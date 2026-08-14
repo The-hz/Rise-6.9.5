@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.Client;
+import com.alan.clients.compat.OfflineMode;
 import com.alan.clients.module.api.Category;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
@@ -183,6 +184,10 @@ InstanceAccess {
     }
 
     public ArrayList<ajt<String, String, String>> qi() {
+        //add code
+        if (OfflineMode.offline()) {
+            return new ArrayList<ajt<String, String, String>>();
+        }
         JsonArray jsonArray = aec.aZ("https://raw.githubusercontent.com/risellc/RiseOnlineConfigs/main/index.json");
         ArrayList<ajt<String, String, String>> arrayList = new ArrayList<ajt<String, String, String>>();
         Iterator<JsonElement> iterator = jsonArray.iterator();

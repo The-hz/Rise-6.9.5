@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.Client;
+import com.alan.clients.compat.OfflineMode;
 import com.alan.clients.component.impl.player.RotationComponent;
 import com.alan.clients.component.impl.player.rotationcomponent.MovementFix;
 import com.alan.clients.newevent.Listener;
@@ -34,6 +35,10 @@ extends aaj {
 
     @Override
     public boolean nX() {
+        //add code
+        if (OfflineMode.offline()) {
+            return false;
+        }
         new Thread(() -> {
             URL uRL;
             String string = "https://raw.githubusercontent.com/risellc/Signatures/main/list";

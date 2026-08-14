@@ -2,6 +2,7 @@ package hackclient.rise;
 
 import com.alan.clients.Client;
 import com.alan.clients.compat.NetworkToggles;
+import com.alan.clients.compat.OfflineMode;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.util.animation.Animation;
@@ -613,8 +614,11 @@ extends ade {
         Client.a.e().c(this);
     }
 
+    //add code
     public void rp() {
-        this.aCA = aec.aY("https://raw.githubusercontent.com/risellc/LatestRiseVersion/main/Version");
+        this.aCA = OfflineMode.offline()
+            ? null
+            : aec.aY("https://raw.githubusercontent.com/risellc/LatestRiseVersion/main/Version");
     }
 
     @Override

@@ -16,7 +16,7 @@ public final class NetworkToggles {
     }
 
     public static boolean remoteScripts() {
-        return REMOTE_SCRIPTS;
+        return !OfflineMode.offline() && REMOTE_SCRIPTS;
     }
 
     public static boolean altService() {
@@ -24,6 +24,6 @@ public final class NetworkToggles {
     }
 
     public static boolean versionCheck() {
-        return VERSION_CHECK;
+        return !OfflineMode.offline() && VERSION_CHECK;
     }
 }
