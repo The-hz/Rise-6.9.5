@@ -1,0 +1,44 @@
+package hackclient.rise;
+
+import com.alan.clients.util.interfaces.InstanceAccess;
+import net.minecraft.client.gui.ScaledResolution;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
+
+public class aiy implements InstanceAccess {
+    private final int aPQ;
+
+    public aiy(String var1, String var2) {
+        this.aPQ = aiw.H(var1, var2);
+    }
+
+    public static void h(double var0, double var2, double var4, double var6) {
+        GL11.glBegin(7);
+        GL11.glTexCoord2f(0.0F, 0.0F);
+        GL11.glVertex2d(var0, var2 + var6);
+        GL11.glTexCoord2f(1.0F, 0.0F);
+        GL11.glVertex2d(var0 + var4, var2 + var6);
+        GL11.glTexCoord2f(1.0F, 1.0F);
+        GL11.glVertex2d(var0 + var4, var2);
+        GL11.glTexCoord2f(0.0F, 1.0F);
+        GL11.glVertex2d(var0, var2);
+        GL11.glEnd();
+    }
+
+    public static void vN() {
+        ScaledResolution scaledresolution = aEg.jY;
+        h(0.0, 0.0, scaledresolution.getScaledWidth_double(), scaledresolution.getScaledHeight_double());
+    }
+
+    public void rt() {
+        GL20.glUseProgram(this.aPQ);
+    }
+
+    public static void stop() {
+        GL20.glUseProgram(0);
+    }
+
+    public int vO() {
+        return this.aPQ;
+    }
+}

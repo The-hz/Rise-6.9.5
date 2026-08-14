@@ -1,0 +1,151 @@
+package com.alan.clients.value;
+
+import com.alan.clients.module.Module;
+import com.alan.clients.util.interfaces.Toggleable;
+import hackclient.rise.abl;
+import java.util.List;
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
+import lombok.Generated;
+
+public abstract class Value<T> {
+    private final String name;
+    public BooleanSupplier aQJ;
+    public BooleanSupplier aQK;
+    private T aQL;
+    private boolean visible;
+    private Toggleable aQM;
+    private Consumer<T> valueChangeConsumer;
+    private T aQO;
+
+    public Value(String var1, Module var2, T var3) {
+        this.name = var1;
+        this.aQJ = null;
+        this.aQM = var2;
+        this.aQO = (T)var3;
+        this.n((T)var3);
+        var2.getValues().add(this);
+    }
+
+    public Value(String var1, Mode<?> var2, T var3) {
+        this.name = var1;
+        this.aQJ = null;
+        this.aQO = (T)var3;
+        this.aQM = var2;
+        this.n((T)var3);
+        var2.getValues().add(this);
+    }
+
+    public Value(String var1, Module var2, T var3, BooleanSupplier var4) {
+        this.name = var1;
+        this.aQJ = var4;
+        this.aQM = var2;
+        this.aQO = (T)var3;
+        this.n((T)var3);
+        var2.getValues().add(this);
+    }
+
+    public Value(String var1, Mode<?> var2, T var3, BooleanSupplier var4) {
+        this.name = var1;
+        this.aQJ = var4;
+        this.aQO = (T)var3;
+        this.n((T)var3);
+        var2.getValues().add(this);
+    }
+
+    public void m(Object var1) {
+        if (this.valueChangeConsumer != null) {
+            this.valueChangeConsumer.accept((T)var1);
+        }
+
+        this.aQL = (T)var1;
+    }
+
+    public void n(T var1) {
+        if (this.valueChangeConsumer != null) {
+            this.valueChangeConsumer.accept((T)var1);
+        }
+
+        this.aQL = (T)var1;
+    }
+
+    public abstract List<Value<?>> getSubValues();
+
+    public void o(T var1) {
+        this.aQO = (T)var1;
+    }
+
+    public abl wl() {
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
+    @Generated
+    public String getName() {
+        return this.name;
+    }
+
+    @Generated
+    public BooleanSupplier wm() {
+        return this.aQJ;
+    }
+
+    @Generated
+    public BooleanSupplier wn() {
+        return this.aQK;
+    }
+
+    @Generated
+    public T wo() {
+        return this.aQL;
+    }
+
+    @Generated
+    public boolean wp() {
+        return this.visible;
+    }
+
+    @Generated
+    public Toggleable wq() {
+        return this.aQM;
+    }
+
+    @Generated
+    public Consumer<T> wr() {
+        return this.valueChangeConsumer;
+    }
+
+    @Generated
+    public T ws() {
+        return this.aQO;
+    }
+
+    @Generated
+    public void a(BooleanSupplier var1) {
+        this.aQJ = var1;
+    }
+
+    @Generated
+    public void b(BooleanSupplier var1) {
+        this.aQK = var1;
+    }
+
+    @Generated
+    public void M(boolean var1) {
+        this.visible = var1;
+    }
+
+    @Generated
+    public void a(Toggleable var1) {
+        this.aQM = var1;
+    }
+
+    @Generated
+    public void c(Consumer<T> var1) {
+        this.valueChangeConsumer = var1;
+    }
+}

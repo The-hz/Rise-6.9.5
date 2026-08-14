@@ -1,0 +1,114 @@
+package hackclient.rise;
+
+import com.alan.clients.Client;
+import com.alan.clients.ui.menu.impl.account.AccountManagerScreen;
+import com.alan.clients.util.animation.Animation;
+import com.alan.clients.util.animation.Easing;
+import com.alan.clients.util.render.RenderUtil;
+import java.awt.Color;
+import net.minecraft.client.gui.GuiMultiplayer;
+import net.minecraft.client.gui.GuiOptions;
+import net.minecraft.client.gui.GuiSelectWorld;
+import net.minecraft.client.gui.ScaledResolution;
+import rip.vantage.network.core.a;
+
+public final class adr extends ade {
+    private Animation animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
+    private adm aCF;
+    private adm aCG;
+    private adm aCH;
+    private adm aCI;
+    private adh[] menuButtons;
+    private boolean aCJ;
+
+    public adr() {
+    }
+
+    @Override
+    public void drawScreen(int var1, int var2, float var3) {
+        if (this.aCF != null && this.aCG != null && this.aCH != null) {
+            ScaledResolution scaledresolution = aEg.jY;
+            aiv.aPL.a(aiz.OVERLAY, var3, null);
+            this.b(gg.BLUR).c(() -> RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK));
+
+            for (adh adh : this.menuButtons) {
+                adh.c(var1, var2, var3);
+            }
+
+            agc agc = gb.MAIN.a(64, gd.REGULAR);
+            double d0 = this.aCF.getY() - agc.tq();
+            this.animation.Q(d0);
+            String s = this.aCJ ? "Rice" : Client.b;
+            double d1 = this.animation.sG();
+            Color color = aip.d(Color.WHITE, (int)(d1 / d0 * 200.0));
+            this.b(gg.REGULAR)
+                .c(
+                    () -> {
+                        agc.c(s, this.width / 2.0F, d1, color.getRGB());
+                        gb.MAIN
+                            .a(16, gd.REGULAR)
+                            .d(
+                                "Made with <3 by Alan and The_Bi11iona1re",
+                                scaledresolution.getScaledWidth() - 5,
+                                scaledresolution.getScaledHeight() - 20,
+                                aip.d(aBS, 100).getRGB()
+                            );
+                        gb.MAIN
+                            .a(12, gd.REGULAR)
+                            .d(
+                                "© Rise Client 2026. All Rights Reserved",
+                                scaledresolution.getScaledWidth() - 5,
+                                scaledresolution.getScaledHeight() - 10,
+                                aip.d(aBS, 100).getRGB()
+                            );
+                        if (!System.getProperty("java.vm.vendor").toLowerCase().contains("oracle corporation")) {
+                            gb.MAIN.a(32, gd.BOLD);
+                        }
+                    }
+                );
+        }
+    }
+
+    @Override
+    protected void keyTyped(char var1, int var2) {
+        switch (var2) {
+            case 203:
+                System.out.println("Reconnecting");
+                a.aKB().aKI();
+        }
+    }
+
+    @Override
+    public void mouseClicked(int var1, int var2, int var3) {
+        if (this.menuButtons != null) {
+            if (var3 == 0) {
+                for (adh adh : this.menuButtons) {
+                    if (aeb.a(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+                        adh.rm();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void initGui() {
+        this.aCJ = Math.random() > 0.98;
+        int i = this.width / 2;
+        int j = this.height / 2;
+        short short1 = 180;
+        byte b0 = 24;
+        byte b1 = 6;
+        int k = i - 90;
+        int l = j - 12 - 3 - 12;
+        this.aCF = new adm(k, l, short1, b0, () -> aEg.displayGuiScreen(new GuiSelectWorld(this)), "Singleplayer");
+        this.aCG = new adm(k, l + b0 + b1, short1, b0, () -> aEg.displayGuiScreen(new GuiMultiplayer(this)), "Multiplayer");
+        this.aCH = new adm(
+            k + short1 / 2 + b1 / 2, l + b0 * 2 + b1 * 2, short1 / 2 - b1 / 2, b0, () -> aEg.displayGuiScreen(new AccountManagerScreen(this)), "Alts"
+        );
+        this.aCI = new adm(k, l + b0 * 2 + b1 * 2, short1 / 2 - b1 / 2, b0, () -> aEg.displayGuiScreen(new GuiOptions(this, aEg.gameSettings)), "Options");
+        this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
+        this.menuButtons = new adh[]{this.aCF, this.aCG, this.aCH, this.aCI};
+    }
+}

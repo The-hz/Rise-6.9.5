@@ -1,0 +1,307 @@
+package com.alan.clients.module.impl.movement.speed;
+
+import com.alan.clients.module.impl.movement.Speed;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.input.MoveInputEvent;
+import com.alan.clients.newevent.impl.motion.JumpEvent;
+import com.alan.clients.newevent.impl.motion.PostStrafeEvent;
+import com.alan.clients.newevent.impl.motion.PreMotionEvent;
+import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
+import com.alan.clients.newevent.impl.motion.StrafeEvent;
+import com.alan.clients.newevent.impl.other.MoveEvent;
+import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
+import com.alan.clients.util.player.MoveUtil;
+import com.alan.clients.value.Mode;
+import hackclient.rise.afi;
+import hackclient.rise.ahg;
+import hackclient.rise.aih;
+import net.minecraft.block.BlockStairs;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
+
+public class Watchdog6TickSpeed extends Mode<Speed> {
+    private static float Qa = 0.0F;
+    private static float Qb = 42.5F;
+    private Entity Rd = null;
+    private int PD = 0;
+    private boolean Re = false;
+    public static boolean LW;
+    public static boolean LX;
+    public static int hQ;
+    double jy;
+    boolean LY;
+    public static int LZ;
+    public static int Ma;
+    private double Md;
+    private double Me;
+    private double Mf;
+    private double Mg;
+    private double Mh;
+    public static double Mi;
+    @EventLink
+    public final Listener<PacketReceiveEvent> Rf = var0 -> {
+        switch (var0.dq()) {
+            default:
+                break;
+        }
+    };
+    @EventLink
+    public final Listener<MoveInputEvent> Rg = var0 -> {
+        if (hQ < 23 && hQ > 7) {
+            var0.setJump(false);
+        }
+    };
+    @EventLink
+    public final Listener<MoveEvent> Rh = var0 -> {
+        if (hQ < 23 && hQ > 7) {
+            var0.setPosZ(0.0);
+            var0.setPosX(0.0);
+        }
+    };
+    @EventLink
+    public final Listener<StrafeEvent> Ri = var1x -> {
+        if (aEg.thePlayer.onGround) {
+            this.Re = false;
+        }
+
+        AxisAlignedBB axisalignedbb = aEg.thePlayer.getEntityBoundingBox();
+        WorldClient worldclient = aEg.theWorld;
+
+        for (double d0 = axisalignedbb.minX; d0 < axisalignedbb.maxX; d0 += 0.3) {
+            for (double d1 = axisalignedbb.minZ; d1 < axisalignedbb.maxZ; d1 += 0.3) {
+                BlockPos blockpos = new BlockPos(d0, axisalignedbb.minY - 0.05, d1);
+                if (worldclient.getBlockState(blockpos).getBlock() instanceof BlockStairs) {
+                    this.Re = true;
+                    break;
+                }
+            }
+
+            if (this.Re) {
+                break;
+            }
+        }
+
+        double d2 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
+        double d3 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
+        if (aEg.thePlayer.hurtTime == 9 && hQ < 23) {
+            hQ = 23;
+        }
+
+        if (hQ > 24 && !this.Re && aEg.thePlayer.csk > 5) {
+            if (aEg.thePlayer.tR == 0) {
+                if (hQ <= 48 && (aEg.thePlayer.isPotionActive(Potion.moveSpeed) || hQ <= 66)) {
+                    MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() - 0.01);
+                } else {
+                    MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance());
+                }
+
+                if (aEg.thePlayer.onGround) {
+                    aEg.thePlayer.jump();
+                }
+            }
+
+            if (aEg.thePlayer.tR == 1) {
+                if (aEg.thePlayer.isPotionActive(Potion.moveSpeed) && aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 >= 2) {
+                    MoveUtil.strafe(0.48);
+                } else if (aEg.thePlayer.isPotionActive(Potion.moveSpeed) && aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 >= 2) {
+                    MoveUtil.strafe(0.4);
+                } else if (aEg.thePlayer.isPotionActive(Potion.moveSpeed) && aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 == 1) {
+                    MoveUtil.strafe(0.405);
+                } else {
+                    MoveUtil.strafe(0.33);
+                }
+
+                aEg.thePlayer.motionY = 0.31;
+            }
+
+            if (aEg.thePlayer.tR == 2) {
+                if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                    aEg.thePlayer.motionX *= 1.005;
+                    aEg.thePlayer.motionZ *= 1.005;
+                }
+
+                aEg.thePlayer.motionY -= 0.11;
+            }
+
+            if (aEg.thePlayer.tR == 3) {
+                aEg.thePlayer.motionY -= 0.22;
+            }
+
+            if (aEg.thePlayer.tR == 4) {
+                if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                    if (hQ > 66) {
+                        aEg.thePlayer.motionX *= 1.01;
+                        aEg.thePlayer.motionZ *= 1.01;
+                    }
+                } else {
+                    aEg.thePlayer.motionX *= 1.005;
+                    aEg.thePlayer.motionZ *= 1.005;
+                }
+            }
+
+            if (aEg.thePlayer.tR == 5 && aih.ae(aEg.thePlayer.motionY * 2.0)) {
+                aEg.thePlayer.motionY += 0.085;
+                if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                    if (hQ > 66) {
+                        MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() * 1.069);
+                    }
+                } else {
+                    MoveUtil.strafe();
+                    if (hQ > 154) {
+                    }
+                }
+            }
+
+            if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air) {
+                if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                    if (hQ > 66) {
+                        MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() * 1.059);
+                    }
+                } else {
+                    MoveUtil.strafe();
+                }
+            }
+
+            aih.vk();
+            aEg.thePlayer.stepHeight = 0.2F;
+            if (MoveUtil.speed() < 0.125) {
+                MoveUtil.strafe(0.125);
+            }
+
+            if (ahg.n(d2, d3) > 40.0 && aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                aEg.thePlayer.motionX *= 0.74;
+                aEg.thePlayer.motionZ *= 0.74;
+            }
+        }
+
+        if (hQ < 8 || this.Re || aEg.thePlayer.csk < 6) {
+            if (aEg.thePlayer.onGround) {
+                aEg.thePlayer.jump();
+            }
+
+            if (aEg.thePlayer.onGround && !aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() - 0.01);
+            } else if (aEg.thePlayer.onGround) {
+                MoveUtil.strafe(0.26);
+            }
+
+            if (MoveUtil.speed() < 0.125) {
+                MoveUtil.strafe(0.125);
+            }
+
+            if (aEg.thePlayer.tR == 1) {
+                MoveUtil.strafe();
+                aEg.thePlayer.motionY += 0.057F;
+            }
+
+            if (aEg.thePlayer.tR == 3) {
+                aEg.thePlayer.motionY -= 0.1309F;
+            }
+
+            if (aEg.thePlayer.tR == 4) {
+                aEg.thePlayer.motionY -= 0.2;
+            }
+        }
+
+        if (hQ == 24) {
+            MoveUtil.strafe(0.125);
+        }
+    };
+    @EventLink
+    public final Listener<PreUpdateEvent> Rj = var0 -> {
+        if (hQ > 44) {
+            ;
+        }
+    };
+    @EventLink
+    public final Listener<PreMotionEvent> Rk = var0 -> {
+        aEg.thePlayer.getEntityBoundingBox();
+        hQ++;
+        if (hQ < 23) {
+            if (aEg.thePlayer.onGround && hQ > 3) {
+                var0.setPosY(var0.getPosY() + (hQ % 2 != 0 ? 0.296875 : 0.001));
+                var0.setOnGround(false);
+            }
+        } else if (aEg.thePlayer.onGround) {
+            var0.setPosY(var0.getPosY() + 0.001);
+        }
+    };
+    @EventLink
+    public final Listener<JumpEvent> Rl = var1x -> {
+        if (hQ >= 23 && hQ >= 8 && !this.Re && aEg.thePlayer.csk >= 6) {
+            var1x.setJumpMotion(0.4F);
+        } else {
+            var1x.setJumpMotion(0.42F);
+        }
+    };
+    @EventLink
+    public final Listener<PostStrafeEvent> Rm = var0 -> {
+        double d0 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
+        double d1 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
+        if (ahg.n(d0, d1) > 90.0) {
+            if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                MoveUtil.a(MoveUtil.speed(), (float)d1 - 180.0F);
+            } else {
+                MoveUtil.a(MoveUtil.speed(), (float)d1 - 180.0F);
+            }
+        }
+    };
+
+    public Watchdog6TickSpeed(String var1, Speed var2) {
+        super(var1, var2);
+    }
+
+    @Override
+    public void onEnable() {
+        this.Mg = aEg.thePlayer.pl;
+        this.Mh = aEg.thePlayer.rotationPitch;
+        hQ = 0;
+        aEg.thePlayer.pl = (float)this.Mg;
+        if (aEg.thePlayer.onGround) {
+            aEg.thePlayer.jump();
+        } else {
+            afi.b("start on the ground");
+            this.wj().setEnabled(false);
+        }
+
+        this.Md = aEg.thePlayer.posX;
+        this.Me = aEg.thePlayer.posY;
+        this.Mf = aEg.thePlayer.posZ;
+        this.jy = aEg.thePlayer.posY;
+        LX = true;
+        LW = false;
+    }
+
+    @Override
+    public void onDisable() {
+        double d0 = aEg.thePlayer.posX - this.Md;
+        double d1 = aEg.thePlayer.posY - this.Me;
+        double d2 = aEg.thePlayer.posZ - this.Mf;
+        double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+        LW = false;
+        this.LY = false;
+        afi.b(aEg.thePlayer.ae);
+        afi.c("Distance traveled: " + d3);
+        if (aEg.thePlayer.onGround) {
+            MoveUtil.stop();
+        }
+
+        aEg.thePlayer.stepHeight = 0.6F;
+    }
+
+    private boolean a(Vec3 var1, Vec3 var2) {
+        EntityPlayerSP entityplayersp = Minecraft.getMinecraft().thePlayer;
+        WorldClient worldclient = Minecraft.getMinecraft().theWorld;
+        AxisAlignedBB axisalignedbb = entityplayersp.getEntityBoundingBox().offset(var2.xCoord, var2.yCoord, var2.zCoord);
+        return !worldclient.getCollidingBoundingBoxes(entityplayersp, axisalignedbb).isEmpty();
+    }
+}

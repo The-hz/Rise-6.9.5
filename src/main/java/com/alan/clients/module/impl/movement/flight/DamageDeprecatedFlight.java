@@ -1,0 +1,43 @@
+package com.alan.clients.module.impl.movement.flight;
+
+import com.alan.clients.module.impl.movement.Flight;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.input.MoveInputEvent;
+import com.alan.clients.newevent.impl.motion.PreMotionEvent;
+import com.alan.clients.newevent.impl.motion.StrafeEvent;
+import com.alan.clients.util.player.MoveUtil;
+import com.alan.clients.value.Mode;
+import com.alan.clients.value.impl.NumberValue;
+import hackclient.rise.ahz;
+import hackclient.rise.aia;
+
+public class DamageDeprecatedFlight extends Mode<Flight> {
+    private final NumberValue Jj = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
+    @EventLink
+    public final Listener<StrafeEvent> Jk = var1x -> {
+        float f = this.Jj.wo().floatValue();
+        var1x.setSpeed(f);
+    };
+    @EventLink
+    public final Listener<PreMotionEvent> Jl = var1x -> {
+        float f = this.Jj.wo().floatValue();
+        aEg.thePlayer.motionY = 0.0 + (aEg.gameSettings.keyBindJump.isKeyDown() ? f : 0.0) - (aEg.gameSettings.keyBindSneak.isKeyDown() ? f : 0.0);
+    };
+    @EventLink
+    public final Listener<MoveInputEvent> Jm = var0 -> var0.setSneak(false);
+
+    public DamageDeprecatedFlight(String var1, Flight var2) {
+        super(var1, var2);
+    }
+
+    @Override
+    public void onEnable() {
+        ahz.a(aia.POSITION, 3.42F, 1, false, false);
+    }
+
+    @Override
+    public void onDisable() {
+        MoveUtil.stop();
+    }
+}

@@ -1,0 +1,55 @@
+package com.alan.clients.module.impl.movement.flight;
+
+import com.alan.clients.module.impl.movement.Flight;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.input.MoveInputEvent;
+import com.alan.clients.newevent.impl.motion.PreMotionEvent;
+import com.alan.clients.newevent.impl.motion.StrafeEvent;
+import com.alan.clients.newevent.impl.packet.PacketSendEvent;
+import com.alan.clients.value.Mode;
+import com.alan.clients.value.impl.BooleanValue;
+import com.alan.clients.value.impl.NumberValue;
+import hackclient.rise.ahz;
+import hackclient.rise.aia;
+import hackclient.rise.bb;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.C03PacketPlayer;
+
+public class CubeCraftFlight extends Mode<Flight> {
+    private final NumberValue speed = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
+    private final BooleanValue FQ = new BooleanValue("Send Flying", this, false);
+    @EventLink
+    public final Listener<StrafeEvent> FR = var1x -> {
+        float f = this.speed.wo().floatValue();
+        var1x.setSpeed(f);
+    };
+    @EventLink
+    public final Listener<PreMotionEvent> FS = var1x -> {
+        float f = this.speed.wo().floatValue();
+        aEg.thePlayer.motionY = -1.0E-10 + (aEg.gameSettings.keyBindJump.isKeyDown() ? f : 0.0) - (aEg.gameSettings.keyBindSneak.isKeyDown() ? f : 0.0);
+        if (aEg.thePlayer.getDistance(aEg.thePlayer.lastReportedPosX, aEg.thePlayer.lastReportedPosY, aEg.thePlayer.lastReportedPosZ) <= 10.0F - f - 0.15) {
+            var1x.setCancelled();
+        }
+    };
+    @EventLink
+    public final Listener<MoveInputEvent> FT = var0 -> var0.setSneak(false);
+    @EventLink
+    public final Listener<PacketSendEvent> FU = var1x -> {
+        if (!this.FQ.wo()) {
+            Packet packet = var1x.dq();
+            if (packet instanceof C03PacketPlayer && !((C03PacketPlayer)packet).isMoving() && !bb.aW()) {
+                var1x.setCancelled();
+            }
+        }
+    };
+
+    public CubeCraftFlight(String var1, Flight var2) {
+        super(var1, var2);
+    }
+
+    @Override
+    public void onEnable() {
+        ahz.a(aia.POSITION, 3.42F, 1, false, false);
+    }
+}

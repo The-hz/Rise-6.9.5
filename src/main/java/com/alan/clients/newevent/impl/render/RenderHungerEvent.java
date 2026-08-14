@@ -1,0 +1,19 @@
+package com.alan.clients.newevent.impl.render;
+
+import com.alan.clients.newevent.Event;
+import lombok.Generated;
+import net.minecraft.client.gui.ScaledResolution;
+
+public final class RenderHungerEvent implements Event {
+    private final ScaledResolution scaledResolution;
+
+    @Generated
+    public ScaledResolution dx() {
+        return this.scaledResolution;
+    }
+
+    @Generated
+    public RenderHungerEvent(ScaledResolution var1) {
+        this.scaledResolution = var1;
+    }
+}

@@ -1,0 +1,85 @@
+package com.alan.clients.module.impl.movement.flight;
+
+import com.alan.clients.module.impl.movement.Flight;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.motion.PreMotionEvent;
+import com.alan.clients.newevent.impl.motion.StrafeEvent;
+import com.alan.clients.newevent.impl.other.BlockAABBEvent;
+import com.alan.clients.newevent.impl.other.TeleportEvent;
+import com.alan.clients.util.player.MoveUtil;
+import com.alan.clients.value.Mode;
+import com.alan.clients.value.impl.NumberValue;
+import hackclient.rise.afi;
+import hackclient.rise.ahz;
+import hackclient.rise.aia;
+import net.minecraft.block.BlockAir;
+import net.minecraft.util.AxisAlignedBB;
+
+public class VerusDamageNewFlight extends Mode<Flight> {
+    private int It;
+    private int hV;
+    private boolean El;
+    private final NumberValue Iu = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
+    private double y;
+    @EventLink
+    public final Listener<TeleportEvent> Iv = var0 -> {};
+    @EventLink
+    public final Listener<PreMotionEvent> Iw = var1x -> {
+        if (!this.El && aEg.thePlayer.onGround) {
+            aEg.thePlayer.jump();
+        }
+
+        if (this.El) {
+            this.y = Math.floor(aEg.thePlayer.posY);
+            aEg.thePlayer.motionY = 0.0 + (aEg.gameSettings.keyBindJump.isKeyDown() ? 1.0 : 0.0) - (aEg.gameSettings.keyBindSneak.isKeyDown() ? 1.0 : 0.0);
+            if (aEg.thePlayer.getDistance(aEg.thePlayer.lastReportedPosX, aEg.thePlayer.lastReportedPosY, aEg.thePlayer.lastReportedPosZ) <= 8.5) {
+                var1x.setCancelled();
+            } else {
+                this.hV++;
+                if (this.hV >= 20) {
+                    this.El = false;
+                    afi.b("s");
+                    MoveUtil.stop();
+                }
+            }
+        }
+    };
+    @EventLink
+    public final Listener<StrafeEvent> Ix = var1x -> {
+        if (this.El) {
+            float f = this.Iu.wo().floatValue();
+            var1x.setSpeed(f);
+        }
+    };
+    @EventLink
+    public final Listener<BlockAABBEvent> Iy = var1x -> {
+        if (var1x.df() instanceof BlockAir
+            && !aEg.gameSettings.keyBindSneak.isKeyDown()
+            && (aEg.thePlayer.posY < this.y + 1.0 || aEg.gameSettings.keyBindJump.isKeyDown())) {
+            double d0 = var1x.dg().getX();
+            double d1 = var1x.dg().getY();
+            double d2 = var1x.dg().getZ();
+            if (d1 < aEg.thePlayer.posY) {
+                var1x.a(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
+            }
+        }
+    };
+
+    public VerusDamageNewFlight(String var1, Flight var2) {
+        super(var1, var2);
+    }
+
+    @Override
+    public void onEnable() {
+        ahz.a(aia.POSITION, 3.42F, 1, false, false);
+        this.hV = 0;
+        this.It = 2;
+        this.El = true;
+    }
+
+    @Override
+    public void onDisable() {
+        MoveUtil.stop();
+    }
+}

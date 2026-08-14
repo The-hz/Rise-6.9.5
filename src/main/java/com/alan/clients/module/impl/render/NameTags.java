@@ -1,0 +1,50 @@
+package com.alan.clients.module.impl.render;
+
+import com.alan.clients.module.Module;
+import com.alan.clients.module.api.Category;
+import com.alan.clients.module.api.ModuleInfo;
+import com.alan.clients.module.impl.render.nametags.ClassicNameTags;
+import com.alan.clients.module.impl.render.nametags.ModernNameTags;
+import com.alan.clients.module.impl.render.nametags.VanillaNameTags;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.impl.other.WorldChangeEvent;
+import com.alan.clients.value.impl.BooleanValue;
+import com.alan.clients.value.impl.ModeValue;
+import hackclient.rise.agc;
+import java.util.HashMap;
+import java.util.Map;
+import lombok.Generated;
+
+@ModuleInfo(aliases = "module.render.nametags.name", description = "module.render.nametags.description", category = Category.RENDER)
+public final class NameTags extends Module {
+    public final Map<String, Integer> aoW = new HashMap<>();
+    private final ModeValue aoX = new ModeValue("Mode", this)
+        .add(new ModernNameTags("Modern", this))
+        .add(new VanillaNameTags("Vanilla", this))
+        .add(new ClassicNameTags("Classic", this))
+        .setDefault("Modern");
+    private final BooleanValue aoY = new BooleanValue("Targets", this, false);
+    public final BooleanValue aoZ = new BooleanValue("Player", this, true, () -> !this.aoY.wo());
+    public final BooleanValue apa = new BooleanValue("Invisibles", this, false, () -> !this.aoY.wo());
+    public final BooleanValue apb = new BooleanValue("Animals", this, false, () -> !this.aoY.wo());
+    public final BooleanValue apc = new BooleanValue("Mobs", this, false, () -> !this.aoY.wo());
+    public final BooleanValue apd = new BooleanValue("Player Teammates", this, true, () -> !this.aoY.wo());
+    public final Listener<WorldChangeEvent> onRender2D = var1 -> this.aoW.clear();
+
+    public NameTags() {
+    }
+
+    public float a(String var1, agc var2) {
+        String s = var1 + var2.hashCode();
+        if (!this.aoW.containsKey(s)) {
+            this.aoW.put(s, var2.getStringWidth(var1));
+        }
+
+        return this.aoW.get(s).intValue();
+    }
+
+    @Generated
+    public Map<String, Integer> md() {
+        return this.aoW;
+    }
+}

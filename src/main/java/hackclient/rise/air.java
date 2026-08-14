@@ -1,0 +1,26 @@
+package hackclient.rise;
+
+import net.minecraft.client.gui.ScaledResolution;
+import org.lwjgl.opengl.GL11;
+
+public class air {
+    public air() {
+    }
+
+    public static void hK() {
+        GL11.glEnable(3089);
+    }
+
+    public static void disable() {
+        GL11.glDisable(3089);
+    }
+
+    public static void a(ScaledResolution var0, double var1, double var3, double var5, double var7) {
+        if (var1 + var5 != var1 && var3 + var7 != var3 && !(var1 < 0.0) && !(var3 + var7 < 0.0)) {
+            int i = var0.getScaleFactor();
+            GL11.glScissor(
+                (int)Math.round(var1 * i), (int)Math.round((var0.getScaledHeight() - (var3 + var7)) * i), (int)Math.round(var5 * i), (int)Math.round(var7 * i)
+            );
+        }
+    }
+}

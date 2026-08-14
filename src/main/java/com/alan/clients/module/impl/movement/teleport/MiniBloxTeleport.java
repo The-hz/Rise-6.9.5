@@ -1,0 +1,107 @@
+package com.alan.clients.module.impl.movement.teleport;
+
+import com.alan.clients.module.impl.movement.Teleport;
+import com.alan.clients.newevent.CancellableEvent;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
+import com.alan.clients.newevent.impl.motion.PushOutOfBlockEvent;
+import com.alan.clients.newevent.impl.other.BlockAABBEvent;
+import com.alan.clients.newevent.impl.other.TeleportEvent;
+import com.alan.clients.newevent.impl.render.Render2DEvent;
+import com.alan.clients.newevent.impl.render.Render3DEvent;
+import com.alan.clients.util.render.RenderUtil;
+import com.alan.clients.value.Mode;
+import hackclient.rise.ahj;
+import hackclient.rise.ahu;
+import hackclient.rise.ahy;
+import hackclient.rise.aip;
+import hackclient.rise.gb;
+import hackclient.rise.gd;
+import hackclient.rise.gk;
+import java.awt.Color;
+import java.util.List;
+import net.minecraft.block.BlockAir;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.network.play.client.C03PacketPlayer;
+import org.lwjgl.opengl.GL11;
+
+@gk
+public final class MiniBloxTeleport
+extends Mode<Teleport> {
+    private ahy Sx = new ahy(0.0, 0.0, 0.0);
+    @EventLink
+    public final Listener<TeleportEvent> Sy = teleportEvent -> this.toggle();
+    @EventLink
+    public final Listener<PushOutOfBlockEvent> Sz = CancellableEvent::setCancelled;
+    @EventLink
+    public final Listener<Render2DEvent> SA = render2DEvent -> gb.MAIN.a(17, gd.LIGHT).c("hold sneak to teleport", (float)MiniBloxTeleport.aEg.jY.getScaledWidth() / 2.0f, (float)MiniBloxTeleport.aEg.jY.getScaledHeight() / 2.0f + 30.0f, this.rz().rA().getRGB());
+    @EventLink
+    public final Listener<Render3DEvent> SB = render3DEvent -> {
+        float f2 = MiniBloxTeleport.aEg.timer.bWm;
+        EntityPlayerSP entityPlayerSP = MiniBloxTeleport.aEg.thePlayer;
+        if (entityPlayerSP == null) {
+            return;
+        }
+        double d2 = Math.toRadians(entityPlayerSP.prevRotationYaw + (entityPlayerSP.pl - entityPlayerSP.prevRotationYaw) * f2);
+        double d3 = (double)(MiniBloxTeleport.aEg.thePlayer.rotationPitch + 2.0f) * 1.8;
+        double d4 = entityPlayerSP.prevPosX + (entityPlayerSP.posX - entityPlayerSP.prevPosX) * (double)f2 - Math.sin(d2) * d3;
+        double d5 = entityPlayerSP.prevPosY + (entityPlayerSP.posY - entityPlayerSP.prevPosY) * (double)f2;
+        double d6 = entityPlayerSP.prevPosZ + (entityPlayerSP.posZ - entityPlayerSP.prevPosZ) * (double)f2 + Math.cos(d2) * d3;
+        this.Sx = new ahy(d4, d5, d6);
+        Color color = aip.d(this.rz().rA(), 100);
+        if (color.getAlpha() <= 0) {
+            return;
+        }
+        RenderUtil.color(color);
+        GlStateManager.pushMatrix();
+        GlStateManager.pushAttrib();
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GlStateManager.disableLighting();
+        GL11.glDepthMask(false);
+        double d7 = 0.14;
+        RenderUtil.drawBoundingBox(entityPlayerSP.getEntityBoundingBox().offset(-entityPlayerSP.posX, -entityPlayerSP.posY, -entityPlayerSP.posZ).offset(d4, d5, d6).expand(d7, d7, d7));
+        GlStateManager.enableTexture2D();
+        GlStateManager.enableLighting();
+        GlStateManager.disableBlend();
+        GL11.glDepthMask(true);
+        GlStateManager.popAttrib();
+        GlStateManager.popMatrix();
+        GlStateManager.resetColor();
+        RenderHelper.disableStandardItemLighting();
+        MiniBloxTeleport.aEg.entityRenderer.IU();
+    };
+    @EventLink
+    public final Listener<PreUpdateEvent> SC = preUpdateEvent -> {
+        if (!MiniBloxTeleport.aEg.gameSettings.keyBindSneak.isKeyDown()) {
+            return;
+        }
+        List<ahy> list = ahu.a(new ahy(MiniBloxTeleport.aEg.thePlayer.posX, MiniBloxTeleport.aEg.thePlayer.posY, MiniBloxTeleport.aEg.thePlayer.posZ), this.Sx, true);
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        if (MiniBloxTeleport.aEg.thePlayer.onGround) {
+            MiniBloxTeleport.aEg.thePlayer.setPosition(MiniBloxTeleport.aEg.thePlayer.posX, MiniBloxTeleport.aEg.thePlayer.posY - 1.0E-4, MiniBloxTeleport.aEg.thePlayer.posZ);
+        }
+        for (ahy ahy2 : list) {
+            ahj.m(new C03PacketPlayer.C04PacketPlayerPosition(ahy2.getX(), ahy2.getY(), ahy2.getZ(), true));
+        }
+    };
+    @EventLink
+    public final Listener<BlockAABBEvent> SD = blockAABBEvent -> {
+        if (blockAABBEvent.df() instanceof BlockAir) {
+            double cfr_ignored_1 = blockAABBEvent.dg().getX();
+            double d2 = blockAABBEvent.dg().getY();
+            double cfr_ignored_2 = blockAABBEvent.dg().getZ();
+            double d3 = d2 - MiniBloxTeleport.aEg.thePlayer.posY;
+            int cfr_ignored_3 = d3 == 0.0 ? 0 : (d3 < 0.0 ? -1 : 1);
+        }
+    };
+
+    public MiniBloxTeleport(String string, Teleport teleport) {
+        super(string, teleport);
+    }
+}

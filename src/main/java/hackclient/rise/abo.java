@@ -1,0 +1,156 @@
+package hackclient.rise;
+
+import com.alan.clients.util.render.RenderUtil;
+import com.alan.clients.util.vector.Vector2d;
+import com.alan.clients.util.vector.Vector2f;
+import com.alan.clients.value.Value;
+import com.alan.clients.value.impl.ColorValue;
+import java.awt.Color;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.MathHelper;
+
+public class abo extends abl {
+    private static final double ayT = 5.0;
+    private boolean ayU = false;
+    private boolean ayV;
+    private boolean ayW;
+    private final float ayX = 10.0F;
+    private final float ayY = 0.5F;
+    private float ayZ = 0.0F;
+    private double aza = 90.0;
+    private double azb = 80.0;
+    private Vector2f azc = new Vector2f(1.0F, 1.0F);
+    private Color azd = Color.RED;
+
+    public abo(Value<?> var1) {
+        super(var1);
+    }
+
+    @Override
+    public void a(Vector2d var1, int var2, int var3, float var4) {
+        this.apP = var1;
+        this.aza = 105.0;
+        this.azb = 120.0;
+        ColorValue colorvalue = (ColorValue)this.ayC;
+        String s = ahd.ce(this.ayC.getName());
+        float f = gb.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 4;
+        gb.MAIN.a(16, gd.REGULAR).a(s, this.apP.x, this.apP.y, abw.SECONDARY_TEXT.pW());
+        RenderUtil.roundedRectangle(this.apP.x + f, this.apP.y, 15.0, 7.0, 2.5, colorvalue.wo());
+        this.jy = this.ayU ? 110.0 : 15.0;
+        if (this.ayU) {
+            double d0 = this.apP.x + 0.5 + 10.0 + f + 8.0;
+            double d1 = this.apP.y + 0.5;
+            RenderUtil.dropShadow(10, (float)d0, (float)d1, (float)this.aza, (float)this.azb - 15.0F, 40.0, this.getStandardClickGUI().axV * 2);
+            RenderUtil.roundedRectangle(d0 - 0.5, this.apP.y, this.aza, this.azb - 15.0, this.getStandardClickGUI().axV - 3, abw.SECONDARY.pV());
+            RenderUtil.roundedRectangle(d0, d1, this.aza - 1.0, this.azb - 1.0 - 15.0, this.getStandardClickGUI().axV - 3, abw.BACKGROUND.pV());
+            double d2 = this.azb * 0.55;
+            RenderUtil.a(d0, d1, this.aza - 1.0, d2, 7.0, Color.WHITE, this.azd, false);
+            RenderUtil.a(d0 - 0.5, d1, this.aza - 1.0 + 1.0, d2 + 0.5, 0.5, Color.BLACK, new Color(0, 0, 0, 0), true);
+            double d3 = 8.5;
+            double d4 = d0 + d3;
+            double d5 = d1 + d3 + d2 - 5.0;
+            double d6 = this.aza - d3 * 2.0;
+            RenderUtil.rainbowRectangle(d4, d5 + 2.5, d6, this.getStandardClickGUI().axV - 5);
+            RenderUtil.dropShadow(
+                30,
+                (float)(d0 + d3),
+                (float)(d1 + d2 + d3 + d3 + this.getStandardClickGUI().axV - 11.0),
+                15.0,
+                15.5,
+                40.0,
+                this.getStandardClickGUI().axV / 2.0F
+            );
+            RenderUtil.roundedRectangle(d0 + d3, d1 + d2 + d3 + d3 + this.getStandardClickGUI().axV - 11.0, 15.0, 15.5, 3.5, colorvalue.wo());
+            if (this.ayV) {
+                this.azc = new Vector2f((float)(var2 - d0), (float)(var3 - d1));
+                this.azc.x = MathHelper.clamp_float(this.azc.x, 0.0F, (float)this.aza);
+                this.azc.y = MathHelper.clamp_float(this.azc.y, 0.0F, (float)d2);
+                Color color = aip.a(new Color(0, 0, 0, 0), aip.a(this.azd, Color.WHITE, this.azc.x / this.aza), this.azc.y / d2);
+                colorvalue.n(color);
+            } else if (this.ayW) {
+                this.ayZ = (float)(var2 - d4);
+                this.ayZ = MathHelper.clamp_float(this.ayZ, 0.0F, (float)d6);
+                this.azd = Color.getHSBColor((float)(this.ayZ / d6), 1.0F, 1.0F);
+                Color color2 = aip.a(new Color(0, 0, 0, 0), aip.a(this.azd, Color.WHITE, this.azc.x / this.aza), this.azc.y / d2);
+                colorvalue.n(color2);
+            }
+
+            RenderUtil.roundedRectangle(
+                d4 + this.ayZ - this.getStandardClickGUI().axV / 2.0F + 0.5,
+                d5 + 0.5,
+                this.getStandardClickGUI().axV - 1,
+                this.getStandardClickGUI().axV - 1,
+                this.getStandardClickGUI().axV / 3.0F + 1.0F,
+                this.azd
+            );
+            RenderUtil.roundedOutlineRectangle(
+                d4 + this.ayZ - this.getStandardClickGUI().axV / 2.0F + 0.5,
+                d5 + 0.5,
+                this.getStandardClickGUI().axV - 1,
+                this.getStandardClickGUI().axV - 1,
+                this.getStandardClickGUI().axV / 5.0F + 1.0F,
+                1.0,
+                Color.BLACK
+            );
+            if (this.azc.x != -1.0F && this.azc.y != -1.0F) {
+                RenderUtil.roundedRectangle(d0 - 1.0 + this.azc.x - 2.5, d1 - 1.0 + this.azc.y - 2.5, 7.0, 7.0, 3.5, Color.WHITE);
+                RenderUtil.roundedRectangle(d0 - 0.5 + this.azc.x - 2.5, d1 - 0.5 + this.azc.y - 2.5, 6.0, 6.0, 3.0, Color.BLACK);
+                RenderUtil.roundedRectangle(d0 + this.azc.x - 2.5, d1 + this.azc.y - 2.5, 5.0, 5.0, 2.5, colorvalue.wo());
+            }
+
+            Color color1 = colorvalue.wo();
+            double d7 = d0 + d3 * 2.0 + 15.0;
+            double d8 = d1 + d2 + d3 + d3 + this.getStandardClickGUI().axV - 11.0;
+            gb.MAIN.a(17, gd.REGULAR).c(color1.getRed() + "", d7 + d3, d8, abw.SECONDARY_TEXT.pW());
+            gb.MAIN.a(17, gd.REGULAR).c(color1.getGreen() + "", d7 + 30.0, d8, abw.SECONDARY_TEXT.pW());
+            gb.MAIN.a(17, gd.REGULAR).c(color1.getBlue() + "", d7 + d3 * 6.0, d8, abw.SECONDARY_TEXT.pW());
+            double d9 = d8 + 13.0;
+            gb.MAIN
+                .a(13, gd.REGULAR)
+                .a(String.format("#%02X%02X%02X", color1.getRed(), color1.getGreen(), color1.getBlue()), d7, d9, new Color(55, 59, 61).hashCode());
+        }
+    }
+
+    @Override
+    public boolean e(int var1, int var2, int var3) {
+        if (this.apP == null) {
+            return false;
+        }
+
+        float f = gb.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.ayC.getName())) + 4;
+        this.ayV = this.ayU && agj.c(this.apP.x + 10.0 + f, this.apP.y, this.aza, this.azb * 0.55, var1, var2);
+        this.ayW = this.ayU && agj.c(this.apP.x + 10.0 + f, this.apP.y + this.azb * 0.55, this.aza, 20.0, var1, var2);
+        double d0 = this.apP.x + 14.5 + f;
+        double d1 = this.apP.y + 0.5;
+        double d2 = d0 + 32.0;
+        double d3 = d1 + this.azb - 40.0 + this.getStandardClickGUI().axV;
+        if (agj.c(d2, d3, 60.0, 10.0, var1, var2)) {
+            Color color = (Color)this.ayC.wo();
+            GuiScreen.setClipboardString(color.getRed() + ", " + color.getBlue() + ", " + color.getGreen());
+        } else if (agj.c(d2, d3 + 13.0, 60.0, 10.0, var1, var2)) {
+            Color color1 = (Color)this.ayC.wo();
+            GuiScreen.setClipboardString(String.format("#%02X%02X%02X", color1.getRed(), color1.getGreen(), color1.getBlue()));
+        }
+
+        this.ayU = (this.getStandardClickGUI().axX == null || this.ayU)
+            && (
+                this.ayV
+                    || agj.c(this.apP.x + 10.0 + f, this.apP.y + this.azb * 0.55, this.aza, 52.0, var1, var2)
+                    || !this.ayU && agj.c(this.apP.x, this.apP.y - 3.5, this.getStandardClickGUI().width - 70, this.jy, var1, var2)
+            );
+        return false;
+    }
+
+    @Override
+    public void pz() {
+        this.ayV = this.ayW = false;
+    }
+
+    @Override
+    public void ci() {
+    }
+
+    @Override
+    public void b(char var1, int var2) {
+    }
+}

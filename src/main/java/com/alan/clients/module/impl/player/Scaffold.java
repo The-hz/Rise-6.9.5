@@ -1,0 +1,2501 @@
+package com.alan.clients.module.impl.player;
+
+import com.alan.clients.component.impl.player.RotationComponent;
+import com.alan.clients.component.impl.player.SlotComponent;
+import com.alan.clients.component.impl.player.rotationcomponent.MovementFix;
+import com.alan.clients.module.Module;
+import com.alan.clients.module.api.Category;
+import com.alan.clients.module.api.ModuleInfo;
+import com.alan.clients.module.impl.movement.Flight;
+import com.alan.clients.module.impl.movement.Speed;
+import com.alan.clients.module.impl.movement.Sprint;
+import com.alan.clients.module.impl.player.scaffold.downwards.NormalDownwards;
+import com.alan.clients.module.impl.player.scaffold.downwards.VerusDownwards;
+import com.alan.clients.module.impl.player.scaffold.downwards.WatchdogDownwards;
+import com.alan.clients.module.impl.player.scaffold.sprint.BypassSprint;
+import com.alan.clients.module.impl.player.scaffold.sprint.DisabledSprint;
+import com.alan.clients.module.impl.player.scaffold.sprint.LegitSprint;
+import com.alan.clients.module.impl.player.scaffold.sprint.MatrixSprint;
+import com.alan.clients.module.impl.player.scaffold.sprint.VerusSprint;
+import com.alan.clients.module.impl.player.scaffold.sprint.VulcanSprint;
+import com.alan.clients.module.impl.player.scaffold.sprint.WatchdogJumpSprint;
+import com.alan.clients.module.impl.player.scaffold.sprint.WatchdogPredictiSprint;
+import com.alan.clients.module.impl.player.scaffold.sprint.WatchdogSprint;
+import com.alan.clients.module.impl.player.scaffold.tower.AirJumpTower;
+import com.alan.clients.module.impl.player.scaffold.tower.LegitTower;
+import com.alan.clients.module.impl.player.scaffold.tower.MMCTower;
+import com.alan.clients.module.impl.player.scaffold.tower.MatrixTower;
+import com.alan.clients.module.impl.player.scaffold.tower.NCPTower;
+import com.alan.clients.module.impl.player.scaffold.tower.NormalTower;
+import com.alan.clients.module.impl.player.scaffold.tower.VanillaTower;
+import com.alan.clients.module.impl.player.scaffold.tower.VerusTower;
+import com.alan.clients.module.impl.player.scaffold.tower.VulcanTower;
+import com.alan.clients.module.impl.player.scaffold.tower.WatchdogTower;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.input.MoveInputEvent;
+import com.alan.clients.newevent.impl.motion.PostMotionEvent;
+import com.alan.clients.newevent.impl.motion.PreMotionEvent;
+import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
+import com.alan.clients.newevent.impl.motion.StrafeEvent;
+import com.alan.clients.newevent.impl.other.TeleportEvent;
+import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
+import com.alan.clients.newevent.impl.packet.PacketSendEvent;
+import com.alan.clients.util.player.MoveUtil;
+import com.alan.clients.util.vector.Vector2f;
+import com.alan.clients.value.impl.BooleanValue;
+import com.alan.clients.value.impl.BoundsNumberValue;
+import com.alan.clients.value.impl.ModeValue;
+import com.alan.clients.value.impl.NumberValue;
+import com.alan.clients.value.impl.SubMode;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+import de.florianmichael.vialoadingbase.ViaLoadingBase;
+import hackclient.rise.aef;
+import hackclient.rise.afi;
+import hackclient.rise.ahg;
+import hackclient.rise.ahj;
+import hackclient.rise.aib;
+import hackclient.rise.aih;
+import hackclient.rise.aik;
+import hackclient.rise.aiu;
+import hackclient.rise.aka;
+import hackclient.rise.bb;
+import hackclient.rise.ea;
+import hackclient.rise.en;
+import hackclient.rise.ub;
+import hackclient.rise.vz;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Optional;
+import lombok.Generated;
+import net.minecraft.block.BlockAir;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.multiplayer.PlayerControllerMP;
+import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.network.play.client.m;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
+import net.minecraft.util.Vec3i;
+import org.lwjgl.input.Keyboard;
+import rip.vantage.network.core.a;
+
+@ModuleInfo(aliases = "module.player.scaffold.name", description = "module.player.scaffold.description", category = Category.PLAYER)
+public class Scaffold extends Module {
+    public BooleanValue agk;
+    @EventLink
+    public Listener<TeleportEvent> agX;
+    public static Object[] fld_0oOOoOo0O00O_46 = new Object[4];
+    public static boolean ahf;
+    public ModeValue afJ = new ModeValue("Mode", this)
+        .add(new SubMode("Normal"))
+        .add(new SubMode("Godbridge"))
+        .add(new SubMode("Breesily"))
+        .add(new SubMode("Snap"))
+        .add(new SubMode("Telly"))
+        .add(new SubMode("Eagle"))
+        .setDefault("Normal");
+    public boolean agN;
+    public aka agy;
+    public int agF;
+    @EventLink(cH = 4)
+    public Listener<PreUpdateEvent> agZ;
+    public float agT;
+    public double Me;
+    public BooleanValue agt;
+    public BooleanValue aga;
+    public BoundsNumberValue age;
+    public float agS;
+    public ModeValue afK = new ModeValue("Rotation Mode", this).add(new SubMode("Normal")).add(new SubMode("Grim")).setDefault("Normal");
+    @EventLink
+    public Listener<PacketReceiveEvent> agU;
+    public NumberValue afS;
+    public static Object[] o0Oo000O0oO = new Object[166];
+    public Vec3 targetBlock;
+    public int agE;
+    public BooleanValue agb;
+    @EventLink
+    public Listener<StrafeEvent> ahc;
+    public float jp;
+    public BooleanValue agj;
+    @EventLink
+    public Listener<ea> agY;
+    public BoundsNumberValue agl;
+    public BlockPos Yx;
+    @EventLink
+    public Listener<en> ahe;
+    public BooleanValue afV;
+    public float agQ;
+    public float act;
+    public BooleanValue agf;
+    public ModeValue afP;
+    public aib acr;
+    public ModeValue afM;
+    public ModeValue afL = new ModeValue("Ray Cast", this).add(new SubMode("Off")).add(new SubMode("Normal")).add(new SubMode("Strict")).setDefault("Strict");
+    public BooleanValue afY;
+    public BooleanValue agh;
+    public ModeValue ags;
+    public aib agw;
+    public NumberValue ago;
+    public int agG;
+    public BooleanValue afX;
+    public BoundsNumberValue afQ;
+    public static int[] O0OoOO0OOOOO;
+    public static Object[] oO00O0OO0ooO = new Object[1];
+    public BoundsNumberValue agm;
+    public BooleanValue afU;
+    public BooleanValue agr;
+    public boolean agx;
+    public int agC;
+    @EventLink
+    public Listener<PostMotionEvent> agW;
+    public int acu;
+    public int agI;
+    public boolean agH;
+    @EventLink
+    public Listener<MoveInputEvent> aha;
+    public BooleanValue agp;
+    @EventLink
+    public Listener<PacketSendEvent> ahd;
+    public float jq;
+    public BooleanValue agd;
+    public int agB;
+    public BoundsNumberValue afR;
+    public ModeValue afN;
+    public float agA;
+    public BooleanValue afZ;
+    public int agM;
+    public int agJ;
+    public BooleanValue agv;
+    public int agD;
+    public BooleanValue agq;
+    public NumberValue afT;
+    public BoundsNumberValue agn;
+    public int agK;
+    public BooleanValue agu;
+    public float agz;
+    public int agO;
+    @EventLink
+    public Listener<MoveInputEvent> ahb;
+    public int agL;
+    public BooleanValue afW;
+    @EventLink
+    public Listener<PreMotionEvent> agV;
+    public BoundsNumberValue agg;
+    public BoundsNumberValue agi;
+    public ModeValue afO;
+    public float agR;
+    public BooleanValue agc;
+    public float acs;
+    public boolean agP;
+
+    public void D(int var1) {
+        long i1 = -1018494789218055329L;
+        long j1 = 6271928420745137599L;
+        long k1 = 8733755186196028191L;
+        long l1 = -5328899403421840953L;
+        aib aib = this.acr != null ? this.acr : this.agw;
+        if (aib != null) {
+            if (this.afY.wo()) {
+                ArrayList arraylist = new ArrayList();
+                EntityPlayerSP entityplayersp1 = aEg.thePlayer;
+                double d3 = entityplayersp1.posY + entityplayersp1.getEyeHeight() - this.targetBlock.yCoord - 0.5 - (Math.random() - 0.5) * 0.1;
+
+                for (long i3 = k1 ^ ((long)(-180 + var1) << 32 ^ k1) & -1L << 32; (int)(i3 >>> 32) <= 180; i3 += 193273528320L) {
+                    entityplayersp1.setPosition(entityplayersp1.posX, entityplayersp1.posY - d3, entityplayersp1.posZ);
+                    MovingObjectPosition movingobjectposition1 = aef.c(new Vector2f(entityplayersp1.pl + (int)(i3 >>> 32) * 3, 0.0F), 6.0);
+                    entityplayersp1.setPosition(entityplayersp1.posX, entityplayersp1.posY + d3, entityplayersp1.posZ);
+                    if (movingobjectposition1 != null && movingobjectposition1.hitVec != null) {
+                        Vector2f vector2f7 = aiu.h(movingobjectposition1.hitVec);
+                        if (aef.a(vector2f7, this.Yx, aib.va())) {
+                            arraylist.add(vector2f7);
+                        }
+                    }
+                }
+
+                if (!arraylist.isEmpty()) {
+                    Float f7 = RotationComponent.fk != null ? RotationComponent.fk.x : aEg.thePlayer.pl;
+                    Float f6 = RotationComponent.fk != null ? RotationComponent.fk.y : aEg.thePlayer.rotationPitch;
+                    Vector2f vector2f = (Vector2f)arraylist.get(0);
+                    Float f8 = Math.abs(MathHelper.wrapAngleTo180_float(vector2f.x - f7));
+                    Float f9 = Math.abs(vector2f.y - f6);
+                    float f10 = f8 * f8 + f9 * f9;
+                    Iterator iterator = arraylist.iterator();
+
+                    while (iterator.hasNext()) {
+                        Vector2f vector2f1 = (Vector2f)iterator.next();
+                        float f11 = Math.abs(MathHelper.wrapAngleTo180_float(vector2f1.x - f7));
+                        Float f12 = Math.abs(vector2f1.y - f6);
+                        Float f13 = f11 * f11 + f12 * f12;
+                        if (f13 < f10) {
+                            f10 = f13;
+                            vector2f = vector2f1;
+                        }
+                    }
+
+                    this.acs = vector2f.x;
+                    this.act = vector2f.y;
+                } else {
+                    Vector2f vector2f2 = aiu.a(new aka(this.Yx.getX(), this.Yx.getY(), this.Yx.getZ()), aib.va());
+                    this.acs = vector2f2.x;
+                    this.act = vector2f2.y;
+                }
+            } else {
+                EntityPlayerSP entityplayersp = aEg.thePlayer;
+                Double d1 = entityplayersp.posY + entityplayersp.getEyeHeight() - this.targetBlock.yCoord - 0.5 - (Math.random() - 0.5) * 0.1;
+                Float f14 = aEg.thePlayer.pl;
+                Float f15 = MathHelper.wrapAngleTo180_float(f14);
+                Double d2 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
+                float f24;
+                int j3 = (f24 = Math.abs(f15 - this.acs) - 100.0F) == 0.0F ? 0 : (f24 < 0.0F ? -1 : 1);
+                long i2 = l1 ^ ((!(Math.abs(f15 % 90.0F) <= 10.0F) && !(Math.abs(f15 % 90.0F) >= 80.0F) ? 0 : 1) ^ l1) & -1L >>> 32;
+                long j2 = i2 ^ ((long)((int)i2 != 0 ? -135 + var1 : -180 + var1) << 32 ^ i2) & -1L << 32;
+                long k2 = i1 ^ ((long)((int)j2 != 0 ? 135 : 180) << 32 ^ i1) & -1L << 32;
+                ArrayList arraylist1 = new ArrayList();
+
+                for (long l2 = j1 ^ ((long)((int)(j2 >>> 32)) << 32 ^ j1) & -1L << 32; (int)(l2 >>> 32) <= (int)(k2 >>> 32); l2 += 193273528320L) {
+                    entityplayersp.setPosition(entityplayersp.posX, entityplayersp.posY - d1, entityplayersp.posZ);
+                    MovingObjectPosition movingobjectposition = aef.c(new Vector2f(entityplayersp.pl + (int)(l2 >>> 32) * 3, 0.0F), this.agd.wo() ? 4.5 : 5.5);
+                    entityplayersp.setPosition(entityplayersp.posX, entityplayersp.posY + d1, entityplayersp.posZ);
+                    if (movingobjectposition != null && movingobjectposition.hitVec != null) {
+                        Vector2f vector2f3 = aiu.h(movingobjectposition.hitVec);
+                        if (aef.a(vector2f3, this.Yx, aib.va())) {
+                            arraylist1.add(vector2f3);
+                        }
+                    }
+                }
+
+                if (!arraylist1.isEmpty()) {
+                    Float f16 = RotationComponent.fk != null ? RotationComponent.fk.x : aEg.thePlayer.pl;
+                    Float f17 = RotationComponent.fk != null ? RotationComponent.fk.y : aEg.thePlayer.rotationPitch;
+                    Vector2f vector2f4 = (Vector2f)arraylist1.get(0);
+                    Float f18 = Math.abs(MathHelper.wrapAngleTo180_float(vector2f4.x - f16));
+                    Float f19 = Math.abs(vector2f4.y - f17);
+                    float f20 = f18 * f18 + f19 * f19;
+                    Iterator iterator1 = arraylist1.iterator();
+
+                    while (iterator1.hasNext()) {
+                        Vector2f vector2f5 = (Vector2f)iterator1.next();
+                        float f21 = Math.abs(MathHelper.wrapAngleTo180_float(vector2f5.x - f16));
+                        float f22 = Math.abs(vector2f5.y - f17);
+                        float f23 = f21 * f21 + f22 * f22;
+                        if (f23 < f20) {
+                            f20 = f23;
+                            vector2f4 = vector2f5;
+                        }
+                    }
+
+                    this.acs = vector2f4.x;
+                    this.act = vector2f4.y;
+                } else {
+                    Vector2f vector2f6 = aiu.a(new aka(this.Yx.getX(), this.Yx.getY(), this.Yx.getZ()), aib.va());
+                    if (!aef.a(new Vector2f(this.acs, this.act), this.Yx, aib.va())) {
+                        this.acs = vector2f6.x;
+                        this.act = vector2f6.y;
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onEnable() {
+        this.acs = aEg.thePlayer.pl - 180.0F + Integer.parseInt(this.ags.wo().getName());
+        this.act = 90.0F;
+        this.agA = (float)((Math.random() - 0.5) * (Math.random() - 0.5) * 10.0);
+        this.agz = (float)((Math.random() - 0.5) * (Math.random() - 0.5) * 10.0);
+        this.agK = 0;
+        this.Me = Math.floor(aEg.thePlayer.posY);
+        this.targetBlock = null;
+        this.agw = null;
+        if (this.agh.wo()) {
+            this.agN = true;
+        } else {
+            this.agN = false;
+        }
+
+        this.agO = this.age.wv().intValue();
+        this.h(new Vector2f(this.acs, this.act));
+        this.agB = -1;
+        this.agF = 0;
+        this.agC = 0;
+        aEg.thePlayer.crd = false;
+        Object object = this.afM.wo();
+        if (object instanceof WatchdogJumpSprint) {
+            ((WatchdogJumpSprint)object).kB().onEnable();
+        }
+    }
+
+    public boolean kl() {
+        return this.afL.wo().getName().equals("Strict");
+    }
+
+    public aka a(EntityPlayerSP var1, float var2) {
+        double d3 = var1.prevPosX + (var1.posX - var1.prevPosX) * var2;
+        double d4 = var1.prevPosY + (var1.posY - var1.prevPosY) * var2 + var1.getEyeHeight();
+        double d5 = var1.prevPosZ + (var1.posZ - var1.prevPosZ) * var2;
+        return new aka(d3, d4, d5);
+    }
+
+    public boolean ko() {
+        return (boolean)(this.afZ.wo() && this.agf.wo() && this.agL > 0 ? true : -63 + 63);
+    }
+
+    public boolean a(C08PacketPlayerBlockPlacement var1) {
+        return !var1.getPosition().h(new aka(-1.0, -1.0, -1.0)) && var1.getStack() != null && var1.getStack().getItem() instanceof ItemBlock;
+    }
+
+    public void ks() {
+        long j = -597661393861685211L;
+        if (this.agE > 3) {
+            afi.c("Pause is grea" + "ter than 3");
+        } else if (this.acr != null) {
+            long k = j ^ ((this.afK.wo().getName().equals("Grim") ? 1L : 0L) << 32 ^ j) & -1L << 32;
+            Vec3 vec3 = this.getHitVec();
+            if ((int)(k >>> 32) != 0) {
+                float f1 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.acs - aEg.thePlayer.pl);
+                ahj.l(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, f1, this.act, aEg.thePlayer.onGround));
+                PlayerControllerMP playercontrollermp1 = aEg.playerController;
+                EntityPlayerSP entityplayersp1 = aEg.thePlayer;
+                WorldClient worldclient1 = aEg.theWorld;
+                SlotComponent slotcomponent1 = this.d(SlotComponent.class);
+                if (playercontrollermp1.onPlayerRightClick(entityplayersp1, worldclient1, SlotComponent.getItemStack(), this.Yx, this.acr.va(), vec3)) {
+                    ahj.l(new m());
+                }
+
+                ahj.l(
+                    new C06PacketPlayerPosLook(
+                        aEg.thePlayer.posX,
+                        aEg.thePlayer.posY,
+                        aEg.thePlayer.posZ,
+                        (float)(aEg.thePlayer.pl + Math.random() * 0.03),
+                        (float)Math.clamp(aEg.thePlayer.rotationPitch - Math.random(), -90.0, 90.0),
+                        aEg.thePlayer.onGround
+                    )
+                );
+            } else if (this.afL.wo().getName().equals("Strict")) {
+                aEg.Az();
+            } else {
+                PlayerControllerMP playercontrollermp = aEg.playerController;
+                EntityPlayerSP entityplayersp = aEg.thePlayer;
+                WorldClient worldclient = aEg.theWorld;
+                SlotComponent slotcomponent = this.d(SlotComponent.class);
+                if (playercontrollermp.onPlayerRightClick(entityplayersp, worldclient, SlotComponent.getItemStack(), this.Yx, this.acr.va(), vec3)) {
+                    ahj.l(new m());
+                }
+            }
+        }
+    }
+
+    public boolean ki() {
+        return aEg.thePlayer != null && this.isEnabled() && this.afZ.wo() && "Telly".equals(this.km()) && MoveUtil.enoughMovementForSprinting();
+    }
+
+    public aka b(EntityPlayerSP var1) {
+        return new aka(var1.posX, var1.posY + var1.getEyeHeight(), var1.posZ);
+    }
+
+    public boolean L(int var1) {
+        return aih.p(this.agy.getX(), -var1 + this.agy.getY(), this.agy.getZ()).isReplaceable(aEg.theWorld, new BlockPos(aEg.thePlayer).down(var1));
+    }
+
+    public boolean a(EnumFacing var1) {
+        Vec3 vec3 = new Vec3(aEg.thePlayer.motionX, 0.0, aEg.thePlayer.motionZ);
+        if (vec3.lengthVector() < 1.0E-4) {
+            return false;
+        }
+
+        Vec3 vec31 = vec3.normalize();
+        Vec3i vec3i = var1.getDirectionVec();
+        Vec3 vec32 = new Vec3(vec3i.getX(), 0.0, vec3i.getZ()).normalize();
+        return vec31.dotProduct(vec32) < 0.0;
+    }
+
+    public void kp() {
+        long j = -4047177162190724216L;
+        if (this.km().equals("Telly")) {
+            float f1 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+            long k = j ^ ((long)(!(Math.abs(f1 % 90.0F) <= 10.0F) && !(Math.abs(f1 % 90.0F) >= 80.0F) ? 0 : 1) << 32 ^ j) & -1L << 32;
+            if (aEg.thePlayer.onGround) {
+                MoveUtil.enoughMovementForSprinting();
+            }
+        }
+    }
+
+    public boolean kq() {
+        return aih.o(aEg.thePlayer.posX, this.Me - 1.0, aEg.thePlayer.posZ)
+            .isReplaceable(aEg.thePlayer.worldObj, new BlockPos(aEg.thePlayer.posX, this.Me - 1.0, aEg.thePlayer.posZ));
+    }
+
+    public String km() {
+        this.kn();
+        String s = this.afJ.wo().getName();
+        if (s.equals("Telly")) {
+            if (this.ko()) {
+                return "Normal";
+            }
+
+            if (this.agp.wo()) {
+                return aEg.gameSettings.cgI.isKeyDown() ? "Telly" : "Normal";
+            }
+        }
+
+        return s;
+    }
+
+    public float c(float var1, float var2, float var3) {
+        long j = 2483473862868227359L;
+        float f2 = MathHelper.wrapAngleTo180_float(var2 - var1);
+        MathHelper.wrapAngleTo180_double(var2);
+        MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
+        float f3 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+        long k = j ^ ((long)(!(Math.abs(f3 % 90.0F) <= 15.0F) && !(Math.abs(f3 % 90.0F) >= 75.0F) ? 0 : 1) << 32 ^ j) & -1L << 32;
+        float f4 = MathHelper.clamp_float(f2, -var3, var3);
+        return var1 + f4;
+    }
+
+    public void a(BlockPos var1, float var2) {
+        long k = 948590641378053290L;
+        long l = -4661216933181700127L;
+        this.a(aEg.thePlayer, aEg.timer.bWm);
+        aka akax2 = new aka(var1.getX() + 0.5, var1.getY() + 0.5, var1.getZ() + 0.5);
+        float f6 = aEg.thePlayer.pl;
+        double d4 = Math.toRadians(f6);
+        aka akaxx = new aka(-Math.sin(d4), 0.0, Math.cos(d4));
+        double d5 = akaxx.wg();
+        if (d5 != 0.0) {
+            akaxx = new aka(akaxx.x / d5, 0.0, akaxx.z / d5);
+        }
+
+        long i1 = k ^ ((long)(Math.cos(Math.toRadians(f6)) * 1.0 < 0.0 ? 1 : 0) << 32 ^ k) & -1L << 32;
+        aka akaxxx = new aka(akaxx.z, 0.0, -akaxx.x);
+        double d6 = akaxxx.wg();
+        if (d6 != 0.0) {
+            akaxxx = new aka(akaxxx.x / d6, 0.0, akaxxx.z / d6);
+        }
+
+        double d7 = -0.49999999;
+        aka akaxxxx = akax2.e(akaxxx.ag(-d7));
+        aka akaxxxxx = akaxxxx.v(0.0, (Math.random() - 0.5) * 0.05, 0.0);
+        float[] afloat = this.a(akax2, akaxxxxx);
+        float f7 = this.acs;
+        float f8 = this.act;
+        float f9 = this.c(f7, afloat[0], var2);
+        float f10 = this.c(f8, afloat[1], var2);
+        this.acs = f9;
+        this.act = f10;
+        RotationComponent.d(false);
+        float f11 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+        long j1 = l ^ ((long)(!(Math.abs(f11 % 90.0F) <= 10.0F) && !(Math.abs(f11 % 90.0F) >= 80.0F) ? 0 : 1) << 32 ^ l) & -1L << 32;
+        if (!aEg.gameSettings.keyBindLeft.isKeyDown()
+            && !aEg.gameSettings.keyBindRight.isKeyDown()
+            && (!MoveUtil.enoughMovementForSprinting() || MoveUtil.speed() < 0.09 || (int)(j1 >>> 32) != 0)) {
+            if ((MoveUtil.speed() < 0.21 || !aEg.thePlayer.onGround) && !aEg.gameSettings.keyBindJump.isKeyDown()) {
+                RotationComponent.setRotations(new Vector2f(this.acs - 30.0F, this.act), 10.0, this.afU.wo() ? MovementFix.NORMAL : MovementFix.OFF);
+            } else if (MoveUtil.speed() < 0.3 && !aEg.gameSettings.keyBindJump.isKeyDown()) {
+                RotationComponent.setRotations(new Vector2f(this.acs - 45.0F, this.act), 10.0, this.afU.wo() ? MovementFix.NORMAL : MovementFix.OFF);
+            }
+
+            if (aEg.gameSettings.keyBindJump.isKeyDown() && this.e(Speed.class).isEnabled()) {
+                RotationComponent.setRotations(new Vector2f(this.acs - 10.0F, this.act), 10.0, this.afU.wo() ? MovementFix.NORMAL : MovementFix.OFF);
+            } else if (aEg.gameSettings.keyBindJump.isKeyDown()) {
+                RotationComponent.setRotations(new Vector2f(this.acs - 10.0F, this.act), 10.0, this.afU.wo() ? MovementFix.NORMAL : MovementFix.OFF);
+            }
+        }
+    }
+
+    public float b(float var1, float var2, float var3) {
+        float f1 = MathHelper.wrapAngleTo180_float(var2 - var1);
+        if (f1 > var3) {
+            f1 = var3;
+        }
+
+        if (f1 < -var3) {
+            f1 = -var3;
+        }
+
+        return var1 + f1;
+    }
+
+    public static float m(float var0) {
+        if (var0 > 89.9F) {
+            return 89.9F;
+        }
+        return var0 < -89.9F ? -89.9F : var0;
+    }
+
+    public boolean K(int var1) {
+        return aEg.thePlayer
+            .worldObj
+            .getBlockState(
+                new BlockPos(
+                    MathHelper.floor_double(aEg.thePlayer.posX),
+                    MathHelper.floor_double(aEg.thePlayer.posY) - var1,
+                    MathHelper.floor_double(aEg.thePlayer.posZ)
+                )
+            )
+            .getBlock()
+            .isReplaceable(
+                aEg.thePlayer.worldObj,
+                new BlockPos(
+                    MathHelper.floor_double(aEg.thePlayer.posX),
+                    MathHelper.floor_double(aEg.thePlayer.posY) - var1,
+                    MathHelper.floor_double(aEg.thePlayer.posZ)
+                )
+            );
+    }
+
+    public Vector2f a(BlockPos var1, EnumFacing var2, float var3, boolean var4) {
+        return this.a(var1, var2, var3, var4, 82.0F);
+    }
+
+    public float[] a(aka var1, aka var2) {
+        double d4 = var2.x - var1.x;
+        double d5 = var2.y - var1.y;
+        double d6 = var2.z - var1.z;
+        double d7 = Math.sqrt(d4 * d4 + d6 * d6);
+        float f2 = (float)Math.toDegrees(Math.atan2(d6, d4)) - 90.0F;
+        float f3 = (float)(-Math.toDegrees(Math.atan2(d5, d7)));
+        float f4 = MathHelper.wrapAngleTo180_float(f2);
+        float f5 = MathHelper.clamp_float(f3, -90.0F, 90.0F);
+        return new float[]{f4, f5};
+    }
+
+    @Generated
+    public boolean ku() {
+        return this.agH;
+    }
+
+    @Override
+    public void onDisable() {
+        if (aEg.thePlayer.ticksExisted % 2 == 0) {
+            this.agx = false;
+        }
+
+        this.h(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch));
+        this.kj();
+        aEg.thePlayer.crd = false;
+    }
+
+    public Vector2f a(BlockPos var1, aib var2, float var3, float var4, float var5, int var6) {
+        float f2 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+        float f3 = MathHelper.clamp_float((float)(85.0 + Math.random() * 0.1), var4, var5);
+        return aiu.m(new Vector2f(f2, f3));
+    }
+
+    public Vector2f a(BlockPos var1, EnumFacing var2, float var3, boolean var4, float var5) {
+        long k = 1669674263546720133L;
+        long l = 6566806101767772160L;
+        float[] afloat = new float[]{0.0F, 1.5F, -1.5F, 3.0F, -3.0F, 4.5F, -4.5F};
+        long i1 = l ^ ((long)afloat.length << 32 ^ l) & -1L << 32;
+
+        for (long j1 = i1 ^ (0L ^ i1) & -1L >>> 32; (int)j1 < (int)(j1 >>> 32); j1 ^= (j1 ^ j1 + 1) & -1L >>> 32) {
+            float f2 = afloat[(int)j1];
+            float f3 = m(var5 + f2);
+            Vector2f vector2f = new Vector2f(var3, f3);
+            k ^= ((aef.a(vector2f, var2, var1, var4) ? 1L : 0L) << 32 ^ k) & -1L << 32;
+            if ((int)(k >>> 32) == 0) {
+                MovingObjectPosition movingobjectposition = aef.c(vector2f, this.agd.wo() ? 4.5 : 5.5);
+                k ^= (
+                        (long)(
+                                    (MovingObjectPosition)movingobjectposition != null
+                                            && var1.equals(movingobjectposition.getBlockPos())
+                                            && movingobjectposition.sideHit == var2
+                                        ? 1
+                                        : 0
+                                )
+                                << 32
+                            ^ k
+                    )
+                    & -1L << 32;
+            }
+
+            if ((int)(k >>> 32) != 0) {
+                return vector2f;
+            }
+        }
+
+        return null;
+    }
+
+    public static void Oo0o00000O00() {
+        O0OoOO0OOOOO = new int[400];
+        O0OoOO0OOOOO[115] = 4;
+        O0OoOO0OOOOO[203] = 85;
+        O0OoOO0OOOOO[232] = -83;
+        O0OoOO0OOOOO[192] = -51;
+        O0OoOO0OOOOO[166] = -39;
+        O0OoOO0OOOOO[68] = -22;
+        O0OoOO0OOOOO[328] = -43;
+        O0OoOO0OOOOO[87] = 64;
+        O0OoOO0OOOOO[204] = 69;
+        O0OoOO0OOOOO[179] = 58;
+        O0OoOO0OOOOO[171] = 127;
+        O0OoOO0OOOOO[167] = 102;
+        O0OoOO0OOOOO[67] = -49;
+        O0OoOO0OOOOO[174] = 61;
+        O0OoOO0OOOOO[173] = -63;
+        O0OoOO0OOOOO[62] = 123;
+        O0OoOO0OOOOO[385] = 81;
+        O0OoOO0OOOOO[14] = 100;
+        O0OoOO0OOOOO[398] = 120;
+        O0OoOO0OOOOO[391] = -82;
+        O0OoOO0OOOOO[225] = -149;
+        O0OoOO0OOOOO[340] = -117;
+        O0OoOO0OOOOO[374] = 34;
+        O0OoOO0OOOOO[85] = 51;
+        O0OoOO0OOOOO[93] = 69;
+        O0OoOO0OOOOO[370] = 97;
+        O0OoOO0OOOOO[5] = 61;
+        O0OoOO0OOOOO[129] = -9;
+        O0OoOO0OOOOO[83] = 95;
+        O0OoOO0OOOOO[254] = 122;
+        O0OoOO0OOOOO[169] = -69;
+        O0OoOO0OOOOO[128] = 53;
+        O0OoOO0OOOOO[216] = -101;
+        O0OoOO0OOOOO[266] = 90;
+        O0OoOO0OOOOO[230] = 15;
+        O0OoOO0OOOOO[49] = -119;
+        O0OoOO0OOOOO[9] = 3;
+        O0OoOO0OOOOO[307] = 39;
+        O0OoOO0OOOOO[367] = -82;
+        O0OoOO0OOOOO[92] = -34;
+        O0OoOO0OOOOO[133] = -33;
+        O0OoOO0OOOOO[209] = 117;
+        O0OoOO0OOOOO[6] = 49;
+        O0OoOO0OOOOO[345] = -89;
+        O0OoOO0OOOOO[263] = -16;
+        O0OoOO0OOOOO[97] = -85;
+        O0OoOO0OOOOO[372] = -83;
+        O0OoOO0OOOOO[355] = -23;
+        O0OoOO0OOOOO[10] = 41;
+        O0OoOO0OOOOO[290] = 122;
+        O0OoOO0OOOOO[170] = -109;
+        O0OoOO0OOOOO[304] = 38;
+        O0OoOO0OOOOO[224] = 43;
+        O0OoOO0OOOOO[220] = 73;
+        O0OoOO0OOOOO[82] = -87;
+        O0OoOO0OOOOO[366] = -183;
+        O0OoOO0OOOOO[239] = -92;
+        O0OoOO0OOOOO[208] = 33;
+        O0OoOO0OOOOO[392] = -121;
+        O0OoOO0OOOOO[390] = -40;
+        O0OoOO0OOOOO[15] = -248;
+        O0OoOO0OOOOO[322] = -51;
+        O0OoOO0OOOOO[201] = -195;
+        O0OoOO0OOOOO[326] = -93;
+        O0OoOO0OOOOO[341] = 125;
+        O0OoOO0OOOOO[384] = -91;
+        O0OoOO0OOOOO[35] = -104;
+        O0OoOO0OOOOO[381] = 13;
+        O0OoOO0OOOOO[310] = 38;
+        O0OoOO0OOOOO[274] = 36;
+        O0OoOO0OOOOO[168] = 178;
+        O0OoOO0OOOOO[111] = -194;
+        O0OoOO0OOOOO[136] = -116;
+        O0OoOO0OOOOO[265] = 24;
+        O0OoOO0OOOOO[362] = 60;
+        O0OoOO0OOOOO[101] = 79;
+        O0OoOO0OOOOO[277] = -22;
+        O0OoOO0OOOOO[353] = 90;
+        O0OoOO0OOOOO[246] = -12;
+        O0OoOO0OOOOO[264] = 115;
+        O0OoOO0OOOOO[336] = 74;
+        O0OoOO0OOOOO[135] = -52;
+        O0OoOO0OOOOO[185] = -64;
+        O0OoOO0OOOOO[197] = 73;
+        O0OoOO0OOOOO[114] = 248;
+        O0OoOO0OOOOO[54] = -97;
+        O0OoOO0OOOOO[331] = -33;
+        O0OoOO0OOOOO[324] = -64;
+        O0OoOO0OOOOO[64] = 49;
+        O0OoOO0OOOOO[292] = 124;
+        O0OoOO0OOOOO[99] = 54;
+        O0OoOO0OOOOO[396] = 72;
+        O0OoOO0OOOOO[70] = 112;
+        O0OoOO0OOOOO[91] = 97;
+        O0OoOO0OOOOO[369] = -156;
+        O0OoOO0OOOOO[339] = -8;
+        O0OoOO0OOOOO[103] = -51;
+        O0OoOO0OOOOO[205] = 75;
+        O0OoOO0OOOOO[247] = -18;
+        O0OoOO0OOOOO[94] = -81;
+        O0OoOO0OOOOO[145] = 65;
+        O0OoOO0OOOOO[297] = 123;
+        O0OoOO0OOOOO[218] = -14;
+        O0OoOO0OOOOO[11] = 11;
+        O0OoOO0OOOOO[260] = 8;
+        O0OoOO0OOOOO[76] = 52;
+        O0OoOO0OOOOO[187] = 7;
+        O0OoOO0OOOOO[330] = 197;
+        O0OoOO0OOOOO[71] = -83;
+        O0OoOO0OOOOO[150] = -43;
+        O0OoOO0OOOOO[100] = 25;
+        O0OoOO0OOOOO[41] = 20;
+        O0OoOO0OOOOO[98] = 28;
+        O0OoOO0OOOOO[119] = -42;
+        O0OoOO0OOOOO[158] = -127;
+        O0OoOO0OOOOO[221] = -13;
+        O0OoOO0OOOOO[378] = -110;
+        O0OoOO0OOOOO[288] = -110;
+        O0OoOO0OOOOO[276] = -90;
+        O0OoOO0OOOOO[250] = 112;
+        O0OoOO0OOOOO[373] = 50;
+        O0OoOO0OOOOO[27] = -93;
+        O0OoOO0OOOOO[121] = -1;
+        O0OoOO0OOOOO[159] = 162;
+        O0OoOO0OOOOO[38] = 30;
+        O0OoOO0OOOOO[395] = -80;
+        O0OoOO0OOOOO[77] = -58;
+        O0OoOO0OOOOO[172] = 50;
+        O0OoOO0OOOOO[308] = 27;
+        O0OoOO0OOOOO[163] = 57;
+        O0OoOO0OOOOO[120] = -57;
+        O0OoOO0OOOOO[138] = -35;
+        O0OoOO0OOOOO[317] = 90;
+        O0OoOO0OOOOO[234] = 255;
+        O0OoOO0OOOOO[24] = -194;
+        O0OoOO0OOOOO[360] = 99;
+        O0OoOO0OOOOO[313] = -51;
+        O0OoOO0OOOOO[140] = 1;
+        O0OoOO0OOOOO[311] = -48;
+        O0OoOO0OOOOO[343] = -38;
+        O0OoOO0OOOOO[80] = -14;
+        O0OoOO0OOOOO[289] = 99;
+        O0OoOO0OOOOO[102] = 50;
+        O0OoOO0OOOOO[95] = 67;
+        O0OoOO0OOOOO[278] = -112;
+        O0OoOO0OOOOO[382] = -39;
+        O0OoOO0OOOOO[148] = -83;
+        O0OoOO0OOOOO[294] = -12;
+        O0OoOO0OOOOO[63] = 25;
+        O0OoOO0OOOOO[137] = 74;
+        O0OoOO0OOOOO[42] = 70;
+        O0OoOO0OOOOO[105] = -26;
+        O0OoOO0OOOOO[387] = -106;
+        O0OoOO0OOOOO[134] = -121;
+        O0OoOO0OOOOO[256] = 17;
+        O0OoOO0OOOOO[332] = -108;
+        O0OoOO0OOOOO[48] = -206;
+        O0OoOO0OOOOO[242] = -46;
+        O0OoOO0OOOOO[258] = 6;
+        O0OoOO0OOOOO[354] = -96;
+        O0OoOO0OOOOO[146] = 22;
+        O0OoOO0OOOOO[219] = -87;
+        O0OoOO0OOOOO[386] = 10;
+        O0OoOO0OOOOO[112] = 104;
+        O0OoOO0OOOOO[81] = -69;
+        O0OoOO0OOOOO[17] = 126;
+        O0OoOO0OOOOO[189] = 81;
+        O0OoOO0OOOOO[32] = -117;
+        O0OoOO0OOOOO[74] = -110;
+        O0OoOO0OOOOO[31] = 3;
+        O0OoOO0OOOOO[44] = -43;
+        O0OoOO0OOOOO[361] = 16;
+        O0OoOO0OOOOO[30] = 121;
+        O0OoOO0OOOOO[127] = 81;
+        O0OoOO0OOOOO[348] = -29;
+        O0OoOO0OOOOO[394] = 7;
+        O0OoOO0OOOOO[333] = 293;
+        O0OoOO0OOOOO[188] = 79;
+        O0OoOO0OOOOO[180] = 88;
+        O0OoOO0OOOOO[303] = 9;
+        O0OoOO0OOOOO[110] = -103;
+        O0OoOO0OOOOO[351] = 66;
+        O0OoOO0OOOOO[96] = 114;
+        O0OoOO0OOOOO[1] = -8;
+        O0OoOO0OOOOO[181] = 36;
+        O0OoOO0OOOOO[329] = -30;
+        O0OoOO0OOOOO[143] = 45;
+        O0OoOO0OOOOO[162] = -107;
+        O0OoOO0OOOOO[269] = -35;
+        O0OoOO0OOOOO[319] = 88;
+        O0OoOO0OOOOO[237] = -13;
+        O0OoOO0OOOOO[248] = -5;
+        O0OoOO0OOOOO[22] = -76;
+        O0OoOO0OOOOO[306] = 115;
+        O0OoOO0OOOOO[26] = -74;
+        O0OoOO0OOOOO[154] = -31;
+        O0OoOO0OOOOO[393] = -87;
+        O0OoOO0OOOOO[349] = 1;
+        O0OoOO0OOOOO[295] = 27;
+        O0OoOO0OOOOO[139] = -33;
+        O0OoOO0OOOOO[271] = -31;
+        O0OoOO0OOOOO[12] = 98;
+        O0OoOO0OOOOO[344] = -9;
+        O0OoOO0OOOOO[262] = 104;
+        O0OoOO0OOOOO[249] = 126;
+        O0OoOO0OOOOO[183] = 7;
+        O0OoOO0OOOOO[122] = 57;
+        O0OoOO0OOOOO[149] = -74;
+        O0OoOO0OOOOO[244] = -85;
+        O0OoOO0OOOOO[165] = -62;
+        O0OoOO0OOOOO[213] = 13;
+        O0OoOO0OOOOO[88] = -90;
+        O0OoOO0OOOOO[151] = -117;
+        O0OoOO0OOOOO[200] = -61;
+        O0OoOO0OOOOO[241] = -78;
+        O0OoOO0OOOOO[346] = 5;
+        O0OoOO0OOOOO[335] = -107;
+        O0OoOO0OOOOO[252] = 371;
+        O0OoOO0OOOOO[16] = 122;
+        O0OoOO0OOOOO[123] = -206;
+        O0OoOO0OOOOO[75] = -6;
+        O0OoOO0OOOOO[56] = -40;
+        O0OoOO0OOOOO[52] = 118;
+        O0OoOO0OOOOO[116] = 123;
+        O0OoOO0OOOOO[33] = 92;
+        O0OoOO0OOOOO[29] = 14;
+        O0OoOO0OOOOO[60] = 348;
+        O0OoOO0OOOOO[291] = 64;
+        O0OoOO0OOOOO[245] = 101;
+        O0OoOO0OOOOO[182] = 29;
+        O0OoOO0OOOOO[301] = -62;
+        O0OoOO0OOOOO[21] = 36;
+        O0OoOO0OOOOO[3] = 60;
+        O0OoOO0OOOOO[371] = -11;
+        O0OoOO0OOOOO[293] = 61;
+        O0OoOO0OOOOO[55] = -120;
+        O0OoOO0OOOOO[212] = -95;
+        O0OoOO0OOOOO[37] = -41;
+        O0OoOO0OOOOO[211] = 76;
+        O0OoOO0OOOOO[227] = -28;
+        O0OoOO0OOOOO[126] = 193;
+        O0OoOO0OOOOO[2] = -40;
+        O0OoOO0OOOOO[65] = -73;
+        O0OoOO0OOOOO[153] = 252;
+        O0OoOO0OOOOO[251] = 14;
+        O0OoOO0OOOOO[59] = -80;
+        O0OoOO0OOOOO[377] = 78;
+        O0OoOO0OOOOO[57] = -81;
+        O0OoOO0OOOOO[280] = -9;
+        O0OoOO0OOOOO[84] = 247;
+        O0OoOO0OOOOO[365] = -9;
+        O0OoOO0OOOOO[107] = 38;
+        O0OoOO0OOOOO[8] = 79;
+        O0OoOO0OOOOO[144] = 11;
+        O0OoOO0OOOOO[312] = -38;
+        O0OoOO0OOOOO[199] = 33;
+        O0OoOO0OOOOO[238] = -106;
+        O0OoOO0OOOOO[195] = -105;
+        O0OoOO0OOOOO[261] = 144;
+        O0OoOO0OOOOO[284] = -11;
+        O0OoOO0OOOOO[270] = -16;
+        O0OoOO0OOOOO[72] = -16;
+        O0OoOO0OOOOO[255] = -82;
+        O0OoOO0OOOOO[108] = -105;
+        O0OoOO0OOOOO[268] = 113;
+        O0OoOO0OOOOO[279] = -41;
+        O0OoOO0OOOOO[233] = -99;
+        O0OoOO0OOOOO[50] = -88;
+        O0OoOO0OOOOO[19] = -2;
+        O0OoOO0OOOOO[66] = 27;
+        O0OoOO0OOOOO[314] = 23;
+        O0OoOO0OOOOO[23] = 111;
+        O0OoOO0OOOOO[152] = -74;
+        O0OoOO0OOOOO[184] = -58;
+        O0OoOO0OOOOO[359] = -62;
+        O0OoOO0OOOOO[347] = 95;
+        O0OoOO0OOOOO[397] = 97;
+        O0OoOO0OOOOO[194] = -11;
+        O0OoOO0OOOOO[318] = 210;
+        O0OoOO0OOOOO[327] = -119;
+        O0OoOO0OOOOO[69] = 31;
+        O0OoOO0OOOOO[305] = 47;
+        O0OoOO0OOOOO[157] = 97;
+        O0OoOO0OOOOO[161] = 44;
+        O0OoOO0OOOOO[193] = -89;
+        O0OoOO0OOOOO[368] = 121;
+        O0OoOO0OOOOO[228] = -106;
+        O0OoOO0OOOOO[287] = 43;
+        O0OoOO0OOOOO[124] = 97;
+        O0OoOO0OOOOO[58] = 16;
+        O0OoOO0OOOOO[300] = -1;
+        O0OoOO0OOOOO[61] = -116;
+        O0OoOO0OOOOO[196] = -35;
+        O0OoOO0OOOOO[380] = -7;
+        O0OoOO0OOOOO[226] = -67;
+        O0OoOO0OOOOO[43] = -113;
+        O0OoOO0OOOOO[78] = -32;
+        O0OoOO0OOOOO[223] = -17;
+        O0OoOO0OOOOO[156] = 225;
+        O0OoOO0OOOOO[309] = 11;
+        O0OoOO0OOOOO[160] = 118;
+        O0OoOO0OOOOO[130] = 69;
+        O0OoOO0OOOOO[231] = -182;
+        O0OoOO0OOOOO[364] = -22;
+        O0OoOO0OOOOO[191] = -94;
+        O0OoOO0OOOOO[47] = -16;
+        O0OoOO0OOOOO[13] = 3;
+        O0OoOO0OOOOO[186] = 72;
+        O0OoOO0OOOOO[379] = 117;
+        O0OoOO0OOOOO[315] = 14;
+        O0OoOO0OOOOO[117] = 12;
+        O0OoOO0OOOOO[206] = 15;
+        O0OoOO0OOOOO[229] = 120;
+        O0OoOO0OOOOO[299] = 111;
+        O0OoOO0OOOOO[176] = -57;
+        O0OoOO0OOOOO[240] = 124;
+        O0OoOO0OOOOO[86] = -77;
+        O0OoOO0OOOOO[375] = 37;
+        O0OoOO0OOOOO[36] = 47;
+        O0OoOO0OOOOO[358] = -59;
+        O0OoOO0OOOOO[338] = 11;
+        O0OoOO0OOOOO[320] = 123;
+        O0OoOO0OOOOO[141] = 27;
+        O0OoOO0OOOOO[113] = -42;
+        O0OoOO0OOOOO[39] = -14;
+        O0OoOO0OOOOO[18] = 162;
+        O0OoOO0OOOOO[207] = -150;
+        O0OoOO0OOOOO[118] = 18;
+        O0OoOO0OOOOO[325] = 0;
+        O0OoOO0OOOOO[383] = -43;
+        O0OoOO0OOOOO[132] = -154;
+        O0OoOO0OOOOO[323] = -30;
+        O0OoOO0OOOOO[316] = 40;
+        O0OoOO0OOOOO[51] = 46;
+        O0OoOO0OOOOO[337] = 70;
+        O0OoOO0OOOOO[334] = 41;
+        O0OoOO0OOOOO[222] = 26;
+        O0OoOO0OOOOO[125] = 109;
+        O0OoOO0OOOOO[275] = 78;
+        O0OoOO0OOOOO[376] = -115;
+        O0OoOO0OOOOO[357] = 7;
+        O0OoOO0OOOOO[28] = -101;
+        O0OoOO0OOOOO[20] = 2;
+        O0OoOO0OOOOO[147] = -156;
+        O0OoOO0OOOOO[253] = -122;
+        O0OoOO0OOOOO[34] = 52;
+        O0OoOO0OOOOO[89] = -27;
+        O0OoOO0OOOOO[236] = 109;
+        O0OoOO0OOOOO[267] = 78;
+        O0OoOO0OOOOO[90] = -63;
+        O0OoOO0OOOOO[73] = -97;
+        O0OoOO0OOOOO[321] = -81;
+        O0OoOO0OOOOO[177] = -26;
+        O0OoOO0OOOOO[352] = 42;
+        O0OoOO0OOOOO[198] = -30;
+        O0OoOO0OOOOO[190] = -102;
+        O0OoOO0OOOOO[164] = -13;
+        O0OoOO0OOOOO[286] = -58;
+        O0OoOO0OOOOO[7] = -30;
+        O0OoOO0OOOOO[155] = 95;
+        O0OoOO0OOOOO[298] = -82;
+        O0OoOO0OOOOO[282] = 49;
+        O0OoOO0OOOOO[235] = 49;
+        O0OoOO0OOOOO[285] = 15;
+        O0OoOO0OOOOO[79] = 97;
+        O0OoOO0OOOOO[272] = 30;
+        O0OoOO0OOOOO[131] = -77;
+        O0OoOO0OOOOO[142] = 18;
+        O0OoOO0OOOOO[356] = 120;
+        O0OoOO0OOOOO[210] = -18;
+        O0OoOO0OOOOO[53] = -72;
+        O0OoOO0OOOOO[25] = 120;
+        O0OoOO0OOOOO[243] = -50;
+        O0OoOO0OOOOO[104] = 45;
+        O0OoOO0OOOOO[399] = 209;
+        O0OoOO0OOOOO[257] = -66;
+        O0OoOO0OOOOO[281] = -46;
+        O0OoOO0OOOOO[363] = 30;
+        O0OoOO0OOOOO[0] = 5;
+        O0OoOO0OOOOO[175] = 119;
+        O0OoOO0OOOOO[45] = 28;
+        O0OoOO0OOOOO[40] = -35;
+        O0OoOO0OOOOO[109] = 2;
+        O0OoOO0OOOOO[215] = -70;
+        O0OoOO0OOOOO[296] = 15;
+        O0OoOO0OOOOO[273] = 43;
+        O0OoOO0OOOOO[283] = -57;
+        O0OoOO0OOOOO[259] = -2;
+        O0OoOO0OOOOO[202] = -3;
+        O0OoOO0OOOOO[342] = 112;
+        O0OoOO0OOOOO[388] = -54;
+        O0OoOO0OOOOO[217] = 106;
+        O0OoOO0OOOOO[302] = -64;
+        O0OoOO0OOOOO[46] = 62;
+        O0OoOO0OOOOO[178] = 84;
+        O0OoOO0OOOOO[4] = 120;
+        O0OoOO0OOOOO[389] = -104;
+        O0OoOO0OOOOO[214] = 50;
+        O0OoOO0OOOOO[106] = -65;
+        O0OoOO0OOOOO[350] = 30;
+    }
+
+    public void kn() {
+        if (aEg.thePlayer != null && this.afZ.wo() && this.agf.wo()) {
+            if (aEg.thePlayer.Zl == 1 && this.agM != aEg.thePlayer.ticksExisted) {
+                this.agL = 10;
+                this.agM = aEg.thePlayer.ticksExisted;
+            }
+        } else {
+            this.agL = 0;
+            this.agM = -1;
+        }
+    }
+
+    static {
+        Oo0o00000O00();
+        fld_0oOOoOo0O00O_46[0] = "D3jVQK0UbdSjF+x+0R2XkE0UlevCJ/PbEvCGCLPj6bmUkT8jfZhqvm41341Pr+6QwcYln7p+bLvc/nrH48jdfK0RRjCEg+Zl+yvIrcFG5BOwYpzw1Zh0rjqbjwR1pkRN9fBw81HGLC6ODJZGHhSJPI1jo+/ge5JZkQkxxr441RRxPriWHjYFpoZenfBE4BxvNTfVosgQ0x90o65q1cFfiV0NWqJ2xwpm7kxbPOHVxWnJuD2yTOsBDx5nuzq0aeYPtRFqgO+XYYx75DQr5UVCeEsJmyab+uL7H0sFOWlCdgStcc19OyYHakx98CYquF4tuSeROscGio+oHrdOKfIVcKHjvN8ecCSIluoVygpXUI3X8GJVtbWiBBZFllCRKbdUSgg5mYGcjI+z7J259bo+NnNwwfmOOvTT/AQXGEqAitz7S5AQNFl3nlDHhfbNjL1JM6K0t2Ad02qZNciYAb8fnwrOm5/2XvlokUdLuit5809XKzILzedGfTrZt8m+r90hADiPtHbRQKZGcZq42fLH8pxhgO45mnvPEnzcBb609/nkyxAkbWjTR7HyEkiIZBtpTMWGxRHRGRwOyhxtnvT8HVGdFeqHcSOU5JziKEPfGNEOkh9xuCk2CxlAAXOcaAT5Fd/XaICxrYDb/oxbRAuKLPwuK61Uc4X9BXN86LSoyC2XAt1hZUE2TMlH1PuiqKq8dZaLd/zAoA3d/pE4c8h60dL+Ew9eCIk4UDLZ4TXScS3nrx4u6pLx9kqrGyMY/+mz3pV++v/BLoOZAa8gqBHFqUBdRWijp0lq+GZNf++IMqNpP8U1eavCakmkwIwG/WwFFFvgxc2nvtveEd0UeRw0c/oxF6XIj/I3YoBmfSZd3vDbvbHE+3N4f+P4ZTjzqvGh6zJ97zfR4hIjEY1samzWSq5cw9Ue2iNFSL6UYh29L3Dr4Dp/DwXmfOOKN8/eVCOwkJc4JzUhUylxE02oaLNt9A9tcciJRBg1sUtNUeYAvNb597hSDv5D9GIG19eV8nIemGaQku95GY8tnG8sVqqYsbPHyXNQ26raPNf73+929pCaYdRRyTFdb7P+bDM8l1CWHO/TB92gkqZtDjU09MmtcBgciWRlr7BgYDHAYLWjiNh4C2nSkvNN2LWPPaKkdnwpehUokzfJGu03pO6DicxgEJZxIE4W+hGxXEdfNrAUWH7b+Wo5KLhQwiWRJWbXPh8AizNS8/Sd4mZL9j6iV5AZXfFFVGmSPB3YX9dVbTQUNfe95d2ga8XxH6fd69kL1G70dGiAMRSpVw8OTkJxAEaqk5D8o02gdotB8MVO1m9RmceUGMLiWjFQewRoHinP2hqjcH5hdShgAFZx1FNObMRpffp1wYKMxXmqA39G32iBsbc5Xzuvmu2l0cBvl8Ptyp5CTc/8sVsY9hPjKkwxlAz56v5OJOVY1eJ3Nook8kOvzKc8wN7cfvlh3cYZVsP1LF0awZomswu4h3DgzrjwOL7OXUTs76Z3G04JtIO1okKpPTvlEBtDjC2Xh+kY3D5JRld7FjqLJIpI8VJsdBJ/aDLOCbkjPJxBuVk59iZlQxf8eN0AvSFqRiPQDQaPiblw0R+yBI1m2NiixHpnJbeOEhdHsXnXiLZL4GU4zbwJjPbVdt/gkAmTm5b+Rx1SuHNc4TNKmtkgJToZvIVvFG7Q53H/55SAIRSVrY1bO4Qp9GKNG6bp9wLQiupIjNchljmzms3eqgNbAwyKhyWl0nFfnkfVeXTo82LaKF7uVfYTovvVMG+fQQKu8J8qqZT6xZxWEOBNKrX+D5cw6nvZVYgeJE2bf96aHbyJubLvHH4MwO2hGLtBWTJJjLkbhQKjnrmnr8MSYuW9yodkHBgc4WTrDDQLCrY4WEDWjIOFm3h9CPfaiYzZ8yCuBrMVU/Piec4ldPzy+9Jr1SFGH2lVEmR2gBk1mZ11GCp9qpK0XN3HffUXpEzO6cxVluLDQ0TjmvCtq+uYWlKK9Y+1ACtaRPr5oeRWAV5MJNVF3qNUUquQMpks7SMNhGTOezAqsqxEi8Y6F1BkCV73e1BWOhg2IRcBpVqYWQdR5bpyFKG1l96iCqBAqQcvIFDVACYkFAf3LKdG0s15VTqfkwWJC1GFDxt544ueOcufiQSnt1Udrf0L8I8RRj+an7C6Fj1fQChwJxhlELN/SvhLYwzCkbxIraltfuSx0hUCeXtj2SaNyVVZnALRYkpKk1qm/dswe9UhJ8REQSYyDwhL4x6trKWN2SGCgh90tth+ckUgmzvu5alVVV91RAloDg8kZXHYArn/I7e0bXZYx0bPoNfkfZy0KyyvFy8BQxDVPLXN3Su+A/dGx7Srm2nCC0wDaet7p0d+Yo/Wfa8aITpQZjhKvKY9udi5oyKOrA==";
+        fld_0oOOoOo0O00O_46[1] = "PBKDF2WithHmacSHA1";
+        fld_0oOOoOo0O00O_46[2] = "AES";
+        fld_0oOOoOo0O00O_46[3] = "AES/CBC/PKCS5Padding";
+        oO00O0OO0ooO[0] = "\u0000\u0003Off\u0000\nWatchdog P\u0000\u0016Bypass Raycast When Fa\u0000\u0005Timer\u0000\u0006Normal\u0000\u0006blocks\u0000\u0006Ascend\u0000\u0010Ignore Speed Eff\u0000\bUnknown \u0000\u0005Sneak\u0000\bDisabled\u0000\u0005Telly\u0000[OnTick rotation only works correctly on versions 1.17-1.20.6. Please switch to a version in\u0000\u0003Off\u0000\u0003MMC\u0000\u0006Normal\u0000\tWatchdog \u0000\u0006Matrix\u0000\u0002On\u0000\u0005Tower\u0000\u000eTelly Only on \u0000\u000eWatchdog Telly\u0000\u0005Eagle\u0000\u0006Matrix\u0000\u0014RealStackSize is les\u0000\u0004Grim\u0000\u00010\u0000\u0006Normal\u0000";
+        o0Oo000O0oO[0] = "Off";
+        o0Oo000O0oO[1] = "Watchdog P";
+        o0Oo000O0oO[2] = "Bypass Raycast When Fa";
+        o0Oo000O0oO[3] = "Timer";
+        o0Oo000O0oO[4] = "Normal";
+        o0Oo000O0oO[5] = "blocks";
+        o0Oo000O0oO[6] = "Ascend";
+        o0Oo000O0oO[7] = "Ignore Speed Eff";
+        o0Oo000O0oO[8] = "Unknown ";
+        o0Oo000O0oO[9] = "Sneak";
+        o0Oo000O0oO[10] = "Disabled";
+        o0Oo000O0oO[11] = "Telly";
+        o0Oo000O0oO[12] = "OnTick rotation only works correctly on versions 1.17-1.20.6. Please switch to a version in";
+        o0Oo000O0oO[13] = "Off";
+        o0Oo000O0oO[14] = "MMC";
+        o0Oo000O0oO[15] = "Normal";
+        o0Oo000O0oO[16] = "Watchdog ";
+        o0Oo000O0oO[17] = "Matrix";
+        o0Oo000O0oO[18] = "On";
+        o0Oo000O0oO[19] = "Tower";
+        o0Oo000O0oO[20] = "Telly Only on ";
+        o0Oo000O0oO[21] = "Watchdog Telly";
+        o0Oo000O0oO[22] = "Eagle";
+        o0Oo000O0oO[23] = "Matrix";
+        o0Oo000O0oO[24] = "RealStackSize is les";
+        o0Oo000O0oO[25] = "Grim";
+        o0Oo000O0oO[26] = "0";
+        o0Oo000O0oO[27] = "Normal";
+        o0Oo000O0oO[28] = "Stop Sneaking";
+        o0Oo000O0oO[29] = "Telly";
+        o0Oo000O0oO[30] = "Off";
+        o0Oo000O0oO[31] = "Watchdog Predicti";
+        o0Oo000O0oO[32] = "Watchdog Jump";
+        o0Oo000O0oO[33] = "Normal";
+        o0Oo000O0oO[34] = "Sneak every x ";
+        o0Oo000O0oO[35] = "Telly";
+        o0Oo000O0oO[36] = "n Speed";
+        o0Oo000O0oO[37] = "Mode";
+        o0Oo000O0oO[38] = "Watchdog Telly J";
+        o0Oo000O0oO[39] = "Watchdog Jump";
+        o0Oo000O0oO[40] = "Watchdog Jump";
+        o0Oo000O0oO[41] = "Sneaking Speed";
+        o0Oo000O0oO[42] = "Breesily";
+        o0Oo000O0oO[43] = "Off";
+        o0Oo000O0oO[44] = "Sprint";
+        o0Oo000O0oO[45] = "Watchdog";
+        o0Oo000O0oO[46] = "Watchdog";
+        o0Oo000O0oO[47] = "Pause is grea";
+        o0Oo000O0oO[48] = "neak)";
+        o0Oo000O0oO[49] = "Grim";
+        o0Oo000O0oO[50] = "Off";
+        o0Oo000O0oO[51] = "Watchdog";
+        o0Oo000O0oO[52] = "Normal";
+        o0Oo000O0oO[53] = "Start Sneaking";
+        o0Oo000O0oO[54] = "Rotation Speed";
+        o0Oo000O0oO[55] = "New Watchdog";
+        o0Oo000O0oO[56] = "Air Jump";
+        o0Oo000O0oO[57] = "Legit";
+        o0Oo000O0oO[58] = "Snap";
+        o0Oo000O0oO[59] = "45";
+        o0Oo000O0oO[60] = "Normal";
+        o0Oo000O0oO[61] = "Off";
+        o0Oo000O0oO[62] = "Up Side Down";
+        o0Oo000O0oO[63] = "Eagle";
+        o0Oo000O0oO[64] = "Verus";
+        o0Oo000O0oO[65] = "Off";
+        o0Oo000O0oO[66] = "Godbridge";
+        o0Oo000O0oO[67] = "ect";
+        o0Oo000O0oO[68] = "Matrix";
+        o0Oo000O0oO[69] = "On";
+        o0Oo000O0oO[70] = "Vanilla";
+        o0Oo000O0oO[71] = "Render";
+        o0Oo000O0oO[72] = "Normal";
+        o0Oo000O0oO[73] = "Watchdog Telly Rotatio";
+        o0Oo000O0oO[74] = "Disabled";
+        o0Oo000O0oO[75] = "Watchdog Jump";
+        o0Oo000O0oO[76] = "-45";
+        o0Oo000O0oO[77] = "Don't force raycast on Watchdog T";
+        o0Oo000O0oO[78] = "n";
+        o0Oo000O0oO[79] = "Auto Jump";
+        o0Oo000O0oO[80] = "st";
+        o0Oo000O0oO[81] = "Watchdog";
+        o0Oo000O0oO[82] = "ion";
+        o0Oo000O0oO[83] = "Off";
+        o0Oo000O0oO[84] = "Right Click";
+        o0Oo000O0oO[85] = "Advanced";
+        o0Oo000O0oO[86] = ".8";
+        o0Oo000O0oO[87] = "Disable On Flag";
+        o0Oo000O0oO[88] = "Watchdog Jump";
+        o0Oo000O0oO[89] = "Watchdog Predicti";
+        o0Oo000O0oO[90] = "Verus";
+        o0Oo000O0oO[91] = "Normal";
+        o0Oo000O0oO[92] = "Legit";
+        o0Oo000O0oO[93] = "Telly";
+        o0Oo000O0oO[94] = "on";
+        o0Oo000O0oO[95] = "Vulcan";
+        o0Oo000O0oO[96] = "Predictio";
+        o0Oo000O0oO[97] = "Vulcan";
+        o0Oo000O0oO[98] = "Movement Correct";
+        o0Oo000O0oO[99] = "Watchdog Prediction 1";
+        o0Oo000O0oO[100] = "Normal";
+        o0Oo000O0oO[101] = "elly";
+        o0Oo000O0oO[102] = "rediction";
+        o0Oo000O0oO[103] = "Place Delay";
+        o0Oo000O0oO[104] = "Normal";
+        o0Oo000O0oO[105] = "Block Diagonal ";
+        o0Oo000O0oO[106] = "Telly";
+        o0Oo000O0oO[107] = "Watchdog";
+        o0Oo000O0oO[108] = "Expand";
+        o0Oo000O0oO[109] = "0";
+        o0Oo000O0oO[110] = "0";
+        o0Oo000O0oO[111] = "NCP";
+        o0Oo000O0oO[112] = "Rotation Block Rotation ";
+        o0Oo000O0oO[113] = "Normal";
+        o0Oo000O0oO[114] = "Strict";
+        o0Oo000O0oO[115] = "Rotation Block Boo";
+        o0Oo000O0oO[116] = "Extend Block Reach on Watchdog ";
+        o0Oo000O0oO[117] = "on";
+        o0Oo000O0oO[118] = "Breesily";
+        o0Oo000O0oO[119] = "Ray Cast";
+        o0Oo000O0oO[120] = "Auto Jump";
+        o0Oo000O0oO[121] = "Telly";
+        o0Oo000O0oO[122] = "Disabled";
+        o0Oo000O0oO[123] = "Rotations";
+        o0Oo000O0oO[124] = "Telly";
+        o0Oo000O0oO[125] = "Visual Back ";
+        o0Oo000O0oO[126] = "Off";
+        o0Oo000O0oO[127] = "Normal";
+        o0Oo000O0oO[128] = "Strict";
+        o0Oo000O0oO[129] = "Strict";
+        o0Oo000O0oO[130] = "Bypass";
+        o0Oo000O0oO[131] = " that range.";
+        o0Oo000O0oO[132] = "ter than 3";
+        o0Oo000O0oO[133] = "Normal";
+        o0Oo000O0oO[134] = "Snap";
+        o0Oo000O0oO[135] = "Strict";
+        o0Oo000O0oO[136] = "Strict";
+        o0Oo000O0oO[137] = "lling";
+        o0Oo000O0oO[138] = "Speed";
+        o0Oo000O0oO[139] = "Telly";
+        o0Oo000O0oO[140] = "Verus";
+        o0Oo000O0oO[141] = "Grim";
+        o0Oo000O0oO[142] = "Strict";
+        o0Oo000O0oO[143] = "Strict";
+        o0Oo000O0oO[144] = "s than or equal to 0";
+        o0Oo000O0oO[145] = "Grim";
+        o0Oo000O0oO[146] = "Off";
+        o0Oo000O0oO[147] = "Rotation Mode";
+        o0Oo000O0oO[148] = "Telly";
+        o0Oo000O0oO[149] = "Watchdog Jump";
+        o0Oo000O0oO[150] = "Telly";
+        o0Oo000O0oO[151] = "Grim";
+        o0Oo000O0oO[152] = "Strict";
+        o0Oo000O0oO[153] = "Watchdog";
+        o0Oo000O0oO[154] = "Keep-Y bypass";
+        o0Oo000O0oO[155] = "ing Jump";
+        o0Oo000O0oO[156] = "Safe Walk";
+        o0Oo000O0oO[157] = "Strict";
+        o0Oo000O0oO[158] = "Downwards (Press S";
+        o0Oo000O0oO[159] = "ump Delay";
+        o0Oo000O0oO[160] = "Yaw Offset";
+        o0Oo000O0oO[161] = "Same Y";
+        o0Oo000O0oO[162] = "Godbridge";
+        o0Oo000O0oO[163] = "Strict";
+        o0Oo000O0oO[164] = "Boost Only While Hold";
+        o0Oo000O0oO[165] = " Rots";
+    }
+
+    @Generated
+    public int kt() {
+        return this.acu;
+    }
+
+    public void c(boolean var1, boolean var2, boolean var3, boolean var4, boolean var5, boolean var6) {
+        if (var1) {
+            aEg.gameSettings.keyBindSneak.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindSneak.getKeyCode()));
+        }
+
+        if (var2) {
+            aEg.gameSettings.keyBindJump.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindJump.getKeyCode()));
+        }
+
+        if (var3) {
+            aEg.gameSettings.keyBindRight.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindRight.getKeyCode()));
+        }
+
+        if (var4) {
+            aEg.gameSettings.keyBindLeft.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindLeft.getKeyCode()));
+        }
+
+        if (var5) {
+            aEg.gameSettings.keyBindForward.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindForward.getKeyCode()));
+        }
+
+        if (var6) {
+            aEg.gameSettings.keyBindBack.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindBack.getKeyCode()));
+        }
+    }
+
+    public void h(Vector2f var1) {
+        this.agP = false;
+        this.agS = var1.x;
+        this.agT = var1.y;
+        this.agQ = var1.x;
+        this.agR = var1.y;
+    }
+
+    public Scaffold() {
+        this.afM = new ModeValue("Sprint", this)
+            .add(new SubMode("Normal"))
+            .add(new DisabledSprint("Disabled", this))
+            .add(new LegitSprint("Legit", this))
+            .add(new BypassSprint("Bypass", this))
+            .add(new VulcanSprint("Vulcan", this))
+            .add(new VerusSprint("Verus", this))
+            .add(new MatrixSprint("Matrix", this))
+            .add(new WatchdogPredictiSprint("Watchdog Predicti" + "on", this))
+            .add(new WatchdogJumpSprint("Watchdog Jump", this))
+            .add(new WatchdogSprint("Watchdog", this))
+            .setDefault("Normal");
+        this.afN = new ModeValue("Tower", this)
+            .add(new SubMode("Disabled"))
+            .add(new VulcanTower("Vulcan", this))
+            .add(new VanillaTower("Vanilla", this))
+            .add(new NormalTower("Normal", this))
+            .add(new AirJumpTower("Air Jump", this))
+            .add(new WatchdogTower("Watchdog", this))
+            .add(new MMCTower("MMC", this))
+            .add(new NCPTower("NCP", this))
+            .add(new MatrixTower("Matrix", this))
+            .add(new LegitTower("Legit", this))
+            .add(new VerusTower("Verus", this))
+            .add(new vz("Watchdog Prediction 1" + ".8", this))
+            .setDefault("Disabled");
+        this.afO = new ModeValue("Same Y", this).add(new SubMode("Off")).add(new SubMode("On")).add(new SubMode("Auto Jump")).setDefault("Off");
+        this.afP = new ModeValue("Downwards (Press S" + "neak)", this)
+            .add(new SubMode("Off"))
+            .add(new NormalDownwards("Normal", this))
+            .add(new WatchdogDownwards("Watchdog", this))
+            .add(new VerusDownwards("Verus", this))
+            .setDefault("Off");
+        this.afQ = new BoundsNumberValue("Rotation Speed", this, 5, 10, 0, 10, 1);
+        this.afR = new BoundsNumberValue("Place Delay", this, 0, 0, 0, 5, 1);
+        this.afS = new NumberValue("Timer", this, 1, 0.1, 10, 0.1);
+        this.afT = new NumberValue("Expand", this, 0, 0, 4, 1);
+        this.afU = new BooleanValue("Movement Correct" + "ion", this, false);
+        this.afV = new BooleanValue("Safe Walk", this, true);
+        this.afW = new BooleanValue("New Watchdog" + " Rots", this, false);
+        this.afX = new BooleanValue("Keep-Y bypass", this, true);
+        this.afY = new BooleanValue("Watchdog P" + "rediction", this, false);
+        this.afZ = new BooleanValue("Watchdog Telly", this, false);
+        this.aga = new BooleanValue("Visual Back " + "Rotations", this, true, () -> {
+            int k;
+            if (!this.afZ.wo()) {
+                k = 1;
+            } else {
+                byte b0 = -110;
+                int i = b0 ^ 51;
+                int j = i - -95;
+                k = j;
+            }
+
+            return k != 0;
+        });
+        this.agb = new BooleanValue("Block Diagonal " + "Ascend", this, true, () -> !this.afZ.wo());
+        this.agc = new BooleanValue("Don't force raycast on Watchdog T" + "elly", this, false, () -> !this.afZ.wo());
+        this.agd = new BooleanValue("Extend Block Reach on Watchdog " + "Telly", this, true, () -> !this.afZ.wo());
+        this.age = new BoundsNumberValue("Watchdog Telly J" + "ump Delay", this, 0, 0, 0, 5, 1, () -> (boolean)(!this.afZ.wo() ? true : (-8 ^ 41) - -47));
+        this.agf = new BooleanValue("Disable On Flag", this, true, () -> !this.afZ.wo());
+        this.agg = new BoundsNumberValue("Watchdog Telly Rotatio" + "n Speed", this, 35, 38, 0, 180, 1, () -> !this.afZ.wo());
+        this.agh = new BooleanValue("Rotation Block Boo" + "st", this, false, () -> {
+            int k;
+            if (!this.afZ.wo()) {
+                k = 1;
+            } else {
+                byte b0 = 38;
+                int i = b0 + 48;
+                int j = i - 86;
+                k = j;
+            }
+
+            return k != 0;
+        });
+        this.agi = new BoundsNumberValue("Rotation Block Rotation " + "Speed", this, 122, 128, 0, 180, 1, () -> !this.afZ.wo() || !this.agh.wo());
+        this.agj = new BooleanValue("Boost Only While Hold" + "ing Jump", this, false, () -> !this.afZ.wo() || !this.agh.wo());
+        this.agk = new BooleanValue("Sneak", this, false);
+        this.agl = new BoundsNumberValue("Start Sneaking", this, 0, 0, 0, 5, 1, () -> !this.agk.wo());
+        this.agm = new BoundsNumberValue("Stop Sneaking", this, 0, 0, 0, 5, 1, () -> !this.agk.wo() ? true : true ^ true);
+        this.agn = new BoundsNumberValue("Sneak every x " + "blocks", this, 1, 1, 1, 10, 1, () -> (boolean)(!this.agk.wo() ? true : 109 - 62 - 47));
+        this.ago = new NumberValue("Sneaking Speed", this, 0.2, 0.2, 1, 0.05, () -> (boolean)(!this.agk.wo() ? true : -90 - -90));
+        this.agp = new BooleanValue("Telly Only on " + "Right Click", this, false, () -> !this.afJ.wo().getName().equals((String)o0Oo000O0oO[35]));
+        this.agq = new BooleanValue("Render", this, true);
+        this.agr = new BooleanValue("Advanced", this, false);
+        this.ags = new ModeValue("Yaw Offset", this, () -> !this.agr.wo()).add(new SubMode("0")).add(new SubMode("45")).add(new SubMode("-45")).setDefault("0");
+        this.agt = new BooleanValue("Ignore Speed Eff" + "ect", this, false, () -> !this.agr.wo());
+        this.agu = new BooleanValue("Up Side Down", this, false, () -> !this.agr.wo());
+        this.agv = new BooleanValue("Bypass Raycast When Fa" + "lling", this, false, () -> !this.agr.wo());
+        this.agy = new aka(0.0, 0.0, 0.0);
+        this.agU = ahj::j;
+        this.agV = var1 -> {
+            this.e(Flight.class).isEnabled();
+            this.agy = new aka(0.0, 0.0, 0.0);
+            if (this.targetBlock != null && this.acr != null && this.Yx != null) {
+                aEg.thePlayer.cHT.aX();
+                if (this.afS.wo().floatValue() != 1.0F) {
+                    aEg.timer.dzD = this.afS.wo().floatValue();
+                }
+            }
+        };
+        this.agW = var1 -> {
+            float f = 0.0F;
+            long i = 0L;
+            long j = 0L;
+            Object object = null;
+            Object object1 = null;
+            long k = 1057830707455819691L;
+            long l = 328727389015597311L;
+            aib aib = this.acr != null ? this.acr : this.agw;
+            Vector2f vector2f = RotationComponent.fn != null
+                ? new Vector2f(RotationComponent.fn)
+                : (RotationComponent.fk != null ? new Vector2f(RotationComponent.fk) : new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch));
+            if (this.afZ.wo() && this.aga.wo() && this.km().equals("Telly")) {
+                if (this.Yx != null && aib != null) {
+                    long i1 = k
+                        ^ (
+                                (long)(
+                                            !MoveUtil.enoughMovementForSprinting()
+                                                    || !aEg.thePlayer.onGround
+                                                    || !aEg.gameSettings.keyBindJump.isKeyDown()
+                                                        && aEg.thePlayer.cqL > 1
+                                                        && this.agK > 3
+                                                        && (this.agO <= 0 || aEg.thePlayer.cqL != this.agO)
+                                                ? 0
+                                                : 1
+                                        )
+                                        << 32
+                                    ^ k
+                            )
+                            & -1L << 32;
+                    Vector2f vector2f1 = this.a(
+                        this.Yx,
+                        aib,
+                        !aef.a(vector2f, aib.va(), this.Yx, this.kl()) && this.kl(),
+                        this.agP ? this.agQ : MathHelper.wrapAngleTo180_float(vector2f.x - 135.0F),
+                        this.agP ? this.agR : 84.0F,
+                        45.0F
+                    );
+                    if (vector2f1 == null) {
+                        vector2f1 = aiu.a(new aka(this.Yx.getX(), this.Yx.getY(), this.Yx.getZ()), aib.va());
+                    }
+
+                    Vector2f vector2f2 = new Vector2f(vector2f1.x, MathHelper.clamp_float(vector2f1.y, 80.0F, 89.9F));
+                    long j1 = l
+                        ^ ((long)(!(Math.abs(MathHelper.wrapAngleTo180_float(vector2f.x - vector2f2.x)) > 22.5F) && (int)(i1 >>> 32) == 0 ? 0 : 1) << 32 ^ l)
+                            & -1L << 32;
+                    Vector2f vector2f3 = (int)(j1 >>> 32) != 0 ? vector2f2 : vector2f;
+                    if ((int)(j1 >>> 32) == 0 && !this.agP) {
+                        this.h(vector2f);
+                    } else {
+                        if (!this.agP) {
+                            this.h(vector2f);
+                        }
+
+                        long k1 = j1 ^ ((this.agN && this.agh.wo() && !aEg.thePlayer.onGround ? 1 : 0) ^ j1) & -1L >>> 32;
+                        if (this.agj.wo()) {
+                            k1 ^= (((int)k1 != 0 && aEg.gameSettings.keyBindJump.isKeyDown() ? 1 : 0) ^ k1) & -1L >>> 32;
+                        }
+
+                        float f1 = ((int)k1 != 0 ? this.agi.wv().floatValue() : this.agg.wv().floatValue()) * ((int)k1 != 0 ? 0.42F : 0.3F);
+                        this.agS = this.agQ;
+                        this.agT = this.agR;
+                        this.agP = true;
+                        this.agQ = this.b(this.agQ, vector2f3.x, Math.max(1.5F, f1));
+                        this.agR = this.b(this.agR, vector2f3.y, Math.max(1.0F, f1 * 0.65F));
+                        if ((int)(k1 >>> 32) == 0
+                            && Math.abs(MathHelper.wrapAngleTo180_float(this.agQ - vector2f.x)) <= 2.0F
+                            && Math.abs(this.agR - vector2f.y) <= 2.0F) {
+                            this.h(vector2f);
+                        }
+                    }
+                } else {
+                    this.h(vector2f);
+                }
+
+                if (this.agP && aEg.gameSettings.thirdPersonView != 0) {
+                    aEg.thePlayer.prevRotationYawHead = this.agS;
+                    aEg.thePlayer.rotationYawHead = this.agQ;
+                    aEg.thePlayer.prevRenderYawOffset = this.agS;
+                    aEg.thePlayer.renderYawOffset = this.agQ;
+                    aEg.thePlayer.bjJ = this.agT;
+                    aEg.thePlayer.po = this.agR;
+                }
+            } else {
+                this.h(vector2f);
+            }
+        };
+        this.agX = var0 -> {
+            double d0;
+            int i = (d0 = var0.getPosY() - (aEg.thePlayer.posY - 2.0)) == 0.0 ? 0 : (d0 < 0.0 ? -1 : 1);
+        };
+        this.agY = var1 -> {
+            if (this.agp.wo() && !this.afL.wo().getName().equals("Strict")) {
+                var1.setCancelled();
+            }
+        };
+        this.agZ = var1 -> {
+            int i = 1804046949;
+            int j = 298231907;
+            int k = 1561466657;
+            long l = -546999886189058306L;
+            int i1 = 1905985305;
+            int j1 = 705811684;
+            if (this.afK.wo().getName().equals("Grim") && aEg.thePlayer.ticksExisted % 20 == 0) {
+                if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_17)
+                    && !ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_20_5)) {
+                } else {
+                }
+
+                afi.b("OnTick rotation only works correctly on versions 1.17-1.20.6. Please switch to a version in" + " that range.");
+            }
+
+            this.agG = 0;
+
+            while (this.agG <= this.agF) {
+                boolean flag5 = aEg.thePlayer.motionY < -0.1 && aEg.thePlayer.tR > 3;
+                if (this.L(2)
+                    && this.L(3)
+                    && !this.e(Speed.class).isEnabled()
+                    && !aEg.gameSettings.keyBindSneak.isKeyDown()
+                    && !Objects.equals(a.aKB().bX(), "")) {
+                    aEg.thePlayer.crd = this.afV.wo();
+                }
+
+                this.c(false, false, true, true, false, false);
+                if (this.agu.wo()) {
+                    this.agy.setY(3.0);
+                }
+
+                if (this.afT.wo().intValue() != 0 && MoveUtil.isMoving()) {
+                    double d0 = MoveUtil.direction(
+                        aEg.thePlayer.pl,
+                        aEg.gameSettings.keyBindForward.isKeyDown() ? 1.0 : (aEg.gameSettings.keyBindBack.isKeyDown() ? -1.0 : 0.0),
+                        aEg.gameSettings.keyBindRight.isKeyDown() ? -1.0 : (aEg.gameSettings.keyBindLeft.isKeyDown() ? 1.0 : 0.0)
+                    );
+
+                    for (double d1 = 0.0; d1 <= this.afT.wo().intValue(); d1 += 1.0) {
+                        if (aih.o(d1, this.agy.getY() - 0.5) instanceof BlockAir) {
+                            this.agy = this.agy.e(new aka((int)(-Math.sin(d0) * (d1 + 1.0)), this.agy.getY(), (int)(Math.cos(d0) * (d1 + 1.0))));
+                            break;
+                        }
+                    }
+                }
+
+                float f = aEg.thePlayer.pl;
+                float f1 = MathHelper.wrapAngleTo180_float(f);
+                double d2 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
+                float f11;
+                int i2 = (f11 = Math.abs(f1 - this.acs) - 100.0F) == 0.0F ? 0 : (f11 < 0.0F ? -1 : 1);
+                if (!(Math.abs(f1 % 90.0F) <= 10.0F) && !(Math.abs(f1 % 90.0F) >= 80.0F)) {
+                } else {
+                }
+
+                MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
+                if (this.afM.wo().getName().equals("Watchdog Jump") && (Math.abs(d2 - this.acs) > 85.0 || aEg.thePlayer.cqL < 2)) {
+                    float f2 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+                    if (!(Math.abs(f2 % 90.0F) <= 10.0F) && !(Math.abs(f2 % 90.0F) >= 80.0F)) {
+                    } else {
+                    }
+
+                    if (this.e(Scaffold.class).afO.wo().getName().equals("On") && aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
+                        ;
+                    }
+
+                    this.e(Speed.class).isEnabled();
+                    if (aEg.thePlayer.cqL > 1) {
+                        if (aEg.thePlayer.Zl < 43 && !aEg.gameSettings.keyBindJump.isKeyDown() && !aEg.gameSettings.keyBindJump.isPressed()) {
+                            MoveUtil.stop();
+                        }
+
+                        RotationComponent.d(false);
+                        if (aEg.thePlayer.cqL <= 10) {
+                            RotationComponent.setRotations(
+                                new Vector2f((float)(aEg.thePlayer.pl - 99.99999999999999 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)),
+                                10.0,
+                                MovementFix.OFF
+                            );
+                        } else {
+                            float f3 = aEg.thePlayer.pl;
+                            float f4 = MathHelper.wrapAngleTo180_float(f3);
+                            boolean flag6 = Math.abs(f4 % 90.0F) <= 10.0F || Math.abs(f4 % 90.0F) >= 80.0F;
+                            aEg.thePlayer.motionX *= 0.9895;
+                            aEg.thePlayer.motionZ *= 0.9895;
+                            float f5 = 140.0F;
+                            if (aEg.gameSettings.keyBindRight.isKeyDown()) {
+                                aEg.gameSettings.keyBindForward.isKeyDown();
+                            }
+
+                            if (aEg.gameSettings.keyBindRight.isKeyDown() && aEg.gameSettings.keyBindForward.isKeyDown()) {
+                                RotationComponent.d(false);
+                                RotationComponent.setRotations(
+                                    new Vector2f((float)(f3 - 69.99999999999999 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)),
+                                    2.0,
+                                    MovementFix.OFF
+                                );
+                            }
+
+                            if (aEg.gameSettings.keyBindLeft.isKeyDown() && aEg.gameSettings.keyBindForward.isKeyDown() && !flag6) {
+                                RotationComponent.d(false);
+                                RotationComponent.setRotations(
+                                    new Vector2f((float)(f3 - 150.0 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)), 2.0, MovementFix.OFF
+                                );
+                            } else if (aEg.gameSettings.keyBindLeft.isKeyDown() && aEg.gameSettings.keyBindForward.isKeyDown() && flag6) {
+                                RotationComponent.d(false);
+                                RotationComponent.setRotations(
+                                    new Vector2f((float)(f3 - 160.0 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)), 2.0, MovementFix.OFF
+                                );
+                            }
+
+                            if (!aEg.gameSettings.keyBindRight.isKeyDown() || !aEg.gameSettings.keyBindLeft.isKeyDown()) {
+                                RotationComponent.setRotations(
+                                    new Vector2f((float)(f3 - (f5 - 1.0E-14) + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)),
+                                    2.0,
+                                    MovementFix.OFF
+                                );
+                            }
+
+                            if (aEg.gameSettings.keyBindRight.isKeyDown() && !aEg.gameSettings.keyBindForward.isKeyDown()) {
+                                RotationComponent.d(false);
+                                RotationComponent.setRotations(
+                                    new Vector2f((float)(f3 - 140.0 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)), 2.0, MovementFix.OFF
+                                );
+                            }
+
+                            if (aEg.gameSettings.keyBindLeft.isKeyDown() && !aEg.gameSettings.keyBindForward.isKeyDown()) {
+                                RotationComponent.d(false);
+                                RotationComponent.setRotations(
+                                    new Vector2f((float)(f3 + 9.99999999999999 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)),
+                                    2.0,
+                                    MovementFix.OFF
+                                );
+                            }
+
+                            if (aEg.gameSettings.keyBindLeft.isKeyDown() && aEg.gameSettings.keyBindBack.isKeyDown()) {
+                                if (this.e(Speed.class).isEnabled()) {
+                                    aEg.thePlayer.motionX *= 0.9895;
+                                    aEg.thePlayer.motionZ *= 0.9895;
+                                }
+
+                                RotationComponent.d(false);
+                                RotationComponent.setRotations(
+                                    new Vector2f((float)(f3 + 190.0 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)), 2.0, MovementFix.OFF
+                                );
+                            }
+
+                            if (aEg.gameSettings.keyBindRight.isKeyDown() && aEg.gameSettings.keyBindForward.isKeyDown() && !flag6) {
+                                RotationComponent.d(false);
+                                RotationComponent.setRotations(
+                                    new Vector2f((float)(f3 + 140.0 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)), 2.0, MovementFix.OFF
+                                );
+                            }
+                        }
+                    } else if (MoveUtil.isMoving() || MoveUtil.speed() > 0.0) {
+                        float f7 = aEg.thePlayer.pl;
+                        float f9 = MathHelper.wrapAngleTo180_float(f7);
+                        RotationComponent.d(false);
+                        boolean flag9 = Math.abs(f9 % 90.0F) <= 10.0F || Math.abs(f9 % 90.0F) >= 80.0F;
+                        float f10;
+                        if (aEg.thePlayer.ticksExisted % 2 == 0 && this.e(Speed.class).isEnabled() && this.afX.wo()) {
+                            f10 = 147.0F;
+                        } else if (this.e(Speed.class).isEnabled() && this.afX.wo()) {
+                            f10 = 117.0F;
+                        } else {
+                            f10 = 140.0F;
+                        }
+
+                        if (aEg.gameSettings.keyBindRight.isKeyDown() && aEg.gameSettings.keyBindForward.isKeyDown() && flag9) {
+                            RotationComponent.d(false);
+                            RotationComponent.setRotations(
+                                new Vector2f((float)(f7 - 99.99999999999999 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)),
+                                2.0,
+                                MovementFix.OFF
+                            );
+                        } else if (aEg.gameSettings.keyBindRight.isKeyDown() && aEg.gameSettings.keyBindForward.isKeyDown()) {
+                            RotationComponent.d(false);
+                            RotationComponent.setRotations(
+                                new Vector2f((float)(f7 - 69.99999999999999 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)),
+                                2.0,
+                                MovementFix.OFF
+                            );
+                        }
+
+                        if (aEg.gameSettings.keyBindLeft.isKeyDown() && aEg.gameSettings.keyBindForward.isKeyDown() && !flag9) {
+                            RotationComponent.d(false);
+                            RotationComponent.setRotations(
+                                new Vector2f((float)(f7 - 150.0 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)), 2.0, MovementFix.OFF
+                            );
+                        } else if (aEg.gameSettings.keyBindLeft.isKeyDown() && aEg.gameSettings.keyBindForward.isKeyDown()) {
+                            RotationComponent.d(false);
+                            RotationComponent.setRotations(
+                                new Vector2f((float)(f7 - 160.0 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)), 2.0, MovementFix.OFF
+                            );
+                        }
+
+                        if (!aEg.gameSettings.keyBindRight.isKeyDown() || !aEg.gameSettings.keyBindLeft.isKeyDown()) {
+                            RotationComponent.setRotations(
+                                new Vector2f((float)(f7 - (f10 - 1.0E-14) + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)),
+                                2.0,
+                                MovementFix.OFF
+                            );
+                        }
+
+                        if (aEg.gameSettings.keyBindRight.isKeyDown() && !aEg.gameSettings.keyBindForward.isKeyDown()) {
+                            RotationComponent.d(false);
+                            RotationComponent.setRotations(
+                                new Vector2f((float)(f7 - 140.0 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)), 2.0, MovementFix.OFF
+                            );
+                        }
+
+                        if (aEg.gameSettings.keyBindLeft.isKeyDown() && !aEg.gameSettings.keyBindForward.isKeyDown()) {
+                            RotationComponent.d(false);
+                            RotationComponent.setRotations(
+                                new Vector2f((float)(f7 + 9.99999999999999 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)),
+                                2.0,
+                                MovementFix.OFF
+                            );
+                        }
+
+                        if (aEg.gameSettings.keyBindLeft.isKeyDown() && aEg.gameSettings.keyBindBack.isKeyDown()) {
+                            RotationComponent.d(false);
+                            RotationComponent.setRotations(
+                                new Vector2f((float)(f7 + 190.0 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)), 2.0, MovementFix.OFF
+                            );
+                        }
+
+                        if (aEg.gameSettings.keyBindRight.isKeyDown() && aEg.gameSettings.keyBindForward.isKeyDown() && !flag9) {
+                            RotationComponent.d(false);
+                            RotationComponent.setRotations(
+                                new Vector2f((float)(f7 + 140.0 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)), 2.0, MovementFix.OFF
+                            );
+                        }
+                    }
+                }
+
+                if (this.afM.wo().getName().equals("Watchdog Jump") && !MoveUtil.isMoving() && aEg.gameSettings.keyBindJump.isKeyDown()) {
+                    RotationComponent.d(false);
+                    RotationComponent.setRotations(
+                        new Vector2f((float)(aEg.thePlayer.pl - 150.0 + (Math.random() - 0.5) * 3.0), 85.0F + (float)(Math.random() * 1.0)),
+                        10.0,
+                        MovementFix.OFF
+                    );
+                }
+
+                if (this.afM.wo().getName().equals("Watchdog Jump")
+                    && aEg.thePlayer.isPotionActive(Potion.moveSpeed)
+                    && aEg.gameSettings.keyBindSneak.isKeyDown()) {
+                    aEg.thePlayer.motionX *= 0.75;
+                    aEg.thePlayer.motionZ *= 0.75;
+                }
+
+                long k1 = l
+                    ^ (
+                            (
+                                    (!this.afO.wo().getName().equals("Off") || this.e(Speed.class).isEnabled())
+                                            && !aEg.gameSettings.keyBindJump.isKeyDown()
+                                            && MoveUtil.isMoving()
+                                        ? 1
+                                        : 0
+                                )
+                                ^ l
+                        )
+                        & -1L >>> 32;
+                if (!this.afM.wo().getName().equals("Watchdog Predicti" + "on")
+                    || Sprint.Eo
+                    || !aEg.thePlayer.onGround
+                    || aEg.thePlayer.cqL < 3
+                    || Sprint.Ek == 12) {
+                    SlotComponent slotcomponent = this.d(SlotComponent.class);
+                    SlotComponent.b(aik.vx(), this.agq.wo());
+                }
+
+                if (aEg.gameSettings.keyBindJump.isKeyDown() && !MoveUtil.isMoving() && !this.e(Speed.class).isEnabled()) {
+                    if (!this.L(1) || (int)k1 != 0 && (!this.L(2) || !this.L(3))) {
+                        this.acu = 0;
+                    } else {
+                        this.acu++;
+                    }
+                } else {
+                    boolean flag7;
+                    if ((int)k1 != 0) {
+                        flag7 = this.kq();
+                    } else {
+                        flag7 = this.K(1) && ((int)k1 == 0 || this.kq());
+                    }
+
+                    if (flag7) {
+                        this.acu++;
+                    } else {
+                        this.acu = 0;
+                    }
+                }
+
+                this.agJ = aEg.thePlayer.tR >= 2 && !(Math.random() > 0.3) ? 1 : 0;
+                if (!this.afY.wo()) {
+                    int l1 = flag5 ? 0 : (int)ahg.l(this.afR.wo().intValue(), this.afR.wA().intValue());
+                    this.agH = !bb.a(false, true, false, false, true) && this.acu > l1;
+                } else {
+                    this.agH = !bb.a(false, true, false, false, true) && this.acu > this.agJ;
+                }
+
+                bb.a(false, true, false, false, true);
+                float f6 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+                boolean flag8 = Math.abs(f6 % 90.0F) <= 10.0F || Math.abs(f6 % 90.0F) >= 80.0F;
+                WatchdogDownwards.bj++;
+                if (aEg.thePlayer.posY % 1.0 != 0.0) {
+                    WatchdogDownwards.bj = 0;
+                }
+
+                if (this.agG == 0) {
+                    this.kk();
+                }
+
+                if (aEg.gameSettings.keyBindSneak.isKeyDown()) {
+                    this.agF = 0;
+                }
+
+                if (aEg.gameSettings.keyBindSneak.isKeyDown()
+                    && WatchdogDownwards.bj >= 6
+                    && flag8
+                    && this.afP.wo().getName().equals("Watchdog")
+                    && (!aEg.gameSettings.keyBindSneak.isPressed() || aEg.thePlayer.ticksExisted % 3 != 1)) {
+                    this.agF = 0;
+                    this.agy = new aka(0.0, 0.0, 0.0);
+                    aEg.thePlayer.crd = false;
+                    this.agy.setY(-1.0);
+                }
+
+                this.targetBlock = aih.a(
+                    this.agy.getX(), this.agy.getY(), this.agy.getZ(), (int)k1 != 0 ? (int)Math.floor(this.Me) + (int)this.agy.getY() : null
+                );
+                if (this.targetBlock == null) {
+                    return;
+                }
+
+                aib aib = aih.a(this.targetBlock, this.agy.getY() < 0.0);
+                l = k1 ^ (0L ^ k1) & -1L << 32;
+                if (flag5 && aib != null && aib.va() != EnumFacing.UP) {
+                    aib aibx = aih.a(this.targetBlock, false);
+                    if (aibx != null && aibx.va() == EnumFacing.UP) {
+                        aib = aibx;
+                    }
+                }
+
+                if (aib != null) {
+                    this.acr = aib;
+                    this.agw = aib;
+                } else {
+                    aib aibx = aih.a(this.targetBlock, !(this.agy.getY() < 0.0));
+                    if (aibx != null) {
+                        this.acr = aibx;
+                        this.agw = aibx;
+                    } else {
+                        if (this.agw == null) {
+                            this.acr = null;
+                            return;
+                        }
+
+                        this.acr = this.agw;
+                        l ^= (4294967296L ^ l) & -1L << 32;
+                    }
+                }
+
+                aib aibx = this.acr != null ? this.acr : this.agw;
+                aEg.gameSettings.keyBindSneak.isKeyDown();
+                if (aibx != null && aibx.va().getAxis().isHorizontal()) {
+                } else {
+                }
+
+                BlockPos blockpos = new BlockPos(this.targetBlock.xCoord, this.targetBlock.yCoord, this.targetBlock.zCoord);
+                aib aibxx = this.acr != null ? this.acr : this.agw;
+                if (aibxx == null) {
+                    return;
+                }
+
+                this.Yx = blockpos.add(aibxx.vb().xCoord, aibxx.vb().yCoord, aibxx.vb().zCoord);
+                if (this.Yx != null && aibxx.va() != null) {
+                    if (!this.afM.wo().getName().equals("Watchdog Jump") || !this.afW.wo() || !MoveUtil.isMoving() && aEg.gameSettings.keyBindJump.isKeyDown()) {
+                        this.jF();
+                    } else {
+                        BlockPos blockpos1 = this.Yx;
+                        float f8 = 12.0F;
+                        this.a(blockpos1, f8);
+                    }
+
+                    if (this.targetBlock != null && this.acr != null && this.Yx != null) {
+                        SlotComponent slotcomponent1 = this.d(SlotComponent.class);
+                        if (SlotComponent.getItemStack() != null) {
+                            SlotComponent slotcomponent2 = this.d(SlotComponent.class);
+                            if (SlotComponent.getItemStack().getItem() instanceof ItemBlock) {
+                                SlotComponent slotcomponent3 = this.d(SlotComponent.class);
+                                ItemStack itemstack = SlotComponent.getItemStack();
+                                if (itemstack.cWo <= 0) {
+                                    afi.c("RealStackSize is les" + "s than or equal to 0");
+                                }
+
+                                if (itemstack.getItem() instanceof ItemBlock && itemstack.cWo > 0 && this.acr != null) {
+                                    if (!aef.a(this.acr.va(), this.Yx, this.afL.wo().getName().equals("Strict"))
+                                        && !this.afL.wo().getName().equals("Off")
+                                        && ((int)(l >>> 32) == 0 || (int)l == 0 || !aEg.thePlayer.onGround)
+                                        && (!flag5 || !this.agv.wo())
+                                        && (!this.afK.wo().getName().equals("Grim") || !aef.a(new Vector2f(this.acs, this.act), this.acr.va(), this.Yx, false))
+                                        )
+                                     {
+                                    } else {
+                                    }
+
+                                    if (Math.random() > 0.3
+                                        && aEg.objectMouseOver != null
+                                        && aEg.objectMouseOver.typeOfHit != null
+                                        && Optional.ofNullable(aEg.objectMouseOver.getBlockPos()).map(var1x -> var1x.equals(this.Yx)).orElse(false)
+                                        && this.Yx != null
+                                        && aEg.objectMouseOver.sideHit == EnumFacing.UP
+                                        && this.afL.wo().getName().equals("Strict")
+                                        && !(aih.p(0.0, -1.0, 0.0) instanceof BlockAir)) {
+                                        aEg.Az();
+                                    }
+                                }
+
+                                if (aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.posY % 1.0 > 0.5) {
+                                    this.Me = Math.floor(aEg.thePlayer.posY);
+                                }
+
+                                if ((aEg.thePlayer.posY < this.Me || aEg.thePlayer.onGround) && !MoveUtil.isMoving()) {
+                                    this.Me = Math.floor(aEg.thePlayer.posY);
+                                }
+
+                                if (aEg.thePlayer.cqL > 2 && Math.floor(aEg.thePlayer.posY) != this.Me && !(aih.p(0.0, -1.0, 0.0) instanceof BlockAir)) {
+                                    this.Me = Math.floor(aEg.thePlayer.posY);
+                                }
+
+                                this.agG++;
+                                continue;
+                            }
+                        }
+
+                        return;
+                    }
+
+                    return;
+                }
+
+                return;
+            }
+        };
+        this.aha = var1 -> {
+            float f = 0.0F;
+            long i = 0L;
+            long j = -4196515025755699599L;
+            if (!this.agk.wo() && !this.afM.wo().getName().equals("Matrix")) {
+                var1.setSneak(false);
+            }
+
+            if (this.km().equals("Telly")) {
+                float f1 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+                long k = j ^ ((long)(!(Math.abs(f1 % 90.0F) <= 10.0F) && !(Math.abs(f1 % 90.0F) >= 80.0F) ? 0 : 1) << 32 ^ j) & -1L << 32;
+                if (aEg.thePlayer.onGround && MoveUtil.enoughMovementForSprinting()) {
+                    if (this.afZ.wo()) {
+                        if (aEg.thePlayer.cqL >= this.agO) {
+                            var1.setJump(true);
+                        }
+                    } else {
+                        var1.setJump(true);
+                    }
+                }
+
+                if (aEg.thePlayer.tR == 2 || aEg.thePlayer.tR == 3 || aEg.thePlayer.tR == 4 || aEg.thePlayer.tR == 5) {
+                    aEg.gameSettings.keyBindJump.isKeyDown();
+                }
+            }
+        };
+        this.ahb = var1 -> {
+            double d0 = 0.0;
+            this.jp = var1.getForward();
+            this.jq = var1.getStrafe();
+            if (this.agD-- > 0) {
+                var1.setForward(0.0F);
+                var1.setStrafe(0.0F);
+            }
+
+            if (this.agk.wo()) {
+                double d1 = this.ago.wo().doubleValue();
+                if (!(d1 <= 0.2)) {
+                    var1.setSneakSlowDownMultiplier(d1);
+                }
+            }
+        };
+        this.ahc = var1 -> {
+            this.kp();
+            if (!Objects.equals(this.ags.wo().getName(), "0") && !this.afU.wo() && !this.afM.wo().getName().equals("Watchdog Jump")) {
+                MoveUtil.useDiagonalSpeed();
+            }
+
+            if (this.afO.wo().getName().equals("Auto Jump") && aEg.thePlayer.onGround && MoveUtil.isMoving() && aEg.thePlayer.posY == this.Me) {
+                aEg.thePlayer.jump();
+            }
+        };
+        this.ahd = var1 -> {
+            Object object = null;
+            Object object1 = null;
+            Packet packet = var1.dq();
+            if (packet instanceof C08PacketPlayerBlockPlacement) {
+                C08PacketPlayerBlockPlacement c08packetplayerblockplacement = (C08PacketPlayerBlockPlacement)packet;
+                if (!c08packetplayerblockplacement.getPosition().h(new aka(-1.0, -1.0, -1.0))) {
+                    this.agC--;
+                }
+
+                if (this.ko() && this.a(c08packetplayerblockplacement)) {
+                    this.agL--;
+                }
+            }
+        };
+        this.ahe = var1 -> {
+            long i = 0L;
+            float f = 0.0F;
+            long j = -1874804463676087248L;
+            if (!aEg.thePlayer.onGround) {
+                float f1 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+                long k = j ^ ((long)(!(Math.abs(f1 % 90.0F) <= 10.0F) && !(Math.abs(f1 % 90.0F) >= 80.0F) ? 0 : 1) << 32 ^ j) & -1L << 32;
+                if ((int)(k >>> 32) != 0 && aEg.gameSettings.keyBindJump.isKeyDown() && this.afZ.wo() && !aEg.thePlayer.onGround) {
+                    aEg.thePlayer.setSprinting(false);
+                }
+            }
+        };
+    }
+
+    public void kk() {
+        long k = -6865874829549267538L;
+        long l = -6745351090343705613L;
+        if (!this.afP.wo().getName().equals("Watchdog") && this.acu == 0) {
+            aEg.gameSettings.keyBindSneak.setPressed(false);
+        }
+
+        this.agB--;
+        if (this.agk.wo() || this.agE > 0) {
+            long i1 = k ^ ((long)this.agl.wv().intValue() << 32 ^ k) & -1L << 32;
+            long j1 = i1 ^ (this.afR.wv().intValue() ^ i1) & -1L >>> 32;
+            long k1 = l ^ ((long)this.agm.wv().intValue() << 32 ^ l) & -1L << 32;
+            if (this.agE > 0) {
+                this.agE--;
+                this.agB = 0;
+                this.agC = 0;
+            }
+
+            if (this.agB >= 0) {
+                aEg.gameSettings.keyBindSneak.setPressed(true);
+            } else {
+                if (this.acu > 0) {
+                    this.agB = (int)((int)(k1 >>> 32));
+                }
+
+                if ((
+                        this.acu > 0
+                            || aih.p(aEg.thePlayer.motionX * (int)(j1 >>> 32), -0.0784000015258789, aEg.thePlayer.motionZ * (int)(j1 >>> 32)) instanceof BlockAir
+                    )
+                    && this.agC <= 0) {
+                    this.agB = (int)((int)(j1 >>> 32) + (int)j1 + (int)(k1 >>> 32));
+                    this.agC = this.agn.wv().intValue();
+                }
+            }
+        }
+    }
+
+    public Vector2f a(BlockPos var1, aib var2, boolean var3, float var4, float var5, float var6) {
+        long j = -3015943412123451197L;
+        if (var2 == null) {
+            return new Vector2f(var4, var5);
+        }
+
+        EnumFacing enumfacing = var2.va();
+        float f13 = aEg.thePlayer.pl;
+        float f17 = (float)Math.toDegrees(MoveUtil.direction());
+        ArrayList arraylist = new ArrayList();
+        arraylist.add(this.l(f13 + var6));
+        arraylist.add(this.l(f13 + 45.0F + var6));
+        arraylist.add(this.l(f13 - 45.0F + var6));
+        arraylist.add(this.l(f17 + var6));
+        ArrayList arraylist1 = new ArrayList();
+
+        for (float f18 : (Iterable<Float>)arraylist) {
+            j ^= (0L ^ j) & -1L << 32;
+            Iterator iterator1 = arraylist1.iterator();
+
+            while (iterator1.hasNext()) {
+                Float f19 = (Float)iterator1.next();
+                if (Math.abs(MathHelper.wrapAngleTo180_float(f18 - f19)) < 0.1F) {
+                    j ^= (4294967296L ^ j) & -1L << 32;
+                    break;
+                }
+            }
+
+            if ((int)(j >>> 32) == 0) {
+                arraylist1.add(f18);
+            }
+        }
+
+        Vector2f vector2f1 = null;
+        float f16 = Float.MAX_VALUE;
+        Iterator iterator = arraylist1.iterator();
+
+        while (iterator.hasNext()) {
+            Float f8 = (Float)iterator.next();
+            Vector2f vector2f = this.a(var1, enumfacing, f8, var3);
+            if (vector2f != null) {
+                float f9 = Math.abs(MathHelper.wrapAngleTo180_float(vector2f.x - var4));
+                float f10 = Math.abs(vector2f.y - var5);
+                float f11 = f9 * f9 + f10 * f10;
+                float f12 = Math.abs(MathHelper.wrapAngleTo180_float(vector2f.x - this.l(vector2f.x)));
+                float f14 = Math.abs(MathHelper.wrapAngleTo180_float(vector2f.x - f13));
+                float f15 = f11 + (f12 * 0.001F + f14 * 5.0E-4F);
+                if (f15 < f16) {
+                    f16 = f15;
+                    vector2f1 = vector2f;
+                }
+            }
+        }
+
+        return vector2f1 != null ? vector2f1 : aiu.a(new aka(var1.getX(), var1.getY(), var1.getZ()), enumfacing);
+    }
+
+    @Generated
+    public void M(int var1) {
+        this.acu = var1;
+    }
+
+    public void kj() {
+        this.c(true, true, true, true, true, true);
+    }
+
+    public void jF() {
+        long l = 0L;
+        double d = 0.0;
+        long k2 = -2595341550256897851L;
+        long l2 = -5203543206636347842L;
+        long i3 = -4607525302948312327L;
+        long j3 = -8813353592048539873L;
+        long k3 = 5733332171355984815L;
+        long l3 = -4841482604562180362L;
+        long i4 = 734599389200815415L;
+        long j4 = -9165617281282177393L;
+        long k4 = -9038150233639680016L;
+        long l4 = 3552533322399746160L;
+        long i5 = i4 ^ (0L ^ i4) & -1L << 32;
+        long j5 = i5 ^ (Integer.parseInt(String.valueOf(this.ags.wo().getName())) ^ i5) & -1L >>> 32;
+        double d3 = this.afQ.wo().doubleValue();
+        double d4 = this.afQ.wA().doubleValue();
+        float f6 = (float)ahg.l(d3, d4);
+        MovementFix movementfix = this.afU.wo() ? MovementFix.NORMAL : MovementFix.OFF;
+        aib aib = this.acr != null ? this.acr : this.agw;
+        if (aib != null) {
+            String s = this.km();
+            long k5 = k4 ^ (-4294967296L ^ k4) & -1L << 32;
+            switch (s.hashCode()) {
+                case -2126575899:
+                    if (s.equals("Godbridge")) {
+                        k5 ^= (21474836480L ^ k5) & -1L << 32;
+                    }
+                    break;
+                case -1955878649:
+                    if (s.equals("Normal")) {
+                        k5 ^= (0L ^ k5) & -1L << 32;
+                    }
+                    break;
+                case 2581482:
+                    if (s.equals("Snap")) {
+                        k5 ^= (8589934592L ^ k5) & -1L << 32;
+                    }
+                    break;
+                case 66715108:
+                    if (s.equals("Eagle")) {
+                        k5 ^= (12884901888L ^ k5) & -1L << 32;
+                    }
+                    break;
+                case 80691912:
+                    if (s.equals("Telly")) {
+                        k5 ^= (17179869184L ^ k5) & -1L << 32;
+                    }
+                    break;
+                case 145919859:
+                    if (s.equals("Breesily")) {
+                        k5 ^= (4294967296L ^ k5) & -1L << 32;
+                    }
+            }
+
+            switch ((int)(k5 >>> 32)) {
+                case 0:
+                    aEg.entityRenderer.getMouseOver(1.0F);
+                    if (this.agH
+                        && !aEg.gameSettings.keyBindPickBlock.isKeyDown()
+                        && aib != null
+                        && (aEg.objectMouseOver.sideHit != aib.va() || !aEg.objectMouseOver.getBlockPos().equals(this.Yx))) {
+                        this.D((int)j5);
+                    }
+                    break;
+                case 1:
+                    if (this.agH && aib != null) {
+                        if (aib.va() == EnumFacing.UP) {
+                            this.act = 90.0F;
+                        } else {
+                            Double d5 = (double)((float)(Math.toDegrees(Math.atan2(aib.vb().zCoord, aib.vb().xCoord)) % 360.0) - 90.0F);
+                            Double d6 = 80.0;
+                            this.acs = (float)d5.doubleValue() + this.agz;
+                            this.act = (float)d6.doubleValue() + this.agA;
+                        }
+                    } else if (Math.random() > 0.99 || this.act % 90.0F == 0.0F) {
+                        this.agz = (float)(Math.random() - 0.5);
+                        this.agA = (float)(Math.random() - 0.5);
+                    }
+
+                    if (aEg.gameSettings.keyBindForward.isKeyDown() && !aEg.gameSettings.keyBindJump.isKeyDown()) {
+                        Double d7 = 0.0;
+                        Double d8 = 0.0;
+                        switch (ub.ahg[aEg.thePlayer.getHorizontalFacing().ordinal()]) {
+                            case 1:
+                                d7 = aEg.thePlayer.posX - Math.floor(aEg.thePlayer.posX);
+                                d8 = aEg.thePlayer.motionZ;
+                                break;
+                            case 2:
+                                d7 = aEg.thePlayer.posZ - Math.floor(aEg.thePlayer.posZ);
+                                d8 = aEg.thePlayer.motionX;
+                                break;
+                            case 3:
+                                d7 = 1.0 - (aEg.thePlayer.posX - Math.floor(aEg.thePlayer.posX));
+                                d8 = aEg.thePlayer.motionZ;
+                                break;
+                            case 4:
+                                d7 = 1.0 - (aEg.thePlayer.posZ - Math.floor(aEg.thePlayer.posZ));
+                                d8 = aEg.thePlayer.motionX;
+                                break;
+                            default:
+                                double d9 = Math.random();
+                                afi.b("Unknown " + d9);
+                        }
+
+                        Double d10 = Math.abs(d8);
+                        if (!(d10 < 0.086) || !(Math.abs(d7 - 0.5) < 0.4) || this.afR.wA().intValue() > 1) {
+                            if (d7 < 0.5 + (Math.random() - 0.5) / 10.0) {
+                                aEg.gameSettings.keyBindLeft.setPressed(false);
+                                aEg.gameSettings.keyBindRight.setPressed(true);
+                                aEg.gameSettings.keyBindRight.setPressed(true);
+                            } else {
+                                aEg.gameSettings.keyBindRight.setPressed(false);
+                                aEg.gameSettings.keyBindLeft.setPressed(true);
+                            }
+                        }
+                    }
+                    break;
+                case 2:
+                    this.D((int)j5);
+                    if (aib != null
+                        && (
+                            this.acu <= 0
+                                || aef.a(RotationComponent.fk, aib.va(), this.Yx, this.afL.wo().getName().equals("Strict"))
+                                || aEg.thePlayer.cqL < 2 && aEg.thePlayer.onGround
+                        )) {
+                        this.acs = (float)Math.toDegrees(MoveUtil.direction(aEg.thePlayer.pl, this.jp, this.jq)) - (int)j5;
+                    }
+                    break;
+                case 3:
+                    Float f7 = (aEg.thePlayer.pl + 1.0E7F) % 360.0F;
+                    float f8 = f7 - 180.0F - f7 % 90.0F + 45.0F;
+                    Float f9 = 78.0F;
+                    long l5 = k2
+                        ^ (
+                                (long)(
+                                            Math.min(Math.abs(f7 % 90.0F), Math.abs(90.0F - f7) % 90.0F)
+                                                    < Math.min(Math.abs(f7 + 45.0F) % 90.0F, Math.abs(90.0F - (f7 + 45.0F)) % 90.0F)
+                                                ? 1
+                                                : 0
+                                        )
+                                        << 32
+                                    ^ k2
+                            )
+                            & -1L << 32;
+                    if ((int)(l5 >>> 32) != 0
+                        && aef.c(new Vector2f(f8 + 90.0F, f9), 3.0).typeOfHit == MovingObjectType.BLOCK
+                        && aef.c(new Vector2f(f8, f9), 3.0).typeOfHit != MovingObjectType.BLOCK) {
+                        f8 += 90.0F;
+                    }
+
+                    movementfix = MovementFix.NORMAL;
+                    if (Math.random() > (aEg.thePlayer.onGround ? 0.5 : 0.2)) {
+                        SlotComponent slotcomponent = this.d(SlotComponent.class);
+                        if (SlotComponent.getItemStack().getItem() instanceof ItemBlock) {
+                            aEg.Az();
+                        }
+                    }
+
+                    aEg.thePlayer.movementInput.sneak = aEg.thePlayer.sendQueue.doneLoadingTerrain;
+                    if (aEg.thePlayer.tR >= 4 && MoveUtil.isMoving()) {
+                        aEg.gameSettings.keyBindSneak.setPressed(true);
+                    }
+
+                    if (aEg.thePlayer.cqL == 1) {
+                        aEg.gameSettings.keyBindSneak.setPressed(false);
+                    }
+
+                    if ((int)(l5 >>> 32) == 0) {
+                        f8 += 90.0F;
+                    }
+
+                    this.acs = f8 + this.agz / 2.0F;
+                    this.act = f9 + this.agA / 2.0F;
+                    break;
+                case 4:
+                    if (this.agG == 0 && this.afZ.wo()) {
+                        this.agK++;
+                        Float f10 = aEg.thePlayer.pl;
+                        float f11 = MathHelper.wrapAngleTo180_float(f10);
+                        RotationComponent.d(false);
+                        long i6 = i3 ^ ((long)(!(Math.abs(f11 % 90.0F) <= 10.0F) && !(Math.abs(f11 % 90.0F) >= 80.0F) ? 0 : 1) << 32 ^ i3) & -1L << 32;
+                        if (aEg.thePlayer.onGround && aEg.thePlayer.cqL == 1) {
+                            this.agO = this.age.wv().intValue();
+                        }
+
+                        long j6 = l2
+                            ^ ((long)(aEg.thePlayer.onGround && MoveUtil.enoughMovementForSprinting() && aEg.thePlayer.cqL == this.agO - 0 && this.agO > 0 ? 1 : 0) << 32 ^ l2)
+                                & -1L << 32;
+                        if ((int)(j6 >>> 32) != 0) {
+                            float f12 = (float)Math.toDegrees(MoveUtil.direction());
+                            Float f13 = (float)(85.0 + Math.random() * 0.5);
+                            this.acs = f12;
+                            this.act = f13;
+                            RotationComponent.setRotations(aiu.m(new Vector2f(this.acs, this.act)), 180.0, MovementFix.NORMAL);
+                            long k6 = j5 ^ (4294967296L ^ j5) & -1L << 32;
+                            this.agN = true;
+                        } else {
+                            long l6 = j3
+                                ^ (
+                                        (long)(
+                                                    !aEg.thePlayer.onGround
+                                                            || !MoveUtil.enoughMovementForSprinting()
+                                                            || this.agb.wo() && aEg.gameSettings.keyBindJump.isKeyDown() && (int)(i6 >>> 32) == 0
+                                                            || !aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.cqL > 1 && this.agK > 3
+                                                        ? 0
+                                                        : 1
+                                                )
+                                                << 32
+                                            ^ j3
+                                    )
+                                    & -1L << 32;
+                            if ((int)(l6 >>> 32) != 0) {
+                                Vector2f vector2f = this.a(this.Yx, aib, 360.0F, 0.0F, 90.0F, -45);
+                                this.acs = vector2f.x;
+                                this.act = (float)(vector2f.y + Math.random() * 0.5);
+                                RotationComponent.setRotations(aiu.m(new Vector2f(this.acs, this.act)), 10.0, MovementFix.NORMAL);
+                                long i7 = j5 ^ (4294967296L ^ j5) & -1L << 32;
+                                this.agN = true;
+                            } else {
+                                long j7 = l3
+                                    ^ ((long)(aib != null && !aef.a(RotationComponent.fk, aib.va(), this.Yx, this.kl()) ? 1 : 0) << 32 ^ l3) & -1L << 32;
+                                long k7 = k3 ^ ((aEg.thePlayer.onGround && !aEg.gameSettings.keyBindJump.isKeyDown() ? 1 : 0) ^ k3) & -1L >>> 32;
+                                if (((int)(j7 >>> 32) != 0 || (int)k7 != 0 || this.agK <= 5 || aib == null) && aib != null) {
+                                    Vector2f vector2f1 = this.a(
+                                        this.Yx,
+                                        aib,
+                                        (int)(j7 >>> 32) != 0 ? this.kl() : false,
+                                        (float)(this.acs + Math.random() * 0.5),
+                                        (float)(this.act + Math.random() * 0.5),
+                                        45.0F
+                                    );
+                                    long l7 = j4 ^ ((long)(this.agN && this.agh.wo() && !aEg.thePlayer.onGround ? 1 : 0) << 32 ^ j4) & -1L << 32;
+                                    if (this.agj.wo()) {
+                                        l7 ^= ((long)((int)(l7 >>> 32) != 0 && aEg.gameSettings.keyBindJump.isKeyDown() ? 1 : 0) << 32 ^ l7) & -1L << 32;
+                                    }
+
+                                    float f14;
+                                    float f15;
+                                    if ((int)(l7 >>> 32) != 0) {
+                                        f14 = this.agi.wo().floatValue();
+                                        f15 = this.agi.wA().floatValue();
+                                        this.agN = false;
+                                    } else {
+                                        f14 = this.agg.wo().floatValue();
+                                        f15 = this.agg.wA().floatValue();
+                                    }
+
+                                    this.acs = this.b(this.acs, vector2f1.x, (float)ahg.l(f14, f15));
+                                    this.act = this.b(this.act, vector2f1.y, (float)ahg.l(f14, f15));
+                                }
+                            }
+                        }
+
+                        if (!this.agc.wo()) {
+                            if ((aEg.thePlayer.ae >= 10 || aEg.thePlayer.tR <= 6 || !(Math.hypot(aEg.thePlayer.crI, aEg.thePlayer.crK) > 0.2) || !(Math.random() > 0.5))
+                                && MoveUtil.enoughMovementForSprinting()
+                                && (!(MoveUtil.speed() < 0.15) || aEg.gameSettings.keyBindJump.isKeyDown())
+                                && !aEg.thePlayer.isCollidedHorizontally
+                                && (this.agK >= 15 || aEg.thePlayer.tR <= 8 || aEg.gameSettings.keyBindJump.isKeyDown())
+                                && (aEg.thePlayer.tR <= 11 || !(Math.random() > 0.5))) {
+                                this.afL.co("Normal");
+                            } else {
+                                this.afL.co("Off");
+                            }
+                        }
+                    } else if (this.agG == 0 && this.afY.wo()) {
+                        long i8 = l4 ^ ((long)aEg.thePlayer.tR << 32 ^ l4) & -1L << 32;
+                        if ((int)(i8 >>> 32) == 1 || (int)(i8 >>> 32) == 0) {
+                            aEg.Az();
+                        }
+
+                        if ((int)(i8 >>> 32) >= 0
+                            && aEg.thePlayer.tR <= (this.afO.wo().getName().equals("Off") ? 7 : 10)
+                            && (!aEg.thePlayer.onGround || !aEg.gameSettings.keyBindJump.isKeyDown())) {
+                            if (aib != null && !aef.a(RotationComponent.fk, aib.va(), this.Yx, this.afL.wo().getName().equals("Strict"))) {
+                                this.D(45);
+                            }
+                        } else {
+                            this.D(Integer.parseInt(String.valueOf(this.ags.wo().getName())));
+                            this.acs = aEg.thePlayer.pl;
+                        }
+
+                        if (aEg.thePlayer.tR <= 0 && aEg.thePlayer.cqL < 2 || aEg.thePlayer.onGround && aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.cqL < 2) {
+                            this.agH = false;
+                        }
+                    } else if (this.agG == 0) {
+                        long j8 = l4 ^ ((long)aEg.thePlayer.tR << 32 ^ l4) & -1L << 32;
+                        if ((int)(j8 >>> 32) == 2 || (int)(j8 >>> 32) == 0) {
+                            aEg.Az();
+                        }
+
+                        if ((int)(j8 >>> 32) < 3 || aEg.thePlayer.tR > (this.afO.wo().getName().equals("Off") ? 7 : 10)) {
+                            this.D(Integer.parseInt(String.valueOf(this.ags.wo().getName())));
+                            this.acs = aEg.thePlayer.pl;
+                        } else if (aib != null && !aef.a(RotationComponent.fk, aib.va(), this.Yx, this.afL.wo().getName().equals("Strict"))) {
+                            this.D(0);
+                        }
+
+                        if (aEg.thePlayer.tR <= 3) {
+                            this.agH = false;
+                        }
+                    }
+                    break;
+                case 5:
+                    SlotComponent slotcomponent1 = this.d(SlotComponent.class);
+                    if (SlotComponent.bP() instanceof ItemBlock && this.agH) {
+                        aEg.Az();
+                    }
+
+                    this.acs = aEg.thePlayer.pl - aEg.thePlayer.pl % 90.0F - 180.0F + 45 * (aEg.thePlayer.pl > 0.0F ? 1 : -1);
+                    this.act = 76.4F;
+                    movementfix = MovementFix.TRADITIONAL;
+                    Double d11 = 0.15;
+                    long k8 = i3
+                        ^ ((long)(!(Math.abs(aEg.thePlayer.posX % 1.0) > 1.0 - d11) && !(Math.abs(aEg.thePlayer.posX % 1.0) < d11) ? 0 : 1) << 32 ^ i3) & -1L << 32;
+                    long l8 = l2
+                        ^ ((long)(!(Math.abs(aEg.thePlayer.posZ % 1.0) > 1.0 - d11) && !(Math.abs(aEg.thePlayer.posZ % 1.0) < d11) ? 0 : 1) << 32 ^ l2) & -1L << 32;
+                    aEg.gameSettings
+                        .keyBindRight
+                        .setPressed((int)(k8 >>> 32) != 0 && (int)(l8 >>> 32) != 0 || Keyboard.isKeyDown(aEg.gameSettings.keyBindLeft.getKeyCode()));
+                    aEg.gameSettings.keyBindBack.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindForward.getKeyCode()));
+                    aEg.gameSettings.keyBindForward.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindBack.getKeyCode()));
+                    aEg.gameSettings.keyBindLeft.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindRight.getKeyCode()));
+                    this.agI++;
+                    if (Math.abs(MathHelper.wrapAngleTo180_double(this.acs - RotationComponent.fn.getX())) > 10.0) {
+                        this.agI = (int)(Math.random() * 4.0);
+                        this.agz = (float)(Math.random() - 0.5) / 10.0F;
+                        this.agA = (float)(Math.random() - 0.5) / 10.0F;
+                    }
+
+                    if (Math.random() > 0.99) {
+                        this.agz = (float)(Math.random() - 0.5) / 10.0F;
+                        this.agA = (float)(Math.random() - 0.5) / 10.0F;
+                    }
+
+                    if (this.agI <= 10) {
+                        aEg.gameSettings.keyBindSneak.setPressed(true);
+                    } else if (this.agI == 11) {
+                        aEg.gameSettings.keyBindSneak.setPressed(false);
+                    }
+
+                    this.acs = this.acs + this.agz;
+                    this.act = this.act + this.agA;
+            }
+
+            if (!this.afK.wo().getName().equals("Grim")
+                && f6 != 0.0F
+                && this.Yx != null
+                && (this.acr != null || this.agw != null)
+                && (!this.afM.wo().getName().equals("Watchdog " + "Predictio" + "n") || !aEg.thePlayer.onGround)) {
+                RotationComponent.setRotations(new Vector2f(this.acs, this.act), f6, movementfix);
+            }
+        }
+    }
+
+    public Vec3 getHitVec() {
+        Vec3 vec3 = new Vec3(this.Yx.getX() + Math.random(), this.Yx.getY() + Math.random(), this.Yx.getZ() + Math.random());
+        MovingObjectPosition movingobjectposition = aef.c(RotationComponent.fk, aEg.playerController.getBlockReachDistance());
+        if (this.acr == null) {
+            return vec3;
+        }
+
+        switch (ub.ahg[this.acr.va().ordinal()]) {
+            case 1:
+                vec3.zCoord = this.Yx.getZ();
+                break;
+            case 2:
+                vec3.xCoord = this.Yx.getX() + 1;
+                break;
+            case 3:
+                vec3.zCoord = this.Yx.getZ() + 1;
+                break;
+            case 4:
+                vec3.xCoord = this.Yx.getX();
+                break;
+            case 5:
+                vec3.yCoord = this.Yx.getY();
+                break;
+            case 6:
+                vec3.yCoord = this.Yx.getY() + 1;
+        }
+
+        if (movingobjectposition != null
+            && movingobjectposition.getBlockPos() != null
+            && movingobjectposition.hitVec != null
+            && movingobjectposition.getBlockPos().equals(this.Yx)
+            && movingobjectposition.sideHit == this.acr.va()) {
+            vec3 = movingobjectposition.hitVec;
+        }
+
+        return vec3;
+    }
+
+    public float l(float var1) {
+        return Math.round(MathHelper.wrapAngleTo180_float(var1) / 45.0F) * 45.0F;
+    }
+
+    public boolean kh() {
+        int j;
+        if (this.afZ.wo() && this.age.wA().intValue() > 0) {
+            j = 1;
+        } else {
+            byte b0 = -81;
+            int i = b0 + 81;
+            j = i;
+        }
+
+        return j != 0;
+    }
+}

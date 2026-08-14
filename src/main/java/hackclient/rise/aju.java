@@ -1,0 +1,114 @@
+package hackclient.rise;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+
+public class aju {
+    static String aQx = j(wa()) + "dleotn6oc94kb" + vX();
+
+    public aju() {
+    }
+
+    public static String vW() {
+        return aQx;
+    }
+
+    private static String vX() {
+        String s = vY();
+        String s1 = vZ();
+        return ajv.wb().equals(ajw.WINDOWS) && s.length() >= 5 && s1.length() >= 5
+            ? new String(Base64.getEncoder().encode((s + "_" + s1).getBytes())).replaceAll("==", "")
+            : j(wa());
+    }
+
+    private static String vY() {
+        return f(new String[]{"cmd.exe", "/c", "wmic baseboard get serialnumber"});
+    }
+
+    private static String vZ() {
+        return f(new String[]{"cmd.exe", "/c", "wmic cpu get processorid"});
+    }
+
+    private static String f(String[] var0) {
+        StringBuilder stringbuilder = new StringBuilder();
+
+        try {
+            Process process = Runtime.getRuntime().exec(var0);
+            process.waitFor();
+            BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            String s;
+            for (boolean flag = false; (s = bufferedreader.readLine()) != null; flag = true) {
+                if (flag && !s.trim().isEmpty()) {
+                    stringbuilder.append(s.trim());
+                    break;
+                }
+            }
+
+            bufferedreader.close();
+        } catch (Exception exception) {
+            return "unknown";
+        }
+
+        return stringbuilder.toString();
+    }
+
+    private static byte[] wa() {
+        try {
+            ajw ajw = ajv.wb();
+            MessageDigest messagedigest = MessageDigest.getInstance("SHA-256");
+            String s;
+            if (ajw.equals(ajw.WINDOWS)) {
+                s = "VANTAGE_"
+                    + System.getProperty("os.name")
+                    + System.getProperty("os.arch")
+                    + System.getProperty("os.version")
+                    + System.getProperty("user.name")
+                    + System.getProperty("user.home")
+                    + System.getenv("NUMBER_OF_PROCESSORS");
+            } else {
+                s = "VANTAGE_"
+                    + ajw.wc()
+                    + System.getProperty("os.arch")
+                    + Runtime.getRuntime().availableProcessors()
+                    + System.getenv("PROCESSOR_IDENTIFIER")
+                    + System.getenv("PROCESSOR_ARCHITECTURE")
+                    + System.getenv("PROCESSOR_ARCHITEW6432")
+                    + System.getenv("NUMBER_OF_PROCESSORS")
+                    + System.getenv("COMPUTERNAME")
+                    + System.getenv("os")
+                    + System.getenv("SystemRoot")
+                    + System.getenv("HOMEDRIVE")
+                    + System.getenv("PROCESSOR_LEVEL")
+                    + System.getenv("PROCESSOR_REVISION")
+                    + System.getenv("HOME")
+                    + System.getenv("HOSTNAME")
+                    + System.getenv("SHELL")
+                    + System.getenv("LOGNAME")
+                    + System.getenv("USERNAME");
+            }
+
+            return messagedigest.digest(s.getBytes());
+        } catch (NoSuchAlgorithmException nosuchalgorithmexception) {
+            throw new Error("HWIDException: ", nosuchalgorithmexception);
+        }
+    }
+
+    private static String j(byte[] var0) {
+        StringBuilder stringbuilder = new StringBuilder(2 * var0.length);
+
+        for (byte b0 : var0) {
+            String s = Integer.toHexString(255 & b0);
+            if (s.length() == 1) {
+                stringbuilder.append('0');
+            }
+
+            stringbuilder.append(s);
+        }
+
+        return stringbuilder.toString();
+    }
+}

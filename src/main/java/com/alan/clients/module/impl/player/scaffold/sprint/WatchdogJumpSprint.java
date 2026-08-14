@@ -1,0 +1,317 @@
+package com.alan.clients.module.impl.player.scaffold.sprint;
+
+import com.alan.clients.Client;
+import com.alan.clients.component.impl.player.BlinkComponent;
+import com.alan.clients.component.impl.player.RotationComponent;
+import com.alan.clients.component.impl.player.SlotComponent;
+import com.alan.clients.component.impl.player.rotationcomponent.MovementFix;
+import com.alan.clients.module.impl.movement.Flight;
+import com.alan.clients.module.impl.movement.LongJump;
+import com.alan.clients.module.impl.movement.Speed;
+import com.alan.clients.module.impl.player.Scaffold;
+import com.alan.clients.module.impl.player.scaffold.tower.WatchdogTower;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.motion.PreMotionEvent;
+import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
+import com.alan.clients.newevent.impl.motion.StrafeEvent;
+import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
+import com.alan.clients.util.player.MoveUtil;
+import com.alan.clients.util.vector.Vector2f;
+import com.alan.clients.value.Mode;
+import com.alan.clients.value.impl.BooleanValue;
+import hackclient.rise.ahj;
+import hackclient.rise.aih;
+import hackclient.rise.aik;
+import hackclient.rise.bb;
+import hackclient.rise.vo;
+import java.util.Random;
+import lombok.Generated;
+import net.minecraft.block.BlockAir;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemSword;
+import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.server.S23PacketBlockChange;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.MathHelper;
+
+public class WatchdogJumpSprint extends Mode<Scaffold> {
+    private boolean HJ = false;
+    private boolean gD = false;
+    private boolean aju = false;
+    private int ajv = -1;
+    public static boolean ajw = false;
+    public static boolean ajx = false;
+    public static boolean ajy = false;
+    public static boolean ajz = false;
+    private int ajA = 0;
+    private int ajr;
+    public final BooleanValue ajB = new BooleanValue("Place Extra blocks", this, false);
+    private final vo ajC;
+    @EventLink(cH = 3)
+    public final Listener<PreMotionEvent> ajD = var1x -> {
+        this.wj().agF = 1;
+        if (Math.abs(aEg.thePlayer.motionY) < 0.1) {
+            ;
+        }
+
+        float f = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+        boolean flag = Math.abs(f % 90.0F) <= 10.0F || Math.abs(f % 90.0F) >= 80.0F;
+        double d0 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
+        double d1 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
+        if (Math.abs(d0 - d1) < 5.0 && aEg.thePlayer.Zl > 7 && !aEg.gameSettings.cgI.isKeyDown() && !aEg.gameSettings.keyBindSneak.isKeyDown()) {
+            if (aEg.thePlayer.cqL > 2
+                && !aEg.gameSettings.keyBindJump.isKeyDown()
+                && !Client.a.g().c(Speed.class).isEnabled()
+                && !aEg.thePlayer.isPotionActive(Potion.moveSpeed)
+                && aEg.thePlayer.Zl > 7) {
+                MoveUtil.strafe();
+                if (flag) {
+                    aEg.thePlayer.motionZ *= 1.1225;
+                    aEg.thePlayer.motionX *= 1.1225;
+                } else {
+                    aEg.thePlayer.motionZ *= 1.129;
+                    aEg.thePlayer.motionX *= 1.129;
+                }
+            } else if (aEg.thePlayer.cqL > 2
+                && !aEg.gameSettings.keyBindJump.isKeyDown()
+                && !Client.a.g().c(Speed.class).isEnabled()
+                && aEg.thePlayer.isPotionActive(Potion.moveSpeed)
+                && aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 >= 2
+                && aEg.thePlayer.Zl > 7) {
+                MoveUtil.strafe();
+                aEg.thePlayer.motionZ *= 1.1055;
+                aEg.thePlayer.motionX *= 1.1055;
+            } else if (aEg.thePlayer.cqL > 2
+                && !aEg.gameSettings.keyBindJump.isKeyDown()
+                && !Client.a.g().c(Speed.class).isEnabled()
+                && aEg.thePlayer.isPotionActive(Potion.moveSpeed)
+                && aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 == 1
+                && aEg.thePlayer.Zl > 7) {
+                MoveUtil.strafe();
+                aEg.thePlayer.motionZ *= 1.098;
+                aEg.thePlayer.motionX *= 1.098;
+            }
+        }
+
+        if (!aEg.gameSettings.keyBindSneak.isKeyDown()) {
+            int i = aEg.thePlayer.ticksExisted;
+            if (!this.e(Flight.class).isEnabled()
+                && !this.e(LongJump.class).isEnabled()
+                && !bb.a(true, true, false, true, false)
+                && Math.random() > 0.5
+                && ajy
+                && MoveUtil.isMoving()
+                && !(aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword)) {
+                Random random = new Random();
+                random.nextFloat();
+                random.nextFloat();
+                ajy = false;
+            }
+
+            if ((this.ajv == -1 || i - this.ajv < 4) && this.ajv == -1) {
+                this.ajv = i;
+            }
+
+            if (aEg.thePlayer.onGround) {
+                MoveUtil.strafe();
+            }
+
+            if (this.gD && !aEg.gameSettings.keyBindJump.isKeyDown()) {
+                WatchdogTower.akr = aEg.thePlayer.pl;
+                WatchdogTower.qH = 17;
+                WatchdogTower.hV = 0;
+                MoveUtil.stop();
+                this.gD = false;
+                RotationComponent.setRotations(new Vector2f((float)(aEg.thePlayer.pl + (Math.random() - 0.5) * 3.0), 90.0F), 10.0, MovementFix.NORMAL);
+                if (!(aih.o(aEg.thePlayer.posX, aEg.thePlayer.aI - 2.0, aEg.thePlayer.posY) instanceof BlockAir)) {
+                    this.wj().Me = aEg.thePlayer.aI - 1.0;
+                }
+            }
+
+            if (aEg.gameSettings.keyBindJump.isKeyDown()) {
+                this.gD = true;
+            }
+        }
+    };
+    @EventLink(cH = 2)
+    public final Listener<PreUpdateEvent> ajE = var1x -> {
+        boolean flag = aEg.thePlayer.aI == this.wj().Me;
+        if (!this.ajB.wo()) {
+            flag = true;
+        }
+
+        label159: {
+            SlotComponent slotcomponent = this.d(SlotComponent.class);
+            if (SlotComponent.getItemStack() == null
+                || !(aEg.thePlayer.posY > this.wj().Me)
+                || !(aEg.thePlayer.posY + MoveUtil.predictedMotion(aEg.thePlayer.motionY, 2) < this.wj().Me + 1.0)
+                || this.aju && !ajw
+                || !Client.a.g().c(Speed.class).isEnabled()
+                || this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump")) {
+                slotcomponent = this.d(SlotComponent.class);
+                if (SlotComponent.getItemStack() == null
+                    || !(aEg.thePlayer.posY > this.wj().Me)
+                    || !(aEg.thePlayer.posY + MoveUtil.predictedMotion(aEg.thePlayer.motionY, 2) < this.wj().Me + 1.0)
+                    || !this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump")) {
+                    break label159;
+                }
+            }
+
+            slotcomponent = this.d(SlotComponent.class);
+            SlotComponent.setSlot(aik.vx());
+        }
+
+        if (Client.a.g().c(Speed.class).isEnabled()) {
+            flag = false;
+        }
+
+        if (this.aju) {
+            flag = true;
+        }
+
+        if (aEg.thePlayer.tR > 8) {
+            this.aju = false;
+        }
+
+        if ((
+                aih.ad(2.0)
+                    || aih.ad(1.0)
+                    || aih.ad(0.0)
+                    || aih.ad(3.0)
+                    || aEg.gameSettings.keyBindJump.isPressed()
+                    || aEg.thePlayer.isPotionActive(Potion.moveSpeed)
+                    || this.gD
+            )
+            && aEg.thePlayer.cqL < 1) {
+            aEg.thePlayer.crd = false;
+        }
+
+        if (aEg.gameSettings.keyBindJump.isPressed()
+            && aEg.thePlayer.onGround
+            && !this.gD
+            && (ajx || this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump"))
+            && !Client.a.g().c(Speed.class).isEnabled()) {
+            ajx = false;
+            MoveUtil.strafe(MoveUtil.vd() * 0.9);
+            if (this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump")) {
+                MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() - 0.001);
+            }
+        }
+
+        if (aEg.thePlayer.tR == 4
+            && !aEg.gameSettings.keyBindJump.isKeyDown()
+            && !Client.a.g().c(Speed.class).isEnabled()
+            && !flag
+            && this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump")) {
+            aEg.thePlayer.motionY -= 0.19;
+        }
+
+        if (aEg.thePlayer.tR == 1 && !aEg.gameSettings.keyBindJump.isKeyDown()) {
+            MoveUtil.strafe();
+        }
+
+        if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && aEg.thePlayer.tR > 2) {
+            MoveUtil.strafe();
+        }
+
+        if ((!flag || aEg.gameSettings.keyBindJump.isKeyDown() || aEg.thePlayer.onGround || this.e(Speed.class).isEnabled() || !this.ajB.wo())
+            && flag
+            && !aEg.gameSettings.keyBindJump.isKeyDown()
+            && !aEg.thePlayer.onGround
+            && this.ajB.wo()) {
+        }
+
+        if (flag && aEg.thePlayer.onGround && !aEg.gameSettings.keyBindJump.isKeyDown()) {
+            this.ajA++;
+        }
+
+        if (!flag) {
+            this.ajA = 0;
+        }
+    };
+    @EventLink
+    public final Listener<PacketReceiveEvent> ajF = var1x -> {
+        if (var1x.dq() instanceof S23PacketBlockChange) {
+            ajy = true;
+            this.ajr++;
+        }
+    };
+    @EventLink
+    public final Listener<StrafeEvent> ajG = var1x -> {
+        if (!this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump")
+            && aEg.thePlayer.onGround
+            && this.aju
+            && ajw
+            && !Client.a.g().c(Speed.class).isEnabled()
+            && !aEg.gameSettings.keyBindJump.isKeyDown()) {
+            ajw = false;
+        }
+    };
+
+    public WatchdogJumpSprint(String var1, Scaffold var2) {
+        super(var1, var2);
+        this.ajC = new vo(var2);
+    }
+
+    @Override
+    public void onEnable() {
+        ajy = false;
+        ajz = false;
+        if (!this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump")) {
+            if (aEg.thePlayer.cqL > 9) {
+                ajw = true;
+                this.aju = true;
+            }
+        } else {
+            aEg.thePlayer.crd = false;
+        }
+
+        ajx = true;
+        this.gD = false;
+        if (!aEg.thePlayer.onGround && !aEg.gameSettings.keyBindJump.isKeyDown()) {
+            aEg.thePlayer.motionX *= 0.0;
+            aEg.thePlayer.motionZ *= 0.0;
+        }
+
+        this.ajv = -1;
+        this.ajr = 0;
+        ajx = true;
+    }
+
+    @Override
+    public void onDisable() {
+        this.HJ = false;
+        ajy = false;
+        aEg.thePlayer.crd = false;
+        ajw = false;
+        this.aju = false;
+        float f = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+        boolean flag = Math.abs(f % 90.0F) <= 10.0F || Math.abs(f % 90.0F) >= 80.0F;
+        if (flag) {
+            if (aEg.thePlayer.cqL > 2 && aEg.thePlayer.ticksExisted % 3 == 1) {
+                aEg.timer.dzD = 0.5F;
+                ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+            } else if (aEg.thePlayer.cqL > 2 && aEg.thePlayer.ticksExisted % 3 == 2) {
+                aEg.timer.dzD = 0.33F;
+                ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+                ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+            } else if (aEg.thePlayer.cqL > 2) {
+                aEg.timer.dzD = 0.5F;
+                ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+            }
+        } else if (aEg.thePlayer.cqL > 2) {
+            aEg.timer.dzD = 0.33F;
+            ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+            ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+        }
+
+        ajx = false;
+        BlinkComponent.dispatch();
+    }
+
+    @Generated
+    public vo kB() {
+        return this.ajC;
+    }
+}

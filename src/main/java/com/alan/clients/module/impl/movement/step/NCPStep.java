@@ -1,0 +1,71 @@
+package com.alan.clients.module.impl.movement.step;
+
+import com.alan.clients.module.impl.movement.Step;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.motion.PreMotionEvent;
+import com.alan.clients.newevent.impl.other.StepEvent;
+import com.alan.clients.value.Mode;
+import com.alan.clients.value.impl.BooleanValue;
+import com.alan.clients.value.impl.NumberValue;
+import hackclient.rise.ahj;
+import hackclient.rise.aih;
+import net.minecraft.block.BlockAir;
+import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
+
+public class NCPStep extends Mode<Step> {
+    private final NumberValue RY = new NumberValue("Height", this, 1, 1, 2.5, 0.1);
+    private final NumberValue RZ = new NumberValue("Timer", this, 0.5, 0.1, 1, 0.1);
+    private final BooleanValue reverse = new BooleanValue("Reverse", this, false);
+    @EventLink
+    public final Listener<PreMotionEvent> Sb = var1x -> {
+        if (aEg.thePlayer.onGround && !aih.vj()) {
+            aEg.thePlayer.stepHeight = this.RY.wo().floatValue();
+        } else {
+            aEg.thePlayer.stepHeight = 0.6F;
+        }
+
+        if (this.reverse.wo() && !(aih.p(0.0, -(this.RY.wo().intValue() + 1), 0.0) instanceof BlockAir) && !aih.vj()) {
+            for (int i = 1; i < this.RY.wo().intValue() + 1; i++) {
+                aEg.thePlayer.motionY -= i;
+            }
+        }
+    };
+    @EventLink
+    public final Listener<StepEvent> Sc = var1x -> {
+        if (aEg.thePlayer.onGround && !aih.vj()) {
+            double d0 = var1x.da();
+            if (!(d0 <= 0.6)) {
+                double[] adouble;
+                if (d0 > 2.019) {
+                    adouble = new double[]{0.425, 0.821, 0.699, 0.599, 1.022, 1.372, 1.652, 1.869, 2.019, 1.919};
+                } else if (d0 > 1.869) {
+                    adouble = new double[]{0.425, 0.821, 0.699, 0.599, 1.022, 1.372, 1.652, 1.869};
+                } else if (d0 > 1.5) {
+                    adouble = new double[]{0.425, 0.821, 0.699, 0.599, 1.022, 1.372, 1.652};
+                } else if (d0 > 1.015) {
+                    adouble = new double[]{0.42, 0.7532, 1.01, 1.093, 1.015};
+                } else if (d0 > 0.875) {
+                    adouble = new double[]{0.42, 0.7532};
+                } else {
+                    adouble = new double[]{0.39, 0.6938};
+                }
+
+                aEg.timer.dzD = this.RZ.wo().floatValue();
+
+                for (double d1 : adouble) {
+                    ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + (d1 + Math.random() / 2000.0), aEg.thePlayer.posZ, false));
+                }
+            }
+        }
+    };
+
+    public NCPStep(String var1, Step var2) {
+        super(var1, var2);
+    }
+
+    @Override
+    public void onDisable() {
+        aEg.thePlayer.stepHeight = 0.6F;
+    }
+}

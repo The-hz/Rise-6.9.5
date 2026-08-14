@@ -1,0 +1,65 @@
+package com.alan.clients.module.impl.other;
+
+import com.alan.clients.module.Module;
+import com.alan.clients.module.api.Category;
+import com.alan.clients.module.api.ModuleInfo;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.motion.PreMotionEvent;
+import com.alan.clients.newevent.impl.other.WorldChangeEvent;
+import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
+import com.alan.clients.value.impl.BooleanValue;
+import hackclient.rise.afi;
+import hackclient.rise.aih;
+import java.util.HashSet;
+import java.util.Set;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.e;
+
+@ModuleInfo(aliases = "module.other.murdermystery.name", description = "module.other.murdermystery.description", category = Category.PLAYER)
+public final class MurderMystery extends Module {
+    private final BooleanValue Va = new BooleanValue("Newest Method", this, true);
+    private final BooleanValue Vb = new BooleanValue("Call Out", this, false);
+    private EntityPlayer murderer;
+    private final Set<Integer> Vd = new HashSet<>();
+    @EventLink
+    public final Listener<PacketReceiveEvent> Ve = var1 -> {
+        if (var1.dq() instanceof e e && e.getEquipmentSlot() == 0 && e.getItemStack() != null && this.i(e.getItemStack()) && !this.Vd.contains(e.getEntityID())
+            )
+         {
+            Entity entity = aEg.theWorld.getEntityByID(e.getEntityID());
+            if (entity instanceof EntityPlayer) {
+                afi.b(entity.getName() + " is The Murderer.");
+                this.Vd.add(e.getEntityID());
+                this.murderer = (EntityPlayer)entity;
+                if (this.Vb.wo()) {
+                    aEg.thePlayer.sendChatMessage(entity.getName() + " is The Murderer.");
+                }
+            }
+        }
+    };
+    @EventLink
+    public final Listener<PreMotionEvent> Vf = var1 -> {
+        if (aEg.thePlayer.ticksExisted % 2 != 0 && this.murderer == null && !this.Va.wo()) {
+            for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
+                if (entityplayer.getHeldItem() != null && entityplayer.getHeldItem().getDisplayName().contains("Knife")) {
+                    afi.b(aih.g(entityplayer) + " is The Murderer.");
+                    this.murderer = entityplayer;
+                }
+            }
+        }
+    };
+    @EventLink
+    public final Listener<WorldChangeEvent> Vg = var1 -> this.murderer = null;
+
+    public MurderMystery() {
+    }
+
+    private boolean i(ItemStack var1) {
+        return var1.hasTagCompound() && var1.getTagCompound().hasKey("ExtraAttributes", 10)
+            ? var1.getTagCompound().getCompoundTag("ExtraAttributes").hasKey("MELEE", 1)
+            : false;
+    }
+}

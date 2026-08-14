@@ -1,0 +1,18 @@
+package hackclient.rise;
+
+import com.alan.clients.security.a;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S08PacketPlayerPosLook;
+
+public final class aaz extends a {
+    public aaz() {
+        super("Large Teleport", "Detects ridiculous teleports");
+    }
+
+    @Override
+    public boolean j(Packet<?> var1) {
+        return !(var1 instanceof S08PacketPlayerPosLook s08packetplayerposlook)
+            ? false
+            : Math.abs(s08packetplayerposlook.x) > 1.0E9 || Math.abs(s08packetplayerposlook.y) > 1.0E9 || Math.abs(s08packetplayerposlook.z) > 1.0E9;
+    }
+}

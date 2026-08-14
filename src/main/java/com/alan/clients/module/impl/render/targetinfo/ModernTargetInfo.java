@@ -1,0 +1,312 @@
+package com.alan.clients.module.impl.render.targetinfo;
+
+import com.alan.clients.component.impl.render.NotificationComponent;
+import com.alan.clients.module.impl.player.HealthBypass;
+import com.alan.clients.module.impl.render.TargetInfo;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.other.TickEvent;
+import com.alan.clients.newevent.impl.render.Render2DEvent;
+import com.alan.clients.util.animation.Animation;
+import com.alan.clients.util.animation.Easing;
+import com.alan.clients.util.render.RenderUtil;
+import com.alan.clients.util.vector.Vector2d;
+import com.alan.clients.util.vector.Vector2f;
+import com.alan.clients.value.Mode;
+import com.alan.clients.value.impl.BooleanValue;
+import com.alan.clients.value.impl.ModeValue;
+import hackclient.rise.aab;
+import hackclient.rise.adv;
+import hackclient.rise.agc;
+import hackclient.rise.ahg;
+import hackclient.rise.aip;
+import hackclient.rise.ais;
+import hackclient.rise.ait;
+import hackclient.rise.bf;
+import hackclient.rise.gb;
+import hackclient.rise.gd;
+import hackclient.rise.gg;
+import java.awt.Color;
+import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderSkeleton;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemTool;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
+
+public class ModernTargetInfo extends Mode<TargetInfo> {
+    private final BooleanValue particles = new BooleanValue("Particles", this, true);
+    private final agc auE = gb.MAIN.a(22, gd.LIGHT);
+    private final agc auF = gb.MAIN.a(22, gd.MEDIUM);
+    private final ModeValue backgroundMode = new aab(this, "Background Mode", this);
+    private static final float auH = 0.01F;
+    private static final float auI = 0.8F;
+    private static final int auJ = 256;
+    private long auK = 0L;
+    private float auL = 0.0F;
+    private TargetInfo targetInfoModule;
+    private final int auM = 8;
+    private final int auN = 7;
+    private final int auO = 4;
+    private final Animation auP = new Animation(Easing.EASE_OUT_ELASTIC, 500L);
+    private final Animation auQ = new Animation(Easing.EASE_OUT_SINE, 500L);
+    @EventLink
+    public final Listener<Render2DEvent> auR = var1x -> {
+        if (this.targetInfoModule == null) {
+            this.targetInfoModule = this.e(TargetInfo.class);
+        }
+
+        this.b(gg.BLOOM).c(NotificationComponent::ci);
+        this.b(gg.REGULAR, 1).c(NotificationComponent::cj);
+        Entity entity = this.targetInfoModule.target;
+        if (entity != null) {
+            boolean flag = !this.targetInfoModule.inWorld || this.targetInfoModule.rG.T(1000L);
+            this.auP.h(flag ? 400L : 850L);
+            this.auP.a(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
+            this.auP.Q(flag ? 0.0 : 1.0);
+            if (!(this.auP.sG() <= 0.0)) {
+                String s = entity.getName();
+                String s1 = bf.c(s, s);
+                String s2 = this.nC() > 0.0F ? "Winning:" : "Losing:";
+                double d0 = this.targetInfoModule.position.x;
+                double d1 = this.targetInfoModule.position.y;
+                double d2 = this.auF.getStringWidth(s1);
+                double d3 = this.auE.getStringWidth(s2);
+                AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;
+                HealthBypass healthbypass = this.e(HealthBypass.class);
+                float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractclientplayer) : abstractclientplayer.getHealth();
+                double d4 = Math.min(!this.targetInfoModule.inWorld ? 0.0 : ahg.a(f, 1), abstractclientplayer.getMaxHealth());
+                double d5 = this.auF.getStringWidth(String.valueOf(d4));
+                double d6 = Math.max(d3 + d2 + 35.0 - d5, 65.0);
+                this.auQ.Q(d4 / abstractclientplayer.getMaxHealth() * d6);
+                this.auQ.a(Easing.EASE_OUT_QUINT);
+                this.auQ.h(250L);
+                double d7 = this.auQ.sG();
+                double d8 = (abstractclientplayer.hurtTime == 0 ? 0.0F : abstractclientplayer.hurtTime - aEg.timer.bWm) * 0.5;
+                byte b0 = 32;
+                double d9 = d8 / 2.0;
+                double d10 = 48 + d6 + 4.0 + d5 + 8.0;
+                double d11 = 48;
+                this.targetInfoModule.positionValue.n(new Vector2d(d10, d11));
+                double d12 = this.auP.sG();
+                this.b(gg.REGULAR).c(() -> {
+                    GlStateManager.pushMatrix();
+                    GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
+                    GlStateManager.scale(d12, d12, 0.0);
+                    Color color = adv.rK();
+                    Color color1 = adv.rK();
+                    Color color2 = this.rz().rA();
+                    Color color3 = this.rz().rB();
+                    if (this.backgroundMode.wo().getName().equals("Tint")) {
+                        Color color4 = this.rz().j(new Vector2d(d0, d1));
+                        Color color5 = this.rz().j(new Vector2d(d0, d1 + d11));
+                        color = new Color(color4.getRed() / 5, color4.getGreen() / 5, color4.getBlue() / 5, 128);
+                        color1 = new Color(color5.getRed() / 5, color5.getGreen() / 5, color5.getBlue() / 5, 128);
+                    } else if (this.backgroundMode.wo().getName().equals("Solid")) {
+                        Color color6 = this.rz().rA();
+                        Color color7 = this.rz().rB();
+                        color = new Color(color6.getRed(), color6.getGreen(), color6.getBlue(), 128);
+                        color1 = new Color(color7.getRed(), color7.getGreen(), color7.getBlue(), 128);
+                        color2 = new Color(255, 255, 255);
+                        color3 = new Color(164, 164, 164);
+                    }
+
+                    RenderUtil.a(d0, d1, d10 - 1.0, d11, 16.0, color, color1, true);
+                    this.auE.b(s2, d0 + 8.0 + b0 + 7.0, d1 + 8.0 + 4.0 + 2.0, Color.WHITE.hashCode());
+                    this.auF.b(s1, d0 + 8.0 + b0 + 7.0 + d3 + 3.0, d1 + 8.0 + 4.0 + 2.5, color2.hashCode());
+                    GlStateManager.popMatrix();
+                    GlStateManager.pushMatrix();
+                    GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
+                    GlStateManager.scale(d12, d12, 0.0);
+                    double d13 = d0 + 8.0 + b0 + 7.0;
+                    double d14 = d1 + 8.0 + b0 - 4.0 - 7.0;
+                    Color color8 = aip.d(adv.rK(), (int)(adv.rK().getAlpha() / 1.7F));
+                    this.rz();
+                    RenderUtil.a(d13, d14, d6, 6.0, 3.0, color8, adv.rK(), true);
+                    RenderUtil.a(d0 + 8.0 + b0 + 7.0, d1 + 8.0 + b0 - 4.0 - 7.0, d7, 6.0, 3.0, color3, color2, true);
+                    this.auF.b(String.valueOf(d4), d0 + 8.0 + b0 + 7.0 + d6 + 4.0, d1 + 8.0 + b0 - 4.0 - 8.0, color2.hashCode());
+                    GlStateManager.popMatrix();
+                });
+                this.b(gg.REGULAR, 1).c(() -> {
+                    GlStateManager.pushMatrix();
+                    GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
+                    GlStateManager.scale(d12, d12, 0.0);
+                    RenderUtil.color(aip.a(Color.RED, Color.WHITE, d8 / 9.0));
+                    RenderUtil.dropShadow(3, d0 + 8.0 + d9, d1 + 8.0 + d9, b0 - d8, b0 - d8, 20.0, this.rz().pl() * 2);
+                    this.renderTargetHead((AbstractClientPlayer)entity, d0 + 8.0 + d9, d1 + 8.0 + d9, b0 - d8);
+                    GlStateManager.popMatrix();
+                });
+                this.b(gg.BLUR).c(() -> {
+                    GlStateManager.pushMatrix();
+                    GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
+                    GlStateManager.scale(d12, d12, 0.0);
+                    RenderUtil.roundedRectangle(d0, d1, d10 - 1.0, d11, 16.0, Color.BLACK);
+                    GlStateManager.popMatrix();
+                });
+                this.b(gg.BLOOM).c(() -> {
+                    GlStateManager.pushMatrix();
+                    GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
+                    GlStateManager.scale(d12, d12, 0.0);
+                    RenderUtil.roundedRectangle(d0 + 0.5, d1 + 0.5, d10 - 2.0, d11 - 1.0, 17.0, this.rz().rE());
+                    GlStateManager.popMatrix();
+                });
+            }
+        }
+    };
+    @EventLink
+    public final Listener<TickEvent> auS = var1x -> {
+        if (this.targetInfoModule != null) {
+            Entity entity = this.targetInfoModule.target;
+            if (entity != null && !(this.auP.sG() <= 0.0) && this.particles.wo()) {
+                double d0 = (((AbstractClientPlayer)entity).hurtTime == 0 ? 0.0F : ((AbstractClientPlayer)entity).hurtTime - aEg.timer.bWm) * 0.5;
+                if (d0 > 0.0) {
+                    for (int i = 0; i < d0 * Math.random() / 2.0; i++) {
+                        NotificationComponent.a(
+                            new ait(
+                                new Vector2f((float)(this.targetInfoModule.position.x + 20.0), (float)(this.targetInfoModule.position.y + 20.0)),
+                                new Vector2f((float)(Math.random() - 0.5) * 1.7F, (float)(Math.random() - 0.5) * 1.7F)
+                            )
+                        );
+                    }
+                }
+            }
+        }
+    };
+
+    public ModernTargetInfo(String var1, TargetInfo var2) {
+        super(var1, var2);
+    }
+
+    private float a(ItemStack var1, Entity var2, Entity var3) {
+        float f = 1.0F;
+        if (var1 != null) {
+            Item item = var1.getItem();
+            if (item instanceof ItemSword) {
+                f = ((ItemSword)item).attackDamage;
+            } else if (item instanceof ItemTool) {
+                f = ((ItemTool)item).damageVsEntity;
+            }
+
+            int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, var1);
+            if (i > 0) {
+                f += i * 1.25F;
+            }
+        }
+
+        if (var2 instanceof EntityLivingBase entitylivingbase) {
+            int j = entitylivingbase.getActivePotionEffect(Potion.damageBoost) != null
+                ? entitylivingbase.getActivePotionEffect(Potion.damageBoost).getAmplifier() + 1
+                : 0;
+            if (j > 0) {
+                f += j * 3.0F;
+            }
+        }
+
+        if (var3 instanceof EntityLivingBase entitylivingbase1) {
+            float f1 = entitylivingbase1.getTotalArmorValue();
+            float f2 = Math.min(f1 * 0.04F, 0.8F);
+            f *= 1.0F - f2;
+            int k = this.C(entitylivingbase1);
+            int l = Math.min(20, (int)Math.ceil(Math.min(25, k) * 0.75F));
+            if (l > 0) {
+                f *= 1.0F - l * 0.04F;
+            }
+
+            int i1 = entitylivingbase1.getActivePotionEffect(Potion.resistance) != null
+                ? entitylivingbase1.getActivePotionEffect(Potion.resistance).getAmplifier() + 1
+                : 0;
+            if (i1 > 0) {
+                float f3 = Math.min(i1 * 0.2F, 0.8F);
+                f *= 1.0F - f3;
+            }
+        }
+
+        if (!Float.isFinite(f)) {
+            f = 1.0F;
+        }
+
+        return Math.max(0.01F, f);
+    }
+
+    private int C(EntityLivingBase var1) {
+        int i = 0;
+
+        for (int j = 0; j < 4; j++) {
+            ItemStack itemstack = var1.getCurrentArmor(j);
+            int k = itemstack != null ? EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, itemstack) : 0;
+            if (k > 0) {
+                i += this.T(k);
+            }
+        }
+
+        return i;
+    }
+
+    private int T(int var1) {
+        return (int)Math.floor((6 + var1 * var1) * 0.75F / 3.0F);
+    }
+
+    private float nC() {
+        long i = System.currentTimeMillis();
+        if (i - this.auK > 200L) {
+            this.auL = this.nD();
+            this.auK = i;
+        }
+
+        return this.auL;
+    }
+
+    private float nD() {
+        Entity entity = this.targetInfoModule.target;
+        if (!(entity instanceof AbstractClientPlayer)) {
+            return 0.0F;
+        }
+
+        float f = Math.max(0.1F, aEg.thePlayer.getHealth());
+        AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;
+        HealthBypass healthbypass = this.e(HealthBypass.class);
+        float f1 = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractclientplayer) : abstractclientplayer.getHealth();
+        float f2 = Math.max(0.1F, f1);
+        float f3 = this.a(aEg.thePlayer.getHeldItem(), aEg.thePlayer, entity);
+        float f4 = this.a(((AbstractClientPlayer)entity).getHeldItem(), entity, aEg.thePlayer);
+        if (f3 <= 0.01F && f4 <= 0.01F) {
+            return 0.0F;
+        }
+
+        int i;
+        for (i = 0; f > 0.0F && f2 > 0.0F && i < 256; i++) {
+            f2 -= f3;
+            f -= f4;
+        }
+
+        return i >= 256 ? f3 - f4 : f - f2;
+    }
+
+    private void renderTargetHead(AbstractClientPlayer var1, double var2, double var4, double var6) {
+        ais.vK();
+        ais.vL();
+        RenderUtil.roundedRectangle(var2, var4, var6, var6, this.rz().pl() * 2, adv.rK());
+        ais.aD(1);
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(770, 771);
+        GlStateManager.alphaFunc(516, 0.0F);
+        GlStateManager.enableTexture2D();
+        HealthBypass healthbypass = this.e(HealthBypass.class);
+        float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(var1) : var1.getHealth();
+        ResourceLocation resourcelocation = this.targetInfoModule.inWorld && f > 0.0F ? var1.getLocationSkin() : RenderSkeleton.getEntityTexture();
+        aEg.getTextureManager().bindTexture(resourcelocation);
+        Gui.drawScaledCustomSizeModalRect(var2, var4, 4.0F, 4.0F, 4.0F, 4.0F, var6, var6, 32.0F, 32.0F);
+        GlStateManager.disableBlend();
+        ais.vM();
+        float f1 = 0.5F;
+        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().pl() * 2, 0.5, aip.d(Color.BLACK, 40));
+    }
+}

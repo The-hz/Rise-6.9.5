@@ -1,0 +1,74 @@
+package hackclient.rise;
+
+import com.alan.clients.Client;
+import com.alan.clients.module.impl.exploit.Disabler;
+import com.alan.clients.module.impl.player.Scaffold;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.motion.JumpEvent;
+import com.alan.clients.newevent.impl.motion.PreMotionEvent;
+import com.alan.clients.util.interfaces.InstanceAccess;
+import com.alan.clients.util.player.MoveUtil;
+import net.minecraft.network.play.client.C03PacketPlayer;
+
+public final class vo implements InstanceAccess {
+    private Scaffold ajR;
+    private static final double ajS = 0.001;
+    private boolean ajT;
+    @EventLink(cH = 3)
+    public final Listener<PreMotionEvent> ajU = var1x -> {
+        if (!this.kC()) {
+            this.unregister();
+        } else {
+            if (!var1x.isOnGround() && !aEg.thePlayer.onGround) {
+                if (!this.ajR.isEnabled()) {
+                    this.unregister();
+                }
+            } else {
+                if (!this.e(Disabler.class).wu.wo() || !this.e(Disabler.class).isEnabled()) {
+                    if (aEg.thePlayer.ticksExisted % 3 == 0 && aEg.thePlayer.cqL > 2 && !aEg.gameSettings.keyBindJump.isKeyDown()) {
+                        if (this.e(Scaffold.class).isEnabled() && !aEg.gameSettings.cgI.isKeyDown() && !aEg.gameSettings.keyBindSneak.isKeyDown()) {
+                            var1x.setPosY(var1x.getPosY() + 0.001);
+                        }
+                    } else if (this.e(Scaffold.class).isEnabled()) {
+                    }
+                }
+
+                this.ajT = true;
+            }
+
+            if (this.e(Scaffold.class).isEnabled() && aEg.gameSettings.keyBindSneak.isPressed() && aEg.thePlayer.ticksExisted % 3 == 1) {
+                aEg.gameSettings.keyBindSneak.setPressed(false);
+            }
+
+            if (this.e(Scaffold.class).isEnabled() && aEg.gameSettings.keyBindSneak.isPressed()) {
+                MoveUtil.stop();
+                aEg.timer.dzD = 0.5F;
+                ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+            }
+        }
+    };
+    @EventLink(cH = 4)
+    public final Listener<JumpEvent> ajV = var1x -> {
+        if (aEg.thePlayer.ticksExisted % 3 == 1 && aEg.thePlayer.cqL > 2 && this.e(Scaffold.class).isEnabled()) {
+            var1x.setCancelled();
+        }
+    };
+
+    public vo(Scaffold var1) {
+        this.ajR = var1;
+    }
+
+    private void unregister() {
+        Client.a.e().c(this);
+        this.ajT = false;
+    }
+
+    private boolean kC() {
+        return this.ajR.isEnabled() || this.ajT;
+    }
+
+    public void onEnable() {
+        Client.a.e().b(this);
+    }
+}

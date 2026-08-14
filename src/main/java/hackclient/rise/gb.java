@@ -1,0 +1,204 @@
+package hackclient.rise;
+
+import java.awt.Font;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.function.Supplier;
+import lombok.Generated;
+import net.minecraft.client.Minecraft;
+
+public enum gb {
+    MAIN("product_sans_%s", "ttf"),
+    MINECRAFT("Minecraft", () -> Minecraft.getMinecraft().fontRendererObj),
+    ICONS_1("Icon-1", "ttf"),
+    ICONS_2("Icon-3", "ttf"),
+    CUSTOM("", "ttf");
+
+    Supplier<agc> kx;
+    agc ky;
+    String gK;
+    final String kz;
+    private final HashMap<Integer, agf> kA = new HashMap<>();
+    private static final gb[] $VALUES = dQ();
+
+    gb(String var3, String var4) {
+        this.gK = var3;
+        this.kz = var4;
+    }
+
+    gb(String var3, Supplier<agc> var4) {
+        this.gK = var3;
+        this.kz = "";
+        this.ky = (agc)var4.get();
+        this.kx = var4;
+    }
+
+    public agc o(int var1) {
+        try {
+            return this.a(var1, gd.NONE);
+        } catch (RuntimeException | Error throwable) {
+            throw throwable;
+        } catch (Throwable throwable) {
+            throw new RuntimeException(throwable);
+        }
+    }
+
+    public agc dM() {
+        try {
+            if (this.kx == null) {
+                throw new Exception("Please specify a size, this doesn't have a predefined font");
+            }
+            return this.a(0, gd.NONE);
+        } catch (RuntimeException | Error throwable) {
+            throw throwable;
+        } catch (Throwable throwable) {
+            throw new RuntimeException(throwable);
+        }
+    }
+
+    public agc a(int var1, gd var2) {
+        try {
+            if (this.kx != null) {
+                if (this.ky == null) {
+                    this.ky = this.kx.get();
+                }
+
+                return this.ky;
+            }
+            int i = Integer.parseInt("" + var1 + var2.dR());
+            if (!this.kA.containsKey(i)) {
+                Font font = null;
+                String s = "unknown";
+                if (this.gK.contains(":")) {
+                    s = this.gK;
+                    font = agg.q(s, var1);
+                } else {
+                    for (String s1 : var2.getAliases()) {
+                        s = "rise/font/" + String.format(this.gK, s1) + "." + this.kz;
+                        font = agg.p(s, var1);
+                        if (font != null) {
+                            break;
+                        }
+                    }
+                }
+
+                if (font == null) {
+                    throw new Exception("Unknown Font " + s);
+                }
+
+                agf agf = new agf(font, true, true, false);
+                if (this == MAIN) {
+                    Font font1 = b(var1, var2);
+                    if (font1 != null) {
+                        agf.a(new agh(font1, true, true));
+                    }
+
+                    Font font2 = agg.p("rise/font/product_sans_medium.ttf", var1);
+                    if (font2 != null) {
+                        agf.b(new agh(font2, true, true));
+                    }
+
+                    Font font3 = c(var1, var2);
+                    if (font3 != null) {
+                        agf.c(new agh(font3, true, true));
+                    }
+
+                    Font font4 = d(var1, var2);
+                    if (font4 != null) {
+                        agf.d(new agh(font4, true, true));
+                    }
+                }
+
+                this.kA.put(i, agf);
+            }
+
+            return this.kA.get(i);
+        } catch (RuntimeException | Error throwable) {
+            throw throwable;
+        } catch (Throwable throwable) {
+            throw new RuntimeException(throwable);
+        }
+    }
+
+    private static Font b(int var0, gd var1) {
+        String s = switch (gc.kC[var1.ordinal()]) {
+            case 1 -> "Light";
+            case 2 -> "Medium";
+            case 3 -> "Bold";
+            default -> "Regular";
+        };
+        Font font = agg.p("rise/font/HarmonyOS_Sans_SC_" + s + ".ttf", var0);
+        if (font != null) {
+            return font;
+        }
+
+        String s1 = System.getProperty("rise.harmonyos_sans_sc_dir");
+        return s1 != null && !s1.trim().isEmpty() ? agg.q(s1 + File.separator + "HarmonyOS_Sans_SC_" + s + ".ttf", var0) : null;
+    }
+
+    private static Font c(int var0, gd var1) {
+        return agg.p("rise/font/" + switch (gc.kC[var1.ordinal()]) {
+            case 1 -> "LINESeedJP_TTF_Th.ttf";
+            default -> "LINESeedJP_TTF_Rg.ttf";
+            case 3 -> "LINESeedJP_TTF_Bd.ttf";
+        }, var0);
+    }
+
+    private static Font d(int var0, gd var1) {
+        return agg.p("rise/font/" + switch (gc.kC[var1.ordinal()]) {
+            case 1 -> "LINESeedKR-Th.ttf";
+            default -> "LINESeedKR-Rg.ttf";
+            case 3 -> "LINESeedKR-Bd.ttf";
+        }, var0);
+    }
+
+    public static ArrayList<String> dN() {
+        ArrayList arraylist = new ArrayList();
+        a(arraylist, "/System/Library/Fonts");
+        a(arraylist, "/Library/Fonts");
+        a(arraylist, System.getProperty("user.home") + "/Library/Fonts");
+        a(arraylist, "C:\\Windows\\Fonts");
+        a(arraylist, System.getProperty("user.home") + "\\AppData\\Local\\Microsoft\\Windows\\Fonts");
+        a(arraylist, "/usr/share/fonts");
+        a(arraylist, "/usr/local/share/fonts");
+        a(arraylist, System.getProperty("user.home") + "/.fonts");
+        a(arraylist, System.getProperty("user.home") + "/.local/share/fonts");
+        return arraylist;
+    }
+
+    private static void a(ArrayList<String> var0, String var1) {
+        File file1 = new File(var1);
+        if (file1.exists() && file1.isDirectory()) {
+            File[] afile = file1.listFiles();
+            if (afile != null) {
+                for (File file2 : afile) {
+                    if (file2.isFile() && file2.getName().toLowerCase().endsWith(".ttf")) {
+                        var0.add(file2.getAbsolutePath());
+                    } else if (file2.isDirectory()) {
+                        a(var0, file2.getAbsolutePath());
+                    }
+                }
+            }
+        }
+    }
+
+    @Generated
+    public void setName(String var1) {
+        this.gK = var1;
+    }
+
+    @Generated
+    public String getName() {
+        return this.gK;
+    }
+
+    @Generated
+    public HashMap<Integer, agf> dO() {
+        return this.kA;
+    }
+
+    private static gb[] dQ() {
+        return new gb[]{MAIN, MINECRAFT, ICONS_1, ICONS_2, CUSTOM};
+    }
+}

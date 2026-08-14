@@ -1,0 +1,117 @@
+package com.alan.clients.module.impl.movement.noslow;
+
+import com.alan.clients.component.impl.player.SlotComponent;
+import com.alan.clients.module.impl.combat.KillAura;
+import com.alan.clients.module.impl.movement.NoSlow;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.motion.PreMotionEvent;
+import com.alan.clients.newevent.impl.motion.SlowDownEvent;
+import com.alan.clients.newevent.impl.packet.PacketSendEvent;
+import com.alan.clients.value.Mode;
+import com.alan.clients.value.impl.BooleanValue;
+import hackclient.rise.afi;
+import hackclient.rise.ahj;
+import hackclient.rise.aih;
+import hackclient.rise.ea;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemPotion;
+import net.minecraft.item.ItemSword;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.l;
+
+public class WatchdogNoSlow extends Mode<NoSlow> {
+    private int tR;
+    private boolean dk;
+    private boolean vh;
+    private Packet<?> NI;
+    private KillAura NJ = null;
+    public final BooleanValue NK = new BooleanValue("Slow down on Slabs", this, true);
+    @EventLink
+    public final Listener<PreMotionEvent> NL = var1x -> {
+        if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.isUsingItem() && this.NK.wo()) {
+            this.vh = false;
+        }
+
+        double d0 = var1x.getPosY();
+        if (Math.abs(d0 - Math.round(d0)) > 0.03 && aEg.thePlayer.onGround) {
+            this.vh = true;
+        }
+
+        if (aEg.thePlayer.isUsingItem() && !(aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword)) {
+            if (aEg.thePlayer.onGround) {
+                this.tR = 0;
+            } else {
+                this.tR++;
+            }
+
+            if (this.tR >= 2) {
+                this.dk = false;
+                this.NI = null;
+            } else if (aEg.thePlayer.onGround && !this.vh) {
+                var1x.setPosY(var1x.getPosY() + 0.001);
+            }
+        }
+
+        if (this.vh && !aEg.thePlayer.onGround && aEg.thePlayer.isUsingItem() && !(aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword)) {
+            aEg.thePlayer.motionX *= 0.1;
+            aEg.thePlayer.motionZ *= 0.1;
+        }
+    };
+    @EventLink
+    public final Listener<ea> NM = var1x -> {
+        if (aEg.thePlayer.getHeldItem() != null) {
+            if (aEg.thePlayer.isUsingItem()
+                || aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion && !ItemPotion.isSplash(aEg.thePlayer.getHeldItem().getMetadata())
+                || aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood
+                || aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
+                if (aEg.thePlayer.tR < 2 && aEg.thePlayer.tR != 0 && !this.vh) {
+                    afi.b("You must start eating while in the air even with potions");
+                    var1x.setCancelled();
+                } else if (aEg.thePlayer.onGround) {
+                    aEg.thePlayer.jump();
+                    var1x.setCancelled();
+                }
+            }
+        }
+    };
+    @EventLink
+    private final Listener<PacketSendEvent> NN = var1x -> {
+        if (this.NJ == null) {
+            this.NJ = this.e(KillAura.class);
+        }
+    };
+    @EventLink
+    public final Listener<SlowDownEvent> NO = var1x -> {
+        if (!this.vh || aEg.thePlayer.onGround) {
+            if (this.wj().DO.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
+                var1x.setCancelled();
+            }
+
+            if (this.wj().DP.wo()
+                && aEg.thePlayer.isUsingItem()
+                && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion
+                && !ItemPotion.isSplash(aEg.thePlayer.getHeldItem().getMetadata())) {
+                var1x.setCancelled();
+            }
+
+            if (this.wj().DR.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
+                var1x.setCancelled();
+            }
+        }
+
+        if (this.wj().DQ.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
+            SlotComponent slotcomponent = this.d(SlotComponent.class);
+            ahj.l(new l(SlotComponent.bQ() % 7 + (int)(Math.random() * 2.0) + 1));
+            slotcomponent = this.d(SlotComponent.class);
+            ahj.l(new l(SlotComponent.bQ()));
+            var1x.setCancelled();
+        }
+    };
+
+    public WatchdogNoSlow(String var1, NoSlow var2) {
+        super(var1, var2);
+    }
+}

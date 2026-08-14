@@ -1,0 +1,88 @@
+package com.alan.clients.module.impl.render.nametags;
+
+import com.alan.clients.component.impl.render.ProjectionComponent;
+import com.alan.clients.module.impl.player.HealthBypass;
+import com.alan.clients.module.impl.render.NameTags;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.render.Render2DEvent;
+import com.alan.clients.util.render.RenderUtil;
+import com.alan.clients.value.Mode;
+import com.alan.clients.value.impl.BooleanValue;
+import hackclient.rise.adv;
+import hackclient.rise.agc;
+import hackclient.rise.bv;
+import hackclient.rise.gb;
+import hackclient.rise.gd;
+import hackclient.rise.gg;
+import java.awt.Color;
+import java.util.Iterator;
+import java.util.List;
+import javax.vecmath.Vector4d;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.potion.Potion;
+
+public class ModernNameTags
+extends Mode<NameTags> {
+    private final BooleanValue atA = new BooleanValue("Show Health", (Mode<?>)this, (Boolean)true);
+    private final BooleanValue atB = new BooleanValue("Overlays (Bloom/Blur)", (Mode<?>)this, (Boolean)true);
+    private final agc atC = gb.MAIN.a(14, gd.LIGHT);
+    @EventLink
+    public final Listener<Render2DEvent> atD = render2DEvent -> {
+        List<EntityLivingBase> list = bv.b((Boolean)((NameTags)this.wj()).aoZ.wo(), (Boolean)((NameTags)this.wj()).apa.wo(), (Boolean)((NameTags)this.wj()).apb.wo(), (Boolean)((NameTags)this.wj()).apc.wo(), (Boolean)((NameTags)this.wj()).apd.wo(), true);
+        if (ModernNameTags.aEg.gameSettings.thirdPersonView != 0) {
+            list.add((EntityLivingBase)ModernNameTags.aEg.thePlayer);
+        }
+        Iterator<EntityLivingBase> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            Color color;
+            EntityLivingBase entityLivingBase = iterator.next();
+            if (!RenderUtil.isInViewFrustrum((Entity)entityLivingBase)) continue;
+            entityLivingBase.Tc();
+            Vector4d vector4d = ProjectionComponent.e((Entity)entityLivingBase);
+            if (vector4d == null) continue;
+            String string = entityLivingBase.getName();
+            double d2 = ((NameTags)this.wj()).a(string, gb.MAIN.a(17, gd.LIGHT));
+            HealthBypass healthBypass = this.e(HealthBypass.class);
+            float f2 = healthBypass != null && healthBypass.isEnabled() ? HealthBypass.B(entityLivingBase) : entityLivingBase.getHealth();
+            double d3 = vector4d.x + (vector4d.z - vector4d.x) / 2.0;
+            double d4 = vector4d.y - 2.0;
+            double d5 = (double)(gb.MAIN.a(17, gd.LIGHT).tq() - 2.0f + ((Boolean)this.atA.wo() != false ? this.atC.tq() : 0.0f)) + 4.0;
+            double d6 = d4 - d5 + 1.0;
+            boolean bl = entityLivingBase.isPotionActive(Potion.damageBoost);
+            Color color2 = new Color(255, 30, 30, 235);
+            Color color3 = bl ? color2 : Color.BLACK;
+            this.rz();
+            Color color4 = adv.rK();
+            Color color5 = new Color(255, 40, 40, color4.getAlpha());
+            Color color6 = color = bl ? ModernNameTags.a(color4, color5, 0.35f) : color4;
+            if (((Boolean)this.atB.wo()).booleanValue()) {
+                this.b(gg.BLOOM).c(() -> RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0 + 0.5, d6 + 0.5, d2 + 4.0 - 1.0, d5 - 1.0, this.rz().pl(), color3));
+            }
+            this.b(gg.REGULAR).c(() -> {
+                RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0, d6, d2 + 4.0, d5, this.rz().pl() - 1, color);
+                gb.MAIN.a(17, gd.LIGHT).c(string, d3 - 0.5, d6 - 0.5 + 4.0, this.rz().rA().getRGB());
+                if (((Boolean)this.atA.wo()).booleanValue()) {
+                    this.atC.c(String.valueOf((int)f2), d3, d4 + 5.0 - 2.0 - (double)9, Color.WHITE.getRGB());
+                }
+            });
+            if (!((Boolean)this.atB.wo()).booleanValue()) continue;
+            this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0, d6, d2 + 4.0, d5, this.rz().pl(), color3));
+        }
+        return;
+    };
+
+    public ModernNameTags(String string, NameTags nameTags) {
+        super(string, nameTags);
+    }
+
+    private static Color a(Color color, Color color2, float f2) {
+        float f3 = Math.max(0.0f, Math.min(1.0f, f2));
+        int n2 = (int)((float)color.getRed() + (float)(color2.getRed() - color.getRed()) * f3);
+        int n3 = (int)((float)color.getGreen() + (float)(color2.getGreen() - color.getGreen()) * f3);
+        int n4 = (int)((float)color.getBlue() + (float)(color2.getBlue() - color.getBlue()) * f3);
+        int n5 = (int)((float)color.getAlpha() + (float)(color2.getAlpha() - color.getAlpha()) * f3);
+        return new Color(n2, n3, n4, n5);
+    }
+}

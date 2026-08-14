@@ -1,0 +1,33 @@
+package hackclient.rise;
+
+import com.alan.clients.newevent.CancellableEvent;
+import lombok.Generated;
+import net.minecraft.client.gui.GuiScreen;
+
+public final class dt extends CancellableEvent {
+    private final int je;
+    private final char jf;
+    private final GuiScreen jg;
+
+    @Generated
+    public int cO() {
+        return this.je;
+    }
+
+    @Generated
+    public char cP() {
+        return this.jf;
+    }
+
+    @Generated
+    public GuiScreen cQ() {
+        return this.jg;
+    }
+
+    @Generated
+    public dt(int var1, char var2, GuiScreen var3) {
+        this.je = var1;
+        this.jf = var2;
+        this.jg = var3;
+    }
+}

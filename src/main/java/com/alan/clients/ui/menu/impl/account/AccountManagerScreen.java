@@ -1,0 +1,206 @@
+package com.alan.clients.ui.menu.impl.account;
+
+import com.alan.clients.Client;
+import com.alan.clients.ui.menu.impl.account.display.AccountViewModel;
+import com.alan.clients.ui.menu.impl.account.impl.AddAccountScreen;
+import com.alan.clients.util.animation.Animation;
+import com.alan.clients.util.animation.Easing;
+import com.alan.clients.util.interfaces.InstanceAccess;
+import com.alan.clients.util.render.RenderUtil;
+import hackclient.rise.adh;
+import hackclient.rise.adm;
+import hackclient.rise.adr;
+import hackclient.rise.aeb;
+import hackclient.rise.ael;
+import hackclient.rise.afv;
+import hackclient.rise.agk;
+import hackclient.rise.air;
+import hackclient.rise.aiv;
+import hackclient.rise.aiz;
+import hackclient.rise.gg;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.ScaledResolution;
+import org.lwjgl.opengl.GL11;
+
+public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
+    private static final afv ALT_MANAGER = Client.a.q();
+    private static final Runnable ADD_ACCOUNT_RUNNABLE = () -> aEg.displayGuiScreen(new AddAccountScreen());
+    private static final Runnable CANCEL_RUNNABLE = () -> aEg.displayGuiScreen(new adr());
+    private static final Runnable BACKGROUND_RUNNABLE = () -> {
+        ScaledResolution scaledresolution = new ScaledResolution(aEg);
+        RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK);
+    };
+    private static final Animation SLIDE_ANIMATION = new Animation(Easing.EASE_OUT_CIRC, 350L);
+    private static final adh[] MENU_BUTTONS = new adh[2];
+    private static final List<AccountViewModel<?>> ACCOUNT_DISPLAY_LIST = new ArrayList<>();
+    private static GuiScreen prevScreen;
+    private boolean updateMarker;
+    private static int screenWidth;
+    private static int screenHeight;
+    agk scrollUtil = new agk();
+    private static int accountsInRow;
+
+    public AccountManagerScreen(GuiScreen var1) {
+        prevScreen = var1;
+    }
+
+    @Override
+    public void drawScreen(int var1, int var2, float var3) {
+        aiv.aPL.a(aiz.OVERLAY, var3, null);
+        this.b(gg.BLUR).c(BACKGROUND_RUNNABLE);
+        GL11.glPushMatrix();
+        air.hK();
+        this.b(gg.BLOOM).c(() -> GuiScreen.drawRect(0, 0, 0, 0, 0));
+        this.scrollUtil.qx();
+        if (!ACCOUNT_DISPLAY_LIST.isEmpty()) {
+            int i = (int)ACCOUNT_DISPLAY_LIST.get(0).getHeight();
+            byte b0 = 5;
+            int j = (int)Math.ceil((double)ACCOUNT_DISPLAY_LIST.size() / accountsInRow);
+            int k = j * (i + b0) + 16;
+            int l = this.height - 48;
+            int i1 = Math.min(0, -(k - l));
+            this.scrollUtil.V(i1);
+        } else {
+            this.scrollUtil.V(0.0);
+        }
+
+        for (int j1 = 0; j1 < ACCOUNT_DISPLAY_LIST.size(); j1++) {
+            AccountViewModel accountviewmodel = ACCOUNT_DISPLAY_LIST.get(j1);
+            accountviewmodel.setScroll(this.scrollUtil.tE());
+            accountviewmodel.draw();
+        }
+
+        air.a(new ScaledResolution(aEg), 0.0, 0.0, this.width, this.height - 48);
+        air.disable();
+        GL11.glPopMatrix();
+
+        for (adh adh : MENU_BUTTONS) {
+            if (adh != null) {
+                adh.c(var1, var2, var3);
+            }
+        }
+    }
+
+    @Override
+    public void updateScreen() {
+        if (this.updateMarker) {
+            this.updateMarker = false;
+            ArrayList arraylist = new ArrayList();
+
+            for (AccountViewModel accountviewmodel : ACCOUNT_DISPLAY_LIST) {
+                if (accountviewmodel.isRemovable()) {
+                    ALT_MANAGER.tl().remove(accountviewmodel.getAccount());
+                    arraylist.add(accountviewmodel);
+                }
+            }
+
+            ACCOUNT_DISPLAY_LIST.removeAll(arraylist);
+            ALT_MANAGER.update();
+            this.reorderViewModels();
+        }
+    }
+
+    @Override
+    public void mouseClicked(int var1, int var2, int var3) {
+        for (adh adh : MENU_BUTTONS) {
+            if (aeb.a(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+                adh.rm();
+                return;
+            }
+        }
+
+        for (AccountViewModel accountviewmodel : ACCOUNT_DISPLAY_LIST) {
+            if (accountviewmodel.mouseClicked(var1, var2, var3)) {
+                this.updateMarker = true;
+                return;
+            }
+        }
+    }
+
+    @Override
+    protected void mouseReleased(int var1, int var2, int var3) {
+        super.mouseReleased(var1, var2, var3);
+    }
+
+    @Override
+    public void initGui() {
+        super.initGui();
+        screenWidth = this.width;
+        screenHeight = this.height;
+        int i = MENU_BUTTONS.length;
+        byte b0 = 100;
+        byte b1 = 24;
+        byte b2 = 5;
+        int j = this.width / 2 - ((i & 1) == 0 ? 105 * (i / 2) - 2 : (b0 + b2) * (i / 2) + b0 / 2);
+        MENU_BUTTONS[0] = new adm(0.0, 0.0, 0.0, 0.0, ADD_ACCOUNT_RUNNABLE, "Add Account");
+        MENU_BUTTONS[1] = new adm(0.0, 0.0, 0.0, 0.0, CANCEL_RUNNABLE, "Cancel");
+
+        for (adh adh : MENU_BUTTONS) {
+            adh.setX(j);
+            adh.setY(this.height - b1 - b2 * 2);
+            adh.P(b0);
+            adh.h(b1);
+            j += b0 + b2;
+        }
+
+        if (prevScreen instanceof AccountManagerScreen) {
+            this.reorderViewModels();
+        } else {
+            ACCOUNT_DISPLAY_LIST.clear();
+            ALT_MANAGER.tk();
+
+            for (ael ael : ALT_MANAGER.tl()) {
+                addDisplay(ael);
+            }
+
+            this.b(gg.REGULAR).c(BACKGROUND_RUNNABLE);
+        }
+    }
+
+    public static void addAccount(ael var0) {
+        addDisplay(var0);
+        ALT_MANAGER.tl().add(var0);
+        ALT_MANAGER.update();
+    }
+
+    private static void addDisplay(ael var0) {
+        short short1 = 172;
+        byte b0 = 40;
+        byte b1 = 5;
+        accountsInRow = Math.max(1, Math.min(3, (screenWidth - 57) / 177));
+        int i = 16 + 45 * (ACCOUNT_DISPLAY_LIST.size() / accountsInRow);
+        int j = screenWidth / 2 - ((accountsInRow & 1) == 0 ? 177 * (accountsInRow / 2) - 2 : (short1 + b1) * (accountsInRow / 2) + short1 / 2);
+        int k = j + (short1 + b1) * (ACCOUNT_DISPLAY_LIST.size() % accountsInRow);
+        AccountViewModel accountviewmodel = new AccountViewModel<>(var0, k, i, short1, b0);
+        accountviewmodel.setScreenHeight(screenHeight);
+        ACCOUNT_DISPLAY_LIST.add(accountviewmodel);
+    }
+
+    private void reorderViewModels() {
+        ArrayList arraylist = new ArrayList<>(ACCOUNT_DISPLAY_LIST);
+        ACCOUNT_DISPLAY_LIST.clear();
+        Iterator iterator = arraylist.iterator();
+
+        while (iterator.hasNext()) {
+            addDisplay(((AccountViewModel)iterator.next()).getAccount());
+        }
+    }
+
+    @Override
+    public void onResize(Minecraft var1, int var2, int var3) {
+        prevScreen = this;
+        super.onResize(var1, var2, var3);
+    }
+
+    @Override
+    public void onGuiClosed() {
+        ACCOUNT_DISPLAY_LIST.clear();
+        Arrays.fill(MENU_BUTTONS, null);
+    }
+}

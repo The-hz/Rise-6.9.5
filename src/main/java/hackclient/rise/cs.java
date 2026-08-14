@@ -1,0 +1,183 @@
+package hackclient.rise;
+
+import com.alan.clients.Client;
+import com.alan.clients.module.impl.render.ESP;
+import com.alan.clients.util.interfaces.InstanceAccess;
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.src.a;
+import org.lwjgl.opengl.GL11;
+
+public class cs extends cm implements InstanceAccess {
+    private final Map<EntityPlayer, float[][]> hW = new HashMap<>();
+    private static final float hX = 180.0F / (float)Math.PI;
+
+    public cs(cn var1) {
+        super(var1);
+    }
+
+    @Override
+    public void cp() {
+        GL11.glPushMatrix();
+        this.cv();
+
+        for (Entity entity : bv.bR()) {
+            if (entity instanceof EntityPlayer) {
+                this.a((EntityPlayer)entity, a.bWm);
+            }
+        }
+
+        this.cw();
+        GL11.glPopMatrix();
+    }
+
+    private void cv() {
+        GL11.glLineWidth(Client.a.g().c(ESP.class).anm.wo().floatValue());
+        GL11.glEnable(3042);
+        GL11.glBlendFunc(770, 771);
+        GL11.glEnable(2848);
+        aip.d(Client.a.g().c(ESP.class).anl.wo() ? Color.WHITE : this.hP.cr());
+        GL11.glDisable(2929);
+        GL11.glDisable(3553);
+        GL11.glDepthMask(false);
+    }
+
+    private void cw() {
+        GL11.glDepthMask(true);
+        GL11.glDisable(3042);
+        GL11.glEnable(3553);
+        GL11.glDisable(2848);
+        GL11.glEnable(2929);
+    }
+
+    @Override
+    public void a(EntityPlayer var1, ModelBiped var2) {
+        this.hW
+            .put(
+                var1,
+                new float[][]{
+                    {var2.bxN.rotateAngleX, var2.bxN.rotateAngleY, var2.bxN.rotateAngleZ},
+                    {var2.bxQ.rotateAngleX, var2.bxQ.rotateAngleY, var2.bxQ.rotateAngleZ},
+                    {var2.bxR.rotateAngleX, var2.bxR.rotateAngleY, var2.bxR.rotateAngleZ},
+                    {var2.bxS.rotateAngleX, var2.bxS.rotateAngleY, var2.bxS.rotateAngleZ},
+                    {var2.bxT.rotateAngleX, var2.bxT.rotateAngleY, var2.bxT.rotateAngleZ}
+                }
+            );
+    }
+
+    private void a(EntityPlayer var1, float var2) {
+        float[][] afloat = this.hW.get(var1);
+        if (afloat != null) {
+            GL11.glPushMatrix();
+            float f = (float)(ahf.l(var1.posX, var1.prevPosX, var2) - RenderManager.bUO);
+            float f1 = (float)(ahf.l(var1.posY, var1.prevPosY, var2) - RenderManager.bUP);
+            float f2 = (float)(ahf.l(var1.posZ, var1.prevPosZ, var2) - RenderManager.bUQ);
+            GL11.glTranslated(f, f1, f2);
+            boolean flag = var1.isSneaking();
+            float f3 = var1.rotationYawHead;
+            float f4 = var1.renderYawOffset;
+            float f5 = var1.prevRenderYawOffset;
+            float f6 = ahf.d(f4, f5, var2);
+            float f7 = flag ? 0.6F : 0.75F;
+            GL11.glRotatef(-f6, 0.0F, 1.0F, 0.0F);
+            GL11.glTranslatef(0.0F, 0.0F, flag ? -0.235F : 0.0F);
+            this.a(afloat, f7, flag, f6, f3);
+            GL11.glPopMatrix();
+        }
+    }
+
+    private void a(float[][] var1, float var2, boolean var3, float var4, float var5) {
+        for (int i = 1; i <= 2; i++) {
+            this.a(var1[i + 2], i == 1 ? -0.125F : 0.125F, var2);
+        }
+
+        GL11.glTranslatef(0.0F, 0.0F, var3 ? 0.25F : 0.0F);
+        GL11.glPushMatrix();
+        GL11.glTranslatef(0.0F, var3 ? -0.05F : 0.0F, var3 ? -0.01725F : 0.0F);
+
+        for (int j = 1; j <= 2; j++) {
+            this.b(var1[j], j == 1 ? -0.375F : 0.375F, var2 + 0.55F);
+        }
+
+        GL11.glRotatef(var4 - var5, 0.0F, 1.0F, 0.0F);
+        this.a(var1[0], var2);
+        GL11.glPopMatrix();
+        this.b(var2);
+    }
+
+    private void a(float[] var1, float var2, float var3) {
+        GL11.glPushMatrix();
+        GL11.glTranslatef(var2, var3, 0.0F);
+        this.a(var1);
+        GL11.glBegin(3);
+        GL11.glVertex3i(0, 0, 0);
+        GL11.glVertex3f(0.0F, -var3, 0.0F);
+        GL11.glEnd();
+        GL11.glPopMatrix();
+    }
+
+    private void b(float[] var1, float var2, float var3) {
+        GL11.glPushMatrix();
+        GL11.glTranslatef(var2, var3, 0.0F);
+        this.a(var1);
+        GL11.glBegin(3);
+        GL11.glVertex3i(0, 0, 0);
+        GL11.glVertex3f(0.0F, -0.5F, 0.0F);
+        GL11.glEnd();
+        GL11.glPopMatrix();
+    }
+
+    private void a(float[] var1, float var2) {
+        GL11.glPushMatrix();
+        GL11.glTranslatef(0.0F, var2 + 0.55F, 0.0F);
+        this.a(var1);
+        GL11.glBegin(3);
+        GL11.glVertex3i(0, 0, 0);
+        GL11.glVertex3f(0.0F, 0.3F, 0.0F);
+        GL11.glEnd();
+        GL11.glPopMatrix();
+    }
+
+    private void a(float[] var1) {
+        if (var1[0] != 0.0F) {
+            GL11.glRotatef(var1[0] * (180.0F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
+        }
+
+        if (var1[1] != 0.0F) {
+            GL11.glRotatef(var1[1] * (180.0F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
+        }
+
+        if (var1[2] != 0.0F) {
+            GL11.glRotatef(var1[2] * (180.0F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
+        }
+    }
+
+    private void b(float var1) {
+        GL11.glPushMatrix();
+        GL11.glTranslated(0.0, var1, 0.0);
+        GL11.glBegin(3);
+        GL11.glVertex3f(-0.125F, 0.0F, 0.0F);
+        GL11.glVertex3f(0.125F, 0.0F, 0.0F);
+        GL11.glEnd();
+        GL11.glPopMatrix();
+        GL11.glPushMatrix();
+        GL11.glTranslatef(0.0F, var1, 0.0F);
+        GL11.glBegin(3);
+        GL11.glVertex3i(0, 0, 0);
+        GL11.glVertex3f(0.0F, 0.55F, 0.0F);
+        GL11.glEnd();
+        GL11.glPopMatrix();
+        GL11.glPushMatrix();
+        GL11.glTranslatef(0.0F, var1 + 0.55F, 0.0F);
+        GL11.glBegin(3);
+        GL11.glVertex3f(-0.375F, 0.0F, 0.0F);
+        GL11.glVertex3f(0.375F, 0.0F, 0.0F);
+        GL11.glEnd();
+        GL11.glPopMatrix();
+    }
+}

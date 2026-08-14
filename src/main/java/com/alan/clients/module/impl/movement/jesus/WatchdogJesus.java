@@ -1,0 +1,74 @@
+package com.alan.clients.module.impl.movement.jesus;
+
+import com.alan.clients.module.impl.movement.Jesus;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.motion.PreMotionEvent;
+import com.alan.clients.newevent.impl.motion.StrafeEvent;
+import com.alan.clients.newevent.impl.other.BlockAABBEvent;
+import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
+import com.alan.clients.util.player.MoveUtil;
+import com.alan.clients.value.Mode;
+import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
+import de.florianmichael.vialoadingbase.ViaLoadingBase;
+import hackclient.rise.aih;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import net.minecraft.util.AxisAlignedBB;
+
+public class WatchdogJesus extends Mode<Jesus> {
+    private Boolean KG = false;
+    @EventLink
+    public final Listener<BlockAABBEvent> KH = var1x -> {
+        if (var1x.df() instanceof BlockLiquid && !aEg.thePlayer.inWater) {
+            this.KG = true;
+            int i = var1x.dg().getX();
+            int j = var1x.dg().getY();
+            int k = var1x.dg().getZ();
+            var1x.a(AxisAlignedBB.fromBounds(i, j, k, i + 1, j + 1, k + 1));
+        } else {
+            this.KG = false;
+        }
+    };
+    @EventLink
+    public final Listener<PreMotionEvent> KI = var0 -> {
+        if (aih.vl() && !aEg.thePlayer.inWater) {
+            aEg.thePlayer.onGround = true;
+            var0.setPosY(var0.getPosY() - (aEg.thePlayer.ticksExisted % 2 == 0 ? 0.0625 : 0.0325));
+            var0.setOnGround(false);
+        }
+    };
+    @EventLink
+    public final Listener<StrafeEvent> KJ = var0 -> {
+        if (aih.vl() && aEg.thePlayer.ae > 10 && !aEg.thePlayer.inWater) {
+            if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13)) {
+                var0.setSpeed(0.204);
+            } else {
+                var0.setSpeed(0.152);
+            }
+        } else if (aih.vl() && aEg.thePlayer.ae > 1) {
+            MoveUtil.strafe();
+        }
+
+        if (aEg.thePlayer.inWater && ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13)) {
+            MoveUtil.strafe(0.18);
+        }
+    };
+    @EventLink(cH = 0)
+    public final Listener<PacketReceiveEvent> KK = var1x -> {
+        Packet packet = var1x.dq();
+        if (packet instanceof S12PacketEntityVelocity && this.KG || packet instanceof S12PacketEntityVelocity && (aih.vl() || aEg.thePlayer.inWater)) {
+            S12PacketEntityVelocity s12packetentityvelocity = (S12PacketEntityVelocity)packet;
+            if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
+                s12packetentityvelocity.motionY = 0;
+                var1x.setCancelled();
+                return;
+            }
+        }
+    };
+
+    public WatchdogJesus(String var1, Jesus var2) {
+        super(var1, var2);
+    }
+}

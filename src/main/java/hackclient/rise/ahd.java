@@ -1,0 +1,75 @@
+package hackclient.rise;
+
+import com.alan.clients.Client;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
+
+public class ahd {
+    private static boolean aNc = false;
+
+    public ahd() {
+    }
+
+    public static String ce(String var0) {
+        return a(var0, Client.a.d());
+    }
+
+    public static String a(String var0, ahc var1) {
+        if (!aNc) {
+            uH();
+        }
+
+        String s = var1.uF().get(var0);
+        if (s == null) {
+            s = ahc.EN_US.uF().get(var0);
+        }
+
+        return s == null ? var0 : s;
+    }
+
+    public static void uH() {
+        for (ahc ahc : ahc.values()) {
+            ResourceLocation resourcelocation = new ResourceLocation("rise/text/" + ahc.uE() + ".properties");
+
+            try (
+                InputStream inputstream = Minecraft.getMinecraft().getResourceManager().getResource(resourcelocation).getInputStream();
+                BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(inputstream, StandardCharsets.UTF_8));
+            ) {
+                ahc.uF().clear();
+
+                String s;
+                while ((s = bufferedreader.readLine()) != null) {
+                    String s1 = s.trim();
+                    if (!s1.isEmpty() && !s1.startsWith("#")) {
+                        int i = s1.indexOf(61);
+                        if (i > 0) {
+                            String s2 = s1.substring(0, i).trim();
+                            String s3 = s1.substring(i + 1);
+                            if (!s2.isEmpty()) {
+                                if (s3.contains("\\u")) {
+                                    s3 = s3.replace("\\u2022", "•");
+                                }
+
+                                ahc.uF().put(s2, s3);
+                            }
+                        }
+                    }
+                }
+            } catch (Exception exception) {
+                System.out.println("Localization exception");
+                exception.printStackTrace();
+            }
+        }
+
+        aNc = true;
+    }
+
+    static {
+        uH();
+        aNc = false;
+    }
+}

@@ -1,0 +1,45 @@
+package com.alan.clients.module.impl.movement.speed;
+
+import com.alan.clients.component.impl.player.RotationComponent;
+import com.alan.clients.module.impl.movement.Speed;
+import com.alan.clients.newevent.Listener;
+import com.alan.clients.newevent.annotations.EventLink;
+import com.alan.clients.newevent.impl.motion.JumpEvent;
+import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
+import com.alan.clients.newevent.impl.motion.StrafeEvent;
+import com.alan.clients.util.player.MoveUtil;
+import com.alan.clients.value.Mode;
+import hackclient.rise.afi;
+
+public class PolarSpeed extends Mode<Speed> {
+    private int PD = 0;
+    @EventLink(cH = 4)
+    public final Listener<PreUpdateEvent> PE = var0 -> {
+        aEg.timer.dzD = 1.009F;
+        if (!aEg.thePlayer.onGround && aEg.gameSettings.keyBindForward.isKeyDown()) {
+            RotationComponent.bd();
+        }
+    };
+    @EventLink(cH = 4)
+    public final Listener<StrafeEvent> PF = var1x -> {
+        if (aEg.thePlayer.tR == 5 && this.PD % 2 != 0) {
+            aEg.thePlayer.motionY -= 0.03;
+        }
+
+        if (aEg.thePlayer.onGround) {
+            aEg.thePlayer.jump();
+        }
+
+        if (this.PD % 2 != 0) {
+            afi.c(aEg.thePlayer.tR);
+        }
+
+        MoveUtil.moveFlying(0.002);
+    };
+    @EventLink
+    public final Listener<JumpEvent> PG = var1x -> this.PD++;
+
+    public PolarSpeed(String var1, Speed var2) {
+        super(var1, var2);
+    }
+}

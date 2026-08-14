@@ -1,0 +1,59 @@
+package hackclient.rise;
+
+import net.minecraft.util.Vec3i;
+
+public class ahq {
+    private final int aND;
+    private final int aNE;
+    private boolean[][][] aNF;
+    public final Vec3i aNG;
+
+    public ahq(int var1, Vec3i var2) {
+        this.aND = var1;
+        this.aNG = var2;
+        this.aNE = this.aND * 2 + 2;
+        this.aX();
+    }
+
+    public void a(ahs var1) {
+        this.h(var1.getX(), var1.getY(), var1.getZ());
+    }
+
+    public void aX() {
+        this.aNF = new boolean[this.aNE][this.aNE][this.aNE];
+    }
+
+    public void h(int var1, int var2, int var3) {
+        int i = var1 - this.aNG.getX();
+        int j = var2 - this.aNG.getY();
+        int k = var3 - this.aNG.getZ();
+        this.k(i, j, k);
+        this.aNF[i + this.aND][j + this.aND][k + this.aND] = true;
+    }
+
+    public void i(int var1, int var2, int var3) {
+        int i = var1 - this.aNG.getX();
+        int j = var2 - this.aNG.getY();
+        int k = var3 - this.aNG.getZ();
+        this.k(i, j, k);
+        this.aNF[i + this.aND][j + this.aND][k + this.aND] = false;
+    }
+
+    public boolean b(ahs var1) {
+        return this.j(var1.getX(), var1.getY(), var1.getZ());
+    }
+
+    public boolean j(int var1, int var2, int var3) {
+        int i = var1 - this.aNG.getX();
+        int j = var2 - this.aNG.getY();
+        int k = var3 - this.aNG.getZ();
+        this.k(i, j, k);
+        return this.aNF[i + this.aND][j + this.aND][k + this.aND];
+    }
+
+    public void k(int var1, int var2, int var3) {
+        if (Math.abs(var1) > this.aND || Math.abs(var2) > this.aND || Math.abs(var3) > this.aND) {
+            System.out.println("Outside of size, " + var1 + " " + var2 + " " + var3);
+        }
+    }
+}
