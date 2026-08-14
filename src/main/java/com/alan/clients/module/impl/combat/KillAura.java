@@ -349,7 +349,7 @@ public class KillAura extends Module {
             }
             break;
          case 1934158813:
-            if (((String)var52).equals("1.9+ With 1.8" + " Animations")) {
+            if (((String)var52).equals("1.9+ With 1.8 Animations")) {
                var50 ^= (0L ^ var50) & -1L << 32;
             }
       }
@@ -357,7 +357,7 @@ public class KillAura extends Module {
       switch ((int)(var50 >>> 32)) {
          case 0:
          case 1:
-            if (this.me.wo().getName().equals("1.9+ With 1." + "8 Animations") && Math.random() > 0.2) {
+            if (this.me.wo().getName().equals("1.9+ With 1.8 Animations") && Math.random() > 0.2) {
                RenderUtil.E(this.jE);
             }
 
@@ -817,7 +817,7 @@ public class KillAura extends Module {
          .add(new SubMode("Grim"))
          .add(new SubMode("Intave"))
          .add(new SubMode("Old Intave"))
-         .add(new SubMode("Imperfec" + "t Vanill" + "a"))
+         .add(new SubMode("Imperfect Vanilla"))
          .add(new SubMode("Vanilla ReBlock"))
          .add(new SubMode("Watchdog 1.12"))
          .add(new SubMode("New NCP"))
@@ -826,30 +826,30 @@ public class KillAura extends Module {
          .add(new SubMode("Dual Sword"))
          .add(new SubMode("Watchdog 1.8"))
          .setDefault("None");
-      this.lW = new BooleanValue("New (you need this toggled on curre" + "Fake", this, false, () -> !this.lV.wo().getName().equals("Watchdog"));
-      this.lX = new BooleanValue("Fallback to W" + "atchdog", this, false, () -> !this.eB());
-      this.lY = new BooleanValue("Hide Secon" + "d Sword", this, true, () -> (!this.eB() ? 1 : 73 ^ 82 ^ 27) != 0);
+      this.lW = new BooleanValue("New (you need this toggled on curreFake", this, false, () -> !this.lV.wo().getName().equals("Watchdog"));
+      this.lX = new BooleanValue("Fallback to Watchdog", this, false, () -> !this.eB());
+      this.lY = new BooleanValue("Hide Second Sword", this, true, () -> (!this.eB() ? 1 : 73 ^ 82 ^ 27) != 0);
       this.lZ = new BooleanValue(
-         "Right Cli" + "ck Only", this, false, () -> this.lV.wo().getName().equals((String)o0Oo000O0oO[241]) || this.lV.wo().getName().equals("Fake")
+         "Right Click Only", this, false, () -> this.lV.wo().getName().equals("None") || this.lV.wo().getName().equals("Fake")
       );
       this.ma = new BooleanValue(
-         "Prevent Serverside" + " Blocking",
+         "Prevent Serverside Blocking",
          this,
          false,
          () -> (!this.lV.wo().getName().equals("None") && !this.lV.wo().getName().equals("Fake") ? 1 : 105 - 105) != 0
       );
       this.mb = new BooleanValue(
-         "Block Slowdown", this, false, () -> this.lV.wo().getName().equals("None") || this.lV.wo().getName().equals((String)o0Oo000O0oO[56])
+         "Block Slowdown", this, false, () -> this.lV.wo().getName().equals("None") || this.lV.wo().getName().equals("Fake")
       );
       this.md = new ModeValue("Sorting", this).add(new SubMode("Distance")).add(new SubMode("Health")).add(new SubMode("Hurt Time")).setDefault("Distance");
-      this.me = new ModeValue("Click Delay" + " Mode", this)
+      this.me = new ModeValue("Click Delay Mode", this)
          .add(new SubMode("Normal"))
          .add(new SubMode("Hit Select"))
          .add(new SubMode("1.9+"))
-         .add(new SubMode("1.9+ With 1.8 Animatio" + "ns"))
+         .add(new SubMode("1.9+ With 1.8 Animations"))
          .setDefault("Normal");
-      this.mf = new BooleanValue("Randomize 1.9+ Spe" + "ed", this, false, () -> (!this.me.wo().getName().contains("1.9+") ? 1 : (-57 ^ 17) - -42) != 0);
-      this.mg = new NumberValue("Randomize" + " Factor", this, 0.2, 0.05, 1.0, 0.05, () -> !this.mf.wo() || !this.me.wo().getName().contains("1.9+"));
+      this.mf = new BooleanValue("Randomize 1.9+ Speed", this, false, () -> (!this.me.wo().getName().contains("1.9+") ? 1 : (-57 ^ 17) - -42) != 0);
+      this.mg = new NumberValue("Randomize Factor", this, 0.2, 0.05, 1.0, 0.05, () -> !this.mf.wo() || !this.me.wo().getName().contains("1.9+"));
       this.mh = new NumberValue("Range", this, 3, 3, 6, 0.1);
       this.mi = new NumberValue("Rotation Range", this, 3, 0, 6, 0.1);
       this.mj = new BoundsNumberValue("Rotation speed", this, 5, 10, 0, 10, 1);
@@ -870,17 +870,17 @@ public class KillAura extends Module {
 
          return var10000;
       });
-      this.mp = new BooleanValue("Knockback Displacem" + "ent", this, true);
-      this.mq = new BooleanValue("Knockback Displa" + "cement Debug", this, false, () -> (!this.eV() ? 1 : -94 ^ -94) != 0);
-      this.mr = new BooleanValue("Silent Rot" + "ations", this, true);
-      this.movementCorrection = new ListValue<>("Movement correcti" + "on", this);
+      this.mp = new BooleanValue("Knockback Displacement", this, true);
+      this.mq = new BooleanValue("Knockback Displacement Debug", this, false, () -> (!this.eV() ? 1 : -94 ^ -94) != 0);
+      this.mr = new BooleanValue("Silent Rotations", this, true);
+      this.movementCorrection = new ListValue<>("Movement correction", this);
       this.mt = new BooleanValue(
-         "Show Mov" + "ement Ar" + "c", this, false, () -> (this.movementCorrection.wo() == MovementFix.OFF ? 1 : -71 - -57 ^ -14) != 0
+         "Show Movement Arc", this, false, () -> (this.movementCorrection.wo() == MovementFix.OFF ? 1 : -71 - -57 ^ -14) != 0
       );
       this.mu = new BooleanValue("Keep sprint", this, false);
-      this.mv = new BooleanValue("Old Prediction" + " Keep sprint", this, false);
-      this.mw = new BooleanValue("Old Movef" + "ix Boost", this, false);
-      this.mx = new BooleanValue("New Universal Kee" + "p sprint", this, false);
+      this.mv = new BooleanValue("Old Prediction Keep sprint", this, false);
+      this.mw = new BooleanValue("Old Movefix Boost", this, false);
+      this.mx = new BooleanValue("New Universal Keep sprint", this, false);
       this.my = 0;
       this.mz = false;
       this.mA = -1;
@@ -889,7 +889,7 @@ public class KillAura extends Module {
       this.mF = -1;
       this.mH = -1;
       this.mL = new ModeValue("Target ESP Mode", this).add(new SubMode("Ring")).add(new SubMode("Box")).add(new SubMode("None")).setDefault("Ring");
-      this.mM = new BooleanValue("Colored Sigma Ri" + "ng", this, true, () -> !this.mL.wo().getName().equals("Ring"));
+      this.mM = new BooleanValue("Colored Sigma Ring", this, true, () -> !this.mL.wo().getName().equals("Ring"));
       this.mN = new ModeValue("Box Mode", this, () -> (!this.mL.wo().getName().equals("Box") ? 1 : 60 ^ 60) != 0)
          .add(new SubMode("Above"))
          .add(new SubMode("Full"))
@@ -914,18 +914,18 @@ public class KillAura extends Module {
          .add(new SubMode("Legit/Normal"))
          .add(new SubMode("Snap"))
          .add(new SubMode("NCP"))
-         .add(new SubMode("Autistic Anti" + "Cheat"))
+         .add(new SubMode("Autistic AntiCheat"))
          .add(new SubMode("Advanced"))
          .add(new SubMode("Grim"))
          .setDefault("Legit/Normal");
-      this.mU = new NumberValue("Advanced Gravi" + "ty", this, 9, 1, 20, 0.1, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.mU = new NumberValue("Advanced Gravity", this, 9, 1, 20, 0.1, () -> !this.mT.wo().getName().equals("Advanced"));
       this.mV = new NumberValue("Advanced Wind", this, 6, 0, 10, 0.1, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.mW = new NumberValue("Advanced Damped Dista" + "nce", this, 12, 1, 45, 1, () -> !this.mT.wo().getName().equals((String)o0Oo000O0oO[4]));
-      this.mX = new NumberValue("Advanced Max S" + "tep", this, 15, 3, 60, 0.5, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : 104 + -104) != 0);
-      this.mY = new NumberValue("Advanced Overshoo" + "t Chance", this, 77, 0, 100, 1, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.mZ = new NumberValue("Advanced Oversh" + "oot Scale", this, 0.0, 0.0, 0.6, 0.01, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.na = new NumberValue("Advanced Overshoo" + "t Max", this, 17, 2, 45, 0.5, () -> !this.mT.wo().getName().equals((String)o0Oo000O0oO[129]));
-      this.nb = new NumberValue("Advanced Gaussi" + "an", this, 0.0, 0, 0.6, 0.01, () -> {
+      this.mW = new NumberValue("Advanced Damped Distance", this, 12, 1, 45, 1, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.mX = new NumberValue("Advanced Max Step", this, 15, 3, 60, 0.5, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : 104 + -104) != 0);
+      this.mY = new NumberValue("Advanced Overshoot Chance", this, 77, 0, 100, 1, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.mZ = new NumberValue("Advanced Overshoot Scale", this, 0.0, 0.0, 0.6, 0.01, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.na = new NumberValue("Advanced Overshoot Max", this, 17, 2, 45, 0.5, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.nb = new NumberValue("Advanced Gaussian", this, 0.0, 0, 0.6, 0.01, () -> {
          boolean var10000;
          if (!this.mT.wo().getName().equals("Advanced")) {
             var10000 = true;
@@ -938,21 +938,21 @@ public class KillAura extends Module {
 
          return var10000;
       });
-      this.nc = new NumberValue("Advanced Acc" + "uracy", this, 40, 40, 100, 1, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : -88 - -88) != 0);
-      this.nd = new NumberValue("Advanced " + "Min Step", this, 0, 0.0, 8.0, 0.1, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.ne = new NumberValue("Advanced " + "Predictio" + "n", this, 1.0, 0, 3.5, 0.05, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.nf = new NumberValue("Advanced Dea" + "dzone", this, 1.0, 0.25, 4.5, 0.05, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.nc = new NumberValue("Advanced Accuracy", this, 40, 40, 100, 1, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : -88 - -88) != 0);
+      this.nd = new NumberValue("Advanced Min Step", this, 0, 0.0, 8.0, 0.1, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.ne = new NumberValue("Advanced Prediction", this, 1.0, 0, 3.5, 0.05, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.nf = new NumberValue("Advanced Deadzone", this, 1.0, 0.25, 4.5, 0.05, () -> !this.mT.wo().getName().equals("Advanced"));
       this.ng = new NumberValue(
          "Advanced Anchor", this, 0.0, 0.0, 0.7, 0.01, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : (28 ^ -53) - -41) != 0
       );
-      this.nh = new NumberValue("Advanced " + "Hold Tick" + "s", this, 2, 0, 8, 1, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.ni = new NumberValue("Advanced Cr" + "uise Floor", this, 1.0, 0.0, 5.0, 0.05, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.nj = new NumberValue("Advanced Pace J" + "itter", this, 0.0, 0.0, 0.8, 0.01, () -> !this.mT.wo().getName().equals((String)o0Oo000O0oO[181]));
+      this.nh = new NumberValue("Advanced Hold Ticks", this, 2, 0, 8, 1, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.ni = new NumberValue("Advanced Cruise Floor", this, 1.0, 0.0, 5.0, 0.05, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.nj = new NumberValue("Advanced Pace Jitter", this, 0.0, 0.0, 0.8, 0.01, () -> !this.mT.wo().getName().equals("Advanced"));
       this.nk = new NumberValue(
-         "Advanced Burst Chan" + "ce", this, 21, 0, 100, 1, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : -18 + -54 - -72) != 0
+         "Advanced Burst Chance", this, 21, 0, 100, 1, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : -18 + -54 - -72) != 0
       );
-      this.nl = new NumberValue("Advanced Burst " + "Strength", this, 0.0, 0.0, 1.0, 0.01, () -> !this.mT.wo().getName().equals((String)o0Oo000O0oO[6]));
-      this.nm = new BooleanValue("Advanced Flic" + "k Guard", this, true, () -> {
+      this.nl = new NumberValue("Advanced Burst Strength", this, 0.0, 0.0, 1.0, 0.01, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.nm = new BooleanValue("Advanced Flick Guard", this, true, () -> {
          int var10000;
          if (!this.mT.wo().getName().equals("Advanced")) {
             var10000 = 1;
@@ -965,10 +965,10 @@ public class KillAura extends Module {
 
          return var10000 != 0;
       });
-      this.nn = new NumberValue("Advanced Flick " + "Max", this, 29, 4, 60, 0.5, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : -9 + 9) != 0);
-      this.no = new BooleanValue("Advanced Swing", this, true, () -> !this.mT.wo().getName().equals((String)o0Oo000O0oO[333]));
-      this.np = new NumberValue("Advanced Aim Re" + "action", this, 180, 30, 450, 5, () -> !this.mT.wo().getName().equals((String)o0Oo000O0oO[115]));
-      this.nq = new NumberValue("Advanced Aim Reaction J" + "itter", this, 44, 0, 220, 1, () -> {
+      this.nn = new NumberValue("Advanced Flick Max", this, 29, 4, 60, 0.5, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : -9 + 9) != 0);
+      this.no = new BooleanValue("Advanced Swing", this, true, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.np = new NumberValue("Advanced Aim Reaction", this, 180, 30, 450, 5, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.nq = new NumberValue("Advanced Aim Reaction Jitter", this, 44, 0, 220, 1, () -> {
          boolean var10000;
          if (!this.mT.wo().getName().equals("Advanced")) {
             var10000 = true;
@@ -982,11 +982,11 @@ public class KillAura extends Module {
          return var10000;
       });
       this.nr = new NumberValue(
-         "Advanced Trigge" + "r Reaction", this, 95, 0, 300, 5, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : 123 - 123) != 0
+         "Advanced Trigger Reaction", this, 95, 0, 300, 5, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : 123 - 123) != 0
       );
-      this.ns = new NumberValue("Advanced Trigger Reaction Jitt" + "er", this, 30, 0, 140, 1, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.ns = new NumberValue("Advanced Trigger Reaction Jitter", this, 30, 0, 140, 1, () -> !this.mT.wo().getName().equals("Advanced"));
       this.nt = null;
-      this.nu = new BooleanValue("Attack whilst Scaffold" + "ing", this, false, () -> {
+      this.nu = new BooleanValue("Attack whilst Scaffolding", this, false, () -> {
          boolean var10000;
          if (!this.mS.wo()) {
             var10000 = true;
@@ -1001,7 +1001,7 @@ public class KillAura extends Module {
       });
       this.nv = new BooleanValue("No swing", this, false, () -> !this.mS.wo());
       this.nw = new BooleanValue("Auto disable", this, false, () -> !this.mS.wo());
-      this.nx = new BooleanValue("BadPackets che" + "ck", this, true, () -> (!this.mS.wo() ? 1 : 175 - 54 + -121) != 0);
+      this.nx = new BooleanValue("BadPackets check", this, true, () -> (!this.mS.wo() ? 1 : 175 - 54 + -121) != 0);
       this.ny = new BooleanValue("Targets", this, false);
       this.nz = new BooleanValue("Player", this, true, () -> !this.ny.wo());
       this.nA = new BooleanValue("Invisibles", this, false, () -> !this.ny.wo());
@@ -1019,7 +1019,7 @@ public class KillAura extends Module {
 
          return var10000;
       });
-      this.nD = new BooleanValue("Player Tea" + "mmates", this, true, () -> !this.ny.wo());
+      this.nD = new BooleanValue("Player Teammates", this, true, () -> !this.ny.wo());
       this.nE = null;
       this.nF = new BooleanValue("Weapons", this, false);
       this.nG = new BooleanValue("Fist", this, false, () -> (!this.nF.wo() ? 1 : -92 - -92) != 0);
@@ -1231,12 +1231,12 @@ public class KillAura extends Module {
                   }
 
                   mB = this.my > 0;
-                  if (this.lV.wo().getName().equals((String)o0Oo000O0oO[(44 ^ 117) + 60])
+                  if (this.lV.wo().getName().equals("Watchdog 1.12")
                      && !ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13)
                      && LastConnectionComponent.ip != null
                      && LastConnectionComponent.ip.contains("hypixel")
                      && aEg.thePlayer.ticksExisted % 5 == 0) {
-                     afi.b("USE THIS AUTOBLOCK CONFIG ON 1.20 NOT 1.8 in" + "stead use Watchdog 1.8 Autoblock on 1.8");
+                     afi.b("USE THIS AUTOBLOCK CONFIG ON 1.20 NOT 1.8 instead use Watchdog 1.8 Autoblock on 1.8");
                   }
 
                   if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13)
@@ -1244,7 +1244,7 @@ public class KillAura extends Module {
                      && LastConnectionComponent.ip.contains("hypixel")
                      && aEg.thePlayer.ticksExisted % 5 == 0
                      && this.lV.wo().getName().equals("Watchdog 1.8")) {
-                     afi.b("USE THIS AUTOBLOCK CONFIG ON 1.8 NOT 1.20 instead use Watchdog 1" + ".12 Autoblock on 1.20");
+                     afi.b("USE THIS AUTOBLOCK CONFIG ON 1.8 NOT 1.20 instead use Watchdog 1.12 Autoblock on 1.20");
                   }
 
                   if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13)
@@ -1252,7 +1252,7 @@ public class KillAura extends Module {
                      && LastConnectionComponent.ip.contains("hypixel")
                      && aEg.thePlayer.ticksExisted % 5 == 0
                      && this.lV.wo().getName().equals("Watchdog")) {
-                     afi.b("USE THIS AUTOBLOCK CONFIG ON 1.8 NOT 1.20 instead use Wat" + "chdog 1.12 Autoblock on 1.20");
+                     afi.b("USE THIS AUTOBLOCK CONFIG ON 1.8 NOT 1.20 instead use Watchdog 1.12 Autoblock on 1.20");
                   }
 
                   if (this.mT.wo().getName().equals("Grim") && aEg.thePlayer.ticksExisted % 20 == 0) {
@@ -1268,7 +1268,7 @@ public class KillAura extends Module {
                         )
                         & -1L << 32;
                      if ((int)(var247 >>> 32) == 0) {
-                        afi.b("OnTick rotation only works correctly on versions 1.17-1.20.6. Please switch to a version in that rang" + "e.");
+                        afi.b("OnTick rotation only works correctly on versions 1.17-1.20.6. Please switch to a version in that range.");
                      }
                   }
 
@@ -2367,7 +2367,7 @@ public class KillAura extends Module {
       this.mF = -1;
       this.eW();
       if (this.lV.wo().getName().equals("Watchdog 1.8") && nQ) {
-         afi.c("for Autoblock to work best keep Killaura enabled unless i" + "t's necessary to turn off");
+         afi.c("for Autoblock to work best keep Killaura enabled unless it's necessary to turn off");
       }
 
       if (this.eA()) {
@@ -2636,7 +2636,7 @@ public class KillAura extends Module {
       } else {
          if (!this.eF()) {
             if (!this.oE) {
-               afi.b("Dual Sword Auto Block requires two swords in your hotbar. Get a second s" + "word.");
+               afi.b("Dual Sword Auto Block requires two swords in your hotbar. Get a second sword.");
                this.oE = true;
             }
          } else {
@@ -2785,7 +2785,7 @@ public class KillAura extends Module {
       this.mF = -1;
       this.eW();
       if (this.lZ.wo() && Math.random() > 0.7) {
-         afi.b("hold right click to autoblock or turn off right cl" + "ick to autoblock");
+         afi.b("hold right click to autoblock or turn off right click to autoblock");
       }
    }
 
@@ -3104,7 +3104,7 @@ public class KillAura extends Module {
             }
             break;
          case -1844299644:
-            if (((String)var148).equals("Imperfec" + "t Vanill" + "a")) {
+            if (((String)var148).equals("Imperfect Vanilla")) {
                var167 ^= (17179869184L ^ var167) & -1L << 32;
             }
             break;
@@ -3729,7 +3729,7 @@ public class KillAura extends Module {
       } else if (this.mD.pf != var1.getEntityId()) {
          return "target-swap";
       } else if (this.my <= 0 && !this.et()) {
-         return "no-attack-" + "window";
+         return "no-attack-window";
       }
       return this.h(var1) ? "crit-priority" : null;
    }
@@ -3743,7 +3743,7 @@ public class KillAura extends Module {
             var51 = String.format("%s hurt=%d", var1, this.jE == null ? -1 : this.jE.hurtTime);
          } else {
             var51 = String.format(
-               "%s %s score=%.1f yaw=%.1f pitch=%.1f dist=%.2f hur" + "t=%d",
+               "%s %s score=%.1f yaw=%.1f pitch=%.1f dist=%.2f hurt=%d",
                var1,
                var2.pk,
                var2.pj,
@@ -3820,7 +3820,7 @@ public class KillAura extends Module {
       } else if (this.eA() && this.lX.wo() && (int)(var71 >>> 32) != 0) {
          this.q(true);
          this.oE = false;
-         this.lV.wF().stream().filter(var0 -> var0.getName().equals((String)o0Oo000O0oO[47])).findFirst().ifPresent(this.lV::c);
+         this.lV.wF().stream().filter(var0 -> var0.getName().equals("Watchdog")).findFirst().ifPresent(this.lV::c);
          this.oG = true;
       }
    }
@@ -3936,7 +3936,7 @@ public class KillAura extends Module {
    }
 
    public boolean eA() {
-      return this.lV.wo().getName().equals((String)o0Oo000O0oO[235]);
+      return this.lV.wo().getName().equals("Dual Sword");
    }
 
    public void q(boolean var1) {
@@ -4093,7 +4093,7 @@ public class KillAura extends Module {
       var167 ^= (-4294967296L ^ var167) & -1L << 32;
       switch (((String)var133).hashCode()) {
          case -1631405611:
-            if (((String)var133).equals("Autistic An" + "tiCheat")) {
+            if (((String)var133).equals("Autistic AntiCheat")) {
                var167 ^= (12884901888L ^ var167) & -1L << 32;
             }
             break;

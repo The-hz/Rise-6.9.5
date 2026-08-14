@@ -4,21 +4,15 @@ import org.json.JSONObject;
 
 public class e extends rip.vantage.commons.packet.api.abstracts.b {
     public static int[] O0OoOO0OOOOO;
-    public static Object[] oO00O0OO0ooO = new Object[1];
     public boolean ePR;
-    public static Object[] o0Oo000O0oO = new Object[3];
 
     static {
         Oo0o00000O00();
-        oO00O0OO0ooO[0] = "\u0000\u0002id\u0000\u0001a\u0000\u0001a";
-        o0Oo000O0oO[0] = "id";
-        o0Oo000O0oO[1] = "a";
-        o0Oo000O0oO[2] = "a";
     }
 
     public e(JSONObject var1) {
         super((byte)26);
-        this.ePR = var1.optBoolean((String)o0Oo000O0oO[1], false);
+        this.ePR = var1.optBoolean("a", false);
     }
 
     @Override

@@ -73,7 +73,7 @@ extends Mode<Velocity> {
     public BooleanValue tB;
     public static float jq;
     public static Object Oo0o00000O00;
-    public BooleanValue tw = new BooleanValue("Delay til" + "l Ground", (Mode<?>)this, (Boolean)true);
+    public BooleanValue tw = new BooleanValue("Delay till Ground", (Mode<?>)this, (Boolean)true);
     public NumberValue tF;
     public static float jp;
     public BooleanValue tE;
@@ -748,8 +748,8 @@ extends Mode<Velocity> {
     public GrimReduceVelocity(String string, Velocity velocity) {
         super(string, velocity);
         this.ty = new NumberValue("Reduce Ticks", this, (Number)14, (Number)1, (Number)20, (Number)1);
-        this.tz = new NumberValue("Teleport Disable Tic" + "ks", this, (Number)2, (Number)1, (Number)7, (Number)1);
-        this.tA = new BooleanValue("On Swing Disable on Au" + "ra", (Mode<?>)this, (Boolean)true);
+        this.tz = new NumberValue("Teleport Disable Ticks", this, (Number)2, (Number)1, (Number)7, (Number)1);
+        this.tA = new BooleanValue("On Swing Disable on Aura", (Mode<?>)this, (Boolean)true);
         this.tB = new BooleanValue("Rotate", (Mode<?>)this, (Boolean)false);
         this.tC = new BooleanValue("Delay Plus", (Mode<?>)this, (Boolean)false);
         this.tD = new BooleanValue("Extra Hit", (Mode<?>)this, (Boolean)true);

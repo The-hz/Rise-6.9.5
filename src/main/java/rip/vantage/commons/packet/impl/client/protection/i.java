@@ -4,10 +4,8 @@ import org.json.JSONObject;
 
 public class i extends rip.vantage.commons.packet.api.abstracts.a {
     public String ePj;
-    public static Object[] o0Oo000O0oO = new Object[7];
     public String ePk;
     public String ePi;
-    public static Object[] oO00O0OO0ooO = new Object[1];
     public static int[] O0OoOO0OOOOO;
 
     @Override
@@ -44,19 +42,11 @@ public class i extends rip.vantage.commons.packet.api.abstracts.a {
         super((byte)30);
         this.ePi = var1.getString("a");
         this.ePj = var1.optString("b", "");
-        this.ePk = var1.optString((String)o0Oo000O0oO[1], "");
+        this.ePk = var1.optString("c", "");
     }
 
     static {
         Oo0o00000O00();
-        oO00O0OO0ooO[0] = "\u0000\u0001b\u0000\u0001c\u0000\u0002id\u0000\u0001a\u0000\u0001b\u0000\u0001c\u0000\u0001a";
-        o0Oo000O0oO[0] = "b";
-        o0Oo000O0oO[1] = "c";
-        o0Oo000O0oO[2] = "id";
-        o0Oo000O0oO[3] = "a";
-        o0Oo000O0oO[4] = "b";
-        o0Oo000O0oO[5] = "c";
-        o0Oo000O0oO[6] = "a";
     }
 
     public static void Oo0o00000O00() {

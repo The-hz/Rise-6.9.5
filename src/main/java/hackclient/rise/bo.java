@@ -179,15 +179,13 @@ public class bo extends Component {
         long k = var5;
         long l = var3;
         String s2 = s4;
-        String s3 = "{\"singleplayer\":false,\"serverName\""
-            + ":\""
+        String s3 = "{\"singleplayer\":false,\"serverName\":\""
             + s2
             + "\",\"duration\":"
             + l
             + ",\"date\":"
             + k
-            + ",\"mcversion\":\"1.8.9\",\"fileFormat\":\"MCPR\",\"fileFormatVersion\":14,\"protocol\":47,\"generator\":\"rise\",\"se"
-            + "lfId\":-1,\"players\":"
+            + ",\"mcversion\":\"1.8.9\",\"fileFormat\":\"MCPR\",\"fileFormatVersion\":14,\"protocol\":47,\"generator\":\"rise\",\"selfId\":-1,\"players\":"
             + s1
             + "}";
         zipoutputstream.write(s3.getBytes(StandardCharsets.UTF_8));
@@ -196,9 +194,9 @@ public class bo extends Component {
         zipoutputstream.write("[]".getBytes(StandardCharsets.UTF_8));
         zipoutputstream.closeEntry();
         zipoutputstream.putNextEntry(new ZipEntry("mods.json"));
-        zipoutputstream.write(("{\"required" + "Mods\":[]}").getBytes(StandardCharsets.UTF_8));
+        zipoutputstream.write(("{\"requiredMods\":[]}").getBytes(StandardCharsets.UTF_8));
         zipoutputstream.closeEntry();
-        zipoutputstream.putNextEntry(new ZipEntry("recording.tmcpr." + "crc32"));
+        zipoutputstream.putNextEntry(new ZipEntry("recording.tmcpr.crc32"));
         zipoutputstream.write(Long.toString(crc32.getValue()).getBytes(StandardCharsets.UTF_8));
         zipoutputstream.closeEntry();
         zipoutputstream.close();
@@ -932,7 +930,7 @@ public class bo extends Component {
             k7 = j7 ^ ((int)j7 + (int)k2 ^ j7) & -1L >>> 32;
         }
 
-        ev = UUID.fromString((String)o0Oo000O0oO[4] + (String)o0Oo000O0oO[13]);
+        ev = UUID.fromString("d41d8cd9-8f00-3204-a980-0998ecf8427e");
     }
 
     public void b(GameProfile var1) {

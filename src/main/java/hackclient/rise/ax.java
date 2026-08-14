@@ -16,30 +16,17 @@ public class ax
 extends Component {
     @EventLink
     public Listener<PreMotionEvent> ct;
-    public static Object[] oO00O0OO0ooO;
-    public static Object[] o0Oo000O0oO;
     public static String cs;
     @EventLink
     public Listener<ServerJoinEvent> cv;
     public static int[] O0OoOO0OOOOO;
-    public Pattern cq = Pattern.compile("Your new API key" + " is (.*)");
+    public Pattern cq = Pattern.compile("Your new API key is (.*)");
     @EventLink
     public Listener<PacketReceiveEvent> cu;
     public static boolean cr;
-    public static Object[] fld_0oOOoOo0O00O_9;
 
     static {
         ax.Oo0o00000O00();
-        fld_0oOOoOo0O00O_9 = new Object[4];
-        ax.fld_0oOOoOo0O00O_9[0] = "65/zf6/R+G3Cmt2nYa41jxLAPFL4ansuZZik8hzEYw5O7BexLpLJpkXvuOL4o9Wi";
-        ax.fld_0oOOoOo0O00O_9[1] = "PBKDF2WithHmacSHA1";
-        ax.fld_0oOOoOo0O00O_9[2] = "AES";
-        ax.fld_0oOOoOo0O00O_9[3] = "AES/CBC/PKCS5Padding";
-        oO00O0OO0ooO = new Object[1];
-        ax.oO00O0OO0ooO[0] = "\u0000\u0010Your new API key\u0000\b is (.*)";
-        o0Oo000O0oO = new Object[2];
-        ax.o0Oo000O0oO[0] = "Your new API key";
-        ax.o0Oo000O0oO[1] = " is (.*)";
     }
 
     public ax() {

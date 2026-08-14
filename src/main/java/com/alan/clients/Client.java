@@ -788,7 +788,7 @@ public enum Client
         final long n = -6297520619757661444L;
         final long n2 = 876962712539923373L;
         final long n3 = 8521810644678046354L;
-        final String[] array = { "hackclient.", "com.alan." + "clients." };
+        final String[] array = { "hackclient.", "com.alan.clients." };
         final long n4 = array.length;
         final long n5 = n3;
         final long n6 = n5 ^ ((n4 ^ n5) & -1L >>> 32);
@@ -909,12 +909,12 @@ public enum Client
             n33 = (int)n25 + (int)n4;
             n34 = n25;
         }
-        new StringBuilder().append((String)Client.o0Oo000O0oO[8]).append((String)Client.o0Oo000O0oO[1]).toString();
-        new StringBuilder().append((String)Client.o0Oo000O0oO[3]).append((String)Client.o0Oo000O0oO[10]).toString();
-        final String s = (String)Client.o0Oo000O0oO[6];
-        final String s2 = (String)Client.o0Oo000O0oO[13];
+        new StringBuilder().append("Made with <3 by Alan and ").append("The_Bi11iona1re").toString();
+        new StringBuilder().append("\u00a9 Rise Client 2026. All Righ").append("ts Reserved").toString();
+        final String s = "6.9.5";
+        final String s2 = "6";
         Client.$VALUES = E();
-        Client.b = (String)Client.o0Oo000O0oO[4];
+        Client.b = "Rise";
     }
 
     @Generated

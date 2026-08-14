@@ -27,16 +27,13 @@ public class Grim30NoSlow extends Mode<NoSlow> {
     @EventLink
     public Listener<en> MU;
     public BooleanValue MP = new BooleanValue("Heypixel", this, false);
-    public static Object[] oO00O0OO0ooO = new Object[1];
     @EventLink
     public Listener<ea> MV;
-    public static Object[] fld_0oOOoOo0O00O_35 = new Object[4];
     public int hV;
     @EventLink
     public Listener<PacketSendEvent> MS;
     @EventLink
     public Listener<PreUpdateEvent> MR;
-    public static Object[] o0Oo000O0oO = new Object[1];
     @EventLink
     public Listener<MoveInputEvent> MT;
     @EventLink
@@ -536,11 +533,5 @@ public class Grim30NoSlow extends Mode<NoSlow> {
 
     static {
         Oo0o00000O00();
-        fld_0oOOoOo0O00O_35[0] = "B6sSVXk1h4LYEXJCXiJckdSVUcuJX62zErtGS4YBNrA=";
-        fld_0oOOoOo0O00O_35[1] = "PBKDF2WithHmacSHA1";
-        fld_0oOOoOo0O00O_35[2] = "AES";
-        fld_0oOOoOo0O00O_35[3] = "AES/CBC/PKCS5Padding";
-        oO00O0OO0ooO[0] = "\u0000\bHeypixel";
-        o0Oo000O0oO[0] = "Heypixel";
     }
 }

@@ -40,14 +40,11 @@ extends ade {
     public adh[] menuButtons;
     public adm aCw;
     public boolean aCz;
-    public static Object[] fld_0oOOoOo0O00O_2;
     public String jc;
     public Animation aCv;
     public String aCB = null;
-    public static Object[] o0Oo000O0oO;
     public agm aCy;
     public agc aCu = gb.MAIN.a(64, gd.LIGHT);
-    public static Object[] oO00O0OO0ooO;
     public boolean aCC;
     public boolean aCD;
     public Animation animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
@@ -55,44 +52,6 @@ extends ade {
 
     static {
         aap.Oo0o00000O00();
-        oO00O0OO0ooO = new Object[1];
-        aap.oO00O0OO0ooO[0] = "\u0000,A newer version is available please update y\u0000\u0005Login\u0000\u0004EC61\u0000";
-        o0Oo000O0oO = new Object[30];
-        aap.o0Oo000O0oO[0] = "A newer version is available please update y";
-        aap.o0Oo000O0oO[1] = "Login";
-        aap.o0Oo000O0oO[2] = "EC61";
-        aap.o0Oo000O0oO[3] = "ghts Reserved";
-        aap.o0Oo000O0oO[4] = "n/main/Version";
-        aap.o0Oo000O0oO[5] = "Auth";
-        aap.o0Oo000O0oO[6] = "Made with <3 by Alan a";
-        aap.o0Oo000O0oO[7] = "Rise";
-        aap.o0Oo000O0oO[8] = "https://raw.githubusercontent.com/risellc/LatestRiseVersio";
-        aap.o0Oo000O0oO[9] = "ttps://Vantage.Rip";
-        aap.o0Oo000O0oO[10] = "Rise";
-        aap.o0Oo000O0oO[11] = "Rise";
-        aap.o0Oo000O0oO[12] = "EC92";
-        aap.o0Oo000O0oO[13] = "nd The_Bi11iona1re";
-        aap.o0Oo000O0oO[14] = "our client on https://Vantage.Rip";
-        aap.o0Oo000O0oO[15] = "A newer version is available please update your client on h";
-        aap.o0Oo000O0oO[16] = "6.9.5";
-        aap.o0Oo000O0oO[17] = "\\.";
-        aap.o0Oo000O0oO[18] = "jeYDms69hBo";
-        aap.o0Oo000O0oO[19] = "https://youtu.be/";
-        aap.o0Oo000O0oO[20] = "\u00a9 Rise Client 2026. All Ri";
-        aap.o0Oo000O0oO[21] = "HWID_MISMATCH";
-        aap.o0Oo000O0oO[22] = "\\.";
-        aap.o0Oo000O0oO[23] = "Rise";
-        aap.o0Oo000O0oO[24] = "Welcome";
-        aap.o0Oo000O0oO[25] = "Rise";
-        aap.o0Oo000O0oO[26] = "Username";
-        aap.o0Oo000O0oO[27] = "EC92";
-        aap.o0Oo000O0oO[28] = " HWID copied to clipboard.";
-        aap.o0Oo000O0oO[29] = "Login is taking longer than expected.";
-        fld_0oOOoOo0O00O_2 = new Object[4];
-        aap.fld_0oOOoOo0O00O_2[0] = "bC+88p3NF9ORWPg8c/abBjlmhpzsSSBLGiYWSGRFbGj39wOGzt+8Gi8+jxpEfDpe4ezIIOXpb0e8KWNnYf3g6YooeyRTxhRBiZ/sjzrq9r5FqMoPNXx2oWhiQy95sVfLMgFbZEnA4TePik+X93zfgvokXv9HUASOyB4eq+TUGZNufwjSRsOZTEwGgn4ocovuU5K8oVr0VD8BLrRf3wa/UsSWP7u7l9eTyr78mSo6gvhHg3aVtmAsDx94m0xvDvrUczKszVZjOnenyF80KK8rhiibxnTUHrzpAAllQAf53g6l4vt8PX4LT55Udp6jno0c0ULXR0+mPo+VCEnwnawcCeJ6ZHOA02W1o9VyvnQ4AfVkdJJ8GKXSwvI9wSwqiYtBKoHW32qAHOFlguJjceXbOvACdhQ+kDXYGI6xpMxySQVD2uscTqW896HwAw1/FAuA3hBiQfZmxst0/xP5ojKldyYLaC3LjBtlpYoSQ+m6yT8rQIrMNjJcspwmJikqWkImaLpjMT1lpErbdcZLvHux5ezhTLofhQ9TTpiVWvnkyk5TDcHln+iDk9bhRdqx0mdAkfJxHZcAFaqq56Uz4s8us3YzGU0uObrK/ScfwlG0Seuclth1t808wNqefJe8kTpgDi+jrtdHHhPkC2cMxhiHBHGM55eW53D/xap9FOV+ripyqVVwyl+SA+V/tjyrQ6hnAtS3Jc+w0S2qoJ4DOsgdZr3zjTC6CWKbsENOPVwvbdI=";
-        aap.fld_0oOOoOo0O00O_2[1] = "PBKDF2WithHmacSHA1";
-        aap.fld_0oOOoOo0O00O_2[2] = "AES";
-        aap.fld_0oOOoOo0O00O_2[3] = "AES/CBC/PKCS5Padding";
     }
 
     public static void Oo0o00000O00() {
@@ -562,8 +521,8 @@ extends ade {
                     l3 = l4 ^ (0L ^ l4) & -1L << 32;
                     while ((int)(l3 >>> 32) < 2) {
                         if (Float.parseFloat(stringArray[(int)(l3 >>> 32)]) < Float.parseFloat(stringArray2[(int)(l3 >>> 32)])) {
-                            System.out.println("A newer version is available please update y" + "our client on https://Vantage.Rip");
-                            this.aX("A newer version is available please update your client on h" + "ttps://Vantage.Rip");
+                            System.out.println("A newer version is available please update your client on https://Vantage.Rip");
+                            this.aX("A newer version is available please update your client on https://Vantage.Rip");
                             return;
                         }
                         try {
@@ -641,7 +600,7 @@ extends ade {
             this.aCD = true;
             this.aCB = string3;
             try {
-                java.awt.Desktop.getDesktop().browse(new java.net.URI("https://youtu.be/" + "jeYDms69hBo"));
+                java.awt.Desktop.getDesktop().browse(new java.net.URI("https://youtu.be/jeYDms69hBo"));
             } catch (java.io.IOException | java.net.URISyntaxException e) {
                 e.printStackTrace();
             }
@@ -655,7 +614,7 @@ extends ade {
     }
 
     public void rp() {
-        this.aCA = aec.aY("https://raw.githubusercontent.com/risellc/LatestRiseVersio" + "n/main/Version");
+        this.aCA = aec.aY("https://raw.githubusercontent.com/risellc/LatestRiseVersion/main/Version");
     }
 
     @Override
@@ -715,14 +674,14 @@ extends ade {
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-                    this.aX("Login is taking longer than expected." + " HWID copied to clipboard.");
+                    this.aX("Login is taking longer than expected. HWID copied to clipboard.");
                 }
                 this.aCz = false;
             } else if (this.jc != null) {
                 gb.MAIN.a(18, gd.LIGHT).c(this.jc, (float)this.width / 2.0f, d4 + 26.0, Color.RED.getRGB());
             }
-            gb.MAIN.a(18, gd.REGULAR).d("Made with <3 by Alan a" + "nd The_Bi11iona1re", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 20, aip.d(aBS, 100).getRGB());
-            gb.MAIN.a(12, gd.REGULAR).d("\u00a9 Rise Client 2026. All Ri" + "ghts Reserved", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 10, aip.d(aBS, 100).getRGB());
+            gb.MAIN.a(18, gd.REGULAR).d("Made with <3 by Alan and The_Bi11iona1re", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 20, aip.d(aBS, 100).getRGB());
+            gb.MAIN.a(12, gd.REGULAR).d("\u00a9 Rise Client 2026. All Rights Reserved", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 10, aip.d(aBS, 100).getRGB());
             this.aCv.Q(0.0);
             RenderUtil.d(0.0, 0.0, aap.aEg.displayWidth, aap.aEg.displayHeight, new Color(0, 0, 0, (int)this.aCv.sG()));
         });

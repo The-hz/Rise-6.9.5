@@ -15,7 +15,6 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class mx extends Mode<Flight> {
-    public static Object[] oO00O0OO0ooO = new Object[1];
     @EventLink
     public Listener<PacketSendEvent> FJ;
     public NumberValue FE;
@@ -23,8 +22,6 @@ public class mx extends Mode<Flight> {
     public BooleanValue FF;
     @EventLink
     public Listener<MoveInputEvent> FI;
-    public static Object[] o0Oo000O0oO = new Object[2];
-    public static Object[] fld_0oOOoOo0O00O_33 = new Object[4];
     @EventLink
     public Listener<StrafeEvent> FG;
     @EventLink
@@ -32,7 +29,7 @@ public class mx extends Mode<Flight> {
 
     public mx(String var1, Flight var2) {
         super(var1, var2);
-        this.FE = new NumberValue((String)o0Oo000O0oO[1], this, 1, 0.1, 9.5, 0.1);
+        this.FE = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
         this.FF = new BooleanValue("Send Flying", this, false);
         this.FG = var1x -> {
             float f = 0.0F;
@@ -68,12 +65,5 @@ public class mx extends Mode<Flight> {
 
     static {
         Oo0o00000O00();
-        oO00O0OO0ooO[0] = "\u0000\u000bSend Flying\u0000\u0005Speed";
-        o0Oo000O0oO[0] = "Send Flying";
-        o0Oo000O0oO[1] = "Speed";
-        fld_0oOOoOo0O00O_33[0] = "tUFi/ULMyoMH3ZDhlGSj7ymnoTy18WlkquVgtPoNPMsvihkfEWjrdYC7A7eIzC71";
-        fld_0oOOoOo0O00O_33[1] = "PBKDF2WithHmacSHA1";
-        fld_0oOOoOo0O00O_33[2] = "AES";
-        fld_0oOOoOo0O00O_33[3] = "AES/CBC/PKCS5Padding";
     }
 }

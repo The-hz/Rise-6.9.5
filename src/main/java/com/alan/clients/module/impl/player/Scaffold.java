@@ -95,7 +95,6 @@ public class Scaffold extends Module {
     public BooleanValue agk;
     @EventLink
     public Listener<TeleportEvent> agX;
-    public static Object[] fld_0oOOoOo0O00O_46 = new Object[4];
     public static boolean ahf;
     public ModeValue afJ = new ModeValue("Mode", this)
         .add(new SubMode("Normal"))
@@ -120,7 +119,6 @@ public class Scaffold extends Module {
     @EventLink
     public Listener<PacketReceiveEvent> agU;
     public NumberValue afS;
-    public static Object[] o0Oo000O0oO = new Object[166];
     public Vec3 targetBlock;
     public int agE;
     public BooleanValue agb;
@@ -151,7 +149,6 @@ public class Scaffold extends Module {
     public BooleanValue afX;
     public BoundsNumberValue afQ;
     public static int[] O0OoOO0OOOOO;
-    public static Object[] oO00O0OO0ooO = new Object[1];
     public BoundsNumberValue agm;
     public BooleanValue afU;
     public BooleanValue agr;
@@ -358,7 +355,7 @@ public class Scaffold extends Module {
     public void ks() {
         long j = -597661393861685211L;
         if (this.agE > 3) {
-            afi.c("Pause is grea" + "ter than 3");
+            afi.c("Pause is greater than 3");
         } else if (this.acr != null) {
             long k = j ^ ((this.afK.wo().getName().equals("Grim") ? 1L : 0L) << 32 ^ j) & -1L << 32;
             Vec3 vec3 = this.getHitVec();
@@ -1046,177 +1043,6 @@ public class Scaffold extends Module {
 
     static {
         Oo0o00000O00();
-        fld_0oOOoOo0O00O_46[0] = "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";
-        fld_0oOOoOo0O00O_46[1] = "PBKDF2WithHmacSHA1";
-        fld_0oOOoOo0O00O_46[2] = "AES";
-        fld_0oOOoOo0O00O_46[3] = "AES/CBC/PKCS5Padding";
-        oO00O0OO0ooO[0] = "\u0000\u0003Off\u0000\nWatchdog P\u0000\u0016Bypass Raycast When Fa\u0000\u0005Timer\u0000\u0006Normal\u0000\u0006blocks\u0000\u0006Ascend\u0000\u0010Ignore Speed Eff\u0000\bUnknown \u0000\u0005Sneak\u0000\bDisabled\u0000\u0005Telly\u0000[OnTick rotation only works correctly on versions 1.17-1.20.6. Please switch to a version in\u0000\u0003Off\u0000\u0003MMC\u0000\u0006Normal\u0000\tWatchdog \u0000\u0006Matrix\u0000\u0002On\u0000\u0005Tower\u0000\u000eTelly Only on \u0000\u000eWatchdog Telly\u0000\u0005Eagle\u0000\u0006Matrix\u0000\u0014RealStackSize is les\u0000\u0004Grim\u0000\u00010\u0000\u0006Normal\u0000";
-        o0Oo000O0oO[0] = "Off";
-        o0Oo000O0oO[1] = "Watchdog P";
-        o0Oo000O0oO[2] = "Bypass Raycast When Fa";
-        o0Oo000O0oO[3] = "Timer";
-        o0Oo000O0oO[4] = "Normal";
-        o0Oo000O0oO[5] = "blocks";
-        o0Oo000O0oO[6] = "Ascend";
-        o0Oo000O0oO[7] = "Ignore Speed Eff";
-        o0Oo000O0oO[8] = "Unknown ";
-        o0Oo000O0oO[9] = "Sneak";
-        o0Oo000O0oO[10] = "Disabled";
-        o0Oo000O0oO[11] = "Telly";
-        o0Oo000O0oO[12] = "OnTick rotation only works correctly on versions 1.17-1.20.6. Please switch to a version in";
-        o0Oo000O0oO[13] = "Off";
-        o0Oo000O0oO[14] = "MMC";
-        o0Oo000O0oO[15] = "Normal";
-        o0Oo000O0oO[16] = "Watchdog ";
-        o0Oo000O0oO[17] = "Matrix";
-        o0Oo000O0oO[18] = "On";
-        o0Oo000O0oO[19] = "Tower";
-        o0Oo000O0oO[20] = "Telly Only on ";
-        o0Oo000O0oO[21] = "Watchdog Telly";
-        o0Oo000O0oO[22] = "Eagle";
-        o0Oo000O0oO[23] = "Matrix";
-        o0Oo000O0oO[24] = "RealStackSize is les";
-        o0Oo000O0oO[25] = "Grim";
-        o0Oo000O0oO[26] = "0";
-        o0Oo000O0oO[27] = "Normal";
-        o0Oo000O0oO[28] = "Stop Sneaking";
-        o0Oo000O0oO[29] = "Telly";
-        o0Oo000O0oO[30] = "Off";
-        o0Oo000O0oO[31] = "Watchdog Predicti";
-        o0Oo000O0oO[32] = "Watchdog Jump";
-        o0Oo000O0oO[33] = "Normal";
-        o0Oo000O0oO[34] = "Sneak every x ";
-        o0Oo000O0oO[35] = "Telly";
-        o0Oo000O0oO[36] = "n Speed";
-        o0Oo000O0oO[37] = "Mode";
-        o0Oo000O0oO[38] = "Watchdog Telly J";
-        o0Oo000O0oO[39] = "Watchdog Jump";
-        o0Oo000O0oO[40] = "Watchdog Jump";
-        o0Oo000O0oO[41] = "Sneaking Speed";
-        o0Oo000O0oO[42] = "Breesily";
-        o0Oo000O0oO[43] = "Off";
-        o0Oo000O0oO[44] = "Sprint";
-        o0Oo000O0oO[45] = "Watchdog";
-        o0Oo000O0oO[46] = "Watchdog";
-        o0Oo000O0oO[47] = "Pause is grea";
-        o0Oo000O0oO[48] = "neak)";
-        o0Oo000O0oO[49] = "Grim";
-        o0Oo000O0oO[50] = "Off";
-        o0Oo000O0oO[51] = "Watchdog";
-        o0Oo000O0oO[52] = "Normal";
-        o0Oo000O0oO[53] = "Start Sneaking";
-        o0Oo000O0oO[54] = "Rotation Speed";
-        o0Oo000O0oO[55] = "New Watchdog";
-        o0Oo000O0oO[56] = "Air Jump";
-        o0Oo000O0oO[57] = "Legit";
-        o0Oo000O0oO[58] = "Snap";
-        o0Oo000O0oO[59] = "45";
-        o0Oo000O0oO[60] = "Normal";
-        o0Oo000O0oO[61] = "Off";
-        o0Oo000O0oO[62] = "Up Side Down";
-        o0Oo000O0oO[63] = "Eagle";
-        o0Oo000O0oO[64] = "Verus";
-        o0Oo000O0oO[65] = "Off";
-        o0Oo000O0oO[66] = "Godbridge";
-        o0Oo000O0oO[67] = "ect";
-        o0Oo000O0oO[68] = "Matrix";
-        o0Oo000O0oO[69] = "On";
-        o0Oo000O0oO[70] = "Vanilla";
-        o0Oo000O0oO[71] = "Render";
-        o0Oo000O0oO[72] = "Normal";
-        o0Oo000O0oO[73] = "Watchdog Telly Rotatio";
-        o0Oo000O0oO[74] = "Disabled";
-        o0Oo000O0oO[75] = "Watchdog Jump";
-        o0Oo000O0oO[76] = "-45";
-        o0Oo000O0oO[77] = "Don't force raycast on Watchdog T";
-        o0Oo000O0oO[78] = "n";
-        o0Oo000O0oO[79] = "Auto Jump";
-        o0Oo000O0oO[80] = "st";
-        o0Oo000O0oO[81] = "Watchdog";
-        o0Oo000O0oO[82] = "ion";
-        o0Oo000O0oO[83] = "Off";
-        o0Oo000O0oO[84] = "Right Click";
-        o0Oo000O0oO[85] = "Advanced";
-        o0Oo000O0oO[86] = ".8";
-        o0Oo000O0oO[87] = "Disable On Flag";
-        o0Oo000O0oO[88] = "Watchdog Jump";
-        o0Oo000O0oO[89] = "Watchdog Predicti";
-        o0Oo000O0oO[90] = "Verus";
-        o0Oo000O0oO[91] = "Normal";
-        o0Oo000O0oO[92] = "Legit";
-        o0Oo000O0oO[93] = "Telly";
-        o0Oo000O0oO[94] = "on";
-        o0Oo000O0oO[95] = "Vulcan";
-        o0Oo000O0oO[96] = "Predictio";
-        o0Oo000O0oO[97] = "Vulcan";
-        o0Oo000O0oO[98] = "Movement Correct";
-        o0Oo000O0oO[99] = "Watchdog Prediction 1";
-        o0Oo000O0oO[100] = "Normal";
-        o0Oo000O0oO[101] = "elly";
-        o0Oo000O0oO[102] = "rediction";
-        o0Oo000O0oO[103] = "Place Delay";
-        o0Oo000O0oO[104] = "Normal";
-        o0Oo000O0oO[105] = "Block Diagonal ";
-        o0Oo000O0oO[106] = "Telly";
-        o0Oo000O0oO[107] = "Watchdog";
-        o0Oo000O0oO[108] = "Expand";
-        o0Oo000O0oO[109] = "0";
-        o0Oo000O0oO[110] = "0";
-        o0Oo000O0oO[111] = "NCP";
-        o0Oo000O0oO[112] = "Rotation Block Rotation ";
-        o0Oo000O0oO[113] = "Normal";
-        o0Oo000O0oO[114] = "Strict";
-        o0Oo000O0oO[115] = "Rotation Block Boo";
-        o0Oo000O0oO[116] = "Extend Block Reach on Watchdog ";
-        o0Oo000O0oO[117] = "on";
-        o0Oo000O0oO[118] = "Breesily";
-        o0Oo000O0oO[119] = "Ray Cast";
-        o0Oo000O0oO[120] = "Auto Jump";
-        o0Oo000O0oO[121] = "Telly";
-        o0Oo000O0oO[122] = "Disabled";
-        o0Oo000O0oO[123] = "Rotations";
-        o0Oo000O0oO[124] = "Telly";
-        o0Oo000O0oO[125] = "Visual Back ";
-        o0Oo000O0oO[126] = "Off";
-        o0Oo000O0oO[127] = "Normal";
-        o0Oo000O0oO[128] = "Strict";
-        o0Oo000O0oO[129] = "Strict";
-        o0Oo000O0oO[130] = "Bypass";
-        o0Oo000O0oO[131] = " that range.";
-        o0Oo000O0oO[132] = "ter than 3";
-        o0Oo000O0oO[133] = "Normal";
-        o0Oo000O0oO[134] = "Snap";
-        o0Oo000O0oO[135] = "Strict";
-        o0Oo000O0oO[136] = "Strict";
-        o0Oo000O0oO[137] = "lling";
-        o0Oo000O0oO[138] = "Speed";
-        o0Oo000O0oO[139] = "Telly";
-        o0Oo000O0oO[140] = "Verus";
-        o0Oo000O0oO[141] = "Grim";
-        o0Oo000O0oO[142] = "Strict";
-        o0Oo000O0oO[143] = "Strict";
-        o0Oo000O0oO[144] = "s than or equal to 0";
-        o0Oo000O0oO[145] = "Grim";
-        o0Oo000O0oO[146] = "Off";
-        o0Oo000O0oO[147] = "Rotation Mode";
-        o0Oo000O0oO[148] = "Telly";
-        o0Oo000O0oO[149] = "Watchdog Jump";
-        o0Oo000O0oO[150] = "Telly";
-        o0Oo000O0oO[151] = "Grim";
-        o0Oo000O0oO[152] = "Strict";
-        o0Oo000O0oO[153] = "Watchdog";
-        o0Oo000O0oO[154] = "Keep-Y bypass";
-        o0Oo000O0oO[155] = "ing Jump";
-        o0Oo000O0oO[156] = "Safe Walk";
-        o0Oo000O0oO[157] = "Strict";
-        o0Oo000O0oO[158] = "Downwards (Press S";
-        o0Oo000O0oO[159] = "ump Delay";
-        o0Oo000O0oO[160] = "Yaw Offset";
-        o0Oo000O0oO[161] = "Same Y";
-        o0Oo000O0oO[162] = "Godbridge";
-        o0Oo000O0oO[163] = "Strict";
-        o0Oo000O0oO[164] = "Boost Only While Hold";
-        o0Oo000O0oO[165] = " Rots";
     }
 
     @Generated
@@ -1267,7 +1093,7 @@ public class Scaffold extends Module {
             .add(new VulcanSprint("Vulcan", this))
             .add(new VerusSprint("Verus", this))
             .add(new MatrixSprint("Matrix", this))
-            .add(new WatchdogPredictiSprint("Watchdog Predicti" + "on", this))
+            .add(new WatchdogPredictiSprint("Watchdog Prediction", this))
             .add(new WatchdogJumpSprint("Watchdog Jump", this))
             .add(new WatchdogSprint("Watchdog", this))
             .setDefault("Normal");
@@ -1283,10 +1109,10 @@ public class Scaffold extends Module {
             .add(new MatrixTower("Matrix", this))
             .add(new LegitTower("Legit", this))
             .add(new VerusTower("Verus", this))
-            .add(new vz("Watchdog Prediction 1" + ".8", this))
+            .add(new vz("Watchdog Prediction 1.8", this))
             .setDefault("Disabled");
         this.afO = new ModeValue("Same Y", this).add(new SubMode("Off")).add(new SubMode("On")).add(new SubMode("Auto Jump")).setDefault("Off");
-        this.afP = new ModeValue("Downwards (Press S" + "neak)", this)
+        this.afP = new ModeValue("Downwards (Press Sneak)", this)
             .add(new SubMode("Off"))
             .add(new NormalDownwards("Normal", this))
             .add(new WatchdogDownwards("Watchdog", this))
@@ -1296,13 +1122,13 @@ public class Scaffold extends Module {
         this.afR = new BoundsNumberValue("Place Delay", this, 0, 0, 0, 5, 1);
         this.afS = new NumberValue("Timer", this, 1, 0.1, 10, 0.1);
         this.afT = new NumberValue("Expand", this, 0, 0, 4, 1);
-        this.afU = new BooleanValue("Movement Correct" + "ion", this, false);
+        this.afU = new BooleanValue("Movement Correction", this, false);
         this.afV = new BooleanValue("Safe Walk", this, true);
-        this.afW = new BooleanValue("New Watchdog" + " Rots", this, false);
+        this.afW = new BooleanValue("New Watchdog Rots", this, false);
         this.afX = new BooleanValue("Keep-Y bypass", this, true);
-        this.afY = new BooleanValue("Watchdog P" + "rediction", this, false);
+        this.afY = new BooleanValue("Watchdog Prediction", this, false);
         this.afZ = new BooleanValue("Watchdog Telly", this, false);
-        this.aga = new BooleanValue("Visual Back " + "Rotations", this, true, () -> {
+        this.aga = new BooleanValue("Visual Back Rotations", this, true, () -> {
             int k;
             if (!this.afZ.wo()) {
                 k = 1;
@@ -1315,13 +1141,13 @@ public class Scaffold extends Module {
 
             return k != 0;
         });
-        this.agb = new BooleanValue("Block Diagonal " + "Ascend", this, true, () -> !this.afZ.wo());
-        this.agc = new BooleanValue("Don't force raycast on Watchdog T" + "elly", this, false, () -> !this.afZ.wo());
-        this.agd = new BooleanValue("Extend Block Reach on Watchdog " + "Telly", this, true, () -> !this.afZ.wo());
-        this.age = new BoundsNumberValue("Watchdog Telly J" + "ump Delay", this, 0, 0, 0, 5, 1, () -> (boolean)(!this.afZ.wo() ? true : (-8 ^ 41) - -47));
+        this.agb = new BooleanValue("Block Diagonal Ascend", this, true, () -> !this.afZ.wo());
+        this.agc = new BooleanValue("Don't force raycast on Watchdog Telly", this, false, () -> !this.afZ.wo());
+        this.agd = new BooleanValue("Extend Block Reach on Watchdog Telly", this, true, () -> !this.afZ.wo());
+        this.age = new BoundsNumberValue("Watchdog Telly Jump Delay", this, 0, 0, 0, 5, 1, () -> (boolean)(!this.afZ.wo() ? true : (-8 ^ 41) - -47));
         this.agf = new BooleanValue("Disable On Flag", this, true, () -> !this.afZ.wo());
-        this.agg = new BoundsNumberValue("Watchdog Telly Rotatio" + "n Speed", this, 35, 38, 0, 180, 1, () -> !this.afZ.wo());
-        this.agh = new BooleanValue("Rotation Block Boo" + "st", this, false, () -> {
+        this.agg = new BoundsNumberValue("Watchdog Telly Rotation Speed", this, 35, 38, 0, 180, 1, () -> !this.afZ.wo());
+        this.agh = new BooleanValue("Rotation Block Boost", this, false, () -> {
             int k;
             if (!this.afZ.wo()) {
                 k = 1;
@@ -1334,20 +1160,20 @@ public class Scaffold extends Module {
 
             return k != 0;
         });
-        this.agi = new BoundsNumberValue("Rotation Block Rotation " + "Speed", this, 122, 128, 0, 180, 1, () -> !this.afZ.wo() || !this.agh.wo());
-        this.agj = new BooleanValue("Boost Only While Hold" + "ing Jump", this, false, () -> !this.afZ.wo() || !this.agh.wo());
+        this.agi = new BoundsNumberValue("Rotation Block Rotation Speed", this, 122, 128, 0, 180, 1, () -> !this.afZ.wo() || !this.agh.wo());
+        this.agj = new BooleanValue("Boost Only While Holding Jump", this, false, () -> !this.afZ.wo() || !this.agh.wo());
         this.agk = new BooleanValue("Sneak", this, false);
         this.agl = new BoundsNumberValue("Start Sneaking", this, 0, 0, 0, 5, 1, () -> !this.agk.wo());
         this.agm = new BoundsNumberValue("Stop Sneaking", this, 0, 0, 0, 5, 1, () -> !this.agk.wo() ? true : true ^ true);
-        this.agn = new BoundsNumberValue("Sneak every x " + "blocks", this, 1, 1, 1, 10, 1, () -> (boolean)(!this.agk.wo() ? true : 109 - 62 - 47));
+        this.agn = new BoundsNumberValue("Sneak every x blocks", this, 1, 1, 1, 10, 1, () -> (boolean)(!this.agk.wo() ? true : 109 - 62 - 47));
         this.ago = new NumberValue("Sneaking Speed", this, 0.2, 0.2, 1, 0.05, () -> (boolean)(!this.agk.wo() ? true : -90 - -90));
-        this.agp = new BooleanValue("Telly Only on " + "Right Click", this, false, () -> !this.afJ.wo().getName().equals((String)o0Oo000O0oO[35]));
+        this.agp = new BooleanValue("Telly Only on Right Click", this, false, () -> !this.afJ.wo().getName().equals("Telly"));
         this.agq = new BooleanValue("Render", this, true);
         this.agr = new BooleanValue("Advanced", this, false);
         this.ags = new ModeValue("Yaw Offset", this, () -> !this.agr.wo()).add(new SubMode("0")).add(new SubMode("45")).add(new SubMode("-45")).setDefault("0");
-        this.agt = new BooleanValue("Ignore Speed Eff" + "ect", this, false, () -> !this.agr.wo());
+        this.agt = new BooleanValue("Ignore Speed Effect", this, false, () -> !this.agr.wo());
         this.agu = new BooleanValue("Up Side Down", this, false, () -> !this.agr.wo());
-        this.agv = new BooleanValue("Bypass Raycast When Fa" + "lling", this, false, () -> !this.agr.wo());
+        this.agv = new BooleanValue("Bypass Raycast When Falling", this, false, () -> !this.agr.wo());
         this.agy = new aka(0.0, 0.0, 0.0);
         this.agU = ahj::j;
         this.agV = var1 -> {
@@ -1469,7 +1295,7 @@ public class Scaffold extends Module {
                 } else {
                 }
 
-                afi.b("OnTick rotation only works correctly on versions 1.17-1.20.6. Please switch to a version in" + " that range.");
+                afi.b("OnTick rotation only works correctly on versions 1.17-1.20.6. Please switch to a version in that range.");
             }
 
             this.agG = 0;
@@ -1722,7 +1548,7 @@ public class Scaffold extends Module {
                                 ^ l
                         )
                         & -1L >>> 32;
-                if (!this.afM.wo().getName().equals("Watchdog Predicti" + "on")
+                if (!this.afM.wo().getName().equals("Watchdog Prediction")
                     || Sprint.Eo
                     || !aEg.thePlayer.onGround
                     || aEg.thePlayer.cqL < 3
@@ -1852,7 +1678,7 @@ public class Scaffold extends Module {
                                 SlotComponent slotcomponent3 = this.d(SlotComponent.class);
                                 ItemStack itemstack = SlotComponent.getItemStack();
                                 if (itemstack.cWo <= 0) {
-                                    afi.c("RealStackSize is les" + "s than or equal to 0");
+                                    afi.c("RealStackSize is less than or equal to 0");
                                 }
 
                                 if (itemstack.getItem() instanceof ItemBlock && itemstack.cWo > 0 && this.acr != null) {
@@ -2438,7 +2264,7 @@ public class Scaffold extends Module {
                 && f6 != 0.0F
                 && this.Yx != null
                 && (this.acr != null || this.agw != null)
-                && (!this.afM.wo().getName().equals("Watchdog " + "Predictio" + "n") || !aEg.thePlayer.onGround)) {
+                && (!this.afM.wo().getName().equals("Watchdog Prediction") || !aEg.thePlayer.onGround)) {
                 RotationComponent.setRotations(new Vector2f(this.acs, this.act), f6, movementfix);
             }
         }

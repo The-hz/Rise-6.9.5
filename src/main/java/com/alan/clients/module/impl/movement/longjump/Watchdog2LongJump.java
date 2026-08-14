@@ -55,11 +55,9 @@ public class Watchdog2LongJump extends Mode<LongJump>
     public static double Mi;
     public static int[] O0OoOO0OOOOO;
     public static boolean LX;
-    public static Object[] fld_0oOOoOo0O00O_40;
     @EventLink
     public Listener<PreMotionEvent> Mo;
     public double Mh;
-    public static Object[] o0Oo000O0oO;
     @EventLink
     public Listener<PreUpdateEvent> Mn;
     @EventLink
@@ -69,7 +67,6 @@ public class Watchdog2LongJump extends Mode<LongJump>
     public Listener<JumpEvent> Mp;
     public double jy;
     public double Me;
-    public static Object[] oO00O0OO0ooO;
     public NumberValue LV;
     public double Mf;
     @EventLink
@@ -95,7 +92,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
         Watchdog2LongJump.LW = false;
         this.LY = false;
         afi.b(Watchdog2LongJump.aEg.thePlayer.ae, new Object[0]);
-        afi.c("Distance " + "traveled:" + " " + sqrt, new Object[0]);
+        afi.c("Distance traveled: " + sqrt, new Object[0]);
         if (Watchdog2LongJump.aEg.thePlayer.onGround) {
             MoveUtil.stop();
         }
@@ -151,8 +148,8 @@ public class Watchdog2LongJump extends Mode<LongJump>
         super(s, longJump);
         this.LS = new BooleanValue("Timer", this, false);
         this.LT = new BooleanValue("Fly Mode", this, false);
-        this.LU = new BooleanValue((String)Watchdog2LongJump.o0Oo000O0oO[10] + "ge Move", this, false);
-        this.LV = new NumberValue("Delay Boost (go further with less he" + "ight)", this, 2, 0, 8, 1);
+        this.LU = new BooleanValue("Allow Damage Move", this, false);
+        this.LV = new NumberValue("Delay Boost (go further with less height)", this, 2, 0, 8, 1);
         this.Mb = new ArrayList<BlockPos>();
         this.Mc = false;
         this.Mj = (packetReceiveEvent -> {
@@ -172,7 +169,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
                         }
                         else {
                             Watchdog2LongJump.LW = false;
-                            cg.a("Watchdog Lon" + "gjump", "Bad knockback detected from the server... Cancelling and trying to save you from the v" + "oid", 5000);
+                            cg.a("Watchdog Longjump", "Bad knockback detected from the server... Cancelling and trying to save you from the void", 5000);
                         }
                         packetReceiveEvent.setCancelled();
                         break;
@@ -870,7 +867,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
             Watchdog2LongJump.aEg.thePlayer.jump();
         }
         else {
-            afi.b("start on the " + "ground", new Object[0]);
+            afi.b("start on the ground", new Object[0]);
             this.wj().setEnabled(false);
         }
         this.Md = Watchdog2LongJump.aEg.thePlayer.posX;
@@ -883,26 +880,6 @@ public class Watchdog2LongJump extends Mode<LongJump>
 
     static {
         Oo0o00000O00();
-        (Watchdog2LongJump.fld_0oOOoOo0O00O_40 = new Object[4])[0] = "zFZIoCVlFU7BcPigSxyS5pF5IZLnYYRaijnO5WAtb4zq2HwfwdhBys7kb8r0Cs6OAGQ+ye9bo6xTYOiYPn5PjSaLH1L8ifbC4BWAGRM7kDjnyxG8UF44YdkLwlTH9kqBvxGFfLbiEsmnZKTI2aRJeSPPnu+cseQ0ax7WFGbDJ9ui+rP4lpm1bxjU0Ik9HTeveevAHLI/6n541QebFVjy1LpPhZ4fPGYGOBncNvcmL9/mD9mCpCGUAC9aSuBW+NwwUd4i2mXYqQ9lFqG8lxetI/T8+utb8P+fFSKpPVDTwe6ChMS0a9otayxgexzxTKNKjBkEAX3mzQAIuO/kHUpdWsifj42sFEYfZGPSC9RQy7E=";
-        Watchdog2LongJump.fld_0oOOoOo0O00O_40[1] = "PBKDF2WithHmacSHA1";
-        Watchdog2LongJump.fld_0oOOoOo0O00O_40[2] = "AES";
-        Watchdog2LongJump.fld_0oOOoOo0O00O_40[3] = "AES/CBC/PKCS5Padding";
-        (Watchdog2LongJump.oO00O0OO0ooO = new Object[1])[0] = "\u0000\ttraveled:\u0000\u0006ground\u0000\fWatchdog Lon\u0000\u0005ight)\u0000\u0005Timer\u0000VBad knockback detected from the server... Cancelling and trying to save you from the v\u0000\u0007ge Move\u0000";
-        (Watchdog2LongJump.o0Oo000O0oO = new Object[15])[0] = "traveled:";
-        Watchdog2LongJump.o0Oo000O0oO[1] = "ground";
-        Watchdog2LongJump.o0Oo000O0oO[2] = "Watchdog Lon";
-        Watchdog2LongJump.o0Oo000O0oO[3] = "ight)";
-        Watchdog2LongJump.o0Oo000O0oO[4] = "Timer";
-        Watchdog2LongJump.o0Oo000O0oO[5] = "Bad knockback detected from the server... Cancelling and trying to save you from the v";
-        Watchdog2LongJump.o0Oo000O0oO[6] = "ge Move";
-        Watchdog2LongJump.o0Oo000O0oO[7] = "start on the ";
-        Watchdog2LongJump.o0Oo000O0oO[8] = "gjump";
-        Watchdog2LongJump.o0Oo000O0oO[9] = "Delay Boost (go further with less he";
-        Watchdog2LongJump.o0Oo000O0oO[10] = "Allow Dama";
-        Watchdog2LongJump.o0Oo000O0oO[11] = "Fly Mode";
-        Watchdog2LongJump.o0Oo000O0oO[12] = "oid";
-        Watchdog2LongJump.o0Oo000O0oO[13] = " ";
-        Watchdog2LongJump.o0Oo000O0oO[14] = "Distance ";
     }
 
 }

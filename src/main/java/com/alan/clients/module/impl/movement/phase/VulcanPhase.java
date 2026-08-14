@@ -28,13 +28,11 @@ public class VulcanPhase extends Mode<Phase> {
     @EventLink
     public Listener<PushOutOfBlockEvent> Oo;
     public static int[] O0OoOO0OOOOO;
-    public static Object[] fld_0oOOoOo0O00O_42 = new Object[4];
     public int Og;
     public int qH;
     public int Oh;
     public boolean ys = false;
     public boolean Jq;
-    public static Object[] o0Oo000O0oO = new Object[5];
     public boolean GQ;
     public boolean JM = false;
     @EventLink
@@ -43,22 +41,11 @@ public class VulcanPhase extends Mode<Phase> {
     public Listener<PacketReceiveEvent> On;
     @EventLink
     public Listener<PreMotionEvent> Oj;
-    public static Object[] oO00O0OO0ooO = new Object[1];
     @EventLink
     public Listener<StrafeEvent> Om;
 
     static {
         Oo0o00000O00();
-        oO00O0OO0ooO[0] = "\u0000\u0012Disabled due to no\u0000\b do this\u0000\u001cYou must me on the ground to\u0000\u0006Phased\u0000\u0012t being in a block";
-        o0Oo000O0oO[0] = "Disabled due to no";
-        o0Oo000O0oO[1] = " do this";
-        o0Oo000O0oO[2] = "You must me on the ground to";
-        o0Oo000O0oO[3] = "Phased";
-        o0Oo000O0oO[4] = "t being in a block";
-        fld_0oOOoOo0O00O_42[0] = "shwa8zgU757V7djWT3S3GGNsLoaaQN3t97gp+4YjbDBt6o2OegwgGU1O/yJV1mMCk0+41zCi4hBCo5J/ux3mDNHY9egFsSH1hwChcR53UUkTXp2iXgwCN4YarDhHrg2aP7XqCbRP3mLx31I0cFLirg==";
-        fld_0oOOoOo0O00O_42[1] = "PBKDF2WithHmacSHA1";
-        fld_0oOOoOo0O00O_42[2] = "AES";
-        fld_0oOOoOo0O00O_42[3] = "AES/CBC/PKCS5Padding";
     }
 
     @Override
@@ -483,7 +470,7 @@ public class VulcanPhase extends Mode<Phase> {
             aEg.thePlayer.setPosition(aEg.thePlayer.posX, aEg.thePlayer.posY - 1.0, aEg.thePlayer.posZ);
             MoveUtil.stop();
         } else {
-            afi.b("You must me on the ground to" + " do this");
+            afi.b("You must me on the ground to do this");
             this.e(Phase.class).toggle();
         }
     }
@@ -544,7 +531,7 @@ public class VulcanPhase extends Mode<Phase> {
                     }
                 }
             } else if (this.ys && !aih.vk()) {
-                afi.b("Disabled due to no" + (String)o0Oo000O0oO[4]);
+                afi.b("Disabled due to not being in a block");
                 this.e(Phase.class).toggle();
             }
         };

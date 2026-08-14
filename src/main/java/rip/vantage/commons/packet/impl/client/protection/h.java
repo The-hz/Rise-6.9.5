@@ -8,8 +8,6 @@ public class h extends rip.vantage.commons.packet.api.abstracts.a {
     public int ePy;
     public long ePx;
     public static int[] O0OoOO0OOOOO;
-    public static Object[] o0Oo000O0oO = new Object[7];
-    public static Object[] oO00O0OO0ooO = new Object[1];
 
     public long nb() {
         return this.ePx;
@@ -52,14 +50,6 @@ public class h extends rip.vantage.commons.packet.api.abstracts.a {
 
     static {
         Oo0o00000O00();
-        oO00O0OO0ooO[0] = "\u0000\u0001b\u0000\u0001a\u0000\u0001c\u0000\u0002id\u0000\u0001b\u0000\u0001c\u0000\u0001a";
-        o0Oo000O0oO[0] = "b";
-        o0Oo000O0oO[1] = "a";
-        o0Oo000O0oO[2] = "c";
-        o0Oo000O0oO[3] = "id";
-        o0Oo000O0oO[4] = "b";
-        o0Oo000O0oO[5] = "c";
-        o0Oo000O0oO[6] = "a";
     }
 
     public int aJK() {

@@ -32,10 +32,7 @@ public class ThrowableAura extends Module {
     public int qH;
     public BooleanValue qy;
     public static int[] O0OoOO0OOOOO;
-    public static Object[] oO00O0OO0ooO = new Object[1];
     public int qI;
-    public static Object[] fld_0oOOoOo0O00O_19 = new Object[4];
-    public static Object[] o0Oo000O0oO = new Object[16];
     public EntityLivingBase jE;
     public BooleanValue qB;
     public NumberValue qw;
@@ -110,27 +107,6 @@ public class ThrowableAura extends Module {
 
     static {
         Oo0o00000O00();
-        fld_0oOOoOo0O00O_19[0] = "aovkYhXX3G+n57tQgTHLIawQSKQaKsbk3d+YGBLoTJ93JA4/cA8f5u9PTkKAkOfvbV86ckpvx7LG8QQb5jzG202pcoLKdMnoIdfdiR2NLqL8aTfpTr+nMHJzh8basZyUlkdcJQVF88pq3bJZhurUZdd86fW+5nwns3IzWA0kt1tDZlXEnZ095LBZqSPDn0bZUdjBh4efXUDdf8I0vuFZGXFJroKcWR3GG6F+BME8f0Ea8NqD1E17h+KshiDh0GBI";
-        fld_0oOOoOo0O00O_19[1] = "PBKDF2WithHmacSHA1";
-        fld_0oOOoOo0O00O_19[2] = "AES";
-        fld_0oOOoOo0O00O_19[3] = "AES/CBC/PKCS5Padding";
-        oO00O0OO0ooO[0] = "\u0000\u0003FOV\u0000\u000eRotation Range\u0000\nPlayer Tea\u0000\u0004Mobs\u0000\tSnowballs\u0000\u000bAuto Switch\u0000\fModule Check\u0000\u0006mmates\u0000\u0005Range\u0000\u000bThrow Delay\u0000\nPrediction\u0000\u0007Players\u0000\u0007AntiBot\u0000";
-        o0Oo000O0oO[0] = "FOV";
-        o0Oo000O0oO[1] = "Rotation Range";
-        o0Oo000O0oO[2] = "Player Tea";
-        o0Oo000O0oO[3] = "Mobs";
-        o0Oo000O0oO[4] = "Snowballs";
-        o0Oo000O0oO[5] = "Auto Switch";
-        o0Oo000O0oO[6] = "Module Check";
-        o0Oo000O0oO[7] = "mmates";
-        o0Oo000O0oO[8] = "Range";
-        o0Oo000O0oO[9] = "Throw Delay";
-        o0Oo000O0oO[10] = "Prediction";
-        o0Oo000O0oO[11] = "Players";
-        o0Oo000O0oO[12] = "AntiBot";
-        o0Oo000O0oO[13] = "Minimum Range";
-        o0Oo000O0oO[14] = "Through Walls";
-        o0Oo000O0oO[15] = "Eggs";
     }
 
     public boolean gs() {
@@ -164,7 +140,7 @@ public class ThrowableAura extends Module {
         this.qu = new NumberValue("Minimum Range", this, 3.0, 1.0, 10.0, 0.1);
         this.qv = new NumberValue("Throw Delay", this, 5.0, 0.0, 100.0, 1.0);
         this.qw = new NumberValue("FOV", this, 180.0, 30.0, 360.0, 1.0);
-        this.qx = new BooleanValue("Player Tea" + "mmates", this, true);
+        this.qx = new BooleanValue("Player Teammates", this, true);
         this.qy = new BooleanValue("Players", this, true);
         this.qz = new BooleanValue("Mobs", this, true);
         this.qA = new BooleanValue("Auto Switch", this, true);

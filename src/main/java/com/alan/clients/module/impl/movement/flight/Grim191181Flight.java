@@ -17,14 +17,11 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public class Grim191181Flight extends Mode<Flight> {
-    public static Object[] o0Oo000O0oO = new Object[4];
-    public BooleanValue Gb = new BooleanValue("Glide less/Fly m" + "ore", this, true);
+    public BooleanValue Gb = new BooleanValue("Glide less/Fly more", this, true);
     public static int[] O0OoOO0OOOOO;
-    public static Object[] oO00O0OO0ooO = new Object[1];
     @EventLink
     public Listener<PostStrafeEvent> Ge;
     public NumberValue Gd;
-    public static Object[] fld_0oOOoOo0O00O_30 = new Object[4];
     @EventLink
     public Listener<PreMotionEvent> Gf;
     @EventLink
@@ -93,15 +90,6 @@ public class Grim191181Flight extends Mode<Flight> {
 
     static {
         Oo0o00000O00();
-        fld_0oOOoOo0O00O_30[0] = "FbeXFN4jWp6c1MdrMedOBVWj0Dr309ZgWT/B/LLs6/kxh9FAeGrn8mVKBAmyVyvEOqzFMzzmJqUkPyoJpVAdjw==";
-        fld_0oOOoOo0O00O_30[1] = "PBKDF2WithHmacSHA1";
-        fld_0oOOoOo0O00O_30[2] = "AES";
-        fld_0oOOoOo0O00O_30[3] = "AES/CBC/PKCS5Padding";
-        oO00O0OO0ooO[0] = "\u0000\u0005Speed\u0000\u0003ore\u0000\u0005Timer\u0000\u0010Glide less/Fly m";
-        o0Oo000O0oO[0] = "Speed";
-        o0Oo000O0oO[1] = "ore";
-        o0Oo000O0oO[2] = "Timer";
-        o0Oo000O0oO[3] = "Glide less/Fly m";
     }
 
     @Override

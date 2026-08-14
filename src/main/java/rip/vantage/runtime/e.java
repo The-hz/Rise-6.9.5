@@ -4,9 +4,7 @@ import java.net.InetAddress;
 
 public class e {
     public static int[] O0OoOO0OOOOO;
-    public static Object[] o0Oo000O0oO = new Object[2];
     public int eSg;
-    public static Object[] oO00O0OO0ooO = new Object[1];
     public InetAddress eSf;
 
     e(InetAddress var1, int var2) {
@@ -463,9 +461,6 @@ public class e {
 
     static {
         Oo0o00000O00();
-        oO00O0OO0ooO[0] = "\u0000\u0001[\u0000\u0001:";
-        o0Oo000O0oO[0] = "[";
-        o0Oo000O0oO[1] = ":";
     }
 
     public static e kp(String var0) {

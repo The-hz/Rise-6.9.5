@@ -210,7 +210,7 @@ implements zh {
             return;
         }
         String string2 = string.trim().toLowerCase(Locale.ENGLISH);
-        if (!string2.startsWith("/") || string2.contains((String)o0Oo000O0oO[0x5F ^ 0x5B])) {
+        if (!string2.startsWith("/") || string2.contains(" ")) {
             return;
         }
         if (avN.matcher(string2).matches()) {
@@ -220,7 +220,7 @@ implements zh {
 
     @Override
     public String getReason() {
-        return (String)o0Oo000O0oO[2];
+        return "accommand";
     }
 
     public static void Oo0o00000O00() {
@@ -697,7 +697,7 @@ implements zh {
                 l21 = l23 ^ ((long)((int)l22 + (int)l12) ^ l23) & -1L >>> 32;
             }
             if ((int)l21 >= (int)(l19 >>> 32)) {
-                avN = Pattern.compile((String)o0Oo000O0oO[0] + (String)o0Oo000O0oO[3], 2);
+                avN = Pattern.compile("^/(?:ac[a-z]+|verus[a-z]*|grim[a-z]*|vulcan[a-z]*|alerts?[a-z]*|verbose[a-z]*|watchdog[a-z]*|anticheat[a-z]*|ncp[a-z]*|aac[a-z]*|karhu[a-z]*|matrix[a-z]*|spartan[a-z]*|intave[a-z]*|polar[a-z]*|hawk[a-z]*)$", 2);
                 break clinit;
             }
             long l24 = l21;

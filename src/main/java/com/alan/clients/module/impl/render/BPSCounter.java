@@ -26,13 +26,10 @@ extends Module {
     public aka ali;
     public static int[] O0OoOO0OOOOO;
     public Vector2f scale;
-    public static Object[] oO00O0OO0ooO;
-    public static Object[] fld_0oOOoOo0O00O_49;
     @EventLink
     public Listener<Render2DEvent> all;
     @EventLink
     public Listener<PostStrafeEvent> alk;
-    public static Object[] o0Oo000O0oO;
     public DragValue position;
     public BooleanValue showTitle = new BooleanValue("Title", (Module)this, (Boolean)false);
     public String alj = "";
@@ -42,17 +39,6 @@ extends Module {
 
     static {
         BPSCounter.Oo0o00000O00();
-        fld_0oOOoOo0O00O_49 = new Object[4];
-        BPSCounter.fld_0oOOoOo0O00O_49[0] = "kmWRU7kLeDzItprBPCdPgkYkubhRdfDi+Tj9IQVWTNzNgwUL1S8Aq3gHFdzbqsgW";
-        BPSCounter.fld_0oOOoOo0O00O_49[1] = "PBKDF2WithHmacSHA1";
-        BPSCounter.fld_0oOOoOo0O00O_49[2] = "AES";
-        BPSCounter.fld_0oOOoOo0O00O_49[3] = "AES/CBC/PKCS5Padding";
-        oO00O0OO0ooO = new Object[1];
-        BPSCounter.oO00O0OO0ooO[0] = "\u0000\u0004BPS \u0000\bPosition\u0000\u0005Title";
-        o0Oo000O0oO = new Object[3];
-        BPSCounter.o0Oo000O0oO[0] = "BPS ";
-        BPSCounter.o0Oo000O0oO[1] = "Position";
-        BPSCounter.o0Oo000O0oO[2] = "Title";
     }
 
     public BPSCounter() {
@@ -65,7 +51,7 @@ extends Module {
         };
         this.all = render2DEvent -> {
             Vector2d vector2d = this.position.apP;
-            String string = (Boolean)this.showTitle.wo() != false ? (String)o0Oo000O0oO[0] : "";
+            String string = (Boolean)this.showTitle.wo() != false ? "BPS " : "";
             String string2 = this.alj;
             float f3 = gb.MAIN.a(20, gd.BOLD).getStringWidth(string);
             this.scale.x = f3 + (float)gb.MAIN.a(20, gd.REGULAR).getStringWidth(string2);

@@ -90,7 +90,7 @@ public class ahm implements InstanceAccess
         if (vw == null) {
             return false;
         }
-        final List<Object> list = (List<Object>)((Collection)((ScoreObjective)vw).getScoreboard().getSortedScores((ScoreObjective)vw)).stream().filter(score2 -> ((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith((String)ahm.o0Oo000O0oO[17])).collect((Collector<? super Object, ?, List<Object>>)Collectors.toList());
+        final List<Object> list = (List<Object>)((Collection)((ScoreObjective)vw).getScoreboard().getSortedScores((ScoreObjective)vw)).stream().filter(score2 -> ((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith("#")).collect((Collector<? super Object, ?, List<Object>>)Collectors.toList());
         final ArrayList list2 = (ArrayList)((list.size() > 15) ? Lists.newArrayList(Iterables.skip((Iterable)list, list.size() - 15)) : list);
         final StringBuilder sb = new StringBuilder();
         final Iterator iterator = list2.iterator();
@@ -112,7 +112,7 @@ public class ahm implements InstanceAccess
         try {
             final long n4 = (long)n << 32;
             final long n5 = n3;
-            final String string = (Object)(String)s + (String)ahm.o0Oo000O0oO[24] + (int)((n5 ^ ((n4 ^ n5) & -1L << 32)) >>> 32);
+            final String string = (Object)(String)s + ":" + (int)((n5 ^ ((n4 ^ n5) & -1L << 32)) >>> 32);
             final ServerData serverData = new ServerData((String)string, (String)string, false);
             ahm.aPh.ping(serverData, n2);
             return serverData;
@@ -271,7 +271,7 @@ public class ahm implements InstanceAccess
         final Iterator iterator = scoreObjective.getScoreboard().getSortedScores(scoreObjective).iterator();
         while (((Iterator)iterator).hasNext()) {
             final Score score = (Score)((Iterator)iterator).next();
-            if (score != null && ((Score)score).getPlayerName() != null && !((Score)score).getPlayerName().startsWith((String)ahm.o0Oo000O0oO[6])) {
+            if (score != null && ((Score)score).getPlayerName() != null && !((Score)score).getPlayerName().startsWith("#")) {
                 return true;
             }
         }
@@ -297,7 +297,7 @@ public class ahm implements InstanceAccess
         }
         final List<Object> list = (List<Object>)((Collection)((ScoreObjective)vw).getScoreboard().getSortedScores((ScoreObjective)vw)).stream().filter(score2 -> {
             boolean b;
-            if (((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith((String)ahm.o0Oo000O0oO[44])) {
+            if (((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith("#")) {
                 b = true;
             }
             else {
@@ -334,7 +334,7 @@ public class ahm implements InstanceAccess
         if (ahm.aPa == ahm.aEg.theWorld && ahm.aOY == (int)(n4 >>> 32)) {
             return ahm.aOZ;
         }
-        ahm.aOZ = (vv() || ci((String)ahm.o0Oo000O0oO[29]));
+        ahm.aOZ = (vv() || ci("www.hypixel"));
         ahm.aOY = (int)(n4 >>> 32);
         ahm.aPa = ahm.aEg.theWorld;
         return false;
@@ -807,7 +807,7 @@ public class ahm implements InstanceAccess
         if (((String)lowerCase).isEmpty()) {
             return "";
         }
-        return ((String)Normalizer.normalize(lowerCase, Normalizer.Form.NFD).replaceAll((String)ahm.o0Oo000O0oO[20], "")).replaceAll((String)ahm.o0Oo000O0oO[34], (String)ahm.o0Oo000O0oO[21]);
+        return ((String)Normalizer.normalize(lowerCase, Normalizer.Form.NFD).replaceAll("\\p{M}+", "")).replaceAll("\\s+", " ");
     }
 
     public static boolean nS() {
@@ -922,11 +922,11 @@ public class ahm implements InstanceAccess
             n33 = (int)n25 + (int)n4;
             n34 = n25;
         }
-        ahm.aOL = Pattern.compile((String)ahm.o0Oo000O0oO[22] + (String)ahm.o0Oo000O0oO[0], 2);
-        ahm.aOM = Pattern.compile((String)ahm.o0Oo000O0oO[30] + (String)ahm.o0Oo000O0oO[47], 2);
-        ahm.aON = Pattern.compile((String)ahm.o0Oo000O0oO[46] + (String)ahm.o0Oo000O0oO[27], 2);
-        ahm.aOO = Pattern.compile((String)ahm.o0Oo000O0oO[12] + (String)ahm.o0Oo000O0oO[8]);
-        ahm.aOP = Pattern.compile((String)ahm.o0Oo000O0oO[31] + (String)ahm.o0Oo000O0oO[19] + (String)ahm.o0Oo000O0oO[45]);
+        ahm.aOL = Pattern.compile("^(?:[a-zA-Z0-9-]+\\.)*(?:hypixel\\.net|hypixel\\.io|technoblade\\.club)(?:\\.)?$", 2);
+        ahm.aOM = Pattern.compile("^([a-zA-Z0-9-]+)\\.[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+\\.fisx\\.uk$", 2);
+        ahm.aON = Pattern.compile("^([a-zA-Z0-9-]+)(?:\\.[a-zA-Z0-9-]+)*\\.liquidproxy\\.net$", 2);
+        ahm.aOO = Pattern.compile("Hypixel BungeeCord \\(.+\\) <- .+");
+        ahm.aOP = Pattern.compile("[^\\s/]{1,4}/[^\\s/]{1,4}/[^\\s/]{1,8}");
         ahm.aOS = new ConcurrentHashMap<String, aij>();
         ahm.aOT = Integer.MIN_VALUE;
         ahm.aOV = "";
@@ -944,7 +944,7 @@ public class ahm implements InstanceAccess
         if (vw == null) {
             return false;
         }
-        final List<Object> list = (List<Object>)((Collection)((ScoreObjective)vw).getScoreboard().getSortedScores((ScoreObjective)vw)).stream().filter(score2 -> ((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith((String)ahm.o0Oo000O0oO[41])).collect((Collector<? super Object, ?, List<Object>>)Collectors.toList());
+        final List<Object> list = (List<Object>)((Collection)((ScoreObjective)vw).getScoreboard().getSortedScores((ScoreObjective)vw)).stream().filter(score2 -> ((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith("#")).collect((Collector<? super Object, ?, List<Object>>)Collectors.toList());
         final Iterator iterator = ((list.size() > 15) ? Lists.newArrayList(Iterables.skip((Iterable)list, list.size() - 15)) : list).iterator();
         while (((Iterator)iterator).hasNext()) {
             final Score score = (Score)((Iterator)iterator).next();
@@ -973,11 +973,11 @@ public class ahm implements InstanceAccess
     public static String ch(final String s) {
         final Matcher matcher = ahm.aOM.matcher(s);
         if (((Matcher)matcher).matches()) {
-            return c(s, (String)ahm.o0Oo000O0oO[38] + (String)ahm.o0Oo000O0oO[37] + (Object)(String)((Matcher)matcher).group(1), (String)ahm.o0Oo000O0oO[3]);
+            return c(s, "https://redacted.invalid/lookup-route/" + (Object)(String)((Matcher)matcher).group(1), "target");
         }
         final Matcher matcher2 = ahm.aON.matcher(s);
         if (((Matcher)matcher2).matches()) {
-            return c(s, (String)ahm.o0Oo000O0oO[39] + (String)ahm.o0Oo000O0oO[50] + (Object)(String)((Matcher)matcher2).group(1), (String)ahm.o0Oo000O0oO[5]);
+            return c(s, "https://api.liquidbounce.net/api/v2/proxy/lookup-route/" + (Object)(String)((Matcher)matcher2).group(1), "domain");
         }
         return null;
     }
@@ -1014,7 +1014,7 @@ public class ahm implements InstanceAccess
         final aij aij2 = new aij();
         try {
             final HttpsURLConnection httpsURLConnection = (HttpsURLConnection)new URL(spec).openConnection();
-            ((HttpsURLConnection)httpsURLConnection).setRequestMethod((String)ahm.o0Oo000O0oO[16]);
+            ((HttpsURLConnection)httpsURLConnection).setRequestMethod("GET");
             ((HttpsURLConnection)httpsURLConnection).setConnectTimeout(2500);
             ((HttpsURLConnection)httpsURLConnection).setReadTimeout(2500);
             ((HttpsURLConnection)httpsURLConnection).setUseCaches(false);
@@ -1065,18 +1065,18 @@ public class ahm implements InstanceAccess
     public static Path vt() {
         final aee rv = aed.rV();
         if (rv == aee.WINDOWS) {
-            final String getenv = System.getenv((String)ahm.o0Oo000O0oO[4]);
+            final String getenv = System.getenv("WinDir");
             if (StringUtils.isBlank((CharSequence)(String)getenv)) {
                 return null;
             }
             final String first = (String)getenv;
-            final String[] more = { (String)ahm.o0Oo000O0oO[18], (String)ahm.o0Oo000O0oO[1], null, null };
-            more[104 - ahm.O0OoOO0OOOOO[387]] = (String)ahm.o0Oo000O0oO[26];
-            more[3] = (String)ahm.o0Oo000O0oO[13];
+            final String[] more = { "System32", "drivers", null, null };
+            more[104 - ahm.O0OoOO0OOOOO[387]] = "etc";
+            more[3] = "hosts";
             return Paths.get(first, more);
         }
         if (rv == aee.LINUX || rv == aee.MACOS || rv == aee.SOLARIS) {
-            return Paths.get((String)ahm.o0Oo000O0oO[14], new String[0]);
+            return Paths.get("/etc/hosts", new String[0]);
         }
         return null;
     }
@@ -1090,17 +1090,17 @@ public class ahm implements InstanceAccess
         if (((String)ac).isEmpty()) {
             return false;
         }
-        if (((String)ac).equals(ahm.o0Oo000O0oO[36]) || ((String)ac).startsWith((String)ahm.o0Oo000O0oO[40]) || ((String)ac).equals(ahm.o0Oo000O0oO[32]) || ((String)ac).equals(ahm.o0Oo000O0oO[28])) {
+        if (((String)ac).equals("localhost") || ((String)ac).startsWith("127.") || ((String)ac).equals("::1") || ((String)ac).equals("0:0:0:0:0:0:0:1")) {
             return false;
         }
         final Matcher matcher = ahm.aOM.matcher(ac);
         if (((Matcher)matcher).matches()) {
-            final String c = c(ac, (String)ahm.o0Oo000O0oO[43] + (String)ahm.o0Oo000O0oO[7] + (Object)(String)((Matcher)matcher).group(1), (String)ahm.o0Oo000O0oO[25]);
+            final String c = c(ac, "https://redacted.invalid/lookup-route/" + (Object)(String)((Matcher)matcher).group(1), "target");
             return ((String)c).isEmpty() || ahm.aOL.matcher(c).matches();
         }
         final Matcher matcher2 = ahm.aON.matcher(ac);
         if (((Matcher)matcher2).matches()) {
-            final String c2 = c(ac, (String)ahm.o0Oo000O0oO[42] + (String)ahm.o0Oo000O0oO[15] + (Object)(String)((Matcher)matcher2).group(1), (String)ahm.o0Oo000O0oO[49]);
+            final String c2 = c(ac, "https://api.liquidbounce.net/api/v2/proxy/lookup-route/" + (Object)(String)((Matcher)matcher2).group(1), "domain");
             return ((String)c2).isEmpty() || ahm.aOL.matcher(c2).matches();
         }
         return ahm.aOL.matcher(ac).matches() && LastConnectionComponent.port == 25565;
@@ -1108,7 +1108,7 @@ public class ahm implements InstanceAccess
 
     @Generated
     ahm() {
-        throw new UnsupportedOperationException((String)ahm.o0Oo000O0oO[10] + (String)ahm.o0Oo000O0oO[9]);
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
     public static boolean vs() {
@@ -1118,7 +1118,7 @@ public class ahm implements InstanceAccess
                 return false;
             }
             final String lowerCase = new String(Files.readAllBytes(vt)).toLowerCase(Locale.ENGLISH);
-            return ((String)lowerCase).contains((CharSequence)ahm.o0Oo000O0oO[23]) || ((String)lowerCase).contains((CharSequence)ahm.o0Oo000O0oO[33]) || ((String)lowerCase).contains((CharSequence)ahm.o0Oo000O0oO[11]) || ((String)lowerCase).contains((CharSequence)ahm.o0Oo000O0oO[2]) || ((String)lowerCase).contains((CharSequence)ahm.o0Oo000O0oO[35]);
+            return ((String)lowerCase).contains((CharSequence)"riseclient.com") || ((String)lowerCase).contains((CharSequence)"vantage") || ((String)lowerCase).contains((CharSequence)"hypixel.net") || ((String)lowerCase).contains((CharSequence)"www.hypixel.net") || ((String)lowerCase).contains((CharSequence)"hypixel");
         }
         catch (final Exception ex) {
             return false;
@@ -1152,7 +1152,7 @@ public class ahm implements InstanceAccess
         if (ahm.aEg == null || ahm.aEg.thePlayer == null || ahm.aEg.theWorld == null || ahm.aEg.isIntegratedServerRunning()) {
             return (ahm.O0OoOO0OOOOO[86] ^ 0xFFFFFFA5) + 13 != 0;
         }
-        return !StringUtils.containsIgnoreCase((CharSequence)LastConnectionComponent.ip, (CharSequence)(String)ahm.o0Oo000O0oO[48]) && !vs() && !nS() && vp() && vq() && vm();
+        return !StringUtils.containsIgnoreCase((CharSequence)LastConnectionComponent.ip, (CharSequence)"test") && !vs() && !nS() && vp() && vq() && vm();
     }
 
     public static boolean i(final int n, final int n2) {

@@ -144,7 +144,7 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
             long n14;
             for (n11 = (n10 ^ ((n9 ^ n10) & -1L >>> 32)); (int)n11 < (int)(n8 >>> 32); n11 = (n14 ^ ((n14 ^ n14 + 1) & -1L >>> 32))) {
                 final String className = ((StackTraceElement[])array)[(int)n11].getClassName();
-                if (((String)className).contains("LoginMenu") || ((String)className).contains("ServerPac" + "ketHandle" + "r") || ((String)className).contains("BackendPack" + "etEvent")) {
+                if (((String)className).contains("LoginMenu") || ((String)className).contains("ServerPacketHandler") || ((String)className).contains("BackendPacketEvent")) {
                     final long n12 = 4294967296L;
                     final long n13 = n11;
                     n11 = (n13 ^ ((n12 ^ n13) & -1L << 32));
@@ -955,7 +955,7 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
         b.eQk = true;
         b.eQl = System.currentTimeMillis();
         b.eQm = Math.min(b.eQm + 1, 10);
-        System.setProperty((String)b.o0Oo000O0oO[16], "true");
+        System.setProperty("rise.lag.active", "true");
     }
 
     public void aJZ() {
@@ -965,7 +965,7 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
             final String string = this.getClass().getName() + ".constructor";
             MessageDigest.getInstance("SHA-256");
             if (((String)string).length() >= 10) {
-                ((String)string).contains("S2CPacketAuthenti" + "cation");
+                ((String)string).contains("S2CPacketAuthentication");
             }
             final StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
             final long n3 = 0L;
@@ -981,7 +981,7 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
             long n14;
             for (n11 = (n10 ^ ((n9 ^ n10) & -1L >>> 32)); (int)n11 < (int)(n8 >>> 32); n11 = (n14 ^ ((n14 ^ n14 + 1) & -1L >>> 32))) {
                 final StackTraceElement stackTraceElement = ((StackTraceElement[])array)[(int)n11];
-                if (stackTraceElement.getClassName().contains("WebSocketClient") || stackTraceElement.getClassName().contains("ServerPac" + "ketHandle" + "r")) {
+                if (stackTraceElement.getClassName().contains("WebSocketClient") || stackTraceElement.getClassName().contains("ServerPacketHandler")) {
                     final long n12 = 4294967296L;
                     final long n13 = n11;
                     n11 = (n13 ^ ((n12 ^ n13) & -1L << 32));

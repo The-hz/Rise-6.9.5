@@ -5,9 +5,7 @@ import org.json.JSONObject;
 public class c extends rip.vantage.commons.packet.api.abstracts.b {
     public static int[] O0OoOO0OOOOO;
     public String ePQ;
-    public static Object[] o0Oo000O0oO = new Object[5];
     public String ePP;
-    public static Object[] oO00O0OO0ooO = new Object[1];
 
     public String aJS() {
         return this.ePP;
@@ -423,18 +421,12 @@ public class c extends rip.vantage.commons.packet.api.abstracts.b {
 
     static {
         Oo0o00000O00();
-        oO00O0OO0ooO[0] = "\u0000\u0001b\u0000\u0001b\u0000\u0002id\u0000\u0001a\u0000\u0001a";
-        o0Oo000O0oO[0] = "b";
-        o0Oo000O0oO[1] = "b";
-        o0Oo000O0oO[2] = "id";
-        o0Oo000O0oO[3] = "a";
-        o0Oo000O0oO[4] = "a";
     }
 
     public c(JSONObject var1) {
         super((byte)28);
         this.ePP = var1.getString("a");
-        this.ePQ = var1.getString((String)o0Oo000O0oO[1]);
+        this.ePQ = var1.getString("b");
     }
 
     @Override
@@ -447,7 +439,7 @@ public class c extends rip.vantage.commons.packet.api.abstracts.b {
         JSONObject jsonobject = new JSONObject();
         jsonobject.put("a", this.ePP);
         jsonobject.put("b", this.ePQ);
-        jsonobject.put((String)o0Oo000O0oO[2], this.aeq());
+        jsonobject.put("id", this.aeq());
         return jsonobject.toString();
     }
 }

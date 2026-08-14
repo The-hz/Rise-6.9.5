@@ -3,9 +3,7 @@ package rip.vantage.commons.packet.impl.server.monitoring;
 import org.json.JSONObject;
 
 public class d extends rip.vantage.commons.packet.api.abstracts.b {
-    public static Object[] o0Oo000O0oO = new Object[3];
     public String eQa;
-    public static Object[] oO00O0OO0ooO = new Object[1];
     public static int[] O0OoOO0OOOOO;
 
     public String ajm() {
@@ -14,10 +12,6 @@ public class d extends rip.vantage.commons.packet.api.abstracts.b {
 
     static {
         Oo0o00000O00();
-        oO00O0OO0ooO[0] = "\u0000\u0002id\u0000\u0001a\u0000\u0001a";
-        o0Oo000O0oO[0] = "id";
-        o0Oo000O0oO[1] = "a";
-        o0Oo000O0oO[2] = "a";
     }
 
     @Override
@@ -27,7 +21,7 @@ public class d extends rip.vantage.commons.packet.api.abstracts.b {
 
     public d(JSONObject var1) {
         super((byte)25);
-        this.eQa = var1.getString((String)o0Oo000O0oO[2]);
+        this.eQa = var1.getString("a");
     }
 
     @Override

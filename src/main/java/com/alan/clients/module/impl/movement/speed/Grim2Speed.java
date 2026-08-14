@@ -35,7 +35,7 @@ extends Mode<Speed> {
     @EventLink
     public Listener<TeleportEvent> Pt;
     public boolean Ga;
-    public BooleanValue Pk = new BooleanValue("High Ping Mode (Ma" + "y be slower)", (Mode<?>)this, (Boolean)false);
+    public BooleanValue Pk = new BooleanValue("High Ping Mode (May be slower)", (Mode<?>)this, (Boolean)false);
     public NumberValue Pl = new NumberValue("Speed", this, (Number)1, (Number)0, (Number)1, (Number)0.001);
     @EventLink
     public Listener<JumpEvent> Pm = jumpEvent -> {
@@ -45,13 +45,10 @@ extends Mode<Speed> {
     };
     @EventLink
     public Listener<MoveInputEvent> Pr;
-    public static Object[] oO00O0OO0ooO;
     @EventLink
     public Listener<PostMotionEvent> Pq;
     @EventLink
     public Listener<PacketReceiveEvent> Ps;
-    public static Object[] o0Oo000O0oO;
-    public static Object[] fld_0oOOoOo0O00O_38;
     @EventLink
     public Listener<StrafeEvent> Pn = strafeEvent -> {
         double d2 = 0.0;
@@ -76,21 +73,6 @@ extends Mode<Speed> {
 
     static {
         Grim2Speed.Oo0o00000O00();
-        fld_0oOOoOo0O00O_38 = new Object[4];
-        Grim2Speed.fld_0oOOoOo0O00O_38[0] = "16EEr2ECXko2gYCSjb0cxy3z0lrneruy4KSOghC24iJTWSNMzUqlTToTR7U0Vrdhp2JwRWnM/GjKAdOjUbX06o0RncrrHGe6fR8EWEtyWF2FTRe7jmBDJP/p617te4koV8ItpaLNnOVeqUbgC9/G0Eve9JsZqmSWmHqCvtiJ/9dL1TMrnqo/f53n4sq66dKCW8b56MBpoJ6BNsk4TD6suw==";
-        Grim2Speed.fld_0oOOoOo0O00O_38[1] = "PBKDF2WithHmacSHA1";
-        Grim2Speed.fld_0oOOoOo0O00O_38[2] = "AES";
-        Grim2Speed.fld_0oOOoOo0O00O_38[3] = "AES/CBC/PKCS5Padding";
-        oO00O0OO0ooO = new Object[1];
-        Grim2Speed.oO00O0OO0ooO[0] = "\u0000\u0004ntly\u0000\u00038.1\u00006ping needs to be below 150ms for this to work consista\u0000\u0005Speed\u0000\u001bthis will only work 1.9-1.1\u0000\u0012High Ping Mode (Ma\u0000\fy be slower)";
-        o0Oo000O0oO = new Object[7];
-        Grim2Speed.o0Oo000O0oO[0] = "ntly";
-        Grim2Speed.o0Oo000O0oO[1] = "8.1";
-        Grim2Speed.o0Oo000O0oO[2] = "ping needs to be below 150ms for this to work consista";
-        Grim2Speed.o0Oo000O0oO[3] = "Speed";
-        Grim2Speed.o0Oo000O0oO[4] = "this will only work 1.9-1.1";
-        Grim2Speed.o0Oo000O0oO[5] = "High Ping Mode (Ma";
-        Grim2Speed.o0Oo000O0oO[6] = "y be slower)";
     }
 
     public static void Oo0o00000O00() {
@@ -555,9 +537,9 @@ extends Mode<Speed> {
             ahj.l(new C03PacketPlayer(false));
         }
         if (ViaLoadingBase.getInstance().getTargetVersion().equalTo(ProtocolVersion.v1_8) || ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_18_2)) {
-            afi.b("this will only work 1.9-1.1" + "8.1", new Object[0]);
+            afi.b("this will only work 1.9-1.18.1", new Object[0]);
         } else {
-            afi.b("ping needs to be below 150ms for this to work consista" + "ntly", new Object[0]);
+            afi.b("ping needs to be below 150ms for this to work consistantly", new Object[0]);
         }
         this.Ho = 0;
         this.Pj = 0;

@@ -152,11 +152,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ModuleManager {
-    public static Object[] oO00O0OO0ooO = new Object[1];
-    public static Object[] fld_0oOOoOo0O00O_16 = new Object[4];
     public ady<Class<Module>, Module> lt = new ady<>();
     public static int[] O0OoOO0OOOOO;
-    public static Object[] o0Oo000O0oO = new Object[2];
 
     public void e(Module var1) {
         this.lt.h(var1);
@@ -171,13 +168,6 @@ public class ModuleManager {
 
     static {
         Oo0o00000O00();
-        fld_0oOOoOo0O00O_16[0] = "SQuVzYexfE6xtRasVkczLIxBKpx2ERXws5NnXLJ1a7A=";
-        fld_0oOOoOo0O00O_16[1] = "PBKDF2WithHmacSHA1";
-        fld_0oOOoOo0O00O_16[2] = "AES";
-        fld_0oOOoOo0O00O_16[3] = "AES/CBC/PKCS5Padding";
-        oO00O0OO0ooO[0] = "\u0000\u0001 \u0000\u0001 ";
-        o0Oo000O0oO[0] = " ";
-        o0Oo000O0oO[1] = " ";
     }
 
     public ArrayList<Module> ef() {
@@ -189,7 +179,7 @@ public class ModuleManager {
             .stream()
             .filter(
                 var1x -> Arrays.stream(var1x.getAliases())
-                    .anyMatch(var1xx -> var1xx.replace(" ", "").equalsIgnoreCase(var1.replace((String)o0Oo000O0oO[0], "")))
+                    .anyMatch(var1xx -> var1xx.replace(" ", "").equalsIgnoreCase(var1.replace(" ", "")))
             )
             .findAny()
             .orElse(null);

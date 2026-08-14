@@ -4,8 +4,6 @@ import org.json.JSONObject;
 
 public class b extends rip.vantage.commons.packet.api.abstracts.b {
     public String ePW;
-    public static Object[] o0Oo000O0oO = new Object[8];
-    public static Object[] oO00O0OO0ooO = new Object[1];
     public static int[] O0OoOO0OOOOO;
     public int ePX;
     public String ePY;
@@ -13,8 +11,8 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b {
     @Override
     public String aJk() {
         JSONObject jsonobject = new JSONObject();
-        jsonobject.put((String)o0Oo000O0oO[4], this.ePW);
-        jsonobject.put((String)o0Oo000O0oO[2], this.ePX);
+        jsonobject.put("a", this.ePW);
+        jsonobject.put("b", this.ePX);
         jsonobject.put("d", this.ePY);
         jsonobject.put("id", this.aeq());
         return jsonobject.toString();
@@ -457,14 +455,5 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b {
 
     static {
         Oo0o00000O00();
-        oO00O0OO0ooO[0] = "\u0000\u0001b\u0000\nscreenshot\u0000\u0001b\u0000\u0001d\u0000\u0001a\u0000\u0002id\u0000\u0001d\u0000\u0001a";
-        o0Oo000O0oO[0] = "b";
-        o0Oo000O0oO[1] = "screenshot";
-        o0Oo000O0oO[2] = "b";
-        o0Oo000O0oO[3] = "d";
-        o0Oo000O0oO[4] = "a";
-        o0Oo000O0oO[5] = "id";
-        o0Oo000O0oO[6] = "d";
-        o0Oo000O0oO[7] = "a";
     }
 }

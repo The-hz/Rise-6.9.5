@@ -291,7 +291,7 @@ implements zh {
         long l21 = l20 ^ (0L ^ l20) & -1L >>> 32;
         while (true) {
             if ((int)l21 >= (int)(l19 >>> 32)) {
-                avR = new Pattern[]{Pattern.compile((String)o0Oo000O0oO[1] + (String)o0Oo000O0oO[3], 2), Pattern.compile((String)o0Oo000O0oO[14] + (String)o0Oo000O0oO[18], 2), Pattern.compile((String)o0Oo000O0oO[8] + (String)o0Oo000O0oO[17], 2), Pattern.compile((String)o0Oo000O0oO[15], 2), Pattern.compile((String)o0Oo000O0oO[7], 2), Pattern.compile((String)o0Oo000O0oO[10] + (String)o0Oo000O0oO[9], 2), Pattern.compile((String)o0Oo000O0oO[13] + (String)o0Oo000O0oO[11], 2), Pattern.compile((String)o0Oo000O0oO[4] + (String)o0Oo000O0oO[0], 2), Pattern.compile((String)o0Oo000O0oO[2] + (String)o0Oo000O0oO[5], 2)};
+                avR = new Pattern[]{Pattern.compile("\\bpacket\\s*log(?:ger)?\\b", 2), Pattern.compile("\\bpacket\\s*debug(?:ger)?\\b", 2), Pattern.compile("\\bdebug(?:ger)?\\b", 2), Pattern.compile("\\bverbose\\b", 2), Pattern.compile("\\balerts?\\b", 2), Pattern.compile("\\bproxy\\b|\\bmitm\\b|\\bmitmproxy\\b|\\bsniff(?:er|ing)?\\b", 2), Pattern.compile("\\bwireshark\\b|\\bburp\\b|\\bcharles\\b|\\bproxyman\\b", 2), Pattern.compile("\\bfrida\\b|\\bjdwp\\b|\\bjfr\\b|\\battach\\b|\\bjavaagent\\b|\\bagentlib\\b", 2), Pattern.compile("\\brecaf\\b|\\bdecompil(?:e|er|ing)\\b|\\bbytecode\\b|\\bhook(?:ing)?\\b|\\binject(?:ion|ing)?\\b", 2)};
                 break clinit;
             }
             long l22 = l21;
@@ -322,6 +322,6 @@ implements zh {
 
     @Override
     public String getReason() {
-        return (String)o0Oo000O0oO[12];
+        return "suschat";
     }
 }

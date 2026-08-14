@@ -9,10 +9,7 @@ import java.io.IOException;
 
 public class zj extends SecurityFeature
 {
-    public static Object[] oO00O0OO0ooO;
     public static int[] O0OoOO0OOOOO;
-    public static Object[] o0Oo000O0oO;
-    public static Object[] fld_0oOOoOo0O00O_54;
 
     public static void Oo0o00000O00() {
         (zj.O0OoOO0OOOOO = new int[400])[204] = 50790;
@@ -453,23 +450,6 @@ public class zj extends SecurityFeature
 
     static {
         Oo0o00000O00();
-        (zj.oO00O0OO0ooO = new Object[1])[0] = "\u0000\thostsfile\u0000\u0004HFC \u0000\u0004rise\u0000\u0007drivers\u0000\u0003win\u0000\u0007os.name\u0000\u0005hosts\u0000\u0006windir\u0000\t127.0.0.1\u0000\u0003etc\u0000\bSystem32\u0000\tlocalhost";
-        (zj.o0Oo000O0oO = new Object[12])[0] = "hostsfile";
-        zj.o0Oo000O0oO[1] = "HFC ";
-        zj.o0Oo000O0oO[2] = "rise";
-        zj.o0Oo000O0oO[3] = "drivers";
-        zj.o0Oo000O0oO[4] = "win";
-        zj.o0Oo000O0oO[5] = "os.name";
-        zj.o0Oo000O0oO[6] = "hosts";
-        zj.o0Oo000O0oO[7] = "windir";
-        zj.o0Oo000O0oO[8] = "127.0.0.1";
-        zj.o0Oo000O0oO[9] = "etc";
-        zj.o0Oo000O0oO[10] = "System32";
-        zj.o0Oo000O0oO[11] = "localhost";
-        (zj.fld_0oOOoOo0O00O_54 = new Object[4])[0] = "YKRHkcWU+Mxn2FKpGK/xXpcdZm6z5oaC+63rXuDmXLIJsB8ZCzL8RcLS/SrEYFpqnhtFX2tT2c1HM//hGXhwja0kPrn/o3CoOY0gkVs4wcWL6ca2WAspCJjW30luFJpDNvzes9UXb2rtvdegqoBSCvJnrUKAGU9WxClVccDE0/w=";
-        zj.fld_0oOOoOo0O00O_54[1] = "PBKDF2WithHmacSHA1";
-        zj.fld_0oOOoOo0O00O_54[2] = "AES";
-        zj.fld_0oOOoOo0O00O_54[3] = "AES/CBC/PKCS5Padding";
     }
 
     public String getReason() {
