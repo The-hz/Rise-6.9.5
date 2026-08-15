@@ -1,4 +1,4 @@
-package hackclient.rise;
+package hackclient.rise.ui.screen;
 
 final class acy {
     final String aBz;

@@ -1,4 +1,4 @@
-package hackclient.rise;
+package hackclient.rise.ui.screen;
 
 import com.alan.clients.Client;
 import com.alan.clients.util.file.insult.InsultManager;

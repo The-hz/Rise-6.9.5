@@ -1,4 +1,4 @@
-package hackclient.rise;
+package hackclient.rise.ui.screen;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
-package hackclient.rise;
+package hackclient.rise.ui.screen;
 
 import com.alan.clients.Client;
 import com.alan.clients.module.Module;
-import hackclient.rise.acl;
-import hackclient.rise.acy;
-import hackclient.rise.acz;
-import hackclient.rise.ada;
+import hackclient.rise.ui.screen.acl;
+import hackclient.rise.ui.screen.acy;
+import hackclient.rise.ui.screen.acz;
+import hackclient.rise.ui.screen.ada;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;

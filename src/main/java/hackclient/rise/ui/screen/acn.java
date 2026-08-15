@@ -1,9 +1,11 @@
-package hackclient.rise;
+package hackclient.rise.ui.screen;
 
 import com.alan.clients.Client;
 import com.alan.clients.command.impl.Bind;
 import com.alan.clients.module.Module;
 import com.alan.clients.util.file.config.ConfigFile;
+import hackclient.rise.ahd;
+import hackclient.rise.p;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;

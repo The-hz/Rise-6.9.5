@@ -1,4 +1,4 @@
-package hackclient.rise;
+package hackclient.rise.ui.screen;
 
 import com.alan.clients.Client;
 import com.alan.clients.module.Module;
@@ -8,10 +8,10 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
-import hackclient.rise.acl;
-import hackclient.rise.acy;
-import hackclient.rise.acz;
-import hackclient.rise.ada;
+import hackclient.rise.ui.screen.acl;
+import hackclient.rise.ui.screen.acy;
+import hackclient.rise.ui.screen.acz;
+import hackclient.rise.ui.screen.ada;
 import hackclient.rise.ahd;
 import java.util.ArrayList;
 import java.util.Collections;

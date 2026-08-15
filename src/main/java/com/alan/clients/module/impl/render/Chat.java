@@ -17,7 +17,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.acl;
+import hackclient.rise.ui.screen.acl;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.adz;
 import com.alan.clients.util.MouseUtil;

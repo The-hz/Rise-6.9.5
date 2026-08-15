@@ -1,5 +1,6 @@
-package hackclient.rise;
+package hackclient.rise.ui.screen;
 
+import hackclient.rise.bx;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,10 +8,10 @@ import java.util.Locale;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 
-final class adb implements ada {
-    private static final String[] aBI = new String[]{"add", "remove"};
+final class acs implements ada {
+    private static final String[] aBr = new String[]{"add", "remove"};
 
-    adb() {
+    acs() {
     }
 
     @Override
@@ -25,10 +26,10 @@ final class adb implements ada {
             String s1 = astring[0] == null ? "" : astring[0].toLowerCase(Locale.ROOT);
             ArrayList arraylist = new ArrayList();
 
-            for (String s2 : aBI) {
+            for (String s2 : aBr) {
                 String s3 = s2.toLowerCase(Locale.ROOT);
                 if (s1.isEmpty() || s3.startsWith(s1)) {
-                    arraylist.add(new acy(s2, "Target subcommand", ".target <add/remove> <player>", s2, 0, true));
+                    arraylist.add(new acy(s2, "Friend subcommand", ".f <add/remove> <player>", s2, 0, true));
                 }
             }
 
@@ -62,8 +63,8 @@ final class adb implements ada {
         for (EntityPlayer entityplayer : minecraft.theWorld.playerEntities) {
             String s6 = entityplayer.getName();
             String s7 = s6.toLowerCase(Locale.ROOT);
-            if ((s5.isEmpty() || s7.startsWith(s5)) && (!s4.equals("remove") || bx.n(s6))) {
-                arraylist1.add(new acy(s6, "Player", ".target <add/remove> <player>", s6, 1, false));
+            if ((s5.isEmpty() || s7.startsWith(s5)) && (!s4.equals("remove") || bx.isFriend(s6))) {
+                arraylist1.add(new acy(s6, "Player", ".f <add/remove> <player>", s6, 1, false));
             }
         }
 

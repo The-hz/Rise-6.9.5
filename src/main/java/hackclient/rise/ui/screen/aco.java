@@ -1,4 +1,6 @@
-package hackclient.rise;
+package hackclient.rise.ui.screen;
+
+import hackclient.rise.p;
 
 record aco(p aBe, String aBf, String aBg, String aBh) {
 

@@ -1,6 +1,7 @@
-package hackclient.rise;
+package hackclient.rise.ui.screen;
 
 import com.alan.clients.command.Command;
+import hackclient.rise.ahd;
 import java.util.Locale;
 
 final class acr {
