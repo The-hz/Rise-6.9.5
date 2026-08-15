@@ -6,9 +6,9 @@ public class ajt<A, B, C> {
     private C aQw;
 
     public ajt(A var1, B var2, C var3) {
-        this.aQu = (A)var1;
-        this.aQv = (B)var2;
-        this.aQw = (C)var3;
+        this.aQu = var1;
+        this.aQv = var2;
+        this.aQw = var3;
     }
 
     public A vT() {
@@ -16,7 +16,7 @@ public class ajt<A, B, C> {
     }
 
     public void j(A var1) {
-        this.aQu = (A)var1;
+        this.aQu = var1;
     }
 
     public B vU() {
@@ -24,7 +24,7 @@ public class ajt<A, B, C> {
     }
 
     public void k(B var1) {
-        this.aQv = (B)var1;
+        this.aQv = var1;
     }
 
     public C vV() {
@@ -32,7 +32,7 @@ public class ajt<A, B, C> {
     }
 
     public void l(C var1) {
-        this.aQw = (C)var1;
+        this.aQw = var1;
     }
 
     @Override

@@ -53,6 +53,6 @@ public abstract class Mode<T> implements InstanceAccess, aha, Toggleable {
     @Generated
     public Mode(String var1, T var2) {
         this.name = var1;
-        this.parent = (T)var2;
+        this.parent = var2;
     }
 }

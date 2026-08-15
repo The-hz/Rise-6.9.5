@@ -94,12 +94,12 @@ extends Mode<InventoryMove> {
             if (WatchdogBypass.aEg.currentScreen == null || WatchdogBypass.aEg.currentScreen instanceof GuiChat || WatchdogBypass.aEg.currentScreen == this.getStandardClickGUI()) {
                 return;
             }
-            boolean cfr_ignored_0 = WatchdogBypass.aEg.currentScreen instanceof GuiChest;
+            boolean unused0 = WatchdogBypass.aEg.currentScreen instanceof GuiChest;
             for (KeyBinding keyBinding : this.JS) {
-                keyBinding.setPressed(GameSettings.isKeyDown((KeyBinding)keyBinding));
+                keyBinding.setPressed(GameSettings.isKeyDown(keyBinding));
             }
             if (JQ) {
-                int cfr_ignored_1 = WatchdogBypass.aEg.thePlayer.ticksExisted % 2;
+                int unused1 = WatchdogBypass.aEg.thePlayer.ticksExisted % 2;
             }
         };
         this.onPacketSend = packetSendEvent -> {

@@ -18,7 +18,7 @@ public class HostsFileCheck extends SecurityFeature
                     break Label_0335;
                 }
                 final String separator = File.separator;
-                final File file = new File(new StringBuilder().append((Object)(String)System.getenv("windir")).append((Object)(String)separator).append("System32").append((Object)(String)separator).append("drivers").append((Object)(String)separator).append("etc").append((Object)(String)separator).append("hosts").toString());
+                final File file = new File(new StringBuilder().append((Object)System.getenv("windir")).append((Object)separator).append("System32").append((Object)separator).append("drivers").append((Object)separator).append("etc").append((Object)separator).append("hosts").toString());
                 if (!file.exists() || file.isDirectory()) {
                     break Label_0335;
                 }
@@ -33,7 +33,7 @@ public class HostsFileCheck extends SecurityFeature
                         }
                         break Label_0335;
                     }
-                    System.out.println("HFC " + (Object)(String)line);
+                    System.out.println("HFC " + (Object)line);
                     return true;
                 }
                 catch (final IOException ex) {}

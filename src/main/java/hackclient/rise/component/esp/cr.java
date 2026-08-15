@@ -25,13 +25,13 @@ public class cr extends ESP implements InstanceAccess
             final float bWm = cr.aEg.timer.bWm;
             final Iterator iterator = bv.bR().iterator();
             while (iterator.hasNext()) {
-                final Entity entity = (Entity)((Iterator)iterator).next();
-                final Render render = cr.aEg.getRenderManager().getEntityRenderObject((Entity)entity);
+                final Entity entity = (Entity)iterator.next();
+                final Render render = cr.aEg.getRenderManager().getEntityRenderObject(entity);
                 if (cr.aEg.getRenderManager() != null && entity instanceof EntityPlayer && render != null) {
-                    if (!RenderUtil.isInViewFrustrum((Entity)entity)) {
+                    if (!RenderUtil.isInViewFrustrum(entity)) {
                         continue;
                     }
-                    final Color color = (((EntityPlayer)entity).hurtTime > 0) ? Color.RED : this.getColor((EntityLivingBase)(EntityPlayer)entity);
+                    final Color color = (((EntityPlayer)entity).hurtTime > 0) ? Color.RED : this.getColor((EntityPlayer)entity);
                     if (color.getAlpha() <= 0) {
                         continue;
                     }
@@ -41,8 +41,8 @@ public class cr extends ESP implements InstanceAccess
                     final float n4 = entity.prevRotationYaw + (entity.pl - entity.prevRotationYaw) * bWm;
                     final int n5 = entity.isInvisible() ? 1 : 0;
                     entity.setInvisible(false);
-                    RendererLivingEntity.setShaderBrightness((Color)color);
-                    final Render render2 = (Render)render;
+                    RendererLivingEntity.setShaderBrightness(color);
+                    final Render render2 = render;
                     final EntityPlayer entityPlayer = (EntityPlayer)entity;
                     cr.aEg.getRenderManager();
                     final double n6 = n - RenderManager.bUO;

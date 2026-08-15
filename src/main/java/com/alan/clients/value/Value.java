@@ -22,17 +22,17 @@ public abstract class Value<T> {
         this.name = var1;
         this.aQJ = null;
         this.aQM = var2;
-        this.aQO = (T)var3;
-        this.n((T)var3);
+        this.aQO = var3;
+        this.n(var3);
         var2.getValues().add(this);
     }
 
     public Value(String var1, Mode<?> var2, T var3) {
         this.name = var1;
         this.aQJ = null;
-        this.aQO = (T)var3;
+        this.aQO = var3;
         this.aQM = var2;
-        this.n((T)var3);
+        this.n(var3);
         var2.getValues().add(this);
     }
 
@@ -40,16 +40,16 @@ public abstract class Value<T> {
         this.name = var1;
         this.aQJ = var4;
         this.aQM = var2;
-        this.aQO = (T)var3;
-        this.n((T)var3);
+        this.aQO = var3;
+        this.n(var3);
         var2.getValues().add(this);
     }
 
     public Value(String var1, Mode<?> var2, T var3, BooleanSupplier var4) {
         this.name = var1;
         this.aQJ = var4;
-        this.aQO = (T)var3;
-        this.n((T)var3);
+        this.aQO = var3;
+        this.n(var3);
         var2.getValues().add(this);
     }
 
@@ -72,7 +72,7 @@ public abstract class Value<T> {
     public abstract List<Value<?>> getSubValues();
 
     public void o(T var1) {
-        this.aQO = (T)var1;
+        this.aQO = var1;
     }
 
     public ValueComponent wl() {

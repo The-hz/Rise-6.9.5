@@ -74,7 +74,7 @@ public class AccountViewModel<T extends AltAccount> implements adf, InstanceAcce
     );
 
     public AccountViewModel(T var1, float var2, float var3, float var4, float var5) {
-        this.account = (T)var1;
+        this.account = var1;
         this.x = var2;
         this.y = var3;
         this.width = var4;

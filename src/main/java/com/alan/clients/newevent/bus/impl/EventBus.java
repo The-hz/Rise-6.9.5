@@ -134,7 +134,7 @@ Bus<Event> {
                 if (!field.isAccessible()) {
                     field.setAccessible(true);
                 }
-                Listener cfr_ignored_0 = (Listener)LOOKUP.unreflectGetter(field).invokeWithArguments(objectArray);
+                Listener unused0 = (Listener)LOOKUP.unreflectGetter(field).invokeWithArguments(objectArray);
                 System.out.println("Name: " + type.getTypeName());
                 System.out.println("Event: " + Event2.getClass().getSimpleName());
             }

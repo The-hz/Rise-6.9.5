@@ -32,6 +32,6 @@ public class sj implements Comparator<Integer> {
     }
 
     public int compare(Integer var1, Integer var2) {
-        return this.a((Integer)var1, (Integer)var2);
+        return this.a(var1, var2);
     }
 }

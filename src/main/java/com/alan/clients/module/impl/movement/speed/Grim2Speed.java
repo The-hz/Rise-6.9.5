@@ -53,7 +53,7 @@ extends Mode<Speed> {
         double d2 = 0.0;
         this.Pj = Grim2Speed.aEg.thePlayer.onGround ? ++this.Pj : 0;
         if (this.Pj >= 1) {
-            boolean cfr_ignored_0 = Grim2Speed.aEg.thePlayer.onGround;
+            boolean unused0 = Grim2Speed.aEg.thePlayer.onGround;
         }
         if (this.Ho > -1) {
             double d3 = 0.03;

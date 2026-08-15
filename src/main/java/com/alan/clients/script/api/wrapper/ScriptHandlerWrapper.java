@@ -7,7 +7,7 @@ public abstract class ScriptHandlerWrapper<T> extends ScriptWrapper<T> {
     private final ScriptHandler handler = new ScriptHandler();
 
     public ScriptHandlerWrapper(T var1) {
-        super((T)var1);
+        super(var1);
     }
 
     public void handle(String var1, JSObject var2) {

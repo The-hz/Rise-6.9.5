@@ -4,7 +4,7 @@ import com.alan.clients.newevent.CancellableEvent;
 
 public abstract class CancellableScriptEvent<T extends CancellableEvent> extends ScriptEvent<T> {
     public CancellableScriptEvent(T var1) {
-        super((T)var1);
+        super(var1);
     }
 
     public boolean isCancelled() {

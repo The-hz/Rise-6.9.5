@@ -11,17 +11,12 @@ import com.google.gson.JsonParser;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.Key;
-import java.security.spec.AlgorithmParameterSpec;
 import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,11 +28,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import javax.crypto.Cipher;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.HttpsURLConnection;
 import lombok.Generated;
 import net.minecraft.block.Block;
@@ -57,10 +47,7 @@ import org.apache.commons.lang3.StringUtils;
 public class ahm implements InstanceAccess
 {
     public static long aOR;
-    public static Object[] oO00O0OO0ooO;
-    public static Object[] fld_0oOOoOo0O00O_6;
     public static Object aPd;
-    public static Object[] fld_0OOOoo00o0_7;
     public static Map<String, Boolean> aPg;
     public static boolean aPf;
     public static Pattern aOP;
@@ -72,14 +59,12 @@ public class ahm implements InstanceAccess
     public static String aPc;
     public static Pattern aOO;
     public static boolean aOZ;
-    public static Object[] o0Oo000O0oO;
     public static long aOQ;
     public static Object aPa;
     public static int aPe;
     public static int aOT;
     public static int aOW;
     public static String aOV;
-    public static Object Oo0o00000O00;
     public static int aOY;
     public static Pattern aON;
     public static boolean aOU;
@@ -90,13 +75,13 @@ public class ahm implements InstanceAccess
         if (vw == null) {
             return false;
         }
-        final List<Object> list = (List<Object>)((Collection)((ScoreObjective)vw).getScoreboard().getSortedScores((ScoreObjective)vw)).stream().filter(score2 -> ((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith("#")).collect((Collector<? super Object, ?, List<Object>>)Collectors.toList());
+        final List<Object> list = (List<Object>)((Collection)vw.getScoreboard().getSortedScores(vw)).stream().filter(score2 -> ((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith("#")).collect((Collector<? super Object, ?, List<Object>>)Collectors.toList());
         final ArrayList list2 = (ArrayList)((list.size() > 15) ? Lists.newArrayList(Iterables.skip((Iterable)list, list.size() - 15)) : list);
         final StringBuilder sb = new StringBuilder();
         final Iterator iterator = list2.iterator();
         while (iterator.hasNext()) {
-            final Score score = (Score)((Iterator)iterator).next();
-            final String textWithoutFormattingCodes = EnumChatFormatting.getTextWithoutFormattingCodes(ScorePlayerTeam.formatPlayerName((Team)(ScorePlayerTeam)((ScoreObjective)vw).getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName()));
+            final Score score = (Score)iterator.next();
+            final String textWithoutFormattingCodes = EnumChatFormatting.getTextWithoutFormattingCodes(ScorePlayerTeam.formatPlayerName((ScorePlayerTeam)vw.getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName()));
             if (textWithoutFormattingCodes != null && !textWithoutFormattingCodes.isEmpty()) {
                 if (sb.length() > 0) {
                     sb.append(' ');
@@ -109,152 +94,14 @@ public class ahm implements InstanceAccess
 
     public static ServerData d(final String s, final int n, final int n2) {
         try {
-            final String string = (Object)(String)s + ":" + n;
-            final ServerData serverData = new ServerData((String)string, (String)string, false);
+            final String string = (Object)s + ":" + n;
+            final ServerData serverData = new ServerData(string, string, false);
             ahm.aPh.ping(serverData, n2);
             return serverData;
         }
         catch (final Exception ex) {
             return null;
         }
-    }
-
-    public static Object o0Oo000O0oO(final Object[] array) {
-        try {
-            final int intValue = (int)array[1];
-            final String s = (String)array[2];
-            final Object o = array[0];
-            Object[] oo00O0OO0ooO;
-            if ((oo00O0OO0ooO = ahm.oO00O0OO0ooO) == null) {
-                oo00O0OO0ooO = (ahm.oO00O0OO0ooO = new Object[] { null });
-            }
-            Object o2;
-            if ((o2 = oo00O0OO0ooO[intValue]) == null) {
-                Object[] array2;
-                if ((array2 = (Object[])o) == null) {
-                    final Object[] array3 = ahm.fld_0OOOoo00o0_7 = (array2 = new Object[] { null });
-                    final int n = 0;
-                    final byte[] array4 = new byte[16];
-                    array4[10] = 32;
-                    array4[7] = 60;
-                    array4[13] = -99;
-                    array4[11] = 37;
-                    array4[15] = -59;
-                    array4[4] = 114;
-                    array4[12] = 45;
-                    array4[2] = -31;
-                    array4[0] = -3;
-                    array4[6] = -107;
-                    array4[3] = 53;
-                    array4[14] = 53;
-                    array4[8] = 124;
-                    array4[1] = -4;
-                    array4[9] = 94;
-                    array4[5] = 86;
-                    array3[n] = array4;
-                }
-                final byte[] array5 = (byte[])array2[0];
-                if (ahm.Oo0o00000O00 == null) {
-                    final byte[] array6 = new byte[32];
-                    array6[22] = -91;
-                    array6[8] = -74;
-                    array6[20] = 72;
-                    array6[24] = 31;
-                    array6[23] = -6;
-                    array6[3] = -51;
-                    array6[1] = -26;
-                    array6[11] = -98;
-                    array6[19] = -122;
-                    array6[9] = -34;
-                    array6[28] = 68;
-                    array6[14] = -110;
-                    array6[7] = 45;
-                    array6[2] = 121;
-                    array6[16] = 21;
-                    array6[12] = -85;
-                    array6[0] = -52;
-                    array6[10] = 99;
-                    array6[17] = -118;
-                    array6[15] = 98;
-                    array6[25] = -7;
-                    array6[21] = 2;
-                    array6[18] = 71;
-                    array6[29] = -12;
-                    array6[6] = 75;
-                    array6[27] = 72;
-                    array6[31] = 75;
-                    array6[4] = 107;
-                    array6[13] = -1;
-                    array6[5] = 84;
-                    array6[26] = -51;
-                    array6[30] = -41;
-                    final byte[] array7 = new byte[array5.length + array6.length];
-                    System.arraycopy(array5, 0, array7, 0, array5.length);
-                    System.arraycopy(array6, 0, array7, array5.length, array6.length);
-                    Object o3;
-                    if ((o3 = mth_0OOOoo00o0_3()[1]) == null) {
-                        final char[] charArray = "\u20b2\u20e4\u20b3\u20de\u2090\u2094\u2097\u9451\u944e\u208a\u20ea\u944d\u2089\u208b\u20bb\u20ea\u20e9\u2099".toCharArray();
-                        for (int i = 0; i < 18; ++i) {
-                            charArray[i] = (char)(((((charArray[i] - '\u1ac0' ^ 0x3C22) - 60868 ^ 0xA2E6) + 6569 - 46351 - 27279 ^ 0x2B12) - 15635 ^ 0xD413) - 3701 - 3638 + 60630 + 49981 - 58847);
-                        }
-                        o3 = (mth_0OOOoo00o0_3()[1] = new String(charArray));
-                    }
-                    final SecretKeyFactory instance = SecretKeyFactory.getInstance((String)o3);
-                    final byte[] array8 = new byte[16];
-                    array8[14] = 107;
-                    array8[10] = -54;
-                    array8[4] = 6;
-                    array8[7] = -44;
-                    array8[8] = 91;
-                    array8[2] = 113;
-                    array8[6] = -16;
-                    array8[0] = 20;
-                    array8[12] = 33;
-                    array8[11] = -72;
-                    array8[9] = -21;
-                    array8[3] = -31;
-                    array8[5] = -71;
-                    array8[1] = -94;
-                    array8[13] = 68;
-                    array8[15] = 50;
-                    final byte[] key = (byte[])((SecretKeyFactory)instance).generateSecret(new PBEKeySpec(new String(array7, StandardCharsets.UTF_8).toCharArray(), array8, 9, 256)).getEncoded();
-                    Object o4;
-                    if ((o4 = mth_0OOOoo00o0_3()[2]) == null) {
-                        final char[] charArray2 = "\ue6b2\ue6a6\ue718".toCharArray();
-                        for (int j = 0; j < 3; ++j) {
-                            charArray2[j] = (char)(((((charArray2[j] - '\uc1e0' - 62276 ^ 0x8125 ^ 0xE9E5) + 50729 - 5516 ^ 0x966E ^ 0x5B13) - 39604 ^ 0xBA54 ^ 0xB4B7) - 24984 + 6298 ^ 0x3C3A) - 64699 ^ 0xE53F);
-                        }
-                        o4 = (mth_0OOOoo00o0_3()[2] = new String(charArray2));
-                    }
-                    ahm.Oo0o00000O00 = new SecretKeySpec(key, (String)o4);
-                }
-                final byte[] decode = Base64.getDecoder().decode(s);
-                final byte[] copyOfRange = Arrays.copyOfRange(decode, 0, 16);
-                final byte[] copyOfRange2 = Arrays.copyOfRange(decode, 16, decode.length);
-                Object o5;
-                if ((o5 = mth_0OOOoo00o0_3()[3]) == null) {
-                    final char[] charArray3 = "\u79d2\u79d6\u79c8\u7964\u79d8\u79d7\u79d8\u7964\u79c1\u79d0\u79d8\u79c8\u7966\u79c1\u79b2\u79b5\u79b5\u7a2a\u7a33\u7a2c".toCharArray();
-                    for (int k = 0; k < 20; ++k) {
-                        charArray3[k] = (char)(((charArray3[k] + '\u2201' - 51554 ^ 0xBE25 ^ 0xDD67) + 43147 + 23629 - 146 + 51443 + 46069 - 17557 + 48022 ^ 0xB238) - 6937);
-                    }
-                    o5 = (mth_0OOOoo00o0_3()[3] = new String(charArray3));
-                }
-                final Cipher instance2 = Cipher.getInstance((String)o5);
-                instance2.init(2, (java.security.Key)ahm.Oo0o00000O00, (AlgorithmParameterSpec)new IvParameterSpec(copyOfRange));
-                o2 = (ahm.oO00O0OO0ooO[intValue] = new String(instance2.doFinal(copyOfRange2), StandardCharsets.UTF_8));
-            }
-            return o2;
-        } catch (java.security.GeneralSecurityException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static Object[] mth_0OOOoo00o0_3() {
-        Object[] fld_0oOOoOo0O00O_6;
-        if ((fld_0oOOoOo0O00O_6 = ahm.fld_0oOOoOo0O00O_6) == null) {
-            fld_0oOOoOo0O00O_6 = (ahm.fld_0oOOoOo0O00O_6 = new Object[4]);
-        }
-        return fld_0oOOoOo0O00O_6;
     }
 
     public static boolean a(final Pattern[] array) {
@@ -267,7 +114,7 @@ public class ahm implements InstanceAccess
         }
         final Iterator iterator = scoreObjective.getScoreboard().getSortedScores(scoreObjective).iterator();
         while (iterator.hasNext()) {
-            final Score score = (Score)((Iterator)iterator).next();
+            final Score score = (Score)iterator.next();
             if (score != null && score.getPlayerName() != null && !score.getPlayerName().startsWith("#")) {
                 return true;
             }
@@ -289,7 +136,7 @@ public class ahm implements InstanceAccess
             ahm.aPb = totalWorldTime;
             return ahm.aPc = "";
         }
-        final List<Object> list = (List<Object>)((Collection)((ScoreObjective)vw).getScoreboard().getSortedScores((ScoreObjective)vw)).stream().filter(score2 -> {
+        final List<Object> list = (List<Object>)((Collection)vw.getScoreboard().getSortedScores(vw)).stream().filter(score2 -> {
             boolean b;
             if (((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith("#")) {
                 b = true;
@@ -303,8 +150,8 @@ public class ahm implements InstanceAccess
         final StringBuilder sb = new StringBuilder();
         final Iterator iterator = list2.iterator();
         while (iterator.hasNext()) {
-            final Score score = (Score)((Iterator)iterator).next();
-            final String textWithoutFormattingCodes = EnumChatFormatting.getTextWithoutFormattingCodes(ScorePlayerTeam.formatPlayerName((Team)(ScorePlayerTeam)((ScoreObjective)vw).getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName()));
+            final Score score = (Score)iterator.next();
+            final String textWithoutFormattingCodes = EnumChatFormatting.getTextWithoutFormattingCodes(ScorePlayerTeam.formatPlayerName((ScorePlayerTeam)vw.getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName()));
             if (textWithoutFormattingCodes != null && !textWithoutFormattingCodes.isEmpty()) {
                 if (sb.length() > 0) {
                     sb.append(' ');
@@ -420,42 +267,6 @@ public class ahm implements InstanceAccess
     }
 
     static {
-        ahm.o0Oo000O0oO = new Object[51];
-        int n10_hi = 0;
-        final Object[] array = { ahm.fld_0OOOoo00o0_7, Integer.valueOf(0), null };
-        final int n11 = 2;
-        Object o;
-        if ((o = mth_0OOOoo00o0_3()[0]) == null) {
-            final char[] charArray = "\u2393\u2159\u214c\u238d\u2153\u20f3\u20e6\u20a8\u238d\u2147\u2144\u20ea\u20e7\u2159\u215f\u20a9\u20f6\u238c\u20ae\u208f\u20b6\u2146\u20cf\u2387\u2152\u2387\u2155\u2155\u2153\u214b\u2089\u20ec\u2083\u20ed\u20fd\u20e1\u238c\u20e0\u20ba\u20cf\u215f\u20a8\u20e5\u238d\u20f6\u20c8\u2387\u20c8\u20ae\u214c\u2141\u20f8\u20eb\u2146\u20ae\u20f2\u2088\u20a9\u20e6\u20b4\u214d\u20fa\u2146\u2089\u2089\u20f3\u2144\u20eb\u2154\u2155\u20f2\u20c8\u2387\u20e4\u20b5\u2159\u2393\u2387\u20fa\u20e7\u20e5\u208f\u208f\u20ea\u20af\u20eb\u20f8\u20eb\u2156\u2147\u238d\u2088\u20e1\u20f2\u20fa\u2141\u20fa\u238b\u20b6\u20fd\u20e5\u2140\u20ed\u2163\u20fd\u20b4\u214b\u20f8\u215a\u2152\u20ae\u20f9\u2145\u2147\u2163\u215f\u20b5\u215c\u20e0\u215c\u20e5\u20e6\u2152\u20e1\u2158\u238d\u238d\u20b6\u2147\u20eb\u20fd\u215f\u20c8\u2152\u20ec\u2163\u20fa\u2141\u214b\u20f2\u20ae\u2154\u20ff\u20e4\u214d\u208f\u208f\u20b5\u214b\u20af\u20e5\u2140\u2147\u20f6\u214b\u20ce\u20fc\u2393\u2158\u20b6\u2141\u20eb\u214a\u2158\u2387\u20ba\u20e6\u20ce\u20fc\u238d\u2163\u20cf\u20fc\u20f2\u20ec\u2155\u2141\u2393\u20e4\u2153\u20ce\u20ff\u20e6\u20fc\u2089\u215d\u20f5\u214a\u20eb\u20e4\u2147\u2146\u20ee\u2152\u215c\u2089\u20fa\u20ae\u20ce\u20c9\u215a\u20e0\u2083\u215c\u2159\u20ff\u2089\u208f\u20b5\u20f8\u208f\u20e0\u2387\u2146\u214c\u20f5\u20e0\u215f\u2144\u20e7\u214a\u20e5\u20b4\u2145\u20fd\u215f\u20e5\u2156\u215f\u2163\u2146\u2156\u20ea\u20e4\u214c\u20b5\u215f\u238c\u2152\u20ba\u2159\u2156\u214c\u208f\u2088\u20a8\u20b6\u2156\u214d\u2145\u215f\u208f\u20c8\u2089\u2088\u238b\u2163\u238b\u20e4\u2156\u2163\u20e5\u214d\u2146\u215a\u2153\u214d\u20e4\u20ae\u215c\u208f\u20ee\u238d\u20b6\u238d\u208f\u20e5\u20e0\u20f5\u20e1\u20af\u215c\u238c\u208f\u215a\u20fa\u2088\u20e1\u2145\u215c\u20ec\u238c\u238b\u2083\u2144\u208f\u20ae\u214c\u2144\u20f3\u20e5\u20af\u20ff\u2144\u214a\u2146\u214a\u215d\u2156\u20fc\u20cf\u20ec\u20b6\u2145\u20fd\u2153\u238c\u20e6\u2147\u215c\u2083\u238c\u2387\u215d\u20e4\u2083\u2144\u2147\u238b\u2152\u2163\u20e6\u20b5\u2088\u20e5\u20e4\u2156\u2144\u2144\u20ec\u20ed\u2141\u215d\u2156\u20eb\u20ff\u20c9\u20e1\u20b5\u20f2\u20e7\u20fd\u2153\u20ae\u20e1\u20f8\u2088\u2159\u20e4\u20b6\u238c\u20e7\u20a8\u2159\u20fa\u2158\u2083\u20e7\u20fa\u2155\u20ce\u214c\u20f9\u2152\u20fd\u215c\u2088\u20fc\u215d\u2140\u2144\u238b\u20c8\u20f9\u2154\u2088\u2153\u214b\u20cf\u2153\u2141\u2158\u208f\u2141\u20b5\u2154\u208f\u2140\u20f3\u2152\u20ae\u214a\u238c\u20f8\u20eb\u2147\u2141\u214b\u20b6\u2144\u20b4\u215a\u20f9\u20ed\u238c\u2152\u20fa\u2156\u2141\u20fa\u214c\u2393\u214a\u20ff\u20f8\u20ba\u20e7\u20f3\u2159\u2141\u20a9\u2146\u2159\u20eb\u20eb\u20c9\u238c\u2140\u20f2\u20eb\u20f6\u2155\u2155\u20c8\u214c\u2159\u20cf\u238d\u2156\u2146\u20e1\u238b\u20b4\u20eb\u20ce\u2155\u2155\u215a\u20b5\u2088\u2140\u2147\u20f6\u20a9\u20a9\u2156\u238d\u20fd\u20b4\u238d\u214d\u2141\u20a9\u20e6\u2387\u20ae\u214d\u2152\u2156\u2089\u20c9\u2145\u215c\u20cf\u215f\u214d\u20e0\u208f\u2156\u238c\u2141\u20ae\u20e0\u20ff\u20fc\u20f8\u20e1\u2155\u2083\u238d\u20e4\u20fd\u2158\u2156\u20e6\u20ce\u20b6\u215f\u20ff\u2153\u215a\u20cf\u2144\u2145\u215a\u20a8\u238d\u2159\u2154\u20ed\u20ee\u214d\u2145\u20e1\u2089\u2140\u20c8\u20e6\u2153\u20e1\u20fc\u215c\u2156\u20f8\u20c8\u20a9\u20f3\u20b5\u214c\u20f9\u215f\u20f2\u20b4\u2140\u2146\u2393\u20e6\u238d\u20e7\u20c9\u20a8\u20c9\u20a9\u215a\u20f6\u2156\u20f8\u2145\u2155\u20ea\u20fd\u20e6\u20e0\u20e1\u20b5\u2387\u2140\u2088\u2393\u20b6\u20b5\u2159\u2152\u20f2\u20b4\u2393\u214c\u20ec\u2387\u20ce\u20fc\u2145\u214a\u20ee\u20f3\u2159\u2140\u214d\u2156\u2152\u20e4\u20e4\u20b6\u215f\u2140\u20eb\u20c8\u2083\u20f6\u215f\u20a9\u2141\u20af\u2156\u238b\u20fa\u2153\u20af\u2153\u20e7\u2154\u2155\u215f\u238b\u214c\u20e1\u2144\u2156\u20f9\u20ea\u20ba\u20f2\u214a\u2089\u2153\u20ff\u20e5\u20f5\u20ae\u20f5\u20f6\u2145\u214c\u20e5\u20e1\u20f9\u2153\u215f\u20ba\u214a\u20ce\u20f3\u20e6\u2163\u215d\u20e5\u2141\u20ea\u20e6\u215d\u215d\u20f6\u20f6\u20f6\u238d\u20f2\u215a\u2144\u20b5\u20ed\u215f\u2154\u2088\u2387\u20e7\u238c\u20b4\u20cf\u20ba\u2163\u214d\u2153\u2159\u2144\u20cf\u214a\u2387\u208f\u20e5\u214a\u20ed\u2155\u20ec\u20b5\u20eb\u20ce\u238d\u20f5\u2083\u2152\u20f5\u20e5\u20e5\u20f3\u20b5\u2145\u2145\u2146\u20eb\u2156\u2155\u20eb\u20f6\u2387\u2141\u215d\u20e0\u20a9\u20ed\u20e7\u20ae\u2393\u20fc\u20cf\u2144\u215f\u2155\u215c\u20ba\u2141\u20c8\u238b\u238c\u2155\u20ba\u2155\u20ff\u215f\u20e4\u20ba\u2141\u20c9\u20a8\u215a\u20c8\u20c9\u2146\u20e7\u2140\u2155\u238b\u238b\u20ed\u2088\u20b6\u208f\u2152\u2089\u2140\u238b\u20fa\u214b\u20eb\u20ed\u20cf\u2155\u20ea\u20ae\u2088\u238b\u20e5\u214c\u2083\u2159\u215c\u20e7\u20f2\u2140\u20ce\u215d\u2163\u20a8\u2159\u20e7\u238c\u20f2\u238d\u20ba\u20ae\u20f2\u20e5\u2158\u20fc\u20f3\u20fa\u20a8\u2153\u20f2\u20e0\u214c\u2144\u215f\u20a9\u20b6\u20fa\u214c\u20f3\u20eb\u20c9\u20cf\u20a9\u20ba\u2089\u2083\u20c9\u208f\u2159\u20f3\u20f8\u20ec\u20f3\u2158\u20fd\u2088\u2156\u20ce\u2141\u20a9\u2154\u20f8\u20e5\u215c\u2141\u214a\u20f8\u238c\u20f5\u215a\u2156\u20e5\u214b\u20ed\u2088\u20f8\u20ed\u20b6\u20c8\u20e0\u20f2\u2387\u20f6\u20ec\u2147\u20fc\u20f6\u20e0\u215a\u2145\u20b6\u20b4\u20c9\u20f2\u2141\u20fc\u214b\u2163\u20e1\u20e7\u20fa\u20ec\u20a8\u2140\u20a8\u238b\u20b6\u20f6\u20b4\u20f2\u2155\u2089\u20ae\u2158\u20ff\u20e0\u20ec\u20eb\u20ee\u2163\u2083\u20ea\u20f3\u20e4\u2088\u20e5\u20f9\u20fa\u20e1\u20f6\u2387\u20ae\u2156\u20af\u20f8\u238c\u2153\u2155\u20c9\u214a\u2163\u2141\u20c8\u215f\u20e5\u2083\u2147\u20fa\u2152\u2156\u20e5\u20fd\u2152\u2146\u20f5\u20f5\u20fc\u208f\u238d\u2140\u2152\u20f9\u2083\u2155\u20f6\u2146\u2141\u2089\u20ec\u20c9\u20f9\u2163\u2083\u2158\u2163\u20ee\u20f3\u2140\u20eb\u2393\u20ba\u20e0\u20a9\u20e5\u20b5\u2152\u20e5\u20fc\u2387\u214d\u2088\u20e1\u20ce\u2154\u20e7\u20a9\u20c8\u2089\u20ff\u20b6\u20ea\u2088\u20ec\u20c9\u20ae\u20ec\u2153\u2163\u20e5\u20a8\u20c8\u215f\u2154\u214a\u2155\u2140\u238b\u2145\u20ba\u214a\u2144\u2387\u20ce\u2144\u20ce\u20ec\u238b\u215c\u20ae\u20f3\u215d\u20af\u2153\u20f8\u20ed\u20af\u20f2\u215f\u20c9\u2146\u20fc\u20c9\u20ae\u20c9\u215c\u2158\u20e6\u20fa\u208f\u20a8\u238b\u238c\u215c\u20af\u20ae\u2088\u20ce\u2393\u215f\u2140\u20b6\u20cf\u2089\u20f6\u20af\u2163\u20b6\u208f\u2141\u2154\u2387\u2145\u215d\u20ce\u2156\u2145\u2156\u20fd\u20b4\u20b6\u20cf\u20ce\u2083\u20c9\u20b5\u2156\u238c\u20fd\u2158\u20b5\u20e0\u20fc\u20e6\u2153\u2156\u20f6\u2083\u20f5\u20f9\u214c\u20ce\u20f2\u20ec\u20a9\u238c\u2146\u214a\u2153\u20e4\u215c\u20ae\u2145\u2154\u215c\u215f\u20fd\u214a\u20fd\u20e5\u20f8\u20c8\u20ff\u215c\u2387\u208f\u2154\u20eb\u238b\u2163\u20fc".toCharArray();
-            for (int i = 0; i < 1088; ++i) {
-                charArray[i] = (char)(((((charArray[i] ^ '\udc42') + 50437 - 40263 ^ 0x1268) + 38632 - 4940 ^ 0x87AE) + 50639 ^ 0xEA73) - 821 + 48729 - 47261 + 5149);
-            }
-            o = (mth_0OOOoo00o0_3()[0] = new String(charArray));
-        }
-        array[n11] = o;
-        final char[] charArray2 = ((String)o0Oo000O0oO(array)).toCharArray();
-        int limit = 786;
-        int n33;
-        for (int n17_lo = 0; n17_lo < limit; n17_lo = n33) {
-            final char[] array2 = (char[])charArray2;
-            final int n18 = n17_lo;
-            int n17_lo2 = n17_lo + 1;
-            int n2_lo = array2[n18];
-            final char[] array3 = (char[])charArray2;
-            final int n23 = n17_lo2;
-            int n17_lo3 = n17_lo2 + 1;
-            int n3_hi = array3[n23];
-            int limit2 = n2_lo << 16 | n3_hi;
-            final char[] array4 = new char[limit2];
-            for (int j = 0; j < limit2; j++) {
-                array4[j] = charArray2[n17_lo3 + j];
-            }
-            final Object[] o0Oo000O0oO = ahm.o0Oo000O0oO;
-            final int n32 = n10_hi;
-            n10_hi++;
-            o0Oo000O0oO[n32] = new String(array4);
-            n33 = n17_lo3 + limit2;
-        }
         ahm.aOL = Pattern.compile("^(?:[a-zA-Z0-9-]+\\.)*(?:hypixel\\.net|hypixel\\.io|technoblade\\.club)(?:\\.)?$", 2);
         ahm.aOM = Pattern.compile("^([a-zA-Z0-9-]+)\\.[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+\\.fisx\\.uk$", 2);
         ahm.aON = Pattern.compile("^([a-zA-Z0-9-]+)(?:\\.[a-zA-Z0-9-]+)*\\.liquidproxy\\.net$", 2);
@@ -478,11 +289,11 @@ public class ahm implements InstanceAccess
         if (vw == null) {
             return false;
         }
-        final List<Object> list = (List<Object>)((Collection)((ScoreObjective)vw).getScoreboard().getSortedScores((ScoreObjective)vw)).stream().filter(score2 -> ((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith("#")).collect((Collector<? super Object, ?, List<Object>>)Collectors.toList());
+        final List<Object> list = (List<Object>)((Collection)vw.getScoreboard().getSortedScores(vw)).stream().filter(score2 -> ((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith("#")).collect((Collector<? super Object, ?, List<Object>>)Collectors.toList());
         final Iterator iterator = ((list.size() > 15) ? Lists.newArrayList(Iterables.skip((Iterable)list, list.size() - 15)) : list).iterator();
         while (iterator.hasNext()) {
-            final Score score = (Score)((Iterator)iterator).next();
-            if (StringUtils.containsIgnoreCase((CharSequence)(String)EnumChatFormatting.getTextWithoutFormattingCodes(ScorePlayerTeam.formatPlayerName((Team)(ScorePlayerTeam)((ScoreObjective)vw).getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName())), (CharSequence)s)) {
+            final Score score = (Score)iterator.next();
+            if (StringUtils.containsIgnoreCase((CharSequence)EnumChatFormatting.getTextWithoutFormattingCodes(ScorePlayerTeam.formatPlayerName((ScorePlayerTeam)vw.getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName())), (CharSequence)s)) {
                 return true;
             }
         }
@@ -509,11 +320,11 @@ public class ahm implements InstanceAccess
 
         final Matcher matcher = ahm.aOM.matcher(s);
         if (matcher.matches()) {
-            return c(s, "https://redacted.invalid/lookup-route/" + (Object)(String)((Matcher)matcher).group(1), "target");
+            return c(s, "https://redacted.invalid/lookup-route/" + (Object)matcher.group(1), "target");
         }
         final Matcher matcher2 = ahm.aON.matcher(s);
         if (matcher2.matches()) {
-            return c(s, "https://api.liquidbounce.net/api/v2/proxy/lookup-route/" + (Object)(String)((Matcher)matcher2).group(1), "domain");
+            return c(s, "https://api.liquidbounce.net/api/v2/proxy/lookup-route/" + (Object)matcher2.group(1), "domain");
         }
         return null;
     }
@@ -525,7 +336,7 @@ public class ahm implements InstanceAccess
         int ticksExisted2 = ahm.aEg.thePlayer.ticksExisted / 20;
         final String trimToEmpty = StringUtils.trimToEmpty(LastConnectionComponent.ip);
         int port2 = LastConnectionComponent.port;
-        if (ahm.aOX == ahm.aEg.theWorld && ahm.aOT == ticksExisted2 && ahm.aOW == port2 && StringUtils.equals((CharSequence)ahm.aOV, (CharSequence)(String)trimToEmpty)) {
+        if (ahm.aOX == ahm.aEg.theWorld && ahm.aOT == ticksExisted2 && ahm.aOW == port2 && StringUtils.equals((CharSequence)ahm.aOV, (CharSequence)trimToEmpty)) {
             return ahm.aOU;
         }
         ahm.aOU = vo();
@@ -560,7 +371,7 @@ public class ahm implements InstanceAccess
                     final JsonObject asJsonObject = new JsonParser().parse(sb.toString()).getAsJsonObject();
                     aij2.aPi = ((asJsonObject.has(s2) && !asJsonObject.get(s2).isJsonNull()) ? aC(StringUtils.trimToEmpty(asJsonObject.get(s2).getAsString()).toLowerCase(Locale.ENGLISH)) : "");
                     aij2.awJ = currentTimeMillis + 300000L;
-                    ((BufferedReader)bufferedReader).close();
+                    bufferedReader.close();
                 }
                 catch (final Throwable t) {
                     try {
@@ -590,17 +401,17 @@ public class ahm implements InstanceAccess
             return false;
         }
         final String clientBrand = ahm.aEg.thePlayer.getClientBrand();
-        return ((!StringUtils.isBlank((CharSequence)(String)clientBrand) && ahm.aOO.matcher(clientBrand).matches()) ? 1 : 0) != 0;
+        return ((!StringUtils.isBlank((CharSequence)clientBrand) && ahm.aOO.matcher(clientBrand).matches()) ? 1 : 0) != 0;
     }
 
     public static Path vt() {
         final aee rv = aed.rV();
         if (rv == aee.WINDOWS) {
             final String getenv = System.getenv("WinDir");
-            if (StringUtils.isBlank((CharSequence)(String)getenv)) {
+            if (StringUtils.isBlank((CharSequence)getenv)) {
                 return null;
             }
-            final String first = (String)getenv;
+            final String first = getenv;
             final String[] more = { "System32", "drivers", null, null };
             more[2] = "etc";
             more[3] = "hosts";
@@ -626,12 +437,12 @@ public class ahm implements InstanceAccess
         }
         final Matcher matcher = ahm.aOM.matcher(ac);
         if (matcher.matches()) {
-            final String c = c(ac, "https://redacted.invalid/lookup-route/" + (Object)(String)((Matcher)matcher).group(1), "target");
+            final String c = c(ac, "https://redacted.invalid/lookup-route/" + (Object)matcher.group(1), "target");
             return c.isEmpty() || ahm.aOL.matcher(c).matches();
         }
         final Matcher matcher2 = ahm.aON.matcher(ac);
         if (matcher2.matches()) {
-            final String c2 = c(ac, "https://api.liquidbounce.net/api/v2/proxy/lookup-route/" + (Object)(String)((Matcher)matcher2).group(1), "domain");
+            final String c2 = c(ac, "https://api.liquidbounce.net/api/v2/proxy/lookup-route/" + (Object)matcher2.group(1), "domain");
             return c2.isEmpty() || ahm.aOL.matcher(c2).matches();
         }
         return ahm.aOL.matcher(ac).matches() && LastConnectionComponent.port == 25565;
@@ -658,7 +469,7 @@ public class ahm implements InstanceAccess
 
     public static boolean vq() {
         final String clientBrand = ahm.aEg.thePlayer.getClientBrand();
-        return StringUtils.isBlank((CharSequence)(String)clientBrand) || ahm.aOO.matcher(clientBrand).matches();
+        return StringUtils.isBlank((CharSequence)clientBrand) || ahm.aOO.matcher(clientBrand).matches();
     }
 
     public static boolean a(final Pattern pattern) {

@@ -30,7 +30,7 @@ public class e {
             int j3_lo = (int)((int)(olong >> 16 & 255L));
             int k3_hi = (int)((int)(olong >> 24 & 255L));
             InetAddress inetaddress1 = rip.vantage.util.a.v(new byte[]{(byte)l2_hi, (byte)i3_hi, (byte)j3_lo, (byte)k3_hi});
-            return (InetAddress)inetaddress1 != null ? new e(inetaddress1, parseInt2) : null;
+            return inetaddress1 != null ? new e(inetaddress1, parseInt2) : null;
         }
 
         if (s.length() != 32) {
@@ -47,7 +47,7 @@ public class e {
         }
 
         InetAddress inetaddress = rip.vantage.util.a.v(abyte);
-        return (InetAddress)inetaddress != null ? new e(inetaddress, parseInt2) : null;
+        return inetaddress != null ? new e(inetaddress, parseInt2) : null;
     }
 
 
@@ -73,6 +73,6 @@ public class e {
         }
 
         InetAddress inetaddress = rip.vantage.util.a.kO(s1);
-        return (InetAddress)inetaddress != null ? new e(inetaddress, indexOf3) : null;
+        return inetaddress != null ? new e(inetaddress, indexOf3) : null;
     }
 }

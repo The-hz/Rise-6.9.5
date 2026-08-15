@@ -591,7 +591,7 @@ public class Scaffold extends Module {
             int k_hi = (int)(aef.a(vector2f, var2, var1, var4) ? 1L : 0L);
             if (k_hi == 0) {
                 MovingObjectPosition movingobjectposition = aef.c(vector2f, this.extendBlockReachOnWatchdogTelly.wo() ? 4.5 : 5.5);
-                k_hi = (MovingObjectPosition)movingobjectposition != null && var1.equals(movingobjectposition.getBlockPos()) && movingobjectposition.sideHit == var2 ? 1 : 0;
+                k_hi = movingobjectposition != null && var1.equals(movingobjectposition.getBlockPos()) && movingobjectposition.sideHit == var2 ? 1 : 0;
             }
 
             if (k_hi != 0) {

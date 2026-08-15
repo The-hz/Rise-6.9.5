@@ -11,6 +11,6 @@ public class ahw implements Comparator<ahx> {
     }
 
     public int compare(ahx var1, ahx var2) {
-        return this.a((ahx)var1, (ahx)var2);
+        return this.a(var1, var2);
     }
 }

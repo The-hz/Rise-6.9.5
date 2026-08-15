@@ -13,7 +13,7 @@ public class ady<K, V> extends HashMap<K, V> implements Serializable {
     }
 
     public void g(V var1) {
-        this.aEh.add((V)var1);
+        this.aEh.add(var1);
     }
 
     public ArrayList<V> rP() {

@@ -4,7 +4,7 @@ import com.alan.clients.script.api.wrapper.ScriptWrapper;
 
 public abstract class ScriptFontRenderer<T> extends ScriptWrapper<T> {
     public ScriptFontRenderer(T var1) {
-        super((T)var1);
+        super(var1);
     }
 
     public abstract double width(String var1);

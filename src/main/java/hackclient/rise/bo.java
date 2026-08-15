@@ -16,7 +16,6 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -31,12 +30,6 @@ import java.util.UUID;
 import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -98,7 +91,6 @@ public class bo extends Component {
     public int eX;
     public Method ez;
     public boolean eM;
-    public static Object[] fld_0oOOoOo0O00O_11;
     public long fa;
     public DataOutputStream ff;
     public int eE;
@@ -111,14 +103,12 @@ public class bo extends Component {
     public boolean eW;
     public ByteArrayOutputStream fe;
     public boolean eG;
-    public static Object[] o0Oo000O0oO = new Object[38];
     public static int ew;
     public String fc;
     public boolean eK;
     public static UUID ev;
     @EventLink
     public Listener<TickEvent> onTick;
-    public static Object[] oO00O0OO0ooO;
     public boolean eJ;
     @EventLink
     public Listener<WorldChangeEvent> onWorldChange;
@@ -134,7 +124,6 @@ public class bo extends Component {
     public int eP;
     public byte eQ;
     public Object ey = new Object();
-    public static Object[] fld_0OOOoo00o0_12;
     public String eZ;
     public Set<UUID> eC;
     public int eO;
@@ -142,7 +131,6 @@ public class bo extends Component {
     public boolean eL;
     public int fb;
     public ItemStack eV;
-    public static Object Oo0o00000O00;
 
     public void a(String var1, byte[] var2, String var3) {
 
@@ -547,7 +535,7 @@ public class bo extends Component {
                                 gameprofile,
                                 0,
                                 this.a(aEg.theWorld),
-                                (net.minecraft.network.play.server.S38PacketPlayerListItem.Action)action
+                                action
                                         == net.minecraft.network.play.server.S38PacketPlayerListItem.Action.UPDATE_DISPLAY_NAME
                                     ? addplayerdata.getDisplayName()
                                     : null
@@ -556,193 +544,6 @@ public class bo extends Component {
                     }
                 }
             }
-        }
-    }
-
-    public static Object o0Oo000O0oO(Object[] var0) {
-        try {
-            int i = (Integer)var0[1];
-            String s = (String)var0[2];
-            Object object17 = var0[0];
-            Object secretkeyspec = oO00O0OO0ooO;
-            if (oO00O0OO0ooO == null) {
-                secretkeyspec = oO00O0OO0ooO = new Object[1];
-            }
-
-            secretkeyspec = ((Object[])secretkeyspec)[i];
-            if (secretkeyspec == null) {
-                secretkeyspec = (Object[])object17;
-                if ((Object[])object17 == null) {
-                    secretkeyspec = fld_0OOOoo00o0_12 = new Object[1];
-                    byte[] abyte = new byte[16];
-                    abyte[5] = -81;
-                    abyte[10] = -125;
-                    abyte[2] = 68;
-                    abyte[14] = 40;
-                    abyte[12] = 3;
-                    abyte[4] = 81;
-                    abyte[1] = -117;
-                    abyte[15] = 110;
-                    abyte[6] = 5;
-                    abyte[0] = 80;
-                    abyte[11] = 111;
-                    abyte[3] = 35;
-                    abyte[7] = 79;
-                    abyte[13] = 99;
-                    abyte[9] = 37;
-                    abyte[8] = 57;
-                    ((Object[])secretkeyspec)[0] = abyte;
-                }
-
-                byte[] abyte1 = (byte[])((Object[])secretkeyspec)[0];
-                if (Oo0o00000O00 == null) {
-                    byte[] abyte2 = new byte[32];
-                    abyte2[10] = 10;
-                    abyte2[13] = 96;
-                    abyte2[5] = -55;
-                    abyte2[16] = 104;
-                    abyte2[24] = 90;
-                    abyte2[17] = -32;
-                    abyte2[21] = 43;
-                    abyte2[20] = 71;
-                    abyte2[14] = 103;
-                    abyte2[6] = 117;
-                    abyte2[29] = 123;
-                    abyte2[31] = -109;
-                    abyte2[26] = -64;
-                    abyte2[2] = -102;
-                    abyte2[12] = -64;
-                    abyte2[28] = 115;
-                    abyte2[22] = -49;
-                    abyte2[23] = -125;
-                    abyte2[3] = -6;
-                    abyte2[27] = 77;
-                    abyte2[0] = 93;
-                    abyte2[18] = -65;
-                    abyte2[15] = 24;
-                    abyte2[19] = -110;
-                    abyte2[30] = 27;
-                    abyte2[4] = 117;
-                    abyte2[8] = -90;
-                    abyte2[9] = 29;
-                    abyte2[1] = 15;
-                    abyte2[25] = -75;
-                    abyte2[11] = 28;
-                    abyte2[7] = 23;
-                    byte[] abyte3 = new byte[abyte1.length + abyte2.length];
-                    System.arraycopy(abyte1, 0, abyte3, 0, abyte1.length);
-                    System.arraycopy(abyte2, 0, abyte3, abyte1.length, abyte2.length);
-                    secretkeyspec = mth_0OOOoo00o0_5()[1];
-                    if (secretkeyspec == null) {
-                        char[] achar = "ᝎ\u1754ᝋᝒ\u1758ᚤᝇ\u1775ᝢ\u1776\u1756ᝩ\u177dᝳᝃ\u1756\u175dᚭ".toCharArray();
-
-                        for (int j = 0; j < 18; j++) {
-                            char c0 = achar[j];
-                            int k = c0 - 27365;
-                            int l = k - 8615;
-                            int i1 = l + 49001;
-                            int j1 = i1 + 52329;
-                            int k1 = j1 + 37770;
-                            int l1 = k1 - 13997;
-                            int i2 = l1 - 41777;
-                            int j2 = i2 + 14389;
-                            int k2 = j2 + 16472;
-                            int l2 = k2 ^ 6491;
-                            int i3 = l2 + 27227;
-                            int j3 = i3 + 10430;
-                            int k3 = j3 - 58463;
-                            achar[j] = (char)k3;
-                        }
-
-                        secretkeyspec = mth_0OOOoo00o0_5()[1] = new String(achar);
-                    }
-
-                    SecretKeyFactory secretkeyfactory = SecretKeyFactory.getInstance((String)secretkeyspec);
-                    byte[] abyte4 = new byte[16];
-                    abyte4[4] = -113;
-                    abyte4[3] = 112;
-                    abyte4[9] = 36;
-                    abyte4[12] = -83;
-                    abyte4[13] = -96;
-                    abyte4[0] = -45;
-                    abyte4[6] = 13;
-                    abyte4[8] = -105;
-                    abyte4[11] = -10;
-                    abyte4[7] = 76;
-                    abyte4[5] = 113;
-                    abyte4[2] = 73;
-                    abyte4[14] = 6;
-                    abyte4[1] = 117;
-                    abyte4[10] = 100;
-                    abyte4[15] = 86;
-                    PBEKeySpec pbekeyspec = new PBEKeySpec(new String(abyte3, StandardCharsets.UTF_8).toCharArray(), abyte4, 11, 256);
-                    byte[] abyte5 = secretkeyfactory.generateSecret(pbekeyspec).getEncoded();
-                    byte[] abyte10 = abyte5;
-                    Object object19 = mth_0OOOoo00o0_5()[2];
-                    if (object19 == null) {
-                        char[] achar1 = "亖今令".toCharArray();
-
-                        for (int l3 = 0; l3 < 3; l3++) {
-                            char c1 = achar1[l3];
-                            int i4 = c1 + 'ꌂ';
-                            int j4 = i4 + 13188;
-                            int k4 = j4 ^ 11337;
-                            int l4 = k4 - 4041;
-                            int i5 = l4 - 45292;
-                            int j5 = i5 + 65201;
-                            int k5 = j5 + 55763;
-                            int l5 = k5 + 5139;
-                            int i6 = l5 + 21555;
-                            int j6 = i6 + 39636;
-                            int k6 = j6 ^ 14324;
-                            int l6 = k6 ^ 8086;
-                            int i7 = l6 - 3099;
-                            achar1[l3] = (char)i7;
-                        }
-
-                        object19 = mth_0OOOoo00o0_5()[2] = new String(achar1);
-                    }
-
-                    secretkeyspec = new SecretKeySpec(abyte10, (String)object19);
-                    Oo0o00000O00 = secretkeyspec;
-                }
-
-                byte[] abyte6 = Base64.getDecoder().decode(s);
-                byte[] abyte7 = Arrays.copyOfRange(abyte6, 0, 16);
-                byte[] abyte8 = Arrays.copyOfRange(abyte6, 16, abyte6.length);
-                Object object18 = mth_0OOOoo00o0_5()[3];
-                if (object18 == null) {
-                    char[] achar2 = "缗绫缙绵绩绦绩绵缔缑绩缙绻缔肷脈脈胿育脍".toCharArray();
-
-                    for (byte b0 = 0; b0 < 20; b0 += 1) {
-                        char c2 = achar2[b0];
-                        int j7 = c2 - 31648;
-                        int k7 = j7 - 19522;
-                        int l7 = k7 + 11972;
-                        int i8 = l7 ^ 65318;
-                        int j8 = i8 - 58119;
-                        int k8 = j8 + 5944;
-                        int l8 = k8 ^ 39177;
-                        int i9 = l8 + 30170;
-                        int j9 = i9 + 40316;
-                        int k9 = j9 - 7372;
-                        int l9 = k9 + 23324;
-                        int i10 = l9 ^ 10238;
-                        achar2[b0] = (char)i10;
-                    }
-
-                    object18 = mth_0OOOoo00o0_5()[3] = new String(achar2);
-                }
-
-                Cipher cipher = Cipher.getInstance((String)object18);
-                cipher.init(2, (SecretKey)Oo0o00000O00, new IvParameterSpec(abyte7));
-                byte[] abyte9 = cipher.doFinal(abyte8);
-                secretkeyspec = oO00O0OO0ooO[i] = new String(abyte9, StandardCharsets.UTF_8);
-            }
-
-            return secretkeyspec;
-        } catch (java.security.GeneralSecurityException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -863,59 +664,6 @@ public class bo extends Component {
     }
 
     static {
-        int k3_hi = 0;
-        Object[] achar3 = new Object[]{fld_0OOOoo00o0_12, 0, null};
-        Object object3 = mth_0OOOoo00o0_5()[0];
-        if (object3 == null) {
-            char[] achar = "⁍₈₎⁊⁌ₒ₉⁺\u209d\u206c₁\u209f\u209e⁓₁₋\u206a\u206d⁓\u2069⁵\u209d⁵⁵⁙\u2069\u206f\u206a₁⁌⁴‹₣₈\u206e₡⁒ₒₓ₁⁎⁺⁍ₗ₈⁶⁸ₕₗ₃ₓ₠\u206e⁒₌\u206d₊ₗₒ\u2069ₜ\u206d\u2061⁒⁍ₚ₍\u2073₊‸₡⁌\u206a⁏ⁿ⁵⁶₊ₓ₃\u2064\u208f‹⁕₊ₔ₊₡₍\u206a₈⁘₍⁹‹‹⁹\u206d⁎⁓⁕⁵⁶⁵ₓₚ⁶⁋ₔ\u209d⁻ₗ₠⁻⁼⁙\u209e⁾₎⁼₡\u206d₁\u206d₉⁕⁍⁏ₜ⁏\u2064\u209e\u2068₉\u206c\u2072⁊⁓\u2061⁋ⁿ\u206c⁌₌\u206f\u209d⁸\u206e\u206d₠\u2072⁽₁⁷ₚ\u206f₌⁍\u206dⁿ⁘ⁿ⁹₊⁍ₗ\u2072₠ₕ₉₈⁺⁒⁾₍₣⁍\u206a\u206c₍₍⁓⁋\u209e⁾⁙⁴\u208f⁺⁘\u209f⁕₌ₗ\u206dₓ⁽\u2064⁵⁏⁼\u206c\u206b₊₍⁴\u206e₎\u206c⁊⁷₎₃₠\u206bₚₜₚ⁘⁋₌₉\u209f‸\u2069\u209f\u2073ₛ⁽₌⁍\u2068⁶⁒⁻₃⁊⁸₋⁓⁏⁼⁺₁\u2064⁊ₜ₁⁷⁼⁓‸⁙\u208f⁙‹₠₄⁽⁙₄⁻\u209e₀\u209eₚₕ\u2069ₖ₣ₓ₡⁓\u206c\u209f₈⁎⁴⁵‸ⁿ⁙₉⁼\u206a⁎\u2069₎ₛ⁒\u206e⁶⁍ₚ\u206e⁺⁹⁏ₕₚ\u2069ₒ⁎⁌₌‹\u208f\u2068\u206d⁺ₓₜ⁽₌\u209d⁶ₖ₊₃\u2061\u206fₚ\u2068⁼\u206e\u208fₓ\u2069₀⁊⁊⁘\u209e⁾\u208f₉\u206e⁺⁾ₒ₊\u209eₔⁿ₉⁒ₚ⁍\u209d⁘⁾₋⁌\u206e⁒₠⁵⁶⁏ₖ\u2061\u209e⁘\u2069₠\u209e⁼\u209e⁒₌\u209d₄⁹⁹\u2069\u209d₀⁵₌₋ₔ⁼⁽ⁿ⁙₁₉ₖ\u208f⁹\u208f⁊\u206fₓ⁌⁵⁓⁕\u206c₊⁴₀ₔ₍⁹ₛ⁻₈\u2068\u206c₌⁴⁕₁\u209e⁷\u206e₊⁕₌⁻ₒₜ⁼⁋\u2072ₔ₍\u208f₀⁸⁍ₖ⁙⁼ₒ₎\u206d₈\u2073ₓ⁕ⁿ⁽\u209d⁙⁏ₗ\u2073₎₡⁙₣₈\u206b₊⁽⁊₈ₔ⁹⁍\u2072\u208f⁕\u209d⁙⁻\u208f\u206e\u206a₎ₓ\u2073ₓ₉\u2072\u2068⁌ₚ₀⁒⁕⁙₈\u2061⁕₣⁌⁕ₛ⁾⁷⁓\u206b\u206c⁹₡₎⁼⁶ₖ⁋⁾₊\u206a₁₣\u206f⁌⁌ₕ⁾⁕₌‸₌\u2068⁓⁷₊⁓₌₠⁋⁺₈₍ₔₔ\u209e⁎⁾\u209e⁓ₖ\u2072⁙‸⁵⁺ₖ\u2073\u209eₕ₄ₜ\u2064₀ₜ⁶⁸⁏ₗ\u2069⁌⁾\u2064₣\u206b⁹ₕ\u208f\u206c\u206b⁏₉⁊₡⁷₄⁍⁍⁋\u206b₈₣ₕ\u2064⁻₣⁵‹\u2072ⁿ\u206e⁍ₖ⁹ₖ₀‸⁸ₔ\u2064⁕⁌⁺\u206b₠\u206f⁏⁵\u209d⁽ₜ\u206c⁶⁷₈\u2064⁍⁎₡₊₁⁙\u209d⁵₍₠\u206d₉⁒‹‹ₖ₄⁕₄⁓\u206f₃₍\u2073ₖ\u209fₒ⁒₄₣ₚ⁒⁽\u206e\u2072⁾₊\u206f₋⁊⁏⁘⁼\u209e\u2068⁵₋⁺₌⁕⁻\u206e⁷⁋⁒⁎\u2073\u206aₜ\u209e\u2061⁎\u209eₗ\u206f\u209d‹⁒⁒⁏\u206f₡⁇"
-                .toCharArray();
-
-            for (int b0 = 0; b0 < 684; b0 += 1) {
-                char c0 = achar[b0];
-                int l3 = c0 + '\uf883';
-                int i4 = l3 + 50660;
-                int j4 = i4 - 48101;
-                int k4 = j4 - 13158;
-                int l4 = k4 ^ 8714;
-                int i5 = l4 + 35018;
-                int j5 = i5 - 10314;
-                int k5 = j5 - 15726;
-                int l5 = k5 - 4337;
-                int i6 = l5 - 63571;
-                int j6 = i6 + 1652;
-                int k6 = j6 ^ 2038;
-                int l6 = k6 ^ 41626;
-                int i7 = l6 ^ 18682;
-                achar[b0] = (char)i7;
-            }
-
-            object3 = mth_0OOOoo00o0_5()[0] = new String(achar);
-        }
-
-        achar3[2] = object3;
-        char[] achar2 = ((String)o0Oo000O0oO(achar3)).toCharArray();
-        int limit = 484;
-        int i = 0;
-
-        while (i < limit) {
-            int j8 = i;
-            int i2 = i + 1;
-            int i2_lo = achar2[j8];
-            j8 = i2;
-            int i3 = i2 + 1;
-            int j2_hi = achar2[j8];
-            int limit2 = i2_lo << 16 | j2_hi;
-            char[] achar1 = new char[limit2];
-
-            for (int j = 0; j < limit2; j++) {
-                achar1[j] = achar2[i3 + j];
-            }
-
-            j8 = k3_hi;
-            k3_hi++;
-            o0Oo000O0oO[j8] = new String(achar1);
-            i = i3 + limit2;
-        }
 
         ev = UUID.fromString("d41d8cd9-8f00-3204-a980-0998ecf8427e");
     }
@@ -1203,15 +951,6 @@ public class bo extends Component {
         GameProfile gameprofile1 = new GameProfile(var1, s);
         this.b(gameprofile1);
         return gameprofile1;
-    }
-
-    public static Object[] mth_0OOOoo00o0_5() {
-        Object[] aobject = fld_0oOOoOo0O00O_11;
-        if (fld_0oOOoOo0O00O_11 == null) {
-            aobject = fld_0oOOoOo0O00O_11 = new Object[4];
-        }
-
-        return aobject;
     }
 
     public void c(String var1, int var2) {

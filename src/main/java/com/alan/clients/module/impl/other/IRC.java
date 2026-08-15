@@ -33,7 +33,7 @@ extends Module {
             return;
         }
         rip.vantage.commons.packet.impl.server.community.b b2 = (rip.vantage.commons.packet.impl.server.community.b)er2.dd();
-        a cfr_ignored_0 = a.values()[b2.aJv()];
+        a unused0 = a.values()[b2.aJv()];
         String string = b2.getMessage();
         String string2 = "\u00a7" + b2.getAuthor();
         String string3 = String.valueOf(EnumChatFormatting.GRAY) + string;

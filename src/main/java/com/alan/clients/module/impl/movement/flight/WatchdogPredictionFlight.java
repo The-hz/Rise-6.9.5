@@ -28,8 +28,8 @@ extends Mode<Flight> {
     };
     @EventLink
     public Listener<PostStrafeEvent> onPostStrafe = postStrafeEvent -> {
-        int cfr_ignored_0 = WatchdogPredictionFlight.aEg.thePlayer.Zl;
-        boolean cfr_ignored_1 = WatchdogPredictionFlight.aEg.thePlayer.onGround;
+        int unused0 = WatchdogPredictionFlight.aEg.thePlayer.Zl;
+        boolean unused1 = WatchdogPredictionFlight.aEg.thePlayer.onGround;
         if (WatchdogPredictionFlight.aEg.thePlayer.tR == 5) {
             this.ys = true;
         }
@@ -37,7 +37,7 @@ extends Mode<Flight> {
             WatchdogPredictionFlight.aEg.thePlayer.cameraYaw = 0.1f;
         }
         if (WatchdogPredictionFlight.aEg.thePlayer.motionY < 0.0) {
-            int cfr_ignored_2 = WatchdogPredictionFlight.aEg.thePlayer.tR;
+            int unused2 = WatchdogPredictionFlight.aEg.thePlayer.tR;
         }
     };
     @EventLink
@@ -78,10 +78,10 @@ extends Mode<Flight> {
         this.onPreMotion = preMotionEvent -> {
             if (WatchdogPredictionFlight.aEg.thePlayer.ticksExisted % 2 == 0 && this.ys) {
                 Double d2 = MoveUtil.direction();
-                double cfr_ignored_0 = -MathHelper.sin((float)((float)d2.doubleValue())) * 100.0f;
-                double cfr_ignored_1 = MathHelper.cos((float)((float)d2.doubleValue())) * 100.0f;
+                double unused0 = -MathHelper.sin((float)((float)d2.doubleValue())) * 100.0f;
+                double unused1 = MathHelper.cos((float)((float)d2.doubleValue())) * 100.0f;
                 preMotionEvent.setPosY(preMotionEvent.getPosY() + 100.0);
-                WorldClient cfr_ignored_2 = Minecraft.getMinecraft().theWorld;
+                WorldClient unused2 = Minecraft.getMinecraft().theWorld;
                 int gZ = Minecraft.getMinecraft().theWorld.GZ();
             }
             WorldClient worldClient = Minecraft.getMinecraft().theWorld;
@@ -90,7 +90,7 @@ extends Mode<Flight> {
         this.onPacketSend = packetSendEvent -> {
             Packet<?> packet = packetSendEvent.dq();
             if (packet instanceof C03PacketPlayer.C04PacketPlayerPosition) {
-                C03PacketPlayer.C04PacketPlayerPosition cfr_ignored_0 = (C03PacketPlayer.C04PacketPlayerPosition)packet;
+                C03PacketPlayer.C04PacketPlayerPosition unused0 = (C03PacketPlayer.C04PacketPlayerPosition)packet;
             }
         };
         this.FO = teleportEvent -> {};

@@ -5,7 +5,7 @@ import net.minecraft.network.Packet;
 
 public abstract class ScriptPacket<T extends Packet<?>> extends ScriptWrapper<T> {
     public ScriptPacket(T var1) {
-        super((T)var1);
+        super(var1);
     }
 
     public String getType() {

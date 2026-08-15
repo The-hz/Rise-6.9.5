@@ -93,11 +93,11 @@ extends Mode<Teleport> {
     @EventLink
     public final Listener<BlockAABBEvent> onBlockAABB = blockAABBEvent -> {
         if (blockAABBEvent.getBlock() instanceof BlockAir) {
-            double cfr_ignored_1 = blockAABBEvent.getBlockPos().getX();
+            double unused1 = blockAABBEvent.getBlockPos().getX();
             double d2 = blockAABBEvent.getBlockPos().getY();
-            double cfr_ignored_2 = blockAABBEvent.getBlockPos().getZ();
+            double unused2 = blockAABBEvent.getBlockPos().getZ();
             double d3 = d2 - MiniBloxTeleport.aEg.thePlayer.posY;
-            int cfr_ignored_3 = d3 == 0.0 ? 0 : (d3 < 0.0 ? -1 : 1);
+            int unused3 = d3 == 0.0 ? 0 : (d3 < 0.0 ? -1 : 1);
         }
     };
 

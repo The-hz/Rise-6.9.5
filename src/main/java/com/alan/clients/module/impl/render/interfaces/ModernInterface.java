@@ -107,7 +107,7 @@ extends Mode<Interface> {
                     RenderUtil.roundedRectangle(d32 + (double)zc2.nu() + (double)zc2.nv() + 2.0, d4 - 1.5, 2.0, 9.0, 1.0, color);
                 }
                 if (((Mode)this.asJ.wo()).getName().equals("Minecraft")) {
-                    agd cfr_ignored_0 = ModernInterface.aEg.fontRendererObj;
+                    agd unused0 = ModernInterface.aEg.fontRendererObj;
                     float f4 = 16.0f / (float)9;
                     GlStateManager.pushMatrix();
                     GlStateManager.scale(f4, f4, f4);
@@ -244,7 +244,7 @@ extends Mode<Interface> {
             }
         }
         if (((Mode)this.asJ.wo()).getName().equals("Minecraft")) {
-            agd cfr_ignored_0 = ModernInterface.aEg.fontRendererObj;
+            agd unused0 = ModernInterface.aEg.fontRendererObj;
             float f15 = 16.0f / (float)9;
             GlStateManager.pushMatrix();
             GlStateManager.scale(f15, f15, f15);

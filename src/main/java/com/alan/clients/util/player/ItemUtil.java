@@ -174,7 +174,7 @@ public final class ItemUtil {
     private static ItemStack a(int n3, int n4, Container container, Predicate<ItemStack> predicate, Comparator<ItemStack> comparator) {
         return IntStream.range(n3, n4).mapToObj(n2 -> container.getSlot(n2).getStack()).filter(itemStack -> {
             if (itemStack == null) return false;
-            if (!predicate.test((ItemStack)itemStack)) return false;
+            if (!predicate.test(itemStack)) return false;
             return true;
         }).max(comparator.thenComparingDouble(itemStack -> itemStack.getMaxDamage() - itemStack.getItemDamage())).orElse(null);
     }

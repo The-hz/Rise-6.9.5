@@ -248,7 +248,7 @@ public class ThrowableAura extends Module {
 
         double d1 = var1.range.wo().doubleValue();
         MovingObjectPosition movingobjectposition = aef.c(RotationComponent.fk, d1);
-        return (MovingObjectPosition)movingobjectposition != null && movingobjectposition.entityHit == (EntityLivingBase)entitylivingbase
+        return movingobjectposition != null && movingobjectposition.entityHit == entitylivingbase
             ? true ^ true
             : aEg.thePlayer.getDistanceToEntity(entitylivingbase) <= d1;
     }

@@ -45,7 +45,7 @@ public class ListValue<T> extends Value<T> {
     }
 
     public ListValue<T> setDefault(T var1) {
-        this.n((T)var1);
+        this.n(var1);
         return this;
     }
 

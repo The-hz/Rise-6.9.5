@@ -8,6 +8,6 @@ public abstract class ScriptWrapper<T> extends API {
 
     @Generated
     public ScriptWrapper(T var1) {
-        this.wrapped = (T)var1;
+        this.wrapped = var1;
     }
 }
