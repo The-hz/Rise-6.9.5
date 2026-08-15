@@ -20,6 +20,8 @@ version = '6.9.5'
 
 idea { module { excludeDirs += file('run') } }
 
+apply from: "$rootDir/gradle/reserved-names.gradle"
+
 repositories {
     mavenCentral()
 }
