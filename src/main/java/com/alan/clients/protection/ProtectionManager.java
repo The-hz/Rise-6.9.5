@@ -114,6 +114,11 @@ public final class ProtectionManager {
     }
 
     private boolean isTampered() {
+        //add code
+        if (!ProtectionToggles.nameProbes()) {
+            return true;
+        }
+
         try {
             try {
                 this.getClass().getDeclaredMethod("crash");
