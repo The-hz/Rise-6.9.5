@@ -14,7 +14,7 @@ public class ScriptPacketMaps extends ScriptPacket<S34PacketMaps> {
 
     public byte getMapScale() {
         try {
-            Field field = this.wrapped.getClass().getDeclaredField("mapScale");
+            Field field = this.vanillaField("mapScale");
             field.setAccessible(true);
             return field.getByte(this.wrapped);
         } catch (Exception exception) {

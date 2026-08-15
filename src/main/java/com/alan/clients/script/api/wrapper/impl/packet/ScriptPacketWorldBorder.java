@@ -10,7 +10,7 @@ public class ScriptPacketWorldBorder extends ScriptPacket<S44PacketWorldBorder> 
 
     public String getAction() {
         try {
-            Field field = this.wrapped.getClass().getDeclaredField("action");
+            Field field = this.vanillaField("action");
             field.setAccessible(true);
             Object object = field.get(this.wrapped);
             return object != null ? object.toString() : "";
@@ -21,7 +21,7 @@ public class ScriptPacketWorldBorder extends ScriptPacket<S44PacketWorldBorder> 
 
     public double getTargetSize() {
         try {
-            Field field = this.wrapped.getClass().getDeclaredField("targetSize");
+            Field field = this.vanillaField("targetSize");
             field.setAccessible(true);
             return field.getDouble(this.wrapped);
         } catch (Exception exception) {
@@ -31,7 +31,7 @@ public class ScriptPacketWorldBorder extends ScriptPacket<S44PacketWorldBorder> 
 
     public double getCenterX() {
         try {
-            Field field = this.wrapped.getClass().getDeclaredField("centerX");
+            Field field = this.vanillaField("centerX");
             field.setAccessible(true);
             return field.getDouble(this.wrapped);
         } catch (Exception exception) {
@@ -41,7 +41,7 @@ public class ScriptPacketWorldBorder extends ScriptPacket<S44PacketWorldBorder> 
 
     public double getCenterZ() {
         try {
-            Field field = this.wrapped.getClass().getDeclaredField("centerZ");
+            Field field = this.vanillaField("centerZ");
             field.setAccessible(true);
             return field.getDouble(this.wrapped);
         } catch (Exception exception) {
@@ -51,7 +51,7 @@ public class ScriptPacketWorldBorder extends ScriptPacket<S44PacketWorldBorder> 
 
     public long getTimeUntilTarget() {
         try {
-            Field field = this.wrapped.getClass().getDeclaredField("timeUntilTarget");
+            Field field = this.vanillaField("timeUntilTarget");
             field.setAccessible(true);
             return field.getLong(this.wrapped);
         } catch (Exception exception) {
@@ -61,7 +61,7 @@ public class ScriptPacketWorldBorder extends ScriptPacket<S44PacketWorldBorder> 
 
     public int getWarningTime() {
         try {
-            Field field = this.wrapped.getClass().getDeclaredField("warningTime");
+            Field field = this.vanillaField("warningTime");
             field.setAccessible(true);
             return field.getInt(this.wrapped);
         } catch (Exception exception) {
@@ -71,7 +71,7 @@ public class ScriptPacketWorldBorder extends ScriptPacket<S44PacketWorldBorder> 
 
     public int getWarningDistance() {
         try {
-            Field field = this.wrapped.getClass().getDeclaredField("warningDistance");
+            Field field = this.vanillaField("warningDistance");
             field.setAccessible(true);
             return field.getInt(this.wrapped);
         } catch (Exception exception) {

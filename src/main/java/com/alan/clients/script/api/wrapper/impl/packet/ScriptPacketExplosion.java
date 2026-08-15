@@ -38,7 +38,7 @@ public class ScriptPacketExplosion extends ScriptPacket<S27PacketExplosion> {
 
     public void setPlayerMotionX(float var1) {
         try {
-            Field field = this.wrapped.getClass().getDeclaredField("field_149153_g");
+            Field field = this.vanillaField("field_149153_g");
             field.setAccessible(true);
             field.setFloat(this.wrapped, var1);
         } catch (Exception exception) {
@@ -48,7 +48,7 @@ public class ScriptPacketExplosion extends ScriptPacket<S27PacketExplosion> {
 
     public void setPlayerMotionY(float var1) {
         try {
-            Field field = this.wrapped.getClass().getDeclaredField("field_149152_f");
+            Field field = this.vanillaField("field_149152_f");
             field.setAccessible(true);
             field.setFloat(this.wrapped, var1);
         } catch (Exception exception) {
@@ -58,7 +58,7 @@ public class ScriptPacketExplosion extends ScriptPacket<S27PacketExplosion> {
 
     public void setPlayerMotionZ(float var1) {
         try {
-            Field field = this.wrapped.getClass().getDeclaredField("field_149159_h");
+            Field field = this.vanillaField("field_149159_h");
             field.setAccessible(true);
             field.setFloat(this.wrapped, var1);
         } catch (Exception exception) {

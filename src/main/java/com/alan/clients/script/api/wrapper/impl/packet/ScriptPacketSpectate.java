@@ -10,7 +10,7 @@ public class ScriptPacketSpectate extends ScriptPacket<C18PacketSpectate> {
 
     public String getEntityUUID() {
         try {
-            Field field = this.wrapped.getClass().getDeclaredField("id");
+            Field field = this.vanillaField("id");
             field.setAccessible(true);
             Object object = field.get(this.wrapped);
             return object != null ? object.toString() : "";
