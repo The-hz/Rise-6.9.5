@@ -12,11 +12,18 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class UsernameGenerator {
     private static final String aGe = "https://raw.githubusercontent.com/jeanphorn/wordlist/master/usernames.txt";
+    //add code
+    private static volatile String[] wordList;
 
     public UsernameGenerator() {
     }
 
     public static String[] sx() {
+        String[] astring = wordList;
+        if (astring != null) {
+            return astring;
+        }
+
         try {
             HttpsURLConnection httpsurlconnection = (HttpsURLConnection)new URL("https://raw.githubusercontent.com/jeanphorn/wordlist/master/usernames.txt")
                 .openConnection();
@@ -37,7 +44,9 @@ public class UsernameGenerator {
             }
 
             bufferedreader.close();
-            return stringbuilder.toString().split(System.lineSeparator());
+            String[] astring1 = stringbuilder.toString().split(System.lineSeparator());
+            wordList = astring1;
+            return astring1;
         } catch (IOException ioexception) {
             ioexception.printStackTrace();
             return null;
