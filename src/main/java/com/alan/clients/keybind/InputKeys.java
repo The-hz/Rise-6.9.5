@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.keybind;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

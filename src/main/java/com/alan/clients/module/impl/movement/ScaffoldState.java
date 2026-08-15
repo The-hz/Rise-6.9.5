@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.module.impl.movement;
 
 public enum ScaffoldState {
     IDLE,

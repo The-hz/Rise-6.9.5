@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.module.impl.player.inventory;
 
 import java.util.ArrayList;
 import java.util.List;

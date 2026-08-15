@@ -18,7 +18,7 @@ import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.component.impl.render.NotificationComponent;
 import com.alan.clients.module.impl.movement.AutoMLGSwitchMap;
-import hackclient.rise.ScaffoldState;
+import com.alan.clients.module.impl.movement.ScaffoldState;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;

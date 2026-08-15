@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.module.impl.player.inventory;
 
 import net.minecraft.item.ItemStack;
 
