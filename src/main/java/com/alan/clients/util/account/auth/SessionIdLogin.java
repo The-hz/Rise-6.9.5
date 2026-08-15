@@ -4,7 +4,7 @@ import com.alan.clients.util.account.auth.MicrosoftLogin;
 import com.alan.clients.util.web.Browser;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import hackclient.rise.MicrosoftAuth;
+import hackclient.rise.DynamicAccountApi;
 import java.io.IOException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
@@ -26,7 +26,7 @@ public final class SessionIdLogin {
         if (s.matches("^\\d+$")) {
             String s1;
             try {
-                s1 = MicrosoftAuth.am(Integer.parseInt(s));
+                s1 = DynamicAccountApi.am(Integer.parseInt(s));
             } catch (NumberFormatException numberformatexception) {
                 throw new IOException("Invalid ref id", numberformatexception);
             }

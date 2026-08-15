@@ -12,13 +12,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class MicrosoftAuth {
+public class DynamicAccountApi {
     private static final Gson aHf = new Gson();
     private static final String aHg = "http://alts.russia-games.eu/api/v1/accounts";
     private static final String aHh = "http://alts.russia-games.eu/api/v1/login";
     public static String aHi = "api-token";
 
-    public MicrosoftAuth() {
+    public DynamicAccountApi() {
     }
 
     public static DynamicAccountResult[] sX() {
