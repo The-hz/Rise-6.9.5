@@ -146,6 +146,9 @@ tasks.register('clientJar', Jar) {
     from zipTree('libs/minecraft-deobf.jar')
 }
 
+// source checks run on the documented build path, not only on `check`
+tasks.named('clientJar') { dependsOn 'reservedNames', 'staleLiterals', 'mixedBoxMerge' }
+
 build.dependsOn 'clientJar'
 
 def javaExecutableProperty = providers.gradleProperty('javaExecutable').getOrNull()
