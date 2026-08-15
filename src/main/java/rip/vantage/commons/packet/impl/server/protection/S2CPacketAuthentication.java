@@ -1,5 +1,6 @@
 package rip.vantage.commons.packet.impl.server.protection;
 
+import com.alan.clients.compat.ProtectionToggles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -325,6 +326,11 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
     }
 
     public boolean performMandatoryHWIDCheck(final String s, final String s2) {
+        //add code
+        if (!ProtectionToggles.hwidCheck()) {
+            return true;
+        }
+
         try {
             final String s3 = (String)((Method)((Class<?>)Class.forName(buildHWIDUtilClassName())).getMethod("getHWID", (Class<?>[])new Class[0])).invoke(null, new Object[0]);
             if (s3 == null || s3.length() < 32 || !s3.contains("dleotn6oc94kb")) {

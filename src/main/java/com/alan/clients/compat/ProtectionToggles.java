@@ -12,6 +12,9 @@ public final class ProtectionToggles {
     private static final boolean PROXY_LOOKUP =
             Boolean.getBoolean("rise.protection.proxylookup");
 
+    private static final boolean HWID_CHECK =
+            Boolean.getBoolean("rise.protection.hwidcheck");
+
     private ProtectionToggles() {
     }
 
@@ -25,5 +28,9 @@ public final class ProtectionToggles {
 
     public static boolean proxyLookup() {
         return PROXY_LOOKUP;
+    }
+
+    public static boolean hwidCheck() {
+        return HWID_CHECK;
     }
 }
