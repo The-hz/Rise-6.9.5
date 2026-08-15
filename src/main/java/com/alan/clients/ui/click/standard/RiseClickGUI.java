@@ -12,24 +12,24 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.util.vector.Vector2f;
-import hackclient.rise.abd;
-import hackclient.rise.abf;
-import hackclient.rise.abl;
-import hackclient.rise.abn;
-import hackclient.rise.abt;
-import hackclient.rise.abv;
+import com.alan.clients.ui.click.standard.components.ModuleComponent;
+import com.alan.clients.ui.click.standard.components.category.SidebarCategory;
+import com.alan.clients.ui.click.standard.components.value.ValueComponent;
+import hackclient.rise.ui.value.abn;
+import hackclient.rise.ui.value.abt;
+import hackclient.rise.ui.value.abv;
 import hackclient.rise.abw;
 import hackclient.rise.abx;
-import hackclient.rise.acf;
-import hackclient.rise.acg;
-import hackclient.rise.agj;
+import com.alan.clients.ui.click.standard.screen.impl.SearchScreen;
+import com.alan.clients.ui.click.standard.screen.impl.ThemeScreen;
+import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.agm;
 import hackclient.rise.agw;
 import hackclient.rise.agx;
 import hackclient.rise.aha;
 import hackclient.rise.aip;
 import hackclient.rise.aiz;
-import hackclient.rise.ajb;
+import com.alan.clients.util.shader.impl.AlphaShader;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
 import hackclient.rise.ge;
@@ -53,7 +53,7 @@ import rip.vantage.commons.util.time.a;
 public class RiseClickGUI extends GuiScreen implements aha {
     public Vector2f axI = new Vector2f(-1.0F, -1.0F);
     public Vector2f alh = new Vector2f(416.0F, 338.0F);
-    public abf axJ = new abf();
+    public SidebarCategory axJ = new SidebarCategory();
     public abx axK = Category.SEARCH.ec();
     public abx axL = this.axK;
     public abx axM = this.axK;
@@ -62,20 +62,20 @@ public class RiseClickGUI extends GuiScreen implements aha {
     public boolean dragging;
     public a axP = new a();
     public a rG = new a();
-    public ConcurrentLinkedQueue<abd> moduleList = new ConcurrentLinkedQueue<>();
+    public ConcurrentLinkedQueue<ModuleComponent> moduleList = new ConcurrentLinkedQueue<>();
     public Vector2f axR;
     public double axS;
     public double axT;
     public double axU;
     public int round = 7;
     Vector2d translate;
-    public abl axX;
+    public ValueComponent axX;
     public Vector2f axY = new Vector2f(283.0F, 38.0F);
     public Animation hB = new Animation(Easing.EASE_IN_EXPO, 300L);
     public Animation axZ = new Animation(Easing.EASE_IN_EXPO, 300L);
     private final agw aya = new agw();
     private agm ayb;
-    ge ayc = new ge(new ajb());
+    ge ayc = new ge(new AlphaShader());
     @EventLink(value = 0)
     public final Listener<AlphaEvent> onAlpha = var1 -> {
         if (this.axS <= 0.99) {
@@ -114,7 +114,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
             System.out.println("RMC");
             ArrayList arraylist = Client.a.g().ef();
             arraylist.sort((var0, var1) -> Collator.getInstance().compare(((Module)var0).getName(), ((Module)var1).getName()));
-            arraylist.forEach(var1 -> this.moduleList.add(new abd((Module)var1)));
+            arraylist.forEach(var1 -> this.moduleList.add(new ModuleComponent((Module)var1)));
         }
     }
 
@@ -174,7 +174,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
         if (this.axS > 0.99) {
             this.oT();
         } else {
-            ((ajb)this.ayc.dU()).p((float)this.axT);
+            ((AlphaShader)this.ayc.dU()).p((float)this.axT);
             this.ayc.c(this::oT);
             this.ayc.a(aiz.OVERLAY);
             this.ayc.clear();
@@ -188,8 +188,8 @@ public class RiseClickGUI extends GuiScreen implements aha {
             int j = (int)this.axR.y;
             float f = minecraft.getTimer().bWm;
             if (this.dragging) {
-                if (this.axK instanceof acg) {
-                    ((acg)this.axK).qw();
+                if (this.axK instanceof ThemeScreen) {
+                    ((ThemeScreen)this.axK).qw();
                 }
 
                 this.axI.x = i + this.axN;
@@ -371,11 +371,11 @@ public class RiseClickGUI extends GuiScreen implements aha {
 
     @Override
     public void mouseClicked(int var1, int var2, int var3) {
-        if (agj.c(this.axI.x, this.axI.y, this.alh.x, 15.0, var1, var2) && this.axX == null) {
+        if (GUIUtil.c(this.axI.x, this.axI.y, this.alh.x, 15.0, var1, var2) && this.axX == null) {
             this.axN = this.axI.x - var1;
             this.axO = this.axI.y - var2;
             this.dragging = true;
-        } else if (agj.c(this.axI.getX(), this.axI.getY(), this.alh.getX(), this.alh.getY(), var1, var2)) {
+        } else if (GUIUtil.c(this.axI.getX(), this.axI.getY(), this.alh.getX(), this.alh.getY(), var1, var2)) {
             if (this.axX == null) {
                 this.axJ.clickSidebar(var1, var2, var3);
             }
@@ -416,7 +416,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
 
     private agm oU() {
         try {
-            if (this.axK instanceof acf acf && !this.oV()) {
+            if (this.axK instanceof SearchScreen acf && !this.oV()) {
                 return acf.azR;
             }
 
@@ -432,8 +432,8 @@ public class RiseClickGUI extends GuiScreen implements aha {
             } catch (Throwable throwable) {
             }
 
-            for (abd abd : this.moduleList) {
-                for (abl abl : abd.getValueList()) {
+            for (ModuleComponent abd : this.moduleList) {
+                for (ValueComponent abl : abd.getValueList()) {
                     if (abl instanceof abv abv && abv.azo != null && abv.azo.ayU) {
                         return abv.azo;
                     }
@@ -451,7 +451,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
             this.axK = var1.ec();
             this.axP.aX();
             this.axK.aT();
-            acf acf = (acf)Category.SEARCH.ec();
+            SearchScreen acf = (SearchScreen)Category.SEARCH.ec();
             acf.relevantModules = acf.getRelevantModules(acf.azR.getText());
         }
     }
@@ -462,7 +462,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
             this.axK = var1;
             this.axP.aX();
             this.axK.aT();
-            acf acf = (acf)Category.SEARCH.ec();
+            SearchScreen acf = (SearchScreen)Category.SEARCH.ec();
             acf.relevantModules = acf.getRelevantModules(acf.azR.getText());
         }
     }
@@ -471,7 +471,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
         Iterator iterator = this.moduleList.iterator();
 
         while (iterator.hasNext()) {
-            for (abl abl : ((abd)iterator.next()).getValueList()) {
+            for (ValueComponent abl : ((ModuleComponent)iterator.next()).getValueList()) {
                 if (abl instanceof abv && abl.position != null && ((abv)abl).azo.ayU && !((abv)abl).azo.aJv.T(50L)) {
                     return true;
                 }
@@ -500,7 +500,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public abf oY() {
+    public SidebarCategory oY() {
         return this.axJ;
     }
 
@@ -545,7 +545,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public ConcurrentLinkedQueue<abd> getModuleList() {
+    public ConcurrentLinkedQueue<ModuleComponent> getModuleList() {
         return this.moduleList;
     }
 
@@ -580,7 +580,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public abl pn() {
+    public ValueComponent pn() {
         return this.axX;
     }
 

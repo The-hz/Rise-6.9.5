@@ -11,7 +11,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public class GrimPhase extends Mode<Phase> {
                 boolean flag1 = aEg.thePlayer.onGround;
 
                 for (int i = 0; i < this.semiPackets.wo().intValue(); i++) {
-                    ahj.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, flag1));
+                    PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, flag1));
                 }
 
                 this.NX = true;
@@ -90,7 +90,7 @@ public class GrimPhase extends Mode<Phase> {
             if (!this.releaseMode.wo().getName().equals("None")) {
                 this.A(this.releaseMode.wo().getName());
             } else {
-                ahj.m(
+                PacketUtil.m(
                     new C06PacketPlayerPosLook(
                         aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, aEg.thePlayer.onGround
                     )
@@ -99,7 +99,7 @@ public class GrimPhase extends Mode<Phase> {
         }
 
         if (aEg.thePlayer != null && !this.NU.isEmpty()) {
-            this.NU.forEach(ahj::m);
+            this.NU.forEach(PacketUtil::m);
             this.NU.clear();
         }
     }
@@ -138,8 +138,8 @@ public class GrimPhase extends Mode<Phase> {
 
                 switch (b0) {
                     case 0:
-                        ahj.m(new C06PacketPlayerPosLook(d0 - 5000.0, d1, d2 - 5000.0, f, f1, false));
-                        ahj.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
+                        PacketUtil.m(new C06PacketPlayerPosLook(d0 - 5000.0, d1, d2 - 5000.0, f, f1, false));
+                        PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
                         return;
                     case 1:
                         break label44;
@@ -150,15 +150,15 @@ public class GrimPhase extends Mode<Phase> {
                 }
             }
 
-            ahj.m(new C06PacketPlayerPosLook(d0, d1 + 0.0625, d2, f, f1, false));
-            ahj.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, false));
-            ahj.m(new C06PacketPlayerPosLook(d0, d1 + 0.03125, d2, f, f1, true));
-            ahj.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
+            PacketUtil.m(new C06PacketPlayerPosLook(d0, d1 + 0.0625, d2, f, f1, false));
+            PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, false));
+            PacketUtil.m(new C06PacketPlayerPosLook(d0, d1 + 0.03125, d2, f, f1, true));
+            PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
             return;
         }
 
-        ahj.m(new C06PacketPlayerPosLook(d0 - 5000.0, d1, d2 - 5000.0, f, f1, false));
-        ahj.m(new C06PacketPlayerPosLook(d0 + 5000.0, d1, d2 + 5000.0, f, f1, false));
-        ahj.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
+        PacketUtil.m(new C06PacketPlayerPosLook(d0 - 5000.0, d1, d2 - 5000.0, f, f1, false));
+        PacketUtil.m(new C06PacketPlayerPosLook(d0 + 5000.0, d1, d2 + 5000.0, f, f1, false));
+        PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
     }
 }

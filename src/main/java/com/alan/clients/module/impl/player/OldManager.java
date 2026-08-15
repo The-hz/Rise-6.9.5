@@ -12,11 +12,11 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.BoundsNumberValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahg;
-import hackclient.rise.ahj;
-import hackclient.rise.aie;
+import com.alan.clients.util.math.MathUtil;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.util.player.ItemUtil;
 import hackclient.rise.aih;
-import hackclient.rise.bt;
+import com.alan.clients.component.impl.player.SelectorDetectionComponent;
 import hackclient.rise.en;
 import hackclient.rise.tm;
 import hackclient.rise.tz;
@@ -137,7 +137,7 @@ public class OldManager extends Module {
                         ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(k4);
                         if (itemstack != null) {
                             Item item = itemstack.getItem();
-                            if (!aie.u(itemstack)) {
+                            if (!ItemUtil.u(itemstack)) {
                                 this.J(k4);
                             }
 
@@ -631,7 +631,7 @@ public class OldManager extends Module {
 
     private void ke() {
         if (!this.ads) {
-            ahj.l(new C16PacketClientStatus(EnumState.OPEN_INVENTORY_ACHIEVEMENT));
+            PacketUtil.l(new C16PacketClientStatus(EnumState.OPEN_INVENTORY_ACHIEVEMENT));
             this.ads = true;
             this.jX();
         }
@@ -639,7 +639,7 @@ public class OldManager extends Module {
 
     private void kf() {
         if (this.ads) {
-            ahj.l(new q(aEg.thePlayer.inventoryContainer.windowId));
+            PacketUtil.l(new q(aEg.thePlayer.inventoryContainer.windowId));
             this.ads = false;
             this.jX();
         }
@@ -653,21 +653,21 @@ public class OldManager extends Module {
     }
 
     private void J(int var1) {
-        if ((!this.adr || this.adt <= 0L) && !bt.a(var1, !this.dropCustomItems.wo())) {
+        if ((!this.adr || this.adt <= 0L) && !SelectorDetectionComponent.a(var1, !this.dropCustomItems.wo())) {
             if (this.kg()) {
                 this.ke();
             }
 
             aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.I(var1), 1, 4, aEg.thePlayer);
             this.jX();
-            this.adt = Math.round(ahg.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
+            this.adt = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
             this.afz.aX();
             this.adr = true;
         }
     }
 
     private void g(int var1, int var2) {
-        if ((!this.adr || this.adt <= 0L) && !bt.a(var1, !this.dropCustomItems.wo())) {
+        if ((!this.adr || this.adt <= 0L) && !SelectorDetectionComponent.a(var1, !this.dropCustomItems.wo())) {
             if (this.kg()) {
                 this.ke();
             }
@@ -680,14 +680,14 @@ public class OldManager extends Module {
             }
 
             this.jX();
-            this.adt = Math.round(ahg.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
+            this.adt = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
             this.afz.aX();
             this.adr = true;
         }
     }
 
     private void h(int var1, int var2) {
-        if ((!this.adr || this.adt <= 0L) && !bt.a(var1, !this.useCustomItems.wo())) {
+        if ((!this.adr || this.adt <= 0L) && !SelectorDetectionComponent.a(var1, !this.useCustomItems.wo())) {
             if (this.kg()) {
                 this.ke();
             }
@@ -698,21 +698,21 @@ public class OldManager extends Module {
 
             aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.I(var1), var2, 2, aEg.thePlayer);
             this.jX();
-            this.adt = Math.round(ahg.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
+            this.adt = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
             this.afz.aX();
             this.adr = true;
         }
     }
 
     private void H(int var1) {
-        if ((!this.adr || this.adt <= 0L) && !bt.a(var1, !this.useCustomItems.wo())) {
+        if ((!this.adr || this.adt <= 0L) && !SelectorDetectionComponent.a(var1, !this.useCustomItems.wo())) {
             if (this.kg()) {
                 this.ke();
             }
 
             aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.I(var1), 0, 1, aEg.thePlayer);
             this.jX();
-            this.adt = Math.round(ahg.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
+            this.adt = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
             this.afz.aX();
             this.adr = true;
         }

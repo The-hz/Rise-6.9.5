@@ -7,8 +7,8 @@ import com.alan.clients.script.api.wrapper.impl.ScriptRiseFontRenderer;
 import com.alan.clients.script.api.wrapper.impl.vector.ScriptVector3d;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.adv;
-import hackclient.rise.agf;
+import com.alan.clients.ui.theme.Themes;
+import com.alan.clients.util.font.impl.rise.FontRenderer;
 import hackclient.rise.cl;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
@@ -95,35 +95,35 @@ public class RenderAPI extends API implements InstanceAccess {
     }
 
     public ScriptRiseFontRenderer getMainFontRenderer(int var1) {
-        return new ScriptRiseFontRenderer((agf)gb.MAIN.a(var1, gd.REGULAR));
+        return new ScriptRiseFontRenderer((FontRenderer)gb.MAIN.a(var1, gd.REGULAR));
     }
 
     public ScriptRiseFontRenderer getMainFontRendererBold(int var1) {
-        return new ScriptRiseFontRenderer((agf)gb.MAIN.a(var1, gd.BOLD));
+        return new ScriptRiseFontRenderer((FontRenderer)gb.MAIN.a(var1, gd.BOLD));
     }
 
     public ScriptRiseFontRenderer getMainFontRendererMedium(int var1) {
-        return new ScriptRiseFontRenderer((agf)gb.MAIN.a(var1, gd.MEDIUM));
+        return new ScriptRiseFontRenderer((FontRenderer)gb.MAIN.a(var1, gd.MEDIUM));
     }
 
     public ScriptRiseFontRenderer getMainFontRendererLight(int var1) {
-        return new ScriptRiseFontRenderer((agf)gb.MAIN.a(var1, gd.LIGHT));
+        return new ScriptRiseFontRenderer((FontRenderer)gb.MAIN.a(var1, gd.LIGHT));
     }
 
     public ScriptRiseFontRenderer getCustomFontRenderer(String var1, int var2, boolean var3) {
-        return new ScriptRiseFontRenderer(new agf(new Font(var1, 0, var2), var3));
+        return new ScriptRiseFontRenderer(new FontRenderer(new Font(var1, 0, var2), var3));
     }
 
     public ScriptRiseFontRenderer getCustomFontRendererBold(String var1, int var2, boolean var3) {
-        return new ScriptRiseFontRenderer(new agf(new Font(var1, 1, var2), var3));
+        return new ScriptRiseFontRenderer(new FontRenderer(new Font(var1, 1, var2), var3));
     }
 
     public ScriptRiseFontRenderer getCustomFontRendererItalic(String var1, int var2, boolean var3) {
-        return new ScriptRiseFontRenderer(new agf(new Font(var1, 2, var2), var3));
+        return new ScriptRiseFontRenderer(new FontRenderer(new Font(var1, 2, var2), var3));
     }
 
     public ScriptRiseFontRenderer getCustomFontRendererBoldItalic(String var1, int var2, boolean var3) {
-        return new ScriptRiseFontRenderer(new agf(new Font(var1, 3, var2), var3));
+        return new ScriptRiseFontRenderer(new FontRenderer(new Font(var1, 3, var2), var3));
     }
 
     public float getEyeHeight() {
@@ -172,7 +172,7 @@ public class RenderAPI extends API implements InstanceAccess {
 
     public int[] getBackgroundShade() {
         this.rz();
-        Color color = adv.rK();
+        Color color = Themes.rK();
         return new int[]{color.getRed(), color.getBlue(), color.getGreen(), color.getAlpha()};
     }
 

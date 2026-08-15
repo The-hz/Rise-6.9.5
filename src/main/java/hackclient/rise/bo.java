@@ -6,6 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.mojang.authlib.GameProfile;
+import hackclient.rise.event.er;
 import io.netty.buffer.Unpooled;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

@@ -9,8 +9,8 @@ import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
-import hackclient.rise.aiu;
-import hackclient.rise.bv;
+import com.alan.clients.util.rotation.RotationUtil;
+import hackclient.rise.component.bv;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
@@ -31,9 +31,9 @@ public class RotationsMimic extends Mode<Mimic> {
             this.sg.x = (float)this.sh.sG();
             this.si.Q(f3);
             this.sg.y = (float)this.si.sG();
-            Vector2f vector2f = aiu.a(new Vector2f(f2, f3), aiu.y(entitylivingbase), 1000.0);
-            Vector2f vector2f1 = aiu.a(
-                new Vector2f(f2, f3), aiu.y(entitylivingbase), (Math.abs(vector2f.getX()) + Math.abs(vector2f.getY())) / (vector2f.getX() > 90.0F ? 1.05 : 1.5)
+            Vector2f vector2f = RotationUtil.a(new Vector2f(f2, f3), RotationUtil.y(entitylivingbase), 1000.0);
+            Vector2f vector2f1 = RotationUtil.a(
+                new Vector2f(f2, f3), RotationUtil.y(entitylivingbase), (Math.abs(vector2f.getX()) + Math.abs(vector2f.getY())) / (vector2f.getX() > 90.0F ? 1.05 : 1.5)
             );
             float f4 = f2 + vector2f1.x;
             float f5 = f3 + vector2f1.y;

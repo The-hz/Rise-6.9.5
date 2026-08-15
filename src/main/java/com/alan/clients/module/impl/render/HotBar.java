@@ -12,9 +12,9 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
@@ -61,7 +61,7 @@ public class HotBar extends Module {
 
             String s = this.interfaceModule.lM().wo().getName();
             int i = scaledresolution.getScaledWidth() / 2;
-            this.anO = ahg.lerp(this.anO, i - 92 + entityplayer.inventory.currentItem * 20, 0.03F * (float)this.anN.aKx());
+            this.anO = MathUtil.lerp(this.anO, i - 92 + entityplayer.inventory.currentItem * 20, 0.03F * (float)this.anN.aKx());
             this.anN.aX();
             if ("Rise".equals(s)) {
                 double d0 = this.interfaceModule != null ? this.interfaceModule.lD() : 9.0;
@@ -93,12 +93,12 @@ public class HotBar extends Module {
                 }
 
                 Client.a.k().rz();
-                this.a(adv.rK());
+                this.a(Themes.rK());
                 if ("Rise".equals(s)) {
                     double d2 = this.anO + 1.0F;
                     double d3 = scaledresolution.getScaledHeight() - 26;
                     this.rz();
-                    RenderUtil.roundedRectangle(d2, d3, 22.0, 22.0, 8.0, adv.rK());
+                    RenderUtil.roundedRectangle(d2, d3, 22.0, 22.0, 8.0, Themes.rK());
                 } else if ("Traditional".equals(s)) {
                     aEg.getTextureManager().bindTexture(anM);
                     GlStateManager.enableAlpha();
@@ -182,7 +182,7 @@ public class HotBar extends Module {
                         return;
                     }
 
-                    this.anP = ahg.lerp(this.anP, f, 0.1F);
+                    this.anP = MathUtil.lerp(this.anP, f, 0.1F);
                     double d0 = this.structure.apP.x + 1.0;
                     double d1 = this.structure.apP.y + 14.4;
                     double d2 = this.structure.aHe.x - 1.0;
@@ -190,7 +190,7 @@ public class HotBar extends Module {
                     double d4 = 3.0;
                     double d5 = this.interfaceModule != null ? Math.min(this.interfaceModule.lD(), 2.0) : 2.0;
                     this.rz();
-                    RenderUtil.roundedRectangle(d0, d1, d2, d4, d5, adv.rK());
+                    RenderUtil.roundedRectangle(d0, d1, d2, d4, d5, Themes.rK());
                     RenderUtil.roundedRectangle(d0, d1, d3, d4, d5, this.rz().rD());
                     return;
                 case 1:

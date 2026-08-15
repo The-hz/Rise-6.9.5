@@ -10,9 +10,9 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
-import hackclient.rise.bd;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
 import java.util.ArrayList;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
@@ -66,7 +66,7 @@ public class GrimServer19NoFall extends Mode<NoFall> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (!aEg.thePlayer.isCollidedHorizontally) {
-            float f = bd.cY;
+            float f = FallDistanceComponent.cY;
             if (aEg.thePlayer.motionY > 0.1) {
                 this.aiE = false;
             }
@@ -79,11 +79,11 @@ public class GrimServer19NoFall extends Mode<NoFall> {
                 if (!this.newestGrimMayFlagTheAnticheat.wo()) {
                     var1x.setCancelled(true);
                 } else {
-                    ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.01, aEg.thePlayer.posZ, true));
+                    PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.01, aEg.thePlayer.posZ, true));
                 }
 
                 var1x.setCancelled(true);
-                ahj.l(new C03PacketPlayer(true));
+                PacketUtil.l(new C03PacketPlayer(true));
                 aEg.gameSettings.keyBindJump.setPressed(false);
                 f = 0.0F;
             }
@@ -96,7 +96,7 @@ public class GrimServer19NoFall extends Mode<NoFall> {
                 aEg.thePlayer.motionY = MoveUtil.predictedMotion(aEg.thePlayer.motionY, 10);
             }
 
-            bd.cY = f;
+            FallDistanceComponent.cY = f;
         }
     };
     @EventLink(value = 2)
@@ -104,7 +104,7 @@ public class GrimServer19NoFall extends Mode<NoFall> {
         if (dj && aEg.thePlayer.onGround) {
             tt = true;
             dj = false;
-            this.aiF.forEach(ahj::p);
+            this.aiF.forEach(PacketUtil::p);
             this.aiF.clear();
             tt = false;
         }

@@ -20,11 +20,11 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
-import hackclient.rise.aiu;
-import hackclient.rise.bb;
-import hackclient.rise.bv;
+import com.alan.clients.util.rotation.RotationUtil;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
+import hackclient.rise.component.bv;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.ArrayList;
@@ -408,7 +408,7 @@ extends Mode<Velocity> {
                 return;
             }
             entityLivingBase = killAura.isEnabled() && killAura.jE != null ? killAura.jE : this.e(list2);
-            if (GrimReduceVelocity.aEg.thePlayer.ae <= ((Number)this.reduceTicks.wo()).intValue() && !bb.bad(false, false, false, true, false) && !this.e(Scaffold.class).isEnabled() && GrimReduceVelocity.aEg.thePlayer.Zl > ((Number)this.teleportDisableTicks.wo()).intValue()) {
+            if (GrimReduceVelocity.aEg.thePlayer.ae <= ((Number)this.reduceTicks.wo()).intValue() && !BadPacketsComponent.bad(false, false, false, true, false) && !this.e(Scaffold.class).isEnabled() && GrimReduceVelocity.aEg.thePlayer.Zl > ((Number)this.teleportDisableTicks.wo()).intValue()) {
                 this.tv = true;
             }
             if ((list = bv.f(((Number)this.range.wo()).intValue())) == null || list.isEmpty()) {
@@ -431,24 +431,24 @@ extends Mode<Velocity> {
                 Vec3 vec32 = new Vec3((axisAlignedBB.minX + axisAlignedBB.maxX) * 0.5, (axisAlignedBB.minY + axisAlignedBB.maxY) * 0.5, (axisAlignedBB.minZ + axisAlignedBB.maxZ) * 0.5).subtract(vec3).normalize();
                 Vec3 vec33 = vec3.addVector(vec32.xCoord * 3.0, vec32.yCoord * 3.0, vec32.zCoord * 3.0);
                 MovingObjectPosition movingObjectPosition = axisAlignedBB.calculateIntercept(vec3, vec33);
-                if (!((movingObjectPosition != null ? vec3.distanceTo(movingObjectPosition.hitVec) : vec3.distanceTo(GrimReduceVelocity.a(vec3, axisAlignedBB))) <= 3.0) && GrimReduceVelocity.aEg.thePlayer.ae <= ((Number)this.reduceTicks.wo()).intValue() && !bb.bad(false, false, false, true, false)) {
+                if (!((movingObjectPosition != null ? vec3.distanceTo(movingObjectPosition.hitVec) : vec3.distanceTo(GrimReduceVelocity.a(vec3, axisAlignedBB))) <= 3.0) && GrimReduceVelocity.aEg.thePlayer.ae <= ((Number)this.reduceTicks.wo()).intValue() && !BadPacketsComponent.bad(false, false, false, true, false)) {
                     RotationComponent.d(false);
                     RotationComponent.setRotations(new Vector2f(GrimReduceVelocity.aEg.thePlayer.pl, (float)(90.0 - Math.random() * 0.2)), 10.0, MovementFix.NORMAL);
                 }
             }
             if (entityLivingBase == null) return;
             if (GrimReduceVelocity.aEg.thePlayer.ae > ((Number)this.reduceTicks.wo()).intValue() + 1) return;
-            if (bb.bad(false, false, false, true, false)) return;
+            if (BadPacketsComponent.bad(false, false, false, true, false)) return;
             if (this.e(Scaffold.class).isEnabled()) return;
             if (GrimReduceVelocity.aEg.thePlayer.Zl <= ((Number)this.teleportDisableTicks.wo()).intValue()) return;
             if (ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
                 if ((Boolean)this.extraHit.wo() == false) return;
                 GrimReduceVelocity.aEg.playerController.attackEntity((EntityPlayer)GrimReduceVelocity.aEg.thePlayer, (Entity)entityLivingBase);
-                ahj.l(new m());
+                PacketUtil.l(new m());
                 return;
             }
             if ((Boolean)this.extraHit.wo() == false) return;
-            ahj.l(new m());
+            PacketUtil.l(new m());
             GrimReduceVelocity.aEg.playerController.attackEntity((EntityPlayer)GrimReduceVelocity.aEg.thePlayer, (Entity)entityLivingBase);
         };
         this.tI = preUpdateEvent -> {
@@ -456,7 +456,7 @@ extends Mode<Velocity> {
                 dj = false;
                 tt = true;
                 BlinkComponent.dispatch();
-                this.tu.forEach(p -> ahj.p(p));
+                this.tu.forEach(p -> PacketUtil.p(p));
                 this.tu.clear();
                 tt = false;
             }
@@ -464,7 +464,7 @@ extends Mode<Velocity> {
                 dj = false;
                 tt = true;
                 BlinkComponent.dispatch();
-                this.tu.forEach(p -> ahj.p(p));
+                this.tu.forEach(p -> PacketUtil.p(p));
                 this.tu.clear();
                 tt = false;
             }
@@ -504,7 +504,7 @@ extends Mode<Velocity> {
         if (entity == null) {
             return;
         }
-        Vector2f vector2f = aiu.y(entity);
+        Vector2f vector2f = RotationUtil.y(entity);
         RotationComponent.d(false);
         RotationComponent.setRotations(new Vector2f(vector2f.x, GrimReduceVelocity.aEg.thePlayer.rotationPitch), 10.0, MovementFix.NORMAL);
     }

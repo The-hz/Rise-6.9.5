@@ -9,7 +9,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.newevent.impl.other.BlockBreakEvent;
 import com.alan.clients.newevent.impl.other.BlockDamageEvent;
-import hackclient.rise.aik;
+import com.alan.clients.util.player.SlotUtil;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
@@ -58,7 +58,7 @@ public class AutoTool extends Module {
             } else if (aEg.objectMouseOver != null && this.blockBreak > 0 && this.blockPos != null) {
                 if (aEg.objectMouseOver.typeOfHit == MovingObjectType.BLOCK && this.blockPos.equals(aEg.objectMouseOver.getBlockPos())) {
                     this.blockBreak--;
-                    int i = aik.findTool(this.blockPos);
+                    int i = SlotUtil.findTool(this.blockPos);
                     if (i != -1) {
                         SlotComponent slotcomponent = this.d(SlotComponent.class);
                         SlotComponent.setSlot(i);

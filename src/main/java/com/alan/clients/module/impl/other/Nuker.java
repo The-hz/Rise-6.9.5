@@ -13,12 +13,12 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.ahj;
-import hackclient.rise.ahu;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.util.pathfinding.unlegit.MainPathFinder;
 import hackclient.rise.ahy;
-import hackclient.rise.aiu;
+import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
-import hackclient.rise.be;
+import com.alan.clients.component.impl.player.GUIDetectionComponent;
 import java.util.Collections;
 import java.util.List;
 import net.minecraft.block.BlockAir;
@@ -44,7 +44,7 @@ public final class Nuker extends Module {
     private final a Vp = new a();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
-        if (!be.inGUI()) {
+        if (!GUIDetectionComponent.inGUI()) {
             double d0;
             label41: {
                 d0 = this.range.wo().doubleValue();
@@ -87,24 +87,24 @@ public final class Nuker extends Module {
                 if (aEg.thePlayer.capabilities.allowFlying && !aEg.thePlayer.capabilities.isFlying) {
                     PlayerCapabilities playercapabilities = aEg.thePlayer.capabilities;
                     playercapabilities.isFlying = true;
-                    ahj.m(new C13PacketPlayerAbilities(playercapabilities));
+                    PacketUtil.m(new C13PacketPlayerAbilities(playercapabilities));
                 }
 
                 new Thread(
                         () -> {
-                            List list = ahu.a(
+                            List list = MainPathFinder.a(
                                 new ahy(var1.getPosX(), var1.getPosY(), var1.getPosZ()), new ahy(blockpos.getX(), blockpos.getY(), blockpos.getZ()), false
                             );
                             if (list != null) {
                                 for (ahy ahyx : (Iterable<ahy>)list) {
-                                    ahj.m(new C04PacketPlayerPosition(ahyx.getX(), ahyx.getY(), ahyx.getZ(), false));
+                                    PacketUtil.m(new C04PacketPlayerPosition(ahyx.getX(), ahyx.getY(), ahyx.getZ(), false));
                                 }
 
                                 this.nuke(d0, blockpos.getX(), blockpos.getY(), blockpos.getZ());
                                 Collections.reverse(list);
 
                                 for (ahy ahy : (Iterable<ahy>)list) {
-                                    ahj.m(new C04PacketPlayerPosition(ahy.getX(), ahy.getY(), ahy.getZ(), false));
+                                    PacketUtil.m(new C04PacketPlayerPosition(ahy.getX(), ahy.getY(), ahy.getZ(), false));
                                 }
                             }
                         }
@@ -134,11 +134,11 @@ public final class Nuker extends Module {
                         BlockPos blockpos = new BlockPos(var3 + d0, var5 + d1, var7 + d2);
                         if (!(aEg.theWorld.getBlockState(blockpos).getBlock() instanceof BlockAir)) {
                             if (this.rotations.wo()) {
-                                Vector2f vector2f = aiu.d(new aka(blockpos.getX(), blockpos.getY(), blockpos.getZ()));
-                                ahj.m(new C05PacketPlayerLook(vector2f.x, vector2f.y, false));
+                                Vector2f vector2f = RotationUtil.d(new aka(blockpos.getX(), blockpos.getY(), blockpos.getZ()));
+                                PacketUtil.m(new C05PacketPlayerLook(vector2f.x, vector2f.y, false));
                             }
 
-                            ahj.m(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockpos, EnumFacing.UP));
+                            PacketUtil.m(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockpos, EnumFacing.UP));
                             if (this.swing.wo()) {
                                 aEg.thePlayer.swingItem();
                             }

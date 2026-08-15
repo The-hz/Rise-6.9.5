@@ -13,8 +13,8 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
-import hackclient.rise.bd;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
 import java.util.ArrayList;
 import java.util.Objects;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -56,7 +56,7 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
 
     @Override
     public void onDisable() {
-        this.KM.forEach(ahj::p);
+        this.KM.forEach(PacketUtil::p);
         this.KM.clear();
         this.Kv = false;
         this.Kx = 0;
@@ -114,8 +114,8 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
             if (WatchdogWater118LongJump.aEg.thePlayer.inWater) {
                 MoveUtil.stop();
                 WatchdogWater118LongJump.aEg.timer.dzD = 0.33f;
-                ahj.l(new C03PacketPlayer(true));
-                ahj.l(new C03PacketPlayer.C04PacketPlayerPosition(WatchdogWater118LongJump.aEg.thePlayer.posX, WatchdogWater118LongJump.aEg.thePlayer.posY + 0.068, WatchdogWater118LongJump.aEg.thePlayer.posZ, true));
+                PacketUtil.l(new C03PacketPlayer(true));
+                PacketUtil.l(new C03PacketPlayer.C04PacketPlayerPosition(WatchdogWater118LongJump.aEg.thePlayer.posX, WatchdogWater118LongJump.aEg.thePlayer.posY + 0.068, WatchdogWater118LongJump.aEg.thePlayer.posZ, true));
             }
             final boolean b = MoveUtil.speed() < 0.205;
             return;
@@ -179,7 +179,7 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
                 this.dj = false;
                 this.tt = true;
                 new Vector2d(WatchdogWater118LongJump.aEg.thePlayer.motionX, WatchdogWater118LongJump.aEg.thePlayer.motionZ);
-                this.KM.forEach(ahj::p);
+                this.KM.forEach(PacketUtil::p);
                 if (this.IW > 0.41) {
                     ++this.Kx;
                 }
@@ -209,12 +209,12 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
 
     @Override
     public void onEnable() {
-        this.KM.forEach(ahj::p);
+        this.KM.forEach(PacketUtil::p);
         this.KM.clear();
         if (WatchdogWater118LongJump.aEg.thePlayer.onGround) {
             MoveUtil.stop();
         }
-        bd.cY = 0.0f;
+        FallDistanceComponent.cY = 0.0f;
     }
 
 }

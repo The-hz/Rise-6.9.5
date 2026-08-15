@@ -11,10 +11,10 @@ import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
-import hackclient.rise.aiu;
-import hackclient.rise.bb;
+import com.alan.clients.util.rotation.RotationUtil;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 import java.util.HashSet;
 import java.util.UUID;
 import net.minecraft.entity.Entity;
@@ -41,17 +41,17 @@ public class AntiFireBall extends Module {
     }
 
     public final void js() {
-        if ((!bb.aW() || !this.badPacketsCheck.wo()) && this.aaV.T(this.aaW)) {
+        if ((!BadPacketsComponent.aW() || !this.badPacketsCheck.wo()) && this.aaV.T(this.aaW)) {
             for (Entity entity : aEg.theWorld.loadedEntityList) {
                 if (entity instanceof EntityFireball && entity.getDistanceToEntity(aEg.thePlayer) < 6.0F) {
                     if (this.rotations.wo()) {
-                        RotationComponent.setRotations(aiu.y(entity), 10.0, this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF);
+                        RotationComponent.setRotations(RotationUtil.y(entity), 10.0, this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF);
                     }
 
                     MoveUtil.strafe(0.0);
                     if (entity.getDistanceToEntity(aEg.thePlayer) <= 3.0F && !this.aaX.contains(entity.getUniqueID())) {
-                        ahj.l(new m());
-                        ahj.l(new C02PacketUseEntity(entity, Action.ATTACK));
+                        PacketUtil.l(new m());
+                        PacketUtil.l(new C02PacketUseEntity(entity, Action.ATTACK));
                         this.aaX.add(entity.getUniqueID());
                         break;
                     }

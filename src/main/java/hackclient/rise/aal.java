@@ -2,6 +2,11 @@ package hackclient.rise;
 
 import com.alan.clients.Client;
 import com.alan.clients.module.api.manager.ModuleManager;
+import com.alan.clients.protection.check.ProtectionCheck;
+import com.alan.clients.protection.check.api.McqBFVadWB;
+import com.alan.clients.protection.check.impl.McqBGGeaWB;
+import hackclient.rise.protection.aan;
+import hackclient.rise.protection.aao;
 import java.io.InputStream;
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.Field;
@@ -12,7 +17,7 @@ import sun.misc.Unsafe;
 
 public final class aal {
     private List<String> awS;
-    private aaj[] awT;
+    private ProtectionCheck[] awT;
     private Thread awU;
     private boolean Mc;
 
@@ -22,8 +27,8 @@ public final class aal {
     public void init() {
         try {
             this.awS = ManagementFactory.getRuntimeMXBean().getInputArguments();
-            this.awT = new aaj[]{new aao(), new aar(), new aan()};
-            this.a(aak.INITIALIZE);
+            this.awT = new ProtectionCheck[]{new aao(), new McqBGGeaWB(), new aan()};
+            this.a(McqBFVadWB.INITIALIZE);
             if (this.awT.length == 0) {
                 Client.a.a((ModuleManager)null);
             }
@@ -31,7 +36,7 @@ public final class aal {
             this.awU = new Thread(() -> {
                 while (true) {
                     try {
-                        this.a(aak.REPETITIVE);
+                        this.a(McqBFVadWB.REPETITIVE);
                         Thread.sleep(1000L);
                     } catch (Throwable throwable1) {
                         this.oc();
@@ -45,15 +50,15 @@ public final class aal {
                 this.Mc = true;
             }
 
-            this.a(aak.POST_INITIALIZE);
+            this.a(McqBFVadWB.POST_INITIALIZE);
         } catch (Throwable throwable) {
             this.oc();
         }
     }
 
-    public void a(aak var1) {
+    public void a(McqBFVadWB var1) {
         try {
-            for (aaj aaj : this.awT) {
+            for (ProtectionCheck aaj : this.awT) {
                 if (aaj.nY() == var1 && aaj.check()) {
                     this.ob();
                 }
@@ -163,7 +168,7 @@ public final class aal {
     }
 
     @Generated
-    public aaj[] og() {
+    public ProtectionCheck[] og() {
         return this.awT;
     }
 

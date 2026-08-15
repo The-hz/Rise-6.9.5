@@ -16,8 +16,8 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.aef;
-import hackclient.rise.aiu;
-import hackclient.rise.bv;
+import com.alan.clients.util.rotation.RotationUtil;
+import hackclient.rise.component.bv;
 import java.util.List;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemSword;
@@ -60,8 +60,8 @@ public final class AimAssist extends Module {
                     boolean flag = this.gO();
                     Vector2f vector2f1 = this.gN();
                     Vector2f vector2f2 = this.b(this.target, d0, flag);
-                    float f = Math.abs(MathHelper.wrapAngleTo180_float(aiu.y(this.target).getX() - vector2f.getX()));
-                    if (flag || aiu.a(vector2f2, this.target, d0, false, this.gP() ? this.gr() : 0.0F)) {
+                    float f = Math.abs(MathHelper.wrapAngleTo180_float(RotationUtil.y(this.target).getX() - vector2f.getX()));
+                    if (flag || RotationUtil.a(vector2f2, this.target, d0, false, this.gP() ? this.gr() : 0.0F)) {
                         if (!(f > this.fOV.wo().intValue())) {
                             if (this.limitItems.wo()) {
                                 SlotComponent slotcomponent = this.d(SlotComponent.class);
@@ -143,7 +143,7 @@ public final class AimAssist extends Module {
 
     private Vector2f b(EntityLivingBase var1, double var2, boolean var4) {
         if (!this.gP() && !var4) {
-            return aiu.y(var1);
+            return RotationUtil.y(var1);
         }
 
         AxisAlignedBB axisalignedbb = var1.getEntityBoundingBox();
@@ -153,9 +153,9 @@ public final class AimAssist extends Module {
                 axisalignedbb = axisalignedbb.expand(f, f, f);
             }
 
-            return aiu.a(var1, axisalignedbb, true, var2, var4, f);
+            return RotationUtil.a(var1, axisalignedbb, true, var2, var4, f);
         }
-        return aiu.y(var1);
+        return RotationUtil.y(var1);
     }
 
     private double n(double var1) {

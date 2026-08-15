@@ -13,9 +13,9 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.aef;
-import hackclient.rise.ahj;
-import hackclient.rise.aik;
-import hackclient.rise.aiu;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.util.player.SlotUtil;
+import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.cg;
 import hackclient.rise.ls;
 import hackclient.rise.lt;
@@ -181,7 +181,7 @@ public class AutoMLG extends Module {
 
     private boolean a(ItemStack var1, BlockPos var2) {
         if (var1 != null && var1.getItem() == Items.bucket && var2 != null) {
-            Vector2f vector2f = aiu.h(new Vec3(var2.getX() + 0.5, var2.getY() + 0.5, var2.getZ() + 0.5));
+            Vector2f vector2f = RotationUtil.h(new Vec3(var2.getX() + 0.5, var2.getY() + 0.5, var2.getZ() + 0.5));
             float f = aEg.thePlayer.pl;
             float f1 = aEg.thePlayer.rotationPitch;
             aEg.thePlayer.pl = vector2f.x;
@@ -205,7 +205,7 @@ public class AutoMLG extends Module {
             && !aEg.thePlayer.isInLava()
             && !aEg.thePlayer.onGround
             && !aEg.thePlayer.capabilities.isFlying) {
-            int i = aik.findItem(Items.water_bucket);
+            int i = SlotUtil.findItem(Items.water_bucket);
             if (i != -1) {
                 this.CF = i;
                 SlotComponent.b(this.CF, true);
@@ -237,8 +237,8 @@ public class AutoMLG extends Module {
                         this.a(movingobjectposition.getBlockPos(), movingobjectposition.sideHit, movingobjectposition);
                         ItemStack itemstack1 = SlotComponent.getItemStack();
                         if (itemstack1 != null && itemstack1.getItem() == Items.water_bucket) {
-                            ahj.l(new m());
-                            ahj.l(new C08PacketPlayerBlockPlacement(itemstack1));
+                            PacketUtil.l(new m());
+                            PacketUtil.l(new C08PacketPlayerBlockPlacement(itemstack1));
                             boolean flag1 = true;
                             if (flag1) {
                                 this.CG = this.d(movingobjectposition);
@@ -293,7 +293,7 @@ public class AutoMLG extends Module {
         } else {
             BlockPos blockpos = this.gU();
             if (blockpos != null) {
-                RotationComponent.setRotations(aiu.h(new Vec3(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5)), 30.0, MovementFix.NORMAL);
+                RotationComponent.setRotations(RotationUtil.h(new Vec3(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5)), 30.0, MovementFix.NORMAL);
             } else {
                 RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 90.0F), 10.0, MovementFix.NORMAL);
             }
@@ -301,7 +301,7 @@ public class AutoMLG extends Module {
             if (this.qH >= this.pickupDelay.wo().intValue()) {
                 ItemStack itemstack1 = SlotComponent.getItemStack();
                 if (itemstack1 != null && itemstack1.getItem() == Items.bucket && blockpos != null && this.a(itemstack1, blockpos)) {
-                    ahj.l(new m());
+                    PacketUtil.l(new m());
                     cg.e("Auto MLG", "MLG successful!");
                     this.gS();
                     if (this.autoDisable.wo()) {

@@ -17,7 +17,7 @@ import com.alan.clients.util.vector.Vector2f;
 import hackclient.rise.afi;
 import hackclient.rise.aha;
 import hackclient.rise.ahd;
-import hackclient.rise.aiu;
+import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
 import hackclient.rise.bx;
 import hackclient.rise.cg;
@@ -79,12 +79,12 @@ public class RiseAPI {
     }
 
     public float[] getRotations(int var1) {
-        Vector2f vector2f = aiu.y(Minecraft.getMinecraft().theWorld.getEntityByID(var1));
+        Vector2f vector2f = RotationUtil.y(Minecraft.getMinecraft().theWorld.getEntityByID(var1));
         return new float[]{vector2f.x, vector2f.y};
     }
 
     public float[] getRotations(ScriptVector3d var1) {
-        Vector2f vector2f = aiu.d(new aka(var1.getX(), var1.getY(), var1.getZ()));
+        Vector2f vector2f = RotationUtil.d(new aka(var1.getX(), var1.getY(), var1.getZ()));
         return new float[]{vector2f.x, vector2f.y};
     }
 

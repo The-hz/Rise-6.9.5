@@ -8,9 +8,9 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
-import hackclient.rise.adh;
-import hackclient.rise.adm;
-import hackclient.rise.aeb;
+import com.alan.clients.ui.menu.component.button.MenuButton;
+import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
+import com.alan.clients.util.MouseUtil;
 import hackclient.rise.agc;
 import hackclient.rise.agl;
 import hackclient.rise.agm;
@@ -25,7 +25,7 @@ import net.minecraft.client.gui.ScaledResolution;
 
 public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
     private static final agc FONT_RENDERER = gb.MAIN.a(36, gd.BOLD);
-    private final adh[] menuButtons = new adh[3];
+    private final MenuButton[] menuButtons = new MenuButton[3];
     private static agm usernameBox;
     private static GuiScreen reference;
     private AccountViewModel<?> accountViewModel;
@@ -60,7 +60,7 @@ public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
         this.b(gg.BLUR).c(BACKGROUND_RUNNABLE);
         FONT_RENDERER.c("Update your username", this.width / 2, this.height / 2 - 64 + this.animation.sG(), Color.WHITE.getRGB());
         this.accountViewModel.draw();
-        adh[] aadh = this.menuButtons;
+        MenuButton[] aadh = this.menuButtons;
         int i = aadh.length;
 
         for (int j = 0; j < i; j++) {
@@ -74,8 +74,8 @@ public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
     public void mouseClicked(int var1, int var2, int var3) {
         usernameBox.click(var1, var2, var3);
 
-        for (adh adh : this.menuButtons) {
-            if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+        for (MenuButton adh : this.menuButtons) {
+            if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
                 adh.runAction();
                 break;
             }
@@ -101,9 +101,9 @@ public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
         Vector2d vector2d1 = new Vector2d(this.width / 2 - 100, this.height / 2 + 32);
         usernameBox = new agm(vector2d1.offset(100, 8.0), gb.MAIN.a(24, gd.REGULAR), Color.WHITE, agl.CENTER, "Username", short1);
         usernameBox.bW(this.accountViewModel.getAccount().getName());
-        this.menuButtons[0] = new adm(vector2d1.x, vector2d1.y, short1, b0, TEXT_BOX_RUNNABLE, "");
-        this.menuButtons[1] = new adm(vector2d1.x, vector2d1.y + b0 + b1, f, b0, this.UPDATE_RUNNABLE, "Update");
-        this.menuButtons[2] = new adm(vector2d1.x + f + b1, vector2d1.y + b0 + b1, f, b0, this.CANCEL_RUNNABLE, "Back");
+        this.menuButtons[0] = new MenuTextButton(vector2d1.x, vector2d1.y, short1, b0, TEXT_BOX_RUNNABLE, "");
+        this.menuButtons[1] = new MenuTextButton(vector2d1.x, vector2d1.y + b0 + b1, f, b0, this.UPDATE_RUNNABLE, "Update");
+        this.menuButtons[2] = new MenuTextButton(vector2d1.x + f + b1, vector2d1.y + b0 + b1, f, b0, this.CANCEL_RUNNABLE, "Back");
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
         this.animation.R(-200.0);
     }

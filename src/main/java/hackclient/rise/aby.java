@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.ui.click.standard.RiseClickGUI;
+import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
@@ -15,7 +16,7 @@ public final class aby implements abx, InstanceAccess {
     private ach azx = new ach(new ArrayList<>(), new Vector2f(0.0F, 0.0F), this.rz().rA());
     private ach azy = new ach(new ArrayList<>(), new Vector2f(0.0F, 0.0F), this.rz().rA());
     private float azz = 10.0F;
-    public ArrayList<abl> cj = new ArrayList<>();
+    public ArrayList<ValueComponent> cj = new ArrayList<>();
 
     public aby() {
     }
@@ -46,7 +47,7 @@ public final class aby implements abx, InstanceAccess {
         );
         Vector2f vector2f3 = vector2f2.h(0.0F, this.azz);
 
-        for (abl abl : this.pA()) {
+        for (ValueComponent abl : this.pA()) {
             if (abl.getValue() == null || abl.getValue().wm() == null || !abl.getValue().wm().getAsBoolean()) {
                 abl.U(200);
                 abl.draw(new Vector2d(vector2f3.x + 1.0F + this.azz + (abl.getValue().wm() == null ? 0 : 10), vector2f3.y), var1, var2, var3);
@@ -60,13 +61,13 @@ public final class aby implements abx, InstanceAccess {
         Iterator iterator = this.pA().iterator();
 
         while (iterator.hasNext()) {
-            ((abl)iterator.next()).key(var1, var2);
+            ((ValueComponent)iterator.next()).key(var1, var2);
         }
     }
 
     @Override
     public void f(int var1, int var2, int var3) {
-        for (abl abl : this.pA()) {
+        for (ValueComponent abl : this.pA()) {
             if ((abl.getValue() == null || abl.getValue().wm() == null || !abl.getValue().wm().getAsBoolean()) && abl.e(var1, var2, var3)) {
                 break;
             }
@@ -78,7 +79,7 @@ public final class aby implements abx, InstanceAccess {
         Iterator iterator = this.pA().iterator();
 
         while (iterator.hasNext()) {
-            ((abl)iterator.next()).pz();
+            ((ValueComponent)iterator.next()).pz();
         }
     }
 
@@ -132,7 +133,7 @@ public final class aby implements abx, InstanceAccess {
     }
 
     @Generated
-    public ArrayList<abl> pA() {
+    public ArrayList<ValueComponent> pA() {
         return this.cj;
     }
 
@@ -157,7 +158,7 @@ public final class aby implements abx, InstanceAccess {
     }
 
     @Generated
-    public void a(ArrayList<abl> var1) {
+    public void a(ArrayList<ValueComponent> var1) {
         this.cj = var1;
     }
 }

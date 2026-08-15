@@ -9,8 +9,8 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.motion.SlowDownEvent;
 import com.alan.clients.newevent.impl.other.TeleportEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
-import hackclient.rise.bb;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemPotion;
@@ -77,8 +77,8 @@ public class NewNCPNoSlow extends Mode<NoSlow> {
     }
 
     private void hE() {
-        if (this.disable > 10 && !bb.bad(false, true, true, false, false) && Client.a.g().c(KillAura.class).jE == null) {
-            ahj.l(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 5, null, 0.0F, 0.0F, 0.0F));
+        if (this.disable > 10 && !BadPacketsComponent.bad(false, true, true, false, false) && Client.a.g().c(KillAura.class).jE == null) {
+            PacketUtil.l(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 5, null, 0.0F, 0.0F, 0.0F));
         }
     }
 }

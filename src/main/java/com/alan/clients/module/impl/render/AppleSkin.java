@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.render.RenderHungerEvent;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.wf;
 import hackclient.rise.yb;
-import hackclient.rise.yc;
+import com.alan.clients.module.impl.render.appleskin.FoodValues;
 import java.util.Random;
 import java.util.Vector;
 import net.minecraft.client.gui.ScaledResolution;
@@ -44,7 +44,7 @@ public class AppleSkin extends Module {
             return;
         }
 
-        yc yc = yb.s(itemstack);
+        FoodValues yc = yb.s(itemstack);
         int k = yc.hunger;
         float f = yc.getSaturationIncrement();
         int l = foodstats.getFoodLevel() + k;

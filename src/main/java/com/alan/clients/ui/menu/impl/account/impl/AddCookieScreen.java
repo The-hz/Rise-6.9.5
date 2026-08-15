@@ -10,9 +10,9 @@ import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.google.gson.Gson;
-import hackclient.rise.adh;
-import hackclient.rise.adm;
-import hackclient.rise.aeb;
+import com.alan.clients.ui.menu.component.button.MenuButton;
+import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
+import com.alan.clients.util.MouseUtil;
 import hackclient.rise.aep;
 import hackclient.rise.afc;
 import hackclient.rise.agc;
@@ -20,7 +20,7 @@ import hackclient.rise.agl;
 import hackclient.rise.agm;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
-import hackclient.rise.akc;
+import com.alan.clients.util.web.Browser;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
@@ -44,7 +44,7 @@ import net.minecraft.client.gui.ScaledResolution;
 public class AddCookieScreen extends GuiScreen implements InstanceAccess {
     private static final long RECENT_LOCALTS_ORDER_WINDOW = 600000L;
     private static final agc FONT_RENDERER = gb.MAIN.a(36, gd.BOLD);
-    private final adh[] menuButtons = new adh[4];
+    private final MenuButton[] menuButtons = new MenuButton[4];
     private static agm usernameBox;
     private static GuiScreen reference;
     private static String text_to_render = "Select file";
@@ -159,7 +159,7 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
                         String s7 = s6.split("\"Token\":\"")[1].split("\"")[0];
                         String s8 = "XBL3.0 x=" + s6.split(Pattern.quote("{\"DisplayClaims\":{\"xui\":[{\"uhs\":\""))[1].split("\"")[0] + ";" + s7;
                         e e = gson.fromJson(
-                            akc.postExternal(
+                            Browser.postExternal(
                                 "https://api.minecraftservices.com/authentication/login_with_xbox",
                                 "{\"identityToken\":\"" + s8 + "\",\"ensureLegacyEnabled\":true}",
                                 true
@@ -171,7 +171,7 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
                             return;
                         }
 
-                        f f = gson.fromJson(akc.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.aEU), f.class);
+                        f f = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.aEU), f.class);
                         if (f == null) {
                             text_to_render = "Error (Invalid Acc)";
                             return;
@@ -211,7 +211,7 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
             FONT_RENDERER.c(text_to_render, this.width / 2, this.height / 2 - 64 + this.animation.sG(), Color.WHITE.getRGB());
             usernameBox.draw();
         });
-        adh[] aadh = this.menuButtons;
+        MenuButton[] aadh = this.menuButtons;
         int i = aadh.length;
 
         for (int j = 0; j < i; j++) {
@@ -223,8 +223,8 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
     public void mouseClicked(int var1, int var2, int var3) {
         usernameBox.click(var1, var2, var3);
 
-        for (adh adh : this.menuButtons) {
-            if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+        for (MenuButton adh : this.menuButtons) {
+            if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
                 adh.runAction();
                 break;
             }
@@ -255,10 +255,10 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
         byte b1 = 4;
         Vector2d vector2d = new Vector2d(this.width / 2 - 100, this.height / 2 - 24);
         usernameBox = new agm(vector2d.offset(100, 8.0), gb.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Username", short1);
-        this.menuButtons[0] = new adm(vector2d.x, vector2d.y, short1, b0, TEXT_BOX_RUNNABLE, "");
-        this.menuButtons[1] = new adm(vector2d.x, vector2d.y + b0 + b1, short1, b0, SELECT_FILE_RUNNABLE, "Select File");
-        this.menuButtons[2] = new adm(vector2d.x, vector2d.y + (b0 + b1) * 2, short1 / 2 * 1.5, b0, LOGIN_RUNNABLE, "Login & Add");
-        this.menuButtons[3] = new adm(vector2d.x + short1 / 2 * 1.5 + b1, vector2d.y + (b0 + b1) * 2, short1 / 2 * 0.5 - b1, b0, CANCEL_RUNNABLE, "Cancel");
+        this.menuButtons[0] = new MenuTextButton(vector2d.x, vector2d.y, short1, b0, TEXT_BOX_RUNNABLE, "");
+        this.menuButtons[1] = new MenuTextButton(vector2d.x, vector2d.y + b0 + b1, short1, b0, SELECT_FILE_RUNNABLE, "Select File");
+        this.menuButtons[2] = new MenuTextButton(vector2d.x, vector2d.y + (b0 + b1) * 2, short1 / 2 * 1.5, b0, LOGIN_RUNNABLE, "Login & Add");
+        this.menuButtons[3] = new MenuTextButton(vector2d.x + short1 / 2 * 1.5 + b1, vector2d.y + (b0 + b1) * 2, short1 / 2 * 0.5 - b1, b0, CANCEL_RUNNABLE, "Cancel");
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
         this.animation.R(-200.0);
     }

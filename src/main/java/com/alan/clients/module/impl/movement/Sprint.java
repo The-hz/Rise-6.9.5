@@ -16,7 +16,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.impl.BooleanValue;
 import hackclient.rise.afi;
-import hackclient.rise.aik;
+import com.alan.clients.util.player.SlotUtil;
 import hackclient.rise.en;
 import java.util.Iterator;
 import java.util.UUID;
@@ -40,7 +40,7 @@ public class Sprint extends Module {
     private final BooleanValue watchdogPrediction = new BooleanValue("Watchdog Prediction", this, false);
     @EventLink(value = 2)
     public final Listener<StrafeEvent> onStrafe = var1 -> {
-        if (!this.watchdogPrediction.wo() || aEg.gameSettings.keyBindJump.isKeyDown() || Ek < 12 && KillAura.nQ || aik.vy() == -1 || this.e(Manager.class).kb() && Ek < 12) {
+        if (!this.watchdogPrediction.wo() || aEg.gameSettings.keyBindJump.isKeyDown() || Ek < 12 && KillAura.nQ || SlotUtil.vy() == -1 || this.e(Manager.class).kb() && Ek < 12) {
             aEg.gameSettings.cgG.setPressed(true);
             Ek = 0;
             Eo = false;
@@ -64,8 +64,8 @@ public class Sprint extends Module {
         }
 
         if (this.watchdogPrediction.wo()) {
-            if (Ek < 12 && aEg.thePlayer.cqL > 3 && aEg.thePlayer.moveForward > 0.0F && !KillAura.nQ && aik.vy() != -1 && !this.e(Manager.class).kb()) {
-                aEg.thePlayer.inventory.currentItem = aik.vy();
+            if (Ek < 12 && aEg.thePlayer.cqL > 3 && aEg.thePlayer.moveForward > 0.0F && !KillAura.nQ && SlotUtil.vy() != -1 && !this.e(Manager.class).kb()) {
+                aEg.thePlayer.inventory.currentItem = SlotUtil.vy();
                 Ek++;
                 if (Ek > 1) {
                     aEg.gameSettings.cgI.setPressed(true);

@@ -1,8 +1,10 @@
 package hackclient.rise;
 
 import com.alan.clients.module.Module;
+import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.Value;
+import hackclient.rise.ui.value.abp;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
@@ -34,7 +36,7 @@ public class akj extends Value<Supplier<Double>> {
     }
 
     @Override
-    public abl wl() {
+    public ValueComponent wl() {
         return this.wD();
     }
 }

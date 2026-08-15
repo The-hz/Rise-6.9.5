@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class MatrixNoFall extends Mode<NoFall> {
@@ -37,7 +37,7 @@ public class MatrixNoFall extends Mode<NoFall> {
         if (var1x.dq() instanceof C03PacketPlayer c03packetplayer && this.aiN) {
             aEg.timer.dzD = 0.5F;
             c03packetplayer.aO = false;
-            ahj.m(new C03PacketPlayer(true));
+            PacketUtil.m(new C03PacketPlayer(true));
             this.aiN = false;
         }
     };

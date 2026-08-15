@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.StringValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.ajt;
 import hackclient.rise.ss;
 import io.netty.buffer.Unpooled;
@@ -29,7 +29,7 @@ public class LabyModClientSpoofer extends Mode<ClientSpoofer> {
                     packetbuffer.writeBytes(((String)ajt.vU()).getBytes());
                 }
 
-                ahj.m(new C17PacketCustomPayload((String)ajt.vT(), packetbuffer));
+                PacketUtil.m(new C17PacketCustomPayload((String)ajt.vT(), packetbuffer));
             }
         }
     };

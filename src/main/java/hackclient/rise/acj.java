@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.ui.click.standard.RiseClickGUI;
+import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2f;
 import java.awt.Color;
@@ -86,8 +87,8 @@ public class acj extends ArrayList<aci> implements InstanceAccess {
     public boolean qz() {
         return this.isEmpty()
             ? false
-            : agj.a(this.getStandardClickGUI().axI, this.getStandardClickGUI().alh, afl.sW())
-                && agj.a(
+            : GUIUtil.a(this.getStandardClickGUI().axI, this.getStandardClickGUI().alh, afl.sW())
+                && GUIUtil.a(
                     new Vector2f((float)(this.getStandardClickGUI().axI.x + this.getStandardClickGUI().axJ.aym), this.axI.y),
                     new Vector2f((float)(this.getStandardClickGUI().alh.x - this.getStandardClickGUI().axJ.aym), this.get(0).oX().y + 20 + 10.0F),
                     afl.sW()

@@ -5,20 +5,20 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
-import hackclient.rise.bd;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class PacketNoFall extends Mode<NoFall> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
-        float f = bd.cY;
-        if (bd.cY > 3.1 + aEg.thePlayer.motionY) {
-            ahj.l(new C03PacketPlayer(true));
+        float f = FallDistanceComponent.cY;
+        if (FallDistanceComponent.cY > 3.1 + aEg.thePlayer.motionY) {
+            PacketUtil.l(new C03PacketPlayer(true));
             f = 0.0F;
         }
 
-        bd.cY = f;
+        FallDistanceComponent.cY = f;
     };
 
     public PacketNoFall(String var1, NoFall var2) {

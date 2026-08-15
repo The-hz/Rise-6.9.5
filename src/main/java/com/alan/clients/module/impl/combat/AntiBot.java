@@ -15,7 +15,7 @@ import com.alan.clients.module.impl.combat.antibot.NoPingCheckAntiBot;
 import com.alan.clients.module.impl.combat.antibot.TabCheckAntiBot;
 import com.alan.clients.module.impl.combat.antibot.TimeVisibleCheckAntiBot;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.hl;
+import hackclient.rise.mode.hl;
 
 @ModuleInfo(aliases = "module.combat.antibot.name", description = "module.combat.antibot.description", category = Category.COMBAT)
 public final class AntiBot extends Module {

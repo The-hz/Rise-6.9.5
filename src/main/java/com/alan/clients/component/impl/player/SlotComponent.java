@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import hackclient.rise.aip;
 import hackclient.rise.gb;
@@ -103,9 +103,9 @@ public final class SlotComponent extends Component {
                     GlStateManager.scale(d0, d0, d0);
                     double d9 = this.rz().getRound();
                     this.rz();
-                    Color color = adv.rK();
+                    Color color = Themes.rK();
                     this.rz();
-                    RenderUtil.roundedRectangle(d4, d5, d3, 22.0, d9, aip.d(color, (int)(adv.rK().getAlpha() * d7)));
+                    RenderUtil.roundedRectangle(d4, d5, d3, 22.0, d9, aip.d(color, (int)(Themes.rK().getAlpha() * d7)));
                     if (flag1) {
                         float f = this.ge.getStringWidth("Amount:") + 2;
                         this.ge.b("Amount:", d4 + 6.0 + 16.0, d6, aip.d(Color.WHITE, (int)(255.0 * d7)).getRGB());

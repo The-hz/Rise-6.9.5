@@ -9,9 +9,9 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
-import hackclient.rise.bd;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C03PacketPlayer;
@@ -41,12 +41,12 @@ public final class WatchdogBlinkNoFall extends Mode<NoFall> {
                 this.aiX = 0;
             }
 
-            if (this.aiX <= 0 && bd.cY > 2.9 && !this.e(Scaffold.class).isEnabled()) {
+            if (this.aiX <= 0 && FallDistanceComponent.cY > 2.9 && !this.e(Scaffold.class).isEnabled()) {
                 var1x.setPosY(var1x.getPosY() + 1.0E-13);
-                ahj.l(new C08PacketPlayerBlockPlacement(BlockPos.ORIGIN, 0, new ItemStack(Items.water_bucket, 1), 0.5F, 0.5F, 0.5F));
+                PacketUtil.l(new C08PacketPlayerBlockPlacement(BlockPos.ORIGIN, 0, new ItemStack(Items.water_bucket, 1), 0.5F, 0.5F, 0.5F));
                 aEg.timer.dzD = 0.5F;
-                ahj.l(new C03PacketPlayer(true));
-                bd.cY = 0.0F;
+                PacketUtil.l(new C03PacketPlayer(true));
+                FallDistanceComponent.cY = 0.0F;
             }
         }
     };

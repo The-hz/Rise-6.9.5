@@ -2,7 +2,9 @@ package hackclient.rise;
 
 import com.alan.clients.component.impl.player.RotationComponent;
 import com.alan.clients.util.interfaces.InstanceAccess;
+import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.player.MoveUtil;
+import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.util.vector.Vector2f;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -310,7 +312,7 @@ public final class aih implements InstanceAccess {
         arraylist.sort(Comparator.comparingDouble(var0x -> {
             double d0 = Math.toDegrees(Math.atan2(((aib)var0x).vb().zCoord, ((aib)var0x).vb().xCoord)) % 360.0;
             double d1 = RotationComponent.fk.x % 360.0F + 90.0F;
-            return Math.abs(ahg.n(d0, d1));
+            return Math.abs(MathUtil.n(d0, d1));
         }));
         if (!arraylist.isEmpty()) {
             return (aib)arraylist.get(0);
@@ -422,7 +424,7 @@ public final class aih implements InstanceAccess {
             if (axisalignedbb != null && !axisalignedbb.hasNaN() && w(var0)) {
                 Vec3 vec3 = aEg.thePlayer.getPositionEyes(1.0F);
                 if (af(vec3.xCoord) && af(vec3.yCoord) && af(vec3.zCoord)) {
-                    Vector2f vector2f = aiu.y(var0);
+                    Vector2f vector2f = RotationUtil.y(var0);
                     if (vector2f != null && af(vector2f.getX()) && af(vector2f.getY())) {
                         Vec3 vec31 = aEg.thePlayer.getVectorForRotation(vector2f.getY(), vector2f.getX());
                         if (af(vec31.xCoord) && af(vec31.yCoord) && af(vec31.zCoord)) {

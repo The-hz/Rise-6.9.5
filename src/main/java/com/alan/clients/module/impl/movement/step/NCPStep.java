@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.other.StepEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import net.minecraft.block.BlockAir;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
@@ -54,7 +54,7 @@ public class NCPStep extends Mode<Step> {
                 aEg.timer.dzD = this.timer.wo().floatValue();
 
                 for (double d1 : adouble) {
-                    ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + (d1 + Math.random() / 2000.0), aEg.thePlayer.posZ, false));
+                    PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + (d1 + Math.random() / 2000.0), aEg.thePlayer.posZ, false));
                 }
             }
         }

@@ -16,7 +16,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import hackclient.rise.aka;
 import net.minecraft.block.Block;
@@ -42,7 +42,7 @@ public class MiniBloxFlight extends Mode<Flight> {
         if (aEg.thePlayer.isCollidedHorizontally) {
             aEg.thePlayer.setPosition(aEg.thePlayer.posX - d1 * 0.005, aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * 0.005);
         } else if (aih.vk()) {
-            ahj.m(new C04PacketPlayerPosition(aEg.thePlayer.posX - d1 * 9.5, aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * 9.5, true));
+            PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX - d1 * 9.5, aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * 9.5, true));
             aEg.thePlayer.motionX *= 0.3;
             aEg.thePlayer.motionZ *= 0.3;
         }

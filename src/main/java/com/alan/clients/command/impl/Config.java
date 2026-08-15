@@ -4,7 +4,7 @@ import com.alan.clients.command.Command;
 import com.alan.clients.util.file.config.ConfigFile;
 import hackclient.rise.afi;
 import hackclient.rise.afj;
-import hackclient.rise.afx;
+import com.alan.clients.util.file.config.ConfigManager;
 import hackclient.rise.ahd;
 import java.awt.Desktop;
 import java.io.File;
@@ -24,7 +24,7 @@ public final class Config extends Command {
 
     @Override
     public void execute(String[] var1) {
-        afx afx = this.rN().p();
+        ConfigManager afx = this.rN().p();
         String s = var1[1].toLowerCase();
         switch (var1.length) {
             case 2:

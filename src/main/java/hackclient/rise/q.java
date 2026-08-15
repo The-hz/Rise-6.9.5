@@ -4,6 +4,7 @@ import com.alan.clients.Client;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.input.KeyboardInputEvent;
+import hackclient.rise.event.dy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

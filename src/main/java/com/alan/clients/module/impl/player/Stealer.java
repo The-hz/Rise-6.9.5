@@ -8,10 +8,10 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.BoundsNumberValue;
-import hackclient.rise.ahg;
-import hackclient.rise.aie;
-import hackclient.rise.be;
-import hackclient.rise.bt;
+import com.alan.clients.util.math.MathUtil;
+import com.alan.clients.util.player.ItemUtil;
+import com.alan.clients.component.impl.player.GUIDetectionComponent;
+import com.alan.clients.component.impl.player.SelectorDetectionComponent;
 import java.util.function.Predicate;
 import lombok.Generated;
 import net.minecraft.client.gui.inventory.GuiChest;
@@ -51,7 +51,7 @@ public class Stealer extends Module {
                 int i = this.firstItemDelay.wo().intValue();
                 int j = this.firstItemDelay.wA().intValue();
                 if (i > 0 || j > 0) {
-                    this.nextClick = Math.round(ahg.l(i, j));
+                    this.nextClick = Math.round(MathUtil.l(i, j));
                     this.ahm.aX();
                     this.ahq = true;
                     return;
@@ -60,7 +60,7 @@ public class Stealer extends Module {
                 this.ahq = true;
             }
 
-            if (this.guiDetection.wo() && be.inGUI() || !this.ahm.T(this.nextClick)) {
+            if (this.guiDetection.wo() && GUIDetectionComponent.inGUI() || !this.ahm.T(this.nextClick)) {
                 return;
             }
 
@@ -68,8 +68,8 @@ public class Stealer extends Module {
 
             for (int k = 0; k < containerchest.inventorySlots.size(); k++) {
                 ItemStack itemstack = containerchest.getLowerChestInventory().getStackInSlot(k);
-                if (itemstack != null && this.aho > 1 && (!this.ignoreTrash.wo() || aie.u(itemstack)) && (!this.respectManagerRules.wo() || !this.r(itemstack))) {
-                    this.nextClick = Math.round(ahg.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
+                if (itemstack != null && this.aho > 1 && (!this.ignoreTrash.wo() || ItemUtil.u(itemstack)) && (!this.respectManagerRules.wo() || !this.r(itemstack))) {
+                    this.nextClick = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
                     aEg.playerController.windowClick(containerchest.windowId, k, 0, 1, aEg.thePlayer);
                     this.ahm.aX();
                     this.ahn = 0;
@@ -104,18 +104,18 @@ public class Stealer extends Module {
             Item item = var1.getItem();
             Manager manager = this.e(Manager.class);
             Container container = aEg.thePlayer.inventoryContainer;
-            if (manager != null && bt.a(var1, true) && manager.jP()) {
+            if (manager != null && SelectorDetectionComponent.a(var1, true) && manager.jP()) {
                 return true;
-            } else if (!aie.u(var1)) {
+            } else if (!ItemUtil.u(var1)) {
                 return true;
             } else if (item instanceof ItemSword) {
-                return !aie.b(var1, container);
+                return !ItemUtil.b(var1, container);
             } else if (item instanceof ItemTool) {
-                return !aie.b(var1, container, aie.d((ItemTool)item));
+                return !ItemUtil.b(var1, container, ItemUtil.d((ItemTool)item));
             } else if (item instanceof ItemBow) {
-                return !aie.c(var1, container);
+                return !ItemUtil.c(var1, container);
             } else if (item instanceof ItemArmor) {
-                return !aie.a(var1, container, ((ItemArmor)item).armorType);
+                return !ItemUtil.a(var1, container, ((ItemArmor)item).armorType);
             } else if (item instanceof net.minecraft.item.be) {
                 return this.a(var0 -> var0 instanceof net.minecraft.item.be) >= 1;
             }

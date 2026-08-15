@@ -4,7 +4,7 @@ import com.alan.clients.command.Command;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import hackclient.rise.afi;
-import hackclient.rise.afr;
+import com.alan.clients.util.file.FileManager;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Spotify extends Command {
-    public final File bv = new File(afr.DIRECTORY, "data");
+    public final File bv = new File(FileManager.DIRECTORY, "data");
     private static final String bw = "spotify.json";
 
     public Spotify() {

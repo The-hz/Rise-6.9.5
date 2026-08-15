@@ -11,7 +11,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
 import hackclient.rise.gg;
 import hackclient.rise.xn;
-import hackclient.rise.zd;
+import com.alan.clients.module.impl.render.keystrokes.KeyStroke;
 import java.util.ArrayList;
 
 @ModuleInfo(aliases = "module.render.keystrokes.name", description = "module.render.keystrokes.description", category = Category.RENDER)
@@ -20,7 +20,7 @@ public final class KeyStrokes extends Module {
     public final BooleanValue space = new BooleanValue("Space", this, true);
     private boolean lastSpace;
     private final int gap = 3;
-    private ArrayList<zd> keyStrokes = new ArrayList<>();
+    private ArrayList<KeyStroke> keyStrokes = new ArrayList<>();
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (aEg.currentScreen != null) {

@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.input.ClickEvent;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.ajr;
+import com.alan.clients.util.sound.SoundUtil;
 import org.apache.commons.lang3.RandomUtils;
 
 @ModuleInfo(aliases = "module.other.clicksounds.name", description = "module.other.clicksounds.description", category = Category.RENDER)
@@ -56,7 +56,7 @@ public final class ClickSounds extends Module {
             s = "rise.click.alan";
         }
 
-        ajr.playSound(s, this.volume.wo().floatValue(), RandomUtils.nextFloat(1.0F, 1.0F + this.variation.wo().floatValue() / 100.0F));
+        SoundUtil.playSound(s, this.volume.wo().floatValue(), RandomUtils.nextFloat(1.0F, 1.0F + this.variation.wo().floatValue() / 100.0F));
     };
 
     public ClickSounds() {

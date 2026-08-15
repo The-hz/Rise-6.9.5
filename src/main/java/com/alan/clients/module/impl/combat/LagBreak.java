@@ -23,10 +23,10 @@ import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aih;
-import hackclient.rise.bv;
-import hackclient.rise.ci;
+import hackclient.rise.component.bv;
+import hackclient.rise.component.ci;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
 import java.awt.Color;
@@ -108,7 +108,7 @@ extends Module {
         }
         boolean bl = (entityLivingBase = this.k(((Number)this.range.wo()).doubleValue())) != null && aih.v((Entity)entityLivingBase) <= 3.0 + MoveUtil.speed() / 2.0;
         boolean bl2 = entityLivingBase != null && aih.v((Entity)entityLivingBase) <= 5.0 && this.a(entityLivingBase, 12.0f, 20.0f);
-        int n2 = entityLivingBase != null ? (int)ahg.l(9.0, 16.0) : (int)ahg.l(10.0, 18.0);
+        int n2 = entityLivingBase != null ? (int)MathUtil.l(9.0, 16.0) : (int)MathUtil.l(10.0, 18.0);
         boolean bl3 = false;
         if (this.pt >= ((Number)this.maxLagTicks.wo()).intValue() || this.e(Scaffold.class).isEnabled() || LagBreak.aEg.gameSettings.cgI.isKeyDown() || !MoveUtil.isMoving() || entityLivingBase == null || aih.v((Entity)entityLivingBase) > ((Number)this.range.wo()).doubleValue() || WatchdogPredictionVelocity.dj || LagBreak.aEg.thePlayer.Zl < 2) {
             bl3 = true;
@@ -320,7 +320,7 @@ extends Module {
         int n3 = render2DEvent.getScaledResolution().getScaledHeight();
         float f3 = (float)n2 / 2.0f;
         float f4 = (float)n3 / 2.0f;
-        float f5 = ahg.lerp(this.pC, this.pB, LagBreak.aEg.timer.bWm);
+        float f5 = MathUtil.lerp(this.pC, this.pB, LagBreak.aEg.timer.bWm);
         double d2 = 360.0 * (double)f2;
         double d3 = 270.0 + d2;
         GL11.glPushMatrix();
@@ -340,7 +340,7 @@ extends Module {
     private void g(float f2) {
         float f3 = ((Number)this.circleRadius.wo()).floatValue() + f2 * 5.0f;
         this.pC = this.pB;
-        this.pB = ahg.lerp(this.pB, f3, 0.35f);
+        this.pB = MathUtil.lerp(this.pB, f3, 0.35f);
     }
 
     private void a(float f2, float f3, float f4, double d2, double d3, Color color, float f5) {

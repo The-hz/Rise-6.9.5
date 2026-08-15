@@ -7,7 +7,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
@@ -24,7 +24,7 @@ public class MineLandFlight extends Mode<Flight> {
         if (!this.teleported) {
             double d0 = MoveUtil.direction();
             if (aEg.thePlayer.ticksExisted % 3 == 0) {
-                ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+                PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
                 aEg.thePlayer.setPosition(this.Hy, this.Hz, this.HA);
             }
 

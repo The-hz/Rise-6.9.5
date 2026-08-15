@@ -14,7 +14,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import hackclient.rise.afi;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aih;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.client.Minecraft;
@@ -177,7 +177,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
                 MoveUtil.strafe(0.125);
             }
 
-            if (ahg.n(d2, d3) > 40.0 && aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
+            if (MathUtil.n(d2, d3) > 40.0 && aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                 aEg.thePlayer.motionX *= 0.74;
                 aEg.thePlayer.motionZ *= 0.74;
             }
@@ -247,7 +247,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
     public final Listener<PostStrafeEvent> onPostStrafe = var0 -> {
         double d0 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
         double d1 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
-        if (ahg.n(d0, d1) > 90.0) {
+        if (MathUtil.n(d0, d1) > 90.0) {
             if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                 MoveUtil.a(MoveUtil.speed(), (float)d1 - 180.0F);
             } else {

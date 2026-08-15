@@ -13,7 +13,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import hackclient.rise.afi;
 import hackclient.rise.aih;
-import hackclient.rise.aik;
+import com.alan.clients.util.player.SlotUtil;
 import hackclient.rise.cl;
 import net.minecraft.block.BlockAir;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
@@ -132,7 +132,7 @@ public class VulcanPhase extends Mode<Phase> {
         };
         this.onTick = var0 -> {};
         this.onStrafe = var1x -> {
-            int vx2 = aik.vx();
+            int vx2 = SlotUtil.vx();
             if ((!aEg.gameSettings.keyBindJump.isKeyDown() || aEg.thePlayer.hurtTime <= 0)
                 && !aEg.gameSettings.keyBindSneak.isKeyDown()
                 && !aEg.gameSettings.keyBindJump.isKeyDown()

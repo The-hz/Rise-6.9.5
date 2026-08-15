@@ -7,7 +7,7 @@ import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.script.api.wrapper.impl.ScriptBlockPos;
 import com.alan.clients.script.api.wrapper.impl.ScriptEntityLiving;
 import com.alan.clients.script.api.wrapper.impl.ScriptWorld;
-import hackclient.rise.bv;
+import hackclient.rise.component.bv;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.BlockPos;
 

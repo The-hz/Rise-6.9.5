@@ -7,7 +7,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.bb;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 
 @ModuleInfo(aliases = "module.ghost.clickassist.name", description = "module.ghost.clickassist.description", category = Category.GHOST)
 public class ClickAssist extends Module {
@@ -41,12 +41,12 @@ public class ClickAssist extends Module {
 
         if (this.AP > 0 && Math.random() > 0.2) {
             this.AP--;
-            if (!aEg.thePlayer.isUsingItem() && !bb.aW()) {
+            if (!aEg.thePlayer.isUsingItem() && !BadPacketsComponent.aW()) {
                 aEg.Ay();
             }
         } else if (this.AQ > 0 && Math.random() > 0.2) {
             this.AQ--;
-            if (!aEg.thePlayer.isUsingItem() && !bb.aW()) {
+            if (!aEg.thePlayer.isUsingItem() && !BadPacketsComponent.aW()) {
                 aEg.Az();
             }
         }

@@ -17,9 +17,9 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.ahf;
 import hackclient.rise.aip;
-import hackclient.rise.aiu;
+import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
-import hackclient.rise.bv;
+import hackclient.rise.component.bv;
 import hackclient.rise.gg;
 import java.util.List;
 import net.minecraft.client.renderer.GlStateManager;
@@ -108,13 +108,13 @@ public class TargetStrafe extends Module {
                             if (this.behind.wo()) {
                                 this.yaw = this.target.pl + 180.0F;
                             } else {
-                                this.yaw = aiu.y(this.target).getX() + 135 * (this.cp ? -1 : 1);
+                                this.yaw = RotationUtil.y(this.target).getX() + 135 * (this.cp ? -1 : 1);
                             }
 
                             double d0 = this.range.wo().doubleValue() + Math.random() / 100.0;
                             double d1 = -MathHelper.sin((float)Math.toRadians(this.yaw)) * d0 + this.target.posX;
                             double d2 = MathHelper.cos((float)Math.toRadians(this.yaw)) * d0 + this.target.posZ;
-                            this.yaw = aiu.d(new aka(d1, this.target.posY, d2)).getX();
+                            this.yaw = RotationUtil.d(new aka(d1, this.target.posY, d2)).getX();
                             aEg.thePlayer.pp = this.yaw;
                         }
                     }

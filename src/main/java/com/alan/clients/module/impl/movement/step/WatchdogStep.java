@@ -11,7 +11,7 @@ import com.alan.clients.newevent.impl.other.StepEvent;
 import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
@@ -63,7 +63,7 @@ public class WatchdogStep extends Mode<Step> {
 
                     for (double d1 : adouble) {
                         aEg.timer.dzD = 0.25F;
-                        ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d1, aEg.thePlayer.posZ, false));
+                        PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d1, aEg.thePlayer.posZ, false));
                         this.hV = 0;
                     }
                 }

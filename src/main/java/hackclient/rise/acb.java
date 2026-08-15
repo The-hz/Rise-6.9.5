@@ -2,8 +2,11 @@ package hackclient.rise;
 
 import com.alan.clients.Client;
 import com.alan.clients.ui.click.standard.RiseClickGUI;
+import com.alan.clients.ui.click.standard.components.ModuleComponent;
+import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2d;
+import hackclient.rise.ui.value.abv;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,7 +17,7 @@ public final class acb implements abx, InstanceAccess {
     public final agm azM = new agm(new Vector2d(200.0, 200.0), gb.MAIN.a(20, gd.REGULAR), Color.WHITE, agl.CENTER, "Start typing to search...", 150.0F);
     private final a azN = new a();
     public agk scrollUtil = new agk();
-    public ArrayList<abd> azB = new ArrayList<>();
+    public ArrayList<ModuleComponent> azB = new ArrayList<>();
     private double axT = 255.0;
     private double azC;
     private double azD;
@@ -45,7 +48,7 @@ public final class acb implements abx, InstanceAccess {
         this.azD = d0;
         double d1 = 0.0;
 
-        for (abd abd : this.azB) {
+        for (ModuleComponent abd : this.azB) {
             abd.draw(new Vector2d(riseclickgui.axI.x + riseclickgui.axJ.aym + 4.0, d0), var1, var2, var3);
             d0 += abd.scale.y + 5.0F;
             d1 += abd.scale.y + 5.0F;
@@ -73,7 +76,7 @@ public final class acb implements abx, InstanceAccess {
         Iterator iterator = this.qf().iterator();
 
         while (iterator.hasNext()) {
-            ((abd)iterator.next()).key(var1, var2);
+            ((ModuleComponent)iterator.next()).key(var1, var2);
         }
     }
 
@@ -82,7 +85,7 @@ public final class acb implements abx, InstanceAccess {
         Iterator iterator = this.azB.iterator();
 
         while (iterator.hasNext()) {
-            ((abd)iterator.next()).click(var1, var2, var3);
+            ((ModuleComponent)iterator.next()).click(var1, var2, var3);
         }
 
         this.azM.click(var1, var2, var3);
@@ -93,7 +96,7 @@ public final class acb implements abx, InstanceAccess {
         Iterator iterator = this.qf().iterator();
 
         while (iterator.hasNext()) {
-            ((abd)iterator.next()).pz();
+            ((ModuleComponent)iterator.next()).pz();
         }
     }
 
@@ -102,7 +105,7 @@ public final class acb implements abx, InstanceAccess {
         Iterator iterator = this.qf().iterator();
 
         while (iterator.hasNext()) {
-            ((abd)iterator.next()).ci();
+            ((ModuleComponent)iterator.next()).ci();
         }
     }
 
@@ -112,10 +115,10 @@ public final class acb implements abx, InstanceAccess {
         this.azO = false;
     }
 
-    public ArrayList<abd> aG(String var1) {
+    public ArrayList<ModuleComponent> aG(String var1) {
         ArrayList arraylist = new ArrayList();
 
-        for (abd abd : Client.a.v().getModuleList()) {
+        for (ModuleComponent abd : Client.a.v().getModuleList()) {
             String[] astring = abd.getModule().getAliases();
             int i = astring.length;
 
@@ -139,7 +142,7 @@ public final class acb implements abx, InstanceAccess {
         Iterator iterator = this.azB.iterator();
 
         while (iterator.hasNext()) {
-            for (abl abl : ((abd)iterator.next()).getValueList()) {
+            for (ValueComponent abl : ((ModuleComponent)iterator.next()).getValueList()) {
                 if (abl instanceof abv && ((abv)abl).azo.ayU) {
                     return true;
                 }
@@ -165,7 +168,7 @@ public final class acb implements abx, InstanceAccess {
     }
 
     @Generated
-    public ArrayList<abd> qf() {
+    public ArrayList<ModuleComponent> qf() {
         return this.azB;
     }
 
@@ -195,7 +198,7 @@ public final class acb implements abx, InstanceAccess {
     }
 
     @Generated
-    public void b(ArrayList<abd> var1) {
+    public void b(ArrayList<ModuleComponent> var1) {
         this.azB = var1;
     }
 

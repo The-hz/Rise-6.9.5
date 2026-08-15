@@ -12,7 +12,7 @@ import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.newevent.impl.render.LookEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
-import hackclient.rise.aiu;
+import com.alan.clients.util.rotation.RotationUtil;
 import java.util.function.Function;
 import lombok.Generated;
 import net.minecraft.util.MathHelper;
@@ -136,7 +136,7 @@ public final class RotationComponent extends Component {
     }
 
     private void bI() {
-        Vector2f vector2f = aiu.o(aiu.applySensitivityPatch(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), fl));
+        Vector2f vector2f = RotationUtil.o(RotationUtil.applySensitivityPatch(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), fl));
         aEg.thePlayer.pl = vector2f.x;
         aEg.thePlayer.rotationPitch = vector2f.y;
     }
@@ -178,7 +178,7 @@ public final class RotationComponent extends Component {
                 f1 = f3;
             }
 
-            fk = aiu.e(new Vector2f(f, f1), rotationSpeed + Math.random());
+            fk = RotationUtil.e(new Vector2f(f, f1), rotationSpeed + Math.random());
             if (correctMovement == MovementFix.NORMAL || correctMovement == MovementFix.TRADITIONAL) {
                 aEg.thePlayer.pp = fk.x;
             }

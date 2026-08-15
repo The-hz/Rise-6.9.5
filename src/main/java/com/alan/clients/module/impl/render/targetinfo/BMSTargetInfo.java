@@ -13,13 +13,13 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import hackclient.rise.ahd;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aip;
 import hackclient.rise.ais;
-import hackclient.rise.ait;
+import com.alan.clients.util.render.particle.Particle;
 import hackclient.rise.bf;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
@@ -61,7 +61,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                 AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;
                 HealthBypass healthbypass = this.e(HealthBypass.class);
                 float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractclientplayer) : abstractclientplayer.getHealth();
-                double d2 = Math.min(!this.aui.inWorld ? 0.0 : ahg.round(f, 1), abstractclientplayer.getMaxHealth());
+                double d2 = Math.min(!this.aui.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
                 double d3 = Math.max(0, 100);
                 this.aun.Q(d2 / abstractclientplayer.getMaxHealth() * d3);
                 this.aun.setEasing(Easing.EASE_OUT_QUINT);
@@ -82,7 +82,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                             GlStateManager.translate((d0 + d8 / 2.0) * (1.0 - d10), (d1 + d9 / 2.0) * (1.0 - d10), 0.0);
                             GlStateManager.scale(d10, d10, 0.0);
                             this.rz();
-                            Color color = adv.rK();
+                            Color color = Themes.rK();
                             Color color1 = this.rz().rA();
                             RenderUtil.a(d0, d1, d8 - 4.0, d9, 6.0, color, color, true);
                             this.auh
@@ -145,7 +145,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                 if (d0 > 0.0) {
                     for (int i = 0; i < d0 * Math.random() / 2.0; i++) {
                         NotificationComponent.a(
-                            new ait(
+                            new Particle(
                                 new Vector2f((float)(this.aui.position.x + 20.0), (float)(this.aui.position.y + 20.0)),
                                 new Vector2f((float)(Math.random() - 0.5) * 1.7F, (float)(Math.random() - 0.5) * 1.7F)
                             )
@@ -164,7 +164,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
         ais.vK();
         ais.vL();
         this.rz();
-        RenderUtil.roundedRectangle(var2, var4, var6, var6, 3.0, adv.rK());
+        RenderUtil.roundedRectangle(var2, var4, var6, var6, 3.0, Themes.rK());
         ais.aD(1);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);

@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aip;
 import hackclient.rise.bf;
 import java.awt.Color;
@@ -60,7 +60,7 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
             );
         GlStateManager.popMatrix();
         this.aui.positionValue.aHe = new Vector2d(140.0, 50.0);
-        double d2 = Math.min(!this.aui.inWorld ? 0.0 : ahg.round(f, 1), abstractclientplayer.getMaxHealth());
+        double d2 = Math.min(!this.aui.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
         Color color = c(f, abstractclientplayer.getMaxHealth());
         double d3 = d0 + 40.0;
         RenderUtil.d(d3, d1 + 25.0, 91.0, 5.0, aip.d(color, 50));

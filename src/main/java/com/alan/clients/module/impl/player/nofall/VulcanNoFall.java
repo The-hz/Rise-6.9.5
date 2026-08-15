@@ -5,16 +5,16 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.bd;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
 
 public class VulcanNoFall extends Mode<NoFall> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {
-        if (bd.cY > 3.0F) {
+        if (FallDistanceComponent.cY > 3.0F) {
             var0.setOnGround(true);
             aEg.thePlayer.onGround = true;
             aEg.thePlayer.motionY = -0.09800000190735147;
-            bd.cY = 0.0F;
+            FallDistanceComponent.cY = 0.0F;
         }
     };
 

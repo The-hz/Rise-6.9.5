@@ -8,7 +8,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.ajr;
+import com.alan.clients.util.sound.SoundUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -29,8 +29,8 @@ public final class KillEffect extends Module {
                 aEg.theWorld.addEntityToWorld((int)(-Math.random() * 100000.0), entitylightningbolt);
                 String s = "ambient.weather.thunder";
                 String s1 = "random.explode";
-                ajr.playSound(s, 10000.0F, 0.95F);
-                ajr.playSound(s1, 2.0F, 0.57F);
+                SoundUtil.playSound(s, 10000.0F, 0.95F);
+                SoundUtil.playSound(s1, 2.0F, 0.57F);
             }
 
             if (this.explosion.wo()) {
@@ -38,7 +38,7 @@ public final class KillEffect extends Module {
                     aEg.effectRenderer.emitParticleAtEntity(this.target, EnumParticleTypes.FLAME);
                 }
 
-                ajr.cm("item.fireCharge.use");
+                SoundUtil.cm("item.fireCharge.use");
             }
 
             if (this.bloodExplosion.wo()) {
@@ -63,7 +63,7 @@ public final class KillEffect extends Module {
                 }
 
                 for (double d4 = d0; d4 <= d1; d4 += d2) {
-                    ajr.cm("dig.stone");
+                    SoundUtil.cm("dig.stone");
                 }
             }
 

@@ -14,7 +14,7 @@ import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.aih;
-import hackclient.rise.bb;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +72,7 @@ public final class Insults extends Module {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (this.target != null && !aEg.theWorld.playerEntities.contains(this.target)) {
-            if (this.ticks >= this.delay.wo().intValue() + Math.random() * 2.0 && !bb.aW()) {
+            if (this.ticks >= this.delay.wo().intValue() + Math.random() * 2.0 && !BadPacketsComponent.aW()) {
                 String s;
                 label65: {
                     label64: {

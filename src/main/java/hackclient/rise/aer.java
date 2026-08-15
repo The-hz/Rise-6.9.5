@@ -6,6 +6,7 @@ import com.alan.clients.util.account.auth.MicrosoftLogin;
 import com.alan.clients.util.account.auth.d;
 import com.alan.clients.util.account.auth.e;
 import com.alan.clients.util.account.auth.f;
+import com.alan.clients.util.web.Browser;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -145,7 +146,7 @@ public final class aer {
             String s9 = y(s7, "uhs");
             if (!s8.isEmpty() && !s9.isEmpty()) {
                 e e = gson.fromJson(
-                    akc.postExternal(
+                    Browser.postExternal(
                         "https://api.minecraftservices.com/authentication/login_with_xbox",
                         "{\"identityToken\":\"XBL3.0 x=" + s9 + ";" + s8 + "\",\"ensureLegacyEnabled\":true}",
                         true
@@ -153,7 +154,7 @@ public final class aer {
                     e.class
                 );
                 if (e != null && e.aEU != null) {
-                    f f = gson.fromJson(akc.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.aEU), f.class);
+                    f f = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.aEU), f.class);
                     if (f != null && f.aEZ != null && f.gK != null) {
                         String s10 = MicrosoftLogin.extractRefreshTokenFromCookies(s);
                         return new d(e.aEU, s10, f.aEZ, f.gK);

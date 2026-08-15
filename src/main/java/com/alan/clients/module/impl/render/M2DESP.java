@@ -15,7 +15,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.aip;
-import hackclient.rise.bv;
+import hackclient.rise.component.bv;
 import hackclient.rise.gg;
 import java.awt.Color;
 import java.util.List;

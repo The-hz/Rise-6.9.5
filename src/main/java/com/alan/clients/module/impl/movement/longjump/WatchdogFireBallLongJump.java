@@ -15,7 +15,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import java.util.ArrayList;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFireball;
@@ -129,7 +129,7 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
 
         if (this.IQ == 1) {
             if (!this.IP) {
-                ahj.l(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getHeldItem()));
+                PacketUtil.l(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getHeldItem()));
                 this.IP = true;
             }
         } else if (this.IQ == 2 && this.qI != -1) {
@@ -166,7 +166,7 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
         if (dj && aEg.thePlayer.tR == 13) {
             tt = true;
             dj = false;
-            this.Mt.forEach(ahj::p);
+            this.Mt.forEach(PacketUtil::p);
             this.Mt.clear();
             tt = false;
             this.tR = 0;

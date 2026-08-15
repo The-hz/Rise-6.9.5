@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.BlockAABBEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import net.minecraft.block.BlockAir;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
@@ -24,7 +24,7 @@ public class NormalPhase extends Mode<Phase> {
             aEg.thePlayer.setPosition(aEg.thePlayer.posX - d1 * 0.005, aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * 0.005);
             this.phasing = true;
         } else if (aih.vk()) {
-            ahj.m(new C04PacketPlayerPosition(aEg.thePlayer.posX - d1 * 3.5, aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * 3.5, false));
+            PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX - d1 * 3.5, aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * 3.5, false));
             aEg.thePlayer.motionX *= 0.3;
             aEg.thePlayer.motionZ *= 0.3;
             this.phasing = true;

@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
+import com.alan.clients.util.packet.PacketUtil;
 import lombok.Generated;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
@@ -28,16 +29,16 @@ public final class ahz implements InstanceAccess {
             for (int k = 0; k < j; k++) {
                 switch (var0) {
                     case POSITION_ROTATION:
-                        ahj.l(new C06PacketPlayerPosLook(d0, d1 + var1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
-                        ahj.l(new C06PacketPlayerPosLook(d0, d1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
+                        PacketUtil.l(new C06PacketPlayerPosLook(d0, d1 + var1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
+                        PacketUtil.l(new C06PacketPlayerPosLook(d0, d1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
                         break;
                     case POSITION:
-                        ahj.l(new C04PacketPlayerPosition(d0, d1 + var1, d2, false));
-                        ahj.l(new C04PacketPlayerPosition(d0, d1, d2, false));
+                        PacketUtil.l(new C04PacketPlayerPosition(d0, d1 + var1, d2, false));
+                        PacketUtil.l(new C04PacketPlayerPosition(d0, d1, d2, false));
                 }
             }
 
-            ahj.l(new C03PacketPlayer(true));
+            PacketUtil.l(new C03PacketPlayer(true));
         }
     }
 
@@ -50,16 +51,16 @@ public final class ahz implements InstanceAccess {
             for (int i = 0; i < var3; i++) {
                 switch (var0) {
                     case POSITION_ROTATION:
-                        ahj.l(new C06PacketPlayerPosLook(d0, d1 + var1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
-                        ahj.l(new C06PacketPlayerPosLook(d0, d1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
+                        PacketUtil.l(new C06PacketPlayerPosLook(d0, d1 + var1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
+                        PacketUtil.l(new C06PacketPlayerPosLook(d0, d1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
                         break;
                     case POSITION:
-                        ahj.l(new C04PacketPlayerPosition(d0, d1 + var1, d2, false));
-                        ahj.l(new C04PacketPlayerPosition(d0, d1, d2, false));
+                        PacketUtil.l(new C04PacketPlayerPosition(d0, d1 + var1, d2, false));
+                        PacketUtil.l(new C04PacketPlayerPosition(d0, d1, d2, false));
                 }
             }
 
-            ahj.l(new C03PacketPlayer(true));
+            PacketUtil.l(new C03PacketPlayer(true));
         }
     }
 

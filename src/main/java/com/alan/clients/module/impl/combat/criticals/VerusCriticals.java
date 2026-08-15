@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import rip.vantage.commons.util.time.a;
 
@@ -18,7 +18,7 @@ public final class VerusCriticals extends Mode<Criticals> {
     public final Listener<AttackEvent> onAttack = var1x -> {
         if (this.rQ.T(this.delay.wo().longValue()) && aEg.thePlayer.cqL > 2 && aEg.thePlayer.hurtTime != 0) {
             for (double d0 : this.rP) {
-                ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d0, aEg.thePlayer.posZ, false));
+                PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d0, aEg.thePlayer.posZ, false));
             }
 
             aEg.thePlayer.onCriticalHit(var1x.dc());

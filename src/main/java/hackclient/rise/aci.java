@@ -2,6 +2,7 @@ package hackclient.rise;
 
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
+import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2f;
@@ -51,14 +52,14 @@ public class aci implements InstanceAccess {
 
     public void f(int var1, int var2, int var3) {
         if (this.axI != null) {
-            if (agj.a(this.axI, this.alh, var1, var2) && this.aAa != null) {
+            if (GUIUtil.a(this.axI, this.alh, var1, var2) && this.aAa != null) {
                 this.aAa.run();
             }
         }
     }
 
     public boolean qz() {
-        return agj.a(this.axI, this.alh, afl.sW().getX(), afl.sW().getY());
+        return GUIUtil.a(this.axI, this.alh, afl.sW().getX(), afl.sW().getY());
     }
 
     public void k(Vector2f var1) {

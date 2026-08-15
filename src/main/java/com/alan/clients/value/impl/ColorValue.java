@@ -3,8 +3,8 @@ package com.alan.clients.value.impl;
 import com.alan.clients.module.Module;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.Value;
-import hackclient.rise.abl;
-import hackclient.rise.abo;
+import com.alan.clients.ui.click.standard.components.value.ValueComponent;
+import hackclient.rise.ui.value.abo;
 import java.awt.Color;
 import java.util.List;
 import java.util.function.BooleanSupplier;
@@ -36,7 +36,7 @@ public class ColorValue extends Value<Color> {
     }
 
     @Override
-    public abl wl() {
+    public ValueComponent wl() {
         return this.wC();
     }
 }

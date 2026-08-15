@@ -16,10 +16,10 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
 import com.google.gson.JsonObject;
-import hackclient.rise.ahc;
+import com.alan.clients.util.localization.Locale;
 import hackclient.rise.ahd;
 import hackclient.rise.cg;
-import hackclient.rise.ev;
+import hackclient.rise.event.ev;
 import hackclient.rise.p;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -88,7 +88,7 @@ public class ConfigFile extends File implements p {
                     if (!var0.has(s)) {
                         String s1 = null;
 
-                        for (ahc ahc : ahc.values()) {
+                        for (Locale ahc : Locale.values()) {
                             String s2 = ahd.a(s, ahc);
                             if (s2 != null && !s2.equals(s) && var0.has(s2)) {
                                 s1 = s2;

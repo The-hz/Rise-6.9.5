@@ -14,7 +14,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.aef;
 import hackclient.rise.aih;
-import hackclient.rise.aik;
+import com.alan.clients.util.player.SlotUtil;
 import java.util.Comparator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -220,14 +220,14 @@ public class ThrowableAura extends Module {
 
     public int gu() {
         if (this.snowballs.wo()) {
-            int e2 = aik.findItem(Items.snowball);
+            int e2 = SlotUtil.findItem(Items.snowball);
             if (e2 != -1) {
                 return e2;
             }
         }
 
         if (this.eggs.wo()) {
-            int e3 = aik.findItem(Items.egg);
+            int e3 = SlotUtil.findItem(Items.egg);
             if (e3 != -1) {
                 return e3;
             }

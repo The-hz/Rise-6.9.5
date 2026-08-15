@@ -2,12 +2,14 @@ package hackclient.rise;
 
 import com.alan.clients.Client;
 import com.alan.clients.ui.click.standard.RiseClickGUI;
+import com.alan.clients.util.file.FileManager;
 import com.alan.clients.util.file.FileType;
+import hackclient.rise.file.afy;
 import java.io.File;
 import java.util.ArrayList;
 
 public class afz extends ArrayList<afy> {
-    public static final File aHQ = new File(afr.DIRECTORY, "data");
+    public static final File aHQ = new File(FileManager.DIRECTORY, "data");
 
     public afz() {
     }

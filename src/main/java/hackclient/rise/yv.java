@@ -15,11 +15,11 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.StringValue;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import hackclient.rise.agd;
 import hackclient.rise.aip;
-import hackclient.rise.ait;
+import com.alan.clients.util.render.particle.Particle;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
@@ -180,7 +180,7 @@ extends Mode<Interface> {
                 this.b(gg.BLUR).c(() -> consumer.accept(Color.BLACK));
                 this.b(gg.REGULAR, 1).c(() -> {
                     this.rz();
-                    consumer.accept(adv.rK());
+                    consumer.accept(Themes.rK());
                 });
             }
             this.b(gg.REGULAR, 1).c(() -> this.a(zc2, d4, d5 - 0.5, color2.getRGB()));
@@ -267,7 +267,7 @@ extends Mode<Interface> {
     public final Listener<KillEvent> onKill = killEvent -> {
         if (!this.asH.T(2000L) && ((Boolean)this.particles.wo()).booleanValue()) {
             for (int i = 0; i <= 10; ++i) {
-                NotificationComponent.a(new ait(new Vector2f(0.0f, 0.0f), new Vector2f((float)Math.random(), (float)Math.random())));
+                NotificationComponent.a(new Particle(new Vector2f(0.0f, 0.0f), new Vector2f((float)Math.random(), (float)Math.random())));
             }
         }
         this.asH.aX();

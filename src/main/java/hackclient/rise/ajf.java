@@ -1,6 +1,8 @@
 package hackclient.rise;
 
 import com.alan.clients.module.impl.render.Interface;
+import com.alan.clients.util.shader.base.RiseShaderProgram;
+import com.alan.clients.util.shader.base.ShaderUniforms;
 import java.nio.FloatBuffer;
 import java.util.List;
 import lombok.Generated;
@@ -11,7 +13,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL13;
 
 public class ajf extends aix {
-    private final aiy aQc = new aiy("blur.frag", "vertex.vsh");
+    private final RiseShaderProgram aQc = new RiseShaderProgram("blur.frag", "vertex.vsh");
     private Framebuffer aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
     private Framebuffer aPZ = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
     private ajq aQa = new ajq(0);
@@ -52,28 +54,28 @@ public class ajf extends aix {
                         FloatBuffer floatbuffer = BufferUtils.createFloatBuffer(i);
                         floatbuffer.put(this.aQa.vS());
                         floatbuffer.flip();
-                        aja.uniform1f(j, "u_radius", (float)i);
-                        aja.uniformFB(j, "u_kernel", floatbuffer);
-                        aja.uniform1i(j, "u_diffuse_sampler", 0);
-                        aja.uniform1i(j, "u_other_sampler", flag ? 2 : 20);
+                        ShaderUniforms.uniform1f(j, "u_radius", (float)i);
+                        ShaderUniforms.uniformFB(j, "u_kernel", floatbuffer);
+                        ShaderUniforms.uniform1i(j, "u_diffuse_sampler", 0);
+                        ShaderUniforms.uniform1i(j, "u_other_sampler", flag ? 2 : 20);
                     }
 
-                    aja.uniform2f(j, "u_texel_size", 1.0F / aEg.displayWidth, 1.0F / aEg.displayHeight);
-                    aja.uniform2f(j, "u_direction", f, 0.0F);
+                    ShaderUniforms.uniform2f(j, "u_texel_size", 1.0F / aEg.displayWidth, 1.0F / aEg.displayHeight);
+                    ShaderUniforms.uniform2f(j, "u_direction", f, 0.0F);
                     GlStateManager.enableBlend();
                     GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                     GlStateManager.alphaFunc(516, 0.0F);
                     aEg.getFramebuffer().bindFramebufferTexture();
-                    aiy.vN();
+                    RiseShaderProgram.vN();
                     aEg.getFramebuffer().bindFramebuffer(true);
-                    aja.uniform2f(j, "u_direction", 0.0F, f);
+                    ShaderUniforms.uniform2f(j, "u_direction", 0.0F, f);
                     this.aPZ.bindFramebufferTexture();
                     GL13.glActiveTexture(flag ? 33986 : 34004);
                     this.aPV.bindFramebufferTexture();
                     GL13.glActiveTexture(33984);
-                    aiy.vN();
+                    RiseShaderProgram.vN();
                     GlStateManager.disableBlend();
-                    aiy.stop();
+                    RiseShaderProgram.stop();
             }
         }
     }

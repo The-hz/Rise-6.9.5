@@ -5,7 +5,7 @@ import com.alan.clients.component.Component;
 import com.alan.clients.module.Module;
 import com.alan.clients.ui.click.standard.RiseClickGUI;
 import com.google.gson.Gson;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.ge;
 import hackclient.rise.gf;
 import hackclient.rise.gg;
@@ -38,7 +38,7 @@ public interface InstanceAccess {
         return this.rN().h().b(var1);
     }
 
-    default adv rz() {
+    default Themes rz() {
         return this.rN().k().rz();
     }
 

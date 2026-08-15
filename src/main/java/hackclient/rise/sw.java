@@ -1,5 +1,6 @@
 package hackclient.rise;
 
+import com.alan.clients.util.rotation.RotationUtil;
 import java.util.function.Supplier;
 import net.minecraft.util.MathHelper;
 
@@ -19,8 +20,8 @@ public enum sw
     DIFFERENCE_X(() -> Double.valueOf(sv.DIFFERENCE.a(new Double[] { Double.valueOf(((su)st.ZI.jq()).ih()), Double.valueOf(((su)st.ZJ.jq()).ih()) }))),
     DIFFERENCE_Y(() -> Double.valueOf(sv.DIFFERENCE.a(new Double[] { Double.valueOf(((su)st.ZI.jq()).ii()), Double.valueOf(((su)st.ZJ.jq()).ii()) }))),
     DIFFERENCE_Z(() -> Double.valueOf(sv.DIFFERENCE.a(new Double[] { Double.valueOf(((su)st.ZI.jq()).ij()), Double.valueOf(((su)st.ZJ.jq()).ij()) }))),
-    PLAYER_PERFECT_YAW(() -> Double.valueOf(aiu.c(new aka(((su)st.ZI.jq()).ih(), 0.0, ((su)st.ZI.jq()).ij()), new aka(((su)st.ZJ.jq()).ih(), 0.0, ((su)st.ZJ.jq()).ij())).getX())),
-    PLAYER_PERFECT_PITCH(() -> Double.valueOf(aiu.c(new aka(((su)st.ZI.jq()).ih(), ((su)st.ZI.jq()).ii(), ((su)st.ZI.jq()).ij()), new aka(((su)st.ZJ.jq()).ih(), ((su)st.ZJ.jq()).ii(), ((su)st.ZJ.jq()).ij())).getY())),
+    PLAYER_PERFECT_YAW(() -> Double.valueOf(RotationUtil.c(new aka(((su)st.ZI.jq()).ih(), 0.0, ((su)st.ZI.jq()).ij()), new aka(((su)st.ZJ.jq()).ih(), 0.0, ((su)st.ZJ.jq()).ij())).getX())),
+    PLAYER_PERFECT_PITCH(() -> Double.valueOf(RotationUtil.c(new aka(((su)st.ZI.jq()).ih(), ((su)st.ZI.jq()).ii(), ((su)st.ZI.jq()).ij()), new aka(((su)st.ZJ.jq()).ih(), ((su)st.ZJ.jq()).ii(), ((su)st.ZJ.jq()).ij())).getY())),
     PLAYER_DELTA_X(() -> Double.valueOf(((su)st.ZI.jq()).ih() - ((su)st.ZI.get(1)).ih())),
     PLAYER_DELTA_Y(() -> Double.valueOf(((su)st.ZI.jq()).ii() - ((su)st.ZI.get(1)).ii())),
     PLAYER_DELTA_Z(() -> Double.valueOf(((su)st.ZI.jq()).ij() - ((su)st.ZI.get(1)).ij())),
@@ -46,14 +47,14 @@ public enum sw
     PLAYER_LATERAL_DELTA(() -> Double.valueOf(sw.PLAYER_HORIZONTAL_DELTA.io() * (1.0 - sw.PLAYER_FORWARD_PERCENTAGE.io() / 100.0) * (double)((Math.abs(sv.WRAPPED_TO_180_DISTANCE.a(new Double[] { Double.valueOf(((su)st.ZI.jq()).ik() + 90.0), sw.PLAYER_HORIZONTAL_MOVEMENT_ANGLE.io() })) > 90.0) ? -1 : 1))),
     ENEMY_FORWARD_DELTA(() -> sw.PLAYER_FORWARD_DELTA.t(true)),
     ENEMY_LATERAL_DELTA(() -> sw.PLAYER_LATERAL_DELTA.t(true)),
-    PLAYER_CONTRIBUTION_TO_DELTA_HORIZONTAL_ANGLE_TO_ENEMY(() -> Double.valueOf(sv.WRAPPED_TO_180_DISTANCE.a(new Double[] { sw.PLAYER_PERFECT_YAW.io(), Double.valueOf(aiu.c(new aka(((su)st.ZI.get(1)).ih(), ((su)st.ZI.get(1)).ii(), ((su)st.ZI.get(1)).ij()), new aka(((su)st.ZJ.jq()).ih(), ((su)st.ZJ.jq()).ii(), ((su)st.ZJ.jq()).ij())).getX()) }))),
+    PLAYER_CONTRIBUTION_TO_DELTA_HORIZONTAL_ANGLE_TO_ENEMY(() -> Double.valueOf(sv.WRAPPED_TO_180_DISTANCE.a(new Double[] { sw.PLAYER_PERFECT_YAW.io(), Double.valueOf(RotationUtil.c(new aka(((su)st.ZI.get(1)).ih(), ((su)st.ZI.get(1)).ii(), ((su)st.ZI.get(1)).ij()), new aka(((su)st.ZJ.jq()).ih(), ((su)st.ZJ.jq()).ii(), ((su)st.ZJ.jq()).ij())).getX()) }))),
     ENEMY_CONTRIBUTION_TO_DELTA_HORIZONTAL_ANGLE_TO_PLAYER(() -> sw.PLAYER_CONTRIBUTION_TO_DELTA_HORIZONTAL_ANGLE_TO_ENEMY.t(true)),
-    PLAYER_CONTRIBUTION_TO_DELTA_VERTICAL_ANGLE_TO_ENEMY(() -> Double.valueOf(sv.DIFFERENCE.a(new Double[] { sw.PLAYER_PERFECT_PITCH.io(), Double.valueOf(aiu.c(new aka(((su)st.ZI.get(1)).ih(), ((su)st.ZI.get(1)).ii(), ((su)st.ZI.get(1)).ij()), new aka(((su)st.ZJ.jq()).ih(), ((su)st.ZJ.jq()).ii(), ((su)st.ZJ.jq()).ij())).getY()) }))),
+    PLAYER_CONTRIBUTION_TO_DELTA_VERTICAL_ANGLE_TO_ENEMY(() -> Double.valueOf(sv.DIFFERENCE.a(new Double[] { sw.PLAYER_PERFECT_PITCH.io(), Double.valueOf(RotationUtil.c(new aka(((su)st.ZI.get(1)).ih(), ((su)st.ZI.get(1)).ii(), ((su)st.ZI.get(1)).ij()), new aka(((su)st.ZJ.jq()).ih(), ((su)st.ZJ.jq()).ii(), ((su)st.ZJ.jq()).ij())).getY()) }))),
     ENEMY_CONTRIBUTION_TO_DELTA_VERTICAL_ANGLE_TO_PLAYER(() -> Double.valueOf((double)sw.PLAYER_CONTRIBUTION_TO_DELTA_VERTICAL_ANGLE_TO_ENEMY.t(true) * -1.0)),
     PLAYER_DELTA_ROTATION(() -> Double.valueOf(sv.EUCLIDEAN_DISTANCE.a(new Double[] { sw.PLAYER_DELTA_YAW.io(), sw.PLAYER_DELTA_PITCH.io() }))),
     PLAYER_ROTATION_DISTANCE_FROM_PERFECT_ROTATIONS(() -> Double.valueOf(sv.EUCLIDEAN_DISTANCE.a(new Double[] { sw.PLAYER_YAW_DIFFERENCE_FROM_PERFECT_YAW.io(), sw.PLAYER_PITCH_DIFFERENCE_FROM_PERFECT_PITCH.io() }))),
     PLAYER_DELTA_ROTATION_DISTANCE_FROM_PERFECT_ROTATIONS(() -> Double.valueOf(sv.DIFFERENCE.a(new Double[] { sw.PLAYER_ROTATION_DISTANCE_FROM_PERFECT_ROTATIONS.io(), sw.PLAYER_ROTATION_DISTANCE_FROM_PERFECT_ROTATIONS.C(1) }))),
-    PLAYER_CONTRIBUTION_TO_DELTA_ROTATION_DISTANCE_FROM_PERFECT_ROTATIONS(() -> Double.valueOf(sv.DIFFERENCE.a(new Double[] { sw.PLAYER_ROTATION_DISTANCE_FROM_PERFECT_ROTATIONS.io(), Double.valueOf(sv.EUCLIDEAN_DISTANCE.a(new Double[] { Double.valueOf(sv.WRAPPED_TO_180_DISTANCE.a(new Double[] { Double.valueOf(((su)st.ZI.get(1)).ik()), Double.valueOf(aiu.c(new aka(((su)st.ZI.get(1)).ih(), 0.0, ((su)st.ZI.get(1)).ij()), new aka(((su)st.ZJ.jq()).ih(), 0.0, ((su)st.ZJ.jq()).ij())).getX()) })), Double.valueOf(sv.DIFFERENCE.a(new Double[] { Double.valueOf(((su)st.ZI.get(1)).il()), Double.valueOf(aiu.c(new aka(((su)st.ZI.get(1)).ih(), ((su)st.ZI.get(1)).ii(), ((su)st.ZI.get(1)).ij()), new aka(((su)st.ZJ.jq()).ih(), ((su)st.ZJ.jq()).ii(), ((su)st.ZJ.jq()).ij())).getY()) })) })) }))),
+    PLAYER_CONTRIBUTION_TO_DELTA_ROTATION_DISTANCE_FROM_PERFECT_ROTATIONS(() -> Double.valueOf(sv.DIFFERENCE.a(new Double[] { sw.PLAYER_ROTATION_DISTANCE_FROM_PERFECT_ROTATIONS.io(), Double.valueOf(sv.EUCLIDEAN_DISTANCE.a(new Double[] { Double.valueOf(sv.WRAPPED_TO_180_DISTANCE.a(new Double[] { Double.valueOf(((su)st.ZI.get(1)).ik()), Double.valueOf(RotationUtil.c(new aka(((su)st.ZI.get(1)).ih(), 0.0, ((su)st.ZI.get(1)).ij()), new aka(((su)st.ZJ.jq()).ih(), 0.0, ((su)st.ZJ.jq()).ij())).getX()) })), Double.valueOf(sv.DIFFERENCE.a(new Double[] { Double.valueOf(((su)st.ZI.get(1)).il()), Double.valueOf(RotationUtil.c(new aka(((su)st.ZI.get(1)).ih(), ((su)st.ZI.get(1)).ii(), ((su)st.ZI.get(1)).ij()), new aka(((su)st.ZJ.jq()).ih(), ((su)st.ZJ.jq()).ii(), ((su)st.ZJ.jq()).ij())).getY()) })) })) }))),
     ENEMY_CONTRIBUTION_TO_DELTA_ROTATION_DISTANCE_FROM_PERFECT_ROTATIONS(() -> Double.valueOf((double)sw.PLAYER_CONTRIBUTION_TO_DELTA_ROTATION_DISTANCE_FROM_PERFECT_ROTATIONS.t(true) * -1.0)),
     PLAYER_CLICKED(() -> Double.valueOf(((su)st.ZI.jq()).im() ? 1 : 0)),
     PLAYER_LAST_CLICK(() -> Double.valueOf(Integer.valueOf(st.ZI.stream().filter(su -> su.im()).findFirst().map(su2 -> Integer.valueOf(st.ZI.size() - st.ZI.indexOf((Object)su2) - 1)).orElse(Integer.valueOf(st.ZI.rS())))));

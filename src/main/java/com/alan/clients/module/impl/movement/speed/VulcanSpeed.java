@@ -18,10 +18,10 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
-import hackclient.rise.aik;
-import hackclient.rise.bb;
+import com.alan.clients.util.player.SlotUtil;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 import net.minecraft.block.BlockAir;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.potion.Potion;
@@ -435,22 +435,22 @@ public final class VulcanSpeed extends Mode<Speed> {
                 return;
             }
 
-            int i = aik.vx();
+            int i = SlotUtil.vx();
             if (i == -1) {
                 afi.b("This speed requires a block to be in your HotBar.");
             } else {
-                if (!bb.bad(false, true, false, false, false)) {
+                if (!BadPacketsComponent.bad(false, true, false, false, false)) {
                     SlotComponent slotcomponent = this.d(SlotComponent.class);
                     SlotComponent.setSlot(i);
                 }
 
                 int j = aEg.thePlayer.isPotionActive(Potion.moveSpeed) ? aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 : 0;
-                if (!bb.bad(false, true, false, false, false) && this.QN < aEg.thePlayer.ticksExisted) {
+                if (!BadPacketsComponent.bad(false, true, false, false, false) && this.QN < aEg.thePlayer.ticksExisted) {
                     this.QN = aEg.thePlayer.ticksExisted + 2;
                     BlockPos blockpos = new BlockPos(aEg.thePlayer).down();
                     int l = EnumFacing.UP.getIndex();
                     SlotComponent slotcomponent1 = this.d(SlotComponent.class);
-                    ahj.l(new C08PacketPlayerBlockPlacement(blockpos, l, SlotComponent.getItemStack(), 0.0F, 1.0F, 0.0F));
+                    PacketUtil.l(new C08PacketPlayerBlockPlacement(blockpos, l, SlotComponent.getItemStack(), 0.0F, 1.0F, 0.0F));
                 }
 
                 switch (aEg.thePlayer.tR) {

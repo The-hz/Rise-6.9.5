@@ -2,7 +2,7 @@ package com.alan.clients.value;
 
 import com.alan.clients.module.Module;
 import com.alan.clients.util.interfaces.Toggleable;
-import hackclient.rise.abl;
+import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
@@ -75,7 +75,7 @@ public abstract class Value<T> {
         this.aQO = (T)var1;
     }
 
-    public abl wl() {
+    public ValueComponent wl() {
         return null;
     }
 

@@ -14,7 +14,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
@@ -81,8 +81,8 @@ public final class MiniBloxSpeed extends Mode<Speed> {
                 double d4 = blockpos.getX() + 0;
                 double d5 = blockpos.getY() + 0;
                 double d6 = blockpos.getZ() + 0;
-                ahj.m(new C04PacketPlayerPosition(d4 + 0.5, d5, d6 + 0.5, aEg.thePlayer.onGround));
-                ahj.m(
+                PacketUtil.m(new C04PacketPlayerPosition(d4 + 0.5, d5, d6 + 0.5, aEg.thePlayer.onGround));
+                PacketUtil.m(
                     new C04PacketPlayerPosition(
                         aEg.thePlayer.posX + aEg.thePlayer.motionX,
                         aEg.thePlayer.posY + aEg.thePlayer.motionY,
@@ -91,7 +91,7 @@ public final class MiniBloxSpeed extends Mode<Speed> {
                     )
                 );
             } else {
-                ahj.m(new C04PacketPlayerPosition(d1 * 9.5, aEg.thePlayer.posY, d2 * 9.5, aEg.thePlayer.onGround));
+                PacketUtil.m(new C04PacketPlayerPosition(d1 * 9.5, aEg.thePlayer.posY, d2 * 9.5, aEg.thePlayer.onGround));
             }
         }
     };
@@ -109,8 +109,8 @@ public final class MiniBloxSpeed extends Mode<Speed> {
             double d0 = blockpos.getX() + 0;
             double d1 = blockpos.getY() + 0;
             double d2 = blockpos.getZ() + 0;
-            ahj.m(new C04PacketPlayerPosition(d0 + 0.5, d1, d2 + 0.5, aEg.thePlayer.onGround));
-            ahj.m(
+            PacketUtil.m(new C04PacketPlayerPosition(d0 + 0.5, d1, d2 + 0.5, aEg.thePlayer.onGround));
+            PacketUtil.m(
                 new C04PacketPlayerPosition(
                     aEg.thePlayer.posX + aEg.thePlayer.motionX,
                     aEg.thePlayer.posY + aEg.thePlayer.motionY,

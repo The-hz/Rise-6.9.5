@@ -17,15 +17,15 @@ import com.alan.clients.value.Value;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.cg;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
-import hackclient.rise.xg;
-import hackclient.rise.xh;
-import hackclient.rise.xi;
+import hackclient.rise.value.xg;
+import hackclient.rise.value.xh;
+import hackclient.rise.value.xi;
 import hackclient.rise.zc;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -71,7 +71,7 @@ public final class Interface extends Module {
     a aov = new a();
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> aMR.execute(() -> {
-        adv.c(new Color(0, 0, 0, this.aoc.wo() ? this.lC() : 150));
+        Themes.c(new Color(0, 0, 0, this.aoc.wo() ? this.lC() : 150));
         if (this.aov.T(15000L)) {
             this.lx();
             this.aov.aX();
@@ -129,8 +129,8 @@ public final class Interface extends Module {
                 if (!(Math.abs(zc.nr().getX() - zc.atg.x) > 0.5) && !(Math.abs(zc.nr().getY() - zc.atg.y) > 0.5) && (zc.ath == 0.0F || zc.ath == 10.0F)) {
                     zc.apP = zc.atg;
                 } else {
-                    zc.apP.x = ahg.m(zc.apP.x, zc.atg.x, 0.015F * (float)this.aon.aKx());
-                    zc.apP.y = ahg.m(zc.apP.y, zc.atg.y, 0.015F * (float)this.aon.aKx());
+                    zc.apP.x = MathUtil.m(zc.apP.x, zc.atg.x, 0.015F * (float)this.aon.aKx());
+                    zc.apP.y = MathUtil.m(zc.apP.y, zc.atg.y, 0.015F * (float)this.aon.aKx());
                 }
             }
         }

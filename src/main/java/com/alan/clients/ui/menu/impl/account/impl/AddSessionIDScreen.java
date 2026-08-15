@@ -8,9 +8,9 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import hackclient.rise.adh;
-import hackclient.rise.adm;
-import hackclient.rise.aeb;
+import com.alan.clients.ui.menu.component.button.MenuButton;
+import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
+import com.alan.clients.util.MouseUtil;
 import hackclient.rise.aen;
 import hackclient.rise.agc;
 import hackclient.rise.agl;
@@ -42,7 +42,7 @@ import org.apache.http.util.EntityUtils;
 
 public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
     private static final agc FONT_RENDERER = gb.MAIN.a(36, gd.BOLD);
-    private final adh[] menuButtons = new adh[4];
+    private final MenuButton[] menuButtons = new MenuButton[4];
     private static agm sessionBox;
     private static GuiScreen reference;
     private Animation animation;
@@ -110,10 +110,10 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
         float f = 296 / 2.0F;
         Vector2d vector2d = new Vector2d(this.width / 2.0F - short1 / 2.0F, this.height / 2.0F - 24.0F);
         sessionBox = new agm(vector2d.offset(short1 / 2, 8.0), gb.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Session- / Refresh-Token", short1);
-        this.menuButtons[0] = new adm(vector2d.x, vector2d.y, short1, b0, FOCUS_BOX, "");
-        this.menuButtons[1] = new adm(vector2d.x, vector2d.y + b0 + b1, f, b0, LOGIN, "Login");
-        this.menuButtons[2] = new adm(vector2d.x + f + b1, vector2d.y + b0 + b1, f, b0, CANCEL, "Cancel");
-        this.menuButtons[3] = new adm(vector2d.x, vector2d.y + 2 * (b0 + b1), short1, b0, PASTE_AND_LOGIN, "Paste and Log In");
+        this.menuButtons[0] = new MenuTextButton(vector2d.x, vector2d.y, short1, b0, FOCUS_BOX, "");
+        this.menuButtons[1] = new MenuTextButton(vector2d.x, vector2d.y + b0 + b1, f, b0, LOGIN, "Login");
+        this.menuButtons[2] = new MenuTextButton(vector2d.x + f + b1, vector2d.y + b0 + b1, f, b0, CANCEL, "Cancel");
+        this.menuButtons[3] = new MenuTextButton(vector2d.x, vector2d.y + 2 * (b0 + b1), short1, b0, PASTE_AND_LOGIN, "Paste and Log In");
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
         this.animation.R(-200.0);
     }
@@ -126,7 +126,7 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
             ScaledResolution scaledresolution = new ScaledResolution(aEg);
             RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK);
         });
-        adh[] aadh = this.menuButtons;
+        MenuButton[] aadh = this.menuButtons;
         int i = aadh.length;
 
         for (int j = 0; j < i; j++) {
@@ -143,8 +143,8 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
     public void mouseClicked(int var1, int var2, int var3) {
         sessionBox.click(var1, var2, var3);
 
-        for (adh adh : this.menuButtons) {
-            if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+        for (MenuButton adh : this.menuButtons) {
+            if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
                 adh.runAction();
                 break;
             }

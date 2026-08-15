@@ -3,6 +3,7 @@ package hackclient.rise;
 import com.alan.clients.component.Component;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
+import hackclient.rise.event.er;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;

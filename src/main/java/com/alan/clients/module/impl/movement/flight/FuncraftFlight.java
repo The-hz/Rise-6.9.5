@@ -9,7 +9,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 
 public final class FuncraftFlight extends Mode<Flight> {
@@ -29,7 +29,7 @@ public final class FuncraftFlight extends Mode<Flight> {
         if (this.vanillaKickBypass.wo() && this.hV > 125) {
             this.FX = -1;
             this.hV = 0;
-            ahj.m(new C04PacketPlayerPosition(aEg.thePlayer.posX + 5.0, aEg.thePlayer.posY + 1.0, aEg.thePlayer.posZ + 5.0, true));
+            PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX + 5.0, aEg.thePlayer.posY + 1.0, aEg.thePlayer.posZ + 5.0, true));
         } else {
             switch (this.FX) {
                 case -1:

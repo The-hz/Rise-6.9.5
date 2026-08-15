@@ -19,10 +19,10 @@ import com.alan.clients.util.vector.Vector2f;
 import hackclient.rise.aef;
 import hackclient.rise.ahz;
 import hackclient.rise.aih;
-import hackclient.rise.aiu;
+import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
-import hackclient.rise.bg;
-import hackclient.rise.bk;
+import com.alan.clients.component.impl.player.ItemDamageComponent;
+import com.alan.clients.component.impl.player.PacketlessDamageComponent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.inventory.GuiChest;
@@ -200,12 +200,12 @@ public class PlayerAPI extends ScriptEntityLiving {
     }
 
     public void itemDamage() {
-        bg.damage(true);
+        ItemDamageComponent.damage(true);
     }
 
     public void damage(boolean var1, float var2) {
         if (!var1) {
-            bk.setActive(var2);
+            PacketlessDamageComponent.setActive(var2);
         } else {
             ahz.ab(0.5);
         }
@@ -249,7 +249,7 @@ public class PlayerAPI extends ScriptEntityLiving {
     }
 
     public ScriptVector2f calculateRotations(ScriptVector3d var1) {
-        Vector2f vector2f = aiu.d(new aka(var1.getX(), var1.getY(), var1.getZ()));
+        Vector2f vector2f = RotationUtil.d(new aka(var1.getX(), var1.getY(), var1.getZ()));
         return new ScriptVector2f(vector2f.x, vector2f.y);
     }
 

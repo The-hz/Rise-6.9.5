@@ -1,12 +1,13 @@
 package hackclient.rise;
 
+import com.alan.clients.util.file.FileManager;
 import com.alan.clients.util.file.FileType;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class afv {
-    public static final File aHH = new File(afr.DIRECTORY, "alts");
+    public static final File aHH = new File(FileManager.DIRECTORY, "alts");
     private final List<ael> aHI = new ArrayList<>();
 
     public afv() {

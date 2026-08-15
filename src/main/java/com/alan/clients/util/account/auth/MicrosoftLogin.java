@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import hackclient.rise.akc;
+import com.alan.clients.util.web.Browser;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
@@ -81,7 +81,7 @@ public class MicrosoftLogin {
                 System.out.println("[DEBUG] Cookie->refresh got no code (HTTP " + httpsURLConnection.getResponseCode() + ", location=" + (string4 == null ? "null" : string4.substring(0, Math.min(80, string4.length()))) + ")");
                 return "";
             }
-            a a2 = gson.fromJson(akc.postExternal("https://login.live.com/oauth20_token.srf", "client_id=ba89e6e0-8490-4a26-8746-f389a0d3ccc7&code=" + string2 + "&client_secret=hlQ8Q~33jTRilP4yE-UtuOt9wG.ZFLqq6pErIa2B&grant_type=authorization_code&redirect_uri=http://localhost:8247", false), a.class);
+            a a2 = gson.fromJson(Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=ba89e6e0-8490-4a26-8746-f389a0d3ccc7&code=" + string2 + "&client_secret=hlQ8Q~33jTRilP4yE-UtuOt9wG.ZFLqq6pErIa2B&grant_type=authorization_code&redirect_uri=http://localhost:8247", false), a.class);
             if (a2 == null || a2.aEV == null || a2.aEV.isEmpty()) {
                 System.out.println("[DEBUG] Cookie->refresh code exchange returned no refresh_token");
                 return "";
@@ -116,11 +116,11 @@ public class MicrosoftLogin {
     }
 
     public static d login(String string) {
-        return MicrosoftLogin.loginWithMicrosoftAccessToken(gson.fromJson(akc.postExternal("https://login.live.com/oauth20_token.srf", "client_id=" + MicrosoftLogin.formValue(CLIENT_ID) + "&client_secret=" + MicrosoftLogin.formValue(CLIENT_SECRET) + "&refresh_token=" + MicrosoftLogin.formValue(string) + "&grant_type=refresh_token&redirect_uri=" + MicrosoftLogin.formValue("http://localhost:8247") + "&prompt=select_account", false), a.class), string);
+        return MicrosoftLogin.loginWithMicrosoftAccessToken(gson.fromJson(Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=" + MicrosoftLogin.formValue(CLIENT_ID) + "&client_secret=" + MicrosoftLogin.formValue(CLIENT_SECRET) + "&refresh_token=" + MicrosoftLogin.formValue(string) + "&grant_type=refresh_token&redirect_uri=" + MicrosoftLogin.formValue("http://localhost:8247") + "&prompt=select_account", false), a.class), string);
     }
 
     public static d loginMarketplaceRefreshToken(String string) {
-        return MicrosoftLogin.loginWithMicrosoftAccessToken(gson.fromJson(akc.postExternal("https://login.live.com/oauth20_token.srf", "client_id=00000000402B5328&grant_type=refresh_token&refresh_token=" + MicrosoftLogin.formValue(string) + "&scope=" + MicrosoftLogin.formValue("service::user.auth.xboxlive.com::MBI_SSL"), false), a.class), string);
+        return MicrosoftLogin.loginWithMicrosoftAccessToken(gson.fromJson(Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=00000000402B5328&grant_type=refresh_token&refresh_token=" + MicrosoftLogin.formValue(string) + "&scope=" + MicrosoftLogin.formValue("service::user.auth.xboxlive.com::MBI_SSL"), false), a.class), string);
     }
 
     private static d loginWithMicrosoftAccessToken(a a2, String string) {
@@ -137,15 +137,15 @@ public class MicrosoftLogin {
         if (!MicrosoftLogin.isUsable(g2)) {
             return new d();
         }
-        g g3 = gson.fromJson(akc.postExternal("https://xsts.auth.xboxlive.com/xsts/authorize", "{\"Properties\":{\"SandboxId\":\"RETAIL\",\"UserTokens\":[\"" + g2.aFa + "\"]},\"RelyingParty\":\"rp://api.minecraftservices.com/\",\"TokenType\":\"JWT\"}", true), g.class);
+        g g3 = gson.fromJson(Browser.postExternal("https://xsts.auth.xboxlive.com/xsts/authorize", "{\"Properties\":{\"SandboxId\":\"RETAIL\",\"UserTokens\":[\"" + g2.aFa + "\"]},\"RelyingParty\":\"rp://api.minecraftservices.com/\",\"TokenType\":\"JWT\"}", true), g.class);
         if (g3 == null) {
             return new d();
         }
-        e e2 = gson.fromJson(akc.postExternal("https://api.minecraftservices.com/authentication/login_with_xbox", "{\"identityToken\":\"XBL3.0 x=" + g2.aFb.aFc[0].aFd + ";" + g3.aFa + "\"}", true), e.class);
+        e e2 = gson.fromJson(Browser.postExternal("https://api.minecraftservices.com/authentication/login_with_xbox", "{\"identityToken\":\"XBL3.0 x=" + g2.aFb.aFc[0].aFd + ";" + g3.aFa + "\"}", true), e.class);
         if (e2 == null) {
             return new d();
         }
-        f f2 = gson.fromJson(akc.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e2.aEU), f.class);
+        f f2 = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e2.aEU), f.class);
         if (f2 == null) {
             return new d();
         }
@@ -162,7 +162,7 @@ public class MicrosoftLogin {
     }
 
     private static g authenticateXboxLive(String string) {
-        return gson.fromJson(akc.postExternal("https://user.auth.xboxlive.com/user/authenticate", "{\"Properties\":{\"AuthMethod\":\"RPS\",\"SiteName\":\"user.auth.xboxlive.com\",\"RpsTicket\":\"" + string + "\"},\"RelyingParty\":\"http://auth.xboxlive.com\",\"TokenType\":\"JWT\"}", true), g.class);
+        return gson.fromJson(Browser.postExternal("https://user.auth.xboxlive.com/user/authenticate", "{\"Properties\":{\"AuthMethod\":\"RPS\",\"SiteName\":\"user.auth.xboxlive.com\",\"RpsTicket\":\"" + string + "\"},\"RelyingParty\":\"http://auth.xboxlive.com\",\"TokenType\":\"JWT\"}", true), g.class);
     }
 
     private static boolean isUsable(g g2) {
@@ -232,7 +232,7 @@ public class MicrosoftLogin {
         }
 
         private void bk(String string) {
-            String string2 = akc.postExternal("https://login.live.com/oauth20_token.srf", "client_id=ba89e6e0-8490-4a26-8746-f389a0d3ccc7&code=" + string + "&client_secret=hlQ8Q~33jTRilP4yE-UtuOt9wG.ZFLqq6pErIa2B&grant_type=authorization_code&redirect_uri=http://localhost:8247", false);
+            String string2 = Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=ba89e6e0-8490-4a26-8746-f389a0d3ccc7&code=" + string + "&client_secret=hlQ8Q~33jTRilP4yE-UtuOt9wG.ZFLqq6pErIa2B&grant_type=authorization_code&redirect_uri=http://localhost:8247", false);
             a a2 = gson.fromJson(string2, a.class);
             if (a2 == null) {
                 callback.accept(null);

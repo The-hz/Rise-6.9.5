@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.motion.PostMotionEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.ahk;
 import hackclient.rise.bn;
 import hackclient.rise.bp;
@@ -488,7 +488,7 @@ public final class BlinkComponent extends Component {
         if (!var0.isEmpty()) {
             boolean flag = enabled;
             enabled = false;
-            var0.forEach(ahj::n);
+            var0.forEach(PacketUtil::n);
             enabled = flag;
         }
     }

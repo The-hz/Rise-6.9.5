@@ -1,11 +1,13 @@
 package hackclient.rise;
 
+import com.alan.clients.util.shader.base.RiseShaderProgram;
+import com.alan.clients.util.shader.base.ShaderUniforms;
 import java.awt.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 
 public final class ajp {
-    private final aiy aQq = new aiy("trirgq.glsl", "vertex.vsh");
+    private final RiseShaderProgram aQq = new RiseShaderProgram("trirgq.glsl", "vertex.vsh");
 
     public ajp() {
     }
@@ -27,19 +29,19 @@ public final class ajp {
     ) {
         int i = this.aQq.getProgramId();
         this.aQq.rt();
-        aja.uniform2f(i, "u_size", var3, var4);
-        aja.uniform1f(i, "u_radius", var5);
-        aja.uniform4f(i, "u_first_color", var6.getRed() / 255.0F, var6.getGreen() / 255.0F, var6.getBlue() / 255.0F, var6.getAlpha() / 255.0F);
-        aja.uniform4f(i, "u_second_color", var7.getRed() / 255.0F, var7.getGreen() / 255.0F, var7.getBlue() / 255.0F, var7.getAlpha() / 255.0F);
-        aja.uniform4f(i, "u_third_color", var8.getRed() / 255.0F, var8.getGreen() / 255.0F, var8.getBlue() / 255.0F, var8.getAlpha() / 255.0F);
-        aja.uniform1i(i, "u_direction", var9 ? 1 : 0);
-        aja.uniform1f(i, "u_time", (float)(System.currentTimeMillis() - Minecraft.getMinecraft().Bx()) / 1000.0F);
-        aja.uniform4f(i, "u_edges", var10 ? 1.0F : 0.0F, var11 ? 1.0F : 0.0F, var12 ? 1.0F : 0.0F, var13 ? 1.0F : 0.0F);
+        ShaderUniforms.uniform2f(i, "u_size", var3, var4);
+        ShaderUniforms.uniform1f(i, "u_radius", var5);
+        ShaderUniforms.uniform4f(i, "u_first_color", var6.getRed() / 255.0F, var6.getGreen() / 255.0F, var6.getBlue() / 255.0F, var6.getAlpha() / 255.0F);
+        ShaderUniforms.uniform4f(i, "u_second_color", var7.getRed() / 255.0F, var7.getGreen() / 255.0F, var7.getBlue() / 255.0F, var7.getAlpha() / 255.0F);
+        ShaderUniforms.uniform4f(i, "u_third_color", var8.getRed() / 255.0F, var8.getGreen() / 255.0F, var8.getBlue() / 255.0F, var8.getAlpha() / 255.0F);
+        ShaderUniforms.uniform1i(i, "u_direction", var9 ? 1 : 0);
+        ShaderUniforms.uniform1f(i, "u_time", (float)(System.currentTimeMillis() - Minecraft.getMinecraft().Bx()) / 1000.0F);
+        ShaderUniforms.uniform4f(i, "u_edges", var10 ? 1.0F : 0.0F, var11 ? 1.0F : 0.0F, var12 ? 1.0F : 0.0F, var13 ? 1.0F : 0.0F);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);
-        aiy.h(var1, var2, var3, var4);
+        RiseShaderProgram.h(var1, var2, var3, var4);
         GlStateManager.disableBlend();
-        aiy.stop();
+        RiseShaderProgram.stop();
     }
 
     public void draw(double var1, double var3, double var5, double var7, double var9, Color var11, Color var12, boolean var13) {

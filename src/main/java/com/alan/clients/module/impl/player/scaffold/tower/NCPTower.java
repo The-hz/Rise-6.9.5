@@ -5,7 +5,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 
@@ -13,7 +13,7 @@ public class NCPTower extends Mode<Scaffold> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
         if (aEg.gameSettings.keyBindJump.isKeyDown() && aih.ay(2)) {
-            ahj.m(new C08PacketPlayerBlockPlacement(null));
+            PacketUtil.m(new C08PacketPlayerBlockPlacement(null));
             if (aEg.thePlayer.posY % 1.0 <= 0.00153598) {
                 aEg.thePlayer.setPosition(aEg.thePlayer.posX, Math.floor(aEg.thePlayer.posY), aEg.thePlayer.posZ);
                 aEg.thePlayer.motionY = 0.42F;

@@ -17,7 +17,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
-import hackclient.rise.cy;
+import hackclient.rise.component.cy;
 import hackclient.rise.rb;
 import hackclient.rise.rc;
 import net.minecraft.block.BlockChest;

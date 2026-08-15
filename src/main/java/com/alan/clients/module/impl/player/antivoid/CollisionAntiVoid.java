@@ -7,13 +7,13 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.aih;
-import hackclient.rise.bd;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
 
 public class CollisionAntiVoid extends Mode<AntiVoid> {
     private final NumberValue distance = new NumberValue("Distance", this, 5, 0, 10, 1);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
-        if (bd.cY > this.distance.wo().intValue() && !aih.vh() && aEg.thePlayer.posY + aEg.thePlayer.motionY < Math.floor(aEg.thePlayer.posY)) {
+        if (FallDistanceComponent.cY > this.distance.wo().intValue() && !aih.vh() && aEg.thePlayer.posY + aEg.thePlayer.motionY < Math.floor(aEg.thePlayer.posY)) {
             aEg.thePlayer.motionY = Math.floor(aEg.thePlayer.posY) - aEg.thePlayer.posY;
             if (aEg.thePlayer.motionY == 0.0) {
                 aEg.thePlayer.onGround = true;

@@ -5,16 +5,16 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.cf;
+import com.alan.clients.component.impl.render.ESPComponent;
 import hackclient.rise.cn;
-import hackclient.rise.cr;
+import hackclient.rise.component.esp.cr;
 import java.awt.Color;
 
 public final class GlowESP extends Mode<ESP> {
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         Color color = this.rz().rA();
-        cf.a(new cr(new cn(color, color, color)));
+        ESPComponent.a(new cr(new cn(color, color, color)));
     };
 
     public GlowESP(String var1, ESP var2) {

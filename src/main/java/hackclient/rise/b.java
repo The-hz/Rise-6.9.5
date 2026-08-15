@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.anticheat.alert.AlertManager;
+import com.alan.clients.anticheat.check.manager.CheckManager;
 import com.alan.clients.anticheat.data.PlayerData;
 import java.util.Map;
 import java.util.UUID;
@@ -14,7 +15,7 @@ public final class b {
     private final AlertManager O = new AlertManager();
 
     public b() {
-        l.setup();
+        CheckManager.setup();
     }
 
     public void F() {

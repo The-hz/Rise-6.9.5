@@ -10,10 +10,10 @@ import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import hackclient.rise.afi;
-import hackclient.rise.bc;
-import hackclient.rise.bd;
-import hackclient.rise.bg;
-import hackclient.rise.ci;
+import hackclient.rise.component.bc;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
+import com.alan.clients.component.impl.player.ItemDamageComponent;
+import hackclient.rise.component.ci;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Vec3;
@@ -43,7 +43,7 @@ public class BloxdLongJump extends Mode<LongJump> {
 
         if (!aEg.thePlayer.onGround) {
             float f;
-            int i = (f = bd.cY - 1.0F) == 0.0F ? 0 : (f < 0.0F ? -1 : 1);
+            int i = (f = FallDistanceComponent.cY - 1.0F) == 0.0F ? 0 : (f < 0.0F ? -1 : 1);
         }
     };
     @EventLink
@@ -55,7 +55,7 @@ public class BloxdLongJump extends Mode<LongJump> {
         aEg.thePlayer.cameraYaw = 0.1F;
         if (!aEg.thePlayer.onGround) {
             float f;
-            int i = (f = bd.cY - 1.0F) == 0.0F ? 0 : (f < 0.0F ? -1 : 1);
+            int i = (f = FallDistanceComponent.cY - 1.0F) == 0.0F ? 0 : (f < 0.0F ? -1 : 1);
         }
     };
 
@@ -79,7 +79,7 @@ public class BloxdLongJump extends Mode<LongJump> {
                 afi.b("you need a projectile in your hotbar for this");
             }
 
-            bg.damage(false);
+            ItemDamageComponent.damage(false);
             this.LA = 0;
         }
     }

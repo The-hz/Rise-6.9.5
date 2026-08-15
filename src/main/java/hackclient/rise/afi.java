@@ -2,6 +2,7 @@ package hackclient.rise;
 
 import com.alan.clients.Client;
 import com.alan.clients.util.interfaces.InstanceAccess;
+import com.alan.clients.util.packet.PacketUtil;
 import lombok.Generated;
 import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.util.s;
@@ -27,7 +28,7 @@ public final class afi implements InstanceAccess {
 
     public static void send(Object var0) {
         if (aEg.thePlayer != null) {
-            ahj.l(new C01PacketChatMessage(var0.toString()));
+            PacketUtil.l(new C01PacketChatMessage(var0.toString()));
         }
     }
 

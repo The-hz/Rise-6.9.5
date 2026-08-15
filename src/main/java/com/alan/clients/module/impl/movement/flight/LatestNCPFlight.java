@@ -11,7 +11,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 import net.minecraft.util.AxisAlignedBB;
@@ -42,15 +42,15 @@ public class LatestNCPFlight extends Mode<Flight> {
                 }
 
                 this.Gv = true;
-                ahj.l(
+                PacketUtil.l(
                     new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false)
                 );
-                ahj.l(
+                PacketUtil.l(
                     new C06PacketPlayerPosLook(
                         aEg.thePlayer.posX, aEg.thePlayer.posY - 0.1, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false
                     )
                 );
-                ahj.l(
+                PacketUtil.l(
                     new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false)
                 );
                 this.ys = true;

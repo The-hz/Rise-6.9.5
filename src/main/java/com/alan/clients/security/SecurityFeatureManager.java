@@ -9,14 +9,14 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import hackclient.rise.aha;
 import hackclient.rise.zh;
-import hackclient.rise.zi;
-import hackclient.rise.zj;
-import hackclient.rise.zk;
-import hackclient.rise.zl;
-import hackclient.rise.zm;
-import hackclient.rise.zn;
-import hackclient.rise.zo;
-import hackclient.rise.zp;
+import hackclient.rise.security.zi;
+import com.alan.clients.packetlog.impl.HostsFileCheck;
+import hackclient.rise.security.zk;
+import hackclient.rise.security.zl;
+import hackclient.rise.security.zm;
+import hackclient.rise.security.zn;
+import hackclient.rise.security.zo;
+import hackclient.rise.security.zp;
 import hackclient.rise.zq;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -184,7 +184,7 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
         if (!this.nH()) {
             this.avw = false;
         } else {
-            this.a(new zj());
+            this.a(new HostsFileCheck());
             this.a(new zo());
             this.b(new zl());
             this.b(new zk());

@@ -12,7 +12,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.ahz;
 import hackclient.rise.aia;
-import hackclient.rise.bb;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
@@ -38,7 +38,7 @@ public class CubeCraftFlight extends Mode<Flight> {
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (!this.sendFlying.wo()) {
             Packet packet = var1x.dq();
-            if (packet instanceof C03PacketPlayer && !((C03PacketPlayer)packet).isMoving() && !bb.aW()) {
+            if (packet instanceof C03PacketPlayer && !((C03PacketPlayer)packet).isMoving() && !BadPacketsComponent.aW()) {
                 var1x.setCancelled();
             }
         }

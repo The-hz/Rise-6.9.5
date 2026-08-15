@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.vector.Vector2d;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.xl;
 import java.awt.Color;
 import java.util.Iterator;
@@ -34,9 +34,9 @@ public final class JumpCircles extends Module {
     @EventLink
     private final Listener<PostMotionEvent> onPostMotion = var1 -> {
         if (aEg.thePlayer.onGround && this.aoA) {
-            double d0 = ahg.m(aEg.thePlayer.prevPosX, aEg.thePlayer.posX, aEg.timer.bWm);
-            double d1 = ahg.m(aEg.thePlayer.prevPosY, aEg.thePlayer.posY, aEg.timer.bWm);
-            double d2 = ahg.m(aEg.thePlayer.prevPosZ, aEg.thePlayer.posZ, aEg.timer.bWm);
+            double d0 = MathUtil.m(aEg.thePlayer.prevPosX, aEg.thePlayer.posX, aEg.timer.bWm);
+            double d1 = MathUtil.m(aEg.thePlayer.prevPosY, aEg.thePlayer.posY, aEg.timer.bWm);
+            double d2 = MathUtil.m(aEg.thePlayer.prevPosZ, aEg.thePlayer.posZ, aEg.timer.bWm);
             this.aoy.add(new xl(new Vec3(d0, d1, d2), 0.0, 255.0F));
             this.aoA = false;
         } else if (!aEg.thePlayer.onGround) {

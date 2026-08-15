@@ -9,7 +9,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.il;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -60,7 +60,7 @@ public class DelayVelocity extends Mode<Velocity> {
                 this.to = true;
 
                 try {
-                    ahj.p(packet);
+                    PacketUtil.p(packet);
                 } finally {
                     this.to = false;
                 }
@@ -83,7 +83,7 @@ public class DelayVelocity extends Mode<Velocity> {
                 Iterator iterator = this.tn.iterator();
 
                 while (iterator.hasNext()) {
-                    ahj.p(((il)iterator.next()).tr);
+                    PacketUtil.p(((il)iterator.next()).tr);
                 }
             } finally {
                 this.to = false;

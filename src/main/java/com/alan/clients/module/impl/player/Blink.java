@@ -12,7 +12,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.BoundsNumberValue;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 
 @ModuleInfo(aliases = "module.player.blink.name", description = "module.player.blink.description", category = Category.PLAYER)
@@ -49,7 +49,7 @@ public class Blink extends Module {
 
     public void gi() {
         if (aEg.thePlayer != null) {
-            this.next = aEg.thePlayer.ticksExisted + (int)ahg.l(this.delay.wo().intValue(), this.delay.wA().intValue());
+            this.next = aEg.thePlayer.ticksExisted + (int)MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue());
         }
     }
 

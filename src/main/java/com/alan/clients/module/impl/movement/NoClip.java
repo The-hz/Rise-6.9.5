@@ -15,7 +15,7 @@ import com.alan.clients.newevent.impl.other.BlockAABBEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import hackclient.rise.aih;
-import hackclient.rise.aik;
+import com.alan.clients.util.player.SlotUtil;
 import net.minecraft.block.BlockAir;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
@@ -46,7 +46,7 @@ public class NoClip extends Module {
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         aEg.thePlayer.noClip = true;
         if (this.block.wo()) {
-            int i = aik.vx();
+            int i = SlotUtil.vx();
             if (i == -1 || aih.vk()) {
                 return;
             }

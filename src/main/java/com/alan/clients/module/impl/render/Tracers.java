@@ -9,7 +9,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.util.render.RenderUtil;
 import hackclient.rise.aip;
-import hackclient.rise.bv;
+import hackclient.rise.component.bv;
 import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;

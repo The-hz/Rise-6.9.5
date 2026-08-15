@@ -11,7 +11,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aih;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
@@ -45,7 +45,7 @@ public class MineMenClubSpeed extends Mode<Speed> {
                 MoveUtil.strafe();
             }
 
-            if (ahg.n(d0, d1) < 90.0) {
+            if (MathUtil.n(d0, d1) < 90.0) {
                 MoveUtil.strafe();
             } else if (this.allowMoreStrafing.wo()) {
                 MoveUtil.strafe(MoveUtil.speed() * 0.7);

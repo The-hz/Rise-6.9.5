@@ -14,15 +14,15 @@ import com.alan.clients.value.impl.BoundsNumberValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.ahg;
-import hackclient.rise.ahj;
-import hackclient.rise.aie;
+import com.alan.clients.util.math.MathUtil;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.util.player.ItemUtil;
 import hackclient.rise.aih;
-import hackclient.rise.bb;
-import hackclient.rise.bt;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
+import com.alan.clients.component.impl.player.SelectorDetectionComponent;
 import hackclient.rise.en;
 import hackclient.rise.tp;
-import hackclient.rise.tq;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.tr;
 import hackclient.rise.ts;
 import hackclient.rise.tt;
@@ -115,8 +115,8 @@ public class Manager extends Module {
                     this.adj--;
                 }
 
-                if (this.adu && aEg.currentScreen == null && this.ads && !bb.bad(false, false, false, false, true) && (this.adj == 0 || this.adq >= 10)) {
-                    ahj.l(new q(aEg.thePlayer.inventoryContainer.windowId));
+                if (this.adu && aEg.currentScreen == null && this.ads && !BadPacketsComponent.bad(false, false, false, false, true) && (this.adj == 0 || this.adq >= 10)) {
+                    PacketUtil.l(new q(aEg.thePlayer.inventoryContainer.windowId));
                     this.jX();
                     this.adu = false;
                     this.ads = false;
@@ -390,7 +390,7 @@ public class Manager extends Module {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
             if (itemstack != null) {
                 Item item = itemstack.getItem();
-                if (!aie.u(itemstack)) {
+                if (!ItemUtil.u(itemstack)) {
                     tr.aef.add(i);
                 } else {
                     if (item instanceof ItemBlock) {
@@ -792,7 +792,7 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean a(tq var1, int var2) {
+    private boolean a(ColorUtil var1, int var2) {
         ArrayList arraylist = new ArrayList();
         return var1.gather(arraylist) > var2;
     }
@@ -986,7 +986,7 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean b(tq var1, int var2) {
+    private boolean b(ColorUtil var1, int var2) {
         ArrayList arraylist = new ArrayList();
         int i = var1.gather(arraylist);
         if (i <= var2) {
@@ -1019,7 +1019,7 @@ public class Manager extends Module {
     private int jS() {
         for (int i = 0; i <= 39; i++) {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
-            if (itemstack != null && !aie.u(itemstack)) {
+            if (itemstack != null && !ItemUtil.u(itemstack)) {
                 return i;
             }
         }
@@ -1098,8 +1098,8 @@ public class Manager extends Module {
                 this.adx = true;
                 this.ady = 0;
             } else {
-                if (this.jU() && !this.ads && aEg.currentScreen == null && !bb.bad(false, false, false, false, true)) {
-                    ahj.l(new C16PacketClientStatus(EnumState.OPEN_INVENTORY_ACHIEVEMENT));
+                if (this.jU() && !this.ads && aEg.currentScreen == null && !BadPacketsComponent.bad(false, false, false, false, true)) {
+                    PacketUtil.l(new C16PacketClientStatus(EnumState.OPEN_INVENTORY_ACHIEVEMENT));
                     this.jX();
                     this.ads = true;
                     this.adx = true;
@@ -1112,7 +1112,7 @@ public class Manager extends Module {
     private void u(boolean var1) {
         if (this.adx) {
             if (this.ads) {
-                if (var1 && aEg.currentScreen == null && !bb.bad(false, false, false, false, true)) {
+                if (var1 && aEg.currentScreen == null && !BadPacketsComponent.bad(false, false, false, false, true)) {
                     this.ads = false;
                 } else {
                     this.adu = true;
@@ -1241,7 +1241,7 @@ public class Manager extends Module {
     }
 
     private void jZ() {
-        this.nextClick = Math.round(ahg.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
+        this.nextClick = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
         this.ado.aX();
         this.adr = true;
         this.adz = 0;
@@ -1253,7 +1253,7 @@ public class Manager extends Module {
         }
 
         boolean flag = var2 ? !this.dropCustomItems.wo() : !this.useCustomItems.wo();
-        return !bt.a(var1, flag);
+        return !SelectorDetectionComponent.a(var1, flag);
     }
 
     private boolean f(int var1, boolean var2) {

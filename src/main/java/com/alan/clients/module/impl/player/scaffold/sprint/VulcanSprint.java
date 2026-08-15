@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.client.C0BPacketEntityAction.Action;
@@ -36,7 +36,7 @@ public class VulcanSprint extends Mode<Scaffold> {
         this.ajr++;
         switch (this.dm) {
             case 1:
-                ahj.l(new C0BPacketEntityAction(aEg.thePlayer, Action.START_SNEAKING));
+                PacketUtil.l(new C0BPacketEntityAction(aEg.thePlayer, Action.START_SNEAKING));
                 break;
             case 10:
                 this.dm = 0;
@@ -57,7 +57,7 @@ public class VulcanSprint extends Mode<Scaffold> {
     @Override
     public void onDisable() {
         if (this.dm == 1) {
-            ahj.l(new C0BPacketEntityAction(aEg.thePlayer, Action.STOP_SNEAKING));
+            PacketUtil.l(new C0BPacketEntityAction(aEg.thePlayer, Action.STOP_SNEAKING));
         }
     }
 }

@@ -7,7 +7,7 @@ import com.alan.clients.newevent.impl.other.MoveEvent;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2f;
 import hackclient.rise.abs;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aih;
 import hackclient.rise.aka;
 import java.util.Arrays;
@@ -426,7 +426,7 @@ public final class MoveUtil implements InstanceAccess {
                 for (float f6 = -1.0F; f6 <= 1.0F; f6++) {
                     if (f6 != 0.0F || f5 != 0.0F) {
                         double d1 = MathHelper.wrapAngleTo180_double(Math.toDegrees(direction(var1, f5, f6)));
-                        double d2 = ahg.n(d0, d1);
+                        double d2 = MathUtil.n(d0, d1);
                         if (d2 < f4) {
                             f4 = (float)d2;
                             f2 = f5;

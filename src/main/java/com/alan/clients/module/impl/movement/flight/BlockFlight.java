@@ -9,9 +9,9 @@ import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
-import hackclient.rise.aik;
+import com.alan.clients.util.player.SlotUtil;
 import net.minecraft.block.BlockAir;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.network.play.client.m;
@@ -23,7 +23,7 @@ public class BlockFlight extends Mode<Flight> {
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         SlotComponent slotcomponent = this.d(SlotComponent.class);
-        SlotComponent.setSlot(aik.vx());
+        SlotComponent.setSlot(SlotUtil.vx());
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
@@ -42,7 +42,7 @@ public class BlockFlight extends Mode<Flight> {
         if (SlotComponent.getItemStack() != null) {
             slotcomponent = this.d(SlotComponent.class);
             if (SlotComponent.getItemStack().getItem() instanceof ItemBlock && aih.p(0.0, -1.0, 0.0) instanceof BlockAir) {
-                ahj.l(new m());
+                PacketUtil.l(new m());
                 aEg.playerController
                     .onPlayerRightClick(
                         aEg.thePlayer,

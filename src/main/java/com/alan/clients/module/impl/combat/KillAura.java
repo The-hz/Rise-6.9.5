@@ -56,20 +56,20 @@ import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import hackclient.rise.adz;
 import hackclient.rise.aef;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.ahm;
 import hackclient.rise.aih;
-import hackclient.rise.aiu;
+import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
-import hackclient.rise.bb;
-import hackclient.rise.bc;
-import hackclient.rise.be;
-import hackclient.rise.bv;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
+import hackclient.rise.component.bc;
+import com.alan.clients.component.impl.player.GUIDetectionComponent;
+import hackclient.rise.component.bv;
 import hackclient.rise.bx;
-import hackclient.rise.cf;
-import hackclient.rise.co;
-import hackclient.rise.cp;
-import hackclient.rise.ct;
+import com.alan.clients.component.impl.render.ESPComponent;
+import hackclient.rise.component.esp.co;
+import hackclient.rise.component.esp.cp;
+import hackclient.rise.component.esp.ct;
 import hackclient.rise.ea;
 import hackclient.rise.en;
 import hackclient.rise.gt;
@@ -488,9 +488,9 @@ public class KillAura extends Module {
       if ((AxisAlignedBB)var37 != null && !((AxisAlignedBB)var37).hasNaN()) {
          var44 = this.en();
          var37 = ((AxisAlignedBB)var37).expand(var44, var44, var44);
-         var46 = aiu.a(var1, (AxisAlignedBB)var37, true, var2, var4, var44);
+         var46 = RotationUtil.a(var1, (AxisAlignedBB)var37, true, var2, var4, var44);
       } else {
-         var46 = aiu.calculate(var1, true, var2);
+         var46 = RotationUtil.calculate(var1, true, var2);
       }
 
       this.mG = (Vector2f)var46;
@@ -597,7 +597,7 @@ public class KillAura extends Module {
          this.ot--;
          this.ok *= 0.42F;
          this.ol *= 0.42F;
-         return aiu.applySensitivityPatch(new Vector2f(((Vector2f)var147).x, ((Vector2f)var147).y), (Vector2f)var147);
+         return RotationUtil.applySensitivityPatch(new Vector2f(((Vector2f)var147).x, ((Vector2f)var147).y), (Vector2f)var147);
       }
       if (this.ot > 0) {
          this.ot--;
@@ -606,7 +606,7 @@ public class KillAura extends Module {
       if (var160 < 0.001F) {
          this.ok *= 0.6F;
          this.ol *= 0.6F;
-         return aiu.applySensitivityPatch(new Vector2f(((Vector2f)var147).x, MathHelper.clamp_float(((Vector2f)var147).y, -90.0F, 90.0F)), (Vector2f)var147);
+         return RotationUtil.applySensitivityPatch(new Vector2f(((Vector2f)var147).x, MathHelper.clamp_float(((Vector2f)var147).y, -90.0F, 90.0F)), (Vector2f)var147);
       }
       var204 = Math.min(this.advancedWind.wo().floatValue(), var160);
       if (var160 >= var154) {
@@ -734,7 +734,7 @@ public class KillAura extends Module {
          }
       }
 
-      return aiu.applySensitivityPatch(new Vector2f(var177, var214), (Vector2f)var147);
+      return RotationUtil.applySensitivityPatch(new Vector2f(var177, var214), (Vector2f)var147);
    }
 
    public void eW() {
@@ -1040,7 +1040,7 @@ public class KillAura extends Module {
          Object var168 = null;
          if (!this.oJ) {
             label122: {
-               this.nN.forEach(ahj::m);
+               this.nN.forEach(PacketUtil::m);
                this.nN.clear();
                this.oa++;
                SlotComponent var10000 = this.d(SlotComponent.class);
@@ -1054,7 +1054,7 @@ public class KillAura extends Module {
                nQ = false;
             }
 
-            if (!be.inGUI()) {
+            if (!GUIDetectionComponent.inGUI()) {
                if (this.jE == null || aEg.thePlayer.isDead || this.e(Scaffold.class).isEnabled()) {
                   if (this.eA()) {
                      this.q(true);
@@ -1063,10 +1063,10 @@ public class KillAura extends Module {
                         if (this.ez()) {
                            this.mz = true;
                         }
-                     } else if (!bb.aW()) {
+                     } else if (!BadPacketsComponent.aW()) {
                         this.p(false);
                      }
-                  } else if (!bb.aW()) {
+                  } else if (!BadPacketsComponent.aW()) {
                      int bCP2 = aEg.playerController.bCP;
 
                      do {
@@ -1123,7 +1123,7 @@ public class KillAura extends Module {
 
                         switch (var117_hi) {
                            case 0:
-                              cf.a(new ct((EntityLivingBase)var136, (hackclient.rise.cn)var144));
+                              ESPComponent.a(new ct((EntityLivingBase)var136, (hackclient.rise.cn)var144));
                               break;
                            case 1:
                               var160 = this.boxMode.wo().getName();
@@ -1142,10 +1142,10 @@ public class KillAura extends Module {
 
                               switch (var152_hi) {
                                  case 0:
-                                    cf.a(new cp((EntityLivingBase)var136, (hackclient.rise.cn)var144));
+                                    ESPComponent.a(new cp((EntityLivingBase)var136, (hackclient.rise.cn)var144));
                                     break;
                                  case 1:
-                                    cf.a(new co((EntityLivingBase)var136, (hackclient.rise.cn)var144));
+                                    ESPComponent.a(new co((EntityLivingBase)var136, (hackclient.rise.cn)var144));
                               }
                         }
                      }
@@ -1218,7 +1218,7 @@ public class KillAura extends Module {
                   }
 
                   aEg.entityRenderer.getMouseOver(1.0F);
-                  nR = !bb.bad(false, false, false, true, true);
+                  nR = !BadPacketsComponent.bad(false, false, false, true, true);
                   if (aEg.thePlayer.getHealth() <= 0.0 && this.autoDisable.wo()) {
                      this.toggle();
                   }
@@ -1238,7 +1238,7 @@ public class KillAura extends Module {
                         int jJ2 = (Manager)var220 != null && ((Manager)var220).isEnabled() && ((Manager)var220).jJ() ? 1 : 0;
                         int jJ3 = (OldManager)var249 != null && ((OldManager)var249).isEnabled() && ((OldManager)var249).jJ() ? 1 : 0;
                         int enabled = (Stealer)var221 != null && ((Stealer)var221).isEnabled() && aEg.currentScreen instanceof GuiChest ? 1 : 0;
-                        int notFlag = !be.inGUI() && !aEg.gameSettings.cgI.isKeyDown() && !bb.a(true, false, false, false, true, false) && jJ3 == 0 && enabled == 0 ? 0 : 1;
+                        int notFlag = !GUIDetectionComponent.inGUI() && !aEg.gameSettings.cgI.isKeyDown() && !BadPacketsComponent.a(true, false, false, false, true, false) && jJ3 == 0 && enabled == 0 ? 0 : 1;
                         if (aEg.thePlayer.ticksExisted % 20 == 0 && !this.lV.wo().getName().equals("Watchdog 1.8")) {
                            this.nX = (int)(this.rotationRange.wo().doubleValue() + Math.random() * 0.5);
                         }
@@ -1251,7 +1251,7 @@ public class KillAura extends Module {
                            this.nX = (int)(this.rotationRange.wo().doubleValue() + Math.random() * 0.5);
                         }
 
-                        if (!be.inGUI()) {
+                        if (!GUIDetectionComponent.inGUI()) {
                            this.ei();
                            if (this.nV.isEmpty()) {
                               this.jE = null;
@@ -1578,7 +1578,7 @@ public class KillAura extends Module {
             }
 
             if ((EntityLivingBase)var127 != null) {
-               var145 = aiu.y((EntityLivingBase)var127);
+               var145 = RotationUtil.y((EntityLivingBase)var127);
                var157 = MathHelper.wrapAngleTo180_float(((Vector2f)var145).x - aEg.thePlayer.pl);
                var183 = var157;
                if (this.jE != null && !this.nV.isEmpty()) {
@@ -1992,9 +1992,9 @@ public class KillAura extends Module {
             break;
          case 3:
             SlotComponent var536 = this.d(SlotComponent.class);
-            ahj.l(new l(SlotComponent.bQ() % 8 + 1));
+            PacketUtil.l(new l(SlotComponent.bQ() % 8 + 1));
             var536 = this.d(SlotComponent.class);
-            ahj.l(new l(SlotComponent.bQ()));
+            PacketUtil.l(new l(SlotComponent.bQ()));
             this.block(false, false);
             break;
          case 4:
@@ -2012,7 +2012,7 @@ public class KillAura extends Module {
                nQ = false;
             }
 
-            if (!bb.a(false, false, false, false, true, true)) {
+            if (!BadPacketsComponent.a(false, false, false, false, true, true)) {
                nR = true;
             } else {
                nR = false;
@@ -2021,18 +2021,18 @@ public class KillAura extends Module {
          case 5:
             if (nQ) {
                SlotComponent var534 = this.d(SlotComponent.class);
-               ahj.l(new l(SlotComponent.bQ() % 8 + 1));
+               PacketUtil.l(new l(SlotComponent.bQ() % 8 + 1));
                var534 = this.d(SlotComponent.class);
-               ahj.l(new l(SlotComponent.bQ()));
+               PacketUtil.l(new l(SlotComponent.bQ()));
                nQ = false;
             }
             break;
          case 6:
             if (aEg.thePlayer.isUsingItem()) {
                SlotComponent var10002 = this.d(SlotComponent.class);
-               ahj.l(new l(SlotComponent.bQ() % 8 + 1));
+               PacketUtil.l(new l(SlotComponent.bQ() % 8 + 1));
                var10002 = this.d(SlotComponent.class);
-               ahj.l(new l(SlotComponent.bQ()));
+               PacketUtil.l(new l(SlotComponent.bQ()));
             }
             break;
          case 7:
@@ -2159,7 +2159,7 @@ public class KillAura extends Module {
                   return;
             }
          case 9:
-            nR = this.eK() && !bb.bad(false, false, false, true, true) && !ahm.vn() || this.eK() && !bb.bad(false, false, false, true, true) && Math.random() < 0.6;
+            nR = this.eK() && !BadPacketsComponent.bad(false, false, false, true, true) && !ahm.vn() || this.eK() && !BadPacketsComponent.bad(false, false, false, true, true) && Math.random() < 0.6;
             break;
          case 10:
             BlinkComponent.bf();
@@ -2235,7 +2235,7 @@ public class KillAura extends Module {
       this.oH = -1;
       this.oJ = false;
       this.mz = false;
-      this.nN.forEach(ahj::m);
+      this.nN.forEach(PacketUtil::m);
       this.nN.clear();
       bc.dispatch();
       this.jE = null;
@@ -2250,7 +2250,7 @@ public class KillAura extends Module {
       if (this.eA()) {
          this.q(true);
       } else if (this.lV.wo().getName().equals("Watchdog 1.12")) {
-         if (!bb.aW()) {
+         if (!BadPacketsComponent.aW()) {
             int bCP2 = aEg.playerController.bCP;
 
             do {
@@ -2267,7 +2267,7 @@ public class KillAura extends Module {
          }
       } else if (this.lV.wo().getName().equals("Watchdog") && !this.mz && !SlotComponent.dj && nQ) {
          this.ez();
-      } else if (!bb.aW()) {
+      } else if (!BadPacketsComponent.aW()) {
          this.p(false);
       }
 
@@ -2482,9 +2482,9 @@ public class KillAura extends Module {
 
          var103 = (AxisAlignedBB)var95;
          var84 = new Vec3(this.oq.x, this.oq.y, this.oq.z);
-         return aiu.h(aiu.a(this.jE, (AxisAlignedBB)var103, (Vec3)var84, this.range.wo().doubleValue(), this.em(), this.en()));
+         return RotationUtil.h(RotationUtil.a(this.jE, (AxisAlignedBB)var103, (Vec3)var84, this.range.wo().doubleValue(), this.em(), this.en()));
       }
-      return aiu.y(this.jE);
+      return RotationUtil.y(this.jE);
    }
 
    public void b(Vector2f var1, double var2) {
@@ -2723,7 +2723,7 @@ public class KillAura extends Module {
                   int equals2 = this.rotationMode.wo().getName().equals("Grim") && this.nt != null ? 1 : 0;
                   if (equals2 != 0) {
                      var258 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.nt.getX() - aEg.thePlayer.pl);
-                     ahj.l(
+                     PacketUtil.l(
                         new C06PacketPlayerPosLook(
                            aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, (Float)var258, this.nt.getY(), aEg.thePlayer.onGround
                         )
@@ -2786,7 +2786,7 @@ public class KillAura extends Module {
                   }
 
                   if (equals2 != 0) {
-                     ahj.l(
+                     PacketUtil.l(
                         new C06PacketPlayerPosLook(
                            aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, aEg.thePlayer.onGround
                         )
@@ -2817,7 +2817,7 @@ public class KillAura extends Module {
                   var361 = this.a((Vector2f)var355, (Double)var363);
                   if (equals3 != 0) {
                      var304 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.nt.getX() - aEg.thePlayer.pl);
-                     ahj.l(
+                     PacketUtil.l(
                         new C06PacketPlayerPosLook(
                            aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, (Float)var304, this.nt.getY(), aEg.thePlayer.onGround
                         )
@@ -2903,7 +2903,7 @@ public class KillAura extends Module {
                   }
 
                   if (equals3 != 0) {
-                     ahj.l(
+                     PacketUtil.l(
                         new C06PacketPlayerPosLook(
                            aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, aEg.thePlayer.onGround
                         )
@@ -3037,7 +3037,7 @@ public class KillAura extends Module {
          }
 
          SlotComponent var10002 = this.d(SlotComponent.class);
-         ahj.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+         PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
          nQ = true;
       }
    }
@@ -3110,7 +3110,7 @@ public class KillAura extends Module {
          case 2:
             this.nY++;
             if (this.nY > 0
-               && !bb.a((-9 - 4 ^ -13) != 0, true, false, false, false, true)
+               && !BadPacketsComponent.a((-9 - 4 ^ -13) != 0, true, false, false, false, true)
                && !this.e(LongJump.class).isEnabled()
                && !SlotComponent.dj
                && (aEg.thePlayer.ticksExisted % 2 == 0 || !this.oldPredictionKeepSprint.wo() || aEg.thePlayer.ae < 7 && !this.eZ())) {
@@ -3461,11 +3461,11 @@ public class KillAura extends Module {
                )
             || !this.newYouNeedThisToggledOnCurreFake.wo() && this.oldPredictionKeepSprint.wo() && (aEg.thePlayer.ae >= 7 || this.eZ()) && var1 != null) {
             aEg.playerController.syncCurrentPlayItem();
-            ahj.l(new C02PacketUseEntity((EntityLivingBase)var79, Action.ATTACK));
+            PacketUtil.l(new C02PacketUseEntity((EntityLivingBase)var79, Action.ATTACK));
             if (this.eC() && this.eX()) {
                var66 = this.k((EntityLivingBase)var79);
-               ahj.l(new C02PacketUseEntity((EntityLivingBase)var79, (Vec3)var66));
-               ahj.l(new C02PacketUseEntity((EntityLivingBase)var79, Action.INTERACT));
+               PacketUtil.l(new C02PacketUseEntity((EntityLivingBase)var79, (Vec3)var66));
+               PacketUtil.l(new C02PacketUseEntity((EntityLivingBase)var79, Action.INTERACT));
             }
 
             if (aEg.thePlayer.fallDistance > 0.0F
@@ -3480,8 +3480,8 @@ public class KillAura extends Module {
             aEg.playerController.attackEntity(aEg.thePlayer, (EntityLivingBase)var79);
             if (this.eC() && this.eX()) {
                var66 = this.k((EntityLivingBase)var79);
-               ahj.l(new C02PacketUseEntity((EntityLivingBase)var79, (Vec3)var66));
-               ahj.l(new C02PacketUseEntity((EntityLivingBase)var79, Action.INTERACT));
+               PacketUtil.l(new C02PacketUseEntity((EntityLivingBase)var79, (Vec3)var66));
+               PacketUtil.l(new C02PacketUseEntity((EntityLivingBase)var79, Action.INTERACT));
             }
          }
 
@@ -3563,7 +3563,7 @@ public class KillAura extends Module {
    }
 
    public boolean a(EntityLivingBase var1, double var2) {
-      return Math.abs(MathHelper.wrapAngleTo180_float(aiu.y(var1).x - aEg.thePlayer.pl)) <= var2;
+      return Math.abs(MathHelper.wrapAngleTo180_float(RotationUtil.y(var1).x - aEg.thePlayer.pl)) <= var2;
    }
 
    public boolean eY() {
@@ -3664,7 +3664,7 @@ public class KillAura extends Module {
 
    public void p(boolean var1) {
       if (nQ && (!var1 || !cK)) {
-         ahj.l(new C07PacketPlayerDigging(net.minecraft.network.play.client.C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+         PacketUtil.l(new C07PacketPlayerDigging(net.minecraft.network.play.client.C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
          nQ = false;
       }
 
@@ -3698,7 +3698,7 @@ public class KillAura extends Module {
                   if ((Packet)var39 instanceof C03PacketPlayer && this.jE != null) {
                      var1.setCancelled();
                      this.p(false);
-                     ahj.m((Packet<?>)var39);
+                     PacketUtil.m((Packet<?>)var39);
                      this.block(false, (130 + -20 ^ 111) != 0);
                      this.p(false);
                   }
@@ -3909,7 +3909,7 @@ public class KillAura extends Module {
             if (var179 != 0.0F) {
                RotationComponent.a(
                   (Vector2f)var171, var179, this.movementCorrection.wo() == MovementFix.OFF ? MovementFix.OFF : this.movementCorrection.wo(), var1 -> {
-                     nS = aiu.a(var1, this.jE, this.range.wo().doubleValue(), this.em(), this.en());
+                     nS = RotationUtil.a(var1, this.jE, this.range.wo().doubleValue(), this.em(), this.en());
                      return nS;
                   }, this.silentRotations.wo()
                );
@@ -3927,7 +3927,7 @@ public class KillAura extends Module {
                   aEg.thePlayer.posY + (aEg.thePlayer.motionY + 0.17) * random2,
                   aEg.thePlayer.posZ + aEg.thePlayer.motionZ * random2
                );
-            var181 = aiu.m(this.c(this.jE));
+            var181 = RotationUtil.m(this.c(this.jE));
             this.jE.setPosition(((aka)var143).x, ((aka)var143).y, ((aka)var143).z);
             aEg.thePlayer.setPosition(((aka)var144).x, ((aka)var144).y, ((aka)var144).z);
             var181 = this.a(this.jE, (Vector2f)var181);

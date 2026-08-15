@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.motion.PostMotionEvent;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.motion.SlowDownEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemPotion;
@@ -23,14 +23,14 @@ public class NCPNoSlow extends Mode<NoSlow> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (this.getParent().sword.wo() && aEg.thePlayer.isBlocking()) {
-            ahj.l(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+            PacketUtil.l(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
         }
     };
     @EventLink
     public final Listener<PostMotionEvent> onPostMotion = var1x -> {
         if (this.getParent().sword.wo() && aEg.thePlayer.isBlocking()) {
             SlotComponent slotcomponent = this.d(SlotComponent.class);
-            ahj.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+            PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
         }
     };
     @EventLink

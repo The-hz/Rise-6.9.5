@@ -8,6 +8,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.JumpEvent;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.util.interfaces.InstanceAccess;
+import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.MoveUtil;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
@@ -44,7 +45,7 @@ public final class vo implements InstanceAccess {
             if (this.e(Scaffold.class).isEnabled() && aEg.gameSettings.keyBindSneak.isPressed()) {
                 MoveUtil.stop();
                 aEg.timer.dzD = 0.5F;
-                ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+                PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
             }
         }
     };

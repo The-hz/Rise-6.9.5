@@ -22,11 +22,11 @@ import com.viaversion.viaversion.api.protocol.packet.PacketWrapper;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.protocols.v1_21to1_21_2.packet.ServerboundPackets1_21_2;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.ahg;
-import hackclient.rise.ahj;
-import hackclient.rise.ahu;
+import com.alan.clients.util.math.MathUtil;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.util.pathfinding.unlegit.MainPathFinder;
 import hackclient.rise.ahy;
-import hackclient.rise.bv;
+import hackclient.rise.component.bv;
 import hackclient.rise.hc;
 import java.awt.Color;
 import java.util.Collections;
@@ -154,7 +154,7 @@ public final class TeleportAura extends Module {
 
         if (flag && this.jE != null && !aEg.gameSettings.cgK.isKeyDown() && !aEg.gameSettings.cgI.isKeyDown()) {
             if (!this.ql.wo()) {
-                long i = Math.round(ahg.l(this.cps.wo().intValue(), this.cps.wA().intValue()));
+                long i = Math.round(MathUtil.l(this.cps.wo().intValue(), this.cps.wA().intValue()));
                 this.nextSwing = 1000L / i;
             }
 
@@ -205,14 +205,14 @@ public final class TeleportAura extends Module {
         Client.a.e().d(attackevent);
         if (!attackevent.isCancelled()) {
             EntityLivingBase entitylivingbase = attackevent.dc();
-            this.path = ahu.a(
+            this.path = MainPathFinder.a(
                 new ahy(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ),
                 new ahy(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ),
                 true
             );
             if (this.path != null) {
                 for (ahy ahy : this.path) {
-                    ahj.m(new C04PacketPlayerPosition(ahy.getX(), ahy.getY(), ahy.getZ(), true));
+                    PacketUtil.m(new C04PacketPlayerPosition(ahy.getX(), ahy.getY(), ahy.getZ(), true));
                     if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_21_2)
                         && aEg.thePlayer != null
                         && aEg.theWorld != null
@@ -230,7 +230,7 @@ public final class TeleportAura extends Module {
                     aEg.thePlayer.swingItem();
                 }
 
-                ahj.m(new C02PacketUseEntity(entitylivingbase, Action.ATTACK));
+                PacketUtil.m(new C02PacketUseEntity(entitylivingbase, Action.ATTACK));
                 if (ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
                     Client.a.e().d(new ClickEvent());
                     aEg.thePlayer.swingItem();
@@ -239,7 +239,7 @@ public final class TeleportAura extends Module {
                 Collections.reverse(this.path);
 
                 for (ahy ahyx : this.path) {
-                    ahj.m(new C04PacketPlayerPosition(ahyx.getX(), ahyx.getY(), ahyx.getZ(), true));
+                    PacketUtil.m(new C04PacketPlayerPosition(ahyx.getX(), ahyx.getY(), ahyx.getZ(), true));
                     if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_21_2)
                         && aEg.thePlayer != null
                         && aEg.theWorld != null

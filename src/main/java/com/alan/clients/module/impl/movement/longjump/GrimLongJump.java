@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
@@ -53,7 +53,7 @@ extends Mode<LongJump> {
                 this.Lj = 0xFFFFFFC0 ^ 0xFFFFFFC0;
                 return;
             }
-            ahj.m(new C03PacketPlayer(false));
+            PacketUtil.m(new C03PacketPlayer(false));
             l5_hi++;
         }
     };
@@ -71,7 +71,7 @@ extends Mode<LongJump> {
             this.Li = 1;
             int i = 0;
             while (i < 20) {
-                ahj.m(new C03PacketPlayer(false));
+                PacketUtil.m(new C03PacketPlayer(false));
                 i++;
             }
         }

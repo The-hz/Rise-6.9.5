@@ -3,8 +3,8 @@ package hackclient.rise;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2f;
 import com.google.common.base.Predicates;
-import hackclient.rise.ahg;
-import hackclient.rise.aiu;
+import com.alan.clients.util.math.MathUtil;
+import com.alan.clients.util.rotation.RotationUtil;
 import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,8 +23,8 @@ implements InstanceAccess {
 
     public static boolean t(Entity entity) {
         int n2 = 16 * aef.aEg.gameSettings.renderDistanceChunks;
-        Vector2f vector2f = aiu.y(entity);
-        if (ahg.n(aef.aEg.thePlayer.pl, vector2f.x) > (double)aef.aEg.gameSettings.fovSetting) {
+        Vector2f vector2f = RotationUtil.y(entity);
+        if (MathUtil.n(aef.aEg.thePlayer.pl, vector2f.x) > (double)aef.aEg.gameSettings.fovSetting) {
             return false;
         }
         if (entity.crB > 100.0 || !(entity instanceof EntityPlayer)) {
@@ -37,7 +37,7 @@ implements InstanceAccess {
         while (d2 >= -1.0) {
             for (double d3 = 1.0; d3 >= -1.0; d3 -= 1.0) {
                 for (double d4 = 1.0; d4 >= -1.0; d4 -= 1.0) {
-                    MovingObjectPosition movingObjectPosition = aef.rayCast(aiu.d(entity.Ty().v((entity.getEntityBoundingBox().maxX - entity.getEntityBoundingBox().minX) * d3, (entity.getEntityBoundingBox().maxY - entity.getEntityBoundingBox().minY) * d2, (entity.getEntityBoundingBox().maxZ - entity.getEntityBoundingBox().minZ) * d4)), n2, 0.2f);
+                    MovingObjectPosition movingObjectPosition = aef.rayCast(RotationUtil.d(entity.Ty().v((entity.getEntityBoundingBox().maxX - entity.getEntityBoundingBox().minX) * d3, (entity.getEntityBoundingBox().maxY - entity.getEntityBoundingBox().minY) * d2, (entity.getEntityBoundingBox().maxZ - entity.getEntityBoundingBox().minZ) * d4)), n2, 0.2f);
                     if (movingObjectPosition == null || movingObjectPosition.typeOfHit != MovingObjectPosition.MovingObjectType.ENTITY) continue;
                     return true;
                 }

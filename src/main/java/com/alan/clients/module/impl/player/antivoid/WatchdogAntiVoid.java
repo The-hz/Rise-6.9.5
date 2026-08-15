@@ -14,11 +14,11 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import hackclient.rise.aka;
-import hackclient.rise.bc;
-import hackclient.rise.bd;
+import hackclient.rise.component.bc;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -90,10 +90,10 @@ public class WatchdogAntiVoid extends Mode<AntiVoid> {
                     this.ahU = true;
                     BlinkComponent.blink();
                     bc.a(C0FPacketConfirmTransaction.class, a.class, C01PacketChatMessage.class);
-                    if (bd.cY > this.distance.wo().doubleValue() || this.ahV) {
-                        ahj.m(new C04PacketPlayerPosition(this.Ft.x, this.Ft.y - -0.09800000190735147, this.Ft.z, false));
+                    if (FallDistanceComponent.cY > this.distance.wo().doubleValue() || this.ahV) {
+                        PacketUtil.m(new C04PacketPlayerPosition(this.Ft.x, this.Ft.y - -0.09800000190735147, this.Ft.z, false));
                         bc.cQ.clear();
-                        bd.cY = 0.0F;
+                        FallDistanceComponent.cY = 0.0F;
                         this.ahV = true;
                     }
                 } else {

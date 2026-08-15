@@ -12,14 +12,14 @@ import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BoundsNumberValue;
 import hackclient.rise.aef;
-import hackclient.rise.ahg;
-import hackclient.rise.ahj;
+import com.alan.clients.util.math.MathUtil;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aib;
 import hackclient.rise.aih;
-import hackclient.rise.aik;
-import hackclient.rise.aiu;
+import com.alan.clients.util.player.SlotUtil;
+import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
-import hackclient.rise.bb;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -46,7 +46,7 @@ public class Clutch extends Module {
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         if (aEg.thePlayer.Zl > 15
             && aEg.thePlayer.ticksExisted > 50
-            && !bb.aW()
+            && !BadPacketsComponent.aW()
             && !this.e(Scaffold.class).isEnabled()
             && aEg.gameSettings.keyBindSneak.isKeyDown()) {
             if (aEg.thePlayer.tR > 3 && !aih.ad(10.0)) {
@@ -55,7 +55,7 @@ public class Clutch extends Module {
 
             if (this.acv-- >= 0) {
                 SlotComponent slotcomponent = this.d(SlotComponent.class);
-                SlotComponent.setSlot(aik.vx());
+                SlotComponent.setSlot(SlotUtil.vx());
                 Vec3i vec3i = new Vec3i(0, 0, 0);
                 if (aih.p(vec3i.getX(), -1 + vec3i.getY(), vec3i.getZ()).isReplaceable(aEg.theWorld, new BlockPos(aEg.thePlayer).down())) {
                     this.acu++;
@@ -75,8 +75,8 @@ public class Clutch extends Module {
                                 int i = aEg.thePlayer.inventory.cIT;
                                 SlotComponent slotcomponent1 = this.d(SlotComponent.class);
                                 if (i == SlotComponent.bQ()) {
-                                    if (!bb.bad(false, true, false, false, true)
-                                        && this.acu > ahg.l(this.placeDelay.wo().intValue(), this.placeDelay.wA().intValue())
+                                    if (!BadPacketsComponent.bad(false, true, false, false, true)
+                                        && this.acu > MathUtil.l(this.placeDelay.wo().intValue(), this.placeDelay.wA().intValue())
                                         && aef.overBlock(this.acr.va(), this.Yx, true)) {
                                         Vec3 vec3 = aef.c(RotationComponent.fk, aEg.playerController.getBlockReachDistance()).hitVec;
                                         PlayerControllerMP playercontrollermp = aEg.playerController;
@@ -86,7 +86,7 @@ public class Clutch extends Module {
                                         if (playercontrollermp.onPlayerRightClick(
                                             entityplayersp, worldclient, SlotComponent.getItemStack(), this.Yx, this.acr.va(), vec3
                                         )) {
-                                            ahj.l(new m());
+                                            PacketUtil.l(new m());
                                         }
 
                                         aEg.rightClickDelayTimer = 0;
@@ -107,7 +107,7 @@ public class Clutch extends Module {
                                         }
                                     } else if (Math.random() > 0.92 && aEg.rightClickDelayTimer <= 0) {
                                         SlotComponent slotcomponent2 = this.d(SlotComponent.class);
-                                        ahj.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                                        PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
                                         aEg.rightClickDelayTimer = 0;
                                     }
                                 }
@@ -137,7 +137,7 @@ public class Clutch extends Module {
 
         double d0 = this.rotationSpeed.wo().doubleValue();
         double d1 = this.rotationSpeed.wA().doubleValue();
-        float f = (float)ahg.l(d0, d1);
+        float f = (float)MathUtil.l(d0, d1);
         if (f != 0.0F) {
             RotationComponent.setRotations(new Vector2f(this.acs, this.act), f, MovementFix.NORMAL);
         }
@@ -154,14 +154,14 @@ public class Clutch extends Module {
             if (movingobjectposition != null
                 && new BlockPos(this.Yx).equals(movingobjectposition.getBlockPos())
                 && this.acr.va() == movingobjectposition.sideHit) {
-                Vector2f vector2f = aiu.h(movingobjectposition.hitVec);
+                Vector2f vector2f = RotationUtil.h(movingobjectposition.hitVec);
                 this.acs = vector2f.x;
                 this.act = vector2f.y;
                 return;
             }
         }
 
-        Vector2f vector2f1 = aiu.a(new aka(this.Yx.getX(), this.Yx.getY(), this.Yx.getZ()), this.acr.va());
+        Vector2f vector2f1 = RotationUtil.a(new aka(this.Yx.getX(), this.Yx.getY(), this.Yx.getZ()), this.acr.va());
         this.acs = vector2f1.x;
         this.act = vector2f1.y;
     }

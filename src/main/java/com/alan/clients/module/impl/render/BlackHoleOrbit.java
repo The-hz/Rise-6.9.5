@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.impl.DragValue;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.aip;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
@@ -66,7 +66,7 @@ public final class BlackHoleOrbit extends Module {
 
     private void c(Vector2d var1) {
         double d0 = this.ll();
-        RenderUtil.roundedRectangle(var1.x, var1.y, 190.0, 135.0, d0, aip.d(adv.rK(), 140));
+        RenderUtil.roundedRectangle(var1.x, var1.y, 190.0, 135.0, d0, aip.d(Themes.rK(), 140));
         String s = this.getName();
         gb.MAIN.a(18, gd.BOLD).b(s, var1.x + 10.0, var1.y + 11.0, this.rz().rA().getRGB());
         double d1 = var1.x + 10.0;

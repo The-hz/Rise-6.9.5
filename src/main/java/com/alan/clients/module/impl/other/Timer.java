@@ -21,10 +21,10 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.BoundsNumberValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
-import hackclient.rise.ahg;
-import hackclient.rise.ahj;
+import com.alan.clients.util.math.MathUtil;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.ahk;
-import hackclient.rise.bc;
+import hackclient.rise.component.bc;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
@@ -50,7 +50,7 @@ public final class Timer extends Module {
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (!this.watchdog.wo()) {
             if (!this.Zr) {
-                aEg.timer.dzD = (float)ahg.l(this.timer.wo().floatValue(), this.timer.wA().floatValue());
+                aEg.timer.dzD = (float)MathUtil.l(this.timer.wo().floatValue(), this.timer.wA().floatValue());
             }
 
             if (this.compensateLowTimer.wo() && this.Zr) {
@@ -81,10 +81,10 @@ public final class Timer extends Module {
                 double d0 = aEg.thePlayer.posX;
                 double d1 = aEg.thePlayer.posY;
                 double d2 = aEg.thePlayer.posZ;
-                ahj.l(new C04PacketPlayerPosition(d0, d1, d2, true));
-                ahj.l(new C04PacketPlayerPosition(d0, d1 - 1.0E-16, d2, true));
-                ahj.l(new C04PacketPlayerPosition(d0, d1 + 0.07, d2, true));
-                ahj.l(new C04PacketPlayerPosition(d0, d1, d2, true));
+                PacketUtil.l(new C04PacketPlayerPosition(d0, d1, d2, true));
+                PacketUtil.l(new C04PacketPlayerPosition(d0, d1 - 1.0E-16, d2, true));
+                PacketUtil.l(new C04PacketPlayerPosition(d0, d1 + 0.07, d2, true));
+                PacketUtil.l(new C04PacketPlayerPosition(d0, d1, d2, true));
                 aEg.timer.dzD = this.timer.wo().floatValue();
             } else if (this.watchdog.wo()) {
             }
@@ -102,7 +102,7 @@ public final class Timer extends Module {
             MoveUtil.stop();
             aEg.timer.dzD = 1.0F;
             if (aEg.thePlayer.onGround) {
-                Zk.forEach(var0 -> ahj.n(var0.getPacket()));
+                Zk.forEach(var0 -> PacketUtil.n(var0.getPacket()));
                 Zk.clear();
                 BlinkComponent.dispatch();
             }

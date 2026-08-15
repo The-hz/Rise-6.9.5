@@ -1,10 +1,12 @@
 package hackclient.rise;
 
+import com.alan.clients.util.shader.base.RiseShaderProgram;
+import com.alan.clients.util.shader.base.ShaderUniforms;
 import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
 
 public class ajo {
-    private final aiy aQp = new aiy("rq.frag", "vertex.vsh");
+    private final RiseShaderProgram aQp = new RiseShaderProgram("rq.frag", "vertex.vsh");
 
     public ajo() {
     }
@@ -12,14 +14,14 @@ public class ajo {
     public void a(float var1, float var2, float var3, float var4, float var5, Color var6, boolean var7, boolean var8, boolean var9, boolean var10) {
         int i = this.aQp.getProgramId();
         this.aQp.rt();
-        aja.uniform2f(i, "u_size", var3, var4);
-        aja.uniform1f(i, "u_radius", var5);
-        aja.uniform4f(i, "u_color", var6.getRed() / 255.0F, var6.getGreen() / 255.0F, var6.getBlue() / 255.0F, var6.getAlpha() / 255.0F);
-        aja.uniform4f(i, "u_edges", var7 ? 1.0F : 0.0F, var8 ? 1.0F : 0.0F, var9 ? 1.0F : 0.0F, var10 ? 1.0F : 0.0F);
+        ShaderUniforms.uniform2f(i, "u_size", var3, var4);
+        ShaderUniforms.uniform1f(i, "u_radius", var5);
+        ShaderUniforms.uniform4f(i, "u_color", var6.getRed() / 255.0F, var6.getGreen() / 255.0F, var6.getBlue() / 255.0F, var6.getAlpha() / 255.0F);
+        ShaderUniforms.uniform4f(i, "u_edges", var7 ? 1.0F : 0.0F, var8 ? 1.0F : 0.0F, var9 ? 1.0F : 0.0F, var10 ? 1.0F : 0.0F);
         GlStateManager.enableBlend();
-        aiy.h(var1, var2, var3, var4);
+        RiseShaderProgram.h(var1, var2, var3, var4);
         GlStateManager.disableBlend();
-        aiy.stop();
+        RiseShaderProgram.stop();
     }
 
     public void b(double var1, double var3, double var5, double var7, double var9, Color var11, boolean var12, boolean var13, boolean var14, boolean var15) {

@@ -1,5 +1,6 @@
 package hackclient.rise;
 
+import com.alan.clients.util.font.impl.rise.FontRenderer;
 import java.awt.Font;
 import java.io.File;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public enum gb {
     agc ky;
     String gK;
     final String kz;
-    private final HashMap<Integer, agf> kA = new HashMap<>();
+    private final HashMap<Integer, FontRenderer> kA = new HashMap<>();
     private static final gb[] $VALUES = dQ();
 
     gb(String var3, String var4) {
@@ -87,7 +88,7 @@ public enum gb {
                     throw new Exception("Unknown Font " + s);
                 }
 
-                agf agf = new agf(font, true, true, false);
+                FontRenderer agf = new FontRenderer(font, true, true, false);
                 if (this == MAIN) {
                     Font font1 = b(var1, var2);
                     if (font1 != null) {
@@ -194,7 +195,7 @@ public enum gb {
     }
 
     @Generated
-    public HashMap<Integer, agf> dO() {
+    public HashMap<Integer, FontRenderer> dO() {
         return this.kA;
     }
 

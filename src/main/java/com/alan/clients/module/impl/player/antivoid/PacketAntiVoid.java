@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 
@@ -15,7 +15,7 @@ public class PacketAntiVoid extends Mode<AntiVoid> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (aEg.thePlayer.fallDistance > this.distance.wo().floatValue() && !aih.vh()) {
-            ahj.l(new C04PacketPlayerPosition());
+            PacketUtil.l(new C04PacketPlayerPosition());
         }
     };
 

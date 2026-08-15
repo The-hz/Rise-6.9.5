@@ -6,23 +6,23 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.TeleportEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.bd;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 
 public class FlagNoFall extends Mode<NoFall> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {
-        float f = bd.cY;
+        float f = FallDistanceComponent.cY;
         if (f > 3.0F) {
             f = -999.0F;
             var0.setPosY(var0.getPosY() + Math.random());
         }
 
-        bd.cY = f;
+        FallDistanceComponent.cY = f;
     };
     @EventLink
     public final Listener<TeleportEvent> onTeleport = var0 -> {
-        bd.cY = 0.0F;
+        FallDistanceComponent.cY = 0.0F;
         var0.setResponse(new C06PacketPlayerPosLook(var0.getPosX(), var0.getPosY(), var0.getPosZ(), var0.getYaw(), var0.getPitch(), true));
     };
 

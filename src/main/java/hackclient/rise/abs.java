@@ -3,6 +3,7 @@ package hackclient.rise;
 import com.alan.clients.Client;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
+import hackclient.rise.event.er;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.spec.AlgorithmParameterSpec;

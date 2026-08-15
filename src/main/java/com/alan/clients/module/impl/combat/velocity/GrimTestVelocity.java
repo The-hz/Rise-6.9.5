@@ -15,7 +15,7 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -324,7 +324,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
             while (!this.tb.isEmpty()) {
                 Packet packet = this.tb.poll();
                 if (packet != null) {
-                    ahj.p(packet);
+                    PacketUtil.p(packet);
                 }
             }
         } else {

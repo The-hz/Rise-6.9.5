@@ -20,10 +20,10 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
-import hackclient.rise.aik;
-import hackclient.rise.bb;
+import com.alan.clients.util.player.SlotUtil;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 import hackclient.rise.vo;
 import java.util.Random;
 import lombok.Generated;
@@ -98,7 +98,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
             int i = aEg.thePlayer.ticksExisted;
             if (!this.e(Flight.class).isEnabled()
                 && !this.e(LongJump.class).isEnabled()
-                && !bb.bad(true, true, false, true, false)
+                && !BadPacketsComponent.bad(true, true, false, true, false)
                 && Math.random() > 0.5
                 && ajy
                 && MoveUtil.isMoving()
@@ -159,7 +159,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
             }
 
             slotcomponent = this.d(SlotComponent.class);
-            SlotComponent.setSlot(aik.vx());
+            SlotComponent.setSlot(SlotUtil.vx());
         }
 
         if (Client.a.g().c(Speed.class).isEnabled()) {
@@ -291,19 +291,19 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
         if (flag) {
             if (aEg.thePlayer.cqL > 2 && aEg.thePlayer.ticksExisted % 3 == 1) {
                 aEg.timer.dzD = 0.5F;
-                ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+                PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
             } else if (aEg.thePlayer.cqL > 2 && aEg.thePlayer.ticksExisted % 3 == 2) {
                 aEg.timer.dzD = 0.33F;
-                ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
-                ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+                PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+                PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
             } else if (aEg.thePlayer.cqL > 2) {
                 aEg.timer.dzD = 0.5F;
-                ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+                PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
             }
         } else if (aEg.thePlayer.cqL > 2) {
             aEg.timer.dzD = 0.33F;
-            ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
-            ahj.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+            PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+            PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
         }
 
         ajx = false;

@@ -26,7 +26,7 @@ import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.api.type.Types;
 import com.viaversion.viaversion.protocols.v1_18_2to1_19.packet.ServerboundPackets1_19;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aka;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -142,7 +142,7 @@ public final class GrimVelocity extends Mode<Velocity> {
             if (aEg.thePlayer.tR > 25 && dj) {
                 dj = false;
                 tt = true;
-                this.tT.forEach(ahj::p);
+                this.tT.forEach(PacketUtil::p);
                 this.tT.clear();
                 tt = false;
             }
@@ -153,7 +153,7 @@ public final class GrimVelocity extends Mode<Velocity> {
             this.tO.clear();
             dj = false;
             this.uc = false;
-            this.tT.forEach(ahj::p);
+            this.tT.forEach(PacketUtil::p);
             this.tT.clear();
             tt = false;
         }
@@ -193,7 +193,7 @@ public final class GrimVelocity extends Mode<Velocity> {
             BlinkComponent.dispatch();
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             double d0 = aEg.thePlayer.motionY;
-            this.tT.forEach(ahj::p);
+            this.tT.forEach(PacketUtil::p);
             this.tT.clear();
             aEg.thePlayer.motionX = vector2d.getX();
             aEg.thePlayer.motionZ = vector2d.getY();
@@ -258,7 +258,7 @@ public final class GrimVelocity extends Mode<Velocity> {
     public void onDisable() {
         dk = false;
         tQ = false;
-        this.tT.forEach(ahj::p);
+        this.tT.forEach(PacketUtil::p);
         this.tT.clear();
         dj = false;
     }
@@ -267,7 +267,7 @@ public final class GrimVelocity extends Mode<Velocity> {
     public void onEnable() {
         dk = false;
         tQ = false;
-        this.tT.forEach(ahj::p);
+        this.tT.forEach(PacketUtil::p);
         this.tT.clear();
         dj = false;
         this.tP = false;

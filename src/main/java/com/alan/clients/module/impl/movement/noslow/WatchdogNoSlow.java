@@ -11,7 +11,7 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import hackclient.rise.ea;
 import net.minecraft.init.Blocks;
@@ -104,9 +104,9 @@ public class WatchdogNoSlow extends Mode<NoSlow> {
 
         if (this.getParent().sword.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
             SlotComponent slotcomponent = this.d(SlotComponent.class);
-            ahj.l(new l(SlotComponent.bQ() % 7 + (int)(Math.random() * 2.0) + 1));
+            PacketUtil.l(new l(SlotComponent.bQ() % 7 + (int)(Math.random() * 2.0) + 1));
             slotcomponent = this.d(SlotComponent.class);
-            ahj.l(new l(SlotComponent.bQ()));
+            PacketUtil.l(new l(SlotComponent.bQ()));
             var1x.setCancelled();
         }
     };

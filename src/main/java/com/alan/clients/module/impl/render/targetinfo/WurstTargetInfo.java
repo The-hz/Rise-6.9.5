@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aip;
 import hackclient.rise.bf;
 import java.awt.Color;
@@ -41,7 +41,7 @@ public class WurstTargetInfo extends Mode<TargetInfo> {
         float f = healthbypass != null && healthbypass.isEnabled()
             ? HealthBypass.B(abstractclientplayer)
             : abstractclientplayer.getHealth();
-        double d2 = Math.min(!this.aui.inWorld ? 0.0 : ahg.round(f, 1), abstractclientplayer.getMaxHealth());
+        double d2 = Math.min(!this.aui.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
         RenderUtil.d(d0 + 4.0, d1 + 16.0, 177.0 * (d2 / abstractclientplayer.getMaxHealth()), 10.0, Color.ORANGE);
     };
 

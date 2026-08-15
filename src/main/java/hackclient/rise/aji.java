@@ -1,5 +1,7 @@
 package hackclient.rise;
 
+import com.alan.clients.util.shader.base.RiseShaderProgram;
+import com.alan.clients.util.shader.base.ShaderUniforms;
 import java.util.List;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -8,7 +10,7 @@ import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.opengl.Display;
 
 public class aji extends aix {
-    private final aiy aQj = new aiy("outline.frag", "vertex.vsh");
+    private final RiseShaderProgram aQj = new RiseShaderProgram("outline.frag", "vertex.vsh");
     private Framebuffer aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
 
     public aji() {
@@ -41,16 +43,16 @@ public class aji extends aix {
                         int i = this.aQj.getProgramId();
                         aEg.getFramebuffer().bindFramebuffer(true);
                         this.aQj.rt();
-                        aja.uniform1i(i, "u_texture", 0);
-                        aja.uniform1f(i, "u_radius", 1.0F);
-                        aja.uniform2f(i, "u_texel_size", 1.0F / aEg.displayWidth, 1.0F / aEg.displayHeight);
+                        ShaderUniforms.uniform1i(i, "u_texture", 0);
+                        ShaderUniforms.uniform1f(i, "u_radius", 1.0F);
+                        ShaderUniforms.uniform2f(i, "u_texel_size", 1.0F / aEg.displayWidth, 1.0F / aEg.displayHeight);
                         GlStateManager.enableBlend();
                         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                         GlStateManager.alphaFunc(516, 0.0F);
                         this.aPV.bindFramebufferTexture();
-                        aiy.vN();
+                        RiseShaderProgram.vN();
                         GlStateManager.disableBlend();
-                        aiy.stop();
+                        RiseShaderProgram.stop();
                     }
             }
         }

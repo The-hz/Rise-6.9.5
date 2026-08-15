@@ -17,9 +17,9 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
-import hackclient.rise.aiu;
-import hackclient.rise.bv;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.util.rotation.RotationUtil;
+import hackclient.rise.component.bv;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -63,7 +63,7 @@ extends Module {
             preMotionEvent.setPosY(this.jE.posY);
             preMotionEvent.setPosZ(this.jE.posZ);
             this.qX = this.jE;
-            Vector2f vector2f = aiu.y((Entity)this.jE);
+            Vector2f vector2f = RotationUtil.y((Entity)this.jE);
             preMotionEvent.setYaw(vector2f.x);
             preMotionEvent.setPitch(vector2f.y);
         } else {
@@ -101,9 +101,9 @@ extends Module {
             AttackEvent attackEvent = new AttackEvent(this.qX);
             Client.a.e().d(attackEvent);
             if (!attackEvent.isCancelled()) {
-                ahj.l(new m());
+                PacketUtil.l(new m());
                 afi.c("attacked", new Object[0]);
-                ahj.l(new C02PacketUseEntity((Entity)this.qX, C02PacketUseEntity.Action.ATTACK));
+                PacketUtil.l(new C02PacketUseEntity((Entity)this.qX, C02PacketUseEntity.Action.ATTACK));
             }
             this.qX = null;
         }
@@ -132,7 +132,7 @@ extends Module {
             return;
         }
         list.sort(Comparator.comparingDouble(entityLivingBase -> {
-            Vector2f vector2f = aiu.y((Entity)entityLivingBase);
+            Vector2f vector2f = RotationUtil.y((Entity)entityLivingBase);
             float f2 = Math.abs(MathHelper.wrapAngleTo180_float((float)(vector2f.x - WatchdogTPAura.aEg.thePlayer.pl)));
             float f3 = Math.abs(MathHelper.wrapAngleTo180_float((float)(vector2f.y - WatchdogTPAura.aEg.thePlayer.rotationPitch)));
             return Math.sqrt(f2 * f2 + f3 * f3);
@@ -155,7 +155,7 @@ extends Module {
             this.cR = false;
             afi.c("Dispatching " + this.ra.size() + " packets", new Object[0]);
             while (!this.ra.isEmpty()) {
-                ahj.m(this.ra.poll());
+                PacketUtil.m(this.ra.poll());
             }
             this.qW = false;
             afi.c("Stopped blinking", new Object[0]);

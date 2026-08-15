@@ -14,8 +14,8 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Value;
 import com.alan.clients.value.impl.DragValue;
-import hackclient.rise.aeb;
-import hackclient.rise.agj;
+import com.alan.clients.util.MouseUtil;
+import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.aip;
 import hackclient.rise.as;
 import hackclient.rise.at;
@@ -65,7 +65,7 @@ public class DragComponent extends Component {
                 .filter(var0x -> var0x.isEnabled() && var0x.getValues().stream().anyMatch(var0xx -> var0xx instanceof DragValue))
                 .forEach(bT::add);
             if (selectedValue != null) {
-                Vector2d vector2d = aeb.rU();
+                Vector2d vector2d = MouseUtil.rU();
                 double d0 = vector2d.x + offset.x;
                 double d1 = vector2d.y + offset.y;
                 selectedValue.atg = new Vector2d(d0, d1);
@@ -162,7 +162,7 @@ public class DragComponent extends Component {
                             Vector2d vector2d1 = dragvalue.aHe;
                             float f = var0.cL();
                             float f1 = var0.cM();
-                            if (!dragvalue.aRb && agj.mouseOver(vector2d, vector2d1, f, f1)) {
+                            if (!dragvalue.aRb && GUIUtil.mouseOver(vector2d, vector2d1, f, f1)) {
                                 selectedValue = dragvalue;
                                 offset = new Vector2d(vector2d.x - f, vector2d.y - f1);
                             }

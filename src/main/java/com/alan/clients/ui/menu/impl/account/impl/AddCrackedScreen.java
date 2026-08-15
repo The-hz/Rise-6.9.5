@@ -6,9 +6,9 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
-import hackclient.rise.adh;
-import hackclient.rise.adm;
-import hackclient.rise.aeb;
+import com.alan.clients.ui.menu.component.button.MenuButton;
+import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
+import com.alan.clients.util.MouseUtil;
 import hackclient.rise.aeo;
 import hackclient.rise.aff;
 import hackclient.rise.agc;
@@ -25,7 +25,7 @@ import net.minecraft.client.gui.ScaledResolution;
 
 public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
     private static final agc FONT_RENDERER = gb.MAIN.a(36, gd.BOLD);
-    private final adh[] menuButtons = new adh[5];
+    private final MenuButton[] menuButtons = new MenuButton[5];
     private static agm usernameBox;
     private static GuiScreen reference;
     private Animation animation;
@@ -67,7 +67,7 @@ public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
         this.animation.Q(0.0);
         aiv.aPL.a(aiz.OVERLAY, var3, null);
         this.b(gg.BLUR).c(BACKGROUND_RUNNABLE);
-        adh[] aadh = this.menuButtons;
+        MenuButton[] aadh = this.menuButtons;
         int i = aadh.length;
 
         for (int j = 0; j < i; j++) {
@@ -84,8 +84,8 @@ public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
     public void mouseClicked(int var1, int var2, int var3) {
         usernameBox.click(var1, var2, var3);
 
-        for (adh adh : this.menuButtons) {
-            if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+        for (MenuButton adh : this.menuButtons) {
+            if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
                 adh.runAction();
                 break;
             }
@@ -107,11 +107,11 @@ public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
         float f = 192 / 3.0F;
         Vector2d vector2d = new Vector2d(this.width / 2 - 100, this.height / 2 - 24);
         usernameBox = new agm(vector2d.offset(100, 8.0), gb.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Username", short1);
-        this.menuButtons[0] = new adm(vector2d.x, vector2d.y, short1, b0, TEXT_BOX_RUNNABLE, "");
-        this.menuButtons[1] = new adm(vector2d.x, vector2d.y + b0 + b1, short1, b0, GENERATE_RANDOM_RUNNABLE, "Generate random");
-        this.menuButtons[2] = new adm(vector2d.x, vector2d.y + (b0 + b1) * 2, f, b0, ADD_RUNNABLE, "Add");
-        this.menuButtons[3] = new adm(vector2d.x + f + b1, vector2d.y + (b0 + b1) * 2, f, b0, LOGIN_RUNNABLE, "Login");
-        this.menuButtons[4] = new adm(vector2d.x + (f + b1) * 2.0F, vector2d.y + (b0 + b1) * 2, f, b0, CANCEL_RUNNABLE, "Cancel");
+        this.menuButtons[0] = new MenuTextButton(vector2d.x, vector2d.y, short1, b0, TEXT_BOX_RUNNABLE, "");
+        this.menuButtons[1] = new MenuTextButton(vector2d.x, vector2d.y + b0 + b1, short1, b0, GENERATE_RANDOM_RUNNABLE, "Generate random");
+        this.menuButtons[2] = new MenuTextButton(vector2d.x, vector2d.y + (b0 + b1) * 2, f, b0, ADD_RUNNABLE, "Add");
+        this.menuButtons[3] = new MenuTextButton(vector2d.x + f + b1, vector2d.y + (b0 + b1) * 2, f, b0, LOGIN_RUNNABLE, "Login");
+        this.menuButtons[4] = new MenuTextButton(vector2d.x + (f + b1) * 2.0F, vector2d.y + (b0 + b1) * 2, f, b0, CANCEL_RUNNABLE, "Cancel");
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
         this.animation.R(-200.0);
     }

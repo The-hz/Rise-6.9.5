@@ -7,7 +7,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.TeleportEvent;
 import com.alan.clients.value.Mode;
 import hackclient.rise.aih;
-import hackclient.rise.bd;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
 import net.minecraft.util.BlockPos;
 
 public class ChunkLoadNoFall extends Mode<NoFall> {
@@ -19,9 +19,9 @@ public class ChunkLoadNoFall extends Mode<NoFall> {
             var1x.setOnGround(false);
             var1x.setPosY(var1x.getPosY() - 0.098F);
             aEg.thePlayer.setPositionAndUpdate(aEg.thePlayer.posX, var1x.getPosY(), aEg.thePlayer.posZ);
-        } else if (!(aEg.thePlayer.motionY > 0.0) && !(bd.cY <= 3.0F)) {
+        } else if (!(aEg.thePlayer.motionY > 0.0) && !(FallDistanceComponent.cY <= 3.0F)) {
             if (aih.block(new BlockPos(var1x.getPosX(), var1x.getPosY() + aEg.thePlayer.motionY, var1x.getPosZ())).getMaterial().isSolid()) {
-                bd.cY = 0.0F;
+                FallDistanceComponent.cY = 0.0F;
                 this.fakeUnloaded = true;
             }
         }

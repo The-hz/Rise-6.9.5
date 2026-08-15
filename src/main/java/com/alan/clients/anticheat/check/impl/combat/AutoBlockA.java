@@ -3,7 +3,7 @@ package com.alan.clients.anticheat.check.impl.combat;
 import com.alan.clients.anticheat.check.Check;
 import com.alan.clients.anticheat.check.api.CheckInfo;
 import com.alan.clients.anticheat.data.PlayerData;
-import hackclient.rise.o;
+import com.alan.clients.anticheat.util.PacketUtil;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -35,7 +35,7 @@ public final class AutoBlockA extends Check {
             }
         }
 
-        if (o.b(var1) && ((S14PacketEntity)var1).entityId == this.data.getPlayer().getEntityId() && !this.data.V()) {
+        if (PacketUtil.b(var1) && ((S14PacketEntity)var1).entityId == this.data.getPlayer().getEntityId() && !this.data.V()) {
             this.b(0.985F);
         }
     }

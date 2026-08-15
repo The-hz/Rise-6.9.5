@@ -14,7 +14,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
@@ -57,9 +57,9 @@ public class Watchdog1171FullBlockPhase extends Mode<Phase> {
                 double d0 = blockpos.getX() + 0.5;
                 double d1 = blockpos.getY();
                 double d2 = blockpos.getZ() + 0.5;
-                ahj.m(new C04PacketPlayerPosition(d0, d1, d2, aEg.thePlayer.onGround));
+                PacketUtil.m(new C04PacketPlayerPosition(d0, d1, d2, aEg.thePlayer.onGround));
             } else {
-                ahj.m(new C04PacketPlayerPosition(aEg.thePlayer.posX + 0.5, aEg.thePlayer.posY, aEg.thePlayer.posZ + 0.5, aEg.thePlayer.onGround));
+                PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX + 0.5, aEg.thePlayer.posY, aEg.thePlayer.posZ + 0.5, aEg.thePlayer.onGround));
             }
         }
     };
@@ -75,7 +75,7 @@ public class Watchdog1171FullBlockPhase extends Mode<Phase> {
             float f = s08packetplayerposlook.getYaw();
             float f1 = s08packetplayerposlook.getPitch();
             this.Op = true;
-            ahj.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
+            PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
             if (!this.silent.wo()) {
                 aEg.thePlayer.setPosition(d0, d1, d2);
             }

@@ -6,7 +6,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.init.Blocks;
@@ -39,7 +39,7 @@ public class WatchdogPredictionNoFall extends Mode<NoFall> {
                 Vec3 vec31 = new Vec3(vec3.xCoord, 0.0, vec3.zCoord);
                 MovingObjectPosition movingobjectposition = aEg.theWorld.rayTraceBlocks(vec3, vec31, false, false, false);
                 if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.BLOCK && movingobjectposition.hitVec != null) {
-                    ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, movingobjectposition.hitVec.yCoord, aEg.thePlayer.posZ, true));
+                    PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, movingobjectposition.hitVec.yCoord, aEg.thePlayer.posZ, true));
                     aEg.thePlayer.fallDistance = 0.0F;
                 }
             }

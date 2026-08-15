@@ -22,7 +22,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.aip;
-import hackclient.rise.bv;
+import hackclient.rise.component.bv;
 import java.util.List;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;

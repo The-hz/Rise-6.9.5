@@ -1,0 +1,50 @@
+package com.alan.clients.util.shader.impl;
+
+import hackclient.rise.aix;
+import com.alan.clients.util.shader.base.RiseShaderProgram;
+import hackclient.rise.aiz;
+import com.alan.clients.util.shader.base.ShaderUniforms;
+import java.util.List;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.shader.Framebuffer;
+import org.lwjgl.opengl.Display;
+
+public class MainMenuBackgroundShader extends aix {
+    private final RiseShaderProgram aQi = new RiseShaderProgram("main_menu/background.frag", "vertex.vsh");
+    private Framebuffer tempFBO = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+
+    public MainMenuBackgroundShader() {
+    }
+
+    @Override
+    public void a(aiz var1, float var2, List<Runnable> var3) {
+        if (Display.isVisible()) {
+            if (var1 == aiz.OVERLAY) {
+                this.update();
+                int i = this.aQi.getProgramId();
+                new ScaledResolution(aEg);
+                GlStateManager.enableBlend();
+                GlStateManager.blendFunc(770, 771);
+                GlStateManager.disableAlpha();
+                aEg.getFramebuffer().bindFramebuffer(true);
+                this.aQi.rt();
+                ShaderUniforms.uniform2f(i, "resolution", (float)aEg.displayWidth, (float)aEg.displayHeight);
+                ShaderUniforms.uniform1f(i, "time", (float)(System.currentTimeMillis() - aEg.Bx()) / 1000.0F);
+                RiseShaderProgram.vN();
+                RiseShaderProgram.stop();
+            }
+        }
+    }
+
+    @Override
+    public void update() {
+        this.setActive(true);
+        if (aEg.displayWidth == this.tempFBO.framebufferWidth && aEg.displayHeight == this.tempFBO.framebufferHeight) {
+            this.tempFBO.framebufferClear();
+        } else {
+            this.tempFBO.deleteFramebuffer();
+            this.tempFBO = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+        }
+    }
+}

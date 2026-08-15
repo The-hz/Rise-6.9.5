@@ -15,7 +15,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
 import net.minecraft.block.BlockAir;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
@@ -44,7 +44,7 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
                 aEg.thePlayer
                     .setPosition(aEg.thePlayer.posX - d1 * this.amount.wo().doubleValue(), aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * this.amount.wo().doubleValue());
             } else {
-                ahj.m(
+                PacketUtil.m(
                     new C04PacketPlayerPosition(
                         aEg.thePlayer.posX - d1 * this.amount.wo().doubleValue(), aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * this.amount.wo().doubleValue(), false
                     )

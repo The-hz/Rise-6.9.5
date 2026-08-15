@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 
 public final class VerusRegenRegen extends Mode<Regen> {
@@ -16,7 +16,7 @@ public final class VerusRegenRegen extends Mode<Regen> {
         if (aEg.thePlayer.getHealth() < this.health.wo().floatValue()) {
             for (int i = 0; i < 30; i++) {
                 if (aEg.thePlayer.onGround) {
-                    ahj.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, true));
+                    PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, true));
                 }
             }
         }

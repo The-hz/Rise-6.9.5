@@ -6,8 +6,8 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.motion.SlowDownEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
-import hackclient.rise.bc;
+import com.alan.clients.util.packet.PacketUtil;
+import hackclient.rise.component.bc;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemFood;
@@ -29,7 +29,7 @@ public class IntaveNoSlow extends Mode<NoSlow> {
                 if (item instanceof ItemSword && this.getParent().sword.wo()) {
                     bc.cR = true;
                     if (aEg.thePlayer.ticksExisted % 5 == 0) {
-                        ahj.l(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+                        PacketUtil.l(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
                         bc.dispatch();
                         aEg.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getCurrentEquippedItem()));
                     }

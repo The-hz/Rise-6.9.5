@@ -13,8 +13,8 @@ import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
-import hackclient.rise.aik;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.util.player.SlotUtil;
 import net.minecraft.init.Items;
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 
@@ -23,7 +23,7 @@ public class MMCFireballFlight extends Mode<Flight> {
     private int hV;
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        int i = aik.findItem(Items.fire_charge);
+        int i = SlotUtil.findItem(Items.fire_charge);
         if (this.hQ > 10) {
             BlinkComponent.a(30000, true, true, false, false, false);
         }
@@ -35,7 +35,7 @@ public class MMCFireballFlight extends Mode<Flight> {
         if (i != -1) {
             this.hQ++;
             if (this.hQ == 4) {
-                ahj.l(
+                PacketUtil.l(
                     new C06PacketPlayerPosLook(
                         aEg.thePlayer.posX, aEg.thePlayer.posY - 8.0, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false
                     )

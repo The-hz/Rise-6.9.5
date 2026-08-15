@@ -13,7 +13,7 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.adz;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
@@ -42,7 +42,7 @@ public final class CPSCounter extends Module {
             double d5 = this.scale.y - 1.0F;
             double d6 = this.rz().getRound();
             this.rz();
-            RenderUtil.roundedRectangle(d2, d3, d4, d5, d6, adv.rK());
+            RenderUtil.roundedRectangle(d2, d3, d4, d5, d6, Themes.rK());
             this.position.n(new Vector2d(this.scale.x + 6.0F, this.scale.y - 1.0F));
             double d0 = vector2d.x + 3.0;
             double d1 = vector2d.y + this.scale.y / 2.0F - gb.MAIN.a(20, gd.REGULAR).height() / 4.0F;

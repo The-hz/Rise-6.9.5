@@ -9,9 +9,9 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
-import hackclient.rise.bv;
+import hackclient.rise.component.bv;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
@@ -54,7 +54,7 @@ extends Mode<NameTags> {
             Color color2 = new Color(255, 30, 30, 235);
             Color color3 = bl ? color2 : Color.BLACK;
             this.rz();
-            Color color4 = adv.rK();
+            Color color4 = Themes.rK();
             Color color5 = new Color(255, 40, 40, color4.getAlpha());
             Color color6 = color = bl ? ModernNameTags.a(color4, color5, 0.35f) : color4;
             if (((Boolean)this.atB.wo()).booleanValue()) {

@@ -11,7 +11,7 @@ import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.settings.GameSettings;
@@ -34,10 +34,10 @@ public class BufferAbuseBypass extends Mode<InventoryMove> {
                     this.Jq = true;
                 } else {
                     for (int i = 0; i < this.amount.wo().intValue(); i++) {
-                        ahj.m(new C0EPacketClickWindow());
+                        PacketUtil.m(new C0EPacketClickWindow());
                     }
 
-                    this.Jp.forEach(ahj::m);
+                    this.Jp.forEach(PacketUtil::m);
                     this.Jp.clear();
                     this.GU = true;
                 }

@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.other.ServerKickEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.interfaces.InstanceAccess;
-import hackclient.rise.er;
+import hackclient.rise.event.er;
 import hackclient.rise.fu;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;

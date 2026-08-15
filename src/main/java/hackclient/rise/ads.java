@@ -1,7 +1,7 @@
 package hackclient.rise;
 
-import hackclient.rise.ade;
-import hackclient.rise.adt;
+import com.alan.clients.ui.menu.Menu;
+import com.alan.clients.ui.menu.impl.serverfinder.ServerIP;
 import hackclient.rise.ahm;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import net.minecraft.client.resources.I18n;
 import org.apache.commons.lang3.StringUtils;
 
 public final class ads
-extends ade {
+extends Menu {
     private final Pattern aCK = Pattern.compile("((25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9]))");
     private final Pattern aCL = Pattern.compile("([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])");
     private final List<ServerData> servers = new ArrayList<ServerData>();
@@ -31,8 +31,8 @@ extends ade {
         String string;
         int n2;
         int n3;
-        adt adt2;
-        adt adt3;
+        ServerIP adt2;
+        ServerIP adt3;
         block7: {
             block6: {
                 block4: {
@@ -44,12 +44,12 @@ extends ade {
                                     ((GuiButton)this.buttonList.get((int)0)).displayString = "Stop";
                                     String[] stringArray2 = this.aCO.getText().split("-");
                                     if (!this.aCK.matcher(stringArray2[0]).matches()) break block1;
-                                    adt3 = new adt(stringArray2[0]);
-                                    adt2 = new adt(stringArray2[0]);
+                                    adt3 = new ServerIP(stringArray2[0]);
+                                    adt2 = new ServerIP(stringArray2[0]);
                                     if (stringArray2.length <= 1) break block2;
                                     Matcher matcher = this.aCK.matcher(stringArray2[1]);
                                     if (!matcher.matches()) break block3;
-                                    adt2 = new adt(stringArray2[1]);
+                                    adt2 = new ServerIP(stringArray2[1]);
                                 }
                                 if (!this.aCL.matcher((stringArray = this.aCP.getText().split("-"))[0]).matches()) break block4;
                                 n3 = Integer.parseInt(stringArray[0]);
@@ -82,15 +82,15 @@ extends ade {
         System.out.println("Started with " + n4 + " threads");
         this.servers.clear();
         this.done = false;
-        this.a(adt.a(adt3, adt2), adt.b(adt3, adt2), Math.min(n3, n2), Math.max(n3, n2));
+        this.a(ServerIP.a(adt3, adt2), ServerIP.b(adt3, adt2), Math.min(n3, n2), Math.max(n3, n2));
     }
 
-    private void a(adt adt2, adt adt3, int n2, int n3) {
-        adt adt4 = new adt(adt2.ru(), adt2.rv(), adt2.rw(), adt2.getThird());
+    private void a(ServerIP adt2, ServerIP adt3, int n2, int n3) {
+        ServerIP adt4 = new ServerIP(adt2.ru(), adt2.rv(), adt2.rw(), adt2.getThird());
         for (int i2 = 0; i2 < 4; ++i2) {
             for (int i3 = adt2.getPart(i2); i3 <= adt3.getPart(i2); ++i3) {
                 adt4.setPart(i2, i3);
-                adt adt5 = new adt(adt4.getPart(0), adt4.getPart(1), adt4.getPart(2), adt4.getPart(3));
+                ServerIP adt5 = new ServerIP(adt4.getPart(0), adt4.getPart(1), adt4.getPart(2), adt4.getPart(3));
                 int n4 = n2;
                 while (n4 <= n3) {
                     int n5 = n4++;

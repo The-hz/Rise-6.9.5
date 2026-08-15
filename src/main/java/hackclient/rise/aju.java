@@ -1,5 +1,7 @@
 package hackclient.rise;
 
+import com.alan.clients.util.vantage.OSUtil;
+import com.alan.clients.util.vantage.OperatingSystem;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
@@ -19,7 +21,7 @@ public class aju {
     private static String vX() {
         String s = vY();
         String s1 = vZ();
-        return ajv.wb().equals(ajw.WINDOWS) && s.length() >= 5 && s1.length() >= 5
+        return OSUtil.wb().equals(OperatingSystem.WINDOWS) && s.length() >= 5 && s1.length() >= 5
             ? new String(Base64.getEncoder().encode((s + "_" + s1).getBytes())).replaceAll("==", "")
             : bytesToHex(generateHWID());
     }
@@ -58,7 +60,7 @@ public class aju {
 
     private static byte[] generateHWID() {
         try {
-            ajw ajw = ajv.wb();
+            OperatingSystem ajw = OSUtil.wb();
             MessageDigest messagedigest = MessageDigest.getInstance("SHA-256");
             String s;
             if (ajw.equals(ajw.WINDOWS)) {

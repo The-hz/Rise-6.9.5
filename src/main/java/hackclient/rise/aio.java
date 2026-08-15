@@ -1,5 +1,6 @@
 package hackclient.rise;
 
+import com.alan.clients.util.math.MathUtil;
 import lombok.Generated;
 
 public final class aio {
@@ -10,8 +11,8 @@ public final class aio {
     private float aPq;
 
     public void ju() {
-        this.aIa = ahg.lerp(this.aIa, this.aPo, this.aPq);
-        this.aIb = ahg.lerp(this.aIb, this.aPp, this.aPq);
+        this.aIa = MathUtil.lerp(this.aIa, this.aPo, this.aPq);
+        this.aIb = MathUtil.lerp(this.aIb, this.aPp, this.aPq);
         if (Math.abs(this.aIa - this.aPo) < 0.05F) {
             this.aIa = this.aPo;
         }

@@ -1,5 +1,6 @@
 package hackclient.rise;
 
+import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.vector.Vector2d;
 import rip.vantage.commons.util.time.a;
 
@@ -18,7 +19,7 @@ public class afk {
 
     public void al(int var1) {
         Vector2d vector2d = afl.sW();
-        if (agj.mouseOver(this.apP, this.aHe, vector2d.x, vector2d.y) && var1 == 0) {
+        if (GUIUtil.mouseOver(this.apP, this.aHe, vector2d.x, vector2d.y) && var1 == 0) {
             this.dragging = true;
             this.bS.x = this.atg.x - vector2d.x;
             this.bS.y = this.atg.y - vector2d.y;

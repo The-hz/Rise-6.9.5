@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C02PacketUseEntity.Action;
 import net.minecraft.network.play.client.C02PacketUseEntity;
@@ -42,9 +42,9 @@ public final class WorldGuardRegen extends Mode<Regen> {
             C02PacketUseEntity c02packetuseentity = (C02PacketUseEntity)packet;
             if (c02packetuseentity.getAction().equals(Action.ATTACK)) {
                 var1x.setCancelled();
-                ahj.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, true));
-                ahj.m(c02packetuseentity);
-                ahj.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.05, aEg.thePlayer.posZ, false));
+                PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, true));
+                PacketUtil.m(c02packetuseentity);
+                PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.05, aEg.thePlayer.posZ, false));
             }
         }
     };

@@ -9,9 +9,9 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.impl.BoundsNumberValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahg;
-import hackclient.rise.ahj;
-import hackclient.rise.bb;
+import com.alan.clients.util.math.MathUtil;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
@@ -31,11 +31,11 @@ public class AutoHead extends Module {
                 if (itemstack != null && itemstack.getItem() instanceof ItemSkull && !(aEg.thePlayer.getHealth() > this.health.wo().floatValue())) {
                     SlotComponent slotcomponent = this.d(SlotComponent.class);
                     SlotComponent.setSlot(i);
-                    if (!bb.aW()) {
+                    if (!BadPacketsComponent.aW()) {
                         aEg.playerController.syncCurrentPlayItem();
                         SlotComponent slotcomponent1 = this.d(SlotComponent.class);
-                        ahj.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
-                        this.nextUse = Math.round(ahg.l(this.delay.wo().longValue(), this.delay.wA().longValue()));
+                        PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                        this.nextUse = Math.round(MathUtil.l(this.delay.wo().longValue(), this.delay.wA().longValue()));
                         this.abf.aX();
                     }
                 }

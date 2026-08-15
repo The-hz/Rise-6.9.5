@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.network.Packet;
@@ -89,7 +89,7 @@ public class WatchdogReduceVelocity extends Mode<Velocity> {
 
         try {
             for (Packet<?> packet : list) {
-                ahj.p(packet);
+                PacketUtil.p(packet);
             }
         } finally {
             this.vM = false;

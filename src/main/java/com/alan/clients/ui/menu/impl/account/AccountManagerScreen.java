@@ -7,10 +7,10 @@ import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.adh;
-import hackclient.rise.adm;
+import com.alan.clients.ui.menu.component.button.MenuButton;
+import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import hackclient.rise.adr;
-import hackclient.rise.aeb;
+import com.alan.clients.util.MouseUtil;
 import hackclient.rise.ael;
 import hackclient.rise.afv;
 import hackclient.rise.agk;
@@ -37,7 +37,7 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
         RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK);
     };
     private static final Animation SLIDE_ANIMATION = new Animation(Easing.EASE_OUT_CIRC, 350L);
-    private static final adh[] MENU_BUTTONS = new adh[2];
+    private static final MenuButton[] MENU_BUTTONS = new MenuButton[2];
     private static final List<AccountViewModel<?>> ACCOUNT_DISPLAY_LIST = new ArrayList<>();
     private static GuiScreen prevScreen;
     private boolean updateMarker;
@@ -80,7 +80,7 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
         air.disable();
         GL11.glPopMatrix();
 
-        for (adh adh : MENU_BUTTONS) {
+        for (MenuButton adh : MENU_BUTTONS) {
             if (adh != null) {
                 adh.draw(var1, var2, var3);
             }
@@ -108,8 +108,8 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
 
     @Override
     public void mouseClicked(int var1, int var2, int var3) {
-        for (adh adh : MENU_BUTTONS) {
-            if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+        for (MenuButton adh : MENU_BUTTONS) {
+            if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
                 adh.runAction();
                 return;
             }
@@ -138,10 +138,10 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
         byte b1 = 24;
         byte b2 = 5;
         int j = this.width / 2 - ((i & 1) == 0 ? 105 * (i / 2) - 2 : (b0 + b2) * (i / 2) + b0 / 2);
-        MENU_BUTTONS[0] = new adm(0.0, 0.0, 0.0, 0.0, ADD_ACCOUNT_RUNNABLE, "Add Account");
-        MENU_BUTTONS[1] = new adm(0.0, 0.0, 0.0, 0.0, CANCEL_RUNNABLE, "Cancel");
+        MENU_BUTTONS[0] = new MenuTextButton(0.0, 0.0, 0.0, 0.0, ADD_ACCOUNT_RUNNABLE, "Add Account");
+        MENU_BUTTONS[1] = new MenuTextButton(0.0, 0.0, 0.0, 0.0, CANCEL_RUNNABLE, "Cancel");
 
-        for (adh adh : MENU_BUTTONS) {
+        for (MenuButton adh : MENU_BUTTONS) {
             adh.setX(j);
             adh.setY(this.height - b1 - b2 * 2);
             adh.P(b0);

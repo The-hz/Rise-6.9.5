@@ -7,7 +7,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.motion.SlowDownEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemPotion;
@@ -71,8 +71,8 @@ public class GrimNoSlow extends Mode<NoSlow> {
 
     private void hE() {
         SlotComponent slotcomponent = this.d(SlotComponent.class);
-        ahj.l(new l(SlotComponent.bQ() % 8 + 1));
+        PacketUtil.l(new l(SlotComponent.bQ() % 8 + 1));
         slotcomponent = this.d(SlotComponent.class);
-        ahj.l(new l(SlotComponent.bQ()));
+        PacketUtil.l(new l(SlotComponent.bQ()));
     }
 }

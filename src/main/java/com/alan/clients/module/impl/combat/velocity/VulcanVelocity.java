@@ -25,9 +25,9 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
-import hackclient.rise.bv;
+import hackclient.rise.component.bv;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -211,7 +211,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                 || var1xx instanceof aa
                                 || var1xx instanceof z
                         )
-                        .forEach(ahj::p);
+                        .forEach(PacketUtil::p);
                     this.vr.clear();
                     this.tt = false;
                     this.vd = false;
@@ -259,7 +259,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                         || var1xx instanceof aa
                                         || var1xx instanceof z
                                 )
-                                .forEach(ahj::p);
+                                .forEach(PacketUtil::p);
                             this.vr.clear();
                             this.tt = false;
                             this.vd = false;
@@ -281,7 +281,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                     || var1xx instanceof aa
                                     || var1xx instanceof z
                             )
-                            .forEach(ahj::p);
+                            .forEach(PacketUtil::p);
                         this.vr.clear();
                         this.tt = false;
                     }
@@ -298,7 +298,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                     || var1xx instanceof aa
                                     || var1xx instanceof z
                             )
-                            .forEach(ahj::p);
+                            .forEach(PacketUtil::p);
                         this.vr.clear();
                         this.tt = false;
                     }
@@ -315,7 +315,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                     || var1xx instanceof aa
                                     || var1xx instanceof z
                             )
-                            .forEach(ahj::p);
+                            .forEach(PacketUtil::p);
                         this.vr.clear();
                         this.tt = false;
                     }
@@ -332,7 +332,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                     || var1xx instanceof aa
                                     || var1xx instanceof z
                             )
-                            .forEach(ahj::p);
+                            .forEach(PacketUtil::p);
                         this.vr.clear();
                         this.tt = false;
                     }
@@ -349,7 +349,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                     || var1xx instanceof aa
                                     || var1xx instanceof z
                             )
-                            .forEach(ahj::p);
+                            .forEach(PacketUtil::p);
                         this.vr.clear();
                         this.tt = false;
                     }
@@ -382,7 +382,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
             this.tt = true;
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             double d0 = aEg.thePlayer.motionY;
-            this.vr.forEach(ahj::p);
+            this.vr.forEach(PacketUtil::p);
             this.vr.clear();
             aEg.thePlayer.motionY = d0;
             aEg.thePlayer.motionX = vector2d.getX();
@@ -398,7 +398,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
             this.tt = true;
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             double d0 = aEg.thePlayer.motionY;
-            this.vr.forEach(ahj::p);
+            this.vr.forEach(PacketUtil::p);
             this.vr.clear();
             aEg.thePlayer.motionY = d0;
             aEg.thePlayer.motionX = vector2d.getX();
@@ -413,7 +413,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
             BlinkComponent.dispatch();
             Vector2d vector2d1 = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             double d1 = aEg.thePlayer.motionY;
-            this.vr.forEach(ahj::p);
+            this.vr.forEach(PacketUtil::p);
             this.vr.clear();
             aEg.thePlayer.jump();
             aEg.thePlayer.motionX = vector2d1.getX();
@@ -444,7 +444,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
             this.tt = true;
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             BlinkComponent.dispatch();
-            this.vr.forEach(ahj::p);
+            this.vr.forEach(PacketUtil::p);
             this.vr.clear();
             if (!this.e(Speed.class).isEnabled()) {
                 aEg.thePlayer.motionX = vector2d.getX();

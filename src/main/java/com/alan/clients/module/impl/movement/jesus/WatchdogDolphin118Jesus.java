@@ -16,8 +16,8 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
-import hackclient.rise.bd;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
 import java.util.ArrayList;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
@@ -97,7 +97,7 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
     public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (aEg.thePlayer.inWater) {
             aEg.timer.dzD = 0.5F;
-            ahj.l(new C03PacketPlayer(true));
+            PacketUtil.l(new C03PacketPlayer(true));
         }
 
         if (aEg.thePlayer.inWater) {
@@ -167,7 +167,7 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
             this.dj = false;
             this.tt = true;
             new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
-            this.Kz.forEach(ahj::p);
+            this.Kz.forEach(PacketUtil::p);
             this.Kv = false;
             if (aEg.thePlayer.Zl > 20 && this.IW > 0.4) {
                 aEg.thePlayer.motionX *= 1.23;
@@ -185,14 +185,14 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
 
     @Override
     public void onEnable() {
-        this.Kz.forEach(ahj::p);
+        this.Kz.forEach(PacketUtil::p);
         this.Kz.clear();
-        bd.cY = 0.0F;
+        FallDistanceComponent.cY = 0.0F;
     }
 
     @Override
     public void onDisable() {
-        this.Kz.forEach(ahj::p);
+        this.Kz.forEach(PacketUtil::p);
         this.Kz.clear();
         this.Kv = false;
         this.Kx = 0;

@@ -3,8 +3,8 @@ package com.alan.clients.anticheat.data;
 import com.alan.clients.Client;
 import com.alan.clients.anticheat.check.Check;
 import hackclient.rise.aih;
-import hackclient.rise.l;
-import hackclient.rise.o;
+import com.alan.clients.anticheat.check.manager.CheckManager;
+import com.alan.clients.anticheat.util.PacketUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,14 +86,14 @@ public final class PlayerData {
         this.ao = var1.serverPosX;
         this.ap = var1.serverPosY;
         this.aq = var1.serverPosZ;
-        this.checks = l.loadChecks(this);
+        this.checks = CheckManager.loadChecks(this);
     }
 
     public void handle(Packet<?> var1) {
         if (this.player.ticksExisted <= 80) {
             this.aV.aX();
         } else if (!Client.a.x().a(this.player) && this.player.adr && !this.player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer)) {
-            if (o.b(var1)) {
+            if (PacketUtil.b(var1)) {
                 S14PacketEntity s14packetentity = (S14PacketEntity)var1;
                 if (s14packetentity.entityId == this.player.getEntityId()) {
                     if (this.player.hurtTime != 0 && this.as > 9 && this.aZ > 40) {

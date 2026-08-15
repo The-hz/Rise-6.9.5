@@ -22,8 +22,8 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
-import hackclient.rise.bk;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.component.impl.player.PacketlessDamageComponent;
 import java.util.ArrayList;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFireball;
@@ -156,7 +156,7 @@ public class WatchdogFlight extends Mode<Flight> {
             aEg.gameSettings.keyBindJump.setPressed(false);
         }
 
-        if (this.e(LongJump.class).autoDisable.wo() && !bk.bd() && aEg.thePlayer.onGround && this.dE >= 999) {
+        if (this.e(LongJump.class).autoDisable.wo() && !PacketlessDamageComponent.bd() && aEg.thePlayer.onGround && this.dE >= 999) {
             ;
         }
 
@@ -225,7 +225,7 @@ public class WatchdogFlight extends Mode<Flight> {
 
         if (this.IQ == 1) {
             if (!this.IP) {
-                ahj.l(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getHeldItem()));
+                PacketUtil.l(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getHeldItem()));
                 this.IP = true;
                 if (this.IS != null && this.IS.isEnabled()) {
                     this.IS.aaW = 1500;
@@ -277,7 +277,7 @@ public class WatchdogFlight extends Mode<Flight> {
             new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             BlinkComponent.dispatch();
             MoveUtil.strafe();
-            this.IT.forEach(ahj::p);
+            this.IT.forEach(PacketUtil::p);
             aEg.thePlayer.motionY = 0.005;
             MoveUtil.strafe(1.59F);
             this.IT.clear();
@@ -352,7 +352,7 @@ public class WatchdogFlight extends Mode<Flight> {
             aEg.thePlayer.inventory.currentItem = this.IU;
         }
 
-        this.IT.forEach(ahj::p);
+        this.IT.forEach(PacketUtil::p);
         this.IT.clear();
         if (this.qI != -1) {
             aEg.thePlayer.inventory.currentItem = this.qI;

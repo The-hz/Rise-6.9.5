@@ -15,7 +15,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
-import hackclient.rise.aiu;
+import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.le;
 import java.util.function.Predicate;
 import net.minecraft.block.Block;
@@ -79,7 +79,7 @@ public final class ManualKBDisplacement extends Module {
                 if (this.Br == null) {
                     this.a("rejected:no-plan", null, this.Bq);
                 } else {
-                    Vector2f vector2f = aiu.calculate(this.Bq, true, this.trackingRange.wo().doubleValue());
+                    Vector2f vector2f = RotationUtil.calculate(this.Bq, true, this.trackingRange.wo().doubleValue());
                     Vector2f vector2f1 = new Vector2f(this.Br.Bz, vector2f.getY());
                     RotationComponent.a(vector2f1, this.rotationSpeed.wo().doubleValue(), MovementFix.NORMAL, null, true);
                     this.f(vector2f1);
@@ -197,7 +197,7 @@ public final class ManualKBDisplacement extends Module {
         }
 
         float f = (float)Math.toDegrees(Math.atan2(var5, var3)) - 90.0F;
-        float f1 = aiu.calculate(var1, true, this.trackingRange.wo().doubleValue()).getY();
+        float f1 = RotationUtil.calculate(var1, true, this.trackingRange.wo().doubleValue()).getY();
         return new le(var1.getEntityId(), f, f1, var7, d0, s);
     }
 

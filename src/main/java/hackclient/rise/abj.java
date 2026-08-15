@@ -1,5 +1,6 @@
 package hackclient.rise;
 
+import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
@@ -8,7 +9,7 @@ import java.awt.Color;
 import lombok.Generated;
 
 public class abj implements InstanceAccess {
-    private final adv ayt;
+    private final Themes ayt;
     private aka ayu = new aka(0.0, 0.0, 0.0);
     private final Animation ayv = new Animation(Easing.EASE_OUT_QUINT, 500L);
     private final Animation ayw = new Animation(Easing.EASE_OUT_QUINT, 500L);
@@ -67,7 +68,7 @@ public class abj implements InstanceAccess {
     }
 
     @Generated
-    public adv pK() {
+    public Themes pK() {
         return this.ayt;
     }
 
@@ -97,7 +98,7 @@ public class abj implements InstanceAccess {
     }
 
     @Generated
-    public abj(adv var1) {
+    public abj(Themes var1) {
         this.ayt = var1;
     }
 }

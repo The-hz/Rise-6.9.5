@@ -11,7 +11,7 @@ import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.value.impl.ColorValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.wc;
+import hackclient.rise.value.wc;
 import java.awt.Color;
 import lombok.Generated;
 import net.minecraft.network.play.server.S03PacketTimeUpdate;

@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.Client;
+import com.alan.clients.util.localization.Locale;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,21 +19,21 @@ public class ahd {
         return a(var0, Client.a.getLocale());
     }
 
-    public static String a(String var0, ahc var1) {
+    public static String a(String var0, Locale var1) {
         if (!populated) {
             populate();
         }
 
         String s = var1.getStrings().get(var0);
         if (s == null) {
-            s = ahc.EN_US.getStrings().get(var0);
+            s = Locale.EN_US.getStrings().get(var0);
         }
 
         return s == null ? var0 : s;
     }
 
     public static void populate() {
-        for (ahc ahc : ahc.values()) {
+        for (Locale ahc : Locale.values()) {
             ResourceLocation resourcelocation = new ResourceLocation("rise/text/" + ahc.getFile() + ".properties");
 
             try (

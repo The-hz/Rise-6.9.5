@@ -1,7 +1,11 @@
 package hackclient.rise;
 
 import com.alan.clients.Client;
+import com.alan.clients.ui.menu.Menu;
+import com.alan.clients.ui.menu.component.button.MenuButton;
+import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.ui.menu.impl.account.AccountManagerScreen;
+import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
@@ -12,13 +16,13 @@ import net.minecraft.client.gui.GuiSelectWorld;
 import net.minecraft.client.gui.ScaledResolution;
 import rip.vantage.network.core.a;
 
-public final class adr extends ade {
+public final class adr extends Menu {
     private Animation animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
-    private adm aCF;
-    private adm aCG;
-    private adm aCH;
-    private adm aCI;
-    private adh[] menuButtons;
+    private MenuTextButton aCF;
+    private MenuTextButton aCG;
+    private MenuTextButton aCH;
+    private MenuTextButton aCI;
+    private MenuButton[] menuButtons;
     private boolean rice;
 
     public adr() {
@@ -31,7 +35,7 @@ public final class adr extends ade {
             aiv.aPL.a(aiz.OVERLAY, var3, null);
             this.b(gg.BLUR).c(() -> RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK));
 
-            for (adh adh : this.menuButtons) {
+            for (MenuButton adh : this.menuButtons) {
                 adh.draw(var1, var2, var3);
             }
 
@@ -82,8 +86,8 @@ public final class adr extends ade {
     public void mouseClicked(int var1, int var2, int var3) {
         if (this.menuButtons != null) {
             if (var3 == 0) {
-                for (adh adh : this.menuButtons) {
-                    if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+                for (MenuButton adh : this.menuButtons) {
+                    if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
                         adh.runAction();
                         break;
                     }
@@ -102,13 +106,13 @@ public final class adr extends ade {
         byte b1 = 6;
         int k = i - 90;
         int l = j - 12 - 3 - 12;
-        this.aCF = new adm(k, l, short1, b0, () -> aEg.displayGuiScreen(new GuiSelectWorld(this)), "Singleplayer");
-        this.aCG = new adm(k, l + b0 + b1, short1, b0, () -> aEg.displayGuiScreen(new GuiMultiplayer(this)), "Multiplayer");
-        this.aCH = new adm(
+        this.aCF = new MenuTextButton(k, l, short1, b0, () -> aEg.displayGuiScreen(new GuiSelectWorld(this)), "Singleplayer");
+        this.aCG = new MenuTextButton(k, l + b0 + b1, short1, b0, () -> aEg.displayGuiScreen(new GuiMultiplayer(this)), "Multiplayer");
+        this.aCH = new MenuTextButton(
             k + short1 / 2 + b1 / 2, l + b0 * 2 + b1 * 2, short1 / 2 - b1 / 2, b0, () -> aEg.displayGuiScreen(new AccountManagerScreen(this)), "Alts"
         );
-        this.aCI = new adm(k, l + b0 * 2 + b1 * 2, short1 / 2 - b1 / 2, b0, () -> aEg.displayGuiScreen(new GuiOptions(this, aEg.gameSettings)), "Options");
+        this.aCI = new MenuTextButton(k, l + b0 * 2 + b1 * 2, short1 / 2 - b1 / 2, b0, () -> aEg.displayGuiScreen(new GuiOptions(this, aEg.gameSettings)), "Options");
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
-        this.menuButtons = new adh[]{this.aCF, this.aCG, this.aCH, this.aCI};
+        this.menuButtons = new MenuButton[]{this.aCF, this.aCG, this.aCH, this.aCI};
     }
 }

@@ -12,9 +12,9 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aip;
 import hackclient.rise.ais;
 import hackclient.rise.bf;
@@ -60,7 +60,7 @@ public class GodlyTargetInfo extends Mode<TargetInfo> {
                 HealthBypass healthbypass = this.e(HealthBypass.class);
                 float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractclientplayer) : abstractclientplayer.getHealth();
                 double d2 = this.avg.getStringWidth(s1);
-                double d3 = Math.min(!this.aui.inWorld ? 0.0 : ahg.round(f, 1), abstractclientplayer.getMaxHealth());
+                double d3 = Math.min(!this.aui.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
                 double d4 = Math.max(d2 + 15.0, 70.0);
                 this.avl.Q(d3 / abstractclientplayer.getMaxHealth() * d4);
                 this.avl.setEasing(Easing.EASE_OUT_QUINT);
@@ -83,13 +83,13 @@ public class GodlyTargetInfo extends Mode<TargetInfo> {
                         double d15 = d8 - 3.5;
                         double d16 = d9 - 4.0;
                         this.rz();
-                        RenderUtil.roundedRectangle(d0, d1, d15, d16, 8.0, adv.rK());
+                        RenderUtil.roundedRectangle(d0, d1, d15, d16, 8.0, Themes.rK());
                     }
 
                     double d11 = d8 - 3.5;
                     double d12 = d9 - 4.0;
                     this.rz();
-                    RenderUtil.roundedRectangle(d0, d1, d11, d12, 8.0, adv.rK());
+                    RenderUtil.roundedRectangle(d0, d1, d11, d12, 8.0, Themes.rK());
                     String s2 = String.valueOf(Math.round(f));
                     GlStateManager.pushMatrix();
                     this.avg.b(s1, d0 + 6.0 + b0 + 7.0 - 2.5, d1 + 6.0 + 4.0 - 2.0, color.hashCode());
@@ -103,11 +103,11 @@ public class GodlyTargetInfo extends Mode<TargetInfo> {
                     double d13 = d0 + 6.0 + b0 + 7.0 - 2.5;
                     double d14 = d1 + 6.0 + b0 - 4.0 - 6.0;
                     this.rz();
-                    Color color2 = adv.rK();
+                    Color color2 = Themes.rK();
                     this.rz();
-                    color2 = aip.d(color2, (int)(adv.rK().getAlpha() / 1.7F));
+                    color2 = aip.d(color2, (int)(Themes.rK().getAlpha() / 1.7F));
                     this.rz();
-                    RenderUtil.a(d13, d14, d4, 6.0, 3.0, color2, adv.rK(), true);
+                    RenderUtil.a(d13, d14, d4, 6.0, 3.0, color2, Themes.rK(), true);
                     RenderUtil.a(d0 + 6.0 + b0 + 7.0 - 2.5, d1 + 6.0 + b0 - 4.0 - 6.0, d5, 6.0, 3.0, color1, color, false);
                     GlStateManager.popMatrix();
                 });
@@ -146,7 +146,7 @@ public class GodlyTargetInfo extends Mode<TargetInfo> {
         ais.vL();
         double d0 = this.rz().getRound() * 2;
         this.rz();
-        RenderUtil.roundedRectangle(var2, var4, var6, var6, d0, adv.rK());
+        RenderUtil.roundedRectangle(var2, var4, var6, var6, d0, Themes.rK());
         ais.aD(1);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);

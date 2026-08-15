@@ -11,7 +11,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.abw;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import hackclient.rise.aip;
 import hackclient.rise.aka;
@@ -439,7 +439,7 @@ public class BedPlates extends Module {
             double d9 = var2 - d7 / 2.0;
             double d10 = var4 - d8 - d5 - 8.0 - var6 * (d8 + d5 + 6.0);
             int i = this.kS();
-            Color color = adv.rK();
+            Color color = Themes.rK();
             Color color1 = this.a(color, var1.le());
             Color color2 = this.rz().rA();
             Color color3 = new Color(

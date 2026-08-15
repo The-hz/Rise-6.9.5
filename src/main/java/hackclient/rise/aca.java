@@ -15,7 +15,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import hackclient.rise.abd;
+import com.alan.clients.ui.click.standard.components.ModuleComponent;
 import hackclient.rise.abw;
 import hackclient.rise.abx;
 import hackclient.rise.aci;
@@ -23,7 +23,7 @@ import hackclient.rise.acj;
 import hackclient.rise.aec;
 import hackclient.rise.agk;
 import hackclient.rise.ajt;
-import hackclient.rise.er;
+import hackclient.rise.event.er;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
 import java.awt.Color;
@@ -49,7 +49,7 @@ InstanceAccess {
     private acj azF = new acj(Arrays.asList(new aci("", "Loading"), new aci("", "Loading"), new aci("", "Loading")), "Featured Configs");
     private acj azG = new acj(Arrays.asList(new aci("", "Loading"), new aci("", "Loading"), new aci("", "Loading")), "Community Configs");
     private acj azH = new acj(Arrays.asList(new aci("", ""), new aci("", ""), new aci("", "")), "Your Configs");
-    private ArrayList<abd> azI = new ArrayList();
+    private ArrayList<ModuleComponent> azI = new ArrayList();
     public acj[] azJ = new acj[]{this.azF, this.azH};
     private boolean azK;
     private Animation animation = new Animation(Easing.EASE_OUT_EXPO, 400L);
@@ -98,7 +98,7 @@ InstanceAccess {
         }
         gb.MAIN.a(18, gd.REGULAR).a("Your Scripts", vector2f.x, vector2f.y, Color.WHITE.getRGB());
         vector2f.y += (float)10 + gb.MAIN.a(18, gd.REGULAR).height();
-        Iterator<abd> iterator = this.azI.iterator();
+        Iterator<ModuleComponent> iterator = this.azI.iterator();
         while (true) {
             if (!iterator.hasNext()) {
                 double d3 = 7.0;
@@ -109,7 +109,7 @@ InstanceAccess {
                 double d6 = riseClickGUI.axS - 0.99;
                 return;
             }
-            abd abd2 = iterator.next();
+            ModuleComponent abd2 = iterator.next();
             abd2.draw(new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.axJ.aym + 8.0, vector2f.y), n2, n3, f2);
             vector2f.y += abd2.scale.y + 7.0f;
         }
@@ -117,7 +117,7 @@ InstanceAccess {
 
     @Override
     public void a(char c2, int n2) {
-        Iterator<abd> iterator = this.azI.iterator();
+        Iterator<ModuleComponent> iterator = this.azI.iterator();
         while (iterator.hasNext()) {
             iterator.next().key(c2, n2);
         }
@@ -133,9 +133,9 @@ InstanceAccess {
                 concurrentModificationException.printStackTrace();
             }
         }
-        Iterator<abd> iterator = this.azI.iterator();
+        Iterator<ModuleComponent> iterator = this.azI.iterator();
         while (iterator.hasNext()) {
-            abd abd2 = iterator.next();
+            ModuleComponent abd2 = iterator.next();
             abd2.click(n2, n3, n4);
         }
         return;
@@ -143,7 +143,7 @@ InstanceAccess {
 
     @Override
     public void oG() {
-        Iterator<abd> iterator = this.azI.iterator();
+        Iterator<ModuleComponent> iterator = this.azI.iterator();
         while (iterator.hasNext()) {
             iterator.next().pz();
         }
@@ -151,7 +151,7 @@ InstanceAccess {
 
     @Override
     public void pY() {
-        Iterator<abd> iterator = this.azI.iterator();
+        Iterator<ModuleComponent> iterator = this.azI.iterator();
         while (iterator.hasNext()) {
             iterator.next().ci();
         }
@@ -222,7 +222,7 @@ InstanceAccess {
     }
 
     @Generated
-    public ArrayList<abd> qm() {
+    public ArrayList<ModuleComponent> qm() {
         return this.azI;
     }
 
@@ -267,7 +267,7 @@ InstanceAccess {
     }
 
     @Generated
-    public void c(ArrayList<abd> arrayList) {
+    public void c(ArrayList<ModuleComponent> arrayList) {
         this.azI = arrayList;
     }
 

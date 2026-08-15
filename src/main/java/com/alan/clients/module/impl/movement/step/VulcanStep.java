@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.StepEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 
 public class VulcanStep extends Mode<Step> {
@@ -22,7 +22,7 @@ public class VulcanStep extends Mode<Step> {
     public final Listener<StepEvent> onStep = var0 -> {
         if (var0.getHeight() > 0.6) {
             aEg.timer.dzD = 0.5F;
-            ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.5, aEg.thePlayer.posZ, true));
+            PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.5, aEg.thePlayer.posZ, true));
         }
     };
 

@@ -12,10 +12,10 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aih;
-import hackclient.rise.aiu;
-import hackclient.rise.bv;
+import com.alan.clients.util.rotation.RotationUtil;
+import hackclient.rise.component.bv;
 import net.minecraft.block.BlockAir;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
@@ -68,7 +68,7 @@ public final class KeepRange extends Module {
                 if (aih.v(entitylivingbase) < d0 - 0.05) {
                     float f = var1.getForward();
                     float f1 = var1.getStrafe();
-                    double d1 = MathHelper.wrapAngleTo180_double(aiu.y(entitylivingbase).getX() - 180.0F);
+                    double d1 = MathHelper.wrapAngleTo180_double(RotationUtil.y(entitylivingbase).getX() - 180.0F);
                     if (f == 0.0F && f1 == 0.0F) {
                         return;
                     }
@@ -81,7 +81,7 @@ public final class KeepRange extends Module {
                         for (float f6 = -1.0F; f6 <= 1.0F; f6++) {
                             if (f6 != 0.0F || f5 != 0.0F) {
                                 double d2 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction(aEg.thePlayer.pl, f5, f6)));
-                                double d3 = ahg.n(d1, d2);
+                                double d3 = MathUtil.n(d1, d2);
                                 if (d3 < f4) {
                                     f4 = (float)d3;
                                     f2 = f5;

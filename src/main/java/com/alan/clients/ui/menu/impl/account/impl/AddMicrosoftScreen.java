@@ -7,9 +7,9 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
-import hackclient.rise.adh;
-import hackclient.rise.adm;
-import hackclient.rise.aeb;
+import com.alan.clients.ui.menu.component.button.MenuButton;
+import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
+import com.alan.clients.util.MouseUtil;
 import hackclient.rise.aep;
 import hackclient.rise.agc;
 import hackclient.rise.aiv;
@@ -29,7 +29,7 @@ public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
     private static final agc INFO_FONT_RENDERER = gb.MAIN.a(18, gd.REGULAR);
     private static AccountViewModel<aep> accountViewModel;
     private static GuiScreen reference;
-    private final adh[] menuButtons = new adh[2];
+    private final MenuButton[] menuButtons = new MenuButton[2];
     private Animation animation;
     private static final Runnable CANCEL_RUNNABLE = () -> aEg.displayGuiScreen(new AccountManagerScreen(reference));
     private static final Runnable ADD_RUNNABLE = () -> {
@@ -115,7 +115,7 @@ public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
                 }
             );
         accountViewModel.draw();
-        adh[] aadh = this.menuButtons;
+        MenuButton[] aadh = this.menuButtons;
         int i = aadh.length;
 
         for (int j = 0; j < i; j++) {
@@ -125,8 +125,8 @@ public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
 
     @Override
     public void mouseClicked(int var1, int var2, int var3) {
-        for (adh adh : this.menuButtons) {
-            if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+        for (MenuButton adh : this.menuButtons) {
+            if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
                 adh.runAction();
                 break;
             }
@@ -143,8 +143,8 @@ public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
         byte b1 = 4;
         float f = 196 / 2.0F;
         Vector2d vector2d = new Vector2d(this.width / 2 - 100, this.height / 2 + 76);
-        this.menuButtons[0] = new adm(vector2d.x, vector2d.y, f, b0, ADD_RUNNABLE, "Add");
-        this.menuButtons[1] = new adm(vector2d.x + f + b1, vector2d.y, f, b0, CANCEL_RUNNABLE, "Back");
+        this.menuButtons[0] = new MenuTextButton(vector2d.x, vector2d.y, f, b0, ADD_RUNNABLE, "Add");
+        this.menuButtons[1] = new MenuTextButton(vector2d.x + f + b1, vector2d.y, f, b0, CANCEL_RUNNABLE, "Back");
         accountViewModel = new AccountViewModel<>(aep.sn(), this.width / 2 - 100, this.height / 2 + 32, 200.0F, 40.0F);
         accountViewModel.setScreenHeight(this.height);
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);

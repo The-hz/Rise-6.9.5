@@ -7,7 +7,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.play.client.C02PacketUseEntity.Action;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 
@@ -21,7 +21,7 @@ public final class ComboOneHit extends Module {
     @EventLink
     public final Listener<AttackEvent> onAttack = var1 -> {
         for (int i = 0; i < this.packets.wo().intValue(); i++) {
-            ahj.l(new C02PacketUseEntity(var1.dc(), Action.ATTACK));
+            PacketUtil.l(new C02PacketUseEntity(var1.dc(), Action.ATTACK));
         }
     };
 

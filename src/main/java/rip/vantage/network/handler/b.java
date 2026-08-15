@@ -15,12 +15,12 @@ import com.alan.clients.value.impl.ListValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.aha;
-import hackclient.rise.ahc;
+import com.alan.clients.util.localization.Locale;
 import hackclient.rise.ahd;
 import hackclient.rise.aju;
-import hackclient.rise.er;
+import hackclient.rise.event.er;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -84,7 +84,7 @@ public final class b implements rip.vantage.commons.handler.api.c {
                         String s = module.getModuleInfo().aliases()[0];
                         hashmap.put(s, module);
 
-                        for (ahc ahc : ahc.values()) {
+                        for (Locale ahc : Locale.values()) {
                             String s1 = ahd.a(s, ahc);
                             if (s1 != null && !s1.isEmpty() && !s1.equals(s)) {
                                 hashmap.putIfAbsent(s1, module);
@@ -111,7 +111,7 @@ public final class b implements rip.vantage.commons.handler.api.c {
                         if (!flag) {
                             String[] astring1 = s3.split("th_");
                             if (astring1.length > 1) {
-                                rip.vantage.util.a.a(() -> Client.a.k().a(adv.valueOf(astring1[1])));
+                                rip.vantage.util.a.a(() -> Client.a.k().a(Themes.valueOf(astring1[1])));
                             }
 
                             flag = true;

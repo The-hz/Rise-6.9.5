@@ -9,7 +9,7 @@ import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aip;
 import hackclient.rise.bf;
 import hackclient.rise.gg;
@@ -49,7 +49,7 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
         float f = healthbypass != null && healthbypass.isEnabled()
             ? HealthBypass.B(abstractclientplayer)
             : abstractclientplayer.getHealth();
-        double d2 = Math.min(!this.ava.inWorld ? 0.0 : ahg.round(f, 1), abstractclientplayer.getMaxHealth());
+        double d2 = Math.min(!this.ava.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
         double d3 = abstractclientplayer.getMaxHealth();
         double d4 = d2 / d3 * 100.0;
         String s = entity.getName();

@@ -7,7 +7,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.input.ChatInputEvent;
 import hackclient.rise.afi;
-import hackclient.rise.er;
+import hackclient.rise.event.er;
 import net.minecraft.util.EnumChatFormatting;
 import org.apache.commons.lang3.StringUtils;
 import rip.vantage.commons.packet.impl.client.community.b;

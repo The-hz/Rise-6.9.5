@@ -12,8 +12,8 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.ahj;
-import hackclient.rise.bd;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 
@@ -45,11 +45,11 @@ public class MatrixDamageFlight extends Mode<Flight> {
             var1x.setOnGround(false);
         }
 
-        if (this.newSelfDamage.wo() && bd.cY > 3.0F) {
+        if (this.newSelfDamage.wo() && FallDistanceComponent.cY > 3.0F) {
             var1x.setOnGround(true);
             aEg.thePlayer.onGround = true;
             aEg.thePlayer.motionY = 0.0;
-            bd.cY = 0.0F;
+            FallDistanceComponent.cY = 0.0F;
         }
     };
     @EventLink
@@ -164,9 +164,9 @@ public class MatrixDamageFlight extends Mode<Flight> {
         this.Ip = false;
         aEg.timer.dzD = 1.0F;
         if (this.packet.wo()) {
-            ahj.m(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
-            ahj.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, false));
-            ahj.m(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
+            PacketUtil.m(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
+            PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, false));
+            PacketUtil.m(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
         }
     }
 }

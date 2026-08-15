@@ -18,8 +18,8 @@ import com.alan.clients.value.impl.NumberValue;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
-import hackclient.rise.bv;
+import com.alan.clients.util.packet.PacketUtil;
+import hackclient.rise.component.bv;
 import java.util.ArrayList;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
@@ -150,14 +150,14 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
                 if (f1 <= f2 || f1 >= 360.0F - f2) {
                     tt = true;
                     dj = false;
-                    this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(ahj::p);
+                    this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::p);
                     this.vA.clear();
                     tt = false;
                     this.tR = 0;
                 } else if (aEg.thePlayer.tR > 13) {
                     tt = true;
                     dj = false;
-                    this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(ahj::p);
+                    this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::p);
                     this.vA.clear();
                     tt = false;
                 }
@@ -169,7 +169,7 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
 
                 tt = true;
                 dj = false;
-                this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(ahj::p);
+                this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::p);
                 this.vA.clear();
                 tt = false;
             }

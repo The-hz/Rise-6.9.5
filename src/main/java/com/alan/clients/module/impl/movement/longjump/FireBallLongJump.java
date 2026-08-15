@@ -14,8 +14,8 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
-import hackclient.rise.aik;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.util.player.SlotUtil;
 import net.minecraft.init.Items;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 
@@ -75,7 +75,7 @@ public class FireBallLongJump extends Mode<LongJump> {
             }
         }
 
-        int i = aik.findItem(Items.fire_charge);
+        int i = SlotUtil.findItem(Items.fire_charge);
         if (aEg.thePlayer.cqL == 1) {
             MoveUtil.stop();
         }
@@ -86,7 +86,7 @@ public class FireBallLongJump extends Mode<LongJump> {
             SlotComponent.setSlot(i);
             if (this.tick == 2) {
                 SlotComponent slotcomponent1 = this.d(SlotComponent.class);
-                ahj.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
             }
 
             RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 90.0F), 10.0, MovementFix.OFF);

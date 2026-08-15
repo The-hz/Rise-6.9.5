@@ -5,7 +5,7 @@ import com.alan.clients.component.impl.player.SlotComponent;
 import com.alan.clients.script.api.wrapper.ScriptWrapper;
 import com.alan.clients.script.api.wrapper.impl.vector.ScriptVector3d;
 import hackclient.rise.aih;
-import hackclient.rise.aik;
+import com.alan.clients.util.player.SlotUtil;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.util.BlockPos;
@@ -24,11 +24,11 @@ public class ScriptBlockPos extends ScriptWrapper<BlockPos> {
         WorldClient worldclient = MC.theWorld;
         BlockPos blockpos = this.wrapped;
         SlotComponent slotcomponent = Client.a.h().b(SlotComponent.class);
-        return aik.getPlayerRelativeBlockHardness(entityplayersp, worldclient, blockpos, SlotComponent.bQ());
+        return SlotUtil.getPlayerRelativeBlockHardness(entityplayersp, worldclient, blockpos, SlotComponent.bQ());
     }
 
     public float getHardness(int var1) {
-        return aik.getPlayerRelativeBlockHardness(MC.thePlayer, MC.theWorld, this.wrapped, var1);
+        return SlotUtil.getPlayerRelativeBlockHardness(MC.thePlayer, MC.theWorld, this.wrapped, var1);
     }
 
     public ScriptBlock getBlock() {

@@ -7,6 +7,8 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.newevent.impl.render.Render2DEvent;
+import com.alan.clients.ui.theme.Themes;
+import com.alan.clients.util.localization.Locale;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
@@ -31,7 +33,7 @@ public class ys extends Mode<Interface> {
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1x -> {
         if (aEg != null && !aEg.gameSettings.bJf && aEg.theWorld != null && aEg.thePlayer != null) {
-            agc agc = Client.a.getLocale() == ahc.ZH_ZH ? gb.MAIN.a(18, gd.REGULAR) : aEg.fontRendererObj;
+            agc agc = Client.a.getLocale() == Locale.ZH_ZH ? gb.MAIN.a(18, gd.REGULAR) : aEg.fontRendererObj;
             int i = 0;
             Color[] acolor = new Color[]{new Color(91, 206, 250), new Color(245, 169, 184), Color.WHITE, new Color(245, 169, 184)};
             int j = 0;
@@ -106,7 +108,7 @@ public class ys extends Mode<Interface> {
                     }
 
                     if (this.arraylistBackground.wo()) {
-                        RenderUtil.d(d1 - 2.0, d2 - 2.0, zc.atj + zc.atk + 4.0F, this.getParent().aoq, adv.rK());
+                        RenderUtil.d(d1 - 2.0, d2 - 2.0, zc.atj + zc.atk + 4.0F, this.getParent().aoq, Themes.rK());
                     }
 
                     if (this.arraylistSideBar.wo()) {
@@ -141,7 +143,7 @@ public class ys extends Mode<Interface> {
     public final Listener<TickEvent> onTick = var1x -> aMR.execute(() -> {
         for (zc zc : this.getParent().lL()) {
             if (zc.ath != 0.0F) {
-                agc agc = Client.a.getLocale() == ahc.ZH_ZH ? gb.MAIN.a(18, gd.REGULAR) : aEg.fontRendererObj;
+                agc agc = Client.a.getLocale() == Locale.ZH_ZH ? gb.MAIN.a(18, gd.REGULAR) : aEg.fontRendererObj;
                 zc.y(!zc.getTag().isEmpty() && this.getParent().suffix.wo());
                 String s = (this.getParent().lowercase.wo() ? zc.nx().toLowerCase() : zc.nx()).replace(this.getParent().lH().wo() ? " " : "", "");
                 String s1 = (this.getParent().lowercase.wo() ? zc.getTag().toLowerCase() : zc.getTag()).replace(this.getParent().lH().wo() ? " " : "", "");

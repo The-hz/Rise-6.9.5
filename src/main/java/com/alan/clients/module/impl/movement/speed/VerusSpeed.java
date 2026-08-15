@@ -17,9 +17,9 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.ahj;
-import hackclient.rise.aik;
-import hackclient.rise.bb;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.util.player.SlotUtil;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 import java.util.Random;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -151,12 +151,12 @@ public class VerusSpeed extends Mode<Speed> {
             }
 
             if (!aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.tR < 2) {
-                int i = aik.vx();
-                if (!bb.bad(false, true, false, false, false) && !this.e(Scaffold.class).isEnabled()) {
+                int i = SlotUtil.vx();
+                if (!BadPacketsComponent.bad(false, true, false, false, false) && !this.e(Scaffold.class).isEnabled()) {
                     Random random = new Random();
                     float f2 = random.nextFloat();
                     float f3 = random.nextFloat();
-                    ahj.l(
+                    PacketUtil.l(
                         new C08PacketPlayerBlockPlacement(
                             new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ),
                             EnumFacing.UP.getIndex(),
@@ -178,12 +178,12 @@ public class VerusSpeed extends Mode<Speed> {
                     MoveUtil.strafe(0.4645);
                 }
 
-                bb.bad(false, true, true, false, false);
-                if (!bb.bad(false, true, false, false, false) & this.cJ) {
+                BadPacketsComponent.bad(false, true, true, false, false);
+                if (!BadPacketsComponent.bad(false, true, false, false, false) & this.cJ) {
                     this.QN = aEg.thePlayer.ticksExisted + 2;
                 }
 
-                if (!bb.bad(false, true, false, false, false) & aEg.thePlayer.ticksExisted % 10 == 1) {
+                if (!BadPacketsComponent.bad(false, true, false, false, false) & aEg.thePlayer.ticksExisted % 10 == 1) {
                     this.QN = aEg.thePlayer.ticksExisted + 2;
                 }
 
@@ -258,11 +258,11 @@ public class VerusSpeed extends Mode<Speed> {
     @Override
     public void onEnable() {
         this.GQ = true;
-        if (this.mode.wo().getName().equals("yPort") && !bb.bad(true, true, true, true, true) && !this.e(Scaffold.class).isEnabled()) {
+        if (this.mode.wo().getName().equals("yPort") && !BadPacketsComponent.bad(true, true, true, true, true) && !this.e(Scaffold.class).isEnabled()) {
             Random random = new Random();
             float f = random.nextFloat();
             float f1 = random.nextFloat();
-            ahj.l(
+            PacketUtil.l(
                 new C08PacketPlayerBlockPlacement(
                     new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ),
                     EnumFacing.UP.getIndex(),
@@ -280,11 +280,11 @@ public class VerusSpeed extends Mode<Speed> {
 
     @Override
     public void onDisable() {
-        if (this.mode.wo().getName().equals("yPort") && !bb.bad(true, true, true, true, true) && !this.e(Scaffold.class).isEnabled()) {
+        if (this.mode.wo().getName().equals("yPort") && !BadPacketsComponent.bad(true, true, true, true, true) && !this.e(Scaffold.class).isEnabled()) {
             Random random = new Random();
             float f = random.nextFloat();
             float f1 = random.nextFloat();
-            ahj.l(
+            PacketUtil.l(
                 new C08PacketPlayerBlockPlacement(
                     new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ),
                     EnumFacing.UP.getIndex(),

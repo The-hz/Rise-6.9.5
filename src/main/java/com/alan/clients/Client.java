@@ -17,19 +17,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.florianmichael.viamcp.ViaMCP;
 import hackclient.rise.aal;
-import hackclient.rise.aba;
+import hackclient.rise.ui.screen.aba;
 import hackclient.rise.abs;
 import hackclient.rise.adu;
 import hackclient.rise.aeg;
-import hackclient.rise.afr;
+import com.alan.clients.util.file.FileManager;
 import hackclient.rise.afv;
-import hackclient.rise.afx;
+import com.alan.clients.util.file.config.ConfigManager;
 import hackclient.rise.afz;
-import hackclient.rise.aga;
-import hackclient.rise.agb;
-import hackclient.rise.ahc;
+import com.alan.clients.util.file.insult.InsultFile;
+import com.alan.clients.util.file.insult.InsultManager;
+import com.alan.clients.util.localization.Locale;
 import hackclient.rise.b;
-import hackclient.rise.dg;
+import com.alan.clients.creative.RiseTab;
 import hackclient.rise.gf;
 import hackclient.rise.q;
 import hackclient.rise.r;
@@ -75,24 +75,24 @@ public enum Client
     public static boolean j;
     public ModuleManager moduleManager;
     public SecurityFeatureManager securityManager;
-    public agb D;
+    public InsultManager D;
     public RiseClickGUI standardClickGUI;
     public adu t;
     public CommandManager commandManager;
-    public afr A;
+    public FileManager A;
     public r s;
     public ExecutorService executor;
     public afz v;
     public static Object Oo0o00000O00;
-    public dg J;
+    public RiseTab J;
     public gf G;
-    public afx B;
+    public ConfigManager B;
     public static Client[] $VALUES;
 
 
     public b w;
     public static boolean h;
-    public ahc l;
+    public Locale l;
     public com.alan.clients.security.b r;
 
     @Generated
@@ -252,7 +252,7 @@ public enum Client
 
 
     @Generated
-    public afx p() {
+    public ConfigManager p() {
         return this.B;
     }
 
@@ -275,7 +275,7 @@ public enum Client
         return this.w;
     }
 
-    public void a(ahc ahc2) {
+    public void a(Locale ahc2) {
         if (ahc2 == null) {
             return;
         }
@@ -342,7 +342,7 @@ public enum Client
     }
 
     @Generated
-    public ahc getLocale() {
+    public Locale getLocale() {
         return this.l;
     }
 
@@ -362,7 +362,7 @@ public enum Client
     }
 
     @Generated
-    public void b(final ahc l) {
+    public void b(final Locale l) {
         this.l = l;
     }
 
@@ -504,7 +504,7 @@ public enum Client
     }
 
     @Generated
-    public dg w() {
+    public RiseTab w() {
         return this.J;
     }
 
@@ -530,7 +530,7 @@ public enum Client
 
     Client() {
         this.executor = Executors.newSingleThreadExecutor();
-        this.l = ahc.EN_US;
+        this.l = Locale.EN_US;
         this.K = new GsonBuilder().setPrettyPrinting().create();
     }
 
@@ -540,12 +540,12 @@ public enum Client
     }
 
     @Generated
-    public agb r() {
+    public InsultManager r() {
         return this.D;
     }
 
     @Generated
-    public afr o() {
+    public FileManager o() {
         return this.A;
     }
 
@@ -561,10 +561,10 @@ public enum Client
         this.moduleManager = new ModuleManager();
         this.componentManager = new ComponentManager();
         this.commandManager = new CommandManager();
-        this.A = new afr();
-        this.B = new afx();
+        this.A = new FileManager();
+        this.B = new ConfigManager();
         this.C = new afv();
-        this.D = new agb();
+        this.D = new InsultManager();
         this.v = new afz();
         this.r = new com.alan.clients.security.b();
         this.s = new r();
@@ -591,8 +591,8 @@ public enum Client
         (this.standardClickGUI = new RiseClickGUI()).initGui();
         (this.I = new aba()).initGui();
         this.D.update();
-        this.D.forEach(aga::te);
-        this.J = new dg();
+        this.D.forEach(InsultFile::te);
+        this.J = new RiseTab();
         new Thread(() -> {
             ViaMCP.create();
             ViaMCP.INSTANCE.initAsyncSlider();

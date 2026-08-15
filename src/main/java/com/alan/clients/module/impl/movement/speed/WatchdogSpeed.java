@@ -24,10 +24,10 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.afi;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aih;
-import hackclient.rise.bb;
-import hackclient.rise.bd;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
 import java.util.Objects;
 import java.util.Random;
 import net.minecraft.block.BlockIce;
@@ -166,7 +166,7 @@ public class WatchdogSpeed extends Mode<Speed> {
 
             aih.b(0.0, true);
             double d1;
-            int i = (d1 = bd.cY - 1.4) == 0.0 ? 0 : (d1 < 0.0 ? -1 : 1);
+            int i = (d1 = FallDistanceComponent.cY - 1.4) == 0.0 ? 0 : (d1 < 0.0 ? -1 : 1);
             if (aEg.thePlayer.onGround && !(Math.abs(d0 - Math.round(d0)) > 0.03)) {
                 ;
             }
@@ -320,7 +320,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                                         aEg.thePlayer.motionZ - (aEg.thePlayer.lastTickPosZ - aEg.thePlayer.crA)
                                     );
                                     boolean flag1;
-                                    if (!(d7 < 2.0) && !(ahg.n(d5, d6) > 90.0) && !HJ && !(d8 < 0.0125)) {
+                                    if (!(d7 < 2.0) && !(MathUtil.n(d5, d6) > 90.0) && !HJ && !(d8 < 0.0125)) {
                                         flag1 = true;
                                     } else {
                                         flag1 = false;
@@ -658,7 +658,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                         aEg.thePlayer.motionZ - (aEg.thePlayer.lastTickPosZ - aEg.thePlayer.crA)
                     );
                     boolean flag2;
-                    if (!(d13 < 5.0) && !(ahg.n(d11, d12) > 90.0) && !HJ && !(d14 < 0.0125)) {
+                    if (!(d13 < 5.0) && !(MathUtil.n(d11, d12) > 90.0) && !HJ && !(d14 < 0.0125)) {
                         flag2 = true;
                     } else {
                         flag2 = false;
@@ -817,7 +817,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                     }
                 }
 
-                if (ahg.n(d0, d1) < 5.0
+                if (MathUtil.n(d0, d1) < 5.0
                     && Objects.equals(this.mode.wo().getName(), "Low Strafe")
                     && this.frictionFullDisabler.wo()
                     && (!this.RE || aEg.thePlayer.tR > 2 && aEg.thePlayer.tR < 6)
@@ -855,7 +855,7 @@ public class WatchdogSpeed extends Mode<Speed> {
             double d0 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
             double d1 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
             if (this.airStrafe.wo() && this.mode.wo().getName() == "Strafe") {
-                if (ahg.n(d0, d1) > 90.0) {
+                if (MathUtil.n(d0, d1) > 90.0) {
                     if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                         MoveUtil.a(MoveUtil.speed(), (float)d1 - 180.0F);
                     } else {
@@ -869,7 +869,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                     aEg.thePlayer.motionX = (aEg.thePlayer.motionX * 3.0 + d2 * 1.0) / 4.0;
                 }
             } else if (this.airStrafe.wo()) {
-                if (ahg.n(d0, d1) > 90.0) {
+                if (MathUtil.n(d0, d1) > 90.0) {
                     MoveUtil.a(MoveUtil.speed(), (float)d1 - 180.0F);
                 } else {
                     if (this.Rt.wo() && aEg.thePlayer.ae > 20) {
@@ -906,7 +906,7 @@ public class WatchdogSpeed extends Mode<Speed> {
     @Override
     public void onEnable() {
         HJ = false;
-        if (!bb.bad(true, true, false, true, true) && !this.e(Scaffold.class).isEnabled()) {
+        if (!BadPacketsComponent.bad(true, true, false, true, true) && !this.e(Scaffold.class).isEnabled()) {
             Random random = new Random();
             random.nextFloat();
             random.nextFloat();

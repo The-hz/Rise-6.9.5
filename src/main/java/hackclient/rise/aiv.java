@@ -1,7 +1,14 @@
 package hackclient.rise;
 
+import com.alan.clients.util.shader.impl.AlphaShader;
+import com.alan.clients.util.shader.impl.MainMenuBackgroundShader;
+import com.alan.clients.util.shader.impl.RGQShader;
+import com.alan.clients.util.shader.impl.ROGQShader;
+import com.alan.clients.util.shader.impl.ROQShader;
+import hackclient.rise.render.shader.ajc;
+
 public interface aiv {
-    ajb aPA = new ajb();
+    AlphaShader aPA = new AlphaShader();
     aix aPB = new ajd();
     aix aPC = new ajd();
     aix aPD = new ajd();
@@ -9,10 +16,10 @@ public interface aiv {
     ajf aPF = new ajf();
     aix aPG = new aji();
     ajo aPH = new ajo();
-    ajk aPI = new ajk();
-    ajn aPJ = new ajn();
-    ajm aPK = new ajm();
-    aix aPL = new ajh();
+    RGQShader aPI = new RGQShader();
+    ROQShader aPJ = new ROQShader();
+    ROGQShader aPK = new ROGQShader();
+    aix aPL = new MainMenuBackgroundShader();
     aix aPM = new ajc();
     ajl aPN = new ajl();
     ajp aPO = new ajp();

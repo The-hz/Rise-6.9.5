@@ -1,8 +1,9 @@
 package hackclient.rise;
 
+import com.alan.clients.ui.click.standard.components.popup.PopUp;
 import com.alan.clients.util.vector.Vector2f;
 
-public class abi extends abh {
+public class abi extends PopUp {
     public abi() {
     }
 

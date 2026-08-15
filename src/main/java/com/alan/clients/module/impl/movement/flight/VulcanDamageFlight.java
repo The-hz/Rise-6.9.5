@@ -9,7 +9,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.ahz;
 import hackclient.rise.aia;
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
@@ -26,7 +26,7 @@ public class VulcanDamageFlight extends Mode<Flight> {
         }
 
         if (aEg.thePlayer.ae == 1) {
-            ahj.l(
+            PacketUtil.l(
                 new C06PacketPlayerPosLook(
                     aEg.thePlayer.posX, aEg.thePlayer.posY - 2.0, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false
                 )

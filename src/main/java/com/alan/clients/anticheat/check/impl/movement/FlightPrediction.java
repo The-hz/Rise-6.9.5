@@ -7,7 +7,7 @@ import com.alan.clients.anticheat.data.PlayerData;
 import com.alan.clients.util.player.MoveUtil;
 import hackclient.rise.adz;
 import hackclient.rise.aih;
-import hackclient.rise.o;
+import com.alan.clients.anticheat.util.PacketUtil;
 import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
@@ -50,7 +50,7 @@ public final class FlightPrediction extends Check {
 
     @Override
     public void handle(Packet<?> var1) {
-        if (o.b(var1) && ((S14PacketEntity)var1).entityId == this.data.getPlayer().getEntityId() || var1 instanceof z && ((z)var1).cqK == this.data.getPlayer().getEntityId()) {
+        if (PacketUtil.b(var1) && ((S14PacketEntity)var1).entityId == this.data.getPlayer().getEntityId() || var1 instanceof z && ((z)var1).cqK == this.data.getPlayer().getEntityId()) {
             EntityOtherPlayerMP entityotherplayermp = this.data.getPlayer();
             if (!this.af && this.data.ae() <= 20) {
                 this.af = true;

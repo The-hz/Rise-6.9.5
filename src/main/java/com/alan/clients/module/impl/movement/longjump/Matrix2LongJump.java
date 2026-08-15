@@ -18,7 +18,7 @@ import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.api.type.Types;
 import com.viaversion.viaversion.protocols.v1_8to1_9.packet.ServerboundPackets1_9;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
@@ -46,7 +46,7 @@ public class Matrix2LongJump extends Mode<LongJump> {
                 packetwrapper.sendToServer(Protocol1_9To1_8.class);
             }
 
-            ahj.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, false));
+            PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, false));
             aEg.thePlayer.setPosition(d0, d1, d2);
             aEg.thePlayer.jump();
             this.getParent().setEnabled(false);

@@ -18,9 +18,9 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.cg;
-import hackclient.rise.ci;
+import hackclient.rise.component.ci;
 import hackclient.rise.cl;
 import hackclient.rise.gg;
 import java.util.ArrayList;
@@ -303,7 +303,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
             }
             else if (Watchdog2LongJump.hQ == Watchdog2LongJump.LZ) {
                 preMotionEvent.setPosY(preMotionEvent.getPosY() + 1.0E-13);
-                ahj.l(new C03PacketPlayer(true));
+                PacketUtil.l(new C03PacketPlayer(true));
                 if (this.timer.wo()) {
                     Watchdog2LongJump.aEg.timer.dzD = 0.5f;
                 }

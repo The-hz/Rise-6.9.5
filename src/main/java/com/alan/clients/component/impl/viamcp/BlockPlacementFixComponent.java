@@ -9,7 +9,7 @@ import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C07PacketPlayerDigging.Action;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
@@ -25,11 +25,11 @@ public final class BlockPlacementFixComponent extends Component {
             Packet packet = var0.dq();
             if (packet instanceof C07PacketPlayerDigging c07packetplayerdigging
                 && (c07packetplayerdigging.getStatus() == Action.DROP_ITEM || c07packetplayerdigging.getStatus() == Action.DROP_ALL_ITEMS)) {
-                ahj.l(new m());
+                PacketUtil.l(new m());
             }
 
             if (packet instanceof C0EPacketClickWindow c0epacketclickwindow && c0epacketclickwindow.getMode() == 4) {
-                ahj.l(new m());
+                PacketUtil.l(new m());
             }
 
             if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_17)

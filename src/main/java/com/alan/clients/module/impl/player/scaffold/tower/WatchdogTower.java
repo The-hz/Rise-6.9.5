@@ -21,8 +21,8 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import hackclient.rise.aih;
-import hackclient.rise.aik;
-import hackclient.rise.aiu;
+import com.alan.clients.util.player.SlotUtil;
+import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
@@ -400,7 +400,7 @@ public class WatchdogTower extends Mode<Scaffold> {
     public void onEnable() {
         this.akl = false;
         SlotComponent slotcomponent = this.d(SlotComponent.class);
-        SlotComponent.setSlot(aik.vx());
+        SlotComponent.setSlot(SlotUtil.vx());
         this.akn = 0;
         this.HJ = false;
         this.aks = Double.NaN;
@@ -450,7 +450,7 @@ public class WatchdogTower extends Mode<Scaffold> {
         }
 
         this.getParent().agy = aka;
-        aiu.d(aka);
+        RotationUtil.d(aka);
         if (!MoveUtil.isMoving() && !flag) {
             RotationComponent.d(false);
             float f = (float)(d0 + 164.0 + (Math.random() - 0.5) * 3.0);

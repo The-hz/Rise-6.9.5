@@ -10,7 +10,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import hackclient.rise.aih;
 import hackclient.rise.aka;
-import hackclient.rise.bd;
+import com.alan.clients.component.impl.player.FallDistanceComponent;
 
 public class BlinkAntiVoid extends Mode<AntiVoid> {
     private aka Ft;
@@ -23,14 +23,14 @@ public class BlinkAntiVoid extends Mode<AntiVoid> {
                 this.Ft = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
                 this.EC = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
                 this.ka = new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
-            } else if (bd.cY > 4.0F) {
+            } else if (FallDistanceComponent.cY > 4.0F) {
                 aEg.thePlayer.setPosition(this.Ft.x, this.Ft.y, this.Ft.z);
                 aEg.thePlayer.motionX = 0.0;
                 aEg.thePlayer.motionY = MoveUtil.predictedMotion(this.EC.y);
                 aEg.thePlayer.motionZ = 0.0;
                 aEg.thePlayer.pl = this.ka.x;
                 aEg.thePlayer.rotationPitch = this.ka.y;
-                bd.cY = 0.0F;
+                FallDistanceComponent.cY = 0.0F;
                 BlinkComponent.disable();
                 BlinkComponent.dispatch();
             }

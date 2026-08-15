@@ -5,11 +5,11 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.render.Render2DEvent;
 import hackclient.rise.aha;
-import hackclient.rise.ait;
+import com.alan.clients.util.render.particle.Particle;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class NotificationComponent extends Component implements aha {
-    public static ConcurrentLinkedQueue<ait> hu = new ConcurrentLinkedQueue<>();
+    public static ConcurrentLinkedQueue<Particle> hu = new ConcurrentLinkedQueue<>();
     public static int hv;
     public static int hw;
     @EventLink(value = 4)
@@ -19,7 +19,7 @@ public class NotificationComponent extends Component implements aha {
     }
 
     public static void ci() {
-        hu.forEach(ait::ci);
+        hu.forEach(Particle::ci);
         hw = aEg.ingameGUI.bnh;
     }
 
@@ -32,11 +32,11 @@ public class NotificationComponent extends Component implements aha {
             }
         });
         if (!hu.isEmpty()) {
-            aMR.execute(() -> hu.forEach(ait::ju));
+            aMR.execute(() -> hu.forEach(Particle::ju));
         }
     }
 
-    public static void a(ait var0) {
+    public static void a(Particle var0) {
         hu.add(var0);
     }
 }

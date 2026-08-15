@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
+import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import java.awt.Color;
@@ -36,7 +37,7 @@ public class agk implements InstanceAccess {
         }
 
         for (int i = 0; i < this.rG.aKx(); i++) {
-            this.scroll = ahg.m(this.scroll, this.aJc, 0.01F);
+            this.scroll = MathUtil.m(this.scroll, this.aJc, 0.01F);
         }
 
         this.aJg = Math.abs(this.scroll - this.aJc) > 0.5;

@@ -3,8 +3,8 @@ package com.alan.clients.value.impl;
 import com.alan.clients.module.Module;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.Value;
-import hackclient.rise.abl;
-import hackclient.rise.abt;
+import com.alan.clients.ui.click.standard.components.value.ValueComponent;
+import hackclient.rise.ui.value.abt;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 import lombok.Generated;
@@ -67,7 +67,7 @@ public class NumberValue extends Value<Number> {
     }
 
     @Override
-    public abl wl() {
+    public ValueComponent wl() {
         return this.wG();
     }
 }

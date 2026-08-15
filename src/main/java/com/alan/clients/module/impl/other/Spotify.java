@@ -16,9 +16,9 @@ import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
 import com.alan.clients.value.impl.SubMode;
 import com.google.gson.Gson;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.afi;
-import hackclient.rise.afr;
+import com.alan.clients.util.file.FileManager;
 import hackclient.rise.agd;
 import hackclient.rise.air;
 import hackclient.rise.gb;
@@ -115,7 +115,7 @@ public class Spotify extends Module {
     public int Wn = -1;
     public gb Wo = gb.MAIN;
     public static boolean Wp = false;
-    public final File Wq = new File(afr.DIRECTORY, "data");
+    public final File Wq = new File(FileManager.DIRECTORY, "data");
     private static final String Wr = "spotify.json";
     private float Ws = 0.0F;
     private final float Wt = 105.0F;
@@ -291,9 +291,9 @@ public class Spotify extends Module {
                     double d16 = this.positionValue.aHe.getY();
                     double d17 = f8;
                     this.rz();
-                    Color color1 = adv.rK();
+                    Color color1 = Themes.rK();
                     this.rz();
-                    RenderUtil.a(d13, d14, d15, d16, d17, color1, adv.rK(), false);
+                    RenderUtil.a(d13, d14, d15, d16, d17, color1, Themes.rK(), false);
                     float f10 = this.d(this.We, 20);
                     float f11 = this.d(this.Wf, 16);
                     this.Wu = f10 > 105.0F;
@@ -324,7 +324,7 @@ public class Spotify extends Module {
                     d14 = this.positionValue.apP.getY() + 45.0;
                     d15 = this.positionValue.aHe.getX() - 75.0;
                     this.rz();
-                    RenderUtil.roundedRectangle(d1, d14, d15, 6.0, 3.0, adv.rK());
+                    RenderUtil.roundedRectangle(d1, d14, d15, 6.0, 3.0, Themes.rK());
                     RenderUtil.a(
                         d1,
                         this.positionValue.apP.getY() + 45.0,

@@ -1,5 +1,6 @@
 package hackclient.rise;
 
+import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.vector.Vector2d;
 import java.awt.Color;
 import java.awt.Toolkit;
@@ -156,7 +157,7 @@ public class agm {
 
     public void click(int var1, int var2, int var3) {
         Vector2d vector2d = this.getPosition();
-        boolean flag = agj.c(vector2d.x + (this.aJl == agl.CENTER ? -this.width / 2.0F : 0.0F), vector2d.y, this.width, this.lq.height(), var1, var2);
+        boolean flag = GUIUtil.c(vector2d.x + (this.aJl == agl.CENTER ? -this.width / 2.0F : 0.0F), vector2d.y, this.width, this.lq.height(), var1, var2);
         this.ayU = var3 == 0 && flag;
         if (this.ayU) {
             this.aJk = this.XS.length();

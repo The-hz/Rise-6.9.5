@@ -1,5 +1,6 @@
 package hackclient.rise;
 
+import com.alan.clients.util.file.FileManager;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.BufferedReader;
@@ -9,7 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 public final class afb {
-    private static final File aFW = new File(afr.DIRECTORY, "alts/localts_config.json");
+    private static final File aFW = new File(FileManager.DIRECTORY, "alts/localts_config.json");
     private static String cs = "";
     private static String aFX = "";
 

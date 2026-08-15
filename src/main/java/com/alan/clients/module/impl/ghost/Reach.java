@@ -14,7 +14,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.BoundsNumberValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.aef;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.ea;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
@@ -33,7 +33,7 @@ public class Reach extends Module {
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> this.BV++;
     @EventLink
     public final Listener<MouseOverEvent> onMouseOver = var1 -> {
-        double d0 = ahg.l(this.range.wo().doubleValue(), this.range.wA().doubleValue());
+        double d0 = MathUtil.l(this.range.wo().doubleValue(), this.range.wA().doubleValue());
         var1.setRange(d0);
         if (!this.gR()) {
             MovingObjectPosition movingobjectposition = aef.a(RotationComponent.bH(), d0, var1.dB(), aEg.thePlayer, false);

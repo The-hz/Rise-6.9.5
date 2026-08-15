@@ -12,8 +12,8 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.ahj;
-import hackclient.rise.ahu;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.util.pathfinding.unlegit.MainPathFinder;
 import hackclient.rise.ahy;
 import hackclient.rise.aip;
 import hackclient.rise.gb;
@@ -79,7 +79,7 @@ extends Mode<Teleport> {
         if (!MiniBloxTeleport.aEg.gameSettings.keyBindSneak.isKeyDown()) {
             return;
         }
-        List<ahy> list = ahu.a(new ahy(MiniBloxTeleport.aEg.thePlayer.posX, MiniBloxTeleport.aEg.thePlayer.posY, MiniBloxTeleport.aEg.thePlayer.posZ), this.Sx, true);
+        List<ahy> list = MainPathFinder.a(new ahy(MiniBloxTeleport.aEg.thePlayer.posX, MiniBloxTeleport.aEg.thePlayer.posY, MiniBloxTeleport.aEg.thePlayer.posZ), this.Sx, true);
         if (list == null || list.isEmpty()) {
             return;
         }
@@ -87,7 +87,7 @@ extends Mode<Teleport> {
             MiniBloxTeleport.aEg.thePlayer.setPosition(MiniBloxTeleport.aEg.thePlayer.posX, MiniBloxTeleport.aEg.thePlayer.posY - 1.0E-4, MiniBloxTeleport.aEg.thePlayer.posZ);
         }
         for (ahy ahy2 : list) {
-            ahj.m(new C03PacketPlayer.C04PacketPlayerPosition(ahy2.getX(), ahy2.getY(), ahy2.getZ(), true));
+            PacketUtil.m(new C03PacketPlayer.C04PacketPlayerPosition(ahy2.getX(), ahy2.getY(), ahy2.getZ(), true));
         }
     };
     @EventLink

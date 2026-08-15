@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.Client;
+import com.alan.clients.util.file.insult.InsultManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +28,7 @@ final class act implements ada {
             }
 
             String s5 = astring[1] == null ? "" : astring[1].toLowerCase(Locale.ROOT);
-            agb agb = Client.a.r();
+            InsultManager agb = Client.a.r();
             agb.update();
             ArrayList arraylist1 = new ArrayList();
             agb.forEach(var2 -> {

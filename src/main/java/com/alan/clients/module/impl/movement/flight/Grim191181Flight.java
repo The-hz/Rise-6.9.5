@@ -11,7 +11,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
@@ -37,7 +37,7 @@ public class Grim191181Flight extends Mode<Flight> {
         this.onPostStrafe = var1x -> {
             aEg.timer.dzD = this.timer.wo().floatValue();
             if (!this.Eo && aEg.thePlayer.fallDistance > 0.0F) {
-                ahj.l(new C03PacketPlayer(true));
+                PacketUtil.l(new C03PacketPlayer(true));
                 aEg.thePlayer.fallDistance = 0.0F;
                 this.Eo = true;
             }

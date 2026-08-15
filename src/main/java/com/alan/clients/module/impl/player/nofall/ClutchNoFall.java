@@ -12,8 +12,8 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import hackclient.rise.afi;
-import hackclient.rise.aik;
-import hackclient.rise.aiu;
+import com.alan.clients.util.player.SlotUtil;
+import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.uo;
 import java.util.Iterator;
 import net.minecraft.init.Items;
@@ -43,7 +43,7 @@ public class ClutchNoFall extends Mode<NoFall> {
                     return;
                 }
 
-                this.CF = hackclient.rise.aik.findItem(Items.water_bucket);
+                this.CF = com.alan.clients.util.player.SlotUtil.findItem(Items.water_bucket);
                 if (this.CF == -1) {
                     return;
                 }
@@ -83,7 +83,7 @@ public class ClutchNoFall extends Mode<NoFall> {
             case WAIT_LAND:
                 if (aEg.thePlayer.onGround || this.aie.T(3000L)) {
                     if (this.CG != null) {
-                        this.aig = hackclient.rise.aik.findItem(Items.bucket);
+                        this.aig = com.alan.clients.util.player.SlotUtil.findItem(Items.bucket);
                         afi.b("S");
                         if (this.aig != -1) {
                             this.aic = uo.PICKUP;
@@ -104,7 +104,7 @@ public class ClutchNoFall extends Mode<NoFall> {
                     SlotComponent.setSlot(this.aig);
                     aEg.thePlayer.inventory.currentItem = this.aig;
                     Vec3 vec3 = new Vec3(this.CG.getX() + 0.5, this.CG.getY() + 0.5, this.CG.getZ() + 0.5);
-                    this.aik = aiu.h(vec3);
+                    this.aik = RotationUtil.h(vec3);
                     RotationComponent.setRotations(this.aik, 10.0, MovementFix.NORMAL);
                     this.aij = true;
                 } else {

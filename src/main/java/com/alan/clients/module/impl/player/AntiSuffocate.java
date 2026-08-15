@@ -7,7 +7,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.play.client.C07PacketPlayerDigging.Action;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.BlockPos;
@@ -19,7 +19,7 @@ public class AntiSuffocate extends Module {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.thePlayer.isEntityInsideOpaqueBlock()) {
-            ahj.l(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, new BlockPos(aEg.thePlayer).down(), EnumFacing.UP));
+            PacketUtil.l(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, new BlockPos(aEg.thePlayer).down(), EnumFacing.UP));
             if (this.swing.wo()) {
                 aEg.thePlayer.swingItem();
             }

@@ -52,18 +52,18 @@ import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import hackclient.rise.aef;
 import hackclient.rise.afi;
-import hackclient.rise.ahg;
-import hackclient.rise.ahj;
+import com.alan.clients.util.math.MathUtil;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aib;
 import hackclient.rise.aih;
-import hackclient.rise.aik;
-import hackclient.rise.aiu;
+import com.alan.clients.util.player.SlotUtil;
+import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
-import hackclient.rise.bb;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 import hackclient.rise.ea;
 import hackclient.rise.en;
 import hackclient.rise.ub;
-import hackclient.rise.vz;
+import hackclient.rise.mode.vz;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
@@ -208,7 +208,7 @@ public class Scaffold extends Module {
                     MovingObjectPosition movingobjectposition1 = aef.c(new Vector2f(entityplayersp1.pl + i * 3, 0.0F), 6.0);
                     entityplayersp1.setPosition(entityplayersp1.posX, entityplayersp1.posY + d3, entityplayersp1.posZ);
                     if (movingobjectposition1 != null && movingobjectposition1.hitVec != null) {
-                        Vector2f vector2f7 = aiu.h(movingobjectposition1.hitVec);
+                        Vector2f vector2f7 = RotationUtil.h(movingobjectposition1.hitVec);
                         if (aef.a(vector2f7, this.blockFace, aib.va())) {
                             arraylist.add(vector2f7);
                         }
@@ -238,7 +238,7 @@ public class Scaffold extends Module {
                     this.acs = vector2f.x;
                     this.act = vector2f.y;
                 } else {
-                    Vector2f vector2f2 = aiu.a(new aka(this.blockFace.getX(), this.blockFace.getY(), this.blockFace.getZ()), aib.va());
+                    Vector2f vector2f2 = RotationUtil.a(new aka(this.blockFace.getX(), this.blockFace.getY(), this.blockFace.getZ()), aib.va());
                     this.acs = vector2f2.x;
                     this.act = vector2f2.y;
                 }
@@ -260,7 +260,7 @@ public class Scaffold extends Module {
                     MovingObjectPosition movingobjectposition = aef.c(new Vector2f(entityplayersp.pl + i2 * 3, 0.0F), this.extendBlockReachOnWatchdogTelly.wo() ? 4.5 : 5.5);
                     entityplayersp.setPosition(entityplayersp.posX, entityplayersp.posY + d1, entityplayersp.posZ);
                     if (movingobjectposition != null && movingobjectposition.hitVec != null) {
-                        Vector2f vector2f3 = aiu.h(movingobjectposition.hitVec);
+                        Vector2f vector2f3 = RotationUtil.h(movingobjectposition.hitVec);
                         if (aef.a(vector2f3, this.blockFace, aib.va())) {
                             arraylist1.add(vector2f3);
                         }
@@ -290,7 +290,7 @@ public class Scaffold extends Module {
                     this.acs = vector2f4.x;
                     this.act = vector2f4.y;
                 } else {
-                    Vector2f vector2f6 = aiu.a(new aka(this.blockFace.getX(), this.blockFace.getY(), this.blockFace.getZ()), aib.va());
+                    Vector2f vector2f6 = RotationUtil.a(new aka(this.blockFace.getX(), this.blockFace.getY(), this.blockFace.getZ()), aib.va());
                     if (!aef.a(new Vector2f(this.acs, this.act), this.blockFace, aib.va())) {
                         this.acs = vector2f6.x;
                         this.act = vector2f6.y;
@@ -355,16 +355,16 @@ public class Scaffold extends Module {
             Vec3 vec3 = this.getHitVec();
             if (equals2 != 0) {
                 float f1 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.acs - aEg.thePlayer.pl);
-                ahj.l(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, f1, this.act, aEg.thePlayer.onGround));
+                PacketUtil.l(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, f1, this.act, aEg.thePlayer.onGround));
                 PlayerControllerMP playercontrollermp1 = aEg.playerController;
                 EntityPlayerSP entityplayersp1 = aEg.thePlayer;
                 WorldClient worldclient1 = aEg.theWorld;
                 SlotComponent slotcomponent1 = this.d(SlotComponent.class);
                 if (playercontrollermp1.onPlayerRightClick(entityplayersp1, worldclient1, SlotComponent.getItemStack(), this.blockFace, this.acr.va(), vec3)) {
-                    ahj.l(new m());
+                    PacketUtil.l(new m());
                 }
 
-                ahj.l(
+                PacketUtil.l(
                     new C06PacketPlayerPosLook(
                         aEg.thePlayer.posX,
                         aEg.thePlayer.posY,
@@ -382,7 +382,7 @@ public class Scaffold extends Module {
                 WorldClient worldclient = aEg.theWorld;
                 SlotComponent slotcomponent = this.d(SlotComponent.class);
                 if (playercontrollermp.onPlayerRightClick(entityplayersp, worldclient, SlotComponent.getItemStack(), this.blockFace, this.acr.va(), vec3)) {
-                    ahj.l(new m());
+                    PacketUtil.l(new m());
                 }
             }
         }
@@ -577,7 +577,7 @@ public class Scaffold extends Module {
     public Vector2f a(BlockPos var1, aib var2, float var3, float var4, float var5, int var6) {
         float f2 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
         float f3 = MathHelper.clamp_float((float)(85.0 + Math.random() * 0.1), var4, var5);
-        return aiu.m(new Vector2f(f2, f3));
+        return RotationUtil.m(new Vector2f(f2, f3));
     }
 
     public Vector2f a(BlockPos var1, EnumFacing var2, float var3, boolean var4, float var5) {
@@ -748,7 +748,7 @@ public class Scaffold extends Module {
         this.upSideDown = new BooleanValue("Up Side Down", this, false, () -> !this.advanced.wo());
         this.bypassRaycastWhenFalling = new BooleanValue("Bypass Raycast When Falling", this, false, () -> !this.advanced.wo());
         this.agy = new aka(0.0, 0.0, 0.0);
-        this.onPacketReceiveEvent = ahj::j;
+        this.onPacketReceiveEvent = PacketUtil::j;
         this.onPreMotionEvent = var1 -> {
             this.e(Flight.class).isEnabled();
             this.agy = new aka(0.0, 0.0, 0.0);
@@ -779,7 +779,7 @@ public class Scaffold extends Module {
                         45.0F
                     );
                     if (vector2f1 == null) {
-                        vector2f1 = aiu.a(new aka(this.blockFace.getX(), this.blockFace.getY(), this.blockFace.getZ()), aib.va());
+                        vector2f1 = RotationUtil.a(new aka(this.blockFace.getX(), this.blockFace.getY(), this.blockFace.getZ()), aib.va());
                     }
 
                     Vector2f vector2f2 = new Vector2f(vector2f1.x, MathHelper.clamp_float(vector2f1.y, 80.0F, 89.9F));
@@ -1094,7 +1094,7 @@ public class Scaffold extends Module {
                     || aEg.thePlayer.cqL < 3
                     || Sprint.Ek == 12) {
                     SlotComponent slotcomponent = this.d(SlotComponent.class);
-                    SlotComponent.b(aik.vx(), this.render.wo());
+                    SlotComponent.b(SlotUtil.vx(), this.render.wo());
                 }
 
                 if (aEg.gameSettings.keyBindJump.isKeyDown() && !MoveUtil.isMoving() && !this.e(Speed.class).isEnabled()) {
@@ -1120,13 +1120,13 @@ public class Scaffold extends Module {
 
                 this.agJ = aEg.thePlayer.tR >= 2 && !(Math.random() > 0.3) ? 1 : 0;
                 if (!this.watchdogPrediction.wo()) {
-                    int l1 = flag5 ? 0 : (int)ahg.l(this.placeDelay.wo().intValue(), this.placeDelay.wA().intValue());
-                    this.agH = !bb.bad(false, true, false, false, true) && this.acu > l1;
+                    int l1 = flag5 ? 0 : (int)MathUtil.l(this.placeDelay.wo().intValue(), this.placeDelay.wA().intValue());
+                    this.agH = !BadPacketsComponent.bad(false, true, false, false, true) && this.acu > l1;
                 } else {
-                    this.agH = !bb.bad(false, true, false, false, true) && this.acu > this.agJ;
+                    this.agH = !BadPacketsComponent.bad(false, true, false, false, true) && this.acu > this.agJ;
                 }
 
-                bb.bad(false, true, false, false, true);
+                BadPacketsComponent.bad(false, true, false, false, true);
                 float f6 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
                 boolean flag8 = Math.abs(f6 % 90.0F) <= 10.0F || Math.abs(f6 % 90.0F) >= 80.0F;
                 WatchdogDownwards.bj++;
@@ -1435,7 +1435,7 @@ public class Scaffold extends Module {
             }
         }
 
-        return vector2f1 != null ? vector2f1 : aiu.a(new aka(var1.getX(), var1.getY(), var1.getZ()), enumfacing);
+        return vector2f1 != null ? vector2f1 : RotationUtil.a(new aka(var1.getX(), var1.getY(), var1.getZ()), enumfacing);
     }
 
     @Generated
@@ -1453,7 +1453,7 @@ public class Scaffold extends Module {
         int name = Integer.parseInt(String.valueOf(this.yawOffset.wo().getName()));
         double d3 = this.rotationSpeed.wo().doubleValue();
         double d4 = this.rotationSpeed.wA().doubleValue();
-        float f6 = (float)ahg.l(d3, d4);
+        float f6 = (float)MathUtil.l(d3, d4);
         MovementFix movementfix = this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF;
         aib aib = this.acr != null ? this.acr : this.agw;
         if (aib != null) {
@@ -1617,7 +1617,7 @@ public class Scaffold extends Module {
                             Float f13 = (float)(85.0 + Math.random() * 0.5);
                             this.acs = f12;
                             this.act = f13;
-                            RotationComponent.setRotations(aiu.m(new Vector2f(this.acs, this.act)), 180.0, MovementFix.NORMAL);
+                            RotationComponent.setRotations(RotationUtil.m(new Vector2f(this.acs, this.act)), 180.0, MovementFix.NORMAL);
                             int k6_hi = 1;
                             this.agN = true;
                         } else {
@@ -1626,7 +1626,7 @@ public class Scaffold extends Module {
                                 Vector2f vector2f = this.a(this.blockFace, aib, 360.0F, 0.0F, 90.0F, -45);
                                 this.acs = vector2f.x;
                                 this.act = (float)(vector2f.y + Math.random() * 0.5);
-                                RotationComponent.setRotations(aiu.m(new Vector2f(this.acs, this.act)), 10.0, MovementFix.NORMAL);
+                                RotationComponent.setRotations(RotationUtil.m(new Vector2f(this.acs, this.act)), 10.0, MovementFix.NORMAL);
                                 int i7_hi = 1;
                                 this.agN = true;
                             } else {
@@ -1657,8 +1657,8 @@ public class Scaffold extends Module {
                                         f15 = this.watchdogTellyRotationSpeed.wA().floatValue();
                                     }
 
-                                    this.acs = this.b(this.acs, vector2f1.x, (float)ahg.l(f14, f15));
-                                    this.act = this.b(this.act, vector2f1.y, (float)ahg.l(f14, f15));
+                                    this.acs = this.b(this.acs, vector2f1.x, (float)MathUtil.l(f14, f15));
+                                    this.act = this.b(this.act, vector2f1.y, (float)MathUtil.l(f14, f15));
                                 }
                             }
                         }

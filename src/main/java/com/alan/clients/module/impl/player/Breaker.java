@@ -29,12 +29,12 @@ import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.aef;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
-import hackclient.rise.aiu;
+import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
 import hackclient.rise.akb;
-import hackclient.rise.ci;
+import hackclient.rise.component.ci;
 import hackclient.rise.gg;
 import hackclient.rise.tg;
 import java.awt.Color;
@@ -221,7 +221,7 @@ public class Breaker extends Module {
         this.jA();
         if (this.delayVelocityUntilBedBroken.wo() && !abT && this.acb) {
             tt = true;
-            this.aca.forEach(ahj::p);
+            this.aca.forEach(PacketUtil::p);
             this.aca.clear();
             this.acb = false;
             tt = false;
@@ -285,7 +285,7 @@ public class Breaker extends Module {
         this.abX = null;
         abT = false;
         this.aca.clear();
-        this.aca.forEach(ahj::p);
+        this.aca.forEach(PacketUtil::p);
         this.acb = false;
     }
 
@@ -297,7 +297,7 @@ public class Breaker extends Module {
         this.blockPos = null;
         this.abX = null;
         if (!this.aca.isEmpty()) {
-            this.aca.forEach(ahj::p);
+            this.aca.forEach(PacketUtil::p);
             this.aca.clear();
         }
 
@@ -380,7 +380,7 @@ public class Breaker extends Module {
                     aka akax = new aka(aEg.thePlayer.posX + j, aEg.thePlayer.posY + k, aEg.thePlayer.posZ + l);
                     if (block instanceof BlockBed) {
                         if (++i > 1) {
-                            MovingObjectPosition movingobjectposition = aef.c(aiu.d(akax), this.range.wo().floatValue() + 1.0F);
+                            MovingObjectPosition movingobjectposition = aef.c(RotationUtil.d(akax), this.range.wo().floatValue() + 1.0F);
                             if (movingobjectposition != null
                                 && !(
                                     movingobjectposition.hitVec
@@ -749,9 +749,9 @@ public class Breaker extends Module {
                         this.jw();
                         this.l(blockpos);
                         aEg.thePlayer.swingItem();
-                        ahj.l(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockpos, EnumFacing.UP));
+                        PacketUtil.l(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockpos, EnumFacing.UP));
                         aEg.thePlayer.swingItem();
-                        ahj.l(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockpos, EnumFacing.UP));
+                        PacketUtil.l(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockpos, EnumFacing.UP));
                         abQ = null;
                         this.aaW = 20;
                         aEg.playerController.onPlayerDestroyBlock(blockpos, EnumFacing.DOWN);
@@ -773,7 +773,7 @@ public class Breaker extends Module {
     }
 
     public Vector2f jE() {
-        return aiu.d(
+        return RotationUtil.d(
             new aka(
                 Math.floor(abQ.getX()) + 0.5 + (Math.random() - 0.5) / 4.0,
                 Math.floor(abQ.getY()) + 0.1,

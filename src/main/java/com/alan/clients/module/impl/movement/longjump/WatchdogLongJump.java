@@ -14,10 +14,10 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
-import hackclient.rise.bg;
-import hackclient.rise.bk;
+import com.alan.clients.component.impl.player.ItemDamageComponent;
+import com.alan.clients.component.impl.player.PacketlessDamageComponent;
 import hackclient.rise.cl;
 import java.util.ArrayList;
 import net.minecraft.init.Items;
@@ -138,7 +138,7 @@ public class WatchdogLongJump extends Mode<LongJump> {
             aEg.thePlayer.cameraYaw = 0.1F;
         }
 
-        if (this.e(LongJump.class).autoDisable.wo() && !bk.bd() && aEg.thePlayer.onGround && this.dE >= 999 && !this.dj) {
+        if (this.e(LongJump.class).autoDisable.wo() && !PacketlessDamageComponent.bd() && aEg.thePlayer.onGround && this.dE >= 999 && !this.dj) {
             this.e(LongJump.class).toggle();
         }
 
@@ -189,7 +189,7 @@ public class WatchdogLongJump extends Mode<LongJump> {
             this.dj = false;
             this.tt = true;
             new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
-            this.MF.forEach(ahj::p);
+            this.MF.forEach(PacketUtil::p);
             this.MF.clear();
             this.tt = false;
         }
@@ -220,7 +220,7 @@ public class WatchdogLongJump extends Mode<LongJump> {
                 afi.b("you need a projectile in your hotbar for this");
             }
 
-            bg.damage(false);
+            ItemDamageComponent.damage(false);
             this.dE = 0;
             this.hV = 0;
         }
@@ -258,7 +258,7 @@ public class WatchdogLongJump extends Mode<LongJump> {
             aEg.thePlayer.inventory.currentItem = this.IU;
         }
 
-        this.MF.forEach(ahj::p);
+        this.MF.forEach(PacketUtil::p);
         this.MF.clear();
     }
 }

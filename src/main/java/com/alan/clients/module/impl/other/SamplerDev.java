@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.util.vector.Vector2f;
 import hackclient.rise.afi;
 import hackclient.rise.aka;
-import hackclient.rise.bv;
+import hackclient.rise.component.bv;
 import hackclient.rise.sg;
 import java.util.HashMap;
 import net.minecraft.client.entity.EntityPlayerSP;

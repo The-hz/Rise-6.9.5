@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.Client;
+import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.vector.Vector2d;
 import java.awt.Color;
 import org.lwjgl.opengl.GL11;
@@ -65,7 +66,7 @@ public final class aip {
     }
 
     public static Color d(Color var0, int var1) {
-        return var1 == var0.getAlpha() ? var0 : new Color(var0.getRed(), var0.getGreen(), var0.getBlue(), (int)ahg.c(0.0, 255.0, var1));
+        return var1 == var0.getAlpha() ? var0 : new Color(var0.getRed(), var0.getGreen(), var0.getBlue(), (int)MathUtil.c(0.0, 255.0, var1));
     }
 
     public static Color a(Color var0, Color var1, double var2) {

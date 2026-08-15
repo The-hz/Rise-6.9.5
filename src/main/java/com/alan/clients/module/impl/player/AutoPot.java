@@ -13,10 +13,10 @@ import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BoundsNumberValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahg;
-import hackclient.rise.ahj;
+import com.alan.clients.util.math.MathUtil;
+import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aih;
-import hackclient.rise.bb;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 import java.util.List;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPotion;
@@ -62,7 +62,7 @@ public class AutoPot extends Module {
                                 )) {
                                 double d0 = this.rotationSpeed.wo().doubleValue();
                                 double d1 = this.rotationSpeed.wA().doubleValue();
-                                float f = (float)ahg.l(d0, d1);
+                                float f = (float)MathUtil.l(d0, d1);
                                 RotationComponent.setRotations(
                                     new Vector2f((float)(aEg.thePlayer.pl + (Math.random() - 0.5) * 3.0), (float)(87.0 + Math.random() * 3.0)),
                                     f,
@@ -70,11 +70,11 @@ public class AutoPot extends Module {
                                 );
                                 SlotComponent slotcomponent = this.d(SlotComponent.class);
                                 SlotComponent.setSlot(i);
-                                if (RotationComponent.fk.y > 85.0F && !bb.bad(false, true, false, true, false)) {
+                                if (RotationComponent.fk.y > 85.0F && !BadPacketsComponent.bad(false, true, false, true, false)) {
                                     aEg.playerController.syncCurrentPlayItem();
                                     SlotComponent slotcomponent1 = this.d(SlotComponent.class);
-                                    ahj.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
-                                    this.nextThrow = Math.round(ahg.l(this.delay.wo().longValue(), this.delay.wA().longValue()));
+                                    PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                                    this.nextThrow = Math.round(MathUtil.l(this.delay.wo().longValue(), this.delay.wA().longValue()));
                                     this.abl.aX();
                                     break;
                                 }

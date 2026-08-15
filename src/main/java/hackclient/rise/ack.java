@@ -2,11 +2,12 @@ package hackclient.rise;
 
 import com.alan.clients.compat.NetworkToggles;
 import com.alan.clients.script.ScriptManager;
+import com.alan.clients.util.file.config.ConfigManager;
 import java.io.File;
 import lombok.Generated;
 
 public enum ack {
-    CONFIG("https://199.247.6.233/getconfig?id=", afx.CONFIG_DIRECTORY + File.separator, ".json"),
+    CONFIG("https://199.247.6.233/getconfig?id=", ConfigManager.CONFIG_DIRECTORY + File.separator, ".json"),
     SCRIPT("https://199.247.6.233/getscript?id=", ScriptManager.SCRIPT_DIRECTORY + File.separator, ".js");
 
     private final String aAh;

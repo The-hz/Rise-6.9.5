@@ -15,13 +15,13 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
-import hackclient.rise.aab;
-import hackclient.rise.adv;
+import hackclient.rise.value.aab;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aip;
 import hackclient.rise.ais;
-import hackclient.rise.ait;
+import com.alan.clients.util.render.particle.Particle;
 import hackclient.rise.bf;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
@@ -83,7 +83,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                 AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;
                 HealthBypass healthbypass = this.e(HealthBypass.class);
                 float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractclientplayer) : abstractclientplayer.getHealth();
-                double d4 = Math.min(!this.targetInfoModule.inWorld ? 0.0 : ahg.round(f, 1), abstractclientplayer.getMaxHealth());
+                double d4 = Math.min(!this.targetInfoModule.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
                 double d5 = this.auF.getStringWidth(String.valueOf(d4));
                 double d6 = Math.max(d3 + d2 + 35.0 - d5, 65.0);
                 this.auQ.Q(d4 / abstractclientplayer.getMaxHealth() * d6);
@@ -101,8 +101,8 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
                     GlStateManager.scale(d12, d12, 0.0);
-                    Color color = adv.rK();
-                    Color color1 = adv.rK();
+                    Color color = Themes.rK();
+                    Color color1 = Themes.rK();
                     Color color2 = this.rz().rA();
                     Color color3 = this.rz().rB();
                     if (this.backgroundMode.wo().getName().equals("Tint")) {
@@ -128,9 +128,9 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                     GlStateManager.scale(d12, d12, 0.0);
                     double d13 = d0 + 8.0 + b0 + 7.0;
                     double d14 = d1 + 8.0 + b0 - 4.0 - 7.0;
-                    Color color8 = aip.d(adv.rK(), (int)(adv.rK().getAlpha() / 1.7F));
+                    Color color8 = aip.d(Themes.rK(), (int)(Themes.rK().getAlpha() / 1.7F));
                     this.rz();
-                    RenderUtil.a(d13, d14, d6, 6.0, 3.0, color8, adv.rK(), true);
+                    RenderUtil.a(d13, d14, d6, 6.0, 3.0, color8, Themes.rK(), true);
                     RenderUtil.a(d0 + 8.0 + b0 + 7.0, d1 + 8.0 + b0 - 4.0 - 7.0, d7, 6.0, 3.0, color3, color2, true);
                     this.auF.b(String.valueOf(d4), d0 + 8.0 + b0 + 7.0 + d6 + 4.0, d1 + 8.0 + b0 - 4.0 - 8.0, color2.hashCode());
                     GlStateManager.popMatrix();
@@ -170,7 +170,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                 if (d0 > 0.0) {
                     for (int i = 0; i < d0 * Math.random() / 2.0; i++) {
                         NotificationComponent.a(
-                            new ait(
+                            new Particle(
                                 new Vector2f((float)(this.targetInfoModule.position.x + 20.0), (float)(this.targetInfoModule.position.y + 20.0)),
                                 new Vector2f((float)(Math.random() - 0.5) * 1.7F, (float)(Math.random() - 0.5) * 1.7F)
                             )
@@ -293,7 +293,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
     private void renderTargetHead(AbstractClientPlayer var1, double var2, double var4, double var6) {
         ais.vK();
         ais.vL();
-        RenderUtil.roundedRectangle(var2, var4, var6, var6, this.rz().getRound() * 2, adv.rK());
+        RenderUtil.roundedRectangle(var2, var4, var6, var6, this.rz().getRound() * 2, Themes.rK());
         ais.aD(1);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);

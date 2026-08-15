@@ -1,8 +1,11 @@
 package hackclient.rise;
 
 import com.alan.clients.module.api.Category;
+import com.alan.clients.ui.click.standard.components.ModuleComponent;
+import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
+import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
@@ -20,7 +23,7 @@ import org.lwjgl.input.Mouse;
 
 public class abb implements InstanceAccess {
     private final Category axt;
-    private final List<abd> axu;
+    private final List<ModuleComponent> axu;
     private boolean axv = false;
     private final Animation axw = new Animation(Easing.EASE_OUT_QUINT, 300L);
     private final Animation axx = new Animation(Easing.LINEAR, 100L);
@@ -37,7 +40,7 @@ public class abb implements InstanceAccess {
     private double axG = 0.0;
     private double axH = 0.0;
 
-    public abb(Category var1, List<abd> var2) {
+    public abb(Category var1, List<ModuleComponent> var2) {
         this.axt = var1;
         this.axu = var2;
     }
@@ -71,7 +74,7 @@ public class abb implements InstanceAccess {
 
         double d8 = 0.0;
         if (this.axv) {
-            for (abd abdx : this.axu) {
+            for (ModuleComponent abdx : this.axu) {
                 double d9 = d8 + 34.0 * var10;
                 d8 = d9 + 1.0 * var10;
                 if (abdx.oJ()) {
@@ -96,7 +99,7 @@ public class abb implements InstanceAccess {
         double d11 = this.axw.sG();
         double d12 = 22.0 + d11;
         double d13 = 22.0 * var10;
-        boolean flag = agj.c(d0, d1, var5, d13, var7, var8);
+        boolean flag = GUIUtil.c(d0, d1, var5, d13, var7, var8);
         this.axx.Q(flag ? 30.0 : 0.0);
         Color color = this.rz().rA();
         Color color1 = new Color(
@@ -124,7 +127,7 @@ public class abb implements InstanceAccess {
             RenderUtil.a(d0, d1 + d13, var5, d11, 6.0 * var10, color1, false, false, true, true);
             double d14 = d1 + d13 + 3.0 * var10;
 
-            for (abd abd : this.axu) {
+            for (ModuleComponent abd : this.axu) {
                 double d15 = 34.0;
                 if (abd.oJ()) {
                     for (Value value1 : abd.getModule().getAllValues()) {
@@ -142,7 +145,7 @@ public class abb implements InstanceAccess {
 
                 if (!(d14 + d15 < d1) && !(d14 > d1 + d12)) {
                     double d17 = 34.0 * var10;
-                    boolean flag1 = agj.c(d0 + 6.0 * var10, d14, var5 - 12.0 * var10, d17 - 2.0 * var10, var7, var8);
+                    boolean flag1 = GUIUtil.c(d0 + 6.0 * var10, d14, var5 - 12.0 * var10, d17 - 2.0 * var10, var7, var8);
                     if (flag1) {
                         RenderUtil.roundedRectangle(d0 + 6.0 * var10, d14, var5 - 12.0 * var10, d17 - 2.0 * var10, 4.0 * var10, aip.d(Color.WHITE, 15));
                     }
@@ -213,7 +216,7 @@ public class abb implements InstanceAccess {
                         for (Value value2 : abd.getModule().getAllValues()) {
                             if (this.d(value2)) {
                                 double d21 = 18.0 * var10;
-                                boolean flag3 = agj.c(d0 + 10.0 * var10, d14, var5 - 20.0 * var10, d21, var7, var8);
+                                boolean flag3 = GUIUtil.c(d0 + 10.0 * var10, d14, var5 - 20.0 * var10, d21, var7, var8);
                                 if (flag3) {
                                     RenderUtil.roundedRectangle(
                                         d0 + 10.0 * var10, d14, var5 - 20.0 * var10, d21 - 2.0 * var10, 3.0 * var10, aip.d(Color.WHITE, 10)
@@ -263,7 +266,7 @@ public class abb implements InstanceAccess {
                                     ModeValue modevalue2 = (ModeValue)value2;
 
                                     for (Mode mode : modevalue2.getModes()) {
-                                        boolean flag4 = agj.c(d0 + 16.0 * var10, d14, var5 - 32.0 * var10, d21, var7, var8);
+                                        boolean flag4 = GUIUtil.c(d0 + 16.0 * var10, d14, var5 - 32.0 * var10, d21, var7, var8);
                                         if (flag4) {
                                             RenderUtil.roundedRectangle(
                                                 d0 + 16.0 * var10, d14, var5 - 32.0 * var10, d21 - 2.0 * var10, 3.0 * var10, aip.d(Color.WHITE, 12)
@@ -306,7 +309,7 @@ public class abb implements InstanceAccess {
         if (this.axv && this.axw.sG() > 1.0) {
             double d0 = var3 + 22.0 * var5 + 3.0 * var5;
 
-            for (abd abd : this.axu) {
+            for (ModuleComponent abd : this.axu) {
                 if (abd.getModule().isEnabled()) {
                     RenderUtil.roundedRectangle(var1 + 6.0 * var5, d0, 2.0 * var5, 34.0 * var5 - 2.0 * var5, 1.0 * var5, aip.d(this.rz().rA(), 150));
                     gb.MAIN
@@ -340,7 +343,7 @@ public class abb implements InstanceAccess {
         double d1 = 22.0 * d0;
         double d2 = 34.0 * d0;
         double d3 = 18.0 * d0;
-        if (agj.c(var1, var3, this.axy, d1, var5, var6)) {
+        if (GUIUtil.c(var1, var3, this.axy, d1, var5, var6)) {
             if (var7 == 1) {
                 this.axv = !this.axv;
             }
@@ -348,8 +351,8 @@ public class abb implements InstanceAccess {
             if (this.axv && this.axw.sG() > 1.0) {
                 double d4 = var3 + d1 + 3.0 * d0;
 
-                for (abd abd : this.axu) {
-                    if (agj.c(var1 + 6.0 * d0, d4, this.axy - 12.0 * d0, d2, var5, var6)) {
+                for (ModuleComponent abd : this.axu) {
+                    if (GUIUtil.c(var1 + 6.0 * d0, d4, this.axy - 12.0 * d0, d2, var5, var6)) {
                         if (var7 == 0) {
                             abd.getModule().toggle();
                         } else if (var7 == 1) {
@@ -363,7 +366,7 @@ public class abb implements InstanceAccess {
                     if (abd.oJ()) {
                         for (Value value : abd.getModule().getAllValues()) {
                             if (this.d(value)) {
-                                if (agj.c(var1 + 10.0 * d0, d4, this.axy - 20.0 * d0, d3, var5, var6)) {
+                                if (GUIUtil.c(var1 + 10.0 * d0, d4, this.axy - 20.0 * d0, d3, var5, var6)) {
                                     this.a(value, var7);
                                     return;
                                 }
@@ -373,7 +376,7 @@ public class abb implements InstanceAccess {
                                     ModeValue modevalue = (ModeValue)value;
 
                                     for (Mode mode : modevalue.getModes()) {
-                                        if (agj.c(var1 + 16.0 * d0, d4, this.axy - 32.0 * d0, d3, var5, var6)) {
+                                        if (GUIUtil.c(var1 + 16.0 * d0, d4, this.axy - 32.0 * d0, d3, var5, var6)) {
                                             if (var7 == 0) {
                                                 modevalue.n(mode);
                                             }
@@ -418,19 +421,19 @@ public class abb implements InstanceAccess {
             Iterator iterator = this.axu.iterator();
 
             while (iterator.hasNext()) {
-                ((abd)iterator.next()).pz();
+                ((ModuleComponent)iterator.next()).pz();
             }
         }
     }
 
     public void a(char var1, int var2) {
         if (this.axv) {
-            for (abd abd : this.axu) {
+            for (ModuleComponent abd : this.axu) {
                 if (abd.oJ()) {
                     Iterator iterator = abd.getValueList().iterator();
 
                     while (iterator.hasNext()) {
-                        ((abl)iterator.next()).key(var1, var2);
+                        ((ValueComponent)iterator.next()).key(var1, var2);
                     }
                 }
             }
@@ -452,7 +455,7 @@ public class abb implements InstanceAccess {
     }
 
     @Generated
-    public List<abd> oI() {
+    public List<ModuleComponent> oI() {
         return this.axu;
     }
 

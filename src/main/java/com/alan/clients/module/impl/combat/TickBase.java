@@ -18,8 +18,8 @@ import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.aih;
 import hackclient.rise.aip;
 import hackclient.rise.aka;
-import hackclient.rise.bb;
-import hackclient.rise.bv;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
+import hackclient.rise.component.bv;
 import java.util.List;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -99,7 +99,7 @@ public final class TickBase extends Module {
 
         EntityLivingBase entitylivingbase1 = bv.e(8.0);
         if (entitylivingbase1 != null
-            && !bb.bad(false, true, false, false, false)
+            && !BadPacketsComponent.bad(false, true, false, false, false)
             && this.qL.g(entitylivingbase1.Ty()) >= aEg.thePlayer.Ty().g(entitylivingbase1.Ty())) {
             BlinkComponent.blink();
         }

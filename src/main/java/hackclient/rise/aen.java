@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.util.account.auth.MicrosoftLogin;
+import com.alan.clients.util.web.Browser;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public final class aen {
         if (s.matches("^\\d+$")) {
             String s1;
             try {
-                s1 = afm.am(Integer.parseInt(s));
+                s1 = MicrosoftAuth.am(Integer.parseInt(s));
             } catch (NumberFormatException numberformatexception) {
                 throw new IOException("Invalid ref id", numberformatexception);
             }
@@ -35,7 +36,7 @@ public final class aen {
         }
 
         try {
-            String s2 = akc.getBearerResponse(CLIENT_ID, s);
+            String s2 = Browser.getBearerResponse(CLIENT_ID, s);
             if (s2 == null || s2.trim().isEmpty()) {
                 throw new IOException("Invalid/expired token");
             }

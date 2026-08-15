@@ -12,8 +12,8 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
-import hackclient.rise.adv;
-import hackclient.rise.ahg;
+import com.alan.clients.ui.theme.Themes;
+import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aka;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
@@ -42,7 +42,7 @@ extends Module {
         this.scale = new Vector2f(22.0f, 22.0f);
         this.ali = new aka(0.0, 0.0, 0.0);
         this.onPostStrafe = postStrafeEvent -> {
-            this.speed = String.valueOf(ahg.round(new aka(BPSCounter.aEg.thePlayer.posX, 0.0, BPSCounter.aEg.thePlayer.posZ).g(this.ali) * 20.0 * (double)BPSCounter.aEg.timer.dzD, 2));
+            this.speed = String.valueOf(MathUtil.round(new aka(BPSCounter.aEg.thePlayer.posX, 0.0, BPSCounter.aEg.thePlayer.posZ).g(this.ali) * 20.0 * (double)BPSCounter.aEg.timer.dzD, 2));
             this.ali = new aka(BPSCounter.aEg.thePlayer.posX, 0.0, BPSCounter.aEg.thePlayer.posZ);
         };
         this.onRender2D = render2DEvent -> {
@@ -58,7 +58,7 @@ extends Module {
                 double d7 = this.scale.y - 1.0f;
                 double d8 = this.rz().getRound();
                 this.rz();
-                RenderUtil.roundedRectangle(d4, d5, d6, d7, d8, adv.rK());
+                RenderUtil.roundedRectangle(d4, d5, d6, d7, d8, Themes.rK());
                 this.position.n(new Vector2d(this.scale.x + 6.0f, this.scale.y - 1.0f));
                 double d9 = vector2d.x + 3.0;
                 double d10 = vector2d.y + (double)(this.scale.y / 2.05f) - (double)(gb.MAIN.a(20, gd.REGULAR).height() / 4.0f);

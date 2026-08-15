@@ -23,7 +23,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import hackclient.rise.aih;
-import hackclient.rise.bk;
+import com.alan.clients.component.impl.player.PacketlessDamageComponent;
 
 @ModuleInfo(aliases = "module.movement.longjump.name", description = "module.movement.longjump.description", category = Category.MOVEMENT)
 public class LongJump extends Module {
@@ -56,7 +56,7 @@ public class LongJump extends Module {
             this.toggle();
         }
 
-        this.inAir = !aEg.thePlayer.onGround && !bk.bd();
+        this.inAir = !aEg.thePlayer.onGround && !PacketlessDamageComponent.bd();
     };
 
     public LongJump() {

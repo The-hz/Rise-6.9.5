@@ -6,8 +6,8 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import hackclient.rise.adf;
-import hackclient.rise.adi;
-import hackclient.rise.aeb;
+import hackclient.rise.ui.menu.adi;
+import com.alan.clients.util.MouseUtil;
 import hackclient.rise.afe;
 import hackclient.rise.agc;
 import hackclient.rise.aip;
@@ -70,7 +70,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
         this.animation.Q(0.0);
         aiv.aPL.a(aiz.OVERLAY, var3, null);
         this.b(gg.BLUR).c(BACKGROUND_RUNNABLE);
-        this.adHoverAnimation.Q(aeb.isHovered(this.adX, this.adY, this.adWidth, this.adHeight, var1, var2) ? 100.0 : 45.0);
+        this.adHoverAnimation.Q(MouseUtil.isHovered(this.adX, this.adY, this.adWidth, this.adHeight, var1, var2) ? 100.0 : 45.0);
         this.b(gg.REGULAR)
             .c(() -> FONT_RENDERER.c("Select your login method", this.width / 2, this.height / 2 - 76 + this.animation.sG(), Color.WHITE.getRGB()));
         Color color = aip.d(Color.BLACK, 150);
@@ -110,7 +110,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
 
     @Override
     public void mouseClicked(int var1, int var2, int var3) {
-        if (aeb.isHovered(this.adX, this.adY, this.adWidth, this.adHeight, var1, var2)) {
+        if (MouseUtil.isHovered(this.adX, this.adY, this.adWidth, this.adHeight, var1, var2)) {
             afe.A("login_ad", "https://localts.store/?campaign=rise");
 
             try {
@@ -120,7 +120,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
             }
         } else {
             for (adi adi : this.menuButtons) {
-                if (aeb.isHovered(adi.getX(), adi.getY(), adi.oM(), adi.da(), var1, var2)) {
+                if (MouseUtil.isHovered(adi.getX(), adi.getY(), adi.oM(), adi.da(), var1, var2)) {
                     adi.runAction();
                     break;
                 }

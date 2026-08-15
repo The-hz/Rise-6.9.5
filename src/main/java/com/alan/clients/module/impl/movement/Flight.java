@@ -43,9 +43,9 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import hackclient.rise.aih;
 import hackclient.rise.cl;
-import hackclient.rise.mr;
-import hackclient.rise.mx;
-import hackclient.rise.nn;
+import hackclient.rise.mode.mr;
+import com.alan.clients.module.impl.movement.flight.BufferAbuseFlight;
+import com.alan.clients.module.impl.movement.flight.SlimeNCPFlight;
 import javax.vecmath.Vector3d;
 import net.minecraft.entity.boss.EntityDragon;
 
@@ -60,7 +60,7 @@ public class Flight extends Module {
         .add(new Grim2Flight("Grim 2", this))
         .add(new Grim3Flight("Grim 3", this))
         .add(new WatchdogPredictionFlight("Watchdog Prediction", this))
-        .add(new nn("Watchdog Prediction 2", this))
+        .add(new SlimeNCPFlight("Watchdog Prediction 2", this))
         .add(new Watchdog2Flight("Watchdog 2", this))
         .add(new MiniBloxFlight("MiniBlox", this))
         .add(new Vulcan2Flight("Vulcan 2", this))
@@ -72,9 +72,9 @@ public class Flight extends Module {
         .add(new VerusFlight("Verus", this))
         .add(new BlockFlight("Block", this))
         .add(new MMCFlight("MMC", this))
-        .add(new mx("Buffer Abuse", this))
+        .add(new BufferAbuseFlight("Buffer Abuse", this))
         .add(new ZoneCraftFlight("Zone Craft", this))
-        .add(new nn("Slime NCP", this))
+        .add(new SlimeNCPFlight("Slime NCP", this))
         .add(new mr("Air Jump", this))
         .add(new CubeCraftFlight("CubeCraft", this))
         .add(new MineLandFlight("MineLand", this))
@@ -86,7 +86,7 @@ public class Flight extends Module {
         .add(new MMCFireballFlight("MMC Fireball", this))
         .add(new VulcanDamageFlight("Vulcan Damage", this))
         .add(new mr("Spartan (Deprecated)", this))
-        .add(new mx("Vicnix (Deprecated)", this))
+        .add(new BufferAbuseFlight("Vicnix (Deprecated)", this))
         .setDefault("Vanilla");
     private final BooleanValue disableOnTeleport = new BooleanValue("Disable on Teleport", this, false);
     private final BooleanValue viewBobbing = new BooleanValue("View Bobbing", this, false);

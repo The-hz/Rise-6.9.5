@@ -8,8 +8,8 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.TeleportEvent;
 import com.alan.clients.value.Mode;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
-import hackclient.rise.bb;
+import com.alan.clients.util.packet.PacketUtil;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 import java.util.Random;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -22,11 +22,11 @@ public class BloxdFlight extends Mode<Flight> {
     private final Listener<TeleportEvent> onTeleport = var0 -> {};
     @EventLink
     private final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (!bb.bad(true, true, true, true, true) && !this.e(Scaffold.class).isEnabled()) {
+        if (!BadPacketsComponent.bad(true, true, true, true, true) && !this.e(Scaffold.class).isEnabled()) {
             Random random = new Random();
             float f = random.nextFloat();
             float f1 = random.nextFloat();
-            ahj.l(
+            PacketUtil.l(
                 new C08PacketPlayerBlockPlacement(
                     new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ),
                     EnumFacing.UP.getIndex(),

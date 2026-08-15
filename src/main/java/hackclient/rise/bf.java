@@ -8,6 +8,7 @@ import com.alan.clients.newevent.impl.other.ServerJoinEvent;
 import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.interfaces.InstanceAccess;
+import hackclient.rise.event.er;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

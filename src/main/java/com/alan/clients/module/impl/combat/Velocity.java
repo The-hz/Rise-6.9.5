@@ -26,7 +26,7 @@ import com.alan.clients.module.impl.combat.velocity.WatchdogReduceVelocity;
 import com.alan.clients.module.impl.combat.velocity.WatchdogVelocity;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
-import hackclient.rise.is;
+import hackclient.rise.mode.is;
 
 @ModuleInfo(aliases = "module.combat.velocity.name", description = "module.combat.velocity.description", category = Category.COMBAT)
 public final class Velocity extends Module {

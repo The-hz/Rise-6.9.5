@@ -14,11 +14,11 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.afi;
 import hackclient.rise.aha;
-import hackclient.rise.ahg;
-import hackclient.rise.cf;
+import com.alan.clients.util.math.MathUtil;
+import com.alan.clients.component.impl.render.ESPComponent;
 import hackclient.rise.gg;
 import java.awt.Color;
 import java.time.LocalDateTime;
@@ -70,7 +70,7 @@ public final class Debugger extends Module implements aha {
         } else if (this.teleport.wo() && packet instanceof S08PacketPlayerPosLook s08packetplayerposlook) {
             afi.b(
                 EnumChatFormatting.BLUE + " Server Teleport " + EnumChatFormatting.RESET + " (Position: %s)",
-                ahg.round(s08packetplayerposlook.x, 3) + " " + ahg.round(s08packetplayerposlook.y, 3) + " " + ahg.round(s08packetplayerposlook.z, 3)
+                MathUtil.round(s08packetplayerposlook.x, 3) + " " + MathUtil.round(s08packetplayerposlook.y, 3) + " " + MathUtil.round(s08packetplayerposlook.z, 3)
             );
         } else if (this.velocity.wo() && packet instanceof S12PacketEntityVelocity s12packetentityvelocity) {
             if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
@@ -112,7 +112,7 @@ public final class Debugger extends Module implements aha {
                 double d4 = this.position.aHe.y;
                 double d5 = this.rz().getRound();
                 this.rz();
-                RenderUtil.roundedRectangle(d1, d2, d3, d4, d5, adv.rK());
+                RenderUtil.roundedRectangle(d1, d2, d3, d4, d5, Themes.rK());
             });
             this.b(gg.BLUR)
                 .c(
@@ -148,7 +148,7 @@ public final class Debugger extends Module implements aha {
                             .a("Hidden due to not in dev mode", this.position.apP.x + d0, this.position.apP.y + d0 * 5.0, Color.WHITE.hashCode());
                         aEg.fontRendererObj
                             .a("Hidden due to not in dev mode", this.position.apP.x + d0, this.position.apP.y + d0 * 6.0, Color.WHITE.hashCode());
-                        aEg.fontRendererObj.a("ESPs Amount: " + cf.esps.size(), this.position.apP.x + d0, this.position.apP.y + d0 * 8.0, Color.WHITE.hashCode());
+                        aEg.fontRendererObj.a("ESPs Amount: " + ESPComponent.esps.size(), this.position.apP.x + d0, this.position.apP.y + d0 * 8.0, Color.WHITE.hashCode());
                         aEg.fontRendererObj.a("Performance", this.position.apP.x + d0, this.position.apP.y + d0 * 9.0, this.rz().rA().hashCode());
                         aEg.fontRendererObj
                             .a("ThreadLag: " + this.threadLag, this.position.apP.x + d0, this.position.apP.y + d0 * 16.0, Color.WHITE.hashCode());

@@ -12,10 +12,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import hackclient.rise.afi;
-import hackclient.rise.ahg;
-import hackclient.rise.aiu;
+import com.alan.clients.util.math.MathUtil;
+import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
-import hackclient.rise.bv;
+import hackclient.rise.component.bv;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Map.Entry;
@@ -56,14 +56,14 @@ public final class Data extends Module {
             jsonobject.add("targetOffsetPitch", JsonParser.parseString(Double.toString(vector2f3.getY())));
             double d0 = entityplayersp.getDistanceToEntity(this.by);
             jsonobject.add("distance", JsonParser.parseString(Double.toString(d0)));
-            double d1 = ahg.getDistance(entityplayersp.prevPosX, entityplayersp.posY, entityplayersp.prevPosZ, this.by.posX, entityplayersp.posY, this.by.posZ)
-                - ahg.getDistance(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ, this.by.posX, entityplayersp.posY, this.by.posZ);
+            double d1 = MathUtil.getDistance(entityplayersp.prevPosX, entityplayersp.posY, entityplayersp.prevPosZ, this.by.posX, entityplayersp.posY, this.by.posZ)
+                - MathUtil.getDistance(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ, this.by.posX, entityplayersp.posY, this.by.posZ);
             jsonobject.add("playerDeltaHorizontalDistance", JsonParser.parseString(Double.toString(d1)));
             System.out.println("Data " + d1);
             double d2 = entityplayersp.prevPosY - this.by.posY - (entityplayersp.posY - this.by.posY);
             jsonobject.add("playerDeltaVerticalDistance", JsonParser.parseString(Double.toString(d2)));
-            double d3 = ahg.getDistance(this.Ui.getX(), this.by.posY, this.Ui.getZ(), entityplayersp.posX, this.by.posY, entityplayersp.posZ)
-                - ahg.getDistance(this.by.posX, this.by.posY, this.by.posZ, entityplayersp.posX, this.by.posY, entityplayersp.posZ);
+            double d3 = MathUtil.getDistance(this.Ui.getX(), this.by.posY, this.Ui.getZ(), entityplayersp.posX, this.by.posY, entityplayersp.posZ)
+                - MathUtil.getDistance(this.by.posX, this.by.posY, this.by.posZ, entityplayersp.posX, this.by.posY, entityplayersp.posZ);
             jsonobject.add("enemyDeltaHorizontalDistance", JsonParser.parseString(Double.toString(d3)));
             double d4 = this.Ui.getY() - entityplayersp.posY - (this.by.posY - entityplayersp.posY);
             jsonobject.add("enemyDeltaVerticalDistance", JsonParser.parseString(Double.toString(d4)));
@@ -83,7 +83,7 @@ public final class Data extends Module {
             double d12 = this.by.posY - this.Ui.getY();
             double d13 = this.by.posZ - this.Ui.getZ();
             Math.sqrt(d11 * d11 + d12 * d12 + d13 * d13);
-            double d14 = aiu.a(this.s(this.by), new Vector2f(this.Uk.getX(), 0.0F), 999999.0).getX();
+            double d14 = RotationUtil.a(this.s(this.by), new Vector2f(this.Uk.getX(), 0.0F), 999999.0).getX();
             double d15 = Double.isNaN(d14) ? 0.0 : d14;
             jsonobject.add("deltaHorizontalAngle", JsonParser.parseString(Double.toString(d15)));
             double d16 = this.s(this.by).getY() - this.Uk.getY();
@@ -109,26 +109,26 @@ public final class Data extends Module {
             jsonobject.add("forwardVelocityTarget", JsonParser.parseString(Double.toString(d28)));
             jsonobject.add("lateralVelocityTarget", JsonParser.parseString(Double.toString(d29)));
             double d30 = MathHelper.wrapAngleTo180_double(
-                aiu.c(new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new aka(this.by.posX, entityplayersp.posY, this.by.posZ)).getX()
-                    - aiu.c(
+                RotationUtil.c(new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new aka(this.by.posX, entityplayersp.posY, this.by.posZ)).getX()
+                    - RotationUtil.c(
                             new aka(entityplayersp.prevPosX, entityplayersp.posY, entityplayersp.prevPosZ),
                             new aka(this.by.posX, entityplayersp.posY, this.by.posZ)
                         )
                         .getX()
             );
             jsonobject.add("playerDeltaHorizontalMovementAngle", JsonParser.parseString(Double.toString(d30)));
-            double d31 = aiu.c(new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new aka(this.by.posX, this.by.posY, this.by.posZ))
+            double d31 = RotationUtil.c(new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new aka(this.by.posX, this.by.posY, this.by.posZ))
                     .getY()
-                - aiu.c(new aka(entityplayersp.posX, entityplayersp.prevPosY, entityplayersp.posZ), new aka(this.by.posX, this.by.posY, this.by.posZ)).getY();
+                - RotationUtil.c(new aka(entityplayersp.posX, entityplayersp.prevPosY, entityplayersp.posZ), new aka(this.by.posX, this.by.posY, this.by.posZ)).getY();
             jsonobject.add("playerDeltaVerticalMovementAngle", JsonParser.parseString(Double.toString(d31)));
             double d32 = MathHelper.wrapAngleTo180_double(
-                aiu.c(new aka(this.by.posX, this.by.posY, this.by.posZ), new aka(entityplayersp.posX, this.by.posY, entityplayersp.posZ)).getX()
-                    - aiu.c(new aka(this.Ui.getX(), this.by.posY, this.Ui.getZ()), new aka(entityplayersp.posX, this.by.posY, entityplayersp.posZ)).getX()
+                RotationUtil.c(new aka(this.by.posX, this.by.posY, this.by.posZ), new aka(entityplayersp.posX, this.by.posY, entityplayersp.posZ)).getX()
+                    - RotationUtil.c(new aka(this.Ui.getX(), this.by.posY, this.Ui.getZ()), new aka(entityplayersp.posX, this.by.posY, entityplayersp.posZ)).getX()
             );
             jsonobject.add("targetDeltaHorizontalMovementAngle", JsonParser.parseString(Double.toString(d32)));
-            double d33 = aiu.c(new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new aka(this.by.posX, this.by.posY, this.by.posZ))
+            double d33 = RotationUtil.c(new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new aka(this.by.posX, this.by.posY, this.by.posZ))
                     .getY()
-                - aiu.c(new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new aka(this.by.posX, this.Ui.getY(), this.by.posZ)).getY();
+                - RotationUtil.c(new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new aka(this.by.posX, this.Ui.getY(), this.by.posZ)).getY();
             jsonobject.add("targetDeltaVerticalMovementAngle", JsonParser.parseString(Double.toString(d33)));
             double d34 = this.Un - Math.sqrt(Math.pow(vector2f1.getX(), 2.0) + Math.pow(vector2f1.getY(), 2.0));
             jsonobject.add("deltaPlayerOffsetDistance", JsonParser.parseString(Double.toString(d34)));
@@ -203,7 +203,7 @@ public final class Data extends Module {
     }
 
     public Vector2f a(Entity var1, Entity var2) {
-        Vector2f vector2f = aiu.c(var1.Ty().v(0.0, var1.getEyeHeight(), 0.0), var2.Ty().v(0.0, aEg.thePlayer.getEyeHeight(), 0.0));
+        Vector2f vector2f = RotationUtil.c(var1.Ty().v(0.0, var1.getEyeHeight(), 0.0), var2.Ty().v(0.0, aEg.thePlayer.getEyeHeight(), 0.0));
         if (vector2f.y == 0.0F) {
             vector2f.y = Math.abs(vector2f.getY());
         }

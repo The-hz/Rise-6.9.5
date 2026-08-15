@@ -16,7 +16,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.bb;
+import com.alan.clients.component.impl.player.BadPacketsComponent;
 import hackclient.rise.en;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiChat;
@@ -135,7 +135,7 @@ extends Mode<InventoryMove> {
             }
             if ((guiScreen = WatchdogBypass.aEg.currentScreen) instanceof GuiInventory) {
                 GuiInventory guiInventory = (GuiInventory)guiScreen;
-                if (!JP && !bb.bad(false, false, false, false, true)) {
+                if (!JP && !BadPacketsComponent.bad(false, false, false, false, true)) {
                     WatchdogBypass.aEg.thePlayer.sendQueue.u((Packet)new q(guiInventory.inventorySlots.windowId));
                 }
             }

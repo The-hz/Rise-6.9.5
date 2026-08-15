@@ -7,7 +7,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import hackclient.rise.afi;
-import hackclient.rise.ahj;
+import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.play.client.C19PacketResourcePackStatus.Action;
 import net.minecraft.network.play.client.C19PacketResourcePackStatus;
 import net.minecraft.network.play.server.S48PacketResourcePackSend;
@@ -18,7 +18,7 @@ public final class ResourcePackSpoof extends Module {
     public final Listener<PacketReceiveEvent> onPacketReceive = var0 -> {
         if (var0.getPacket() instanceof S48PacketResourcePackSend s48packetresourcepacksend) {
             var0.setCancelled();
-            ahj.l(new C19PacketResourcePackStatus(s48packetresourcepacksend.getHash(), Action.SUCCESSFULLY_LOADED));
+            PacketUtil.l(new C19PacketResourcePackStatus(s48packetresourcepacksend.getHash(), Action.SUCCESSFULLY_LOADED));
             afi.b("Spoofed resource pack from " + s48packetresourcepacksend.getURL());
         }
     };

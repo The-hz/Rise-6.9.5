@@ -8,11 +8,11 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.adv;
+import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import hackclient.rise.agd;
 import hackclient.rise.aih;
-import hackclient.rise.bv;
+import hackclient.rise.component.bv;
 import hackclient.rise.bx;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -79,7 +79,7 @@ extends Mode<NameTags> {
         double d4 = f3 + f4 * 2.0f;
         double d5 = (float)n2 + f4 * 2.0f;
         this.rz();
-        RenderUtil.d(d2, d3, d4, d5, adv.rK());
+        RenderUtil.d(d2, d3, d4, d5, Themes.rK());
         float f6 = f2 - f3 / 2.0f;
         agc2.b(string, f6 + 0.5f, f5 - 2.0f, Color.WHITE.getRGB());
     }

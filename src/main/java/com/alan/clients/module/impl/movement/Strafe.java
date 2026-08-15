@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahg;
+import com.alan.clients.util.math.MathUtil;
 import net.minecraft.util.MathHelper;
 
 @ModuleInfo(aliases = "module.movement.strafe.name", description = "module.movement.strafe.description", category = Category.MOVEMENT)
@@ -29,13 +29,13 @@ public class Strafe extends Module {
         double d1 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
         if (this.hypixelFlyDisabler.wo()) {
             if (!aEg.thePlayer.onGround && aEg.thePlayer.tR != 1 && aEg.thePlayer.ae >= 20) {
-                if (aEg.thePlayer.ae <= 1 || !(ahg.n(d0, d1) > 90.0)) {
+                if (aEg.thePlayer.ae <= 1 || !(MathUtil.n(d0, d1) > 90.0)) {
                     double d2 = aEg.thePlayer.motionX;
                     double d3 = aEg.thePlayer.motionZ;
                     MoveUtil.strafe();
                     aEg.thePlayer.motionZ = (aEg.thePlayer.motionZ * 2.1 + d3 * 1.0) / 3.1;
                     aEg.thePlayer.motionX = (aEg.thePlayer.motionX * 2.1 + d2 * 1.0) / 3.1;
-                } else if (ahg.n(d0, d1) > 90.0) {
+                } else if (MathUtil.n(d0, d1) > 90.0) {
                     MoveUtil.a(MoveUtil.speed(), (float)d1 - 180.0F);
                 }
             } else {
