@@ -1,4 +1,4 @@
-package hackclient.rise.ui.value;
+package com.alan.clients.ui.click.standard.components.value.impl;
 
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
@@ -10,12 +10,12 @@ import hackclient.rise.MathOperation;
 import java.awt.Color;
 import java.util.ArrayList;
 
-public class abp
+public class SupplierValueComponent
 extends ValueComponent {
     private final ArrayList<Vector2d> aze = new ArrayList();
     private Vector2d YM = null;
 
-    public abp(Value<?> value) {
+    public SupplierValueComponent(Value<?> value) {
         super(value);
         this.aze.clear();
         for (int i2 = 0; i2 <= 250; i2 += 10) {

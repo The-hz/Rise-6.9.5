@@ -1,4 +1,4 @@
-package hackclient.rise.ui.screen;
+package com.alan.clients.ui.click.dropdown;
 
 import com.alan.clients.Client;
 import com.alan.clients.module.Module;
@@ -24,7 +24,7 @@ import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-public class aba
+public class DropdownClickGUI
 extends GuiScreen
 implements aha {
     private final Map<Category, CategoryComponent> axh = new HashMap<Category, CategoryComponent>();
@@ -45,7 +45,7 @@ implements aha {
         this.axh.clear();
         this.axi.clear();
         this.Mc = false;
-        if (aEg != null && aba.aEg.currentScreen == this) {
+        if (aEg != null && DropdownClickGUI.aEg.currentScreen == this) {
             this.initGui();
         }
     }
@@ -118,7 +118,7 @@ implements aha {
     }
 
     public void drawScreen(int n2, int n3, float f2) {
-        aba.drawRect((int)0, (int)0, (int)this.width, (int)this.height, (int)new Color(0, 0, 0, 100).getRGB());
+        DropdownClickGUI.drawRect((int)0, (int)0, (int)this.width, (int)this.height, (int)new Color(0, 0, 0, 100).getRGB());
         boolean bl = this.axh.values().stream().anyMatch(CategoryComponent::oJ);
         if (bl) {
             int dWheel = Mouse.getDWheel();
@@ -182,7 +182,7 @@ implements aha {
             CategoryComponent abb2 = this.axh.get((Object)category);
             if (abb2 == null) continue;
             double d3 = abb2.getX();
-            if (GUIUtil.c(d3, d2 = abb2.getY() - this.axj, this.on(), 24.0 * this.axp, n2, n3) && aba.isShiftKeyDown() && n4 == 0) {
+            if (GUIUtil.c(d3, d2 = abb2.getY() - this.axj, this.on(), 24.0 * this.axp, n2, n3) && DropdownClickGUI.isShiftKeyDown() && n4 == 0) {
                 this.axm = abb2;
                 this.axn = d3 - (double)n2;
                 this.axo = d2 - (double)n3;
@@ -208,7 +208,7 @@ implements aha {
             aEg.displayGuiScreen(null);
             return;
         }
-        boolean ctrlKeyDown = aba.isCtrlKeyDown();
+        boolean ctrlKeyDown = DropdownClickGUI.isCtrlKeyDown();
         if (ctrlKeyDown) {
             if (n2 == 13 || n2 == 78) {
                 this.E(this.axp + 0.1);
@@ -234,13 +234,13 @@ implements aha {
     }
 
     public void cj() {
-        if (aba.aEg.currentScreen != this) {
+        if (DropdownClickGUI.aEg.currentScreen != this) {
             return;
         }
     }
 
     public void ci() {
-        if (aba.aEg.currentScreen != this) {
+        if (DropdownClickGUI.aEg.currentScreen != this) {
             return;
         }
     }

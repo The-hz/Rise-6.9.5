@@ -1,4 +1,4 @@
-package hackclient.rise.ui.value;
+package com.alan.clients.ui.click.standard.components.value.impl;
 
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
@@ -16,7 +16,7 @@ import java.awt.Color;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.MathHelper;
 
-public class abo extends ValueComponent {
+public class ColorValueComponent extends ValueComponent {
     private static final double ayT = 5.0;
     private boolean ayU = false;
     private boolean ayV;
@@ -29,7 +29,7 @@ public class abo extends ValueComponent {
     private Vector2f azc = new Vector2f(1.0F, 1.0F);
     private Color azd = Color.RED;
 
-    public abo(Value<?> var1) {
+    public ColorValueComponent(Value<?> var1) {
         super(var1);
     }
 

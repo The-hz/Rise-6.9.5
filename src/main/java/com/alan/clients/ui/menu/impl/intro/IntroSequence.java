@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.ui.menu.impl.intro;
 
 import com.alan.clients.ui.menu.impl.main.LoginMenu;
 import com.alan.clients.util.animation.Animation;
@@ -11,7 +11,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 import rip.vantage.commons.util.time.StopWatch;
 
-public class adn extends GuiScreen {
+public class IntroSequence extends GuiScreen {
     private final String aCj = "";
     private final String aCk = "";
     private final ArrayList<IntroLine> aCl = new IntroSequenceLines(this);
@@ -20,7 +20,7 @@ public class adn extends GuiScreen {
     private boolean yr = false;
     private final Animation aCo = new Animation(Easing.EASE_IN_OUT_CUBIC, 3000L);
 
-    public adn() {
+    public IntroSequence() {
     }
 
     @Override

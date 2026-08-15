@@ -16,8 +16,8 @@ import hackclient.rise.ahd;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
-import hackclient.rise.ui.value.abn;
-import hackclient.rise.ui.value.abt;
+import com.alan.clients.ui.click.standard.components.value.impl.BoundsNumberValueComponent;
+import com.alan.clients.ui.click.standard.components.value.impl.NumberValueComponent;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -154,10 +154,10 @@ public class ModuleComponent implements InstanceAccess {
                     this.expanded = !this.expanded;
 
                     for (ValueComponent valueComponent : this.getValueList()) {
-                        if (valueComponent instanceof abn abn) {
+                        if (valueComponent instanceof BoundsNumberValueComponent abn) {
                             abn.ayI = abn.ayJ = false;
-                        } else if (valueComponent instanceof abt) {
-                            ((abt)valueComponent).azi = false;
+                        } else if (valueComponent instanceof NumberValueComponent) {
+                            ((NumberValueComponent)valueComponent).azi = false;
                         }
                     }
                 }

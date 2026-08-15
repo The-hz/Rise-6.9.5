@@ -1,6 +1,7 @@
-package hackclient.rise;
+package com.alan.clients.ui.menu.impl.serverfinder;
 
 import com.alan.clients.ui.menu.Menu;
+import com.alan.clients.ui.menu.impl.main.MainMenu;
 import com.alan.clients.ui.menu.impl.serverfinder.ServerIP;
 import com.alan.clients.util.player.ServerUtil;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.resources.I18n;
 import org.apache.commons.lang3.StringUtils;
 
-public final class ads
+public final class ServerFinder
 extends Menu {
     private final Pattern aCK = Pattern.compile("((25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9]))");
     private final Pattern aCL = Pattern.compile("([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])");
@@ -172,7 +173,7 @@ extends Menu {
                 break;
             }
             case 1: {
-                ads.aEg.displayGuiScreen(new GuiMultiplayer(new adr()));
+                ServerFinder.aEg.displayGuiScreen(new GuiMultiplayer(new MainMenu()));
             }
         }
     }

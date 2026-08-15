@@ -1,4 +1,4 @@
-package hackclient.rise.component.esp;
+package com.alan.clients.component.impl.render.espcomponent.impl;
 
 import com.alan.clients.Client;
 import com.alan.clients.util.interfaces.InstanceAccess;
@@ -13,8 +13,8 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class cq extends ESP implements InstanceAccess {
-    public cq(ESPColor espColor) {
+public class PlayerChams extends ESP implements InstanceAccess {
+    public PlayerChams(ESPColor espColor) {
         super(espColor);
     }
 

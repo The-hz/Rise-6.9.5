@@ -7,14 +7,14 @@ import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.component.impl.render.ESPComponent;
 import com.alan.clients.component.impl.render.espcomponent.api.ESPColor;
-import hackclient.rise.component.esp.cq;
+import com.alan.clients.component.impl.render.espcomponent.impl.PlayerChams;
 import java.awt.Color;
 
 public final class ChamsESP extends Mode<ESP> {
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         Color color = this.rz().rA();
-        ESPComponent.add(new cq(new ESPColor(color, color, color)));
+        ESPComponent.add(new PlayerChams(new ESPColor(color, color, color)));
     };
 
     public ChamsESP(String var1, ESP esp) {

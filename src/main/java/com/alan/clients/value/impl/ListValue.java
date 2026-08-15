@@ -4,7 +4,7 @@ import com.alan.clients.module.Module;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.Value;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
-import hackclient.rise.ui.value.abq;
+import com.alan.clients.ui.click.standard.components.value.impl.ListValueComponent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,8 +54,8 @@ public class ListValue<T> extends Value<T> {
         return null;
     }
 
-    public abq wE() {
-        return new abq(this);
+    public ListValueComponent wE() {
+        return new ListValueComponent(this);
     }
 
     @Generated

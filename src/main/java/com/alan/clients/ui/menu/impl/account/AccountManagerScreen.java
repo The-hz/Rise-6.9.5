@@ -9,7 +9,7 @@ import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.menu.component.button.MenuButton;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
-import hackclient.rise.adr;
+import com.alan.clients.ui.menu.impl.main.MainMenu;
 import com.alan.clients.util.MouseUtil;
 import hackclient.rise.AltAccount;
 import com.alan.clients.util.file.alt.AltManager;
@@ -31,7 +31,7 @@ import org.lwjgl.opengl.GL11;
 public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
     private static final AltManager ALT_MANAGER = Client.a.getAltManager();
     private static final Runnable ADD_ACCOUNT_RUNNABLE = () -> aEg.displayGuiScreen(new AddAccountScreen());
-    private static final Runnable CANCEL_RUNNABLE = () -> aEg.displayGuiScreen(new adr());
+    private static final Runnable CANCEL_RUNNABLE = () -> aEg.displayGuiScreen(new MainMenu());
     private static final Runnable BACKGROUND_RUNNABLE = () -> {
         ScaledResolution scaledresolution = new ScaledResolution(aEg);
         RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK);

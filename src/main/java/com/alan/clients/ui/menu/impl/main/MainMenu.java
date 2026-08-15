@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.ui.menu.impl.main;
 
 import com.alan.clients.Client;
 import com.alan.clients.ui.menu.Menu;
@@ -13,6 +13,9 @@ import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.shader.ShaderQueueType;
+import hackclient.rise.agc;
+import hackclient.rise.aiv;
+import hackclient.rise.aiz;
 import java.awt.Color;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
@@ -20,7 +23,7 @@ import net.minecraft.client.gui.GuiSelectWorld;
 import net.minecraft.client.gui.ScaledResolution;
 import rip.vantage.network.core.VantageNetwork;
 
-public final class adr extends Menu {
+public final class MainMenu extends Menu {
     private Animation animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
     private MenuTextButton aCF;
     private MenuTextButton aCG;
@@ -29,7 +32,7 @@ public final class adr extends Menu {
     private MenuButton[] menuButtons;
     private boolean rice;
 
-    public adr() {
+    public MainMenu() {
     }
 
     @Override

@@ -1,4 +1,4 @@
-package hackclient.rise.component.esp;
+package com.alan.clients.component.impl.render.espcomponent.impl;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
@@ -11,12 +11,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.AxisAlignedBB;
 import org.lwjgl.opengl.GL11;
 
-public class co extends ESP implements InstanceAccess {
-    public co(ESPColor espColor) {
+public class AboveBox extends ESP implements InstanceAccess {
+    public AboveBox(ESPColor espColor) {
         super(espColor);
     }
 
-    public co(EntityLivingBase target, ESPColor espColor) {
+    public AboveBox(EntityLivingBase target, ESPColor espColor) {
         super(espColor);
         this.target = target;
     }

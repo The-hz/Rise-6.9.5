@@ -1,4 +1,4 @@
-package hackclient.rise.ui.value;
+package com.alan.clients.ui.click.standard.components.value.impl;
 
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
@@ -12,7 +12,7 @@ import hackclient.rise.ahd;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 
-public class abq extends ValueComponent {
+public class ListValueComponent extends ValueComponent {
     @Override
     public void draw(Vector2d position, int var2, int var3, float var4) {
         ListValue listvalue = (ListValue)this.value;
@@ -29,7 +29,7 @@ public class abq extends ValueComponent {
             );
     }
 
-    public abq(Value<?> var1) {
+    public ListValueComponent(Value<?> var1) {
         super(var1);
     }
 

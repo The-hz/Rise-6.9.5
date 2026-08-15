@@ -1,4 +1,4 @@
-package hackclient.rise.ui.value;
+package com.alan.clients.ui.click.standard.components.value.impl;
 
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Value;
@@ -13,10 +13,10 @@ import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
 
-public class abv extends ValueComponent {
+public class StringValueComponent extends ValueComponent {
     public final TextBox azo = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(16, FontWeight.REGULAR), Color.WHITE, TextAlign.LEFT, "", 20.0F);
 
-    public abv(Value<?> var1) {
+    public StringValueComponent(Value<?> var1) {
         super(var1);
         StringValue stringvalue = (StringValue)var1;
         this.azo.bW(stringvalue.wo());

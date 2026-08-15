@@ -6,7 +6,7 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.menu.MenuColors;
-import hackclient.rise.ui.menu.adl;
+import com.alan.clients.ui.menu.component.button.impl.MenuLabelButton;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.SkinUtil;
@@ -45,7 +45,7 @@ public class AccountViewModel<T extends AltAccount> implements MenuColors, Insta
     private float height;
     private int screenHeight;
     private boolean removable;
-    private adl[] labelButtons;
+    private MenuLabelButton[] labelButtons;
     private final Runnable defaultRenderRunnable = () -> {
         RenderUtil.roundedRectangle(this.x, this.y + this.scroll, this.width, this.height, 5.0, BACKGROUND_COLOR);
         RenderUtil.roundedOutlineGradientRectangle(this.x, this.y + this.scroll, this.width, this.height, 5.0, 1.0, BORDER_ONE_COLOR, BORDER_TWO_COLOR);
@@ -55,7 +55,7 @@ public class AccountViewModel<T extends AltAccount> implements MenuColors, Insta
         INFO_FONT_RENDERER.a("Last login: " + s, this.x + 40.0F, this.y + 19.0F + this.scroll, INFO_COLOR.getRGB());
         INFO_FONT_RENDERER.a("Actions:", this.x + 40.0F, this.y + 29.0F + this.scroll, INFO_COLOR.getRGB());
 
-        for (adl adl : this.labelButtons) {
+        for (MenuLabelButton adl : this.labelButtons) {
             adl.setY(adl.getY() + this.scroll);
             adl.draw(0, 0, 0.0F);
             adl.setY(adl.getY() - this.scroll);
@@ -83,12 +83,12 @@ public class AccountViewModel<T extends AltAccount> implements MenuColors, Insta
         this.positionAnimation = new Animation(Easing.EASE_OUT_CUBIC, 200L);
         if (!(account instanceof MicrosoftAccount) && !(account instanceof RaveAccount)) {
             byte b0 = 2;
-            this.labelButtons = new adl[]{
-                new adl(var2 + 76.0F, var3 + height - 12.0F, 28.0, 8.0, () -> aEg.displayGuiScreen(new RenameAccountScreen(this)), "Rename", Color.YELLOW),
-                new adl(var2 + 76.0F + 28.0F + b0, var3 + height - 12.0F, 24.0, 8.0, () -> this.removable = true, "Delete", Color.RED)
+            this.labelButtons = new MenuLabelButton[]{
+                new MenuLabelButton(var2 + 76.0F, var3 + height - 12.0F, 28.0, 8.0, () -> aEg.displayGuiScreen(new RenameAccountScreen(this)), "Rename", Color.YELLOW),
+                new MenuLabelButton(var2 + 76.0F + 28.0F + b0, var3 + height - 12.0F, 24.0, 8.0, () -> this.removable = true, "Delete", Color.RED)
             };
         } else {
-            this.labelButtons = new adl[]{new adl(var2 + 76.0F, var3 + height - 12.0F, 24.0, 8.0, () -> this.removable = true, "Delete", Color.RED)};
+            this.labelButtons = new MenuLabelButton[]{new MenuLabelButton(var2 + 76.0F, var3 + height - 12.0F, 24.0, 8.0, () -> this.removable = true, "Delete", Color.RED)};
         }
     }
 
@@ -117,7 +117,7 @@ public class AccountViewModel<T extends AltAccount> implements MenuColors, Insta
         }
 
         if (this.account.kW()) {
-            for (adl adl : this.labelButtons) {
+            for (MenuLabelButton adl : this.labelButtons) {
                 if (MouseUtil.isHovered(adl.getX(), adl.getY() + this.scroll, adl.oM(), adl.da(), var1, var2)) {
                     adl.runAction();
                     return true;

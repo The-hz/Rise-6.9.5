@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.florianmichael.viamcp.ViaMCP;
 import hackclient.rise.aal;
-import hackclient.rise.ui.screen.aba;
+import com.alan.clients.ui.click.dropdown.DropdownClickGUI;
 import com.alan.clients.util.value.ConstantManager;
 import com.alan.clients.ui.theme.ThemeManager;
 import com.alan.clients.util.ReflectionUtil;
@@ -51,7 +51,7 @@ public enum Client
     public static boolean i;
     public static String e;
     public EventBus<Event> eventBus;
-    public aba I;
+    public DropdownClickGUI I;
     public ComponentManager componentManager;
     public static String g;
     public aal n;
@@ -322,7 +322,7 @@ public enum Client
     }
 
     @Generated
-    public aba z() {
+    public DropdownClickGUI z() {
         return this.I;
     }
 
@@ -402,7 +402,7 @@ public enum Client
         this.scriptManager.init();
         this.securityManager.init();
         (this.standardClickGUI = new RiseClickGUI()).initGui();
-        (this.I = new aba()).initGui();
+        (this.I = new DropdownClickGUI()).initGui();
         this.insultManager.update();
         this.insultManager.forEach(InsultFile::te);
         this.creativeTab = new RiseTab();

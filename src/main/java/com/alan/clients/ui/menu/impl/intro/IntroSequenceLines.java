@@ -1,11 +1,11 @@
-package hackclient.rise;
+package com.alan.clients.ui.menu.impl.intro;
 
 import java.util.ArrayList;
 
 class IntroSequenceLines extends ArrayList<IntroLine> {
-    final adn aCp;
+    final IntroSequence aCp;
 
-    IntroSequenceLines(adn var1) {
+    IntroSequenceLines(IntroSequence var1) {
         this.aCp = var1;
         this.add(new IntroLine("Around the release of Rise 5.3, the team behind Rise began to envision a new project", 10000L));
         this.add(new IntroLine("This project came to be known as Rise 6.", 5000L));

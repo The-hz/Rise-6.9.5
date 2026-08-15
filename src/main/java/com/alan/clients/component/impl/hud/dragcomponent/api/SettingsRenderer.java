@@ -19,13 +19,13 @@ import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.shader.ShaderQueueType;
-import hackclient.rise.ui.value.abm;
-import hackclient.rise.ui.value.abn;
-import hackclient.rise.ui.value.abo;
-import hackclient.rise.ui.value.abq;
-import hackclient.rise.ui.value.abr;
-import hackclient.rise.ui.value.abt;
-import hackclient.rise.ui.value.abv;
+import com.alan.clients.ui.click.standard.components.value.impl.BooleanValueComponent;
+import com.alan.clients.ui.click.standard.components.value.impl.BoundsNumberValueComponent;
+import com.alan.clients.ui.click.standard.components.value.impl.ColorValueComponent;
+import com.alan.clients.ui.click.standard.components.value.impl.ListValueComponent;
+import com.alan.clients.ui.click.standard.components.value.impl.ModeValueComponent;
+import com.alan.clients.ui.click.standard.components.value.impl.NumberValueComponent;
+import com.alan.clients.ui.click.standard.components.value.impl.StringValueComponent;
 import java.awt.Color;
 import java.util.ArrayList;
 import net.minecraft.client.renderer.GlStateManager;
@@ -43,21 +43,21 @@ public class SettingsRenderer implements InstanceAccess {
 
         for (Value value : module.getAllValues()) {
             if (value instanceof ModeValue) {
-                this.valueList.add(new abr(value));
+                this.valueList.add(new ModeValueComponent(value));
             } else if (value instanceof BooleanValue) {
-                this.valueList.add(new abm(value));
+                this.valueList.add(new BooleanValueComponent(value));
             } else if (value instanceof StringValue) {
-                this.valueList.add(new abv(value));
+                this.valueList.add(new StringValueComponent(value));
             } else if (value instanceof NumberValue) {
-                this.valueList.add(new abt(value));
+                this.valueList.add(new NumberValueComponent(value));
             } else if (value instanceof BoundsNumberValue) {
-                this.valueList.add(new abn(value));
+                this.valueList.add(new BoundsNumberValueComponent(value));
             } else if (value instanceof DragValue) {
                 this.valueList.add(new PositionValueComponent(value));
             } else if (value instanceof ListValue) {
-                this.valueList.add(new abq(value));
+                this.valueList.add(new ListValueComponent(value));
             } else if (value instanceof ColorValue) {
-                this.valueList.add(new abo(value));
+                this.valueList.add(new ColorValueComponent(value));
             }
         }
     }

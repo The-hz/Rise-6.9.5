@@ -6,7 +6,7 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.menu.MenuColors;
-import hackclient.rise.ui.menu.adi;
+import com.alan.clients.ui.menu.component.button.impl.MenuIconTextButton;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.web.CommunityChat;
 import hackclient.rise.agc;
@@ -55,7 +55,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
     private static final Runnable GAMEPASS_RUNNABLE = () -> aEg.displayGuiScreen(new AddSessionIDScreen());
     private static final Runnable COOKIE_RUNNABLE = () -> aEg.displayGuiScreen(new AddCookieScreen());
     private static final Runnable LOCALTS_RUNNABLE = () -> aEg.displayGuiScreen(new AddLocaltsScreen());
-    private final adi[] menuButtons = new adi[5];
+    private final MenuIconTextButton[] menuButtons = new MenuIconTextButton[5];
 
     private static float centeredTextY(double var0, double var2, agc var4) {
         return (float)(var0 + var2 / 2.0 - 4.0 * var4.height() / CENTER_REF_HEIGHT);
@@ -87,7 +87,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
             float f1 = centeredTextY(this.adY, this.adHeight, AD_FONT_RENDERER);
             AD_FONT_RENDERER.a("Need alts? Localts purchases in Rise are 5% off — Click here!", f, f1, color1.getRGB());
         });
-        adi[] aadi = this.menuButtons;
+        MenuIconTextButton[] aadi = this.menuButtons;
         int i = aadi.length;
 
         for (int j = 0; j < i; j++) {
@@ -95,7 +95,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
         }
 
         this.b(ShaderQueueType.REGULAR).c(() -> {
-            adi adi = this.menuButtons[4];
+            MenuIconTextButton adi = this.menuButtons[4];
             if (adi != null) {
                 String s = "5% OFF";
                 float f = 16.0F;
@@ -119,7 +119,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
                 exception.printStackTrace();
             }
         } else {
-            for (adi adi : this.menuButtons) {
+            for (MenuIconTextButton adi : this.menuButtons) {
                 if (MouseUtil.isHovered(adi.getX(), adi.getY(), adi.oM(), adi.da(), var1, var2)) {
                     adi.runAction();
                     break;
@@ -135,13 +135,13 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
         short short1 = 140;
         byte b1 = 5;
         int j = this.width / 2 - ((i & 1) == 0 ? 105 * (i / 2) + 2 : (b0 + b1) * (i / 2) + b0 / 2);
-        this.menuButtons[0] = new adi(0.0, 0.0, 0.0, 0.0, GAMEPASS_RUNNABLE, "SessionID/refID", XBOX_RESOURCE);
-        this.menuButtons[1] = new adi(0.0, 0.0, 0.0, 0.0, MICROSOFT_RUNNABLE, "Microsoft", MICROSOFT_RESOURCE);
-        this.menuButtons[2] = new adi(0.0, 0.0, 0.0, 0.0, CRACKED_RUNNABLE, "Cracked", CRACKED_RESOURCE);
-        this.menuButtons[3] = new adi(0.0, 0.0, 0.0, 0.0, COOKIE_RUNNABLE, "Cookie", COOKIE_RESOURCE);
-        this.menuButtons[4] = new adi(0.0, 0.0, 0.0, 0.0, LOCALTS_RUNNABLE, "Localts", LOCALTS_RESOURCE);
+        this.menuButtons[0] = new MenuIconTextButton(0.0, 0.0, 0.0, 0.0, GAMEPASS_RUNNABLE, "SessionID/refID", XBOX_RESOURCE);
+        this.menuButtons[1] = new MenuIconTextButton(0.0, 0.0, 0.0, 0.0, MICROSOFT_RUNNABLE, "Microsoft", MICROSOFT_RESOURCE);
+        this.menuButtons[2] = new MenuIconTextButton(0.0, 0.0, 0.0, 0.0, CRACKED_RUNNABLE, "Cracked", CRACKED_RESOURCE);
+        this.menuButtons[3] = new MenuIconTextButton(0.0, 0.0, 0.0, 0.0, COOKIE_RUNNABLE, "Cookie", COOKIE_RESOURCE);
+        this.menuButtons[4] = new MenuIconTextButton(0.0, 0.0, 0.0, 0.0, LOCALTS_RUNNABLE, "Localts", LOCALTS_RESOURCE);
 
-        for (adi adi : this.menuButtons) {
+        for (MenuIconTextButton adi : this.menuButtons) {
             adi.setX(j);
             adi.setY(this.height / 2 - short1 / 2 + 24);
             adi.P(b0);

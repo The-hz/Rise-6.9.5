@@ -1,4 +1,4 @@
-package hackclient.rise.ui.menu;
+package com.alan.clients.ui.menu.component.button.impl;
 
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
@@ -11,11 +11,11 @@ import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import net.minecraft.util.ResourceLocation;
 
-public class adi extends MenuTextButton {
+public class MenuIconTextButton extends MenuTextButton {
     private static final agc aBZ = FontManager.MAIN.a(24, FontWeight.BOLD);
     private final ResourceLocation aCa;
 
-    public adi(double var1, double var3, double var5, double var7, Runnable var9, String var10, ResourceLocation location) {
+    public MenuIconTextButton(double var1, double var3, double var5, double var7, Runnable var9, String var10, ResourceLocation location) {
         super(var1, var3, var5, var7, var9, var10);
         this.aCa = location;
     }

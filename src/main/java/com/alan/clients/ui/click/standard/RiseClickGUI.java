@@ -15,9 +15,9 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.ui.click.standard.components.ModuleComponent;
 import com.alan.clients.ui.click.standard.components.category.SidebarCategory;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
-import hackclient.rise.ui.value.abn;
-import hackclient.rise.ui.value.abt;
-import hackclient.rise.ui.value.abv;
+import com.alan.clients.ui.click.standard.components.value.impl.BoundsNumberValueComponent;
+import com.alan.clients.ui.click.standard.components.value.impl.NumberValueComponent;
+import com.alan.clients.ui.click.standard.components.value.impl.StringValueComponent;
 import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.ui.click.standard.screen.impl.SearchScreen;
@@ -145,10 +145,10 @@ public class RiseClickGUI extends GuiScreen implements aha {
                 }
 
                 this.moduleList.forEach(var0 -> var0.getValueList().forEach(var0x -> {
-                    if (var0x instanceof abt) {
-                        ((abt)var0x).pU();
-                    } else if (var0x instanceof abn) {
-                        ((abn)var0x).pU();
+                    if (var0x instanceof NumberValueComponent) {
+                        ((NumberValueComponent)var0x).pU();
+                    } else if (var0x instanceof BoundsNumberValueComponent) {
+                        ((BoundsNumberValueComponent)var0x).pU();
                     }
                 }));
             }
@@ -434,7 +434,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
 
             for (ModuleComponent moduleComponent : this.moduleList) {
                 for (ValueComponent valueComponent : moduleComponent.getValueList()) {
-                    if (valueComponent instanceof abv abv && abv.azo != null && abv.azo.selected) {
+                    if (valueComponent instanceof StringValueComponent abv && abv.azo != null && abv.azo.selected) {
                         return abv.azo;
                     }
                 }
@@ -472,15 +472,15 @@ public class RiseClickGUI extends GuiScreen implements aha {
 
         while (iterator.hasNext()) {
             for (ValueComponent valueComponent : ((ModuleComponent)iterator.next()).getValueList()) {
-                if (valueComponent instanceof abv && valueComponent.position != null && ((abv)valueComponent).azo.selected && !((abv)valueComponent).azo.aJv.T(50L)) {
+                if (valueComponent instanceof StringValueComponent && valueComponent.position != null && ((StringValueComponent)valueComponent).azo.selected && !((StringValueComponent)valueComponent).azo.aJv.T(50L)) {
                     return true;
                 }
 
-                if (valueComponent instanceof abt && ((abt)valueComponent).azm.isSelected() && !((abt)valueComponent).azm.aJv.T(50L)) {
+                if (valueComponent instanceof NumberValueComponent && ((NumberValueComponent)valueComponent).azm.isSelected() && !((NumberValueComponent)valueComponent).azm.aJv.T(50L)) {
                     return true;
                 }
 
-                if (valueComponent instanceof abn && ((abn)valueComponent).ayS.isSelected() && !((abn)valueComponent).ayS.aJv.T(50L)) {
+                if (valueComponent instanceof BoundsNumberValueComponent && ((BoundsNumberValueComponent)valueComponent).ayS.isSelected() && !((BoundsNumberValueComponent)valueComponent).ayS.aJv.T(50L)) {
                     return true;
                 }
             }

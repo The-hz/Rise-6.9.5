@@ -1,4 +1,4 @@
-package hackclient.rise.ui.value;
+package com.alan.clients.ui.click.standard.components.value.impl;
 
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
@@ -11,8 +11,8 @@ import hackclient.rise.ahd;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 
-public class abr extends ValueComponent {
-    public abr(Value<?> var1) {
+public class ModeValueComponent extends ValueComponent {
+    public ModeValueComponent(Value<?> var1) {
         super(var1);
     }
 

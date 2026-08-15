@@ -4,7 +4,7 @@ import com.alan.clients.module.Module;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.Value;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
-import hackclient.rise.ui.value.abt;
+import com.alan.clients.ui.click.standard.components.value.impl.NumberValueComponent;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 import lombok.Generated;
@@ -47,8 +47,8 @@ public class NumberValue extends Value<Number> {
         return null;
     }
 
-    public abt wG() {
-        return new abt(this);
+    public NumberValueComponent wG() {
+        return new NumberValueComponent(this);
     }
 
     @Generated

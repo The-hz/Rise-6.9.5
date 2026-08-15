@@ -1,4 +1,4 @@
-package hackclient.rise.ui.value;
+package com.alan.clients.ui.click.standard.components.value.impl;
 
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
@@ -16,7 +16,7 @@ import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import rip.vantage.commons.util.time.StopWatch;
 
-public class abt extends ValueComponent {
+public class NumberValueComponent extends ValueComponent {
     private static final double azf = 100.0;
     private final double azg = 5.0;
     private final StopWatch azh = new StopWatch();
@@ -36,7 +36,7 @@ public class abt extends ValueComponent {
         "1234567890."
     );
 
-    public abt(Value<?> var1) {
+    public NumberValueComponent(Value<?> var1) {
         super(var1);
         this.pU();
     }

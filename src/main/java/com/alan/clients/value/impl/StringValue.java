@@ -4,7 +4,7 @@ import com.alan.clients.module.Module;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.Value;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
-import hackclient.rise.ui.value.abv;
+import com.alan.clients.ui.click.standard.components.value.impl.StringValueComponent;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
@@ -30,8 +30,8 @@ public class StringValue extends Value<String> {
         return null;
     }
 
-    public abv wH() {
-        return new abv(this);
+    public StringValueComponent wH() {
+        return new StringValueComponent(this);
     }
 
     @Override

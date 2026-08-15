@@ -127,7 +127,7 @@ public class VantageNetwork {
         }
         net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getMinecraft();
         if (mc != null) {
-            mc.displayGuiScreen(new hackclient.rise.adr());
+            mc.displayGuiScreen(new com.alan.clients.ui.menu.impl.main.MainMenu());
         }
         Client.a.getConfigManager().tn();
     }

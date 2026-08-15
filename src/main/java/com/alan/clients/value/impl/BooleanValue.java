@@ -4,7 +4,7 @@ import com.alan.clients.module.Module;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.Value;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
-import hackclient.rise.ui.value.abm;
+import com.alan.clients.ui.click.standard.components.value.impl.BooleanValueComponent;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 import lombok.Generated;
@@ -87,8 +87,8 @@ public class BooleanValue extends Value<Boolean> {
         }
     }
 
-    public abm wt() {
-        return new abm(this);
+    public BooleanValueComponent wt() {
+        return new BooleanValueComponent(this);
     }
 
     @Generated

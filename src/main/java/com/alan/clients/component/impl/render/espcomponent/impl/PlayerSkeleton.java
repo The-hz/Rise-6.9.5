@@ -1,4 +1,4 @@
-package hackclient.rise.component.esp;
+package com.alan.clients.component.impl.render.espcomponent.impl;
 
 import com.alan.clients.Client;
 import com.alan.clients.util.interfaces.InstanceAccess;
@@ -17,11 +17,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.src.a;
 import org.lwjgl.opengl.GL11;
 
-public class cs extends ESP implements InstanceAccess {
+public class PlayerSkeleton extends ESP implements InstanceAccess {
     private final Map<EntityPlayer, float[][]> limbAngles = new HashMap<>();
     private static final float RAD_TO_DEG = 180.0F / (float)Math.PI;
 
-    public cs(ESPColor espColor) {
+    public PlayerSkeleton(ESPColor espColor) {
         super(espColor);
     }
 

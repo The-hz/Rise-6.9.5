@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.ui.click.standard.screen.impl;
 
 import com.alan.clients.ui.click.standard.RiseClickGUI;
 import com.alan.clients.ui.click.standard.UIColors;
@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import lombok.Generated;
 
-public final class aby implements Screen, InstanceAccess {
+public final class CurveScreen implements Screen, InstanceAccess {
     private RiseClickGUI H;
     private CurveRenderer azx = new CurveRenderer(new ArrayList<>(), new Vector2f(0.0F, 0.0F), this.rz().rA());
     private CurveRenderer azy = new CurveRenderer(new ArrayList<>(), new Vector2f(0.0F, 0.0F), this.rz().rA());
     private float azz = 10.0F;
     public ArrayList<ValueComponent> cj = new ArrayList<>();
 
-    public aby() {
+    public CurveScreen() {
     }
 
     @Override

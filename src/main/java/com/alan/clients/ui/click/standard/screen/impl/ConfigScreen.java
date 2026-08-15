@@ -13,7 +13,7 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.ui.click.standard.UIColors;
 import hackclient.rise.agk;
 import com.alan.clients.util.font.FontWeight;
-import hackclient.rise.ui.value.abv;
+import com.alan.clients.ui.click.standard.components.value.impl.StringValueComponent;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -150,7 +150,7 @@ public final class ConfigScreen implements Screen, InstanceAccess {
 
         while (iterator.hasNext()) {
             for (ValueComponent valueComponent : ((ModuleComponent)iterator.next()).getValueList()) {
-                if (valueComponent instanceof abv && ((abv)valueComponent).azo.selected) {
+                if (valueComponent instanceof StringValueComponent && ((StringValueComponent)valueComponent).azo.selected) {
                     return true;
                 }
             }

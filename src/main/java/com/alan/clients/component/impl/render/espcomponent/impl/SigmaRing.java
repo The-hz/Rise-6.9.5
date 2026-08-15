@@ -1,4 +1,4 @@
-package hackclient.rise.component.esp;
+package com.alan.clients.component.impl.render.espcomponent.impl;
 
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.component.impl.render.espcomponent.api.ESP;
@@ -10,12 +10,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import org.lwjgl.opengl.GL11;
 
-public class ct extends ESP {
-    public ct(ESPColor espColor) {
+public class SigmaRing extends ESP {
+    public SigmaRing(ESPColor espColor) {
         super(espColor);
     }
 
-    public ct(Entity target, ESPColor espColor) {
+    public SigmaRing(Entity target, ESPColor espColor) {
         super(espColor);
         this.target = target;
     }

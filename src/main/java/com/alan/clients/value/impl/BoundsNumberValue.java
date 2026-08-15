@@ -4,7 +4,7 @@ import com.alan.clients.module.Module;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.Value;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
-import hackclient.rise.ui.value.abn;
+import com.alan.clients.ui.click.standard.components.value.impl.BoundsNumberValueComponent;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 import lombok.Generated;
@@ -74,8 +74,8 @@ public class BoundsNumberValue extends Value<Number> {
         return new BoundsNumberValue$1(this, l);
     }
 
-    public abn ww() {
-        return new abn(this);
+    public BoundsNumberValueComponent ww() {
+        return new BoundsNumberValueComponent(this);
     }
 
     @Generated

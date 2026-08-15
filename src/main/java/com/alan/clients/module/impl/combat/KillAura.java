@@ -67,9 +67,9 @@ import com.alan.clients.component.impl.player.GUIDetectionComponent;
 import com.alan.clients.component.impl.combat.TargetComponent;
 import com.alan.clients.util.social.FriendManager;
 import com.alan.clients.component.impl.render.ESPComponent;
-import hackclient.rise.component.esp.co;
-import hackclient.rise.component.esp.cp;
-import hackclient.rise.component.esp.ct;
+import com.alan.clients.component.impl.render.espcomponent.impl.AboveBox;
+import com.alan.clients.component.impl.render.espcomponent.impl.FullBox;
+import com.alan.clients.component.impl.render.espcomponent.impl.SigmaRing;
 import hackclient.rise.ea;
 import hackclient.rise.en;
 import com.alan.clients.module.impl.combat.KillAuraSwitchMap;
@@ -1109,7 +1109,7 @@ public class KillAura extends Module {
 
                         switch (var117_hi) {
                            case 0:
-                              ESPComponent.add(new ct((EntityLivingBase)var136, (com.alan.clients.component.impl.render.espcomponent.api.ESPColor)var144));
+                              ESPComponent.add(new SigmaRing((EntityLivingBase)var136, (com.alan.clients.component.impl.render.espcomponent.api.ESPColor)var144));
                               break;
                            case 1:
                               var160 = this.boxMode.wo().getName();
@@ -1128,10 +1128,10 @@ public class KillAura extends Module {
 
                               switch (var152_hi) {
                                  case 0:
-                                    ESPComponent.add(new cp((EntityLivingBase)var136, (com.alan.clients.component.impl.render.espcomponent.api.ESPColor)var144));
+                                    ESPComponent.add(new FullBox((EntityLivingBase)var136, (com.alan.clients.component.impl.render.espcomponent.api.ESPColor)var144));
                                     break;
                                  case 1:
-                                    ESPComponent.add(new co((EntityLivingBase)var136, (com.alan.clients.component.impl.render.espcomponent.api.ESPColor)var144));
+                                    ESPComponent.add(new AboveBox((EntityLivingBase)var136, (com.alan.clients.component.impl.render.espcomponent.api.ESPColor)var144));
                               }
                         }
                      }

@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.ui.menu.impl.intro;
 
 import lombok.Generated;
 

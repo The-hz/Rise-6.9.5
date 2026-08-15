@@ -1,4 +1,4 @@
-package hackclient.rise.component.esp;
+package com.alan.clients.component.impl.render.espcomponent.impl;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
@@ -16,18 +16,18 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class cr extends ESP implements InstanceAccess
+public class PlayerGlow extends ESP implements InstanceAccess
 {
 
 
     public void render3D() {
         this.b(ShaderQueueType.BLOOM).c(() -> {
-            final float bWm = cr.aEg.timer.bWm;
+            final float bWm = PlayerGlow.aEg.timer.bWm;
             final Iterator iterator = TargetComponent.bR().iterator();
             while (iterator.hasNext()) {
                 final Entity entity = (Entity)iterator.next();
-                final Render render = cr.aEg.getRenderManager().getEntityRenderObject(entity);
-                if (cr.aEg.getRenderManager() != null && entity instanceof EntityPlayer && render != null) {
+                final Render render = PlayerGlow.aEg.getRenderManager().getEntityRenderObject(entity);
+                if (PlayerGlow.aEg.getRenderManager() != null && entity instanceof EntityPlayer && render != null) {
                     if (!RenderUtil.isInViewFrustrum(entity)) {
                         continue;
                     }
@@ -44,22 +44,22 @@ public class cr extends ESP implements InstanceAccess
                     RendererLivingEntity.setShaderBrightness(color);
                     final Render render2 = render;
                     final EntityPlayer entityPlayer = (EntityPlayer)entity;
-                    cr.aEg.getRenderManager();
+                    PlayerGlow.aEg.getRenderManager();
                     final double n6 = n - RenderManager.bUO;
-                    cr.aEg.getRenderManager();
+                    PlayerGlow.aEg.getRenderManager();
                     final double n8 = n2 - RenderManager.bUP;
-                    cr.aEg.getRenderManager();
+                    PlayerGlow.aEg.getRenderManager();
                     render2.doRender((Entity)entityPlayer, n6, n8, n3 - RenderManager.bUQ, n4, bWm);
                     RendererLivingEntity.No();
                     entity.setInvisible(n5 != 0);
                 }
             }
             RenderHelper.disableStandardItemLighting();
-            cr.aEg.entityRenderer.IU();
+            PlayerGlow.aEg.entityRenderer.IU();
         });
     }
 
-    public cr(final ESPColor espColor) {
+    public PlayerGlow(final ESPColor espColor) {
         super(espColor);
     }
 

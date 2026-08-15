@@ -13,7 +13,7 @@ import com.alan.clients.ui.menu.Menu;
 import com.alan.clients.ui.menu.component.button.MenuButton;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.util.MouseUtil;
-import hackclient.rise.adr;
+import com.alan.clients.ui.menu.impl.main.MainMenu;
 import com.alan.clients.util.NetworkUtil;
 import hackclient.rise.agc;
 import com.alan.clients.util.gui.textbox.TextAlign;
@@ -160,7 +160,7 @@ extends Menu {
             if (aKi2 != 0) {
                 this.aCB = null;
                 this.aCD = false;
-                aEg.displayGuiScreen(new adr());
+                aEg.displayGuiScreen(new MainMenu());
                 Client.a.getConfigManager().tn();
                 return;
             }
