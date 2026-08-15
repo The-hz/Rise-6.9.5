@@ -15,7 +15,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
-import hackclient.rise.value.TargetInfoBackgroundModeValue;
+import com.alan.clients.module.impl.render.targetinfo.TargetInfoBackgroundModeValue;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.font.Font;
 import com.alan.clients.util.math.MathUtil;

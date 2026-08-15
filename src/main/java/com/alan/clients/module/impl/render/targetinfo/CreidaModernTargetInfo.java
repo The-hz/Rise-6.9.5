@@ -26,7 +26,7 @@ import com.alan.clients.component.impl.community.UserLookupComponent;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
-import hackclient.rise.value.CreidaBackgroundModeValue;
+import com.alan.clients.module.impl.render.targetinfo.CreidaBackgroundModeValue;
 import java.awt.Color;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.Gui;

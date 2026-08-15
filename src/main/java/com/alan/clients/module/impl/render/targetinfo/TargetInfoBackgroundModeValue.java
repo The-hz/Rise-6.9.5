@@ -1,4 +1,4 @@
-package hackclient.rise.value;
+package com.alan.clients.module.impl.render.targetinfo;
 
 import com.alan.clients.module.impl.render.targetinfo.ModernTargetInfo;
 import com.alan.clients.value.Mode;
