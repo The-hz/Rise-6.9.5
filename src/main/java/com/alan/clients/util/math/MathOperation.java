@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.math;
 
 import java.util.function.Function;
 import lombok.Generated;

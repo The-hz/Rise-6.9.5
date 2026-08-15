@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.rotation;
 
 import com.alan.clients.util.type.EvictingList;
 import com.alan.clients.util.vector.Vector2f;

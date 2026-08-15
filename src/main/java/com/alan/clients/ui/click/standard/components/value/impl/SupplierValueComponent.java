@@ -6,7 +6,7 @@ import com.alan.clients.value.Value;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.MathOperation;
+import com.alan.clients.util.math.MathOperation;
 import java.awt.Color;
 import java.util.ArrayList;
 

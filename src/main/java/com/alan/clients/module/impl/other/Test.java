@@ -41,7 +41,7 @@ import com.alan.clients.util.pathfinding.alan.Pathfinder;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.value.impl.SupplierValue;
-import hackclient.rise.MathOperation;
+import com.alan.clients.util.math.MathOperation;
 import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.ArrayList;

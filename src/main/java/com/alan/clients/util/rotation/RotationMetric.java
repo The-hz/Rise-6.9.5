@@ -1,5 +1,6 @@
-package hackclient.rise;
+package com.alan.clients.util.rotation;
 
+import com.alan.clients.util.math.MathOperation;
 import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.util.type.IndexedEvictingList;
 import com.alan.clients.util.vector.Vector3d;
