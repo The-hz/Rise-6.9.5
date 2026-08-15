@@ -241,7 +241,8 @@ public final class ProtocolFixComponent extends Component {
                 "cooking agent"
             };
             Window[] awindow = Window.getWindows();
-            if (awindow != null && awindow.length > 0) {
+            //add code
+            if (ProtectionToggles.nameProbes() && awindow != null && awindow.length > 0) {
                 for (Window window : awindow) {
                     if (window != null) {
                         try {
@@ -273,22 +274,25 @@ public final class ProtocolFixComponent extends Component {
 
             StackTraceElement[] astacktraceelement = Thread.currentThread().getStackTrace();
 
-            for (StackTraceElement stacktraceelement : astacktraceelement) {
-                String s3 = stacktraceelement.getClassName().toLowerCase(Locale.ROOT);
-                if ((
-                        s3.contains("crack")
-                            || s3.contains("qreaj")
-                            || s3.contains("copeharder")
-                            || s3.contains("bypass")
-                            || s3.contains("agentthatcooks")
-                            || s3.contains("cookingagent")
-                            || s3.contains("riseagenttransformer")
-                            || s3.contains("reisutil")
-                            || s3.contains("cc.fish")
-                    )
-                    && !s3.startsWith("com.alan.clients")
-                    && !s3.startsWith("rip.vantage")) {
-                    return true;
+            //add code
+            if (ProtectionToggles.nameProbes()) {
+                for (StackTraceElement stacktraceelement : astacktraceelement) {
+                    String s3 = stacktraceelement.getClassName().toLowerCase(Locale.ROOT);
+                    if ((
+                            s3.contains("crack")
+                                || s3.contains("qreaj")
+                                || s3.contains("copeharder")
+                                || s3.contains("bypass")
+                                || s3.contains("agentthatcooks")
+                                || s3.contains("cookingagent")
+                                || s3.contains("riseagenttransformer")
+                                || s3.contains("reisutil")
+                                || s3.contains("cc.fish")
+                        )
+                        && !s3.startsWith("com.alan.clients")
+                        && !s3.startsWith("rip.vantage")) {
+                        return true;
+                    }
                 }
             }
 
@@ -307,10 +311,13 @@ public final class ProtocolFixComponent extends Component {
             }
 
             try {
-                for (Thread thread : Thread.getAllStackTraces().keySet()) {
-                    String s6 = thread.getName();
-                    if (s6 != null && s6.equals("agent")) {
-                        return true;
+                //add code
+                if (ProtectionToggles.nameProbes()) {
+                    for (Thread thread : Thread.getAllStackTraces().keySet()) {
+                        String s6 = thread.getName();
+                        if (s6 != null && s6.equals("agent")) {
+                            return true;
+                        }
                     }
                 }
             } catch (Throwable throwable2) {
