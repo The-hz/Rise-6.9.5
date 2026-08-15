@@ -21,9 +21,11 @@ public class AdaptiveRefreshRateComponent extends Component {
     public final StopWatch bN = new StopWatch();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1 -> {
+        //add code
         if (aEg.thePlayer.ticksExisted % 100 == 0
             || this.bK
             || aEg.gameSettings.keyBindPlayerList.isKeyDown() != this.keyDown
+            || aEg.gameSettings.bJf
             || aEg.gameSettings.bJf != this.bJ
             || aEg.thePlayer.ticksExisted <= 10
             || this.disabledFor > 0) {
