@@ -122,35 +122,12 @@ public final class Ambience extends Module {
     public float getFloatTemperature(BlockPos var1, BiomeGenBase var2) {
         if (this.isEnabled()) {
             String s = this.weather.wo().getName();
-            byte b0 = -1;
-            switch (s.hashCode()) {
-                case -1031953028:
-                    if (s.equals("Heavy Snow")) {
-                        return 0.1F;
-                    }
-                    break;
-                case 2539444:
-                    if (s.equals("Rain")) {
-                        return 0.2F;
-                    }
-                    break;
-                case 1476134117:
-                    if (s.equals("Nether Particles")) {
-                        b0 = 0;
-                    }
-                    break;
-                case 1725741709:
-                    if (s.equals("Light Snow")) {
-                        return 0.1F;
-                    }
-            }
-
-            switch (b0) {
-                case 0:
-                case 1:
-                case 2:
+            switch (s) {
+                case "Nether Particles":
+                case "Heavy Snow":
+                case "Light Snow":
                     return 0.1F;
-                case 3:
+                case "Rain":
                     return 0.2F;
             }
         }

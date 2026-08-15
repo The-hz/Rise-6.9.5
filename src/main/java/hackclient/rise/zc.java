@@ -41,30 +41,12 @@ public final class zc {
         }
 
         String s = var1.lE().wo().getName();
-        byte b0 = -1;
-        switch (s.hashCode()) {
-            case 65921:
-                if (s.equals("All")) {
-                    b0 = 0;
-                }
-                break;
-            case 672585770:
-                if (s.equals("Only bound")) {
-                    return this.dl().getKey() != 0;
-                }
-                break;
-            case 1771450044:
-                if (s.equals("Exclude render")) {
-                    return !this.dl().getModuleInfo().category().equals(Category.RENDER);
-                }
-        }
-
-        switch (b0) {
-            case 0:
+        switch (s) {
+            case "All":
                 return true;
-            case 1:
+            case "Exclude render":
                 return !this.dl().getModuleInfo().category().equals(Category.RENDER);
-            case 2:
+            case "Only bound":
                 return this.dl().getKey() != 0;
             default:
                 return true;

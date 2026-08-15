@@ -54,115 +54,27 @@ public final class Bind extends Command
             return 0;
         }
         final String s2 = upperCase;
-        int n = -1;
-        switch (s2.hashCode()) {
-            case 2402104: {
-                if (s2.equals("NONE")) {
-                    n = 0;
-                    break;
-                }
-                break;
-            }
-            case 424865381: {
-                if (s2.equals("UNBOUND")) {
-                    return 0;
-                }
-                break;
-            }
-            case 237052353: {
-                if (s2.equals("LEFTCLICK")) {
-                    return -100;
-                }
-                break;
-            }
-            case 246388958: {
-                if (s2.equals("LEFTMOUSE")) {
-                    return -100;
-                }
-                break;
-            }
-            case -2014950324: {
-                if (s2.equals("MOUSE1")) {
-                    return -100;
-                }
-                break;
-            }
-            case 76092: {
-                if (s2.equals("MB1")) {
-                    return -100;
-                }
-                break;
-            }
-            case -899096340: {
-                if (s2.equals("RIGHTCLICK")) {
-                    return -99;
-                }
-                break;
-            }
-            case -889759735: {
-                if (s2.equals("RIGHTMOUSE")) {
-                    return -99;
-                }
-                break;
-            }
-            case -2014950323: {
-                if (s2.equals("MOUSE2")) {
-                    return -99;
-                }
-                break;
-            }
-            case 76093: {
-                if (s2.equals("MB2")) {
-                    return -99;
-                }
-                break;
-            }
-            case -1717291789: {
-                if (s2.equals("MIDDLECLICK")) {
-                    return -98;
-                }
-                break;
-            }
-            case -1707955184: {
-                if (s2.equals("MIDDLEMOUSE")) {
-                    return -98;
-                }
-                break;
-            }
-            case -2014950322: {
-                if (s2.equals("MOUSE3")) {
-                    return -98;
-                }
-                break;
-            }
-            case 76094: {
-                if (s2.equals("MB3")) {
-                    return -98;
-                }
-                break;
-            }
-        }
-        switch (n) {
-            case 0:
-            case 1: {
+        switch (s2) {
+            case "NONE":
+            case "UNBOUND": {
                 return 0;
             }
-            case 2:
-            case 3:
-            case 4:
-            case 5: {
+            case "LEFTCLICK":
+            case "LEFTMOUSE":
+            case "MOUSE1":
+            case "MB1": {
                 return -100;
             }
-            case 6:
-            case 7:
-            case 8:
-            case 9: {
+            case "RIGHTCLICK":
+            case "RIGHTMOUSE":
+            case "MOUSE2":
+            case "MB2": {
                 return -99;
             }
-            case 10:
-            case 11:
-            case 12:
-            case 13: {
+            case "MIDDLECLICK":
+            case "MIDDLEMOUSE":
+            case "MOUSE3":
+            case "MB3": {
                 return -98;
             }
             default: {

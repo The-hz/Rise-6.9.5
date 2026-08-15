@@ -1458,41 +1458,8 @@ public class Scaffold extends Module {
         aib aib = this.acr != null ? this.acr : this.agw;
         if (aib != null) {
             String s = this.getDisplayName();
-            int k5_hi = -1;
-            switch (s.hashCode()) {
-                case -2126575899:
-                    if (s.equals("Godbridge")) {
-                        k5_hi = 5;
-                    }
-                    break;
-                case -1955878649:
-                    if (s.equals("Normal")) {
-                        k5_hi = 0;
-                    }
-                    break;
-                case 2581482:
-                    if (s.equals("Snap")) {
-                        k5_hi = 2;
-                    }
-                    break;
-                case 66715108:
-                    if (s.equals("Eagle")) {
-                        k5_hi = 3;
-                    }
-                    break;
-                case 80691912:
-                    if (s.equals("Telly")) {
-                        k5_hi = 4;
-                    }
-                    break;
-                case 145919859:
-                    if (s.equals("Breesily")) {
-                        k5_hi = 1;
-                    }
-            }
-
-            switch (k5_hi) {
-                case 0:
+            switch (s) {
+                case "Normal":
                     aEg.entityRenderer.getMouseOver(1.0F);
                     if (this.agH
                         && !aEg.gameSettings.keyBindPickBlock.isKeyDown()
@@ -1501,7 +1468,7 @@ public class Scaffold extends Module {
                         this.D(name);
                     }
                     break;
-                case 1:
+                case "Breesily":
                     if (this.agH && aib != null) {
                         if (aib.va() == EnumFacing.UP) {
                             this.act = 90.0F;
@@ -1554,7 +1521,7 @@ public class Scaffold extends Module {
                         }
                     }
                     break;
-                case 2:
+                case "Snap":
                     this.D(name);
                     if (aib != null
                         && (
@@ -1565,7 +1532,7 @@ public class Scaffold extends Module {
                         this.acs = (float)Math.toDegrees(MoveUtil.direction(aEg.thePlayer.pl, this.jp, this.jq)) - name;
                     }
                     break;
-                case 3:
+                case "Eagle":
                     Float f7 = (aEg.thePlayer.pl + 1.0E7F) % 360.0F;
                     float f8 = f7 - 180.0F - f7 % 90.0F + 45.0F;
                     Float f9 = 78.0F;
@@ -1600,7 +1567,7 @@ public class Scaffold extends Module {
                     this.acs = f8 + this.agz / 2.0F;
                     this.act = f9 + this.agA / 2.0F;
                     break;
-                case 4:
+                case "Telly":
                     if (this.agG == 0 && this.watchdogTelly.wo()) {
                         this.agK++;
                         Float f10 = aEg.thePlayer.pl;
@@ -1713,7 +1680,7 @@ public class Scaffold extends Module {
                         }
                     }
                     break;
-                case 5:
+                case "Godbridge":
                     SlotComponent slotcomponent1 = this.d(SlotComponent.class);
                     if (SlotComponent.bP() instanceof ItemBlock && this.agH) {
                         aEg.Az();
