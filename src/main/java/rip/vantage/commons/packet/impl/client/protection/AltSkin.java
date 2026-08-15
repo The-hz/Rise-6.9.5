@@ -3,10 +3,10 @@ package rip.vantage.commons.packet.impl.client.protection;
 import java.awt.geom.Dimension2D;
 import org.apache.batik.swing.JSVGCanvas;
 
-public class SvgMeasurer {
+public class AltSkin {
     private final String eOQ;
 
-    public SvgMeasurer(String var1) {
+    public AltSkin(String var1) {
         this.eOQ = var1;
     }
 

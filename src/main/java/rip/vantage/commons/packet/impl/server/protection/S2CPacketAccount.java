@@ -24,7 +24,7 @@ public class S2CPacketAccount extends rip.vantage.commons.packet.api.abstracts.A
         this.eQd = json.getString("c");
         this.eQe = json.getString("d");
         if (json.has("e")) {
-            this.eOP = new rip.vantage.commons.packet.impl.client.protection.SvgMeasurer(json.getString("e")).toString();
+            this.eOP = new rip.vantage.commons.packet.impl.client.protection.AltSkin(json.getString("e")).toString();
         }
     }
 

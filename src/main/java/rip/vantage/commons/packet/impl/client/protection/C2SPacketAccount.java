@@ -15,7 +15,7 @@ public class C2SPacketAccount extends rip.vantage.commons.packet.api.abstracts.A
         super((byte)4);
         this.eOO = json.getString("a");
         if (json.has("b")) {
-            this.eOP = new SvgMeasurer(json.getString("b")).toString();
+            this.eOP = new AltSkin(json.getString("b")).toString();
         }
     }
 
