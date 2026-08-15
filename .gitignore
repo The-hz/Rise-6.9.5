@@ -20,8 +20,8 @@ client-src.jar
 /ViaMCP/
 src/main/resources/native/
 
-libs/*.pre-fix
-libs/*.pre-enum
+# pre-images of hand-patched libs/ jars: .pre-fix, .pre-enum, .pre-strip, ...
+libs/*.pre-*
 libs/*.stale
 libs/lombok-*.jar
 
