@@ -1,5 +1,6 @@
 package com.alan.clients.component.impl.monitoring;
 
+import com.alan.clients.compat.RevivedPaths;
 import com.alan.clients.component.Component;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
@@ -1000,6 +1001,18 @@ public class ReplayRecordingComponent extends Component {
         ArrayList arraylist = new ArrayList();
 
         label100: {
+            //add code
+            // ChunkProviderClient.chunkListing was bCw in the shipped client, so the lookup
+            // below threw on its first instruction and this whole block was skipped -- and the
+            // block is not an if/else with the loop underneath, it is an addition to it. Skipped,
+            // the recording is the render-distance square and nothing else, which is what every
+            // shipped build produced. Entered, it is every loaded chunk plus that square, which
+            // is what the author wrote first and plainly meant. Off by default; the same
+            // break label100 the shipped catch took, so nothing in here runs at all.
+            if (!RevivedPaths.replayAllLoadedChunks()) {
+                break label100;
+            }
+
             label95: {
                 try {
                     if (this.eA != null) {
