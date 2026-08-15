@@ -1,4 +1,4 @@
-package hackclient.rise.render.shader;
+package com.alan.clients.util.shader.impl;
 
 import com.alan.clients.module.impl.render.Interface;
 import com.alan.clients.util.shader.base.RiseShaderProgram;
@@ -15,7 +15,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL13;
 
-public class ajf extends aix {
+public class GaussianBlurShader extends aix {
     private final RiseShaderProgram aQc = new RiseShaderProgram("blur.frag", "vertex.vsh");
     private Framebuffer aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
     private Framebuffer aPZ = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
@@ -26,7 +26,7 @@ public class ajf extends aix {
     float aQg = 3.0F;
     private Interface amf;
 
-    public ajf() {
+    public GaussianBlurShader() {
     }
 
     @Override

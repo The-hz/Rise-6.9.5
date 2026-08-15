@@ -1,4 +1,4 @@
-package hackclient.rise.render.shader;
+package com.alan.clients.util.shader.impl;
 
 import hackclient.rise.aix;
 import com.alan.clients.util.shader.base.RiseShaderProgram;
@@ -9,11 +9,11 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.opengl.Display;
 
-public class ajc extends aix {
+public class BAWShader extends aix {
     private final RiseShaderProgram aPW = new RiseShaderProgram("baw.frag", "vertex.vsh");
     private Framebuffer aPX = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
 
-    public ajc() {
+    public BAWShader() {
     }
 
     @Override

@@ -1,18 +1,18 @@
-package hackclient.rise.render.shader;
+package com.alan.clients.util.shader.impl;
 
 import hackclient.rise.aiz;
 
-class aje {
-    static final int[] aQb = new int[aiz.values().length];
+class ajg {
+    static final int[] aQh = new int[aiz.values().length];
 
     static {
         try {
-            aQb[aiz.CAMERA.ordinal()] = 1;
+            aQh[aiz.CAMERA.ordinal()] = 1;
         } catch (NoSuchFieldError nosuchfielderror1) {
         }
 
         try {
-            aQb[aiz.OVERLAY.ordinal()] = 2;
+            aQh[aiz.OVERLAY.ordinal()] = 2;
         } catch (NoSuchFieldError nosuchfielderror) {
         }
     }

@@ -1,13 +1,13 @@
 package hackclient.rise;
 
-import hackclient.rise.render.shader.ajd;
-import hackclient.rise.render.shader.ajf;
+import com.alan.clients.util.shader.impl.BloomShader;
+import com.alan.clients.util.shader.impl.GaussianBlurShader;
 import lombok.Generated;
 
 public enum gh {
     REGULAR(null),
-    BLOOM(ajd.class),
-    BLUR(ajf.class);
+    BLOOM(BloomShader.class),
+    BLUR(GaussianBlurShader.class);
 
     private final Class<?> lb;
     private static final gh[] $VALUES = dZ();

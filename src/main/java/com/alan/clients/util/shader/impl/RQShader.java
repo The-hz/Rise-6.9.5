@@ -1,14 +1,14 @@
-package hackclient.rise;
+package com.alan.clients.util.shader.impl;
 
 import com.alan.clients.util.shader.base.RiseShaderProgram;
 import com.alan.clients.util.shader.base.ShaderUniforms;
 import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
 
-public class ajo {
+public class RQShader {
     private final RiseShaderProgram aQp = new RiseShaderProgram("rq.frag", "vertex.vsh");
 
-    public ajo() {
+    public RQShader() {
     }
 
     public void a(float var1, float var2, float var3, float var4, float var5, Color var6, boolean var7, boolean var8, boolean var9, boolean var10) {

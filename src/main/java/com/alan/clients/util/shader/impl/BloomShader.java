@@ -1,4 +1,4 @@
-package hackclient.rise.render.shader;
+package com.alan.clients.util.shader.impl;
 
 import com.alan.clients.module.impl.render.Interface;
 import com.alan.clients.util.shader.base.RiseShaderProgram;
@@ -16,14 +16,14 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL13;
 
-public class ajd extends aix {
+public class BloomShader extends aix {
     private final RiseShaderProgram aPY = new RiseShaderProgram("bloom.frag", "vertex.vsh");
     private Framebuffer aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
     private Framebuffer aPZ = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
     private ajq aQa = new ajq(0);
     private Interface amf;
 
-    public ajd() {
+    public BloomShader() {
     }
 
     @Override

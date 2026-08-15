@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.shader.impl;
 
 import com.alan.clients.util.shader.base.RiseShaderProgram;
 import com.alan.clients.util.shader.base.ShaderUniforms;
@@ -6,10 +6,10 @@ import java.awt.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 
-public final class ajl {
+public final class RGQTestShader {
     private final RiseShaderProgram aQm = new RiseShaderProgram("rgqtest.glsl", "vertex.vsh");
 
-    public ajl() {
+    public RGQTestShader() {
     }
 
     public void a(
