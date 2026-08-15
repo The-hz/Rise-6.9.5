@@ -18,8 +18,10 @@ public final class AuthHook {
 
     private static final class DefaultAuthProvider implements AuthProvider {
 
-        private volatile boolean authenticated =
+        private static final boolean AUTO_LOGIN =
                 !"false".equalsIgnoreCase(System.getProperty("rise.auth.autologin"));
+
+        private volatile boolean authenticated;
         private volatile String name = System.getProperty("rise.auth.username");
 
         @Override
@@ -37,6 +39,9 @@ public final class AuthHook {
 
         @Override
         public boolean login(String credential) {
+            if (!AUTO_LOGIN) {
+                return false;
+            }
             authenticated = true;
             return true;
         }

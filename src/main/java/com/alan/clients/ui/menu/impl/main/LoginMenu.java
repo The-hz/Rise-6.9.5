@@ -100,31 +100,23 @@ extends Menu {
         }
         //add code
         if (NetworkToggles.versionCheck()) {
-            block59: while (true) {
-                try {
-                    if (this.aCA == null) {
-                        this.rp();
-                    }
-                    String[] stringArray = "6.9.5".split("\\.");
-                    String[] stringArray2 = this.aCA.split("\\.");
-                    int i = 0;
-                    while (i < 2) {
-                        if (Float.parseFloat(stringArray[i]) < Float.parseFloat(stringArray2[i])) {
-                            System.out.println("A newer version is available please update your client on https://Vantage.Rip");
-                            this.aX("A newer version is available please update your client on https://Vantage.Rip");
-                            return;
-                        }
-                        try {
-                            i++;
-                        } catch (Exception exception) {
-                            exception.printStackTrace();
-                            break;
-                        }
-                    }
-                    break block59;
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+            try {
+                if (this.aCA == null) {
+                    this.rp();
                 }
+
+                String[] stringArray = "6.9.5".split("\\.");
+                String[] stringArray2 = this.aCA.split("\\.");
+
+                for (int i = 0; i < 2; i++) {
+                    if (Float.parseFloat(stringArray[i]) < Float.parseFloat(stringArray2[i])) {
+                        System.out.println("A newer version is available please update your client on https://Vantage.Rip");
+                        this.aX("A newer version is available please update your client on https://Vantage.Rip");
+                        return;
+                    }
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
         rip.vantage.network.core.a.aKB().kj(string);

@@ -16,7 +16,7 @@ public class a {
     public static String eRr;
     public String aCj;
     public b eRs;
-    public c dcF;
+    public volatile c dcF;
     public static volatile long eRw;
     public static volatile a eRq;
     public static SecureRandom eRu;
@@ -94,8 +94,11 @@ public class a {
     public void aKH() {
     }
 
+    public void a(GameEvent var1) {
+    }
+
     public a() {
-        this.onGame = var1 -> {};
+        this.onGame = this::a;
         Client.a.e().b(this);
     }
 

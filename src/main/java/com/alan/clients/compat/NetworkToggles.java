@@ -20,7 +20,7 @@ public final class NetworkToggles {
     }
 
     public static boolean altService() {
-        return ALT_SERVICE;
+        return !OfflineMode.offline() && ALT_SERVICE;
     }
 
     public static boolean versionCheck() {
