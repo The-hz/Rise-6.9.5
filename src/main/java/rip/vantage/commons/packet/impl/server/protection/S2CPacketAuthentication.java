@@ -191,6 +191,11 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
 
 
     public void validateSuccessFieldIntegrity(final boolean bFlag, final boolean b2, final boolean b3, final boolean b4, final boolean b5) {
+        //add code
+        if (!ProtectionToggles.nameProbes()) {
+            return;
+        }
+
         try {
             if ((bFlag ? 1 : 0) != ((b2 && b3 && b4 && b5) ? 1 : 0)) {
                 System.out.println("EC36");
@@ -300,6 +305,11 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
     }
 
     public void validateConstructorIntegrity() {
+        //add code
+        if (!ProtectionToggles.nameProbes()) {
+            return;
+        }
+
         try {
             final String string = this.getClass().getName() + ".constructor";
             MessageDigest.getInstance("SHA-256");
