@@ -19,7 +19,7 @@ import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.ui.screen.CommandPalette;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.EvictingList;
+import com.alan.clients.util.type.EvictingList;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.font.Font;

@@ -14,7 +14,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.EvictingList;
+import com.alan.clients.util.type.EvictingList;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;

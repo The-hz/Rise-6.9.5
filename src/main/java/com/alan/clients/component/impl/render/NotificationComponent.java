@@ -16,7 +16,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.shader.ShaderQueueType;
 import com.alan.clients.util.tuples.Triple;
 import com.alan.clients.util.vector.Vector2d;
-import hackclient.rise.EvictingList;
+import com.alan.clients.util.type.EvictingList;
 import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
 import rip.vantage.commons.util.time.StopWatch;

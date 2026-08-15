@@ -53,7 +53,7 @@ import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.api.type.Types;
 import com.viaversion.viaversion.protocols.v1_18_2to1_19.packet.ServerboundPackets1_19;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.EvictingList;
+import com.alan.clients.util.type.EvictingList;
 import com.alan.clients.util.RayCastUtil;
 import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;

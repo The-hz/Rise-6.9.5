@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.util.rotation.RotationUtil;
+import com.alan.clients.util.type.IndexedEvictingList;
 import com.alan.clients.util.vector.Vector3d;
 import java.util.function.Supplier;
 import net.minecraft.util.MathHelper;

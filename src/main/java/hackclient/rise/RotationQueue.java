@@ -1,5 +1,6 @@
 package hackclient.rise;
 
+import com.alan.clients.util.type.EvictingList;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.util.vector.Vector3d;
 import net.minecraft.client.Minecraft;

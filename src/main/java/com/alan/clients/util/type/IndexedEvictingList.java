@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.type;
 
 import java.util.Collection;
 

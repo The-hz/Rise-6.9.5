@@ -5,7 +5,7 @@ import com.alan.clients.anticheat.check.api.CheckInfo;
 import com.alan.clients.anticheat.check.impl.combat.VelocityCancel;
 import com.alan.clients.anticheat.data.PlayerData;
 import com.alan.clients.util.player.MoveUtil;
-import hackclient.rise.EvictingList;
+import com.alan.clients.util.type.EvictingList;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.anticheat.util.PacketUtil;
 import java.util.ArrayList;

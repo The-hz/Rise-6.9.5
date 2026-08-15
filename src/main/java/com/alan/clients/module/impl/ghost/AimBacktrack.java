@@ -11,7 +11,7 @@ import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.EvictingList;
+import com.alan.clients.util.type.EvictingList;
 import com.alan.clients.util.RayCastUtil;
 import com.alan.clients.util.chat.ChatUtil;
 import net.minecraft.entity.EntityLivingBase;

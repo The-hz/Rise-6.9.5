@@ -33,7 +33,7 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.value.impl.StringValue;
-import hackclient.rise.EvictingList;
+import com.alan.clients.util.type.EvictingList;
 import com.alan.clients.util.RayCastUtil;
 import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.TimedPacket;
