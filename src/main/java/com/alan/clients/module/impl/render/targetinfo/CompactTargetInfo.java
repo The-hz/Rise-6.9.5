@@ -1,6 +1,6 @@
 package com.alan.clients.module.impl.render.targetinfo;
 
-import com.alan.clients.component.impl.render.NotificationComponent;
+import com.alan.clients.component.impl.render.ParticleComponent;
 import com.alan.clients.module.impl.player.HealthBypass;
 import com.alan.clients.module.impl.render.Interface;
 import com.alan.clients.module.impl.render.TargetInfo;
@@ -43,8 +43,8 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
             this.targetInfo = this.e(TargetInfo.class);
         }
 
-        this.b(ShaderQueueType.BLOOM).c(NotificationComponent::ci);
-        this.b(ShaderQueueType.REGULAR, 1).c(NotificationComponent::cj);
+        this.b(ShaderQueueType.BLOOM).c(ParticleComponent::ci);
+        this.b(ShaderQueueType.REGULAR, 1).c(ParticleComponent::cj);
         Entity entity = this.targetInfo.target;
         if (entity != null) {
             boolean flag = !this.targetInfo.inWorld || this.targetInfo.stopwatch.T(1000L);

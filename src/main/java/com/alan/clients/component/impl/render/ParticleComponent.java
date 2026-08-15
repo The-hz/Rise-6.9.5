@@ -8,14 +8,14 @@ import hackclient.rise.aha;
 import com.alan.clients.util.render.particle.Particle;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class NotificationComponent extends Component implements aha {
+public class ParticleComponent extends Component implements aha {
     public static ConcurrentLinkedQueue<Particle> hu = new ConcurrentLinkedQueue<>();
     public static int hv;
     public static int hw;
     @EventLink(value = 4)
     public final Listener<Render2DEvent> onRender2DEvent = var1 -> hu.isEmpty();
 
-    public NotificationComponent() {
+    public ParticleComponent() {
     }
 
     public static void ci() {

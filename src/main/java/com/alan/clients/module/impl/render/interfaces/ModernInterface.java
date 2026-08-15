@@ -1,7 +1,7 @@
 package com.alan.clients.module.impl.render.interfaces;
 
 import com.alan.clients.Client;
-import com.alan.clients.component.impl.render.NotificationComponent;
+import com.alan.clients.component.impl.render.ParticleComponent;
 import com.alan.clients.module.impl.render.Interface;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
@@ -191,7 +191,7 @@ extends Mode<Interface> {
             return;
         }
         if (!this.particleStopWatch.T(2000L)) {
-            this.b(ShaderQueueType.BLOOM).c(NotificationComponent::cj);
+            this.b(ShaderQueueType.BLOOM).c(ParticleComponent::cj);
         }
         String string = rip.vantage.network.core.a.aKB().bX();
         String string2 = "User:";
@@ -267,7 +267,7 @@ extends Mode<Interface> {
     public final Listener<KillEvent> onKill = killEvent -> {
         if (!this.particleStopWatch.T(2000L) && ((Boolean)this.particles.wo()).booleanValue()) {
             for (int i = 0; i <= 10; ++i) {
-                NotificationComponent.a(new Particle(new Vector2f(0.0f, 0.0f), new Vector2f((float)Math.random(), (float)Math.random())));
+                ParticleComponent.a(new Particle(new Vector2f(0.0f, 0.0f), new Vector2f((float)Math.random(), (float)Math.random())));
             }
         }
         this.particleStopWatch.aX();

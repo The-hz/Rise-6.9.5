@@ -1,6 +1,6 @@
 package com.alan.clients.module.impl.render.targetinfo;
 
-import com.alan.clients.component.impl.render.NotificationComponent;
+import com.alan.clients.component.impl.render.ParticleComponent;
 import com.alan.clients.module.impl.player.HealthBypass;
 import com.alan.clients.module.impl.render.TargetInfo;
 import com.alan.clients.newevent.Listener;
@@ -144,7 +144,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                 double d0 = (((AbstractClientPlayer)entity).hurtTime == 0 ? 0.0F : ((AbstractClientPlayer)entity).hurtTime - aEg.timer.bWm) * 0.0F;
                 if (d0 > 0.0) {
                     for (int i = 0; i < d0 * Math.random() / 2.0; i++) {
-                        NotificationComponent.a(
+                        ParticleComponent.a(
                             new Particle(
                                 new Vector2f((float)(this.targetInfo.position.x + 20.0), (float)(this.targetInfo.position.y + 20.0)),
                                 new Vector2f((float)(Math.random() - 0.5) * 1.7F, (float)(Math.random() - 0.5) * 1.7F)

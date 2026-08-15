@@ -8,7 +8,7 @@ import com.alan.clients.component.impl.player.LastConnectionComponent;
 import com.alan.clients.component.impl.player.PingSpoofComponent;
 import com.alan.clients.component.impl.player.RotationComponent;
 import com.alan.clients.component.impl.player.SlotComponent;
-import com.alan.clients.component.impl.render.NotificationComponent;
+import com.alan.clients.component.impl.render.ParticleComponent;
 import com.alan.clients.component.impl.render.ProjectionComponent;
 import com.alan.clients.component.impl.viamcp.BlockPlacementFixComponent;
 import com.alan.clients.component.impl.viamcp.HitboxFixComponent;
@@ -79,7 +79,7 @@ public class ComponentManager {
         this.a(new ESPComponent());
         this.a(new cg());
         this.a(new bf());
-        this.a(new NotificationComponent());
+        this.a(new ParticleComponent());
         this.a(new ProgressBarComponent());
         this.a(new ProjectionComponent());
         this.a(new cl());
