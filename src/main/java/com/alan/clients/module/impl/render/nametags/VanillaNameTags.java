@@ -11,7 +11,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import hackclient.rise.agd;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.component.bv;
 import hackclient.rise.bx;
 import hackclient.rise.gg;
@@ -45,7 +45,7 @@ extends Mode<NameTags> {
             }
             EntityLivingBase entityLivingBase = iterator.next();
             Object object = entityLivingBase.getDisplayName().getUnformattedText();
-            if (((Boolean)this.showTeamTag.wo()).booleanValue() && aih.sameTeam(entityLivingBase)) {
+            if (((Boolean)this.showTeamTag.wo()).booleanValue() && PlayerUtil.sameTeam(entityLivingBase)) {
                 object = "\u00a7a\u00a7l" + ((Boolean)this.shortenedTags.wo() != false ? "[TM]" : "[TEAM]") + "\u00a7r " + (String)object;
             }
             if (((Boolean)this.showTargetTag.wo()).booleanValue() && bx.n(entityLivingBase.getName())) {

@@ -15,7 +15,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.JumpEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 
 @ModuleInfo(aliases = "module.movement.jesus.name", description = "module.movement.jesus.description", category = Category.MOVEMENT)
 public class Jesus extends Module {
@@ -31,7 +31,7 @@ public class Jesus extends Module {
     private final BooleanValue allowJump = new BooleanValue("Allow Jump", this, true);
     @EventLink
     public final Listener<JumpEvent> onJump = var1 -> {
-        if (!this.allowJump.wo() && aih.vl()) {
+        if (!this.allowJump.wo() && PlayerUtil.vl()) {
             var1.setCancelled();
         }
     };

@@ -12,7 +12,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.ea;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBow;
@@ -31,7 +31,7 @@ public class WatchdogNoSlow extends Mode<NoSlow> {
     public final BooleanValue slowDownOnSlabs = new BooleanValue("Slow down on Slabs", this, true);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.isUsingItem() && this.slowDownOnSlabs.wo()) {
+        if (PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.isUsingItem() && this.slowDownOnSlabs.wo()) {
             this.vh = false;
         }
 

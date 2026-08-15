@@ -12,7 +12,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.util.MathHelper;
@@ -65,9 +65,9 @@ public class MineMenClubSpeed extends Mode<Speed> {
                 aEg.thePlayer.ae < 8
                     || aEg.thePlayer.onGround
                     || aEg.thePlayer.tR == 1
-                    || aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && aEg.thePlayer.tR > 10
+                    || PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && aEg.thePlayer.tR > 10
             )
-            && (aEg.thePlayer.onGround || aEg.thePlayer.tR == 1 || aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air)
+            && (aEg.thePlayer.onGround || aEg.thePlayer.tR == 1 || PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air)
             && aEg.thePlayer.ae >= 8) {
         }
     };

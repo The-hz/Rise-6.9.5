@@ -36,12 +36,12 @@ import hackclient.rise.afj;
 import hackclient.rise.agc;
 import hackclient.rise.agk;
 import hackclient.rise.agl;
-import hackclient.rise.agm;
+import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.agw;
 import hackclient.rise.agx;
 import hackclient.rise.ahd;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import hackclient.rise.p;
@@ -68,11 +68,11 @@ extends GuiScreen {
     private static final double aAm = 28.0;
     private static final double aAn = 2.0;
     private static final long aAo = 3000L;
-    private static final agc aAp = gb.MAIN.a(17, gd.MEDIUM);
-    private static final agc aAq = gb.MAIN.a(13, gd.REGULAR);
-    private static final agc aAr = gb.MAIN.a(12, gd.REGULAR);
+    private static final agc aAp = FontManager.MAIN.a(17, gd.MEDIUM);
+    private static final agc aAq = FontManager.MAIN.a(13, gd.REGULAR);
+    private static final agc aAr = FontManager.MAIN.a(12, gd.REGULAR);
     private final GuiScreen aAs;
-    private final agm aAt;
+    private final TextBox aAt;
     private final agw aAu = new agw();
     private final agk aAv = new agk();
     private final Animation aAw = new Animation(Easing.EASE_OUT_QUAD, 1L);
@@ -129,7 +129,7 @@ extends GuiScreen {
 
     public acl(GuiScreen guiScreen) {
         this.aAs = guiScreen;
-        this.aAt = new agm(new Vector2d(0.0, 0.0), gb.MAIN.a(20, gd.REGULAR), Color.WHITE, agl.LEFT, ahd.ce("ui.command.palette.placeholder"), 400.0f);
+        this.aAt = new TextBox(new Vector2d(0.0, 0.0), FontManager.MAIN.a(20, gd.REGULAR), Color.WHITE, agl.LEFT, ahd.ce("ui.command.palette.placeholder"), 400.0f);
         this.aAt.I(true);
         this.aAt.bW(".");
         this.aAt.ar(1);
@@ -575,7 +575,7 @@ extends GuiScreen {
             this.a(acr2, d3 + 8.0, d9 + 5.0, d4 - 16.0, d2);
         }
         if (n4 == 0) {
-            agc agc2 = gb.MAIN.a(15, gd.REGULAR);
+            agc agc2 = FontManager.MAIN.a(15, gd.REGULAR);
             String string = this.rd();
             agc2.c(string, this.aAK + this.aAM / 2.0, this.aAL + this.aAN / 2.0 - (double)agc2.height() / 2.0, aip.d(Color.WHITE, (int)(180.0 * d2)).getRGB());
         }
@@ -640,7 +640,7 @@ extends GuiScreen {
             double d3 = 1.0 - (double)this.aAx.aKx() / 3000.0;
             double d4 = Math.max(0.0, Math.min(1.0, d3));
             int n2 = (int)((double)this.statusColor.getAlpha() * d4);
-            agc agc2 = gb.MAIN.a(13, gd.MEDIUM);
+            agc agc2 = FontManager.MAIN.a(13, gd.MEDIUM);
             agc2.a(this.statusMessage, this.aAF + -0.5, this.aAG + this.aAI - -0.5 - (double)agc2.height() + 4.0, aip.d(this.statusColor, n2).getRGB());
         }
     }

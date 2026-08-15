@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import net.minecraft.block.BlockAir;
 import net.minecraft.init.Blocks;
@@ -44,7 +44,7 @@ public class vd extends Mode<Scaffold> {
             MoveUtil.strafe();
         }
 
-        if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && aEg.thePlayer.tR > 2) {
+        if (PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && aEg.thePlayer.tR > 2) {
             MoveUtil.strafe();
         }
 
@@ -57,14 +57,14 @@ public class vd extends Mode<Scaffold> {
 
     @Override
     public void onEnable() {
-        if (!(aih.o(aEg.thePlayer.posX, aEg.thePlayer.aI - 2.0, aEg.thePlayer.posY) instanceof BlockAir)) {
+        if (!(PlayerUtil.o(aEg.thePlayer.posX, aEg.thePlayer.aI - 2.0, aEg.thePlayer.posY) instanceof BlockAir)) {
             this.getParent().startY = aEg.thePlayer.aI - 1.0;
         }
     }
 
     @Override
     public void onDisable() {
-        if (!(aih.o(aEg.thePlayer.posX, aEg.thePlayer.aI - 2.0, aEg.thePlayer.posY) instanceof BlockAir)) {
+        if (!(PlayerUtil.o(aEg.thePlayer.posX, aEg.thePlayer.aI - 2.0, aEg.thePlayer.posY) instanceof BlockAir)) {
             this.getParent().startY = aEg.thePlayer.aI - 1.0;
         }
     }

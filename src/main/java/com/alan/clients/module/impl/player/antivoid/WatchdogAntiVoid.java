@@ -15,7 +15,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.aka;
 import hackclient.rise.component.bc;
 import com.alan.clients.component.impl.player.FallDistanceComponent;
@@ -48,7 +48,7 @@ public class WatchdogAntiVoid extends Mode<AntiVoid> {
                 }
 
                 for (int i = 0; i <= this.distance.wo().doubleValue() * 40.0; i++) {
-                    WorldClient worldclient = aih.aEg.theWorld;
+                    WorldClient worldclient = PlayerUtil.aEg.theWorld;
                     aka aka = MoveUtil.a(aEg.thePlayer, new Vector2f(aEg.thePlayer.moveStrafing, aEg.thePlayer.moveForward), i, true);
                     BlockPos blockpos = new BlockPos(aka.x, aka.y - i, aka.z);
                     if (worldclient.getBlockState(blockpos).getBlock() != Blocks.air || aEg.thePlayer.onGround) {

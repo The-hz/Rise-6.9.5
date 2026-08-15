@@ -6,13 +6,13 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.item.ItemStack;
 
 public class VulcanTower extends Mode<Scaffold> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
-        if (aEg.gameSettings.keyBindJump.isKeyDown() && aih.ay(2) && aEg.thePlayer.tR > 3) {
+        if (aEg.gameSettings.keyBindJump.isKeyDown() && PlayerUtil.ay(2) && aEg.thePlayer.tR > 3) {
             ItemStack itemstack = aEg.thePlayer.inventory.mainInventory[aEg.thePlayer.inventory.currentItem];
             if (itemstack != null) {
                 ;

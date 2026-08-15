@@ -21,7 +21,7 @@ import hackclient.rise.afi;
 import com.alan.clients.util.file.FileManager;
 import hackclient.rise.agd;
 import hackclient.rise.air;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import hackclient.rise.gk;
@@ -113,7 +113,7 @@ public class Spotify extends Module {
     public int Wm = 1;
     public int hV = 0;
     public int Wn = -1;
-    public gb Wo = gb.MAIN;
+    public FontManager Wo = FontManager.MAIN;
     public static boolean Wp = false;
     public final File Wq = new File(FileManager.DIRECTORY, "data");
     private static final String Wr = "spotify.json";
@@ -565,11 +565,11 @@ public class Spotify extends Module {
     }
 
     private float d(String var1, int var2) {
-        return this.C(var1) ? this.Xg.fontRendererObj.getStringWidth(var1) * this.v(var2) : gb.MAIN.a(var2, gd.BOLD).getStringWidth(var1);
+        return this.C(var1) ? this.Xg.fontRendererObj.getStringWidth(var1) * this.v(var2) : FontManager.MAIN.a(var2, gd.BOLD).getStringWidth(var1);
     }
 
     private float e(String var1, int var2) {
-        return this.C(var1) ? 9 * this.v(var2) : gb.MAIN.a(var2, gd.BOLD).height();
+        return this.C(var1) ? 9 * this.v(var2) : FontManager.MAIN.a(var2, gd.BOLD).height();
     }
 
     private void a(String var1, float var2, double var3, int var5, int var6) {
@@ -582,7 +582,7 @@ public class Spotify extends Module {
             agd.b(var1, 0.0, 0.0, var6, true);
             GlStateManager.popMatrix();
         } else {
-            gb.MAIN.a(var5, gd.BOLD).a(var1, var2, (float)var3, var6);
+            FontManager.MAIN.a(var5, gd.BOLD).a(var1, var2, (float)var3, var6);
         }
     }
 
@@ -657,7 +657,7 @@ public class Spotify extends Module {
             GlStateManager.pushMatrix();
             GlStateManager.translate(var2, var3, 0.0F);
             GlStateManager.scale(var5, var5, 1.0F);
-            gb.MAIN.a(var4, gd.BOLD).a(var1, 0.0, 0.0, var6);
+            FontManager.MAIN.a(var4, gd.BOLD).a(var1, 0.0, 0.0, var6);
             GlStateManager.popMatrix();
         }
     }

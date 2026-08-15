@@ -22,7 +22,7 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.cg;
@@ -121,7 +121,7 @@ extends Module {
                         continue block0;
                     }
                     for (int i2 = -((Number)this.range.wo()).intValue() + 1; i2 <= ((Number)this.range.wo()).intValue() + 1; ++i2) {
-                        Block block = aih.p(n5, n6, i2);
+                        Block block = PlayerUtil.p(n5, n6, i2);
                         if (!(block instanceof BlockBed)) continue;
                         bl = true;
                         n2 = n5;
@@ -152,7 +152,7 @@ extends Module {
                     block28: {
                         if (n8 >= arrayList.size()) break block28;
                         BlockPos blockPos = (BlockPos)arrayList.get(n8);
-                        Block block = aih.p(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+                        Block block = PlayerUtil.p(blockPos.getX(), blockPos.getY(), blockPos.getZ());
                         if (!(block instanceof BlockBed)) break block29;
                         arrayList.remove(n8);
                         arrayList.add(new BlockPos(blockPos.getX() + 1, blockPos.getY(), blockPos.getZ()));
@@ -163,7 +163,7 @@ extends Module {
                     }
                     for (int i3 = 0; i3 < arrayList.size(); ++i3) {
                         BlockPos blockPos = (BlockPos)arrayList.get(i3);
-                        Block block = aih.p(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+                        Block block = PlayerUtil.p(blockPos.getX(), blockPos.getY(), blockPos.getZ());
                         if (!(block instanceof BlockAir)) continue;
                         ++n7;
                     }
@@ -176,7 +176,7 @@ extends Module {
             } else {
                 float f2 = 1.0E8f;
                 for (BlockPos blockPos : arrayList) {
-                    Block block = aih.p(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+                    Block block = PlayerUtil.p(blockPos.getX(), blockPos.getY(), blockPos.getZ());
                     if (!(block.wX() < f2) || block instanceof BlockBed) continue;
                     f2 = block.wX();
                     if (!(this.aeK <= 0.0f)) continue;
@@ -184,7 +184,7 @@ extends Module {
                 }
                 for (int i4 = 0; i4 < arrayList.size(); ++i4) {
                     BlockPos blockPos = (BlockPos)arrayList.get(i4);
-                    Block block = aih.p(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+                    Block block = PlayerUtil.p(blockPos.getX(), blockPos.getY(), blockPos.getZ());
                     if (f2 != block.wX() || !(blockPos.add((Vec3i)entityPlayerSP.getPosition()).j((Vec3i)entityPlayerSP.getPosition()) < this.aeQ.j((Vec3i)entityPlayerSP.getPosition())) || !(this.aeK <= 0.0f)) continue;
                     this.aeQ = new BlockPos(entityPlayerSP.posX + (double)blockPos.getX(), entityPlayerSP.posY + (double)blockPos.getY(), entityPlayerSP.posZ + (double)blockPos.getZ());
                 }
@@ -213,7 +213,7 @@ extends Module {
                 tw.aEg.thePlayer.swingItem();
                 this.aeK += this.aeJ;
                 tw.aEg.theWorld.sendBlockBreakProgress(entityPlayerSP.getEntityId(), this.aeQ, (int)(this.aeK * 10.0f - 1.0f));
-                float f3 = aih.p(this.aeQ.getX(), this.aeQ.getY(), this.aeQ.getZ()) instanceof BlockBed ? 1.0f - ((Number)this.fastBreakBed.wo()).floatValue() : 1.0f - ((Number)this.fastBreak.wo()).floatValue();
+                float f3 = PlayerUtil.p(this.aeQ.getX(), this.aeQ.getY(), this.aeQ.getZ()) instanceof BlockBed ? 1.0f - ((Number)this.fastBreakBed.wo()).floatValue() : 1.0f - ((Number)this.fastBreak.wo()).floatValue();
                 if (this.aeK >= f3) {
                     this.aeK = 0.0f;
                     PacketUtil.l(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, this.aeQ, EnumFacing.DOWN));

@@ -5,14 +5,14 @@ import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.util.MouseUtil;
 import hackclient.rise.agc;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
 import net.minecraft.util.ResourceLocation;
 
 public class adi extends MenuTextButton {
-    private static final agc aBZ = gb.MAIN.a(24, gd.BOLD);
+    private static final agc aBZ = FontManager.MAIN.a(24, gd.BOLD);
     private final ResourceLocation aCa;
 
     public adi(double var1, double var3, double var5, double var7, Runnable var9, String var10, ResourceLocation var11) {
@@ -37,7 +37,7 @@ public class adi extends MenuTextButton {
             float f = (float)(this.oM() - 8.0);
 
             for (int i = 24; i > 11 && agc.getStringWidth(this.name) > f; i--) {
-                agc = gb.MAIN.a(i, gd.BOLD);
+                agc = FontManager.MAIN.a(i, gd.BOLD);
             }
 
             agc.c(this.name, (float)(this.getX() + this.oM() / 2.0), (float)(d0 + this.da() / 2.0 - b0 / 2 - 24.0), color1.getRGB());

@@ -5,6 +5,7 @@ import com.alan.clients.ui.click.standard.components.ModuleComponent;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
+import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
@@ -114,11 +115,11 @@ public class abb implements InstanceAccess {
         }
 
         String s = ahd.ce(this.axt.getName());
-        gb.MAIN.a((int)(16.0 * var10), gd.BOLD).a(s, (float)(d0 + 8.0 * var10), (float)(d1 + 7.0 * var10), this.rz().rD().getRGB());
+        FontManager.MAIN.a((int)(16.0 * var10), gd.BOLD).a(s, (float)(d0 + 8.0 * var10), (float)(d1 + 7.0 * var10), this.rz().rD().getRGB());
         String s1 = this.axv ? "▲" : "▼";
-        gb.MAIN.a((int)(12.0 * var10), gd.REGULAR).a(s1, (float)(d0 + var5 - 16.0 * var10), (float)(d1 + 7.0 * var10), abw.TRINARY_TEXT.pW());
+        FontManager.MAIN.a((int)(12.0 * var10), gd.REGULAR).a(s1, (float)(d0 + var5 - 16.0 * var10), (float)(d1 + 7.0 * var10), abw.TRINARY_TEXT.pW());
         String s2 = "(" + this.axu.size() + ")";
-        gb.MAIN.a((int)(12.0 * var10), gd.REGULAR).d(s2, (float)(d0 + var5 - 26.0 * var10), (float)(d1 + 8.0 * var10), abw.TRINARY_TEXT.pW());
+        FontManager.MAIN.a((int)(12.0 * var10), gd.REGULAR).d(s2, (float)(d0 + var5 - 26.0 * var10), (float)(d1 + 8.0 * var10), abw.TRINARY_TEXT.pW());
         if (d11 > 1.0) {
             if (this.axv) {
                 RenderUtil.d(d0, d1 + d13 - 4.0 * var10, var5, 4.0 * var10, aip.d(abw.SECONDARY.pV(), 180));
@@ -156,16 +157,16 @@ public class abb implements InstanceAccess {
 
                     double d18 = d0 + 12.0 * var10;
                     double d19 = d14 + 4.0 * var10;
-                    gb.MAIN
+                    FontManager.MAIN
                         .a((int)(13.0 * var10), gd.REGULAR)
                         .a(abd.getModule().getName(), (float)d18, (float)d19, abd.getModule().isEnabled() ? this.rz().rD().getRGB() : abw.TEXT.pW());
                     if (!abd.oJ()) {
                         String s3 = "(" + ahd.ce(abd.getModule().getModuleInfo().category().getName()) + ")";
-                        gb.MAIN
+                        FontManager.MAIN
                             .a((int)(10.0 * var10), gd.REGULAR)
                             .a(
                                 s3,
-                                (float)(d18 + gb.MAIN.a((int)(13.0 * var10), gd.REGULAR).getStringWidth(abd.getModule().getName()) + 4.0 * var10),
+                                (float)(d18 + FontManager.MAIN.a((int)(13.0 * var10), gd.REGULAR).getStringWidth(abd.getModule().getName()) + 4.0 * var10),
                                 (float)(d19 + 1.0 * var10),
                                 abw.TRINARY_TEXT.pW()
                             );
@@ -185,7 +186,7 @@ public class abb implements InstanceAccess {
 
                         for (byte b0 = 0; b0 < k; b0 += 1) {
                             String s5 = astring1[b0];
-                            float f2 = gb.MAIN.a(j, gd.REGULAR).getStringWidth(s5 + " ");
+                            float f2 = FontManager.MAIN.a(j, gd.REGULAR).getStringWidth(s5 + " ");
                             if (!flag2 && f1 + f2 > f && stringbuilder.length() > 0) {
                                 flag2 = true;
                                 f1 = 0.0F;
@@ -204,9 +205,9 @@ public class abb implements InstanceAccess {
                             }
                         }
 
-                        gb.MAIN.a(j, gd.REGULAR).a(stringbuilder.toString().trim(), (float)d18, (float)(d19 + 11.0 * var10), abw.TRINARY_TEXT.pW());
+                        FontManager.MAIN.a(j, gd.REGULAR).a(stringbuilder.toString().trim(), (float)d18, (float)(d19 + 11.0 * var10), abw.TRINARY_TEXT.pW());
                         if (stringbuilder1.length() > 0) {
-                            gb.MAIN.a(j, gd.REGULAR).a(stringbuilder1.toString().trim(), (float)d18, (float)(d19 + 19.0 * var10), abw.TRINARY_TEXT.pW());
+                            FontManager.MAIN.a(j, gd.REGULAR).a(stringbuilder1.toString().trim(), (float)d18, (float)(d19 + 19.0 * var10), abw.TRINARY_TEXT.pW());
                         }
                     }
 
@@ -227,7 +228,7 @@ public class abb implements InstanceAccess {
                                 double d23 = d14 + 4.0 * var10;
                                 if (value2 instanceof BooleanValue booleanvalue) {
                                     String s6 = ahd.ce(value2.getName());
-                                    gb.MAIN.a((int)(12.0 * var10), gd.REGULAR).a(s6, (float)d22, (float)d23, abw.TEXT.pW());
+                                    FontManager.MAIN.a((int)(12.0 * var10), gd.REGULAR).a(s6, (float)d22, (float)d23, abw.TEXT.pW());
                                     double d24 = d0 + var5 - 28.0 * var10;
                                     double d25 = d14 + 4.0 * var10;
                                     RenderUtil.roundedRectangle(d24, d25, 12.0 * var10, 12.0 * var10, 3.0 * var10, aip.d(abw.SECONDARY.pV(), 150));
@@ -236,14 +237,14 @@ public class abb implements InstanceAccess {
                                     }
                                 } else if (value2 instanceof ModeValue modevalue3) {
                                     String s7 = ahd.ce(value2.getName());
-                                    gb.MAIN.a((int)(12.0 * var10), gd.REGULAR).a(s7, (float)d22, (float)d23, abw.TEXT.pW());
+                                    FontManager.MAIN.a((int)(12.0 * var10), gd.REGULAR).a(s7, (float)d22, (float)d23, abw.TEXT.pW());
                                     String s8 = modevalue3.wo().getName();
-                                    gb.MAIN.a((int)(11.0 * var10), gd.REGULAR).d(s8, (float)(d0 + var5 - 18.0 * var10), (float)d23, this.rz().rD().getRGB());
+                                    FontManager.MAIN.a((int)(11.0 * var10), gd.REGULAR).d(s8, (float)(d0 + var5 - 18.0 * var10), (float)d23, this.rz().rD().getRGB());
                                     String s9 = this.axE.getOrDefault(value2, false) ? "▲" : "▼";
-                                    gb.MAIN.a((int)(10.0 * var10), gd.REGULAR).a(s9, (float)(d0 + var5 - 16.0 * var10), (float)d23, abw.TRINARY_TEXT.pW());
+                                    FontManager.MAIN.a((int)(10.0 * var10), gd.REGULAR).a(s9, (float)(d0 + var5 - 16.0 * var10), (float)d23, abw.TRINARY_TEXT.pW());
                                 } else if (value2 instanceof NumberValue numbervalue) {
                                     String s10 = ahd.ce(value2.getName());
-                                    gb.MAIN.a((int)(12.0 * var10), gd.REGULAR).a(s10, (float)d22, (float)d23, abw.TEXT.pW());
+                                    FontManager.MAIN.a((int)(12.0 * var10), gd.REGULAR).a(s10, (float)d22, (float)d23, abw.TEXT.pW());
                                     double d26 = d0 + 12.0 * var10;
                                     double d27 = d14 + 18.0 * var10 - 6.0 * var10;
                                     double d28 = var5 - 24.0 * var10;
@@ -256,7 +257,7 @@ public class abb implements InstanceAccess {
                                     }
 
                                     String s11 = String.format("%." + numbervalue.wz().intValue() + "f", numbervalue.wo().doubleValue());
-                                    gb.MAIN
+                                    FontManager.MAIN
                                         .a((int)(11.0 * var10), gd.REGULAR)
                                         .d(s11, (float)(d0 + var5 - 14.0 * var10), (float)(d23 - 2.0 * var10), abw.TRINARY_TEXT.pW());
                                 }
@@ -279,7 +280,7 @@ public class abb implements InstanceAccess {
                                                 d0 + 16.0 * var10, d14, 2.0 * var10, d21 - 2.0 * var10, 1.0 * var10, this.rz().rD()
                                             );
                                         }
-                                        gb.MAIN
+                                        FontManager.MAIN
                                             .a((int)(11.0 * var10), gd.REGULAR)
                                             .a(
                                                 mode.getName(),
@@ -305,14 +306,14 @@ public class abb implements InstanceAccess {
 
     public void i(double var1, double var3, double var5) {
         String s = ahd.ce(this.axt.getName());
-        gb.MAIN.a((int)(16.0 * var5), gd.BOLD).a(s, (float)(var1 + 8.0 * var5), (float)(var3 + 7.0 * var5), aip.d(this.rz().rA(), 200).getRGB());
+        FontManager.MAIN.a((int)(16.0 * var5), gd.BOLD).a(s, (float)(var1 + 8.0 * var5), (float)(var3 + 7.0 * var5), aip.d(this.rz().rA(), 200).getRGB());
         if (this.axv && this.axw.sG() > 1.0) {
             double d0 = var3 + 22.0 * var5 + 3.0 * var5;
 
             for (ModuleComponent abd : this.axu) {
                 if (abd.getModule().isEnabled()) {
                     RenderUtil.roundedRectangle(var1 + 6.0 * var5, d0, 2.0 * var5, 34.0 * var5 - 2.0 * var5, 1.0 * var5, aip.d(this.rz().rA(), 150));
-                    gb.MAIN
+                    FontManager.MAIN
                         .a((int)(13.0 * var5), gd.REGULAR)
                         .a(abd.getModule().getName(), (float)(var1 + 12.0 * var5), (float)(d0 + 4.0 * var5), aip.d(this.rz().rA(), 120).getRGB());
                     if (abd.oJ()) {

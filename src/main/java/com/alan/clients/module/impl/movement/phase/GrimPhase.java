@@ -12,7 +12,7 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.network.Packet;
@@ -44,7 +44,7 @@ public class GrimPhase extends Mode<Phase> {
     @EventLink
     public final Listener<TickEvent> onTick = var1x -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
-            boolean flag = aih.vk();
+            boolean flag = PlayerUtil.vk();
             if (!this.NX && flag) {
                 double d0 = aEg.thePlayer.posX;
                 double d1 = aEg.thePlayer.posY;

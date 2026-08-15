@@ -10,7 +10,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import lombok.Generated;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
@@ -58,7 +58,7 @@ public final class FastBreak extends Module {
                             d0 = 0.8F;
                         }
 
-                        if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.onGround && this.equalAirGroundDig.wo()) {
+                        if (PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.onGround && this.equalAirGroundDig.wo()) {
                             aEg.playerController.curBlockDamageMP *= 5.0F;
                             d0 -= 0.8F;
                         }
@@ -72,13 +72,13 @@ public final class FastBreak extends Module {
 
             if (aEg.objectMouseOver != null && aEg.objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
                 BlockPos blockpos = aEg.objectMouseOver.getBlockPos();
-                d0 = aih.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos) * this.ticks.wo().intValue();
+                d0 = PlayerUtil.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos) * this.ticks.wo().intValue();
                 if (aEg.thePlayer.tR == 1 && this.equalAirGroundDig.wo()) {
                     aEg.playerController.curBlockDamageMP /= 5.0F;
                     d0 = 0.81F;
                 }
 
-                if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.onGround && this.equalAirGroundDig.wo()) {
+                if (PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.onGround && this.equalAirGroundDig.wo()) {
                     aEg.playerController.curBlockDamageMP *= 5.0F;
                     d0 -= 0.81F;
                 }

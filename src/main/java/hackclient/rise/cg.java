@@ -8,6 +8,7 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
+import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import java.awt.Color;
@@ -23,8 +24,8 @@ public class cg extends Component {
     private static final Vector2d hn = new Vector2d(20.0, 20.0);
     private static final Vector2d ho = new Vector2d(5.0, 126.0);
     private static final double hp = (hm.y - hn.y) / 2.0;
-    private static final agc hq = gb.MAIN.a(15, gd.BOLD);
-    private static final agc hr = gb.MAIN.a(15, gd.LIGHT);
+    private static final agc hq = FontManager.MAIN.a(15, gd.BOLD);
+    private static final agc hr = FontManager.MAIN.a(15, gd.LIGHT);
     @EventLink(value = 4)
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (hk != null) {

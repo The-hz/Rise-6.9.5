@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BoundsNumberValue;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 
 public class DragClickSimulationsAutoClicker extends Mode<AutoClicker> {
     private final BoundsNumberValue length = new BoundsNumberValue("Drag Click Length", this, 17, 18, 1, 50, 1);
@@ -24,7 +24,7 @@ public class DragClickSimulationsAutoClicker extends Mode<AutoClicker> {
                 }
             } else if (Math.random() < 0.95) {
                 this.Ch--;
-                aih.h(0, true);
+                PlayerUtil.h(0, true);
             }
         }
     };

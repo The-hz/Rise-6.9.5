@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.module.impl.render.interfaces;
 
 import com.alan.clients.Client;
 import com.alan.clients.component.impl.render.NotificationComponent;
@@ -20,13 +20,13 @@ import hackclient.rise.agc;
 import hackclient.rise.agd;
 import hackclient.rise.aip;
 import com.alan.clients.util.render.particle.Particle;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
-import hackclient.rise.yw;
-import hackclient.rise.yx;
-import hackclient.rise.yy;
-import hackclient.rise.yz;
+import com.alan.clients.module.impl.render.interfaces.yw;
+import com.alan.clients.module.impl.render.interfaces.yx;
+import com.alan.clients.module.impl.render.interfaces.yy;
+import com.alan.clients.module.impl.render.interfaces.yz;
 import hackclient.rise.zc;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -41,13 +41,13 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import rip.vantage.commons.util.time.a;
 
-public class yv
+public class ModernInterface
 extends Mode<Interface> {
-    private final agc asD = gb.MAIN.a(36, gd.MEDIUM);
-    private final agc asE = gb.MAIN.a(20, gd.REGULAR);
-    private final agc asF = gb.MAIN.a(18, gd.MEDIUM);
-    private final agc asG = gb.MAIN.a(18, gd.REGULAR);
-    agc ky = gb.MAIN.a(18, gd.REGULAR);
+    private final agc asD = FontManager.MAIN.a(36, gd.MEDIUM);
+    private final agc asE = FontManager.MAIN.a(20, gd.REGULAR);
+    private final agc asF = FontManager.MAIN.a(18, gd.MEDIUM);
+    private final agc asG = FontManager.MAIN.a(18, gd.REGULAR);
+    agc ky = FontManager.MAIN.a(18, gd.REGULAR);
     private final a asH = new a();
     private final ModeValue asI = new yw(this, "ArrayList Color Mode", this);
     private final ModeValue asJ = new yx(this, "ArrayList Font", this);
@@ -72,10 +72,10 @@ extends Mode<Interface> {
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         double d2;
-        if (aEg == null || yv.aEg.gameSettings.bJf || yv.aEg.theWorld == null || yv.aEg.thePlayer == null) {
+        if (aEg == null || ModernInterface.aEg.gameSettings.bJf || ModernInterface.aEg.theWorld == null || ModernInterface.aEg.thePlayer == null) {
             return;
         }
-        boolean bl = this.ky == gb.MINECRAFT.dM();
+        boolean bl = this.ky == FontManager.MINECRAFT.dM();
         ((Interface)this.getParent()).n(this.ky.height() + (float)(bl ? 2 : 0));
         ((Interface)this.getParent()).a(this.ky);
         ((Interface)this.getParent()).o(10.0f);
@@ -107,11 +107,11 @@ extends Mode<Interface> {
                     RenderUtil.roundedRectangle(d32 + (double)zc2.nu() + (double)zc2.nv() + 2.0, d4 - 1.5, 2.0, 9.0, 1.0, color);
                 }
                 if (((Mode)this.asJ.wo()).getName().equals("Minecraft")) {
-                    agd cfr_ignored_0 = yv.aEg.fontRendererObj;
+                    agd cfr_ignored_0 = ModernInterface.aEg.fontRendererObj;
                     float f4 = 16.0f / (float)9;
                     GlStateManager.pushMatrix();
                     GlStateManager.scale(f4, f4, f4);
-                    yv.aEg.fontRendererObj.b(Client.b, 6.0f / f4, 6.0f / f4, this.rz().rA().getRGB());
+                    ModernInterface.aEg.fontRendererObj.b(Client.b, 6.0f / f4, 6.0f / f4, this.rz().rA().getRGB());
                     GlStateManager.popMatrix();
                 } else {
                     aip.a(this.asD, Client.b, 6.0, 6.0, true);
@@ -120,8 +120,8 @@ extends Mode<Interface> {
                 if (!((String)this.customClientName.wo()).isEmpty()) {
                     this.asF.a((String)this.customClientName.wo(), (double)(6 + this.asD.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
                 }
-                agc agc2 = gb.MAIN.a(18, gd.MEDIUM);
-                agc agc3 = gb.MAIN.a(18, gd.BOLD);
+                agc agc2 = FontManager.MAIN.a(18, gd.MEDIUM);
+                agc agc3 = FontManager.MAIN.a(18, gd.BOLD);
                 String string = "6.9.5";
                 String string2 = rip.vantage.network.core.a.aKB().bX();
                 String string3 = "User:";
@@ -137,9 +137,9 @@ extends Mode<Interface> {
                 this.asF.b(string2, f10 + f7, f3, -3355444);
                 this.asG.b("XYZ:", 5.0, f3, -3355444);
                 this.asF.b(this.asU, 5.0f + this.asW, f3, -3355444);
-                gb.MAIN.a(16, gd.MEDIUM);
-                agc agc4 = gb.MAIN.a(16, gd.BOLD);
-                Collection<PotionEffect> collection = yv.aEg.thePlayer.getActivePotionEffects();
+                FontManager.MAIN.a(16, gd.MEDIUM);
+                agc agc4 = FontManager.MAIN.a(16, gd.BOLD);
+                Collection<PotionEffect> collection = ModernInterface.aEg.thePlayer.getActivePotionEffects();
                 if (!collection.isEmpty()) {
                     String string4;
                     agc agc5 = this.asG;
@@ -196,8 +196,8 @@ extends Mode<Interface> {
         String string = rip.vantage.network.core.a.aKB().bX();
         String string2 = "User:";
         String string3 = "6.9.5";
-        agc agc2 = gb.MAIN.a(18, gd.MEDIUM);
-        agc agc3 = gb.MAIN.a(18, gd.BOLD);
+        agc agc2 = FontManager.MAIN.a(18, gd.MEDIUM);
+        agc agc3 = FontManager.MAIN.a(18, gd.BOLD);
         float f4 = agc2.getStringWidth("Version:\u2009\u2009\u2009\u2009\u2009\u2009");
         float f5 = agc3.getStringWidth(string3);
         float f6 = this.asE.getStringWidth(string2);
@@ -211,9 +211,9 @@ extends Mode<Interface> {
         this.asV = f6 + f7;
         this.asG.b("XYZ:", 5.0, f3, -3355444);
         this.asF.b(this.asU, 5.0f + this.asW, f3, -3355444);
-        gb.MAIN.a(16, gd.MEDIUM);
-        agc agc4 = gb.MAIN.a(16, gd.BOLD);
-        Collection<PotionEffect> collection = yv.aEg.thePlayer.getActivePotionEffects();
+        FontManager.MAIN.a(16, gd.MEDIUM);
+        agc agc4 = FontManager.MAIN.a(16, gd.BOLD);
+        Collection<PotionEffect> collection = ModernInterface.aEg.thePlayer.getActivePotionEffects();
         if (!collection.isEmpty()) {
             agc agc5 = this.asG;
             ArrayList<String[]> arrayList = new ArrayList<String[]>();
@@ -244,11 +244,11 @@ extends Mode<Interface> {
             }
         }
         if (((Mode)this.asJ.wo()).getName().equals("Minecraft")) {
-            agd cfr_ignored_0 = yv.aEg.fontRendererObj;
+            agd cfr_ignored_0 = ModernInterface.aEg.fontRendererObj;
             float f15 = 16.0f / (float)9;
             GlStateManager.pushMatrix();
             GlStateManager.scale(f15, f15, f15);
-            yv.aEg.fontRendererObj.b(Client.b, 6.0f / f15, 6.0f / f15, this.rz().rA().getRGB());
+            ModernInterface.aEg.fontRendererObj.b(Client.b, 6.0f / f15, 6.0f / f15, this.rz().rA().getRGB());
             GlStateManager.popMatrix();
         } else {
             aip.a(this.asD, Client.b, 6.0, 6.0, true);
@@ -274,12 +274,12 @@ extends Mode<Interface> {
     };
     @EventLink
     public final Listener<TickEvent> onTick = tickEvent -> {
-        if (yv.aEg.thePlayer == null || !yv.aEg.getNetHandler().doneLoadingTerrain) {
+        if (ModernInterface.aEg.thePlayer == null || !ModernInterface.aEg.getNetHandler().doneLoadingTerrain) {
             return;
         }
         try {
-            if (((Mode)this.asJ.wo()).getName().equals("Custom") && this.ky != gb.CUSTOM.o(18)) {
-                this.ky = gb.CUSTOM.o(18);
+            if (((Mode)this.asJ.wo()).getName().equals("Custom") && this.ky != FontManager.CUSTOM.o(18)) {
+                this.ky = FontManager.CUSTOM.o(18);
             }
         } catch (Exception exception) {}
         aMR.execute(() -> {
@@ -289,7 +289,7 @@ extends Mode<Interface> {
                         this.asR = ((Mode)this.asL.wo()).getName().equals("Glow");
                         this.asS = ((Mode)this.asL.wo()).getName().equals("Shadow");
                         this.asV = this.asE.getStringWidth("riseclient.com") + 2;
-                        this.asU = (int)Math.floor(yv.aEg.thePlayer.posX) + ", " + (int)Math.floor(yv.aEg.thePlayer.posY) + ", " + (int)Math.floor(yv.aEg.thePlayer.posZ);
+                        this.asU = (int)Math.floor(ModernInterface.aEg.thePlayer.posX) + ", " + (int)Math.floor(ModernInterface.aEg.thePlayer.posY) + ", " + (int)Math.floor(ModernInterface.aEg.thePlayer.posZ);
                         this.asW = this.asF.getStringWidth("XYZ:") + 2;
                         this.logoColor = this.rz().rA();
                         this.asT = ((Mode)this.asP.wo()).getName().equals("Normal");
@@ -314,7 +314,7 @@ extends Mode<Interface> {
                         }
                         switch (n2) {
                             case 0: {
-                                agc agc2 = gb.MAIN.a(18, gd.REGULAR);
+                                agc agc2 = FontManager.MAIN.a(18, gd.REGULAR);
                                 if (!this.ky.equals(agc2)) {
                                     this.ky = agc2;
                                 }
@@ -331,7 +331,7 @@ extends Mode<Interface> {
                             }
                         }
                     }
-                    agc agc3 = gb.MINECRAFT.dM();
+                    agc agc3 = FontManager.MINECRAFT.dM();
                     if (!this.ky.equals(agc3)) {
                         this.ky = agc3;
                     }
@@ -339,10 +339,10 @@ extends Mode<Interface> {
                 }
                 String string2 = (String)this.customInstalledFont.wo();
                 if (Math.random() > 0.95) {
-                    Optional<String> optional = gb.dN().stream().filter(string3 -> yv.o(string2, string3)).findFirst();
-                    if (optional.isPresent() && !gb.CUSTOM.getName().equals(optional.get())) {
-                        gb.CUSTOM.setName((String)optional.get());
-                        gb.CUSTOM.dO().clear();
+                    Optional<String> optional = FontManager.dN().stream().filter(string3 -> ModernInterface.o(string2, string3)).findFirst();
+                    if (optional.isPresent() && !FontManager.CUSTOM.getName().equals(optional.get())) {
+                        FontManager.CUSTOM.setName((String)optional.get());
+                        FontManager.CUSTOM.dO().clear();
                     }
                 }
             }
@@ -395,7 +395,7 @@ extends Mode<Interface> {
         });
     };
 
-    public yv(String string, Interface interface_) {
+    public ModernInterface(String string, Interface interface_) {
         super(string, interface_);
     }
 
@@ -451,6 +451,6 @@ extends Mode<Interface> {
     }
 
     private static  boolean o(String string, String string2) {
-        return yv.am(string2).toLowerCase().contains(yv.am(string).toLowerCase());
+        return ModernInterface.am(string2).toLowerCase().contains(ModernInterface.am(string).toLowerCase());
     }
 }

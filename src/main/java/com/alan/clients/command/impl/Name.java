@@ -2,7 +2,7 @@ package com.alan.clients.command.impl;
 
 import com.alan.clients.command.Command;
 import hackclient.rise.afi;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.client.gui.GuiScreen;
 
 public final class Name extends Command {
@@ -12,7 +12,7 @@ public final class Name extends Command {
 
     @Override
     public void execute(String[] var1) {
-        String s = aih.name();
+        String s = PlayerUtil.name();
         GuiScreen.setClipboardString(s);
         afi.b("command.name.copied", s);
     }

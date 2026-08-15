@@ -21,7 +21,7 @@ import hackclient.rise.aip;
 import hackclient.rise.ais;
 import com.alan.clients.util.render.particle.Particle;
 import hackclient.rise.bf;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -33,8 +33,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 public class BMSTargetInfo extends Mode<TargetInfo> {
-    private final agc aug = gb.MAIN.a(22, gd.LIGHT);
-    private final agc auh = gb.MAIN.a(22, gd.LIGHT);
+    private final agc aug = FontManager.MAIN.a(22, gd.LIGHT);
+    private final agc auh = FontManager.MAIN.a(22, gd.LIGHT);
     private TargetInfo aui;
     private int auj = 4;
     private int auk = 4;

@@ -2,6 +2,7 @@ package hackclient.rise;
 
 import com.alan.clients.ui.click.standard.RiseClickGUI;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
+import com.alan.clients.util.gui.textbox.TextBox;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
@@ -99,9 +100,9 @@ public final class aby implements abx, InstanceAccess {
     public boolean pZ() {
         return this.cj.stream().noneMatch(var0 -> {
             for (Field field : var0.getClass().getDeclaredFields()) {
-                if (field.getType().equals(agm.class)) {
+                if (field.getType().equals(TextBox.class)) {
                     try {
-                        return ((agm)field.get(var0)).tO();
+                        return ((TextBox)field.get(var0)).tO();
                     } catch (IllegalAccessException illegalaccessexception) {
                     }
                 }

@@ -6,7 +6,7 @@ import com.alan.clients.anticheat.check.impl.combat.VelocityCancel;
 import com.alan.clients.anticheat.data.PlayerData;
 import com.alan.clients.util.player.MoveUtil;
 import hackclient.rise.adz;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.anticheat.util.PacketUtil;
 import java.util.ArrayList;
 import net.minecraft.block.Block;
@@ -76,7 +76,7 @@ public final class FlightPrediction extends Check {
                 for (int i = -3; i <= 3; i++) {
                     for (int j = -2; j <= 2; j++) {
                         for (int k = -3; k <= 3; k++) {
-                            Block block = aih.o(entityotherplayermp.posX + i, entityotherplayermp.posY + j, entityotherplayermp.posZ + k);
+                            Block block = PlayerUtil.o(entityotherplayermp.posX + i, entityotherplayermp.posY + j, entityotherplayermp.posZ + k);
                             if (block.getMaterial() != Blocks.air.getMaterial()) {
                                 double d1 = Math.floor(entityotherplayermp.posX + i);
                                 double d2 = Math.floor(entityotherplayermp.posY + j) + block.getBlockBoundsMaxY() + d0;

@@ -10,7 +10,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import net.minecraft.block.BlockAir;
 import net.minecraft.item.ItemBlock;
@@ -27,7 +27,7 @@ public class BlockFlight extends Mode<Flight> {
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (aEg.gameSettings.keyBindJump.isKeyDown() && aih.ay(3) && aEg.thePlayer.ae > 15) {
+        if (aEg.gameSettings.keyBindJump.isKeyDown() && PlayerUtil.ay(3) && aEg.thePlayer.ae > 15) {
             if (Math.abs(MoveUtil.predictedMotion(0.42F) - aEg.thePlayer.motionY) < 1.0E-4) {
                 var1x.setOnGround(true);
             } else {
@@ -41,7 +41,7 @@ public class BlockFlight extends Mode<Flight> {
         SlotComponent slotcomponent = this.d(SlotComponent.class);
         if (SlotComponent.getItemStack() != null) {
             slotcomponent = this.d(SlotComponent.class);
-            if (SlotComponent.getItemStack().getItem() instanceof ItemBlock && aih.p(0.0, -1.0, 0.0) instanceof BlockAir) {
+            if (SlotComponent.getItemStack().getItem() instanceof ItemBlock && PlayerUtil.p(0.0, -1.0, 0.0) instanceof BlockAir) {
                 PacketUtil.l(new m());
                 aEg.playerController
                     .onPlayerRightClick(

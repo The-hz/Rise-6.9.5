@@ -16,7 +16,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.BlockAir;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
@@ -38,7 +38,7 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
         if (aEg.thePlayer.isCollidedHorizontally) {
             aEg.thePlayer.setPosition(aEg.thePlayer.posX - d1 * 0.01, aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * 0.01);
             this.Od = true;
-        } else if (this.OK && aih.vk()) {
+        } else if (this.OK && PlayerUtil.vk()) {
             aEg.timer.dzD = this.timer.wo().floatValue();
             if (!this.packet.wo()) {
                 aEg.thePlayer
@@ -56,7 +56,7 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
-        if (this.OK && aih.vk()) {
+        if (this.OK && PlayerUtil.vk()) {
             MoveUtil.stop();
         }
     };
@@ -75,7 +75,7 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
     @EventLink
     private final Listener<MoveEvent> onMove = var1x -> {
         if (this.OK) {
-            aih.vk();
+            PlayerUtil.vk();
         }
     };
     @EventLink

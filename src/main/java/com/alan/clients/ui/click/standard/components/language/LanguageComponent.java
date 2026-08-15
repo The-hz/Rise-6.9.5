@@ -8,7 +8,7 @@ import com.alan.clients.util.vector.Vector2f;
 import hackclient.rise.abw;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.localization.Locale;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import lombok.Generated;
 import net.minecraft.util.ResourceLocation;
@@ -23,7 +23,7 @@ public class LanguageComponent implements InstanceAccess {
         Vector2f vector2f = this.getStandardClickGUI().getScale();
         double d0 = this.getStandardClickGUI().oY().aym;
         RenderUtil.roundedRectangle(vector2f.getX() + d0 + 8.0, vector2f.getY() + var1, 285.0, 38.0, 6.0, abw.OVERLAY.pV());
-        gb.MAIN
+        FontManager.MAIN
             .a(20, gd.REGULAR)
             .a(
                 this.ays,
@@ -31,10 +31,10 @@ public class LanguageComponent implements InstanceAccess {
                 vector2f.getY() + var1 + 9.0,
                 Client.a.getLocale().equals(this.ayq) ? this.rz().getAccentColor(new Vector2d(0.0, vector2f.y / 5.0F)).getRGB() : abw.TEXT.pW()
             );
-        gb.MAIN.a(17, gd.REGULAR).a(this.ayr, vector2f.getX() + d0 + 18.0, vector2f.getY() + var1 + 24.0, abw.TEXT.Z(100));
+        FontManager.MAIN.a(17, gd.REGULAR).a(this.ayr, vector2f.getX() + d0 + 18.0, vector2f.getY() + var1 + 24.0, abw.TEXT.Z(100));
         RenderUtil.image(
             new ResourceLocation("rise/icons/language/" + this.ayq.getFile() + ".png"),
-            vector2f.getX() + d0 + gb.MAIN.a(20, gd.REGULAR).getStringWidth(this.ays) + 25.0,
+            vector2f.getX() + d0 + FontManager.MAIN.a(20, gd.REGULAR).getStringWidth(this.ays) + 25.0,
             vector2f.getY() + var1 + 5.0,
             15.0,
             15.0

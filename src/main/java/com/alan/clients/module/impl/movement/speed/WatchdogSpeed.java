@@ -25,7 +25,7 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.afi;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import com.alan.clients.component.impl.player.FallDistanceComponent;
 import java.util.Objects;
@@ -116,7 +116,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                 this.RE = false;
             }
 
-            if (aih.p(0.0, -1.0, 0.0) == Blocks.packed_ice || aih.p(0.0, -1.0, 0.0) == Blocks.ice) {
+            if (PlayerUtil.p(0.0, -1.0, 0.0) == Blocks.packed_ice || PlayerUtil.p(0.0, -1.0, 0.0) == Blocks.ice) {
                 this.Rx = true;
             } else if (aEg.thePlayer.tR > 1) {
                 this.Rx = false;
@@ -126,11 +126,11 @@ public class WatchdogSpeed extends Mode<Speed> {
                 this.RB = false;
             }
 
-            if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air) {
+            if (PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air) {
                 this.vh = false;
             }
 
-            if (aEg.thePlayer.isCollidedVertically && !aEg.thePlayer.onGround && this.mode.wo().getName() == "Low Strafe" && aih.b(2.0, true)) {
+            if (aEg.thePlayer.isCollidedVertically && !aEg.thePlayer.onGround && this.mode.wo().getName() == "Low Strafe" && PlayerUtil.b(2.0, true)) {
                 this.vh = true;
             }
 
@@ -164,7 +164,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                 MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() * 4.0);
             }
 
-            aih.b(0.0, true);
+            PlayerUtil.b(0.0, true);
             double d1;
             int i = (d1 = FallDistanceComponent.cY - 1.4) == 0.0 ? 0 : (d1 < 0.0 ? -1 : 1);
             if (aEg.thePlayer.onGround && !(Math.abs(d0 - Math.round(d0)) > 0.03)) {
@@ -300,7 +300,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                                         ;
                                     }
 
-                                    if (aEg.thePlayer.tR == 8 && aih.p(0.0, aEg.thePlayer.motionY * 4.7, 0.0) != Blocks.air) {
+                                    if (aEg.thePlayer.tR == 8 && PlayerUtil.p(0.0, aEg.thePlayer.motionY * 4.7, 0.0) != Blocks.air) {
                                         if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                                             aEg.thePlayer.motionZ *= 1.001;
                                             aEg.thePlayer.motionX *= 1.001;
@@ -326,7 +326,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                                         flag1 = false;
                                     }
 
-                                    if (aEg.thePlayer.tR == 9 && aih.p(0.0, aEg.thePlayer.motionY * 3.5, 0.0) != Blocks.air) {
+                                    if (aEg.thePlayer.tR == 9 && PlayerUtil.p(0.0, aEg.thePlayer.motionY * 3.5, 0.0) != Blocks.air) {
                                         if (!this.vh) {
                                             if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                                                 aEg.thePlayer.motionZ *= 1.003;
@@ -355,7 +355,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                                         }
                                     }
 
-                                    if (aEg.thePlayer.tR == 10 && aih.p(0.0, aEg.thePlayer.motionY * 2.0, 0.0) != Blocks.air) {
+                                    if (aEg.thePlayer.tR == 10 && PlayerUtil.p(0.0, aEg.thePlayer.motionY * 2.0, 0.0) != Blocks.air) {
                                         if (!this.vh && !this.RF) {
                                             if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                                                 aEg.thePlayer.motionZ *= 1.005;
@@ -382,7 +382,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                                         }
                                     }
 
-                                    if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air) {
+                                    if (PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air) {
                                         MoveUtil.strafe();
                                         if (aEg.thePlayer.tR == 11) {
                                             if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)
@@ -489,7 +489,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                             }
                         }
 
-                        if (aEg.thePlayer.tR == 8 && aih.p(0.0, aEg.thePlayer.motionY * 3.0, 0.0) != Blocks.air) {
+                        if (aEg.thePlayer.tR == 8 && PlayerUtil.p(0.0, aEg.thePlayer.motionY * 3.0, 0.0) != Blocks.air) {
                             MoveUtil.useDiagonalSpeed();
                             if (this.alwaysGlideStrafe.wo()) {
                                 aEg.thePlayer.motionY += 0.075F;
@@ -497,14 +497,14 @@ public class WatchdogSpeed extends Mode<Speed> {
                             }
                         }
 
-                        if (aEg.thePlayer.tR == 9 && aih.p(0.0, aEg.thePlayer.motionY * 3.0, 0.0) != Blocks.air) {
+                        if (aEg.thePlayer.tR == 9 && PlayerUtil.p(0.0, aEg.thePlayer.motionY * 3.0, 0.0) != Blocks.air) {
                             MoveUtil.useDiagonalSpeed();
                             if (this.alwaysGlideStrafe.wo()) {
                                 MoveUtil.strafe();
                             }
                         }
 
-                        if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air) {
+                        if (PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air) {
                             if (aEg.thePlayer.isPotionActive(Potion.moveSpeed) && aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 >= 2) {
                                 MoveUtil.strafe(0.45);
                             } else if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)
@@ -540,7 +540,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                     }
 
                     MoveUtil.useDiagonalSpeed();
-                    aih.b(0.5, true);
+                    PlayerUtil.b(0.5, true);
                     if (this.Rt.wo()) {
                         ;
                     }
@@ -670,7 +670,7 @@ public class WatchdogSpeed extends Mode<Speed> {
 
                     if (aEg.thePlayer.tR == 6
                         && !this.vh
-                        && aih.ae(aEg.thePlayer.motionY * 3.0)
+                        && PlayerUtil.ae(aEg.thePlayer.motionY * 3.0)
                         && (this.alwaysGlideStrafe.wo() || flag2)
                         && (MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance() * 0.994 || !this.damageBoost.wo() || aEg.thePlayer.ae > 5)
                         && (!this.vh || !this.Rt.wo())
@@ -692,7 +692,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                     }
 
                     if (aEg.thePlayer.tR < 7
-                        && aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air
+                        && PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air
                         && aEg.thePlayer.isPotionActive(Potion.moveSpeed)
                         && !this.Rz) {
                         this.RE = true;
@@ -702,33 +702,33 @@ public class WatchdogSpeed extends Mode<Speed> {
 
                     if (aEg.thePlayer.tR == 7
                         && !this.vh
-                        && aih.ae(aEg.thePlayer.motionY * 2.0)
+                        && PlayerUtil.ae(aEg.thePlayer.motionY * 2.0)
                         && !this.e(Scaffold.class).isEnabled()
                         && (MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance() * 1.1 || !this.damageBoost.wo() || aEg.thePlayer.ae > 5)
                         && aEg.thePlayer.ae > 1) {
                         MoveUtil.strafe(this.alwaysGlideStrafe.wo() ? MoveUtil.speed() : MoveUtil.getAllowedHorizontalDistance() * 1.1);
                     }
 
-                    if (!aih.ae(aEg.thePlayer.motionY)
+                    if (!PlayerUtil.ae(aEg.thePlayer.motionY)
                         || aEg.thePlayer.ae <= 1
                         || this.vh
                         || this.uHCMode.wo()
                         || (aEg.thePlayer.tR <= 6 || !this.alwaysGlideStrafe.wo()) && (aEg.thePlayer.tR <= 6 || this.alwaysGlideStrafe.wo())
                         || this.RB
                         || !(MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance() * 1.095) && this.damageBoost.wo() && aEg.thePlayer.ae <= 5) {
-                        if ((!aih.ae(aEg.thePlayer.motionY) || this.vh || aEg.thePlayer.ae <= 1 || this.uHCMode.wo() || aEg.thePlayer.tR <= 6 || !this.alwaysGlideStrafe.wo())
+                        if ((!PlayerUtil.ae(aEg.thePlayer.motionY) || this.vh || aEg.thePlayer.ae <= 1 || this.uHCMode.wo() || aEg.thePlayer.tR <= 6 || !this.alwaysGlideStrafe.wo())
                             && (
                                 aEg.thePlayer.tR <= 6
                                     || this.alwaysGlideStrafe.wo()
                                     || this.RB
                                     || !(MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance()) && this.damageBoost.wo() && aEg.thePlayer.ae <= 5
                             )) {
-                            if (!aih.ae(aEg.thePlayer.motionY)
+                            if (!PlayerUtil.ae(aEg.thePlayer.motionY)
                                 || aEg.thePlayer.tR <= 5
                                 || this.RB
                                 || aEg.thePlayer.ae <= 1
                                 || !(MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance()) && this.damageBoost.wo() && aEg.thePlayer.ae <= 5) {
-                                if (aih.ae(aEg.thePlayer.motionY) && aEg.thePlayer.tR > 5 && !this.RB && aEg.thePlayer.ae > 1 && this.damageBoost.wo()) {
+                                if (PlayerUtil.ae(aEg.thePlayer.motionY) && aEg.thePlayer.tR > 5 && !this.RB && aEg.thePlayer.ae > 1 && this.damageBoost.wo()) {
                                     MoveUtil.strafe();
                                 }
                             } else {
@@ -799,7 +799,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                     }
 
                     if (this.Rx
-                        && (aih.p(0.0, aEg.thePlayer.motionY, 0.0) == Blocks.ice || aih.p(0.0, aEg.thePlayer.motionY, 0.0) == Blocks.packed_ice)
+                        && (PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) == Blocks.ice || PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) == Blocks.packed_ice)
                         && !this.vh
                         && !this.vh) {
                         aEg.thePlayer.motionX *= 1.01;

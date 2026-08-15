@@ -17,13 +17,13 @@ import hackclient.rise.adr;
 import hackclient.rise.aec;
 import hackclient.rise.agc;
 import hackclient.rise.agl;
-import hackclient.rise.agm;
+import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.aip;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
 import hackclient.rise.aju;
 import hackclient.rise.event.er;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -45,8 +45,8 @@ extends Menu {
     public String jc;
     public Animation aCv;
     public String aCB = null;
-    public agm aCy;
-    public agc aCu = gb.MAIN.a(64, gd.LIGHT);
+    public TextBox aCy;
+    public agc aCu = FontManager.MAIN.a(64, gd.LIGHT);
     public boolean aCC;
     public boolean aCD;
     public Animation animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
@@ -207,7 +207,7 @@ extends Menu {
         int l25_hi = height2 - l19_hi / 2 - l21_hi / 2 - l19_hi / 2;
         this.aCw = new MenuTextButton(dL19, l25_hi, l17_lo, l19_hi, () -> {}, "");
         this.aCx = new MenuTextButton(dL19, l25_hi + l19_hi + l21_hi, l17_lo, l19_hi, () -> this.aW(this.aCy.getText()), "Login");
-        this.aCy = new agm(new Vector2d(width2, l25_hi + 9), gb.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Username", l17_lo * 5);
+        this.aCy = new TextBox(new Vector2d(width2, l25_hi + 9), FontManager.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Username", l17_lo * 5);
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
         this.menuButtons = new MenuButton[]{this.aCw, this.aCx};
         this.aCv.T(255.0);
@@ -245,10 +245,10 @@ extends Menu {
                 }
                 this.aCz = false;
             } else if (this.jc != null) {
-                gb.MAIN.a(18, gd.LIGHT).c(this.jc, (float)this.width / 2.0f, d4 + 26.0, Color.RED.getRGB());
+                FontManager.MAIN.a(18, gd.LIGHT).c(this.jc, (float)this.width / 2.0f, d4 + 26.0, Color.RED.getRGB());
             }
-            gb.MAIN.a(18, gd.REGULAR).d("Made with <3 by Alan and The_Bi11iona1re", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 20, aip.d(aBS, 100).getRGB());
-            gb.MAIN.a(12, gd.REGULAR).d("\u00a9 Rise Client 2026. All Rights Reserved", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 10, aip.d(aBS, 100).getRGB());
+            FontManager.MAIN.a(18, gd.REGULAR).d("Made with <3 by Alan and The_Bi11iona1re", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 20, aip.d(aBS, 100).getRGB());
+            FontManager.MAIN.a(12, gd.REGULAR).d("\u00a9 Rise Client 2026. All Rights Reserved", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 10, aip.d(aBS, 100).getRGB());
             this.aCv.Q(0.0);
             RenderUtil.d(0.0, 0.0, LoginMenu.aEg.displayWidth, LoginMenu.aEg.displayHeight, new Color(0, 0, 0, (int)this.aCv.sG()));
         });

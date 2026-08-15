@@ -9,7 +9,7 @@ import hackclient.rise.abw;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.ahd;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import rip.vantage.commons.util.time.a;
 
@@ -26,8 +26,8 @@ public class abm extends ValueComponent {
         this.position = var1;
         BooleanValue booleanvalue = (BooleanValue)this.value;
         String s = ahd.ce(this.value.getName());
-        gb.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
-        double d0 = this.position.x + gb.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 3.0;
+        FontManager.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
+        double d0 = this.position.x + FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 3.0;
         if (booleanvalue.wo()) {
             this.axp = Math.min(5.0, this.axp + (float)this.ayE.aKx() / 20.0F);
         } else {
@@ -66,7 +66,7 @@ public class abm extends ValueComponent {
         if (this.position != null) {
             String s = ahd.ce(this.value.getName());
             RenderUtil.roundedRectangle(
-                this.position.x + gb.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 2.0 - this.axp / 2.0 + 4.0,
+                this.position.x + FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 2.0 - this.axp / 2.0 + 4.0,
                 this.position.y - this.axp / 2.0 + 2.5,
                 this.axp,
                 this.axp,

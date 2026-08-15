@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.other.TeleportEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.component.bc;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 
@@ -21,7 +21,7 @@ public class MMCFlight extends Mode<Flight> {
         this.ticks++;
         if (aEg.thePlayer.onGround) {
             MoveUtil.stop();
-            if (this.ticks == 1 && aih.p(0.0, -2.5, 0.0).isFullBlock()) {
+            if (this.ticks == 1 && PlayerUtil.p(0.0, -2.5, 0.0).isFullBlock()) {
                 aEg.timer.dzD = 0.1F;
                 bc.cR = true;
                 PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, true));

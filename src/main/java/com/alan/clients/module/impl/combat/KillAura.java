@@ -58,7 +58,7 @@ import hackclient.rise.aef;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.ahm;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
@@ -1412,10 +1412,10 @@ public class KillAura extends Module {
             var1x.setCancelled();
          } else {
             if (!this.lV.wo().getName().equals("Watchdog") || this.rightClickOnly.wo() && !aEg.gameSettings.cgI.isKeyDown()) {
-               if (this.oldPredictionKeepSprint.wo() && aEg.thePlayer.ticksExisted % 2 == 0 && mB && this.jE != null && aih.v(this.jE) <= 3.0 + MoveUtil.speed()) {
+               if (this.oldPredictionKeepSprint.wo() && aEg.thePlayer.ticksExisted % 2 == 0 && mB && this.jE != null && PlayerUtil.v(this.jE) <= 3.0 + MoveUtil.speed()) {
                   var1x.setCancelled();
                }
-            } else if (!this.newYouNeedThisToggledOnCurreFake.wo() && this.oldPredictionKeepSprint.wo() && this.nY == 2 && mB && this.jE != null && aih.v(this.jE) <= 3.0 + MoveUtil.speed()) {
+            } else if (!this.newYouNeedThisToggledOnCurreFake.wo() && this.oldPredictionKeepSprint.wo() && this.nY == 2 && mB && this.jE != null && PlayerUtil.v(this.jE) <= 3.0 + MoveUtil.speed()) {
                var1x.setCancelled();
             }
          }
@@ -1423,7 +1423,7 @@ public class KillAura extends Module {
       this.onHitSlowDown = var1x -> {
          if (this.lV.wo().getName().equals("Watchdog")
             && this.jE != null
-            && aih.v(this.jE) <= 3.0 + MoveUtil.speed()
+            && PlayerUtil.v(this.jE) <= 3.0 + MoveUtil.speed()
             && this.oldPredictionKeepSprint.wo()
             && this.newYouNeedThisToggledOnCurreFake.wo()
             && aEg.thePlayer.ae >= 7) {
@@ -1433,7 +1433,7 @@ public class KillAura extends Module {
       this.pb = var1x -> {
          if (this.lV.wo().getName().equals("Watchdog")
             && this.jE != null
-            && aih.v(this.jE) <= 3.0 + MoveUtil.speed()
+            && PlayerUtil.v(this.jE) <= 3.0 + MoveUtil.speed()
             && this.oldPredictionKeepSprint.wo()
             && this.newYouNeedThisToggledOnCurreFake.wo()
             && aEg.thePlayer.ae > 7) {
@@ -1445,7 +1445,7 @@ public class KillAura extends Module {
                && aEg.thePlayer.ticksExisted % 2 == 0
                && mB
                && this.jE != null
-               && aih.v(this.jE) <= 3.0 + MoveUtil.speed()
+               && PlayerUtil.v(this.jE) <= 3.0 + MoveUtil.speed()
                && (aEg.thePlayer.ae >= 7 || this.eZ())) {
                aEg.thePlayer.setSprinting(false);
             }
@@ -1454,7 +1454,7 @@ public class KillAura extends Module {
             && this.nY > 1
             && mB
             && this.jE != null
-            && aih.v(this.jE) <= 3.0 + MoveUtil.speed()
+            && PlayerUtil.v(this.jE) <= 3.0 + MoveUtil.speed()
             && (aEg.thePlayer.ae >= 7 || this.eZ())) {
             aEg.thePlayer.setSprinting(false);
          }
@@ -1977,7 +1977,7 @@ public class KillAura extends Module {
 
       switch (var441_hi) {
          case 0:
-            var464 = aih.v(this.jE);
+            var464 = PlayerUtil.v(this.jE);
             aEg.gameSettings.cgI.setPressed(var464 < 3.0 && this.oa <= 5 && aEg.thePlayer.ae >= 5);
             this.nY++;
             if (aEg.gameSettings.cgI.isPressed() || aEg.thePlayer.isUsingItem()) {

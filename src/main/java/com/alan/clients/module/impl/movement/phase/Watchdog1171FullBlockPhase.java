@@ -15,7 +15,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockSnow;
@@ -50,7 +50,7 @@ public class Watchdog1171FullBlockPhase extends Mode<Phase> {
                         && !(aEg.currentScreen instanceof GuiContainer)
                     || !this.Ow.wo() && flag && this.Op
             )
-            && !aih.vk()) {
+            && !PlayerUtil.vk()) {
             this.Op = false;
             BlockPos blockpos = this.u(10);
             if (blockpos != null) {
@@ -66,7 +66,7 @@ public class Watchdog1171FullBlockPhase extends Mode<Phase> {
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         Packet packet = var1x.getPacket();
-        if (packet instanceof S08PacketPlayerPosLook && !this.Op && (!this.silent.wo() || aih.vk())) {
+        if (packet instanceof S08PacketPlayerPosLook && !this.Op && (!this.silent.wo() || PlayerUtil.vk())) {
             S08PacketPlayerPosLook s08packetplayerposlook = (S08PacketPlayerPosLook)packet;
             var1x.setCancelled();
             double d0 = s08packetplayerposlook.getX();
@@ -98,7 +98,7 @@ public class Watchdog1171FullBlockPhase extends Mode<Phase> {
                 MathHelper.floor_double(aEg.thePlayer.posZ)
             );
             if (!blockpos.equals(blockpos1) && this.silent.wo()) {
-                if (aih.vk()) {
+                if (PlayerUtil.vk()) {
                     MoveUtil.strafe(-0.1);
                 }
 

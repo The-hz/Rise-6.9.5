@@ -12,7 +12,7 @@ import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import java.util.HashSet;
@@ -56,8 +56,8 @@ public class AntiFireBall extends Module {
                         break;
                     }
 
-                    aih.h(0, true);
-                    aih.h(0, false);
+                    PlayerUtil.h(0, true);
+                    PlayerUtil.h(0, false);
                     break;
                 }
             }

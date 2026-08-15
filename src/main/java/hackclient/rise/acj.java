@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.ui.click.standard.RiseClickGUI;
+import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2f;
@@ -36,9 +37,9 @@ public class acj extends ArrayList<aci> implements InstanceAccess {
         try {
             RiseClickGUI riseclickgui = this.getStandardClickGUI();
             this.axI = new Vector2f(var1.x, var1.y);
-            gb.MAIN.a(18, gd.REGULAR).a(this.gK, this.axI.x, this.axI.y, Color.WHITE.getRGB());
+            FontManager.MAIN.a(18, gd.REGULAR).a(this.gK, this.axI.x, this.axI.y, Color.WHITE.getRGB());
             String s = this.size() + "";
-            gb.MAIN.a(18, gd.REGULAR).a(s, this.axI.x + gb.MAIN.a(18, gd.REGULAR).getStringWidth(this.gK) + 10 / 2.0F, this.axI.y, this.rz().rA().getRGB());
+            FontManager.MAIN.a(18, gd.REGULAR).a(s, this.axI.x + FontManager.MAIN.a(18, gd.REGULAR).getStringWidth(this.gK) + 10 / 2.0F, this.axI.y, this.rz().rA().getRGB());
             if (!this.isEmpty()) {
                 this.scrollUtil.E(this.qz());
                 this.scrollUtil.V(-this.size() * (10 + this.get(0).oX().x) + this.getStandardClickGUI().alh.x - this.getStandardClickGUI().axJ.aym - 10);
@@ -46,7 +47,7 @@ public class acj extends ArrayList<aci> implements InstanceAccess {
                     this.scrollUtil.aJc = (float)Math.round(this.scrollUtil.aJc / (10 + this.get(0).oX().x)) * (10 + this.get(0).oX().x);
                 }
 
-                this.axI.y = this.axI.y + (10 + gb.MAIN.a(18, gd.REGULAR).height());
+                this.axI.y = this.axI.y + (10 + FontManager.MAIN.a(18, gd.REGULAR).height());
                 this.axI.x = (float)(this.axI.x + this.scrollUtil.tE());
 
                 for (aci aci : this) {
@@ -65,7 +66,7 @@ public class acj extends ArrayList<aci> implements InstanceAccess {
     }
 
     public int getHeight() {
-        return (int)((this.isEmpty() ? 0.0F : this.get(0).oX().getY()) + 10 + gb.MAIN.a(18, gd.REGULAR).height());
+        return (int)((this.isEmpty() ? 0.0F : this.get(0).oX().getY()) + 10 + FontManager.MAIN.a(18, gd.REGULAR).height());
     }
 
     public void f(int var1, int var2, int var3) {

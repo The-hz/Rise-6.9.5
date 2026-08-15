@@ -11,7 +11,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agd;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.component.bv;
 import hackclient.rise.bx;
 import hackclient.rise.gg;
@@ -39,7 +39,7 @@ public class ClassicNameTags extends Mode<NameTags> {
             HealthBypass healthbypass = this.e(HealthBypass.class);
             float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(entitylivingbase) : entitylivingbase.getHealth();
             String s = entitylivingbase.getDisplayName().getFormattedText() + " §7[§4❤" + Math.round(f) + "§7]";
-            if (this.showTeamTag.wo() && aih.sameTeam(entitylivingbase)) {
+            if (this.showTeamTag.wo() && PlayerUtil.sameTeam(entitylivingbase)) {
                 s = "§a§l" + (this.shortenedTags.wo() ? "[TM]" : "[TEAM]") + "§r " + s;
             }
 

@@ -11,7 +11,7 @@ import com.alan.clients.util.render.RenderUtil;
 import hackclient.rise.abw;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
 import java.util.Arrays;
@@ -94,11 +94,11 @@ public final class SidebarCategory implements InstanceAccess {
         }
 
         float f = (float)(riseclickgui.axI.getX() + 9.0F + this.animation.sG());
-        float f1 = riseclickgui.axI.getY() + (24.75F - gb.MAIN.a(42, gd.REGULAR).height() / 2.0F);
-        gb.MAIN.a(32, gd.REGULAR).a(Client.b, f + 5.0F, f1 + 2.0F, aip.d(Color.WHITE, (int)this.axT).hashCode());
-        gb.MAIN
+        float f1 = riseclickgui.axI.getY() + (24.75F - FontManager.MAIN.a(42, gd.REGULAR).height() / 2.0F);
+        FontManager.MAIN.a(32, gd.REGULAR).a(Client.b, f + 5.0F, f1 + 2.0F, aip.d(Color.WHITE, (int)this.axT).hashCode());
+        FontManager.MAIN
             .a(16, gd.REGULAR)
-            .a("6.9.5", f + 5.0F + gb.MAIN.a(32, gd.REGULAR).getStringWidth(Client.b), f1, aip.d(this.rz().rA(), (int)Math.min(this.axT, 200.0)).getRGB());
+            .a("6.9.5", f + 5.0F + FontManager.MAIN.a(32, gd.REGULAR).getStringWidth(Client.b), f1, aip.d(this.rz().rA(), (int)Math.min(this.axT, 200.0)).getRGB());
     }
 
     public void preRenderClickGUI() {

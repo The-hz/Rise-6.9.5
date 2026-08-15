@@ -8,6 +8,7 @@ import com.alan.clients.ui.menu.impl.account.AccountManagerScreen;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
+import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.render.RenderUtil;
 import java.awt.Color;
 import net.minecraft.client.gui.GuiMultiplayer;
@@ -39,7 +40,7 @@ public final class adr extends Menu {
                 adh.draw(var1, var2, var3);
             }
 
-            agc agc = gb.MAIN.a(64, gd.REGULAR);
+            agc agc = FontManager.MAIN.a(64, gd.REGULAR);
             double d0 = this.aCF.getY() - agc.height();
             this.animation.Q(d0);
             String s = this.rice ? "Rice" : Client.b;
@@ -49,7 +50,7 @@ public final class adr extends Menu {
                 .c(
                     () -> {
                         agc.c(s, this.width / 2.0F, d1, color.getRGB());
-                        gb.MAIN
+                        FontManager.MAIN
                             .a(16, gd.REGULAR)
                             .d(
                                 "Made with <3 by Alan and The_Bi11iona1re",
@@ -57,7 +58,7 @@ public final class adr extends Menu {
                                 scaledresolution.getScaledHeight() - 20,
                                 aip.d(aBS, 100).getRGB()
                             );
-                        gb.MAIN
+                        FontManager.MAIN
                             .a(12, gd.REGULAR)
                             .d(
                                 "© Rise Client 2026. All Rights Reserved",
@@ -66,7 +67,7 @@ public final class adr extends Menu {
                                 aip.d(aBS, 100).getRGB()
                             );
                         if (!System.getProperty("java.vm.vendor").toLowerCase().contains("oracle corporation")) {
-                            gb.MAIN.a(32, gd.BOLD);
+                            FontManager.MAIN.a(32, gd.BOLD);
                         }
                     }
                 );

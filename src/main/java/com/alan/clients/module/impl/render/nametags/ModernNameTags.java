@@ -12,7 +12,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import hackclient.rise.component.bv;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -27,7 +27,7 @@ public class ModernNameTags
 extends Mode<NameTags> {
     private final BooleanValue health = new BooleanValue("Show Health", (Mode<?>)this, (Boolean)true);
     private final BooleanValue atB = new BooleanValue("Overlays (Bloom/Blur)", (Mode<?>)this, (Boolean)true);
-    private final agc atC = gb.MAIN.a(14, gd.LIGHT);
+    private final agc atC = FontManager.MAIN.a(14, gd.LIGHT);
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         List<EntityLivingBase> list = bv.b((Boolean)((NameTags)this.getParent()).player.wo(), (Boolean)((NameTags)this.getParent()).invisibles.wo(), (Boolean)((NameTags)this.getParent()).animals.wo(), (Boolean)((NameTags)this.getParent()).mobs.wo(), (Boolean)((NameTags)this.getParent()).playerTeammates.wo(), true);
@@ -43,12 +43,12 @@ extends Mode<NameTags> {
             Vector4d vector4d = ProjectionComponent.e((Entity)entityLivingBase);
             if (vector4d == null) continue;
             String string = entityLivingBase.getName();
-            double d2 = ((NameTags)this.getParent()).a(string, gb.MAIN.a(17, gd.LIGHT));
+            double d2 = ((NameTags)this.getParent()).a(string, FontManager.MAIN.a(17, gd.LIGHT));
             HealthBypass healthBypass = this.e(HealthBypass.class);
             float f2 = healthBypass != null && healthBypass.isEnabled() ? HealthBypass.B(entityLivingBase) : entityLivingBase.getHealth();
             double d3 = vector4d.x + (vector4d.z - vector4d.x) / 2.0;
             double d4 = vector4d.y - 2.0;
-            double d5 = (double)(gb.MAIN.a(17, gd.LIGHT).height() - 2.0f + ((Boolean)this.health.wo() != false ? this.atC.height() : 0.0f)) + 4.0;
+            double d5 = (double)(FontManager.MAIN.a(17, gd.LIGHT).height() - 2.0f + ((Boolean)this.health.wo() != false ? this.atC.height() : 0.0f)) + 4.0;
             double d6 = d4 - d5 + 1.0;
             boolean bl = entityLivingBase.isPotionActive(Potion.damageBoost);
             Color color2 = new Color(255, 30, 30, 235);
@@ -62,7 +62,7 @@ extends Mode<NameTags> {
             }
             this.b(gg.REGULAR).c(() -> {
                 RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0, d6, d2 + 4.0, d5, this.rz().getRound() - 1, color);
-                gb.MAIN.a(17, gd.LIGHT).c(string, d3 - 0.5, d6 - 0.5 + 4.0, this.rz().rA().getRGB());
+                FontManager.MAIN.a(17, gd.LIGHT).c(string, d3 - 0.5, d6 - 0.5 + 4.0, this.rz().rA().getRGB());
                 if (((Boolean)this.health.wo()).booleanValue()) {
                     this.atC.c(String.valueOf((int)f2), d3, d4 + 5.0 - 2.0 - (double)9, Color.WHITE.getRGB());
                 }

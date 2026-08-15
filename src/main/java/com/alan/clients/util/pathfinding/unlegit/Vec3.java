@@ -1,25 +1,25 @@
-package hackclient.rise;
+package com.alan.clients.util.pathfinding.unlegit;
 
 import lombok.Generated;
 
-public class ahy {
+public class Vec3 {
     private double x;
     private double y;
     private double z;
 
-    public ahy n(double var1, double var3, double var5) {
-        return new ahy(this.x + var1, this.y + var3, this.z + var5);
+    public Vec3 n(double var1, double var3, double var5) {
+        return new Vec3(this.x + var1, this.y + var3, this.z + var5);
     }
 
-    public ahy uX() {
-        return new ahy(Math.floor(this.x), Math.floor(this.y), Math.floor(this.z));
+    public Vec3 uX() {
+        return new Vec3(Math.floor(this.x), Math.floor(this.y), Math.floor(this.z));
     }
 
-    public double c(ahy var1) {
+    public double c(Vec3 var1) {
         return Math.pow(var1.x - this.x, 2.0) + Math.pow(var1.y - this.y, 2.0) + Math.pow(var1.z - this.z, 2.0);
     }
 
-    public ahy d(ahy var1) {
+    public Vec3 d(Vec3 var1) {
         return this.n(var1.getX(), var1.getY(), var1.getZ());
     }
 
@@ -63,7 +63,7 @@ public class ahy {
     }
 
     @Generated
-    public ahy(double var1, double var3, double var5) {
+    public Vec3(double var1, double var3, double var5) {
         this.x = var1;
         this.y = var3;
         this.z = var5;

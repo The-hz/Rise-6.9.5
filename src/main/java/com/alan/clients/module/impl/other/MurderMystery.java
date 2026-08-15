@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import hackclient.rise.afi;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import java.util.HashSet;
 import java.util.Set;
 import net.minecraft.entity.Entity;
@@ -45,7 +45,7 @@ public final class MurderMystery extends Module {
         if (aEg.thePlayer.ticksExisted % 2 != 0 && this.murderer == null && !this.newestMethod.wo()) {
             for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
                 if (entityplayer.getHeldItem() != null && entityplayer.getHeldItem().getDisplayName().contains("Knife")) {
-                    afi.b(aih.g(entityplayer) + " is The Murderer.");
+                    afi.b(PlayerUtil.g(entityplayer) + " is The Murderer.");
                     this.murderer = entityplayer;
                 }
             }

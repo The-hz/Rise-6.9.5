@@ -13,10 +13,10 @@ import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.util.MouseUtil;
 import hackclient.rise.agc;
 import hackclient.rise.agl;
-import hackclient.rise.agm;
+import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -24,9 +24,9 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 
 public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
-    private static final agc FONT_RENDERER = gb.MAIN.a(36, gd.BOLD);
+    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, gd.BOLD);
     private final MenuButton[] menuButtons = new MenuButton[3];
-    private static agm usernameBox;
+    private static TextBox usernameBox;
     private static GuiScreen reference;
     private AccountViewModel<?> accountViewModel;
     private Animation animation;
@@ -99,7 +99,7 @@ public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
         this.accountViewModel = new AccountViewModel<>(this.accountViewModel.getAccount(), (float)vector2d.x, (float)vector2d.y, 200.0F, 40.0F);
         this.accountViewModel.setScreenHeight(this.height);
         Vector2d vector2d1 = new Vector2d(this.width / 2 - 100, this.height / 2 + 32);
-        usernameBox = new agm(vector2d1.offset(100, 8.0), gb.MAIN.a(24, gd.REGULAR), Color.WHITE, agl.CENTER, "Username", short1);
+        usernameBox = new TextBox(vector2d1.offset(100, 8.0), FontManager.MAIN.a(24, gd.REGULAR), Color.WHITE, agl.CENTER, "Username", short1);
         usernameBox.bW(this.accountViewModel.getAccount().getName());
         this.menuButtons[0] = new MenuTextButton(vector2d1.x, vector2d1.y, short1, b0, TEXT_BOX_RUNNABLE, "");
         this.menuButtons[1] = new MenuTextButton(vector2d1.x, vector2d1.y + b0 + b1, f, b0, this.UPDATE_RUNNABLE, "Update");

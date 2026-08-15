@@ -4,6 +4,8 @@ import com.alan.clients.Client;
 import com.alan.clients.ui.click.standard.RiseClickGUI;
 import com.alan.clients.ui.click.standard.components.ModuleComponent;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
+import com.alan.clients.util.font.FontManager;
+import com.alan.clients.util.gui.textbox.TextBox;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2d;
 import hackclient.rise.ui.value.abv;
@@ -14,7 +16,7 @@ import lombok.Generated;
 import rip.vantage.commons.util.time.a;
 
 public final class acb implements abx, InstanceAccess {
-    public final agm azM = new agm(new Vector2d(200.0, 200.0), gb.MAIN.a(20, gd.REGULAR), Color.WHITE, agl.CENTER, "Start typing to search...", 150.0F);
+    public final TextBox azM = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(20, gd.REGULAR), Color.WHITE, agl.CENTER, "Start typing to search...", 150.0F);
     private final a azN = new a();
     public agk scrollUtil = new agk();
     public ArrayList<ModuleComponent> azB = new ArrayList<>();
@@ -153,7 +155,7 @@ public final class acb implements abx, InstanceAccess {
     }
 
     @Generated
-    public agm qr() {
+    public TextBox qr() {
         return this.azM;
     }
 

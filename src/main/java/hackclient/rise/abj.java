@@ -3,6 +3,7 @@ package hackclient.rise;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
+import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import java.awt.Color;
@@ -30,7 +31,7 @@ public class abj implements InstanceAccess {
         }
 
         RenderUtil.d(d0, d1 + 30.0, var3, 10.0, color);
-        gb.MAIN.a(16, gd.REGULAR).c(this.ayt.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, flag ? aip.d(this.rz().rA(), i).getRGB() : new Color(255, 255, 255, i).getRGB());
+        FontManager.MAIN.a(16, gd.REGULAR).c(this.ayt.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, flag ? aip.d(this.rz().rA(), i).getRGB() : new Color(255, 255, 255, i).getRGB());
         this.ayy.Q(this.ayt.equals(this.rz()) ? 255.0 : 0.0);
         int j = (int)Math.min(this.ayy.sG(), i);
         if (j > 0 && this.getStandardClickGUI().axS > 0.8) {
@@ -59,7 +60,7 @@ public class abj implements InstanceAccess {
                             );
                         }
 
-                        gb.MAIN.a(16, gd.REGULAR).c(this.ayt.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, aip.d(this.ayt.rA(), j).getRGB());
+                        FontManager.MAIN.a(16, gd.REGULAR).c(this.ayt.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, aip.d(this.ayt.rA(), j).getRGB());
                     }
                 );
         }

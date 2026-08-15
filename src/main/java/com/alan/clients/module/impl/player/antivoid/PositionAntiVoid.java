@@ -6,13 +6,13 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 
 public class PositionAntiVoid extends Mode<AntiVoid> {
     private final NumberValue distance = new NumberValue("Distance", this, 5, 0, 10, 1);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
-        if (aEg.thePlayer.fallDistance > this.distance.wo().floatValue() && !aih.vh()) {
+        if (aEg.thePlayer.fallDistance > this.distance.wo().floatValue() && !PlayerUtil.vh()) {
             var1x.setPosY(var1x.getPosY() + aEg.thePlayer.fallDistance);
         }
     };

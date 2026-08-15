@@ -11,7 +11,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.BoundsNumberValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.BlockAir;
 import net.minecraft.item.ItemBlock;
 
@@ -34,7 +34,7 @@ public class LegitScaffold extends Module {
             }
         } else {
             if ((aEg.thePlayer.onGround || !this.groundOnly.wo())
-                && aih.p(0.0, -1.0, 0.0) instanceof BlockAir
+                && PlayerUtil.p(0.0, -1.0, 0.0) instanceof BlockAir
                 && (!aEg.gameSettings.keyBindForward.isKeyDown() || !this.backwardsOnly.wo())) {
                 if (!this.Ba) {
                     this.Ba = true;

@@ -8,11 +8,11 @@ import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import hackclient.rise.abw;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.agl;
-import hackclient.rise.agm;
+import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.ahd;
 import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
 import rip.vantage.commons.util.time.a;
@@ -31,9 +31,9 @@ public class abn extends ValueComponent {
     private double ayP;
     private boolean ayQ;
     private float ayR;
-    public final agm ayS = new agm(
+    public final TextBox ayS = new TextBox(
         new Vector2d(0.0, 0.0),
-        gb.MAIN.a(16, gd.REGULAR),
+        FontManager.MAIN.a(16, gd.REGULAR),
         abw.SECONDARY_TEXT.pV(),
         agl.LEFT,
         ((BoundsNumberValue)this.value).ws().toString().replace(".0", "") + " " + ((BoundsNumberValue)this.value).wB().toString().replace(".0", ""),
@@ -72,7 +72,7 @@ public class abn extends ValueComponent {
 
         String s2 = s + " " + s1;
         String s3 = ahd.ce(this.value.getName());
-        float f = gb.MAIN.a(16, gd.REGULAR).getStringWidth(s3) + 7;
+        float f = FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(s3) + 7;
         this.ayQ = GUIUtil.c(this.position.x + f - 5.0, this.position.y - 3.5, 110.0, this.height, var2, var3);
         if (this.ayQ) {
             this.ayR = Math.min(1.0F, this.ayR + (float)this.ayG.aKx() / 200.0F);
@@ -80,7 +80,7 @@ public class abn extends ValueComponent {
             this.ayR = Math.max(0.0F, this.ayR - (float)this.ayG.aKx() / 200.0F);
         }
 
-        gb.MAIN.a(16, gd.REGULAR).a(s3, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
+        FontManager.MAIN.a(16, gd.REGULAR).a(s3, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
         this.ayS.h(new Vector2d(this.position.x + f + 105.0, this.position.y));
         if (!this.ayS.tO()) {
             this.ayS.bW(s2);

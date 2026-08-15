@@ -15,7 +15,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import hackclient.rise.afi;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -148,7 +148,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
                 }
             }
 
-            if (aEg.thePlayer.tR == 5 && aih.ae(aEg.thePlayer.motionY * 2.0)) {
+            if (aEg.thePlayer.tR == 5 && PlayerUtil.ae(aEg.thePlayer.motionY * 2.0)) {
                 aEg.thePlayer.motionY += 0.085;
                 if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                     if (hQ > 66) {
@@ -161,7 +161,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
                 }
             }
 
-            if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air) {
+            if (PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air) {
                 if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                     if (hQ > 66) {
                         MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() * 1.059);
@@ -171,7 +171,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
                 }
             }
 
-            aih.vk();
+            PlayerUtil.vk();
             aEg.thePlayer.stepHeight = 0.2F;
             if (MoveUtil.speed() < 0.125) {
                 MoveUtil.strafe(0.125);

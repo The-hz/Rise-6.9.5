@@ -15,7 +15,7 @@ import com.alan.clients.value.impl.BoundsNumberValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import java.util.List;
 import net.minecraft.item.Item;
@@ -51,7 +51,7 @@ public class AutoPot extends Module {
                         if (!list.isEmpty()) {
                             PotionEffect potioneffect = (PotionEffect)list.get(0);
                             if (ItemPotion.isSplash(itemstack.getMetadata())
-                                && aih.aw(potioneffect.getPotionID())
+                                && PlayerUtil.aw(potioneffect.getPotionID())
                                 && (
                                     potioneffect.getPotionID() != Potion.regeneration.id && potioneffect.getPotionID() != Potion.heal.id
                                         || !(aEg.thePlayer.getHealth() > this.health.wo().floatValue())

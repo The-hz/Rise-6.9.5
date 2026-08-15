@@ -15,7 +15,7 @@ import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -45,7 +45,7 @@ public class HotBar extends Module {
     private Interface interfaceModule;
     private KillAura gj;
     public final BooleanValue showXPBar = new BooleanValue("Show XP Bar", this, true);
-    private final agc anR = gb.MAIN.a(18, gd.MEDIUM);
+    private final agc anR = FontManager.MAIN.a(18, gd.MEDIUM);
     @EventLink
     public final Listener<Render2DEvent> onPreMotionEvent = var1 -> {
         if (aEg.getRenderViewEntity() instanceof EntityPlayer) {

@@ -13,10 +13,10 @@ import hackclient.rise.aeo;
 import hackclient.rise.aff;
 import hackclient.rise.agc;
 import hackclient.rise.agl;
-import hackclient.rise.agm;
+import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -24,9 +24,9 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 
 public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
-    private static final agc FONT_RENDERER = gb.MAIN.a(36, gd.BOLD);
+    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, gd.BOLD);
     private final MenuButton[] menuButtons = new MenuButton[5];
-    private static agm usernameBox;
+    private static TextBox usernameBox;
     private static GuiScreen reference;
     private Animation animation;
     private static final Runnable TEXT_BOX_RUNNABLE = () -> usernameBox.I(true);
@@ -106,7 +106,7 @@ public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
         byte b1 = 4;
         float f = 192 / 3.0F;
         Vector2d vector2d = new Vector2d(this.width / 2 - 100, this.height / 2 - 24);
-        usernameBox = new agm(vector2d.offset(100, 8.0), gb.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Username", short1);
+        usernameBox = new TextBox(vector2d.offset(100, 8.0), FontManager.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Username", short1);
         this.menuButtons[0] = new MenuTextButton(vector2d.x, vector2d.y, short1, b0, TEXT_BOX_RUNNABLE, "");
         this.menuButtons[1] = new MenuTextButton(vector2d.x, vector2d.y + b0 + b1, short1, b0, GENERATE_RANDOM_RUNNABLE, "Generate random");
         this.menuButtons[2] = new MenuTextButton(vector2d.x, vector2d.y + (b0 + b1) * 2, f, b0, ADD_RUNNABLE, "Add");

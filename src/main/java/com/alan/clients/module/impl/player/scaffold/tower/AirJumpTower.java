@@ -5,12 +5,12 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 
 public class AirJumpTower extends Mode<Scaffold> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
-        if (aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.ticksExisted % 2 == 0 && aih.ay(2)) {
+        if (aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.ticksExisted % 2 == 0 && PlayerUtil.ay(2)) {
             aEg.thePlayer.motionY = 0.42F;
             var0.setOnGround(true);
         }

@@ -25,7 +25,7 @@ import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.aef;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
 import hackclient.rise.akb;
@@ -120,7 +120,7 @@ public class tu extends Module {
 
             if (this.abQ == null
                 || aEg.thePlayer.getDistance(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()) > 4.0
-                || aih.o(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()) instanceof BlockAir) {
+                || PlayerUtil.o(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()) instanceof BlockAir) {
                 this.jv();
                 if (this.ji) {
                     aEg.gameSettings.cgK.setPressed(false);
@@ -181,7 +181,7 @@ public class tu extends Module {
 
     public void jv() {
         if (this.abQ == null
-            || aih.o(this.abQ.x, this.abQ.y, this.abQ.z) instanceof BlockAir
+            || PlayerUtil.o(this.abQ.x, this.abQ.y, this.abQ.z) instanceof BlockAir
             || aEg.thePlayer.getDistance(this.abQ.x, this.abQ.y - aEg.thePlayer.getEyeHeight(), this.abQ.z) > 4.5) {
             if (this.abR != null && !this.keepBreakProgressWhenOutOfRange.wo()) {
                 aEg.playerController.curBlockDamageMP = 0.0F;
@@ -194,7 +194,7 @@ public class tu extends Module {
 
     public void jw() {
         BlockPos blockpos = new BlockPos(Math.floor(this.abQ.getX()), Math.floor(this.abQ.getY()), Math.floor(this.abQ.getZ()));
-        float f = aih.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos);
+        float f = PlayerUtil.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos);
         if (!this.onlyRotateAtStartAndStop.wo() || aEg.playerController.curBlockDamageMP == 0.0F || aEg.playerController.curBlockDamageMP >= 1.0F - f - 0.001) {
             if (this.rotations.wo()) {
                 RotationComponent.setRotations(this.jE(), 10.0, this.movementCorrection.wo());
@@ -222,7 +222,7 @@ public class tu extends Module {
         for (int j = -5; j <= 5; j++) {
             for (int k = -5; k <= 5; k++) {
                 for (int l = -5; l <= 5; l++) {
-                    Block block = aih.p(j, k, l);
+                    Block block = PlayerUtil.p(j, k, l);
                     aka akax = new aka(aEg.thePlayer.posX + j, aEg.thePlayer.posY + k, aEg.thePlayer.posZ + l);
                     if (block instanceof BlockBed) {
                         if (++i > 1) {
@@ -242,7 +242,7 @@ public class tu extends Module {
                                         for (int i1 = -4; i1 <= 4; i1++) {
                                             for (int j1 = 0; j1 <= 1; j1++) {
                                                 for (int k1 = -4; k1 <= 4; k1++) {
-                                                    Block block1 = aih.o(akax2.getX() + i1, akax2.getY() + j1, akax2.getZ() + k1);
+                                                    Block block1 = PlayerUtil.o(akax2.getX() + i1, akax2.getY() + j1, akax2.getZ() + k1);
                                                     if (!(block1 instanceof BlockBed)
                                                         && !flag
                                                         && !(aEg.thePlayer.getDistance(akax2.getX() + i1, akax2.getY() + j1, akax2.getZ()) + k1 > 4.5)
@@ -301,7 +301,7 @@ public class tu extends Module {
         for (EnumFacing enumfacing : EnumFacing.values()) {
             if (enumfacing != EnumFacing.UP) {
                 aka aka = var1.e(new aka(enumfacing.getDirectionVec().getX(), enumfacing.getDirectionVec().getY(), enumfacing.getDirectionVec().getZ()));
-                arraylist.add(aih.c(aka));
+                arraylist.add(PlayerUtil.c(aka));
             }
         }
 
@@ -390,7 +390,7 @@ public class tu extends Module {
     }
 
     private MovingObjectPosition g(Vector2f var1) {
-        Block block = aih.c(this.abQ);
+        Block block = PlayerUtil.c(this.abQ);
         AxisAlignedBB axisalignedbb = block.getCollisionBoundingBox(
             aEg.theWorld, new BlockPos(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()), block.getDefaultState()
         );

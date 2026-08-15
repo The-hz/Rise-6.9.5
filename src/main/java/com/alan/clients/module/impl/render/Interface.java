@@ -21,7 +21,7 @@ import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.cg;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.value.xg;
 import hackclient.rise.value.xh;
@@ -55,7 +55,7 @@ public final class Interface extends Module {
     private ModeValue aom = new xi(this, "Information Type", this);
     private final a aon = new a();
     private final a aoo = new a();
-    public agc aop = gb.MAIN.a(20, gd.MEDIUM);
+    public agc aop = FontManager.MAIN.a(20, gd.MEDIUM);
     public float aoq = 12.0F;
     public float aor;
     @EventLink

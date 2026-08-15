@@ -4,7 +4,7 @@ import com.alan.clients.Client;
 import com.alan.clients.component.Component;
 import com.alan.clients.module.impl.combat.KillAura;
 import com.alan.clients.util.interfaces.InstanceAccess;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.bx;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,11 +32,11 @@ public class bv extends Component implements InstanceAccess {
             gj = Client.a.g().c(KillAura.class);
         }
 
-        return b(gj.player.wo(), gj.invisibles.wo(), gj.animals.wo(), gj.mobs.wo(), gj.playerTeammates.wo()).stream().filter(var2 -> aih.v(var2) <= var0).collect(Collectors.toList());
+        return b(gj.player.wo(), gj.invisibles.wo(), gj.animals.wo(), gj.mobs.wo(), gj.playerTeammates.wo()).stream().filter(var2 -> PlayerUtil.v(var2) <= var0).collect(Collectors.toList());
     }
 
     public static List<EntityLivingBase> a(double var0, boolean var2, boolean var3, boolean var4, boolean var5, boolean var6) {
-        return b(var2, var3, var4, var5, var6).stream().filter(var2x -> aih.v(var2x) <= var0).collect(Collectors.toList());
+        return b(var2, var3, var4, var5, var6).stream().filter(var2x -> PlayerUtil.v(var2x) <= var0).collect(Collectors.toList());
     }
 
     public static List<EntityLivingBase> bR() {
@@ -67,7 +67,7 @@ public class bv extends Component implements InstanceAccess {
                     && !(var5x instanceof EntityArmorStand)
             )
             .map(var0x -> (EntityLivingBase)var0x)
-            .filter(var1x -> !(var1x instanceof EntityPlayer) || !aih.sameTeam(var1x) || var4)
+            .filter(var1x -> !(var1x instanceof EntityPlayer) || !PlayerUtil.sameTeam(var1x) || var4)
             .collect(Collectors.toList());
     }
 }

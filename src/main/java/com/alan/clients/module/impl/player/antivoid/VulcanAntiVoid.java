@@ -15,7 +15,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.BlockAir;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
@@ -44,7 +44,7 @@ public class VulcanAntiVoid extends Mode<AntiVoid> {
             this.ahM = this.e(LongJump.class);
         }
 
-        if (aEg.thePlayer.fallDistance > this.distance.wo().floatValue() && !aih.vh()) {
+        if (aEg.thePlayer.fallDistance > this.distance.wo().floatValue() && !PlayerUtil.vh()) {
             this.ahL = true;
         }
 

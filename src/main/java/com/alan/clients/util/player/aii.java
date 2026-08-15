@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.player;
 
 import java.util.HashMap;
 

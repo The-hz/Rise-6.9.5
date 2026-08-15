@@ -12,7 +12,7 @@ import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
@@ -30,7 +30,7 @@ public class WatchdogStep extends Mode<Step> {
     @EventLink
     public final Listener<PreMotionEvent> St = var1x -> {
         if (!this.e(Scaffold.class).isEnabled()) {
-            if (aEg.thePlayer.onGround && !aih.vj() && !aEg.gameSettings.keyBindJump.isKeyDown()) {
+            if (aEg.thePlayer.onGround && !PlayerUtil.vj() && !aEg.gameSettings.keyBindJump.isKeyDown()) {
                 aEg.thePlayer.stepHeight = 1.0F;
             } else {
                 aEg.thePlayer.stepHeight = 0.6F;
@@ -50,9 +50,9 @@ public class WatchdogStep extends Mode<Step> {
         if (!this.e(Scaffold.class).isEnabled()) {
             aEg.thePlayer.stepHeight = 1.0F;
             if (aEg.thePlayer.onGround
-                && !aih.vj()
-                && !(aih.o(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ) instanceof BlockSlab)
-                && !(aih.o(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ) instanceof BlockStairs)) {
+                && !PlayerUtil.vj()
+                && !(PlayerUtil.o(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ) instanceof BlockSlab)
+                && !(PlayerUtil.o(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ) instanceof BlockStairs)) {
                 if (!(d0 <= 0.6F)) {
                     double[] adouble = new double[0];
                     if (d0 == 1.0) {

@@ -25,7 +25,7 @@ import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.pathfinding.unlegit.MainPathFinder;
-import hackclient.rise.ahy;
+import com.alan.clients.util.pathfinding.unlegit.Vec3;
 import hackclient.rise.component.bv;
 import hackclient.rise.hc;
 import java.awt.Color;
@@ -59,7 +59,7 @@ public final class TeleportAura extends Module {
     private final BooleanValue render = new BooleanValue("Render", this, true);
     private final a qn = new a();
     private KillAura gj;
-    private List<ahy> path;
+    private List<Vec3> path;
     public EntityLivingBase jE;
     private long nextSwing;
     @EventLink
@@ -82,9 +82,9 @@ public final class TeleportAura extends Module {
     @EventLink
     public final Listener<Render3DEvent> onRender3D = var1 -> {
         if (this.render.wo() && this.path != null && this.jE != null) {
-            ahy ahyx = null;
+            Vec3 ahyx = null;
 
-            for (ahy ahyx2 : this.path) {
+            for (Vec3 ahyx2 : this.path) {
                 if (ahyx != null) {
                     RenderUtil.drawLine(ahyx.getX(), ahyx.getY() + 0.01, ahyx.getZ(), ahyx2.getX(), ahyx2.getY() + 0.01, ahyx2.getZ(), Color.WHITE, 1.0F);
                 }
@@ -206,12 +206,12 @@ public final class TeleportAura extends Module {
         if (!attackevent.isCancelled()) {
             EntityLivingBase entitylivingbase = attackevent.dc();
             this.path = MainPathFinder.a(
-                new ahy(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ),
-                new ahy(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ),
+                new Vec3(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ),
+                new Vec3(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ),
                 true
             );
             if (this.path != null) {
-                for (ahy ahy : this.path) {
+                for (Vec3 ahy : this.path) {
                     PacketUtil.m(new C04PacketPlayerPosition(ahy.getX(), ahy.getY(), ahy.getZ(), true));
                     if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_21_2)
                         && aEg.thePlayer != null
@@ -238,7 +238,7 @@ public final class TeleportAura extends Module {
 
                 Collections.reverse(this.path);
 
-                for (ahy ahyx : this.path) {
+                for (Vec3 ahyx : this.path) {
                     PacketUtil.m(new C04PacketPlayerPosition(ahyx.getX(), ahyx.getY(), ahyx.getZ(), true));
                     if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_21_2)
                         && aEg.thePlayer != null

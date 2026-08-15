@@ -4,12 +4,12 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import hackclient.rise.agc;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
 
 public class adl extends MenuTextButton {
-    private static final agc aCe = gb.MAIN.a(14, gd.LIGHT);
+    private static final agc aCe = FontManager.MAIN.a(14, gd.LIGHT);
     private static final Color aCf = aip.d(Color.WHITE, 150);
     private final Color aCg;
 

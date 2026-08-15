@@ -11,7 +11,7 @@ import com.alan.clients.value.Mode;
 import hackclient.rise.agc;
 import com.alan.clients.util.localization.Locale;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.zc;
 import java.awt.Color;
@@ -55,6 +55,6 @@ public class WurstInterface extends Mode<Interface> {
 
     public WurstInterface(String var1, Interface var2) {
         super(var1, var2);
-        this.ky = Client.a.getLocale() == Locale.ZH_ZH ? gb.MAIN.a(18, gd.REGULAR) : aEg.fontRendererObj;
+        this.ky = Client.a.getLocale() == Locale.ZH_ZH ? FontManager.MAIN.a(18, gd.REGULAR) : aEg.fontRendererObj;
     }
 }

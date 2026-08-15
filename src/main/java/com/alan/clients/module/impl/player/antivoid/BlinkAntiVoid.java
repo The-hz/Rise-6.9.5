@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.motion.PostMotionEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.aka;
 import com.alan.clients.component.impl.player.FallDistanceComponent;
 
@@ -19,7 +19,7 @@ public class BlinkAntiVoid extends Mode<AntiVoid> {
     @EventLink
     public final Listener<PostMotionEvent> onPreUpdate = var1x -> {
         if (aEg.thePlayer.ticksExisted > 60) {
-            if (this.Ft == null || this.EC == null || this.ka == null || aih.a(50.0, true)) {
+            if (this.Ft == null || this.EC == null || this.ka == null || PlayerUtil.a(50.0, true)) {
                 this.Ft = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
                 this.EC = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
                 this.ka = new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);

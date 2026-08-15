@@ -12,7 +12,7 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 import net.minecraft.util.AxisAlignedBB;
 
@@ -82,7 +82,7 @@ public class LatestNCPFlight extends Mode<Flight> {
             if (this.yr) {
                 aEg.thePlayer.motionY += 0.025;
                 MoveUtil.strafe(this.moveSpeed *= 0.935F);
-                if (aEg.thePlayer.motionY < -0.5 && !aih.vh()) {
+                if (aEg.thePlayer.motionY < -0.5 && !PlayerUtil.vh()) {
                     this.toggle();
                 }
             }

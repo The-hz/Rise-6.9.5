@@ -4,14 +4,14 @@ import com.alan.clients.ui.menu.component.button.MenuButton;
 import com.alan.clients.util.render.RenderUtil;
 import hackclient.rise.agc;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
 import lombok.Generated;
 
 public class MenuTextButton extends MenuButton {
-    private agc lq = gb.MAIN.a(24, gd.BOLD);
+    private agc lq = FontManager.MAIN.a(24, gd.BOLD);
     public String name;
     private float aCh = 5.0F;
     private int aCi = 32;

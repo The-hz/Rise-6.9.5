@@ -12,7 +12,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import hackclient.rise.afi;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import hackclient.rise.cl;
 import net.minecraft.block.BlockAir;
@@ -81,13 +81,13 @@ public class VulcanPhase extends Mode<Phase> {
         this.GQ = true;
         this.onPreMotion = var1x -> {
             aEg.thePlayer.cameraYaw = 0.1F;
-            if (this.Oh > 25 && aih.vk()) {
+            if (this.Oh > 25 && PlayerUtil.vk()) {
                 double d0;
                 int i = (d0 = aEg.thePlayer.motionY - 0.0) == 0.0 ? 0 : (d0 < 0.0 ? -1 : 1);
                 aEg.thePlayer.onGround = false;
             }
 
-            if (aih.vk()) {
+            if (PlayerUtil.vk()) {
                 this.Oh++;
             }
 
@@ -95,18 +95,18 @@ public class VulcanPhase extends Mode<Phase> {
                 cl.cn();
             }
 
-            if (aih.vk() && !this.El && this.GQ) {
+            if (PlayerUtil.vk() && !this.El && this.GQ) {
                 this.GQ = false;
                 afi.b("Phased");
             }
 
-            if (aih.vk()) {
+            if (PlayerUtil.vk()) {
                 ;
             }
         };
         this.onBlockAABB = var1x -> {
             double d0 = 0.0;
-            if (aih.vk()) {
+            if (PlayerUtil.vk()) {
                 var1x.setBoundingBox(null);
                 if (!(var1x.getBlock() instanceof BlockAir) && !aEg.gameSettings.keyBindSneak.isKeyDown()) {
                     double d3 = var1x.getBlockPos().getX();
@@ -125,7 +125,7 @@ public class VulcanPhase extends Mode<Phase> {
                         var1x.setBoundingBox(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d6, d7, d8));
                     }
                 }
-            } else if (this.ys && !aih.vk()) {
+            } else if (this.ys && !PlayerUtil.vk()) {
                 afi.b("Disabled due to not being in a block");
                 this.e(Phase.class).toggle();
             }
@@ -136,11 +136,11 @@ public class VulcanPhase extends Mode<Phase> {
             if ((!aEg.gameSettings.keyBindJump.isKeyDown() || aEg.thePlayer.hurtTime <= 0)
                 && !aEg.gameSettings.keyBindSneak.isKeyDown()
                 && !aEg.gameSettings.keyBindJump.isKeyDown()
-                && aih.vk()) {
+                && PlayerUtil.vk()) {
                 ;
             }
 
-            if (aih.vk()) {
+            if (PlayerUtil.vk()) {
                 if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                     var1x.setSpeed(0.0605 * (1 + aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier()) + 0.306);
                 } else {

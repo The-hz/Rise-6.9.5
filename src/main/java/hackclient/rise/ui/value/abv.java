@@ -6,15 +6,15 @@ import com.alan.clients.value.impl.StringValue;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import hackclient.rise.abw;
 import hackclient.rise.agl;
-import hackclient.rise.agm;
+import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.ahd;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
 
 public class abv extends ValueComponent {
-    public final agm azo = new agm(new Vector2d(200.0, 200.0), gb.MAIN.a(16, gd.REGULAR), Color.WHITE, agl.LEFT, "", 20.0F);
+    public final TextBox azo = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(16, gd.REGULAR), Color.WHITE, agl.LEFT, "", 20.0F);
 
     public abv(Value<?> var1) {
         super(var1);
@@ -29,7 +29,7 @@ public class abv extends ValueComponent {
         StringValue stringvalue = (StringValue)this.value;
         this.height = 28.0;
         String s = ahd.ce(this.value.getName());
-        gb.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
+        FontManager.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
         this.azo.setColor(aip.d(this.azo.getColor(), this.ayD));
         this.position = new Vector2d(this.position.x, this.position.y + 14.0);
         this.azo.h(this.position);

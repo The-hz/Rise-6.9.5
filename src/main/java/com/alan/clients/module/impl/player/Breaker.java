@@ -30,7 +30,7 @@ import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.aef;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
 import hackclient.rise.akb;
@@ -233,7 +233,7 @@ public class Breaker extends Module {
             this.jz();
             if (abQ == null
                 || aEg.thePlayer.getDistance(abQ.getX(), abQ.getY(), abQ.getZ()) > this.range.wo().doubleValue() + 2.5
-                || aih.o(abQ.getX(), abQ.getY(), abQ.getZ()) instanceof BlockAir) {
+                || PlayerUtil.o(abQ.getX(), abQ.getY(), abQ.getZ()) instanceof BlockAir) {
                 this.jv();
                 if (this.ji) {
                     aEg.gameSettings.cgK.setPressed(false);
@@ -257,7 +257,7 @@ public class Breaker extends Module {
             Vec3 vec31 = aEg.thePlayer.getVectorForRotation(vector2f.getY(), vector2f.getX());
             double d0 = this.range.wo().doubleValue() + 1.0;
             Vec3 vec32 = vec3.addVector(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0);
-            MovingObjectPosition movingobjectposition = aih.block(blockpos).collisionRayTrace(aEg.theWorld, blockpos, aEg.thePlayer.getPositionEyes(1.0F), vec32);
+            MovingObjectPosition movingobjectposition = PlayerUtil.block(blockpos).collisionRayTrace(aEg.theWorld, blockpos, aEg.thePlayer.getPositionEyes(1.0F), vec32);
             var1.a(movingobjectposition);
         }
     };
@@ -334,7 +334,7 @@ public class Breaker extends Module {
 
     public void jv() {
         if (abQ == null
-            || aih.o(abQ.x, abQ.y, abQ.z) instanceof BlockAir
+            || PlayerUtil.o(abQ.x, abQ.y, abQ.z) instanceof BlockAir
             || aEg.thePlayer.getDistance(abQ.x, abQ.y - aEg.thePlayer.getEyeHeight(), abQ.z) > this.range.wo().doubleValue() + 2.5) {
             if (abR != null && !this.keepBreakProgressWhenOutOfRange.wo()) {
                 aEg.playerController.curBlockDamageMP = 0.0F;
@@ -354,7 +354,7 @@ public class Breaker extends Module {
 
     public void jw() {
         BlockPos blockpos = new BlockPos(abQ.getX(), abQ.getY(), abQ.getZ());
-        float f = aih.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos);
+        float f = PlayerUtil.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos);
         if (!this.onlyRotateAtStartAndStop.wo() || aEg.playerController.curBlockDamageMP == 0.0F || !(aEg.playerController.curBlockDamageMP <= 1.0F - f - 0.001)) {
             if (this.rotations.wo()) {
                 RotationComponent.setRotations(this.jE(), 10.0, this.movementCorrection.wo());
@@ -376,7 +376,7 @@ public class Breaker extends Module {
         for (int j = -5; j <= 5; j++) {
             for (int k = -5; k <= 5; k++) {
                 for (int l = -5; l <= 5; l++) {
-                    Block block = aih.p(j, k, l);
+                    Block block = PlayerUtil.p(j, k, l);
                     aka akax = new aka(aEg.thePlayer.posX + j, aEg.thePlayer.posY + k, aEg.thePlayer.posZ + l);
                     if (block instanceof BlockBed) {
                         if (++i > 1) {
@@ -398,7 +398,7 @@ public class Breaker extends Module {
                                         for (int k1 = -i1; k1 <= i1; k1++) {
                                             for (int l1 = j1; l1 <= 1; l1++) {
                                                 for (int i2 = -i1; i2 <= i1; i2++) {
-                                                    Block block1 = aih.o(akax2.getX() + k1, akax2.getY() + l1, akax2.getZ() + i2);
+                                                    Block block1 = PlayerUtil.o(akax2.getX() + k1, akax2.getY() + l1, akax2.getZ() + i2);
                                                     if (!(block1 instanceof BlockBed)
                                                         && !flag
                                                         && !(aEg.thePlayer.getDistance(akax2.getX() + k1, akax2.getY() + l1, akax2.getZ()) + i2 > 46.0)
@@ -505,7 +505,7 @@ public class Breaker extends Module {
             }
 
             if (!this.j(blockpos)) {
-                Block block = aih.block(blockpos);
+                Block block = PlayerUtil.block(blockpos);
                 if (block instanceof BlockBed || block.getBlockHardness(aEg.theWorld, blockpos) < 0.0F || arraylist.size() >= i) {
                     return null;
                 }
@@ -579,7 +579,7 @@ public class Breaker extends Module {
                 if (tgx != null && !tgx.acn.get(0).equals(blockpos)) {
                     if (tgxx != null) {
                         double d0 = aEg.playerController.curBlockDamageMP
-                            / Math.max(aih.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos), 1.0E-4F);
+                            / Math.max(PlayerUtil.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos), 1.0E-4F);
                         if (tgx.aco >= (tgxx.aco - d0) * 0.9) {
                             return;
                         }
@@ -661,11 +661,11 @@ public class Breaker extends Module {
     private boolean i(BlockPos var1) {
         return this.j(var1)
             && this.j(var1.up())
-            && aih.block(var1.down()).getCollisionBoundingBox(aEg.theWorld, var1.down(), aEg.theWorld.getBlockState(var1.down())) != null;
+            && PlayerUtil.block(var1.down()).getCollisionBoundingBox(aEg.theWorld, var1.down(), aEg.theWorld.getBlockState(var1.down())) != null;
     }
 
     private boolean j(BlockPos var1) {
-        return aih.block(var1).getCollisionBoundingBox(aEg.theWorld, var1, aEg.theWorld.getBlockState(var1)) == null;
+        return PlayerUtil.block(var1).getCollisionBoundingBox(aEg.theWorld, var1, aEg.theWorld.getBlockState(var1)) == null;
     }
 
     private double a(Vec3 var1, BlockPos var2) {
@@ -681,7 +681,7 @@ public class Breaker extends Module {
         for (int i = -5; i <= 5; i++) {
             for (int j = -5; j <= 5; j++) {
                 for (int k = -5; k <= 5; k++) {
-                    if (aih.p(i, j, k) instanceof BlockBed) {
+                    if (PlayerUtil.p(i, j, k) instanceof BlockBed) {
                         arraylist.add(new BlockPos(aEg.thePlayer.posX + i, aEg.thePlayer.posY + j, aEg.thePlayer.posZ + k));
                     }
                 }
@@ -707,7 +707,7 @@ public class Breaker extends Module {
         for (EnumFacing enumfacing : EnumFacing.values()) {
             if (enumfacing != EnumFacing.UP) {
                 aka aka = var1.e(new aka(enumfacing.getDirectionVec().getX(), enumfacing.getDirectionVec().getY(), enumfacing.getDirectionVec().getZ()));
-                arraylist.add(aih.c(aka));
+                arraylist.add(PlayerUtil.c(aka));
             }
         }
 

@@ -55,7 +55,7 @@ import hackclient.rise.afi;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aib;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
@@ -397,7 +397,7 @@ public class Scaffold extends Module {
     }
 
     public boolean L(int var1) {
-        return aih.p(this.agy.getX(), -var1 + this.agy.getY(), this.agy.getZ()).isReplaceable(aEg.theWorld, new BlockPos(aEg.thePlayer).down(var1));
+        return PlayerUtil.p(this.agy.getX(), -var1 + this.agy.getY(), this.agy.getZ()).isReplaceable(aEg.theWorld, new BlockPos(aEg.thePlayer).down(var1));
     }
 
     public boolean a(EnumFacing var1) {
@@ -423,7 +423,7 @@ public class Scaffold extends Module {
     }
 
     public boolean kq() {
-        return aih.o(aEg.thePlayer.posX, this.startY - 1.0, aEg.thePlayer.posZ)
+        return PlayerUtil.o(aEg.thePlayer.posX, this.startY - 1.0, aEg.thePlayer.posZ)
             .isReplaceable(aEg.thePlayer.worldObj, new BlockPos(aEg.thePlayer.posX, this.startY - 1.0, aEg.thePlayer.posZ));
     }
 
@@ -874,7 +874,7 @@ public class Scaffold extends Module {
                     );
 
                     for (double d1 = 0.0; d1 <= this.expand.wo().intValue(); d1 += 1.0) {
-                        if (aih.blockAheadOfPlayer(d1, this.agy.getY() - 0.5) instanceof BlockAir) {
+                        if (PlayerUtil.blockAheadOfPlayer(d1, this.agy.getY() - 0.5) instanceof BlockAir) {
                             this.agy = this.agy.e(new aka((int)(-Math.sin(d0) * (d1 + 1.0)), this.agy.getY(), (int)(Math.cos(d0) * (d1 + 1.0))));
                             break;
                         }
@@ -1153,17 +1153,17 @@ public class Scaffold extends Module {
                     this.agy.setY(-1.0);
                 }
 
-                this.targetBlock = aih.a(
+                this.targetBlock = PlayerUtil.a(
                     this.agy.getX(), this.agy.getY(), this.agy.getZ(), moving != 0 ? (int)Math.floor(this.startY) + (int)this.agy.getY() : null
                 );
                 if (this.targetBlock == null) {
                     return;
                 }
 
-                aib aib = aih.a(this.targetBlock, this.agy.getY() < 0.0);
+                aib aib = PlayerUtil.a(this.targetBlock, this.agy.getY() < 0.0);
                 int l_hi = 0;
                 if (flag5 && aib != null && aib.va() != EnumFacing.UP) {
-                    aib aibx = aih.a(this.targetBlock, false);
+                    aib aibx = PlayerUtil.a(this.targetBlock, false);
                     if (aibx != null && aibx.va() == EnumFacing.UP) {
                         aib = aibx;
                     }
@@ -1173,7 +1173,7 @@ public class Scaffold extends Module {
                     this.acr = aib;
                     this.agw = aib;
                 } else {
-                    aib aibx = aih.a(this.targetBlock, !(this.agy.getY() < 0.0));
+                    aib aibx = PlayerUtil.a(this.targetBlock, !(this.agy.getY() < 0.0));
                     if (aibx != null) {
                         this.acr = aibx;
                         this.agw = aibx;
@@ -1239,7 +1239,7 @@ public class Scaffold extends Module {
                                         && this.blockFace != null
                                         && aEg.objectMouseOver.sideHit == EnumFacing.UP
                                         && this.rayCast.wo().getName().equals("Strict")
-                                        && !(aih.p(0.0, -1.0, 0.0) instanceof BlockAir)) {
+                                        && !(PlayerUtil.p(0.0, -1.0, 0.0) instanceof BlockAir)) {
                                         aEg.Az();
                                     }
                                 }
@@ -1252,7 +1252,7 @@ public class Scaffold extends Module {
                                     this.startY = Math.floor(aEg.thePlayer.posY);
                                 }
 
-                                if (aEg.thePlayer.cqL > 2 && Math.floor(aEg.thePlayer.posY) != this.startY && !(aih.p(0.0, -1.0, 0.0) instanceof BlockAir)) {
+                                if (aEg.thePlayer.cqL > 2 && Math.floor(aEg.thePlayer.posY) != this.startY && !(PlayerUtil.p(0.0, -1.0, 0.0) instanceof BlockAir)) {
                                     this.startY = Math.floor(aEg.thePlayer.posY);
                                 }
 
@@ -1372,7 +1372,7 @@ public class Scaffold extends Module {
 
                 if ((
                         this.acu > 0
-                            || aih.p(aEg.thePlayer.motionX * intValue2, -0.0784000015258789, aEg.thePlayer.motionZ * intValue2) instanceof BlockAir
+                            || PlayerUtil.p(aEg.thePlayer.motionX * intValue2, -0.0784000015258789, aEg.thePlayer.motionZ * intValue2) instanceof BlockAir
                     )
                     && this.agC <= 0) {
                     this.agB = (int)(intValue2 + intValue3 + intValue4);

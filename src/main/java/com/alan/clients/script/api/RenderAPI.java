@@ -10,7 +10,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.font.impl.rise.FontRenderer;
 import hackclient.rise.cl;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -95,19 +95,19 @@ public class RenderAPI extends API implements InstanceAccess {
     }
 
     public ScriptRiseFontRenderer getMainFontRenderer(int var1) {
-        return new ScriptRiseFontRenderer((FontRenderer)gb.MAIN.a(var1, gd.REGULAR));
+        return new ScriptRiseFontRenderer((FontRenderer)FontManager.MAIN.a(var1, gd.REGULAR));
     }
 
     public ScriptRiseFontRenderer getMainFontRendererBold(int var1) {
-        return new ScriptRiseFontRenderer((FontRenderer)gb.MAIN.a(var1, gd.BOLD));
+        return new ScriptRiseFontRenderer((FontRenderer)FontManager.MAIN.a(var1, gd.BOLD));
     }
 
     public ScriptRiseFontRenderer getMainFontRendererMedium(int var1) {
-        return new ScriptRiseFontRenderer((FontRenderer)gb.MAIN.a(var1, gd.MEDIUM));
+        return new ScriptRiseFontRenderer((FontRenderer)FontManager.MAIN.a(var1, gd.MEDIUM));
     }
 
     public ScriptRiseFontRenderer getMainFontRendererLight(int var1) {
-        return new ScriptRiseFontRenderer((FontRenderer)gb.MAIN.a(var1, gd.LIGHT));
+        return new ScriptRiseFontRenderer((FontRenderer)FontManager.MAIN.a(var1, gd.LIGHT));
     }
 
     public ScriptRiseFontRenderer getCustomFontRenderer(String var1, int var2, boolean var3) {

@@ -27,11 +27,11 @@ import hackclient.rise.afd;
 import hackclient.rise.afe;
 import hackclient.rise.agc;
 import hackclient.rise.agl;
-import hackclient.rise.agm;
+import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.aip;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -53,12 +53,12 @@ import rip.vantage.network.core.a;
 
 public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
     private static final String API_KEY_SETTINGS_URL = "https://localts.store/user/settings";
-    private static final agc TITLE_FONT = gb.MAIN.a(36, gd.BOLD);
-    private static final agc INFO_FONT = gb.MAIN.a(16, gd.REGULAR);
-    private static final agc LABEL_FONT = gb.MAIN.a(14, gd.BOLD);
-    private static final agc TOOLTIP_FONT = gb.MAIN.a(12, gd.REGULAR);
-    private static final agc QUANTITY_FONT = gb.MAIN.a(18, gd.REGULAR);
-    private static final float CENTER_REF_HEIGHT = gb.MAIN.a(24, gd.BOLD).height();
+    private static final agc TITLE_FONT = FontManager.MAIN.a(36, gd.BOLD);
+    private static final agc INFO_FONT = FontManager.MAIN.a(16, gd.REGULAR);
+    private static final agc LABEL_FONT = FontManager.MAIN.a(14, gd.BOLD);
+    private static final agc TOOLTIP_FONT = FontManager.MAIN.a(12, gd.REGULAR);
+    private static final agc QUANTITY_FONT = FontManager.MAIN.a(18, gd.REGULAR);
+    private static final float CENTER_REF_HEIGHT = FontManager.MAIN.a(24, gd.BOLD).height();
     private static final int PRODUCT_INDEX_NONE = -1;
     private static final int PRODUCTS_PER_PAGE = 4;
     private final MenuButton[] menuButtons = new MenuButton[4];
@@ -89,8 +89,8 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
             "6a246a3c62352652aae20bc6"
         )
     );
-    private static agm apiKeyBox;
-    private static agm quantityBox;
+    private static TextBox apiKeyBox;
+    private static TextBox quantityBox;
     private static GuiScreen reference;
     private Animation animation;
     private static volatile String statusMessage = "Loading Localts products...";
@@ -511,14 +511,14 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
     @Override
     public void initGui() {
         String s = afb.sv();
-        apiKeyBox = new agm(
-            new Vector2d(this.width / 2, this.panelY() + 91), gb.MAIN.a(16, gd.REGULAR), Color.WHITE, agl.CENTER, s.isEmpty() ? "API Key" : s, 330.0F
+        apiKeyBox = new TextBox(
+            new Vector2d(this.width / 2, this.panelY() + 91), FontManager.MAIN.a(16, gd.REGULAR), Color.WHITE, agl.CENTER, s.isEmpty() ? "API Key" : s, 330.0F
         );
         if (!s.isEmpty()) {
             apiKeyBox.bW(s);
         }
 
-        quantityBox = new agm(new Vector2d(this.width / 2, this.height / 2), QUANTITY_FONT, Color.WHITE, agl.CENTER, "1", 42.0F);
+        quantityBox = new TextBox(new Vector2d(this.width / 2, this.height / 2), QUANTITY_FONT, Color.WHITE, agl.CENTER, "1", 42.0F);
         quantityBox.bW("1");
         float f = (this.panelWidth() - 42) / 4.0F;
         float f1 = this.cardsY() + 278;

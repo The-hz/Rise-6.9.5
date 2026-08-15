@@ -11,7 +11,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
@@ -33,7 +33,7 @@ public class WatchdogJesus extends Mode<Jesus> {
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {
-        if (aih.vl() && !aEg.thePlayer.inWater) {
+        if (PlayerUtil.vl() && !aEg.thePlayer.inWater) {
             aEg.thePlayer.onGround = true;
             var0.setPosY(var0.getPosY() - (aEg.thePlayer.ticksExisted % 2 == 0 ? 0.0625 : 0.0325));
             var0.setOnGround(false);
@@ -41,13 +41,13 @@ public class WatchdogJesus extends Mode<Jesus> {
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var0 -> {
-        if (aih.vl() && aEg.thePlayer.ae > 10 && !aEg.thePlayer.inWater) {
+        if (PlayerUtil.vl() && aEg.thePlayer.ae > 10 && !aEg.thePlayer.inWater) {
             if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13)) {
                 var0.setSpeed(0.204);
             } else {
                 var0.setSpeed(0.152);
             }
-        } else if (aih.vl() && aEg.thePlayer.ae > 1) {
+        } else if (PlayerUtil.vl() && aEg.thePlayer.ae > 1) {
             MoveUtil.strafe();
         }
 
@@ -58,7 +58,7 @@ public class WatchdogJesus extends Mode<Jesus> {
     @EventLink(value = 0)
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         Packet packet = var1x.getPacket();
-        if (packet instanceof S12PacketEntityVelocity && this.KG || packet instanceof S12PacketEntityVelocity && (aih.vl() || aEg.thePlayer.inWater)) {
+        if (packet instanceof S12PacketEntityVelocity && this.KG || packet instanceof S12PacketEntityVelocity && (PlayerUtil.vl() || aEg.thePlayer.inWater)) {
             S12PacketEntityVelocity s12packetentityvelocity = (S12PacketEntityVelocity)packet;
             if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                 s12packetentityvelocity.motionY = 0;

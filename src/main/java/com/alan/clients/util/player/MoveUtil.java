@@ -8,7 +8,7 @@ import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2f;
 import hackclient.rise.abs;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.aka;
 import java.util.Arrays;
 import javax.vecmath.Vector2d;
@@ -193,7 +193,7 @@ public final class MoveUtil implements InstanceAccess {
         double d0;
         if (aEg.thePlayer.isInWeb) {
             d0 = 0.105;
-        } else if (aih.vj()) {
+        } else if (PlayerUtil.vj()) {
             d0 = 0.11500000208616258;
             int i = depthStriderLevel();
             if (i > 0) {

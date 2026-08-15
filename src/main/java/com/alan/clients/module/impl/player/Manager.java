@@ -17,7 +17,7 @@ import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.ItemUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import com.alan.clients.component.impl.player.SelectorDetectionComponent;
 import hackclient.rise.en;
@@ -744,8 +744,8 @@ public class Manager extends Module {
                     }
                 }
 
-                int k1 = aih.potionRanking(((ItemPotion)((ts)var1x).aeh.getItem()).getEffects(((ts)var1x).aeh).get(0).getPotionID());
-                return Integer.compare(aih.potionRanking(((ItemPotion)((ts)var2).aeh.getItem()).getEffects(((ts)var2).aeh).get(0).getPotionID()), k1);
+                int k1 = PlayerUtil.potionRanking(((ItemPotion)((ts)var1x).aeh.getItem()).getEffects(((ts)var1x).aeh).get(0).getPotionID());
+                return Integer.compare(PlayerUtil.potionRanking(((ItemPotion)((ts)var2).aeh.getItem()).getEffects(((ts)var2).aeh).get(0).getPotionID()), k1);
             });
             int k = j - i + 1;
 
@@ -941,8 +941,8 @@ public class Manager extends Module {
                     }
                 }
 
-                int k1 = aih.potionRanking(((ItemPotion)((ts)var1x).aeh.getItem()).getEffects(((ts)var1x).aeh).get(0).getPotionID());
-                return Integer.compare(aih.potionRanking(((ItemPotion)((ts)var2).aeh.getItem()).getEffects(((ts)var2).aeh).get(0).getPotionID()), k1);
+                int k1 = PlayerUtil.potionRanking(((ItemPotion)((ts)var1x).aeh.getItem()).getEffects(((ts)var1x).aeh).get(0).getPotionID());
+                return Integer.compare(PlayerUtil.potionRanking(((ItemPotion)((ts)var2).aeh.getItem()).getEffects(((ts)var2).aeh).get(0).getPotionID()), k1);
             });
             int k = j - i + 1;
 

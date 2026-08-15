@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.player;
 
 import com.alan.clients.component.impl.player.RotationComponent;
 import com.alan.clients.util.interfaces.InstanceAccess;
@@ -6,6 +6,9 @@ import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.util.vector.Vector2f;
+import hackclient.rise.aib;
+import hackclient.rise.ajz;
+import hackclient.rise.aka;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -34,7 +37,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.util.Vec3i;
 import net.minecraft.util.Vector3d;
 
-public final class aih implements InstanceAccess {
+public final class PlayerUtil implements InstanceAccess {
     private static final HashMap<Integer, Integer> GOOD_POTIONS = new aii();
 
     public static Block o(double var0, double var2, double var4) {
@@ -461,7 +464,7 @@ public final class aih implements InstanceAccess {
     }
 
     @Generated
-    private aih() {
+    private PlayerUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 }

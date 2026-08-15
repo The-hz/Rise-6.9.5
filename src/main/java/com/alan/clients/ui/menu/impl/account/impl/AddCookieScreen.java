@@ -17,11 +17,11 @@ import hackclient.rise.aep;
 import hackclient.rise.afc;
 import hackclient.rise.agc;
 import hackclient.rise.agl;
-import hackclient.rise.agm;
+import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
 import com.alan.clients.util.web.Browser;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -43,9 +43,9 @@ import net.minecraft.client.gui.ScaledResolution;
 
 public class AddCookieScreen extends GuiScreen implements InstanceAccess {
     private static final long RECENT_LOCALTS_ORDER_WINDOW = 600000L;
-    private static final agc FONT_RENDERER = gb.MAIN.a(36, gd.BOLD);
+    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, gd.BOLD);
     private final MenuButton[] menuButtons = new MenuButton[4];
-    private static agm usernameBox;
+    private static TextBox usernameBox;
     private static GuiScreen reference;
     private static String text_to_render = "Select file";
     private static String[] cookie_string;
@@ -254,7 +254,7 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
         byte b0 = 24;
         byte b1 = 4;
         Vector2d vector2d = new Vector2d(this.width / 2 - 100, this.height / 2 - 24);
-        usernameBox = new agm(vector2d.offset(100, 8.0), gb.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Username", short1);
+        usernameBox = new TextBox(vector2d.offset(100, 8.0), FontManager.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Username", short1);
         this.menuButtons[0] = new MenuTextButton(vector2d.x, vector2d.y, short1, b0, TEXT_BOX_RUNNABLE, "");
         this.menuButtons[1] = new MenuTextButton(vector2d.x, vector2d.y + b0 + b1, short1, b0, SELECT_FILE_RUNNABLE, "Select File");
         this.menuButtons[2] = new MenuTextButton(vector2d.x, vector2d.y + (b0 + b1) * 2, short1 / 2 * 1.5, b0, LOGIN_RUNNABLE, "Login & Add");

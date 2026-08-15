@@ -1,9 +1,9 @@
-package hackclient.rise;
+package com.alan.clients.util.pathfinding.unlegit;
 
-import hackclient.rise.ahw;
-import hackclient.rise.ahx;
-import hackclient.rise.ahy;
-import hackclient.rise.aih;
+import com.alan.clients.util.pathfinding.unlegit.ahw;
+import com.alan.clients.util.pathfinding.unlegit.ahx;
+import com.alan.clients.util.pathfinding.unlegit.Vec3;
+import com.alan.clients.util.player.PlayerUtil;
 import java.util.ArrayList;
 import java.util.Iterator;
 import net.minecraft.block.Block;
@@ -38,22 +38,22 @@ import net.minecraft.block.BlockWeb;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockPos;
 
-public final class ahv {
+public final class PathFinder {
     private final ArrayList<ahx> aNL = new ArrayList();
-    private ArrayList<ahy> aNM = new ArrayList();
+    private ArrayList<Vec3> aNM = new ArrayList();
     private final ArrayList<ahx> aNN = new ArrayList();
     private final double minDistanceSquared = 9.5;
     private final boolean nearest = true;
-    private final ahy aNQ;
-    private final ahy aNR;
-    private static final ahy[] aNS = new ahy[]{new ahy(1.0, 0.0, 0.0), new ahy(-1.0, 0.0, 0.0), new ahy(0.0, 0.0, 1.0), new ahy(0.0, 0.0, -1.0)};
+    private final Vec3 aNQ;
+    private final Vec3 aNR;
+    private static final Vec3[] aNS = new Vec3[]{new Vec3(1.0, 0.0, 0.0), new Vec3(-1.0, 0.0, 0.0), new Vec3(0.0, 0.0, 1.0), new Vec3(0.0, 0.0, -1.0)};
 
-    public ahv(ahy ahy2, ahy ahy3) {
+    public PathFinder(Vec3 ahy2, Vec3 ahy3) {
         this.aNQ = ahy2.n(0.0, 0.0, 0.0).uX();
         this.aNR = ahy3.n(0.0, 0.0, 0.0).uX();
     }
 
-    public ArrayList<ahy> getPath() {
+    public ArrayList<Vec3> getPath() {
         return this.aNM;
     }
 
@@ -64,13 +64,13 @@ public final class ahv {
     public void compute(int n2, int n3) {
         this.aNM.clear();
         this.aNL.clear();
-        ArrayList<ahy> arrayList = new ArrayList<ahy>();
+        ArrayList<Vec3> arrayList = new ArrayList<Vec3>();
         arrayList.add(this.aNQ);
         this.aNL.add(new ahx(this.aNQ, null, arrayList, this.aNQ.c(this.aNR), 0.0, 0.0));
         block0: for (int i2 = 0; i2 < n2; ++i2) {
-            ahy ahy2;
+            Vec3 ahy2;
             ahx ahx2;
-            ahy ahy3;
+            Vec3 ahy3;
             this.aNL.sort(new ahw());
             int n4 = 0;
             if (this.aNL.size() == 0) break;
@@ -83,33 +83,33 @@ public final class ahv {
                 }
                 this.aNL.remove(ahx2);
                 this.aNN.add(ahx2);
-                for (ahy ahy4 : aNS) {
-                    ahy ahy5 = ahx2.uS().d(ahy4).uX();
-                    if (ahv.checkPositionValidity(ahy5, false) && this.a(ahx2, ahy5, 0.0)) break block0;
+                for (Vec3 ahy4 : aNS) {
+                    Vec3 ahy5 = ahx2.uS().d(ahy4).uX();
+                    if (PathFinder.checkPositionValidity(ahy5, false) && this.a(ahx2, ahy5, 0.0)) break block0;
                 }
-            } while ((!ahv.checkPositionValidity(ahy3 = ahx2.uS().n(0.0, 1.0, 0.0).uX(), false) || !this.a(ahx2, ahy3, 0.0)) && (!ahv.checkPositionValidity(ahy2 = ahx2.uS().n(0.0, -1.0, 0.0).uX(), false) || !this.a(ahx2, ahy2, 0.0)));
+            } while ((!PathFinder.checkPositionValidity(ahy3 = ahx2.uS().n(0.0, 1.0, 0.0).uX(), false) || !this.a(ahx2, ahy3, 0.0)) && (!PathFinder.checkPositionValidity(ahy2 = ahx2.uS().n(0.0, -1.0, 0.0).uX(), false) || !this.a(ahx2, ahy2, 0.0)));
         }
         this.aNN.sort(new ahw());
         this.aNM = this.aNN.get(0).uQ();
     }
 
-    public static boolean checkPositionValidity(ahy ahy2, boolean bl) {
-        return ahv.a((int)ahy2.getX(), (int)ahy2.getY(), (int)ahy2.getZ(), bl);
+    public static boolean checkPositionValidity(Vec3 ahy2, boolean bl) {
+        return PathFinder.a((int)ahy2.getX(), (int)ahy2.getY(), (int)ahy2.getZ(), bl);
     }
 
     public static boolean a(int n2, int n3, int n4, boolean bl) {
         BlockPos blockPos = new BlockPos(n2, n3 - 1, n4);
-        if (ahv.o(new BlockPos(n2, n3, n4))) return false;
-        if (ahv.o(new BlockPos(n2, n3 + 1, n4))) return false;
-        if (!ahv.o(blockPos)) {
+        if (PathFinder.o(new BlockPos(n2, n3, n4))) return false;
+        if (PathFinder.o(new BlockPos(n2, n3 + 1, n4))) return false;
+        if (!PathFinder.o(blockPos)) {
             if (bl) return false;
         }
-        if (!ahv.p(blockPos)) return false;
+        if (!PathFinder.p(blockPos)) return false;
         return true;
     }
 
     private static boolean o(BlockPos blockPos) {
-        Block block = aih.block(blockPos);
+        Block block = PlayerUtil.block(blockPos);
         if (block.isFullBlock()) return true;
         if (block instanceof BlockSlab) return true;
         if (block instanceof BlockStairs) return true;
@@ -149,7 +149,7 @@ public final class ahv {
         return true;
     }
 
-    public ahx a(ahy ahy2) {
+    public ahx a(Vec3 ahy2) {
         for (ahx ahx2 : this.aNN) {
             if (ahx2.uS().getX() != ahy2.getX() || ahx2.uS().getY() != ahy2.getY() || ahx2.uS().getZ() != ahy2.getZ()) continue;
             return ahx2;
@@ -161,7 +161,7 @@ public final class ahv {
         return null;
     }
 
-    public boolean a(ahx ahx2, ahy ahy2, double d2) {
+    public boolean a(ahx ahx2, Vec3 ahy2, double d2) {
         ahx ahx3 = this.a(ahy2);
         double d3 = d2;
         if (ahx2 != null) {
@@ -169,7 +169,7 @@ public final class ahv {
         }
         if (ahx3 != null) {
             if (!(ahx3.uV() > d2)) return false;
-            ArrayList<ahy> arrayList = new ArrayList<ahy>(ahx2.uQ());
+            ArrayList<Vec3> arrayList = new ArrayList<Vec3>(ahx2.uQ());
             arrayList.add(ahy2);
             ahx3.b(ahy2);
             ahx3.a(ahx2);
@@ -180,7 +180,7 @@ public final class ahv {
             return false;
         }
         if (!(ahy2.getX() == this.aNR.getX() && ahy2.getY() == this.aNR.getY() && ahy2.getZ() == this.aNR.getZ() || ahy2.c(this.aNR) <= 9.5)) {
-            ArrayList<ahy> arrayList = new ArrayList<ahy>(ahx2.uQ());
+            ArrayList<Vec3> arrayList = new ArrayList<Vec3>(ahx2.uQ());
             arrayList.add(ahy2);
             this.aNL.add(new ahx(ahy2, ahx2, arrayList, ahy2.c(this.aNR), d2, d3));
             return false;

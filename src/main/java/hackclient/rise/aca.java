@@ -24,7 +24,7 @@ import hackclient.rise.aec;
 import hackclient.rise.agk;
 import hackclient.rise.ajt;
 import hackclient.rise.event.er;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -96,8 +96,8 @@ InstanceAccess {
             }
             catch (ConcurrentModificationException concurrentModificationException) {}
         }
-        gb.MAIN.a(18, gd.REGULAR).a("Your Scripts", vector2f.x, vector2f.y, Color.WHITE.getRGB());
-        vector2f.y += (float)10 + gb.MAIN.a(18, gd.REGULAR).height();
+        FontManager.MAIN.a(18, gd.REGULAR).a("Your Scripts", vector2f.x, vector2f.y, Color.WHITE.getRGB());
+        vector2f.y += (float)10 + FontManager.MAIN.a(18, gd.REGULAR).height();
         Iterator<ModuleComponent> iterator = this.azI.iterator();
         while (true) {
             if (!iterator.hasNext()) {

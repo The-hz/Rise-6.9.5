@@ -12,7 +12,7 @@ import hackclient.rise.adw;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.agk;
 import hackclient.rise.ahd;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class ThemeScreen implements abx, InstanceAccess {
         double d5 = vector2f.getY() + 44.0F + this.azW.tE();
         double d6 = (vector2f1.getX() - d4 - 29.0) / 3.0;
         double d7 = (vector2f1.getX() - d4 - 43.0) / 5.0;
-        gb.MAIN
+        FontManager.MAIN
             .a(16, gd.REGULAR)
             .d(
                 ahd.ce("ui.themes.text"),

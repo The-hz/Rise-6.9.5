@@ -15,7 +15,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.ItemDamageComponent;
 import com.alan.clients.component.impl.player.PacketlessDamageComponent;
 import hackclient.rise.cl;
@@ -147,12 +147,12 @@ public class WatchdogLongJump extends Mode<LongJump> {
         }
 
         if (aEg.thePlayer.ae == 0 && aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
-            aih.fakeDamage();
+            PlayerUtil.fakeDamage();
             MoveUtil.strafe();
             aEg.thePlayer.motionX *= 2.42;
             aEg.thePlayer.motionZ *= 2.42;
         } else if (aEg.thePlayer.ae == 0) {
-            aih.fakeDamage();
+            PlayerUtil.fakeDamage();
             MoveUtil.strafe();
             aEg.thePlayer.motionX *= 2.42;
             aEg.thePlayer.motionZ *= 2.42;

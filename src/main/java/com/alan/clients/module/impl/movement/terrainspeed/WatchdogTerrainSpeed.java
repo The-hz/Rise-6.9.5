@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.newevent.impl.other.MoveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.potion.Potion;
@@ -20,7 +20,7 @@ public final class WatchdogTerrainSpeed extends Mode<TerrainSpeed> {
     private int SF;
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
-        if (aih.o(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.5, aEg.thePlayer.posZ) instanceof BlockSlab
+        if (PlayerUtil.o(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.5, aEg.thePlayer.posZ) instanceof BlockSlab
             && aEg.thePlayer.posY == Math.floor(aEg.thePlayer.posY) + 0.5
             && !this.e(Scaffold.class).isEnabled()
             && !this.e(Speed.class).isEnabled()
@@ -38,7 +38,7 @@ public final class WatchdogTerrainSpeed extends Mode<TerrainSpeed> {
             }
         }
 
-        if (aih.o(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.5, aEg.thePlayer.posZ) instanceof BlockStairs
+        if (PlayerUtil.o(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.5, aEg.thePlayer.posZ) instanceof BlockStairs
             && !this.e(Scaffold.class).isEnabled()
             && !this.e(Speed.class).isEnabled()
             && this.e(KillAura.class).jE == null

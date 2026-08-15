@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.motion.JumpEvent;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.TeleportEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.FallDistanceComponent;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.BlockPos;
@@ -28,7 +28,7 @@ public class HeypixelNoFall extends Mode<NoFall> {
             var1x.setPosY(var1x.getPosY() - 0.098F);
             aEg.thePlayer.setPositionAndUpdate(aEg.thePlayer.posX, var1x.getPosY(), aEg.thePlayer.posZ);
         } else if (!(aEg.thePlayer.motionY > 0.0) && !(FallDistanceComponent.cY <= 3.0F)) {
-            if (aih.block(new BlockPos(var1x.getPosX(), var1x.getPosY() + aEg.thePlayer.motionY, var1x.getPosZ())).getMaterial().isSolid()) {
+            if (PlayerUtil.block(new BlockPos(var1x.getPosX(), var1x.getPosY() + aEg.thePlayer.motionY, var1x.getPosZ())).getMaterial().isSolid()) {
                 FallDistanceComponent.cY = 0.0F;
                 this.ahZ = true;
                 this.aiz = true;

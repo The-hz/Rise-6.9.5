@@ -13,7 +13,7 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.component.bv;
 import net.minecraft.block.BlockAir;
@@ -37,7 +37,7 @@ public final class KeepRange extends Module {
 
             for (int j = -i; j <= i; j++) {
                 for (int k = -i; k <= i; k++) {
-                    for (int l = -5; l <= 0 && aih.p(j, l, k) instanceof BlockAir; l++) {
+                    for (int l = -5; l <= 0 && PlayerUtil.p(j, l, k) instanceof BlockAir; l++) {
                         if (l == 0) {
                             this.lP = true;
                             return;
@@ -65,7 +65,7 @@ public final class KeepRange extends Module {
             }
 
             if (this.lQ > this.comboToStart.wo().intValue() * 8 || this.comboToStart.wo().intValue() <= 0) {
-                if (aih.v(entitylivingbase) < d0 - 0.05) {
+                if (PlayerUtil.v(entitylivingbase) < d0 - 0.05) {
                     float f = var1.getForward();
                     float f1 = var1.getStrafe();
                     double d1 = MathHelper.wrapAngleTo180_double(RotationUtil.y(entitylivingbase).getX() - 180.0F);

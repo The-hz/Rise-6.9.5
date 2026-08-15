@@ -7,7 +7,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
@@ -23,7 +23,7 @@ public class WatchdogPredictionNoFall extends Mode<NoFall> {
         boolean flag = false;
         if (!this.e(Flight.class).isEnabled()) {
             for (int i = 0; i <= 200; i++) {
-                WorldClient worldclient = aih.aEg.theWorld;
+                WorldClient worldclient = PlayerUtil.aEg.theWorld;
                 BlockPos blockpos = new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY - i, aEg.thePlayer.posZ);
                 if (worldclient.getBlockState(blockpos).getBlock() != Blocks.air || aEg.thePlayer.onGround) {
                     flag = false;

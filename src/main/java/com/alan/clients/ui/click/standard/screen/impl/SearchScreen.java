@@ -9,10 +9,10 @@ import hackclient.rise.abw;
 import hackclient.rise.abx;
 import hackclient.rise.agk;
 import hackclient.rise.agl;
-import hackclient.rise.agm;
+import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.ahd;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import rip.vantage.commons.util.time.a;
 public final class SearchScreen
 implements abx,
 InstanceAccess {
-    public final agm azR = new agm(new Vector2d(200.0, 200.0), gb.MAIN.a(20, gd.REGULAR), Color.WHITE, agl.CENTER, ahd.ce("ui.search.text"), 150.0f);
+    public final TextBox azR = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(20, gd.REGULAR), Color.WHITE, agl.CENTER, ahd.ce("ui.search.text"), 150.0f);
     private final a azS = new a();
     public agk scrollUtil = new agk();
     public ArrayList<ModuleComponent> relevantModules = new ArrayList();
@@ -145,7 +145,7 @@ InstanceAccess {
     }
 
     @Generated
-    public agm qr() {
+    public TextBox qr() {
         return this.azR;
     }
 

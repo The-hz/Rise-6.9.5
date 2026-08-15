@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.FallDistanceComponent;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -24,8 +24,8 @@ public final class WatchdogBlinkNoFall extends Mode<NoFall> {
     public final BooleanValue packet = new BooleanValue("Packet", this, true);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (aih.vh() && !this.e(Scaffold.class).isEnabled()) {
-            if (aEg.thePlayer.tR == 1 && aEg.thePlayer.motionY < 0.0 && aih.vh() && !aih.ad(3.0)) {
+        if (PlayerUtil.vh() && !this.e(Scaffold.class).isEnabled()) {
+            if (aEg.thePlayer.tR == 1 && aEg.thePlayer.motionY < 0.0 && PlayerUtil.vh() && !PlayerUtil.ad(3.0)) {
                 this.IJ = true;
             }
 

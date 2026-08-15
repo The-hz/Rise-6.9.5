@@ -23,7 +23,7 @@ import hackclient.rise.aip;
 import hackclient.rise.ais;
 import com.alan.clients.util.render.particle.Particle;
 import hackclient.rise.bf;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import hackclient.rise.value.zy;
@@ -37,8 +37,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class CreidaModernTargetInfo extends Mode<TargetInfo> {
     private final BooleanValue particles = new BooleanValue("Particles", this, true);
-    private final agc aur = gb.MAIN.a(22, gd.LIGHT);
-    private final agc aus = gb.MAIN.a(22, gd.MEDIUM);
+    private final agc aur = FontManager.MAIN.a(22, gd.LIGHT);
+    private final agc aus = FontManager.MAIN.a(22, gd.MEDIUM);
     private final ModeValue aut = new zy(this, "Background Mode", this);
     private TargetInfo aui;
     private final int auu = 10;

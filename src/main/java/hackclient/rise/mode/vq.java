@@ -7,7 +7,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.util.BlockPos;
@@ -16,7 +16,7 @@ public class vq extends Mode<Scaffold> {
     private int ajX = 5;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {
-        if (aEg.gameSettings.keyBindJump.isKeyDown() && aih.ay(2) && !MoveUtil.isMoving()) {
+        if (aEg.gameSettings.keyBindJump.isKeyDown() && PlayerUtil.ay(2) && !MoveUtil.isMoving()) {
             if (aEg.thePlayer.posY % 1.0 <= 0.00153598) {
                 aEg.thePlayer.setPosition(aEg.thePlayer.posX, Math.floor(aEg.thePlayer.posY), aEg.thePlayer.posZ);
                 aEg.thePlayer.motionY = 0.42F;

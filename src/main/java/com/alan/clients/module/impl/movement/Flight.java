@@ -41,7 +41,7 @@ import com.alan.clients.newevent.impl.other.TeleportEvent;
 import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.cl;
 import hackclient.rise.mode.mr;
 import com.alan.clients.module.impl.movement.flight.BufferAbuseFlight;
@@ -141,7 +141,7 @@ public class Flight extends Module {
     @Override
     public void onEnable() {
         if (this.fakeDamage.wo() && aEg.thePlayer.ticksExisted > 1) {
-            aih.fakeDamage();
+            PlayerUtil.fakeDamage();
         }
 
         this.teleported = false;

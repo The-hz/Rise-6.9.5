@@ -12,7 +12,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -65,11 +65,11 @@ public class ci extends Component {
                         if (hF) {
                             String s = MathUtil.round(hA.sG() * 100.0, 1) + "%";
                             int i = Math.max(12, Math.round(16.0F * hE));
-                            gb.MAIN
+                            FontManager.MAIN
                                 .a(i, gd.REGULAR)
                                 .b(
                                     s,
-                                    f2 + f - gb.MAIN.a(i, gd.REGULAR).getStringWidth(s) - 2.0F * hE,
+                                    f2 + f - FontManager.MAIN.a(i, gd.REGULAR).getStringWidth(s) - 2.0F * hE,
                                     f3 + 3.0F * hE,
                                     aip.d(Color.WHITE, (int)(255.0 * d1)).getRGB()
                                 );

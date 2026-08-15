@@ -38,7 +38,7 @@ import hackclient.rise.aef;
 import hackclient.rise.afi;
 import hackclient.rise.ahk;
 import hackclient.rise.ahp;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.aka;
 import hackclient.rise.akj;
 import hackclient.rise.sv;
@@ -174,7 +174,7 @@ extends Module {
     @EventLink
     public final Listener<PreUpdateEvent> preUpdate = preUpdateEvent -> {
         this.YD = true;
-        Test.aEg.gameSettings.keyBindSneak.setPressed(aih.p(0.0, MoveUtil.predictedMotion(Test.aEg.thePlayer.motionY), 0.0) instanceof BlockSlime && Test.aEg.thePlayer.motionY < -0.1);
+        Test.aEg.gameSettings.keyBindSneak.setPressed(PlayerUtil.p(0.0, MoveUtil.predictedMotion(Test.aEg.thePlayer.motionY), 0.0) instanceof BlockSlime && Test.aEg.thePlayer.motionY < -0.1);
     };
     @EventLink
     public final Listener<WaterEvent> water = waterEvent -> {

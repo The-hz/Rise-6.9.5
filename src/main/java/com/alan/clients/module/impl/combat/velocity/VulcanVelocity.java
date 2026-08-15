@@ -26,7 +26,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.component.bv;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -86,7 +86,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
             switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
                     if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()
-                        && !aih.vk()
+                        && !PlayerUtil.vk()
                         && (
                             aEg.thePlayer.cqL <= 0
                                 || !this.alwaysCancelVertical.wo()
@@ -145,7 +145,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                             this.vr.add(s12packetentityvelocity);
                             var1x.setCancelled();
                         }
-                    } else if (!var1x.isCancelled() && aih.vk()) {
+                    } else if (!var1x.isCancelled() && PlayerUtil.vk()) {
                         var1x.setCancelled();
                     } else if (!var1x.isCancelled()
                         && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()

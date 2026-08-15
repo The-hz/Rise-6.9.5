@@ -13,7 +13,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.aef;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import java.util.Comparator;
 import net.minecraft.entity.Entity;
@@ -266,7 +266,7 @@ public class ThrowableAura extends Module {
                 } else if (this.antiBot.wo() && Client.a.x().a(var1)) {
                     return false;
                 } else if (var1 instanceof EntityPlayer) {
-                    return !this.players.wo() ? false : !this.playerTeammates.wo() || !aih.sameTeam(var1);
+                    return !this.players.wo() ? false : !this.playerTeammates.wo() || !PlayerUtil.sameTeam(var1);
                 }
                 return var1 instanceof IMob ? this.mobs.wo() : false;
             }

@@ -12,7 +12,7 @@ import hackclient.rise.abx;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.ahd;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
@@ -41,16 +41,16 @@ public final class CategoryComponent implements InstanceAccess {
         this.y = (float)(riseclickgui.axI.y + var1) + 16.0F;
         this.animation.h(200L);
         this.animation.Q(var7.equals(this.category.ec()) ? 255.0 : 0.0);
-        double d0 = gb.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.category.getName())) + 8.0 + this.category.eb().getStringWidth(this.category.ea());
+        double d0 = FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.category.getName())) + 8.0 + this.category.eb().getStringWidth(this.category.ea());
         GlStateManager.pushMatrix();
         RenderUtil.roundedRectangle(
             this.x, this.y - 5.5, d0 + 8.0, 15.0, 5.0, aip.d(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.sG(), var5)).darker()
         );
         int j = new Color(255, 255, 255, Math.min(var7.equals(this.category.ec()) ? 255 : 200, (int)var5)).hashCode();
         this.category.eb().a(this.category.ea(), (float)(this.x + this.animation.sG() / 80.0 + 3.0), this.y, j);
-        gb.MAIN
+        FontManager.MAIN
             .a(16, gd.REGULAR)
-            .a(ahd.ce(this.category.getName()), (float)(this.x + this.animation.sG() / 80.0 + 3.0 + 4.0) + gb.ICONS_1.o(17).getStringWidth(this.category.ea()), this.y, j);
+            .a(ahd.ce(this.category.getName()), (float)(this.x + this.animation.sG() / 80.0 + 3.0 + 4.0) + FontManager.ICONS_1.o(17).getStringWidth(this.category.ea()), this.y, j);
         GlStateManager.popMatrix();
         this.lastTime = i;
     }
@@ -64,7 +64,7 @@ public final class CategoryComponent implements InstanceAccess {
     }
 
     public void bloom(double var1) {
-        double d0 = gb.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.category.getName())) + 8.0 + this.category.eb().getStringWidth(this.category.ea());
+        double d0 = FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.category.getName())) + 8.0 + this.category.eb().getStringWidth(this.category.ea());
         RenderUtil.roundedRectangle(
             this.x, this.y - 5.0F, d0 + 8.0, 14.0, 5.0, aip.d(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.sG(), var1)).darker()
         );

@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.other.StepEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 
 public class VanillaStep extends Mode<Step> {
     private final NumberValue height = new NumberValue("Height", this, 1, 1, 10, 0.1);
@@ -17,7 +17,7 @@ public class VanillaStep extends Mode<Step> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         aEg.thePlayer.stepHeight = this.height.wo().floatValue();
-        if (this.reverse.wo() && aih.ad(this.height.wo().floatValue() + aEg.thePlayer.getEyeHeight()) && !aih.vj()) {
+        if (this.reverse.wo() && PlayerUtil.ad(this.height.wo().floatValue() + aEg.thePlayer.getEyeHeight()) && !PlayerUtil.vj()) {
             if (aEg.thePlayer.posY < aEg.thePlayer.aI && !aEg.thePlayer.onGround && aEg.thePlayer.tR <= 1) {
                 aEg.thePlayer.motionY = -this.height.wo().doubleValue();
             }

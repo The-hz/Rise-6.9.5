@@ -26,7 +26,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.aip;
 import hackclient.rise.component.bv;
 import java.util.ArrayList;
@@ -81,7 +81,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
             switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
                     if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()
-                        && !aih.vk()
+                        && !PlayerUtil.vk()
                         && (
                             aEg.thePlayer.cqL <= 0
                                 || !this.alwaysCancelVertical.wo()
@@ -140,7 +140,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                             this.vW.add(s12packetentityvelocity);
                             var1x.setCancelled();
                         }
-                    } else if (!var1x.isCancelled() && aih.vk()) {
+                    } else if (!var1x.isCancelled() && PlayerUtil.vk()) {
                         var1x.setCancelled();
                     } else if (!var1x.isCancelled()
                         && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()

@@ -4,7 +4,7 @@ import com.alan.clients.Client;
 import com.alan.clients.component.impl.player.SlotComponent;
 import com.alan.clients.script.api.wrapper.ScriptWrapper;
 import com.alan.clients.script.api.wrapper.impl.vector.ScriptVector3d;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -32,6 +32,6 @@ public class ScriptBlockPos extends ScriptWrapper<BlockPos> {
     }
 
     public ScriptBlock getBlock() {
-        return new ScriptBlock(aih.block(this.wrapped));
+        return new ScriptBlock(PlayerUtil.block(this.wrapped));
     }
 }

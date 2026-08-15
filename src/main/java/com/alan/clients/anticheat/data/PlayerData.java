@@ -2,7 +2,7 @@ package com.alan.clients.anticheat.data;
 
 import com.alan.clients.Client;
 import com.alan.clients.anticheat.check.Check;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.anticheat.check.manager.CheckManager;
 import com.alan.clients.anticheat.util.PacketUtil;
 import java.util.ArrayList;
@@ -131,15 +131,15 @@ public final class PlayerData {
 
                     this.aV.aX();
                     this.aP = this.aO;
-                    this.aO = !(aih.o(this.x - 0.5, this.y - 0.43, this.z - 0.5) instanceof BlockAir)
-                        || !(aih.o(this.x + 0.5, this.y - 0.43, this.z - 0.5) instanceof BlockAir)
-                        || !(aih.o(this.x + 0.5, this.y - 0.43, this.z + 0.5) instanceof BlockAir)
-                        || !(aih.o(this.x - 0.5, this.y - 0.43, this.z + 0.5) instanceof BlockAir);
+                    this.aO = !(PlayerUtil.o(this.x - 0.5, this.y - 0.43, this.z - 0.5) instanceof BlockAir)
+                        || !(PlayerUtil.o(this.x + 0.5, this.y - 0.43, this.z - 0.5) instanceof BlockAir)
+                        || !(PlayerUtil.o(this.x + 0.5, this.y - 0.43, this.z + 0.5) instanceof BlockAir)
+                        || !(PlayerUtil.o(this.x - 0.5, this.y - 0.43, this.z + 0.5) instanceof BlockAir);
                     this.aT = this.aS;
-                    this.aS = !(aih.o(this.x - 0.5, this.y - 0.99, this.z - 0.5) instanceof BlockAir)
-                        || !(aih.o(this.x + 0.5, this.y - 0.99, this.z - 0.5) instanceof BlockAir)
-                        || !(aih.o(this.x + 0.5, this.y - 0.99, this.z + 0.5) instanceof BlockAir)
-                        || !(aih.o(this.x - 0.5, this.y - 0.99, this.z + 0.5) instanceof BlockAir);
+                    this.aS = !(PlayerUtil.o(this.x - 0.5, this.y - 0.99, this.z - 0.5) instanceof BlockAir)
+                        || !(PlayerUtil.o(this.x + 0.5, this.y - 0.99, this.z - 0.5) instanceof BlockAir)
+                        || !(PlayerUtil.o(this.x + 0.5, this.y - 0.99, this.z + 0.5) instanceof BlockAir)
+                        || !(PlayerUtil.o(this.x - 0.5, this.y - 0.99, this.z + 0.5) instanceof BlockAir);
                     if (this.aO) {
                         this.aH = this.aE;
                         this.aI = this.aF;

@@ -21,7 +21,7 @@ import com.alan.clients.value.impl.NumberValue;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import hackclient.rise.component.bv;
@@ -452,7 +452,7 @@ extends Mode<Velocity> {
             GrimReduceVelocity.aEg.playerController.attackEntity((EntityPlayer)GrimReduceVelocity.aEg.thePlayer, (Entity)entityLivingBase);
         };
         this.tI = preUpdateEvent -> {
-            if (GrimReduceVelocity.aEg.thePlayer.onGround && dj && (Boolean)this.delayPlus.wo() == false || GrimReduceVelocity.aEg.thePlayer.Zl < 3 && dj || ((Boolean)this.delayPlus.wo()).booleanValue() && (GrimReduceVelocity.aEg.thePlayer.onGround || !((Boolean)this.delayTillGround.wo()).booleanValue()) && dj && (this.e(KillAura.class).jE == null || aih.v((Entity)this.e(KillAura.class).jE) < 2.7 || GrimReduceVelocity.aEg.thePlayer.aY == 1)) {
+            if (GrimReduceVelocity.aEg.thePlayer.onGround && dj && (Boolean)this.delayPlus.wo() == false || GrimReduceVelocity.aEg.thePlayer.Zl < 3 && dj || ((Boolean)this.delayPlus.wo()).booleanValue() && (GrimReduceVelocity.aEg.thePlayer.onGround || !((Boolean)this.delayTillGround.wo()).booleanValue()) && dj && (this.e(KillAura.class).jE == null || PlayerUtil.v((Entity)this.e(KillAura.class).jE) < 2.7 || GrimReduceVelocity.aEg.thePlayer.aY == 1)) {
                 dj = false;
                 tt = true;
                 BlinkComponent.dispatch();

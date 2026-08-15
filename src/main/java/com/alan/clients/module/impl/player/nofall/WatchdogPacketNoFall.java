@@ -13,7 +13,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.FallDistanceComponent;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.init.Blocks;
@@ -27,7 +27,7 @@ public class WatchdogPacketNoFall extends Mode<NoFall> {
         boolean flag = false;
 
         for (int i = 0; i <= 200; i++) {
-            WorldClient worldclient = aih.aEg.theWorld;
+            WorldClient worldclient = PlayerUtil.aEg.theWorld;
             BlockPos blockpos = new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY - i, aEg.thePlayer.posZ);
             if (worldclient.getBlockState(blockpos).getBlock() != Blocks.air || aEg.thePlayer.onGround) {
                 flag = false;

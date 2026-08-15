@@ -1,7 +1,9 @@
-package hackclient.rise;
+package com.alan.clients.util.shader.impl;
 
 import com.alan.clients.util.shader.base.RiseShaderProgram;
 import com.alan.clients.util.shader.base.ShaderUniforms;
+import hackclient.rise.aix;
+import hackclient.rise.aiz;
 import java.util.List;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -9,11 +11,11 @@ import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.opengl.Display;
 
-public class aji extends aix {
+public class OutlineShader extends aix {
     private final RiseShaderProgram aQj = new RiseShaderProgram("outline.frag", "vertex.vsh");
     private Framebuffer aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
 
-    public aji() {
+    public OutlineShader() {
     }
 
     @Override

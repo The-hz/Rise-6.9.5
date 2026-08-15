@@ -8,7 +8,7 @@ import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import hackclient.rise.abw;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.ahd;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 
 public class abr extends ValueComponent {
@@ -21,12 +21,12 @@ public class abr extends ValueComponent {
         ModeValue modevalue = (ModeValue)this.value;
         this.position = var1;
         String s = ahd.ce(this.value.getName()) + ":";
-        gb.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(Math.min(this.ayD, abw.SECONDARY_TEXT.pV().getAlpha())));
-        gb.MAIN
+        FontManager.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(Math.min(this.ayD, abw.SECONDARY_TEXT.pV().getAlpha())));
+        FontManager.MAIN
             .a(16, gd.REGULAR)
             .a(
                 ahd.ce(modevalue.wo().getName()),
-                this.position.x + gb.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 2.0,
+                this.position.x + FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 2.0,
                 this.position.y,
                 abw.SECONDARY_TEXT.Z(Math.min(this.ayD, abw.SECONDARY_TEXT.pV().getAlpha()))
             );

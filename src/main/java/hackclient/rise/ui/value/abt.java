@@ -8,11 +8,11 @@ import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import hackclient.rise.abw;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.agl;
-import hackclient.rise.agm;
+import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.ahd;
 import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import rip.vantage.commons.util.time.a;
 
@@ -26,9 +26,9 @@ public class abt extends ValueComponent {
     private double azl;
     private boolean ayQ;
     private float ayR;
-    public final agm azm = new agm(
+    public final TextBox azm = new TextBox(
         new Vector2d(0.0, 0.0),
-        gb.MAIN.a(16, gd.REGULAR),
+        FontManager.MAIN.a(16, gd.REGULAR),
         abw.SECONDARY_TEXT.pV(),
         agl.LEFT,
         ((NumberValue)this.value).ws().toString().replace(".0", ""),
@@ -57,7 +57,7 @@ public class abt extends ValueComponent {
         NumberValue numbervalue = (NumberValue)this.value;
         String s = String.valueOf(numbervalue.wo().doubleValue());
         String s1 = ahd.ce(this.value.getName());
-        float f = gb.MAIN.a(16, gd.REGULAR).getStringWidth(s1) + 7;
+        float f = FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(s1) + 7;
         if (s.endsWith(".0")) {
             s = s.replace(".0", "");
         }
@@ -69,7 +69,7 @@ public class abt extends ValueComponent {
             this.ayR = Math.max(0.0F, this.ayR - (float)this.azh.aKx() / 200.0F);
         }
 
-        gb.MAIN.a(16, gd.REGULAR).a(s1, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
+        FontManager.MAIN.a(16, gd.REGULAR).a(s1, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
         this.azm.h(new Vector2d(this.position.x + f + 105.0, this.position.y));
         if (!this.azm.tO()) {
             this.azm.bW(s);

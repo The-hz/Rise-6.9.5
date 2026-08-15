@@ -15,7 +15,7 @@ import hackclient.rise.aef;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.aib;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
@@ -49,7 +49,7 @@ public class Clutch extends Module {
             && !BadPacketsComponent.aW()
             && !this.e(Scaffold.class).isEnabled()
             && aEg.gameSettings.keyBindSneak.isKeyDown()) {
-            if (aEg.thePlayer.tR > 3 && !aih.ad(10.0)) {
+            if (aEg.thePlayer.tR > 3 && !PlayerUtil.ad(10.0)) {
                 this.acv = 10;
             }
 
@@ -57,15 +57,15 @@ public class Clutch extends Module {
                 SlotComponent slotcomponent = this.d(SlotComponent.class);
                 SlotComponent.setSlot(SlotUtil.vx());
                 Vec3i vec3i = new Vec3i(0, 0, 0);
-                if (aih.p(vec3i.getX(), -1 + vec3i.getY(), vec3i.getZ()).isReplaceable(aEg.theWorld, new BlockPos(aEg.thePlayer).down())) {
+                if (PlayerUtil.p(vec3i.getX(), -1 + vec3i.getY(), vec3i.getZ()).isReplaceable(aEg.theWorld, new BlockPos(aEg.thePlayer).down())) {
                     this.acu++;
                 } else {
                     this.acu = 0;
                 }
 
-                this.Yw = aih.getPlacePossibility(vec3i.getX(), vec3i.getY(), vec3i.getZ());
+                this.Yw = PlayerUtil.getPlacePossibility(vec3i.getX(), vec3i.getY(), vec3i.getZ());
                 if (this.Yw != null) {
-                    this.acr = aih.e(this.Yw);
+                    this.acr = PlayerUtil.e(this.Yw);
                     if (this.acr != null) {
                         BlockPos blockpos = new BlockPos(this.Yw.xCoord, this.Yw.yCoord, this.Yw.zCoord);
                         this.Yx = blockpos.add(this.acr.vb().xCoord, this.acr.vb().yCoord, this.acr.vb().zCoord);

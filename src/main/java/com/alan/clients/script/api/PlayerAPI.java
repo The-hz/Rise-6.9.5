@@ -18,7 +18,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
 import hackclient.rise.aef;
 import hackclient.rise.ahz;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
 import com.alan.clients.component.impl.player.ItemDamageComponent;
@@ -221,7 +221,7 @@ public class PlayerAPI extends ScriptEntityLiving {
     }
 
     public void fakeDamage() {
-        aih.fakeDamage();
+        PlayerUtil.fakeDamage();
     }
 
     public boolean isUsingItem() {

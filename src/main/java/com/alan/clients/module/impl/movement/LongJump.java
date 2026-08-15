@@ -22,7 +22,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.PacketlessDamageComponent;
 
 @ModuleInfo(aliases = "module.movement.longjump.name", description = "module.movement.longjump.description", category = Category.MOVEMENT)
@@ -65,7 +65,7 @@ public class LongJump extends Module {
     @Override
     public void onEnable() {
         if (this.fakeDamage.wo() && aEg.thePlayer.ticksExisted > 1) {
-            aih.fakeDamage();
+            PlayerUtil.fakeDamage();
         }
     }
 

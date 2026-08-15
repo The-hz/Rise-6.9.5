@@ -3,7 +3,7 @@ package com.alan.clients.creative;
 import com.alan.clients.Client;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.player.ItemUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import java.util.List;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
@@ -104,16 +104,16 @@ public final class RiseTab extends CreativeTabs implements InstanceAccess {
         var1.add(itemstack13);
         ItemStack itemstack14 = ItemUtil.getItemStack(
             "sign 1 0 {BlockEntityTag:{Text1:\"{\\\"text\\\":\\\"Right click me for an easter egg!\\\",\\\"clickEvent\\\":{\\\"action\\\":\\\"run_command\\\",\\\"value\\\":\\\"/op "
-                + aih.name()
+                + PlayerUtil.name()
                 + "\\\"}}\"}}"
         );
         itemstack14.setStackDisplayName("§rOP Sign");
         var1.add(itemstack14);
         ItemStack itemstack15 = ItemUtil.getItemStack(
             "written_book 1 0 {pages:[\"{\\\"text\\\":\\\"Click me for an Easter Egg!\\\",\\\"clickEvent\\\":{\\\"action\\\":\\\"run_command\\\",\\\"value\\\":\\\"/op "
-                + aih.name()
+                + PlayerUtil.name()
                 + "\\\"}}\"],title:\"Easter Egg\",author:"
-                + aih.name()
+                + PlayerUtil.name()
                 + "}"
         );
         var1.add(itemstack15);

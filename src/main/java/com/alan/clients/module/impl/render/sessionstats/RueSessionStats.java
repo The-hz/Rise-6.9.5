@@ -14,7 +14,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.DragValue;
 import hackclient.rise.ahd;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import hackclient.rise.zv;
@@ -63,13 +63,13 @@ public final class RueSessionStats extends Mode<SessionStats> {
                         RenderUtil.roundedOutlineGradientRectangle(
                             this.atY.apP.x, this.atY.apP.y, this.atY.aHe.x, this.atY.aHe.y, 11.0, 0.5, aip.d(this.rz().rA(), 200), aip.d(this.rz().rB(), 200)
                         );
-                        gb.MAIN
+                        FontManager.MAIN
                             .a(24, gd.REGULAR)
                             .c(ahd.ce("ui.sessionstats.name"), this.atY.apP.x + this.atY.aHe.x / 2.0, this.atY.apP.y + d0, this.rz().rD().getRGB());
-                        gb.MAIN
+                        FontManager.MAIN
                             .a(18, gd.REGULAR)
                             .c(this.atL, this.atY.apP.x + this.atY.aHe.x / 2.0, this.atY.apP.y + d0 + 19.0, new Color(255, 255, 255, 200).getRGB());
-                        gb.MAIN
+                        FontManager.MAIN
                             .a(18, gd.REGULAR)
                             .c(
                                 ahd.ce("ui.sessionstats.kills").toLowerCase() + " " + this.atZ.atR,
@@ -77,7 +77,7 @@ public final class RueSessionStats extends Mode<SessionStats> {
                                 this.atY.apP.y + d0 + 32.0,
                                 new Color(255, 255, 255, 200).getRGB()
                             );
-                        gb.MAIN
+                        FontManager.MAIN
                             .a(18, gd.REGULAR)
                             .c(
                                 ahd.ce("ui.sessionstats.wins").toLowerCase() + " " + this.atZ.atS,

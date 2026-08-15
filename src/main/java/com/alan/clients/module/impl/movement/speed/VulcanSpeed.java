@@ -19,7 +19,7 @@ import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import net.minecraft.block.BlockAir;
@@ -290,7 +290,7 @@ public final class VulcanSpeed extends Mode<Speed> {
                                 aEg.thePlayer.motionZ *= 0.985;
                             }
 
-                            if (!(aih.p(0.0, aEg.thePlayer.motionY, 0.0) instanceof BlockAir)) {
+                            if (!(PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) instanceof BlockAir)) {
                                 aEg.thePlayer.jump();
                             }
 
@@ -335,12 +335,12 @@ public final class VulcanSpeed extends Mode<Speed> {
                                 MoveUtil.strafe(0.27);
                             }
 
-                            if (!(aih.p(0.0, 1.0, 0.0) instanceof BlockAir)) {
+                            if (!(PlayerUtil.p(0.0, 1.0, 0.0) instanceof BlockAir)) {
                                 aEg.thePlayer.motionY = 0.003;
                             }
                             break;
                         case 9:
-                            if (!(aih.p(0.0, aEg.thePlayer.motionY, 0.0) instanceof BlockAir)) {
+                            if (!(PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) instanceof BlockAir)) {
                                 MoveUtil.strafe();
                             }
 
@@ -427,7 +427,7 @@ public final class VulcanSpeed extends Mode<Speed> {
                         MoveUtil.strafe();
                 }
 
-                if (!(aih.p(0.0, aEg.thePlayer.motionY, 0.0) instanceof BlockAir)) {
+                if (!(PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) instanceof BlockAir)) {
                     MoveUtil.strafe();
                 }
 

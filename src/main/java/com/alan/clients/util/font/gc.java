@@ -1,4 +1,6 @@
-package hackclient.rise;
+package com.alan.clients.util.font;
+
+import hackclient.rise.gd;
 
 class gc {
     static final int[] kC = new int[gd.values().length];

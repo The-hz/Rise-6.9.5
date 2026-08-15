@@ -15,7 +15,7 @@ import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aka;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -49,8 +49,8 @@ extends Module {
             Vector2d vector2d = this.position.apP;
             String string = (Boolean)this.showTitle.wo() != false ? "BPS " : "";
             String string2 = this.speed;
-            float f3 = gb.MAIN.a(20, gd.BOLD).getStringWidth(string);
-            this.scale.x = f3 + (float)gb.MAIN.a(20, gd.REGULAR).getStringWidth(string2);
+            float f3 = FontManager.MAIN.a(20, gd.BOLD).getStringWidth(string);
+            this.scale.x = f3 + (float)FontManager.MAIN.a(20, gd.REGULAR).getStringWidth(string2);
             this.b(gg.REGULAR, 1).c(() -> {
                 double d4 = vector2d.x;
                 double d5 = vector2d.y;
@@ -61,9 +61,9 @@ extends Module {
                 RenderUtil.roundedRectangle(d4, d5, d6, d7, d8, Themes.rK());
                 this.position.n(new Vector2d(this.scale.x + 6.0f, this.scale.y - 1.0f));
                 double d9 = vector2d.x + 3.0;
-                double d10 = vector2d.y + (double)(this.scale.y / 2.05f) - (double)(gb.MAIN.a(20, gd.REGULAR).height() / 4.0f);
-                gb.MAIN.a(20, gd.BOLD).b(string, d9, d10, this.rz().rA().getRGB());
-                gb.MAIN.a(20, gd.REGULAR).b(string2, d9 + (double)f3, d10, Color.WHITE.getRGB());
+                double d10 = vector2d.y + (double)(this.scale.y / 2.05f) - (double)(FontManager.MAIN.a(20, gd.REGULAR).height() / 4.0f);
+                FontManager.MAIN.a(20, gd.BOLD).b(string, d9, d10, this.rz().rA().getRGB());
+                FontManager.MAIN.a(20, gd.REGULAR).b(string2, d9 + (double)f3, d10, Color.WHITE.getRGB());
             });
             this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(vector2d.x, vector2d.y, this.scale.x + 6.0f, this.scale.y - 1.0f, this.rz().getRound(), Color.BLACK));
             this.b(gg.BLOOM).c(() -> RenderUtil.roundedRectangle(vector2d.x + 0.5, vector2d.y + 0.5, this.scale.x + 6.0f - 1.0f, this.scale.y - 2.0f, this.rz().getRound() + 1, this.rz().rE()));

@@ -7,20 +7,20 @@ import com.alan.clients.ui.click.standard.screen.impl.LanguageScreen;
 import com.alan.clients.ui.click.standard.screen.impl.SearchScreen;
 import com.alan.clients.ui.click.standard.screen.impl.ThemeScreen;
 import hackclient.rise.agc;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import lombok.Generated;
 
 public enum Category {
-    SEARCH("category.search", gb.ICONS_2.o(17), "U", 1, new SearchScreen()),
-    COMBAT("category.combat", gb.ICONS_1.o(17), "a", 2, new abz()),
-    MOVEMENT("category.movement", gb.ICONS_1.o(17), "b", 3, new abz()),
-    PLAYER("category.player", gb.ICONS_1.o(17), "c", 4, new abz()),
-    RENDER("category.render", gb.ICONS_1.o(17), "g", 5, new abz()),
-    EXPLOIT("category.exploit", gb.ICONS_1.o(17), "a", 6, new abz()),
-    GHOST("category.ghost", gb.ICONS_1.o(17), "f", 7, new abz()),
-    SCRIPT("category.script", gb.ICONS_2.o(17), "m", 7, new aca()),
-    THEME("category.themes", gb.ICONS_2.o(17), "U", 10, new ThemeScreen()),
-    LANGUAGE("category.language", gb.ICONS_2.o(17), "U", 10, new LanguageScreen());
+    SEARCH("category.search", FontManager.ICONS_2.o(17), "U", 1, new SearchScreen()),
+    COMBAT("category.combat", FontManager.ICONS_1.o(17), "a", 2, new abz()),
+    MOVEMENT("category.movement", FontManager.ICONS_1.o(17), "b", 3, new abz()),
+    PLAYER("category.player", FontManager.ICONS_1.o(17), "c", 4, new abz()),
+    RENDER("category.render", FontManager.ICONS_1.o(17), "g", 5, new abz()),
+    EXPLOIT("category.exploit", FontManager.ICONS_1.o(17), "a", 6, new abz()),
+    GHOST("category.ghost", FontManager.ICONS_1.o(17), "f", 7, new abz()),
+    SCRIPT("category.script", FontManager.ICONS_2.o(17), "m", 7, new aca()),
+    THEME("category.themes", FontManager.ICONS_2.o(17), "U", 10, new ThemeScreen()),
+    LANGUAGE("category.language", FontManager.ICONS_2.o(17), "U", 10, new LanguageScreen());
 
     private final String ln;
     private final String lo;

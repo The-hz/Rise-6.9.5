@@ -1,6 +1,10 @@
-package hackclient.rise;
+package com.alan.clients.util.font;
 
 import com.alan.clients.util.font.impl.rise.FontRenderer;
+import hackclient.rise.agc;
+import hackclient.rise.agg;
+import hackclient.rise.agh;
+import hackclient.rise.gd;
 import java.awt.Font;
 import java.io.File;
 import java.util.ArrayList;
@@ -9,7 +13,7 @@ import java.util.function.Supplier;
 import lombok.Generated;
 import net.minecraft.client.Minecraft;
 
-public enum gb {
+public enum FontManager {
     MAIN("product_sans_%s", "ttf"),
     MINECRAFT("Minecraft", () -> Minecraft.getMinecraft().fontRendererObj),
     ICONS_1("Icon-1", "ttf"),
@@ -21,14 +25,14 @@ public enum gb {
     String gK;
     final String kz;
     private final HashMap<Integer, FontRenderer> kA = new HashMap<>();
-    private static final gb[] $VALUES = dQ();
+    private static final FontManager[] $VALUES = dQ();
 
-    gb(String var3, String var4) {
+    FontManager(String var3, String var4) {
         this.gK = var3;
         this.kz = var4;
     }
 
-    gb(String var3, Supplier<agc> var4) {
+    FontManager(String var3, Supplier<agc> var4) {
         this.gK = var3;
         this.kz = "";
         this.ky = (agc)var4.get();
@@ -199,7 +203,7 @@ public enum gb {
         return this.kA;
     }
 
-    private static gb[] dQ() {
-        return new gb[]{MAIN, MINECRAFT, ICONS_1, ICONS_2, CUSTOM};
+    private static FontManager[] dQ() {
+        return new FontManager[]{MAIN, MINECRAFT, ICONS_1, ICONS_2, CUSTOM};
     }
 }

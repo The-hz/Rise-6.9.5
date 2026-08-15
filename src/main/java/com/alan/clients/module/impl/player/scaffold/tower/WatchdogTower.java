@@ -20,7 +20,7 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
@@ -464,7 +464,7 @@ public class WatchdogTower extends Mode<Scaffold> {
         int i = (int)Math.floor(aEg.thePlayer.posX);
         int j = (int)Math.floor(aEg.thePlayer.posY);
         int k = (int)Math.floor(aEg.thePlayer.posZ);
-        Block[] ablock = new Block[]{aih.o(i + 1, j, k), aih.o(i - 1, j, k), aih.o(i, j, k + 1), aih.o(i, j, k - 1)};
+        Block[] ablock = new Block[]{PlayerUtil.o(i + 1, j, k), PlayerUtil.o(i - 1, j, k), PlayerUtil.o(i, j, k + 1), PlayerUtil.o(i, j, k - 1)};
         int l = ablock.length;
 
         for (int i1 = 0; i1 < l; i1++) {
@@ -488,7 +488,7 @@ public class WatchdogTower extends Mode<Scaffold> {
         for (int i = MathHelper.floor_double(d0); i <= MathHelper.floor_double(d3); i++) {
             for (int j = MathHelper.floor_double(d1); j <= MathHelper.floor_double(d4); j++) {
                 for (int k = MathHelper.floor_double(d2); k <= MathHelper.floor_double(d5); k++) {
-                    if (!(aih.o(i, j, k) instanceof BlockAir)) {
+                    if (!(PlayerUtil.o(i, j, k) instanceof BlockAir)) {
                         return false;
                     }
                 }

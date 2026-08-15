@@ -11,7 +11,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 
@@ -47,7 +47,7 @@ public class MatrixSpeed extends Mode<Speed> {
             MoveUtil.partialStrafePercent(65.0);
         }
 
-        if (aih.ae(aEg.thePlayer.motionY)) {
+        if (PlayerUtil.ae(aEg.thePlayer.motionY)) {
             MoveUtil.partialStrafePercent(65.0);
         }
 

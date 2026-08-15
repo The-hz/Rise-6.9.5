@@ -13,7 +13,7 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.cg;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +32,12 @@ public class jw extends Mode<Disabler> {
         }
     };
     @EventLink(value = 4)
-    public final Listener<PreUpdateEvent> xQ = var0 -> aih.p(0.0, -1.0, 0.0);
+    public final Listener<PreUpdateEvent> xQ = var0 -> PlayerUtil.p(0.0, -1.0, 0.0);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (Math.abs(aEg.thePlayer.posY - Math.round(aEg.thePlayer.posY)) > 0.03
             && aEg.thePlayer.onGround
-            && !(aih.o(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.5, aEg.thePlayer.posZ) instanceof BlockStairs)) {
+            && !(PlayerUtil.o(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.5, aEg.thePlayer.posZ) instanceof BlockStairs)) {
             aEg.thePlayer.jump();
         }
 

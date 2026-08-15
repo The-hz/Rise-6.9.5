@@ -23,7 +23,7 @@ import hackclient.rise.aip;
 import hackclient.rise.ais;
 import com.alan.clients.util.render.particle.Particle;
 import hackclient.rise.bf;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -44,8 +44,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class ModernTargetInfo extends Mode<TargetInfo> {
     private final BooleanValue particles = new BooleanValue("Particles", this, true);
-    private final agc auE = gb.MAIN.a(22, gd.LIGHT);
-    private final agc auF = gb.MAIN.a(22, gd.MEDIUM);
+    private final agc auE = FontManager.MAIN.a(22, gd.LIGHT);
+    private final agc auF = FontManager.MAIN.a(22, gd.MEDIUM);
     private final ModeValue backgroundMode = new aab(this, "Background Mode", this);
     private static final float auH = 0.01F;
     private static final float auI = 0.8F;

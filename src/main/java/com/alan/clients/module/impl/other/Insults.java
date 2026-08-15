@@ -13,7 +13,7 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import java.util.HashMap;
 import java.util.List;
@@ -145,7 +145,7 @@ public final class Insults extends Module {
                     s = "[STAFF] [WATCHDOG] %s reeled in.";
                 }
 
-                String s2 = String.format(s, aih.g(this.target));
+                String s2 = String.format(s, PlayerUtil.g(this.target));
                 if (!this.prefix.wo().isEmpty()) {
                     s2 = this.prefix.wo() + " " + s2;
                 }

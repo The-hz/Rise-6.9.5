@@ -11,7 +11,7 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import hackclient.rise.agc;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import hackclient.rise.zc;
@@ -22,7 +22,7 @@ import net.minecraft.client.renderer.GlStateManager;
 
 public final class yr extends Mode<Interface> {
     private final BooleanValue font = new BooleanValue("Font", this, true);
-    private static final agc asn = gb.MINECRAFT.dM();
+    private static final agc asn = FontManager.MINECRAFT.dM();
     private static final double aso = asn.height() + 2.0F;
     private static final int asp = 1;
     @EventLink
@@ -92,7 +92,7 @@ public final class yr extends Mode<Interface> {
     }
 
     private agc nm() {
-        return this.font.wo() ? gb.MAIN.a(24, gd.REGULAR) : gb.MINECRAFT.dM();
+        return this.font.wo() ? FontManager.MAIN.a(24, gd.REGULAR) : FontManager.MINECRAFT.dM();
     }
 
     private void a(zc var1, double var2, double var4, int var6) {

@@ -23,14 +23,14 @@ import hackclient.rise.abx;
 import com.alan.clients.ui.click.standard.screen.impl.SearchScreen;
 import com.alan.clients.ui.click.standard.screen.impl.ThemeScreen;
 import com.alan.clients.util.gui.GUIUtil;
-import hackclient.rise.agm;
+import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.agw;
 import hackclient.rise.agx;
 import hackclient.rise.aha;
 import hackclient.rise.aip;
 import hackclient.rise.aiz;
 import com.alan.clients.util.shader.impl.AlphaShader;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.ge;
 import hackclient.rise.gg;
@@ -74,7 +74,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     public Animation hB = new Animation(Easing.EASE_IN_EXPO, 300L);
     public Animation axZ = new Animation(Easing.EASE_IN_EXPO, 300L);
     private final agw aya = new agw();
-    private agm ayb;
+    private TextBox ayb;
     ge ayc = new ge(new AlphaShader());
     @EventLink(value = 0)
     public final Listener<AlphaEvent> onAlpha = var1 -> {
@@ -86,7 +86,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     public RiseClickGUI() {
     }
 
-    public boolean a(agm var1) {
+    public boolean a(TextBox var1) {
         if (!agx.isEnabled()) {
             return false;
         }
@@ -249,7 +249,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
                     double d1 = this.axI.y * this.axS + this.translate.y + 1.0;
                     double d2 = this.alh.x * this.axS - 2.0;
                     double d3 = this.alh.y * this.axS - 2.0;
-                    agm agm = this.oU();
+                    TextBox agm = this.oU();
                     if (agm != this.ayb) {
                         this.aya.aX();
                         this.ayb = agm;
@@ -261,9 +261,9 @@ public class RiseClickGUI extends GuiScreen implements aha {
                         if (s != null && !s.isEmpty()) {
                             float f1 = agm.tL();
                             float f2 = agm.tM();
-                            gb.MAIN.a(16, gd.REGULAR).a(s, f1, f2, aip.d(Color.WHITE, 210).getRGB());
+                            FontManager.MAIN.a(16, gd.REGULAR).a(s, f1, f2, aip.d(Color.WHITE, 210).getRGB());
                             RenderUtil.d(
-                                f1, f2 + gb.MAIN.a(16, gd.REGULAR).height() + 1.0F, gb.MAIN.a(16, gd.REGULAR).getStringWidth(s), 1.0, aip.d(Color.WHITE, 140)
+                                f1, f2 + FontManager.MAIN.a(16, gd.REGULAR).height() + 1.0F, FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(s), 1.0, aip.d(Color.WHITE, 140)
                             );
                             if (list != null && !list.isEmpty()) {
                                 StringBuilder stringbuilder = new StringBuilder();
@@ -286,10 +286,10 @@ public class RiseClickGUI extends GuiScreen implements aha {
                                 stringbuilder.append(this.aya.ut());
                                 String s2 = stringbuilder.toString();
                                 double d5 = 6.0;
-                                double d6 = gb.MAIN.a(16, gd.REGULAR).getStringWidth(s2) + d5 * 2.0;
-                                double d7 = gb.MAIN.a(16, gd.REGULAR).height() + d5 * 2.0 - 5.0;
+                                double d6 = FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(s2) + d5 * 2.0;
+                                double d7 = FontManager.MAIN.a(16, gd.REGULAR).height() + d5 * 2.0 - 5.0;
                                 double d8 = f1 - 2.0F;
-                                double d9 = f2 + gb.MAIN.a(16, gd.REGULAR).height() + 6.0F;
+                                double d9 = f2 + FontManager.MAIN.a(16, gd.REGULAR).height() + 6.0F;
                                 double d10 = 8.0;
                                 Color color = aip.d(Color.WHITE, 255);
                                 this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(d8, d9, d6, d7, d10, color));
@@ -305,7 +305,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
                                 }
 
                                 RenderUtil.roundedRectangle(d8, d9, d6, d7, d10, aip.d(abw.BACKGROUND.pV(), (int)Math.min(220.0, this.axT * 255.0)));
-                                gb.MAIN.a(16, gd.REGULAR).a(s2, d8 + d5, d9 + d5, aip.d(Color.WHITE, 240).getRGB());
+                                FontManager.MAIN.a(16, gd.REGULAR).a(s2, d8 + d5, d9 + d5, aip.d(Color.WHITE, 240).getRGB());
                                 if (flag1) {
                                     GL11.glEnable(3089);
                                     RenderUtil.g(d0, d1, d2, d3);
@@ -395,7 +395,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     @Override
     protected void keyTyped(char var1, int var2) {
         if (agx.isEnabled()) {
-            agm agm = this.oU();
+            TextBox agm = this.oU();
             if (agm != this.ayb) {
                 this.aya.aX();
                 this.ayb = agm;
@@ -414,7 +414,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
         this.axK.a(var1, var2);
     }
 
-    private agm oU() {
+    private TextBox oU() {
         try {
             if (this.axK instanceof SearchScreen acf && !this.oV()) {
                 return acf.azR;
@@ -425,8 +425,8 @@ public class RiseClickGUI extends GuiScreen implements aha {
                     Field field = this.axK.getClass().getDeclaredField("searchBar");
                     field.setAccessible(true);
                     Object object = field.get(this.axK);
-                    if (object instanceof agm && !this.oV()) {
-                        return (agm)object;
+                    if (object instanceof TextBox && !this.oV()) {
+                        return (TextBox)object;
                     }
                 }
             } catch (Throwable throwable) {
@@ -605,7 +605,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public agm pr() {
+    public TextBox pr() {
         return this.ayb;
     }
 

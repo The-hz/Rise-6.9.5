@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 
 public class NewNCPStep extends Mode<Step> {
@@ -18,7 +18,7 @@ public class NewNCPStep extends Mode<Step> {
     private double Sf;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (aEg.thePlayer.onGround && !aih.vj()) {
+        if (aEg.thePlayer.onGround && !PlayerUtil.vj()) {
             aEg.thePlayer.stepHeight = this.height.wo().floatValue();
         } else {
             aEg.thePlayer.stepHeight = 0.6F;
@@ -26,7 +26,7 @@ public class NewNCPStep extends Mode<Step> {
     };
     @EventLink
     public final Listener<StepEvent> onStep = var1x -> {
-        if (aEg.thePlayer.onGround && !aih.vj()) {
+        if (aEg.thePlayer.onGround && !PlayerUtil.vj()) {
             double d0 = var1x.getHeight();
             this.Sf = d0;
             if (!(d0 <= 0.6F)) {
@@ -58,7 +58,7 @@ public class NewNCPStep extends Mode<Step> {
             adouble = new double[]{0.39F, 0.6938F};
         }
 
-        if (var1x.dq() instanceof C04PacketPlayerPosition && aih.vg()) {
+        if (var1x.dq() instanceof C04PacketPlayerPosition && PlayerUtil.vg()) {
             for (double d0 : adouble) {
                 ;
             }

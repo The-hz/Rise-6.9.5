@@ -25,13 +25,13 @@ import hackclient.rise.afi;
 import hackclient.rise.agc;
 import hackclient.rise.agk;
 import hackclient.rise.agl;
-import hackclient.rise.agm;
+import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.agw;
 import hackclient.rise.agx;
 import hackclient.rise.ahd;
 import hackclient.rise.aip;
 import hackclient.rise.dt;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import hackclient.rise.ye;
@@ -89,7 +89,7 @@ extends Module {
     private static final int aqR = 100;
     private int aqS;
     private String aqT;
-    private agm aqU;
+    private TextBox aqU;
     private int aqV;
     private int aqW;
     private float aqX;
@@ -114,7 +114,7 @@ extends Module {
         this.pinyinChineseIME = new BooleanValue("Pinyin Chinese IME", (Module)this, (Boolean)false);
         this.aqS = -1;
         this.aqT = "";
-        this.aqU = new agm(new Vector2d(0.0, 0.0), this.aqL, Color.WHITE, agl.LEFT, "", 1000.0f, aqQ);
+        this.aqU = new TextBox(new Vector2d(0.0, 0.0), this.aqL, Color.WHITE, agl.LEFT, "", 1000.0f, aqQ);
         this.bN = new rip.vantage.commons.util.time.a();
         this.aqY = new adz(20);
         this.onKeyboardInput = keyboardInputEvent -> {
@@ -525,7 +525,7 @@ extends Module {
         if (this.aqG.sG() <= 0.0) {
             return;
         }
-        Vector2d vector2d = new Vector2d(this.rz().qd(), (float)Chat.aEg.jY.getScaledHeight() - this.rz().qd() - gb.MAIN.a(20, gd.REGULAR).height() - 3.0f);
+        Vector2d vector2d = new Vector2d(this.rz().qd(), (float)Chat.aEg.jY.getScaledHeight() - this.rz().qd() - FontManager.MAIN.a(20, gd.REGULAR).height() - 3.0f);
         Vector2d vector2d2 = new Vector2d(this.aqE.aHe.x, (double)this.aqL.height() + 7.5);
         Runnable runnable = () -> {
             GlStateManager.pushMatrix();
@@ -801,7 +801,7 @@ extends Module {
     }
 
     @Generated
-    public agm mL() {
+    public TextBox mL() {
         return this.aqU;
     }
 

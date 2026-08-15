@@ -15,7 +15,7 @@ import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.ItemUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.SelectorDetectionComponent;
 import hackclient.rise.en;
 import hackclient.rise.tm;
@@ -549,8 +549,8 @@ public class OldManager extends Module {
                                 return list1.isEmpty()
                                     ? -1
                                     : Integer.compare(
-                                        aih.potionRanking(itempotion1.getEffects(((tm)var2).bO()).get(0).getPotionID()),
-                                        aih.potionRanking(itempotion.getEffects(((tm)var1x).bO()).get(0).getPotionID())
+                                        PlayerUtil.potionRanking(itempotion1.getEffects(((tm)var2).bO()).get(0).getPotionID()),
+                                        PlayerUtil.potionRanking(itempotion.getEffects(((tm)var1x).bO()).get(0).getPotionID())
                                     );
                             }
                         );

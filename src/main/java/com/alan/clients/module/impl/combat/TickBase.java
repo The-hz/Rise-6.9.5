@@ -15,7 +15,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.aip;
 import hackclient.rise.aka;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
@@ -77,7 +77,7 @@ public final class TickBase extends Module {
 
                     EntityLivingBase entitylivingbase = (EntityLivingBase)list.get(0);
                     this.qL = this.k(entitylivingbase);
-                    if (aEg.thePlayer.getDistance(this.qL.x, this.qL.y, this.qL.z) < 8.0 && aih.v(entitylivingbase) > 3.0 && this.qM < 0) {
+                    if (aEg.thePlayer.getDistance(this.qL.x, this.qL.y, this.qL.z) < 8.0 && PlayerUtil.v(entitylivingbase) > 3.0 && this.qM < 0) {
                         int i = this.j(entitylivingbase);
                         if (i == -1) {
                             return;

@@ -1,11 +1,11 @@
-package hackclient.rise;
+package com.alan.clients.module.impl.render.interfaces;
 
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
 
 class yw extends ModeValue {
-    yw(yv var1, String var2, Mode var3) {
+    yw(ModernInterface var1, String var2, Mode var3) {
         super(var2, var3);
         this.add(new SubMode("Static"));
         this.add(new SubMode("Fade"));

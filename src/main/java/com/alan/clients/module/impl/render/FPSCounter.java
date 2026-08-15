@@ -12,7 +12,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -29,9 +29,9 @@ public final class FPSCounter extends Module {
         Vector2d vector2d = this.position.apP;
         String s = this.showTitle.wo() ? "FPS " : "";
         String s1 = Minecraft.getDebugFPS() + "";
-        float f = gb.MAIN.a(20, gd.BOLD).getStringWidth(s);
+        float f = FontManager.MAIN.a(20, gd.BOLD).getStringWidth(s);
         if (Minecraft.getDebugFPS() != this.anq) {
-            this.scale.x = f + gb.MAIN.a(20, gd.REGULAR).getStringWidth(s1);
+            this.scale.x = f + FontManager.MAIN.a(20, gd.REGULAR).getStringWidth(s1);
         }
 
         this.anq = Minecraft.getDebugFPS();
@@ -45,9 +45,9 @@ public final class FPSCounter extends Module {
             RenderUtil.roundedRectangle(d2, d3, d4, d5, d6, Themes.rK());
             this.position.n(new Vector2d(this.scale.x + 6.0F, this.scale.y - 1.0F));
             double d0 = vector2d.x + 3.0;
-            double d1 = vector2d.y + this.scale.y / 2.05F - gb.MAIN.a(20, gd.REGULAR).height() / 4.0F;
-            gb.MAIN.a(20, gd.BOLD).b(s, d0, d1, this.rz().rA().getRGB());
-            gb.MAIN.a(20, gd.REGULAR).b(s1, d0 + f, d1, Color.WHITE.getRGB());
+            double d1 = vector2d.y + this.scale.y / 2.05F - FontManager.MAIN.a(20, gd.REGULAR).height() / 4.0F;
+            FontManager.MAIN.a(20, gd.BOLD).b(s, d0, d1, this.rz().rA().getRGB());
+            FontManager.MAIN.a(20, gd.REGULAR).b(s1, d0 + f, d1, Color.WHITE.getRGB());
         });
         this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(vector2d.x, vector2d.y, this.scale.x + 6.0F, this.scale.y - 1.0F, this.rz().getRound() + 1, Color.BLACK));
         this.b(gg.BLOOM)

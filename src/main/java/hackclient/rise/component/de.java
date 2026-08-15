@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 
@@ -18,7 +18,7 @@ public final class de extends Component {
                 return;
             }
 
-            if (aih.p(0.0, -1.0, 0.0) == Blocks.packed_ice || aih.p(0.0, -1.0, 0.0) == Blocks.ice) {
+            if (PlayerUtil.p(0.0, -1.0, 0.0) == Blocks.packed_ice || PlayerUtil.p(0.0, -1.0, 0.0) == Blocks.ice) {
                 return;
             }
 

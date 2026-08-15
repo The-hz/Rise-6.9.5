@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.BlockAABBEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.util.AxisAlignedBB;
 
@@ -22,7 +22,7 @@ public class NCPJesus extends Mode<Jesus> {
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
-        if (aEg.thePlayer.ticksExisted % 2 == 0 && aih.vl()) {
+        if (aEg.thePlayer.ticksExisted % 2 == 0 && PlayerUtil.vl()) {
             var0.setPosY(var0.getPosY() - 0.015625);
         }
     };

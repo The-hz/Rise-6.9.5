@@ -10,7 +10,7 @@ import hackclient.rise.agk;
 import com.alan.clients.util.localization.Locale;
 import hackclient.rise.ahd;
 import hackclient.rise.air;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class LanguageScreen implements abx, InstanceAccess {
         RenderUtil.a(
             vector2f.getX() + d0, vector2f.getY(), vector2f1.x - d0, 40.0, this.getStandardClickGUI().round, abw.BACKGROUND.pV(), true, true, false, false
         );
-        gb.MAIN
+        FontManager.MAIN
             .a(16, gd.REGULAR)
             .d(ahd.ce("ui.language.text"), vector2f.getX() + vector2f1.getX() - 20.0F, vector2f.getY() + 20.0F, new Color(255, 255, 255, 128).getRGB());
         this.azQ.V(-2000.0);

@@ -1,4 +1,6 @@
-package hackclient.rise;
+package com.alan.clients.util.gui.textbox;
+
+import hackclient.rise.agl;
 
 class agn {
     static final int[] aJw = new int[agl.values().length];

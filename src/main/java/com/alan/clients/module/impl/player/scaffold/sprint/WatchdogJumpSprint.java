@@ -21,7 +21,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import hackclient.rise.vo;
@@ -124,7 +124,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
                 MoveUtil.stop();
                 this.gD = false;
                 RotationComponent.setRotations(new Vector2f((float)(aEg.thePlayer.pl + (Math.random() - 0.5) * 3.0), 90.0F), 10.0, MovementFix.NORMAL);
-                if (!(aih.o(aEg.thePlayer.posX, aEg.thePlayer.aI - 2.0, aEg.thePlayer.posY) instanceof BlockAir)) {
+                if (!(PlayerUtil.o(aEg.thePlayer.posX, aEg.thePlayer.aI - 2.0, aEg.thePlayer.posY) instanceof BlockAir)) {
                     this.getParent().startY = aEg.thePlayer.aI - 1.0;
                 }
             }
@@ -175,10 +175,10 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
         }
 
         if ((
-                aih.ad(2.0)
-                    || aih.ad(1.0)
-                    || aih.ad(0.0)
-                    || aih.ad(3.0)
+                PlayerUtil.ad(2.0)
+                    || PlayerUtil.ad(1.0)
+                    || PlayerUtil.ad(0.0)
+                    || PlayerUtil.ad(3.0)
                     || aEg.gameSettings.keyBindJump.isPressed()
                     || aEg.thePlayer.isPotionActive(Potion.moveSpeed)
                     || this.gD
@@ -211,7 +211,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
             MoveUtil.strafe();
         }
 
-        if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && aEg.thePlayer.tR > 2) {
+        if (PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && aEg.thePlayer.tR > 2) {
             MoveUtil.strafe();
         }
 

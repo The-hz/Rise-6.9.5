@@ -1,5 +1,6 @@
 package hackclient.rise;
 
+import com.alan.clients.util.gui.textbox.TextBox;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -87,7 +88,7 @@ public final class agw {
         }
     }
 
-    public boolean a(agm var1, char var2, int var3) {
+    public boolean a(TextBox var1, char var2, int var3) {
         if (var1 == null) {
             return false;
         }
@@ -293,7 +294,7 @@ public final class agw {
         return true;
     }
 
-    private void a(agm var1, int var2) {
+    private void a(TextBox var1, int var2) {
         if (this.aJU) {
             if (this.aJX != null && !this.aJX.isEmpty()) {
                 int i = Math.max(0, Math.min(var2, this.aJX.size() - 1));

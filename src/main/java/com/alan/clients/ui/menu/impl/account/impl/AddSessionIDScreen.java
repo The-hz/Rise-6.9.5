@@ -14,10 +14,10 @@ import com.alan.clients.util.MouseUtil;
 import hackclient.rise.aen;
 import hackclient.rise.agc;
 import hackclient.rise.agl;
-import hackclient.rise.agm;
+import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -41,9 +41,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
-    private static final agc FONT_RENDERER = gb.MAIN.a(36, gd.BOLD);
+    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, gd.BOLD);
     private final MenuButton[] menuButtons = new MenuButton[4];
-    private static agm sessionBox;
+    private static TextBox sessionBox;
     private static GuiScreen reference;
     private Animation animation;
     private static String statusMessage = "Enter Session- or Refresh-Token";
@@ -109,7 +109,7 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
         byte b1 = 4;
         float f = 296 / 2.0F;
         Vector2d vector2d = new Vector2d(this.width / 2.0F - short1 / 2.0F, this.height / 2.0F - 24.0F);
-        sessionBox = new agm(vector2d.offset(short1 / 2, 8.0), gb.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Session- / Refresh-Token", short1);
+        sessionBox = new TextBox(vector2d.offset(short1 / 2, 8.0), FontManager.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Session- / Refresh-Token", short1);
         this.menuButtons[0] = new MenuTextButton(vector2d.x, vector2d.y, short1, b0, FOCUS_BOX, "");
         this.menuButtons[1] = new MenuTextButton(vector2d.x, vector2d.y + b0 + b1, f, b0, LOGIN, "Login");
         this.menuButtons[2] = new MenuTextButton(vector2d.x + f + b1, vector2d.y + b0 + b1, f, b0, CANCEL, "Cancel");

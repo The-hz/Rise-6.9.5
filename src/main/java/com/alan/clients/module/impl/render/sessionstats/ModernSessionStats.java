@@ -16,7 +16,7 @@ import com.alan.clients.value.impl.DragValue;
 import hackclient.rise.abw;
 import hackclient.rise.ahd;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import hackclient.rise.zt;
@@ -55,8 +55,8 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                 });
                 this.b(gg.BLOOM).c(() -> {
                     RenderUtil.roundedRectangle(this.atJ.apP.x, this.atJ.apP.y - 14.0, this.atJ.aHe.x, this.atJ.aHe.y + 14.0, 7.0, this.rz().rE());
-                    double d1 = this.atJ.apP.x + this.atJ.aHe.x / 2.0 - (gb.MAIN.a(18, gd.REGULAR).getStringWidth("Information") / 2.0 + 1.0);
-                    gb.MAIN.a(18, gd.BOLD).c(ahd.ce("session"), d1, this.atJ.apP.y - 9.0, aip.d(this.rz().rA(), 200).getRGB());
+                    double d1 = this.atJ.apP.x + this.atJ.aHe.x / 2.0 - (FontManager.MAIN.a(18, gd.REGULAR).getStringWidth("Information") / 2.0 + 1.0);
+                    FontManager.MAIN.a(18, gd.BOLD).c(ahd.ce("session"), d1, this.atJ.apP.y - 9.0, aip.d(this.rz().rA(), 200).getRGB());
                 });
             }
 
@@ -72,31 +72,31 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                         );
                         RenderUtil.a(this.atJ.apP.x, this.atJ.apP.y - 14.0, this.atJ.aHe.x, 14.0, 6.0, aip.d(abw.SECONDARY.pV(), 170), true, true, false, false);
                         RenderUtil.a(this.atJ.apP.x, this.atJ.apP.y, this.atJ.aHe.x, this.atJ.aHe.y, 6.0, color1, false, false, true, true);
-                        double d1 = this.atJ.apP.x + this.atJ.aHe.x / 2.0 - (gb.MAIN.a(18, gd.REGULAR).getStringWidth("Information") / 2.0 + 1.0);
-                        gb.MAIN.a(18, gd.BOLD).c(ahd.ce("session"), d1, this.atJ.apP.y - 9.0, this.rz().rD().getRGB());
-                        gb.MAIN
+                        double d1 = this.atJ.apP.x + this.atJ.aHe.x / 2.0 - (FontManager.MAIN.a(18, gd.REGULAR).getStringWidth("Information") / 2.0 + 1.0);
+                        FontManager.MAIN.a(18, gd.BOLD).c(ahd.ce("session"), d1, this.atJ.apP.y - 9.0, this.rz().rD().getRGB());
+                        FontManager.MAIN
                             .a(18, gd.REGULAR)
                             .c(
                                 ahd.ce("Information"),
-                                this.atJ.apP.x + this.atJ.aHe.x / 2.0 + (gb.MAIN.a(18, gd.BOLD).getStringWidth("session") / 2.0 + 1.0),
+                                this.atJ.apP.x + this.atJ.aHe.x / 2.0 + (FontManager.MAIN.a(18, gd.BOLD).getStringWidth("session") / 2.0 + 1.0),
                                 this.atJ.apP.y - 9.0,
                                 abw.TEXT.pW()
                             );
-                        gb.MAIN.a(24, gd.BOLD).a(this.atL, this.atJ.apP.x + d0, this.atJ.apP.y + d0 - 1.8, abw.TEXT.pW());
-                        gb.MAIN
+                        FontManager.MAIN.a(24, gd.BOLD).a(this.atL, this.atJ.apP.x + d0, this.atJ.apP.y + d0 - 1.8, abw.TEXT.pW());
+                        FontManager.MAIN
                             .a(16, gd.REGULAR)
                             .a(
                                 ahd.ce("You have gotten ") + this.atK.atR + " kills",
                                 this.atJ.apP.x + d0,
-                                this.atJ.apP.y + d0 + gb.MAIN.a(24, gd.BOLD).height(),
+                                this.atJ.apP.y + d0 + FontManager.MAIN.a(24, gd.BOLD).height(),
                                 abw.TRINARY_TEXT.pW()
                             );
-                        gb.MAIN
+                        FontManager.MAIN
                             .a(16, gd.REGULAR)
                             .a(
                                 ahd.ce("You have won " + this.atK.atS) + " games",
                                 this.atJ.apP.x + d0,
-                                this.atJ.apP.y + d0 + gb.MAIN.a(24, gd.BOLD).height() + gb.MAIN.a(16, gd.REGULAR).height() + 2.0,
+                                this.atJ.apP.y + d0 + FontManager.MAIN.a(24, gd.BOLD).height() + FontManager.MAIN.a(16, gd.REGULAR).height() + 2.0,
                                 abw.TRINARY_TEXT.pW()
                             );
                     }

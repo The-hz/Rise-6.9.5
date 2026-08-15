@@ -14,7 +14,7 @@ import hackclient.rise.aep;
 import hackclient.rise.agc;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -25,8 +25,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
 public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
-    private static final agc FONT_RENDERER = gb.MAIN.a(36, gd.BOLD);
-    private static final agc INFO_FONT_RENDERER = gb.MAIN.a(18, gd.REGULAR);
+    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, gd.BOLD);
+    private static final agc INFO_FONT_RENDERER = FontManager.MAIN.a(18, gd.REGULAR);
     private static AccountViewModel<aep> accountViewModel;
     private static GuiScreen reference;
     private final MenuButton[] menuButtons = new MenuButton[2];

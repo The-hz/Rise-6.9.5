@@ -18,7 +18,7 @@ import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.aip;
 import hackclient.rise.ais;
 import hackclient.rise.bf;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -30,7 +30,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 public class GodlyTargetInfo extends Mode<TargetInfo> {
-    private final agc avg = gb.MAIN.a(18, gd.REGULAR);
+    private final agc avg = FontManager.MAIN.a(18, gd.REGULAR);
     private TargetInfo aui;
     private final int avh = 6;
     private final int avi = 7;

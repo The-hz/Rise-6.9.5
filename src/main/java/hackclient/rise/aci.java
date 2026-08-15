@@ -2,6 +2,7 @@ package hackclient.rise;
 
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
+import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
@@ -19,7 +20,7 @@ public class aci implements InstanceAccess {
     private Animation aAc = new Animation(Easing.EASE_OUT_EXPO, 500L);
     private Vector2f axI;
     private a asY;
-    private agc aAd = gb.MAIN.a(20, gd.REGULAR);
+    private agc aAd = FontManager.MAIN.a(20, gd.REGULAR);
 
     public aci(String var1, String var2) {
         this.azY = StringUtils.b(this.aAd, var2, 86.450005F - 20);
@@ -63,7 +64,7 @@ public class aci implements InstanceAccess {
     }
 
     public void k(Vector2f var1) {
-        gb.MAIN.a(16, gd.REGULAR).c(this.azZ, var1.x + this.alh.x / 2.0F, var1.y, abw.TRINARY_TEXT.pW());
+        FontManager.MAIN.a(16, gd.REGULAR).c(this.azZ, var1.x + this.alh.x / 2.0F, var1.y, abw.TRINARY_TEXT.pW());
     }
 
     @Generated

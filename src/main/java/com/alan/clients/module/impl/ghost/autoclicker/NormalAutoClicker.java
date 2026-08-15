@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.BoundsNumberValue;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import rip.vantage.commons.util.time.a;
 
@@ -41,9 +41,9 @@ public class NormalAutoClicker extends Mode<AutoClicker> {
             }
 
             if (this.rightClick.wo() && aEg.gameSettings.cgI.isKeyDown() && !aEg.gameSettings.cgK.isKeyDown()) {
-                aih.h(1, true);
+                PlayerUtil.h(1, true);
                 if (Math.random() > 0.9) {
-                    aih.h(1, true);
+                    PlayerUtil.h(1, true);
                 }
             }
 
@@ -55,7 +55,7 @@ public class NormalAutoClicker extends Mode<AutoClicker> {
                     aEg.playerController.curBlockDamageMP = 0.0F;
                 }
             } else {
-                aih.h(0, true);
+                PlayerUtil.h(0, true);
             }
 
             this.Cq.aX();

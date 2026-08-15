@@ -14,7 +14,7 @@ import com.alan.clients.newevent.impl.motion.PushOutOfBlockEvent;
 import com.alan.clients.newevent.impl.other.BlockAABBEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import net.minecraft.block.BlockAir;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -28,7 +28,7 @@ public class NoClip extends Module {
     private final BooleanValue block = new BooleanValue("Block", this, false);
     @EventLink
     public final Listener<BlockAABBEvent> onBlockAABB = var0 -> {
-        if (aih.vk()) {
+        if (PlayerUtil.vk()) {
             var0.setBoundingBox(null);
             if (!(var0.getBlock() instanceof BlockAir) && !aEg.gameSettings.keyBindSneak.isKeyDown()) {
                 double d0 = var0.getBlockPos().getX();
@@ -47,7 +47,7 @@ public class NoClip extends Module {
         aEg.thePlayer.noClip = true;
         if (this.block.wo()) {
             int i = SlotUtil.vx();
-            if (i == -1 || aih.vk()) {
+            if (i == -1 || PlayerUtil.vk()) {
                 return;
             }
 

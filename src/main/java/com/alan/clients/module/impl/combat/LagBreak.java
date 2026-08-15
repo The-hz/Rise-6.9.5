@@ -24,10 +24,10 @@ import com.alan.clients.value.impl.SubMode;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.component.bv;
 import hackclient.rise.component.ci;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
 import java.util.Comparator;
@@ -106,11 +106,11 @@ extends Module {
             this.pz = 0;
             ci.cl();
         }
-        boolean bl = (entityLivingBase = this.k(((Number)this.range.wo()).doubleValue())) != null && aih.v((Entity)entityLivingBase) <= 3.0 + MoveUtil.speed() / 2.0;
-        boolean bl2 = entityLivingBase != null && aih.v((Entity)entityLivingBase) <= 5.0 && this.a(entityLivingBase, 12.0f, 20.0f);
+        boolean bl = (entityLivingBase = this.k(((Number)this.range.wo()).doubleValue())) != null && PlayerUtil.v((Entity)entityLivingBase) <= 3.0 + MoveUtil.speed() / 2.0;
+        boolean bl2 = entityLivingBase != null && PlayerUtil.v((Entity)entityLivingBase) <= 5.0 && this.a(entityLivingBase, 12.0f, 20.0f);
         int n2 = entityLivingBase != null ? (int)MathUtil.l(9.0, 16.0) : (int)MathUtil.l(10.0, 18.0);
         boolean bl3 = false;
-        if (this.pt >= ((Number)this.maxLagTicks.wo()).intValue() || this.e(Scaffold.class).isEnabled() || LagBreak.aEg.gameSettings.cgI.isKeyDown() || !MoveUtil.isMoving() || entityLivingBase == null || aih.v((Entity)entityLivingBase) > ((Number)this.range.wo()).doubleValue() || WatchdogPredictionVelocity.dj || LagBreak.aEg.thePlayer.Zl < 2) {
+        if (this.pt >= ((Number)this.maxLagTicks.wo()).intValue() || this.e(Scaffold.class).isEnabled() || LagBreak.aEg.gameSettings.cgI.isKeyDown() || !MoveUtil.isMoving() || entityLivingBase == null || PlayerUtil.v((Entity)entityLivingBase) > ((Number)this.range.wo()).doubleValue() || WatchdogPredictionVelocity.dj || LagBreak.aEg.thePlayer.Zl < 2) {
             bl3 = true;
         }
         if (!((Boolean)this.dispatchOnAttack.wo()).booleanValue()) {
@@ -124,7 +124,7 @@ extends Module {
         if (bl3) {
             this.gk();
         }
-        if (entityLivingBase != null && aih.v((Entity)entityLivingBase) < ((Number)this.minimumRange.wo()).doubleValue()) {
+        if (entityLivingBase != null && PlayerUtil.v((Entity)entityLivingBase) < ((Number)this.minimumRange.wo()).doubleValue()) {
             this.gk();
         }
         if (LagBreak.aEg.thePlayer.ae < 2 && ((Boolean)this.dispatchOnHurtime.wo()).booleanValue()) {
@@ -311,8 +311,8 @@ extends Module {
         float f3 = (float)LagBreak.aEg.jY.getScaledHeight() / 2.0f;
         int n2 = this.rz().rA().getRGB();
         int n3 = new Color(0, 0, 0, 200).getRGB();
-        gb.MAIN.a(17, gd.LIGHT).c("Blinking: " + this.pt, f2 + 1.0f, f3 + 10.0f + 1.0f, n3);
-        gb.MAIN.a(17, gd.LIGHT).c("Blinking: " + this.pt, f2, f3 + 10.0f, n2);
+        FontManager.MAIN.a(17, gd.LIGHT).c("Blinking: " + this.pt, f2 + 1.0f, f3 + 10.0f + 1.0f, n3);
+        FontManager.MAIN.a(17, gd.LIGHT).c("Blinking: " + this.pt, f2, f3 + 10.0f, n2);
     }
 
     private void a(Render2DEvent render2DEvent, float f2) {
@@ -366,7 +366,7 @@ extends Module {
             if (list == null || list.isEmpty()) {
                 return null;
             }
-            list.sort(Comparator.comparingDouble(entityLivingBase -> aih.v((Entity)entityLivingBase)));
+            list.sort(Comparator.comparingDouble(entityLivingBase -> PlayerUtil.v((Entity)entityLivingBase)));
             return list.get(0);
         }
         catch (Throwable throwable) {

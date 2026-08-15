@@ -12,7 +12,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import hackclient.rise.aip;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -33,8 +33,8 @@ public final class SlotComponent extends Component {
     private static boolean gb = false;
     private static String stackSize = "0";
     private static double gd = 38.0;
-    private final agc ge = hackclient.rise.gb.MAIN.a(18, hackclient.rise.gd.LIGHT);
-    private final agc gf = hackclient.rise.gb.MAIN.a(18, hackclient.rise.gd.MEDIUM);
+    private final agc ge = com.alan.clients.util.font.FontManager.MAIN.a(18, hackclient.rise.gd.LIGHT);
+    private final agc gf = com.alan.clients.util.font.FontManager.MAIN.a(18, hackclient.rise.gd.MEDIUM);
     @EventLink(value = 4)
     public final Listener<SyncCurrentItemEvent> onSyncItem = var0 -> {
         InventoryPlayer inventoryplayer = aEg.thePlayer.inventory;

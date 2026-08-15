@@ -13,7 +13,7 @@ import hackclient.rise.agc;
 import hackclient.rise.aip;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -24,9 +24,9 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 
 public class AddAccountScreen extends GuiScreen implements InstanceAccess {
-    private static final agc FONT_RENDERER = gb.MAIN.a(36, gd.BOLD);
-    private static final agc AD_FONT_RENDERER = gb.MAIN.a(16, gd.REGULAR);
-    private static final agc DISCOUNT_FONT_RENDERER = gb.MAIN.a(14, gd.BOLD);
+    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, gd.BOLD);
+    private static final agc AD_FONT_RENDERER = FontManager.MAIN.a(16, gd.REGULAR);
+    private static final agc DISCOUNT_FONT_RENDERER = FontManager.MAIN.a(14, gd.BOLD);
     private static final ResourceLocation XBOX_RESOURCE = new ResourceLocation("rise/images/xbox.png");
     private static final ResourceLocation MICROSOFT_RESOURCE = new ResourceLocation("rise/images/microsoft.png");
     private static final ResourceLocation CRACKED_RESOURCE = new ResourceLocation("rise/images/minecraft.png");
@@ -37,7 +37,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
     private static final int AD_LOGO_SIZE = 24;
     private static final int AD_GAP = 8;
     private static final int AD_SIDE_PADDING = 14;
-    private static final float CENTER_REF_HEIGHT = gb.MAIN.a(24, gd.BOLD).height();
+    private static final float CENTER_REF_HEIGHT = FontManager.MAIN.a(24, gd.BOLD).height();
     private static GuiScreen reference;
     private Animation animation;
     private Animation adHoverAnimation;

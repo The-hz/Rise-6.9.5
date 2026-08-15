@@ -1,7 +1,11 @@
-package hackclient.rise;
+package com.alan.clients.util.gui.textbox;
 
+import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.vector.Vector2d;
+import hackclient.rise.agc;
+import hackclient.rise.agl;
+import hackclient.rise.gd;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
@@ -14,7 +18,7 @@ import net.minecraft.util.ChatAllowedCharacters;
 import org.lwjgl.input.Keyboard;
 import rip.vantage.commons.util.time.a;
 
-public class agm {
+public class TextBox {
     public String XS = "";
     public boolean ayU;
     public int aJk;
@@ -35,7 +39,7 @@ public class agm {
     private float aJu;
     public a aJv = new a();
 
-    public agm(Vector2d var1, agc var2, Color var3, agl var4, String var5, float var6, boolean var7) {
+    public TextBox(Vector2d var1, agc var2, Color var3, agl var4, String var5, float var6, boolean var7) {
         this.position = var1;
         this.lq = var2;
         this.color = var3;
@@ -45,11 +49,11 @@ public class agm {
         this.aJn = var7;
     }
 
-    public agm(Vector2d var1, agc var2, Color var3, agl var4, String var5, float var6) {
+    public TextBox(Vector2d var1, agc var2, Color var3, agl var4, String var5, float var6) {
         this(var1, var2, var3, var4, var5, var6, false);
     }
 
-    public agm(Vector2d var1, agc var2, Color var3, agl var4, String var5, float var6, String var7) {
+    public TextBox(Vector2d var1, agc var2, Color var3, agl var4, String var5, float var6, String var7) {
         this(var1, var2, var3, var4, var5, var6, false);
         this.aJq = var7;
     }
@@ -111,7 +115,7 @@ public class agm {
                 this.aJr = (this.aJr * 19.0 + (f1 - 2.0F)) / 20.0;
             }
 
-            (this.lq == Minecraft.getMinecraft().fontRendererObj ? gb.MAIN.a(18, gd.REGULAR) : this.lq)
+            (this.lq == Minecraft.getMinecraft().fontRendererObj ? FontManager.MAIN.a(18, gd.REGULAR) : this.lq)
                 .a(
                     "|",
                     (float)(this.gW + this.aJr + 1.0),

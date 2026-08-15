@@ -9,7 +9,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.BlockAir;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 
@@ -19,13 +19,13 @@ public class NCPStep extends Mode<Step> {
     private final BooleanValue reverse = new BooleanValue("Reverse", this, false);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
-        if (aEg.thePlayer.onGround && !aih.vj()) {
+        if (aEg.thePlayer.onGround && !PlayerUtil.vj()) {
             aEg.thePlayer.stepHeight = this.height.wo().floatValue();
         } else {
             aEg.thePlayer.stepHeight = 0.6F;
         }
 
-        if (this.reverse.wo() && !(aih.p(0.0, -(this.height.wo().intValue() + 1), 0.0) instanceof BlockAir) && !aih.vj()) {
+        if (this.reverse.wo() && !(PlayerUtil.p(0.0, -(this.height.wo().intValue() + 1), 0.0) instanceof BlockAir) && !PlayerUtil.vj()) {
             for (int i = 1; i < this.height.wo().intValue() + 1; i++) {
                 aEg.thePlayer.motionY -= i;
             }
@@ -33,7 +33,7 @@ public class NCPStep extends Mode<Step> {
     };
     @EventLink
     public final Listener<StepEvent> onStep = var1x -> {
-        if (aEg.thePlayer.onGround && !aih.vj()) {
+        if (aEg.thePlayer.onGround && !PlayerUtil.vj()) {
             double d0 = var1x.getHeight();
             if (!(d0 <= 0.6)) {
                 double[] adouble;

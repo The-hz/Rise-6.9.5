@@ -11,7 +11,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.FallDistanceComponent;
 import java.util.ArrayList;
 import net.minecraft.network.Packet;
@@ -92,7 +92,7 @@ public class GrimServer19NoFall extends Mode<NoFall> {
                 aEg.gameSettings.keyBindJump.setPressed(false);
             }
 
-            if (aih.vi() > 5.0 && aEg.thePlayer.tR == 9 && aEg.thePlayer.Zl > 200 && this.newestGrimMayFlagTheAnticheat.wo()) {
+            if (PlayerUtil.vi() > 5.0 && aEg.thePlayer.tR == 9 && aEg.thePlayer.Zl > 200 && this.newestGrimMayFlagTheAnticheat.wo()) {
                 aEg.thePlayer.motionY = MoveUtil.predictedMotion(aEg.thePlayer.motionY, 10);
             }
 

@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import java.util.ArrayList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.Vec3i;
@@ -27,7 +27,7 @@ public final class PlayerNotifier extends Module {
         if (aEg.thePlayer.ticksExisted % 25 == 0) {
             aMR.execute(() -> {
                 for (EntityLivingBase entitylivingbase : aEg.theWorld.playerEntities) {
-                    if (!aih.sameTeam(entitylivingbase) && !Client.a.x().a(entitylivingbase) && entitylivingbase != aEg.thePlayer) {
+                    if (!PlayerUtil.sameTeam(entitylivingbase) && !Client.a.x().a(entitylivingbase) && entitylivingbase != aEg.thePlayer) {
                         int i = (int)entitylivingbase.getDistance(this.bedPosition.getX(), this.bedPosition.getY(), this.bedPosition.getZ());
                         if (i < this.distance.wo().intValue()) {
                             if (this.notifiedPlayers.contains(entitylivingbase) && this.notifyOnce.wo()) {

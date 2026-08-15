@@ -15,7 +15,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aih;
+import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockSnow;
@@ -69,7 +69,7 @@ public final class MiniBloxSpeed extends Mode<Speed> {
         if (aEg.thePlayer.isCollidedHorizontally) {
             double d3 = aEg.thePlayer.posX - d1 * 0.005;
             double d7 = aEg.thePlayer.posZ + d2 * 0.005;
-        } else if (aih.vk()) {
+        } else if (PlayerUtil.vk()) {
         }
 
         if (aEg.thePlayer.ticksExisted % 24 == 0) {

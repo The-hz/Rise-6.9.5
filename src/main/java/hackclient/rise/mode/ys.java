@@ -16,7 +16,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.StringValue;
 import hackclient.rise.agc;
-import hackclient.rise.gb;
+import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.zc;
 import java.awt.Color;
@@ -37,7 +37,7 @@ public class ys extends Mode<Interface> {
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1x -> {
         if (aEg != null && !aEg.gameSettings.bJf && aEg.theWorld != null && aEg.thePlayer != null) {
-            agc agc = Client.a.getLocale() == Locale.ZH_ZH ? gb.MAIN.a(18, gd.REGULAR) : aEg.fontRendererObj;
+            agc agc = Client.a.getLocale() == Locale.ZH_ZH ? FontManager.MAIN.a(18, gd.REGULAR) : aEg.fontRendererObj;
             int i = 0;
             Color[] acolor = new Color[]{new Color(91, 206, 250), new Color(245, 169, 184), Color.WHITE, new Color(245, 169, 184)};
             int j = 0;
@@ -147,7 +147,7 @@ public class ys extends Mode<Interface> {
     public final Listener<TickEvent> onTick = var1x -> aMR.execute(() -> {
         for (zc zc : this.getParent().lL()) {
             if (zc.ath != 0.0F) {
-                agc agc = Client.a.getLocale() == Locale.ZH_ZH ? gb.MAIN.a(18, gd.REGULAR) : aEg.fontRendererObj;
+                agc agc = Client.a.getLocale() == Locale.ZH_ZH ? FontManager.MAIN.a(18, gd.REGULAR) : aEg.fontRendererObj;
                 zc.y(!zc.getTag().isEmpty() && this.getParent().suffix.wo());
                 String s = (this.getParent().lowercase.wo() ? zc.nx().toLowerCase() : zc.nx()).replace(this.getParent().lH().wo() ? " " : "", "");
                 String s1 = (this.getParent().lowercase.wo() ? zc.getTag().toLowerCase() : zc.getTag()).replace(this.getParent().lH().wo() ? " " : "", "");
