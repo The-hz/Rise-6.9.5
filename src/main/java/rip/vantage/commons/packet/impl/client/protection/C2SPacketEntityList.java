@@ -42,8 +42,8 @@ public class C2SPacketEntityList extends rip.vantage.commons.packet.api.abstract
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
-        handler.a(this);
+    public void handle(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
+        handler.handle(this);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class C2SPacketEntityList extends rip.vantage.commons.packet.api.abstract
         for (EntityInfo g : this.eOZ) {
             JSONObject jsonobject1 = new JSONObject();
             jsonobject1.put("a", g.getEntityId());
-            jsonobject1.put("b", g.agr());
+            jsonobject1.put("b", g.getType());
             jsonobject1.put("c", g.isInvisible());
             jsonarray.put(jsonobject1);
         }
@@ -65,11 +65,11 @@ public class C2SPacketEntityList extends rip.vantage.commons.packet.api.abstract
         jsonobject.put("d", this.ePc);
         jsonobject.put("e", this.ePd);
         jsonobject.put("f", this.ePe);
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
-    public List<EntityInfo> aJx() {
+    public List<EntityInfo> getEntityList() {
         return this.eOZ;
     }
 
@@ -89,7 +89,7 @@ public class C2SPacketEntityList extends rip.vantage.commons.packet.api.abstract
         return this.ePd;
     }
 
-    public int aJC() {
+    public int getUid() {
         return this.ePe;
     }
 }

@@ -15,7 +15,7 @@ public class EntityInfo {
         return this.ePf;
     }
 
-    public int agr() {
+    public int getType() {
         return this.ePg;
     }
 

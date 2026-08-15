@@ -33,7 +33,7 @@ public enum VantageClient {
         return this.eRn;
     }
 
-    public Color nw() {
+    public Color getColor() {
         return this.eRo;
     }
 

@@ -124,9 +124,9 @@ public final class PlayerData {
                     this.ay = this.z - this.av;
                     this.aD = this.aC;
                     this.aC = MathHelper.sqrt_double(this.aw * this.aw + this.ay * this.ay);
-                    double d0 = (float)this.aV.aKx() / 50.0F * 0.2;
-                    if (this.aV.aKx() / 50L > this.aX && (this.aC > d0 || this.aD > d0)) {
-                        this.aX = (int)(this.aV.aKx() / 50L);
+                    double d0 = (float)this.aV.getElapsedTime() / 50.0F * 0.2;
+                    if (this.aV.getElapsedTime() / 50L > this.aX && (this.aC > d0 || this.aD > d0)) {
+                        this.aX = (int)(this.aV.getElapsedTime() / 50L);
                     }
 
                     this.aV.aX();
@@ -174,9 +174,9 @@ public final class PlayerData {
                     this.ar = 0;
                     this.aD = this.aC;
                     this.aC = MathHelper.sqrt_double(this.aw * this.aw + this.ay * this.ay);
-                    double d3 = (float)this.aV.aKx() / 50.0F * 0.2;
-                    if (this.aV.aKx() / 50L > this.aX && (this.aC > d3 || this.aD > d3)) {
-                        this.aX = (int)(this.aV.aKx() / 50L);
+                    double d3 = (float)this.aV.getElapsedTime() / 50.0F * 0.2;
+                    if (this.aV.getElapsedTime() / 50L > this.aX && (this.aC > d3 || this.aD > d3)) {
+                        this.aX = (int)(this.aV.getElapsedTime() / 50L);
                     }
                 }
             } else if (this.player.isSwingInProgress) {

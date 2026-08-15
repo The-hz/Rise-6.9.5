@@ -19,7 +19,7 @@ public class S2CPacketStartRecording extends rip.vantage.commons.packet.api.abst
         JSONObject jsonobject = new JSONObject();
         jsonobject.put("a", this.ePU);
         jsonobject.put("b", this.ePV);
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
@@ -33,7 +33,7 @@ public class S2CPacketStartRecording extends rip.vantage.commons.packet.api.abst
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
+    public void handle(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
         handler.a(this);
     }
 

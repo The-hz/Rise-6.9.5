@@ -53,11 +53,11 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
     }
 
     public void aKc() {
-        aKd();
+        enableLagMode();
         this.aKe();
     }
 
-    public void cT(final boolean bFlag) {
+    public void validateResultIntegrity(final boolean bFlag) {
         try {
             "true".equals(System.getProperty("rise.lag.active"));
             if (bFlag) {
@@ -70,7 +70,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         }
     }
 
-    public static void aKg() {
+    public static void applyPeriodicLag() {
         if (!S2CPacketAuthentication.eQk) {
             return;
         }
@@ -94,16 +94,16 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         return this.eQj;
     }
 
-    public boolean aKi() {
+    public boolean isSuccess() {
         this.aKj();
-        aKg();
+        applyPeriodicLag();
         int eQf2 = this.eQf ? 1 : 0;
-        this.cT((boolean)(eQf2 != 0));
+        this.validateResultIntegrity((boolean)(eQf2 != 0));
         return eQf2 != 0;
     }
 
-    public void a(final S2CPacketHandler handler) {
-        handler.a(this);
+    public void handle(final S2CPacketHandler handler) {
+        handler.handle(this);
     }
 
     public void aKj() {
@@ -161,7 +161,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         jsonObject.put("d", System.currentTimeMillis());
         jsonObject.put("e", (Object)this.eOM);
         jsonObject.put("f", (Object)this.eQj);
-        jsonObject.put("id", (int)this.aeq());
+        jsonObject.put("id", (int)this.getId());
         return jsonObject.toString();
     }
 
@@ -180,7 +180,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         S2CPacketAuthentication.eQr = 0;
     }
 
-    public float aKl() {
+    public float getC() {
         return this.eQh;
     }
 
@@ -189,7 +189,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
     }
 
 
-    public void c(final boolean bFlag, final boolean b2, final boolean b3, final boolean b4, final boolean b5) {
+    public void validateSuccessFieldIntegrity(final boolean bFlag, final boolean b2, final boolean b3, final boolean b4, final boolean b5) {
         try {
             if ((bFlag ? 1 : 0) != ((b2 && b3 && b4 && b5) ? 1 : 0)) {
                 System.out.println("EC36");
@@ -210,7 +210,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         }
     }
 
-    public double aKk() {
+    public double getB() {
         return this.eQg;
     }
 
@@ -255,11 +255,11 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         final String string = jsonObject.getString("e");
         final String optString = jsonObject.optString("f", "");
         this.eQj = optString;
-        int aE2 = this.aE(string, optString) ? 1 : 0;
+        int aE2 = this.performMandatoryHWIDCheck(string, optString) ? 1 : 0;
         int m2 = this.m((boolean)(boolean2 != 0), (boolean)(aE2 != 0)) ? 1 : 0;
         int n3 = this.n((boolean)(boolean2 != 0), (boolean)(aE2 != 0)) ? 1 : 0;
         int flag = (aE2 == 0 || m2 == 0 || n3 == 0) ? 1 : 0;
-        this.c(this.eQf = (boolean2 != 0 && flag == 0), (boolean)(boolean2 != 0), (boolean)(aE2 != 0), (boolean)(m2 != 0), (boolean)(n3 != 0));
+        this.validateSuccessFieldIntegrity(this.eQf = (boolean2 != 0 && flag == 0), (boolean)(boolean2 != 0), (boolean)(aE2 != 0), (boolean)(m2 != 0), (boolean)(n3 != 0));
         this.eQg = jsonObject.getDouble("b");
         this.eQh = jsonObject.getFloat("c");
         this.eQi = jsonObject.getLong("d");
@@ -285,7 +285,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         catch (final InterruptedException ex) {}
     }
 
-    public static void aKd() {
+    public static void enableLagMode() {
         S2CPacketAuthentication.eQk = true;
         S2CPacketAuthentication.eQl = System.currentTimeMillis();
         S2CPacketAuthentication.eQm = Math.min(S2CPacketAuthentication.eQm + 1, 10);
@@ -324,7 +324,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         return this.eOM;
     }
 
-    public boolean aE(final String s, final String s2) {
+    public boolean performMandatoryHWIDCheck(final String s, final String s2) {
         try {
             final String s3 = (String)((Method)((Class<?>)Class.forName(aJY())).getMethod("getHWID", (Class<?>[])new Class[0])).invoke(null, new Object[0]);
             if (s3 == null || s3.length() < 32 || !s3.contains("dleotn6oc94kb")) {
@@ -389,7 +389,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         this.aKc();
     }
 
-    public long aKm() {
+    public long getD() {
         return this.eQi;
     }
 

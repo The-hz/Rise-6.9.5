@@ -104,9 +104,9 @@ public final class Interface extends Module {
         for (ArrayListEntry zcx : this.aok) {
             float f = this.anX.wo().getName().equals("Classic") ? 10.0F : 100.0F;
             if (zcx.dl().isEnabled()) {
-                zcx.ath = Math.min(zcx.ath + (float)this.aon.aKx() / f, 10.0F);
+                zcx.ath = Math.min(zcx.ath + (float)this.aon.getElapsedTime() / f, 10.0F);
             } else {
-                zcx.ath = Math.max(zcx.ath - (float)this.aon.aKx() / f, 0.0F);
+                zcx.ath = Math.max(zcx.ath - (float)this.aon.getElapsedTime() / f, 0.0F);
             }
         }
 
@@ -129,8 +129,8 @@ public final class Interface extends Module {
                 if (!(Math.abs(zc.nr().getX() - zc.atg.x) > 0.5) && !(Math.abs(zc.nr().getY() - zc.atg.y) > 0.5) && (zc.ath == 0.0F || zc.ath == 10.0F)) {
                     zc.apP = zc.atg;
                 } else {
-                    zc.apP.x = MathUtil.m(zc.apP.x, zc.atg.x, 0.015F * (float)this.aon.aKx());
-                    zc.apP.y = MathUtil.m(zc.apP.y, zc.atg.y, 0.015F * (float)this.aon.aKx());
+                    zc.apP.x = MathUtil.m(zc.apP.x, zc.atg.x, 0.015F * (float)this.aon.getElapsedTime());
+                    zc.apP.y = MathUtil.m(zc.apP.y, zc.atg.y, 0.015F * (float)this.aon.getElapsedTime());
                 }
             }
         }

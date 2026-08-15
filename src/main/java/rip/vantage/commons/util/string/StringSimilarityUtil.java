@@ -6,7 +6,7 @@ public class StringSimilarityUtil {
     public StringSimilarityUtil() {
     }
 
-    public static double aH(String var0, String var1) {
+    public static double getSimilarity(String var0, String var1) {
         int i = var0.length();
         int j = var1.length();
         int[][] aint = new int[i + 1][j + 1];
@@ -18,7 +18,7 @@ public class StringSimilarityUtil {
                 } else if (l == 0) {
                     aint[k][l] = k;
                 } else {
-                    aint[k][l] = w(aint[k - 1][l - 1] + a(var0.charAt(k - 1), var1.charAt(l - 1)), aint[k - 1][l] + 1, aint[k][l - 1] + 1);
+                    aint[k][l] = min(aint[k - 1][l - 1] + costOfSubstitution(var0.charAt(k - 1), var1.charAt(l - 1)), aint[k - 1][l] + 1, aint[k][l - 1] + 1);
                 }
             }
         }
@@ -27,11 +27,11 @@ public class StringSimilarityUtil {
         return 1.0 - (double)aint[i][j] / i1;
     }
 
-    private static int a(char var0, char var1) {
+    private static int costOfSubstitution(char var0, char var1) {
         return var0 == var1 ? 0 : 1;
     }
 
-    private static int w(int... var0) {
+    private static int min(int... var0) {
         return Arrays.stream(var0).min().orElse(Integer.MAX_VALUE);
     }
 }

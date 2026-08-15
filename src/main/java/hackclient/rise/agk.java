@@ -37,7 +37,7 @@ public class agk implements InstanceAccess {
             this.aJe.aX();
         }
 
-        for (int i = 0; i < this.rG.aKx(); i++) {
+        for (int i = 0; i < this.rG.getElapsedTime(); i++) {
             this.scroll = MathUtil.m(this.scroll, this.aJc, 0.01F);
         }
 

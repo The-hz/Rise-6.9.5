@@ -9,7 +9,7 @@ public class XorCipherFake2 {
     public XorCipherFake2() {
     }
 
-    public static String kh(String var0) {
+    public static String encrypt(String var0) {
         byte[] abyte = "ふんぁふぃふにかぎいかじふざ".getBytes(StandardCharsets.UTF_8);
         byte[] abyte1 = var0.getBytes(StandardCharsets.UTF_8);
         byte[] abyte2 = new byte[abyte1.length];
@@ -21,7 +21,7 @@ public class XorCipherFake2 {
         return Base64.getEncoder().encodeToString(abyte2);
     }
 
-    public static String ki(String var0) {
+    public static String decrypt(String var0) {
         byte[] abyte = "ふんぁふぃふにかぎいかじふざ".getBytes(StandardCharsets.UTF_8);
         byte[] abyte1 = Base64.getDecoder().decode(var0);
         byte[] abyte2 = new byte[abyte1.length];

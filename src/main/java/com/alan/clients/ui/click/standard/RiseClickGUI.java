@@ -132,7 +132,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
                 ScaledResolution scaledresolution = aEg.jY;
                 this.axM = this.axK;
                 this.axP.aX();
-                this.axP.i(System.currentTimeMillis() - 150L);
+                this.axP.setMillis(System.currentTimeMillis() - 150L);
                 Keyboard.enableRepeatEvents(true);
                 this.rG.aX();
                 this.axK.aT();
@@ -320,10 +320,10 @@ public class RiseClickGUI extends GuiScreen implements aha {
                         0.0F,
                         Math.min(
                             255.0F,
-                            this.axP.aKx() < short1 ? 255.0F - (float)this.axP.aKx() * (255.0F / short1) : (float)(this.axP.aKx() - short1) * (255.0F / short1)
+                            this.axP.getElapsedTime() < short1 ? 255.0F - (float)this.axP.getElapsedTime() * (255.0F / short1) : (float)(this.axP.getElapsedTime() - short1) * (255.0F / short1)
                         )
                     );
-                if (this.axP.aKx() <= short1 * 2) {
+                if (this.axP.getElapsedTime() <= short1 * 2) {
                     RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, this.round, UIColors.BACKGROUND.Y(k));
                 }
 

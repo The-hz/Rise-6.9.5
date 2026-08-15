@@ -28,7 +28,7 @@ public class PrereleaseDisclaimer extends GuiScreen {
     @Override
     public void drawScreen(int var1, int var2, float var3) {
         RenderUtil.d(0.0, 0.0, aEg.displayWidth, aEg.displayHeight, Color.BLACK);
-        this.fadeAnimation.Q(this.aCt.aKx() > 4000L ? 0.0 : 255.0);
+        this.fadeAnimation.Q(this.aCt.getElapsedTime() > 4000L ? 0.0 : 255.0);
         ScaledResolution scaledresolution = new ScaledResolution(aEg);
         FontManager.MAIN
             .a(24, FontWeight.REGULAR)

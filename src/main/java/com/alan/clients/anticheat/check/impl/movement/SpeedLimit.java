@@ -47,7 +47,7 @@ public final class SpeedLimit extends Check {
             }
 
             this.ah = this.ah + this.data.ao();
-            this.ai = this.ai + (float)this.aj.aKx() / 50.0F * d0;
+            this.ai = this.ai + (float)this.aj.getElapsedTime() / 50.0F * d0;
             this.ai = Math.min(this.ai, this.ah + 2.0);
             if (this.data.aj() == 0.65625 && this.data.am() == 0.75) {
                 this.J();

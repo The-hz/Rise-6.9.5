@@ -17,8 +17,8 @@ public class C2SPacketChatMessage extends rip.vantage.commons.packet.api.abstrac
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
-        handler.a(this);
+    public void handle(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
+        handler.handle(this);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class C2SPacketChatMessage extends rip.vantage.commons.packet.api.abstrac
         JSONObject jsonobject = new JSONObject();
         jsonobject.put("a", this.eOs);
         jsonobject.put("b", "63d0f9bc46ca6bf7ad9572b7");
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 

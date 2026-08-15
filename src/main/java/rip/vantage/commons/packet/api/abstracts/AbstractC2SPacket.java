@@ -7,7 +7,7 @@ public abstract class AbstractC2SPacket implements rip.vantage.commons.packet.ap
         this.eOq = var1;
     }
 
-    public byte aeq() {
+    public byte getId() {
         return this.eOq;
     }
 }

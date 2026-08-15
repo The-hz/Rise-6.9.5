@@ -16,7 +16,7 @@ public class S2CPacketStopRecording extends rip.vantage.commons.packet.api.abstr
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
+    public void handle(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
         handler.a(this);
     }
 
@@ -24,7 +24,7 @@ public class S2CPacketStopRecording extends rip.vantage.commons.packet.api.abstr
     public String aJk() {
         JSONObject jsonobject = new JSONObject();
         jsonobject.put("a", this.ePZ);
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 

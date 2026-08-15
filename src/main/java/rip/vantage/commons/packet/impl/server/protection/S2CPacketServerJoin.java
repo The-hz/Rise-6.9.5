@@ -19,8 +19,8 @@ public class S2CPacketServerJoin extends rip.vantage.commons.packet.api.abstract
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
-        handler.a(this);
+    public void handle(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
+        handler.handle(this);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class S2CPacketServerJoin extends rip.vantage.commons.packet.api.abstract
         JSONObject jsonobject = new JSONObject();
         jsonobject.put("a", this.eQB);
         jsonobject.put("b", this.eQC);
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 

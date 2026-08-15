@@ -20,7 +20,7 @@ public class S2CPacketProofOfWorkChallenge extends rip.vantage.commons.packet.ap
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
+    public void handle(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
         handler.a(this);
     }
 
@@ -29,15 +29,15 @@ public class S2CPacketProofOfWorkChallenge extends rip.vantage.commons.packet.ap
         JSONObject jsonobject = new JSONObject();
         jsonobject.put("a", Base64.getEncoder().encodeToString(this.eQE));
         jsonobject.put("b", this.eQF);
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
-    public byte[] aJF() {
+    public byte[] getChallenge() {
         return this.eQE;
     }
 
-    public long nb() {
+    public long getTimestamp() {
         return this.eQF;
     }
 }

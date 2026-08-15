@@ -64,9 +64,9 @@ public class abt extends ValueComponent {
 
         this.ayQ = GUIUtil.c(this.position.x + f - 5.0, this.position.y - 3.5, 110.0, this.height, var2, var3);
         if (this.ayQ) {
-            this.ayR = Math.min(1.0F, this.ayR + (float)this.azh.aKx() / 200.0F);
+            this.ayR = Math.min(1.0F, this.ayR + (float)this.azh.getElapsedTime() / 200.0F);
         } else {
-            this.ayR = Math.max(0.0F, this.ayR - (float)this.azh.aKx() / 200.0F);
+            this.ayR = Math.max(0.0F, this.ayR - (float)this.azh.getElapsedTime() / 200.0F);
         }
 
         FontManager.MAIN.a(16, FontWeight.REGULAR).a(s1, this.position.x, this.position.y, UIColors.SECONDARY_TEXT.Z(this.ayD));
@@ -92,7 +92,7 @@ public class abt extends ValueComponent {
             numbervalue.n(MathUtil.m(numbervalue.wo().doubleValue(), numbervalue.wz().floatValue()));
         }
 
-        for (int i = 0; i <= this.azh.aKx(); i++) {
+        for (int i = 0; i <= this.azh.getElapsedTime(); i++) {
             this.azl = (this.azl * 29.0 + this.azj) / 30.0;
         }
 

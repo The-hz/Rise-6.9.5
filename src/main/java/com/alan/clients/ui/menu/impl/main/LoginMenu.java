@@ -142,7 +142,7 @@ extends Menu {
             b2 = (rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication)er2.dd();
             System.out.println("Auth");
             rip.vantage.network.handler.c.eRC.aX();
-            int aKi2 = (int)(b2.aKi() ? 1L : 0L);
+            int aKi2 = (int)(b2.isSuccess() ? 1L : 0L);
             this.aCC = false;
             if (aKi2 != 0 && (string2 = b2.aKh()) != null && !string2.isEmpty() && !rip.vantage.security.IntegrityGuard.aL(string = aju.vW(), string2)) {
                 System.out.println("EC61");

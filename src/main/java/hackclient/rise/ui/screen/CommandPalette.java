@@ -637,7 +637,7 @@ extends GuiScreen {
 
     private void O(double d2) {
         if (!this.statusMessage.isEmpty() && !this.aAx.T(3000L)) {
-            double d3 = 1.0 - (double)this.aAx.aKx() / 3000.0;
+            double d3 = 1.0 - (double)this.aAx.getElapsedTime() / 3000.0;
             double d4 = Math.max(0.0, Math.min(1.0, d3));
             int n2 = (int)((double)this.statusColor.getAlpha() * d4);
             agc agc2 = FontManager.MAIN.a(13, FontWeight.MEDIUM);

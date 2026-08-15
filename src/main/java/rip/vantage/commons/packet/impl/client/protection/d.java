@@ -22,8 +22,8 @@ public class d extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacke
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
-        handler.a(this);
+    public void handle(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
+        handler.handle(this);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class d extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacke
         jsonobject.put("a", this.eOV);
         jsonobject.put("b", this.eOW);
         jsonobject.put("c", this.eOX);
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 

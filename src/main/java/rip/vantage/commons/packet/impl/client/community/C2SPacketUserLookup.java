@@ -16,15 +16,15 @@ public class C2SPacketUserLookup extends rip.vantage.commons.packet.api.abstract
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
-        handler.a(this);
+    public void handle(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
+        handler.handle(this);
     }
 
     @Override
     public String aJk() {
         JSONObject jsonobject = new JSONObject();
         jsonobject.put("a", this.eOH);
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 

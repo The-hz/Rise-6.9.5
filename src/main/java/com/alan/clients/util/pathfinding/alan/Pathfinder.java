@@ -60,7 +60,7 @@ public class Pathfinder extends ArrayList<ahr> implements InstanceAccess {
             if (this.aNz == null) {
                 afi.b("Failed to find path.");
             } else {
-                afi.b("Took " + a.aKx() + " ms.");
+                afi.b("Took " + a.getElapsedTime() + " ms.");
             }
         });
     }

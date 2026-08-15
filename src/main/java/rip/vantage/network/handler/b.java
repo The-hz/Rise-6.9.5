@@ -42,7 +42,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication packet) {
+    public void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication packet) {
         String s = packet.aKh();
         if (s != null && !s.isEmpty()) {
             String s1 = aju.vW();
@@ -53,7 +53,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
             }
         }
 
-        long i = IntegrityGuard.a(packet, packet.aKi(), packet.aKk(), packet.aKl(), packet.aKm());
+        long i = IntegrityGuard.a(packet, packet.isSuccess(), packet.getB(), packet.getC(), packet.getD());
         if (!IntegrityGuard.V(i)) {
             System.out.println("EC74");
             rip.vantage.util.NativeBridge.kF(1);
@@ -73,7 +73,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
     }
 
     @Override
-    public void a(S2CPacketConfig packet) {
+    public void handle(S2CPacketConfig packet) {
         aha.aMR
             .execute(
                 () -> {
@@ -107,7 +107,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
 
                     boolean flag = false;
 
-                    for (String s3 : packet.aJw().split("\n")) {
+                    for (String s3 : packet.getConfig().split("\n")) {
                         if (!flag) {
                             String[] astring1 = s3.split("th_");
                             if (astring1.length > 1) {
@@ -258,7 +258,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                         }
                     }
 
-                    for (String s12 : packet.aJw().split("\n")) {
+                    for (String s12 : packet.getConfig().split("\n")) {
                         String s13 = s12.split("_")[0];
                         if (hashmap.containsKey(s13)) {
                             Module module2;
@@ -287,47 +287,47 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
     }
 
     @Override
-    public void a(S2CPacketServerJoin packet) {
+    public void handle(S2CPacketServerJoin packet) {
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.protection.S2CPacketAccount packet) {
+    public void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketAccount packet) {
         Minecraft.getMinecraft().session = new Session(packet.bX(), packet.sh(), packet.si(), "microsoft");
         Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.management.S2CPacketHudRefresh packet) {
+    public void handle(rip.vantage.commons.packet.impl.server.management.S2CPacketHudRefresh packet) {
         Minecraft.getMinecraft().ingameGUI.lastSystemTime = -50L;
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.community.S2CPacketChatMessage packet) {
+    public void handle(rip.vantage.commons.packet.impl.server.community.S2CPacketChatMessage packet) {
         Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.community.S2CPacketUserData packet) {
+    public void handle(rip.vantage.commons.packet.impl.server.community.S2CPacketUserData packet) {
         Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.protection.S2CPacketEntityListRequest packet) {
+    public void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketEntityListRequest packet) {
         Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.community.S2CPacketTitle packet) {
+    public void handle(rip.vantage.commons.packet.impl.server.community.S2CPacketTitle packet) {
         Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.community.S2CPacketConfigList packet) {
+    public void handle(rip.vantage.commons.packet.impl.server.community.S2CPacketConfigList packet) {
         Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.community.e var1) {
+    public void handle(rip.vantage.commons.packet.impl.server.community.e var1) {
         Client.a.e().d(new er(var1));
     }
 
@@ -338,9 +338,9 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
 
     @Override
     public void a(S2CPacketProofOfWorkChallenge packet) {
-        byte[] abyte = packet.aJF();
+        byte[] abyte = packet.getChallenge();
         if (abyte != null && abyte.length == 32) {
-            long i = packet.nb();
+            long i = packet.getTimestamp();
             if (i > 0L && Math.abs(System.currentTimeMillis() - i) > 60000L) {
                 System.out.println("EC152");
             }

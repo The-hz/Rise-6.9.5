@@ -75,9 +75,9 @@ public class abn extends ValueComponent {
         float f = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s3) + 7;
         this.ayQ = GUIUtil.c(this.position.x + f - 5.0, this.position.y - 3.5, 110.0, this.height, var2, var3);
         if (this.ayQ) {
-            this.ayR = Math.min(1.0F, this.ayR + (float)this.ayG.aKx() / 200.0F);
+            this.ayR = Math.min(1.0F, this.ayR + (float)this.ayG.getElapsedTime() / 200.0F);
         } else {
-            this.ayR = Math.max(0.0F, this.ayR - (float)this.ayG.aKx() / 200.0F);
+            this.ayR = Math.max(0.0F, this.ayR - (float)this.ayG.getElapsedTime() / 200.0F);
         }
 
         FontManager.MAIN.a(16, FontWeight.REGULAR).a(s3, this.position.x, this.position.y, UIColors.SECONDARY_TEXT.Z(this.ayD));
@@ -124,7 +124,7 @@ public class abn extends ValueComponent {
             }
         }
 
-        for (int i = 0; i <= this.ayG.aKx(); i++) {
+        for (int i = 0; i <= this.ayG.getElapsedTime(); i++) {
             this.ayO = (this.ayO * 29.0 + this.ayK) / 30.0;
             this.ayP = (this.ayP * 29.0 + this.ayL) / 30.0;
         }

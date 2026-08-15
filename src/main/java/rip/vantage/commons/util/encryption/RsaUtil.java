@@ -18,14 +18,14 @@ public class RsaUtil {
     public RsaUtil() {
     }
 
-    public static KeyPair aKu() throws java.security.NoSuchAlgorithmException {
+    public static KeyPair generateRSAKeyPair() throws java.security.NoSuchAlgorithmException {
         SecureRandom securerandom = new SecureRandom();
         KeyPairGenerator keypairgenerator = KeyPairGenerator.getInstance("RSA");
         keypairgenerator.initialize(2048, securerandom);
         return keypairgenerator.generateKeyPair();
     }
 
-    public static String aF(String var0, String var1) {
+    public static String encrypt(String var0, String var1) {
         try {
             byte[] abyte = var0.getBytes();
             byte[] abyte1 = var1.getBytes();
@@ -39,7 +39,7 @@ public class RsaUtil {
         }
     }
 
-    public static String aG(String var0, String var1) {
+    public static String decrypt(String var0, String var1) {
         try {
             byte[] abyte = Base64.getDecoder().decode(var0);
             byte[] abyte1 = var1.getBytes();

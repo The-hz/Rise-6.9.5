@@ -33,7 +33,7 @@ extends Module {
             return;
         }
         rip.vantage.commons.packet.impl.server.community.S2CPacketChatMessage b2 = (rip.vantage.commons.packet.impl.server.community.S2CPacketChatMessage)er2.dd();
-        VantageClient unused0 = VantageClient.values()[b2.aJv()];
+        VantageClient unused0 = VantageClient.values()[b2.getProduct()];
         String string = b2.getMessage();
         String string2 = "\u00a7" + b2.getAuthor();
         String string3 = String.valueOf(EnumChatFormatting.GRAY) + string;

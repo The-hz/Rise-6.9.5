@@ -7,13 +7,13 @@ public class XorCipher {
     public XorCipher() {
     }
 
-    private static byte[] aKt() {
+    private static byte[] keyBytes() {
         char[] achar = new char[]{'ふ', 'ふ', 'ぁ', 'ふ', 'ぃ', 'ふ', 'に', 'か', 'ん', 'い', 'か', 'じ', 'ぎ', 'ざ'};
         return new String(achar).getBytes(StandardCharsets.UTF_8);
     }
 
-    public static String kh(String var0) {
-        byte[] abyte = aKt();
+    public static String encrypt(String var0) {
+        byte[] abyte = keyBytes();
         byte[] abyte1 = var0.getBytes(StandardCharsets.UTF_8);
         byte[] abyte2 = new byte[abyte1.length];
 
@@ -24,8 +24,8 @@ public class XorCipher {
         return Base64.getEncoder().encodeToString(abyte2);
     }
 
-    public static String ki(String var0) {
-        byte[] abyte = aKt();
+    public static String decrypt(String var0) {
+        byte[] abyte = keyBytes();
         byte[] abyte1 = Base64.getDecoder().decode(var0);
         byte[] abyte2 = new byte[abyte1.length];
 

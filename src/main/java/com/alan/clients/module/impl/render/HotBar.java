@@ -61,7 +61,7 @@ public class HotBar extends Module {
 
             String s = this.interfaceModule.lM().wo().getName();
             int i = scaledresolution.getScaledWidth() / 2;
-            this.anO = MathUtil.lerp(this.anO, i - 92 + entityplayer.inventory.currentItem * 20, 0.03F * (float)this.anN.aKx());
+            this.anO = MathUtil.lerp(this.anO, i - 92 + entityplayer.inventory.currentItem * 20, 0.03F * (float)this.anN.getElapsedTime());
             this.anN.aX();
             if ("Rise".equals(s)) {
                 double d0 = this.interfaceModule != null ? this.interfaceModule.lD() : 9.0;

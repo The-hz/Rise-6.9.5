@@ -41,7 +41,7 @@ public final class S2CPacketJdkUnlockGrant extends rip.vantage.commons.packet.ap
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
+    public void handle(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
         handler.a(this);
     }
 
@@ -51,7 +51,7 @@ public final class S2CPacketJdkUnlockGrant extends rip.vantage.commons.packet.ap
         jsonobject.put("v", this.eQy);
         jsonobject.put("a", Base64.getEncoder().encodeToString(this.eQz));
         jsonobject.put("b", Base64.getEncoder().encodeToString(this.eQA));
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 

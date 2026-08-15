@@ -41,7 +41,7 @@ public final class C2SPacketJdkUnlockRequest extends rip.vantage.commons.packet.
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
+    public void handle(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
         handler.a(this);
     }
 
@@ -53,7 +53,7 @@ public final class C2SPacketJdkUnlockRequest extends rip.vantage.commons.packet.
         jsonobject.put("b", Base64.getEncoder().encodeToString(this.ePt));
         jsonobject.put("c", this.ePu);
         jsonobject.put("d", Base64.getEncoder().encodeToString(this.ePv));
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 

@@ -29,9 +29,9 @@ public class abm extends ValueComponent {
         FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, this.position.x, this.position.y, UIColors.SECONDARY_TEXT.Z(this.ayD));
         double d0 = this.position.x + FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s) + 3.0;
         if (booleanvalue.wo()) {
-            this.axp = Math.min(5.0, this.axp + (float)this.ayE.aKx() / 20.0F);
+            this.axp = Math.min(5.0, this.axp + (float)this.ayE.getElapsedTime() / 20.0F);
         } else {
-            this.axp = Math.max(0.0, this.axp - (float)this.ayE.aKx() / 20.0F);
+            this.axp = Math.max(0.0, this.axp - (float)this.ayE.getElapsedTime() / 20.0F);
         }
 
         RenderUtil.roundedRectangle(d0 - 2.5 + 5.0, this.position.y - 2.5 + 2.5, 5.0, 5.0, 2.5, UIColors.BACKGROUND.Y(this.ayD));

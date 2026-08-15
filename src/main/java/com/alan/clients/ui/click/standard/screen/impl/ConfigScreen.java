@@ -37,9 +37,9 @@ public final class ConfigScreen implements Screen, InstanceAccess {
     public void b(int var1, int var2, float var3) {
         RiseClickGUI riseclickgui = this.getStandardClickGUI();
         if (this.scrollUtil.tD() < 0.0) {
-            this.axT = this.axT - this.azN.aKx() * 4L;
+            this.axT = this.axT - this.azN.getElapsedTime() * 4L;
         } else {
-            this.axT = this.axT + this.azN.aKx() * 4L;
+            this.axT = this.axT + this.azN.getElapsedTime() * 4L;
         }
 
         this.axT = Math.min(Math.max(0.0, this.axT), 255.0);

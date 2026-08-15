@@ -18,18 +18,18 @@ public class a extends AbstractS2CPacket {
     }
 
     @Override
-    public void a(S2CPacketHandler handler) {
+    public void handle(S2CPacketHandler handler) {
     }
 
     @Override
     public String aJk() {
         JSONObject jsonobject = new JSONObject();
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         jsonobject.put("a", this.ePO);
         return jsonobject.toString();
     }
 
-    public long aJR() {
+    public long getA() {
         return this.ePO;
     }
 }

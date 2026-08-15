@@ -8,12 +8,12 @@ public class C2SPacketProofOfWorkSolution extends rip.vantage.commons.packet.api
     public int ePy;
     public long ePx;
 
-    public long nb() {
+    public long getTimestamp() {
         return this.ePx;
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
+    public void handle(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
     }
 
     @Override
@@ -22,7 +22,7 @@ public class C2SPacketProofOfWorkSolution extends rip.vantage.commons.packet.api
         jsonobject.put("a", Base64.getEncoder().encodeToString(this.ePw));
         jsonobject.put("b", this.ePx);
         jsonobject.put("c", this.ePy);
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
@@ -34,7 +34,7 @@ public class C2SPacketProofOfWorkSolution extends rip.vantage.commons.packet.api
     }
 
 
-    public byte[] aJJ() {
+    public byte[] getProof() {
         return this.ePw;
     }
 
@@ -48,7 +48,7 @@ public class C2SPacketProofOfWorkSolution extends rip.vantage.commons.packet.api
     static {
     }
 
-    public int aJK() {
+    public int getChecksumCount() {
         return this.ePy;
     }
 }

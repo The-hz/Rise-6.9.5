@@ -40,7 +40,7 @@ public class Drag {
 
         if (this.atg != null) {
             if (Math.abs(this.apP.x - this.atg.x) > 1.0 || Math.abs(this.apP.y - this.atg.y) > 1.0) {
-                for (int i = 0; i <= this.bN.aKx(); i++) {
+                for (int i = 0; i <= this.bN.getElapsedTime(); i++) {
                     this.apP.x = (this.apP.x * 38.0 + this.atg.x) / 39.0;
                     this.apP.y = (this.apP.y * 38.0 + this.atg.y) / 39.0;
                 }

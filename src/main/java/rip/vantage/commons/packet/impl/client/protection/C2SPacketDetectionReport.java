@@ -13,7 +13,7 @@ public class C2SPacketDetectionReport extends rip.vantage.commons.packet.api.abs
         jsonobject.put("a", this.ePi);
         jsonobject.put("b", this.ePj);
         jsonobject.put("c", this.ePk);
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
@@ -33,7 +33,7 @@ public class C2SPacketDetectionReport extends rip.vantage.commons.packet.api.abs
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
+    public void handle(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
         handler.a(this);
     }
 

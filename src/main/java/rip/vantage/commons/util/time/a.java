@@ -15,11 +15,11 @@ public class a {
         this.aGh = System.currentTimeMillis();
     }
 
-    public long aKx() {
+    public long getElapsedTime() {
         return System.currentTimeMillis() - this.aGh;
     }
 
-    public void i(long var1) {
+    public void setMillis(long var1) {
         this.aGh = var1;
     }
 }

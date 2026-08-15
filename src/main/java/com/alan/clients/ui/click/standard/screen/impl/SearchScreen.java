@@ -37,7 +37,7 @@ InstanceAccess {
     public void b(int n2, int n3, float f2) {
         double d2;
         RiseClickGUI riseClickGUI = this.getStandardClickGUI();
-        this.axT = this.scrollUtil.tD() < 0.0 ? (this.axT -= (double)(this.azS.aKx() * 4L)) : (this.axT += (double)(this.azS.aKx() * 4L));
+        this.axT = this.scrollUtil.tD() < 0.0 ? (this.axT -= (double)(this.azS.getElapsedTime() * 4L)) : (this.axT += (double)(this.azS.getElapsedTime() * 4L));
         this.axT = Math.min(Math.max(0.0, this.axT), 255.0);
         this.azR.setColor(ColorUtil.d(UIColors.TEXT.pV(), (int)this.axT));
         Vector2d vector2d = new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.axJ.aym + ((double)riseClickGUI.alh.x - riseClickGUI.axJ.aym) / 2.0, (float)((double)(riseClickGUI.axI.y + 17.0f) + this.scrollUtil.tE()));

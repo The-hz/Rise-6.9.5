@@ -22,8 +22,8 @@ public class S2CPacketChatMessage extends rip.vantage.commons.packet.api.abstrac
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
-        handler.a(this);
+    public void handle(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
+        handler.handle(this);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class S2CPacketChatMessage extends rip.vantage.commons.packet.api.abstrac
         jsonobject.put("a", this.ePD);
         jsonobject.put("b", this.ePE);
         jsonobject.put("c", this.ePF);
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
@@ -40,7 +40,7 @@ public class S2CPacketChatMessage extends rip.vantage.commons.packet.api.abstrac
         return this.ePD;
     }
 
-    public int aJv() {
+    public int getProduct() {
         return this.ePE;
     }
 

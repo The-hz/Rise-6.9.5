@@ -17,7 +17,7 @@ public class ConstantManager
         this.aHd = (Listener<er>)(var1 -> {
             if (var1.dd() instanceof rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication) {
                 final rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication b = (rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication)var1.dd();
-                if (!rip.vantage.security.IntegrityGuard.a(b, b.aKi())) {
+                if (!rip.vantage.security.IntegrityGuard.a(b, b.isSuccess())) {
                     System.out.println("EC91");
 
                     try {
@@ -32,8 +32,8 @@ public class ConstantManager
 
                     throw new SecurityException("EC91");
                 }
-                ConstantManager.aHb = b.aKk();
-                ConstantManager.aHc = b.aKl();
+                ConstantManager.aHb = b.getB();
+                ConstantManager.aHc = b.getC();
             }
         });
         Client.a.e().b((Object)this);

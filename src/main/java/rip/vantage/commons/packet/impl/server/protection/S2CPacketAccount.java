@@ -29,8 +29,8 @@ public class S2CPacketAccount extends rip.vantage.commons.packet.api.abstracts.A
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
-        handler.a(this);
+    public void handle(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
+        handler.handle(this);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class S2CPacketAccount extends rip.vantage.commons.packet.api.abstracts.A
         jsonobject.put("b", this.eQc);
         jsonobject.put("c", this.eQd);
         jsonobject.put("d", this.eQe);
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 

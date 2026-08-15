@@ -10,7 +10,7 @@ public class S2CPacketMonitorPing extends rip.vantage.commons.packet.api.abstrac
 
 
     @Override
-    public void a(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
+    public void handle(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
         handler.a(this);
     }
 
@@ -18,7 +18,7 @@ public class S2CPacketMonitorPing extends rip.vantage.commons.packet.api.abstrac
     public String aJk() {
         JSONObject jsonobject = new JSONObject();
         jsonobject.put("a", true);
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 

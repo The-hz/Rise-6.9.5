@@ -10,7 +10,7 @@ public class AltSkin {
         this.eOQ = var1;
     }
 
-    public Dimension2D aJs() {
+    public Dimension2D getSize() {
         if (this.eOQ == null) {
             return null;
         }
@@ -22,7 +22,7 @@ public class AltSkin {
 
     @Override
     public String toString() {
-        Dimension2D dimension2d = this.aJs();
+        Dimension2D dimension2d = this.getSize();
         return "[" + dimension2d.getWidth() + ", " + dimension2d.getHeight() + "]";
     }
 }

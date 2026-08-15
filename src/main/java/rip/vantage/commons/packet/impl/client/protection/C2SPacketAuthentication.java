@@ -44,10 +44,10 @@ public class C2SPacketAuthentication extends AbstractC2SPacket
         return null;
     }
 
-    public int aJv() {
+    public int getProduct() {
         return 0;
     }
 
-    public void a(final rip.vantage.commons.handler.api.C2SPacketHandler handler) {
+    public void handle(final rip.vantage.commons.handler.api.C2SPacketHandler handler) {
     }
 }

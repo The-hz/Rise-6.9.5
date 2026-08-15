@@ -27,7 +27,7 @@ public class NotificationComponent extends Component implements aha {
         hv = aEg.ingameGUI.bnh;
         hu.forEach(var0 -> {
             var0.cj();
-            if (var0.hj.aKx() > 3000L) {
+            if (var0.hj.getElapsedTime() > 3000L) {
                 hu.remove(var0);
             }
         });

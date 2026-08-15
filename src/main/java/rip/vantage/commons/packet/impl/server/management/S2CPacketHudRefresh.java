@@ -10,14 +10,14 @@ public class S2CPacketHudRefresh extends AbstractS2CPacket {
     }
 
     @Override
-    public void a(S2CPacketHandler handler) {
-        handler.a(this);
+    public void handle(S2CPacketHandler handler) {
+        handler.handle(this);
     }
 
     @Override
     public String aJk() {
         JSONObject jsonobject = new JSONObject();
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 }

@@ -49,7 +49,7 @@ public class Particle implements InstanceAccess {
     }
 
     public void ju() {
-        for (int i = 0; i <= this.bN.aKx(); i++) {
+        for (int i = 0; i <= this.bN.getElapsedTime(); i++) {
             this.aPu.setX(this.aPu.getX() + this.aPv.getX() / 10.0F);
             this.aPu.setY(this.aPu.getY() + this.aPv.getY() / 10.0F);
             this.aPv.setX(this.aPv.getX() * 0.999F);
@@ -58,7 +58,7 @@ public class Particle implements InstanceAccess {
 
         this.aPz = ColorUtil.d(this.aPx, (int)this.aoJ * 3);
         this.aPy = ColorUtil.d(this.aPx, (int)this.aoJ);
-        this.aoJ = Math.max(this.aoJ - (float)this.bN.aKx() / 18.0F, 0.0F);
+        this.aoJ = Math.max(this.aoJ - (float)this.bN.getElapsedTime() / 18.0F, 0.0F);
         this.bN.aX();
     }
 }

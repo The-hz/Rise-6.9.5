@@ -30,8 +30,8 @@ public class S2CPacketEntityListRequest extends rip.vantage.commons.packet.api.a
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
-        handler.a(this);
+    public void handle(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
+        handler.handle(this);
     }
 
     @Override
@@ -47,15 +47,15 @@ public class S2CPacketEntityListRequest extends rip.vantage.commons.packet.api.a
 
         jsonobject.put("a", jsonarray);
         jsonobject.put("b", this.eQt);
-        jsonobject.put("id", this.aeq());
+        jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
-    public List<rip.vantage.commons.packet.impl.client.protection.EntityInfo> aJx() {
+    public List<rip.vantage.commons.packet.impl.client.protection.EntityInfo> getEntityList() {
         return this.eQs;
     }
 
-    public int aJC() {
+    public int getUid() {
         return this.eQt;
     }
 }

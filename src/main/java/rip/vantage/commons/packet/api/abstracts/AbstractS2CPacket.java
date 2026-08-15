@@ -9,7 +9,7 @@ public abstract class AbstractS2CPacket implements S2CPacket {
         this.eOr = var1;
     }
 
-    public byte aeq() {
+    public byte getId() {
         return this.eOr;
     }
 }

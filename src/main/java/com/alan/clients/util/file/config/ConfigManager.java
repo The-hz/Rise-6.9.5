@@ -21,7 +21,7 @@ public class ConfigManager extends ArrayList<ConfigFile> {
             CONFIG_DIRECTORY.mkdir();
         }
 
-        this.aHN.i(5000L);
+        this.aHN.setMillis(5000L);
         this.update();
     }
 

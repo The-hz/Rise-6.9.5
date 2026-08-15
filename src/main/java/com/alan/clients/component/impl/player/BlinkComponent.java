@@ -256,7 +256,7 @@ public final class BlinkComponent extends Component {
             bm();
         }
 
-        dP.i(dP.aGh - 999999999L);
+        dP.setMillis(dP.aGh - 999999999L);
     }
 
     public static void a(int var0, boolean var1, boolean var2, boolean var3, boolean var4) {

@@ -9,35 +9,35 @@ import rip.vantage.commons.packet.impl.client.protection.C2SPacketDetectionRepor
 import rip.vantage.commons.packet.impl.client.protection.C2SPacketJdkUnlockRequest;
 
 public interface C2SPacketHandler extends PacketHandler {
-    void a(f var1);
+    void handle(f var1);
 
     void a(C2SPacketTelemetry packet);
 
-    void a(rip.vantage.commons.packet.impl.client.protection.d var1);
+    void handle(rip.vantage.commons.packet.impl.client.protection.d var1);
 
     void a(C2SPacketJdkUnlockRequest packet);
 
-    void a(rip.vantage.commons.packet.impl.client.community.C2SPacketConfigRequest packet);
+    void handle(rip.vantage.commons.packet.impl.client.community.C2SPacketConfigRequest packet);
 
-    void a(rip.vantage.commons.packet.impl.client.general.a var1);
+    void handle(rip.vantage.commons.packet.impl.client.general.a var1);
 
     void a(C2SPacketDetectionReport packet);
 
-    void a(rip.vantage.commons.packet.impl.client.community.C2SPacketChatMessage packet);
+    void handle(rip.vantage.commons.packet.impl.client.community.C2SPacketChatMessage packet);
 
-    void a(rip.vantage.commons.packet.impl.client.protection.C2SPacketEntityList packet);
+    void handle(rip.vantage.commons.packet.impl.client.protection.C2SPacketEntityList packet);
 
-    void a(rip.vantage.commons.packet.impl.client.community.C2SPacketConfigListRequest packet);
+    void handle(rip.vantage.commons.packet.impl.client.community.C2SPacketConfigListRequest packet);
 
     void a(C2SPacketStoreDelivery packet);
 
-    void a(rip.vantage.commons.packet.impl.client.protection.C2SPacketAuthentication packet);
+    void handle(rip.vantage.commons.packet.impl.client.protection.C2SPacketAuthentication packet);
 
-    void a(C2SPacketTitle packet);
+    void handle(C2SPacketTitle packet);
 
-    void a(rip.vantage.commons.packet.impl.client.protection.C2SPacketAccount packet);
+    void handle(rip.vantage.commons.packet.impl.client.protection.C2SPacketAccount packet);
 
-    void a(C2SPacketUserLookup packet);
+    void handle(C2SPacketUserLookup packet);
 
-    void a(rip.vantage.commons.packet.impl.client.protection.C2SPacketConfig packet);
+    void handle(rip.vantage.commons.packet.impl.client.protection.C2SPacketConfig packet);
 }
