@@ -18,8 +18,8 @@ import com.alan.clients.command.impl.Insults;
 import com.alan.clients.command.impl.Say;
 import hackclient.rise.afi;
 import hackclient.rise.afj;
-import hackclient.rise.command.ai;
-import hackclient.rise.command.aj;
+import com.alan.clients.command.impl.Target;
+import com.alan.clients.command.impl.Title;
 import com.alan.clients.command.impl.Toggle;
 import hackclient.rise.u;
 import com.alan.clients.command.impl.Friend;
@@ -51,14 +51,14 @@ public final class CommandManager {
         this.a(new Help());
         this.a(new Insults());
         this.a(new Name());
-        this.a(new aj());
+        this.a(new Title());
         this.a(new Panic());
         this.a(new Say());
         this.a(new Script());
         this.a(new Stuck());
         this.a(new Toggle());
         this.a(new Spotify());
-        this.a(new ai());
+        this.a(new Target());
         Client.a.e().b(this);
     }
 

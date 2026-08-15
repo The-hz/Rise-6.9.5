@@ -1,11 +1,11 @@
-package hackclient.rise.command;
+package com.alan.clients.command.impl;
 
 import com.alan.clients.command.Command;
 import rip.vantage.commons.packet.impl.client.community.h;
 import rip.vantage.network.core.a;
 
-public class aj extends Command {
-    public aj() {
+public class Title extends Command {
+    public Title() {
         super("command.title.description", "title");
     }
 

@@ -1,12 +1,12 @@
-package hackclient.rise.command;
+package com.alan.clients.command.impl;
 
 import com.alan.clients.command.Command;
 import hackclient.rise.afi;
 import hackclient.rise.bx;
 import net.minecraft.entity.player.EntityPlayer;
 
-public final class ai extends Command {
-    public ai() {
+public final class Target extends Command {
+    public Target() {
         super("command.target.description", "target", "settarget");
     }
 
