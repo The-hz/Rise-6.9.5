@@ -1229,7 +1229,8 @@ public class Scaffold extends Module {
                                         && (!this.rotationMode.wo().getName().equals("Grim") || !RayCastUtil.a(new Vector2f(this.targetYaw, this.targetPitch), this.enumFacing.getEnumFacing(), this.blockFace, false))
                                         )
                                      {
-                                    } else {
+                                    } else if (this.readyToPlace) {
+                                        this.placeBlock();
                                     }
 
                                     if (Math.random() > 0.3
