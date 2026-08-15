@@ -5,16 +5,16 @@ import rip.vantage.commons.handler.api.S2CPacketHandler;
 import rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket;
 
 public class a extends AbstractS2CPacket {
-    long ePO;
+    long a;
 
     public a() {
         super((byte)0);
-        this.ePO = System.currentTimeMillis();
+        this.a = System.currentTimeMillis();
     }
 
     public a(JSONObject json) {
         super((byte)0);
-        this.ePO = json.getLong("a");
+        this.a = json.getLong("a");
     }
 
     @Override
@@ -25,11 +25,11 @@ public class a extends AbstractS2CPacket {
     public String aJk() {
         JSONObject jsonobject = new JSONObject();
         jsonobject.put("id", this.getId());
-        jsonobject.put("a", this.ePO);
+        jsonobject.put("a", this.a);
         return jsonobject.toString();
     }
 
     public long getA() {
-        return this.ePO;
+        return this.a;
     }
 }

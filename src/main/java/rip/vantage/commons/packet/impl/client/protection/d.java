@@ -3,22 +3,22 @@ package rip.vantage.commons.packet.impl.client.protection;
 import org.json.JSONObject;
 
 public class d extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacket {
-    private final String eOV;
-    private final int eOW;
-    private final String eOX;
+    private final String ip;
+    private final int port;
+    private final String username;
 
     public d(String var1, int var2, String var3) {
         super((byte)3);
-        this.eOV = var1;
-        this.eOW = var2;
-        this.eOX = var3;
+        this.ip = var1;
+        this.port = var2;
+        this.username = var3;
     }
 
     public d(JSONObject json) {
         super((byte)3);
-        this.eOV = json.getString("a");
-        this.eOW = json.getInt("b");
-        this.eOX = json.getString("c");
+        this.ip = json.getString("a");
+        this.port = json.getInt("b");
+        this.username = json.getString("c");
     }
 
     @Override
@@ -29,18 +29,18 @@ public class d extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacke
     @Override
     public String aJk() {
         JSONObject jsonobject = new JSONObject();
-        jsonobject.put("a", this.eOV);
-        jsonobject.put("b", this.eOW);
-        jsonobject.put("c", this.eOX);
+        jsonobject.put("a", this.ip);
+        jsonobject.put("b", this.port);
+        jsonobject.put("c", this.username);
         jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
     public String getIp() {
-        return this.eOV;
+        return this.ip;
     }
 
     public int getPort() {
-        return this.eOW;
+        return this.port;
     }
 }

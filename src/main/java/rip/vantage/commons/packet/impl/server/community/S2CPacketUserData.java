@@ -3,16 +3,16 @@ package rip.vantage.commons.packet.impl.server.community;
 import org.json.JSONObject;
 
 public class S2CPacketUserData extends rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket {
-    private final String ePG;
+    private final String message;
 
     public S2CPacketUserData(String var1) {
         super((byte)6);
-        this.ePG = var1;
+        this.message = var1;
     }
 
     public S2CPacketUserData(JSONObject json) {
         super((byte)6);
-        this.ePG = json.getString("a");
+        this.message = json.getString("a");
     }
 
     @Override
@@ -23,12 +23,12 @@ public class S2CPacketUserData extends rip.vantage.commons.packet.api.abstracts.
     @Override
     public String aJk() {
         JSONObject jsonobject = new JSONObject();
-        jsonobject.put("a", this.ePG);
+        jsonobject.put("a", this.message);
         jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
     public String getMessage() {
-        return this.ePG;
+        return this.message;
     }
 }

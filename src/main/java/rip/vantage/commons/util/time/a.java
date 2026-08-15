@@ -1,25 +1,25 @@
 package rip.vantage.commons.util.time;
 
 public class a {
-    public long aGh;
+    public long millis;
 
     public a() {
         this.aX();
     }
 
     public boolean T(long var1) {
-        return System.currentTimeMillis() - var1 >= this.aGh;
+        return System.currentTimeMillis() - var1 >= this.millis;
     }
 
     public void aX() {
-        this.aGh = System.currentTimeMillis();
+        this.millis = System.currentTimeMillis();
     }
 
     public long getElapsedTime() {
-        return System.currentTimeMillis() - this.aGh;
+        return System.currentTimeMillis() - this.millis;
     }
 
     public void setMillis(long var1) {
-        this.aGh = var1;
+        this.millis = var1;
     }
 }

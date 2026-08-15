@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class XorCipherFake19 {
-    private static final String eQR = "ふぎざふふかにかぁふぃいんじ";
+    private static final String KEY = "ふぎざふふかにかぁふぃいんじ";
 
     public XorCipherFake19() {
     }

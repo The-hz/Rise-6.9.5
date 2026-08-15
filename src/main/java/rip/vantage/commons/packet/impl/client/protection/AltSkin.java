@@ -4,19 +4,19 @@ import java.awt.geom.Dimension2D;
 import org.apache.batik.swing.JSVGCanvas;
 
 public class AltSkin {
-    private final String eOQ;
+    private final String skin;
 
     public AltSkin(String var1) {
-        this.eOQ = var1;
+        this.skin = var1;
     }
 
     public Dimension2D getSize() {
-        if (this.eOQ == null) {
+        if (this.skin == null) {
             return null;
         }
 
         JSVGCanvas jsvgcanvas = new JSVGCanvas();
-        jsvgcanvas.loadSVGDocument(this.eOQ);
+        jsvgcanvas.loadSVGDocument(this.skin);
         return jsvgcanvas.getSVGDocumentSize();
     }
 

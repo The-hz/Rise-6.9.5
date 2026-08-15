@@ -3,22 +3,22 @@ package rip.vantage.commons.packet.impl.server.community;
 import org.json.JSONObject;
 
 public class S2CPacketChatMessage extends rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket {
-    private final String ePD;
-    private final int ePE;
-    private final String ePF;
+    private final String author;
+    private final int product;
+    private final String message;
 
     public S2CPacketChatMessage(String var1, int var2, String var3) {
         super((byte)4);
-        this.ePD = var1;
-        this.ePE = var2;
-        this.ePF = var3;
+        this.author = var1;
+        this.product = var2;
+        this.message = var3;
     }
 
     public S2CPacketChatMessage(JSONObject json) {
         super((byte)4);
-        this.ePD = json.getString("a");
-        this.ePE = json.getInt("b");
-        this.ePF = json.getString("c");
+        this.author = json.getString("a");
+        this.product = json.getInt("b");
+        this.message = json.getString("c");
     }
 
     @Override
@@ -29,22 +29,22 @@ public class S2CPacketChatMessage extends rip.vantage.commons.packet.api.abstrac
     @Override
     public String aJk() {
         JSONObject jsonobject = new JSONObject();
-        jsonobject.put("a", this.ePD);
-        jsonobject.put("b", this.ePE);
-        jsonobject.put("c", this.ePF);
+        jsonobject.put("a", this.author);
+        jsonobject.put("b", this.product);
+        jsonobject.put("c", this.message);
         jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
     public String getAuthor() {
-        return this.ePD;
+        return this.author;
     }
 
     public int getProduct() {
-        return this.ePE;
+        return this.product;
     }
 
     public String getMessage() {
-        return this.ePF;
+        return this.message;
     }
 }

@@ -6,13 +6,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class S2CPacketEntityListRequest extends rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket {
-    private final List<rip.vantage.commons.packet.impl.client.protection.EntityInfo> eQs;
-    private final int eQt;
+    private final List<rip.vantage.commons.packet.impl.client.protection.EntityInfo> entityList;
+    private final int uid;
 
     public S2CPacketEntityListRequest(List<rip.vantage.commons.packet.impl.client.protection.EntityInfo> var1, int var2) {
         super((byte)7);
-        this.eQs = var1;
-        this.eQt = var2;
+        this.entityList = var1;
+        this.uid = var2;
     }
 
     public S2CPacketEntityListRequest(JSONObject json) {
@@ -25,8 +25,8 @@ public class S2CPacketEntityListRequest extends rip.vantage.commons.packet.api.a
             arraylist.add(new rip.vantage.commons.packet.impl.client.protection.EntityInfo(jsonobject.getInt("a"), -1, false));
         }
 
-        this.eQs = arraylist;
-        this.eQt = json.getInt("b");
+        this.entityList = arraylist;
+        this.uid = json.getInt("b");
     }
 
     @Override
@@ -39,23 +39,23 @@ public class S2CPacketEntityListRequest extends rip.vantage.commons.packet.api.a
         JSONObject jsonobject = new JSONObject();
         JSONArray jsonarray = new JSONArray();
 
-        for (rip.vantage.commons.packet.impl.client.protection.EntityInfo g : this.eQs) {
+        for (rip.vantage.commons.packet.impl.client.protection.EntityInfo g : this.entityList) {
             JSONObject jsonobject1 = new JSONObject();
             jsonobject1.put("a", g.getEntityId());
             jsonarray.put(jsonobject1);
         }
 
         jsonobject.put("a", jsonarray);
-        jsonobject.put("b", this.eQt);
+        jsonobject.put("b", this.uid);
         jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
     public List<rip.vantage.commons.packet.impl.client.protection.EntityInfo> getEntityList() {
-        return this.eQs;
+        return this.entityList;
     }
 
     public int getUid() {
-        return this.eQt;
+        return this.uid;
     }
 }

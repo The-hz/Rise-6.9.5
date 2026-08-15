@@ -4,26 +4,26 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class S2CPacketConfigList extends rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket {
-    private JSONArray ePA;
-    private JSONArray ePB;
-    private final String ePC;
+    private JSONArray configs;
+    private JSONArray scripts;
+    private final String type;
 
     public S2CPacketConfigList(JSONObject json) {
         super((byte)11);
 
         try {
-            this.ePA = json.getJSONArray("a");
+            this.configs = json.getJSONArray("a");
         } catch (Exception exception1) {
-            this.ePA = new JSONArray();
+            this.configs = new JSONArray();
         }
 
         try {
-            this.ePB = json.getJSONArray("b");
+            this.scripts = json.getJSONArray("b");
         } catch (Exception exception) {
-            this.ePB = new JSONArray();
+            this.scripts = new JSONArray();
         }
 
-        this.ePC = json.getString("c");
+        this.type = json.getString("c");
     }
 
     @Override
@@ -34,22 +34,22 @@ public class S2CPacketConfigList extends rip.vantage.commons.packet.api.abstract
     @Override
     public String aJk() {
         JSONObject jsonobject = new JSONObject();
-        jsonobject.put("a", this.ePA);
-        jsonobject.put("b", this.ePB);
-        jsonobject.put("c", this.ePC);
+        jsonobject.put("a", this.configs);
+        jsonobject.put("b", this.scripts);
+        jsonobject.put("c", this.type);
         jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
     public JSONArray aJM() {
-        return this.ePA;
+        return this.configs;
     }
 
     public JSONArray aJN() {
-        return this.ePB;
+        return this.scripts;
     }
 
     public String getType() {
-        return this.ePC;
+        return this.type;
     }
 }

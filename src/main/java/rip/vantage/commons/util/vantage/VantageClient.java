@@ -8,33 +8,33 @@ public enum VantageClient {
     PRESTIGE("Prestige", "", "§1", new Color(79, 70, 229)),
     MONSOON("Monsoon", "63d106727842de723ada3bf0", "§3", new Color(32, 117, 171));
 
-    private final String eRl;
-    private final String eRm;
-    private final String eRn;
-    private final Color eRo;
+    private final String displayName;
+    private final String productId;
+    private final String chatColor;
+    private final Color color;
     private static final VantageClient[] $VALUES = aKA();
 
     VantageClient(String var3, String var4, String var5, Color color) {
-        this.eRl = var3;
-        this.eRm = var4;
-        this.eRn = var5;
-        this.eRo = color;
+        this.displayName = var3;
+        this.productId = var4;
+        this.chatColor = var5;
+        this.color = color;
     }
 
     public String getDisplayName() {
-        return this.eRl;
+        return this.displayName;
     }
 
     public String aKy() {
-        return this.eRm;
+        return this.productId;
     }
 
     public String aKz() {
-        return this.eRn;
+        return this.chatColor;
     }
 
     public Color getColor() {
-        return this.eRo;
+        return this.color;
     }
 
     private static VantageClient[] aKA() {

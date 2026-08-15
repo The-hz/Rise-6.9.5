@@ -6,10 +6,10 @@ import rip.vantage.commons.packet.api.abstracts.AbstractC2SPacket;
 
 public class C2SPacketAuthentication extends AbstractC2SPacket
 {
-    private final String eOR;
-    private final String eOS;
-    private final String eOT;
-    private final int eOU;
+    private final String username;
+    private final String hazeid;
+    private final String hwid;
+    private final int product;
 
     public String aJt() {
         return null;
@@ -17,18 +17,18 @@ public class C2SPacketAuthentication extends AbstractC2SPacket
 
     public C2SPacketAuthentication(final String eor, final String eot, final String eos, final int eou) {
         super((byte)1);
-        this.eOR = eor;
-        this.eOT = eot;
-        this.eOS = eos;
-        this.eOU = eou;
+        this.username = eor;
+        this.hwid = eot;
+        this.hazeid = eos;
+        this.product = eou;
     }
 
     public C2SPacketAuthentication(final JSONObject jsonObject) {
         super((byte)1);
-        this.eOR = jsonObject.getString("a");
-        this.eOT = jsonObject.getString("b");
-        this.eOU = jsonObject.getInt("c");
-        this.eOS = jsonObject.getString("d");
+        this.username = jsonObject.getString("a");
+        this.hwid = jsonObject.getString("b");
+        this.product = jsonObject.getInt("c");
+        this.hazeid = jsonObject.getString("d");
     }
 
 

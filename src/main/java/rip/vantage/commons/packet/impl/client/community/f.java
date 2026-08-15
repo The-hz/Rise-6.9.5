@@ -3,16 +3,16 @@ package rip.vantage.commons.packet.impl.client.community;
 import org.json.JSONObject;
 
 public class f extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacket {
-    private final String eOG;
+    private final String serverIp;
 
     public f(String var1) {
         super((byte)5);
-        this.eOG = var1;
+        this.serverIp = var1;
     }
 
     public f(JSONObject json) {
         super((byte)5);
-        this.eOG = json.getString("a");
+        this.serverIp = json.getString("a");
     }
 
     @Override
@@ -23,12 +23,12 @@ public class f extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacke
     @Override
     public String aJk() {
         JSONObject jsonobject = new JSONObject();
-        jsonobject.put("a", this.eOG);
+        jsonobject.put("a", this.serverIp);
         jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
     public String getServerIp() {
-        return this.eOG;
+        return this.serverIp;
     }
 }

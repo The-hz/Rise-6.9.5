@@ -13,7 +13,7 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 
 public class RsaUtil {
-    private static final String eRb = "RSA/ECB/PKCS1Padding";
+    private static final String CIPHER_INSTANCE = "RSA/ECB/PKCS1Padding";
 
     public RsaUtil() {
     }

@@ -3,16 +3,16 @@ package rip.vantage.commons.packet.impl.client.protection;
 import org.json.JSONObject;
 
 public class C2SPacketConfig extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacket {
-    private final String eOY;
+    private final String config;
 
     public C2SPacketConfig(String var1) {
         super((byte)2);
-        this.eOY = var1;
+        this.config = var1;
     }
 
     public C2SPacketConfig(JSONObject json) {
         super((byte)2);
-        this.eOY = json.getString("a");
+        this.config = json.getString("a");
     }
 
     @Override
@@ -23,12 +23,12 @@ public class C2SPacketConfig extends rip.vantage.commons.packet.api.abstracts.Ab
     @Override
     public String aJk() {
         JSONObject jsonobject = new JSONObject();
-        jsonobject.put("a", this.eOY);
+        jsonobject.put("a", this.config);
         jsonobject.put("id", this.getId());
         return jsonobject.toString();
     }
 
     public String getConfig() {
-        return this.eOY;
+        return this.config;
     }
 }

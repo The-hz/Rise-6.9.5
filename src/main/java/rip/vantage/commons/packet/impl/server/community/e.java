@@ -3,19 +3,19 @@ package rip.vantage.commons.packet.impl.server.community;
 import org.json.JSONObject;
 
 public class e extends rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket {
-    private final boolean ePM;
-    private final boolean ePN;
+    private final boolean killauraDisabled;
+    private final boolean reverseKeybinds;
 
     public e(boolean var1, boolean var2) {
         super((byte)10);
-        this.ePM = var1;
-        this.ePN = var2;
+        this.killauraDisabled = var1;
+        this.reverseKeybinds = var2;
     }
 
     public e(JSONObject json) {
         super((byte)10);
-        this.ePM = json.getBoolean("a");
-        this.ePN = json.getBoolean("b");
+        this.killauraDisabled = json.getBoolean("a");
+        this.reverseKeybinds = json.getBoolean("b");
     }
 
     @Override
@@ -31,10 +31,10 @@ public class e extends rip.vantage.commons.packet.api.abstracts.AbstractS2CPacke
     }
 
     public boolean aJP() {
-        return this.ePM;
+        return this.killauraDisabled;
     }
 
     public boolean aJQ() {
-        return this.ePN;
+        return this.reverseKeybinds;
     }
 }
