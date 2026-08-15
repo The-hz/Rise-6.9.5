@@ -39,22 +39,8 @@ public final class TickBase extends Module {
     Listener<TickEvent> onTick = var1 -> {
         label53: {
             String s = this.mode.wo().getName();
-            byte b0 = -1;
-            switch (s.hashCode()) {
-                case 2493632:
-                    if (s.equals("Post")) {
-                        b0 = 0;
-                    }
-                    break;
-                case 73298841:
-                    if (s.equals("Legit")) {
-                        boolean flag = true;
-                        break label53;
-                    }
-            }
-
-            switch (b0) {
-                case 0:
+            switch (s) {
+                case "Post":
                     if (aEg.thePlayer.ticksExisted <= 20) {
                         aEg.timer.dzD = 0.5F;
                     }
@@ -90,7 +76,7 @@ public final class TickBase extends Module {
                     }
 
                     return;
-                case 1:
+                case "Legit":
                     break;
                 default:
                     return;

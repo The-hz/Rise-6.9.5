@@ -163,26 +163,13 @@ public final class TeleportAura extends Module {
                 label65: {
                     d2 = this.range.wo().doubleValue();
                     String s = this.mode.wo().getName();
-                    byte b0 = -1;
-                    switch (s.hashCode()) {
-                        case -1818398616:
-                            if (s.equals("Single")) {
-                                b0 = 0;
-                            }
-                            break;
-                        case 718473776:
-                            if (s.equals("Multiple")) {
-                                break label65;
-                            }
-                    }
-
-                    switch (b0) {
-                        case 0:
+                    switch (s) {
+                        case "Single":
                             if (aEg.thePlayer.getDistanceToEntity(this.jE) <= d2) {
                                 this.e(this.jE);
                             }
                             break label66;
-                        case 1:
+                        case "Multiple":
                             break;
                         default:
                             break label66;

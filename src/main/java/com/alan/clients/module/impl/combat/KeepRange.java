@@ -93,22 +93,8 @@ public final class KeepRange extends Module {
 
                     label63: {
                         String s = this.mode.wo().getName();
-                        byte b0 = -1;
-                        switch (s.hashCode()) {
-                            case -963780432:
-                                if (s.equals("BackWards")) {
-                                    boolean flag = true;
-                                    break label63;
-                                }
-                                break;
-                            case 2587682:
-                                if (s.equals("Stop")) {
-                                    b0 = 0;
-                                }
-                        }
-
-                        switch (b0) {
-                            case 0:
+                        switch (s) {
+                            case "Stop":
                                 if (f2 == f * -1.0F) {
                                     var1.setForward(0.0F);
                                 }
@@ -118,7 +104,7 @@ public final class KeepRange extends Module {
                                 }
 
                                 return;
-                            case 1:
+                            case "BackWards":
                                 break;
                             default:
                                 return;

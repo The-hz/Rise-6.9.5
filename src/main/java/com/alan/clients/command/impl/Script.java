@@ -50,64 +50,21 @@ public final class Script extends Command {
                                     label101: {
                                         label100: {
                                             String s1 = s;
-                                            byte b0 = -1;
-                                            switch (s1.hashCode()) {
-                                                case -1829555672:
-                                                    if (s1.equals("disablesecurity")) {
-                                                        break label108;
-                                                    }
+                                            switch (s1) {
+                                                case "load":
                                                     break;
-                                                case -1268966290:
-                                                    if (s1.equals("folder")) {
-                                                        b0 = 7;
-                                                    }
-                                                    break;
-                                                case -934641255:
-                                                    if (s1.equals("reload")) {
-                                                        break label102;
-                                                    }
-                                                    break;
-                                                case -840442113:
-                                                    if (s1.equals("unload")) {
-                                                        break label101;
-                                                    }
-                                                    break;
-                                                case 3327206:
-                                                    if (s1.equals("load")) {
-                                                        break label100;
-                                                    }
-                                                    break;
-                                                case 1228368323:
-                                                    if (s1.equals("enablesecurity")) {
-                                                        break label122;
-                                                    }
-                                                    break;
-                                                case 1427818632:
-                                                    if (s1.equals("download")) {
-                                                        break label125;
-                                                    }
-                                                    break;
-                                                case 1957569947:
-                                                    if (s1.equals("install")) {
-                                                        break label125;
-                                                    }
-                                            }
-
-                                            switch (b0) {
-                                                case 0:
-                                                    break;
-                                                case 1:
+                                                case "reload":
                                                     break label102;
-                                                case 2:
+                                                case "unload":
                                                     break label101;
-                                                case 3:
+                                                case "disablesecurity":
                                                     break label108;
-                                                case 4:
+                                                case "enablesecurity":
                                                     break label122;
-                                                case 5:
-                                                case 6:
+                                                case "download":
+                                                case "install":
                                                     break label125;
-                                                case 7:
+                                                case "folder":
                                                     try {
                                                         Desktop desktop = Desktop.getDesktop();
                                                         File file1 = new File(String.valueOf(ScriptManager.SCRIPT_DIRECTORY));

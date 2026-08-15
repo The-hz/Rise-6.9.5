@@ -98,25 +98,11 @@ public class LagFlight extends Mode<Flight> {
                 label70: {
                     label69: {
                         String s = this.jumpMode.wo().getName();
-                        byte b0 = -1;
-                        switch (s.hashCode()) {
-                            case -1019425297:
-                                if (s.equals("SlowJump")) {
-                                    b0 = 0;
-                                }
-                                break;
-                            case 2320462:
-                                if (s.equals("Jump")) {
-                                    boolean flag = true;
-                                    break label69;
-                                }
-                        }
-
-                        switch (b0) {
-                            case 0:
+                        switch (s) {
+                            case "SlowJump":
                                 aEg.thePlayer.motionY = 0.42;
                                 break label70;
-                            case 1:
+                            case "Jump":
                                 break;
                             default:
                                 break label70;
@@ -163,50 +149,18 @@ public class LagFlight extends Mode<Flight> {
                                     d0 = var1x.getPosX() + this.offsetSize.wo().doubleValue();
                                     d1 = var1x.getPosZ() + this.offsetSize.wo().doubleValue();
                                     String s = this.lagMode.wo().getName();
-                                    byte b0 = -1;
-                                    switch (s.hashCode()) {
-                                        case -2001194238:
-                                            if (s.equals("VoidTP2")) {
-                                                byte b1 = 2;
-                                                break label52;
-                                            }
-                                            break;
-                                        case -1911998296:
-                                            if (s.equals("Packet")) {
-                                                b0 = 0;
-                                            }
-                                            break;
-                                        case -1727122640:
-                                            if (s.equals("VoidTP")) {
-                                                boolean flag = true;
-                                                break label53;
-                                            }
-                                            break;
-                                        case 857595018:
-                                            if (s.equals("Packet2")) {
-                                                byte b2 = 3;
-                                                break label51;
-                                            }
-                                            break;
-                                        case 857595019:
-                                            if (s.equals("Packet3")) {
-                                                byte b3 = 4;
-                                                break label50;
-                                            }
-                                    }
-
-                                    switch (b0) {
-                                        case 0:
+                                    switch (s) {
+                                        case "Packet":
                                             double d2 = var1x.getPosY();
                                             PacketUtil.m(new C04PacketPlayerPosition(d0, d2, d1, this.spoofGround.wo()));
                                             break label54;
-                                        case 1:
+                                        case "VoidTP":
                                             break label53;
-                                        case 2:
+                                        case "VoidTP2":
                                             break label52;
-                                        case 3:
+                                        case "Packet2":
                                             break label51;
-                                        case 4:
+                                        case "Packet3":
                                             break;
                                         default:
                                             break label54;

@@ -76,26 +76,8 @@ extends Module {
             block90: {
                 block89: {
                     String string = ((Mode)this.box.wo()).getName();
-                    int n2 = -1;
-                    switch (string.hashCode()) {
-                        case -1955878649: {
-                            if (!string.equals("Normal")) break;
-                            n2 = 0;
-                            break;
-                        }
-                        case 2160: {
-                            if (!string.equals("CS")) break;
-                            boolean bl = true;
-                            break block89;
-                        }
-                        case 2433880: {
-                            if (!string.equals("None")) break;
-                            int n3 = 2;
-                            break block90;
-                        }
-                    }
-                    switch (n2) {
-                        case 0: {
+                    switch (string) {
+                        case "Normal": {
                             RenderUtil.d(d2 - 0.5, d3 + 1.0, 1.5, d7 - 1.5, color3);
                             RenderUtil.d(d2 - 0.5, d3 - 0.5, d6 + 1.5, 1.5, color3);
                             RenderUtil.d(d4 - 0.5, d3 + 1.0, 1.5, d7, color3);
@@ -107,10 +89,10 @@ extends Module {
                             this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, d7, color, color2, d6, d4, d5));
                             break block90;
                         }
-                        case 1: {
+                        case "CS": {
                             break;
                         }
-                        case 2:
+                        case "None":
                         default: {
                             break block90;
                         }
@@ -150,35 +132,17 @@ extends Module {
                         f3 = MathHelper.clamp_float((float)(f2 / entityLivingBase.getMaxHealth()), (float)0.0f, (float)1.0f);
                         d8 = (d5 - d3 - 2.0) * (double)(1.0f - f3);
                         String string2 = ((Mode)this.healthBarMode.wo()).getName();
-                        int n4 = -1;
-                        switch (string2.hashCode()) {
-                            case -2137395588: {
-                                if (!string2.equals("Health")) break;
-                                n4 = 0;
-                                break;
-                            }
-                            case 154295120: {
-                                if (!string2.equals("Gradient")) break;
-                                int n5 = 2;
-                                break block68;
-                            }
-                            case 1377272541: {
-                                if (!string2.equals("Standard")) break;
-                                boolean bl2 = true;
-                                break block69;
-                            }
-                        }
-                        switch (n4) {
-                            case 0: {
+                        switch (string2) {
+                            case "Health": {
                                 int n6 = Color.HSBtoRGB(f2 / entityLivingBase.getMaxHealth() / 3.0f, 1.0f, 1.0f);
                                 RenderUtil.d(d2 - 2.0, d3 + d8, 0.5, d5 - d3 - d8 + 0.5, new Color(n6));
                                 this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, d8, d5, n6));
                                 break block72;
                             }
-                            case 1: {
+                            case "Standard": {
                                 break block69;
                             }
-                            case 2: {
+                            case "Gradient": {
                                 break;
                             }
                             default: {

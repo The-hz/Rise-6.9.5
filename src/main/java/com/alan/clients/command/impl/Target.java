@@ -24,26 +24,13 @@ public final class Target extends Command {
                 if (entityplayer.getName().equalsIgnoreCase(s1)) {
                     label32: {
                         String s2 = s;
-                        byte b0 = -1;
-                        switch (s2.hashCode()) {
-                            case -934610812:
-                                if (s2.equals("remove")) {
-                                    break label32;
-                                }
-                                break;
-                            case 96417:
-                                if (s2.equals("add")) {
-                                    b0 = 0;
-                                }
-                        }
-
-                        switch (b0) {
-                            case 0:
+                        switch (s2) {
+                            case "add":
                                 FriendManager.l(entityplayer.getName());
                                 afi.b(String.format("Added %s to target list", s1));
                                 flag = true;
                                 break label36;
-                            case 1:
+                            case "remove":
                                 break;
                             default:
                                 break label36;

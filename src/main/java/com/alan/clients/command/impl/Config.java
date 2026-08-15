@@ -30,21 +30,8 @@ public final class Config extends Command {
             case 2:
                 label48: {
                     String s3 = s;
-                    byte b2 = -1;
-                    switch (s3.hashCode()) {
-                        case -1268966290:
-                            if (s3.equals("folder")) {
-                                break label48;
-                            }
-                            break;
-                        case 3322014:
-                            if (s3.equals("list")) {
-                                b2 = 0;
-                            }
-                    }
-
-                    switch (b2) {
-                        case 0:
+                    switch (s3) {
+                        case "list":
                             afi.b("command.config.selectload");
                             configManager.update();
                             configManager.forEach(
@@ -61,7 +48,7 @@ public final class Config extends Command {
                                 }
                             );
                             return;
-                        case 1:
+                        case "folder":
                             break;
                         default:
                             afi.b("command.config.actions");
@@ -83,26 +70,8 @@ public final class Config extends Command {
                 label58: {
                     s1 = var1[2];
                     String s2 = s;
-                    byte b0 = -1;
-                    switch (s2.hashCode()) {
-                        case -1352294148:
-                            if (s2.equals("create")) {
-                                break label58;
-                            }
-                            break;
-                        case 3327206:
-                            if (s2.equals("load")) {
-                                b0 = 0;
-                            }
-                            break;
-                        case 3522941:
-                            if (s2.equals("save")) {
-                                break label58;
-                            }
-                    }
-
-                    switch (b0) {
-                        case 0:
+                    switch (s2) {
+                        case "load":
                             configManager.update();
                             ConfigFile configfile = configManager.get(s1);
                             if (configfile != null) {
@@ -126,8 +95,8 @@ public final class Config extends Command {
                             }
 
                             return;
-                        case 1:
-                        case 2:
+                        case "create":
+                        case "save":
                             break;
                         default:
                             afi.b("command.config.usage");

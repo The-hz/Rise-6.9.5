@@ -28,25 +28,11 @@ public final class ViewBobbing extends Module {
         label22: {
             aEg.gameSettings.cfG = true;
             String s = this.viewBobbingMode.wo().getName();
-            byte b0 = -1;
-            switch (s.hashCode()) {
-                case 2394448:
-                    if (s.equals("Meme")) {
-                        b0 = 0;
-                    }
-                    break;
-                case 2433880:
-                    if (s.equals("None")) {
-                        boolean flag = true;
-                        break label22;
-                    }
-            }
-
-            switch (b0) {
-                case 0:
+            switch (s) {
+                case "Meme":
                     aEg.thePlayer.cameraYaw = 0.5F;
                     return;
-                case 1:
+                case "None":
                     break;
                 default:
                     return;

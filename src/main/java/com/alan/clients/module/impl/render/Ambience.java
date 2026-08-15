@@ -35,40 +35,8 @@ public final class Ambience extends Module {
         if (aEg.thePlayer.ticksExisted % 20 == 0) {
             label32: {
                 String s = this.weather.wo().getName();
-                byte b0 = -1;
-                switch (s.hashCode()) {
-                    case -1031953028:
-                        if (s.equals("Heavy Snow")) {
-                            byte b2 = 3;
-                            break label32;
-                        }
-                        break;
-                    case 2539444:
-                        if (s.equals("Rain")) {
-                            byte b3 = 4;
-                            break label32;
-                        }
-                        break;
-                    case 65193517:
-                        if (s.equals("Clear")) {
-                            b0 = 0;
-                        }
-                        break;
-                    case 1476134117:
-                        if (s.equals("Nether Particles")) {
-                            boolean flag = true;
-                            break label32;
-                        }
-                        break;
-                    case 1725741709:
-                        if (s.equals("Light Snow")) {
-                            byte b1 = 2;
-                            break label32;
-                        }
-                }
-
-                switch (b0) {
-                    case 0:
+                switch (s) {
+                    case "Clear":
                         aEg.theWorld.setRainStrength(0.0F);
                         aEg.theWorld.getWorldInfo().setCleanWeatherTime(Integer.MAX_VALUE);
                         aEg.theWorld.getWorldInfo().setRainTime(0);
@@ -76,10 +44,10 @@ public final class Ambience extends Module {
                         aEg.theWorld.getWorldInfo().setRaining(false);
                         aEg.theWorld.getWorldInfo().setThundering(false);
                         return;
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
+                    case "Heavy Snow":
+                    case "Rain":
+                    case "Nether Particles":
+                    case "Light Snow":
                         break;
                     default:
                         return;

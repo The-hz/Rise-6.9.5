@@ -14,33 +14,15 @@ public final class Clip extends Command {
             label149: {
                 label118: {
                     String s = var1[0].toLowerCase();
-                    byte b0 = -1;
-                    switch (s.hashCode()) {
-                        case 3056464:
-                            if (s.equals("clip")) {
-                                break label149;
-                            }
-                            break;
-                        case 99102648:
-                            if (s.equals("hclip")) {
-                                break label118;
-                            }
-                            break;
-                        case 112031942:
-                            if (s.equals("vclip")) {
-                                b0 = 0;
-                            }
-                    }
-
-                    switch (b0) {
-                        case 0:
+                    switch (s) {
+                        case "vclip":
                             double d0 = Double.parseDouble(var1[1]);
                             aEg.thePlayer.setPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d0, aEg.thePlayer.posZ);
                             afi.b("Clipped you " + (d0 > 0.0 ? "up" : "down") + " " + Math.abs(d0) + " blocks.");
                             return;
-                        case 1:
+                        case "hclip":
                             break;
-                        case 2:
+                        case "clip":
                             break label149;
                         default:
                             this.error();
@@ -67,93 +49,25 @@ public final class Clip extends Command {
                                 label154: {
                                     label97: {
                                         String s1 = var1[1];
-                                        byte b2 = -1;
-                                        switch (s1.hashCode()) {
-                                            case -838280297:
-                                                if (s1.equals("upward")) {
-                                                    b2 = 0;
-                                                }
-                                                break;
-                                            case -677145915:
-                                                if (s1.equals("forward")) {
-                                                    break label152;
-                                                }
-                                                break;
-                                            case -216885316:
-                                                if (s1.equals("upwards")) {
-                                                    break label150;
-                                                }
-                                                break;
-                                            case 3739:
-                                                if (s1.equals("up")) {
-                                                    break label150;
-                                                }
-                                                break;
-                                            case 3015911:
-                                                if (s1.equals("back")) {
-                                                    break label153;
-                                                }
-                                                break;
-                                            case 3089570:
-                                                if (s1.equals("down")) {
-                                                    break label151;
-                                                }
-                                                break;
-                                            case 3317767:
-                                                if (s1.equals("left")) {
-                                                    break label154;
-                                                }
-                                                break;
-                                            case 108511772:
-                                                if (s1.equals("right")) {
-                                                    break label97;
-                                                }
-                                                break;
-                                            case 483313230:
-                                                if (s1.equals("forwards")) {
-                                                    break label152;
-                                                }
-                                                break;
-                                            case 1322462741:
-                                                if (s1.equals("downwards")) {
-                                                    break label151;
-                                                }
-                                                break;
-                                            case 1356771568:
-                                                if (s1.equals("backwards")) {
-                                                    break label153;
-                                                }
-                                                break;
-                                            case 1428133406:
-                                                if (s1.equals("downward")) {
-                                                    break label151;
-                                                }
-                                                break;
-                                            case 2121976803:
-                                                if (s1.equals("backward")) {
-                                                    break label153;
-                                                }
-                                        }
-
-                                        switch (b2) {
-                                            case 0:
-                                            case 1:
-                                            case 2:
+                                        switch (s1) {
+                                            case "upward":
+                                            case "upwards":
+                                            case "up":
                                                 break label150;
-                                            case 3:
-                                            case 4:
-                                            case 5:
+                                            case "down":
+                                            case "downwards":
+                                            case "downward":
                                                 break label151;
-                                            case 6:
-                                            case 7:
+                                            case "forward":
+                                            case "forwards":
                                                 break label152;
-                                            case 8:
-                                            case 9:
-                                            case 10:
+                                            case "back":
+                                            case "backwards":
+                                            case "backward":
                                                 break label153;
-                                            case 11:
+                                            case "left":
                                                 break label154;
-                                            case 12:
+                                            case "right":
                                                 break;
                                             default:
                                                 this.error();

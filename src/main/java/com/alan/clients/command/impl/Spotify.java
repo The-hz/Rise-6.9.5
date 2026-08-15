@@ -31,26 +31,13 @@ public class Spotify extends Command {
                     s1 = var1[2];
                     map = this.aS();
                     String s2 = s;
-                    byte b0 = -1;
-                    switch (s2.hashCode()) {
-                        case -530776517:
-                            if (s2.equals("clientsecret")) {
-                                b0 = 0;
-                            }
-                            break;
-                        case 908409382:
-                            if (s2.equals("clientid")) {
-                                break label25;
-                            }
-                    }
-
-                    switch (b0) {
-                        case 0:
+                    switch (s2) {
+                        case "clientsecret":
                             map.remove("client_secret");
                             map.put("client_secret", s1);
                             afi.b("Successfully Set clientsecret");
                             break label26;
-                        case 1:
+                        case "clientid":
                             break;
                         default:
                             break label26;

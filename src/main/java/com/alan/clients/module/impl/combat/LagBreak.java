@@ -170,33 +170,15 @@ extends Module {
                 block2: {
                     f2 = this.go();
                     String string = ((Mode)this.visualMode.wo()).getName();
-                    int n2 = -1;
-                    switch (string.hashCode()) {
-                        case 2603341: {
-                            if (!string.equals("Text")) break;
-                            int n3 = 2;
-                            break block2;
-                        }
-                        case 1071632058: {
-                            if (!string.equals("Percentage")) break;
-                            n2 = 0;
-                            break;
-                        }
-                        case 2018617584: {
-                            if (!string.equals("Circle")) break;
-                            boolean bl = true;
-                            break block3;
-                        }
-                    }
-                    switch (n2) {
-                        case 0: {
+                    switch (string) {
+                        case "Percentage": {
                             ProgressBarComponent.a(f2, 0.75f, false, true, 10);
                             break block4;
                         }
-                        case 1: {
+                        case "Circle": {
                             break block3;
                         }
-                        case 2: {
+                        case "Text": {
                             break;
                         }
                         default: {
