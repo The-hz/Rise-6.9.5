@@ -14,25 +14,25 @@ import rip.vantage.commons.util.time.StopWatch;
 
 public class AdaptiveRefreshRateComponent extends Component {
     private boolean keyDown;
-    private boolean bJ;
-    private boolean bK;
+    private boolean debugInfoShown;
+    private boolean forceRefresh;
     private int disabledFor;
     private float health;
-    public final StopWatch bN = new StopWatch();
+    public final StopWatch inventoryPacketTimer = new StopWatch();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         //add code
         if (aEg.thePlayer.ticksExisted % 100 == 0
-            || this.bK
+            || this.forceRefresh
             || aEg.gameSettings.keyBindPlayerList.isKeyDown() != this.keyDown
             || aEg.gameSettings.bJf
-            || aEg.gameSettings.bJf != this.bJ
+            || aEg.gameSettings.bJf != this.debugInfoShown
             || aEg.thePlayer.ticksExisted <= 10
             || this.disabledFor > 0) {
             GuiIngameCache.dirty = true;
             this.keyDown = aEg.gameSettings.keyBindPlayerList.isKeyDown();
-            this.bJ = aEg.gameSettings.bJf;
-            this.bK = false;
+            this.debugInfoShown = aEg.gameSettings.bJf;
+            this.forceRefresh = false;
         }
 
         if (this.health != aEg.thePlayer.getHealth()) {
@@ -45,7 +45,7 @@ public class AdaptiveRefreshRateComponent extends Component {
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (aEg.currentScreen != null) {
-            this.bK = true;
+            this.forceRefresh = true;
             GuiIngameCache.dirty = true;
         }
     };
@@ -53,8 +53,8 @@ public class AdaptiveRefreshRateComponent extends Component {
     public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
         Packet packet = var1.getPacket();
         if (packet instanceof c || packet instanceof S30PacketWindowItems || packet instanceof net.minecraft.network.play.server.az) {
-            this.bN.aX();
-            this.bK = true;
+            this.inventoryPacketTimer.aX();
+            this.forceRefresh = true;
         }
 
         if (packet instanceof net.minecraft.network.play.server.o) {
