@@ -5,14 +5,14 @@ import lombok.Generated;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
 
-public class ael {
-    private aem aEK;
+public class AltAccount {
+    private AltType aEK;
     private String gK;
     private String aEL;
     private String aEM;
     private long aEN;
 
-    public ael(aem var1, String var2, String var3, String var4) {
+    public AltAccount(AltType var1, String var2, String var3, String var4) {
         this.aEK = var1;
         this.gK = var2;
         this.aEL = var3;
@@ -41,9 +41,9 @@ public class ael {
 
     public void b(JsonObject var1) {
         if (var1.has("type")) {
-            this.aEK = aem.bi(var1.get("type").getAsString());
+            this.aEK = AltType.bi(var1.get("type").getAsString());
         } else {
-            this.aEK = aem.CRACKED;
+            this.aEK = AltType.CRACKED;
         }
 
         if (var1.has("name")) {
@@ -64,7 +64,7 @@ public class ael {
     }
 
     @Generated
-    public aem sg() {
+    public AltType sg() {
         return this.aEK;
     }
 
@@ -89,7 +89,7 @@ public class ael {
     }
 
     @Generated
-    public void a(aem var1) {
+    public void a(AltType var1) {
         this.aEK = var1;
     }
 

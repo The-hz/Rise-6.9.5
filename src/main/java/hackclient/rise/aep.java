@@ -5,11 +5,11 @@ import com.alan.clients.util.account.auth.LoginData;
 import com.google.gson.JsonObject;
 import lombok.Generated;
 
-public class aep extends ael {
+public class aep extends AltAccount {
     private String aFe;
 
     public aep(String var1, String var2, String var3, String var4) {
-        super(aem.MICROSOFT, var1, var2, var3);
+        super(AltType.MICROSOFT, var1, var2, var3);
         this.aFe = var4;
     }
 

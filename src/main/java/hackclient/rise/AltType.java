@@ -1,19 +1,19 @@
 package hackclient.rise;
 
-public enum aem {
+public enum AltType {
     CRACKED("Cracked"),
     MICROSOFT("Microsoft"),
     RAVE("Rave");
 
     private final String aER;
-    private static final aem[] $VALUES = sk();
+    private static final AltType[] $VALUES = sk();
 
-    aem(String var3) {
+    AltType(String var3) {
         this.aER = var3;
     }
 
-    public static aem bi(String var0) {
-        for (aem aem : values()) {
+    public static AltType bi(String var0) {
+        for (AltType aem : values()) {
             if (aem.getName().equalsIgnoreCase(var0)) {
                 return aem;
             }
@@ -26,7 +26,7 @@ public enum aem {
         return this.aER;
     }
 
-    private static aem[] sk() {
-        return new aem[]{CRACKED, MICROSOFT, RAVE};
+    private static AltType[] sk() {
+        return new AltType[]{CRACKED, MICROSOFT, RAVE};
     }
 }

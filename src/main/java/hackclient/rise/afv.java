@@ -9,7 +9,7 @@ import java.util.List;
 
 public class afv {
     public static final File aHH = new File(FileManager.DIRECTORY, "alts");
-    private final List<ael> aHI = new ArrayList<>();
+    private final List<AltAccount> aHI = new ArrayList<>();
 
     public afv() {
     }
@@ -39,7 +39,7 @@ public class afv {
         return new File(aHH, "alts.json");
     }
 
-    public List<ael> tl() {
+    public List<AltAccount> tl() {
         return this.aHI;
     }
 }

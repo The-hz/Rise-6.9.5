@@ -30,7 +30,7 @@ public final class aer {
     public static aes a(JsonArray var0) {
         HashSet hashset = new HashSet();
 
-        for (ael ael : Client.a.q().tl()) {
+        for (AltAccount ael : Client.a.q().tl()) {
             if (ael.sh() != null) {
                 hashset.add(ael.sh().toLowerCase());
             }

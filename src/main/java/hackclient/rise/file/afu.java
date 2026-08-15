@@ -1,23 +1,23 @@
 package hackclient.rise.file;
 
-import hackclient.rise.aem;
+import hackclient.rise.AltType;
 
 class afu {
-    static final int[] aHG = new int[aem.values().length];
+    static final int[] aHG = new int[AltType.values().length];
 
     static {
         try {
-            aHG[aem.CRACKED.ordinal()] = 1;
+            aHG[AltType.CRACKED.ordinal()] = 1;
         } catch (NoSuchFieldError nosuchfielderror2) {
         }
 
         try {
-            aHG[aem.MICROSOFT.ordinal()] = 2;
+            aHG[AltType.MICROSOFT.ordinal()] = 2;
         } catch (NoSuchFieldError nosuchfielderror1) {
         }
 
         try {
-            aHG[aem.RAVE.ordinal()] = 3;
+            aHG[AltType.RAVE.ordinal()] = 3;
         } catch (NoSuchFieldError nosuchfielderror) {
         }
     }

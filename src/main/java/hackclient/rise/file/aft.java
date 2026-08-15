@@ -5,8 +5,8 @@ import com.alan.clients.util.file.FileType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import hackclient.rise.ael;
-import hackclient.rise.aem;
+import hackclient.rise.AltAccount;
+import hackclient.rise.AltType;
 import hackclient.rise.aeo;
 import hackclient.rise.aep;
 import hackclient.rise.aeq;
@@ -31,7 +31,7 @@ extends com.alan.clients.util.file.File {
         super(file, fileType);
     }
 
-    private static boolean a(ael ael2) {
+    private static boolean a(AltAccount ael2) {
         if (!(ael2 instanceof aep)) {
             return false;
         }
@@ -59,13 +59,13 @@ extends com.alan.clients.util.file.File {
             if (jsonObject == null) {
                 return false;
             }
-            List<ael> list = Client.a.q().tl();
+            List<AltAccount> list = Client.a.q().tl();
             list.clear();
             JsonArray jsonArray = jsonObject.getAsJsonArray("data");
             if (jsonArray != null) {
                 for (int i2 = 0; i2 < jsonArray.size(); ++i2) {
                     JsonObject jsonObject2 = jsonArray.get(i2).getAsJsonObject();
-                    ael ael2 = new ael(aem.CRACKED, "", "", "");
+                    AltAccount ael2 = new AltAccount(AltType.CRACKED, "", "", "");
                     ael2.b(jsonObject2);
                     switch (afu.aHG[ael2.sg().ordinal()]) {
                         case 1: {
@@ -101,7 +101,7 @@ extends com.alan.clients.util.file.File {
     @Override
     public boolean write() {
         try {
-            List<ael> list;
+            List<AltAccount> list;
             if (!this.getFile().exists()) {
                 this.getFile().createNewFile();
             }
@@ -114,7 +114,7 @@ extends com.alan.clients.util.file.File {
             jsonObject2.addProperty("creationDate", aHE.format(new Date()));
             jsonObject.add("Metadata", jsonObject2);
             JsonArray jsonArray = new JsonArray();
-            for (ael ael2 : list) {
+            for (AltAccount ael2 : list) {
                 jsonArray.add(ael2.sf());
                 System.out.println("writing account: " + ael2.getName());
             }

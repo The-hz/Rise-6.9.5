@@ -11,7 +11,7 @@ import com.alan.clients.ui.menu.component.button.MenuButton;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import hackclient.rise.adr;
 import com.alan.clients.util.MouseUtil;
-import hackclient.rise.ael;
+import hackclient.rise.AltAccount;
 import hackclient.rise.afv;
 import hackclient.rise.agk;
 import hackclient.rise.air;
@@ -155,7 +155,7 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
             ACCOUNT_DISPLAY_LIST.clear();
             ALT_MANAGER.tk();
 
-            for (ael ael : ALT_MANAGER.tl()) {
+            for (AltAccount ael : ALT_MANAGER.tl()) {
                 addDisplay(ael);
             }
 
@@ -163,13 +163,13 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
         }
     }
 
-    public static void addAccount(ael var0) {
+    public static void addAccount(AltAccount var0) {
         addDisplay(var0);
         ALT_MANAGER.tl().add(var0);
         ALT_MANAGER.update();
     }
 
-    private static void addDisplay(ael var0) {
+    private static void addDisplay(AltAccount var0) {
         short short1 = 172;
         byte b0 = 40;
         byte b1 = 5;

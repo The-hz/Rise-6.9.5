@@ -11,7 +11,7 @@ import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.SkinUtil;
 import hackclient.rise.aei;
-import hackclient.rise.ael;
+import hackclient.rise.AltAccount;
 import hackclient.rise.aep;
 import hackclient.rise.aeq;
 import hackclient.rise.agc;
@@ -25,7 +25,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import lombok.Generated;
 
-public class AccountViewModel<T extends ael> implements adf, InstanceAccess {
+public class AccountViewModel<T extends AltAccount> implements adf, InstanceAccess {
     private static final agc FONT_RENDERER = FontManager.MAIN.a(24, gd.BOLD);
     private static final agc INFO_FONT_RENDERER = FontManager.MAIN.a(18, gd.MEDIUM);
     private static final DateFormat DATE_FORMAT = DateFormat.getDateInstance(3);

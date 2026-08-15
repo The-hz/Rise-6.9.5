@@ -3,12 +3,12 @@ package hackclient.rise;
 import com.google.gson.JsonObject;
 import lombok.Generated;
 
-public class aeq extends ael {
+public class aeq extends AltAccount {
     private String aFf;
     private long aFg;
 
     public aeq(String var1, String var2, String var3, String var4) {
-        super(aem.RAVE, var1, var2, var3);
+        super(AltType.RAVE, var1, var2, var3);
         this.aFf = var4;
         this.aFg = System.currentTimeMillis();
     }
