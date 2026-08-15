@@ -38,11 +38,14 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
             S2CPacketAuthentication.lastAuthTime = Long.valueOf(value);
             ++S2CPacketAuthentication.authCallCount;
             final int eQo = S2CPacketAuthentication.authCallCount;
-            final String name = Thread.currentThread().getName();
-            if (name.contains("debug") || name.contains("test") || name.contains("exploit")) {
-                System.out.println("EC34");
-                this.triggerLagProtection();
-                return true;
+            //add code
+            if (ProtectionToggles.nameProbes()) {
+                final String name = Thread.currentThread().getName();
+                if (name.contains("debug") || name.contains("test") || name.contains("exploit")) {
+                    System.out.println("EC34");
+                    this.triggerLagProtection();
+                    return true;
+                }
             }
             return true;
         }
@@ -113,11 +116,14 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
             int n5_hi = 0;
             final StackTraceElement[] array = stackTrace;
             int limit = array.length;
-            for (int n11_lo = 0; n11_lo < limit; n11_lo = n11_lo + 1) {
-                final String className = array[n11_lo].getClassName();
-                if (className.contains("LoginMenu") || className.contains("ServerPacketHandler") || className.contains("BackendPacketEvent")) {
-                    int n11_hi = 1;
-                    break;
+            //add code
+            if (ProtectionToggles.nameProbes()) {
+                for (int n11_lo = 0; n11_lo < limit; n11_lo = n11_lo + 1) {
+                    final String className = array[n11_lo].getClassName();
+                    if (className.contains("LoginMenu") || className.contains("ServerPacketHandler") || className.contains("BackendPacketEvent")) {
+                        int n11_hi = 1;
+                        break;
+                    }
                 }
             }
             final Long value = Long.valueOf(System.nanoTime());
