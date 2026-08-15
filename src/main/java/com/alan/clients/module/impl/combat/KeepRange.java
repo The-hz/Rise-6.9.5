@@ -91,7 +91,7 @@ public final class KeepRange extends Module {
                         }
                     }
 
-                    label63: {
+                    {
                         String s = this.mode.wo().getName();
                         switch (s) {
                             case "Stop":

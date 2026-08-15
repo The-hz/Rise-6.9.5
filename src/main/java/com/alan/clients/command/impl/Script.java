@@ -48,7 +48,7 @@ public final class Script extends Command {
                             label103: {
                                 label102: {
                                     label101: {
-                                        label100: {
+                                        {
                                             String s1 = s;
                                             switch (s1) {
                                                 case "load":

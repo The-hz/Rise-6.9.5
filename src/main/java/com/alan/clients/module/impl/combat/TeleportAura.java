@@ -160,7 +160,7 @@ public final class TeleportAura extends Module {
 
             label66: {
                 double d2;
-                label65: {
+                {
                     d2 = this.range.wo().doubleValue();
                     String s = this.mode.wo().getName();
                     switch (s) {

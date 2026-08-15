@@ -33,7 +33,7 @@ public final class Ambience extends Module {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.thePlayer.ticksExisted % 20 == 0) {
-            label32: {
+            {
                 String s = this.weather.wo().getName();
                 switch (s) {
                     case "Clear":

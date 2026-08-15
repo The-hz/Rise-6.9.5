@@ -25,7 +25,7 @@ public final class ViewBobbing extends Module {
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
-        label22: {
+        {
             aEg.gameSettings.cfG = true;
             String s = this.viewBobbingMode.wo().getName();
             switch (s) {

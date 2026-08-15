@@ -167,7 +167,7 @@ extends Module {
         block4: {
             float f2;
             block3: {
-                block2: {
+                {
                     f2 = this.go();
                     String string = ((Mode)this.visualMode.wo()).getName();
                     switch (string) {

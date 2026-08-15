@@ -28,7 +28,7 @@ public final class Config extends Command {
         String s = var1[1].toLowerCase();
         switch (var1.length) {
             case 2:
-                label48: {
+                {
                     String s3 = s;
                     switch (s3) {
                         case "list":
@@ -67,7 +67,7 @@ public final class Config extends Command {
                 break;
             case 3:
                 String s1;
-                label58: {
+                {
                     s1 = var1[2];
                     String s2 = s;
                     switch (s2) {

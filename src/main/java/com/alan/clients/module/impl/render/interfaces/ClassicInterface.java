@@ -67,7 +67,7 @@ public class ClassicInterface extends Mode<Interface> {
                     Color color1;
                     label88: {
                         label87: {
-                            label86: {
+                            {
                                 color = zc.nw();
                                 color1 = this.rz().rA();
                                 String s3 = this.ass.wo().getName();

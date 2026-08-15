@@ -32,7 +32,7 @@ public final class FastBreak extends Module {
 
         double d0;
         label60: {
-            label59: {
+            {
                 aEg.playerController.blockHitDelay = 0;
                 d0 = 0.0;
                 String s = this.mode.wo().getName();

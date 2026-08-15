@@ -285,7 +285,7 @@ extends Mode<Interface> {
         aMR.execute(() -> {
             block105: {
                 block104: {
-                    block103: {
+                    {
                         this.asR = ((Mode)this.asL.wo()).getName().equals("Glow");
                         this.asS = ((Mode)this.asL.wo()).getName().equals("Shadow");
                         this.asV = this.asE.getStringWidth("riseclient.com") + 2;
@@ -334,7 +334,7 @@ extends Mode<Interface> {
                 String string5;
                 Color color;
                 block80: {
-                    block79: {
+                    {
                         zc2.y(!zc2.getTag().isEmpty() && ((Boolean)((Interface)this.getParent()).suffix.wo()).booleanValue());
                         string4 = (((Boolean)((Interface)this.getParent()).lowercase.wo()).booleanValue() ? zc2.nx().toLowerCase() : zc2.nx()).replace(((Boolean)((Interface)this.getParent()).lH().wo()).booleanValue() ? " " : "", "");
                         string5 = (((Boolean)((Interface)this.getParent()).lowercase.wo()).booleanValue() ? zc2.getTag().toLowerCase() : zc2.getTag()).replace(((Boolean)((Interface)this.getParent()).lH().wo()).booleanValue() ? " " : "", "");

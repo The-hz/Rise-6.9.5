@@ -43,7 +43,7 @@ public class WatchdogBlinkPhase extends Mode<Phase> {
         if (packet instanceof c) {
             label55: {
                 label56: {
-                    label43: {
+                    {
                         String s = ((c)packet).getChatComponent().getUnformattedText();
                         switch (s) {
                             case "§r§r§r                               §r§f§lSkyWars Duel§r":

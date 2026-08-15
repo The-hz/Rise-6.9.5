@@ -30,7 +30,7 @@ public class LegitSpeed extends Mode<Speed> {
     @EventLink(value = 1)
     public final Listener<PreUpdateEvent> preUpdate = var1x -> {
         label45: {
-            label44: {
+            {
                 String s = this.rotationExploit.wo().getName();
                 switch (s) {
                     case "Rotate (Fully Legit)":

@@ -215,7 +215,7 @@ public class WatchdogSpeed extends Mode<Speed> {
 
                 label1264: {
                     label1224: {
-                        label1086: {
+                        {
                             String s = this.mode.wo().getName();
                             switch (s) {
                                 case "Strafe":

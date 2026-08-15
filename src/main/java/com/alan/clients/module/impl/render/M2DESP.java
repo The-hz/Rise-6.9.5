@@ -74,7 +74,7 @@ extends Module {
             Color color2 = this.rz().getAccentColor(vector2d2);
             Color color3 = Color.BLACK;
             block90: {
-                block89: {
+                {
                     String string = ((Mode)this.box.wo()).getName();
                     switch (string) {
                         case "Normal": {
@@ -126,7 +126,7 @@ extends Module {
                 double d8;
                 block69: {
                     float f3;
-                    block68: {
+                    {
                         Color color4 = new Color(0, 0, 0, 180);
                         RenderUtil.d(d2 - 2.5, d3 - 0.5, 1.5, d7 + 1.5, color4);
                         f3 = MathHelper.clamp_float((float)(f2 / entityLivingBase.getMaxHealth()), (float)0.0f, (float)1.0f);

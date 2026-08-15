@@ -101,7 +101,7 @@ public final class ScriptModule extends ScriptHandlerWrapper<Module> {
             label98: {
                 label99: {
                     label100: {
-                        label70: {
+                        {
                             String s = var1.toLowerCase();
                             switch (s) {
                                 case "string":

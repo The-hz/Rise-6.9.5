@@ -322,7 +322,7 @@ public class OldBreaker extends Module {
 
         label26: {
             BlockPos blockpos;
-            label25: {
+            {
                 blockpos = new BlockPos(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ());
                 aEg.objectMouseOver = this.kc();
                 aEg.playerController.curBlockDamageMP = this.abU;

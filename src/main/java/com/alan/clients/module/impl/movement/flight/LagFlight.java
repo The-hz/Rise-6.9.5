@@ -96,7 +96,7 @@ public class LagFlight extends Mode<Flight> {
                 }
 
                 label70: {
-                    label69: {
+                    {
                         String s = this.jumpMode.wo().getName();
                         switch (s) {
                             case "SlowJump":
@@ -144,7 +144,7 @@ public class LagFlight extends Mode<Flight> {
                     label53: {
                         label52: {
                             label51: {
-                                label50: {
+                                {
                                     aEg.timer.dzD = this.timer.wo().floatValue();
                                     d0 = var1x.getPosX() + this.offsetSize.wo().doubleValue();
                                     d1 = var1x.getPosZ() + this.offsetSize.wo().doubleValue();

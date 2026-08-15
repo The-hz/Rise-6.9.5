@@ -12,7 +12,7 @@ public final class Clip extends Command {
     public void execute(String[] var1) {
         if (var1.length > 1 && !var1[1].isEmpty()) {
             label149: {
-                label118: {
+                {
                     String s = var1[0].toLowerCase();
                     switch (s) {
                         case "vclip":
@@ -47,7 +47,7 @@ public final class Clip extends Command {
                         label152: {
                             label153: {
                                 label154: {
-                                    label97: {
+                                    {
                                         String s1 = var1[1];
                                         switch (s1) {
                                             case "upward":

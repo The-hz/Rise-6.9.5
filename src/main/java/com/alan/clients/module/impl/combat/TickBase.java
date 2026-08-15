@@ -37,7 +37,7 @@ public final class TickBase extends Module {
     private int qO;
     @EventLink
     Listener<TickEvent> onTick = var1 -> {
-        label53: {
+        {
             String s = this.mode.wo().getName();
             switch (s) {
                 case "Post":

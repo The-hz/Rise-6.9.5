@@ -115,7 +115,7 @@ public class ProximityVoiceChat extends Module {
 
     private AudioFormat getAudioFormat() {
         label44: {
-            label30: {
+            {
                 String s = this.VC.wo().getName();
                 switch (s) {
                     case "Stereo":

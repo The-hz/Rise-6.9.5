@@ -81,7 +81,7 @@ public class MatrixDamageFlight extends Mode<Flight> {
 
             label76: {
                 label75: {
-                    label74: {
+                    {
                         aEg.timer.dzD = this.timerSpeed.wo().floatValue();
                         String s = this.motionY.wo().getName();
                         switch (s) {

@@ -46,7 +46,7 @@ public final class Nuker extends Module {
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (!GUIDetectionComponent.inGUI()) {
             double d0;
-            label41: {
+            {
                 d0 = this.range.wo().doubleValue();
                 String s = this.mode.wo().getName();
                 switch (s) {

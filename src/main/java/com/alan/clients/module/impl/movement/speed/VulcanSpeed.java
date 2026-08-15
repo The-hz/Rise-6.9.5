@@ -170,7 +170,7 @@ public final class VulcanSpeed extends Mode<Speed> {
         if (MoveUtil.isMoving()) {
             label343: {
                 label344: {
-                    label295: {
+                    {
                         String s = this.mode.wo().getName();
                         switch (s) {
                             case "Yport":

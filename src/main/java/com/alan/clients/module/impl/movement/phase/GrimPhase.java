@@ -111,7 +111,7 @@ public class GrimPhase extends Mode<Phase> {
         float f;
         float f1;
         label44: {
-            label30: {
+            {
                 d0 = aEg.thePlayer.posX;
                 d1 = aEg.thePlayer.posY;
                 d2 = aEg.thePlayer.posZ;

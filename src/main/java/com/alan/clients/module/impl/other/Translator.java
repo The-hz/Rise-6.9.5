@@ -35,7 +35,7 @@ public class Translator extends Module {
                     return;
                 }
 
-                label29: {
+                {
                     String s1 = this.mode.wo().getName();
                     switch (s1) {
                         case "Delay":

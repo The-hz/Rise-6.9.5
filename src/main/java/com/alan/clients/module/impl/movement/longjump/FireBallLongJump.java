@@ -29,7 +29,7 @@ public class FireBallLongJump extends Mode<LongJump> {
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         label47: {
-            label46: {
+            {
                 String s = this.mode.wo().getName();
                 switch (s) {
                     case "Hypixel":

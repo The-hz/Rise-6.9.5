@@ -160,7 +160,7 @@ public class HotBar extends Module {
     }
 
     private void a(ScaledResolution resolution, EntityPlayer player) {
-        label39: {
+        {
             String s = this.interfaceModule.lM().wo().getName();
             switch (s) {
                 case "Rise":
@@ -207,7 +207,7 @@ public class HotBar extends Module {
     }
 
     private void a(Color color) {
-        label27: {
+        {
             String s = this.interfaceModule.lM().wo().getName();
             switch (s) {
                 case "Rise":

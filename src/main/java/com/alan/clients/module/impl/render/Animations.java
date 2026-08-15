@@ -110,7 +110,7 @@ public final class Animations extends Module {
                                                                                                             label251: {
                                                                                                                 label250: {
                                                                                                                     label293: {
-                                                                                                                        label248: {
+                                                                                                                        {
                                                                                                                             String s = this.blockAnimation.wo().getName();
                                                                                                                             switch (s) {
                                                                                                                                 case "None":
@@ -468,7 +468,7 @@ public final class Animations extends Module {
                     label159: {
                         label158: {
                             label157: {
-                                label156: {
+                                {
                                     String s1 = this.swingAnimation.wo().getName();
                                     switch (s1) {
                                         case "None":

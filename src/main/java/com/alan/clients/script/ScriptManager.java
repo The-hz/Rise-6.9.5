@@ -156,7 +156,7 @@ public final class ScriptManager implements InstanceAccess {
                 String s7;
                 label50: {
                     label49: {
-                        label48: {
+                        {
                             String s5 = s4.substring(3).trim();
                             String s6 = s5.toLowerCase(Locale.ENGLISH).split(" ")[0];
                             s7 = s5.substring(s6.length()).trim();

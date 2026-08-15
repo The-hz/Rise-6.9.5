@@ -162,7 +162,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                                             numbervalue.n(Double.parseDouble(s3.split("_" + Pattern.quote(s7) + "_")[1]));
                                         } else if (value1 instanceof BoundsNumberValue boundsnumbervalue) {
                                             double d0;
-                                            label198: {
+                                            {
                                                 d0 = Double.parseDouble(s3.split("_" + Pattern.quote(s7) + "_")[1]);
                                                 String s9 = s7;
                                                 switch (s9) {
@@ -182,7 +182,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                                             int j;
                                             label220: {
                                                 label219: {
-                                                    label218: {
+                                                    {
                                                         color = colorvalue.wo();
                                                         j = Integer.parseInt(s3.split("_" + Pattern.quote(s7) + "_")[1]);
                                                         String s10 = s7;
@@ -222,7 +222,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                                             double d1;
                                             label241: {
                                                 label240: {
-                                                    label239: {
+                                                    {
                                                         d1 = Double.parseDouble(s3.split("_" + Pattern.quote(s7) + "_")[1]);
                                                         String s11 = s7;
                                                         switch (s11) {
@@ -262,7 +262,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                         String s13 = s12.split("_")[0];
                         if (hashmap.containsKey(s13)) {
                             Module module2;
-                            label152: {
+                            {
                                 module2 = (Module)hashmap.get(s13);
                                 String s14 = s12.split("_")[1].split("_")[0];
                                 String s15 = s14;

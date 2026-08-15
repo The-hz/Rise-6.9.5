@@ -25,7 +25,7 @@ public final class ClickSounds extends Module {
     public final Listener<ClickEvent> onClick = var1 -> {
         String s;
         label23: {
-            label22: {
+            {
                 s = "rise.click.standard";
                 String s1 = this.sound.wo().getName();
                 switch (s1) {

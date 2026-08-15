@@ -728,7 +728,7 @@ public class Breaker extends Module {
 
         label26: {
             BlockPos blockpos;
-            label25: {
+            {
                 blockpos = new BlockPos(abQ.getX(), abQ.getY(), abQ.getZ());
                 String s = this.mode.wo().getName();
                 switch (s) {

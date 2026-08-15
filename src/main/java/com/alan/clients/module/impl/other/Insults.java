@@ -78,7 +78,7 @@ public final class Insults extends Module {
                     label64: {
                         label63: {
                             label62: {
-                                label61: {
+                                {
                                     s = "";
                                     String s1 = this.mode.wo().getName();
                                     switch (s1) {

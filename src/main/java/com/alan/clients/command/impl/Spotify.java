@@ -26,7 +26,7 @@ public class Spotify extends Command {
             Map map;
             label26: {
                 String s1;
-                label25: {
+                {
                     String s = var1[1];
                     s1 = var1[2];
                     map = this.aS();

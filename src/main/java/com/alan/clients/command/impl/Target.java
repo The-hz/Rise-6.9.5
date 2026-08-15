@@ -22,7 +22,7 @@ public final class Target extends Command {
             label36:
             for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
                 if (entityplayer.getName().equalsIgnoreCase(s1)) {
-                    label32: {
+                    {
                         String s2 = s;
                         switch (s2) {
                             case "add":
