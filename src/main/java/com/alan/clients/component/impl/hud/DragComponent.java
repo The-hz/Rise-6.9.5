@@ -94,8 +94,8 @@ public class DragComponent extends Component {
                 Color color = ColorUtil.d(Color.WHITE, 60);
 
                 for (av av : bX) {
-                    switch (as.cc[av.cm.ordinal()]) {
-                        case 1:
+                    switch (av.cm) {
+                        case VERTICAL:
                             double d3 = Double.MAX_VALUE;
                             double d4 = -selectedValue.aHe.y;
 
@@ -111,7 +111,7 @@ public class DragComponent extends Component {
                                 }
                             }
                             break;
-                        case 2:
+                        case HORIZONTAL:
                             double d6 = Double.MAX_VALUE;
 
                             for (double d7 = -selectedValue.aHe.x; d7 <= 0.0; d7 += selectedValue.aHe.x / 2.0) {

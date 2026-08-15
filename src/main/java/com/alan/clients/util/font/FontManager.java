@@ -127,10 +127,10 @@ public enum FontManager {
     }
 
     private static Font b(int var0, gd var1) {
-        String s = switch (gc.kC[var1.ordinal()]) {
-            case 1 -> "Light";
-            case 2 -> "Medium";
-            case 3 -> "Bold";
+        String s = switch (var1) {
+            case LIGHT -> "Light";
+            case MEDIUM -> "Medium";
+            case BOLD -> "Bold";
             default -> "Regular";
         };
         Font font = agg.p("rise/font/HarmonyOS_Sans_SC_" + s + ".ttf", var0);
@@ -143,18 +143,18 @@ public enum FontManager {
     }
 
     private static Font c(int var0, gd var1) {
-        return agg.p("rise/font/" + switch (gc.kC[var1.ordinal()]) {
-            case 1 -> "LINESeedJP_TTF_Th.ttf";
+        return agg.p("rise/font/" + switch (var1) {
+            case LIGHT -> "LINESeedJP_TTF_Th.ttf";
             default -> "LINESeedJP_TTF_Rg.ttf";
-            case 3 -> "LINESeedJP_TTF_Bd.ttf";
+            case BOLD -> "LINESeedJP_TTF_Bd.ttf";
         }, var0);
     }
 
     private static Font d(int var0, gd var1) {
-        return agg.p("rise/font/" + switch (gc.kC[var1.ordinal()]) {
-            case 1 -> "LINESeedKR-Th.ttf";
+        return agg.p("rise/font/" + switch (var1) {
+            case LIGHT -> "LINESeedKR-Th.ttf";
             default -> "LINESeedKR-Rg.ttf";
-            case 3 -> "LINESeedKR-Bd.ttf";
+            case BOLD -> "LINESeedKR-Bd.ttf";
         }, var0);
     }
 

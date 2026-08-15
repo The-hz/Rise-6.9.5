@@ -21,8 +21,8 @@ public class OutlineShader extends aix {
     @Override
     public void a(aiz var1, float var2, List<Runnable> var3) {
         if (Display.isVisible()) {
-            switch (ajj.aQk[var1.ordinal()]) {
-                case 1:
+            switch (var1) {
+                case CAMERA:
                     this.update();
                     this.setActive(!var3.isEmpty());
                     if (this.isActive()) {
@@ -37,7 +37,7 @@ public class OutlineShader extends aix {
                         aEg.entityRenderer.IU();
                     }
                     break;
-                case 2:
+                case OVERLAY:
                     this.setActive(this.isActive() || !var3.isEmpty());
                     if (this.isActive()) {
                         this.aPV.bindFramebuffer(true);

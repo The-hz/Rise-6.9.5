@@ -82,14 +82,14 @@ public class TextBox {
         double d0 = System.currentTimeMillis();
         double d1 = Math.min(Math.abs(d0 - this.aJs), 500.0);
         this.aJs = d0;
-        switch (agn.aJw[this.aJl.ordinal()]) {
-            case 1:
+        switch (this.aJl) {
+            case CENTER:
 
                 for (int i = 0; i < d1; i++) {
                     this.gW = (this.gW * 19.0 + (this.position.x - f / 2.0F)) / 20.0;
                 }
                 break;
-            case 2:
+            case LEFT:
             default:
                 this.gW = this.position.x;
         }

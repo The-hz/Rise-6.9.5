@@ -67,18 +67,18 @@ extends com.alan.clients.util.file.File {
                     JsonObject jsonObject2 = jsonArray.get(i2).getAsJsonObject();
                     AltAccount ael2 = new AltAccount(AltType.CRACKED, "", "", "");
                     ael2.b(jsonObject2);
-                    switch (afu.aHG[ael2.sg().ordinal()]) {
-                        case 1: {
+                    switch (ael2.sg()) {
+                        case CRACKED: {
                             ael2 = new aeo("");
                             ael2.b(jsonObject2);
                             break;
                         }
-                        case 2: {
+                        case MICROSOFT: {
                             ael2 = new aep("", "", "", "");
                             ael2.b(jsonObject2);
                             break;
                         }
-                        case 3: {
+                        case RAVE: {
                             ael2 = new aeq("", "", "", "");
                             ael2.b(jsonObject2);
                         }

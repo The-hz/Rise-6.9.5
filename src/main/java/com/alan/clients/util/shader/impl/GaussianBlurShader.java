@@ -39,13 +39,13 @@ public class GaussianBlurShader extends aix {
             int i = this.amf != null ? this.amf.ly() : 12;
             float f = this.amf != null ? this.amf.lz() : 3.0F;
             boolean flag = System.getProperty("os.name").toLowerCase().contains("mac");
-            switch (ajg.aQh[var1.ordinal()]) {
-                case 1:
+            switch (var1) {
+                case CAMERA:
                     this.aPV.bindFramebuffer(true);
                     var3.forEach(Runnable::run);
                     aEg.getFramebuffer().bindFramebuffer(true);
                     break;
-                case 2:
+                case OVERLAY:
                     this.aPV.bindFramebuffer(true);
                     var3.forEach(Runnable::run);
                     int j = this.aQc.getProgramId();

@@ -30,8 +30,8 @@ public class BloomShader extends aix {
     public void a(aiz var1, float var2, List<Runnable> var3) {
         if (Display.isVisible()) {
             boolean flag = System.getProperty("os.name").toLowerCase().contains("mac");
-            switch (aje.aQb[var1.ordinal()]) {
-                case 1:
+            switch (var1) {
+                case CAMERA:
                     RendererLivingEntity.bWd = 0.0F;
                     RendererLivingEntity.bWe = 0.0F;
                     this.aPV.bindFramebuffer(true);
@@ -46,7 +46,7 @@ public class BloomShader extends aix {
                     RenderHelper.disableStandardItemLighting();
                     aEg.entityRenderer.IU();
                     break;
-                case 2:
+                case OVERLAY:
                     this.aPV.bindFramebuffer(true);
 
                     for (Runnable runnable1 : var3) {
