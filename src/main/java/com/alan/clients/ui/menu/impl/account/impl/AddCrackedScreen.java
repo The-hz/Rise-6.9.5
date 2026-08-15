@@ -75,7 +75,9 @@ public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
         }
 
         this.b(ShaderQueueType.REGULAR).c(() -> {
-            FONT_RENDERER.drawString("Select your username", this.width / 2, this.height / 2 - 64 + this.animation.getValue(), Color.WHITE.getRGB());
+            //add code
+            String s = UsernameGenerator.isDownloading() ? "Downloading names list..." : "Select your username";
+            FONT_RENDERER.drawString(s, this.width / 2, this.height / 2 - 64 + this.animation.getValue(), Color.WHITE.getRGB());
             usernameBox.draw();
         });
     }

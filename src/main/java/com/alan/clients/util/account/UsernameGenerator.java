@@ -1,10 +1,14 @@
 package com.alan.clients.util.account;
 
+import com.alan.clients.util.file.alt.AltManager;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,9 +17,41 @@ import javax.net.ssl.HttpsURLConnection;
 public class UsernameGenerator {
     private static final String aGe = "https://raw.githubusercontent.com/jeanphorn/wordlist/master/usernames.txt";
     //add code
+    private static final File NAMES_FILE = new File(AltManager.ALT_DIRECTORY, "names.txt");
     private static volatile String[] wordList;
+    private static volatile boolean downloading;
 
     public UsernameGenerator() {
+    }
+
+    public static boolean isDownloading() {
+        return downloading;
+    }
+
+    private static String[] readNamesFile() {
+        if (!NAMES_FILE.isFile()) {
+            return null;
+        }
+
+        try {
+            List<String> list = Files.readAllLines(NAMES_FILE.toPath(), StandardCharsets.UTF_8);
+            return list.isEmpty() ? null : list.toArray(new String[0]);
+        } catch (IOException ioexception) {
+            return null;
+        }
+    }
+
+    private static void writeNamesFile(String var0) {
+        try {
+            File file = NAMES_FILE.getParentFile();
+            if (file != null && !file.isDirectory()) {
+                file.mkdirs();
+            }
+
+            Files.write(NAMES_FILE.toPath(), var0.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException ioexception) {
+            ioexception.printStackTrace();
+        }
     }
 
     public static String[] sx() {
@@ -23,6 +59,14 @@ public class UsernameGenerator {
         if (astring != null) {
             return astring;
         }
+
+        astring = readNamesFile();
+        if (astring != null) {
+            wordList = astring;
+            return astring;
+        }
+
+        downloading = true;
 
         try {
             HttpsURLConnection httpsurlconnection = (HttpsURLConnection)new URL("https://raw.githubusercontent.com/jeanphorn/wordlist/master/usernames.txt")
@@ -44,12 +88,16 @@ public class UsernameGenerator {
             }
 
             bufferedreader.close();
-            String[] astring1 = stringbuilder.toString().split(System.lineSeparator());
+            String s1 = stringbuilder.toString();
+            String[] astring1 = s1.split(System.lineSeparator());
+            writeNamesFile(s1);
             wordList = astring1;
             return astring1;
         } catch (IOException ioexception) {
             ioexception.printStackTrace();
             return null;
+        } finally {
+            downloading = false;
         }
     }
 
