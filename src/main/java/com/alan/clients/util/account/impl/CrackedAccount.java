@@ -1,7 +1,7 @@
 package com.alan.clients.util.account.impl;
 
-import hackclient.rise.AltAccount;
-import hackclient.rise.AltType;
+import com.alan.clients.util.account.AltAccount;
+import com.alan.clients.util.account.AltType;
 import java.util.UUID;
 
 public class CrackedAccount extends AltAccount {

@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.vantage;
 
 import com.alan.clients.util.vantage.OSUtil;
 import com.alan.clients.util.vantage.OperatingSystem;

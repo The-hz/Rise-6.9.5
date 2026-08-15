@@ -11,7 +11,7 @@ import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.SkinUtil;
 import com.alan.clients.util.SkinType;
-import hackclient.rise.AltAccount;
+import com.alan.clients.util.account.AltAccount;
 import com.alan.clients.util.account.impl.MicrosoftAccount;
 import com.alan.clients.util.account.impl.RaveAccount;
 import com.alan.clients.util.font.Font;

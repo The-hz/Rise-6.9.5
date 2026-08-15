@@ -1,6 +1,6 @@
 package com.alan.clients.util.file.account;
 
-import hackclient.rise.AltType;
+import com.alan.clients.util.account.AltType;
 
 class AccountFileSwitchMap {
     static final int[] aHG = new int[AltType.values().length];

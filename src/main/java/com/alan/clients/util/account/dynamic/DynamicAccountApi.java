@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.account.dynamic;
 
 import com.alan.clients.compat.NetworkToggles;
 import com.alan.clients.util.account.dynamic.DynamicAccountResult;

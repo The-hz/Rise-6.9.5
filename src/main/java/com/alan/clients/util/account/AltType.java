@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.account;
 
 public enum AltType {
     CRACKED("Cracked"),

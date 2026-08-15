@@ -19,7 +19,7 @@ import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.interfaces.ExecutorAccess;
 import com.alan.clients.util.localization.Locale;
 import com.alan.clients.util.localization.Localization;
-import hackclient.rise.MachineFingerprint;
+import com.alan.clients.util.vantage.MachineFingerprint;
 import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import java.awt.Color;
 import java.util.HashMap;

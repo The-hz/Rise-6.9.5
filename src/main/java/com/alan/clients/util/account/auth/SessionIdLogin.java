@@ -4,7 +4,7 @@ import com.alan.clients.util.account.auth.MicrosoftLogin;
 import com.alan.clients.util.web.Browser;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import hackclient.rise.DynamicAccountApi;
+import com.alan.clients.util.account.dynamic.DynamicAccountApi;
 import java.io.IOException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;

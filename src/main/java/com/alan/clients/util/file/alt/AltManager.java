@@ -4,7 +4,7 @@ import com.alan.clients.util.account.localts.LocaltsConfig;
 import com.alan.clients.util.file.FileManager;
 import com.alan.clients.util.file.FileType;
 import com.alan.clients.util.file.account.AccountFile;
-import hackclient.rise.AltAccount;
+import com.alan.clients.util.account.AltAccount;
 import com.alan.clients.util.account.localts.LocaltsOrderStore;
 import java.io.File;
 import java.util.ArrayList;

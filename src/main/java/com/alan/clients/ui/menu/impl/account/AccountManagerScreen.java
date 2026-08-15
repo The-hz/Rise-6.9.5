@@ -11,7 +11,7 @@ import com.alan.clients.ui.menu.component.button.MenuButton;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.ui.menu.impl.main.MainMenu;
 import com.alan.clients.util.MouseUtil;
-import hackclient.rise.AltAccount;
+import com.alan.clients.util.account.AltAccount;
 import com.alan.clients.util.file.alt.AltManager;
 import com.alan.clients.util.gui.ScrollUtil;
 import com.alan.clients.util.render.ScissorUtil;

@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.account;
 
 import com.google.gson.JsonObject;
 import lombok.Generated;

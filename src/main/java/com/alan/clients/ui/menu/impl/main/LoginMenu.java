@@ -21,7 +21,7 @@ import com.alan.clients.util.gui.textbox.TextBox;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.shader.RiseShaders;
 import com.alan.clients.util.shader.base.ShaderRenderType;
-import hackclient.rise.MachineFingerprint;
+import com.alan.clients.util.vantage.MachineFingerprint;
 import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
