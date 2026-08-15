@@ -37,8 +37,8 @@ extends ValueComponent {
     }
 
     private void cj() {
-        Color color = ColorUtil.withBlue(this.rz().rA(), this.pT());
-        Color color2 = ColorUtil.withBlue(this.rz().rB(), this.pT());
+        Color color = ColorUtil.withAlpha(this.rz().rA(), this.pT());
+        Color color2 = ColorUtil.withAlpha(this.rz().rB(), this.pT());
         this.aze.forEach(vector2d -> RenderUtil.c(this.position.getX() + vector2d.getX(), this.position.getY() + vector2d.getY(), 2.5, color));
         for (float f2 = 0.0f; f2 <= 1.0f; f2 += 0.1f) {
             ArrayList<Vector2d> arrayList = new ArrayList<Vector2d>(this.aze);
@@ -60,7 +60,7 @@ extends ValueComponent {
                 arrayList.removeAll(arrayList2);
                 arrayList2.clear();
             }
-            RenderUtil.c(arrayList.get(0).getX() + this.position.getX(), arrayList.get(0).getY() + this.position.getY(), 1.5, ColorUtil.withBlue(color2, Math.min(200, color2.getAlpha())));
+            RenderUtil.c(arrayList.get(0).getX() + this.position.getX(), arrayList.get(0).getY() + this.position.getY(), 1.5, ColorUtil.withAlpha(color2, Math.min(200, color2.getAlpha())));
         }
     }
 

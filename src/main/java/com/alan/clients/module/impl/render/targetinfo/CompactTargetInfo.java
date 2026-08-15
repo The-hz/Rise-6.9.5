@@ -87,7 +87,7 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
                         RenderUtil.roundedRectangle(d0, d1, d8 - 3.5, d9 - 5.0, 8.0, color);
                     }
 
-                    RenderUtil.roundedOutlineGradientRectangle(d0, d1, d8 - 3.5, d9 - 5.0, 8.0, 0.5, ColorUtil.withBlue(this.rz().rA(), 200), ColorUtil.withBlue(this.rz().rB(), 200));
+                    RenderUtil.roundedOutlineGradientRectangle(d0, d1, d8 - 3.5, d9 - 5.0, 8.0, 0.5, ColorUtil.withAlpha(this.rz().rA(), 200), ColorUtil.withAlpha(this.rz().rB(), 200));
                     GlStateManager.pushMatrix();
                     this.font.b(s1, d0 + 6.0 + b0 + 7.0 - 2.5, d1 + 6.0 + 4.0 + 1.0, Color.WHITE.hashCode());
                     this.font.drawString(String.valueOf(Math.round(f)), d0 + b0 + d4 + 4.5, d1 + 6.0 + 4.0 + 1.0, color2.hashCode());
@@ -101,7 +101,7 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
                     this.rz();
                     Color color3 = Themes.rK();
                     this.rz();
-                    color3 = ColorUtil.withBlue(color3, (int)(Themes.rK().getAlpha() / 1.7F));
+                    color3 = ColorUtil.withAlpha(color3, (int)(Themes.rK().getAlpha() / 1.7F));
                     this.rz();
                     RenderUtil.a(d11, d12, d4, 6.0, 3.0, color3, Themes.rK(), true);
                     RenderUtil.a(d0 + 6.0 + b0 + 7.0 - 2.5, d1 + 6.0 + b0 - 4.0 - 10.0, d5, 6.0, 3.0, color2, color1, false);
@@ -157,6 +157,6 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
         GlStateManager.disableBlend();
         StencilUtil.uninitStencilBuffer();
         float f1 = 0.5F;
-        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.withBlue(Color.BLACK, 40));
+        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.withAlpha(Color.BLACK, 40));
     }
 }

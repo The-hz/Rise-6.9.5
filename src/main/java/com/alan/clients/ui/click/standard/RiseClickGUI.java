@@ -261,9 +261,9 @@ public class RiseClickGUI extends GuiScreen implements ExecutorAccess {
                         if (s != null && !s.isEmpty()) {
                             float f1 = textBox.tL();
                             float f2 = textBox.tM();
-                            FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, f1, f2, ColorUtil.withBlue(Color.WHITE, 210).getRGB());
+                            FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, f1, f2, ColorUtil.withAlpha(Color.WHITE, 210).getRGB());
                             RenderUtil.d(
-                                f1, f2 + FontManager.MAIN.a(16, FontWeight.REGULAR).height() + 1.0F, FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s), 1.0, ColorUtil.withBlue(Color.WHITE, 140)
+                                f1, f2 + FontManager.MAIN.a(16, FontWeight.REGULAR).height() + 1.0F, FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s), 1.0, ColorUtil.withAlpha(Color.WHITE, 140)
                             );
                             if (list != null && !list.isEmpty()) {
                                 StringBuilder stringbuilder = new StringBuilder();
@@ -291,7 +291,7 @@ public class RiseClickGUI extends GuiScreen implements ExecutorAccess {
                                 double d8 = f1 - 2.0F;
                                 double d9 = f2 + FontManager.MAIN.a(16, FontWeight.REGULAR).height() + 6.0F;
                                 double d10 = 8.0;
-                                Color color = ColorUtil.withBlue(Color.WHITE, 255);
+                                Color color = ColorUtil.withAlpha(Color.WHITE, 255);
                                 this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(d8, d9, d6, d7, d10, color));
                                 this.b(ShaderQueueType.BLOOM, 2).c(() -> {
                                     GL11.glDisable(3089);
@@ -304,8 +304,8 @@ public class RiseClickGUI extends GuiScreen implements ExecutorAccess {
                                     GL11.glDisable(3089);
                                 }
 
-                                RenderUtil.roundedRectangle(d8, d9, d6, d7, d10, ColorUtil.withBlue(UIColors.BACKGROUND.pV(), (int)Math.min(220.0, this.axT * 255.0)));
-                                FontManager.MAIN.a(16, FontWeight.REGULAR).a(s2, d8 + d5, d9 + d5, ColorUtil.withBlue(Color.WHITE, 240).getRGB());
+                                RenderUtil.roundedRectangle(d8, d9, d6, d7, d10, ColorUtil.withAlpha(UIColors.BACKGROUND.pV(), (int)Math.min(220.0, this.axT * 255.0)));
+                                FontManager.MAIN.a(16, FontWeight.REGULAR).a(s2, d8 + d5, d9 + d5, ColorUtil.withAlpha(Color.WHITE, 240).getRGB());
                                 if (flag1) {
                                     GL11.glEnable(3089);
                                     RenderUtil.g(d0, d1, d2, d3);
@@ -331,7 +331,7 @@ public class RiseClickGUI extends GuiScreen implements ExecutorAccess {
 
                 for (int l = 0; l <= 8; l++) {
                     double d4 = l * 50;
-                    RenderUtil.c(this.axI.x + this.sidebar.aym - d4 / 2.0, this.axI.y + this.position.y / 2.0F - d4 / 2.0, d4, ColorUtil.withBlue(this.rz().rA(), 1));
+                    RenderUtil.c(this.axI.x + this.sidebar.aym - d4 / 2.0, this.axI.y + this.position.y / 2.0F - d4 / 2.0, d4, ColorUtil.withAlpha(this.rz().rA(), 1));
                 }
 
                 this.sidebar.renderSidebar(i, j);

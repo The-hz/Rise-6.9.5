@@ -91,9 +91,9 @@ extends Mode<Interface> {
                     Color color = zc2.getColor();
                     if (this.normalBackGround) {
                         if (!bl) {
-                            RenderUtil.d(d32 - d2, d4 - 3.0, (double)(zc2.nameWidth + zc2.tagWidth + 3.0f) + d2, ((Interface)this.getParent()).moduleSpacing, this.glow ? ColorUtil.withBlue(color, 255) : this.rz().rE());
+                            RenderUtil.d(d32 - d2, d4 - 3.0, (double)(zc2.nameWidth + zc2.tagWidth + 3.0f) + d2, ((Interface)this.getParent()).moduleSpacing, this.glow ? ColorUtil.withAlpha(color, 255) : this.rz().rE());
                         } else {
-                            RenderUtil.d(d32 - d2 + 0.5, d4 - 3.0, (double)(zc2.nameWidth + zc2.tagWidth + 3.0f) + d2, ((Interface)this.getParent()).moduleSpacing, this.glow ? ColorUtil.withBlue(color, 255) : this.rz().rE());
+                            RenderUtil.d(d32 - d2 + 0.5, d4 - 3.0, (double)(zc2.nameWidth + zc2.tagWidth + 3.0f) + d2, ((Interface)this.getParent()).moduleSpacing, this.glow ? ColorUtil.withAlpha(color, 255) : this.rz().rE());
                         }
                     } else if (this.glow) {
                         this.drawEntry(zc2, d32 + 0.5, d4, color.getRGB());
@@ -115,7 +115,7 @@ extends Mode<Interface> {
                     GlStateManager.popMatrix();
                 } else {
                     ColorUtil.a(this.medium36Font, Client.b, 6.0, 6.0, true);
-                    this.medium18Font.b("", 39.0, 6.0, ColorUtil.withBlue(Color.WHITE, 170).getRGB());
+                    this.medium18Font.b("", 39.0, 6.0, ColorUtil.withAlpha(Color.WHITE, 170).getRGB());
                 }
                 if (!((String)this.customClientName.wo()).isEmpty()) {
                     this.medium18Font.a((String)this.customClientName.wo(), (double)(6 + this.medium36Font.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
@@ -252,9 +252,9 @@ extends Mode<Interface> {
             GlStateManager.popMatrix();
         } else {
             ColorUtil.a(this.medium36Font, Client.b, 6.0, 6.0, true);
-            this.medium18Font.b("", 39.0, 6.0, ColorUtil.withBlue(Color.WHITE, 170).getRGB());
+            this.medium18Font.b("", 39.0, 6.0, ColorUtil.withAlpha(Color.WHITE, 170).getRGB());
         }
-        this.medium18Font.b("", 39.0, 6.0, ColorUtil.withBlue(Color.WHITE, 170).getRGB());
+        this.medium18Font.b("", 39.0, 6.0, ColorUtil.withAlpha(Color.WHITE, 170).getRGB());
         if (!((String)this.customClientName.wo()).isEmpty()) {
             this.medium18Font.a((String)this.customClientName.wo(), (double)(6 + this.medium36Font.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
         }

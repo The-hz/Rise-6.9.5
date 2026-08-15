@@ -36,7 +36,7 @@ public class WurstInterface extends Mode<Interface> {
                 }
             }
 
-            RenderUtil.d(0.0, 10.0, 185.0, 12.0, ColorUtil.withBlue(Color.WHITE, 100));
+            RenderUtil.d(0.0, 10.0, 185.0, 12.0, ColorUtil.withAlpha(Color.WHITE, 100));
             RenderUtil.image(this.resourceLocation, 2.0, 5.5, 89.17647F, 22.588236F);
             this.arrayListFont.a("v6 MC 1.8.9", 95.0, 14.0, Color.BLACK.getRGB());
         }

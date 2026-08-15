@@ -51,7 +51,7 @@ public final class MainMenu extends Menu {
             this.animation.Q(d0);
             String s = this.rice ? "Rice" : Client.b;
             double d1 = this.animation.getValue();
-            Color color = ColorUtil.withBlue(Color.WHITE, (int)(d1 / d0 * 200.0));
+            Color color = ColorUtil.withAlpha(Color.WHITE, (int)(d1 / d0 * 200.0));
             this.b(ShaderQueueType.REGULAR)
                 .c(
                     () -> {
@@ -62,7 +62,7 @@ public final class MainMenu extends Menu {
                                 "Made with <3 by Alan and The_Bi11iona1re",
                                 scaledresolution.getScaledWidth() - 5,
                                 scaledresolution.getScaledHeight() - 20,
-                                ColorUtil.withBlue(aBS, 100).getRGB()
+                                ColorUtil.withAlpha(aBS, 100).getRGB()
                             );
                         FontManager.MAIN
                             .a(12, FontWeight.REGULAR)
@@ -70,7 +70,7 @@ public final class MainMenu extends Menu {
                                 "© Rise Client 2026. All Rights Reserved",
                                 scaledresolution.getScaledWidth() - 5,
                                 scaledresolution.getScaledHeight() - 10,
-                                ColorUtil.withBlue(aBS, 100).getRGB()
+                                ColorUtil.withAlpha(aBS, 100).getRGB()
                             );
                         if (!System.getProperty("java.vm.vendor").toLowerCase().contains("oracle corporation")) {
                             FontManager.MAIN.a(32, FontWeight.BOLD);

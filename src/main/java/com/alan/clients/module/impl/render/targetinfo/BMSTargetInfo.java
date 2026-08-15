@@ -108,8 +108,8 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                                 d4,
                                 12.0,
                                 2.0,
-                                ColorUtil.withBlue(color1, 100),
-                                ColorUtil.withBlue(color1, 100),
+                                ColorUtil.withAlpha(color1, 100),
+                                ColorUtil.withAlpha(color1, 100),
                                 false
                             );
                             this.healthFont

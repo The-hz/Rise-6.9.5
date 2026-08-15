@@ -91,7 +91,7 @@ public class DragComponent extends Component {
                 }
 
                 bY = null;
-                Color color = ColorUtil.withBlue(Color.WHITE, 60);
+                Color color = ColorUtil.withAlpha(Color.WHITE, 60);
 
                 for (SnapLine av : snaps) {
                     switch (av.cm) {

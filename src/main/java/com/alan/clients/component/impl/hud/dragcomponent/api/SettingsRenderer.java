@@ -81,7 +81,7 @@ public class SettingsRenderer implements InstanceAccess {
                 Color color = Themes.rK();
                 double d6 = this.animation.getValue();
                 this.rz();
-                RenderUtil.roundedRectangle(d3, d4, d0, d1, round, ColorUtil.withBlue(color, (int)(d6 * Themes.rK().getAlpha())));
+                RenderUtil.roundedRectangle(d3, d4, d0, d1, round, ColorUtil.withAlpha(color, (int)(d6 * Themes.rK().getAlpha())));
 
                 for (ValueComponent valueComponent : this.valueList) {
                     if (valueComponent.getValue() != null && valueComponent.getValue().getHideIf() != null && valueComponent.getValue().getHideIf().getAsBoolean()) {

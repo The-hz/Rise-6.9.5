@@ -37,7 +37,7 @@ public class BooleanValueComponent extends ValueComponent {
         RenderUtil.roundedRectangle(d0 - 2.5 + 5.0, this.position.y - 2.5 + 2.5, 5.0, 5.0, 2.5, UIColors.BACKGROUND.Y(this.ayD));
         if (this.axp != 0.0) {
             RenderUtil.roundedRectangle(
-                d0 - this.axp / 2.0 + 5.0, this.position.y - this.axp / 2.0 + 2.5, this.axp, this.axp, this.axp / 2.0, ColorUtil.withBlue(this.rz().rA(), this.ayD)
+                d0 - this.axp / 2.0 + 5.0, this.position.y - this.axp / 2.0 + 2.5, this.axp, this.axp, this.axp / 2.0, ColorUtil.withAlpha(this.rz().rA(), this.ayD)
             );
         }
 
@@ -71,7 +71,7 @@ public class BooleanValueComponent extends ValueComponent {
                 this.axp,
                 this.axp,
                 this.axp / 2.0,
-                ColorUtil.withBlue(this.rz().rA(), this.ayD)
+                ColorUtil.withAlpha(this.rz().rA(), this.ayD)
             );
         }
     }

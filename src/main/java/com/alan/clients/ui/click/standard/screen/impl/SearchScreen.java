@@ -39,7 +39,7 @@ InstanceAccess {
         RiseClickGUI riseClickGUI = this.getStandardClickGUI();
         this.axT = this.scrollUtil.tD() < 0.0 ? (this.axT -= (double)(this.azS.getElapsedTime() * 4L)) : (this.axT += (double)(this.azS.getElapsedTime() * 4L));
         this.axT = Math.min(Math.max(0.0, this.axT), 255.0);
-        this.azR.setColor(ColorUtil.withBlue(UIColors.TEXT.pV(), (int)this.axT));
+        this.azR.setColor(ColorUtil.withAlpha(UIColors.TEXT.pV(), (int)this.axT));
         Vector2d vector2d = new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.sidebar.aym + ((double)riseClickGUI.position.x - riseClickGUI.sidebar.aym) / 2.0, (float)((double)(riseClickGUI.axI.y + 17.0f) + this.scrollUtil.tE()));
         this.azR.setPosition(vector2d);
         String string = this.azR.aJm;

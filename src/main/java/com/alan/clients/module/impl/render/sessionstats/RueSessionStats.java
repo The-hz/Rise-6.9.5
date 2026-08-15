@@ -59,9 +59,9 @@ public final class RueSessionStats extends Mode<SessionStats> {
             this.b(ShaderQueueType.REGULAR, 1)
                 .c(
                     () -> {
-                        RenderUtil.roundedRectangle(this.position.apP.x, this.position.apP.y, this.position.aHe.x, this.position.aHe.y, 11.0, ColorUtil.withBlue(Color.black, 100));
+                        RenderUtil.roundedRectangle(this.position.apP.x, this.position.apP.y, this.position.aHe.x, this.position.aHe.y, 11.0, ColorUtil.withAlpha(Color.black, 100));
                         RenderUtil.roundedOutlineGradientRectangle(
-                            this.position.apP.x, this.position.apP.y, this.position.aHe.x, this.position.aHe.y, 11.0, 0.5, ColorUtil.withBlue(this.rz().rA(), 200), ColorUtil.withBlue(this.rz().rB(), 200)
+                            this.position.apP.x, this.position.apP.y, this.position.aHe.x, this.position.aHe.y, 11.0, 0.5, ColorUtil.withAlpha(this.rz().rA(), 200), ColorUtil.withAlpha(this.rz().rB(), 200)
                         );
                         FontManager.MAIN
                             .a(24, FontWeight.REGULAR)

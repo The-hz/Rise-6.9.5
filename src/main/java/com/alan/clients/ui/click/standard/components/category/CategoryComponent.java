@@ -44,7 +44,7 @@ public final class CategoryComponent implements InstanceAccess {
         double d0 = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(Localization.ce(this.category.getName())) + 8.0 + this.category.getFontRenderer().getStringWidth(this.category.getIcon());
         GlStateManager.pushMatrix();
         RenderUtil.roundedRectangle(
-            this.x, this.y - 5.5, d0 + 8.0, 15.0, 5.0, ColorUtil.withBlue(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.getValue(), var5)).darker()
+            this.x, this.y - 5.5, d0 + 8.0, 15.0, 5.0, ColorUtil.withAlpha(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.getValue(), var5)).darker()
         );
         int j = new Color(255, 255, 255, Math.min(screen.equals(this.category.getClickGUIScreen()) ? 255 : 200, (int)var5)).hashCode();
         this.category.getFontRenderer().a(this.category.getIcon(), (float)(this.x + this.animation.getValue() / 80.0 + 3.0), this.y, j);
@@ -66,7 +66,7 @@ public final class CategoryComponent implements InstanceAccess {
     public void bloom(double var1) {
         double d0 = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(Localization.ce(this.category.getName())) + 8.0 + this.category.getFontRenderer().getStringWidth(this.category.getIcon());
         RenderUtil.roundedRectangle(
-            this.x, this.y - 5.0F, d0 + 8.0, 14.0, 5.0, ColorUtil.withBlue(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.getValue(), var1)).darker()
+            this.x, this.y - 5.0F, d0 + 8.0, 14.0, 5.0, ColorUtil.withAlpha(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.getValue(), var1)).darker()
         );
     }
 

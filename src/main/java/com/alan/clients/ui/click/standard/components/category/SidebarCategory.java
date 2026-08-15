@@ -59,7 +59,7 @@ public final class SidebarCategory implements InstanceAccess {
             riseclickgui.axI.y,
             30.0,
             riseclickgui.position.y,
-            ColorUtil.withBlue(Color.BLACK, (int)Math.min(this.ayp.getValue(), this.axT / 7.0)),
+            ColorUtil.withAlpha(Color.BLACK, (int)Math.min(this.ayp.getValue(), this.axT / 7.0)),
             new Color(0, 0, 0, 0)
         );
     }
@@ -95,10 +95,10 @@ public final class SidebarCategory implements InstanceAccess {
 
         float f = (float)(riseclickgui.axI.getX() + 9.0F + this.animation.getValue());
         float f1 = riseclickgui.axI.getY() + (24.75F - FontManager.MAIN.a(42, FontWeight.REGULAR).height() / 2.0F);
-        FontManager.MAIN.a(32, FontWeight.REGULAR).a(Client.b, f + 5.0F, f1 + 2.0F, ColorUtil.withBlue(Color.WHITE, (int)this.axT).hashCode());
+        FontManager.MAIN.a(32, FontWeight.REGULAR).a(Client.b, f + 5.0F, f1 + 2.0F, ColorUtil.withAlpha(Color.WHITE, (int)this.axT).hashCode());
         FontManager.MAIN
             .a(16, FontWeight.REGULAR)
-            .a("6.9.5", f + 5.0F + FontManager.MAIN.a(32, FontWeight.REGULAR).getStringWidth(Client.b), f1, ColorUtil.withBlue(this.rz().rA(), (int)Math.min(this.axT, 200.0)).getRGB());
+            .a("6.9.5", f + 5.0F + FontManager.MAIN.a(32, FontWeight.REGULAR).getStringWidth(Client.b), f1, ColorUtil.withAlpha(this.rz().rA(), (int)Math.min(this.axT, 200.0)).getRGB());
     }
 
     public void preRenderClickGUI() {

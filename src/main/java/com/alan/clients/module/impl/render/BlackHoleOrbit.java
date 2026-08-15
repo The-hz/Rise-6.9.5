@@ -66,12 +66,12 @@ public final class BlackHoleOrbit extends Module {
 
     private void c(Vector2d var1) {
         double d0 = this.getRound();
-        RenderUtil.roundedRectangle(var1.x, var1.y, 190.0, 135.0, d0, ColorUtil.withBlue(Themes.rK(), 140));
+        RenderUtil.roundedRectangle(var1.x, var1.y, 190.0, 135.0, d0, ColorUtil.withAlpha(Themes.rK(), 140));
         String s = this.getName();
         FontManager.MAIN.a(18, FontWeight.BOLD).b(s, var1.x + 10.0, var1.y + 11.0, this.rz().rA().getRGB());
         double d1 = var1.x + 10.0;
         double d2 = var1.y + 28.0;
-        RenderUtil.roundedRectangle(d1, d2, 170.0, 97.0, Math.max(3.0, d0 - 1.0), ColorUtil.withBlue(Color.BLACK, 55));
+        RenderUtil.roundedRectangle(d1, d2, 170.0, 97.0, Math.max(3.0, d0 - 1.0), ColorUtil.withAlpha(Color.BLACK, 55));
         double d3 = d1 + 85.0;
         double d4 = d2 + 52.38;
         RenderUtil.g(d1, d2, 170.0, 97.0);
@@ -97,17 +97,17 @@ public final class BlackHoleOrbit extends Module {
         double d2 = vector2d.y + 28.0;
         double d3 = d1 + 85.0;
         double d4 = d2 + 52.38;
-        Color color = ColorUtil.withBlue(this.rz().rA(), 55);
+        Color color = ColorUtil.withAlpha(this.rz().rA(), 55);
         RenderUtil.c(d3, d4, 26.0, color);
     }
 
     private void renderHole(double var1, double var3) {
         Color color = this.rz().rA();
         Color color1 = this.rz().rB();
-        RenderUtil.c(var1, var3, 22.0, ColorUtil.withBlue(ColorUtil.a(color, color1, 0.5), 35));
-        RenderUtil.c(var1, var3, 18.0, ColorUtil.withBlue(ColorUtil.a(color1, color, 0.65), 28));
-        RenderUtil.c(var1, var3, 15.5, ColorUtil.withBlue(new Color(10, 10, 12), 255));
-        RenderUtil.c(var1, var3, 13.0, ColorUtil.withBlue(Color.BLACK, 255));
+        RenderUtil.c(var1, var3, 22.0, ColorUtil.withAlpha(ColorUtil.a(color, color1, 0.5), 35));
+        RenderUtil.c(var1, var3, 18.0, ColorUtil.withAlpha(ColorUtil.a(color1, color, 0.65), 28));
+        RenderUtil.c(var1, var3, 15.5, ColorUtil.withAlpha(new Color(10, 10, 12), 255));
+        RenderUtil.c(var1, var3, 13.0, ColorUtil.withAlpha(Color.BLACK, 255));
     }
 
     private void updatePhysics() {
@@ -203,7 +203,7 @@ public final class BlackHoleOrbit extends Module {
             this.drawParticle(var1, var3, wo);
         }
 
-        RenderUtil.c(var1, var3, 13.2, ColorUtil.withBlue(Color.WHITE, 10));
+        RenderUtil.c(var1, var3, 13.2, ColorUtil.withAlpha(Color.WHITE, 10));
     }
 
     private void drawBody(double var1, double var3, OrbitBody var5, TrailBuffer var6, Color var7) {
@@ -216,7 +216,7 @@ public final class BlackHoleOrbit extends Module {
                     double d2 = 1.2 + 1.2 * d0;
                     double d3 = var1 + var6.getX(j);
                     double d4 = var3 + var6.getY(j);
-                    RenderUtil.c(d3, d4, d2, ColorUtil.withBlue(var7, (int)d1));
+                    RenderUtil.c(d3, d4, d2, ColorUtil.withAlpha(var7, (int)d1));
                 }
             }
 
@@ -234,9 +234,9 @@ public final class BlackHoleOrbit extends Module {
             double d15 = Math.atan2(var5.y, var5.x);
             double d16 = var1 + var5.x;
             double d17 = var3 + var5.y;
-            Color color = ColorUtil.withBlue(var7, k);
+            Color color = ColorUtil.withAlpha(var7, k);
             this.drawEllipse(d16, d17, 4.4 * d12, 4.4 * d13, d15, color);
-            Color color1 = ColorUtil.withBlue(Color.WHITE, (int)(110.0 * d14));
+            Color color1 = ColorUtil.withAlpha(Color.WHITE, (int)(110.0 * d14));
             this.drawEllipse(d16 - 0.7, d17 - 0.7, Math.max(1.0, 2.4200000000000004), Math.max(0.8, 1.2320000000000002), d15, color1);
         }
     }
@@ -248,7 +248,7 @@ public final class BlackHoleOrbit extends Module {
                 double d0 = (double)j / (i - 1);
                 double d1 = 110.0 * (d0 * d0);
                 double d2 = 0.8 + 0.9 * d0;
-                RenderUtil.c(var1 + var5.trail.getX(j), var3 + var5.trail.getY(j), d2, ColorUtil.withBlue(var5.color, (int)d1));
+                RenderUtil.c(var1 + var5.trail.getX(j), var3 + var5.trail.getY(j), d2, ColorUtil.withAlpha(var5.color, (int)d1));
             }
         }
 
@@ -265,15 +265,15 @@ public final class BlackHoleOrbit extends Module {
         double d13 = u((d4 - 13.2) / 5.0) * d12;
         int k = (int)(170.0 * d13);
         double d14 = Math.atan2(var5.y, var5.x);
-        this.drawEllipse(var1 + var5.x, var3 + var5.y, var5.size * d10, var5.size * d11, d14, ColorUtil.withBlue(var5.color, k));
+        this.drawEllipse(var1 + var5.x, var3 + var5.y, var5.size * d10, var5.size * d11, d14, ColorUtil.withAlpha(var5.color, k));
     }
 
     private void drawGrid(double var1, double var3, double var5, double var7, double var9, double var11) {
         int i = (int)Math.ceil(var5 / 8.0);
         int j = (int)Math.ceil(var7 / 8.0);
-        Color color = ColorUtil.withBlue(Color.BLACK, 18);
-        Color color1 = ColorUtil.withBlue(Color.BLACK, 10);
-        Color color2 = ColorUtil.withBlue(this.rz().rA(), 55);
+        Color color = ColorUtil.withAlpha(Color.BLACK, 18);
+        Color color1 = ColorUtil.withAlpha(Color.BLACK, 10);
+        Color color2 = ColorUtil.withAlpha(this.rz().rA(), 55);
 
         for (int k = 0; k < j; k++) {
             for (int l = 0; l < i; l++) {
@@ -304,7 +304,7 @@ public final class BlackHoleOrbit extends Module {
                 double d12 = c(d10 * 8.0E-4, -1.6, 1.6);
                 double d13 = c(d11 * 8.0E-4, -1.6, 1.6);
                 Color color3 = (l + k & 1) == 0 ? color : color1;
-                Color color4 = ColorUtil.withBlue(ColorUtil.a(color2, color3, d8), (int)(30.0 + 110.0 * d8));
+                Color color4 = ColorUtil.withAlpha(ColorUtil.a(color2, color3, d8), (int)(30.0 + 110.0 * d8));
                 RenderUtil.d(d0 + d12, d1 + d13, 7.0, 7.0, color4);
             }
         }
@@ -331,7 +331,7 @@ public final class BlackHoleOrbit extends Module {
             wo.size = ThreadLocalRandom.current().nextDouble(1.0, 1.8);
             wo.lifetime = 1.6 + ThreadLocalRandom.current().nextDouble(0.0, 1.0);
             wo.age = 0.0;
-            wo.color = ColorUtil.withBlue(ColorUtil.a(this.rz().rA(), this.rz().rB(), ThreadLocalRandom.current().nextDouble()), 255);
+            wo.color = ColorUtil.withAlpha(ColorUtil.a(this.rz().rA(), this.rz().rB(), ThreadLocalRandom.current().nextDouble()), 255);
             wo.trail = new TrailBuffer(54);
             this.particles.add(wo);
         }

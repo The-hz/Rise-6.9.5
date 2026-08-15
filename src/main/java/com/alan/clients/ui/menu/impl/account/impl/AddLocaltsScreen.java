@@ -676,7 +676,7 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
 
     private void drawTag(float var1, float var2, String var3, Color color) {
         float f = TOOLTIP_FONT.getStringWidth(var3) + 20;
-        RenderUtil.roundedRectangle(var1, var2, f, 15.0, 7.0, ColorUtil.withBlue(color, 55));
+        RenderUtil.roundedRectangle(var1, var2, f, 15.0, 7.0, ColorUtil.withAlpha(color, 55));
         TOOLTIP_FONT.a(var3, var1 + 10.0F, centeredTextY(var2, 15.0, TOOLTIP_FONT), color.getRGB());
     }
 

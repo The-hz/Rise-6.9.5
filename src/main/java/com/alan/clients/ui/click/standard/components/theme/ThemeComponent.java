@@ -29,13 +29,13 @@ public class ThemeComponent implements InstanceAccess {
         double d1 = this.yAnimation.getValue() + var1;
         RenderUtil.roundedRectangle(d0, d1, var3, 50.0, 10.0, color);
         if (this.activeTheme.isTriColor()) {
-            RenderUtil.a(d0, d1, var3, 30.0, 9.0, ColorUtil.withBlue(this.activeTheme.rA(), i), ColorUtil.withBlue(this.activeTheme.rB(), i), ColorUtil.withBlue(this.activeTheme.rC(), i), false, true, true, false, false);
+            RenderUtil.a(d0, d1, var3, 30.0, 9.0, ColorUtil.withAlpha(this.activeTheme.rA(), i), ColorUtil.withAlpha(this.activeTheme.rB(), i), ColorUtil.withAlpha(this.activeTheme.rC(), i), false, true, true, false, false);
         } else {
-            RenderUtil.a(d0, d1, var3, 30.0, 9.0, ColorUtil.withBlue(this.activeTheme.rA(), i), ColorUtil.withBlue(this.activeTheme.rB(), i), false, true, true, false, false);
+            RenderUtil.a(d0, d1, var3, 30.0, 9.0, ColorUtil.withAlpha(this.activeTheme.rA(), i), ColorUtil.withAlpha(this.activeTheme.rB(), i), false, true, true, false, false);
         }
 
         RenderUtil.d(d0, d1 + 30.0, var3, 10.0, color);
-        FontManager.MAIN.a(16, FontWeight.REGULAR).drawString(this.activeTheme.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, flag ? ColorUtil.withBlue(this.rz().rA(), i).getRGB() : new Color(255, 255, 255, i).getRGB());
+        FontManager.MAIN.a(16, FontWeight.REGULAR).drawString(this.activeTheme.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, flag ? ColorUtil.withAlpha(this.rz().rA(), i).getRGB() : new Color(255, 255, 255, i).getRGB());
         this.selectorAnimation.Q(this.activeTheme.equals(this.rz()) ? 255.0 : 0.0);
         int j = (int)Math.min(this.selectorAnimation.getValue(), i);
         if (j > 0 && this.getStandardClickGUI().axS > 0.8) {
@@ -49,9 +49,9 @@ public class ThemeComponent implements InstanceAccess {
                                 var3,
                                 30.0,
                                 10.0,
-                                ColorUtil.withBlue(this.activeTheme.rA(), i),
-                                ColorUtil.withBlue(this.activeTheme.rB(), i),
-                                ColorUtil.withBlue(this.activeTheme.rC(), i),
+                                ColorUtil.withAlpha(this.activeTheme.rA(), i),
+                                ColorUtil.withAlpha(this.activeTheme.rB(), i),
+                                ColorUtil.withAlpha(this.activeTheme.rC(), i),
                                 false,
                                 true,
                                 true,
@@ -60,11 +60,11 @@ public class ThemeComponent implements InstanceAccess {
                             );
                         } else {
                             RenderUtil.a(
-                                d0 + 1.0, d1, var3 - 2.0, 30.0, 10.0, ColorUtil.withBlue(this.activeTheme.rA(), j), ColorUtil.withBlue(this.activeTheme.rB(), j), false, true, true, false, false
+                                d0 + 1.0, d1, var3 - 2.0, 30.0, 10.0, ColorUtil.withAlpha(this.activeTheme.rA(), j), ColorUtil.withAlpha(this.activeTheme.rB(), j), false, true, true, false, false
                             );
                         }
 
-                        FontManager.MAIN.a(16, FontWeight.REGULAR).drawString(this.activeTheme.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, ColorUtil.withBlue(this.activeTheme.rA(), j).getRGB());
+                        FontManager.MAIN.a(16, FontWeight.REGULAR).drawString(this.activeTheme.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, ColorUtil.withAlpha(this.activeTheme.rA(), j).getRGB());
                     }
                 );
         }

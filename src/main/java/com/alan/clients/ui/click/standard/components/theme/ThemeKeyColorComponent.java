@@ -24,7 +24,7 @@ public class ThemeKeyColorComponent implements InstanceAccess {
         RenderUtil.roundedRectangle(var1, var3, var5, 17.0, 5.0, new Color(25, 25, 25, (int)((1.0 - this.dimAnimation.getValue()) * 128.0)));
         this.b(ShaderQueueType.BLOOM).c(() -> {
             RenderUtil.roundedRectangle(var1, var3, var5, 17.0, 5.0, new Color(18, 21, 30, (int)(this.bloomAnimation.getValue() * 255.0)));
-            RenderUtil.roundedRectangle(var1 + 0.5, var3 + 0.5, var5 - 1.0, 16.0, 4.0, ColorUtil.withBlue(this.color.getColor(), (int)(this.bloomAnimation.getValue() * 255.0)));
+            RenderUtil.roundedRectangle(var1 + 0.5, var3 + 0.5, var5 - 1.0, 16.0, 4.0, ColorUtil.withAlpha(this.color.getColor(), (int)(this.bloomAnimation.getValue() * 255.0)));
         });
         this.ayu = new Vector3d(var1, var3, var5);
     }

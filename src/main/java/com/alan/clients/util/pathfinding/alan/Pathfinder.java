@@ -144,7 +144,7 @@ public class Pathfinder extends ArrayList<Path> implements InstanceAccess {
         GlStateManager.disableTexture2D();
         GlStateManager.disableLighting();
         GL11.glDepthMask(false);
-        RenderUtil.color(ColorUtil.withBlue(this.rz().rA(), 100));
+        RenderUtil.color(ColorUtil.withAlpha(this.rz().rA(), 100));
         double d0 = 0.6;
 
         for (Path ahr : new ArrayList<>(this)) {

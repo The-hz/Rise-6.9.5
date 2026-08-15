@@ -10,12 +10,12 @@ import java.awt.Color;
 
 public class MenuLabelButton extends MenuTextButton {
     private static final Font aCe = FontManager.MAIN.a(14, FontWeight.LIGHT);
-    private static final Color aCf = ColorUtil.withBlue(Color.WHITE, 150);
+    private static final Color aCf = ColorUtil.withAlpha(Color.WHITE, 150);
     private final Color aCg;
 
     public MenuLabelButton(double var1, double var3, double var5, double var7, Runnable var9, String var10, Color color) {
         super(var1, var3, var5, var7, var9, var10);
-        this.aCg = ColorUtil.withBlue(color, 150);
+        this.aCg = ColorUtil.withAlpha(color, 150);
     }
 
     @Override

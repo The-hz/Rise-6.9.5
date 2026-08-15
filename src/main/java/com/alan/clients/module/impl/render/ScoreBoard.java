@@ -58,7 +58,7 @@ extends Module {
             int n3 = this.collection.size();
             int n4 = this.fontHeight * n3 + 3;
             if (((Boolean)this.outline.wo()).booleanValue()) {
-                RenderUtil.roundedOutlineGradientRectangle(ajz2.ald - 1, ajz2.ale - 1, this.maxWidth + 12 + 2, n4 + this.fontHeight + 3 + 2, n2, 1.0, ColorUtil.withBlue(this.rz().rA(), 100), ColorUtil.withBlue(this.rz().rB(), 100));
+                RenderUtil.roundedOutlineGradientRectangle(ajz2.ald - 1, ajz2.ale - 1, this.maxWidth + 12 + 2, n4 + this.fontHeight + 3 + 2, n2, 1.0, ColorUtil.withAlpha(this.rz().rA(), 100), ColorUtil.withAlpha(this.rz().rB(), 100));
             }
         });
         this.b(ShaderQueueType.BLUR).c(() -> this.renderScoreboard(ajz2.ald, ajz2.ale, Color.WHITE, false, n2, false));

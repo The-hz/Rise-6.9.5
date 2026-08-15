@@ -105,7 +105,7 @@ public class GodlyTargetInfo extends Mode<TargetInfo> {
                     this.rz();
                     Color color2 = Themes.rK();
                     this.rz();
-                    color2 = ColorUtil.withBlue(color2, (int)(Themes.rK().getAlpha() / 1.7F));
+                    color2 = ColorUtil.withAlpha(color2, (int)(Themes.rK().getAlpha() / 1.7F));
                     this.rz();
                     RenderUtil.a(d13, d14, d4, 6.0, 3.0, color2, Themes.rK(), true);
                     RenderUtil.a(d0 + 6.0 + b0 + 7.0 - 2.5, d1 + 6.0 + b0 - 4.0 - 6.0, d5, 6.0, 3.0, color1, color, false);
@@ -160,6 +160,6 @@ public class GodlyTargetInfo extends Mode<TargetInfo> {
         GlStateManager.disableBlend();
         StencilUtil.uninitStencilBuffer();
         float f1 = 0.5F;
-        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.withBlue(Color.BLACK, 40));
+        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.withAlpha(Color.BLACK, 40));
     }
 }

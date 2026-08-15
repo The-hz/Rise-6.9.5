@@ -62,7 +62,7 @@ public class ModuleComponent implements InstanceAccess {
             Color color = UIColors.TEXT.Y(this.module.isEnabled() ? 255 : 200);
             boolean flag1 = GUIUtil.c(position.x, position.y, this.scale.x, this.scale.y, var2, var3);
             this.axx.Q(flag1 ? (this.mouseDown ? 35.0 : 20.0) : 0.0);
-            RenderUtil.roundedRectangle(position.x, position.y, this.scale.x, this.scale.y, 6.0, ColorUtil.withBlue(Color.BLACK, (int)this.axx.getValue()));
+            RenderUtil.roundedRectangle(position.x, position.y, this.scale.x, this.scale.y, 6.0, ColorUtil.withAlpha(Color.BLACK, (int)this.axx.getValue()));
             if (riseclickgui.pa() instanceof SearchScreen) {
                 FontManager.MAIN
                     .a(15, FontWeight.REGULAR)
@@ -70,7 +70,7 @@ public class ModuleComponent implements InstanceAccess {
                         "(" + Localization.ce(this.module.getModuleInfo().category().getName()) + ")",
                         (float)(position.getX() + FontManager.MAIN.a(20, FontWeight.REGULAR).getStringWidth(this.module.getName()) + 10.0),
                         (float)position.getY() + 10.0F,
-                        ColorUtil.withBlue(color, 64).hashCode()
+                        ColorUtil.withAlpha(color, 64).hashCode()
                     );
             }
 
@@ -82,7 +82,7 @@ public class ModuleComponent implements InstanceAccess {
                     (float)position.y + 8.0F,
                     this.module.isEnabled() ? this.rz().getAccentColor(new Vector2d(0.0, position.y / 5.0)).getRGB() : color.getRGB()
                 );
-            FontManager.MAIN.a(15, FontWeight.REGULAR).a(Localization.ce(this.module.getModuleInfo().description()), (float)position.x + 6.0F, (float)position.y + 25.0F, ColorUtil.withBlue(color, 70).hashCode());
+            FontManager.MAIN.a(15, FontWeight.REGULAR).a(Localization.ce(this.module.getModuleInfo().description()), (float)position.x + 6.0F, (float)position.y + 25.0F, ColorUtil.withAlpha(color, 70).hashCode());
             this.scale = new Vector2f(this.getStandardClickGUI().moduleDefaultScale.x, f1);
         }
 

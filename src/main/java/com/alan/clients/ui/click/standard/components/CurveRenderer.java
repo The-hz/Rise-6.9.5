@@ -19,7 +19,7 @@ public class CurveRenderer {
         for (int i = 1; i <= 5; i++) {
             GL11.glLineWidth(i);
             RenderUtil.rt();
-            RenderUtil.color(ColorUtil.withBlue(this.amH, (int)(this.amH.getAlpha() / i / 1.2)));
+            RenderUtil.color(ColorUtil.withAlpha(this.amH, (int)(this.amH.getAlpha() / i / 1.2)));
             GL11.glBegin(3);
 
             for (float[] afloat : this.aze) {

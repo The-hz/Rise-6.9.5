@@ -60,8 +60,8 @@ public class ProgressBarComponent extends Component {
                         GlStateManager.pushMatrix();
                         GlStateManager.translate((f2 + f * 0.5F) * (1.0 - d0), (f3 + f1 * 0.5F) * (1.0 - d0), 0.0);
                         GlStateManager.scale(d0, d0, 0.0);
-                        RenderUtil.roundedRectangle(f2, f3, f, f1, adv.getRound(), ColorUtil.withBlue(adv.rK(), (int)(adv.rK().getAlpha() * d1)));
-                        RenderUtil.a(f2, f3, f * hA.getValue(), f1, adv.getRound(), ColorUtil.withBlue(adv.rA(), (int)(255.0 * d1)), ColorUtil.withBlue(adv.rB(), (int)(255.0 * d1)), false);
+                        RenderUtil.roundedRectangle(f2, f3, f, f1, adv.getRound(), ColorUtil.withAlpha(adv.rK(), (int)(adv.rK().getAlpha() * d1)));
+                        RenderUtil.a(f2, f3, f * hA.getValue(), f1, adv.getRound(), ColorUtil.withAlpha(adv.rA(), (int)(255.0 * d1)), ColorUtil.withAlpha(adv.rB(), (int)(255.0 * d1)), false);
                         if (hF) {
                             String s = MathUtil.round(hA.getValue() * 100.0, 1) + "%";
                             int i = Math.max(12, Math.round(16.0F * hE));
@@ -71,7 +71,7 @@ public class ProgressBarComponent extends Component {
                                     s,
                                     f2 + f - FontManager.MAIN.a(i, FontWeight.REGULAR).getStringWidth(s) - 2.0F * hE,
                                     f3 + 3.0F * hE,
-                                    ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d1)).getRGB()
+                                    ColorUtil.withAlpha(Color.WHITE, (int)(255.0 * d1)).getRGB()
                                 );
                         }
 
@@ -85,7 +85,7 @@ public class ProgressBarComponent extends Component {
                         GlStateManager.translate((f2 + f * 0.5F) * (1.0 - d0), (f3 + f1 * 0.5F) * (1.0 - d0), 0.0);
                         GlStateManager.scale(d0, d0, 0.0);
                         RenderUtil.roundedRectangle(
-                            f2 + 0.5F, f3 + 0.5F, f - 1.0F, f1 - 1.0F, adv.getRound() + 1, ColorUtil.withBlue(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d1))
+                            f2 + 0.5F, f3 + 0.5F, f - 1.0F, f1 - 1.0F, adv.getRound() + 1, ColorUtil.withAlpha(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d1))
                         );
                         GlStateManager.popMatrix();
                     }
@@ -94,7 +94,7 @@ public class ProgressBarComponent extends Component {
                 GlStateManager.pushMatrix();
                 GlStateManager.translate((f2 + f * 0.5F) * (1.0 - d0), (f3 + f1 * 0.5F) * (1.0 - d0), 0.0);
                 GlStateManager.scale(d0, d0, 0.0);
-                RenderUtil.roundedRectangle(f2, f3, f, f1, adv.getRound(), ColorUtil.withBlue(Color.BLACK, (int)(255.0 * d1)));
+                RenderUtil.roundedRectangle(f2, f3, f, f1, adv.getRound(), ColorUtil.withAlpha(Color.BLACK, (int)(255.0 * d1)));
                 GlStateManager.popMatrix();
             });
             if (!dj && hB.isFinished()) {

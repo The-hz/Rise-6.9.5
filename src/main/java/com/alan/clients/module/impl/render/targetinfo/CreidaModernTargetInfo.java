@@ -121,7 +121,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                     this.rz();
                     Color color8 = Themes.rK();
                     this.rz();
-                    color8 = ColorUtil.withBlue(color8, (int)(Themes.rK().getAlpha() / 1.7F));
+                    color8 = ColorUtil.withAlpha(color8, (int)(Themes.rK().getAlpha() / 1.7F));
                     this.rz();
                     RenderUtil.a(d12, d13, d5, 6.5, 3.5, color8, Themes.rK(), true);
                     RenderUtil.b(d0 + 10.0 + b0 + 6.0, d1 + 10.0 + b0 - 4.0 - 7.0, d6, 6.5, 3.5, color3, color2, false);
@@ -154,7 +154,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                     RenderUtil.roundedRectangle(d0 + 3.5, d1 + 5.5, d9 - 2.0, d10 - 1.0, 12.0, this.rz().rE());
                     Color color = this.rz().rA();
                     Color color1 = this.rz().rB();
-                    RenderUtil.b(d0 + 10.0 + b0 + 6.0, d1 + 10.0 + b0 - 4.0 - 7.0, d6, 6.0, 3.0, ColorUtil.withBlue(color1, 255), ColorUtil.withBlue(color, 255), false);
+                    RenderUtil.b(d0 + 10.0 + b0 + 6.0, d1 + 10.0 + b0 - 4.0 - 7.0, d6, 6.0, 3.0, ColorUtil.withAlpha(color1, 255), ColorUtil.withAlpha(color, 255), false);
                     GlStateManager.popMatrix();
                 });
             }
@@ -202,6 +202,6 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
         GlStateManager.disableBlend();
         StencilUtil.uninitStencilBuffer();
         float f1 = 0.5F;
-        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.withBlue(Color.BLACK, 40));
+        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.withAlpha(Color.BLACK, 40));
     }
 }

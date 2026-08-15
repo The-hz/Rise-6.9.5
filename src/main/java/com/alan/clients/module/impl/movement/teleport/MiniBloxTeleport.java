@@ -51,7 +51,7 @@ extends Mode<Teleport> {
         double d5 = entityPlayerSP.prevPosY + (entityPlayerSP.posY - entityPlayerSP.prevPosY) * (double)f2;
         double d6 = entityPlayerSP.prevPosZ + (entityPlayerSP.posZ - entityPlayerSP.prevPosZ) * (double)f2 + Math.cos(d2) * d3;
         this.targetPosition = new Vec3(d4, d5, d6);
-        Color color = ColorUtil.withBlue(this.rz().rA(), 100);
+        Color color = ColorUtil.withAlpha(this.rz().rA(), 100);
         if (color.getAlpha() <= 0) {
             return;
         }

@@ -536,7 +536,7 @@ extends Module {
             double d3 = this.interfaceModule != null ? this.interfaceModule.getRoundingRadius() : 6.0;
             this.b(ShaderQueueType.REGULAR, 1).c(() -> {
                 runnable.run();
-                RenderUtil.roundedRectangle(vector2d.x, vector2d.y, vector2d2.x, vector2d2.y, d3, ColorUtil.withBlue(Themes.rK(), Math.min((int)this.alphaAnimation.getValue(), Themes.rK().getAlpha())));
+                RenderUtil.roundedRectangle(vector2d.x, vector2d.y, vector2d2.x, vector2d2.y, d3, ColorUtil.withAlpha(Themes.rK(), Math.min((int)this.alphaAnimation.getValue(), Themes.rK().getAlpha())));
                 GlStateManager.popMatrix();
             });
             this.b(ShaderQueueType.BLOOM).c(() -> {
@@ -556,7 +556,7 @@ extends Module {
                 GlStateManager.popMatrix();
             });
         }
-        this.textBox.setColor(ColorUtil.withBlue(Color.WHITE, (int)this.alphaAnimation.getValue()));
+        this.textBox.setColor(ColorUtil.withAlpha(Color.WHITE, (int)this.alphaAnimation.getValue()));
         this.textBox.c(this.inputFont);
         this.textBox.setPosition(new Vector2d(this.rz().qd() + 5.0f, (float)Chat.aEg.jY.getScaledHeight() - this.inputFont.height() - this.rz().qd()));
         this.b(ShaderQueueType.REGULAR, 1).c(() -> {
@@ -619,13 +619,13 @@ extends Module {
                     RenderUtil.roundedRectangle(d7, d9, d5, d6, 6.0, this.rz().rE());
                     GlStateManager.popMatrix();
                 });
-                RenderUtil.roundedRectangle(d7, d9, d5, d6, 6.0, ColorUtil.withBlue(Themes.rK(), Math.min(n, Themes.rK().getAlpha())));
+                RenderUtil.roundedRectangle(d7, d9, d5, d6, 6.0, ColorUtil.withAlpha(Themes.rK(), Math.min(n, Themes.rK().getAlpha())));
                 for (int i = 0; i < n2; ++i) {
                     String string4 = (String)arrayList.get(i);
                     if (string4 == null || string4.isEmpty()) continue;
                     float f4 = (float)((double)f3 - (double)i * (d3 + 1.0));
                     int n3 = i == 0 ? 180 : (i == 1 ? 140 : 120);
-                    this.inputFont.b(string4, f2, f4, ColorUtil.withBlue(Color.WHITE, Math.min(n, n3)).hashCode());
+                    this.inputFont.b(string4, f2, f4, ColorUtil.withAlpha(Color.WHITE, Math.min(n, n3)).hashCode());
                 }
             }
             if (this.chatOpen && ((Boolean)this.pinyinChineseIME.wo()).booleanValue() && PinyinImeState.isEnabled() && pinyinHandler.uc()) {
@@ -635,9 +635,9 @@ extends Module {
                     int n = Math.min(255, Math.max(0, (int)this.alphaAnimation.getValue()));
                     float f5 = this.textBox.tL();
                     float f6 = this.textBox.tM();
-                    this.inputFont.b(string5, f5, f6, ColorUtil.withBlue(new Color(220, 220, 220), n).hashCode());
+                    this.inputFont.b(string5, f5, f6, ColorUtil.withAlpha(new Color(220, 220, 220), n).hashCode());
                     double d = this.inputFont.getStringWidth(string5);
-                    RenderUtil.d(f5, f6 + this.inputFont.height() + 1.0f, d, 1.0, ColorUtil.withBlue(Color.WHITE, Math.min(n, 180)));
+                    RenderUtil.d(f5, f6 + this.inputFont.height() + 1.0f, d, 1.0, ColorUtil.withAlpha(Color.WHITE, Math.min(n, 180)));
                     if (list != null && !list.isEmpty()) {
                         float f7 = (float)this.textBox.getPosition().x;
                         float f8 = f6 - this.inputFont.height() - 3.0f;
@@ -659,8 +659,8 @@ extends Module {
                         String string7 = stringBuilder.toString();
                         double d11 = this.inputFont.getStringWidth(string7) + 6;
                         double d12 = this.inputFont.height() + 4.0f;
-                        RenderUtil.d(f7 - 2.0f, f8 - 2.0f, d11, d12, ColorUtil.withBlue(new Color(0, 0, 0), Math.min(n, 140)));
-                        this.inputFont.b(string7, f7 + 1.0f, f8, ColorUtil.withBlue(Color.WHITE, n).hashCode());
+                        RenderUtil.d(f7 - 2.0f, f8 - 2.0f, d11, d12, ColorUtil.withAlpha(new Color(0, 0, 0), Math.min(n, 140)));
+                        this.inputFont.b(string7, f7 + 1.0f, f8, ColorUtil.withAlpha(Color.WHITE, n).hashCode());
                     }
                 }
             }

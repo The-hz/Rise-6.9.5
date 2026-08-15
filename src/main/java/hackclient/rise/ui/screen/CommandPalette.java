@@ -116,7 +116,7 @@ extends GuiScreen {
         try {
             Interface interface_ = (Interface)this.e(Interface.class);
             if (interface_ != null && ((Boolean)interface_.aoc.wo()).booleanValue()) {
-                Color color = ColorUtil.withBlue(Themes.rK(), 255);
+                Color color = ColorUtil.withAlpha(Themes.rK(), 255);
                 this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(this.aAF, this.aAG, this.aAH, this.aAI, d2, color));
                 this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.roundedRectangle(this.aAF, this.aAG, this.aAH, this.aAI, d2 + 2.0, this.rz().rE()));
             }
@@ -372,12 +372,12 @@ extends GuiScreen {
 
     private void L(double d2) {
         double d3 = 10.0;
-        Color color = ColorUtil.withBlue(Color.BLACK, (int)(43.0 * d2));
+        Color color = ColorUtil.withAlpha(Color.BLACK, (int)(43.0 * d2));
         RenderUtil.roundedRectangle(this.aAF - 3.0, this.aAG - 3.0, this.aAH + 6.0, this.aAI + 6.0, d3 + 2.0, color);
-        Color color2 = ColorUtil.withBlue(Themes.rK(), 115);
+        Color color2 = ColorUtil.withAlpha(Themes.rK(), 115);
         RenderUtil.roundedRectangle(this.aAF, this.aAG, this.aAH, this.aAI, d3, color2);
-        Color color3 = ColorUtil.withBlue(this.rz().rA(), (int)(65.0 * d2));
-        Color color4 = ColorUtil.withBlue(this.rz().rB(), (int)(40.0 * d2));
+        Color color3 = ColorUtil.withAlpha(this.rz().rA(), (int)(65.0 * d2));
+        Color color4 = ColorUtil.withAlpha(this.rz().rB(), (int)(40.0 * d2));
         RenderUtil.roundedOutlineGradientRectangle(this.aAF, this.aAG, this.aAH, this.aAI, d3, 1.0, color3, color4);
     }
 
@@ -388,7 +388,7 @@ extends GuiScreen {
         double d5 = this.aAH - -1.0;
         this.aAt.setWidth((float)(d5 - 24.0));
         this.aAt.setPosition(new Vector2d(d3 + 12.0, d4 + (this.aAJ - (double)this.aAt.eb().height()) / 2.0 + 1.5));
-        this.aAt.setColor(ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d2)));
+        this.aAt.setColor(ColorUtil.withAlpha(Color.WHITE, (int)(255.0 * d2)));
         this.aAt.setSelected(true);
         String string2 = this.aAt.aJm;
         if (PinyinImeState.isEnabled() && this.aAu.uc() && (string = this.aAu.uo()) != null && !string.isEmpty()) {
@@ -403,9 +403,9 @@ extends GuiScreen {
             if (string3 != null && !string3.isEmpty()) {
                 float f2 = this.aAt.tL();
                 float f3 = this.aAt.tM();
-                int n2 = ColorUtil.withBlue(Color.WHITE, (int)(215.0 * d2)).getRGB();
+                int n2 = ColorUtil.withAlpha(Color.WHITE, (int)(215.0 * d2)).getRGB();
                 aAp.a(string3, f2, f3, n2);
-                RenderUtil.d(f2, f3 + aAp.height() + 1.0f, aAp.getStringWidth(string3), 1.0, ColorUtil.withBlue(Color.WHITE, (int)(160.0 * d2)));
+                RenderUtil.d(f2, f3 + aAp.height() + 1.0f, aAp.getStringWidth(string3), 1.0, ColorUtil.withAlpha(Color.WHITE, (int)(160.0 * d2)));
                 if (list != null && !list.isEmpty()) {
                     StringBuilder stringBuilder = new StringBuilder();
                     int n3 = Math.min(9, list.size());
@@ -430,8 +430,8 @@ extends GuiScreen {
                     double d10 = f3 + aAp.height() + 6.0f;
                     double d11 = 8.0;
                     this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.roundedRectangle(d9, d10, d7, d8, d11 + 2.0, this.rz().rE()));
-                    RenderUtil.roundedRectangle(d9, d10, d7, d8, d11, ColorUtil.withBlue(Themes.rK(), 190));
-                    aAp.a(string5, d9 + d6, d10 + d6, ColorUtil.withBlue(Color.WHITE, 230).getRGB());
+                    RenderUtil.roundedRectangle(d9, d10, d7, d8, d11, ColorUtil.withAlpha(Themes.rK(), 190));
+                    aAp.a(string5, d9 + d6, d10 + d6, ColorUtil.withAlpha(Color.WHITE, 230).getRGB());
                 }
             }
         }
@@ -511,13 +511,13 @@ extends GuiScreen {
         if (object != null && !((String)object).isEmpty()) {
             Font agc2 = this.aAt.eb();
             double d5 = d2 + (double)agc2.getStringWidth(string);
-            int n7 = ColorUtil.withBlue(Color.WHITE, (int)(120.0 * d4)).getRGB();
+            int n7 = ColorUtil.withAlpha(Color.WHITE, (int)(120.0 * d4)).getRGB();
             agc2.a((String)object, d5, d3, n7);
         }
     }
 
     private void N(double d2) {
-        int n2 = ColorUtil.withBlue(Color.WHITE, (int)(155.0 * d2)).getRGB();
+        int n2 = ColorUtil.withAlpha(Color.WHITE, (int)(155.0 * d2)).getRGB();
         String string = this.aS(this.aAt.getText());
         String string2 = (string.isEmpty() ? new String[]{} : string.split("\\s+")).length >= 2 ? (this.aAC ? Localization.ce("ui.command.palette.hint.arguments") : Localization.ce("ui.command.palette.hint.commands")) : (this.aAC ? Localization.ce("ui.command.palette.hint.arguments") : Localization.ce("ui.command.palette.hint.commands"));
         double d3 = this.aAF + -0.5 + 8.0;
@@ -526,7 +526,7 @@ extends GuiScreen {
     }
 
     private void a(int n2, int n3, double d2) {
-        RenderUtil.roundedRectangle(this.aAK, this.aAL, this.aAM, this.aAN, 8.0, ColorUtil.withBlue(Color.BLACK, (int)(45.0 * d2)));
+        RenderUtil.roundedRectangle(this.aAK, this.aAL, this.aAM, this.aAN, 8.0, ColorUtil.withAlpha(Color.BLACK, (int)(45.0 * d2)));
         double d3 = this.aAK + 6.0;
         double d4 = this.aAM - 12.0;
         double d5 = this.aAN - 8.0;
@@ -550,7 +550,7 @@ extends GuiScreen {
             }
             int n6 = bl ? 95 : (bl2 ? 60 : 38);
             int n7 = (int)((double)n6 * d10);
-            RenderUtil.roundedRectangle(d3, d9, d4, 28.0, 6.0, ColorUtil.withBlue(Color.WHITE, (int)((double)n7 * d2)));
+            RenderUtil.roundedRectangle(d3, d9, d4, 28.0, 6.0, ColorUtil.withAlpha(Color.WHITE, (int)((double)n7 * d2)));
             if (this.aAC) {
                 Suggestion suggestion = this.aAB.get(i2);
                 this.a(suggestion, d3 + 8.0, d9 + 5.0, d4 - 16.0, d2);
@@ -559,8 +559,8 @@ extends GuiScreen {
             int n8 = this.qV();
             int n9 = this.qW();
             if (n8 != -1 && i2 == n8) {
-                Color color = ColorUtil.withBlue(this.rz().rA(), (int)(85.0 * d2));
-                Color color2 = ColorUtil.withBlue(this.rz().rB(), (int)(55.0 * d2));
+                Color color = ColorUtil.withAlpha(this.rz().rA(), (int)(85.0 * d2));
+                Color color2 = ColorUtil.withAlpha(this.rz().rB(), (int)(55.0 * d2));
                 RenderUtil.roundedOutlineGradientRectangle(d3, d9, d4, 28.0, 6.0, 1.0, color, color2);
                 this.a(this.aAR, this.aAS, d3 + 8.0, d9 + 5.0, d4 - 16.0, d2);
                 continue;
@@ -577,7 +577,7 @@ extends GuiScreen {
         if (n4 == 0) {
             Font agc2 = FontManager.MAIN.a(15, FontWeight.REGULAR);
             String string = this.rd();
-            agc2.drawString(string, this.aAK + this.aAM / 2.0, this.aAL + this.aAN / 2.0 - (double)agc2.height() / 2.0, ColorUtil.withBlue(Color.WHITE, (int)(180.0 * d2)).getRGB());
+            agc2.drawString(string, this.aAK + this.aAM / 2.0, this.aAL + this.aAN / 2.0 - (double)agc2.height() / 2.0, ColorUtil.withAlpha(Color.WHITE, (int)(180.0 * d2)).getRGB());
         }
         RenderUtil.vJ();
         this.aAv.a(new Vector2d(this.aAK + this.aAM - 4.0, this.aAL + 6.0), this.aAN - 12.0);
@@ -585,7 +585,7 @@ extends GuiScreen {
 
     private void a(CommandEntry commandEntry, double d2, double d3, double d4, double d5) {
         double d6 = d3 + (28.0 - (double)aAp.height()) / 2.0;
-        int n2 = ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d5)).getRGB();
+        int n2 = ColorUtil.withAlpha(Color.WHITE, (int)(255.0 * d5)).getRGB();
         String string = "." + commandEntry.aBk;
         aAp.a(string, d2, d6, n2);
         double d7 = d2 + (double)aAp.getStringWidth(string) + 10.0;
@@ -601,7 +601,7 @@ extends GuiScreen {
             stringBuilder.append(commandEntry.aBo);
         }
         if (stringBuilder.length() > 0) {
-            int n3 = ColorUtil.withBlue(Color.WHITE, (int)(205.0 * d5)).getRGB();
+            int n3 = ColorUtil.withAlpha(Color.WHITE, (int)(205.0 * d5)).getRGB();
             aAq.a(stringBuilder.toString(), d7, d8, n3);
             d7 += (double)aAq.getStringWidth(stringBuilder.toString());
         }
@@ -609,20 +609,20 @@ extends GuiScreen {
             if (stringBuilder.length() > 0) {
                 d7 += (double)aAq.getStringWidth("  ");
             }
-            int n4 = ColorUtil.withBlue(Color.WHITE, (int)(155.0 * d5)).getRGB();
+            int n4 = ColorUtil.withAlpha(Color.WHITE, (int)(155.0 * d5)).getRGB();
             aAq.a(commandEntry.aBp, d7, d8, n4);
         }
     }
 
     private void a(Suggestion suggestion, double d2, double d3, double d4, double d5) {
         double d6 = d3 + (28.0 - (double)aAp.height()) / 2.0;
-        int n2 = ColorUtil.withBlue(Color.WHITE, (int)(250.0 * d5)).getRGB();
+        int n2 = ColorUtil.withAlpha(Color.WHITE, (int)(250.0 * d5)).getRGB();
         String string = suggestion.aBz;
         aAp.a(string, d2, d6, n2);
         double d7 = d2 + (double)aAp.getStringWidth(string) + 10.0;
         double d8 = d6 + (double)aAp.height() - (double)aAq.height();
         if (!suggestion.aBA.isEmpty()) {
-            int n3 = ColorUtil.withBlue(Color.WHITE, (int)(220.0 * d5)).getRGB();
+            int n3 = ColorUtil.withAlpha(Color.WHITE, (int)(220.0 * d5)).getRGB();
             aAq.a(suggestion.aBA, d7, d8, n3);
             d7 += (double)aAq.getStringWidth(suggestion.aBA);
         }
@@ -630,7 +630,7 @@ extends GuiScreen {
             if (!suggestion.aBA.isEmpty()) {
                 d7 += (double)aAq.getStringWidth("  ");
             }
-            int n4 = ColorUtil.withBlue(Color.WHITE, (int)(155.0 * d5)).getRGB();
+            int n4 = ColorUtil.withAlpha(Color.WHITE, (int)(155.0 * d5)).getRGB();
             aAq.a(suggestion.aBB, d7, d8, n4);
         }
     }
@@ -641,7 +641,7 @@ extends GuiScreen {
             double d4 = Math.max(0.0, Math.min(1.0, d3));
             int n2 = (int)((double)this.statusColor.getAlpha() * d4);
             Font agc2 = FontManager.MAIN.a(13, FontWeight.MEDIUM);
-            agc2.a(this.statusMessage, this.aAF + -0.5, this.aAG + this.aAI - -0.5 - (double)agc2.height() + 4.0, ColorUtil.withBlue(this.statusColor, n2).getRGB());
+            agc2.a(this.statusMessage, this.aAF + -0.5, this.aAG + this.aAI - -0.5 - (double)agc2.height() + 4.0, ColorUtil.withAlpha(this.statusColor, n2).getRGB());
         }
     }
 
@@ -1607,9 +1607,9 @@ extends GuiScreen {
             return;
         }
         double d6 = d3 + (28.0 - (double)aAp.height()) / 2.0;
-        int n2 = ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d5)).getRGB();
+        int n2 = ColorUtil.withAlpha(Color.WHITE, (int)(255.0 * d5)).getRGB();
         String string4 = Localization.ce("ui.command.palette.suggested.meta");
-        int n3 = ColorUtil.withBlue(Color.WHITE, (int)(175.0 * d5)).getRGB();
+        int n3 = ColorUtil.withAlpha(Color.WHITE, (int)(175.0 * d5)).getRGB();
         double d7 = aAq.getStringWidth(string4);
         double d8 = d2 + Math.max(0.0, d4 - d7);
         double d9 = d6 + (double)aAp.height() - (double)aAq.height() - 1.0;
@@ -1625,7 +1625,7 @@ extends GuiScreen {
             double d11 = d2 + (double)aAp.getStringWidth(string6) + 10.0;
             double d12 = Math.max(0.0, d8 - d11 - 10.0);
             String string7 = this.a(aAq, string3, d12);
-            int n4 = ColorUtil.withBlue(Color.WHITE, (int)(160.0 * d5)).getRGB();
+            int n4 = ColorUtil.withAlpha(Color.WHITE, (int)(160.0 * d5)).getRGB();
             aAq.a(string7, d11, d9, n4);
         }
     }
@@ -1676,9 +1676,9 @@ extends GuiScreen {
             return;
         }
         double d6 = d3 + (28.0 - (double)aAp.height()) / 2.0;
-        int n2 = ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d5)).getRGB();
+        int n2 = ColorUtil.withAlpha(Color.WHITE, (int)(255.0 * d5)).getRGB();
         String string2 = Localization.ce("ui.command.palette.previous.meta");
-        int n3 = ColorUtil.withBlue(Color.WHITE, (int)(165.0 * d5)).getRGB();
+        int n3 = ColorUtil.withAlpha(Color.WHITE, (int)(165.0 * d5)).getRGB();
         double d7 = aAq.getStringWidth(string2);
         double d8 = d2 + Math.max(0.0, d4 - d7);
         double d9 = d6 + (double)aAp.height() - (double)aAq.height() - 1.0;

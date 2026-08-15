@@ -475,7 +475,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
             GlStateManager.disableLighting();
             GL11.glDepthMask(false);
             double d0 = -0.14;
-            RenderUtil.color(ColorUtil.withBlue(this.rz().rB(), 100));
+            RenderUtil.color(ColorUtil.withAlpha(this.rz().rB(), 100));
             RenderUtil.drawBoundingBox(
                 aEg.thePlayer
                     .getEntityBoundingBox()

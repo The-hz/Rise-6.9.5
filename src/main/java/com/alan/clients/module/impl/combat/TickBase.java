@@ -105,7 +105,7 @@ public final class TickBase extends Module {
         GlStateManager.disableTexture2D();
         GlStateManager.disableLighting();
         GL11.glDepthMask(false);
-        RenderUtil.color(ColorUtil.withBlue(this.rz().rA(), 50));
+        RenderUtil.color(ColorUtil.withAlpha(this.rz().rA(), 50));
         GlStateManager.enableTexture2D();
         GlStateManager.enableLighting();
         GlStateManager.disableBlend();

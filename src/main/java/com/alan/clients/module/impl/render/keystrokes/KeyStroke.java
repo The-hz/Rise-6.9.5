@@ -44,7 +44,7 @@ public class KeyStroke implements InstanceAccess {
         double d3 = this.scale.getX();
         double d4 = this.scale.getY();
         this.rz();
-        RenderUtil.roundedRectangle(d1, d2, d3, d4, d0, ColorUtil.withBlue(Themes.rK(), (int)this.animation.getValue()));
+        RenderUtil.roundedRectangle(d1, d2, d3, d4, d0, ColorUtil.withAlpha(Themes.rK(), (int)this.animation.getValue()));
         this.updateHeld();
         Vector2d vector2d1 = new Vector2d(FontManager.MAIN.a(20, FontWeight.REGULAR).getStringWidth(this.name), FontManager.MAIN.a(20, FontWeight.REGULAR).height());
         Vector2d vector2d2 = new Vector2d(

@@ -29,7 +29,7 @@ public class Particle implements InstanceAccess {
 
     public Particle(Vector2f vec2, Vector2f var2) {
         this.aPu = vec2;
-        this.aPx = ColorUtil.withBlue(ColorUtil.a(this.rz().rA(), this.rz().rB(), Math.random()), (int)(Math.random() * 255.0));
+        this.aPx = ColorUtil.withAlpha(ColorUtil.a(this.rz().rA(), this.rz().rB(), Math.random()), (int)(Math.random() * 255.0));
         this.velocity = var2;
         this.scale = (float)(2.0 + Math.random() * 3.0);
         this.bN.aX();
@@ -56,8 +56,8 @@ public class Particle implements InstanceAccess {
             this.velocity.setY(this.velocity.getY() * 0.999F);
         }
 
-        this.aPz = ColorUtil.withBlue(this.aPx, (int)this.alpha * 3);
-        this.aPy = ColorUtil.withBlue(this.aPx, (int)this.alpha);
+        this.aPz = ColorUtil.withAlpha(this.aPx, (int)this.alpha * 3);
+        this.aPy = ColorUtil.withAlpha(this.aPx, (int)this.alpha);
         this.alpha = Math.max(this.alpha - (float)this.bN.getElapsedTime() / 18.0F, 0.0F);
         this.bN.aX();
     }

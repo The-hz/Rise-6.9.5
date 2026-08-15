@@ -29,7 +29,7 @@ public final class Tracers extends Module {
                     double d0 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * var1.getPartialTicks();
                     double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * var1.getPartialTicks() + 1.62F;
                     double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * var1.getPartialTicks();
-                    Color color = ColorUtil.withBlue(ColorUtil.a(this.rz().rB(), this.rz().rA(), Math.min(1.0F, aEg.thePlayer.getDistanceToEntity(entity) / 50.0F)), 128);
+                    Color color = ColorUtil.withAlpha(ColorUtil.a(this.rz().rB(), this.rz().rA(), Math.min(1.0F, aEg.thePlayer.getDistanceToEntity(entity) / 50.0F)), 128);
                     aEg.getRenderManager();
                     double d3 = RenderManager.bUO;
                     aEg.getRenderManager();

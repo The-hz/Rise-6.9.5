@@ -105,14 +105,14 @@ public final class SlotComponent extends Component {
                     this.rz();
                     Color color = Themes.rK();
                     this.rz();
-                    RenderUtil.roundedRectangle(d4, d5, d3, 22.0, d9, ColorUtil.withBlue(color, (int)(Themes.rK().getAlpha() * d7)));
+                    RenderUtil.roundedRectangle(d4, d5, d3, 22.0, d9, ColorUtil.withAlpha(color, (int)(Themes.rK().getAlpha() * d7)));
                     if (flag1) {
                         float f = this.ge.getStringWidth("Amount:") + 2;
-                        this.ge.b("Amount:", d4 + 6.0 + 16.0, d6, ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d7)).getRGB());
-                        this.gf.b(s, d4 + 6.0 + 16.0 + f, d6, ColorUtil.withBlue(this.rz().rA(), (int)(255.0 * d7)).getRGB());
+                        this.ge.b("Amount:", d4 + 6.0 + 16.0, d6, ColorUtil.withAlpha(Color.WHITE, (int)(255.0 * d7)).getRGB());
+                        this.gf.b(s, d4 + 6.0 + 16.0 + f, d6, ColorUtil.withAlpha(this.rz().rA(), (int)(255.0 * d7)).getRGB());
                     }
 
-                    RenderUtil.a(d4 + 3.0, d5 + 3.0, ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d7)).getRGB(), itemstack2);
+                    RenderUtil.a(d4 + 3.0, d5 + 3.0, ColorUtil.withAlpha(Color.WHITE, (int)(255.0 * d7)).getRGB(), itemstack2);
                     GlStateManager.popMatrix();
                 });
                 double d8 = d2;
@@ -123,7 +123,7 @@ public final class SlotComponent extends Component {
                             GlStateManager.translate((d4 + d3 * 0.5) * (1.0 - d0), (d5 + 11.0) * (1.0 - d0), 0.0);
                             GlStateManager.scale(d0, d0, 0.0);
                             RenderUtil.roundedRectangle(
-                                d4 + 0.5, d5 + 0.5, d3 - 1.0, 21.0, this.rz().getRound() + 1, ColorUtil.withBlue(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d8))
+                                d4 + 0.5, d5 + 0.5, d3 - 1.0, 21.0, this.rz().getRound() + 1, ColorUtil.withAlpha(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d8))
                             );
                             GlStateManager.popMatrix();
                         }

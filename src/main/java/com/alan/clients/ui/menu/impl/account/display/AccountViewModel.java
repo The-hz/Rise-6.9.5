@@ -29,12 +29,12 @@ public class AccountViewModel<T extends AltAccount> implements MenuColors, Insta
     private static final Font FONT_RENDERER = FontManager.MAIN.a(24, FontWeight.BOLD);
     private static final Font INFO_FONT_RENDERER = FontManager.MAIN.a(18, FontWeight.MEDIUM);
     private static final DateFormat DATE_FORMAT = DateFormat.getDateInstance(3);
-    private static final Color BLOOM_COLOR = ColorUtil.withBlue(Color.BLACK, 150);
-    private static final Color FONT_COLOR = ColorUtil.withBlue(Color.WHITE, 150);
-    private static final Color INFO_COLOR = ColorUtil.withBlue(FONT_COLOR.darker(), 150);
-    private static final Color BACKGROUND_COLOR = ColorUtil.withBlue(aBV, 50);
-    private static final Color BORDER_ONE_COLOR = ColorUtil.withBlue(aBP, 32);
-    private static final Color BORDER_TWO_COLOR = ColorUtil.withBlue(aBO, 32);
+    private static final Color BLOOM_COLOR = ColorUtil.withAlpha(Color.BLACK, 150);
+    private static final Color FONT_COLOR = ColorUtil.withAlpha(Color.WHITE, 150);
+    private static final Color INFO_COLOR = ColorUtil.withAlpha(FONT_COLOR.darker(), 150);
+    private static final Color BACKGROUND_COLOR = ColorUtil.withAlpha(aBV, 50);
+    private static final Color BORDER_ONE_COLOR = ColorUtil.withAlpha(aBP, 32);
+    private static final Color BORDER_TWO_COLOR = ColorUtil.withAlpha(aBO, 32);
     private final Animation hoverAnimation;
     private final Animation positionAnimation;
     private T account;
@@ -136,7 +136,7 @@ public class AccountViewModel<T extends AltAccount> implements MenuColors, Insta
         this.rz();
         RenderUtil.roundedRectangle(var1, var3, d0, d1, 5.0, Themes.rK());
         StencilUtil.bindReadStencilBuffer(1);
-        RenderUtil.image(SkinUtil.getResourceLocation(SkinType.SKIN, this.account.sh(), 24), var1, var3, var5, var5, ColorUtil.withBlue(Color.WHITE, (int)(200.0 + this.hoverAnimation.getValue())));
+        RenderUtil.image(SkinUtil.getResourceLocation(SkinType.SKIN, this.account.sh(), 24), var1, var3, var5, var5, ColorUtil.withAlpha(Color.WHITE, (int)(200.0 + this.hoverAnimation.getValue())));
         StencilUtil.uninitStencilBuffer();
     }
 

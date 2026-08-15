@@ -159,7 +159,7 @@ public final class LegitReach extends Module {
             GlStateManager.disableLighting();
             GL11.glDepthMask(false);
             double d0 = 0.14;
-            RenderUtil.color(ColorUtil.withBlue(this.rz().rA(), 50));
+            RenderUtil.color(ColorUtil.withAlpha(this.rz().rA(), 50));
             RenderUtil.drawBoundingBox(
                 aEg.thePlayer
                     .getEntityBoundingBox()

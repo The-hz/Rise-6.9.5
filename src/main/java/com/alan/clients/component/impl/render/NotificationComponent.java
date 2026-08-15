@@ -53,10 +53,10 @@ public class NotificationComponent extends Component {
                     this.rz();
                     Color color = Themes.rK();
                     this.rz();
-                    RenderUtil.roundedRectangle(d2, d3, d4, d5, 10.0, ColorUtil.withBlue(color, (int)(Themes.rK().getAlpha() * d1)));
-                    RenderUtil.roundedRectangle(POSITION.x + SPACER, POSITION.y + SPACER, ICON_SCALE.x, ICON_SCALE.y, 6.0, ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d1)));
-                    bold.b(current.getFirst(), POSITION.x + SPACER + ICON_SCALE.x + SPACER, POSITION.y + SPACER + 3.0, ColorUtil.withBlue(this.rz().rA(), (int)(255.0 * d1)).getRGB());
-                    light.b(current.getSecond(), POSITION.x + SPACER + ICON_SCALE.x + SPACER, POSITION.y + SPACER + 0.5 + SPACER * 0.7 + bold.height(), ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d1)).getRGB());
+                    RenderUtil.roundedRectangle(d2, d3, d4, d5, 10.0, ColorUtil.withAlpha(color, (int)(Themes.rK().getAlpha() * d1)));
+                    RenderUtil.roundedRectangle(POSITION.x + SPACER, POSITION.y + SPACER, ICON_SCALE.x, ICON_SCALE.y, 6.0, ColorUtil.withAlpha(Color.WHITE, (int)(255.0 * d1)));
+                    bold.b(current.getFirst(), POSITION.x + SPACER + ICON_SCALE.x + SPACER, POSITION.y + SPACER + 3.0, ColorUtil.withAlpha(this.rz().rA(), (int)(255.0 * d1)).getRGB());
+                    light.b(current.getSecond(), POSITION.x + SPACER + ICON_SCALE.x + SPACER, POSITION.y + SPACER + 0.5 + SPACER * 0.7 + bold.height(), ColorUtil.withAlpha(Color.WHITE, (int)(255.0 * d1)).getRGB());
                     GlStateManager.popMatrix();
                 });
                 this.b(ShaderQueueType.BLOOM)
@@ -66,7 +66,7 @@ public class NotificationComponent extends Component {
                             GlStateManager.translate((POSITION.x + SCALE.x / 2.0) * (1.0 - d0), (POSITION.y + SCALE.y / 2.0) * (1.0 - d0), 0.0);
                             GlStateManager.scale(d0, d0, 0.0);
                             RenderUtil.roundedRectangle(
-                                POSITION.x + 0.5, POSITION.y + 0.5, SCALE.x - 1.0, SCALE.y - 1.0, 11.0, ColorUtil.withBlue(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d1))
+                                POSITION.x + 0.5, POSITION.y + 0.5, SCALE.x - 1.0, SCALE.y - 1.0, 11.0, ColorUtil.withAlpha(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d1))
                             );
                             GlStateManager.popMatrix();
                         }
@@ -76,7 +76,7 @@ public class NotificationComponent extends Component {
                         GlStateManager.pushMatrix();
                         GlStateManager.translate((POSITION.x + SCALE.x / 2.0) * (1.0 - d0), (POSITION.y + SCALE.y / 2.0) * (1.0 - d0), 0.0);
                         GlStateManager.scale(d0, d0, 0.0);
-                        RenderUtil.roundedRectangle(POSITION.x, POSITION.y, SCALE.x, SCALE.y, 10.0, ColorUtil.withBlue(Color.BLACK, (int)(255.0 * d1)));
+                        RenderUtil.roundedRectangle(POSITION.x, POSITION.y, SCALE.x, SCALE.y, 10.0, ColorUtil.withAlpha(Color.BLACK, (int)(255.0 * d1)));
                         GlStateManager.popMatrix();
                     }
                 });

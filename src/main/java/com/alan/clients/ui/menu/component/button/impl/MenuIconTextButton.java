@@ -24,13 +24,13 @@ public class MenuIconTextButton extends MenuTextButton {
     public void draw(int var1, int var2, float var3) {
         this.getHoverAnimation().Q(MouseUtil.isHovered(this.getX(), this.getY(), this.oM(), this.da(), var1, var2) ? 100.0 : 45.0);
         double d0 = this.getY();
-        Color color = ColorUtil.withBlue(Color.BLACK, 150);
-        Color color1 = ColorUtil.withBlue(Color.WHITE, (int)(150.0 + this.getHoverAnimation().getValue()));
+        Color color = ColorUtil.withAlpha(Color.BLACK, 150);
+        Color color1 = ColorUtil.withAlpha(Color.WHITE, (int)(150.0 + this.getHoverAnimation().getValue()));
         this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(this.getX(), this.getY(), this.oM(), this.da(), 5.0, Color.WHITE));
         this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.roundedRectangle(this.getX() + 0.5, d0 + 0.5, this.oM() - 1.0, this.da() - 1.0, 6.0, color));
         this.b(ShaderQueueType.REGULAR).c(() -> {
-            RenderUtil.roundedRectangle(this.getX(), d0, this.oM(), this.da(), 5.0, ColorUtil.withBlue(aBV, (int)this.getHoverAnimation().getValue() - 15));
-            RenderUtil.roundedOutlineGradientRectangle(this.getX(), d0, this.oM(), this.da(), 5.0, 1.0, ColorUtil.withBlue(aBP, 32), ColorUtil.withBlue(aBO, 32));
+            RenderUtil.roundedRectangle(this.getX(), d0, this.oM(), this.da(), 5.0, ColorUtil.withAlpha(aBV, (int)this.getHoverAnimation().getValue() - 15));
+            RenderUtil.roundedOutlineGradientRectangle(this.getX(), d0, this.oM(), this.da(), 5.0, 1.0, ColorUtil.withAlpha(aBP, 32), ColorUtil.withAlpha(aBO, 32));
             byte b0 = 64;
             RenderUtil.image(this.aCa, this.getX() + this.oM() / 2.0 - 32, d0 + this.da() / 2.0 - 32, b0, b0, color1);
             Font agc = aBZ;

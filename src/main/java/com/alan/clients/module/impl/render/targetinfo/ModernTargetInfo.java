@@ -128,7 +128,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                     GlStateManager.scale(d12, d12, 0.0);
                     double d13 = d0 + 8.0 + b0 + 7.0;
                     double d14 = d1 + 8.0 + b0 - 4.0 - 7.0;
-                    Color color8 = ColorUtil.withBlue(Themes.rK(), (int)(Themes.rK().getAlpha() / 1.7F));
+                    Color color8 = ColorUtil.withAlpha(Themes.rK(), (int)(Themes.rK().getAlpha() / 1.7F));
                     this.rz();
                     RenderUtil.a(d13, d14, d6, 6.0, 3.0, color8, Themes.rK(), true);
                     RenderUtil.a(d0 + 8.0 + b0 + 7.0, d1 + 8.0 + b0 - 4.0 - 7.0, d7, 6.0, 3.0, color3, color2, true);
@@ -307,6 +307,6 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         GlStateManager.disableBlend();
         StencilUtil.uninitStencilBuffer();
         float f1 = 0.5F;
-        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.withBlue(Color.BLACK, 40));
+        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.withAlpha(Color.BLACK, 40));
     }
 }

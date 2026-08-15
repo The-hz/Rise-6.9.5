@@ -76,7 +76,7 @@ public class NumberValueComponent extends ValueComponent {
         }
 
         this.azm.setWidth(20.0F);
-        this.azm.setColor(ColorUtil.withBlue(this.azm.getColor(), this.ayD));
+        this.azm.setColor(ColorUtil.withAlpha(this.azm.getColor(), this.ayD));
         this.azm.draw();
         RenderUtil.roundedRectangle(this.position.x + f, this.position.y + 1.5, 100.0, 2.0, 1.0, UIColors.BACKGROUND.Y(this.ayD));
         this.azk = this.position.x + f;
@@ -96,7 +96,7 @@ public class NumberValueComponent extends ValueComponent {
             this.azl = (this.azl * 29.0 + this.azj) / 30.0;
         }
 
-        RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.withBlue(this.rz().rA(), this.ayD));
+        RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.withAlpha(this.rz().rA(), this.ayD));
         this.azh.aX();
     }
 
@@ -123,7 +123,7 @@ public class NumberValueComponent extends ValueComponent {
     @Override
     public void released() {
         if (this.position != null) {
-            RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.withBlue(this.rz().rA(), this.ayD));
+            RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.withAlpha(this.rz().rA(), this.ayD));
         }
     }
 

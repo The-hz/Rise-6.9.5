@@ -462,7 +462,7 @@ public class BedPlates extends Module {
             double d17 = d3;
             double d18 = d4;
             double d19 = d1;
-            Color color8 = ColorUtil.withBlue(UIColors.SECONDARY.pV(), 105);
+            Color color8 = ColorUtil.withAlpha(UIColors.SECONDARY.pV(), 105);
             Color color9 = color3;
             Color color10 = color6;
             Color color11 = color7;
@@ -487,7 +487,7 @@ public class BedPlates extends Module {
                         GlStateManager.pushMatrix();
                         GlStateManager.translate(d28, d29, 0.0);
                         GlStateManager.scale(d19, d19, d19);
-                        this.distanceLabelFont.a(s2, 0.0, 0.0, ColorUtil.withBlue(this.rz().rA(), 240).getRGB());
+                        this.distanceLabelFont.a(s2, 0.0, 0.0, ColorUtil.withAlpha(this.rz().rA(), 240).getRGB());
                         GlStateManager.popMatrix();
                     }
                 });

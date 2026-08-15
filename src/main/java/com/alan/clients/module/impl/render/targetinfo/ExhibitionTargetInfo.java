@@ -63,7 +63,7 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
         double d2 = Math.min(!this.targetInfo.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
         Color color = getHealthColor(f, abstractclientplayer.getMaxHealth());
         double d3 = d0 + 40.0;
-        RenderUtil.d(d3, d1 + 25.0, 91.0, 5.0, ColorUtil.withBlue(color, 50));
+        RenderUtil.d(d3, d1 + 25.0, 91.0, 5.0, ColorUtil.withAlpha(color, 50));
         RenderUtil.d(d3, d1 + 25.0, 91.0 * (d2 / abstractclientplayer.getMaxHealth()), 6.0, color);
         RenderUtil.d(d3, d1 + 25.0, 91.0, 1.0, Color.BLACK);
         RenderUtil.d(d3, d1 + 30.0, 91.0, 1.0, Color.BLACK);

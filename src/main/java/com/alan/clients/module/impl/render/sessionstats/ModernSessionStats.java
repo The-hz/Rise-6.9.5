@@ -56,7 +56,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                 this.b(ShaderQueueType.BLOOM).c(() -> {
                     RenderUtil.roundedRectangle(this.position.apP.x, this.position.apP.y - 14.0, this.position.aHe.x, this.position.aHe.y + 14.0, 7.0, this.rz().rE());
                     double d1 = this.position.apP.x + this.position.aHe.x / 2.0 - (FontManager.MAIN.a(18, FontWeight.REGULAR).getStringWidth("Information") / 2.0 + 1.0);
-                    FontManager.MAIN.a(18, FontWeight.BOLD).drawString(Localization.ce("session"), d1, this.position.apP.y - 9.0, ColorUtil.withBlue(this.rz().rA(), 200).getRGB());
+                    FontManager.MAIN.a(18, FontWeight.BOLD).drawString(Localization.ce("session"), d1, this.position.apP.y - 9.0, ColorUtil.withAlpha(this.rz().rA(), 200).getRGB());
                 });
             }
 
@@ -70,7 +70,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                             Math.min(255, UIColors.BACKGROUND.pV().getBlue() + color.getBlue() / 26),
                             245
                         );
-                        RenderUtil.a(this.position.apP.x, this.position.apP.y - 14.0, this.position.aHe.x, 14.0, 6.0, ColorUtil.withBlue(UIColors.SECONDARY.pV(), 170), true, true, false, false);
+                        RenderUtil.a(this.position.apP.x, this.position.apP.y - 14.0, this.position.aHe.x, 14.0, 6.0, ColorUtil.withAlpha(UIColors.SECONDARY.pV(), 170), true, true, false, false);
                         RenderUtil.a(this.position.apP.x, this.position.apP.y, this.position.aHe.x, this.position.aHe.y, 6.0, color1, false, false, true, true);
                         double d1 = this.position.apP.x + this.position.aHe.x / 2.0 - (FontManager.MAIN.a(18, FontWeight.REGULAR).getStringWidth("Information") / 2.0 + 1.0);
                         FontManager.MAIN.a(18, FontWeight.BOLD).drawString(Localization.ce("session"), d1, this.position.apP.y - 9.0, this.rz().rD().getRGB());

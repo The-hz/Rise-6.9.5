@@ -33,7 +33,7 @@ public class WurstTargetInfo extends Mode<TargetInfo> {
         String s1 = UserLookupComponent.c(s, s);
         double d0 = this.targetInfo.position.x;
         double d1 = this.targetInfo.position.y;
-        RenderUtil.d(d0, d1, 185.0, 34.0, ColorUtil.withBlue(Color.WHITE, 100));
+        RenderUtil.d(d0, d1, 185.0, 34.0, ColorUtil.withAlpha(Color.WHITE, 100));
         aEg.fontRendererObj.a("Name: " + s1, d0 + 4.0, d1 + 4.0, Color.BLACK.getRGB());
         this.targetInfo.positionValue.aHe = new Vector2d(185.0, 50.0);
         AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;

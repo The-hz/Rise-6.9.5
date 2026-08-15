@@ -87,7 +87,7 @@ public class BoundsNumberValueComponent extends ValueComponent {
         }
 
         this.ayS.setWidth(20.0F);
-        this.ayS.setColor(ColorUtil.withBlue(this.ayS.getColor(), this.ayD));
+        this.ayS.setColor(ColorUtil.withAlpha(this.ayS.getColor(), this.ayD));
         this.ayS.draw();
         RenderUtil.roundedRectangle(this.position.x + f, this.position.y + 1.5, 100.0, 2.0, 1.0, UIColors.BACKGROUND.Y(Math.min(this.ayD, UIColors.BACKGROUND.pV().getAlpha())));
         this.ayM = this.position.x + f;
@@ -133,12 +133,12 @@ public class BoundsNumberValueComponent extends ValueComponent {
         double d1 = this.ayN + this.ayP * 100.0;
         double d2 = d1 - d0;
         if (this.ayK != this.ayL) {
-            RenderUtil.roundedRectangle(d0, this.position.y + 1.5, d2, 2.0, 1.0, ColorUtil.withBlue(this.rz().rA(), Math.min(70, this.ayD)));
+            RenderUtil.roundedRectangle(d0, this.position.y + 1.5, d2, 2.0, 1.0, ColorUtil.withAlpha(this.rz().rA(), Math.min(70, this.ayD)));
         }
 
-        RenderUtil.roundedRectangle(d0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.withBlue(this.rz().rA(), this.ayD));
+        RenderUtil.roundedRectangle(d0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.withAlpha(this.rz().rA(), this.ayD));
         if (this.ayK != this.ayL) {
-            RenderUtil.roundedRectangle(d1 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.withBlue(this.rz().rA(), this.ayD));
+            RenderUtil.roundedRectangle(d1 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.withAlpha(this.rz().rA(), this.ayD));
         }
 
         this.ayG.aX();
@@ -176,7 +176,7 @@ public class BoundsNumberValueComponent extends ValueComponent {
         if (this.position != null) {
             double d0 = this.ayM + this.ayO * 100.0;
             double d1 = this.ayN + this.ayP * 100.0;
-            Color color = ColorUtil.withBlue(this.rz().rA(), this.ayD);
+            Color color = ColorUtil.withAlpha(this.rz().rA(), this.ayD);
             RenderUtil.roundedRectangle(d0 - 2.5, this.position.y, 5.0, 5.0, 2.5, color);
             RenderUtil.roundedRectangle(d1 - 2.5, this.position.y, 5.0, 5.0, 2.5, color);
         }

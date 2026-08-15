@@ -55,19 +55,19 @@ public final class ColorUtil {
         return new Color(Math.min((int)(i / var1), 255), Math.min((int)(j / var1), 255), Math.min((int)(k / var1), 255), l);
     }
 
-    public static Color withAlpha(Color color, int var1) {
+    public static Color withRed(Color color, int var1) {
         return new Color(var1, color.getGreen(), color.getBlue());
     }
 
-    public static Color withRed(Color color, int var1) {
+    public static Color withGreen(Color color, int var1) {
         return new Color(color.getRed(), var1, color.getBlue());
     }
 
-    public static Color withGreen(Color color, int var1) {
+    public static Color withBlue(Color color, int var1) {
         return new Color(color.getRed(), color.getGreen(), var1);
     }
 
-    public static Color withBlue(Color color, int var1) {
+    public static Color withAlpha(Color color, int var1) {
         return var1 == color.getAlpha() ? color : new Color(color.getRed(), color.getGreen(), color.getBlue(), (int)MathUtil.c(0.0, 255.0, var1));
     }
 
