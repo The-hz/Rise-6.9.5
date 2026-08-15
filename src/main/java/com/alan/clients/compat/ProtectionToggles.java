@@ -15,6 +15,9 @@ public final class ProtectionToggles {
     private static final boolean HWID_CHECK =
             Boolean.getBoolean("rise.protection.hwidcheck");
 
+    private static final boolean NAME_PROBES =
+            Boolean.getBoolean("rise.protection.nameprobes");
+
     private ProtectionToggles() {
     }
 
@@ -32,5 +35,9 @@ public final class ProtectionToggles {
 
     public static boolean hwidCheck() {
         return HWID_CHECK;
+    }
+
+    public static boolean nameProbes() {
+        return NAME_PROBES;
     }
 }
