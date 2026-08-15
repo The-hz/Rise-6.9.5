@@ -1,8 +1,11 @@
-package hackclient.rise;
+package hackclient.rise.render.shader;
 
 import com.alan.clients.module.impl.render.Interface;
 import com.alan.clients.util.shader.base.RiseShaderProgram;
 import com.alan.clients.util.shader.base.ShaderUniforms;
+import hackclient.rise.aix;
+import hackclient.rise.aiz;
+import hackclient.rise.ajq;
 import java.nio.FloatBuffer;
 import java.util.List;
 import lombok.Generated;

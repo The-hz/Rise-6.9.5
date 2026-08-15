@@ -1,4 +1,4 @@
-package hackclient.rise;
+package hackclient.rise.component;
 
 import com.alan.clients.component.Component;
 import com.alan.clients.newevent.Listener;

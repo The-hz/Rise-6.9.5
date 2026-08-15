@@ -1,4 +1,6 @@
-package hackclient.rise;
+package hackclient.rise.file;
+
+import hackclient.rise.aem;
 
 class afu {
     static final int[] aHG = new int[aem.values().length];

@@ -1,5 +1,7 @@
 package hackclient.rise;
 
+import hackclient.rise.render.shader.ajd;
+import hackclient.rise.render.shader.ajf;
 import lombok.Generated;
 
 public enum gh {

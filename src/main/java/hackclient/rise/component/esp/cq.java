@@ -1,7 +1,6 @@
 package hackclient.rise.component.esp;
 
 import com.alan.clients.Client;
-import com.alan.clients.module.impl.render.ESP;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import hackclient.rise.aip;
@@ -21,7 +20,7 @@ public class cq extends cm implements InstanceAccess {
 
     @Override
     public void cp() {
-        boolean flag = Client.a.g().c(ESP.class).staticColor.wo();
+        boolean flag = Client.a.g().c(com.alan.clients.module.impl.render.ESP.class).staticColor.wo();
         float f = aEg.timer.bWm;
 
         for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {

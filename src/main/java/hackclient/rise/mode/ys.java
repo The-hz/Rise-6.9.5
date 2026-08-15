@@ -1,4 +1,4 @@
-package hackclient.rise;
+package hackclient.rise.mode;
 
 import com.alan.clients.Client;
 import com.alan.clients.component.impl.player.PingSpoofComponent;
@@ -15,6 +15,10 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.StringValue;
+import hackclient.rise.agc;
+import hackclient.rise.gb;
+import hackclient.rise.gd;
+import hackclient.rise.zc;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;

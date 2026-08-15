@@ -1,4 +1,4 @@
-package hackclient.rise;
+package hackclient.rise.security;
 
 import com.alan.clients.Client;
 import com.alan.clients.compat.ProtectionToggles;
@@ -13,6 +13,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.security.SecurityFeature;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import hackclient.rise.ahm;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;

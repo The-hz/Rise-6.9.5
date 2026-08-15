@@ -1,7 +1,6 @@
 package hackclient.rise;
 
 import lombok.Generated;
-import net.minecraft.util.Vec3;
 
 public class ahy {
     private double x;
@@ -24,8 +23,8 @@ public class ahy {
         return this.n(var1.getX(), var1.getY(), var1.getZ());
     }
 
-    public Vec3 uY() {
-        return new Vec3(this.x, this.y, this.z);
+    public net.minecraft.util.Vec3 uY() {
+        return new net.minecraft.util.Vec3(this.x, this.y, this.z);
     }
 
     @Override

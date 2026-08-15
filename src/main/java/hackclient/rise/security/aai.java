@@ -1,4 +1,4 @@
-package hackclient.rise;
+package hackclient.rise.security;
 
 final class aai {
     double at;

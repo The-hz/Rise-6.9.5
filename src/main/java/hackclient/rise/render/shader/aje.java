@@ -1,4 +1,6 @@
-package hackclient.rise;
+package hackclient.rise.render.shader;
+
+import hackclient.rise.aiz;
 
 class aje {
     static final int[] aQb = new int[aiz.values().length];

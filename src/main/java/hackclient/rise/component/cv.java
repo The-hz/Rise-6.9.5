@@ -1,4 +1,4 @@
-package hackclient.rise;
+package hackclient.rise.component;
 
 class cv {
     final String ih;

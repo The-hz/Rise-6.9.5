@@ -6,6 +6,8 @@ import com.alan.clients.util.shader.impl.RGQShader;
 import com.alan.clients.util.shader.impl.ROGQShader;
 import com.alan.clients.util.shader.impl.ROQShader;
 import hackclient.rise.render.shader.ajc;
+import hackclient.rise.render.shader.ajd;
+import hackclient.rise.render.shader.ajf;
 
 public interface aiv {
     AlphaShader aPA = new AlphaShader();

@@ -1,4 +1,4 @@
-package hackclient.rise;
+package hackclient.rise.mode;
 
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.ModeValue;

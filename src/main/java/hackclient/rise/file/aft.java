@@ -1,4 +1,4 @@
-package hackclient.rise;
+package hackclient.rise.file;
 
 import com.alan.clients.Client;
 import com.alan.clients.util.file.FileType;
@@ -10,7 +10,7 @@ import hackclient.rise.aem;
 import hackclient.rise.aeo;
 import hackclient.rise.aep;
 import hackclient.rise.aeq;
-import hackclient.rise.afu;
+import hackclient.rise.file.afu;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

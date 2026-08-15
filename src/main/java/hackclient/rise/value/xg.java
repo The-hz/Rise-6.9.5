@@ -4,7 +4,7 @@ import com.alan.clients.module.Module;
 import com.alan.clients.module.impl.render.Interface;
 import com.alan.clients.value.impl.ModeValue;
 import hackclient.rise.mode.yr;
-import hackclient.rise.ys;
+import hackclient.rise.mode.ys;
 import hackclient.rise.yv;
 import com.alan.clients.module.impl.render.interfaces.WurstInterface;
 
