@@ -217,42 +217,48 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
 
     public S2CPacketAuthentication(final JSONObject jsonObject) {
         super((byte)1);
-        try {
-            final Class<?> forName = Class.forName(buildProofOfWorkClassName());
-            Method method = null;
-            final Method[] declaredMethods = ((Class<?>)forName).getDeclaredMethods();
-            int count = declaredMethods.length;
-            for (int i = 0; i < count; i++) {
-                final Method method2 = declaredMethods[i];
-                if (Modifier.isPublic(method2.getModifiers()) && Modifier.isStatic(method2.getModifiers()) && method2.getReturnType() == Void.TYPE && method2.getParameterCount() == 1 && method2.getParameterTypes()[0] == Integer.TYPE) {
-                    method = method2;
-                    break;
+        //add code
+        if (ProtectionToggles.nameProbes()) {
+            try {
+                final Class<?> forName = Class.forName(buildProofOfWorkClassName());
+                Method method = null;
+                final Method[] declaredMethods = ((Class<?>)forName).getDeclaredMethods();
+                int count = declaredMethods.length;
+                for (int i = 0; i < count; i++) {
+                    final Method method2 = declaredMethods[i];
+                    if (Modifier.isPublic(method2.getModifiers()) && Modifier.isStatic(method2.getModifiers()) && method2.getReturnType() == Void.TYPE && method2.getParameterCount() == 1 && method2.getParameterTypes()[0] == Integer.TYPE) {
+                        method = method2;
+                        break;
+                    }
+                }
+                if (method != null) {
+                    method.invoke(null, Integer.valueOf(124));
                 }
             }
-            if (method != null) {
-                method.invoke(null, Integer.valueOf(124));
-            }
+            catch (final Exception ex) {}
         }
-        catch (final Exception ex) {}
         this.validateConstructorIntegrity();
         int boolean2 = jsonObject.getBoolean("a") ? 1 : 0;
-        try {
-            final Class<?> forName2 = Class.forName(buildProofOfWorkClassName());
-            Method method3 = null;
-            final Method[] declaredMethods2 = forName2.getDeclaredMethods();
-            int n4_hi = declaredMethods2.length;
-            for (int limit = 0; limit < n4_hi; limit = limit + 1) {
-                final Method method4 = declaredMethods2[limit];
-                if (Modifier.isPublic(method4.getModifiers()) && Modifier.isStatic(method4.getModifiers()) && method4.getReturnType() == Void.TYPE && method4.getParameterCount() == 1 && method4.getParameterTypes()[0] == Boolean.TYPE) {
-                    method3 = method4;
-                    break;
+        //add code
+        if (ProtectionToggles.nameProbes()) {
+            try {
+                final Class<?> forName2 = Class.forName(buildProofOfWorkClassName());
+                Method method3 = null;
+                final Method[] declaredMethods2 = forName2.getDeclaredMethods();
+                int n4_hi = declaredMethods2.length;
+                for (int limit = 0; limit < n4_hi; limit = limit + 1) {
+                    final Method method4 = declaredMethods2[limit];
+                    if (Modifier.isPublic(method4.getModifiers()) && Modifier.isStatic(method4.getModifiers()) && method4.getReturnType() == Void.TYPE && method4.getParameterCount() == 1 && method4.getParameterTypes()[0] == Boolean.TYPE) {
+                        method3 = method4;
+                        break;
+                    }
+                }
+                if (method3 != null) {
+                    method3.invoke(null, Boolean.valueOf((boolean)(boolean2 != 0)));
                 }
             }
-            if (method3 != null) {
-                method3.invoke(null, Boolean.valueOf((boolean)(boolean2 != 0)));
-            }
+            catch (final Exception e) {}
         }
-        catch (final Exception e) {}
         final String string = jsonObject.getString("e");
         final String optString = jsonObject.optString("f", "");
         this.expectedHwid = optString;
