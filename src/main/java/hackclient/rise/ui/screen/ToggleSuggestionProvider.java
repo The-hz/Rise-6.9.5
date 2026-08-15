@@ -2,28 +2,28 @@ package hackclient.rise.ui.screen;
 
 import com.alan.clients.Client;
 import com.alan.clients.module.Module;
-import hackclient.rise.ui.screen.acl;
-import hackclient.rise.ui.screen.acy;
-import hackclient.rise.ui.screen.acz;
-import hackclient.rise.ui.screen.ada;
+import hackclient.rise.ui.screen.CommandPalette;
+import hackclient.rise.ui.screen.Suggestion;
+import hackclient.rise.ui.screen.SuggestionContext;
+import hackclient.rise.ui.screen.SuggestionProvider;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-final class adc
-implements ada {
-    adc() {
+final class ToggleSuggestionProvider
+implements SuggestionProvider {
+    ToggleSuggestionProvider() {
     }
 
     @Override
-    public List<acy> b(acz acz2) {
+    public List<Suggestion> b(SuggestionContext acz2) {
         String[] stringArray = acz2.rk();
         if (stringArray.length == 0) {
             return Collections.emptyList();
         }
-        String string = acl.aQ(acz2.rj());
+        String string = CommandPalette.aQ(acz2.rj());
         String string2 = stringArray[0] == null ? "" : stringArray[0].toLowerCase(Locale.ROOT);
         String string3 = string2 == null ? "" : string2.trim().toLowerCase(Locale.ROOT).replace(" ", "");
         ArrayList<Module> arrayList = new ArrayList<Module>();
@@ -44,12 +44,12 @@ implements ada {
             }
             return module.getName().compareToIgnoreCase(module2.getName());
         });
-        ArrayList<acy> arrayList2 = new ArrayList<acy>();
+        ArrayList<Suggestion> arrayList2 = new ArrayList<Suggestion>();
         Iterator iterator = arrayList.iterator();
         while (iterator.hasNext()) {
             Module module4 = (Module)iterator.next();
             String string4 = module4.getName().replace(" ", "");
-            arrayList2.add(new acy(module4.getName(), "Module", ".toggle <module>", string4, 0, false));
+            arrayList2.add(new Suggestion(module4.getName(), "Module", ".toggle <module>", string4, 0, false));
         }
         return arrayList2;
     }
@@ -94,12 +94,12 @@ implements ada {
             for (String string3 : stringArray) {
                 String string4;
                 if (string3 == null || (string4 = string3.replace(" ", "")).isEmpty()) continue;
-                l2 = Math.max(l2, acl.b(string, n2, string4));
+                l2 = Math.max(l2, CommandPalette.b(string, n2, string4));
             }
         }
         if ((string2 = module.getName()) == null) return l2;
         String string5 = string2.replace(" ", "");
         if (string5.isEmpty()) return l2;
-        return Math.max(l2, acl.b(string, n2, string5));
+        return Math.max(l2, CommandPalette.b(string, n2, string5));
     }
 }

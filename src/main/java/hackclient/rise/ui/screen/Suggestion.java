@@ -1,6 +1,6 @@
 package hackclient.rise.ui.screen;
 
-final class acy {
+final class Suggestion {
     final String aBz;
     final String aBA;
     final String aBB;
@@ -8,7 +8,7 @@ final class acy {
     final int aBD;
     final boolean aBE;
 
-    acy(String var1, String var2, String var3, String var4, int var5, boolean var6) {
+    Suggestion(String var1, String var2, String var3, String var4, int var5, boolean var6) {
         this.aBz = var1;
         this.aBA = var2 == null ? "" : var2;
         this.aBB = var3 == null ? "" : var3;

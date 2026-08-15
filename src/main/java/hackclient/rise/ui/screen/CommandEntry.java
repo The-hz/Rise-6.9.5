@@ -4,7 +4,7 @@ import com.alan.clients.command.Command;
 import hackclient.rise.ahd;
 import java.util.Locale;
 
-final class acr {
+final class CommandEntry {
     final String aBk;
     private final String[] aBl;
     final String aBm;
@@ -13,7 +13,7 @@ final class acr {
     final String aBp;
     double aBq;
 
-    acr(Command var1) {
+    CommandEntry(Command var1) {
         this.aBl = var1.getExpressions();
         this.aBk = this.aBl.length == 0 ? "" : this.aBl[0];
         this.aBm = ahd.ce(var1.getDescription());

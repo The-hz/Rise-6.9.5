@@ -1,6 +1,6 @@
 package hackclient.rise.ui.screen;
 
-record acz(String aBF, String[] aBG, String aBH) {
+record SuggestionContext(String aBF, String[] aBG, String aBH) {
     public String rj() {
         return this.aBF;
     }

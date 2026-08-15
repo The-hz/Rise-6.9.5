@@ -12,12 +12,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
-final class acn implements ada {
-    acn() {
+final class BindSuggestionProvider implements SuggestionProvider {
+    BindSuggestionProvider() {
     }
 
     @Override
-    public void a(acz var1) {
+    public void a(SuggestionContext var1) {
         try {
             Client.a.p().update();
         } catch (Throwable throwable) {
@@ -25,9 +25,9 @@ final class acn implements ada {
     }
 
     @Override
-    public List<acy> b(acz var1) {
+    public List<Suggestion> b(SuggestionContext var1) {
         if (var1.rk().length != 0 && var1.rk().length <= 1) {
-            String s = acl.aQ(var1.rj());
+            String s = CommandPalette.aQ(var1.rj());
             String s1 = var1.rk()[0].toLowerCase(Locale.ROOT);
             List list = Client.a.t().aP();
             ArrayList arraylist = new ArrayList();
@@ -76,7 +76,7 @@ final class acn implements ada {
             for (int i = 0; i < Math.min(80, arraylist.size()); i++) {
                 aco aco = (aco)arraylist.get(i);
                 String s6 = aco.aBe().getName() == null ? aco.aBf() : aco.aBe().getName();
-                arraylist1.add(new acy(s6, aco.aBg(), aco.aBh(), aco.aBf(), 0, true));
+                arraylist1.add(new Suggestion(s6, aco.aBg(), aco.aBh(), aco.aBf(), 0, true));
             }
 
             return arraylist1;
@@ -122,7 +122,7 @@ final class acn implements ada {
     private long a(String var1, int var2, p var3, String var4) {
         long i = 0L;
         if (var4 != null) {
-            i = Math.max(i, acl.b(var1, var2, var4));
+            i = Math.max(i, CommandPalette.b(var1, var2, var4));
         }
 
         String[] astring = var3.getAliases();
@@ -131,7 +131,7 @@ final class acn implements ada {
                 if (s != null) {
                     String s1 = s.replace(" ", "");
                     if (!s1.isEmpty()) {
-                        i = Math.max(i, acl.b(var1, var2, s1));
+                        i = Math.max(i, CommandPalette.b(var1, var2, s1));
                     }
                 }
             }
@@ -141,7 +141,7 @@ final class acn implements ada {
         if (s2 != null) {
             String s3 = s2.replace(" ", "");
             if (!s3.isEmpty()) {
-                i = Math.max(i, acl.b(var1, var2, s3));
+                i = Math.max(i, CommandPalette.b(var1, var2, s3));
             }
         }
 

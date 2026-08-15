@@ -17,7 +17,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ui.screen.acl;
+import hackclient.rise.ui.screen.CommandPalette;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.adz;
 import com.alan.clients.util.MouseUtil;
@@ -122,12 +122,12 @@ extends Module {
             if (c2 == '.' || c2 == '\u3002') {
                 String string;
                 if (keyboardInputEvent.getGuiScreen() == null) {
-                    aEg.displayGuiScreen(new acl(null));
+                    aEg.displayGuiScreen(new CommandPalette(null));
                     keyboardInputEvent.setCancelled();
                     return;
                 }
                 if (keyboardInputEvent.getGuiScreen() instanceof c && ((string = this.mL().getText()) == null || string.trim().isEmpty())) {
-                    aEg.displayGuiScreen(new acl(Chat.aEg.currentScreen));
+                    aEg.displayGuiScreen(new CommandPalette(Chat.aEg.currentScreen));
                     keyboardInputEvent.setCancelled();
                     return;
                 }

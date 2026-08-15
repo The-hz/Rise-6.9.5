@@ -8,10 +8,10 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
-import hackclient.rise.ui.screen.acl;
-import hackclient.rise.ui.screen.acy;
-import hackclient.rise.ui.screen.acz;
-import hackclient.rise.ui.screen.ada;
+import hackclient.rise.ui.screen.CommandPalette;
+import hackclient.rise.ui.screen.Suggestion;
+import hackclient.rise.ui.screen.SuggestionContext;
+import hackclient.rise.ui.screen.SuggestionProvider;
 import hackclient.rise.ahd;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,14 +19,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-final class acv
-implements ada {
-    acv() {
+final class ModuleSuggestionProvider
+implements SuggestionProvider {
+    ModuleSuggestionProvider() {
     }
 
     @Override
-    public List<acy> b(acz acz2) {
-        ArrayList<acy> arrayList;
+    public List<Suggestion> b(SuggestionContext acz2) {
+        ArrayList<Suggestion> arrayList;
         String string;
         String string2;
         block26: {
@@ -37,7 +37,7 @@ implements ada {
                 Iterator<Mode<?>> iterator;
                 block25: {
                     Iterator<Value<?>> iterator2;
-                    ArrayList<acy> arrayList2;
+                    ArrayList<Suggestion> arrayList2;
                     String string3;
                     block23: {
                         Iterator<Module> iterator3;
@@ -53,7 +53,7 @@ implements ada {
                                         if (stringArray2.length == 0) {
                                             return Collections.emptyList();
                                         }
-                                        string2 = acl.aQ(acz2.rj());
+                                        string2 = CommandPalette.aQ(acz2.rj());
                                         if (stringArray2.length != 1) break block20;
                                         String string5 = stringArray2[0] == null ? "" : stringArray2[0].toLowerCase(Locale.ROOT);
                                         string4 = string5.trim().toLowerCase(Locale.ROOT).replace(" ", "");
@@ -68,7 +68,7 @@ implements ada {
                                     }
                                     if (stringArray2.length != 2) break block22;
                                     string3 = stringArray2[1] == null ? "" : stringArray2[1].toLowerCase(Locale.ROOT);
-                                    arrayList2 = new ArrayList<acy>();
+                                    arrayList2 = new ArrayList<Suggestion>();
                                     iterator2 = ((Module)t2).getAllValues().iterator();
                                     break block23;
                                 }
@@ -77,11 +77,11 @@ implements ada {
                                 }
                                 String string7 = stringArray2[1];
                                 string = stringArray2[2] == null ? "" : stringArray2[2].toLowerCase(Locale.ROOT);
-                                value = acv.c((Module)t2, string7);
+                                value = ModuleSuggestionProvider.c((Module)t2, string7);
                                 if (value == null) {
                                     return Collections.emptyList();
                                 }
-                                arrayList = new ArrayList<acy>();
+                                arrayList = new ArrayList<Suggestion>();
                                 if (!(value instanceof ModeValue)) break block24;
                                 ModeValue modeValue = (ModeValue)value;
                                 iterator = modeValue.getModes().iterator();
@@ -94,23 +94,23 @@ implements ada {
                         }
                         while (iterator3.hasNext()) {
                             Module module3 = iterator3.next();
-                            if (module3 == null || !string4.isEmpty() && acv.b(module3, string4) <= 1) continue;
+                            if (module3 == null || !string4.isEmpty() && ModuleSuggestionProvider.b(module3, string4) <= 1) continue;
                             arrayList3.add(module3);
                         }
                         arrayList3.sort((module, module2) -> {
                             long l2;
                             int n222;
-                            int n3 = acv.b(module, string4);
-                            if (n3 != (n222 = acv.b(module2, string4))) {
+                            int n3 = ModuleSuggestionProvider.b(module, string4);
+                            if (n3 != (n222 = ModuleSuggestionProvider.b(module2, string4))) {
                                 return Integer.compare(n222, n3);
                             }
-                            long l3 = acv.a(string2, 0, module);
-                            if (l3 != (l2 = acv.a(string2, 0, module2))) {
+                            long l3 = ModuleSuggestionProvider.a(string2, 0, module);
+                            if (l3 != (l2 = ModuleSuggestionProvider.a(string2, 0, module2))) {
                                 return Long.compare(l2, l3);
                             }
                             return module.getName().compareToIgnoreCase(module2.getName());
                         });
-                        ArrayList<acy> arrayList4 = new ArrayList<acy>();
+                        ArrayList<Suggestion> arrayList4 = new ArrayList<Suggestion>();
                         Iterator iterator4 = arrayList3.iterator();
                         while (true) {
                             if (!iterator4.hasNext()) {
@@ -119,7 +119,7 @@ implements ada {
                             Module module4 = (Module)iterator4.next();
                             String string9 = module4.getName();
                             String string10 = string9.replace(" ", "");
-                            arrayList4.add(new acy(string9, ahd.ce(module4.getModuleInfo().description()), module4.getModuleInfo().category().getName(), string10, 0, true));
+                            arrayList4.add(new Suggestion(string9, ahd.ce(module4.getModuleInfo().description()), module4.getModuleInfo().category().getName(), string10, 0, true));
                         }
                     }
                     while (iterator2.hasNext()) {
@@ -147,9 +147,9 @@ implements ada {
                             string11 = "Value";
                             bl = true;
                         }
-                        arrayList2.add(new acy(string12, ((Module)t2).getName() + " setting", string11, string13, 1, bl));
+                        arrayList2.add(new Suggestion(string12, ((Module)t2).getName() + " setting", string11, string13, 1, bl));
                     }
-                    ModeValue modeValue = acv.a((Module)t2);
+                    ModeValue modeValue = ModuleSuggestionProvider.a((Module)t2);
                     if (modeValue != null) {
                         String string15 = string3;
                         for (Mode<?> mode : modeValue.getModes()) {
@@ -157,7 +157,7 @@ implements ada {
                             String string17 = string16.toLowerCase(Locale.ROOT);
                             if (!string15.isEmpty() && !string17.startsWith(string15)) continue;
                             String string18 = string16.replace(" ", "");
-                            arrayList2.add(new acy(string16, "Mode", "Mode for " + ((Module)t2).getName(), string18, 1, false));
+                            arrayList2.add(new Suggestion(string16, "Mode", "Mode for " + ((Module)t2).getName(), string18, 1, false));
                         }
                     }
                     arrayList2.sort((acy2, acy3) -> {
@@ -170,8 +170,8 @@ implements ada {
                         if (n3 != n4) {
                             return Integer.compare(n4, n3);
                         }
-                        long l3 = acl.b(string2, 1, string32);
-                        if (l3 != (l2 = acl.b(string2, 1, string4))) {
+                        long l3 = CommandPalette.b(string2, 1, string32);
+                        if (l3 != (l2 = CommandPalette.b(string2, 1, string4))) {
                             return Long.compare(l2, l3);
                         }
                         return acy2.aBz.compareToIgnoreCase(acy3.aBz);
@@ -184,14 +184,14 @@ implements ada {
                     String string20 = string19.toLowerCase(Locale.ROOT);
                     if (!string.isEmpty() && !string20.startsWith(string)) continue;
                     String string21 = string19.replace(" ", "");
-                    arrayList.add(new acy(string19, ((Module)t2).getName() + " mode", "Modes", string21, 2, false));
+                    arrayList.add(new Suggestion(string19, ((Module)t2).getName() + " mode", "Modes", string21, 2, false));
                 }
                 break block26;
             }
             for (int i2 = 0; i2 < n2; ++i2) {
                 String string22 = stringArray[i2];
                 if (!string.isEmpty() && !string22.startsWith(string)) continue;
-                arrayList.add(new acy(string22, ((Module)t2).getName() + " flag", "Boolean", string22, 2, false));
+                arrayList.add(new Suggestion(string22, ((Module)t2).getName() + " flag", "Boolean", string22, 2, false));
             }
         }
         arrayList.sort((acy2, acy3) -> {
@@ -204,8 +204,8 @@ implements ada {
             if (n3 != n4) {
                 return Integer.compare(n4, n3);
             }
-            long l3 = acl.b(string2, 2, string3);
-            if (l3 != (l2 = acl.b(string2, 2, string4))) {
+            long l3 = CommandPalette.b(string2, 2, string3);
+            if (l3 != (l2 = CommandPalette.b(string2, 2, string4))) {
                 return Long.compare(l2, l3);
             }
             return acy2.aBz.compareToIgnoreCase(acy3.aBz);
@@ -218,11 +218,11 @@ implements ada {
             return 0;
         }
         int n2 = 1;
-        int n3 = Math.max(n2, acv.s(module.getName(), string));
+        int n3 = Math.max(n2, ModuleSuggestionProvider.s(module.getName(), string));
         String[] stringArray = module.getAliases();
         if (stringArray != null) {
             for (String string2 : stringArray) {
-                n3 = Math.max(n3, acv.s(string2, string));
+                n3 = Math.max(n3, ModuleSuggestionProvider.s(string2, string));
             }
         }
         return n3;
@@ -253,13 +253,13 @@ implements ada {
             for (String string3 : stringArray) {
                 String string4;
                 if (string3 == null || (string4 = string3.replace(" ", "")).isEmpty()) continue;
-                l2 = Math.max(l2, acl.b(string, n2, string4));
+                l2 = Math.max(l2, CommandPalette.b(string, n2, string4));
             }
         }
         if ((string2 = module.getName()) == null) return l2;
         String string5 = string2.replace(" ", "");
         if (string5.isEmpty()) return l2;
-        return Math.max(l2, acl.b(string, n2, string5));
+        return Math.max(l2, CommandPalette.b(string, n2, string5));
     }
 
     private static ModeValue a(Module module) {

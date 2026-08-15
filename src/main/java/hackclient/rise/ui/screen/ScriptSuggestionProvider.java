@@ -7,20 +7,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-final class acw implements ada {
+final class ScriptSuggestionProvider implements SuggestionProvider {
     private static final String[] aBx = new String[]{"load", "reload", "unload", "disablesecurity", "enablesecurity", "download", "install", "folder"};
 
-    acw() {
+    ScriptSuggestionProvider() {
     }
 
     @Override
-    public List<acy> b(acz var1) {
+    public List<Suggestion> b(SuggestionContext var1) {
         String[] astring = var1.rk();
         if (astring.length == 0) {
             return Collections.emptyList();
         }
 
-        String s = acl.aQ(var1.rj());
+        String s = CommandPalette.aQ(var1.rj());
         if (astring.length == 1) {
             String s1 = astring[0] == null ? "" : astring[0].toLowerCase(Locale.ROOT);
             ArrayList arraylist = new ArrayList();
@@ -28,22 +28,22 @@ final class acw implements ada {
             for (String s2 : aBx) {
                 String s3 = s2.toLowerCase(Locale.ROOT);
                 if (s1.isEmpty() || s3.startsWith(s1)) {
-                    arraylist.add(new acy(s2, "Script action", "load/reload/unload/disablesecurity/enablesecurity/download/install/folder", s2, 0, true));
+                    arraylist.add(new Suggestion(s2, "Script action", "load/reload/unload/disablesecurity/enablesecurity/download/install/folder", s2, 0, true));
                 }
             }
 
             arraylist.sort((var2, var3) -> {
-                String s8 = ((acy)var2).aBC.toLowerCase(Locale.ROOT);
-                String s9 = ((acy)var3).aBC.toLowerCase(Locale.ROOT);
+                String s8 = ((Suggestion)var2).aBC.toLowerCase(Locale.ROOT);
+                String s9 = ((Suggestion)var3).aBC.toLowerCase(Locale.ROOT);
                 int k = s8.equals(s1) ? 2 : (s8.startsWith(s1) ? 1 : 0);
                 int l = s9.equals(s1) ? 2 : (s9.startsWith(s1) ? 1 : 0);
                 if (k != l) {
                     return Integer.compare(l, k);
                 }
 
-                long i1 = acl.b(s, 0, s8);
-                long j1 = acl.b(s, 0, s9);
-                return i1 != j1 ? Long.compare(j1, i1) : ((acy)var2).aBC.compareToIgnoreCase(((acy)var3).aBC);
+                long i1 = CommandPalette.b(s, 0, s8);
+                long j1 = CommandPalette.b(s, 0, s9);
+                return i1 != j1 ? Long.compare(j1, i1) : ((Suggestion)var2).aBC.compareToIgnoreCase(((Suggestion)var3).aBC);
             });
             return arraylist;
         }
@@ -67,7 +67,7 @@ final class acw implements ada {
                         String s6 = afile1[j].getName().replace(".js", "");
                         String s7 = s6.toLowerCase(Locale.ROOT);
                         if (s5.isEmpty() || s7.startsWith(s5)) {
-                            arraylist1.add(new acy(s6, "Script", ".script " + s4 + " " + s6, s6, 1, false));
+                            arraylist1.add(new Suggestion(s6, "Script", ".script " + s4 + " " + s6, s6, 1, false));
                         }
                     }
                 }
@@ -76,17 +76,17 @@ final class acw implements ada {
         }
 
         arraylist1.sort((var2, var3) -> {
-            String s8 = ((acy)var2).aBC.toLowerCase(Locale.ROOT);
-            String s9 = ((acy)var3).aBC.toLowerCase(Locale.ROOT);
+            String s8 = ((Suggestion)var2).aBC.toLowerCase(Locale.ROOT);
+            String s9 = ((Suggestion)var3).aBC.toLowerCase(Locale.ROOT);
             boolean flag = !s5.isEmpty() && s8.equals(s5);
             boolean flag1 = !s5.isEmpty() && s9.equals(s5);
             if (flag != flag1) {
                 return flag ? -1 : 1;
             }
 
-            long k = acl.b(s, 1, s8);
-            long l = acl.b(s, 1, s9);
-            return k != l ? Long.compare(l, k) : ((acy)var2).aBC.compareToIgnoreCase(((acy)var3).aBC);
+            long k = CommandPalette.b(s, 1, s8);
+            long l = CommandPalette.b(s, 1, s9);
+            return k != l ? Long.compare(l, k) : ((Suggestion)var2).aBC.compareToIgnoreCase(((Suggestion)var3).aBC);
         });
         return arraylist1;
     }
