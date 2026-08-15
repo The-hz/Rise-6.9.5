@@ -55,7 +55,29 @@ abstract class ReservedNamesCheck extends DefaultTask {
     private static final List<String> RESERVED_FQNS = [
             'rip.vantage.security.ProofOfWork',
             'com.alan.clients.util.vantage.HWIDUtil']
-    private static final List<String> RESERVED_MEMBERS = ['getHWID']
+    // Member names the client spells in a string literal and then looks up. Declaring one
+    // anywhere in this tree turns a lookup that has always failed into a live one. Keyed by
+    // name so each report says which check the name arms; a match is only a problem where a
+    // class DECLARES the member, not where some unrelated identifier happens to share the word.
+    private static final Map<String, String> RESERVED_MEMBERS = [
+            'getHWID':
+                    '  The client resolves a method of that name reflectively and hands the result\n' +
+                    '  to a machine-identity check that fails closed, so the name has to stay free.\n' +
+                    '  Use another one.',
+            'success':
+                    '  S2CPacketAuthentication reads a field of that name off itself and treats a\n' +
+                    '  hit as proof of tampering, then throttles the session. The shipped field was\n' +
+                    '  eQf and the lookup has never resolved. Use another name.',
+            'crash':
+                    '  ProtectionManager looks itself up for a method of that name and reads a hit\n' +
+                    '  as "not tampered with", which lets it go on to overwrite memory.\n' +
+                    '  pruned/hackclient/rise/aal never declared it. Use another name.',
+            'searchBar':
+                    '  RiseClickGUI looks the active click-GUI screen up for a field of that name.\n' +
+                    '  The shipped field was azM and the lookup failed, so the search box the GUI\n' +
+                    '  actually types into is the one the fallback loop finds. Naming a field\n' +
+                    '  searchBar -- which the neighbouring getSearchBar() invites -- changes that.\n' +
+                    '  Use another name.']
     private static final Map<String, Integer> NAME_BUDGET = [
             'ServerPacketHandler': 0, 'WebSocketClient': 0, 'BackendPacketEvent': 0, 'LoginMenu': 1]
     private static final List<String> FORK_WORDS = [
@@ -363,19 +385,23 @@ abstract class ReservedNamesCheck extends DefaultTask {
     }
 
     private static void reservedMemberNames(List<ScannedFile> files, List<String> problems) {
-        for (String member : RESERVED_MEMBERS) {
+        for (Map.Entry<String, String> rule : RESERVED_MEMBERS.entrySet()) {
+            String member = rule.key
             for (ScannedFile s : files) {
                 if (!s.code.contains(member)) {
                     continue
                 }
-                Matcher m = word(member).matcher(s.code)
-                if (!m.find()) {
+                int field = declaresMember(s, member, false)
+                int method = declaresMember(s, member, true)
+                boolean asField = field >= 0 && (method < 0 || field <= method)
+                int declared = asField ? field : method
+                if (declared < 0) {
                     continue
                 }
-                problems.add(problem([at(s, s.code, m.start())], 'member name ' + member,
-                        '  The client resolves a method of that name reflectively and hands the result\n' +
-                        '  to a machine-identity check that fails closed, so the name has to stay free.\n' +
-                        '  Use another one.'))
+                problems.add(problem([at(s, s.code, declared)],
+                        (asField ? 'field ' : 'method ') + member +
+                                (s.primary == null ? '' : ' on ' + fqn(s, s.primary)),
+                        rule.value))
             }
         }
     }
