@@ -340,7 +340,7 @@ public class Scaffold extends Module {
     }
 
     public boolean isDisabledByFlag() {
-        return (boolean)(this.watchdogTelly.wo() && this.disableOnFlag.wo() && this.flagDisableTicks > 0 ? true : -63 + 63);
+        return this.watchdogTelly.wo() && this.disableOnFlag.wo() && this.flagDisableTicks > 0;
     }
 
     public boolean isBlockPlacement(C08PacketPlayerBlockPlacement packet) {
@@ -717,7 +717,7 @@ public class Scaffold extends Module {
         this.blockDiagonalAscend = new BooleanValue("Block Diagonal Ascend", this, true, () -> !this.watchdogTelly.wo());
         this.dontForceRaycastOnWatchdogTelly = new BooleanValue("Don't force raycast on Watchdog Telly", this, false, () -> !this.watchdogTelly.wo());
         this.extendBlockReachOnWatchdogTelly = new BooleanValue("Extend Block Reach on Watchdog Telly", this, true, () -> !this.watchdogTelly.wo());
-        this.age = new BoundsNumberValue("Watchdog Telly Jump Delay", this, 0, 0, 0, 5, 1, () -> (boolean)(!this.watchdogTelly.wo() ? true : (-8 ^ 41) - -47));
+        this.age = new BoundsNumberValue("Watchdog Telly Jump Delay", this, 0, 0, 0, 5, 1, () -> !this.watchdogTelly.wo());
         this.disableOnFlag = new BooleanValue("Disable On Flag", this, true, () -> !this.watchdogTelly.wo());
         this.watchdogTellyRotationSpeed = new BoundsNumberValue("Watchdog Telly Rotation Speed", this, 35, 38, 0, 180, 1, () -> !this.watchdogTelly.wo());
         this.rotationBlockBoost = new BooleanValue("Rotation Block Boost", this, false, () -> {
@@ -738,8 +738,8 @@ public class Scaffold extends Module {
         this.sneak = new BooleanValue("Sneak", this, false);
         this.startSneaking = new BoundsNumberValue("Start Sneaking", this, 0, 0, 0, 5, 1, () -> !this.sneak.wo());
         this.stopSneaking = new BoundsNumberValue("Stop Sneaking", this, 0, 0, 0, 5, 1, () -> !this.sneak.wo() ? true : true ^ true);
-        this.sneakEvery = new BoundsNumberValue("Sneak every x blocks", this, 1, 1, 1, 10, 1, () -> (boolean)(!this.sneak.wo() ? true : 109 - 62 - 47));
-        this.sneakingSpeed = new NumberValue("Sneaking Speed", this, 0.2, 0.2, 1, 0.05, () -> (boolean)(!this.sneak.wo() ? true : -90 - -90));
+        this.sneakEvery = new BoundsNumberValue("Sneak every x blocks", this, 1, 1, 1, 10, 1, () -> !this.sneak.wo());
+        this.sneakingSpeed = new NumberValue("Sneaking Speed", this, 0.2, 0.2, 1, 0.05, () -> !this.sneak.wo());
         this.tellyOnlyOnRightClick = new BooleanValue("Telly Only on Right Click", this, false, () -> !this.mode.wo().getName().equals("Telly"));
         this.render = new BooleanValue("Render", this, true);
         this.advanced = new BooleanValue("Advanced", this, false);
