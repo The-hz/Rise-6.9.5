@@ -21,7 +21,6 @@ implements zh {
     public static Object[] fld_0OOOoo00o0_63;
     public static Object Oo0o00000O00;
     public volatile boolean avA;
-    public static int[] O0OoOO0OOOOO;
     public static Object[] fld_0oOOoOo0O00O_64;
     public static Object[] oO00O0OO0ooO;
     public static Object[] o0Oo000O0oO;
@@ -238,8 +237,6 @@ implements zh {
         }
     }
 
-    public static void Oo0o00000O00() {
-    }
 
     @Override
     public boolean nG() {
@@ -248,7 +245,6 @@ implements zh {
 
     static {
         clinit: {
-        zp.Oo0o00000O00();
         long l9 = 2158836260573194485L;
         long l10 = -5598912548307870118L;
         long l11 = 2062248284796167102L;

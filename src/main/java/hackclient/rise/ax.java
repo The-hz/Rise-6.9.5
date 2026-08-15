@@ -19,14 +19,12 @@ extends Component {
     public static String cs;
     @EventLink
     public Listener<ServerJoinEvent> cv;
-    public static int[] O0OoOO0OOOOO;
     public Pattern cq = Pattern.compile("Your new API key is (.*)");
     @EventLink
     public Listener<PacketReceiveEvent> cu;
     public static boolean cr;
 
     static {
-        ax.Oo0o00000O00();
     }
 
     public ax() {
@@ -58,6 +56,4 @@ extends Component {
         };
     }
 
-    public static void Oo0o00000O00() {
-    }
 }

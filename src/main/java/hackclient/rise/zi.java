@@ -5,13 +5,9 @@ import java.util.Locale;
 
 public class zi extends SecurityFeature implements zh {
     public volatile boolean avA;
-    public static int[] O0OoOO0OOOOO;
 
-    public static void Oo0o00000O00() {
-    }
 
     static {
-        Oo0o00000O00();
     }
 
     @Override

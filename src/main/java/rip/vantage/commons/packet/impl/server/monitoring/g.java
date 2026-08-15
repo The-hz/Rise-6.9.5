@@ -3,14 +3,11 @@ package rip.vantage.commons.packet.impl.server.monitoring;
 import org.json.JSONObject;
 
 public class g extends rip.vantage.commons.packet.api.abstracts.b {
-    public static int[] O0OoOO0OOOOO;
 
     public g(JSONObject var1) {
         super((byte)29);
     }
 
-    public static void Oo0o00000O00() {
-    }
 
     @Override
     public void a(rip.vantage.commons.handler.api.c var1) {
@@ -26,6 +23,5 @@ public class g extends rip.vantage.commons.packet.api.abstracts.b {
     }
 
     static {
-        Oo0o00000O00();
     }
 }

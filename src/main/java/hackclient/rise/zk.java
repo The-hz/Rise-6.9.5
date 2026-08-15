@@ -5,7 +5,6 @@ import com.alan.clients.security.SecurityFeature;
 public class zk extends SecurityFeature
 {
     public volatile boolean avA;
-    public static int[] O0OoOO0OOOOO;
 
     public boolean nG() {
         if (this.avA) {
@@ -22,9 +21,6 @@ public class zk extends SecurityFeature
     }
 
     static {
-        Oo0o00000O00();
     }
 
-    public static void Oo0o00000O00() {
-    }
 }

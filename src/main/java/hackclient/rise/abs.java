@@ -21,14 +21,11 @@ public class abs
     @EventLink
     public Listener<er> aHd;
     public static Object[] fld_0OOOoo00o0_5;
-    public static int[] O0OoOO0OOOOO;
     public static Object Oo0o00000O00;
     public static double aHb;
     public static Object[] oO00O0OO0ooO;
     public static float aHc;
 
-    public static void Oo0o00000O00() {
-    }
 
     public abs() {
         this.aHd = (Listener<er>)(var1 -> {
@@ -57,7 +54,6 @@ public class abs
     }
 
     static {
-        Oo0o00000O00();
         final long n = 6341868354063047710L;
         long n2 = -6514496455960521908L;
         long n3 = 3524331609204261369L;

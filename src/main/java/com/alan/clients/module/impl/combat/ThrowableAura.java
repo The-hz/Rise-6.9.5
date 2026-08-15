@@ -31,7 +31,6 @@ import net.minecraft.util.Vec3;
 public class ThrowableAura extends Module {
     public int qH;
     public BooleanValue qy;
-    public static int[] O0OoOO0OOOOO;
     public int qI;
     public EntityLivingBase jE;
     public BooleanValue qB;
@@ -60,8 +59,6 @@ public class ThrowableAura extends Module {
         this.jE = null;
     }
 
-    public static void Oo0o00000O00() {
-    }
 
     public Vec3 i(Entity var1) {
         Vec3 vec3 = var1.getPositionVector().addVector(0.0, var1.getEyeHeight() * 0.5, 0.0);
@@ -106,7 +103,6 @@ public class ThrowableAura extends Module {
     }
 
     static {
-        Oo0o00000O00();
     }
 
     public boolean gs() {

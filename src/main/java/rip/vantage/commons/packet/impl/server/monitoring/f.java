@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 public class f extends rip.vantage.commons.packet.api.abstracts.b {
     public JSONArray ePS;
-    public static int[] O0OoOO0OOOOO;
     public String ePT;
 
     public JSONArray aJU() {
@@ -31,11 +30,8 @@ public class f extends rip.vantage.commons.packet.api.abstracts.b {
     }
 
     static {
-        Oo0o00000O00();
     }
 
-    public static void Oo0o00000O00() {
-    }
 
     public f(JSONObject var1) {
         super((byte)27);

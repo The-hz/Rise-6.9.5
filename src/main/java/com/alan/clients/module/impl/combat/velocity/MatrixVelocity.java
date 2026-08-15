@@ -17,7 +17,6 @@ public class MatrixVelocity
 extends Mode<Velocity> {
     @EventLink
     public Listener<StrafeEvent> uL;
-    public static int[] fld_0OOOoo00o0_23;
     @EventLink
     public Listener<TeleportEvent> uM;
     @EventLink(cH=0)
@@ -39,33 +38,8 @@ extends Mode<Velocity> {
     };
 
     static {
-        MatrixVelocity.o0Oo000O0oO();
     }
 
-    public static void o0Oo000O0oO() {
-        fld_0OOOoo00o0_23 = new int[21];
-        MatrixVelocity.fld_0OOOoo00o0_23[2] = 49;
-        MatrixVelocity.fld_0OOOoo00o0_23[15] = 75;
-        MatrixVelocity.fld_0OOOoo00o0_23[18] = -169;
-        MatrixVelocity.fld_0OOOoo00o0_23[16] = -1;
-        MatrixVelocity.fld_0OOOoo00o0_23[10] = -70;
-        MatrixVelocity.fld_0OOOoo00o0_23[3] = 82;
-        MatrixVelocity.fld_0OOOoo00o0_23[14] = -52;
-        MatrixVelocity.fld_0OOOoo00o0_23[19] = 67;
-        MatrixVelocity.fld_0OOOoo00o0_23[1] = 64;
-        MatrixVelocity.fld_0OOOoo00o0_23[11] = 75;
-        MatrixVelocity.fld_0OOOoo00o0_23[17] = -64;
-        MatrixVelocity.fld_0OOOoo00o0_23[6] = 132;
-        MatrixVelocity.fld_0OOOoo00o0_23[12] = 13;
-        MatrixVelocity.fld_0OOOoo00o0_23[9] = 12;
-        MatrixVelocity.fld_0OOOoo00o0_23[8] = 102;
-        MatrixVelocity.fld_0OOOoo00o0_23[13] = -50;
-        MatrixVelocity.fld_0OOOoo00o0_23[7] = -36;
-        MatrixVelocity.fld_0OOOoo00o0_23[0] = -14;
-        MatrixVelocity.fld_0OOOoo00o0_23[20] = -101;
-        MatrixVelocity.fld_0OOOoo00o0_23[4] = -20;
-        MatrixVelocity.fld_0OOOoo00o0_23[5] = 63;
-    }
 
     public MatrixVelocity(String string, Velocity velocity) {
         super(string, velocity);

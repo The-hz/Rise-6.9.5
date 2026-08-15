@@ -7,7 +7,6 @@ public class h extends rip.vantage.commons.packet.api.abstracts.a {
     public byte[] ePw;
     public int ePy;
     public long ePx;
-    public static int[] O0OoOO0OOOOO;
 
     public long nb() {
         return this.ePx;
@@ -34,8 +33,6 @@ public class h extends rip.vantage.commons.packet.api.abstracts.a {
         this.ePy = var4;
     }
 
-    public static void Oo0o00000O00() {
-    }
 
     public byte[] aJJ() {
         return this.ePw;
@@ -49,7 +46,6 @@ public class h extends rip.vantage.commons.packet.api.abstracts.a {
     }
 
     static {
-        Oo0o00000O00();
     }
 
     public int aJK() {

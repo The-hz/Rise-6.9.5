@@ -14,22 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class cr extends cm implements InstanceAccess
 {
-    public static int[] fld_0OOOoo00o0_13;
 
-    public static void o0Oo000O0oO() {
-        (cr.fld_0OOOoo00o0_13 = new int[12])[5] = 41;
-        cr.fld_0OOOoo00o0_13[10] = -102;
-        cr.fld_0OOOoo00o0_13[0] = 21;
-        cr.fld_0OOOoo00o0_13[2] = 102;
-        cr.fld_0OOOoo00o0_13[1] = 83;
-        cr.fld_0OOOoo00o0_13[6] = 119;
-        cr.fld_0OOOoo00o0_13[8] = 7;
-        cr.fld_0OOOoo00o0_13[9] = -92;
-        cr.fld_0OOOoo00o0_13[11] = -30;
-        cr.fld_0OOOoo00o0_13[3] = -90;
-        cr.fld_0OOOoo00o0_13[4] = 81;
-        cr.fld_0OOOoo00o0_13[7] = 112;
-    }
 
     public void cp() {
         this.b(gg.BLOOM).c(() -> {
@@ -75,6 +60,5 @@ public class cr extends cm implements InstanceAccess
     }
 
     static {
-        o0Oo000O0oO();
     }
 }

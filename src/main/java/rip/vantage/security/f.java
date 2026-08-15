@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 import java.util.Map;
 
 public class f {
-    public static int[] O0OoOO0OOOOO;
     public Map<String, Object> eSp = new LinkedHashMap<>();
 
     public void g(String var1, long var2) {
@@ -48,15 +47,12 @@ public class f {
         return var0 == null ? "" : var0.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
     }
 
-    public static void Oo0o00000O00() {
-    }
 
     public void U(String var1, int var2) {
         this.eSp.put(var1, var2);
     }
 
     static {
-        Oo0o00000O00();
     }
 
     public void a(String var1, f var2) {

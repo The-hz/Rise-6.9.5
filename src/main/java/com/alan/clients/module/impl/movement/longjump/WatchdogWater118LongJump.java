@@ -36,7 +36,6 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
     public boolean tt;
     public int Kw;
     public boolean Kv;
-    public static int[] fld_0OOOoo00o0_37;
     @EventLink(cH = 4)
     public Listener<PreUpdateEvent> KS;
     public boolean vq;
@@ -54,8 +53,6 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
     public double jy;
     public double IW;
 
-    public static void o0Oo000O0oO() {
-    }
 
     @Override
     public void onDisable() {
@@ -210,7 +207,6 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
     }
 
     static {
-        o0Oo000O0oO();
     }
 
     @Override

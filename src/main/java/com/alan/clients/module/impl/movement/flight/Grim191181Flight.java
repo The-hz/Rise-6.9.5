@@ -18,7 +18,6 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public class Grim191181Flight extends Mode<Flight> {
     public BooleanValue Gb = new BooleanValue("Glide less/Fly more", this, true);
-    public static int[] O0OoOO0OOOOO;
     @EventLink
     public Listener<PostStrafeEvent> Ge;
     public NumberValue Gd;
@@ -85,11 +84,8 @@ public class Grim191181Flight extends Mode<Flight> {
         this.Eo = false;
     }
 
-    public static void Oo0o00000O00() {
-    }
 
     static {
-        Oo0o00000O00();
     }
 
     @Override

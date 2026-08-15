@@ -153,7 +153,6 @@ import java.util.Arrays;
 
 public class ModuleManager {
     public ady<Class<Module>, Module> lt = new ady<>();
-    public static int[] O0OoOO0OOOOO;
 
     public void e(Module var1) {
         this.lt.h(var1);
@@ -167,7 +166,6 @@ public class ModuleManager {
     }
 
     static {
-        Oo0o00000O00();
     }
 
     public ArrayList<Module> ef() {
@@ -196,8 +194,6 @@ public class ModuleManager {
         return (T)this.lt.get(var1);
     }
 
-    public static void Oo0o00000O00() {
-    }
 
     public ModuleManager() {
     }

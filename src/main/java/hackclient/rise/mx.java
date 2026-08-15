@@ -18,7 +18,6 @@ public class mx extends Mode<Flight> {
     @EventLink
     public Listener<PacketSendEvent> FJ;
     public NumberValue FE;
-    public static int[] O0OoOO0OOOOO;
     public BooleanValue FF;
     @EventLink
     public Listener<MoveInputEvent> FI;
@@ -55,8 +54,6 @@ public class mx extends Mode<Flight> {
         };
     }
 
-    public static void Oo0o00000O00() {
-    }
 
     @Override
     public void onDisable() {
@@ -64,6 +61,5 @@ public class mx extends Mode<Flight> {
     }
 
     static {
-        Oo0o00000O00();
     }
 }

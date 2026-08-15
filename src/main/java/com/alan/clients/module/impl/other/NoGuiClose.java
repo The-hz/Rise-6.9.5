@@ -13,7 +13,6 @@ import net.minecraft.network.play.server.ay;
 @ModuleInfo(aliases = "module.other.noguiclose.name", category = Category.PLAYER, description = "module.other.noguiclose.description")
 public class NoGuiClose extends Module {
     public BooleanValue chatonly = new BooleanValue("Chat Only", this, false);
-    public static int[] O0OoOO0OOOOO;
     @EventLink
     public Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
         var1.dq();
@@ -23,12 +22,9 @@ public class NoGuiClose extends Module {
     };
 
     static {
-        Oo0o00000O00();
     }
 
     public NoGuiClose() {
     }
 
-    public static void Oo0o00000O00() {
-    }
 }

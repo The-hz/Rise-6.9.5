@@ -24,7 +24,6 @@ import java.awt.Color;
 public class BPSCounter
 extends Module {
     public aka ali;
-    public static int[] O0OoOO0OOOOO;
     public Vector2f scale;
     @EventLink
     public Listener<Render2DEvent> all;
@@ -34,11 +33,8 @@ extends Module {
     public BooleanValue showTitle = new BooleanValue("Title", (Module)this, (Boolean)false);
     public String alj = "";
 
-    public static void Oo0o00000O00() {
-    }
 
     static {
-        BPSCounter.Oo0o00000O00();
     }
 
     public BPSCounter() {

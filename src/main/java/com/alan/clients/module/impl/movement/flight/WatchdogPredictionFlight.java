@@ -42,7 +42,6 @@ extends Mode<Flight> {
     };
     @EventLink
     public Listener<PreMotionEvent> yu;
-    public static int[] fld_0OOOoo00o0_29;
     public boolean ys;
     @EventLink
     public Listener<PacketReceiveEvent> FM = packetReceiveEvent -> {
@@ -73,48 +72,6 @@ extends Mode<Flight> {
     @EventLink
     public Listener<TeleportEvent> FO;
 
-    public static void o0Oo000O0oO() {
-        fld_0OOOoo00o0_29 = new int[39];
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[22] = 80;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[9] = 36;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[28] = 21;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[11] = 90;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[18] = -114;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[1] = -70;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[10] = 54;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[25] = 84;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[34] = 76;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[19] = 124;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[32] = -29;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[2] = 126;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[20] = -46;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[16] = 90;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[21] = 19;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[31] = 5;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[29] = -12;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[33] = 107;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[36] = 138;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[5] = 93;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[26] = 72;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[30] = -33;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[3] = 101;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[23] = -67;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[15] = -184;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[37] = 49;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[7] = 32;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[0] = -60;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[12] = -118;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[38] = 82;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[13] = -82;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[14] = -34;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[6] = -56;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[24] = 13;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[35] = 30;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[4] = -58;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[8] = 24;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[27] = -36;
-        WatchdogPredictionFlight.fld_0OOOoo00o0_29[17] = 126;
-    }
 
     public WatchdogPredictionFlight(String string, Flight flight) {
         super(string, flight);
@@ -149,7 +106,6 @@ extends Mode<Flight> {
     }
 
     static {
-        WatchdogPredictionFlight.o0Oo000O0oO();
     }
 
     @Override

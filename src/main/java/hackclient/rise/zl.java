@@ -8,7 +8,6 @@ import com.alan.clients.security.SecurityFeature;
 import net.minecraft.network.play.server.c;
 
 public class zl extends SecurityFeature {
-    public static int[] O0OoOO0OOOOO;
     public volatile int avJ;
     public volatile Object avF;
     @EventLink
@@ -25,8 +24,6 @@ public class zl extends SecurityFeature {
     public volatile int avK = Integer.MIN_VALUE;
     public volatile Object avG;
 
-    public static void Oo0o00000O00() {
-    }
 
     public zl() {
         this.avL = var1 -> {
@@ -119,6 +116,5 @@ public class zl extends SecurityFeature {
     }
 
     static {
-        Oo0o00000O00();
     }
 }

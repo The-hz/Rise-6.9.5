@@ -33,7 +33,6 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
     public Listener<ChatInputEvent> avy;
     public static long avp;
     public String avu;
-    public static int[] fld_0OOOoo00o0_50;
     public List<SecurityFeature> avr;
     public long avv;
     public List<SecurityFeature> avq = new ArrayList<>();
@@ -71,7 +70,6 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
     }
 
     static {
-        o0Oo000O0oO();
     }
 
     @Generated
@@ -181,8 +179,6 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
         }
     }
 
-    public static void o0Oo000O0oO() {
-    }
 
     public void init() {
         Client.a.e().b(this);
