@@ -13,14 +13,14 @@ public final class PhysicsIntegrator {
 
     public PhysicsVector3 hI() {
         double d0 = 1.0 / this.SZ;
-        this.SV.p(d0);
-        this.SV.a(this.SX).p(this.SY);
-        this.SU.p(d0);
-        this.SV.p(0.03333333333333333);
-        this.SU.a(this.SV);
-        this.SW.a(this.SU);
-        this.SV.d(0.0, 0.0, 0.0);
-        this.SU.d(0.0, 0.0, 0.0);
+        this.SV.scale(d0);
+        this.SV.add(this.SX).scale(this.SY);
+        this.SU.scale(d0);
+        this.SV.scale(0.03333333333333333);
+        this.SU.add(this.SV);
+        this.SW.add(this.SU);
+        this.SV.set(0.0, 0.0, 0.0);
+        this.SU.set(0.0, 0.0, 0.0);
         return this.SW;
     }
 }

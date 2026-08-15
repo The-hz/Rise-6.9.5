@@ -12,9 +12,9 @@ public final class ColourCheckAntiBot extends Mode<AntiBot> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         String s = var1xx.getDisplayName().getUnformattedText();
-        if (!r(s)) {
+        if (!startsWithColorCode(s)) {
             afi.c("Detected bot (invalid colour start): " + s);
-            Client.a.x().b(this, var1xx);
+            Client.a.getBotManager().b(this, var1xx);
         }
     });
 
@@ -22,12 +22,12 @@ public final class ColourCheckAntiBot extends Mode<AntiBot> {
         super(var1, antiBot);
     }
 
-    public static boolean r(String var0) {
+    public static boolean startsWithColorCode(String var0) {
         return var0 != null && !var0.isEmpty() ? var0.matches("^§[0-9a-fk-or].*") : false;
     }
 
     @Override
     public void onDisable() {
-        Client.a.x().a(this);
+        Client.a.getBotManager().a(this);
     }
 }

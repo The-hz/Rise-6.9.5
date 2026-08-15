@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 class Claim {
     @Expose
     @SerializedName("uhs")
-    String aFd;
+    String uhs;
 
     private Claim() {
     }

@@ -13,7 +13,7 @@ public class NCPTower extends Mode<Scaffold> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
         if (aEg.gameSettings.keyBindJump.isKeyDown() && PlayerUtil.ay(2)) {
-            PacketUtil.m(new C08PacketPlayerBlockPlacement(null));
+            PacketUtil.sendNoEvent(new C08PacketPlayerBlockPlacement(null));
             if (aEg.thePlayer.posY % 1.0 <= 0.00153598) {
                 aEg.thePlayer.setPosition(aEg.thePlayer.posX, Math.floor(aEg.thePlayer.posY), aEg.thePlayer.posZ);
                 aEg.thePlayer.motionY = 0.42F;

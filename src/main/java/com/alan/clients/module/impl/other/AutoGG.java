@@ -13,7 +13,7 @@ import com.alan.clients.value.impl.StringValue;
 public final class AutoGG extends Module {
     private final StringValue message = new StringValue("Message", this, "Why waste another game without Rise?");
     private boolean dj;
-    private boolean Tq;
+    private boolean active;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.thePlayer.ticksExisted % 18 == 0 && aEg.thePlayer.sendQueue.doneLoadingTerrain && !aEg.isIntegratedServerRunning()) {
@@ -22,20 +22,20 @@ public final class AutoGG extends Module {
                     aEg.thePlayer.sendChatMessage(this.message.wo());
                     this.dj = false;
                 }
-            } else if (this.Tq) {
+            } else if (this.active) {
                 this.dj = true;
-                this.Tq = false;
+                this.active = false;
             }
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.Tq = true;
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.active = true;
 
     public AutoGG() {
     }
 
     @Override
     public void onEnable() {
-        this.Tq = true;
+        this.active = true;
     }
 }

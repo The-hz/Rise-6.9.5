@@ -25,11 +25,11 @@ public final class BlockPlacementFixComponent extends Component {
             Packet packet = var0.dq();
             if (packet instanceof C07PacketPlayerDigging c07packetplayerdigging
                 && (c07packetplayerdigging.getStatus() == Action.DROP_ITEM || c07packetplayerdigging.getStatus() == Action.DROP_ALL_ITEMS)) {
-                PacketUtil.l(new m());
+                PacketUtil.send(new m());
             }
 
             if (packet instanceof C0EPacketClickWindow c0epacketclickwindow && c0epacketclickwindow.getMode() == 4) {
-                PacketUtil.l(new m());
+                PacketUtil.send(new m());
             }
 
             if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_17)

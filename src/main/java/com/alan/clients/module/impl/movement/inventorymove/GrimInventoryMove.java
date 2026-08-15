@@ -14,7 +14,7 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 
 public final class GrimInventoryMove extends Mode<InventoryMove> {
-    private final KeyBinding[] JD = new KeyBinding[]{
+    private final KeyBinding[] movementKeys = new KeyBinding[]{
         aEg.gameSettings.keyBindForward,
         aEg.gameSettings.keyBindBack,
         aEg.gameSettings.keyBindRight,
@@ -25,7 +25,7 @@ public final class GrimInventoryMove extends Mode<InventoryMove> {
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.currentScreen != null && !(aEg.currentScreen instanceof GuiChat) && aEg.currentScreen != this.getStandardClickGUI()) {
-            for (KeyBinding keybinding : this.JD) {
+            for (KeyBinding keybinding : this.movementKeys) {
                 keybinding.setPressed(GameSettings.isKeyDown(keybinding));
             }
         }
@@ -41,7 +41,7 @@ public final class GrimInventoryMove extends Mode<InventoryMove> {
         super(var1, inventoryMove);
     }
 
-    public int hu() {
+    public int getManagerExtraSprintTicks() {
         return this.managerExtraSprintTicks.wo().intValue();
     }
 }

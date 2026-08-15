@@ -22,14 +22,14 @@ public final class GlyphCache {
     private static final int aIW = 255;
     private final Font aIX;
     private final boolean aIY;
-    private final boolean aIZ;
+    private final boolean bl2;
     private final ConcurrentHashMap<Integer, Float> aJa = new ConcurrentHashMap();
     private final ConcurrentHashMap<Integer, FontCharacter> aJb = new ConcurrentHashMap();
 
     public GlyphCache(Font font, boolean bl, boolean bl2) {
         this.aIX = font;
         this.aIY = bl;
-        this.aIZ = bl2;
+        this.bl2 = bl2;
     }
 
     public float j(char c2) {
@@ -50,7 +50,7 @@ public final class GlyphCache {
                 age2 = age3;
             }
         }
-        age2.e(f2, f3);
+        age2.render(f2, f3);
     }
 
     private float k(char c2) {
@@ -105,7 +105,7 @@ public final class GlyphCache {
 
     private void a(Graphics2D graphics2D) {
         graphics2D.setColor(Color.WHITE);
-        if (this.aIZ) {
+        if (this.bl2) {
             graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         }

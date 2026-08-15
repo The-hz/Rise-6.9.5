@@ -46,7 +46,7 @@ public final class LimboComponent extends Component {
             if (this.cx > 0) {
                 List list = var1.getMessage();
                 if (list != null && !list.isEmpty()) {
-                    Client.a.k().rz().getChatAccentColor();
+                    Client.a.getThemeManager().getTheme().getChatAccentColor();
                     this.cy = false;
                     this.cx = 0;
                 }

@@ -15,8 +15,8 @@ import org.lwjgl.input.Keyboard;
 public final class FreeLook extends Module {
     public BooleanValue invertPitch = new BooleanValue("Invert Pitch", this, false);
     private int previousPerspective;
-    public float anB;
-    public float anC;
+    public float originalYaw;
+    public float originalPitch;
     public float Il;
     public float Im;
     @EventLink(value = 1)
@@ -35,8 +35,8 @@ public final class FreeLook extends Module {
     };
     @EventLink(value = 1)
     public final Listener<TeleportEvent> onTeleport = var1 -> {
-        this.anB = var1.getYaw();
-        this.anC = var1.getPitch();
+        this.originalYaw = var1.getYaw();
+        this.originalPitch = var1.getPitch();
     };
 
     public FreeLook() {
@@ -45,8 +45,8 @@ public final class FreeLook extends Module {
     @Override
     public void onEnable() {
         this.previousPerspective = aEg.gameSettings.thirdPersonView;
-        this.anB = this.Il = aEg.thePlayer.pl;
-        this.anC = this.Im = aEg.thePlayer.rotationPitch;
+        this.originalYaw = this.Il = aEg.thePlayer.pl;
+        this.originalPitch = this.Im = aEg.thePlayer.rotationPitch;
         if (this.invertPitch.wo()) {
             this.Im *= -1.0F;
         }
@@ -56,8 +56,8 @@ public final class FreeLook extends Module {
 
     @Override
     public void onDisable() {
-        aEg.thePlayer.pl = this.anB;
-        aEg.thePlayer.rotationPitch = this.anC;
+        aEg.thePlayer.pl = this.originalYaw;
+        aEg.thePlayer.rotationPitch = this.originalPitch;
         aEg.gameSettings.thirdPersonView = this.previousPerspective;
     }
 }

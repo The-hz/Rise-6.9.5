@@ -10,10 +10,10 @@ public final class n {
     }
 
     public void b(EntityOtherPlayerMP other) {
-        Client.a.n().G().put(other.getUniqueID(), new PlayerData(other));
+        Client.a.n().getPlayerMap().put(other.getUniqueID(), new PlayerData(other));
     }
 
-    public void a(UUID uuid) {
-        Client.a.n().G().remove(uuid);
+    public void handleDestroy(UUID uuid) {
+        Client.a.n().getPlayerMap().remove(uuid);
     }
 }

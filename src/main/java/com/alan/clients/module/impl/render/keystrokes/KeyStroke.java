@@ -18,8 +18,8 @@ import org.lwjgl.input.Keyboard;
 
 public class KeyStroke implements InstanceAccess {
     private Interface amf;
-    private final Vector2f atq;
-    private final Vector2f atr;
+    private final Vector2f scale;
+    private final Vector2f offset;
     private final String name;
     private final KeyBinding binding;
     private final Animation animation = new Animation(Easing.LINEAR, 200L);
@@ -33,43 +33,43 @@ public class KeyStroke implements InstanceAccess {
     }
 
     public void c(Vector2d var1) {
-        Vector2d vector2d = new Vector2d(var1.getX() + this.atr.getX(), var1.getY() + this.atr.getY());
+        Vector2d vector2d = new Vector2d(var1.getX() + this.offset.getX(), var1.getY() + this.offset.getY());
         if (this.amf == null) {
             this.amf = this.e(Interface.class);
         }
 
-        double d0 = this.amf != null ? this.amf.lD() : 4.0;
+        double d0 = this.amf != null ? this.amf.getRoundingRadius() : 4.0;
         double d1 = vector2d.getX();
         double d2 = vector2d.getY();
-        double d3 = this.atq.getX();
-        double d4 = this.atq.getY();
+        double d3 = this.scale.getX();
+        double d4 = this.scale.getY();
         this.rz();
-        RenderUtil.roundedRectangle(d1, d2, d3, d4, d0, ColorUtil.d(Themes.rK(), (int)this.animation.sG()));
+        RenderUtil.roundedRectangle(d1, d2, d3, d4, d0, ColorUtil.withBlue(Themes.rK(), (int)this.animation.getValue()));
         this.updateHeld();
         Vector2d vector2d1 = new Vector2d(FontManager.MAIN.a(20, FontWeight.REGULAR).getStringWidth(this.name), FontManager.MAIN.a(20, FontWeight.REGULAR).height());
         Vector2d vector2d2 = new Vector2d(
-            vector2d.getX() + this.atq.getX() * 0.5F - FontManager.MAIN.a(20, FontWeight.REGULAR).getStringWidth(this.name) * 0.5F,
-            vector2d.getY() + (this.atq.getY() - vector2d1.getY()) / 2.0 + 3.0
+            vector2d.getX() + this.scale.getX() * 0.5F - FontManager.MAIN.a(20, FontWeight.REGULAR).getStringWidth(this.name) * 0.5F,
+            vector2d.getY() + (this.scale.getY() - vector2d1.getY()) / 2.0 + 3.0
         );
         FontManager.MAIN.a(20, FontWeight.REGULAR).b(this.name, vector2d2.getX(), vector2d2.getY(), this.rz().rA().getRGB());
     }
 
-    public void e(Vector2d vector2d) {
+    public void bloom(Vector2d vector2d) {
         if (this.amf == null) {
             this.amf = this.e(Interface.class);
         }
 
-        double d0 = this.amf != null ? this.amf.lD() : 4.0;
-        RenderUtil.roundedRectangle(vector2d.x + this.atr.x + 0.5, vector2d.y + this.atr.y + 0.5, this.atq.x - 1.0F, this.atq.y - 1.0F, d0, this.rz().rE());
+        double d0 = this.amf != null ? this.amf.getRoundingRadius() : 4.0;
+        RenderUtil.roundedRectangle(vector2d.x + this.offset.x + 0.5, vector2d.y + this.offset.y + 0.5, this.scale.x - 1.0F, this.scale.y - 1.0F, d0, this.rz().rE());
     }
 
-    public void d(Vector2d vector2d) {
+    public void blur(Vector2d vector2d) {
         if (this.amf == null) {
             this.amf = this.e(Interface.class);
         }
 
-        double d0 = this.amf != null ? this.amf.lD() : 4.0;
-        RenderUtil.roundedRectangle(vector2d.x + this.atr.x, vector2d.y + this.atr.y, this.atq.x, this.atq.y, d0, Color.BLACK);
+        double d0 = this.amf != null ? this.amf.getRoundingRadius() : 4.0;
+        RenderUtil.roundedRectangle(vector2d.x + this.offset.x, vector2d.y + this.offset.y, this.scale.x, this.scale.y, d0, Color.BLACK);
     }
 
     public void updateHeld() {
@@ -80,8 +80,8 @@ public class KeyStroke implements InstanceAccess {
 
     @Generated
     public KeyStroke(Vector2f vec2, Vector2f var2, String name, KeyBinding binding) {
-        this.atq = vec2;
-        this.atr = var2;
+        this.scale = vec2;
+        this.offset = var2;
         this.name = name;
         this.binding = binding;
     }

@@ -58,28 +58,28 @@ public enum Client
     public KeybindManager F;
     public ScriptManager scriptManager;
     public static String d;
-    public AltManager C;
+    public AltManager altManager;
     public static String c;
     public static boolean j;
     public ModuleManager moduleManager;
     public SecurityFeatureManager securityManager;
-    public InsultManager D;
+    public InsultManager insultManager;
     public RiseClickGUI standardClickGUI;
-    public ThemeManager t;
+    public ThemeManager themeManager;
     public CommandManager commandManager;
-    public FileManager A;
-    public BotManager s;
+    public FileManager fileManager;
+    public BotManager botManager;
     public ExecutorService executor;
-    public DataManager v;
-    public RiseTab J;
+    public DataManager dataManager;
+    public RiseTab creativeTab;
     public ShaderRenderManager G;
-    public ConfigManager B;
+    public ConfigManager configManager;
     public static Client[] $VALUES;
 
 
     public b w;
     public static boolean h;
-    public Locale l;
+    public Locale locale;
     public com.alan.clients.security.b r;
 
     @Generated
@@ -98,8 +98,8 @@ public enum Client
     }
 
     @Generated
-    public BotManager x() {
-        return this.s;
+    public BotManager getBotManager() {
+        return this.botManager;
     }
 
     @Generated
@@ -109,13 +109,13 @@ public enum Client
 
 
     @Generated
-    public ConfigManager p() {
-        return this.B;
+    public ConfigManager getConfigManager() {
+        return this.configManager;
     }
 
     public void b() {
-        if (this.p() != null && this.p().to() != null) {
-            this.p().to().write();
+        if (this.getConfigManager() != null && this.getConfigManager().to() != null) {
+            this.getConfigManager().to().write();
         }
     }
 
@@ -128,12 +128,12 @@ public enum Client
         if (locale == null) {
             return;
         }
-        if (this.l == locale) {
+        if (this.locale == locale) {
             return;
         }
-        this.l = locale;
+        this.locale = locale;
         if (this.moduleManager != null) {
-            for (Module module : this.moduleManager.ef()) {
+            for (Module module : this.moduleManager.getAll()) {
                 if (module == null || module.getModuleInfo() == null) continue;
                 try {
                     module.setAliases((String[])Arrays.stream(module.getModuleInfo().aliases()).map(hackclient.rise.ahd::ce).toArray(String[]::new));
@@ -192,7 +192,7 @@ public enum Client
 
     @Generated
     public Locale getLocale() {
-        return this.l;
+        return this.locale;
     }
 
     @Generated
@@ -211,8 +211,8 @@ public enum Client
     }
 
     @Generated
-    public void b(final Locale locale) {
-        this.l = locale;
+    public void setLocale(final Locale locale) {
+        this.locale = locale;
     }
 
     @Generated
@@ -235,8 +235,8 @@ public enum Client
         int count = array.length;
         for (int i = 0; i < count; i++) {
             final String s = array[i];
-            if (ReflectionUtil.bc(s)) {
-                final Class<?>[] array2 = ReflectionUtil.ba(s);
+            if (ReflectionUtil.dirExist(s)) {
+                final Class<?>[] array2 = ReflectionUtil.getClassesInPackage(s);
                 int count2 = array2.length;
                 int j = 0;
             Label_0241_Outer:
@@ -298,7 +298,7 @@ public enum Client
     public void reload() {
         this.b();
         this.init();
-        Client.a.p().tn();
+        Client.a.getConfigManager().tn();
     }
 
     @Generated
@@ -307,7 +307,7 @@ public enum Client
     }
 
     @Generated
-    public RiseClickGUI v() {
+    public RiseClickGUI getStandardClickGUI() {
         return this.standardClickGUI;
     }
 
@@ -317,8 +317,8 @@ public enum Client
     }
 
     @Generated
-    public RiseTab w() {
-        return this.J;
+    public RiseTab getCreativeTab() {
+        return this.creativeTab;
     }
 
     @Generated
@@ -327,13 +327,13 @@ public enum Client
     }
 
     @Generated
-    public ThemeManager k() {
-        return this.t;
+    public ThemeManager getThemeManager() {
+        return this.themeManager;
     }
 
     @Generated
-    public AltManager q() {
-        return this.C;
+    public AltManager getAltManager() {
+        return this.altManager;
     }
 
     @Generated
@@ -343,7 +343,7 @@ public enum Client
 
     Client() {
         this.executor = Executors.newSingleThreadExecutor();
-        this.l = Locale.EN_US;
+        this.locale = Locale.EN_US;
         this.K = new GsonBuilder().setPrettyPrinting().create();
     }
 
@@ -353,13 +353,13 @@ public enum Client
     }
 
     @Generated
-    public InsultManager r() {
-        return this.D;
+    public InsultManager getInsultManager() {
+        return this.insultManager;
     }
 
     @Generated
-    public FileManager o() {
-        return this.A;
+    public FileManager getFileManager() {
+        return this.fileManager;
     }
 
     public void init() {
@@ -374,14 +374,14 @@ public enum Client
         this.moduleManager = new ModuleManager();
         this.componentManager = new ComponentManager();
         this.commandManager = new CommandManager();
-        this.A = new FileManager();
-        this.B = new ConfigManager();
-        this.C = new AltManager();
-        this.D = new InsultManager();
-        this.v = new DataManager();
+        this.fileManager = new FileManager();
+        this.configManager = new ConfigManager();
+        this.altManager = new AltManager();
+        this.insultManager = new InsultManager();
+        this.dataManager = new DataManager();
         this.r = new com.alan.clients.security.b();
-        this.s = new BotManager();
-        this.t = new ThemeManager();
+        this.botManager = new BotManager();
+        this.themeManager = new ThemeManager();
         this.scriptManager = new ScriptManager();
         this.w = new b();
         this.eventBus = new EventBus<Event>();
@@ -389,41 +389,41 @@ public enum Client
         this.F = new KeybindManager();
         this.G = new ShaderRenderManager();
         new ConstantManager();
-        this.A.init();
-        this.v.init();
+        this.fileManager.init();
+        this.dataManager.init();
         this.n.init();
         this.moduleManager.init();
         this.r.init();
-        this.s.init();
+        this.botManager.init();
         this.componentManager.init();
         this.commandManager.init();
-        this.C.init();
-        this.D.init();
+        this.altManager.init();
+        this.insultManager.init();
         this.scriptManager.init();
         this.securityManager.init();
         (this.standardClickGUI = new RiseClickGUI()).initGui();
         (this.I = new aba()).initGui();
-        this.D.update();
-        this.D.forEach(InsultFile::te);
-        this.J = new RiseTab();
+        this.insultManager.update();
+        this.insultManager.forEach(InsultFile::te);
+        this.creativeTab = new RiseTab();
         new Thread(() -> {
             ViaMCP.create();
             ViaMCP.INSTANCE.initAsyncSlider();
             ViaMCP.INSTANCE.getAsyncVersionSlider().setVersion(47);
             return;
         }).start();
-        this.B.init();
+        this.configManager.init();
         this.F.init();
         Display.setTitle((Object)Client.b + " " + (Object)"6.9.5".replace(".0", ""));
     }
 
     @Generated
-    public DataManager m() {
-        return this.v;
+    public DataManager getDataManager() {
+        return this.dataManager;
     }
 
     @Generated
-    public void a(final CommandManager commandManager) {
+    public void setCommandManager(final CommandManager commandManager) {
         this.commandManager = commandManager;
     }
 }

@@ -7,7 +7,7 @@ public final class OrbitBody {
     public double amA;
     public int amB;
     public boolean amC;
-    public boolean dj = true;
+    public boolean active = true;
     public double amD;
 
     public OrbitBody() {

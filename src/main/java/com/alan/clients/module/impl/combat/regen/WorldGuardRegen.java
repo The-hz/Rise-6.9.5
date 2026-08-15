@@ -20,18 +20,18 @@ import net.minecraft.network.play.server.S2DPacketOpenWindow;
 public final class WorldGuardRegen extends Mode<Regen> {
     private final NumberValue health = new NumberValue("Minimum Health", this, 15, 1, 20, 1);
     private int ticks;
-    private float gZ;
-    private float ha;
+    private float yaw;
+    private float pitch;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (!aEg.thePlayer.onGround || !(aEg.thePlayer.getHealth() < this.health.wo().floatValue())) {
-            this.gZ = var1x.getYaw();
-            this.ha = var1x.getPitch();
+            this.yaw = var1x.getYaw();
+            this.pitch = var1x.getPitch();
             this.ticks = 0;
         } else if (this.ticks <= 1) {
             var1x.setPosY(var1x.getPosY() - 0.05);
-            var1x.setYaw(this.gZ);
-            var1x.setPitch(this.ha);
+            var1x.setYaw(this.yaw);
+            var1x.setPitch(this.pitch);
             this.ticks++;
         }
     };
@@ -42,9 +42,9 @@ public final class WorldGuardRegen extends Mode<Regen> {
             C02PacketUseEntity c02packetuseentity = (C02PacketUseEntity)packet;
             if (c02packetuseentity.getAction().equals(Action.ATTACK)) {
                 var1x.setCancelled();
-                PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, true));
-                PacketUtil.m(c02packetuseentity);
-                PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.05, aEg.thePlayer.posZ, false));
+                PacketUtil.sendNoEvent(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, true));
+                PacketUtil.sendNoEvent(c02packetuseentity);
+                PacketUtil.sendNoEvent(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.05, aEg.thePlayer.posZ, false));
             }
         }
     };

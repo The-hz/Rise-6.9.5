@@ -14,7 +14,7 @@ public class S2CPacketCaptureCancel extends rip.vantage.commons.packet.api.abstr
 
     @Override
     public void handle(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
-        handler.a(this);
+        handler.handle(this);
     }
 
     public S2CPacketCaptureCancel(JSONObject json) {

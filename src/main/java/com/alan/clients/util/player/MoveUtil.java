@@ -112,8 +112,8 @@ public final class MoveUtil implements InstanceAccess {
             }
         }
 
-        double cos = Math.cos(Math.toRadians(d2 + ConstantManager.aHc));
-        double sin = Math.sin(Math.toRadians(d2 + ConstantManager.aHc));
+        double cos = Math.cos(Math.toRadians(d2 + ConstantManager.J));
+        double sin = Math.sin(Math.toRadians(d2 + ConstantManager.J));
         return new Vector2d(d0 * var0 * cos + d1 * var0 * sin, d0 * var0 * sin - d1 * var0 * cos);
     }
 
@@ -407,8 +407,8 @@ public final class MoveUtil implements InstanceAccess {
             }
         }
 
-        double cos = Math.cos(Math.toRadians(f + ConstantManager.aHc));
-        double sin = Math.sin(Math.toRadians(f + ConstantManager.aHc));
+        double cos = Math.cos(Math.toRadians(f + ConstantManager.J));
+        double sin = Math.sin(Math.toRadians(f + ConstantManager.J));
         moveEvent.setPosX(d0 * var1 * cos + d1 * var1 * sin);
         moveEvent.setPosZ(d0 * var1 * sin - d1 * var1 * cos);
     }

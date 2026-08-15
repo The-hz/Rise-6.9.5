@@ -40,8 +40,8 @@ public final class ManualKBDisplacement extends Module {
     private final NumberValue trackingRange = new NumberValue("Tracking Range", this, 6.0, 3.0, 8.0, 0.1);
     private final BooleanValue debug = new BooleanValue("Debug", this, false);
     private EntityLivingBase Bq;
-    private DisplacementSample Br;
-    private int Bs;
+    private DisplacementSample plan;
+    private int armedTicks;
     private String Bt = "";
     private int Bu = -1;
     @EventLink
@@ -50,9 +50,9 @@ public final class ManualKBDisplacement extends Module {
     public final Listener<AttackEvent> onAttack = var1 -> {
         KillAura killaura = this.e(KillAura.class);
         if (killaura == null || !killaura.isEnabled()) {
-            if (!var1.isCancelled() && var1.dc() != null) {
-                this.Bq = var1.dc();
-                this.Bs = 2;
+            if (!var1.isCancelled() && var1.getLiving() != null) {
+                this.Bq = var1.getLiving();
+                this.armedTicks = 2;
                 this.a("armed", null, this.Bq);
             }
         }
@@ -60,30 +60,30 @@ public final class ManualKBDisplacement extends Module {
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         if (this.Bq != null) {
-            if (this.Bs > 0) {
-                this.Bs--;
+            if (this.armedTicks > 0) {
+                this.armedTicks--;
             }
 
             if (!this.x(this.Bq)) {
                 this.a("rejected:no-target", null, this.Bq);
                 this.gQ();
-            } else if (!this.eT()) {
+            } else if (!this.hasKnockbackSource()) {
                 this.a("rejected:no-kb-source", null, this.Bq);
-            } else if (this.Bq.hurtTime <= 0 && this.Bs <= 0) {
+            } else if (this.Bq.hurtTime <= 0 && this.armedTicks <= 0) {
                 this.a("rejected:hurt-time-ended", null, this.Bq);
                 this.gQ();
             } else if (this.h(this.Bq)) {
                 this.a("rejected:crit-priority", null, this.Bq);
             } else {
-                this.Br = this.y(this.Bq);
-                if (this.Br == null) {
+                this.plan = this.y(this.Bq);
+                if (this.plan == null) {
                     this.a("rejected:no-plan", null, this.Bq);
                 } else {
                     Vector2f vector2f = RotationUtil.calculate(this.Bq, true, this.trackingRange.wo().doubleValue());
-                    Vector2f vector2f1 = new Vector2f(this.Br.Bz, vector2f.getY());
+                    Vector2f vector2f1 = new Vector2f(this.plan.yaw, vector2f.getY());
                     RotationComponent.a(vector2f1, this.rotationSpeed.wo().doubleValue(), MovementFix.NORMAL, null, true);
                     this.f(vector2f1);
-                    this.a("applied", this.Br, this.Bq);
+                    this.a("applied", this.plan, this.Bq);
                 }
             }
         }
@@ -104,8 +104,8 @@ public final class ManualKBDisplacement extends Module {
 
     private void gQ() {
         this.Bq = null;
-        this.Br = null;
-        this.Bs = 0;
+        this.plan = null;
+        this.armedTicks = 0;
         this.Bt = "";
         this.Bu = -1;
     }
@@ -118,11 +118,11 @@ public final class ManualKBDisplacement extends Module {
             && aEg.thePlayer.getDistanceToEntity(living) <= this.trackingRange.wo().doubleValue() + 1.0;
     }
 
-    private boolean eT() {
+    private boolean hasKnockbackSource() {
         return aEg.thePlayer != null && (aEg.thePlayer.isSprinting() || EnchantmentHelper.getKnockbackModifier(aEg.thePlayer) > 0);
     }
 
-    private boolean g(EntityLivingBase living) {
+    private boolean canCrit(EntityLivingBase living) {
         return living != null
             && aEg.thePlayer.fallDistance > 0.0F
             && !aEg.thePlayer.onGround
@@ -133,7 +133,7 @@ public final class ManualKBDisplacement extends Module {
     }
 
     private boolean h(EntityLivingBase living) {
-        return this.g(living) && aEg.thePlayer.motionY < 0.0;
+        return this.canCrit(living) && aEg.thePlayer.motionY < 0.0;
     }
 
     private DisplacementSample y(EntityLivingBase living) {
@@ -148,7 +148,7 @@ public final class ManualKBDisplacement extends Module {
             for (double d3 = 0.8; d3 <= 5.0; d3 += 0.35) {
                 AxisAlignedBB axisalignedbb1 = axisalignedbb.offset(d1 * d3, 0.0, cos * d3);
                 DisplacementSample lex = this.b(living, axisalignedbb1, d1, cos, d3);
-                if (lex != null && (le == null || lex.BC > le.BC)) {
+                if (lex != null && (le == null || lex.score > le.score)) {
                     le = lex;
                 }
 
@@ -158,7 +158,7 @@ public final class ManualKBDisplacement extends Module {
             }
         }
 
-        return le != null && le.BC >= 45.0 ? le : null;
+        return le != null && le.score >= 45.0 ? le : null;
     }
 
     private DisplacementSample b(EntityLivingBase living, AxisAlignedBB box, double var3, double var5, double var7) {
@@ -286,11 +286,11 @@ public final class ManualKBDisplacement extends Module {
                 : String.format(
                     "%s %s score=%.1f yaw=%.1f pitch=%.1f dist=%.2f hurt=%d",
                     var1,
-                    var2.BD,
-                    var2.BC,
-                    var2.Bz,
-                    var2.BA,
-                    var2.BB,
+                    var2.hazard,
+                    var2.score,
+                    var2.yaw,
+                    var2.pitch,
+                    var2.distance,
                     living == null ? -1 : living.hurtTime
                 );
             if (!s.equals(this.Bt) || aEg.thePlayer.ticksExisted - this.Bu >= 8) {

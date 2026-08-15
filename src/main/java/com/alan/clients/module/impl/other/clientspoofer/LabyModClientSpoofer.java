@@ -23,13 +23,13 @@ public class LabyModClientSpoofer extends Mode<ClientSpoofer> {
 
             for (Triple ajt : ss) {
                 PacketBuffer packetbuffer = new PacketBuffer(Unpooled.buffer());
-                if ((Boolean)ajt.vV()) {
-                    packetbuffer.writeString((String)ajt.vU());
+                if ((Boolean)ajt.getThird()) {
+                    packetbuffer.writeString((String)ajt.getSecond());
                 } else {
-                    packetbuffer.writeBytes(((String)ajt.vU()).getBytes());
+                    packetbuffer.writeBytes(((String)ajt.getSecond()).getBytes());
                 }
 
-                PacketUtil.m(new C17PacketCustomPayload((String)ajt.vT(), packetbuffer));
+                PacketUtil.sendNoEvent(new C17PacketCustomPayload((String)ajt.getFirst(), packetbuffer));
             }
         }
     };

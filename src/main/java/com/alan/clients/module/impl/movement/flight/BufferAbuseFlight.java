@@ -18,7 +18,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 public class BufferAbuseFlight extends Mode<Flight> {
     @EventLink
     public Listener<PacketSendEvent> onPacketSend;
-    public NumberValue FE;
+    public NumberValue speed;
     public BooleanValue sendFlying;
     @EventLink
     public Listener<MoveInputEvent> onMoveInput;
@@ -29,16 +29,16 @@ public class BufferAbuseFlight extends Mode<Flight> {
 
     public BufferAbuseFlight(String var1, Flight flight) {
         super(var1, flight);
-        this.FE = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
+        this.speed = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
         this.sendFlying = new BooleanValue("Send Flying", this, false);
         this.onStrafe = var1x -> {
             float f = 0.0F;
-            float f1 = this.FE.wo().floatValue();
+            float f1 = this.speed.wo().floatValue();
             var1x.setSpeed(f1);
         };
         this.onPreMotion = var1x -> {
             float f = 0.0F;
-            float f1 = this.FE.wo().floatValue();
+            float f1 = this.speed.wo().floatValue();
             aEg.thePlayer.motionY = -1.0E-10 + (aEg.gameSettings.keyBindJump.isKeyDown() ? f1 : 0.0) - (aEg.gameSettings.keyBindSneak.isKeyDown() ? f1 : 0.0);
             if (aEg.thePlayer.getDistance(aEg.thePlayer.lastReportedPosX, aEg.thePlayer.lastReportedPosY, aEg.thePlayer.lastReportedPosZ) <= 10.0F - f1 - 0.15) {
                 var1x.setCancelled();

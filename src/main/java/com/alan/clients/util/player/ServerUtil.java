@@ -70,7 +70,7 @@ public class ServerUtil implements InstanceAccess
     public static int aOY;
     public static Pattern aON;
     public static boolean aOU;
-    public static OldServerPinger aPh;
+    public static OldServerPinger pinger;
 
     public static boolean vv() {
         final ScoreObjective objective = vw();
@@ -94,11 +94,11 @@ public class ServerUtil implements InstanceAccess
         return ServerUtil.aOP.matcher(sb).find();
     }
 
-    public static ServerData d(final String s, final int n, final int n2) {
+    public static ServerData isOnline(final String s, final int n, final int n2) {
         try {
             final String string = (Object)s + ":" + n;
             final ServerData serverData = new ServerData(string, string, false);
-            ServerUtil.aPh.ping(serverData, n2);
+            ServerUtil.pinger.ping(serverData, n2);
             return serverData;
         }
         catch (final Exception ex) {
@@ -283,7 +283,7 @@ public class ServerUtil implements InstanceAccess
         ServerUtil.aPc = "";
         ServerUtil.aPe = Integer.MIN_VALUE;
         ServerUtil.aPg = new HashMap<String, Boolean>();
-        ServerUtil.aPh = new OldServerPinger();
+        ServerUtil.pinger = new OldServerPinger();
     }
 
     public static boolean ci(final String s) {

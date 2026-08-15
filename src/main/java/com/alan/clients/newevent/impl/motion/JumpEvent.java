@@ -7,8 +7,8 @@ import com.alan.clients.script.api.wrapper.impl.event.impl.ScriptJumpEvent;
 import lombok.Generated;
 
 public class JumpEvent extends CancellableEvent {
-    private float ju;
-    private float gZ;
+    private float jumpMotion;
+    private float yaw;
 
     @Override
     public ScriptEvent<? extends Event> getScriptEvent() {
@@ -17,27 +17,27 @@ public class JumpEvent extends CancellableEvent {
 
     @Generated
     public float getJumpMotion() {
-        return this.ju;
+        return this.jumpMotion;
     }
 
     @Generated
     public float getYaw() {
-        return this.gZ;
+        return this.yaw;
     }
 
     @Generated
     public void setJumpMotion(float jumpMotion) {
-        this.ju = jumpMotion;
+        this.jumpMotion = jumpMotion;
     }
 
     @Generated
     public void setYaw(float var1) {
-        this.gZ = var1;
+        this.yaw = var1;
     }
 
     @Generated
     public JumpEvent(float var1, float var2) {
-        this.ju = var1;
-        this.gZ = var2;
+        this.jumpMotion = var1;
+        this.yaw = var2;
     }
 }

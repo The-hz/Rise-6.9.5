@@ -6,11 +6,11 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 
 public final class TeleportEvent extends CancellableEvent {
     private C03PacketPlayer response;
-    private double gW;
-    private double gX;
-    private double gY;
-    private float gZ;
-    private float ha;
+    private double posX;
+    private double posY;
+    private double posZ;
+    private float yaw;
+    private float pitch;
 
     @Generated
     public C03PacketPlayer getResponse() {
@@ -19,27 +19,27 @@ public final class TeleportEvent extends CancellableEvent {
 
     @Generated
     public double getPosX() {
-        return this.gW;
+        return this.posX;
     }
 
     @Generated
     public double getPosY() {
-        return this.gX;
+        return this.posY;
     }
 
     @Generated
     public double getPosZ() {
-        return this.gY;
+        return this.posZ;
     }
 
     @Generated
     public float getYaw() {
-        return this.gZ;
+        return this.yaw;
     }
 
     @Generated
     public float getPitch() {
-        return this.ha;
+        return this.pitch;
     }
 
     @Generated
@@ -49,36 +49,36 @@ public final class TeleportEvent extends CancellableEvent {
 
     @Generated
     public void setPosX(double var1) {
-        this.gW = var1;
+        this.posX = var1;
     }
 
     @Generated
     public void setPosY(double var1) {
-        this.gX = var1;
+        this.posY = var1;
     }
 
     @Generated
     public void setPosZ(double var1) {
-        this.gY = var1;
+        this.posZ = var1;
     }
 
     @Generated
     public void setYaw(float var1) {
-        this.gZ = var1;
+        this.yaw = var1;
     }
 
     @Generated
     public void setPitch(float pitch) {
-        this.ha = pitch;
+        this.pitch = pitch;
     }
 
     @Generated
     public TeleportEvent(C03PacketPlayer response, double var2, double var4, double var6, float var8, float var9) {
         this.response = response;
-        this.gW = var2;
-        this.gX = var4;
-        this.gY = var6;
-        this.gZ = var8;
-        this.ha = var9;
+        this.posX = var2;
+        this.posY = var4;
+        this.posZ = var6;
+        this.yaw = var8;
+        this.pitch = var9;
     }
 }

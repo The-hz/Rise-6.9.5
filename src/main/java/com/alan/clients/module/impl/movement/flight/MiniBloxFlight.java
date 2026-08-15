@@ -42,7 +42,7 @@ public class MiniBloxFlight extends Mode<Flight> {
         if (aEg.thePlayer.isCollidedHorizontally) {
             aEg.thePlayer.setPosition(aEg.thePlayer.posX - d1 * 0.005, aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * 0.005);
         } else if (PlayerUtil.vk()) {
-            PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX - d1 * 9.5, aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * 9.5, true));
+            PacketUtil.sendNoEvent(new C04PacketPlayerPosition(aEg.thePlayer.posX - d1 * 9.5, aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * 9.5, true));
             aEg.thePlayer.motionX *= 0.3;
             aEg.thePlayer.motionZ *= 0.3;
         }

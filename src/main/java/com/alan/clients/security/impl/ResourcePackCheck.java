@@ -45,7 +45,7 @@ public final class ResourcePackCheck extends CrashCheck {
             System.out.println("Server tried to access the path: " + s1);
             throw new URISyntaxException(s1, "Invalid levelstorage resource pack path");
         } catch (Exception exception) {
-            PacketUtil.m(new C19PacketResourcePackStatus(var2, Action.FAILED_DOWNLOAD));
+            PacketUtil.sendNoEvent(new C19PacketResourcePackStatus(var2, Action.FAILED_DOWNLOAD));
             return true;
         }
     }

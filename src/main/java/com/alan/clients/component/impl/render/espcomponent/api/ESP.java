@@ -10,21 +10,21 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class ESP implements InstanceAccess {
-    public ESPColor hP;
+    public ESPColor espColor;
     public Entity target;
     public int tick;
     public static KillAura gj;
     public static TeleportAura hR;
 
     public ESP(ESPColor espColor) {
-        this.hP = espColor;
+        this.espColor = espColor;
         this.tick = aEg.thePlayer.ticksExisted;
     }
 
     public void co() {
     }
 
-    public void cp() {
+    public void render3D() {
     }
 
     public void a(EntityPlayer player, ModelBiped modelBiped) {
@@ -41,23 +41,23 @@ public class ESP implements InstanceAccess {
 
         if (gj.jE != null) {
             this.target = gj.jE;
-        } else if (hR.jE != null) {
-            this.target = hR.jE;
+        } else if (hR.target != null) {
+            this.target = hR.target;
         } else {
             this.target = null;
         }
     }
 
     public Color getColor(EntityLivingBase living) {
-        Color color = this.hP.cr();
+        Color color = this.espColor.cr();
         if (living == null) {
             return color;
         }
 
         if (living.hurtTime > 0) {
-            color = this.hP.cs();
+            color = this.espColor.cs();
         } else if (this.target == living) {
-            color = this.hP.ct();
+            color = this.espColor.ct();
         }
 
         return color;

@@ -32,8 +32,8 @@ public class by {
         this.gq = var1;
     }
 
-    public String bU() {
-        return this.gp.bU();
+    public String getColorCode() {
+        return this.gp.getColorCode();
     }
 
     public bz bV() {

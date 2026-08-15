@@ -26,7 +26,7 @@ import net.minecraft.potion.Potion;
 public class ModernNameTags
 extends Mode<NameTags> {
     private final BooleanValue health = new BooleanValue("Show Health", (Mode<?>)this, (Boolean)true);
-    private final BooleanValue atB = new BooleanValue("Overlays (Bloom/Blur)", (Mode<?>)this, (Boolean)true);
+    private final BooleanValue overlaysBloomBlur = new BooleanValue("Overlays (Bloom/Blur)", (Mode<?>)this, (Boolean)true);
     private final agc atC = FontManager.MAIN.a(14, FontWeight.LIGHT);
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
@@ -57,17 +57,17 @@ extends Mode<NameTags> {
             Color color4 = Themes.rK();
             Color color5 = new Color(255, 40, 40, color4.getAlpha());
             Color color6 = color = bl ? ModernNameTags.a(color4, color5, 0.35f) : color4;
-            if (((Boolean)this.atB.wo()).booleanValue()) {
+            if (((Boolean)this.overlaysBloomBlur.wo()).booleanValue()) {
                 this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0 + 0.5, d6 + 0.5, d2 + 4.0 - 1.0, d5 - 1.0, this.rz().getRound(), color3));
             }
             this.b(ShaderQueueType.REGULAR).c(() -> {
                 RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0, d6, d2 + 4.0, d5, this.rz().getRound() - 1, color);
-                FontManager.MAIN.a(17, FontWeight.LIGHT).c(string, d3 - 0.5, d6 - 0.5 + 4.0, this.rz().rA().getRGB());
+                FontManager.MAIN.a(17, FontWeight.LIGHT).drawString(string, d3 - 0.5, d6 - 0.5 + 4.0, this.rz().rA().getRGB());
                 if (((Boolean)this.health.wo()).booleanValue()) {
-                    this.atC.c(String.valueOf((int)f2), d3, d4 + 5.0 - 2.0 - (double)9, Color.WHITE.getRGB());
+                    this.atC.drawString(String.valueOf((int)f2), d3, d4 + 5.0 - 2.0 - (double)9, Color.WHITE.getRGB());
                 }
             });
-            if (!((Boolean)this.atB.wo()).booleanValue()) continue;
+            if (!((Boolean)this.overlaysBloomBlur.wo()).booleanValue()) continue;
             this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0, d6, d2 + 4.0, d5, this.rz().getRound(), color3));
         }
         return;

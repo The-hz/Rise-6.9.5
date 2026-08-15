@@ -47,7 +47,7 @@ public class WatchdogPacketNoFall extends Mode<NoFall> {
                 var1x.setPosY(var1x.getPosY() + 1.0E-13);
             }
 
-            PacketUtil.l(new C03PacketPlayer(true));
+            PacketUtil.send(new C03PacketPlayer(true));
             aEg.timer.dzD = 0.5F;
             FallDistanceComponent.cY = 0.0F;
         } else if (FallDistanceComponent.cY > 3.1 + aEg.thePlayer.motionY
@@ -59,7 +59,7 @@ public class WatchdogPacketNoFall extends Mode<NoFall> {
                     var1x.setPosY(var1x.getPosY() + 1.0E-13);
                 }
 
-                PacketUtil.l(new C03PacketPlayer(true));
+                PacketUtil.send(new C03PacketPlayer(true));
                 aEg.timer.dzD = 0.5F;
                 FallDistanceComponent.cY = 0.0F;
             }
@@ -67,7 +67,7 @@ public class WatchdogPacketNoFall extends Mode<NoFall> {
             && this.e(LongJump.class).isEnabled()
             && FallDistanceComponent.cY > 4.0 + aEg.thePlayer.motionY) {
             var1x.setPosY(var1x.getPosY() + 1.0E-13);
-            PacketUtil.l(new C03PacketPlayer(true));
+            PacketUtil.send(new C03PacketPlayer(true));
             aEg.timer.dzD = 0.5F;
             FallDistanceComponent.cY = 0.0F;
         }
@@ -78,7 +78,7 @@ public class WatchdogPacketNoFall extends Mode<NoFall> {
             && this.prediction.wo()
             && (!this.e(Disabler.class).watchdogFly.wo() || !this.e(Disabler.class).isEnabled())) {
             var1x.setPosY(var1x.getPosY() + 1.0E-13);
-            PacketUtil.l(new C03PacketPlayer(true));
+            PacketUtil.send(new C03PacketPlayer(true));
             aEg.timer.dzD = 0.5F;
             FallDistanceComponent.cY = 0.0F;
         }

@@ -27,7 +27,7 @@ public final class PlayerNotifier extends Module {
         if (aEg.thePlayer.ticksExisted % 25 == 0) {
             aMR.execute(() -> {
                 for (EntityLivingBase entitylivingbase : aEg.theWorld.playerEntities) {
-                    if (!PlayerUtil.sameTeam(entitylivingbase) && !Client.a.x().a(entitylivingbase) && entitylivingbase != aEg.thePlayer) {
+                    if (!PlayerUtil.sameTeam(entitylivingbase) && !Client.a.getBotManager().a(entitylivingbase) && entitylivingbase != aEg.thePlayer) {
                         int i = (int)entitylivingbase.getDistance(this.bedPosition.getX(), this.bedPosition.getY(), this.bedPosition.getZ());
                         if (i < this.distance.wo().intValue()) {
                             if (this.notifiedPlayers.contains(entitylivingbase) && this.notifyOnce.wo()) {

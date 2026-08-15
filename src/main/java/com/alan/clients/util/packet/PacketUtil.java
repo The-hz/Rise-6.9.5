@@ -13,27 +13,27 @@ public final class PacketUtil implements InstanceAccess {
         return aEg != null ? aEg.getNetHandler() : null;
     }
 
-    public static void l(Packet<?> packet) {
+    public static void send(Packet<?> packet) {
         NetHandlerPlayClient nethandlerplayclient = uK();
         if (nethandlerplayclient != null && packet != null) {
             nethandlerplayclient.addToSendQueue(packet);
         }
     }
 
-    public static void m(Packet<?> packet) {
+    public static void sendNoEvent(Packet<?> packet) {
         NetHandlerPlayClient nethandlerplayclient = uK();
         if (nethandlerplayclient != null && packet != null) {
             nethandlerplayclient.u(packet);
         }
     }
 
-    public static void n(Packet<?> packet) {
+    public static void queue(Packet<?> packet) {
         if (packet == null) {
             System.out.println("Packet is null");
         } else {
             NetHandlerPlayClient nethandlerplayclient = uK();
             if (nethandlerplayclient != null) {
-                if (s(packet)) {
+                if (isClientPacket(packet)) {
                     nethandlerplayclient.addToSendQueue(packet);
                 } else {
                     nethandlerplayclient.v(packet);
@@ -42,10 +42,10 @@ public final class PacketUtil implements InstanceAccess {
         }
     }
 
-    public static void o(Packet<?> packet) {
+    public static void queueNoEvent(Packet<?> packet) {
         NetHandlerPlayClient nethandlerplayclient = uK();
         if (nethandlerplayclient != null && packet != null) {
-            if (s(packet)) {
+            if (isClientPacket(packet)) {
                 nethandlerplayclient.u(packet);
             } else {
                 nethandlerplayclient.w(packet);
@@ -53,25 +53,25 @@ public final class PacketUtil implements InstanceAccess {
         }
     }
 
-    public static void p(Packet<?> packet) {
+    public static void receive(Packet<?> packet) {
         NetHandlerPlayClient nethandlerplayclient = uK();
         if (nethandlerplayclient != null && packet != null) {
             nethandlerplayclient.v(packet);
         }
     }
 
-    public static void q(Packet<?> packet) {
+    public static void receiveNoEvent(Packet<?> packet) {
         NetHandlerPlayClient nethandlerplayclient = uK();
         if (nethandlerplayclient != null && packet != null) {
             nethandlerplayclient.w(packet);
         }
     }
 
-    public static boolean r(Packet<?> packet) {
-        return !s(packet);
+    public static boolean isServerPacket(Packet<?> packet) {
+        return !isClientPacket(packet);
     }
 
-    public static boolean s(Packet<?> packet) {
+    public static boolean isClientPacket(Packet<?> packet) {
         return Arrays.stream(NetworkAPI.serverbound).anyMatch(var1 -> var1 == packet.getClass());
     }
 

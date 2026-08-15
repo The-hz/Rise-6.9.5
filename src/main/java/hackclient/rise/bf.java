@@ -115,14 +115,14 @@ public class bf extends Component implements InstanceAccess {
         by by = dc.get(var1);
         if (by != null) {
             String s = " §7(" + var1 + "§7)§r";
-            String s1 = "§" + by.bU() + by.bW() + " §7(";
+            String s1 = "§" + by.getColorCode() + by.bW() + " §7(";
             if (!var0.contains(s1)) {
                 int i = var0.indexOf(var1);
                 if (i > 1 && var0.toCharArray()[i - 2] == 167) {
                     s = " §7(§" + var0.toCharArray()[i - 1] + var1 + "§7)§r";
                 }
 
-                return var0.replaceAll(var1, "§" + by.bU() + by.bW() + s);
+                return var0.replaceAll(var1, "§" + by.getColorCode() + by.bW() + s);
             }
         } else if (!dd.contains(var1)) {
             dd.add(var1);
@@ -151,7 +151,7 @@ public class bf extends Component implements InstanceAccess {
     }
 
     public static String d(String var0, String var1) {
-        String s = Client.a.k().rz().getChatAccentColor().toString();
+        String s = Client.a.getThemeManager().getTheme().getChatAccentColor().toString();
         return EnumChatFormatting.BOLD + var1 + var0 + EnumChatFormatting.RESET + s + " » " + EnumChatFormatting.RESET;
     }
 }

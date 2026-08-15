@@ -31,7 +31,7 @@ public class AutoPot extends Module {
     private final NumberValue health = new NumberValue("Health", this, 15, 1, 20, 1);
     private final BoundsNumberValue delay = new BoundsNumberValue("Delay", this, 500, 1000, 50, 5000, 50);
     private final BoundsNumberValue rotationSpeed = new BoundsNumberValue("Rotation Speed", this, 5, 10, 0, 10, 1);
-    private final a abl = new a();
+    private final a stopWatch = new a();
     private int attackTicks;
     private long nextThrow;
     @EventLink
@@ -41,7 +41,7 @@ public class AutoPot extends Module {
             this.attackTicks = 0;
         }
 
-        if (aEg.thePlayer.cqL > 1 && this.abl.T(this.nextThrow) && this.attackTicks >= 10 && !this.e(Scaffold.class).isEnabled()) {
+        if (aEg.thePlayer.cqL > 1 && this.stopWatch.T(this.nextThrow) && this.attackTicks >= 10 && !this.e(Scaffold.class).isEnabled()) {
             for (int i = 0; i < 9; i++) {
                 ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
                 if (itemstack != null) {
@@ -73,9 +73,9 @@ public class AutoPot extends Module {
                                 if (RotationComponent.fk.y > 85.0F && !BadPacketsComponent.bad(false, true, false, true, false)) {
                                     aEg.playerController.syncCurrentPlayItem();
                                     SlotComponent slotcomponent1 = this.d(SlotComponent.class);
-                                    PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                                    PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
                                     this.nextThrow = Math.round(MathUtil.l(this.delay.wo().longValue(), this.delay.wA().longValue()));
-                                    this.abl.aX();
+                                    this.stopWatch.aX();
                                     break;
                                 }
                             }

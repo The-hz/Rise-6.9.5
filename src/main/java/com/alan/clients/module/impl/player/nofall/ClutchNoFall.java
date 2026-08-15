@@ -24,31 +24,31 @@ import net.minecraft.util.Vec3;
 import rip.vantage.commons.util.time.a;
 
 public class ClutchNoFall extends Mode<NoFall> {
-    private ClutchState aic = ClutchState.IDLE;
+    private ClutchState state = ClutchState.IDLE;
     private BlockPos aid = null;
     private BlockPos CG = null;
     private a aie = new a();
     private a aif = new a();
-    private int CF = -1;
-    private int aig = -1;
+    private int waterSlot = -1;
+    private int bucketSlot = -1;
     private boolean aih = false;
     private boolean aii = false;
     private boolean aij = false;
-    private Vector2f aik = null;
+    private Vector2f rotations = null;
     @EventLink(value = 2)
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        switch (this.aic) {
+        switch (this.state) {
             case IDLE:
                 if (aEg.thePlayer.onGround || aEg.thePlayer.motionY >= 0.0 || aEg.thePlayer.fallDistance < 2.0F) {
                     return;
                 }
 
-                this.CF = com.alan.clients.util.player.SlotUtil.findItem(Items.water_bucket);
-                if (this.CF == -1) {
+                this.waterSlot = com.alan.clients.util.player.SlotUtil.findItem(Items.water_bucket);
+                if (this.waterSlot == -1) {
                     return;
                 }
 
-                this.aic = ClutchState.PREDICT;
+                this.state = ClutchState.PREDICT;
                 this.aie.aX();
                 break;
             case PREDICT:
@@ -60,20 +60,20 @@ public class ClutchNoFall extends Mode<NoFall> {
                 double d0 = aEg.thePlayer.posY - this.aid.getY();
                 double d1 = 8.0;
                 if (d0 < d1 && d0 > 3.0) {
-                    this.aic = ClutchState.ROTATE;
+                    this.state = ClutchState.ROTATE;
                     this.aie.aX();
                 } else if (this.aie.T(50L)) {
-                    this.aic = ClutchState.IDLE;
+                    this.state = ClutchState.IDLE;
                 }
                 break;
             case ROTATE:
                 SlotComponent slotcomponent = this.d(SlotComponent.class);
-                SlotComponent.setSlot(this.CF);
+                SlotComponent.setSlot(this.waterSlot);
                 RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 90.0F), 5.0, MovementFix.NORMAL);
                 if (Math.abs(aEg.thePlayer.rotationPitch - 90.0F) < 15.0F || this.aie.T(200L)) {
                     this.aii = true;
-                    this.aik = new Vector2f(aEg.thePlayer.pl, 90.0F);
-                    this.aic = ClutchState.PLACE;
+                    this.rotations = new Vector2f(aEg.thePlayer.pl, 90.0F);
+                    this.state = ClutchState.PLACE;
                     this.aie.aX();
                 }
                 break;
@@ -83,10 +83,10 @@ public class ClutchNoFall extends Mode<NoFall> {
             case WAIT_LAND:
                 if (aEg.thePlayer.onGround || this.aie.T(3000L)) {
                     if (this.CG != null) {
-                        this.aig = com.alan.clients.util.player.SlotUtil.findItem(Items.bucket);
+                        this.bucketSlot = com.alan.clients.util.player.SlotUtil.findItem(Items.bucket);
                         afi.b("S");
-                        if (this.aig != -1) {
-                            this.aic = ClutchState.PICKUP;
+                        if (this.bucketSlot != -1) {
+                            this.state = ClutchState.PICKUP;
                             this.aie.aX();
                         } else {
                             this.ky();
@@ -101,11 +101,11 @@ public class ClutchNoFall extends Mode<NoFall> {
                     this.ky();
                 } else if (aEg.thePlayer.getDistance(this.CG.getX() + 0.5, this.CG.getY() + 0.5, this.CG.getZ() + 0.5) < 5.0) {
                     SlotComponent slotcomponent1 = this.d(SlotComponent.class);
-                    SlotComponent.setSlot(this.aig);
-                    aEg.thePlayer.inventory.currentItem = this.aig;
+                    SlotComponent.setSlot(this.bucketSlot);
+                    aEg.thePlayer.inventory.currentItem = this.bucketSlot;
                     Vec3 vec3 = new Vec3(this.CG.getX() + 0.5, this.CG.getY() + 0.5, this.CG.getZ() + 0.5);
-                    this.aik = RotationUtil.h(vec3);
-                    RotationComponent.setRotations(this.aik, 10.0, MovementFix.NORMAL);
+                    this.rotations = RotationUtil.h(vec3);
+                    RotationComponent.setRotations(this.rotations, 10.0, MovementFix.NORMAL);
                     this.aij = true;
                 } else {
                     this.ky();
@@ -114,14 +114,14 @@ public class ClutchNoFall extends Mode<NoFall> {
     };
     @EventLink(value = 4)
     public final Listener<PreMotionEvent> aim = var1x -> {
-        if (this.aic == ClutchState.PLACE && this.aii) {
-            RotationComponent.setRotations(this.aik, 10.0, MovementFix.NORMAL);
+        if (this.state == ClutchState.PLACE && this.aii) {
+            RotationComponent.setRotations(this.rotations, 10.0, MovementFix.NORMAL);
             float f = aEg.thePlayer.rotationPitch;
-            aEg.thePlayer.pl = this.aik.x;
-            aEg.thePlayer.rotationPitch = this.aik.y;
+            aEg.thePlayer.pl = this.rotations.x;
+            aEg.thePlayer.rotationPitch = this.rotations.y;
             aEg.entityRenderer.getMouseOver(1.0F);
             SlotComponent slotcomponent = this.d(SlotComponent.class);
-            SlotComponent.setSlot(this.CF);
+            SlotComponent.setSlot(this.waterSlot);
             aEg.rightClickDelayTimer = 0;
             aEg.Az();
             aEg.thePlayer.rotationPitch = f;
@@ -129,10 +129,10 @@ public class ClutchNoFall extends Mode<NoFall> {
             this.aih = true;
             this.aif.aX();
             afi.b("MLG water placed at distance: " + (aEg.thePlayer.posY - this.aid.getY()));
-            this.aic = ClutchState.WAIT_LAND;
+            this.state = ClutchState.WAIT_LAND;
             this.aie.aX();
             this.aii = false;
-        } else if (this.aic == ClutchState.PICKUP && this.aij) {
+        } else if (this.state == ClutchState.PICKUP && this.aij) {
             float f1 = aEg.thePlayer.rotationPitch;
             aEg.entityRenderer.getMouseOver(1.0F);
             aEg.rightClickDelayTimer = 0;
@@ -143,10 +143,10 @@ public class ClutchNoFall extends Mode<NoFall> {
     };
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
-        if (this.aic == ClutchState.PLACE && this.aii) {
+        if (this.state == ClutchState.PLACE && this.aii) {
             var1x.setCancelled(true);
             this.aii = false;
-        } else if (this.aic == ClutchState.PICKUP && this.aij) {
+        } else if (this.state == ClutchState.PICKUP && this.aij) {
             var1x.setCancelled(true);
             this.aij = false;
         }
@@ -243,16 +243,16 @@ public class ClutchNoFall extends Mode<NoFall> {
     }
 
     private void ky() {
-        this.aic = ClutchState.IDLE;
+        this.state = ClutchState.IDLE;
         this.aid = null;
         this.CG = null;
-        this.CF = -1;
-        this.aig = -1;
+        this.waterSlot = -1;
+        this.bucketSlot = -1;
         this.aih = false;
         this.aie.aX();
         this.aif.aX();
         this.aii = false;
         this.aij = false;
-        this.aik = null;
+        this.rotations = null;
     }
 }

@@ -13,7 +13,7 @@ public class RiseShaderProgram implements InstanceAccess {
         this.programId = aiw.createShader(var1, var2);
     }
 
-    public static void h(double var0, double var2, double var4, double var6) {
+    public static void drawQuad(double var0, double var2, double var4, double var6) {
         GL11.glBegin(7);
         GL11.glTexCoord2f(0.0F, 0.0F);
         GL11.glVertex2d(var0, var2 + var6);
@@ -28,7 +28,7 @@ public class RiseShaderProgram implements InstanceAccess {
 
     public static void vN() {
         ScaledResolution scaledresolution = aEg.jY;
-        h(0.0, 0.0, scaledresolution.getScaledWidth_double(), scaledresolution.getScaledHeight_double());
+        drawQuad(0.0, 0.0, scaledresolution.getScaledWidth_double(), scaledresolution.getScaledHeight_double());
     }
 
     public void rt() {

@@ -22,7 +22,7 @@ public class WatchdogReduceVelocity extends Mode<Velocity> {
     private final BooleanValue cancelOnGround = new BooleanValue("Cancel On Ground", this, true);
     private final BooleanValue cancelOnAttack = new BooleanValue("Cancel On Attack", this, true);
     private final BooleanValue cancelExplosions = new BooleanValue("Cancel Explosions", this, true);
-    private final List<Packet<?>> vL = new ArrayList<>();
+    private final List<Packet<?>> heldPackets = new ArrayList<>();
     private boolean vM = false;
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
@@ -31,22 +31,22 @@ public class WatchdogReduceVelocity extends Mode<Velocity> {
             if (packet instanceof S12PacketEntityVelocity s12packetentityvelocity) {
                 if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                     var1x.setCancelled();
-                    synchronized (this.vL) {
-                        this.vL.add(packet);
+                    synchronized (this.heldPackets) {
+                        this.heldPackets.add(packet);
                     }
                 }
             } else if (packet instanceof S32PacketConfirmTransaction) {
-                synchronized (this.vL) {
-                    if (!this.vL.isEmpty()) {
+                synchronized (this.heldPackets) {
+                    if (!this.heldPackets.isEmpty()) {
                         var1x.setCancelled();
-                        this.vL.add(packet);
+                        this.heldPackets.add(packet);
                     }
                 }
             } else if (packet instanceof z) {
-                synchronized (this.vL) {
-                    if (!this.vL.isEmpty()) {
+                synchronized (this.heldPackets) {
+                    if (!this.heldPackets.isEmpty()) {
                         var1x.setCancelled();
-                        this.vL.add(packet);
+                        this.heldPackets.add(packet);
                     }
                 }
             }
@@ -64,7 +64,7 @@ public class WatchdogReduceVelocity extends Mode<Velocity> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (this.cancelOnGround.wo()) {
-            if (aEg.thePlayer.onGround && !this.vL.isEmpty()) {
+            if (aEg.thePlayer.onGround && !this.heldPackets.isEmpty()) {
                 this.v("ground");
             }
         }
@@ -76,20 +76,20 @@ public class WatchdogReduceVelocity extends Mode<Velocity> {
 
     private void v(String param1) {
         List<Packet<?>> list;
-        synchronized (this.vL) {
-            if (this.vL.isEmpty()) {
+        synchronized (this.heldPackets) {
+            if (this.heldPackets.isEmpty()) {
                 return;
             }
 
-            list = new ArrayList<>(this.vL);
-            this.vL.clear();
+            list = new ArrayList<>(this.heldPackets);
+            this.heldPackets.clear();
         }
 
         this.vM = true;
 
         try {
             for (Packet<?> packet : list) {
-                PacketUtil.p(packet);
+                PacketUtil.receive(packet);
             }
         } finally {
             this.vM = false;

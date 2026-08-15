@@ -26,13 +26,13 @@ import net.minecraft.network.play.server.S45PacketTitle;
 import net.minecraft.util.StringUtils;
 
 public final class ModernSessionStats extends Mode<SessionStats> {
-    private final DragValue atJ = this.getParent().mg();
+    private final DragValue atJ = this.getParent().getPosition();
     private ModernSessionStatsData atK = new ModernSessionStatsData(0, 0, 0, 0, 0.0, 0.0);
     private String atL = "0 seconds";
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.ticksExisted % 20 == 0) {
-            long i = System.currentTimeMillis() - this.atK.atX;
+            long i = System.currentTimeMillis() - this.atK.startTime;
             long j = TimeUnit.MILLISECONDS.toHours(i);
             long k = TimeUnit.MILLISECONDS.toMinutes(i) % 60L;
             long l = TimeUnit.MILLISECONDS.toSeconds(i) % 60L;
@@ -56,7 +56,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                 this.b(ShaderQueueType.BLOOM).c(() -> {
                     RenderUtil.roundedRectangle(this.atJ.apP.x, this.atJ.apP.y - 14.0, this.atJ.aHe.x, this.atJ.aHe.y + 14.0, 7.0, this.rz().rE());
                     double d1 = this.atJ.apP.x + this.atJ.aHe.x / 2.0 - (FontManager.MAIN.a(18, FontWeight.REGULAR).getStringWidth("Information") / 2.0 + 1.0);
-                    FontManager.MAIN.a(18, FontWeight.BOLD).c(ahd.ce("session"), d1, this.atJ.apP.y - 9.0, ColorUtil.d(this.rz().rA(), 200).getRGB());
+                    FontManager.MAIN.a(18, FontWeight.BOLD).drawString(ahd.ce("session"), d1, this.atJ.apP.y - 9.0, ColorUtil.withBlue(this.rz().rA(), 200).getRGB());
                 });
             }
 
@@ -70,13 +70,13 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                             Math.min(255, UIColors.BACKGROUND.pV().getBlue() + color.getBlue() / 26),
                             245
                         );
-                        RenderUtil.a(this.atJ.apP.x, this.atJ.apP.y - 14.0, this.atJ.aHe.x, 14.0, 6.0, ColorUtil.d(UIColors.SECONDARY.pV(), 170), true, true, false, false);
+                        RenderUtil.a(this.atJ.apP.x, this.atJ.apP.y - 14.0, this.atJ.aHe.x, 14.0, 6.0, ColorUtil.withBlue(UIColors.SECONDARY.pV(), 170), true, true, false, false);
                         RenderUtil.a(this.atJ.apP.x, this.atJ.apP.y, this.atJ.aHe.x, this.atJ.aHe.y, 6.0, color1, false, false, true, true);
                         double d1 = this.atJ.apP.x + this.atJ.aHe.x / 2.0 - (FontManager.MAIN.a(18, FontWeight.REGULAR).getStringWidth("Information") / 2.0 + 1.0);
-                        FontManager.MAIN.a(18, FontWeight.BOLD).c(ahd.ce("session"), d1, this.atJ.apP.y - 9.0, this.rz().rD().getRGB());
+                        FontManager.MAIN.a(18, FontWeight.BOLD).drawString(ahd.ce("session"), d1, this.atJ.apP.y - 9.0, this.rz().rD().getRGB());
                         FontManager.MAIN
                             .a(18, FontWeight.REGULAR)
-                            .c(
+                            .drawString(
                                 ahd.ce("Information"),
                                 this.atJ.apP.x + this.atJ.aHe.x / 2.0 + (FontManager.MAIN.a(18, FontWeight.BOLD).getStringWidth("session") / 2.0 + 1.0),
                                 this.atJ.apP.y - 9.0,
@@ -86,7 +86,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                         FontManager.MAIN
                             .a(16, FontWeight.REGULAR)
                             .a(
-                                ahd.ce("You have gotten ") + this.atK.atR + " kills",
+                                ahd.ce("You have gotten ") + this.atK.kills + " kills",
                                 this.atJ.apP.x + d0,
                                 this.atJ.apP.y + d0 + FontManager.MAIN.a(24, FontWeight.BOLD).height(),
                                 UIColors.TRINARY_TEXT.pW()
@@ -94,7 +94,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                         FontManager.MAIN
                             .a(16, FontWeight.REGULAR)
                             .a(
-                                ahd.ce("You have won " + this.atK.atS) + " games",
+                                ahd.ce("You have won " + this.atK.wins) + " games",
                                 this.atJ.apP.x + d0,
                                 this.atJ.apP.y + d0 + FontManager.MAIN.a(24, FontWeight.BOLD).height() + FontManager.MAIN.a(16, FontWeight.REGULAR).height() + 2.0,
                                 UIColors.TRINARY_TEXT.pW()
@@ -104,7 +104,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
         }
     };
     @EventLink
-    public final Listener<KillEvent> onKill = var1x -> this.atK.atR++;
+    public final Listener<KillEvent> onKill = var1x -> this.atK.kills++;
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         if (var1x.getPacket() instanceof S45PacketTitle) {
@@ -114,7 +114,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
             }
 
             if (StringUtils.stripControlCodes(s45packettitle.getMessage().getUnformattedText()).equals("VICTORY!")) {
-                this.atK.atS++;
+                this.atK.wins++;
             }
         }
     };

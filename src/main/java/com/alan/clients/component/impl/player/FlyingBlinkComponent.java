@@ -19,7 +19,7 @@ public class FlyingBlinkComponent extends Component {
             cR = false;
             dA.clear();
         } else if (aEg.thePlayer.isDead || aEg.isSingleplayer() || PacketQueueComponent.cR) {
-            dA.forEach(PacketUtil::m);
+            dA.forEach(PacketUtil::sendNoEvent);
             dA.clear();
             cR = false;
         } else if (!var0.isCancelled()) {
@@ -30,7 +30,7 @@ public class FlyingBlinkComponent extends Component {
                     var0.setCancelled();
                 }
             } else if (packet instanceof C03PacketPlayer) {
-                dA.forEach(PacketUtil::m);
+                dA.forEach(PacketUtil::sendNoEvent);
                 dA.clear();
             }
         }
@@ -45,7 +45,7 @@ public class FlyingBlinkComponent extends Component {
     }
 
     public static void bc() {
-        dA.forEach(PacketUtil::m);
+        dA.forEach(PacketUtil::sendNoEvent);
         dA.clear();
         cR = false;
     }

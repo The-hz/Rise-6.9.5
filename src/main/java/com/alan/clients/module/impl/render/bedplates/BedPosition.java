@@ -9,7 +9,7 @@ public class BedPosition {
         this.alU = pos;
     }
 
-    public BlockPos la() {
+    public BlockPos getPosition() {
         return this.alU;
     }
 }

@@ -33,7 +33,7 @@ public class EntityPositionComponent extends Component {
     @Override
     public void aT() {
         for (EntityPositionPacket cc : EntityPositionPacket.values()) {
-            this.gl.put(cc.ce(), cc);
+            this.gl.put(cc.getClazz(), cc);
         }
     }
 

@@ -488,7 +488,7 @@ public final class BlinkComponent extends Component {
         if (!var0.isEmpty()) {
             boolean flag = enabled;
             enabled = false;
-            var0.forEach(PacketUtil::n);
+            var0.forEach(PacketUtil::queue);
             enabled = flag;
         }
     }

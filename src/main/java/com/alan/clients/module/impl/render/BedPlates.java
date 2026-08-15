@@ -51,7 +51,7 @@ import org.lwjgl.util.glu.GLU;
 @ModuleInfo(aliases = {"module.render.bedplates.name", "Bed Plates"}, description = "module.render.bedplates.description", category = Category.RENDER)
 public class BedPlates extends Module {
     private final BooleanValue whiteListOwnBed = new BooleanValue("Whitelist Own Bed", this, true);
-    private final BooleanValue aln = new BooleanValue("Overlays (Bloom/Blur)", this, true);
+    private final BooleanValue overlaysBloomBlur = new BooleanValue("Overlays (Bloom/Blur)", this, true);
     private final BooleanValue minimal = new BooleanValue("Minimal", this, false);
     private final BooleanValue showGradient = new BooleanValue("Show Gradient", this, false);
     private final BooleanValue showDistance = new BooleanValue("Show Distance", this, true);
@@ -75,7 +75,7 @@ public class BedPlates extends Module {
     private int alI;
     private float Il;
     private float Im;
-    private volatile boolean alJ = false;
+    private volatile boolean scanning = false;
     private long alK = 0L;
     private static final long alL = 5000L;
     private static final EnumFacing[] alM = new EnumFacing[]{EnumFacing.UP, EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST};
@@ -84,7 +84,7 @@ public class BedPlates extends Module {
         if (!this.kN()) {
             this.alx.clear();
             this.aly.clear();
-            this.alJ = false;
+            this.scanning = false;
         } else {
             int i = aEg.thePlayer.ticksExisted;
             if (i != this.alA) {
@@ -112,7 +112,7 @@ public class BedPlates extends Module {
         this.alA = -1;
         this.alB = 0;
         this.alD = false;
-        this.alJ = false;
+        this.scanning = false;
         this.alK = 0L;
     }
 
@@ -124,7 +124,7 @@ public class BedPlates extends Module {
         this.alA = -1;
         this.alB = 0;
         this.alD = false;
-        this.alJ = false;
+        this.scanning = false;
         this.alK = 0L;
     }
 
@@ -135,28 +135,28 @@ public class BedPlates extends Module {
     private void kO() {
         if (this.kN()) {
             long now = System.currentTimeMillis();
-            if (!this.alJ) {
+            if (!this.scanning) {
                 if (now - this.alK >= 5000L) {
                     this.alK = now;
-                    this.kP();
+                    this.startBedScan();
                 }
             }
         }
     }
 
-    private void kP() {
+    private void startBedScan() {
         if (this.kN()) {
             synchronized (this) {
-                if (this.alJ) {
+                if (this.scanning) {
                     return;
                 }
 
-                this.alJ = true;
+                this.scanning = true;
             }
 
             WorldClient worldclient = aEg.theWorld;
             if (worldclient == null) {
-                this.alJ = false;
+                this.scanning = false;
             } else {
                 BlockPos blockpos = new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
                 int i = this.range.wo().intValue();
@@ -211,7 +211,7 @@ public class BedPlates extends Module {
                     } catch (Throwable throwable) {
                         throwable.printStackTrace();
                     } finally {
-                        this.alJ = false;
+                        this.scanning = false;
                     }
                 }, "BedPlates-AsyncBedScan").start();
             }
@@ -230,7 +230,7 @@ public class BedPlates extends Module {
             Iterator iterator = this.aly.iterator();
 
             while (iterator.hasNext()) {
-                BlockPos blockpos = ((BedPosition)iterator.next()).la();
+                BlockPos blockpos = ((BedPosition)iterator.next()).getPosition();
                 IBlockState iblockstate = worldclient.getBlockState(blockpos);
                 if (iblockstate.getBlock() instanceof BlockBed && iblockstate.getValue(BlockBed.PART) == EnumPartType.HEAD) {
                     EnumFacing enumfacing = iblockstate.getValue(BlockBed.FACING);
@@ -254,12 +254,12 @@ public class BedPlates extends Module {
                 }
             }
 
-            this.alx.sort(Comparator.comparingDouble(BedPlateEntry::kU));
+            this.alx.sort(Comparator.comparingDouble(BedPlateEntry::getDistanceSquared));
         }
     }
 
     private boolean a(BlockPos pos, EnumFacing facing) {
-        aka akaxx = Breaker.abS;
+        aka akaxx = Breaker.home;
         if (akaxx == null) {
             return false;
         }
@@ -370,7 +370,7 @@ public class BedPlates extends Module {
 
                 for (BedPlateEntry wi : this.alx) {
                     if (flag) {
-                        aka aka = wi.kT();
+                        aka aka = wi.getPosition();
                         BlockPos blockpos = new BlockPos(aka.getX(), aka.getY(), aka.getZ());
                         if (!(aEg.theWorld.getBlockState(blockpos).getBlock() instanceof BlockBed)) {
                             wi.v(false);
@@ -380,11 +380,11 @@ public class BedPlates extends Module {
                         wi.v(true);
                     }
 
-                    if (wi.kW()) {
-                        double[] adouble = wi.kX();
+                    if (wi.isVisible()) {
+                        double[] adouble = wi.getProjectedPosition();
                         wi.kZ();
-                        if (adouble == null || flag1 || wi.kY() > 60) {
-                            adouble = this.a(wi.kT(), d0, d1, d2, i, j);
+                        if (adouble == null || flag1 || wi.getCacheAge() > 60) {
+                            adouble = this.a(wi.getPosition(), d0, d1, d2, i, j);
                             if (adouble == null) {
                                 continue;
                             }
@@ -393,7 +393,7 @@ public class BedPlates extends Module {
                         }
 
                         if (!(adouble[2] < 0.0) && !(adouble[2] > 1.0)) {
-                            this.a(wi.kV(), adouble[0], adouble[1], 0);
+                            this.a(wi.getInfo(), adouble[0], adouble[1], 0);
                         }
                     }
                 }
@@ -402,14 +402,14 @@ public class BedPlates extends Module {
     }
 
     private void a(BedPlateInfo var1, double var2, double var4, int var6) {
-        ItemStack itemstack = var1.lb();
+        ItemStack itemstack = var1.getStack();
         if (itemstack != null && itemstack.getItem() != null) {
             boolean flag = this.minimal.wo();
-            if (flag && (var1.lg() || var1.lh())) {
+            if (flag && (var1.isIncomplete() || var1.isNotProtected())) {
                 itemstack = new ItemStack(Items.bed, 1, 0);
             }
 
-            double d0 = var1.ld();
+            double d0 = var1.getDistance();
             double d1 = 1.0;
             if (this.distanceScale.wo() && d0 > 10.0) {
                 d1 = Math.max(0.5, 1.0 - (d0 - 10.0) / 80.0);
@@ -423,14 +423,14 @@ public class BedPlates extends Module {
             double d7;
             double d8;
             if (flag) {
-                double d6 = showDistance ? this.alw.getStringWidth(var1.li()) * d1 : 0.0;
+                double d6 = showDistance ? this.alw.getStringWidth(var1.getDistanceText()) * d1 : 0.0;
                 d7 = Math.max(d3 + d2 * 2.0, d6 + d2 * 4.0);
                 d8 = d3 + d2 * 1.0;
             } else {
                 double d20 = this.alu.height() * d1;
                 double d21 = Math.max(d3, d20);
-                double d22 = this.alu.getStringWidth(var1.lc()) * d1;
-                double d23 = showDistance ? (this.alv.getStringWidth("distance: ") + this.alw.getStringWidth(var1.li())) * d1 : 0.0;
+                double d22 = this.alu.getStringWidth(var1.getDisplayName()) * d1;
+                double d23 = showDistance ? (this.alv.getStringWidth("distance: ") + this.alw.getStringWidth(var1.getDistanceText())) * d1 : 0.0;
                 double d24 = d3 + d2 * 3.0 + d22;
                 d7 = Math.max(d24, d23 + d2 * 4.0);
                 d8 = d21 + d2 * 1.0;
@@ -438,9 +438,9 @@ public class BedPlates extends Module {
 
             double d9 = var2 - d7 / 2.0;
             double d10 = var4 - d8 - d5 - 8.0 - var6 * (d8 + d5 + 6.0);
-            int i = this.kS();
+            int i = this.getRound();
             Color color = Themes.rK();
-            Color color1 = this.a(color, var1.le());
+            Color color1 = this.a(color, var1.getMapColor());
             Color color2 = this.rz().rA();
             Color color3 = new Color(
                 Math.min(255, color1.getRed() + color2.getRed() / 26),
@@ -462,15 +462,15 @@ public class BedPlates extends Module {
             double d17 = d3;
             double d18 = d4;
             double d19 = d1;
-            Color color8 = ColorUtil.d(UIColors.SECONDARY.pV(), 105);
+            Color color8 = ColorUtil.withBlue(UIColors.SECONDARY.pV(), 105);
             Color color9 = color3;
             Color color10 = color6;
             Color color11 = color7;
-            String s = var1.lc();
-            String s1 = var1.li();
+            String s = var1.getDisplayName();
+            String s1 = var1.getDistanceText();
             boolean flag2 = showDistance;
             boolean flag3 = flag;
-            if (this.aln.wo()) {
+            if (this.overlaysBloomBlur.wo()) {
                 this.b(ShaderQueueType.BLUR).c(() -> {
                     RenderUtil.a(d11, d12, d14, d13, i, UIColors.SECONDARY.pV(), true, true, false, false);
                     RenderUtil.a(d11, d12 + d13, d14, d15, i, UIColors.BACKGROUND.pV(), false, false, true, true);
@@ -487,7 +487,7 @@ public class BedPlates extends Module {
                         GlStateManager.pushMatrix();
                         GlStateManager.translate(d28, d29, 0.0);
                         GlStateManager.scale(d19, d19, d19);
-                        this.alv.a(s2, 0.0, 0.0, ColorUtil.d(this.rz().rA(), 240).getRGB());
+                        this.alv.a(s2, 0.0, 0.0, ColorUtil.withBlue(this.rz().rA(), 240).getRGB());
                         GlStateManager.popMatrix();
                     }
                 });
@@ -499,7 +499,7 @@ public class BedPlates extends Module {
                 RenderUtil.a(d11, d12 + d13, d14, d15, j, color9, false, false, true, true);
                 if (this.showGradient.wo()) {
                     double d25 = 2.5 * d19;
-                    RenderUtil.c(d11, d12, d14, d25, color10, color11);
+                    RenderUtil.horizontalCenteredGradient(d11, d12, d14, d25, color10, color11);
                 }
 
                 if (flag2) {
@@ -602,7 +602,7 @@ public class BedPlates extends Module {
         }
     }
 
-    private int kS() {
+    private int getRound() {
         return this.rz().getRound();
     }
 
@@ -629,7 +629,7 @@ public class BedPlates extends Module {
         Iterator iterator = var0.iterator();
 
         while (iterator.hasNext()) {
-            if (((BedPosition)iterator.next()).la().equals(pos)) {
+            if (((BedPosition)iterator.next()).getPosition().equals(pos)) {
                 return true;
             }
         }

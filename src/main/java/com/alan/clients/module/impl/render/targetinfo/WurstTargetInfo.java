@@ -24,7 +24,7 @@ public class WurstTargetInfo extends Mode<TargetInfo> {
         }
 
         Entity entity = this.aui.target;
-        boolean flag = !this.aui.inWorld || this.aui.rG.T(1000L);
+        boolean flag = !this.aui.inWorld || this.aui.stopwatch.T(1000L);
         if (entity == null || flag) {
             return;
         }
@@ -33,7 +33,7 @@ public class WurstTargetInfo extends Mode<TargetInfo> {
         String s1 = bf.c(s, s);
         double d0 = this.aui.position.x;
         double d1 = this.aui.position.y;
-        RenderUtil.d(d0, d1, 185.0, 34.0, ColorUtil.d(Color.WHITE, 100));
+        RenderUtil.d(d0, d1, 185.0, 34.0, ColorUtil.withBlue(Color.WHITE, 100));
         aEg.fontRendererObj.a("Name: " + s1, d0 + 4.0, d1 + 4.0, Color.BLACK.getRGB());
         this.aui.positionValue.aHe = new Vector2d(185.0, 50.0);
         AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;

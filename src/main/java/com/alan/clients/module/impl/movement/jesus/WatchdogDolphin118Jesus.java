@@ -84,7 +84,7 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
             }
         }
     };
-    private final ArrayList<Packet<?>> Kz = new ArrayList<>();
+    private final ArrayList<Packet<?>> packets = new ArrayList<>();
     private boolean dj;
     private boolean tt;
     private boolean vq;
@@ -97,7 +97,7 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
     public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (aEg.thePlayer.inWater) {
             aEg.timer.dzD = 0.5F;
-            PacketUtil.l(new C03PacketPlayer(true));
+            PacketUtil.send(new C03PacketPlayer(true));
         }
 
         if (aEg.thePlayer.inWater) {
@@ -122,7 +122,7 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
                         this.IW = s12packetentityvelocity.getMotionY() / 8000.0;
                         var1x.setCancelled();
                         this.dj = true;
-                        this.Kz.add(s12packetentityvelocity);
+                        this.packets.add(s12packetentityvelocity);
                         if (this.IW > 0.2) {
                             this.Kx++;
                         }
@@ -136,7 +136,7 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
                     break;
                 case S32PacketConfirmTransaction s32packetconfirmtransaction:
                     if (this.dj) {
-                        this.Kz.add(s32packetconfirmtransaction);
+                        this.packets.add(s32packetconfirmtransaction);
                         var1x.setCancelled();
                     }
                     break;
@@ -167,14 +167,14 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
             this.dj = false;
             this.tt = true;
             new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
-            this.Kz.forEach(PacketUtil::p);
+            this.packets.forEach(PacketUtil::receive);
             this.Kv = false;
             if (aEg.thePlayer.Zl > 20 && this.IW > 0.4) {
                 aEg.thePlayer.motionX *= 1.23;
                 aEg.thePlayer.motionZ *= 1.23;
             }
 
-            this.Kz.clear();
+            this.packets.clear();
             this.tt = false;
         }
     };
@@ -185,15 +185,15 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
 
     @Override
     public void onEnable() {
-        this.Kz.forEach(PacketUtil::p);
-        this.Kz.clear();
+        this.packets.forEach(PacketUtil::receive);
+        this.packets.clear();
         FallDistanceComponent.cY = 0.0F;
     }
 
     @Override
     public void onDisable() {
-        this.Kz.forEach(PacketUtil::p);
-        this.Kz.clear();
+        this.packets.forEach(PacketUtil::receive);
+        this.packets.clear();
         this.Kv = false;
         this.Kx = 0;
     }

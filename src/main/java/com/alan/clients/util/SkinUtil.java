@@ -26,7 +26,7 @@ public class SkinUtil implements InstanceAccess {
     public SkinUtil() {
     }
 
-    public static ResourceLocation a(SkinType var0, String var1, int var2) {
+    public static ResourceLocation getResourceLocation(SkinType var0, String var1, int var2) {
         String s = var1 + "_" + var0.name() + "_" + var2;
         if (SKIN_CACHE.containsKey(s)) {
             return SKIN_CACHE.get(s);
@@ -77,12 +77,12 @@ public class SkinUtil implements InstanceAccess {
         return aEs[aEt].split("/")[2];
     }
 
-    public static String bd(String var0) {
-        JsonObject jsonobject = JsonParser.parseString(be("https://api.mojang.com/users/profiles/minecraft/" + var0)).getAsJsonObject();
+    public static String uuidOf(String var0) {
+        JsonObject jsonobject = JsonParser.parseString(scrape("https://api.mojang.com/users/profiles/minecraft/" + var0)).getAsJsonObject();
         return jsonobject != null && jsonobject.has("id") ? jsonobject.get("id").getAsString() : null;
     }
 
-    private static String be(String var0) {
+    private static String scrape(String var0) {
         StringBuilder stringbuilder = new StringBuilder();
 
         try {
@@ -103,7 +103,7 @@ public class SkinUtil implements InstanceAccess {
         return stringbuilder.toString();
     }
 
-    public static String bf(String var0) {
+    public static String name(String var0) {
         return null;
     }
 }

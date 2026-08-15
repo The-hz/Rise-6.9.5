@@ -74,35 +74,35 @@ public class OldManager extends Module {
     private final NumberValue bowSlot = new NumberValue("Bow Slot", this, 7, 0, 9, 1);
     private final NumberValue rodSlot = new NumberValue("Rod Slot", this, 8, 0, 9, 1);
     private final BoundsNumberValue foodSlot = new BoundsNumberValue("Food Slot", this, 9, 9, 0, 9, 1);
-    private final int afv = 4;
-    private final int afw = 9;
-    private final int afx = 4;
-    private final int afy = 40;
-    private final a afz = new a();
-    private int adp;
-    private int BV;
-    private int adq;
-    private boolean adr;
-    private boolean ads;
-    private long adt;
+    private final int INVENTORY_ROWS = 4;
+    private final int INVENTORY_COLUMNS = 9;
+    private final int ARMOR_SLOTS = 4;
+    private final int INVENTORY_SLOTS = 40;
+    private final a stopwatch = new a();
+    private int chestTicks;
+    private int attackTicks;
+    private int placeTicks;
+    private boolean moved;
+    private boolean open;
+    private long nextClick;
     private int adv;
-    private int adw;
+    private int extraSprintTicks;
     @EventLink(value = 1)
     public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         if (aEg.thePlayer.ticksExisted > 40) {
             if (aEg.currentScreen instanceof GuiChest) {
-                this.adp = 0;
+                this.chestTicks = 0;
             } else {
-                this.adp++;
+                this.chestTicks++;
             }
 
-            this.BV++;
-            this.adq++;
+            this.attackTicks++;
+            this.placeTicks++;
             if (this.legit.wo() && !(aEg.currentScreen instanceof GuiInventory)) {
-                this.afz.aX();
-            } else if (this.afz.T(this.adt) && this.adp >= 10 && this.BV >= 10 && this.adq >= 10 && !this.e(Scaffold.class).isEnabled()) {
+                this.stopwatch.aX();
+            } else if (this.stopwatch.T(this.nextClick) && this.chestTicks >= 10 && this.attackTicks >= 10 && this.placeTicks >= 10 && !this.e(Scaffold.class).isEnabled()) {
                 if (this.e(InventoryMove.class).isEnabled() || aEg.currentScreen instanceof GuiInventory) {
-                    this.adr = false;
+                    this.moved = false;
                     int i = -1;
                     int j = -1;
                     int k = -1;
@@ -137,8 +137,8 @@ public class OldManager extends Module {
                         ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(k4);
                         if (itemstack != null) {
                             Item item = itemstack.getItem();
-                            if (!ItemUtil.u(itemstack)) {
-                                this.J(k4);
+                            if (!ItemUtil.useful(itemstack)) {
+                                this.throwItem(k4);
                             }
 
                             if (item == Items.arrow) {
@@ -194,13 +194,13 @@ public class OldManager extends Module {
                             if (item instanceof ItemSword && this.swordSlot.wo().intValue() != 0) {
                                 if (i1 == -1) {
                                     i1 = k4;
-                                } else if (this.n(itemstack) > this.n(aEg.thePlayer.inventory.getStackInSlot(i1))) {
+                                } else if (this.damage(itemstack) > this.damage(aEg.thePlayer.inventory.getStackInSlot(i1))) {
                                     if (flag) {
                                         j1 = i1;
                                     }
 
                                     i1 = k4;
-                                } else if (flag && (j1 == -1 || this.n(itemstack) > this.n(aEg.thePlayer.inventory.getStackInSlot(j1)))) {
+                                } else if (flag && (j1 == -1 || this.damage(itemstack) > this.damage(aEg.thePlayer.inventory.getStackInSlot(j1)))) {
                                     j1 = k4;
                                 }
                             }
@@ -208,36 +208,36 @@ public class OldManager extends Module {
                             if (item instanceof bw) {
                                 if (k1 == -1) {
                                     k1 = k4;
-                                } else if (this.p(itemstack) > this.p(aEg.thePlayer.inventory.getStackInSlot(k1))) {
+                                } else if (this.mineSpeed(itemstack) > this.mineSpeed(aEg.thePlayer.inventory.getStackInSlot(k1))) {
                                     k1 = k4;
                                 }
 
                                 if (k4 != k1) {
-                                    this.J(k4);
+                                    this.throwItem(k4);
                                 }
                             }
 
                             if (item instanceof ItemAxe) {
                                 if (l1 == -1) {
                                     l1 = k4;
-                                } else if (this.p(itemstack) > this.p(aEg.thePlayer.inventory.getStackInSlot(l1))) {
+                                } else if (this.mineSpeed(itemstack) > this.mineSpeed(aEg.thePlayer.inventory.getStackInSlot(l1))) {
                                     l1 = k4;
                                 }
 
                                 if (k4 != l1) {
-                                    this.J(k4);
+                                    this.throwItem(k4);
                                 }
                             }
 
                             if (item instanceof cn) {
                                 if (i2 == -1) {
                                     i2 = k4;
-                                } else if (this.p(itemstack) > this.p(aEg.thePlayer.inventory.getStackInSlot(i2))) {
+                                } else if (this.mineSpeed(itemstack) > this.mineSpeed(aEg.thePlayer.inventory.getStackInSlot(i2))) {
                                     i2 = k4;
                                 }
 
                                 if (k4 != i2) {
-                                    this.J(k4);
+                                    this.throwItem(k4);
                                 }
                             }
 
@@ -259,7 +259,7 @@ public class OldManager extends Module {
                                 }
 
                                 if (k4 != j2) {
-                                    this.J(k4);
+                                    this.throwItem(k4);
                                 }
                             }
 
@@ -273,7 +273,7 @@ public class OldManager extends Module {
                                 }
 
                                 if (k4 != k2) {
-                                    this.J(k4);
+                                    this.throwItem(k4);
                                 }
                             }
                         }
@@ -287,46 +287,46 @@ public class OldManager extends Module {
                                 switch (itemarmor1.armorType) {
                                     case 0:
                                         if (i5 != i) {
-                                            this.J(i5);
+                                            this.throwItem(i5);
                                         }
                                         break;
                                     case 1:
                                         if (i5 != j) {
-                                            this.J(i5);
+                                            this.throwItem(i5);
                                         }
                                         break;
                                     case 2:
                                         if (i5 != k) {
-                                            this.J(i5);
+                                            this.throwItem(i5);
                                         }
                                         break;
                                     case 3:
                                         if (i5 != l) {
-                                            this.J(i5);
+                                            this.throwItem(i5);
                                         }
                                 }
                             }
 
                             if (this.swordSlot.wo().intValue() != 0 && item1 instanceof ItemSword && i5 != i1 && (!flag || i5 != j1)) {
-                                this.J(i5);
+                                this.throwItem(i5);
                             }
                         }
                     }
 
                     if (i != -1 && i != 39) {
-                        this.H(i);
+                        this.equipItem(i);
                     }
 
                     if (j != -1 && j != 38) {
-                        this.H(j);
+                        this.equipItem(j);
                     }
 
                     if (k != -1 && k != 37) {
-                        this.H(k);
+                        this.equipItem(k);
                     }
 
                     if (l != -1 && l != 36) {
-                        this.H(l);
+                        this.equipItem(l);
                     }
 
                     if (this.blockSlot.wo().intValue() != 0 && this.blockSlot.wA().intValue() != 0) {
@@ -355,7 +355,7 @@ public class OldManager extends Module {
                             ItemStack itemstack2 = aEg.thePlayer.inventory.getStackInSlot(k6);
                             int k13 = itemstack2.stackSize;
                             if (j6 >= k13) {
-                                this.J(k6);
+                                this.throwItem(k6);
                                 j6 -= k13;
                             } else {
                                 this.g(k6, k13 - j6);
@@ -375,7 +375,7 @@ public class OldManager extends Module {
                             ItemStack itemstack3 = aEg.thePlayer.inventory.getStackInSlot(i7);
                             int l13 = itemstack3.stackSize;
                             if (l6 >= l13) {
-                                this.J(i7);
+                                this.throwItem(i7);
                                 l6 -= l13;
                             } else {
                                 this.g(i7, l13 - l6);
@@ -395,7 +395,7 @@ public class OldManager extends Module {
                             ItemStack itemstack4 = aEg.thePlayer.inventory.getStackInSlot(k7);
                             int i14 = itemstack4.stackSize;
                             if (j7 >= i14) {
-                                this.J(k7);
+                                this.throwItem(k7);
                                 j7 -= i14;
                             } else {
                                 this.g(k7, i14 - j7);
@@ -415,7 +415,7 @@ public class OldManager extends Module {
                             ItemStack itemstack5 = aEg.thePlayer.inventory.getStackInSlot(i8);
                             int j14 = itemstack5.stackSize;
                             if (l7 >= j14) {
-                                this.J(i8);
+                                this.throwItem(i8);
                                 l7 -= j14;
                             } else {
                                 this.g(i8, j14 - l7);
@@ -435,7 +435,7 @@ public class OldManager extends Module {
                             ItemStack itemstack6 = aEg.thePlayer.inventory.getStackInSlot(k8);
                             int k14 = itemstack6.stackSize;
                             if (j8 >= k14) {
-                                this.J(k8);
+                                this.throwItem(k8);
                                 j8 -= k14;
                             } else {
                                 this.g(k8, k14 - j8);
@@ -455,7 +455,7 @@ public class OldManager extends Module {
                             ItemStack itemstack7 = aEg.thePlayer.inventory.getStackInSlot(i9);
                             int l14 = itemstack7.stackSize;
                             if (l8 >= l14) {
-                                this.J(i9);
+                                this.throwItem(i9);
                                 l8 -= l14;
                             } else {
                                 this.g(i9, l14 - l8);
@@ -475,7 +475,7 @@ public class OldManager extends Module {
                             ItemStack itemstack8 = aEg.thePlayer.inventory.getStackInSlot(k9);
                             int i15 = itemstack8.stackSize;
                             if (j9 >= i15) {
-                                this.J(k9);
+                                this.throwItem(k9);
                                 j9 -= i15;
                             } else {
                                 this.g(k9, i15 - j9);
@@ -581,29 +581,29 @@ public class OldManager extends Module {
                         }
                     }
 
-                    if (this.kg() && !this.adr) {
-                        this.kf();
+                    if (this.canOpenInventory() && !this.moved) {
+                        this.closeInventory();
                     }
                 }
             } else {
-                this.kf();
+                this.closeInventory();
             }
         }
     };
     @EventLink
-    public final Listener<AttackEvent> onAttack = var1 -> this.BV = 0;
+    public final Listener<AttackEvent> onAttack = var1 -> this.attackTicks = 0;
     @EventLink
     public final Listener<en> afC = var1 -> {
         if (this.jY() && this.adv > 0) {
-            this.adw = Math.max(this.adw, this.hk());
+            this.extraSprintTicks = Math.max(this.extraSprintTicks, this.getExtraSprintTicks());
         }
 
         this.adv = 0;
-        if (this.jY() && this.adw > 0) {
+        if (this.jY() && this.extraSprintTicks > 0) {
             aEg.thePlayer.setSprinting(false);
-            this.adw--;
+            this.extraSprintTicks--;
         } else if (!this.jY()) {
-            this.adw = 0;
+            this.extraSprintTicks = 0;
         }
     };
     @EventLink
@@ -611,7 +611,7 @@ public class OldManager extends Module {
         if (var1.dq() instanceof C08PacketPlayerBlockPlacement) {
             C08PacketPlayerBlockPlacement c08packetplayerblockplacement = (C08PacketPlayerBlockPlacement)var1.dq();
             if (c08packetplayerblockplacement.getStack() == null || c08packetplayerblockplacement.getStack().getItem() != Items.water_bucket) {
-                this.adq = 0;
+                this.placeTicks = 0;
             }
         }
     };
@@ -621,100 +621,100 @@ public class OldManager extends Module {
 
     @Override
     public void onDisable() {
-        if (this.kg()) {
-            this.kf();
+        if (this.canOpenInventory()) {
+            this.closeInventory();
         }
 
         this.adv = 0;
-        this.adw = 0;
+        this.extraSprintTicks = 0;
     }
 
-    private void ke() {
-        if (!this.ads) {
-            PacketUtil.l(new C16PacketClientStatus(EnumState.OPEN_INVENTORY_ACHIEVEMENT));
-            this.ads = true;
+    private void openInventory() {
+        if (!this.open) {
+            PacketUtil.send(new C16PacketClientStatus(EnumState.OPEN_INVENTORY_ACHIEVEMENT));
+            this.open = true;
             this.jX();
         }
     }
 
-    private void kf() {
-        if (this.ads) {
-            PacketUtil.l(new q(aEg.thePlayer.inventoryContainer.windowId));
-            this.ads = false;
+    private void closeInventory() {
+        if (this.open) {
+            PacketUtil.send(new q(aEg.thePlayer.inventoryContainer.windowId));
+            this.open = false;
             this.jX();
         }
     }
 
-    private boolean kg() {
+    private boolean canOpenInventory() {
         boolean flag = this.e(InventoryMove.class).isEnabled();
         boolean flag1 = !(aEg.currentScreen instanceof GuiInventory);
         boolean flag2 = this.e(Scaffold.class).isEnabled();
         return flag && flag1 && !flag2;
     }
 
-    private void J(int var1) {
-        if ((!this.adr || this.adt <= 0L) && !SelectorDetectionComponent.a(var1, !this.dropCustomItems.wo())) {
-            if (this.kg()) {
-                this.ke();
+    private void throwItem(int var1) {
+        if ((!this.moved || this.nextClick <= 0L) && !SelectorDetectionComponent.a(var1, !this.dropCustomItems.wo())) {
+            if (this.canOpenInventory()) {
+                this.openInventory();
             }
 
-            aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.I(var1), 1, 4, aEg.thePlayer);
+            aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.slot(var1), 1, 4, aEg.thePlayer);
             this.jX();
-            this.adt = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
-            this.afz.aX();
-            this.adr = true;
+            this.nextClick = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
+            this.stopwatch.aX();
+            this.moved = true;
         }
     }
 
     private void g(int var1, int var2) {
-        if ((!this.adr || this.adt <= 0L) && !SelectorDetectionComponent.a(var1, !this.dropCustomItems.wo())) {
-            if (this.kg()) {
-                this.ke();
+        if ((!this.moved || this.nextClick <= 0L) && !SelectorDetectionComponent.a(var1, !this.dropCustomItems.wo())) {
+            if (this.canOpenInventory()) {
+                this.openInventory();
             }
 
-            aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.I(var1), 0, 0, aEg.thePlayer);
+            aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.slot(var1), 0, 0, aEg.thePlayer);
             System.out.println(var2);
 
             for (int i = 0; i < var2; i++) {
-                aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.I(var1), 1, 0, aEg.thePlayer);
+                aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.slot(var1), 1, 0, aEg.thePlayer);
             }
 
             this.jX();
-            this.adt = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
-            this.afz.aX();
-            this.adr = true;
+            this.nextClick = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
+            this.stopwatch.aX();
+            this.moved = true;
         }
     }
 
     private void h(int var1, int var2) {
-        if ((!this.adr || this.adt <= 0L) && !SelectorDetectionComponent.a(var1, !this.useCustomItems.wo())) {
-            if (this.kg()) {
-                this.ke();
+        if ((!this.moved || this.nextClick <= 0L) && !SelectorDetectionComponent.a(var1, !this.useCustomItems.wo())) {
+            if (this.canOpenInventory()) {
+                this.openInventory();
             }
 
             if (var2 < 0 || var2 > 8) {
                 return;
             }
 
-            aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.I(var1), var2, 2, aEg.thePlayer);
+            aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.slot(var1), var2, 2, aEg.thePlayer);
             this.jX();
-            this.adt = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
-            this.afz.aX();
-            this.adr = true;
+            this.nextClick = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
+            this.stopwatch.aX();
+            this.moved = true;
         }
     }
 
-    private void H(int var1) {
-        if ((!this.adr || this.adt <= 0L) && !SelectorDetectionComponent.a(var1, !this.useCustomItems.wo())) {
-            if (this.kg()) {
-                this.ke();
+    private void equipItem(int var1) {
+        if ((!this.moved || this.nextClick <= 0L) && !SelectorDetectionComponent.a(var1, !this.useCustomItems.wo())) {
+            if (this.canOpenInventory()) {
+                this.openInventory();
             }
 
-            aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.I(var1), 0, 1, aEg.thePlayer);
+            aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.slot(var1), 0, 1, aEg.thePlayer);
             this.jX();
-            this.adt = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
-            this.afz.aX();
-            this.adr = true;
+            this.nextClick = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
+            this.stopwatch.aX();
+            this.moved = true;
         }
     }
 
@@ -726,16 +726,16 @@ public class OldManager extends Module {
 
     private boolean jY() {
         InventoryMove inventorymove = this.e(InventoryMove.class);
-        return inventorymove != null && inventorymove.isEnabled() && inventorymove.hj();
+        return inventorymove != null && inventorymove.isEnabled() && inventorymove.isGrimBypass();
     }
 
-    private int hk() {
+    private int getExtraSprintTicks() {
         InventoryMove inventorymove = this.e(InventoryMove.class);
-        return inventorymove == null ? 9 : inventorymove.hk();
+        return inventorymove == null ? 9 : inventorymove.getExtraSprintTicks();
     }
 
     public boolean jJ() {
-        return this.afz.T(this.adt) && this.adp >= 10 && this.BV >= 10 && this.adq >= 10 && (this.kg() || aEg.currentScreen instanceof GuiInventory);
+        return this.stopwatch.T(this.nextClick) && this.chestTicks >= 10 && this.attackTicks >= 10 && this.placeTicks >= 10 && (this.canOpenInventory() || aEg.currentScreen instanceof GuiInventory);
     }
 
     private boolean a(NumberValue numberValue, int var2, int var3) {
@@ -743,7 +743,7 @@ public class OldManager extends Module {
         return i != 0 && (var2 != -1 && this.swordSlot.wo().intValue() == i || var3 != -1 && this.secondSwordSlot.wo().intValue() == i);
     }
 
-    private float n(ItemStack stack) {
+    private float damage(ItemStack stack) {
         ItemSword itemsword = (ItemSword)stack.getItem();
         int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, stack);
         int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, stack);
@@ -755,7 +755,7 @@ public class OldManager extends Module {
         return EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, stack);
     }
 
-    private float p(ItemStack stack) {
+    private float mineSpeed(ItemStack stack) {
         Item item = stack.getItem();
         int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.efficiency.effectId, stack);
 
@@ -794,7 +794,7 @@ public class OldManager extends Module {
         return i * 100 + b0 * 10 + j * 6 + (k + l + i1) * 2;
     }
 
-    private int q(ItemStack stack) {
+    private int armorReduction(ItemStack stack) {
         return ((ItemArmor)stack.getItem()).damageReduceAmount + EnchantmentHelper.getEnchantmentModifierDamage(new ItemStack[]{stack}, DamageSource.generic);
     }
 
@@ -802,7 +802,7 @@ public class OldManager extends Module {
         return var2 >= 0 && var2 <= 8 && var1 >= 0 && var1 <= 8 && var1 == var2;
     }
 
-    private int I(int var1) {
+    private int slot(int var1) {
         if (var1 >= 0 && var1 <= 8) {
             return var1 + 36;
         } else if (var1 >= 9 && var1 <= 35) {
@@ -818,12 +818,12 @@ public class OldManager extends Module {
     }
 
     @Generated
-    public boolean ka() {
-        return this.adr;
+    public boolean isMoved() {
+        return this.moved;
     }
 
     @Generated
-    public boolean kb() {
-        return this.ads;
+    public boolean isOpen() {
+        return this.open;
     }
 }

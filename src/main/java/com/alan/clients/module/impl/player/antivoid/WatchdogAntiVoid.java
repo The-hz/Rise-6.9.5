@@ -91,7 +91,7 @@ public class WatchdogAntiVoid extends Mode<AntiVoid> {
                     BlinkComponent.blink();
                     PacketQueueComponent.a(C0FPacketConfirmTransaction.class, a.class, C01PacketChatMessage.class);
                     if (FallDistanceComponent.cY > this.distance.wo().doubleValue() || this.ahV) {
-                        PacketUtil.m(new C04PacketPlayerPosition(this.Ft.x, this.Ft.y - -0.09800000190735147, this.Ft.z, false));
+                        PacketUtil.sendNoEvent(new C04PacketPlayerPosition(this.Ft.x, this.Ft.y - -0.09800000190735147, this.Ft.z, false));
                         PacketQueueComponent.cQ.clear();
                         FallDistanceComponent.cY = 0.0F;
                         this.ahV = true;

@@ -36,7 +36,7 @@ public class abn extends ValueComponent {
         FontManager.MAIN.a(16, FontWeight.REGULAR),
         UIColors.SECONDARY_TEXT.pV(),
         TextAlign.LEFT,
-        ((BoundsNumberValue)this.value).ws().toString().replace(".0", "") + " " + ((BoundsNumberValue)this.value).wB().toString().replace(".0", ""),
+        ((BoundsNumberValue)this.value).getDefaultValue().toString().replace(".0", "") + " " + ((BoundsNumberValue)this.value).wB().toString().replace(".0", ""),
         100.0F,
         "1234567890. "
     );
@@ -81,13 +81,13 @@ public class abn extends ValueComponent {
         }
 
         FontManager.MAIN.a(16, FontWeight.REGULAR).a(s3, this.position.x, this.position.y, UIColors.SECONDARY_TEXT.Z(this.ayD));
-        this.ayS.h(new Vector2d(this.position.x + f + 105.0, this.position.y));
-        if (!this.ayS.tO()) {
+        this.ayS.setPosition(new Vector2d(this.position.x + f + 105.0, this.position.y));
+        if (!this.ayS.isSelected()) {
             this.ayS.bW(s2);
         }
 
-        this.ayS.z(20.0F);
-        this.ayS.setColor(ColorUtil.d(this.ayS.getColor(), this.ayD));
+        this.ayS.setWidth(20.0F);
+        this.ayS.setColor(ColorUtil.withBlue(this.ayS.getColor(), this.ayD));
         this.ayS.draw();
         RenderUtil.roundedRectangle(this.position.x + f, this.position.y + 1.5, 100.0, 2.0, 1.0, UIColors.BACKGROUND.Y(Math.min(this.ayD, UIColors.BACKGROUND.pV().getAlpha())));
         this.ayM = this.position.x + f;
@@ -133,12 +133,12 @@ public class abn extends ValueComponent {
         double d1 = this.ayN + this.ayP * 100.0;
         double d2 = d1 - d0;
         if (this.ayK != this.ayL) {
-            RenderUtil.roundedRectangle(d0, this.position.y + 1.5, d2, 2.0, 1.0, ColorUtil.d(this.rz().rA(), Math.min(70, this.ayD)));
+            RenderUtil.roundedRectangle(d0, this.position.y + 1.5, d2, 2.0, 1.0, ColorUtil.withBlue(this.rz().rA(), Math.min(70, this.ayD)));
         }
 
-        RenderUtil.roundedRectangle(d0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.d(this.rz().rA(), this.ayD));
+        RenderUtil.roundedRectangle(d0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.withBlue(this.rz().rA(), this.ayD));
         if (this.ayK != this.ayL) {
-            RenderUtil.roundedRectangle(d1 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.d(this.rz().rA(), this.ayD));
+            RenderUtil.roundedRectangle(d1 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.withBlue(this.rz().rA(), this.ayD));
         }
 
         this.ayG.aX();
@@ -176,7 +176,7 @@ public class abn extends ValueComponent {
         if (this.position != null) {
             double d0 = this.ayM + this.ayO * 100.0;
             double d1 = this.ayN + this.ayP * 100.0;
-            Color color = ColorUtil.d(this.rz().rA(), this.ayD);
+            Color color = ColorUtil.withBlue(this.rz().rA(), this.ayD);
             RenderUtil.roundedRectangle(d0 - 2.5, this.position.y, 5.0, 5.0, 2.5, color);
             RenderUtil.roundedRectangle(d1 - 2.5, this.position.y, 5.0, 5.0, 2.5, color);
         }
@@ -193,11 +193,11 @@ public class abn extends ValueComponent {
                 boundsnumbervalue.n(Double.parseDouble(astring[0]));
                 boundsnumbervalue.a(Double.parseDouble(astring[1]));
             } else {
-                boundsnumbervalue.n(boundsnumbervalue.ws());
+                boundsnumbervalue.n(boundsnumbervalue.getDefaultValue());
                 boundsnumbervalue.a(boundsnumbervalue.wB());
             }
 
-            this.ayS.I(false);
+            this.ayS.setSelected(false);
             this.pU();
         }
     }

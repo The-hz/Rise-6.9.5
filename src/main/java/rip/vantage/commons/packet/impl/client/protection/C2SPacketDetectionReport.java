@@ -34,7 +34,7 @@ public class C2SPacketDetectionReport extends rip.vantage.commons.packet.api.abs
 
     @Override
     public void handle(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
-        handler.a(this);
+        handler.handle(this);
     }
 
     public C2SPacketDetectionReport(JSONObject json) {

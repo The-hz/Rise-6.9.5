@@ -27,7 +27,7 @@ import net.minecraft.util.MathHelper;
 public class WatchdogPredictionFullBlockPhase extends Mode<Phase> {
     private boolean ys;
     @EventLink
-    private Listener<TeleportEvent> FK = var1x -> this.ys = this.ys;
+    private Listener<TeleportEvent> onTeleport = var1x -> this.ys = this.ys;
     @EventLink
     private Listener<PostStrafeEvent> onPostStrafe = var1x -> {
         MoveUtil.stop();
@@ -90,7 +90,7 @@ public class WatchdogPredictionFullBlockPhase extends Mode<Phase> {
         }
     };
     @EventLink
-    private final Listener<TeleportEvent> OT = var0 -> {};
+    private final Listener<TeleportEvent> onTeleportMedium = var0 -> {};
 
     public WatchdogPredictionFullBlockPhase(String var1, Phase phase) {
         super(var1, phase);

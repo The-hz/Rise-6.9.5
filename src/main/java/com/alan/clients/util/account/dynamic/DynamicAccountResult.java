@@ -8,7 +8,7 @@ public class DynamicAccountResult {
     @SerializedName("id")
     private final int aHn;
     @SerializedName("name")
-    private final String aHo;
+    private final String name;
     @SerializedName("uuid")
     private final String aHp;
     @SerializedName("skins")
@@ -18,7 +18,7 @@ public class DynamicAccountResult {
 
     public DynamicAccountResult(int var1, String var2, String var3, DynamicSkin[] var4, DynamicCape[] var5) {
         this.aHn = var1;
-        this.aHo = var2;
+        this.name = var2;
         this.aHp = var3;
         this.aHq = var4;
         this.aHr = var5;
@@ -29,7 +29,7 @@ public class DynamicAccountResult {
     }
 
     public String getName() {
-        return this.aHo;
+        return this.name;
     }
 
     public String sh() {
@@ -49,7 +49,7 @@ public class DynamicAccountResult {
         return "DynamicAccountResult{id="
             + this.aHn
             + ", name='"
-            + this.aHo
+            + this.name
             + "', uuid='"
             + this.aHp
             + "', skins="

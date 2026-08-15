@@ -25,40 +25,40 @@ public class VulcanAntiVoid extends Mode<AntiVoid> {
     private final NumberValue distance = new NumberValue("Distance", this, 2.6, 0, 10, 0.1);
     private boolean zd;
     private boolean ahL;
-    private Flight zm = null;
-    private Speed uS = null;
-    private LongJump ahM = null;
+    private Flight flight = null;
+    private Speed speed = null;
+    private LongJump longJump = null;
     private boolean ahN = false;
     private int zn;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
-        if (this.zm == null) {
-            this.zm = this.e(Flight.class);
+        if (this.flight == null) {
+            this.flight = this.e(Flight.class);
         }
 
-        if (this.uS == null) {
-            this.uS = this.e(Speed.class);
+        if (this.speed == null) {
+            this.speed = this.e(Speed.class);
         }
 
-        if (this.ahM == null) {
-            this.ahM = this.e(LongJump.class);
+        if (this.longJump == null) {
+            this.longJump = this.e(LongJump.class);
         }
 
         if (aEg.thePlayer.fallDistance > this.distance.wo().floatValue() && !PlayerUtil.vh()) {
             this.ahL = true;
         }
 
-        if (this.zm.isEnabled() || this.ahM.isEnabled()) {
+        if (this.flight.isEnabled() || this.longJump.isEnabled()) {
             this.ahL = false;
         }
 
-        if (this.uS.isEnabled() && this.ahL) {
+        if (this.speed.isEnabled() && this.ahL) {
             this.ahN = true;
-            this.uS.toggle();
+            this.speed.toggle();
         }
 
-        if (!this.ahL && !this.uS.isEnabled() && this.ahN) {
-            this.uS.toggle();
+        if (!this.ahL && !this.speed.isEnabled() && this.ahN) {
+            this.speed.toggle();
             this.ahN = false;
         }
     };

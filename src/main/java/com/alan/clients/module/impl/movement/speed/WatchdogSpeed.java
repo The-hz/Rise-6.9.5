@@ -50,12 +50,12 @@ public class WatchdogSpeed extends Mode<Speed> {
     public final BooleanValue frictionOverride = new BooleanValue("Friction Override", this, true);
     public final BooleanValue frictionFullDisabler = new BooleanValue("Friction Full Disabler", this, true);
     public final BooleanValue damageBoost = new BooleanValue("Damage Boost", this, false);
-    public final BooleanValue Rt = new BooleanValue("Damage Strafe (Hypixel Fly Disabler)", this, false);
+    public final BooleanValue damageStrafeHypixelFlyDisabler = new BooleanValue("Damage Strafe (Hypixel Fly Disabler)", this, false);
     public final BooleanValue uHCMode = new BooleanValue("UHC Mode", this, false);
     public final BooleanValue alternateMotion = new BooleanValue("Alternate Motion", this, false);
-    public static boolean Rw = false;
-    boolean Rx = false;
-    public static boolean Ry = false;
+    public static boolean damageBoostEnabled = false;
+    boolean onIce = false;
+    public static boolean damageStrafeEnabled = false;
     boolean Rz = false;
     boolean RA = false;
     boolean RB = false;
@@ -86,10 +86,10 @@ public class WatchdogSpeed extends Mode<Speed> {
     };
     @EventLink(value = 3)
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        Rw = this.damageBoost.wo();
-        Ry = this.Rt.wo();
+        damageBoostEnabled = this.damageBoost.wo();
+        damageStrafeEnabled = this.damageStrafeHypixelFlyDisabler.wo();
         if (MoveUtil.isMoving()) {
-            if (aEg.thePlayer.ae < 10 && this.Rt.wo()) {
+            if (aEg.thePlayer.ae < 10 && this.damageStrafeHypixelFlyDisabler.wo()) {
                 MoveUtil.strafe();
             } else if (aEg.thePlayer.ae == 1) {
                 MoveUtil.strafe();
@@ -117,9 +117,9 @@ public class WatchdogSpeed extends Mode<Speed> {
             }
 
             if (PlayerUtil.p(0.0, -1.0, 0.0) == Blocks.packed_ice || PlayerUtil.p(0.0, -1.0, 0.0) == Blocks.ice) {
-                this.Rx = true;
+                this.onIce = true;
             } else if (aEg.thePlayer.tR > 1) {
-                this.Rx = false;
+                this.onIce = false;
             }
 
             if (aEg.thePlayer.onGround) {
@@ -186,11 +186,11 @@ public class WatchdogSpeed extends Mode<Speed> {
         if (aEg.thePlayer.cqL > 1 && this.e(Scaffold.class).isEnabled() && aEg.thePlayer.ticksExisted % 3 == 1) {
             MoveUtil.stop();
         } else {
-            if (aEg.thePlayer.ae < 2 && this.Rt.wo() && this.mode.wo().getName() != "Strafe") {
+            if (aEg.thePlayer.ae < 2 && this.damageStrafeHypixelFlyDisabler.wo() && this.mode.wo().getName() != "Strafe") {
                 this.vh = true;
             }
 
-            if (aEg.thePlayer.ae < 20 && this.Rt.wo()) {
+            if (aEg.thePlayer.ae < 20 && this.damageStrafeHypixelFlyDisabler.wo()) {
                 MoveUtil.partialStrafePercent(100.0);
             }
 
@@ -404,7 +404,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                             }
                         }
 
-                        if (this.Rt.wo()) {
+                        if (this.damageStrafeHypixelFlyDisabler.wo()) {
                             ;
                         }
 
@@ -452,13 +452,13 @@ public class WatchdogSpeed extends Mode<Speed> {
                             MoveUtil.useDiagonalSpeed();
                         }
 
-                        if (aEg.thePlayer.tR == 6 && !this.vh && aEg.thePlayer.ae > 10 && this.Rt.wo()) {
+                        if (aEg.thePlayer.tR == 6 && !this.vh && aEg.thePlayer.ae > 10 && this.damageStrafeHypixelFlyDisabler.wo()) {
                             MoveUtil.useDiagonalSpeed();
                             aEg.thePlayer.motionZ *= 1.01;
                             aEg.thePlayer.motionX *= 1.01;
                         }
 
-                        if (aEg.thePlayer.tR == 7 && !this.vh && aEg.thePlayer.ae > 10 && this.Rt.wo()) {
+                        if (aEg.thePlayer.tR == 7 && !this.vh && aEg.thePlayer.ae > 10 && this.damageStrafeHypixelFlyDisabler.wo()) {
                             MoveUtil.useDiagonalSpeed();
                             if (!aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                                 aEg.thePlayer.motionZ *= 1.01;
@@ -521,7 +521,7 @@ public class WatchdogSpeed extends Mode<Speed> {
 
                     MoveUtil.useDiagonalSpeed();
                     PlayerUtil.b(0.5, true);
-                    if (this.Rt.wo()) {
+                    if (this.damageStrafeHypixelFlyDisabler.wo()) {
                         ;
                     }
 
@@ -653,7 +653,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                         && PlayerUtil.ae(aEg.thePlayer.motionY * 3.0)
                         && (this.alwaysGlideStrafe.wo() || flag2)
                         && (MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance() * 0.994 || !this.damageBoost.wo() || aEg.thePlayer.ae > 5)
-                        && (!this.vh || !this.Rt.wo())
+                        && (!this.vh || !this.damageStrafeHypixelFlyDisabler.wo())
                         && aEg.thePlayer.ae > 1) {
                         aEg.thePlayer.motionY += 0.075;
                         MoveUtil.strafe(MoveUtil.speed());
@@ -773,12 +773,12 @@ public class WatchdogSpeed extends Mode<Speed> {
                     || aEg.thePlayer.isPotionActive(Potion.moveSpeed)
                         && aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 >= 2
                         && MoveUtil.speed() < 0.55) {
-                    if (this.Rx && aEg.thePlayer.onGround && !this.vh) {
+                    if (this.onIce && aEg.thePlayer.onGround && !this.vh) {
                         aEg.thePlayer.motionX *= 1.45;
                         aEg.thePlayer.motionZ *= 1.45;
                     }
 
-                    if (this.Rx
+                    if (this.onIce
                         && (PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) == Blocks.ice || PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) == Blocks.packed_ice)
                         && !this.vh
                         && !this.vh) {
@@ -786,12 +786,12 @@ public class WatchdogSpeed extends Mode<Speed> {
                         aEg.thePlayer.motionZ *= 1.01;
                     }
 
-                    if (this.Rx && aEg.thePlayer.tR == 1 && !this.vh) {
+                    if (this.onIce && aEg.thePlayer.tR == 1 && !this.vh) {
                         aEg.thePlayer.motionX *= 1.15;
                         aEg.thePlayer.motionZ *= 1.15;
                     }
 
-                    if (this.Rx && aEg.thePlayer.tR > 1 && !this.vh && this.mode.wo().getName() == "Low Strafe") {
+                    if (this.onIce && aEg.thePlayer.tR > 1 && !this.vh && this.mode.wo().getName() == "Low Strafe") {
                         aEg.thePlayer.motionX *= 1.015;
                         aEg.thePlayer.motionZ *= 1.015;
                     }
@@ -841,7 +841,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                     } else {
                         MoveUtil.a(MoveUtil.speed(), (float)d1 - 180.0F);
                     }
-                } else if (this.Rt.wo() && aEg.thePlayer.ae > 20) {
+                } else if (this.damageStrafeHypixelFlyDisabler.wo() && aEg.thePlayer.ae > 20) {
                     double d2 = aEg.thePlayer.motionX;
                     double d3 = aEg.thePlayer.motionZ;
                     MoveUtil.strafe();
@@ -852,7 +852,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                 if (MathUtil.n(d0, d1) > 90.0) {
                     MoveUtil.a(MoveUtil.speed(), (float)d1 - 180.0F);
                 } else {
-                    if (this.Rt.wo() && aEg.thePlayer.ae > 20) {
+                    if (this.damageStrafeHypixelFlyDisabler.wo() && aEg.thePlayer.ae > 20) {
                         double d4 = aEg.thePlayer.motionX;
                         double d5 = aEg.thePlayer.motionZ;
                         MoveUtil.strafe();
@@ -912,7 +912,7 @@ public class WatchdogSpeed extends Mode<Speed> {
     public void onDisable() {
         WatchdogTower.hV = 0;
         WatchdogTower.qH = 0;
-        this.Rx = false;
+        this.onIce = false;
         afi.c(aEg.thePlayer.tR + ": " + aEg.thePlayer.ae);
         this.RC = false;
         if (Client.a.g().c(Scaffold.class).isEnabled()) {

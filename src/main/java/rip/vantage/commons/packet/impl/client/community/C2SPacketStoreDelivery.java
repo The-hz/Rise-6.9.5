@@ -33,7 +33,7 @@ public final class C2SPacketStoreDelivery extends rip.vantage.commons.packet.api
 
     @Override
     public void handle(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
-        handler.a(this);
+        handler.handle(this);
     }
 
     @Override

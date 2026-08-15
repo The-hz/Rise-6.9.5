@@ -32,7 +32,7 @@ public class adn extends GuiScreen {
         if (!this.yr) {
             this.yr = true;
             this.aCm.aX();
-            this.aCo.T(255.0);
+            this.aCo.setValue(255.0);
             this.aCo.reset();
         }
 
@@ -46,7 +46,7 @@ public class adn extends GuiScreen {
             scaledresolution.getScaledHeight() / 2.0 - 25.0,
             150.0,
             50.0,
-            new Color(255, 255, 255, (int)this.aCo.sG())
+            new Color(255, 255, 255, (int)this.aCo.getValue())
         );
         if (this.aCm.T(4000L)) {
             aEg.displayGuiScreen(new LoginMenu());

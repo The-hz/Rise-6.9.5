@@ -154,26 +154,26 @@ import java.util.Arrays;
 public class ModuleManager {
     public RegistryMap<Class<Module>, Module> lt = new RegistryMap<>();
 
-    public void e(Module module) {
+    public void remove(Module module) {
         this.lt.h(module);
-        this.eg();
+        this.updateArraylistCache();
     }
 
     public boolean add(Module module) {
         this.lt.g(module);
-        this.eg();
+        this.updateArraylistCache();
         return true;
     }
 
     static {
     }
 
-    public ArrayList<Module> ef() {
+    public ArrayList<Module> getAll() {
         return this.lt.rP();
     }
 
     public <T extends Module> T get(String var1) {
-        return (T)this.ef()
+        return (T)this.getAll()
             .stream()
             .filter(
                 var1x -> Arrays.stream(var1x.getAliases())
@@ -183,7 +183,7 @@ public class ModuleManager {
             .orElse(null);
     }
 
-    public void eg() {
+    public void updateArraylistCache() {
         Interface interfaceModule = this.c(Interface.class);
         if (interfaceModule != null) {
             interfaceModule.lv();
@@ -346,7 +346,7 @@ public class ModuleManager {
         this.a(JumpCircles.class, new JumpCircles());
         this.a(BlackHoleOrbit.class, new BlackHoleOrbit());
         this.a(OreESP.class, new OreESP());
-        this.ef().stream().filter(var0 -> var0.getModuleInfo().autoEnabled()).forEach(var0 -> var0.setEnabled(true));
+        this.getAll().stream().filter(var0 -> var0.getModuleInfo().autoEnabled()).forEach(var0 -> var0.setEnabled(true));
         Client.a.e().b(this);
     }
 

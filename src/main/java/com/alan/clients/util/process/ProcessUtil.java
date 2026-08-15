@@ -8,7 +8,7 @@ public class ProcessUtil {
     public ProcessUtil() {
     }
 
-    public static boolean ck(String var0) {
+    public static boolean running(String var0) {
         try {
             StringBuilder stringbuilder = new StringBuilder();
             Process process = Runtime.getRuntime().exec(System.getenv("windir") + "\\system32\\tasklist.exe");

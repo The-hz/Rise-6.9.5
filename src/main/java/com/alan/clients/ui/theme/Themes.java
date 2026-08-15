@@ -122,7 +122,7 @@ public enum Themes {
         try {
             Interface interfaceModule = Client.a.g().c(Interface.class);
             if (interfaceModule != null) {
-                return (int)interfaceModule.lD();
+                return (int)interfaceModule.getRoundingRadius();
             }
         } catch (Exception exception) {
         }

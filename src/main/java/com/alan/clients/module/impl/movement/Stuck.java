@@ -21,7 +21,7 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 
 @ModuleInfo(aliases = {"module.movement.stuck.name", "stasis"}, description = "module.movement.stuck.description", category = Category.MOVEMENT)
 public class Stuck extends Module {
-    private aka EC;
+    private aka savedMotion;
     private final BooleanValue rotations = new BooleanValue("Rotate", this, false);
     private final BooleanValue test = new BooleanValue("Test", this, false);
     private final NumberValue pulseTicks = new NumberValue("Pulse Ticks", this, 0, 0, 30, 1);
@@ -98,17 +98,17 @@ public class Stuck extends Module {
 
     private void hm() {
         if (!this.EG) {
-            this.EC = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
+            this.savedMotion = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
             this.EG = true;
         }
     }
 
     private void hn() {
         if (this.EG) {
-            if (this.EC != null) {
-                aEg.thePlayer.motionX = this.EC.x;
-                aEg.thePlayer.motionY = this.EC.y;
-                aEg.thePlayer.motionZ = this.EC.z;
+            if (this.savedMotion != null) {
+                aEg.thePlayer.motionX = this.savedMotion.x;
+                aEg.thePlayer.motionY = this.savedMotion.y;
+                aEg.thePlayer.motionZ = this.savedMotion.z;
             }
 
             this.EG = false;

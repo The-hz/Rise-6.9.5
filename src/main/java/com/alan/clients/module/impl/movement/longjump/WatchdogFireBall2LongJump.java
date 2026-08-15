@@ -29,7 +29,7 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
     private int IQ;
     private boolean IR;
     private boolean Ms;
-    a bN = new a();
+    a stopWatch = new a();
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (var1x.dq() instanceof C08PacketPlayerBlockPlacement
@@ -89,7 +89,7 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
             if (this.IQ == 0) {
                 var1x.setYaw(aEg.thePlayer.pl - 180.0F);
                 var1x.setPitch(89.0F);
-                int i = this.hr();
+                int i = this.findFireballSlot();
                 if (i != -1 && i != aEg.thePlayer.inventory.currentItem) {
                     this.qI = aEg.thePlayer.inventory.currentItem;
                     if (aEg.thePlayer.cqL > 1) {
@@ -100,7 +100,7 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
 
             if (this.IQ == 1) {
                 if (!this.IP) {
-                    PacketUtil.l(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getHeldItem()));
+                    PacketUtil.send(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getHeldItem()));
                     this.IP = true;
                 }
             } else if (this.IQ == 2 && this.qI != -1) {
@@ -236,7 +236,7 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
 
     @Override
     public void onEnable() {
-        if (this.hr() == -1) {
+        if (this.findFireballSlot() == -1) {
             afi.b("Could not find Fireball");
             this.toggle();
         } else {
@@ -249,7 +249,7 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
         MoveUtil.strafe(1.768F);
     }
 
-    private int hr() {
+    private int findFireballSlot() {
         int i = -1;
 
         for (int j = 0; j < 9; j++) {

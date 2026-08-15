@@ -17,9 +17,9 @@ public class BreakBlockPhase extends Mode<Phase> {
     public void onEnable() {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             BlockPos blockpos = new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY - 1.0, aEg.thePlayer.posZ);
-            PacketUtil.l(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockpos, EnumFacing.DOWN));
+            PacketUtil.send(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockpos, EnumFacing.DOWN));
             aEg.thePlayer.swingItem();
-            PacketUtil.l(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockpos, EnumFacing.DOWN));
+            PacketUtil.send(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockpos, EnumFacing.DOWN));
             aEg.playerController.onPlayerDestroyBlock(blockpos, EnumFacing.DOWN);
             double d0 = blockpos.getX() + 0.5;
             double d1 = blockpos.getZ() + 0.5;

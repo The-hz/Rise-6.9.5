@@ -11,8 +11,8 @@ public class BlockAABBEvent extends CancellableEvent {
     private final World world;
     private final Block block;
     private final BlockPos blockPos;
-    private AxisAlignedBB jJ;
-    private final AxisAlignedBB jK;
+    private AxisAlignedBB boundingBox;
+    private final AxisAlignedBB maskBoundingBox;
 
     @Generated
     public World getWorld() {
@@ -31,17 +31,17 @@ public class BlockAABBEvent extends CancellableEvent {
 
     @Generated
     public AxisAlignedBB dh() {
-        return this.jJ;
+        return this.boundingBox;
     }
 
     @Generated
     public AxisAlignedBB di() {
-        return this.jK;
+        return this.maskBoundingBox;
     }
 
     @Generated
     public void setBoundingBox(AxisAlignedBB boundingBox) {
-        this.jJ = boundingBox;
+        this.boundingBox = boundingBox;
     }
 
     @Generated
@@ -49,7 +49,7 @@ public class BlockAABBEvent extends CancellableEvent {
         this.world = world;
         this.block = block;
         this.blockPos = blockPos;
-        this.jJ = box;
-        this.jK = var5;
+        this.boundingBox = box;
+        this.maskBoundingBox = var5;
     }
 }

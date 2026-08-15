@@ -12,7 +12,7 @@ import rip.vantage.commons.util.time.a;
 public final class EditCriticals extends Mode<Criticals> {
     private final NumberValue delay = new NumberValue("Delay", this, 500, 0, 1000, 50);
     private final double[] VALUES = new double[]{5.0E-4, 1.0E-4};
-    private final a rG = new a();
+    private final a stopwatch = new a();
     private boolean attacked;
     private int ticks;
     @EventLink
@@ -36,9 +36,9 @@ public final class EditCriticals extends Mode<Criticals> {
     };
     @EventLink
     public final Listener<AttackEvent> onAttackEvent = var1x -> {
-        if (aEg.thePlayer.onGround && !aEg.thePlayer.isOnLadder() && this.rG.T(this.delay.wo().longValue())) {
-            aEg.thePlayer.onCriticalHit(var1x.dc());
-            this.rG.aX();
+        if (aEg.thePlayer.onGround && !aEg.thePlayer.isOnLadder() && this.stopwatch.T(this.delay.wo().longValue())) {
+            aEg.thePlayer.onCriticalHit(var1x.getLiving());
+            this.stopwatch.aX();
             this.attacked = true;
         }
     };

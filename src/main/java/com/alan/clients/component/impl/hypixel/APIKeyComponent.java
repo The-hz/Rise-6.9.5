@@ -16,20 +16,20 @@ public class APIKeyComponent
 extends Component {
     @EventLink
     public Listener<PreMotionEvent> onPreMotion;
-    public static String cs;
+    public static String apiKey;
     @EventLink
     public Listener<ServerJoinEvent> onServerJoin;
-    public Pattern cq = Pattern.compile("Your new API key is (.*)");
+    public Pattern pattern = Pattern.compile("Your new API key is (.*)");
     @EventLink
     public Listener<PacketReceiveEvent> onPacketReceive;
-    public static boolean cr;
+    public static boolean receivedKey;
 
     static {
     }
 
     public APIKeyComponent() {
         this.onPreMotion = preMotionEvent -> {
-            if (!cr && APIKeyComponent.aEg.thePlayer.ticksExisted == 2) {
+            if (!receivedKey && APIKeyComponent.aEg.thePlayer.ticksExisted == 2) {
                 ServerUtil.vn();
             }
         };
@@ -41,18 +41,18 @@ extends Component {
                 }
                 c c2 = (c)packet;
                 String string = c2.getChatComponent().getUnformattedText();
-                Matcher matcher = this.cq.matcher(string);
+                Matcher matcher = this.pattern.matcher(string);
                 if (!c2.isChat() && matcher.find()) {
                     matcher.group(1);
-                    if (!cr) {
+                    if (!receivedKey) {
                         packetReceiveEvent.setCancelled();
                     }
-                    cr = true;
+                    receivedKey = true;
                 }
             }
         };
         this.onServerJoin = serverJoinEvent -> {
-            cr = false;
+            receivedKey = false;
         };
     }
 

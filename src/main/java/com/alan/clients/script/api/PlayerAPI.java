@@ -207,7 +207,7 @@ public class PlayerAPI extends ScriptEntityLiving {
         if (!var1) {
             PacketlessDamageComponent.setActive(var2);
         } else {
-            DamageUtil.ab(0.5);
+            DamageUtil.damagePlayer(0.5);
         }
     }
 

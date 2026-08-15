@@ -28,7 +28,7 @@ final class InsultSuggestionProvider implements SuggestionProvider {
             }
 
             String s5 = astring[1] == null ? "" : astring[1].toLowerCase(Locale.ROOT);
-            InsultManager insultManager = Client.a.r();
+            InsultManager insultManager = Client.a.getInsultManager();
             insultManager.update();
             ArrayList arraylist1 = new ArrayList();
             insultManager.forEach(var2 -> {

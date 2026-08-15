@@ -29,18 +29,18 @@ public class LanguageScreen implements Screen, InstanceAccess {
     }
 
     @Override
-    public void b(int var1, int var2, float var3) {
+    public void onRender(int var1, int var2, float var3) {
         this.azQ.qx();
         Vector2f vector2f = this.getStandardClickGUI().getScale();
         Vector2f vector2f1 = this.getStandardClickGUI().getPosition();
-        double d0 = this.getStandardClickGUI().oY().aym;
+        double d0 = this.getStandardClickGUI().getSidebar().aym;
         double d1 = vector2f.getX() + d0;
         double d2 = vector2f.getY() + 40.0;
         double d3 = vector2f1.x - d0;
         double d4 = Math.max(0.0, vector2f1.y - 40.0);
         GL11.glPushAttrib(524288);
         ScissorUtil.hK();
-        ScissorUtil.a(new ScaledResolution(aEg), d1, d2, d3, d4);
+        ScissorUtil.scissor(new ScaledResolution(aEg), d1, d2, d3, d4);
 
         for (int i = 0; i < this.languages.size(); i++) {
             this.languages.get(i).draw((i + 1) * 46 + this.azQ.tE());
@@ -53,7 +53,7 @@ public class LanguageScreen implements Screen, InstanceAccess {
         );
         FontManager.MAIN
             .a(16, FontWeight.REGULAR)
-            .d(ahd.ce("ui.language.text"), vector2f.getX() + vector2f1.getX() - 20.0F, vector2f.getY() + 20.0F, new Color(255, 255, 255, 128).getRGB());
+            .drawCenteredString(ahd.ce("ui.language.text"), vector2f.getX() + vector2f1.getX() - 20.0F, vector2f.getY() + 20.0F, new Color(255, 255, 255, 128).getRGB());
         this.azQ.V(-2000.0);
     }
 

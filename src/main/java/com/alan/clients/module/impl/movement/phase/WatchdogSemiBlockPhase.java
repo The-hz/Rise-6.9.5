@@ -27,8 +27,8 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
     private final BooleanValue packet = new BooleanValue("Packet", this, false);
     private boolean OK;
     private boolean Od;
-    private double OL;
-    private double OM;
+    private double lastSetbackX;
+    private double lastSetbackZ;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         this.Od = false;
@@ -44,7 +44,7 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
                 aEg.thePlayer
                     .setPosition(aEg.thePlayer.posX - d1 * this.amount.wo().doubleValue(), aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * this.amount.wo().doubleValue());
             } else {
-                PacketUtil.m(
+                PacketUtil.sendNoEvent(
                     new C04PacketPlayerPosition(
                         aEg.thePlayer.posX - d1 * this.amount.wo().doubleValue(), aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * this.amount.wo().doubleValue(), false
                     )
@@ -84,10 +84,10 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
             S08PacketPlayerPosLook s08packetplayerposlook = (S08PacketPlayerPosLook)var1x.getPacket();
             double d0 = s08packetplayerposlook.getX();
             double d1 = s08packetplayerposlook.getZ();
-            double d2 = Math.abs(d0 - this.OL);
-            double d3 = Math.abs(d1 - this.OM);
-            this.OL = d0;
-            this.OM = d1;
+            double d2 = Math.abs(d0 - this.lastSetbackX);
+            double d3 = Math.abs(d1 - this.lastSetbackZ);
+            this.lastSetbackX = d0;
+            this.lastSetbackZ = d1;
             if (d2 <= 0.001 && d3 <= 0.001) {
                 this.OK = true;
             } else {

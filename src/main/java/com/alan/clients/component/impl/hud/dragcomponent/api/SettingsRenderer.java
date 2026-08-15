@@ -65,10 +65,10 @@ public class SettingsRenderer implements InstanceAccess {
     public void render(int var1, int var2, float var3) {
         double d0 = 100.0;
         double d1 = 100.0;
-        this.animation.h(300L);
+        this.animation.setDuration(300L);
         this.animation.setEasing(this.close ? Easing.EASE_IN_EXPO : Easing.EASE_OUT_EXPO);
         this.animation.Q(this.close ? 0.0 : 1.0);
-        double d2 = this.animation.sG();
+        double d2 = this.animation.getValue();
         if (!(d2 <= 1.0E-4)) {
             this.b(ShaderQueueType.REGULAR).c(() -> {
                 GlStateManager.pushMatrix();
@@ -79,12 +79,12 @@ public class SettingsRenderer implements InstanceAccess {
                 double round = this.rz().getRound();
                 this.rz();
                 Color color = Themes.rK();
-                double d6 = this.animation.sG();
+                double d6 = this.animation.getValue();
                 this.rz();
-                RenderUtil.roundedRectangle(d3, d4, d0, d1, round, ColorUtil.d(color, (int)(d6 * Themes.rK().getAlpha())));
+                RenderUtil.roundedRectangle(d3, d4, d0, d1, round, ColorUtil.withBlue(color, (int)(d6 * Themes.rK().getAlpha())));
 
                 for (ValueComponent valueComponent : this.valueList) {
-                    if (valueComponent.getValue() != null && valueComponent.getValue().wm() != null && valueComponent.getValue().wm().getAsBoolean()) {
+                    if (valueComponent.getValue() != null && valueComponent.getValue().getHideIf() != null && valueComponent.getValue().getHideIf().getAsBoolean()) {
                     }
                 }
 

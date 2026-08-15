@@ -132,7 +132,7 @@ public class RenderAPI extends API implements InstanceAccess {
 
     public int[] getThemeColor() {
         int[] aint = new int[4];
-        Color color = Client.a.k().rz().rA();
+        Color color = Client.a.getThemeManager().getTheme().rA();
         aint[0] = color.getRed();
         aint[1] = color.getGreen();
         aint[2] = color.getBlue();
@@ -142,7 +142,7 @@ public class RenderAPI extends API implements InstanceAccess {
 
     public int[] getSecondaryColor() {
         int[] aint = new int[4];
-        Color color = Client.a.k().rz().rB();
+        Color color = Client.a.getThemeManager().getTheme().rB();
         aint[0] = color.getRed();
         aint[1] = color.getGreen();
         aint[2] = color.getBlue();

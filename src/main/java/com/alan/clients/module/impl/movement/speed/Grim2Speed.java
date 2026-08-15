@@ -82,11 +82,11 @@ extends Mode<Speed> {
         this.onPostMotion = postMotionEvent -> {
             if (this.Ho % 2 == 0) {
                 if (!((Boolean)this.highPingModeMa.wo()).booleanValue()) {
-                    PacketUtil.l(new C03PacketPlayer(true));
-                    PacketUtil.l(new C03PacketPlayer(false));
+                    PacketUtil.send(new C03PacketPlayer(true));
+                    PacketUtil.send(new C03PacketPlayer(false));
                 } else {
-                    PacketUtil.l(new C03PacketPlayer(false));
-                    PacketUtil.l(new C03PacketPlayer(false));
+                    PacketUtil.send(new C03PacketPlayer(false));
+                    PacketUtil.send(new C03PacketPlayer(false));
                 }
                 this.Eo = true;
             }
@@ -125,11 +125,11 @@ extends Mode<Speed> {
     @Override
     public void onEnable() {
         if (!((Boolean)this.highPingModeMa.wo()).booleanValue()) {
-            PacketUtil.l(new C03PacketPlayer(true));
-            PacketUtil.l(new C03PacketPlayer(false));
+            PacketUtil.send(new C03PacketPlayer(true));
+            PacketUtil.send(new C03PacketPlayer(false));
         } else {
-            PacketUtil.l(new C03PacketPlayer(false));
-            PacketUtil.l(new C03PacketPlayer(false));
+            PacketUtil.send(new C03PacketPlayer(false));
+            PacketUtil.send(new C03PacketPlayer(false));
         }
         if (ViaLoadingBase.getInstance().getTargetVersion().equalTo(ProtocolVersion.v1_8) || ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_18_2)) {
             afi.b("this will only work 1.9-1.18.1", new Object[0]);

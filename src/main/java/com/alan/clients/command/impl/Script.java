@@ -101,7 +101,7 @@ public final class Script extends Command {
                                 }
 
                                 Client.a.getScriptManager().reloadScripts();
-                                Client.a.v().moduleList = new ConcurrentLinkedQueue<>();
+                                Client.a.getStandardClickGUI().moduleList = new ConcurrentLinkedQueue<>();
                             }
 
                             afi.b("Successfully " + s + "ed " + (script == null ? "all scripts" : "\"" + script.getName() + "\"") + ".");

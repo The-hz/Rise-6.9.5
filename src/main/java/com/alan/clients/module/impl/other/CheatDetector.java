@@ -16,12 +16,12 @@ import net.minecraft.client.entity.EntityOtherPlayerMP;
 
 @ModuleInfo(aliases = "module.other.cheatdetector.name", description = "module.other.cheatdetector.description", category = Category.PLAYER)
 public final class CheatDetector extends Module {
-    private final AlertManager TW = new AlertManager();
+    private final AlertManager alertManager = new AlertManager();
     public ModeValue alertType = new ModeValue("Alert Type", this).add(new SubMode("ClientSide")).add(new SubMode("ServerSide")).setDefault("ClientSide");
     @EventLink
-    public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> Client.a.n().F();
+    public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> Client.a.n().incrementTick();
     @EventLink
-    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var0 -> Client.a.n().M.values().forEach(var1 -> {
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var0 -> Client.a.n().playerMap.values().forEach(var1 -> {
         if (var1 != null) {
             try {
                 var1.handle(var0.getPacket());
@@ -35,13 +35,13 @@ public final class CheatDetector extends Module {
 
     @Override
     public void onDisable() {
-        Client.a.n().M.clear();
+        Client.a.n().playerMap.clear();
     }
 
     @Override
     public void onEnable() {
         if (aEg.theWorld != null) {
-            Client.a.n().M.clear();
+            Client.a.n().playerMap.clear();
             aEg.theWorld.playerEntities.forEach(var0 -> {
                 if (var0 instanceof EntityOtherPlayerMP && var0 != aEg.thePlayer) {
                     Client.a.n().H().b((EntityOtherPlayerMP)var0);
@@ -51,7 +51,7 @@ public final class CheatDetector extends Module {
     }
 
     @Generated
-    public AlertManager I() {
-        return this.TW;
+    public AlertManager getAlertManager() {
+        return this.alertManager;
     }
 }

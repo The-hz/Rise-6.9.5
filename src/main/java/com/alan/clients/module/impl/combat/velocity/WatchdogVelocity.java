@@ -59,14 +59,14 @@ public final class WatchdogVelocity extends Mode<Velocity> {
     public final BooleanValue pingSpoof = new BooleanValue("Ping Spoof", this, true);
     public final BooleanValue alwaysCancelVertical = new BooleanValue("Always Cancel Vertical", this, false);
     public final BooleanValue watchdogBacktrack = new BooleanValue("Watchdog Backtrack", this, false);
-    public final BooleanValue vU = new BooleanValue("Damage Boost (not for hypixel)", this, false);
+    public final BooleanValue damageBoostNotForHypixel = new BooleanValue("Damage Boost (not for hypixel)", this, false);
     private final NumberValue damageBoostSpeed = new NumberValue("Damage Boost Speed", this, 1, 1, 10, 0.01);
     public static boolean dj;
     public static boolean tt;
     public static boolean vq;
     private Vec3 pU = new Vec3(0.0, 0.0, 0.0);
     public Entity pY;
-    private int sG;
+    private int stackCount;
     private final ArrayList<Packet<?>> vW = new ArrayList<>();
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
@@ -92,14 +92,14 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                 || !(s12packetentityvelocity.getMotionY() / 8000.0 > 0.08)
                                 || aEg.thePlayer.Zl <= 11
                         )) {
-                        if (this.stack.wo() && this.sG < 1 && !aEg.thePlayer.onGround && Math.random() < 0.73 && aEg.thePlayer.tR <= 13
+                        if (this.stack.wo() && this.stackCount < 1 && !aEg.thePlayer.onGround && Math.random() < 0.73 && aEg.thePlayer.tR <= 13
                             || aEg.thePlayer.inWater
                             || this.e(Scaffold.class).isEnabled()
                                 && (
                                     aEg.thePlayer.tR <= 3
                                         || !MoveUtil.isMoving()
                                         || !this.e(Speed.class).isEnabled()
-                                        || !WatchdogSpeed.Rw
+                                        || !WatchdogSpeed.damageBoostEnabled
                                         || !(
                                             Math.hypot(
                                                     MoveUtil.predictedMotion(s12packetentityvelocity.getMotionX() / 8000.0, 1),
@@ -108,7 +108,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                                 > MoveUtil.speed()
                                         )
                                 )) {
-                            this.sG++;
+                            this.stackCount++;
                             vq = true;
                             var1x.setCancelled();
                             vq = false;
@@ -123,7 +123,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                 && aEg.thePlayer.tR > 3
                                 && MoveUtil.isMoving()
                                 && this.e(Speed.class).isEnabled()
-                                && WatchdogSpeed.Rw
+                                && WatchdogSpeed.damageBoostEnabled
                                 && Math.hypot(s12packetentityvelocity.getMotionX() / 8000.0, s12packetentityvelocity.getMotionZ() / 8000.0) > MoveUtil.speed()) {
                             if (!var1x.isCancelled()) {
                                 if (!this.e(Scaffold.class).isEnabled()) {
@@ -135,7 +135,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                 }
                             }
                         } else {
-                            this.sG = 0;
+                            this.stackCount = 0;
                             dj = true;
                             this.vW.add(s12packetentityvelocity);
                             var1x.setCancelled();
@@ -204,7 +204,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                 || var1xx instanceof aa
                                 || var1xx instanceof z
                         )
-                        .forEach(PacketUtil::p);
+                        .forEach(PacketUtil::receive);
                     this.vW.clear();
                     tt = false;
                     this.vd = false;
@@ -252,7 +252,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                         || var1xx instanceof aa
                                         || var1xx instanceof z
                                 )
-                                .forEach(PacketUtil::p);
+                                .forEach(PacketUtil::receive);
                             this.vW.clear();
                             tt = false;
                             this.vd = false;
@@ -274,7 +274,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                     || var1xx instanceof aa
                                     || var1xx instanceof z
                             )
-                            .forEach(PacketUtil::p);
+                            .forEach(PacketUtil::receive);
                         this.vW.clear();
                         tt = false;
                     }
@@ -291,7 +291,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                     || var1xx instanceof aa
                                     || var1xx instanceof z
                             )
-                            .forEach(PacketUtil::p);
+                            .forEach(PacketUtil::receive);
                         this.vW.clear();
                         tt = false;
                     }
@@ -308,7 +308,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                     || var1xx instanceof aa
                                     || var1xx instanceof z
                             )
-                            .forEach(PacketUtil::p);
+                            .forEach(PacketUtil::receive);
                         this.vW.clear();
                         tt = false;
                     }
@@ -325,7 +325,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                     || var1xx instanceof aa
                                     || var1xx instanceof z
                             )
-                            .forEach(PacketUtil::p);
+                            .forEach(PacketUtil::receive);
                         this.vW.clear();
                         tt = false;
                     }
@@ -342,7 +342,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                     || var1xx instanceof aa
                                     || var1xx instanceof z
                             )
-                            .forEach(PacketUtil::p);
+                            .forEach(PacketUtil::receive);
                         this.vW.clear();
                         tt = false;
                     }
@@ -362,7 +362,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
         }
     };
     @EventLink(value = 4)
-    public final Listener<JumpEvent> vY = var0 -> {};
+    public final Listener<JumpEvent> onJumpVeryHigh = var0 -> {};
     @EventLink(value = 4)
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (Math.abs(aEg.thePlayer.posY - Math.round(aEg.thePlayer.posY)) > 0.01 && aEg.thePlayer.onGround) {
@@ -398,7 +398,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
             tt = true;
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             double d0 = aEg.thePlayer.motionY;
-            this.vW.forEach(PacketUtil::p);
+            this.vW.forEach(PacketUtil::receive);
             this.vW.clear();
             aEg.thePlayer.motionY = d0;
             aEg.thePlayer.motionX = vector2d.getX();
@@ -413,7 +413,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
             BlinkComponent.dispatch();
             Vector2d vector2d1 = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             double d1 = aEg.thePlayer.motionY;
-            this.vW.forEach(PacketUtil::p);
+            this.vW.forEach(PacketUtil::receive);
             this.vW.clear();
             aEg.thePlayer.jump();
             aEg.thePlayer.motionX = vector2d1.getX();
@@ -434,14 +434,14 @@ public final class WatchdogVelocity extends Mode<Velocity> {
         }
     };
     @EventLink(value = 2)
-    public final Listener<JumpEvent> wb = var1x -> {
+    public final Listener<JumpEvent> onJump = var1x -> {
         if (aEg.thePlayer.onGround && dj && this.e(Speed.class).isEnabled()) {
             dj = false;
             tt = true;
             this.vf = false;
             BlinkComponent.dispatch();
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
-            this.vW.forEach(PacketUtil::p);
+            this.vW.forEach(PacketUtil::receive);
             this.vW.clear();
             aEg.thePlayer.motionX = vector2d.getX();
             aEg.thePlayer.motionZ = vector2d.getY();
@@ -455,7 +455,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
             tt = true;
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             BlinkComponent.dispatch();
-            this.vW.forEach(PacketUtil::p);
+            this.vW.forEach(PacketUtil::receive);
             this.vW.clear();
             if (!this.e(Speed.class).isEnabled()) {
                 aEg.thePlayer.motionX = vector2d.getX();
@@ -475,7 +475,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
             GlStateManager.disableLighting();
             GL11.glDepthMask(false);
             double d0 = -0.14;
-            RenderUtil.color(ColorUtil.d(this.rz().rB(), 100));
+            RenderUtil.color(ColorUtil.withBlue(this.rz().rB(), 100));
             RenderUtil.drawBoundingBox(
                 aEg.thePlayer
                     .getEntityBoundingBox()

@@ -36,16 +36,16 @@ public class LoginMenu
 extends Menu {
     public String aCA;
     public a bN;
-    public MenuTextButton aCx;
+    public MenuTextButton emailButton;
     @EventLink
     public Listener<er> aCE;
     public MenuButton[] menuButtons;
-    public MenuTextButton aCw;
+    public MenuTextButton loginButton;
     public boolean aCz;
     public String jc;
-    public Animation aCv;
+    public Animation fadeAnimation;
     public String aCB = null;
-    public TextBox aCy;
+    public TextBox emailBox;
     public agc aCu = FontManager.MAIN.a(64, FontWeight.LIGHT);
     public boolean aCC;
     public boolean aCD;
@@ -70,20 +70,20 @@ extends Menu {
                     break;
                 }
             }
-            this.aCy.click(n, n2, n3);
+            this.emailBox.click(n, n2, n3);
         }
     }
 
     @Override
     public void keyTyped(char c2, int n) {
-        this.aCy.key(c2, n);
+        this.emailBox.key(c2, n);
         if (n != 15) {
             if (n != 28) return;
-            if (this.aCy.getText().isEmpty()) return;
-            this.aCx.runAction();
+            if (this.emailBox.getText().isEmpty()) return;
+            this.emailButton.runAction();
             return;
         }
-        this.aCy.I(!this.aCy.tO());
+        this.emailBox.setSelected(!this.emailBox.isSelected());
     }
 
     public void aW(String string) {
@@ -132,7 +132,7 @@ extends Menu {
     }
 
     public LoginMenu() {
-        this.aCv = new Animation(Easing.EASE_IN_OUT_CUBIC, 3000L);
+        this.fadeAnimation = new Animation(Easing.EASE_IN_OUT_CUBIC, 3000L);
         this.bN = new a();
         this.aCE = er2 -> {
             String string;
@@ -161,7 +161,7 @@ extends Menu {
                 this.aCB = null;
                 this.aCD = false;
                 aEg.displayGuiScreen(new adr());
-                Client.a.p().tn();
+                Client.a.getConfigManager().tn();
                 return;
             }
             this.aX(b2.getE());
@@ -205,33 +205,33 @@ extends Menu {
         int l21_hi = 6;
         int dL19 = width2 - l17_lo / 2;
         int l25_hi = height2 - l19_hi / 2 - l21_hi / 2 - l19_hi / 2;
-        this.aCw = new MenuTextButton(dL19, l25_hi, l17_lo, l19_hi, () -> {}, "");
-        this.aCx = new MenuTextButton(dL19, l25_hi + l19_hi + l21_hi, l17_lo, l19_hi, () -> this.aW(this.aCy.getText()), "Login");
-        this.aCy = new TextBox(new Vector2d(width2, l25_hi + 9), FontManager.MAIN.a(24, FontWeight.BOLD), Color.WHITE, TextAlign.CENTER, "Username", l17_lo * 5);
+        this.loginButton = new MenuTextButton(dL19, l25_hi, l17_lo, l19_hi, () -> {}, "");
+        this.emailButton = new MenuTextButton(dL19, l25_hi + l19_hi + l21_hi, l17_lo, l19_hi, () -> this.aW(this.emailBox.getText()), "Login");
+        this.emailBox = new TextBox(new Vector2d(width2, l25_hi + 9), FontManager.MAIN.a(24, FontWeight.BOLD), Color.WHITE, TextAlign.CENTER, "Username", l17_lo * 5);
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
-        this.menuButtons = new MenuButton[]{this.aCw, this.aCx};
-        this.aCv.T(255.0);
-        this.aCv.reset();
+        this.menuButtons = new MenuButton[]{this.loginButton, this.emailButton};
+        this.fadeAnimation.setValue(255.0);
+        this.fadeAnimation.reset();
         this.aCz = false;
     }
 
     @Override
     public void drawScreen(int n, int n2, float f) {
-        if (this.aCv.sG() < 255.0) {
+        if (this.fadeAnimation.getValue() < 255.0) {
             aiv.aPL.a(aiz.OVERLAY, f, null);
         }
         ScaledResolution scaledResolution = LoginMenu.aEg.jY;
         this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.d(0.0, 0.0, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight(), Color.BLACK));
-        this.aCw.draw(n, n2, f);
-        this.aCx.draw(n, n2, f);
+        this.loginButton.draw(n, n2, f);
+        this.emailButton.draw(n, n2, f);
         this.b(ShaderQueueType.REGULAR).c(() -> {
             double d = 0.0;
-            this.aCy.draw();
-            double d3 = this.aCw.getY() - (double)this.aCu.height();
+            this.emailBox.draw();
+            double d3 = this.loginButton.getY() - (double)this.aCu.height();
             this.animation.Q(d3);
-            double d4 = this.animation.sG();
-            Color color = ColorUtil.d(Color.WHITE, (int)(d4 / d3 * 200.0));
-            this.aCu.c("Welcome", (float)this.width / 2.0f, d4 - 10.0, color.getRGB());
+            double d4 = this.animation.getValue();
+            Color color = ColorUtil.withBlue(Color.WHITE, (int)(d4 / d3 * 200.0));
+            this.aCu.drawString("Welcome", (float)this.width / 2.0f, d4 - 10.0, color.getRGB());
             if (this.bN.T(3000L)) {
                 if (this.aCz) {
                     try {
@@ -245,12 +245,12 @@ extends Menu {
                 }
                 this.aCz = false;
             } else if (this.jc != null) {
-                FontManager.MAIN.a(18, FontWeight.LIGHT).c(this.jc, (float)this.width / 2.0f, d4 + 26.0, Color.RED.getRGB());
+                FontManager.MAIN.a(18, FontWeight.LIGHT).drawString(this.jc, (float)this.width / 2.0f, d4 + 26.0, Color.RED.getRGB());
             }
-            FontManager.MAIN.a(18, FontWeight.REGULAR).d("Made with <3 by Alan and The_Bi11iona1re", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 20, ColorUtil.d(aBS, 100).getRGB());
-            FontManager.MAIN.a(12, FontWeight.REGULAR).d("\u00a9 Rise Client 2026. All Rights Reserved", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 10, ColorUtil.d(aBS, 100).getRGB());
-            this.aCv.Q(0.0);
-            RenderUtil.d(0.0, 0.0, LoginMenu.aEg.displayWidth, LoginMenu.aEg.displayHeight, new Color(0, 0, 0, (int)this.aCv.sG()));
+            FontManager.MAIN.a(18, FontWeight.REGULAR).drawCenteredString("Made with <3 by Alan and The_Bi11iona1re", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 20, ColorUtil.withBlue(aBS, 100).getRGB());
+            FontManager.MAIN.a(12, FontWeight.REGULAR).drawCenteredString("\u00a9 Rise Client 2026. All Rights Reserved", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 10, ColorUtil.withBlue(aBS, 100).getRGB());
+            this.fadeAnimation.Q(0.0);
+            RenderUtil.d(0.0, 0.0, LoginMenu.aEg.displayWidth, LoginMenu.aEg.displayHeight, new Color(0, 0, 0, (int)this.fadeAnimation.getValue()));
         });
     }
 }

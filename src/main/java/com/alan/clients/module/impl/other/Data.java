@@ -35,7 +35,7 @@ public final class Data extends Module {
     private Vector2f Uk = new Vector2f(0.0F, 0.0F);
     private Vector2f Ul = new Vector2f(0.0F, 0.0F);
     private Vector2f Um = new Vector2f(0.0F, 0.0F);
-    private double Un;
+    private double playerOffsetDistance;
     @EventLink
     public final Listener<PostMotionEvent> onPostMotion = var1 -> {
         this.by = TargetComponent.e(16.0);
@@ -130,10 +130,10 @@ public final class Data extends Module {
                     .getY()
                 - RotationUtil.c(new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new aka(this.by.posX, this.Ui.getY(), this.by.posZ)).getY();
             jsonobject.add("targetDeltaVerticalMovementAngle", JsonParser.parseString(Double.toString(d33)));
-            double d34 = this.Un - Math.sqrt(Math.pow(vector2f1.getX(), 2.0) + Math.pow(vector2f1.getY(), 2.0));
+            double d34 = this.playerOffsetDistance - Math.sqrt(Math.pow(vector2f1.getX(), 2.0) + Math.pow(vector2f1.getY(), 2.0));
             jsonobject.add("deltaPlayerOffsetDistance", JsonParser.parseString(Double.toString(d34)));
-            this.Un = Math.sqrt(Math.pow(vector2f1.getX(), 2.0) + Math.pow(vector2f1.getY(), 2.0));
-            jsonobject.add("playerOffsetDistance", JsonParser.parseString(Double.toString(this.Un)));
+            this.playerOffsetDistance = Math.sqrt(Math.pow(vector2f1.getX(), 2.0) + Math.pow(vector2f1.getY(), 2.0));
+            jsonobject.add("playerOffsetDistance", JsonParser.parseString(Double.toString(this.playerOffsetDistance)));
             double d35 = Math.sqrt(Math.pow(entityplayersp.pl - this.Ul.getX(), 2.0) + Math.pow(entityplayersp.rotationPitch - this.Ul.getY(), 2.0));
             jsonobject.add("deltaRotation", JsonParser.parseString(Double.toString(d35)));
             double d36 = Math.sqrt(Math.pow(this.by.pl - this.Um.getX(), 2.0) + Math.pow(this.by.rotationPitch - this.Um.getY(), 2.0));

@@ -26,7 +26,7 @@ public class S2CPacketCaptureRequest extends rip.vantage.commons.packet.api.abst
 
     @Override
     public void handle(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
-        handler.a(this);
+        handler.handle(this);
     }
 
     public S2CPacketCaptureRequest(String var1, int var2, String var3) {

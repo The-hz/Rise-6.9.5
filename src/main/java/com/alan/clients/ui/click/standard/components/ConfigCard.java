@@ -16,7 +16,7 @@ import net.minecraft.util.StringUtils;
 import rip.vantage.commons.util.time.a;
 
 public class ConfigCard implements InstanceAccess {
-    private String azY;
+    private String title;
     private String azZ;
     private Runnable aAa;
     private Vector2f alh = new Vector2f(86.450005F, 86.450005F);
@@ -27,28 +27,28 @@ public class ConfigCard implements InstanceAccess {
     private agc aAd = FontManager.MAIN.a(20, FontWeight.REGULAR);
 
     public ConfigCard(String var1, String var2) {
-        this.azY = StringUtils.b(this.aAd, var2, 86.450005F - 20);
+        this.title = StringUtils.b(this.aAd, var2, 86.450005F - 20);
         this.azZ = var1;
         this.aAa = null;
     }
 
     public ConfigCard(String var1, String var2, Runnable runnable) {
         String s = org.apache.commons.lang3.StringUtils.capitalize(var2);
-        this.azY = StringUtils.b(this.aAd, s, 86.450005F - 20);
+        this.title = StringUtils.b(this.aAd, s, 86.450005F - 20);
         this.aAa = runnable;
         this.azZ = var1;
     }
 
     public void j(Vector2f vec2) {
         this.axI = new Vector2f(vec2.x, vec2.y);
-        if (!(this.axI.x + this.alh.x < this.getStandardClickGUI().axI.x + this.getStandardClickGUI().axJ.aym)
-            && !(this.axI.x > this.getStandardClickGUI().axI.x + this.getStandardClickGUI().axJ.aym + this.getStandardClickGUI().alh.x)) {
+        if (!(this.axI.x + this.alh.x < this.getStandardClickGUI().axI.x + this.getStandardClickGUI().sidebar.aym)
+            && !(this.axI.x > this.getStandardClickGUI().axI.x + this.getStandardClickGUI().sidebar.aym + this.getStandardClickGUI().position.x)) {
             this.aAb.Q(this.qz() ? 75.0 : 0.0);
             this.aAc.Q(this.qz() ? 5.0 : 0.0);
             RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, 8.0, UIColors.OVERLAY.pV());
-            RenderUtil.roundedRectangle(vec2.x, vec2.y, this.alh.x, this.alh.y, 8.0, UIColors.OVERLAY.Y((int)this.aAb.sG()));
+            RenderUtil.roundedRectangle(vec2.x, vec2.y, this.alh.x, this.alh.y, 8.0, UIColors.OVERLAY.Y((int)this.aAb.getValue()));
             this.axI.y = this.axI.y + (this.alh.y / 2.0F - this.aAd.height() / 2.0F + 1.0F - 10 / 4.0F);
-            this.aAd.c(this.azY, this.axI.x + this.alh.x / 2.0F, this.axI.y, UIColors.SECONDARY_TEXT.pW());
+            this.aAd.drawString(this.title, this.axI.x + this.alh.x / 2.0F, this.axI.y, UIColors.SECONDARY_TEXT.pW());
             this.axI.y = this.axI.y + (this.aAd.height() + 10 / 2.0F);
             this.k(this.axI);
             this.axI = new Vector2f(vec2.x, vec2.y);
@@ -64,16 +64,16 @@ public class ConfigCard implements InstanceAccess {
     }
 
     public boolean qz() {
-        return GUIUtil.a(this.axI, this.alh, afl.sW().getX(), afl.sW().getY());
+        return GUIUtil.a(this.axI, this.alh, afl.getMouse().getX(), afl.getMouse().getY());
     }
 
     public void k(Vector2f vec2) {
-        FontManager.MAIN.a(16, FontWeight.REGULAR).c(this.azZ, vec2.x + this.alh.x / 2.0F, vec2.y, UIColors.TRINARY_TEXT.pW());
+        FontManager.MAIN.a(16, FontWeight.REGULAR).drawString(this.azZ, vec2.x + this.alh.x / 2.0F, vec2.y, UIColors.TRINARY_TEXT.pW());
     }
 
     @Generated
     public String getTitle() {
-        return this.azY;
+        return this.title;
     }
 
     @Generated
@@ -117,12 +117,12 @@ public class ConfigCard implements InstanceAccess {
     }
 
     @Generated
-    public void aI(String var1) {
-        this.azY = var1;
+    public void setTitle(String var1) {
+        this.title = var1;
     }
 
     @Generated
-    public void aJ(String var1) {
+    public void setAction(String var1) {
         this.azZ = var1;
     }
 

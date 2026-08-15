@@ -82,11 +82,11 @@ public class MicrosoftLogin {
                 return "";
             }
             AuthTokenResponse authTokenResponse = gson.fromJson(Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=ba89e6e0-8490-4a26-8746-f389a0d3ccc7&code=" + string2 + "&client_secret=hlQ8Q~33jTRilP4yE-UtuOt9wG.ZFLqq6pErIa2B&grant_type=authorization_code&redirect_uri=http://localhost:8247", false), AuthTokenResponse.class);
-            if (authTokenResponse == null || authTokenResponse.aEV == null || authTokenResponse.aEV.isEmpty()) {
+            if (authTokenResponse == null || authTokenResponse.refresh_token == null || authTokenResponse.refresh_token.isEmpty()) {
                 System.out.println("[DEBUG] Cookie->refresh code exchange returned no refresh_token");
                 return "";
             }
-            return authTokenResponse.aEV;
+            return authTokenResponse.refresh_token;
         }
         catch (Exception exception) {
             System.out.println("[DEBUG] Cookie->refresh threw: " + String.valueOf(exception));
@@ -125,11 +125,11 @@ public class MicrosoftLogin {
 
     private static LoginData loginWithMicrosoftAccessToken(AuthTokenResponse authTokenResponse, String string) {
         String string2;
-        if (authTokenResponse == null || authTokenResponse.aEU == null || authTokenResponse.aEU.isEmpty()) {
+        if (authTokenResponse == null || authTokenResponse.access_token == null || authTokenResponse.access_token.isEmpty()) {
             return new LoginData();
         }
-        String string3 = authTokenResponse.aEU;
-        string2 = authTokenResponse.aEV == null || authTokenResponse.aEV.isEmpty() ? string : authTokenResponse.aEV;
+        String string3 = authTokenResponse.access_token;
+        string2 = authTokenResponse.refresh_token == null || authTokenResponse.refresh_token.isEmpty() ? string : authTokenResponse.refresh_token;
         XblXstsResponse g2 = MicrosoftLogin.authenticateXboxLive("d=" + string3);
         if (!MicrosoftLogin.isUsable(g2)) {
             g2 = MicrosoftLogin.authenticateXboxLive(string3);
@@ -137,19 +137,19 @@ public class MicrosoftLogin {
         if (!MicrosoftLogin.isUsable(g2)) {
             return new LoginData();
         }
-        XblXstsResponse g3 = gson.fromJson(Browser.postExternal("https://xsts.auth.xboxlive.com/xsts/authorize", "{\"Properties\":{\"SandboxId\":\"RETAIL\",\"UserTokens\":[\"" + g2.aFa + "\"]},\"RelyingParty\":\"rp://api.minecraftservices.com/\",\"TokenType\":\"JWT\"}", true), XblXstsResponse.class);
+        XblXstsResponse g3 = gson.fromJson(Browser.postExternal("https://xsts.auth.xboxlive.com/xsts/authorize", "{\"Properties\":{\"SandboxId\":\"RETAIL\",\"UserTokens\":[\"" + g2.Token + "\"]},\"RelyingParty\":\"rp://api.minecraftservices.com/\",\"TokenType\":\"JWT\"}", true), XblXstsResponse.class);
         if (g3 == null) {
             return new LoginData();
         }
-        McResponse mcResponse = gson.fromJson(Browser.postExternal("https://api.minecraftservices.com/authentication/login_with_xbox", "{\"identityToken\":\"XBL3.0 x=" + g2.aFb.aFc[0].aFd + ";" + g3.aFa + "\"}", true), McResponse.class);
+        McResponse mcResponse = gson.fromJson(Browser.postExternal("https://api.minecraftservices.com/authentication/login_with_xbox", "{\"identityToken\":\"XBL3.0 x=" + g2.DisplayClaims.xui[0].uhs + ";" + g3.Token + "\"}", true), McResponse.class);
         if (mcResponse == null) {
             return new LoginData();
         }
-        ProfileResponse profileResponse = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", mcResponse.aEU), ProfileResponse.class);
+        ProfileResponse profileResponse = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", mcResponse.access_token), ProfileResponse.class);
         if (profileResponse == null) {
             return new LoginData();
         }
-        return new LoginData(mcResponse.aEU, string2, profileResponse.aEZ, profileResponse.gK);
+        return new LoginData(mcResponse.access_token, string2, profileResponse.aEZ, profileResponse.name);
     }
 
     private static String formValue(String string) {
@@ -167,12 +167,12 @@ public class MicrosoftLogin {
 
     private static boolean isUsable(XblXstsResponse xblXstsResponse) {
         if (xblXstsResponse == null) return false;
-        if (xblXstsResponse.aFa == null) return false;
-        if (xblXstsResponse.aFb == null) return false;
-        if (xblXstsResponse.aFb.aFc == null) return false;
-        if (xblXstsResponse.aFb.aFc.length <= 0) return false;
-        if (xblXstsResponse.aFb.aFc[0] == null) return false;
-        if (xblXstsResponse.aFb.aFc[0].aFd == null) return false;
+        if (xblXstsResponse.Token == null) return false;
+        if (xblXstsResponse.DisplayClaims == null) return false;
+        if (xblXstsResponse.DisplayClaims.xui == null) return false;
+        if (xblXstsResponse.DisplayClaims.xui.length <= 0) return false;
+        if (xblXstsResponse.DisplayClaims.xui[0] == null) return false;
+        if (xblXstsResponse.DisplayClaims.xui[0].uhs == null) return false;
         return true;
     }
 
@@ -238,7 +238,7 @@ public class MicrosoftLogin {
                 callback.accept(null);
                 return;
             }
-            callback.accept(authTokenResponse.aEV);
+            callback.accept(authTokenResponse.refresh_token);
         }
 
         private void a(HttpExchange httpExchange, String string) throws java.io.IOException {

@@ -48,10 +48,10 @@ public class Clipper extends Module {
 
             int j = new Color(0, 0, 0, 200).getRGB();
             if (aEg.thePlayer.cqL > 2) {
-                FontManager.MAIN.a(17, FontWeight.LIGHT).c(s, f + 1.0F, f1 - 10.0F + 1.0F, j);
-                FontManager.MAIN.a(17, FontWeight.LIGHT).c(s1, f + 1.0F, f1 + 10.0F + 1.0F, j);
-                FontManager.MAIN.a(17, FontWeight.LIGHT).c(s, f, f1 - 10.0F, i);
-                FontManager.MAIN.a(17, FontWeight.LIGHT).c(s1, f, f1 + 10.0F, i);
+                FontManager.MAIN.a(17, FontWeight.LIGHT).drawString(s, f + 1.0F, f1 - 10.0F + 1.0F, j);
+                FontManager.MAIN.a(17, FontWeight.LIGHT).drawString(s1, f + 1.0F, f1 + 10.0F + 1.0F, j);
+                FontManager.MAIN.a(17, FontWeight.LIGHT).drawString(s, f, f1 - 10.0F, i);
+                FontManager.MAIN.a(17, FontWeight.LIGHT).drawString(s1, f, f1 + 10.0F, i);
             }
         }
     };

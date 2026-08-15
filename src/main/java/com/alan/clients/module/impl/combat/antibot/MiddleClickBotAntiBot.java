@@ -23,12 +23,12 @@ public final class MiddleClickBotAntiBot extends Mode<AntiBot> {
 
             this.ji = true;
             if (aEg.objectMouseOver.typeOfHit == MovingObjectType.ENTITY) {
-                BotManager r = Client.a.x();
+                BotManager r = Client.a.getBotManager();
                 Entity entity = aEg.objectMouseOver.entityHit;
                 if (r.a(this, entity)) {
-                    Client.a.x().c(this, entity);
+                    Client.a.getBotManager().c(this, entity);
                 } else {
-                    Client.a.x().b(this, entity);
+                    Client.a.getBotManager().b(this, entity);
                 }
             }
         } else {
@@ -42,6 +42,6 @@ public final class MiddleClickBotAntiBot extends Mode<AntiBot> {
 
     @Override
     public void onDisable() {
-        Client.a.x().a(this);
+        Client.a.getBotManager().a(this);
     }
 }

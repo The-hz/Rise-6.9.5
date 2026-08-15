@@ -27,7 +27,7 @@ public class WatchdogNoSlow extends Mode<NoSlow> {
     private boolean dk;
     private boolean vh;
     private Packet<?> NI;
-    private KillAura NJ = null;
+    private KillAura killAura = null;
     public final BooleanValue slowDownOnSlabs = new BooleanValue("Slow down on Slabs", this, true);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
@@ -79,8 +79,8 @@ public class WatchdogNoSlow extends Mode<NoSlow> {
     };
     @EventLink
     private final Listener<PacketSendEvent> onPacketSend = var1x -> {
-        if (this.NJ == null) {
-            this.NJ = this.e(KillAura.class);
+        if (this.killAura == null) {
+            this.killAura = this.e(KillAura.class);
         }
     };
     @EventLink
@@ -104,9 +104,9 @@ public class WatchdogNoSlow extends Mode<NoSlow> {
 
         if (this.getParent().sword.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
             SlotComponent slotcomponent = this.d(SlotComponent.class);
-            PacketUtil.l(new l(SlotComponent.bQ() % 7 + (int)(Math.random() * 2.0) + 1));
+            PacketUtil.send(new l(SlotComponent.bQ() % 7 + (int)(Math.random() * 2.0) + 1));
             slotcomponent = this.d(SlotComponent.class);
-            PacketUtil.l(new l(SlotComponent.bQ()));
+            PacketUtil.send(new l(SlotComponent.bQ()));
             var1x.setCancelled();
         }
     };

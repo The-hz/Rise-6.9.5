@@ -10,11 +10,11 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.potion.Potion;
 
 public final class DamageUtil implements InstanceAccess {
-    public static void ab(double var0) {
-        a(DamageType.POSITION, var0, true, true);
+    public static void damagePlayer(double var0) {
+        damagePlayer(DamageType.POSITION, var0, true, true);
     }
 
-    public static void a(DamageType var0, double var1, boolean var3, boolean var4) {
+    public static void damagePlayer(DamageType var0, double var1, boolean var3, boolean var4) {
         if ((!var3 || aEg.thePlayer.onGround) && (!var4 || aEg.thePlayer.hurtTime == 0)) {
             double d0 = aEg.thePlayer.posX;
             double d1 = aEg.thePlayer.posY;
@@ -30,20 +30,20 @@ public final class DamageUtil implements InstanceAccess {
             for (int k = 0; k < j; k++) {
                 switch (var0) {
                     case POSITION_ROTATION:
-                        PacketUtil.l(new C06PacketPlayerPosLook(d0, d1 + var1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
-                        PacketUtil.l(new C06PacketPlayerPosLook(d0, d1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
+                        PacketUtil.send(new C06PacketPlayerPosLook(d0, d1 + var1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
+                        PacketUtil.send(new C06PacketPlayerPosLook(d0, d1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
                         break;
                     case POSITION:
-                        PacketUtil.l(new C04PacketPlayerPosition(d0, d1 + var1, d2, false));
-                        PacketUtil.l(new C04PacketPlayerPosition(d0, d1, d2, false));
+                        PacketUtil.send(new C04PacketPlayerPosition(d0, d1 + var1, d2, false));
+                        PacketUtil.send(new C04PacketPlayerPosition(d0, d1, d2, false));
                 }
             }
 
-            PacketUtil.l(new C03PacketPlayer(true));
+            PacketUtil.send(new C03PacketPlayer(true));
         }
     }
 
-    public static void a(DamageType var0, double var1, int var3, boolean var4, boolean var5) {
+    public static void damagePlayer(DamageType var0, double var1, int var3, boolean var4, boolean var5) {
         if ((!var4 || aEg.thePlayer.onGround) && (!var5 || aEg.thePlayer.hurtTime == 0)) {
             double d0 = aEg.thePlayer.posX;
             double d1 = aEg.thePlayer.posY;
@@ -52,16 +52,16 @@ public final class DamageUtil implements InstanceAccess {
             for (int i = 0; i < var3; i++) {
                 switch (var0) {
                     case POSITION_ROTATION:
-                        PacketUtil.l(new C06PacketPlayerPosLook(d0, d1 + var1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
-                        PacketUtil.l(new C06PacketPlayerPosLook(d0, d1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
+                        PacketUtil.send(new C06PacketPlayerPosLook(d0, d1 + var1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
+                        PacketUtil.send(new C06PacketPlayerPosLook(d0, d1, d2, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
                         break;
                     case POSITION:
-                        PacketUtil.l(new C04PacketPlayerPosition(d0, d1 + var1, d2, false));
-                        PacketUtil.l(new C04PacketPlayerPosition(d0, d1, d2, false));
+                        PacketUtil.send(new C04PacketPlayerPosition(d0, d1 + var1, d2, false));
+                        PacketUtil.send(new C04PacketPlayerPosition(d0, d1, d2, false));
                 }
             }
 
-            PacketUtil.l(new C03PacketPlayer(true));
+            PacketUtil.send(new C03PacketPlayer(true));
         }
     }
 

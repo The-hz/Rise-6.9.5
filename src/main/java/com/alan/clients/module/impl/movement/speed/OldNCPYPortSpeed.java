@@ -30,7 +30,7 @@ public class OldNCPYPortSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> QF = var0 -> var0.setJump(false);
+    public final Listener<MoveInputEvent> onMoveInput = var0 -> var0.setJump(false);
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
         MoveUtil.isMoving();
@@ -70,7 +70,7 @@ public class OldNCPYPortSpeed extends Mode<Speed> {
         MoveUtil.preventDiagonalSpeed();
     };
     @EventLink
-    public final Listener<MoveInputEvent> QH = var0 -> var0.setJump(false);
+    public final Listener<MoveInputEvent> onMoveInputMedium = var0 -> var0.setJump(false);
     @EventLink
     public final Listener<JumpEvent> onJump = var0 -> var0.setJumpMotion(0.4F);
 

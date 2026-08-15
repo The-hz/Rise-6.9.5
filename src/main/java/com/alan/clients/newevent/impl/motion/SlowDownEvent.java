@@ -7,8 +7,8 @@ import com.alan.clients.script.api.wrapper.impl.event.impl.ScriptSlowDownEvent;
 import lombok.Generated;
 
 public class SlowDownEvent extends CancellableEvent {
-    private float jz;
-    private float jA;
+    private float strafeMultiplier;
+    private float forwardMultiplier;
     private boolean jB;
 
     @Override
@@ -18,12 +18,12 @@ public class SlowDownEvent extends CancellableEvent {
 
     @Generated
     public float getStrafeMultiplier() {
-        return this.jz;
+        return this.strafeMultiplier;
     }
 
     @Generated
     public float getForwardMultiplier() {
-        return this.jA;
+        return this.forwardMultiplier;
     }
 
     @Generated
@@ -33,12 +33,12 @@ public class SlowDownEvent extends CancellableEvent {
 
     @Generated
     public void setStrafeMultiplier(float strafeMultiplier) {
-        this.jz = strafeMultiplier;
+        this.strafeMultiplier = strafeMultiplier;
     }
 
     @Generated
     public void setForwardMultiplier(float forwardMultiplier) {
-        this.jA = forwardMultiplier;
+        this.forwardMultiplier = forwardMultiplier;
     }
 
     @Generated
@@ -48,8 +48,8 @@ public class SlowDownEvent extends CancellableEvent {
 
     @Generated
     public SlowDownEvent(float var1, float var2, boolean var3) {
-        this.jz = var1;
-        this.jA = var2;
+        this.strafeMultiplier = var1;
+        this.forwardMultiplier = var2;
         this.jB = var3;
     }
 }

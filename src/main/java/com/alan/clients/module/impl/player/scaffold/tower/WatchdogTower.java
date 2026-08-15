@@ -45,12 +45,12 @@ public class WatchdogTower extends Mode<Scaffold> {
     boolean akq = false;
     private int rW;
     public static float akr;
-    double aks = Double.NaN;
-    double akt = Double.NaN;
+    double targetZ = Double.NaN;
+    double targetX = Double.NaN;
     private int aku;
     private boolean gD = false;
     @EventLink
-    public final Listener<JumpEvent> akv = var0 -> {};
+    public final Listener<JumpEvent> onJump = var0 -> {};
     @EventLink(value = 1)
     public Listener<PreMotionEvent> onPreMotion = var1x -> {
         double d0 = Math.toRadians(aEg.thePlayer.pl);
@@ -103,11 +103,11 @@ public class WatchdogTower extends Mode<Scaffold> {
                 this.getParent().agF = 1;
                 if (!this.akq) {
                     if (flag2) {
-                        this.akt = Math.floor(aEg.thePlayer.posX) + 0.999999999999;
-                        this.aks = Double.NaN;
+                        this.targetX = Math.floor(aEg.thePlayer.posX) + 0.999999999999;
+                        this.targetZ = Double.NaN;
                     } else {
-                        this.aks = Math.floor(aEg.thePlayer.posZ) + 0.999999999999;
-                        this.akt = Double.NaN;
+                        this.targetZ = Math.floor(aEg.thePlayer.posZ) + 0.999999999999;
+                        this.targetX = Double.NaN;
                     }
 
                     this.akq = true;
@@ -118,17 +118,17 @@ public class WatchdogTower extends Mode<Scaffold> {
                     if (this.rW == 1) {
                         MoveUtil.stop();
                         if (!this.kE()) {
-                            if (!Double.isNaN(this.akt)) {
-                                double d3 = aEg.thePlayer.posX + (this.akt - aEg.thePlayer.posX) / 3.0;
+                            if (!Double.isNaN(this.targetX)) {
+                                double d3 = aEg.thePlayer.posX + (this.targetX - aEg.thePlayer.posX) / 3.0;
                                 double d4 = aEg.thePlayer.posY;
                                 double d5 = aEg.thePlayer.posZ;
                                 if (this.e(d3, d4, d5)) {
                                     aEg.thePlayer.setPosition(d3, d4, d5);
                                 }
-                            } else if (!Double.isNaN(this.aks)) {
+                            } else if (!Double.isNaN(this.targetZ)) {
                                 double d6 = aEg.thePlayer.posX;
                                 double d7 = aEg.thePlayer.posY;
-                                double d8 = aEg.thePlayer.posZ + (this.aks - aEg.thePlayer.posZ) / 3.0;
+                                double d8 = aEg.thePlayer.posZ + (this.targetZ - aEg.thePlayer.posZ) / 3.0;
                                 if (this.e(d6, d7, d8)) {
                                     aEg.thePlayer.setPosition(d6, d7, d8);
                                 }
@@ -137,17 +137,17 @@ public class WatchdogTower extends Mode<Scaffold> {
                     } else if (this.rW == 2) {
                         MoveUtil.stop();
                         if (!this.kE()) {
-                            if (!Double.isNaN(this.akt)) {
-                                double d9 = aEg.thePlayer.posX + 2.0 * (this.akt - aEg.thePlayer.posX) / 3.0;
+                            if (!Double.isNaN(this.targetX)) {
+                                double d9 = aEg.thePlayer.posX + 2.0 * (this.targetX - aEg.thePlayer.posX) / 3.0;
                                 double d10 = aEg.thePlayer.posY;
                                 double d11 = aEg.thePlayer.posZ;
                                 if (this.e(d9, d10, d11)) {
                                     aEg.thePlayer.setPosition(d9, d10, d11);
                                 }
-                            } else if (!Double.isNaN(this.aks)) {
+                            } else if (!Double.isNaN(this.targetZ)) {
                                 double d12 = aEg.thePlayer.posX;
                                 double d13 = aEg.thePlayer.posY;
-                                double d14 = aEg.thePlayer.posZ + 2.0 * (this.aks - aEg.thePlayer.posZ) / 3.0;
+                                double d14 = aEg.thePlayer.posZ + 2.0 * (this.targetZ - aEg.thePlayer.posZ) / 3.0;
                                 if (this.e(d12, d13, d14)) {
                                     aEg.thePlayer.setPosition(d12, d13, d14);
                                 }
@@ -160,18 +160,18 @@ public class WatchdogTower extends Mode<Scaffold> {
                     } else if (this.rW == 3) {
                         MoveUtil.stop();
                         if (!this.kE()) {
-                            if (!Double.isNaN(this.akt)) {
-                                double d15 = this.akt;
+                            if (!Double.isNaN(this.targetX)) {
+                                double d15 = this.targetX;
                                 double d16 = aEg.thePlayer.posY;
                                 double d17 = aEg.thePlayer.posZ;
                                 if (this.e(d15, d16, d17)) {
                                     aEg.thePlayer.setPosition(d15, d16, d17);
                                     this.kD();
                                 }
-                            } else if (!Double.isNaN(this.aks)) {
+                            } else if (!Double.isNaN(this.targetZ)) {
                                 double d21 = aEg.thePlayer.posX;
                                 double d22 = aEg.thePlayer.posY;
-                                double d23 = this.aks;
+                                double d23 = this.targetZ;
                                 if (this.e(d21, d22, d23)) {
                                     aEg.thePlayer.setPosition(d21, d22, d23);
                                 }
@@ -179,7 +179,7 @@ public class WatchdogTower extends Mode<Scaffold> {
 
                             double d18 = aEg.thePlayer.posX;
                             double d19 = aEg.thePlayer.posY;
-                            double d20 = this.aks;
+                            double d20 = this.targetZ;
                             this.e(d18, d19, d20);
                             this.kD();
                             this.rW = 0;
@@ -382,7 +382,7 @@ public class WatchdogTower extends Mode<Scaffold> {
         }
     };
     @EventLink
-    public final Listener<JumpEvent> akC = var1x -> {
+    public final Listener<JumpEvent> onJumpMedium = var1x -> {
         if (!this.e(Speed.class).isEnabled() && aEg.gameSettings.keyBindJump.isKeyDown() && !aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
             MoveUtil.strafe(0.15);
         }
@@ -403,7 +403,7 @@ public class WatchdogTower extends Mode<Scaffold> {
         SlotComponent.setSlot(SlotUtil.vx());
         this.akn = 0;
         this.HJ = false;
-        this.aks = Double.NaN;
+        this.targetZ = Double.NaN;
         qH = 0;
         this.rW = 0;
         akr = aEg.thePlayer.pl;

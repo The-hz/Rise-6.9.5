@@ -27,8 +27,8 @@ import lombok.Generated;
 import org.lwjgl.input.Mouse;
 
 public class CategoryComponent implements InstanceAccess {
-    private final Category axt;
-    private final List<ModuleComponent> axu;
+    private final Category category;
+    private final List<ModuleComponent> moduleComponents;
     private boolean axv = false;
     private final Animation axw = new Animation(Easing.EASE_OUT_QUINT, 300L);
     private final Animation axx = new Animation(Easing.LINEAR, 100L);
@@ -46,8 +46,8 @@ public class CategoryComponent implements InstanceAccess {
     private double axH = 0.0;
 
     public CategoryComponent(Category category, List<ModuleComponent> moduleComponents) {
-        this.axt = category;
-        this.axu = moduleComponents;
+        this.category = category;
+        this.moduleComponents = moduleComponents;
     }
 
     public void a(double var1, double var3, double var5, int var7, int var8, float var9, double var10) {
@@ -58,11 +58,11 @@ public class CategoryComponent implements InstanceAccess {
         if (this.axF != null) {
             if (Mouse.isButtonDown(0)) {
                 double d2 = var7 - this.axG;
-                double d3 = this.axF.wy().doubleValue() - this.axF.wx().doubleValue();
+                double d3 = this.axF.getMax().doubleValue() - this.axF.getMin().doubleValue();
                 double d4 = d3 / (var5 * 0.8);
                 double d5 = this.axH + d2 * d4;
-                double d6 = Math.max(this.axF.wx().doubleValue(), Math.min(this.axF.wy().doubleValue(), d5));
-                int i = this.axF.wz().intValue();
+                double d6 = Math.max(this.axF.getMin().doubleValue(), Math.min(this.axF.getMax().doubleValue(), d5));
+                int i = this.axF.getDecimalPlaces().intValue();
                 double d7;
                 if (i == 0) {
                     d7 = Math.round(d6);
@@ -79,10 +79,10 @@ public class CategoryComponent implements InstanceAccess {
 
         double d8 = 0.0;
         if (this.axv) {
-            for (ModuleComponent abdx : this.axu) {
+            for (ModuleComponent abdx : this.moduleComponents) {
                 double d9 = d8 + 34.0 * var10;
                 d8 = d9 + 1.0 * var10;
-                if (abdx.oJ()) {
+                if (abdx.isExpanded()) {
                     for (Value value : abdx.getModule().getAllValues()) {
                         if (this.d(value)) {
                             d8 += 18.0 * var10;
@@ -101,7 +101,7 @@ public class CategoryComponent implements InstanceAccess {
         }
 
         this.axw.Q(this.axv ? d8 : 0.0);
-        double d11 = this.axw.sG();
+        double d11 = this.axw.getValue();
         double d12 = 22.0 + d11;
         double d13 = 22.0 * var10;
         boolean flag = GUIUtil.c(d0, d1, var5, d13, var7, var8);
@@ -113,28 +113,28 @@ public class CategoryComponent implements InstanceAccess {
             Math.min(255, UIColors.BACKGROUND.pV().getBlue() + color.getBlue() / 26),
             245
         );
-        RenderUtil.a(d0, d1, var5, d13, 6.0 * var10, ColorUtil.d(UIColors.SECONDARY.pV(), 180), true, true, !this.axv, !this.axv);
-        if (this.axx.sG() > 0.0) {
-            RenderUtil.a(d0, d1, var5, d13, 6.0 * var10, ColorUtil.d(Color.WHITE, (int)this.axx.sG()), true, true, !this.axv, !this.axv);
+        RenderUtil.a(d0, d1, var5, d13, 6.0 * var10, ColorUtil.withBlue(UIColors.SECONDARY.pV(), 180), true, true, !this.axv, !this.axv);
+        if (this.axx.getValue() > 0.0) {
+            RenderUtil.a(d0, d1, var5, d13, 6.0 * var10, ColorUtil.withBlue(Color.WHITE, (int)this.axx.getValue()), true, true, !this.axv, !this.axv);
         }
 
-        String s = ahd.ce(this.axt.getName());
+        String s = ahd.ce(this.category.getName());
         FontManager.MAIN.a((int)(16.0 * var10), FontWeight.BOLD).a(s, (float)(d0 + 8.0 * var10), (float)(d1 + 7.0 * var10), this.rz().rD().getRGB());
         String s1 = this.axv ? "▲" : "▼";
         FontManager.MAIN.a((int)(12.0 * var10), FontWeight.REGULAR).a(s1, (float)(d0 + var5 - 16.0 * var10), (float)(d1 + 7.0 * var10), UIColors.TRINARY_TEXT.pW());
-        String s2 = "(" + this.axu.size() + ")";
-        FontManager.MAIN.a((int)(12.0 * var10), FontWeight.REGULAR).d(s2, (float)(d0 + var5 - 26.0 * var10), (float)(d1 + 8.0 * var10), UIColors.TRINARY_TEXT.pW());
+        String s2 = "(" + this.moduleComponents.size() + ")";
+        FontManager.MAIN.a((int)(12.0 * var10), FontWeight.REGULAR).drawCenteredString(s2, (float)(d0 + var5 - 26.0 * var10), (float)(d1 + 8.0 * var10), UIColors.TRINARY_TEXT.pW());
         if (d11 > 1.0) {
             if (this.axv) {
-                RenderUtil.d(d0, d1 + d13 - 4.0 * var10, var5, 4.0 * var10, ColorUtil.d(UIColors.SECONDARY.pV(), 180));
+                RenderUtil.d(d0, d1 + d13 - 4.0 * var10, var5, 4.0 * var10, ColorUtil.withBlue(UIColors.SECONDARY.pV(), 180));
             }
 
             RenderUtil.a(d0, d1 + d13, var5, d11, 6.0 * var10, color1, false, false, true, true);
             double d14 = d1 + d13 + 3.0 * var10;
 
-            for (ModuleComponent moduleComponent : this.axu) {
+            for (ModuleComponent moduleComponent : this.moduleComponents) {
                 double d15 = 34.0;
-                if (moduleComponent.oJ()) {
+                if (moduleComponent.isExpanded()) {
                     for (Value value1 : moduleComponent.getModule().getAllValues()) {
                         if (this.d(value1)) {
                             d15 += 18.0;
@@ -152,7 +152,7 @@ public class CategoryComponent implements InstanceAccess {
                     double d17 = 34.0 * var10;
                     boolean flag1 = GUIUtil.c(d0 + 6.0 * var10, d14, var5 - 12.0 * var10, d17 - 2.0 * var10, var7, var8);
                     if (flag1) {
-                        RenderUtil.roundedRectangle(d0 + 6.0 * var10, d14, var5 - 12.0 * var10, d17 - 2.0 * var10, 4.0 * var10, ColorUtil.d(Color.WHITE, 15));
+                        RenderUtil.roundedRectangle(d0 + 6.0 * var10, d14, var5 - 12.0 * var10, d17 - 2.0 * var10, 4.0 * var10, ColorUtil.withBlue(Color.WHITE, 15));
                     }
 
                     if (moduleComponent.getModule().isEnabled()) {
@@ -164,7 +164,7 @@ public class CategoryComponent implements InstanceAccess {
                     FontManager.MAIN
                         .a((int)(13.0 * var10), FontWeight.REGULAR)
                         .a(moduleComponent.getModule().getName(), (float)d18, (float)d19, moduleComponent.getModule().isEnabled() ? this.rz().rD().getRGB() : UIColors.TEXT.pW());
-                    if (!moduleComponent.oJ()) {
+                    if (!moduleComponent.isExpanded()) {
                         String s3 = "(" + ahd.ce(moduleComponent.getModule().getModuleInfo().category().getName()) + ")";
                         FontManager.MAIN
                             .a((int)(10.0 * var10), FontWeight.REGULAR)
@@ -176,7 +176,7 @@ public class CategoryComponent implements InstanceAccess {
                             );
                     }
 
-                    if (!moduleComponent.oJ()) {
+                    if (!moduleComponent.isExpanded()) {
                         String description = ahd.ce(moduleComponent.getModule().getModuleInfo().description());
                         int j = (int)(9.0 * var10);
                         float f = (float)(var5 - 24.0 * var10);
@@ -217,14 +217,14 @@ public class CategoryComponent implements InstanceAccess {
 
                     double d20 = d14 + d17;
                     d14 = d20 + 1.0 * var10;
-                    if (moduleComponent.oJ()) {
+                    if (moduleComponent.isExpanded()) {
                         for (Value value2 : moduleComponent.getModule().getAllValues()) {
                             if (this.d(value2)) {
                                 double d21 = 18.0 * var10;
                                 boolean flag3 = GUIUtil.c(d0 + 10.0 * var10, d14, var5 - 20.0 * var10, d21, var7, var8);
                                 if (flag3) {
                                     RenderUtil.roundedRectangle(
-                                        d0 + 10.0 * var10, d14, var5 - 20.0 * var10, d21 - 2.0 * var10, 3.0 * var10, ColorUtil.d(Color.WHITE, 10)
+                                        d0 + 10.0 * var10, d14, var5 - 20.0 * var10, d21 - 2.0 * var10, 3.0 * var10, ColorUtil.withBlue(Color.WHITE, 10)
                                     );
                                 }
 
@@ -235,7 +235,7 @@ public class CategoryComponent implements InstanceAccess {
                                     FontManager.MAIN.a((int)(12.0 * var10), FontWeight.REGULAR).a(s6, (float)d22, (float)d23, UIColors.TEXT.pW());
                                     double d24 = d0 + var5 - 28.0 * var10;
                                     double d25 = d14 + 4.0 * var10;
-                                    RenderUtil.roundedRectangle(d24, d25, 12.0 * var10, 12.0 * var10, 3.0 * var10, ColorUtil.d(UIColors.SECONDARY.pV(), 150));
+                                    RenderUtil.roundedRectangle(d24, d25, 12.0 * var10, 12.0 * var10, 3.0 * var10, ColorUtil.withBlue(UIColors.SECONDARY.pV(), 150));
                                     if (booleanvalue.wo()) {
                                         RenderUtil.roundedRectangle(d24 + 2.0 * var10, d25 + 2.0 * var10, 8.0 * var10, 8.0 * var10, 2.0 * var10, this.rz().rD());
                                     }
@@ -243,7 +243,7 @@ public class CategoryComponent implements InstanceAccess {
                                     String s7 = ahd.ce(value2.getName());
                                     FontManager.MAIN.a((int)(12.0 * var10), FontWeight.REGULAR).a(s7, (float)d22, (float)d23, UIColors.TEXT.pW());
                                     String s8 = modevalue3.wo().getName();
-                                    FontManager.MAIN.a((int)(11.0 * var10), FontWeight.REGULAR).d(s8, (float)(d0 + var5 - 18.0 * var10), (float)d23, this.rz().rD().getRGB());
+                                    FontManager.MAIN.a((int)(11.0 * var10), FontWeight.REGULAR).drawCenteredString(s8, (float)(d0 + var5 - 18.0 * var10), (float)d23, this.rz().rD().getRGB());
                                     String s9 = this.axE.getOrDefault(value2, false) ? "▲" : "▼";
                                     FontManager.MAIN.a((int)(10.0 * var10), FontWeight.REGULAR).a(s9, (float)(d0 + var5 - 16.0 * var10), (float)d23, UIColors.TRINARY_TEXT.pW());
                                 } else if (value2 instanceof NumberValue numbervalue) {
@@ -253,17 +253,17 @@ public class CategoryComponent implements InstanceAccess {
                                     double d27 = d14 + 18.0 * var10 - 6.0 * var10;
                                     double d28 = var5 - 24.0 * var10;
                                     double d29 = 2.0 * var10;
-                                    RenderUtil.roundedRectangle(d26, d27, d28, d29, 1.5 * var10, ColorUtil.d(UIColors.SECONDARY.pV(), 100));
-                                    double d30 = (numbervalue.wo().doubleValue() - numbervalue.wx().doubleValue())
-                                        / (numbervalue.wy().doubleValue() - numbervalue.wx().doubleValue());
+                                    RenderUtil.roundedRectangle(d26, d27, d28, d29, 1.5 * var10, ColorUtil.withBlue(UIColors.SECONDARY.pV(), 100));
+                                    double d30 = (numbervalue.wo().doubleValue() - numbervalue.getMin().doubleValue())
+                                        / (numbervalue.getMax().doubleValue() - numbervalue.getMin().doubleValue());
                                     if (d30 > 0.0) {
                                         RenderUtil.roundedRectangle(d26, d27, d28 * d30, d29, 1.5 * var10, this.rz().rD());
                                     }
 
-                                    String s11 = String.format("%." + numbervalue.wz().intValue() + "f", numbervalue.wo().doubleValue());
+                                    String s11 = String.format("%." + numbervalue.getDecimalPlaces().intValue() + "f", numbervalue.wo().doubleValue());
                                     FontManager.MAIN
                                         .a((int)(11.0 * var10), FontWeight.REGULAR)
-                                        .d(s11, (float)(d0 + var5 - 14.0 * var10), (float)(d23 - 2.0 * var10), UIColors.TRINARY_TEXT.pW());
+                                        .drawCenteredString(s11, (float)(d0 + var5 - 14.0 * var10), (float)(d23 - 2.0 * var10), UIColors.TRINARY_TEXT.pW());
                                 }
 
                                 d14 += d21;
@@ -274,7 +274,7 @@ public class CategoryComponent implements InstanceAccess {
                                         boolean flag4 = GUIUtil.c(d0 + 16.0 * var10, d14, var5 - 32.0 * var10, d21, var7, var8);
                                         if (flag4) {
                                             RenderUtil.roundedRectangle(
-                                                d0 + 16.0 * var10, d14, var5 - 32.0 * var10, d21 - 2.0 * var10, 3.0 * var10, ColorUtil.d(Color.WHITE, 12)
+                                                d0 + 16.0 * var10, d14, var5 - 32.0 * var10, d21 - 2.0 * var10, 3.0 * var10, ColorUtil.withBlue(Color.WHITE, 12)
                                             );
                                         }
 
@@ -309,24 +309,24 @@ public class CategoryComponent implements InstanceAccess {
     }
 
     public void i(double var1, double var3, double var5) {
-        String s = ahd.ce(this.axt.getName());
-        FontManager.MAIN.a((int)(16.0 * var5), FontWeight.BOLD).a(s, (float)(var1 + 8.0 * var5), (float)(var3 + 7.0 * var5), ColorUtil.d(this.rz().rA(), 200).getRGB());
-        if (this.axv && this.axw.sG() > 1.0) {
+        String s = ahd.ce(this.category.getName());
+        FontManager.MAIN.a((int)(16.0 * var5), FontWeight.BOLD).a(s, (float)(var1 + 8.0 * var5), (float)(var3 + 7.0 * var5), ColorUtil.withBlue(this.rz().rA(), 200).getRGB());
+        if (this.axv && this.axw.getValue() > 1.0) {
             double d0 = var3 + 22.0 * var5 + 3.0 * var5;
 
-            for (ModuleComponent moduleComponent : this.axu) {
+            for (ModuleComponent moduleComponent : this.moduleComponents) {
                 if (moduleComponent.getModule().isEnabled()) {
-                    RenderUtil.roundedRectangle(var1 + 6.0 * var5, d0, 2.0 * var5, 34.0 * var5 - 2.0 * var5, 1.0 * var5, ColorUtil.d(this.rz().rA(), 150));
+                    RenderUtil.roundedRectangle(var1 + 6.0 * var5, d0, 2.0 * var5, 34.0 * var5 - 2.0 * var5, 1.0 * var5, ColorUtil.withBlue(this.rz().rA(), 150));
                     FontManager.MAIN
                         .a((int)(13.0 * var5), FontWeight.REGULAR)
-                        .a(moduleComponent.getModule().getName(), (float)(var1 + 12.0 * var5), (float)(d0 + 4.0 * var5), ColorUtil.d(this.rz().rA(), 120).getRGB());
-                    if (moduleComponent.oJ()) {
+                        .a(moduleComponent.getModule().getName(), (float)(var1 + 12.0 * var5), (float)(d0 + 4.0 * var5), ColorUtil.withBlue(this.rz().rA(), 120).getRGB());
+                    if (moduleComponent.isExpanded()) {
                         moduleComponent.ci();
                     }
                 }
 
                 d0 += 34.0 * var5 + 1.0 * var5;
-                if (moduleComponent.oJ()) {
+                if (moduleComponent.isExpanded()) {
                     for (Value value : moduleComponent.getModule().getAllValues()) {
                         if (this.d(value)) {
                             d0 += 18.0 * var5;
@@ -353,22 +353,22 @@ public class CategoryComponent implements InstanceAccess {
                 this.axv = !this.axv;
             }
         } else {
-            if (this.axv && this.axw.sG() > 1.0) {
+            if (this.axv && this.axw.getValue() > 1.0) {
                 double d4 = var3 + d1 + 3.0 * d0;
 
-                for (ModuleComponent moduleComponent : this.axu) {
+                for (ModuleComponent moduleComponent : this.moduleComponents) {
                     if (GUIUtil.c(var1 + 6.0 * d0, d4, this.axy - 12.0 * d0, d2, var5, var6)) {
                         if (var7 == 0) {
                             moduleComponent.getModule().toggle();
                         } else if (var7 == 1) {
-                            moduleComponent.axv = !moduleComponent.axv;
+                            moduleComponent.expanded = !moduleComponent.expanded;
                         }
 
                         return;
                     }
 
                     d4 += d2 + 1.0 * d0;
-                    if (moduleComponent.oJ()) {
+                    if (moduleComponent.isExpanded()) {
                         for (Value value : moduleComponent.getModule().getAllValues()) {
                             if (this.d(value)) {
                                 if (GUIUtil.c(var1 + 10.0 * d0, d4, this.axy - 20.0 * d0, d3, var5, var6)) {
@@ -417,13 +417,13 @@ public class CategoryComponent implements InstanceAccess {
     }
 
     private boolean d(Value<?> var1) {
-        return var1.wm() != null && var1.wm().getAsBoolean() ? false : var1.wn() == null || !var1.wn().getAsBoolean();
+        return var1.getHideIf() != null && var1.getHideIf().getAsBoolean() ? false : var1.wn() == null || !var1.wn().getAsBoolean();
     }
 
     public void oG() {
         this.axF = null;
         if (this.axv) {
-            Iterator iterator = this.axu.iterator();
+            Iterator iterator = this.moduleComponents.iterator();
 
             while (iterator.hasNext()) {
                 ((ModuleComponent)iterator.next()).pz();
@@ -433,8 +433,8 @@ public class CategoryComponent implements InstanceAccess {
 
     public void a(char var1, int var2) {
         if (this.axv) {
-            for (ModuleComponent moduleComponent : this.axu) {
-                if (moduleComponent.oJ()) {
+            for (ModuleComponent moduleComponent : this.moduleComponents) {
+                if (moduleComponent.isExpanded()) {
                     Iterator iterator = moduleComponent.getValueList().iterator();
 
                     while (iterator.hasNext()) {
@@ -446,7 +446,7 @@ public class CategoryComponent implements InstanceAccess {
     }
 
     public double da() {
-        return 22.0 + this.axw.sG();
+        return 22.0 + this.axw.getValue();
     }
 
     public void i(double var1, double var3) {
@@ -455,13 +455,13 @@ public class CategoryComponent implements InstanceAccess {
     }
 
     @Generated
-    public Category oH() {
-        return this.axt;
+    public Category getCategory() {
+        return this.category;
     }
 
     @Generated
-    public List<ModuleComponent> oI() {
-        return this.axu;
+    public List<ModuleComponent> getModuleComponents() {
+        return this.moduleComponents;
     }
 
     @Generated

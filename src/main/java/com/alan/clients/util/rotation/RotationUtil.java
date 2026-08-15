@@ -139,7 +139,7 @@ public final class RotationUtil implements InstanceAccess {
     }
 
     public static boolean a(Vector2f vec2, Entity entity, double var2, boolean var4, float var5) {
-        MovingObjectPosition movingobjectposition = aef.a(vec2, var2, var5, aEg.thePlayer, var4);
+        MovingObjectPosition movingobjectposition = aef.rayCast(vec2, var2, var5, aEg.thePlayer, var4);
         return movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.ENTITY && movingobjectposition.entityHit == entity;
     }
 

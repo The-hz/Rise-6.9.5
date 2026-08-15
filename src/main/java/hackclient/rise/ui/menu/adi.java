@@ -22,15 +22,15 @@ public class adi extends MenuTextButton {
 
     @Override
     public void draw(int var1, int var2, float var3) {
-        this.oL().Q(MouseUtil.isHovered(this.getX(), this.getY(), this.oM(), this.da(), var1, var2) ? 100.0 : 45.0);
+        this.getHoverAnimation().Q(MouseUtil.isHovered(this.getX(), this.getY(), this.oM(), this.da(), var1, var2) ? 100.0 : 45.0);
         double d0 = this.getY();
-        Color color = ColorUtil.d(Color.BLACK, 150);
-        Color color1 = ColorUtil.d(Color.WHITE, (int)(150.0 + this.oL().sG()));
+        Color color = ColorUtil.withBlue(Color.BLACK, 150);
+        Color color1 = ColorUtil.withBlue(Color.WHITE, (int)(150.0 + this.getHoverAnimation().getValue()));
         this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(this.getX(), this.getY(), this.oM(), this.da(), 5.0, Color.WHITE));
         this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.roundedRectangle(this.getX() + 0.5, d0 + 0.5, this.oM() - 1.0, this.da() - 1.0, 6.0, color));
         this.b(ShaderQueueType.REGULAR).c(() -> {
-            RenderUtil.roundedRectangle(this.getX(), d0, this.oM(), this.da(), 5.0, ColorUtil.d(aBV, (int)this.oL().sG() - 15));
-            RenderUtil.roundedOutlineGradientRectangle(this.getX(), d0, this.oM(), this.da(), 5.0, 1.0, ColorUtil.d(aBP, 32), ColorUtil.d(aBO, 32));
+            RenderUtil.roundedRectangle(this.getX(), d0, this.oM(), this.da(), 5.0, ColorUtil.withBlue(aBV, (int)this.getHoverAnimation().getValue() - 15));
+            RenderUtil.roundedOutlineGradientRectangle(this.getX(), d0, this.oM(), this.da(), 5.0, 1.0, ColorUtil.withBlue(aBP, 32), ColorUtil.withBlue(aBO, 32));
             byte b0 = 64;
             RenderUtil.image(this.aCa, this.getX() + this.oM() / 2.0 - 32, d0 + this.da() / 2.0 - 32, b0, b0, color1);
             agc agc = aBZ;
@@ -40,7 +40,7 @@ public class adi extends MenuTextButton {
                 agc = FontManager.MAIN.a(i, FontWeight.BOLD);
             }
 
-            agc.c(this.name, (float)(this.getX() + this.oM() / 2.0), (float)(d0 + this.da() / 2.0 - b0 / 2 - 24.0), color1.getRGB());
+            agc.drawString(this.name, (float)(this.getX() + this.oM() / 2.0), (float)(d0 + this.da() / 2.0 - b0 / 2 - 24.0), color1.getRGB());
         });
     }
 }

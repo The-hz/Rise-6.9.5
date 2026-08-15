@@ -40,7 +40,7 @@ public class MatrixFlight extends Mode<Flight> {
                 packetwrapper.sendToServer(Protocol1_9To1_8.class);
             }
 
-            PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, false));
+            PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, false));
             aEg.thePlayer.setPosition(d0, d1, d2);
             aEg.thePlayer.jump();
             if (this.Hu) {

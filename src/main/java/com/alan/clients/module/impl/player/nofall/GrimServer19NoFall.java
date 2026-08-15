@@ -79,11 +79,11 @@ public class GrimServer19NoFall extends Mode<NoFall> {
                 if (!this.newestGrimMayFlagTheAnticheat.wo()) {
                     var1x.setCancelled(true);
                 } else {
-                    PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.01, aEg.thePlayer.posZ, true));
+                    PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.01, aEg.thePlayer.posZ, true));
                 }
 
                 var1x.setCancelled(true);
-                PacketUtil.l(new C03PacketPlayer(true));
+                PacketUtil.send(new C03PacketPlayer(true));
                 aEg.gameSettings.keyBindJump.setPressed(false);
                 f = 0.0F;
             }
@@ -104,7 +104,7 @@ public class GrimServer19NoFall extends Mode<NoFall> {
         if (dj && aEg.thePlayer.onGround) {
             tt = true;
             dj = false;
-            this.aiF.forEach(PacketUtil::p);
+            this.aiF.forEach(PacketUtil::receive);
             this.aiF.clear();
             tt = false;
         }

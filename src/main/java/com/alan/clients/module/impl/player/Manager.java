@@ -92,12 +92,12 @@ public class Manager extends Module {
     private static final int adl = 8;
     private static final int adm = 9;
     private static final int adn = 35;
-    private final a ado = new a();
-    private int adp;
-    private int BV;
-    private int adq;
-    private boolean adr;
-    private boolean ads;
+    private final a stopwatch = new a();
+    private int chestTicks;
+    private int attackTicks;
+    private int placeTicks;
+    private boolean moved;
+    private boolean open;
     private long nextClick;
     private boolean adu = false;
     private int adv;
@@ -115,32 +115,32 @@ public class Manager extends Module {
                     this.adj--;
                 }
 
-                if (this.adu && aEg.currentScreen == null && this.ads && !BadPacketsComponent.bad(false, false, false, false, true) && (this.adj == 0 || this.adq >= 10)) {
-                    PacketUtil.l(new q(aEg.thePlayer.inventoryContainer.windowId));
+                if (this.adu && aEg.currentScreen == null && this.open && !BadPacketsComponent.bad(false, false, false, false, true) && (this.adj == 0 || this.placeTicks >= 10)) {
+                    PacketUtil.send(new q(aEg.thePlayer.inventoryContainer.windowId));
                     this.jX();
                     this.adu = false;
-                    this.ads = false;
+                    this.open = false;
                 }
 
                 if (this.jV()) {
-                    this.adp = 0;
+                    this.chestTicks = 0;
                 } else {
-                    this.adp++;
+                    this.chestTicks++;
                 }
 
-                this.BV++;
-                this.adq++;
+                this.attackTicks++;
+                this.placeTicks++;
                 if (this.legit.wo() && !(aEg.currentScreen instanceof GuiInventory)) {
-                    this.ado.aX();
+                    this.stopwatch.aX();
                     this.u(false);
-                } else if (!this.ado.T(this.nextClick) || this.adp < 10 || this.BV < 10 || this.adq < 10 || this.e(Scaffold.class).isEnabled()) {
+                } else if (!this.stopwatch.T(this.nextClick) || this.chestTicks < 10 || this.attackTicks < 10 || this.placeTicks < 10 || this.e(Scaffold.class).isEnabled()) {
                     this.u(false);
                 } else if (this.jV()) {
                     this.u(false);
                 } else if (!this.e(InventoryMove.class).isEnabled() && !(aEg.currentScreen instanceof GuiInventory)) {
                     this.u(false);
                 } else {
-                    this.adr = false;
+                    this.moved = false;
                     InventoryScan tr = this.jR();
                     boolean flag = this.a(tr);
                     if (!this.adx) {
@@ -148,7 +148,7 @@ public class Manager extends Module {
                             return;
                         }
 
-                        this.jT();
+                        this.openInventory();
                         if (this.ady > 0) {
                             this.ady--;
                             return;
@@ -279,11 +279,11 @@ public class Manager extends Module {
         }
     };
     @EventLink
-    public final Listener<AttackEvent> onAttack = var1 -> this.BV = 0;
+    public final Listener<AttackEvent> onAttack = var1 -> this.attackTicks = 0;
     @EventLink
     public final Listener<en> adC = var1 -> {
         if (this.jY() && this.adv > 0) {
-            this.adw = Math.max(this.adw, this.adv + this.hk());
+            this.adw = Math.max(this.adw, this.adv + this.getExtraSprintTicks());
         }
 
         this.adv = 0;
@@ -299,7 +299,7 @@ public class Manager extends Module {
         if (var1.dq() instanceof C08PacketPlayerBlockPlacement) {
             C08PacketPlayerBlockPlacement c08packetplayerblockplacement = (C08PacketPlayerBlockPlacement)var1.dq();
             if (c08packetplayerblockplacement.getStack() == null || c08packetplayerblockplacement.getStack().getItem() != Items.water_bucket) {
-                this.adq = 0;
+                this.placeTicks = 0;
             }
         }
     };
@@ -311,34 +311,34 @@ public class Manager extends Module {
         return aEg != null
             && aEg.thePlayer != null
             && aEg.theWorld != null
-            && this.ado.T(this.nextClick)
-            && this.adp >= 10
-            && this.BV >= 10
-            && this.adq >= 10
-            && (this.jU() || aEg.currentScreen instanceof GuiInventory);
+            && this.stopwatch.T(this.nextClick)
+            && this.chestTicks >= 10
+            && this.attackTicks >= 10
+            && this.placeTicks >= 10
+            && (this.canOpenInventory() || aEg.currentScreen instanceof GuiInventory);
     }
 
-    public int jK() {
+    public int getBlockLimit() {
         return this.blockLimit.wo().intValue();
     }
 
-    public int jL() {
+    public int getArrowLimit() {
         return this.arrowLimit.wo().intValue();
     }
 
-    public int jM() {
+    public int getBucketLimit() {
         return this.bucketLimit.wo().intValue();
     }
 
-    public int jN() {
+    public int getSnowballEggLimit() {
         return this.snowballEggLimit.wo().intValue();
     }
 
-    public int jO() {
+    public int getEnderPearlLimit() {
         return this.enderPearlLimit.wo().intValue();
     }
 
-    public boolean jP() {
+    public boolean shouldDropCustomItems() {
         return this.dropCustomItems.wo();
     }
 
@@ -356,7 +356,7 @@ public class Manager extends Module {
     }
 
     private void jQ() {
-        if (this.adr) {
+        if (this.moved) {
             this.adz = 0;
         } else {
             this.adz++;
@@ -390,7 +390,7 @@ public class Manager extends Module {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
             if (itemstack != null) {
                 Item item = itemstack.getItem();
-                if (!ItemUtil.u(itemstack)) {
+                if (!ItemUtil.useful(itemstack)) {
                     tr.aef.add(i);
                 } else {
                     if (item instanceof ItemBlock) {
@@ -503,7 +503,7 @@ public class Manager extends Module {
     }
 
     private void a(List<Integer> var1, InventoryScan var2) {
-        var1.sort((var1x, var2x) -> Float.compare(this.j(aEg.thePlayer.inventory.getStackInSlot(var2x)), this.j(aEg.thePlayer.inventory.getStackInSlot(var1x))));
+        var1.sort((var1x, var2x) -> Float.compare(this.damage(aEg.thePlayer.inventory.getStackInSlot(var2x)), this.damage(aEg.thePlayer.inventory.getStackInSlot(var1x))));
         if (!var1.isEmpty()) {
             var2.adJ = (Integer)var1.get(0);
             boolean flag = this.swordSlot.wo().intValue() != 0
@@ -810,23 +810,23 @@ public class Manager extends Module {
             int k = itemstack != null && itemstack.getItem() instanceof ItemArmor ? this.armorReduction(itemstack) : Integer.MIN_VALUE;
             if (var2 != i && j > k) {
                 int l = aEg.thePlayer.inventoryContainer.windowId;
-                int i1 = this.I(var2);
+                int i1 = this.slot(var2);
                 int j1 = this.F(var1);
                 if (aEg.thePlayer.inventory.getItemStack() != null) {
                     return false;
                 }
 
                 if (ViaLoadingBase.getInstance().getTargetVersion().olderThanOrEqualTo(ProtocolVersion.v1_12)) {
-                    this.a(l, i1, 0, 0);
-                    this.a(l, j1, 0, 0);
-                    this.a(l, i1, 0, 0);
+                    this.windowClick(l, i1, 0, 0);
+                    this.windowClick(l, j1, 0, 0);
+                    this.windowClick(l, i1, 0, 0);
                 } else {
-                    this.a(l, i1, 1, 1);
-                    this.a(l, j1, 1, 1);
-                    this.a(l, i1, 1, 1);
+                    this.windowClick(l, i1, 1, 1);
+                    this.windowClick(l, j1, 1, 1);
+                    this.windowClick(l, i1, 1, 1);
                 }
 
-                this.jZ();
+                this.throwItem();
                 return true;
             }
             return false;
@@ -1019,7 +1019,7 @@ public class Manager extends Module {
     private int jS() {
         for (int i = 0; i <= 39; i++) {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
-            if (itemstack != null && !ItemUtil.u(itemstack)) {
+            if (itemstack != null && !ItemUtil.useful(itemstack)) {
                 return i;
             }
         }
@@ -1091,17 +1091,17 @@ public class Manager extends Module {
         return -1;
     }
 
-    private void jT() {
+    private void openInventory() {
         this.adz = 0;
         if (!this.jV()) {
             if (aEg.currentScreen instanceof GuiInventory) {
                 this.adx = true;
                 this.ady = 0;
             } else {
-                if (this.jU() && !this.ads && aEg.currentScreen == null && !BadPacketsComponent.bad(false, false, false, false, true)) {
-                    PacketUtil.l(new C16PacketClientStatus(EnumState.OPEN_INVENTORY_ACHIEVEMENT));
+                if (this.canOpenInventory() && !this.open && aEg.currentScreen == null && !BadPacketsComponent.bad(false, false, false, false, true)) {
+                    PacketUtil.send(new C16PacketClientStatus(EnumState.OPEN_INVENTORY_ACHIEVEMENT));
                     this.jX();
-                    this.ads = true;
+                    this.open = true;
                     this.adx = true;
                     this.ady = 1;
                 }
@@ -1111,9 +1111,9 @@ public class Manager extends Module {
 
     private void u(boolean var1) {
         if (this.adx) {
-            if (this.ads) {
+            if (this.open) {
                 if (var1 && aEg.currentScreen == null && !BadPacketsComponent.bad(false, false, false, false, true)) {
-                    this.ads = false;
+                    this.open = false;
                 } else {
                     this.adu = true;
                 }
@@ -1125,7 +1125,7 @@ public class Manager extends Module {
         }
     }
 
-    private boolean jU() {
+    private boolean canOpenInventory() {
         boolean flag = this.e(InventoryMove.class).isEnabled();
         boolean flag1 = aEg.currentScreen == null;
         boolean flag2 = this.e(Scaffold.class).isEnabled();
@@ -1145,56 +1145,56 @@ public class Manager extends Module {
 
         for (int j = 0; j <= 39; j++) {
             if (j != 36 && j != 37 && j != 38 && j != 39 && aEg.thePlayer.inventory.getStackInSlot(j) == null) {
-                this.a(i, this.I(j), 0, 0);
-                this.jZ();
+                this.windowClick(i, this.slot(j), 0, 0);
+                this.throwItem();
                 return true;
             }
         }
 
-        this.a(i, -999, 0, 0);
-        this.jZ();
+        this.windowClick(i, -999, 0, 0);
+        this.throwItem();
         return true;
     }
 
     private void G(int var1) {
         if (this.f(var1, true)) {
             int i = aEg.thePlayer.inventoryContainer.windowId;
-            int j = this.I(var1);
-            this.a(i, j, 1, 4);
-            this.jZ();
+            int j = this.slot(var1);
+            this.windowClick(i, j, 1, 4);
+            this.throwItem();
         }
     }
 
     private void d(int var1, int var2) {
         if (this.f(var1, true) && var2 >= 0) {
             int i = aEg.thePlayer.inventoryContainer.windowId;
-            int j = this.I(var1);
-            this.a(i, j, 0, 0);
+            int j = this.slot(var1);
+            this.windowClick(i, j, 0, 0);
 
             for (int k = 0; k < var2; k++) {
-                this.a(i, j, 1, 0);
+                this.windowClick(i, j, 1, 0);
             }
 
-            this.a(i, -999, 0, 0);
-            this.jZ();
+            this.windowClick(i, -999, 0, 0);
+            this.throwItem();
         }
     }
 
     private void H(int var1) {
         if (this.e(var1, false)) {
             int i = aEg.thePlayer.inventoryContainer.windowId;
-            int j = this.I(var1);
-            this.a(i, j, 0, 1);
-            this.jZ();
+            int j = this.slot(var1);
+            this.windowClick(i, j, 0, 1);
+            this.throwItem();
         }
     }
 
     private void e(int var1, int var2) {
         if (this.e(var1, false) && var2 >= 0 && var2 <= 8) {
             int i = aEg.thePlayer.inventoryContainer.windowId;
-            int j = this.I(var1);
-            this.a(i, j, var2, 2);
-            this.jZ();
+            int j = this.slot(var1);
+            this.windowClick(i, j, var2, 2);
+            this.throwItem();
         }
     }
 
@@ -1219,7 +1219,7 @@ public class Manager extends Module {
         return var1 >= 0 && var1 <= 8 && var1 == var2;
     }
 
-    private void a(int var1, int var2, int var3, int var4) {
+    private void windowClick(int var1, int var2, int var3, int var4) {
         aEg.playerController.windowClick(var1, var2, var3, var4, aEg.thePlayer);
         this.jX();
     }
@@ -1232,23 +1232,23 @@ public class Manager extends Module {
 
     private boolean jY() {
         InventoryMove inventorymove = this.e(InventoryMove.class);
-        return inventorymove != null && inventorymove.isEnabled() && inventorymove.hj();
+        return inventorymove != null && inventorymove.isEnabled() && inventorymove.isGrimBypass();
     }
 
-    private int hk() {
+    private int getExtraSprintTicks() {
         InventoryMove inventorymove = this.e(InventoryMove.class);
-        return inventorymove == null ? 9 : inventorymove.hk();
+        return inventorymove == null ? 9 : inventorymove.getExtraSprintTicks();
     }
 
-    private void jZ() {
+    private void throwItem() {
         this.nextClick = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
-        this.ado.aX();
-        this.adr = true;
+        this.stopwatch.aX();
+        this.moved = true;
         this.adz = 0;
     }
 
     private boolean e(int var1, boolean var2) {
-        if (this.adr && this.nextClick > 0L) {
+        if (this.moved && this.nextClick > 0L) {
             return false;
         }
 
@@ -1260,7 +1260,7 @@ public class Manager extends Module {
         return this.e(var1, true);
     }
 
-    private float j(ItemStack stack) {
+    private float damage(ItemStack stack) {
         ItemSword itemsword = (ItemSword)stack.getItem();
         int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, stack);
         int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, stack);
@@ -1286,7 +1286,7 @@ public class Manager extends Module {
         return i * 100 + b0 * 10 + j * 6 + (k + l + i1) * 2;
     }
 
-    private int I(int var1) {
+    private int slot(int var1) {
         if (var1 >= 0 && var1 <= 8) {
             return 36 + var1;
         } else if (var1 >= 9 && var1 <= 35) {
@@ -1302,12 +1302,12 @@ public class Manager extends Module {
     }
 
     @Generated
-    public boolean ka() {
-        return this.adr;
+    public boolean isMoved() {
+        return this.moved;
     }
 
     @Generated
     public boolean kb() {
-        return this.ads;
+        return this.open;
     }
 }

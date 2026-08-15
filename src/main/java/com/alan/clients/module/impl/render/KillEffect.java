@@ -72,7 +72,7 @@ public final class KillEffect extends Module {
     };
     @EventLink
     public final Listener<AttackEvent> onAttack = var1 -> {
-        EntityLivingBase entitylivingbase = var1.dc();
+        EntityLivingBase entitylivingbase = var1.getLiving();
         if (entitylivingbase instanceof EntityLivingBase) {
             this.target = entitylivingbase;
         }

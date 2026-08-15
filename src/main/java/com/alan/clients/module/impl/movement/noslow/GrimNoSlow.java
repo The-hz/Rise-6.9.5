@@ -71,8 +71,8 @@ public class GrimNoSlow extends Mode<NoSlow> {
 
     private void hE() {
         SlotComponent slotcomponent = this.d(SlotComponent.class);
-        PacketUtil.l(new l(SlotComponent.bQ() % 8 + 1));
+        PacketUtil.send(new l(SlotComponent.bQ() % 8 + 1));
         slotcomponent = this.d(SlotComponent.class);
-        PacketUtil.l(new l(SlotComponent.bQ()));
+        PacketUtil.send(new l(SlotComponent.bQ()));
     }
 }

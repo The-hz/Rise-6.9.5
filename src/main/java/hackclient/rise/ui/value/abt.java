@@ -31,7 +31,7 @@ public class abt extends ValueComponent {
         FontManager.MAIN.a(16, FontWeight.REGULAR),
         UIColors.SECONDARY_TEXT.pV(),
         TextAlign.LEFT,
-        ((NumberValue)this.value).ws().toString().replace(".0", ""),
+        ((NumberValue)this.value).getDefaultValue().toString().replace(".0", ""),
         45.0F,
         "1234567890."
     );
@@ -45,7 +45,7 @@ public class abt extends ValueComponent {
         NumberValue numbervalue = (NumberValue)this.value;
         this.azj = Math.min(
             Math.max(
-                0.0, (-numbervalue.wx().doubleValue() + numbervalue.wo().doubleValue()) / (-numbervalue.wx().doubleValue() + numbervalue.wy().doubleValue())
+                0.0, (-numbervalue.getMin().doubleValue() + numbervalue.wo().doubleValue()) / (-numbervalue.getMin().doubleValue() + numbervalue.getMax().doubleValue())
             ),
             1.0
         );
@@ -70,13 +70,13 @@ public class abt extends ValueComponent {
         }
 
         FontManager.MAIN.a(16, FontWeight.REGULAR).a(s1, this.position.x, this.position.y, UIColors.SECONDARY_TEXT.Z(this.ayD));
-        this.azm.h(new Vector2d(this.position.x + f + 105.0, this.position.y));
-        if (!this.azm.tO()) {
+        this.azm.setPosition(new Vector2d(this.position.x + f + 105.0, this.position.y));
+        if (!this.azm.isSelected()) {
             this.azm.bW(s);
         }
 
-        this.azm.z(20.0F);
-        this.azm.setColor(ColorUtil.d(this.azm.getColor(), this.ayD));
+        this.azm.setWidth(20.0F);
+        this.azm.setColor(ColorUtil.withBlue(this.azm.getColor(), this.ayD));
         this.azm.draw();
         RenderUtil.roundedRectangle(this.position.x + f, this.position.y + 1.5, 100.0, 2.0, 1.0, UIColors.BACKGROUND.Y(this.ayD));
         this.azk = this.position.x + f;
@@ -88,15 +88,15 @@ public class abt extends ValueComponent {
             this.azj = var2 - this.azk;
             this.azj /= 100.0;
             this.azj = Math.max(Math.min(this.azj, 1.0), 0.0);
-            numbervalue.n(numbervalue.wx().doubleValue() + (numbervalue.wy().doubleValue() - numbervalue.wx().doubleValue()) * this.azj);
-            numbervalue.n(MathUtil.m(numbervalue.wo().doubleValue(), numbervalue.wz().floatValue()));
+            numbervalue.n(numbervalue.getMin().doubleValue() + (numbervalue.getMax().doubleValue() - numbervalue.getMin().doubleValue()) * this.azj);
+            numbervalue.n(MathUtil.m(numbervalue.wo().doubleValue(), numbervalue.getDecimalPlaces().floatValue()));
         }
 
         for (int i = 0; i <= this.azh.getElapsedTime(); i++) {
             this.azl = (this.azl * 29.0 + this.azj) / 30.0;
         }
 
-        RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.d(this.rz().rA(), this.ayD));
+        RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.withBlue(this.rz().rA(), this.ayD));
         this.azh.aX();
     }
 
@@ -123,7 +123,7 @@ public class abt extends ValueComponent {
     @Override
     public void released() {
         if (this.position != null) {
-            RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.d(this.rz().rA(), this.ayD));
+            RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.withBlue(this.rz().rA(), this.ayD));
         }
     }
 
@@ -132,13 +132,13 @@ public class abt extends ValueComponent {
         if (var2 == 28) {
             NumberValue numbervalue = (NumberValue)this.value;
             if (this.azm.getText().isEmpty()) {
-                numbervalue.n(numbervalue.ws());
+                numbervalue.n(numbervalue.getDefaultValue());
             } else {
                 double text = Double.parseDouble(this.azm.getText());
                 numbervalue.n(text);
             }
 
-            this.azm.I(false);
+            this.azm.setSelected(false);
             this.pU();
         } else {
             this.azm.key(var1, var2);

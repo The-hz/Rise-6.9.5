@@ -16,12 +16,12 @@ import net.minecraft.util.Vec3;
 public class TatakoSpeed extends Mode<Speed> {
     public Vec3 Jd = new Vec3(0.0, 0.0, 0.0);
     int dE = 0;
-    float jp = 0.0F;
-    float jq = 0.0F;
+    float forward = 0.0F;
+    float strafe = 0.0F;
     @EventLink(value = 3)
     Listener<MoveInputEvent> onMoveInput = var1x -> {
-        this.jp = var1x.getForward();
-        this.jq = var1x.getStrafe();
+        this.forward = var1x.getForward();
+        this.strafe = var1x.getStrafe();
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
@@ -62,7 +62,7 @@ public class TatakoSpeed extends Mode<Speed> {
     };
     @EventLink(value = 1)
     Listener<PreUpdateEvent> onPreUpdate = var1x -> RotationComponent.setRotations(
-        new Vector2f((float)Math.toDegrees(MoveUtil.g(this.jp, this.jq)), aEg.thePlayer.rotationPitch), 10.0, MovementFix.OFF
+        new Vector2f((float)Math.toDegrees(MoveUtil.g(this.forward, this.strafe)), aEg.thePlayer.rotationPitch), 10.0, MovementFix.OFF
     );
 
     public TatakoSpeed(String var1, Speed speed) {

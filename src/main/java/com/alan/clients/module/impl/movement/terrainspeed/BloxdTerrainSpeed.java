@@ -54,12 +54,12 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
 
         aEg.timer.dzD = 1.5F;
         if (entityplayersp.onGround && this.SL.SW.y < 0.0) {
-            this.SL.SW.d(0.0, 0.0, 0.0);
+            this.SL.SW.set(0.0, 0.0, 0.0);
         }
 
         if (entityplayersp.onGround && entityplayersp.motionY == MoveUtil.jumpMotion()) {
             this.SM = Math.min(this.SM + 1, 3);
-            this.SL.SU.a(new PhysicsVector3(0.0, 8.0, 0.0));
+            this.SL.SU.add(new PhysicsVector3(0.0, 8.0, 0.0));
         }
 
         this.aR = entityplayersp.onGround ? this.aR + 1 : 0;
@@ -68,7 +68,7 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
         }
 
         if (entityplayersp.isCollidedHorizontally) {
-            this.SL.SW.d(0.0, 8.6, 0.0);
+            this.SL.SW.set(0.0, 8.6, 0.0);
         }
 
         entityplayersp.motionX = entityplayersp.motionZ = 0.0;
@@ -167,9 +167,9 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
             if ("bloxd:resyncphysics".equals(s3fpacketcustompayload.getChannelName())) {
                 PacketBuffer packetbuffer = s3fpacketcustompayload.getBufferData();
                 this.SM = 0;
-                this.SL.SV.d(0.0, 0.0, 0.0);
-                this.SL.SU.d(0.0, 0.0, 0.0);
-                this.SL.SW.d(packetbuffer.readFloat(), packetbuffer.readFloat(), packetbuffer.readFloat());
+                this.SL.SV.set(0.0, 0.0, 0.0);
+                this.SL.SU.set(0.0, 0.0, 0.0);
+                this.SL.SW.set(packetbuffer.readFloat(), packetbuffer.readFloat(), packetbuffer.readFloat());
             }
         }
     };

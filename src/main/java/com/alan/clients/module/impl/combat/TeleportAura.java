@@ -55,33 +55,33 @@ public final class TeleportAura extends Module {
     private final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Single")).add(new SubMode("Multiple")).setDefault("Single");
     private final NumberValue range = new NumberValue("Range", this, 32, 3, 100, 0.1);
     private final BoundsNumberValue cps = new BoundsNumberValue("CPS", this, 10, 15, 1, 20, 1);
-    private final BooleanValue ql = new BooleanValue("1.9 Cooldown", this, false);
+    private final BooleanValue cooldown19 = new BooleanValue("1.9 Cooldown", this, false);
     private final BooleanValue render = new BooleanValue("Render", this, true);
-    private final a qn = new a();
-    private KillAura gj;
+    private final a clickStopWatch = new a();
+    private KillAura killAura;
     private List<ahy> path;
-    public EntityLivingBase jE;
+    public EntityLivingBase target;
     private long nextSwing;
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
-        if (this.gj == null) {
-            this.gj = this.e(KillAura.class);
+        if (this.killAura == null) {
+            this.killAura = this.e(KillAura.class);
         }
 
-        List list = TargetComponent.a(this.range.wo().doubleValue(), this.gj.player.wo(), this.gj.invisibles.wo(), this.gj.animals.wo(), this.gj.mobs.wo(), this.gj.playerTeammates.wo());
+        List list = TargetComponent.a(this.range.wo().doubleValue(), this.killAura.player.wo(), this.killAura.invisibles.wo(), this.killAura.animals.wo(), this.killAura.mobs.wo(), this.killAura.playerTeammates.wo());
         if (list.isEmpty()) {
-            this.jE = null;
+            this.target = null;
         } else {
             list.sort(Comparator.comparingDouble(var0 -> aEg.thePlayer.getDistanceToEntity((Entity)var0)));
-            this.jE = (EntityLivingBase)list.get(0);
-            if (this.jE != null && !aEg.thePlayer.isDead) {
+            this.target = (EntityLivingBase)list.get(0);
+            if (this.target != null && !aEg.thePlayer.isDead) {
                 this.doAttack(list);
             }
         }
     };
     @EventLink
     public final Listener<Render3DEvent> onRender3D = var1 -> {
-        if (this.render.wo() && this.path != null && this.jE != null) {
+        if (this.render.wo() && this.path != null && this.target != null) {
             ahy ahyx = null;
 
             for (ahy ahyx2 : this.path) {
@@ -99,12 +99,12 @@ public final class TeleportAura extends Module {
 
     @Override
     public void onDisable() {
-        this.jE = null;
+        this.target = null;
     }
 
     private void doAttack(List<EntityLivingBase> livings) {
         boolean flag;
-        if (this.ql.wo()) {
+        if (this.cooldown19.wo()) {
             double d0 = 4.0;
             if (aEg.thePlayer.getHeldItem() != null) {
                 Item item = aEg.thePlayer.getHeldItem().getItem();
@@ -147,13 +147,13 @@ public final class TeleportAura extends Module {
             }
 
             double d1 = 1.0 / d0 * 20.0 - 1.0;
-            flag = this.qn.T((long)(d1 * 50.0));
+            flag = this.clickStopWatch.T((long)(d1 * 50.0));
         } else {
-            flag = this.qn.T(this.nextSwing);
+            flag = this.clickStopWatch.T(this.nextSwing);
         }
 
-        if (flag && this.jE != null && !aEg.gameSettings.cgK.isKeyDown() && !aEg.gameSettings.cgI.isKeyDown()) {
-            if (!this.ql.wo()) {
+        if (flag && this.target != null && !aEg.gameSettings.cgK.isKeyDown() && !aEg.gameSettings.cgI.isKeyDown()) {
+            if (!this.cooldown19.wo()) {
                 long i = Math.round(MathUtil.l(this.cps.wo().intValue(), this.cps.wA().intValue()));
                 this.nextSwing = 1000L / i;
             }
@@ -165,8 +165,8 @@ public final class TeleportAura extends Module {
                     String s = this.mode.wo().getName();
                     switch (s) {
                         case "Single":
-                            if (aEg.thePlayer.getDistanceToEntity(this.jE) <= d2) {
-                                this.e(this.jE);
+                            if (aEg.thePlayer.getDistanceToEntity(this.target) <= d2) {
+                                this.attack(this.target);
                             }
                             break label66;
                         case "Multiple":
@@ -178,20 +178,20 @@ public final class TeleportAura extends Module {
 
                 livings.removeIf(var2 -> aEg.thePlayer.getDistanceToEntity(var2) > d2);
                 if (!livings.isEmpty()) {
-                    livings.forEach(this::e);
+                    livings.forEach(this::attack);
                 }
             }
 
-            this.qn.aX();
+            this.clickStopWatch.aX();
         }
     }
 
-    private void e(EntityLivingBase living) {
+    private void attack(EntityLivingBase living) {
         aEg.playerController.syncCurrentPlayItem();
         AttackEvent attackevent = new AttackEvent(living);
         Client.a.e().d(attackevent);
         if (!attackevent.isCancelled()) {
-            EntityLivingBase entitylivingbase = attackevent.dc();
+            EntityLivingBase entitylivingbase = attackevent.getLiving();
             this.path = MainPathFinder.a(
                 new ahy(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ),
                 new ahy(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ),
@@ -199,7 +199,7 @@ public final class TeleportAura extends Module {
             );
             if (this.path != null) {
                 for (ahy ahy : this.path) {
-                    PacketUtil.m(new C04PacketPlayerPosition(ahy.getX(), ahy.getY(), ahy.getZ(), true));
+                    PacketUtil.sendNoEvent(new C04PacketPlayerPosition(ahy.getX(), ahy.getY(), ahy.getZ(), true));
                     if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_21_2)
                         && aEg.thePlayer != null
                         && aEg.theWorld != null
@@ -217,7 +217,7 @@ public final class TeleportAura extends Module {
                     aEg.thePlayer.swingItem();
                 }
 
-                PacketUtil.m(new C02PacketUseEntity(entitylivingbase, Action.ATTACK));
+                PacketUtil.sendNoEvent(new C02PacketUseEntity(entitylivingbase, Action.ATTACK));
                 if (ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
                     Client.a.e().d(new ClickEvent());
                     aEg.thePlayer.swingItem();
@@ -226,7 +226,7 @@ public final class TeleportAura extends Module {
                 Collections.reverse(this.path);
 
                 for (ahy ahyx : this.path) {
-                    PacketUtil.m(new C04PacketPlayerPosition(ahyx.getX(), ahyx.getY(), ahyx.getZ(), true));
+                    PacketUtil.sendNoEvent(new C04PacketPlayerPosition(ahyx.getX(), ahyx.getY(), ahyx.getZ(), true));
                     if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_21_2)
                         && aEg.thePlayer != null
                         && aEg.theWorld != null

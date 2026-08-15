@@ -1,17 +1,17 @@
 package com.alan.clients.util.vantage;
 
 public class OSUtil {
-    private static final String aQy = System.getProperty("os.name").toLowerCase();
+    private static final String osName = System.getProperty("os.name").toLowerCase();
 
     public OSUtil() {
     }
 
     public static OperatingSystem wb() {
-        if (aQy.contains("win")) {
+        if (osName.contains("win")) {
             return OperatingSystem.WINDOWS;
-        } else if (aQy.contains("mac")) {
+        } else if (osName.contains("mac")) {
             return OperatingSystem.MACOSX;
-        } else if (!aQy.contains("nix") && !aQy.contains("nux") && !aQy.contains("aix")) {
+        } else if (!osName.contains("nix") && !osName.contains("nux") && !osName.contains("aix")) {
             System.exit(0);
             return null;
         }

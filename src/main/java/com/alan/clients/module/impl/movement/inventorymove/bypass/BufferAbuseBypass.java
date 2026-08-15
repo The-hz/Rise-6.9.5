@@ -22,10 +22,10 @@ import net.minecraft.network.play.client.C0EPacketClickWindow;
 public class BufferAbuseBypass extends Mode<InventoryMove> {
     private final NumberValue clicksSetting = new NumberValue("Clicks", this, 3, 2, 10, 1);
     private final NumberValue amount = new NumberValue("Amount", this, 5, 1, 10, 1);
-    private final ConcurrentLinkedQueue<Packet<?>> Jp = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<Packet<?>> queuedPackets = new ConcurrentLinkedQueue<>();
     private boolean Jq;
     private boolean GU;
-    private int Jr;
+    private int clickCount;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (this.ht()) {
@@ -34,11 +34,11 @@ public class BufferAbuseBypass extends Mode<InventoryMove> {
                     this.Jq = true;
                 } else {
                     for (int i = 0; i < this.amount.wo().intValue(); i++) {
-                        PacketUtil.m(new C0EPacketClickWindow());
+                        PacketUtil.sendNoEvent(new C0EPacketClickWindow());
                     }
 
-                    this.Jp.forEach(PacketUtil::m);
-                    this.Jp.clear();
+                    this.queuedPackets.forEach(PacketUtil::sendNoEvent);
+                    this.queuedPackets.clear();
                     this.GU = true;
                 }
             }
@@ -65,16 +65,16 @@ public class BufferAbuseBypass extends Mode<InventoryMove> {
         if (packet instanceof C0EPacketClickWindow) {
             if (this.ht() && !this.GU) {
                 var1x.setCancelled();
-                this.Jp.add(packet);
+                this.queuedPackets.add(packet);
                 return;
             }
 
-            this.Jr++;
+            this.clickCount++;
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> onWorldChange = var1x -> this.Jp.clear();
-    private final KeyBinding[] Jx = new KeyBinding[]{
+    public final Listener<WorldChangeEvent> onWorldChange = var1x -> this.queuedPackets.clear();
+    private final KeyBinding[] movementKeys = new KeyBinding[]{
         aEg.gameSettings.keyBindForward,
         aEg.gameSettings.keyBindBack,
         aEg.gameSettings.keyBindRight,
@@ -84,7 +84,7 @@ public class BufferAbuseBypass extends Mode<InventoryMove> {
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (!(aEg.currentScreen instanceof GuiChat) && aEg.currentScreen != this.getStandardClickGUI()) {
-            for (KeyBinding keybinding : this.Jx) {
+            for (KeyBinding keybinding : this.movementKeys) {
                 keybinding.setPressed(GameSettings.isKeyDown(keybinding));
             }
         }
@@ -95,6 +95,6 @@ public class BufferAbuseBypass extends Mode<InventoryMove> {
     }
 
     private boolean ht() {
-        return this.Jr > 0 && this.Jr % this.clicksSetting.wo().intValue() == 0;
+        return this.clickCount > 0 && this.clickCount % this.clicksSetting.wo().intValue() == 0;
     }
 }

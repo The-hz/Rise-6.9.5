@@ -1,35 +1,35 @@
 package com.alan.clients.module.impl.render.blackholeorbit;
 
 public final class TrailBuffer {
-    final int amJ;
+    final int capacity;
     final double[] amK;
     final double[] amL;
-    int amM = 0;
-    boolean amN = false;
+    int writeIndex = 0;
+    boolean wrapped = false;
 
     public TrailBuffer(int var1) {
-        this.amJ = var1;
+        this.capacity = var1;
         this.amK = new double[var1];
         this.amL = new double[var1];
     }
 
     public void h(double var1, double var3) {
-        this.amK[this.amM] = var1;
-        this.amL[this.amM] = var3;
-        this.amM++;
-        if (this.amM >= this.amJ) {
-            this.amM = 0;
-            this.amN = true;
+        this.amK[this.writeIndex] = var1;
+        this.amL[this.writeIndex] = var3;
+        this.writeIndex++;
+        if (this.writeIndex >= this.capacity) {
+            this.writeIndex = 0;
+            this.wrapped = true;
         }
     }
 
     public void clear() {
-        this.amM = 0;
-        this.amN = false;
+        this.writeIndex = 0;
+        this.wrapped = false;
     }
 
-    public int lm() {
-        return this.amN ? this.amJ : this.amM;
+    public int size() {
+        return this.wrapped ? this.capacity : this.writeIndex;
     }
 
     public double O(int var1) {
@@ -43,7 +43,7 @@ public final class TrailBuffer {
     }
 
     int Q(int var1) {
-        int i = this.amN ? this.amJ : this.amM;
-        return i <= 0 ? 0 : ((this.amM - 1 + this.amJ) % this.amJ - (i - 1 - var1) + this.amJ) % this.amJ;
+        int i = this.wrapped ? this.capacity : this.writeIndex;
+        return i <= 0 ? 0 : ((this.writeIndex - 1 + this.capacity) % this.capacity - (i - 1 - var1) + this.capacity) % this.capacity;
     }
 }

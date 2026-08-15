@@ -19,14 +19,14 @@ import org.lwjgl.opengl.GL11;
 
 public class cs extends ESP implements InstanceAccess {
     private final Map<EntityPlayer, float[][]> hW = new HashMap<>();
-    private static final float hX = 180.0F / (float)Math.PI;
+    private static final float RAD_TO_DEG = 180.0F / (float)Math.PI;
 
     public cs(ESPColor espColor) {
         super(espColor);
     }
 
     @Override
-    public void cp() {
+    public void render3D() {
         GL11.glPushMatrix();
         this.cv();
 
@@ -45,7 +45,7 @@ public class cs extends ESP implements InstanceAccess {
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(2848);
-        ColorUtil.d(Client.a.g().c(com.alan.clients.module.impl.render.ESP.class).whiteColor.wo() ? Color.WHITE : this.hP.cr());
+        ColorUtil.glColor(Client.a.g().c(com.alan.clients.module.impl.render.ESP.class).whiteColor.wo() ? Color.WHITE : this.espColor.cr());
         GL11.glDisable(2929);
         GL11.glDisable(3553);
         GL11.glDepthMask(false);
@@ -78,15 +78,15 @@ public class cs extends ESP implements InstanceAccess {
         float[][] afloat = this.hW.get(player);
         if (afloat != null) {
             GL11.glPushMatrix();
-            float f = (float)(MathInterpolation.l(player.posX, player.prevPosX, var2) - RenderManager.bUO);
-            float f1 = (float)(MathInterpolation.l(player.posY, player.prevPosY, var2) - RenderManager.bUP);
-            float f2 = (float)(MathInterpolation.l(player.posZ, player.prevPosZ, var2) - RenderManager.bUQ);
+            float f = (float)(MathInterpolation.interpolate(player.posX, player.prevPosX, var2) - RenderManager.bUO);
+            float f1 = (float)(MathInterpolation.interpolate(player.posY, player.prevPosY, var2) - RenderManager.bUP);
+            float f2 = (float)(MathInterpolation.interpolate(player.posZ, player.prevPosZ, var2) - RenderManager.bUQ);
             GL11.glTranslated(f, f1, f2);
             boolean flag = player.isSneaking();
             float rotationYawHead = player.rotationYawHead;
             float renderYawOffset = player.renderYawOffset;
             float prevRenderYawOffset = player.prevRenderYawOffset;
-            float f6 = MathInterpolation.d(renderYawOffset, prevRenderYawOffset, var2);
+            float f6 = MathInterpolation.interpolate(renderYawOffset, prevRenderYawOffset, var2);
             float f7 = flag ? 0.6F : 0.75F;
             GL11.glRotatef(-f6, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(0.0F, 0.0F, flag ? -0.235F : 0.0F);

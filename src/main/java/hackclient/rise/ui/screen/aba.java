@@ -66,7 +66,7 @@ implements aha {
         }
         this.axj = 0.0;
         this.axk = 0.0;
-        this.axl.T(0.0);
+        this.axl.setValue(0.0);
         Keyboard.enableRepeatEvents(true);
     }
 
@@ -96,7 +96,7 @@ implements aha {
         Keyboard.enableRepeatEvents(false);
         this.axj = 0.0;
         this.axk = 0.0;
-        this.axl.T(0.0);
+        this.axl.setValue(0.0);
     }
 
     private void oq() {
@@ -108,7 +108,7 @@ implements aha {
         this.axi.add(Category.EXPLOIT);
         for (Category category : this.axi) {
             ArrayList<ModuleComponent> arrayList = new ArrayList<ModuleComponent>();
-            for (Module module : Client.a.g().ef()) {
+            for (Module module : Client.a.g().getAll()) {
                 if (module.getModuleInfo().category() != category) continue;
                 arrayList.add(new ModuleComponent(module));
             }
@@ -131,10 +131,10 @@ implements aha {
         } else {
             this.axk = 0.0;
             this.axj = 0.0;
-            this.axl.T(0.0);
+            this.axl.setValue(0.0);
         }
         this.axl.Q(this.axk);
-        this.axj = this.axl.sG();
+        this.axj = this.axl.getValue();
         if (this.axm != null) {
             double d4 = (double)n3 + this.axo + this.axj;
             this.axm.i((double)n2 + this.axn, d4);
@@ -148,8 +148,8 @@ implements aha {
                     double d3 = abb2.getY() - this.axj;
                     if (d3 + abb2.da() < 0.0 || d3 > (double)this.height) continue;
                     RenderUtil.a(d2, d3, this.on(), 24.0 * this.axp, 6.0 * this.axp, UIColors.SECONDARY.pV(), true, true, false, false);
-                    if (!abb2.oJ() || !(abb2.oK().sG() > 1.0)) continue;
-                    RenderUtil.a(d2, d3 + 24.0 * this.axp, this.on(), abb2.oK().sG(), 6.0 * this.axp, UIColors.BACKGROUND.pV(), false, false, true, true);
+                    if (!abb2.oJ() || !(abb2.oK().getValue() > 1.0)) continue;
+                    RenderUtil.a(d2, d3 + 24.0 * this.axp, this.on(), abb2.oK().getValue(), 6.0 * this.axp, UIColors.BACKGROUND.pV(), false, false, true, true);
                 }
             });
             this.b(ShaderQueueType.BLOOM).c(() -> {

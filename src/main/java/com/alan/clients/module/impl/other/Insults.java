@@ -36,7 +36,7 @@ public final class Insults extends Module {
     private final StringValue prefix = new StringValue("Prefix", this, "");
     private final NumberValue delay = new NumberValue("Delay", this, 0, 0, 50, 1);
     private final BooleanValue randomizer = new BooleanValue("Randomizer", this, false);
-    private final String[] US = new String[]{
+    private final String[] defaultInsults = new String[]{
         "Wow! My combo is Rise'n!",
         "Why would someone as bad as you not use Rise 6.0?",
         "Here's your ticket to spectator from Rise 6.0!",
@@ -56,9 +56,9 @@ public final class Insults extends Module {
         "how about you rise up to heaven by ending it",
         "Did you know Watchdog has banned 6346 players in the last 7 days."
     };
-    private final String[] UT = new String[]{"Add me on WhatsApp "};
-    private final String UU = "LOL %s GOT SNIPED BY NERDYASS ON YOUTUBE";
-    private final String[] UV = new String[]{
+    private final String[] whatsAppInsults = new String[]{"Add me on WhatsApp "};
+    private final String nerdyAssInsult = "LOL %s GOT SNIPED BY NERDYASS ON YOUTUBE";
+    private final String[] csgoInsults = new String[]{
         "Missed %s due to correction",
         "Missed %s due to spread",
         "Missed %s due to prediction error",
@@ -83,7 +83,7 @@ public final class Insults extends Module {
                                     String s1 = this.mode.wo().getName();
                                     switch (s1) {
                                         case "Default":
-                                            s = this.US[RandomUtils.nextInt(0, this.US.length)];
+                                            s = this.defaultInsults[RandomUtils.nextInt(0, this.defaultInsults.length)];
                                             break label65;
                                         case "Watchdog":
                                             break label64;
@@ -102,11 +102,11 @@ public final class Insults extends Module {
                                 break label65;
                             }
 
-                            s = this.UV[RandomUtils.nextInt(0, this.UV.length)];
+                            s = this.csgoInsults[RandomUtils.nextInt(0, this.csgoInsults.length)];
                             break label65;
                         }
 
-                        s = this.UT[RandomUtils.nextInt(0, this.UT.length)];
+                        s = this.whatsAppInsults[RandomUtils.nextInt(0, this.whatsAppInsults.length)];
                         break label65;
                     }
 
@@ -133,7 +133,7 @@ public final class Insults extends Module {
     };
     @EventLink
     public final Listener<AttackEvent> onAttack = var1 -> {
-        EntityLivingBase entitylivingbase = var1.dc();
+        EntityLivingBase entitylivingbase = var1.getLiving();
         if (entitylivingbase instanceof EntityPlayer) {
             this.target = (EntityPlayer)entitylivingbase;
             this.ticks = 0;

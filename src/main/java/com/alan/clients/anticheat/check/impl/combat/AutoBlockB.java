@@ -23,7 +23,7 @@ public final class AutoBlockB extends Check {
             && this.data.isUsingItem()
             && this.data.isSprinting()) {
             ItemStack itemstack = this.data.getPlayer().getHeldItem();
-            if (itemstack != null && itemstack.getItem() instanceof ItemSword && this.a(1.0) >= 4.0) {
+            if (itemstack != null && itemstack.getItem() instanceof ItemSword && this.increaseBufferBy(1.0) >= 4.0) {
                 this.J();
                 this.M();
             }

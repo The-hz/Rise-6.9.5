@@ -68,11 +68,11 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         this.b(ShaderQueueType.REGULAR, 1).c(NotificationComponent::cj);
         Entity entity = this.targetInfoModule.target;
         if (entity != null) {
-            boolean flag = !this.targetInfoModule.inWorld || this.targetInfoModule.rG.T(1000L);
-            this.auP.h(flag ? 400L : 850L);
+            boolean flag = !this.targetInfoModule.inWorld || this.targetInfoModule.stopwatch.T(1000L);
+            this.auP.setDuration(flag ? 400L : 850L);
             this.auP.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
             this.auP.Q(flag ? 0.0 : 1.0);
-            if (!(this.auP.sG() <= 0.0)) {
+            if (!(this.auP.getValue() <= 0.0)) {
                 String s = entity.getName();
                 String s1 = bf.c(s, s);
                 String s2 = this.nC() > 0.0F ? "Winning:" : "Losing:";
@@ -88,15 +88,15 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                 double d6 = Math.max(d3 + d2 + 35.0 - d5, 65.0);
                 this.auQ.Q(d4 / abstractclientplayer.getMaxHealth() * d6);
                 this.auQ.setEasing(Easing.EASE_OUT_QUINT);
-                this.auQ.h(250L);
-                double d7 = this.auQ.sG();
+                this.auQ.setDuration(250L);
+                double d7 = this.auQ.getValue();
                 double d8 = (abstractclientplayer.hurtTime == 0 ? 0.0F : abstractclientplayer.hurtTime - aEg.timer.bWm) * 0.5;
                 byte b0 = 32;
                 double d9 = d8 / 2.0;
                 double d10 = 48 + d6 + 4.0 + d5 + 8.0;
                 double d11 = 48;
                 this.targetInfoModule.positionValue.n(new Vector2d(d10, d11));
-                double d12 = this.auP.sG();
+                double d12 = this.auP.getValue();
                 this.b(ShaderQueueType.REGULAR).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
@@ -128,7 +128,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                     GlStateManager.scale(d12, d12, 0.0);
                     double d13 = d0 + 8.0 + b0 + 7.0;
                     double d14 = d1 + 8.0 + b0 - 4.0 - 7.0;
-                    Color color8 = ColorUtil.d(Themes.rK(), (int)(Themes.rK().getAlpha() / 1.7F));
+                    Color color8 = ColorUtil.withBlue(Themes.rK(), (int)(Themes.rK().getAlpha() / 1.7F));
                     this.rz();
                     RenderUtil.a(d13, d14, d6, 6.0, 3.0, color8, Themes.rK(), true);
                     RenderUtil.a(d0 + 8.0 + b0 + 7.0, d1 + 8.0 + b0 - 4.0 - 7.0, d7, 6.0, 3.0, color3, color2, true);
@@ -165,7 +165,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
     public final Listener<TickEvent> onTick = var1x -> {
         if (this.targetInfoModule != null) {
             Entity entity = this.targetInfoModule.target;
-            if (entity != null && !(this.auP.sG() <= 0.0) && this.particles.wo()) {
+            if (entity != null && !(this.auP.getValue() <= 0.0) && this.particles.wo()) {
                 double d0 = (((AbstractClientPlayer)entity).hurtTime == 0 ? 0.0F : ((AbstractClientPlayer)entity).hurtTime - aEg.timer.bWm) * 0.5;
                 if (d0 > 0.0) {
                     for (int i = 0; i < d0 * Math.random() / 2.0; i++) {
@@ -291,10 +291,10 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
     }
 
     private void renderTargetHead(AbstractClientPlayer abstractClientPlayer, double var2, double var4, double var6) {
-        ais.vK();
-        ais.vL();
+        ais.initStencil();
+        ais.bindWriteStencilBuffer();
         RenderUtil.roundedRectangle(var2, var4, var6, var6, this.rz().getRound() * 2, Themes.rK());
-        ais.aD(1);
+        ais.bindReadStencilBuffer(1);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);
         GlStateManager.alphaFunc(516, 0.0F);
@@ -305,8 +305,8 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         aEg.getTextureManager().bindTexture(resourcelocation);
         Gui.drawScaledCustomSizeModalRect(var2, var4, 4.0F, 4.0F, 4.0F, 4.0F, var6, var6, 32.0F, 32.0F);
         GlStateManager.disableBlend();
-        ais.vM();
+        ais.uninitStencilBuffer();
         float f1 = 0.5F;
-        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.d(Color.BLACK, 40));
+        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.withBlue(Color.BLACK, 40));
     }
 }

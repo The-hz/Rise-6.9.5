@@ -15,17 +15,17 @@ public enum KeyColors {
     PINK(new Color(255, 128, 255)),
     GRAY(new Color(100, 100, 110));
 
-    private final Color aEe;
+    private final Color color;
     private static final KeyColors[] $VALUES = rM();
 
     @Generated
-    public Color nw() {
-        return this.aEe;
+    public Color getColor() {
+        return this.color;
     }
 
     @Generated
     KeyColors(Color color) {
-        this.aEe = color;
+        this.color = color;
     }
 
     private static KeyColors[] rM() {

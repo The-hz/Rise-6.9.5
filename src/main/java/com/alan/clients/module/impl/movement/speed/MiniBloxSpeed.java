@@ -81,8 +81,8 @@ public final class MiniBloxSpeed extends Mode<Speed> {
                 double d4 = blockpos.getX() + 0;
                 double d5 = blockpos.getY() + 0;
                 double d6 = blockpos.getZ() + 0;
-                PacketUtil.m(new C04PacketPlayerPosition(d4 + 0.5, d5, d6 + 0.5, aEg.thePlayer.onGround));
-                PacketUtil.m(
+                PacketUtil.sendNoEvent(new C04PacketPlayerPosition(d4 + 0.5, d5, d6 + 0.5, aEg.thePlayer.onGround));
+                PacketUtil.sendNoEvent(
                     new C04PacketPlayerPosition(
                         aEg.thePlayer.posX + aEg.thePlayer.motionX,
                         aEg.thePlayer.posY + aEg.thePlayer.motionY,
@@ -91,7 +91,7 @@ public final class MiniBloxSpeed extends Mode<Speed> {
                     )
                 );
             } else {
-                PacketUtil.m(new C04PacketPlayerPosition(d1 * 9.5, aEg.thePlayer.posY, d2 * 9.5, aEg.thePlayer.onGround));
+                PacketUtil.sendNoEvent(new C04PacketPlayerPosition(d1 * 9.5, aEg.thePlayer.posY, d2 * 9.5, aEg.thePlayer.onGround));
             }
         }
     };
@@ -109,8 +109,8 @@ public final class MiniBloxSpeed extends Mode<Speed> {
             double d0 = blockpos.getX() + 0;
             double d1 = blockpos.getY() + 0;
             double d2 = blockpos.getZ() + 0;
-            PacketUtil.m(new C04PacketPlayerPosition(d0 + 0.5, d1, d2 + 0.5, aEg.thePlayer.onGround));
-            PacketUtil.m(
+            PacketUtil.sendNoEvent(new C04PacketPlayerPosition(d0 + 0.5, d1, d2 + 0.5, aEg.thePlayer.onGround));
+            PacketUtil.sendNoEvent(
                 new C04PacketPlayerPosition(
                     aEg.thePlayer.posX + aEg.thePlayer.motionX,
                     aEg.thePlayer.posY + aEg.thePlayer.motionY,

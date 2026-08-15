@@ -63,19 +63,19 @@ extends Mode<InventoryMove> {
     private boolean Ke;
     private boolean Kf;
     @EventLink
-    private final Listener<PreMotionEvent> Kg;
+    private final Listener<PreMotionEvent> onPreMotion;
     @EventLink
     private final Listener<PacketSendEvent> onPacketSend;
     @EventLink
-    public final Listener<PreMotionEvent> Ki;
+    public final Listener<PreMotionEvent> onPreMotionMedium;
     @EventLink(value=3)
-    Listener<MoveInputEvent> yv;
+    Listener<MoveInputEvent> onMoveInputHigh;
     @EventLink(value=1)
     Listener<en> pb;
     @EventLink(value=1)
     Listener<PreUpdateEvent> onPreUpdate;
     @EventLink
-    public final Listener<MoveInputEvent> Kj;
+    public final Listener<MoveInputEvent> onMoveInput;
     @EventLink
     public final Listener<MoveEvent> onMove;
 
@@ -90,7 +90,7 @@ extends Mode<InventoryMove> {
         this.JZ = -1;
         this.Kc = "unknown";
         this.Kd = "unknown";
-        this.Kg = preMotionEvent -> {
+        this.onPreMotion = preMotionEvent -> {
             if (WatchdogBypass.aEg.currentScreen == null || WatchdogBypass.aEg.currentScreen instanceof GuiChat || WatchdogBypass.aEg.currentScreen == this.getStandardClickGUI()) {
                 return;
             }
@@ -128,7 +128,7 @@ extends Mode<InventoryMove> {
                 }
             }
         };
-        this.Ki = preMotionEvent -> {
+        this.onPreMotionMedium = preMotionEvent -> {
             GuiScreen guiScreen;
             if (!(WatchdogBypass.aEg.currentScreen instanceof GuiInventory)) {
                 JP = false;
@@ -188,7 +188,7 @@ extends Mode<InventoryMove> {
             if ((Boolean)this.predictionMode.wo() == false) return;
             preMotionEvent.setSprinting(false);
         };
-        this.yv = moveInputEvent -> {
+        this.onMoveInputHigh = moveInputEvent -> {
             this.jp = moveInputEvent.getForward();
             this.jq = moveInputEvent.getStrafe();
         };
@@ -216,7 +216,7 @@ extends Mode<InventoryMove> {
                 RotationComponent.setRotations(new Vector2f((float)Math.toDegrees(MoveUtil.g(this.jp, this.jq)), WatchdogBypass.aEg.thePlayer.rotationPitch), 10.0, MovementFix.NORMAL);
             }
         };
-        this.Kj = moveInputEvent -> {
+        this.onMoveInput = moveInputEvent -> {
             KeyBinding[] keyBindingArray = new KeyBinding[]{WatchdogBypass.aEg.gameSettings.keyBindForward, WatchdogBypass.aEg.gameSettings.keyBindRight, WatchdogBypass.aEg.gameSettings.keyBindBack, WatchdogBypass.aEg.gameSettings.keyBindLeft};
             int n2 = 0;
             KeyBinding[] keyBindingArray2 = keyBindingArray;

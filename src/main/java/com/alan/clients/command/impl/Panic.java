@@ -10,6 +10,6 @@ public final class Panic extends Command {
 
     @Override
     public void execute(String[] var1) {
-        Client.a.g().ef().stream().filter(var0 -> !var0.getModuleInfo().autoEnabled()).forEach(var0 -> var0.setEnabled(false));
+        Client.a.g().getAll().stream().filter(var0 -> !var0.getModuleInfo().autoEnabled()).forEach(var0 -> var0.setEnabled(false));
     }
 }

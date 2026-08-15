@@ -49,11 +49,11 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
 
         Entity entity = this.aui.target;
         if (entity != null) {
-            boolean flag = !this.aui.inWorld || this.aui.rG.T(1000L);
-            this.aum.h(flag ? 400L : 850L);
+            boolean flag = !this.aui.inWorld || this.aui.stopwatch.T(1000L);
+            this.aum.setDuration(flag ? 400L : 850L);
             this.aum.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
             this.aum.Q(flag ? 0.0 : 1.0);
-            if (!(this.aum.sG() <= 0.0)) {
+            if (!(this.aum.getValue() <= 0.0)) {
                 String s = entity.getName();
                 String s1 = bf.c(s, s);
                 double d0 = this.aui.position.x;
@@ -65,8 +65,8 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                 double d3 = Math.max(0, 100);
                 this.aun.Q(d2 / abstractclientplayer.getMaxHealth() * d3);
                 this.aun.setEasing(Easing.EASE_OUT_QUINT);
-                this.aun.h(250L);
-                double d4 = this.aun.sG();
+                this.aun.setDuration(250L);
+                double d4 = this.aun.getValue();
                 double d5 = (abstractclientplayer.hurtTime == 0 ? 0.0F : abstractclientplayer.hurtTime - aEg.timer.bWm) * 0.0F;
                 byte b0 = 32;
                 double d6 = Math.round(d2 / abstractclientplayer.getMaxHealth() * 100.0);
@@ -74,7 +74,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                 double d8 = this.auj + b0 + this.auj + d3 + this.aul + this.auj;
                 double d9 = b0 + this.auj * 2;
                 this.aui.positionValue.n(new Vector2d(d8, d9));
-                double d10 = this.aum.sG();
+                double d10 = this.aum.getValue();
                 this.b(ShaderQueueType.REGULAR, 1)
                     .c(
                         () -> {
@@ -108,12 +108,12 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                                 d4,
                                 12.0,
                                 2.0,
-                                ColorUtil.d(color1, 100),
-                                ColorUtil.d(color1, 100),
+                                ColorUtil.withBlue(color1, 100),
+                                ColorUtil.withBlue(color1, 100),
                                 false
                             );
                             this.aug
-                                .c(d6 + "%", d0 + this.auj + b0 + this.auk + d3 + this.aul - 50.0, d1 + this.auj + b0 - this.aul - 8.0, Color.WHITE.getRGB());
+                                .drawString(d6 + "%", d0 + this.auj + b0 + this.auk + d3 + this.aul - 50.0, d1 + this.auj + b0 - this.aul - 8.0, Color.WHITE.getRGB());
                             GlStateManager.popMatrix();
                         }
                     );
@@ -140,7 +140,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
     public final Listener<TickEvent> onTick = var1x -> {
         if (this.aui != null) {
             Entity entity = this.aui.target;
-            if (entity != null && !(this.aum.sG() <= 0.0)) {
+            if (entity != null && !(this.aum.getValue() <= 0.0)) {
                 double d0 = (((AbstractClientPlayer)entity).hurtTime == 0 ? 0.0F : ((AbstractClientPlayer)entity).hurtTime - aEg.timer.bWm) * 0.0F;
                 if (d0 > 0.0) {
                     for (int i = 0; i < d0 * Math.random() / 2.0; i++) {
@@ -161,11 +161,11 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
     }
 
     private void a(AbstractClientPlayer abstractClientPlayer, double var2, double var4, double var6) {
-        ais.vK();
-        ais.vL();
+        ais.initStencil();
+        ais.bindWriteStencilBuffer();
         this.rz();
         RenderUtil.roundedRectangle(var2, var4, var6, var6, 3.0, Themes.rK());
-        ais.aD(1);
+        ais.bindReadStencilBuffer(1);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);
         GlStateManager.alphaFunc(516, 0.0F);
@@ -176,6 +176,6 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
         aEg.getTextureManager().bindTexture(resourcelocation);
         Gui.drawScaledCustomSizeModalRect(var2, var4, 4.0F, 4.0F, 4.0F, 4.0F, var6, var6, 32.0F, 32.0F);
         GlStateManager.disableBlend();
-        ais.vM();
+        ais.uninitStencilBuffer();
     }
 }

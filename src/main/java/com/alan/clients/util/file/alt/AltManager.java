@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AltManager {
-    public static final File aHH = new File(FileManager.DIRECTORY, "alts");
-    private final List<AltAccount> aHI = new ArrayList<>();
+    public static final File ALT_DIRECTORY = new File(FileManager.DIRECTORY, "alts");
+    private final List<AltAccount> accounts = new ArrayList<>();
 
     public AltManager() {
     }
 
     public void init() {
-        if (!aHH.exists()) {
-            aHH.mkdir();
+        if (!ALT_DIRECTORY.exists()) {
+            ALT_DIRECTORY.mkdir();
         }
 
         LocaltsOrderStore.init();
@@ -39,10 +39,10 @@ public class AltManager {
     }
 
     private File sK() {
-        return new File(aHH, "alts.json");
+        return new File(ALT_DIRECTORY, "alts.json");
     }
 
-    public List<AltAccount> tl() {
-        return this.aHI;
+    public List<AltAccount> getAccounts() {
+        return this.accounts;
     }
 }

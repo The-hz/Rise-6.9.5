@@ -35,12 +35,12 @@ import rip.vantage.network.core.a;
 public class ConfigFile extends File implements Bindable {
     private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd.MM.yyyy");
     private boolean loadKeyCodes;
-    private String gK;
+    private String name;
     private int keyCode;
 
     public ConfigFile(java.io.File var1, FileType var2, String var3) {
         super(var1, var2);
-        this.gK = var3;
+        this.name = var3;
     }
 
     public ConfigFile(java.io.File var1, FileType var2) {
@@ -64,17 +64,17 @@ public class ConfigFile extends File implements Bindable {
             }
 
             e(jsonobject);
-            if (Client.a.p().mQ().T(1000L)) {
+            if (Client.a.getConfigManager().mQ().T(1000L)) {
                 a.aKB().aKK().sendMessage(new C2SPacketConfig(jsonobject.toString()).aJk());
-                Client.a.p().mQ().aX();
+                Client.a.getConfigManager().mQ().aX();
             }
         } catch (IOException ioexception) {
             return false;
         }
 
         Client.a.e().d(new ConfigLoadEvent());
-        if (this.gK != null) {
-            cg.e("Config", "Loaded " + this.gK + " config");
+        if (this.name != null) {
+            cg.e("Config", "Loaded " + this.name + " config");
         }
 
         return true;
@@ -82,7 +82,7 @@ public class ConfigFile extends File implements Bindable {
 
     private static void e(JsonObject json) {
         if (json != null) {
-            for (Module module : Client.a.g().ef()) {
+            for (Module module : Client.a.g().getAll()) {
                 if (module != null && module.getModuleInfo() != null) {
                     String s = module.getModuleInfo().aliases()[0];
                     if (!json.has(s)) {
@@ -132,7 +132,7 @@ public class ConfigFile extends File implements Bindable {
             jsonobject.add("Metadata", jsonobject1);
         }
 
-        for (Module module : Client.a.g().ef()) {
+        for (Module module : Client.a.g().getAll()) {
             JsonObject jsonobject2 = new JsonObject();
             if (!(module instanceof ClickGUI)) {
                 jsonobject2.addProperty("state", module.isEnabled());
@@ -188,7 +188,7 @@ public class ConfigFile extends File implements Bindable {
             jsonobject.add(module.getModuleInfo().aliases()[0], jsonobject2);
         }
 
-        jsonobject.addProperty("theme", Client.a.k().rz().name());
+        jsonobject.addProperty("theme", Client.a.getThemeManager().getTheme().name());
         return jsonobject;
     }
 
@@ -228,7 +228,7 @@ public class ConfigFile extends File implements Bindable {
 
     @Override
     public String getName() {
-        return this.gK;
+        return this.name;
     }
 
     @Generated

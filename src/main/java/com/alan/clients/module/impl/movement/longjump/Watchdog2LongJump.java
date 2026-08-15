@@ -78,7 +78,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
     public Listener<PacketReceiveEvent> onPacketReceive;
     public static int LZ;
     public static int Ma;
-    public BooleanValue LU;
+    public BooleanValue allowDamageMove;
     public double Mg;
     public BooleanValue timer;
 
@@ -130,7 +130,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
         super(s, longJump);
         this.timer = new BooleanValue("Timer", this, false);
         this.flyMode = new BooleanValue("Fly Mode", this, false);
-        this.LU = new BooleanValue("Allow Damage Move", this, false);
+        this.allowDamageMove = new BooleanValue("Allow Damage Move", this, false);
         this.delayBoostGoFurtherWithLessHe = new NumberValue("Delay Boost (go further with less height)", this, 2, 0, 8, 1);
         this.Mb = new ArrayList<BlockPos>();
         this.Mc = false;
@@ -173,7 +173,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
             return;
         });
         this.onMove = (moveEvent -> {
-            if (Watchdog2LongJump.hQ < Watchdog2LongJump.Ma && (Watchdog2LongJump.hQ > 7 || !this.LU.wo())) {
+            if (Watchdog2LongJump.hQ < Watchdog2LongJump.Ma && (Watchdog2LongJump.hQ > 7 || !this.allowDamageMove.wo())) {
                 moveEvent.setPosZ(0.0);
                 moveEvent.setPosX(0.0);
             }
@@ -303,7 +303,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
             }
             else if (Watchdog2LongJump.hQ == Watchdog2LongJump.LZ) {
                 preMotionEvent.setPosY(preMotionEvent.getPosY() + 1.0E-13);
-                PacketUtil.l(new C03PacketPlayer(true));
+                PacketUtil.send(new C03PacketPlayer(true));
                 if (this.timer.wo()) {
                     Watchdog2LongJump.aEg.timer.dzD = 0.5f;
                 }

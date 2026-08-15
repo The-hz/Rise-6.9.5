@@ -4,32 +4,32 @@ import net.minecraft.util.Vec3;
 
 public final class JumpCircle {
     private final Vec3 aoH;
-    public double aoI;
-    public float aoJ;
+    public double radius;
+    public float alpha;
 
     public JumpCircle(Vec3 vec, double var2, float var4) {
         this.aoH = vec;
-        this.aoI = var2;
-        this.aoJ = var4;
+        this.radius = var2;
+        this.alpha = var4;
     }
 
     public void y(double var1) {
-        this.aoI += var1;
+        this.radius += var1;
     }
 
-    public Vec3 ma() {
+    public Vec3 getPosition() {
         return this.aoH;
     }
 
-    public double mb() {
-        return this.aoI;
+    public double getRadius() {
+        return this.radius;
     }
 
     public float mc() {
-        return this.aoJ;
+        return this.alpha;
     }
 
-    public void p(float var1) {
-        this.aoJ = var1;
+    public void setAlpha(float var1) {
+        this.alpha = var1;
     }
 }

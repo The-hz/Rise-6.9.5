@@ -38,9 +38,9 @@ import rip.vantage.commons.util.time.a;
 )
 public class HotBar extends Module {
     private final DragValue structure = new DragValue("", this, new Vector2d(200.0, 200.0), false, true);
-    private static final ResourceLocation anM = new ResourceLocation("textures/gui/widgets.png");
-    private final a anN = new a();
-    private float anO;
+    private static final ResourceLocation WIDGETS_TEXTURE = new ResourceLocation("textures/gui/widgets.png");
+    private final a stopwatch = new a();
+    private float rPosX;
     private float anP = 0.0F;
     private Interface interfaceModule;
     private KillAura gj;
@@ -52,19 +52,19 @@ public class HotBar extends Module {
             ScaledResolution scaledresolution = var1.getScaledResolution();
             EntityPlayer entityplayer = (EntityPlayer)aEg.getRenderViewEntity();
             this.structure.apP = new Vector2d(
-                (int)(scaledresolution.getScaledWidth() / 2.0F - 92.0F), scaledresolution.getScaledHeight() - 21 - Client.a.k().rz().qd() - 17.5
+                (int)(scaledresolution.getScaledWidth() / 2.0F - 92.0F), scaledresolution.getScaledHeight() - 21 - Client.a.getThemeManager().getTheme().qd() - 17.5
             );
             this.structure.aHe = new Vector2d(182.0, 40.0);
             if (this.interfaceModule == null) {
                 this.interfaceModule = this.e(Interface.class);
             }
 
-            String s = this.interfaceModule.lM().wo().getName();
+            String s = this.interfaceModule.getInformationType().wo().getName();
             int i = scaledresolution.getScaledWidth() / 2;
-            this.anO = MathUtil.lerp(this.anO, i - 92 + entityplayer.inventory.currentItem * 20, 0.03F * (float)this.anN.getElapsedTime());
-            this.anN.aX();
+            this.rPosX = MathUtil.lerp(this.rPosX, i - 92 + entityplayer.inventory.currentItem * 20, 0.03F * (float)this.stopwatch.getElapsedTime());
+            this.stopwatch.aX();
             if ("Rise".equals(s)) {
-                double d0 = this.interfaceModule != null ? this.interfaceModule.lD() : 9.0;
+                double d0 = this.interfaceModule != null ? this.interfaceModule.getRoundingRadius() : 9.0;
                 this.b(ShaderQueueType.BLUR)
                     .c(
                         () -> RenderUtil.roundedRectangle(
@@ -74,7 +74,7 @@ public class HotBar extends Module {
             }
 
             if (this.showXPBar.wo() && entityplayer.experience > 0.0F && "Rise".equals(s)) {
-                double d1 = this.interfaceModule != null ? Math.min(this.interfaceModule.lD(), 2.0) : 2.0;
+                double d1 = this.interfaceModule != null ? Math.min(this.interfaceModule.getRoundingRadius(), 2.0) : 2.0;
                 this.b(ShaderQueueType.BLUR)
                     .c(
                         () -> RenderUtil.roundedRectangle(
@@ -89,21 +89,21 @@ public class HotBar extends Module {
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                 RenderHelper.enableGUIStandardItemLighting();
                 if (this.showXPBar.wo() && entityplayer.experience > 0.0F) {
-                    this.a(scaledresolution, entityplayer);
+                    this.renderXPBar(scaledresolution, entityplayer);
                 }
 
-                Client.a.k().rz();
-                this.a(Themes.rK());
+                Client.a.getThemeManager().getTheme();
+                this.renderHotBar(Themes.rK());
                 if ("Rise".equals(s)) {
-                    double d2 = this.anO + 1.0F;
+                    double d2 = this.rPosX + 1.0F;
                     double d3 = scaledresolution.getScaledHeight() - 26;
                     this.rz();
                     RenderUtil.roundedRectangle(d2, d3, 22.0, 22.0, 8.0, Themes.rK());
                 } else if ("Traditional".equals(s)) {
-                    aEg.getTextureManager().bindTexture(anM);
+                    aEg.getTextureManager().bindTexture(WIDGETS_TEXTURE);
                     GlStateManager.enableAlpha();
                     RenderUtil.color(Color.WHITE);
-                    aEg.ingameGUI.drawTexturedModalRect(this.anO + 1.0F, (int)(this.structure.apP.y + 17.0), 0, 22, 24, 24);
+                    aEg.ingameGUI.drawTexturedModalRect(this.rPosX + 1.0F, (int)(this.structure.apP.y + 17.0), 0, 22, 24, 24);
                 }
 
                 for (int j = 0; j < 9; j++) {
@@ -120,7 +120,7 @@ public class HotBar extends Module {
                 this.b(ShaderQueueType.BLOOM)
                     .c(
                         () -> {
-                            double d0x = this.interfaceModule != null ? this.interfaceModule.lD() + 1.0 : 10.0;
+                            double d0x = this.interfaceModule != null ? this.interfaceModule.getRoundingRadius() + 1.0 : 10.0;
                             RenderUtil.roundedRectangle(
                                 this.structure.apP.x + 1.0,
                                 this.structure.apP.y + 18.0,
@@ -159,9 +159,9 @@ public class HotBar extends Module {
     public HotBar() {
     }
 
-    private void a(ScaledResolution resolution, EntityPlayer player) {
+    private void renderXPBar(ScaledResolution resolution, EntityPlayer player) {
         {
-            String s = this.interfaceModule.lM().wo().getName();
+            String s = this.interfaceModule.getInformationType().wo().getName();
             switch (s) {
                 case "Rise":
                     float f = player.experience;
@@ -175,7 +175,7 @@ public class HotBar extends Module {
                     double d2 = this.structure.aHe.x - 1.0;
                     double d3 = d2 * this.anP;
                     double d4 = 3.0;
-                    double d5 = this.interfaceModule != null ? Math.min(this.interfaceModule.lD(), 2.0) : 2.0;
+                    double d5 = this.interfaceModule != null ? Math.min(this.interfaceModule.getRoundingRadius(), 2.0) : 2.0;
                     this.rz();
                     RenderUtil.roundedRectangle(d0, d1, d2, d4, d5, Themes.rK());
                     RenderUtil.roundedRectangle(d0, d1, d3, d4, d5, this.rz().rD());
@@ -206,12 +206,12 @@ public class HotBar extends Module {
         }
     }
 
-    private void a(Color color) {
+    private void renderHotBar(Color color) {
         {
-            String s = this.interfaceModule.lM().wo().getName();
+            String s = this.interfaceModule.getInformationType().wo().getName();
             switch (s) {
                 case "Rise":
-                    double d0 = this.interfaceModule != null ? this.interfaceModule.lD() : 9.0;
+                    double d0 = this.interfaceModule != null ? this.interfaceModule.getRoundingRadius() : 9.0;
                     RenderUtil.roundedRectangle(
                         this.structure.apP.x + 1.0, this.structure.apP.y + 18.0, this.structure.aHe.x - 0.0, this.structure.aHe.y - 18.0, d0, color
                     );
@@ -224,7 +224,7 @@ public class HotBar extends Module {
         }
 
         RenderUtil.color(Color.WHITE);
-        aEg.getTextureManager().bindTexture(anM);
+        aEg.getTextureManager().bindTexture(WIDGETS_TEXTURE);
         GlStateManager.enableAlpha();
         aEg.ingameGUI.drawTexturedModalRect((float)(this.structure.apP.x + 1.0), (int)(this.structure.apP.y + 18.0), 0, 0, 182, 22);
     }

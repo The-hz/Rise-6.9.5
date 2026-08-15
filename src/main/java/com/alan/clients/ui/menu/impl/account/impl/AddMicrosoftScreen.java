@@ -60,20 +60,20 @@ public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
         this.b(ShaderQueueType.REGULAR)
             .c(
                 () -> {
-                    FONT_RENDERER.c("Log in to your microsoft account", this.width / 2, this.height / 2 - 96 + this.animation.sG(), Color.WHITE.getRGB());
-                    INFO_FONT_RENDERER.c(
-                        "A link has been copied to your clipboard.", this.width / 2, this.height / 2 - 64 + this.animation.sG(), Color.WHITE.darker().getRGB()
+                    FONT_RENDERER.drawString("Log in to your microsoft account", this.width / 2, this.height / 2 - 96 + this.animation.getValue(), Color.WHITE.getRGB());
+                    INFO_FONT_RENDERER.drawString(
+                        "A link has been copied to your clipboard.", this.width / 2, this.height / 2 - 64 + this.animation.getValue(), Color.WHITE.darker().getRGB()
                     );
-                    INFO_FONT_RENDERER.c(
+                    INFO_FONT_RENDERER.drawString(
                         "To load a cookie, please use firefox and install \"Cookie Quick Manager\".",
                         this.width / 2,
-                        this.height / 2 - 48 + this.animation.sG(),
+                        this.height / 2 - 48 + this.animation.getValue(),
                         Color.WHITE.darker().getRGB()
                     );
-                    INFO_FONT_RENDERER.c(
+                    INFO_FONT_RENDERER.drawString(
                         "To login to your own account, just fill out the form.",
                         this.width / 2,
-                        this.height / 2 - 32 + this.animation.sG(),
+                        this.height / 2 - 32 + this.animation.getValue(),
                         Color.WHITE.darker().getRGB()
                     );
                     int k = this.width / 2;
@@ -81,7 +81,7 @@ public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
                     byte b0 = 12;
                     if (!accountViewModel.getAccount().kW()) {
                         GlStateManager.pushMatrix();
-                        GlStateManager.translate(k, l + this.animation.sG(), 0.0);
+                        GlStateManager.translate(k, l + this.animation.getValue(), 0.0);
                         GlStateManager.pushMatrix();
                         GlStateManager.enableBlend();
                         GlStateManager.blendFunc(770, 771);
@@ -148,6 +148,6 @@ public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
         accountViewModel = new AccountViewModel<>(MicrosoftAccount.sn(), this.width / 2 - 100, this.height / 2 + 32, 200.0F, 40.0F);
         accountViewModel.setScreenHeight(this.height);
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
-        this.animation.R(-200.0);
+        this.animation.setStartValue(-200.0);
     }
 }

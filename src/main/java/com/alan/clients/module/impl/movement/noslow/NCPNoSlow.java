@@ -23,14 +23,14 @@ public class NCPNoSlow extends Mode<NoSlow> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (this.getParent().sword.wo() && aEg.thePlayer.isBlocking()) {
-            PacketUtil.l(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+            PacketUtil.send(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
         }
     };
     @EventLink
     public final Listener<PostMotionEvent> onPostMotion = var1x -> {
         if (this.getParent().sword.wo() && aEg.thePlayer.isBlocking()) {
             SlotComponent slotcomponent = this.d(SlotComponent.class);
-            PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+            PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
         }
     };
     @EventLink

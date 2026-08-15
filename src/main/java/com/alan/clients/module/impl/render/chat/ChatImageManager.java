@@ -36,23 +36,23 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 public class ChatImageManager {
-    private static final byte[] ars = new byte[]{-119, 80, 78, 71, 13, 10, 26, 10};
+    private static final byte[] PNG_MAGIC = new byte[]{-119, 80, 78, 71, 13, 10, 26, 10};
     private static final byte[] art = new byte[]{-1, -40, -1};
-    private static final byte[] aru = new byte[]{71, 73, 70, 56, 55, 97};
-    private static final byte[] arv = new byte[]{71, 73, 70, 56, 57, 97};
+    private static final byte[] GIF87A_MAGIC = new byte[]{71, 73, 70, 56, 55, 97};
+    private static final byte[] GIF89A_MAGIC = new byte[]{71, 73, 70, 56, 57, 97};
     private static final long arw = 15000L;
-    private static volatile boolean arx = false;
-    private static final Pattern ary = Pattern.compile("(https?://[^\\s<>\\\"']+)", 2);
-    private static final Pattern arz = Pattern.compile("(?is)<meta\\b[^>]*>");
-    private static final Pattern arA = Pattern.compile("(?is)\\bcontent\\s*=\\s*[\"']([^\"']+)[\"']");
-    private static final String[] arB = new String[]{".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp"};
-    private static final String[] arC = new String[]{".mp4", ".webm", ".mov"};
+    private static volatile boolean sandboxInitialized = false;
+    private static final Pattern URL_PATTERN = Pattern.compile("(https?://[^\\s<>\\\"']+)", 2);
+    private static final Pattern META_TAG_PATTERN = Pattern.compile("(?is)<meta\\b[^>]*>");
+    private static final Pattern META_CONTENT_PATTERN = Pattern.compile("(?is)\\bcontent\\s*=\\s*[\"']([^\"']+)[\"']");
+    private static final String[] IMAGE_EXTENSIONS = new String[]{".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp"};
+    private static final String[] VIDEO_EXTENSIONS = new String[]{".mp4", ".webm", ".mov"};
     private static final int arD = 3;
     private static final int arE = 8;
     private static final int arF = 10485760;
     private static final int arG = 200;
     private static final int arH = 4096;
-    private static final String[] arI = new String[]{
+    private static final String[] ALLOWED_DOMAINS = new String[]{
         "discord.com",
         "discordapp.com",
         "media.discordapp.net",
@@ -108,26 +108,26 @@ public class ChatImageManager {
     private final Map<String, ChatImage> arJ = new ConcurrentHashMap<>();
     private final Set<String> arK = ConcurrentHashMap.newKeySet();
     private final ExecutorService arL = Executors.newFixedThreadPool(3);
-    private static final ExecutorService arM = Executors.newCachedThreadPool(var0 -> {
+    private static final ExecutorService decodeExecutor = Executors.newCachedThreadPool(var0 -> {
         Thread thread = new Thread(var0, "ChatImage-Decode");
         thread.setDaemon(true);
         thread.setPriority(1);
         return thread;
     });
-    private final Minecraft arN = Minecraft.getMinecraft();
+    private final Minecraft mc = Minecraft.getMinecraft();
 
     public ChatImageManager() {
     }
 
-    private static synchronized void ni() {
-        if (!arx) {
-            arx = true;
+    private static synchronized void initSandbox() {
+        if (!sandboxInitialized) {
+            sandboxInitialized = true;
             System.out.println("[ChatImage] Security sandbox initialized (format validation + timeout protection)");
         }
     }
 
     private static boolean a(byte[] var0, ImageFormat var1, String var2, DecodeState var3) {
-        ni();
+        initSandbox();
         DecodedImage[] ayi = new DecodedImage[1];
         Exception[] aexception = new Exception[1];
         Callable callable = () -> {
@@ -138,7 +138,7 @@ public class ChatImageManager {
             BufferedImage bufferedimage = ImageIO.read(new ByteArrayInputStream(var0));
             return bufferedimage != null ? new DecodedImage(new BufferedImage[]{bufferedimage}, new int[]{100}, 1) : null;
         };
-        Future future = arM.submit(callable);
+        Future future = decodeExecutor.submit(callable);
 
         try {
             DecodedImage yi = (DecodedImage)future.get(15000L, TimeUnit.MILLISECONDS);
@@ -146,9 +146,9 @@ public class ChatImageManager {
                 return false;
             }
 
-            var3.arO = yi.arR;
-            var3.arP = yi.arS;
-            var3.arQ = yi.arT;
+            var3.images = yi.frames;
+            var3.arP = yi.delays;
+            var3.frameCount = yi.frameCount;
             return true;
         } catch (TimeoutException timeoutexception) {
             future.cancel(true);
@@ -163,11 +163,11 @@ public class ChatImageManager {
     private static ImageFormat b(byte[] var0) {
         if (var0 == null || var0.length < 8) {
             return ImageFormat.UNKNOWN;
-        } else if (a(var0, ars)) {
+        } else if (a(var0, PNG_MAGIC)) {
             return ImageFormat.PNG;
         } else if (a(var0, art)) {
             return ImageFormat.JPEG;
-        } else if (a(var0, aru) || a(var0, arv)) {
+        } else if (a(var0, GIF87A_MAGIC) || a(var0, GIF89A_MAGIC)) {
             return ImageFormat.GIF;
         } else if (var0.length >= 12
             && var0[0] == 82
@@ -570,7 +570,7 @@ public class ChatImageManager {
 
     public List<String> Y(String var1) {
         ArrayList arraylist = new ArrayList();
-        Matcher matcher = ary.matcher(var1);
+        Matcher matcher = URL_PATTERN.matcher(var1);
 
         while (matcher.find()) {
             String s = this.ae(matcher.group(1));
@@ -591,12 +591,12 @@ public class ChatImageManager {
         return list.isEmpty() ? null : (String)list.get(0);
     }
 
-    public void b(ChatImage var1) {
-        String s = var1.mY();
+    public void queueImage(ChatImage var1) {
+        String s = var1.getUrl();
         this.arJ.putIfAbsent(s, var1);
-        if (!this.aj(s)) {
+        if (!this.isSafeUrl(s)) {
             System.out.println("[ChatImage] blocked unsafe url " + s);
-            this.ac(s);
+            this.markFailed(s);
         } else {
             if (this.arK.add(s)) {
                 System.out.println("[ChatImage] queued " + s);
@@ -609,31 +609,31 @@ public class ChatImageManager {
         if (var3 > 3 || !var4.add(var2)) {
             System.out.println("[ChatImage] stopping resolve depth for " + var2);
             if (var3 == 0) {
-                this.ac(var1);
+                this.markFailed(var1);
                 this.arK.remove(var1);
             }
-        } else if (!this.aj(var2)) {
+        } else if (!this.isSafeUrl(var2)) {
             System.out.println("[ChatImage] blocked unsafe target " + var2);
             if (var3 == 0) {
-                this.ac(var1);
+                this.markFailed(var1);
                 this.arK.remove(var1);
             }
         } else {
             try {
-                for (String s : this.ag(var2)) {
-                    if (this.aj(s)) {
+                for (String s : this.getCandidates(var2)) {
+                    if (this.isSafeUrl(s)) {
                         try {
                             System.out.println("[ChatImage] downloading " + s);
                             DownloadResult yjx = this.ab(s);
                             if (yjx != null) {
-                                System.out.println("[ChatImage] downloaded " + s + " status=" + yjx.arX + " contentType=" + yjx.arW + " resolved=" + yjx.arV);
+                                System.out.println("[ChatImage] downloaded " + s + " status=" + yjx.statusCode + " contentType=" + yjx.contentType + " resolved=" + yjx.resolvedUrl);
                                 if (this.a(var1, yjx)) {
                                     System.out.println("[ChatImage] decoded " + var1);
                                     return;
                                 }
 
-                                for (String s1 : this.n(yjx.arV, yjx.arW)) {
-                                    if (!this.aj(s1)) {
+                                for (String s1 : this.n(yjx.resolvedUrl, yjx.contentType)) {
+                                    if (!this.isSafeUrl(s1)) {
                                         System.out.println("[ChatImage] blocked unsafe fallback " + s1);
                                     } else {
                                         System.out.println("[ChatImage] retrying decode fallback " + s1);
@@ -644,11 +644,11 @@ public class ChatImageManager {
                                                     "[ChatImage] fallback downloaded "
                                                         + s1
                                                         + " status="
-                                                        + yjx2.arX
+                                                        + yjx2.statusCode
                                                         + " contentType="
-                                                        + yjx2.arW
+                                                        + yjx2.contentType
                                                         + " resolved="
-                                                        + yjx2.arV
+                                                        + yjx2.resolvedUrl
                                                 );
                                             if (this.a(var1, yjx2)) {
                                                 System.out.println("[ChatImage] decoded via fallback " + var1);
@@ -665,7 +665,7 @@ public class ChatImageManager {
                                     for (String s2 : (Iterable<String>)list) {
                                         this.a(var1, s2, var3 + 1, var4);
                                         ChatImage ye = this.arJ.get(var1);
-                                        if (ye != null && ye.isLoaded() && !ye.nc()) {
+                                        if (ye != null && ye.isLoaded() && !ye.isFailed()) {
                                             return;
                                         }
                                     }
@@ -683,7 +683,7 @@ public class ChatImageManager {
 
                 System.out.println("[ChatImage] no candidate succeeded " + var1);
                 if (var3 == 0) {
-                    this.ac(var1);
+                    this.markFailed(var1);
                 }
             } finally {
                 if (var3 == 0) {
@@ -746,7 +746,7 @@ public class ChatImageManager {
     }
 
     private boolean a(String var1, DownloadResult var2) {
-        byte[] abyte = var2.arU;
+        byte[] abyte = var2.data;
         ImageFormat yk = b(abyte);
         if (yk == yk.UNKNOWN) {
             System.out.println("[ChatImage] unknown format, no magic bytes match");
@@ -764,8 +764,8 @@ public class ChatImageManager {
             return false;
         }
 
-        for (int i = 0; i < yh.arQ; i++) {
-            if (!c(yh.arO[i])) {
+        for (int i = 0; i < yh.frameCount; i++) {
+            if (!c(yh.images[i])) {
                 System.out.println("[ChatImage] post-decode dimension check failed");
                 return false;
             }
@@ -773,21 +773,21 @@ public class ChatImageManager {
 
         ChatImage ye = this.arJ.get(var1);
         if (ye != null) {
-            if (yh.arQ == 1) {
-                ye.b(yh.arO[0]);
+            if (yh.frameCount == 1) {
+                ye.b(yh.images[0]);
             } else {
-                ye.a(yh.arO, yh.arP);
+                ye.a(yh.images, yh.arP);
             }
         }
 
         return true;
     }
 
-    public void c(ChatImage var1) {
+    public void uploadTextures(ChatImage var1) {
         if (var1 != null && var1.ne()) {
             synchronized (var1) {
                 if (var1.ne()) {
-                    BufferedImage[] abufferedimage = var1.nf();
+                    BufferedImage[] abufferedimage = var1.getFrames();
                     if (abufferedimage != null && abufferedimage.length != 0) {
                         int[] aint = new int[abufferedimage.length];
 
@@ -796,23 +796,23 @@ public class ChatImageManager {
                         }
 
                         var1.a(aint);
-                        System.out.println("[ChatImage] uploaded " + aint.length + " texture(s) for " + var1.mY());
+                        System.out.println("[ChatImage] uploaded " + aint.length + " texture(s) for " + var1.getUrl());
                     }
                 }
             }
         }
     }
 
-    private void ac(String var1) {
+    private void markFailed(String var1) {
         ChatImage ye = this.arJ.get(var1);
         if (ye != null) {
-            ye.ng();
+            ye.markFailed();
         }
 
         System.out.println("[ChatImage] marked failed " + var1);
     }
 
-    public ChatImage ad(String var1) {
+    public ChatImage getImage(String var1) {
         return this.arJ.get(var1);
     }
 
@@ -841,7 +841,7 @@ public class ChatImageManager {
         }
     }
 
-    private List<String> ag(String var1) {
+    private List<String> getCandidates(String var1) {
         LinkedHashSet linkedhashset = new LinkedHashSet();
         linkedhashset.add(var1);
 
@@ -908,7 +908,7 @@ public class ChatImageManager {
 
     private List<Proxy> nj() {
         ArrayList arraylist = new ArrayList(1);
-        Proxy proxy = this.arN.getProxy();
+        Proxy proxy = this.mc.getProxy();
         if (proxy != null) {
             arraylist.add(proxy);
         } else {
@@ -922,7 +922,7 @@ public class ChatImageManager {
         Iterator iterator = this.arJ.values().iterator();
 
         while (iterator.hasNext()) {
-            for (int i : ((ChatImage)iterator.next()).nd()) {
+            for (int i : ((ChatImage)iterator.next()).getTextureIds()) {
                 if (i >= 0) {
                     TextureUtil.deleteTexture(i);
                 }
@@ -931,30 +931,30 @@ public class ChatImageManager {
 
         this.arJ.clear();
         this.arL.shutdown();
-        arM.shutdown();
+        decodeExecutor.shutdown();
     }
 
     private boolean a(DownloadResult var1) {
-        if (var1.arW != null && var1.arW.toLowerCase().contains("html")) {
+        if (var1.contentType != null && var1.contentType.toLowerCase().contains("html")) {
             return true;
         }
 
-        String s = new String(var1.arU, 0, Math.min(var1.arU.length, 256), StandardCharsets.UTF_8).toLowerCase();
+        String s = new String(var1.data, 0, Math.min(var1.data.length, 256), StandardCharsets.UTF_8).toLowerCase();
         return s.contains("<html") || s.contains("<meta");
     }
 
     private List<String> b(DownloadResult var1) {
         LinkedHashSet linkedhashset = new LinkedHashSet();
-        String s = new String(var1.arU, StandardCharsets.UTF_8);
+        String s = new String(var1.data, StandardCharsets.UTF_8);
 
         URI uri;
         try {
-            uri = URI.create(var1.arV);
+            uri = URI.create(var1.resolvedUrl);
         } catch (IllegalArgumentException illegalargumentexception) {
             return new ArrayList<>(linkedhashset);
         }
 
-        Matcher matcher = arz.matcher(s);
+        Matcher matcher = META_TAG_PATTERN.matcher(s);
 
         while (matcher.find()) {
             String group = matcher.group();
@@ -964,7 +964,7 @@ public class ChatImageManager {
                 || s2.contains("og:video")
                 || s2.contains("twitter:player:stream")
                 || s2.contains("twitter:image:src")) {
-                Matcher matcher1 = arA.matcher(group);
+                Matcher matcher1 = META_CONTENT_PATTERN.matcher(group);
                 if (matcher1.find()) {
                     this.a(linkedhashset, uri, matcher1.group(1));
                     if (linkedhashset.size() >= 8) {
@@ -982,7 +982,7 @@ public class ChatImageManager {
         if (s != null) {
             try {
                 String s1 = uri.resolve(s).toString();
-                if (this.ai(s1) && this.aj(s1)) {
+                if (this.ai(s1) && this.isSafeUrl(s1)) {
                     var1.add(s1);
                 }
             } catch (IllegalArgumentException illegalargumentexception) {
@@ -996,13 +996,13 @@ public class ChatImageManager {
             String s = uri.getPath() == null ? "" : uri.getPath().toLowerCase();
             String s1 = uri.getHost() == null ? "" : uri.getHost().toLowerCase();
 
-            for (String s2 : arB) {
+            for (String s2 : IMAGE_EXTENSIONS) {
                 if (s.endsWith(s2)) {
                     return true;
                 }
             }
 
-            for (String s3 : arC) {
+            for (String s3 : VIDEO_EXTENSIONS) {
                 if (s.endsWith(s3)) {
                     return true;
                 }
@@ -1052,7 +1052,7 @@ public class ChatImageManager {
         return null;
     }
 
-    private boolean aj(String var1) {
+    private boolean isSafeUrl(String var1) {
         try {
             URI uri = URI.create(var1);
             String s = uri.getScheme() == null ? "" : uri.getScheme().toLowerCase();
@@ -1060,7 +1060,7 @@ public class ChatImageManager {
                 return false;
             }
             String s1 = uri.getHost() == null ? "" : uri.getHost().toLowerCase();
-            if (!ak(s1)) {
+            if (!isAllowedDomain(s1)) {
                 System.out.println("[ChatImage] domain not in allowlist: " + s1);
                 return false;
             }
@@ -1070,9 +1070,9 @@ public class ChatImageManager {
         }
     }
 
-    private static boolean ak(String var0) {
+    private static boolean isAllowedDomain(String var0) {
         if (var0 != null && !var0.isEmpty()) {
-            for (String s : arI) {
+            for (String s : ALLOWED_DOMAINS) {
                 if (var0.equals(s) || var0.endsWith("." + s)) {
                     return true;
                 }

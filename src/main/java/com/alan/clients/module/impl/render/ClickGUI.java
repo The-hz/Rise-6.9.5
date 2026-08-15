@@ -21,8 +21,8 @@ public final class ClickGUI extends Module {
     @EventLink(value = 3)
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (this.mode.wo().getName().equals("Modern")) {
-            this.b(ShaderQueueType.REGULAR, 2).c(() -> Client.a.v().cj());
-            this.b(ShaderQueueType.BLOOM, 3).c(() -> Client.a.v().ci());
+            this.b(ShaderQueueType.REGULAR, 2).c(() -> Client.a.getStandardClickGUI().cj());
+            this.b(ShaderQueueType.BLOOM, 3).c(() -> Client.a.getStandardClickGUI().ci());
         } else {
             this.b(ShaderQueueType.REGULAR, 2).c(() -> Client.a.z().cj());
             this.b(ShaderQueueType.BLOOM, 3).c(() -> Client.a.z().ci());
@@ -46,7 +46,7 @@ public final class ClickGUI extends Module {
     @Override
     public void onEnable() {
         if (this.mode.wo().getName().equals("Modern")) {
-            aEg.displayGuiScreen(Client.a.v());
+            aEg.displayGuiScreen(Client.a.getStandardClickGUI());
         } else {
             aEg.displayGuiScreen(Client.a.z());
         }
@@ -58,8 +58,8 @@ public final class ClickGUI extends Module {
     public void onDisable() {
         aEg.Av();
         Keyboard.enableRepeatEvents(false);
-        Client.a.e().c(Client.a.v());
+        Client.a.e().c(Client.a.getStandardClickGUI());
         Client.a.e().c(Client.a.z());
-        aMR.execute(() -> Client.a.p().to().write());
+        aMR.execute(() -> Client.a.getConfigManager().to().write());
     }
 }

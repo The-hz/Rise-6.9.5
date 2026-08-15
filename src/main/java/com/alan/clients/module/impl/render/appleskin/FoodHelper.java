@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 
 public final class FoodHelper implements InstanceAccess {
-    public static FoodValues s(ItemStack stack) {
+    public static FoodValues getFoodValues(ItemStack stack) {
         ItemFood itemfood = (ItemFood)stack.getItem();
         int i = itemfood != null ? itemfood.getHealAmount(stack) : 0;
         float f = itemfood != null ? itemfood.getSaturationModifier(stack) : 0.0F;

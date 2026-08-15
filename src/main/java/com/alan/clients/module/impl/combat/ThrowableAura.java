@@ -32,7 +32,7 @@ public class ThrowableAura extends Module {
     public int qH;
     public BooleanValue players;
     public int qI;
-    public EntityLivingBase jE;
+    public EntityLivingBase target;
     public BooleanValue prediction;
     public NumberValue fOV;
     public boolean qJ;
@@ -56,7 +56,7 @@ public class ThrowableAura extends Module {
         this.qH = 0;
         this.qI = -1;
         this.qJ = false;
-        this.jE = null;
+        this.target = null;
     }
 
 
@@ -73,7 +73,7 @@ public class ThrowableAura extends Module {
         }
 
         this.qJ = false;
-        this.jE = null;
+        this.target = null;
         this.qI = -1;
     }
 
@@ -85,7 +85,7 @@ public class ThrowableAura extends Module {
         return vec32.dotProduct(vec33) > 0.9;
     }
 
-    public void g(Entity entity) {
+    public void throwAt(Entity entity) {
         if (aEg.playerController != null && entity != null) {
             float f2 = aEg.thePlayer.pl;
             float rotationPitch = aEg.thePlayer.rotationPitch;
@@ -154,13 +154,13 @@ public class ThrowableAura extends Module {
                         this.qH++;
                     } else {
                         this.qH = 0;
-                        this.jE = this.gt();
-                        if (this.jE != null) {
-                            double d1 = aEg.thePlayer.getDistanceToEntity(this.jE);
+                        this.target = this.getTarget();
+                        if (this.target != null) {
+                            double d1 = aEg.thePlayer.getDistanceToEntity(this.target);
                             if (!(d1 > this.range.wo().doubleValue()) && !(d1 <= this.minimumRange.wo().doubleValue())) {
-                                int gu2 = this.gu();
+                                int gu2 = this.findThrowableSlot();
                                 if (gu2 != -1) {
-                                    if (this.s(this.jE) && this.t(this.jE)) {
+                                    if (this.s(this.target) && this.t(this.target)) {
                                         int currentItem2 = aEg.thePlayer.inventory.currentItem;
                                         if (this.autoSwitch.wo() && currentItem2 != gu2) {
                                             if (this.qI == -1) {
@@ -171,7 +171,7 @@ public class ThrowableAura extends Module {
                                         }
 
                                         ItemStack itemstack = aEg.thePlayer.getHeldItem();
-                                        if (!this.g(itemstack)) {
+                                        if (!this.isThrowable(itemstack)) {
                                             if (this.autoSwitch.wo() && this.qI != -1) {
                                                 aEg.thePlayer.inventory.currentItem = this.qI;
                                                 this.qI = -1;
@@ -184,7 +184,7 @@ public class ThrowableAura extends Module {
                                             }
 
                                             this.qJ = true;
-                                            this.g(this.jE);
+                                            this.throwAt(this.target);
                                             this.qJ = false;
                                             if (entitylivingbase != null && killaura != null) {
                                                 killaura.jE = entitylivingbase;
@@ -195,12 +195,12 @@ public class ThrowableAura extends Module {
                                                 this.qI = -1;
                                             }
 
-                                            this.jE = null;
+                                            this.target = null;
                                         }
                                     }
                                 }
                             } else {
-                                this.jE = null;
+                                this.target = null;
                             }
                         }
                     }
@@ -218,7 +218,7 @@ public class ThrowableAura extends Module {
         return movingobjectposition != null && movingobjectposition.entityHit == living;
     }
 
-    public int gu() {
+    public int findThrowableSlot() {
         if (this.snowballs.wo()) {
             int e2 = SlotUtil.findItem(Items.snowball);
             if (e2 != -1) {
@@ -236,7 +236,7 @@ public class ThrowableAura extends Module {
         return -1;
     }
 
-    public boolean g(ItemStack stack) {
+    public boolean isThrowable(ItemStack stack) {
         return stack == null ? false : this.snowballs.wo() && stack.getItem() == Items.snowball || this.eggs.wo() && stack.getItem() == Items.egg;
     }
 
@@ -253,7 +253,7 @@ public class ThrowableAura extends Module {
             : aEg.thePlayer.getDistanceToEntity(entitylivingbase) <= d1;
     }
 
-    public EntityLivingBase gt() {
+    public EntityLivingBase getTarget() {
         return aEg.theWorld.loadedEntityList.stream().filter(EntityLivingBase.class::isInstance).map(EntityLivingBase.class::cast).filter(var1 -> {
             if (var1 != aEg.thePlayer && var1.isEntityAlive()) {
                 double d1 = aEg.thePlayer.getDistanceToEntity(var1);
@@ -263,7 +263,7 @@ public class ThrowableAura extends Module {
                     return false;
                 } else if (this.throughWalls.wo() && !aEg.thePlayer.canEntityBeSeen(var1)) {
                     return false;
-                } else if (this.antiBot.wo() && Client.a.x().a(var1)) {
+                } else if (this.antiBot.wo() && Client.a.getBotManager().a(var1)) {
                     return false;
                 } else if (var1 instanceof EntityPlayer) {
                     return !this.players.wo() ? false : !this.playerTeammates.wo() || !PlayerUtil.sameTeam(var1);

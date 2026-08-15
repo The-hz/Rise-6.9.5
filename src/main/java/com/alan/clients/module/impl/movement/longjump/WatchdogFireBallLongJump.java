@@ -36,15 +36,15 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
     private int IQ;
     private boolean IR;
     private boolean Ms;
-    a bN = new a();
-    public static boolean dj = false;
+    a stopWatch = new a();
+    public static boolean active = false;
     public static boolean tt;
     private int tR;
     private final ArrayList<Packet<?>> Mt = new ArrayList<>();
     private float ub;
     private double vB;
     private double vC;
-    private boolean gD;
+    private boolean jump;
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (var1x.dq() instanceof C08PacketPlayerBlockPlacement
@@ -79,7 +79,7 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
                         IO = true;
                         this.Mt.add(s12packetentityvelocity);
                         var1x.setCancelled();
-                        dj = true;
+                        active = true;
                         double d0 = s12packetentityvelocity.getMotionX() / 8000.0;
                         double d1 = s12packetentityvelocity.getMotionZ() / 8000.0;
                         this.ub = (float)Math.toDegrees(Math.atan2(d1, d0));
@@ -96,19 +96,19 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
                     }
                     break;
                 case S32PacketConfirmTransaction s32packetconfirmtransaction:
-                    if (dj) {
+                    if (active) {
                         var1x.setCancelled();
                         this.Mt.add(s32packetconfirmtransaction);
                     }
                     break;
                 case net.minecraft.network.play.server.a a:
-                    if (dj) {
+                    if (active) {
                         var1x.setCancelled();
                         this.Mt.add(a);
                     }
                     break;
                 default:
-                    if (dj) {
+                    if (active) {
                     }
             }
         }
@@ -118,7 +118,7 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
         if (this.IQ == 0) {
             RotationComponent.d(false);
             RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 89.0F), 10.0, MovementFix.NORMAL);
-            int i = this.hr();
+            int i = this.findFireballSlot();
             if (i != -1 && i != aEg.thePlayer.inventory.currentItem) {
                 this.qI = aEg.thePlayer.inventory.currentItem;
                 if (aEg.thePlayer.cqL > 1) {
@@ -129,7 +129,7 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
 
         if (this.IQ == 1) {
             if (!this.IP) {
-                PacketUtil.l(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getHeldItem()));
+                PacketUtil.send(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getHeldItem()));
                 this.IP = true;
             }
         } else if (this.IQ == 2 && this.qI != -1) {
@@ -163,10 +163,10 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
     };
     @EventLink(value = 2)
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        if (dj && aEg.thePlayer.tR == 13) {
+        if (active && aEg.thePlayer.tR == 13) {
             tt = true;
-            dj = false;
-            this.Mt.forEach(PacketUtil::p);
+            active = false;
+            this.Mt.forEach(PacketUtil::receive);
             this.Mt.clear();
             tt = false;
             this.tR = 0;
@@ -178,15 +178,15 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
     };
     @EventLink
     public final Listener<MoveInputEvent> onMoveInput = var1x -> {
-        if (this.gD) {
-            this.gD = false;
+        if (this.jump) {
+            this.jump = false;
         }
 
-        if (dj || tt) {
-            this.gD = false;
+        if (active || tt) {
+            this.jump = false;
         }
 
-        if (!dj) {
+        if (!active) {
             ;
         }
     };
@@ -199,7 +199,7 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
     public void onDisable() {
         this.Mt.clear();
         tt = false;
-        dj = false;
+        active = false;
         if (aEg.thePlayer.onGround) {
             MoveUtil.stop();
         }
@@ -217,8 +217,8 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
     public void onEnable() {
         this.Mt.clear();
         tt = false;
-        dj = false;
-        if (this.hr() == -1) {
+        active = false;
+        if (this.findFireballSlot() == -1) {
             afi.b("Could not find Fireball");
             this.toggle();
         } else {
@@ -227,7 +227,7 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
         }
     }
 
-    private int hr() {
+    private int findFireballSlot() {
         int i = -1;
 
         for (int j = 0; j < 9; j++) {

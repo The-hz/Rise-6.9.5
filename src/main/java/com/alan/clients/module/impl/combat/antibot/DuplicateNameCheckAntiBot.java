@@ -12,7 +12,7 @@ public final class DuplicateNameCheckAntiBot extends Mode<AntiBot> {
     public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         String s = var1xx.getDisplayName().getUnformattedText();
         if (aEg.theWorld.playerEntities.stream().anyMatch(var1xxx -> s.equals(var1xxx.getDisplayName().getUnformattedText()))) {
-            Client.a.x().b(this, var1xx);
+            Client.a.getBotManager().b(this, var1xx);
         }
     });
 
@@ -22,6 +22,6 @@ public final class DuplicateNameCheckAntiBot extends Mode<AntiBot> {
 
     @Override
     public void onDisable() {
-        Client.a.x().a(this);
+        Client.a.getBotManager().a(this);
     }
 }

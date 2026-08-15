@@ -22,23 +22,23 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
 public class FontRenderer extends agc {
-    private static final String aIw = "ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    private static final String aIx = "0123456789abcdefklmnor";
+    private static final String ALPHABET = "ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private static final String COLOR_CODE_CHARACTERS = "0123456789abcdefklmnor";
     private static final Color TRANSPARENT_COLOR = new Color(255, 255, 255, 0);
-    private static final float aIz = 0.5F;
-    private static final float aIA = 2.0F;
+    private static final float SCALE = 0.5F;
+    private static final float SCALE_INVERSE = 2.0F;
     private static final char COLOR_INVOKER = '§';
     private static final int[] COLOR_CODES = new int[32];
-    private static final int aID = 256;
-    private static final int aIE = 65535;
-    private static final int aIF = 4;
-    private static final int aIG = 255;
+    private static final int LATIN_MAX_AMOUNT = 256;
+    private static final int INTERNATIONAL_MAX_AMOUNT = 65535;
+    private static final int MARGIN_WIDTH = 4;
+    private static final int MASK = 255;
     private final Font font;
     private final boolean aII;
-    private final float aIJ;
-    private final FontCharacter[] aIK = new FontCharacter[256];
-    private final FontCharacter[] aIL = new FontCharacter[65535];
-    private final FontCharacter[] aIM = new FontCharacter[256];
+    private final float fontHeight;
+    private final FontCharacter[] defaultCharacters = new FontCharacter[256];
+    private final FontCharacter[] internationalCharacters = new FontCharacter[65535];
+    private final FontCharacter[] boldCharacters = new FontCharacter[256];
     private boolean aIN = true;
     private boolean aIO = false;
     private GlyphCache aIP;
@@ -67,15 +67,15 @@ public class FontRenderer extends agc {
         this.aIN = var3;
         this.font = font;
         this.aII = var2;
-        this.aIJ = (float)(
+        this.fontHeight = (float)(
             font.getStringBounds("ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", new FontRenderContext(new AffineTransform(), var3, var2)).getHeight()
                 / 2.0
         );
-        this.a(this.aIK, 0);
-        this.a(this.aIM, 1);
+        this.fillCharacters(this.defaultCharacters, 0);
+        this.fillCharacters(this.boldCharacters, 1);
         this.aIO = var4;
         if (this.aIO) {
-            this.a(this.aIL, 0);
+            this.fillCharacters(this.internationalCharacters, 0);
         }
     }
 
@@ -84,24 +84,24 @@ public class FontRenderer extends agc {
         this.aIN = var3;
         this.font = font;
         this.aII = var2;
-        this.aIJ = (float)(
+        this.fontHeight = (float)(
             font.getStringBounds("ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", new FontRenderContext(new AffineTransform(), var3, var2)).getHeight()
                 / 2.0
         );
-        this.a(this.aIK, 0);
-        this.a(this.aIM, 1);
+        this.fillCharacters(this.defaultCharacters, 0);
+        this.fillCharacters(this.boldCharacters, 1);
     }
 
     public FontRenderer(Font font, boolean var2) {
         calculateColorCodes();
         this.font = font;
         this.aII = var2;
-        this.aIJ = (float)(
+        this.fontHeight = (float)(
             font.getStringBounds("ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", new FontRenderContext(new AffineTransform(), true, var2)).getHeight()
                 / 2.0
         );
-        this.a(this.aIK, 0);
-        this.a(this.aIM, 1);
+        this.fillCharacters(this.defaultCharacters, 0);
+        this.fillCharacters(this.boldCharacters, 1);
     }
 
     public static void calculateColorCodes() {
@@ -124,7 +124,7 @@ public class FontRenderer extends agc {
         }
     }
 
-    public void a(FontCharacter[] var1, int var2) {
+    public void fillCharacters(FontCharacter[] var1, int var2) {
         Font font = this.font.deriveFont(var2);
         Graphics2D graphics2d = (Graphics2D)new BufferedImage(1, 1, 2).getGraphics();
         FontMetrics fontmetrics = graphics2d.getFontMetrics(font);
@@ -189,12 +189,12 @@ public class FontRenderer extends agc {
     }
 
     @Override
-    public int c(String var1, double var2, double var4, int var6) {
+    public int drawString(String var1, double var2, double var4, int var6) {
         return this.b(var1, var2 - (this.getStringWidth(var1) >> 1), var4, var6, false);
     }
 
     @Override
-    public int d(String var1, double var2, double var4, int var6) {
+    public int drawCenteredString(String var1, double var2, double var4, int var6) {
         return this.b(var1, var2 - this.getStringWidth(var1), var4, var6, false);
     }
 
@@ -217,7 +217,7 @@ public class FontRenderer extends agc {
             return Minecraft.getMinecraft().fontRendererObj.b(var1, var2, var4, var6, var7);
         }
 
-        FontCharacter[] aage = this.aIO ? this.aIL : this.aIK;
+        FontCharacter[] aage = this.aIO ? this.internationalCharacters : this.defaultCharacters;
         double d0 = var2;
         GL11.glPushMatrix();
         GL11.glPushAttrib(1048575);
@@ -229,9 +229,9 @@ public class FontRenderer extends agc {
         double d2 = var4 - 2.0;
         double d3 = d1 * 2.0;
         double d4 = d2 * 2.0;
-        double d5 = d4 - this.aIJ / 5.0F;
+        double d5 = d4 - this.fontHeight / 5.0F;
         double d6 = d3;
-        ColorUtil.aA(var7 ? Color.white.getRGB() : var6);
+        ColorUtil.glColor(var7 ? Color.white.getRGB() : var6);
         String s = var1.replaceAll("§l", "");
 
         try {
@@ -246,7 +246,7 @@ public class FontRenderer extends agc {
                 } else if (c0 == 167 && j + 1 < achar.length) {
                     int k = "0123456789abcdefklmnor".indexOf(achar[++j]);
                     if (k >= 0 && k < COLOR_CODES.length) {
-                        ColorUtil.d(new Color(COLOR_CODES[k]));
+                        ColorUtil.glColor(new Color(COLOR_CODES[k]));
                     }
                 } else {
                     char c1 = c0;
@@ -267,8 +267,8 @@ public class FontRenderer extends agc {
                                 d3 += this.aIQ.j(c0);
                             }
                         } else {
-                            float f = age.ty();
-                            age.e((float)d3, (float)d5);
+                            float f = age.getWidth();
+                            age.render((float)d3, (float)d5);
                             d3 += f - 8.0F;
                         }
                     } else if (this.aIP != null && g(c0)) {
@@ -300,11 +300,11 @@ public class FontRenderer extends agc {
 
     @Override
     public void a(char var1, int var2, int var3, Color color) {
-        FontCharacter[] aage = this.aIO ? this.aIL : this.aIK;
+        FontCharacter[] aage = this.aIO ? this.internationalCharacters : this.defaultCharacters;
         if (var1 < aage.length && aage[var1] != null) {
             FontCharacter age = aage[var1];
             GlStateManager.color(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, color.getAlpha() / 255.0F);
-            age.e(var2, var3);
+            age.render(var2, var3);
         }
     }
 
@@ -315,7 +315,7 @@ public class FontRenderer extends agc {
             return Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
         }
 
-        FontCharacter[] aage = this.aIO ? this.aIL : this.aIK;
+        FontCharacter[] aage = this.aIO ? this.internationalCharacters : this.defaultCharacters;
         int i = s.length();
         int j = 0;
 
@@ -338,7 +338,7 @@ public class FontRenderer extends agc {
                             j = (int)(j + this.aIQ.j(c0));
                         }
                     } else {
-                        j = (int)(j + (age.ty() - 8.0F));
+                        j = (int)(j + (age.getWidth() - 8.0F));
                     }
                 } else if (this.aIP != null && g(c0)) {
                     j = (int)(j + this.aIP.j(c0));
@@ -357,7 +357,7 @@ public class FontRenderer extends agc {
 
     @Override
     public float height() {
-        return this.aIJ;
+        return this.fontHeight;
     }
 
     private static boolean g(char var0) {

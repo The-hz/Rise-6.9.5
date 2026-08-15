@@ -43,30 +43,30 @@ import rip.vantage.commons.util.time.a;
 
 public class ModernInterface
 extends Mode<Interface> {
-    private final agc asD = FontManager.MAIN.a(36, FontWeight.MEDIUM);
-    private final agc asE = FontManager.MAIN.a(20, FontWeight.REGULAR);
-    private final agc asF = FontManager.MAIN.a(18, FontWeight.MEDIUM);
-    private final agc asG = FontManager.MAIN.a(18, FontWeight.REGULAR);
-    agc ky = FontManager.MAIN.a(18, FontWeight.REGULAR);
+    private final agc medium36Font = FontManager.MAIN.a(36, FontWeight.MEDIUM);
+    private final agc regular20Font = FontManager.MAIN.a(20, FontWeight.REGULAR);
+    private final agc medium18Font = FontManager.MAIN.a(18, FontWeight.MEDIUM);
+    private final agc regular18Font = FontManager.MAIN.a(18, FontWeight.REGULAR);
+    agc arrayListFont = FontManager.MAIN.a(18, FontWeight.REGULAR);
     private final a asH = new a();
-    private final ModeValue asI = new ModernArrayListColorModeValue(this, "ArrayList Color Mode", this);
-    private final ModeValue asJ = new ArrayListFontModeValue(this, "ArrayList Font", this);
+    private final ModeValue arrayListColorMode = new ModernArrayListColorModeValue(this, "ArrayList Color Mode", this);
+    private final ModeValue arrayListFontMode = new ArrayListFontModeValue(this, "ArrayList Font", this);
     private final StringValue customInstalledFont = new StringValue("Custom Installed Font", (Mode<?>)this, "Arial", () -> {
-        if (((Mode)this.asJ.wo()).getName().equals("Custom")) return false;
+        if (((Mode)this.arrayListFontMode.wo()).getName().equals("Custom")) return false;
         return true;
     });
-    private final ModeValue asL = new ShaderEffectModeValue(this, "Shader Effect", this);
+    private final ModeValue shaderEffect = new ShaderEffectModeValue(this, "Shader Effect", this);
     private final BooleanValue dropShadow = new BooleanValue("Drop Shadow", (Mode<?>)this, (Boolean)true);
     private final BooleanValue sidebar = new BooleanValue("Sidebar", (Mode<?>)this, (Boolean)true);
     private final BooleanValue particles = new BooleanValue("Particles on Kill", (Mode<?>)this, (Boolean)true);
-    private final ModeValue asP = new BackGroundModeValue(this, "BackGround", this);
+    private final ModeValue background = new BackGroundModeValue(this, "BackGround", this);
     private final StringValue customClientName = new StringValue("Custom Client Name", (Mode<?>)this, "");
-    private boolean asR;
-    private boolean asS;
-    private boolean asT;
-    private String asU;
-    private float asV;
-    private float asW;
+    private boolean glow;
+    private boolean shadow;
+    private boolean normalBackGround;
+    private String coordinates;
+    private float userWidth;
+    private float xyzWidth;
     private Color logoColor = new Color(0);
     private final a asY = new a();
     @EventLink
@@ -75,38 +75,38 @@ extends Mode<Interface> {
         if (aEg == null || ModernInterface.aEg.gameSettings.bJf || ModernInterface.aEg.theWorld == null || ModernInterface.aEg.thePlayer == null) {
             return;
         }
-        boolean bl = this.ky == FontManager.MINECRAFT.dM();
-        ((Interface)this.getParent()).n(this.ky.height() + (float)(bl ? 2 : 0));
-        ((Interface)this.getParent()).a(this.ky);
-        ((Interface)this.getParent()).o(10.0f);
+        boolean bl = this.arrayListFont == FontManager.MINECRAFT.dM();
+        ((Interface)this.getParent()).n(this.arrayListFont.height() + (float)(bl ? 2 : 0));
+        ((Interface)this.getParent()).setWidthComparator(this.arrayListFont);
+        ((Interface)this.getParent()).setEdgeOffset(10.0f);
         float f2 = render2DEvent.getScaledResolution().getScaledWidth();
-        float f3 = (float)render2DEvent.getScaledResolution().getScaledHeight() - this.ky.height() - 1.0f;
+        float f3 = (float)render2DEvent.getScaledResolution().getScaledHeight() - this.arrayListFont.height() - 1.0f;
         double d3 = d2 = bl ? 3.5 : 2.0;
-        if (this.asR || this.asS) {
+        if (this.glow || this.shadow) {
             this.b(ShaderQueueType.BLOOM).c(() -> {
-                for (ArrayListEntry zc2 : ((Interface)this.getParent()).lL()) {
-                    if (zc2.ath == 0.0f) continue;
-                    double d32 = zc2.nr().getX();
-                    double d4 = zc2.nr().getY();
-                    Color color = zc2.nw();
-                    if (this.asT) {
+                for (ArrayListEntry zc2 : ((Interface)this.getParent()).getActiveEntries()) {
+                    if (zc2.animationTime == 0.0f) continue;
+                    double d32 = zc2.getPosition().getX();
+                    double d4 = zc2.getPosition().getY();
+                    Color color = zc2.getColor();
+                    if (this.normalBackGround) {
                         if (!bl) {
-                            RenderUtil.d(d32 - d2, d4 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.getParent()).aoq, this.asR ? ColorUtil.d(color, 255) : this.rz().rE());
+                            RenderUtil.d(d32 - d2, d4 - 3.0, (double)(zc2.nameWidth + zc2.tagWidth + 3.0f) + d2, ((Interface)this.getParent()).moduleSpacing, this.glow ? ColorUtil.withBlue(color, 255) : this.rz().rE());
                         } else {
-                            RenderUtil.d(d32 - d2 + 0.5, d4 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.getParent()).aoq, this.asR ? ColorUtil.d(color, 255) : this.rz().rE());
+                            RenderUtil.d(d32 - d2 + 0.5, d4 - 3.0, (double)(zc2.nameWidth + zc2.tagWidth + 3.0f) + d2, ((Interface)this.getParent()).moduleSpacing, this.glow ? ColorUtil.withBlue(color, 255) : this.rz().rE());
                         }
-                    } else if (this.asR) {
+                    } else if (this.glow) {
                         this.a(zc2, d32 + 0.5, d4, color.getRGB());
-                    } else if (this.asS) {
-                        this.ky.a(zc2.getDisplayName(), d32, d4, Color.BLACK.getRGB());
-                        if (zc2.nA()) {
-                            this.ky.a(zc2.nz(), d32 + (double)zc2.nu() + 3.0, d4, Color.BLACK.getRGB());
+                    } else if (this.shadow) {
+                        this.arrayListFont.a(zc2.getDisplayName(), d32, d4, Color.BLACK.getRGB());
+                        if (zc2.isHasTag()) {
+                            this.arrayListFont.a(zc2.getDisplayTag(), d32 + (double)zc2.getNameWidth() + 3.0, d4, Color.BLACK.getRGB());
                         }
                     }
                     if (!((Boolean)this.sidebar.wo()).booleanValue()) continue;
-                    RenderUtil.roundedRectangle(d32 + (double)zc2.nu() + (double)zc2.nv() + 2.0, d4 - 1.5, 2.0, 9.0, 1.0, color);
+                    RenderUtil.roundedRectangle(d32 + (double)zc2.getNameWidth() + (double)zc2.getTagWidth() + 2.0, d4 - 1.5, 2.0, 9.0, 1.0, color);
                 }
-                if (((Mode)this.asJ.wo()).getName().equals("Minecraft")) {
+                if (((Mode)this.arrayListFontMode.wo()).getName().equals("Minecraft")) {
                     agd unused0 = ModernInterface.aEg.fontRendererObj;
                     float f4 = 16.0f / (float)9;
                     GlStateManager.pushMatrix();
@@ -114,11 +114,11 @@ extends Mode<Interface> {
                     ModernInterface.aEg.fontRendererObj.b(Client.b, 6.0f / f4, 6.0f / f4, this.rz().rA().getRGB());
                     GlStateManager.popMatrix();
                 } else {
-                    ColorUtil.a(this.asD, Client.b, 6.0, 6.0, true);
-                    this.asF.b("", 39.0, 6.0, ColorUtil.d(Color.WHITE, 170).getRGB());
+                    ColorUtil.a(this.medium36Font, Client.b, 6.0, 6.0, true);
+                    this.medium18Font.b("", 39.0, 6.0, ColorUtil.withBlue(Color.WHITE, 170).getRGB());
                 }
                 if (!((String)this.customClientName.wo()).isEmpty()) {
-                    this.asF.a((String)this.customClientName.wo(), (double)(6 + this.asD.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
+                    this.medium18Font.a((String)this.customClientName.wo(), (double)(6 + this.medium36Font.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
                 }
                 agc agc2 = FontManager.MAIN.a(18, FontWeight.MEDIUM);
                 agc agc3 = FontManager.MAIN.a(18, FontWeight.BOLD);
@@ -127,26 +127,26 @@ extends Mode<Interface> {
                 String string3 = "User:";
                 float f5 = agc2.getStringWidth("Version:\u2009\u2009\u2009\u2009\u2009\u2009");
                 float f6 = agc3.getStringWidth(string);
-                float f7 = this.asE.getStringWidth(string3);
-                float f8 = this.asE.getStringWidth(string2);
+                float f7 = this.regular20Font.getStringWidth(string3);
+                float f8 = this.regular20Font.getStringWidth(string2);
                 float f9 = f2 - (f5 + f6 + f7 + f8) - 6.0f;
-                this.asG.b("Version:\u2009\u2009\u2009\u2009\u2009\u2009", f9, f3, -3355444);
+                this.regular18Font.b("Version:\u2009\u2009\u2009\u2009\u2009\u2009", f9, f3, -3355444);
                 agc3.b(string, f9 + f5, f3, -3355444);
                 float f10 = f9 + f5 + f6 + 5.0f;
-                this.asG.b(string3, f10, f3, -3355444);
-                this.asF.b(string2, f10 + f7, f3, -3355444);
-                this.asG.b("XYZ:", 5.0, f3, -3355444);
-                this.asF.b(this.asU, 5.0f + this.asW, f3, -3355444);
+                this.regular18Font.b(string3, f10, f3, -3355444);
+                this.medium18Font.b(string2, f10 + f7, f3, -3355444);
+                this.regular18Font.b("XYZ:", 5.0, f3, -3355444);
+                this.medium18Font.b(this.coordinates, 5.0f + this.xyzWidth, f3, -3355444);
                 FontManager.MAIN.a(16, FontWeight.MEDIUM);
                 agc agc4 = FontManager.MAIN.a(16, FontWeight.BOLD);
                 Collection<PotionEffect> collection = ModernInterface.aEg.thePlayer.getActivePotionEffects();
                 if (!collection.isEmpty()) {
                     String string4;
-                    agc agc5 = this.asG;
+                    agc agc5 = this.regular18Font;
                     ArrayList<String[]> arrayList = new ArrayList<String[]>();
                     for (PotionEffect potionEffect : collection) {
                         if (potionEffect.getDuration() > 24000) continue;
-                        string4 = this.S(potionEffect.getAmplifier() + 1);
+                        string4 = this.toRomanNumeral(potionEffect.getAmplifier() + 1);
                         String string5 = I18n.format(potionEffect.getEffectName(), new Object[0]) + " " + string4;
                         String string6 = Potion.getDurationString(potionEffect);
                         arrayList.add(new String[]{string5, string6});
@@ -164,18 +164,18 @@ extends Mode<Interface> {
                 }
             });
         }
-        for (ArrayListEntry zc2 : ((Interface)this.getParent()).lL()) {
-            if (zc2.ath == 0.0f) continue;
-            double d4 = zc2.nr().getX();
-            double d5 = zc2.nr().getY();
-            Color color2 = zc2.nw();
-            if (this.asT) {
+        for (ArrayListEntry zc2 : ((Interface)this.getParent()).getActiveEntries()) {
+            if (zc2.animationTime == 0.0f) continue;
+            double d4 = zc2.getPosition().getX();
+            double d5 = zc2.getPosition().getY();
+            Color color2 = zc2.getColor();
+            if (this.normalBackGround) {
                 Consumer<Color> consumer = color -> {
                     if (!bl) {
-                        RenderUtil.d(d4 - d2, d5 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.getParent()).aoq, color);
+                        RenderUtil.d(d4 - d2, d5 - 3.0, (double)(zc2.nameWidth + zc2.tagWidth + 3.0f) + d2, ((Interface)this.getParent()).moduleSpacing, color);
                         return;
                     }
-                    RenderUtil.d(d4 - d2 + 0.5, d5 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.getParent()).aoq, color);
+                    RenderUtil.d(d4 - d2 + 0.5, d5 - 3.0, (double)(zc2.nameWidth + zc2.tagWidth + 3.0f) + d2, ((Interface)this.getParent()).moduleSpacing, color);
                 };
                 this.b(ShaderQueueType.BLUR).c(() -> consumer.accept(Color.BLACK));
                 this.b(ShaderQueueType.REGULAR, 1).c(() -> {
@@ -185,9 +185,9 @@ extends Mode<Interface> {
             }
             this.b(ShaderQueueType.REGULAR, 1).c(() -> this.a(zc2, d4, d5 - 0.5, color2.getRGB()));
             if (!((Boolean)this.sidebar.wo()).booleanValue()) continue;
-            RenderUtil.roundedRectangle(d4 + (double)zc2.nu() + (double)zc2.nv() + 2.0, d5 - 1.5, 2.0, 9.0, 1.0, color2);
+            RenderUtil.roundedRectangle(d4 + (double)zc2.getNameWidth() + (double)zc2.getTagWidth() + 2.0, d5 - 1.5, 2.0, 9.0, 1.0, color2);
         }
-        if (this.asU == null) {
+        if (this.coordinates == null) {
             return;
         }
         if (!this.asH.T(2000L)) {
@@ -200,26 +200,26 @@ extends Mode<Interface> {
         agc agc3 = FontManager.MAIN.a(18, FontWeight.BOLD);
         float f4 = agc2.getStringWidth("Version:\u2009\u2009\u2009\u2009\u2009\u2009");
         float f5 = agc3.getStringWidth(string3);
-        float f6 = this.asE.getStringWidth(string2);
-        float f7 = this.asE.getStringWidth(string);
+        float f6 = this.regular20Font.getStringWidth(string2);
+        float f7 = this.regular20Font.getStringWidth(string);
         float f8 = f2 - (f4 + f5 + f6 + f7) - 6.0f;
-        this.asG.b("Version:\u2009\u2009\u2009\u2009\u2009\u2009", f8, f3, -3355444);
+        this.regular18Font.b("Version:\u2009\u2009\u2009\u2009\u2009\u2009", f8, f3, -3355444);
         agc3.b(string3, f8 + f4, f3, -3355444);
         float f9 = f8 + f4 + f5 + 5.0f;
-        this.asG.b(string2, f9, f3, -3355444);
-        this.asF.b(string, f9 + f6, f3, -3355444);
-        this.asV = f6 + f7;
-        this.asG.b("XYZ:", 5.0, f3, -3355444);
-        this.asF.b(this.asU, 5.0f + this.asW, f3, -3355444);
+        this.regular18Font.b(string2, f9, f3, -3355444);
+        this.medium18Font.b(string, f9 + f6, f3, -3355444);
+        this.userWidth = f6 + f7;
+        this.regular18Font.b("XYZ:", 5.0, f3, -3355444);
+        this.medium18Font.b(this.coordinates, 5.0f + this.xyzWidth, f3, -3355444);
         FontManager.MAIN.a(16, FontWeight.MEDIUM);
         agc agc4 = FontManager.MAIN.a(16, FontWeight.BOLD);
         Collection<PotionEffect> collection = ModernInterface.aEg.thePlayer.getActivePotionEffects();
         if (!collection.isEmpty()) {
-            agc agc5 = this.asG;
+            agc agc5 = this.regular18Font;
             ArrayList<String[]> arrayList = new ArrayList<String[]>();
             for (PotionEffect potionEffect2 : collection) {
                 if (potionEffect2.getDuration() > 24000) continue;
-                String string5 = this.S(potionEffect2.getAmplifier() + 1);
+                String string5 = this.toRomanNumeral(potionEffect2.getAmplifier() + 1);
                 String string6 = I18n.format(potionEffect2.getEffectName(), new Object[0]) + " " + string5;
                 String string4 = Potion.getDurationString(potionEffect2);
                 arrayList.add(new String[]{string6, string4});
@@ -232,7 +232,7 @@ extends Mode<Interface> {
                 String string4 = ((String[])arrayList.get(i))[0];
                 String string7 = ((String[])arrayList.get(i))[1];
                 PotionEffect potionEffect3 = collection.stream().filter(potionEffect -> {
-                    String string22 = this.S(potionEffect.getAmplifier() + 1);
+                    String string22 = this.toRomanNumeral(potionEffect.getAmplifier() + 1);
                     return I18n.format(potionEffect.getEffectName(), new Object[0]).equals(string4.replace(" " + string22, ""));
                 }).findFirst().orElse(null);
                 if (potionEffect3 == null) continue;
@@ -243,7 +243,7 @@ extends Mode<Interface> {
                 agc4.b(" " + string7, f13 + f10 + f12 + (float)agc4.getStringWidth(string4), f14, -3355444);
             }
         }
-        if (((Mode)this.asJ.wo()).getName().equals("Minecraft")) {
+        if (((Mode)this.arrayListFontMode.wo()).getName().equals("Minecraft")) {
             agd unused0 = ModernInterface.aEg.fontRendererObj;
             float f15 = 16.0f / (float)9;
             GlStateManager.pushMatrix();
@@ -251,12 +251,12 @@ extends Mode<Interface> {
             ModernInterface.aEg.fontRendererObj.b(Client.b, 6.0f / f15, 6.0f / f15, this.rz().rA().getRGB());
             GlStateManager.popMatrix();
         } else {
-            ColorUtil.a(this.asD, Client.b, 6.0, 6.0, true);
-            this.asF.b("", 39.0, 6.0, ColorUtil.d(Color.WHITE, 170).getRGB());
+            ColorUtil.a(this.medium36Font, Client.b, 6.0, 6.0, true);
+            this.medium18Font.b("", 39.0, 6.0, ColorUtil.withBlue(Color.WHITE, 170).getRGB());
         }
-        this.asF.b("", 39.0, 6.0, ColorUtil.d(Color.WHITE, 170).getRGB());
+        this.medium18Font.b("", 39.0, 6.0, ColorUtil.withBlue(Color.WHITE, 170).getRGB());
         if (!((String)this.customClientName.wo()).isEmpty()) {
-            this.asF.a((String)this.customClientName.wo(), (double)(6 + this.asD.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
+            this.medium18Font.a((String)this.customClientName.wo(), (double)(6 + this.medium36Font.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
         }
         if (this.asY.T(7500L)) {
             this.asH.aX();
@@ -278,27 +278,27 @@ extends Mode<Interface> {
             return;
         }
         try {
-            if (((Mode)this.asJ.wo()).getName().equals("Custom") && this.ky != FontManager.CUSTOM.o(18)) {
-                this.ky = FontManager.CUSTOM.o(18);
+            if (((Mode)this.arrayListFontMode.wo()).getName().equals("Custom") && this.arrayListFont != FontManager.CUSTOM.o(18)) {
+                this.arrayListFont = FontManager.CUSTOM.o(18);
             }
         } catch (Exception exception) {}
         aMR.execute(() -> {
             block105: {
                 block104: {
                     {
-                        this.asR = ((Mode)this.asL.wo()).getName().equals("Glow");
-                        this.asS = ((Mode)this.asL.wo()).getName().equals("Shadow");
-                        this.asV = this.asE.getStringWidth("riseclient.com") + 2;
-                        this.asU = (int)Math.floor(ModernInterface.aEg.thePlayer.posX) + ", " + (int)Math.floor(ModernInterface.aEg.thePlayer.posY) + ", " + (int)Math.floor(ModernInterface.aEg.thePlayer.posZ);
-                        this.asW = this.asF.getStringWidth("XYZ:") + 2;
+                        this.glow = ((Mode)this.shaderEffect.wo()).getName().equals("Glow");
+                        this.shadow = ((Mode)this.shaderEffect.wo()).getName().equals("Shadow");
+                        this.userWidth = this.regular20Font.getStringWidth("riseclient.com") + 2;
+                        this.coordinates = (int)Math.floor(ModernInterface.aEg.thePlayer.posX) + ", " + (int)Math.floor(ModernInterface.aEg.thePlayer.posY) + ", " + (int)Math.floor(ModernInterface.aEg.thePlayer.posZ);
+                        this.xyzWidth = this.medium18Font.getStringWidth("XYZ:") + 2;
                         this.logoColor = this.rz().rA();
-                        this.asT = ((Mode)this.asP.wo()).getName().equals("Normal");
-                        String string = ((Mode)this.asJ.wo()).getName();
+                        this.normalBackGround = ((Mode)this.background.wo()).getName().equals("Normal");
+                        String string = ((Mode)this.arrayListFontMode.wo()).getName();
                         switch (string) {
                             case "Apple UI": {
                                 agc agc2 = FontManager.MAIN.a(18, FontWeight.REGULAR);
-                                if (!this.ky.equals(agc2)) {
-                                    this.ky = agc2;
+                                if (!this.arrayListFont.equals(agc2)) {
+                                    this.arrayListFont = agc2;
                                 }
                                 break block105;
                             }
@@ -314,8 +314,8 @@ extends Mode<Interface> {
                         }
                     }
                     agc agc3 = FontManager.MINECRAFT.dM();
-                    if (!this.ky.equals(agc3)) {
-                        this.ky = agc3;
+                    if (!this.arrayListFont.equals(agc3)) {
+                        this.arrayListFont = agc3;
                     }
                     break block105;
                 }
@@ -328,18 +328,18 @@ extends Mode<Interface> {
                     }
                 }
             }
-            for (ArrayListEntry zc2 : ((Interface)this.getParent()).lL()) {
-                if (zc2.ath == 0.0f) continue;
+            for (ArrayListEntry zc2 : ((Interface)this.getParent()).getActiveEntries()) {
+                if (zc2.animationTime == 0.0f) continue;
                 String string4;
                 String string5;
                 Color color;
                 block80: {
                     {
                         zc2.y(!zc2.getTag().isEmpty() && ((Boolean)((Interface)this.getParent()).suffix.wo()).booleanValue());
-                        string4 = (((Boolean)((Interface)this.getParent()).lowercase.wo()).booleanValue() ? zc2.nx().toLowerCase() : zc2.nx()).replace(((Boolean)((Interface)this.getParent()).lH().wo()).booleanValue() ? " " : "", "");
-                        string5 = (((Boolean)((Interface)this.getParent()).lowercase.wo()).booleanValue() ? zc2.getTag().toLowerCase() : zc2.getTag()).replace(((Boolean)((Interface)this.getParent()).lH().wo()).booleanValue() ? " " : "", "");
+                        string4 = (((Boolean)((Interface)this.getParent()).lowercase.wo()).booleanValue() ? zc2.getTranslatedName().toLowerCase() : zc2.getTranslatedName()).replace(((Boolean)((Interface)this.getParent()).getRemoveSpaces().wo()).booleanValue() ? " " : "", "");
+                        string5 = (((Boolean)((Interface)this.getParent()).lowercase.wo()).booleanValue() ? zc2.getTag().toLowerCase() : zc2.getTag()).replace(((Boolean)((Interface)this.getParent()).getRemoveSpaces().wo()).booleanValue() ? " " : "", "");
                         color = this.rz().rA();
-                        String string6 = ((Mode)this.asI.wo()).getName();
+                        String string6 = ((Mode)this.arrayListColorMode.wo()).getName();
                         switch (string6) {
                             case "Breathe": {
                                 double d2 = this.rz().getBlendFactor(new Vector2d(0.0, 0.0));
@@ -354,13 +354,13 @@ extends Mode<Interface> {
                             }
                         }
                     }
-                    color = this.rz().getAccentColor(new Vector2d(0.0, zc2.nr().getY()));
+                    color = this.rz().getAccentColor(new Vector2d(0.0, zc2.getPosition().getY()));
                 }
-                zc2.b(color);
-                zc2.t(this.ky.getStringWidth(string4));
-                zc2.u(zc2.nA() ? this.ky.getStringWidth(string5) + 3 : 0.0f);
-                zc2.ap(string4);
-                zc2.aq(string5);
+                zc2.setColor(color);
+                zc2.setNameWidth(this.arrayListFont.getStringWidth(string4));
+                zc2.u(zc2.isHasTag() ? this.arrayListFont.getStringWidth(string5) + 3 : 0.0f);
+                zc2.setDisplayName(string4);
+                zc2.setDisplayTag(string5);
             }
         });
     };
@@ -369,7 +369,7 @@ extends Mode<Interface> {
         super(string, interface_);
     }
 
-    private String S(int n2) {
+    private String toRomanNumeral(int n2) {
         if (n2 < 1) {
             return String.valueOf(n2);
         }
@@ -410,14 +410,14 @@ extends Mode<Interface> {
 
     private void a(ArrayListEntry zc2, double d2, double d3, int n2) {
         if (((Boolean)this.dropShadow.wo()).booleanValue()) {
-            this.ky.b(zc2.getDisplayName(), d2, d3, n2);
-            if (!zc2.nA()) return;
-            this.ky.b(zc2.nz(), d2 + (double)zc2.nu() + 3.0, d3, -3355444);
+            this.arrayListFont.b(zc2.getDisplayName(), d2, d3, n2);
+            if (!zc2.isHasTag()) return;
+            this.arrayListFont.b(zc2.getDisplayTag(), d2 + (double)zc2.getNameWidth() + 3.0, d3, -3355444);
             return;
         }
-        this.ky.a(zc2.getDisplayName(), d2, d3, n2);
-        if (!zc2.nA()) return;
-        this.ky.a(zc2.nz(), d2 + (double)zc2.nu() + 3.0, d3, -3355444);
+        this.arrayListFont.a(zc2.getDisplayName(), d2, d3, n2);
+        if (!zc2.isHasTag()) return;
+        this.arrayListFont.a(zc2.getDisplayTag(), d2 + (double)zc2.getNameWidth() + 3.0, d3, -3355444);
     }
 
     private static  boolean o(String string, String string2) {

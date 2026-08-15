@@ -10,27 +10,27 @@ import lombok.Generated;
 
 public abstract class Value<T> {
     private final String name;
-    public BooleanSupplier aQJ;
+    public BooleanSupplier hideIf;
     public BooleanSupplier aQK;
-    private T aQL;
+    private T value;
     private boolean visible;
     private Toggleable aQM;
     private Consumer<T> valueChangeConsumer;
-    private T aQO;
+    private T defaultValue;
 
     public Value(String name, Module module, T var3) {
         this.name = name;
-        this.aQJ = null;
+        this.hideIf = null;
         this.aQM = module;
-        this.aQO = var3;
+        this.defaultValue = var3;
         this.n(var3);
         module.getValues().add(this);
     }
 
     public Value(String name, Mode<?> mode, T var3) {
         this.name = name;
-        this.aQJ = null;
-        this.aQO = var3;
+        this.hideIf = null;
+        this.defaultValue = var3;
         this.aQM = mode;
         this.n(var3);
         mode.getValues().add(this);
@@ -38,17 +38,17 @@ public abstract class Value<T> {
 
     public Value(String name, Module module, T var3, BooleanSupplier booleanSupplier) {
         this.name = name;
-        this.aQJ = booleanSupplier;
+        this.hideIf = booleanSupplier;
         this.aQM = module;
-        this.aQO = var3;
+        this.defaultValue = var3;
         this.n(var3);
         module.getValues().add(this);
     }
 
     public Value(String name, Mode<?> mode, T var3, BooleanSupplier booleanSupplier) {
         this.name = name;
-        this.aQJ = booleanSupplier;
-        this.aQO = var3;
+        this.hideIf = booleanSupplier;
+        this.defaultValue = var3;
         this.n(var3);
         mode.getValues().add(this);
     }
@@ -58,7 +58,7 @@ public abstract class Value<T> {
             this.valueChangeConsumer.accept((T)valueAsObject);
         }
 
-        this.aQL = (T)valueAsObject;
+        this.value = (T)valueAsObject;
     }
 
     public void n(T var1) {
@@ -66,13 +66,13 @@ public abstract class Value<T> {
             this.valueChangeConsumer.accept((T)var1);
         }
 
-        this.aQL = (T)var1;
+        this.value = (T)var1;
     }
 
     public abstract List<Value<?>> getSubValues();
 
-    public void o(T var1) {
-        this.aQO = var1;
+    public void setDefaultValue(T var1) {
+        this.defaultValue = var1;
     }
 
     public ValueComponent wl() {
@@ -90,8 +90,8 @@ public abstract class Value<T> {
     }
 
     @Generated
-    public BooleanSupplier wm() {
-        return this.aQJ;
+    public BooleanSupplier getHideIf() {
+        return this.hideIf;
     }
 
     @Generated
@@ -101,7 +101,7 @@ public abstract class Value<T> {
 
     @Generated
     public T wo() {
-        return this.aQL;
+        return this.value;
     }
 
     @Generated
@@ -120,13 +120,13 @@ public abstract class Value<T> {
     }
 
     @Generated
-    public T ws() {
-        return this.aQO;
+    public T getDefaultValue() {
+        return this.defaultValue;
     }
 
     @Generated
     public void setHideIf(BooleanSupplier hideIf) {
-        this.aQJ = hideIf;
+        this.hideIf = hideIf;
     }
 
     @Generated

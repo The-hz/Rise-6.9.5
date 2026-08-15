@@ -9,12 +9,12 @@ public final class GuiClickEvent extends CancellableEvent {
     private final int jd;
 
     @Generated
-    public int cL() {
+    public int getMouseX() {
         return this.mouseX;
     }
 
     @Generated
-    public int cM() {
+    public int getMouseY() {
         return this.mouseY;
     }
 

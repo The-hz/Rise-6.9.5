@@ -12,8 +12,8 @@ import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.opengl.Display;
 
 public class OutlineShader extends aix {
-    private final RiseShaderProgram aQj = new RiseShaderProgram("outline.frag", "vertex.vsh");
-    private Framebuffer aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+    private final RiseShaderProgram shaderProgram = new RiseShaderProgram("outline.frag", "vertex.vsh");
+    private Framebuffer inputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
 
     public OutlineShader() {
     }
@@ -28,7 +28,7 @@ public class OutlineShader extends aix {
                     if (this.isActive()) {
                         RendererLivingEntity.bWd = 0.0F;
                         RendererLivingEntity.bWe = 0.0F;
-                        this.aPV.bindFramebuffer(true);
+                        this.inputFramebuffer.bindFramebuffer(true);
                         runnables.forEach(Runnable::run);
                         aEg.getFramebuffer().bindFramebuffer(true);
                         RendererLivingEntity.bWd = 64.0F;
@@ -40,18 +40,18 @@ public class OutlineShader extends aix {
                 case OVERLAY:
                     this.setActive(this.isActive() || !runnables.isEmpty());
                     if (this.isActive()) {
-                        this.aPV.bindFramebuffer(true);
+                        this.inputFramebuffer.bindFramebuffer(true);
                         runnables.forEach(Runnable::run);
-                        int i = this.aQj.getProgramId();
+                        int i = this.shaderProgram.getProgramId();
                         aEg.getFramebuffer().bindFramebuffer(true);
-                        this.aQj.rt();
+                        this.shaderProgram.rt();
                         ShaderUniforms.uniform1i(i, "u_texture", 0);
                         ShaderUniforms.uniform1f(i, "u_radius", 1.0F);
                         ShaderUniforms.uniform2f(i, "u_texel_size", 1.0F / aEg.displayWidth, 1.0F / aEg.displayHeight);
                         GlStateManager.enableBlend();
                         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                         GlStateManager.alphaFunc(516, 0.0F);
-                        this.aPV.bindFramebufferTexture();
+                        this.inputFramebuffer.bindFramebufferTexture();
                         RiseShaderProgram.vN();
                         GlStateManager.disableBlend();
                         RiseShaderProgram.stop();
@@ -63,11 +63,11 @@ public class OutlineShader extends aix {
     @Override
     public void update() {
         this.setActive(false);
-        if (aEg.displayWidth == this.aPV.framebufferWidth && aEg.displayHeight == this.aPV.framebufferHeight) {
-            this.aPV.framebufferClear();
+        if (aEg.displayWidth == this.inputFramebuffer.framebufferWidth && aEg.displayHeight == this.inputFramebuffer.framebufferHeight) {
+            this.inputFramebuffer.framebufferClear();
         } else {
-            this.aPV.deleteFramebuffer();
-            this.aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+            this.inputFramebuffer.deleteFramebuffer();
+            this.inputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
         }
     }
 }

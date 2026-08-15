@@ -37,7 +37,7 @@ public final class RGQTestShader {
         ShaderUniforms.uniform4f(i, "u_edges", var9 ? 1.0F : 0.0F, var10 ? 1.0F : 0.0F, var11 ? 1.0F : 0.0F, var12 ? 1.0F : 0.0F);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);
-        RiseShaderProgram.h(var1, var2, var3, var4);
+        RiseShaderProgram.drawQuad(var1, var2, var3, var4);
         GlStateManager.disableBlend();
         RiseShaderProgram.stop();
     }

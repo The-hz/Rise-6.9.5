@@ -24,13 +24,13 @@ public class MMCFlight extends Mode<Flight> {
             if (this.ticks == 1 && PlayerUtil.p(0.0, -2.5, 0.0).isFullBlock()) {
                 aEg.timer.dzD = 0.1F;
                 PacketQueueComponent.cR = true;
-                PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, true));
-                PacketUtil.l(
+                PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, true));
+                PacketUtil.send(
                     new C04PacketPlayerPosition(
                         aEg.thePlayer.posX, MoveUtil.roundToGround(aEg.thePlayer.posY - (2.5 - Math.random() / 100.0)), aEg.thePlayer.posZ, false
                     )
                 );
-                PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, false));
+                PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, false));
                 this.clipped = true;
                 aEg.thePlayer.jump();
                 MoveUtil.strafe(7.0 - Math.random() / 10.0);

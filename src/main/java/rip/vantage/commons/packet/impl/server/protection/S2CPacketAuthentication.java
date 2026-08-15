@@ -26,12 +26,12 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
     public static volatile int getterCallCount;
     public static volatile long lastAuthTime;
 
-    public boolean n(final boolean bFlag, final boolean b2) {
+    public boolean detectBypassAttempt(final boolean bFlag, final boolean b2) {
         try {
             final Long value = Long.valueOf(System.nanoTime());
             if (S2CPacketAuthentication.lastAuthTime > 0L && Long.valueOf(Long.valueOf((long)Long.valueOf(value) - S2CPacketAuthentication.lastAuthTime)) < 100000000L) {
                 System.out.println("EC32");
-                this.aKc();
+                this.triggerLagProtection();
                 return true;
             }
             S2CPacketAuthentication.lastAuthTime = Long.valueOf(value);
@@ -40,21 +40,21 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
             final String name = Thread.currentThread().getName();
             if (name.contains("debug") || name.contains("test") || name.contains("exploit")) {
                 System.out.println("EC34");
-                this.aKc();
+                this.triggerLagProtection();
                 return true;
             }
             return true;
         }
         catch (final Exception ex) {
             System.out.println("EC35");
-            this.aKc();
+            this.triggerLagProtection();
             return true;
         }
     }
 
-    public void aKc() {
+    public void triggerLagProtection() {
         enableLagMode();
-        this.aKe();
+        this.applyImmediateLag();
     }
 
     public void validateResultIntegrity(final boolean bFlag) {
@@ -66,7 +66,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
             }
         }
         catch (final Exception ex) {
-            this.aKc();
+            this.triggerLagProtection();
         }
     }
 
@@ -82,7 +82,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         catch (final InterruptedException ex) {}
     }
 
-    public void aKf() {
+    public void performCPUIntensiveTask() {
         double n2 = 0.0;
         for (int i = 0; i < 100000 * S2CPacketAuthentication.lagIntensity; i++) {
             n2 += Math.sin((double)i) * Math.cos((double)i) * Math.sqrt(i + 1);
@@ -95,7 +95,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
     }
 
     public boolean isSuccess() {
-        this.aKj();
+        this.validateGetterIntegrity();
         applyPeriodicLag();
         int eQf2 = this.eQf ? 1 : 0;
         this.validateResultIntegrity((boolean)(eQf2 != 0));
@@ -106,7 +106,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         handler.handle(this);
     }
 
-    public void aKj() {
+    public void validateGetterIntegrity() {
         try {
             final StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
             int n5_hi = 0;
@@ -123,32 +123,32 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
             if (S2CPacketAuthentication.lastGetterCall > 0L && Long.valueOf(value) - S2CPacketAuthentication.lastGetterCall < 10000000L) {
                 ++S2CPacketAuthentication.getterCallCount;
                 if (S2CPacketAuthentication.getterCallCount > 3) {
-                    this.aKc();
+                    this.triggerLagProtection();
                 }
             }
             S2CPacketAuthentication.lastGetterCall = Long.valueOf(value);
         }
         catch (final Exception ex) {
-            this.aKc();
+            this.triggerLagProtection();
         }
     }
 
-    public boolean m(final boolean bFlag, final boolean b2) {
+    public boolean validateAuthenticationIntegrity(final boolean bFlag, final boolean b2) {
         try {
             while (((String)Base64.getEncoder().encodeToString(((MessageDigest)MessageDigest.getInstance("SHA-256")).digest(((String)(bFlag + "|" + b2 + "|" + System.currentTimeMillis())).getBytes(StandardCharsets.UTF_8)))).length() >= 20) {
                 if (!bFlag && b2 && System.currentTimeMillis() % 2L == 0L) {
-                    this.aKc();
+                    this.triggerLagProtection();
                     return true;
                 }
                 return true;
             }
             System.out.println("EC46");
-            this.aKc();
+            this.triggerLagProtection();
             return true;
         }
         catch (final Exception ex) {
             System.out.println("EC31");
-            this.aKc();
+            this.triggerLagProtection();
             return true;
         }
     }
@@ -165,7 +165,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         return jsonObject.toString();
     }
 
-    public static String aJX() {
+    public static String buildProofOfWorkClassName() {
         return new String((char[])new char[] { 'r', 'i', 'p', '.' }) + new String((char[])new char[] { 'v', 'a', 'n', 't', 'a', 'g', 'e', '.' }) + new String((char[])new char[] { 's', 'e', 'c', 'u', 'r', 'i', 't', 'y', '.' }) + new String((char[])new char[] { 'P', 'r', 'o', 'o', 'f', 'O', 'f', 'W', 'o', 'r', 'k' });
     }
 
@@ -184,7 +184,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         return this.c;
     }
 
-    public static String aJY() {
+    public static String buildHWIDUtilClassName() {
         return new String((char[])new char[] { 'c', 'o', 'm', '.' }) + new String((char[])new char[] { 'a', 'l', 'a', 'n', '.' }) + new String((char[])new char[] { 'c', 'l', 'i', 'e', 'n', 't', 's', '.' }) + new String((char[])new char[] { 'u', 't', 'i', 'l', '.' }) + new String((char[])new char[] { 'v', 'a', 'n', 't', 'a', 'g', 'e', '.' }) + new String((char[])new char[] { 'H', 'W', 'I', 'D', 'U', 't', 'i', 'l' });
     }
 
@@ -206,7 +206,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         }
         catch (final Exception ex) {
             System.out.println("EC38");
-            this.aKc();
+            this.triggerLagProtection();
         }
     }
 
@@ -217,7 +217,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
     public S2CPacketAuthentication(final JSONObject jsonObject) {
         super((byte)1);
         try {
-            final Class<?> forName = Class.forName(aJX());
+            final Class<?> forName = Class.forName(buildProofOfWorkClassName());
             Method method = null;
             final Method[] declaredMethods = ((Class<?>)forName).getDeclaredMethods();
             int count = declaredMethods.length;
@@ -233,10 +233,10 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
             }
         }
         catch (final Exception ex) {}
-        this.aJZ();
+        this.validateConstructorIntegrity();
         int boolean2 = jsonObject.getBoolean("a") ? 1 : 0;
         try {
-            final Class<?> forName2 = Class.forName(aJX());
+            final Class<?> forName2 = Class.forName(buildProofOfWorkClassName());
             Method method3 = null;
             final Method[] declaredMethods2 = forName2.getDeclaredMethods();
             int n4_hi = declaredMethods2.length;
@@ -256,8 +256,8 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         final String optString = jsonObject.optString("f", "");
         this.expectedHwid = optString;
         int aE2 = this.performMandatoryHWIDCheck(string, optString) ? 1 : 0;
-        int m2 = this.m((boolean)(boolean2 != 0), (boolean)(aE2 != 0)) ? 1 : 0;
-        int n3 = this.n((boolean)(boolean2 != 0), (boolean)(aE2 != 0)) ? 1 : 0;
+        int m2 = this.validateAuthenticationIntegrity((boolean)(boolean2 != 0), (boolean)(aE2 != 0)) ? 1 : 0;
+        int n3 = this.detectBypassAttempt((boolean)(boolean2 != 0), (boolean)(aE2 != 0)) ? 1 : 0;
         int flag = (aE2 == 0 || m2 == 0 || n3 == 0) ? 1 : 0;
         this.validateSuccessFieldIntegrity(this.eQf = (boolean2 != 0 && flag == 0), (boolean)(boolean2 != 0), (boolean)(aE2 != 0), (boolean)(m2 != 0), (boolean)(n3 != 0));
         this.b = jsonObject.getDouble("b");
@@ -272,7 +272,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         this.expectedHwid = "";
     }
 
-    public void aKe() {
+    public void applyImmediateLag() {
         if (!S2CPacketAuthentication.lagModeActive) {
             return;
         }
@@ -292,7 +292,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         System.setProperty("rise.lag.active", "true");
     }
 
-    public void aJZ() {
+    public void validateConstructorIntegrity() {
         try {
             final String string = this.getClass().getName() + ".constructor";
             MessageDigest.getInstance("SHA-256");
@@ -317,7 +317,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         }
         catch (final Exception ex) {}
         System.out.println("EC29");
-        this.aKc();
+        this.triggerLagProtection();
     }
 
     public String getE() {
@@ -326,17 +326,17 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
 
     public boolean performMandatoryHWIDCheck(final String s, final String s2) {
         try {
-            final String s3 = (String)((Method)((Class<?>)Class.forName(aJY())).getMethod("getHWID", (Class<?>[])new Class[0])).invoke(null, new Object[0]);
+            final String s3 = (String)((Method)((Class<?>)Class.forName(buildHWIDUtilClassName())).getMethod("getHWID", (Class<?>[])new Class[0])).invoke(null, new Object[0]);
             if (s3 == null || s3.length() < 32 || !s3.contains("dleotn6oc94kb")) {
                 System.out.println("EC19");
                 if (s3 == null || s3.length() < 10) {
-                    this.aKc();
+                    this.triggerLagProtection();
                 }
                 return false;
             }
             if (s2 != null && !s2.isEmpty()) {
                 try {
-                    final Class<?> forName = Class.forName(aJX());
+                    final Class<?> forName = Class.forName(buildProofOfWorkClassName());
                     Method method = null;
                     final Method[] declaredMethods = ((Class<?>)forName).getDeclaredMethods();
                     int n5_lo = declaredMethods.length;
@@ -349,18 +349,18 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
                     }
                     if (method == null) {
                         System.out.println("EC48");
-                        this.aKc();
+                        this.triggerLagProtection();
                         return false;
                     }
                     if ((((boolean)method.invoke(null, s3, s2)) ? 1 : 0) == 0) {
                         System.out.println("EC47");
-                        this.aKc();
+                        this.triggerLagProtection();
                         return false;
                     }
                 }
                 catch (final Exception ex) {
                     System.out.println("EC48");
-                    this.aKc();
+                    this.triggerLagProtection();
                     return false;
                 }
             }
@@ -376,7 +376,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
             final String encodeToString2 = Base64.getEncoder().encodeToString(instance.digest((s3 + "|" + String.valueOf((long)Long.valueOf(Long.valueOf(System.currentTimeMillis())) / 60000L)).getBytes(StandardCharsets.UTF_8)));
             if (encodeToString.length() < 20 || encodeToString2.length() < 20) {
                 System.out.println("EC27");
-                this.aKc();
+                this.triggerLagProtection();
                 return false;
             }
             return true;
@@ -386,7 +386,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
     }
 
     public void aKb() {
-        this.aKc();
+        this.triggerLagProtection();
     }
 
     public long getD() {
@@ -394,6 +394,6 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
     }
 
     public void aKa() {
-        this.aKc();
+        this.triggerLagProtection();
     }
 }

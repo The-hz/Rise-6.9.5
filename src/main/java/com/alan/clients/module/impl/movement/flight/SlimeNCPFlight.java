@@ -18,7 +18,7 @@ public class SlimeNCPFlight extends Mode<Flight> {
     private final double HV = 0.053299998353843775;
     private final double HW = 1.0;
     private int tY;
-    private boolean tZ;
+    private boolean started;
     private aka ua;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {};
@@ -52,9 +52,9 @@ public class SlimeNCPFlight extends Mode<Flight> {
             aEg.thePlayer.motionY = this.ua.getY() * d0;
             aEg.thePlayer.motionZ = this.ua.getZ() * d0;
             this.ua = null;
-            this.tZ = true;
-        } else if (this.tZ) {
-            this.tZ = false;
+            this.started = true;
+        } else if (this.started) {
+            this.started = false;
             if (!KillAura.nQ) {
             }
         }

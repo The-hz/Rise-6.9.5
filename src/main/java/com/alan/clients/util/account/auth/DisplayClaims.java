@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 class DisplayClaims {
     @Expose
     @SerializedName("xui")
-    Claim[] aFc;
+    Claim[] xui;
 
     private DisplayClaims() {
     }

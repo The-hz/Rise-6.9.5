@@ -124,7 +124,7 @@ public class Scaffold extends Module {
     public BooleanValue blockDiagonalAscend;
     @EventLink
     public Listener<StrafeEvent> onStrafe;
-    public float jp;
+    public float forward;
     public BooleanValue boostOnlyWhileHoldingJump;
     @EventLink
     public Listener<ea> agY;
@@ -134,10 +134,10 @@ public class Scaffold extends Module {
     public Listener<en> ahe;
     public BooleanValue safeWalk;
     public float agQ;
-    public float act;
+    public float targetPitch;
     public BooleanValue disableOnFlag;
     public ModeValue downwardsPressS;
-    public EnumFacingOffset acr;
+    public EnumFacingOffset enumFacing;
     public ModeValue sprint;
     public ModeValue rayCast = new ModeValue("Ray Cast", this).add(new SubMode("Off")).add(new SubMode("Normal")).add(new SubMode("Strict")).setDefault("Strict");
     public BooleanValue watchdogPrediction;
@@ -155,17 +155,17 @@ public class Scaffold extends Module {
     public int agC;
     @EventLink
     public Listener<PostMotionEvent> onPostMotion;
-    public int acu;
+    public int ticksOnAir;
     public int agI;
     public boolean agH;
     @EventLink
-    public Listener<MoveInputEvent> aha;
+    public Listener<MoveInputEvent> onMoveInput;
     public BooleanValue tellyOnlyOnRightClick;
     @EventLink
     public Listener<PacketSendEvent> onPacketSend;
-    public float jq;
+    public float strafe;
     public BooleanValue extendBlockReachOnWatchdogTelly;
-    public int agB;
+    public int sneakingTicks;
     public BoundsNumberValue placeDelay;
     public ModeValue tower;
     public float agA;
@@ -182,7 +182,7 @@ public class Scaffold extends Module {
     public float agz;
     public int agO;
     @EventLink
-    public Listener<MoveInputEvent> ahb;
+    public Listener<MoveInputEvent> onMoveInputMedium;
     public int agL;
     public BooleanValue newWatchdogRots;
     @EventLink
@@ -192,11 +192,11 @@ public class Scaffold extends Module {
     public ModeValue sameY;
     public float agR;
     public BooleanValue dontForceRaycastOnWatchdogTelly;
-    public float acs;
+    public float targetYaw;
     public boolean agP;
 
     public void D(int var1) {
-        EnumFacingOffset aib = this.acr != null ? this.acr : this.agw;
+        EnumFacingOffset aib = this.enumFacing != null ? this.enumFacing : this.agw;
         if (aib != null) {
             if (this.watchdogPrediction.wo()) {
                 ArrayList arraylist = new ArrayList();
@@ -209,7 +209,7 @@ public class Scaffold extends Module {
                     entityplayersp1.setPosition(entityplayersp1.posX, entityplayersp1.posY + d3, entityplayersp1.posZ);
                     if (movingobjectposition1 != null && movingobjectposition1.hitVec != null) {
                         Vector2f vector2f7 = RotationUtil.h(movingobjectposition1.hitVec);
-                        if (aef.a(vector2f7, this.blockFace, aib.va())) {
+                        if (aef.a(vector2f7, this.blockFace, aib.getEnumFacing())) {
                             arraylist.add(vector2f7);
                         }
                     }
@@ -235,12 +235,12 @@ public class Scaffold extends Module {
                         }
                     }
 
-                    this.acs = vector2f.x;
-                    this.act = vector2f.y;
+                    this.targetYaw = vector2f.x;
+                    this.targetPitch = vector2f.y;
                 } else {
-                    Vector2f vector2f2 = RotationUtil.a(new aka(this.blockFace.getX(), this.blockFace.getY(), this.blockFace.getZ()), aib.va());
-                    this.acs = vector2f2.x;
-                    this.act = vector2f2.y;
+                    Vector2f vector2f2 = RotationUtil.a(new aka(this.blockFace.getX(), this.blockFace.getY(), this.blockFace.getZ()), aib.getEnumFacing());
+                    this.targetYaw = vector2f2.x;
+                    this.targetPitch = vector2f2.y;
                 }
             } else {
                 EntityPlayerSP entityplayersp = aEg.thePlayer;
@@ -249,7 +249,7 @@ public class Scaffold extends Module {
                 Float wrapped = MathHelper.wrapAngleTo180_float(f14);
                 Double d2 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
                 float f24;
-                int j3 = (f24 = Math.abs(wrapped - this.acs) - 100.0F) == 0.0F ? 0 : (f24 < 0.0F ? -1 : 1);
+                int j3 = (f24 = Math.abs(wrapped - this.targetYaw) - 100.0F) == 0.0F ? 0 : (f24 < 0.0F ? -1 : 1);
                 int notAbs = !(Math.abs(wrapped % 90.0F) <= 10.0F) && !(Math.abs(wrapped % 90.0F) >= 80.0F) ? 0 : 1;
                 int j2_hi = notAbs != 0 ? -135 + var1 : -180 + var1;
                 int limit = notAbs != 0 ? 135 : 180;
@@ -261,7 +261,7 @@ public class Scaffold extends Module {
                     entityplayersp.setPosition(entityplayersp.posX, entityplayersp.posY + d1, entityplayersp.posZ);
                     if (movingobjectposition != null && movingobjectposition.hitVec != null) {
                         Vector2f vector2f3 = RotationUtil.h(movingobjectposition.hitVec);
-                        if (aef.a(vector2f3, this.blockFace, aib.va())) {
+                        if (aef.a(vector2f3, this.blockFace, aib.getEnumFacing())) {
                             arraylist1.add(vector2f3);
                         }
                     }
@@ -287,13 +287,13 @@ public class Scaffold extends Module {
                         }
                     }
 
-                    this.acs = vector2f4.x;
-                    this.act = vector2f4.y;
+                    this.targetYaw = vector2f4.x;
+                    this.targetPitch = vector2f4.y;
                 } else {
-                    Vector2f vector2f6 = RotationUtil.a(new aka(this.blockFace.getX(), this.blockFace.getY(), this.blockFace.getZ()), aib.va());
-                    if (!aef.a(new Vector2f(this.acs, this.act), this.blockFace, aib.va())) {
-                        this.acs = vector2f6.x;
-                        this.act = vector2f6.y;
+                    Vector2f vector2f6 = RotationUtil.a(new aka(this.blockFace.getX(), this.blockFace.getY(), this.blockFace.getZ()), aib.getEnumFacing());
+                    if (!aef.a(new Vector2f(this.targetYaw, this.targetPitch), this.blockFace, aib.getEnumFacing())) {
+                        this.targetYaw = vector2f6.x;
+                        this.targetPitch = vector2f6.y;
                     }
                 }
             }
@@ -302,8 +302,8 @@ public class Scaffold extends Module {
 
     @Override
     public void onEnable() {
-        this.acs = aEg.thePlayer.pl - 180.0F + Integer.parseInt(this.yawOffset.wo().getName());
-        this.act = 90.0F;
+        this.targetYaw = aEg.thePlayer.pl - 180.0F + Integer.parseInt(this.yawOffset.wo().getName());
+        this.targetPitch = 90.0F;
         this.agA = (float)((Math.random() - 0.5) * (Math.random() - 0.5) * 10.0);
         this.agz = (float)((Math.random() - 0.5) * (Math.random() - 0.5) * 10.0);
         this.agK = 0;
@@ -317,14 +317,14 @@ public class Scaffold extends Module {
         }
 
         this.agO = this.age.wv().intValue();
-        this.h(new Vector2f(this.acs, this.act));
-        this.agB = -1;
+        this.h(new Vector2f(this.targetYaw, this.targetPitch));
+        this.sneakingTicks = -1;
         this.agF = 0;
         this.agC = 0;
         aEg.thePlayer.crd = false;
         Object object = this.sprint.wo();
         if (object instanceof WatchdogJumpSprint) {
-            ((WatchdogJumpSprint)object).kB().onEnable();
+            ((WatchdogJumpSprint)object).getHelper().onEnable();
         }
     }
 
@@ -350,21 +350,21 @@ public class Scaffold extends Module {
     public void ks() {
         if (this.agE > 3) {
             afi.c("Pause is greater than 3");
-        } else if (this.acr != null) {
+        } else if (this.enumFacing != null) {
             int equals2 = (int)(this.rotationMode.wo().getName().equals("Grim") ? 1L : 0L);
             Vec3 hitVec = this.getHitVec();
             if (equals2 != 0) {
-                float f1 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.acs - aEg.thePlayer.pl);
-                PacketUtil.l(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, f1, this.act, aEg.thePlayer.onGround));
+                float f1 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.targetYaw - aEg.thePlayer.pl);
+                PacketUtil.send(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, f1, this.targetPitch, aEg.thePlayer.onGround));
                 PlayerControllerMP playercontrollermp1 = aEg.playerController;
                 EntityPlayerSP entityplayersp1 = aEg.thePlayer;
                 WorldClient worldclient1 = aEg.theWorld;
                 SlotComponent slotcomponent1 = this.d(SlotComponent.class);
-                if (playercontrollermp1.onPlayerRightClick(entityplayersp1, worldclient1, SlotComponent.getItemStack(), this.blockFace, this.acr.va(), hitVec)) {
-                    PacketUtil.l(new m());
+                if (playercontrollermp1.onPlayerRightClick(entityplayersp1, worldclient1, SlotComponent.getItemStack(), this.blockFace, this.enumFacing.getEnumFacing(), hitVec)) {
+                    PacketUtil.send(new m());
                 }
 
-                PacketUtil.l(
+                PacketUtil.send(
                     new C06PacketPlayerPosLook(
                         aEg.thePlayer.posX,
                         aEg.thePlayer.posY,
@@ -381,8 +381,8 @@ public class Scaffold extends Module {
                 EntityPlayerSP entityplayersp = aEg.thePlayer;
                 WorldClient worldclient = aEg.theWorld;
                 SlotComponent slotcomponent = this.d(SlotComponent.class);
-                if (playercontrollermp.onPlayerRightClick(entityplayersp, worldclient, SlotComponent.getItemStack(), this.blockFace, this.acr.va(), hitVec)) {
-                    PacketUtil.l(new m());
+                if (playercontrollermp.onPlayerRightClick(entityplayersp, worldclient, SlotComponent.getItemStack(), this.blockFace, this.enumFacing.getEnumFacing(), hitVec)) {
+                    PacketUtil.send(new m());
                 }
             }
         }
@@ -412,7 +412,7 @@ public class Scaffold extends Module {
         return vec.dotProduct(vec32) < 0.0;
     }
 
-    public void kp() {
+    public void runMode() {
         if (this.getDisplayName().equals("Telly")) {
             float wrapped = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
             int notAbs = !(Math.abs(wrapped % 90.0F) <= 10.0F) && !(Math.abs(wrapped % 90.0F) >= 80.0F) ? 0 : 1;
@@ -475,12 +475,12 @@ public class Scaffold extends Module {
         aka akaxxxx = akax2.e(akaxxx.ag(-d7));
         aka akaxxxxx = akaxxxx.v(0.0, (Math.random() - 0.5) * 0.05, 0.0);
         float[] afloat = this.a(akax2, akaxxxxx);
-        float f7 = this.acs;
-        float f8 = this.act;
+        float f7 = this.targetYaw;
+        float f8 = this.targetPitch;
         float f9 = this.c(f7, afloat[0], var2);
         float f10 = this.c(f8, afloat[1], var2);
-        this.acs = f9;
-        this.act = f10;
+        this.targetYaw = f9;
+        this.targetPitch = f10;
         RotationComponent.d(false);
         float wrapped = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
         int notAbs = !(Math.abs(wrapped % 90.0F) <= 10.0F) && !(Math.abs(wrapped % 90.0F) >= 80.0F) ? 0 : 1;
@@ -488,15 +488,15 @@ public class Scaffold extends Module {
             && !aEg.gameSettings.keyBindRight.isKeyDown()
             && (!MoveUtil.enoughMovementForSprinting() || MoveUtil.speed() < 0.09 || notAbs != 0)) {
             if ((MoveUtil.speed() < 0.21 || !aEg.thePlayer.onGround) && !aEg.gameSettings.keyBindJump.isKeyDown()) {
-                RotationComponent.setRotations(new Vector2f(this.acs - 30.0F, this.act), 10.0, this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF);
+                RotationComponent.setRotations(new Vector2f(this.targetYaw - 30.0F, this.targetPitch), 10.0, this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF);
             } else if (MoveUtil.speed() < 0.3 && !aEg.gameSettings.keyBindJump.isKeyDown()) {
-                RotationComponent.setRotations(new Vector2f(this.acs - 45.0F, this.act), 10.0, this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF);
+                RotationComponent.setRotations(new Vector2f(this.targetYaw - 45.0F, this.targetPitch), 10.0, this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF);
             }
 
             if (aEg.gameSettings.keyBindJump.isKeyDown() && this.e(Speed.class).isEnabled()) {
-                RotationComponent.setRotations(new Vector2f(this.acs - 10.0F, this.act), 10.0, this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF);
+                RotationComponent.setRotations(new Vector2f(this.targetYaw - 10.0F, this.targetPitch), 10.0, this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF);
             } else if (aEg.gameSettings.keyBindJump.isKeyDown()) {
-                RotationComponent.setRotations(new Vector2f(this.acs - 10.0F, this.act), 10.0, this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF);
+                RotationComponent.setRotations(new Vector2f(this.targetYaw - 10.0F, this.targetPitch), 10.0, this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF);
             }
         }
     }
@@ -559,7 +559,7 @@ public class Scaffold extends Module {
     }
 
     @Generated
-    public boolean ku() {
+    public boolean isReadyToPlace() {
         return this.agH;
     }
 
@@ -619,8 +619,8 @@ public class Scaffold extends Module {
     }
 
     @Generated
-    public int kt() {
-        return this.acu;
+    public int getTicksOnAir() {
+        return this.ticksOnAir;
     }
 
     public void c(boolean var1, boolean var2, boolean var3, boolean var4, boolean var5, boolean var6) {
@@ -752,7 +752,7 @@ public class Scaffold extends Module {
         this.onPreMotionEvent = var1 -> {
             this.e(Flight.class).isEnabled();
             this.agy = new aka(0.0, 0.0, 0.0);
-            if (this.targetBlock != null && this.acr != null && this.blockFace != null) {
+            if (this.targetBlock != null && this.enumFacing != null && this.blockFace != null) {
                 aEg.thePlayer.cHT.aX();
                 if (this.timer.wo().floatValue() != 1.0F) {
                     aEg.timer.dzD = this.timer.wo().floatValue();
@@ -763,7 +763,7 @@ public class Scaffold extends Module {
             float f = 0.0F;
             Object object = null;
             Object object1 = null;
-            EnumFacingOffset aib = this.acr != null ? this.acr : this.agw;
+            EnumFacingOffset aib = this.enumFacing != null ? this.enumFacing : this.agw;
             Vector2f vector2f = RotationComponent.fn != null
                 ? new Vector2f(RotationComponent.fn)
                 : (RotationComponent.fk != null ? new Vector2f(RotationComponent.fk) : new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch));
@@ -773,13 +773,13 @@ public class Scaffold extends Module {
                     Vector2f vector2f1 = this.a(
                         this.blockFace,
                         aib,
-                        !aef.a(vector2f, aib.va(), this.blockFace, this.kl()) && this.kl(),
+                        !aef.a(vector2f, aib.getEnumFacing(), this.blockFace, this.kl()) && this.kl(),
                         this.agP ? this.agQ : MathHelper.wrapAngleTo180_float(vector2f.x - 135.0F),
                         this.agP ? this.agR : 84.0F,
                         45.0F
                     );
                     if (vector2f1 == null) {
-                        vector2f1 = RotationUtil.a(new aka(this.blockFace.getX(), this.blockFace.getY(), this.blockFace.getZ()), aib.va());
+                        vector2f1 = RotationUtil.a(new aka(this.blockFace.getX(), this.blockFace.getY(), this.blockFace.getZ()), aib.getEnumFacing());
                     }
 
                     Vector2f vector2f2 = new Vector2f(vector2f1.x, MathHelper.clamp_float(vector2f1.y, 80.0F, 89.9F));
@@ -885,13 +885,13 @@ public class Scaffold extends Module {
                 float f1 = MathHelper.wrapAngleTo180_float(f);
                 double d2 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
                 float f11;
-                int i2 = (f11 = Math.abs(f1 - this.acs) - 100.0F) == 0.0F ? 0 : (f11 < 0.0F ? -1 : 1);
+                int i2 = (f11 = Math.abs(f1 - this.targetYaw) - 100.0F) == 0.0F ? 0 : (f11 < 0.0F ? -1 : 1);
                 if (!(Math.abs(f1 % 90.0F) <= 10.0F) && !(Math.abs(f1 % 90.0F) >= 80.0F)) {
                 } else {
                 }
 
                 MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
-                if (this.sprint.wo().getName().equals("Watchdog Jump") && (Math.abs(d2 - this.acs) > 85.0 || aEg.thePlayer.cqL < 2)) {
+                if (this.sprint.wo().getName().equals("Watchdog Jump") && (Math.abs(d2 - this.targetYaw) > 85.0 || aEg.thePlayer.cqL < 2)) {
                     float wrapped = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
                     if (!(Math.abs(wrapped % 90.0F) <= 10.0F) && !(Math.abs(wrapped % 90.0F) >= 80.0F)) {
                     } else {
@@ -1099,9 +1099,9 @@ public class Scaffold extends Module {
 
                 if (aEg.gameSettings.keyBindJump.isKeyDown() && !MoveUtil.isMoving() && !this.e(Speed.class).isEnabled()) {
                     if (!this.L(1) || moving != 0 && (!this.L(2) || !this.L(3))) {
-                        this.acu = 0;
+                        this.ticksOnAir = 0;
                     } else {
-                        this.acu++;
+                        this.ticksOnAir++;
                     }
                 } else {
                     boolean flag7;
@@ -1112,18 +1112,18 @@ public class Scaffold extends Module {
                     }
 
                     if (flag7) {
-                        this.acu++;
+                        this.ticksOnAir++;
                     } else {
-                        this.acu = 0;
+                        this.ticksOnAir = 0;
                     }
                 }
 
                 this.agJ = aEg.thePlayer.tR >= 2 && !(Math.random() > 0.3) ? 1 : 0;
                 if (!this.watchdogPrediction.wo()) {
                     int l1 = flag5 ? 0 : (int)MathUtil.l(this.placeDelay.wo().intValue(), this.placeDelay.wA().intValue());
-                    this.agH = !BadPacketsComponent.bad(false, true, false, false, true) && this.acu > l1;
+                    this.agH = !BadPacketsComponent.bad(false, true, false, false, true) && this.ticksOnAir > l1;
                 } else {
-                    this.agH = !BadPacketsComponent.bad(false, true, false, false, true) && this.acu > this.agJ;
+                    this.agH = !BadPacketsComponent.bad(false, true, false, false, true) && this.ticksOnAir > this.agJ;
                 }
 
                 BadPacketsComponent.bad(false, true, false, false, true);
@@ -1135,7 +1135,7 @@ public class Scaffold extends Module {
                 }
 
                 if (this.agG == 0) {
-                    this.kk();
+                    this.calculateSneaking();
                 }
 
                 if (aEg.gameSettings.keyBindSneak.isKeyDown()) {
@@ -1162,55 +1162,55 @@ public class Scaffold extends Module {
 
                 EnumFacingOffset aib = PlayerUtil.a(this.targetBlock, this.agy.getY() < 0.0);
                 int l_hi = 0;
-                if (flag5 && aib != null && aib.va() != EnumFacing.UP) {
+                if (flag5 && aib != null && aib.getEnumFacing() != EnumFacing.UP) {
                     EnumFacingOffset aibx = PlayerUtil.a(this.targetBlock, false);
-                    if (aibx != null && aibx.va() == EnumFacing.UP) {
+                    if (aibx != null && aibx.getEnumFacing() == EnumFacing.UP) {
                         aib = aibx;
                     }
                 }
 
                 if (aib != null) {
-                    this.acr = aib;
+                    this.enumFacing = aib;
                     this.agw = aib;
                 } else {
                     EnumFacingOffset aibx = PlayerUtil.a(this.targetBlock, !(this.agy.getY() < 0.0));
                     if (aibx != null) {
-                        this.acr = aibx;
+                        this.enumFacing = aibx;
                         this.agw = aibx;
                     } else {
                         if (this.agw == null) {
-                            this.acr = null;
+                            this.enumFacing = null;
                             return;
                         }
 
-                        this.acr = this.agw;
+                        this.enumFacing = this.agw;
                         l_hi = 1;
                     }
                 }
 
-                EnumFacingOffset aibx = this.acr != null ? this.acr : this.agw;
+                EnumFacingOffset aibx = this.enumFacing != null ? this.enumFacing : this.agw;
                 aEg.gameSettings.keyBindSneak.isKeyDown();
-                if (aibx != null && aibx.va().getAxis().isHorizontal()) {
+                if (aibx != null && aibx.getEnumFacing().getAxis().isHorizontal()) {
                 } else {
                 }
 
                 BlockPos blockpos = new BlockPos(this.targetBlock.xCoord, this.targetBlock.yCoord, this.targetBlock.zCoord);
-                EnumFacingOffset aibxx = this.acr != null ? this.acr : this.agw;
+                EnumFacingOffset aibxx = this.enumFacing != null ? this.enumFacing : this.agw;
                 if (aibxx == null) {
                     return;
                 }
 
-                this.blockFace = blockpos.add(aibxx.vb().xCoord, aibxx.vb().yCoord, aibxx.vb().zCoord);
-                if (this.blockFace != null && aibxx.va() != null) {
+                this.blockFace = blockpos.add(aibxx.getOffset().xCoord, aibxx.getOffset().yCoord, aibxx.getOffset().zCoord);
+                if (this.blockFace != null && aibxx.getEnumFacing() != null) {
                     if (!this.sprint.wo().getName().equals("Watchdog Jump") || !this.newWatchdogRots.wo() || !MoveUtil.isMoving() && aEg.gameSettings.keyBindJump.isKeyDown()) {
-                        this.jF();
+                        this.calculateRotations();
                     } else {
                         BlockPos blockpos1 = this.blockFace;
                         float f8 = 12.0F;
                         this.a(blockpos1, f8);
                     }
 
-                    if (this.targetBlock != null && this.acr != null && this.blockFace != null) {
+                    if (this.targetBlock != null && this.enumFacing != null && this.blockFace != null) {
                         SlotComponent slotcomponent1 = this.d(SlotComponent.class);
                         if (SlotComponent.getItemStack() != null) {
                             SlotComponent slotcomponent2 = this.d(SlotComponent.class);
@@ -1221,12 +1221,12 @@ public class Scaffold extends Module {
                                     afi.c("RealStackSize is less than or equal to 0");
                                 }
 
-                                if (itemstack.getItem() instanceof ItemBlock && itemstack.cWo > 0 && this.acr != null) {
-                                    if (!aef.overBlock(this.acr.va(), this.blockFace, this.rayCast.wo().getName().equals("Strict"))
+                                if (itemstack.getItem() instanceof ItemBlock && itemstack.cWo > 0 && this.enumFacing != null) {
+                                    if (!aef.overBlock(this.enumFacing.getEnumFacing(), this.blockFace, this.rayCast.wo().getName().equals("Strict"))
                                         && !this.rayCast.wo().getName().equals("Off")
                                         && (l_hi == 0 || moving == 0 || !aEg.thePlayer.onGround)
                                         && (!flag5 || !this.bypassRaycastWhenFalling.wo())
-                                        && (!this.rotationMode.wo().getName().equals("Grim") || !aef.a(new Vector2f(this.acs, this.act), this.acr.va(), this.blockFace, false))
+                                        && (!this.rotationMode.wo().getName().equals("Grim") || !aef.a(new Vector2f(this.targetYaw, this.targetPitch), this.enumFacing.getEnumFacing(), this.blockFace, false))
                                         )
                                      {
                                     } else {
@@ -1270,7 +1270,7 @@ public class Scaffold extends Module {
                 return;
             }
         };
-        this.aha = var1 -> {
+        this.onMoveInput = var1 -> {
             float f = 0.0F;
             if (!this.sneak.wo() && !this.sprint.wo().getName().equals("Matrix")) {
                 var1.setSneak(false);
@@ -1294,10 +1294,10 @@ public class Scaffold extends Module {
                 }
             }
         };
-        this.ahb = var1 -> {
+        this.onMoveInputMedium = var1 -> {
             double d0 = 0.0;
-            this.jp = var1.getForward();
-            this.jq = var1.getStrafe();
+            this.forward = var1.getForward();
+            this.strafe = var1.getStrafe();
             if (this.agD-- > 0) {
                 var1.setForward(0.0F);
                 var1.setStrafe(0.0F);
@@ -1311,7 +1311,7 @@ public class Scaffold extends Module {
             }
         };
         this.onStrafe = var1 -> {
-            this.kp();
+            this.runMode();
             if (!Objects.equals(this.yawOffset.wo().getName(), "0") && !this.movementCorrection.wo() && !this.sprint.wo().getName().equals("Watchdog Jump")) {
                 MoveUtil.useDiagonalSpeed();
             }
@@ -1347,35 +1347,35 @@ public class Scaffold extends Module {
         };
     }
 
-    public void kk() {
-        if (!this.downwardsPressS.wo().getName().equals("Watchdog") && this.acu == 0) {
+    public void calculateSneaking() {
+        if (!this.downwardsPressS.wo().getName().equals("Watchdog") && this.ticksOnAir == 0) {
             aEg.gameSettings.keyBindSneak.setPressed(false);
         }
 
-        this.agB--;
+        this.sneakingTicks--;
         if (this.sneak.wo() || this.agE > 0) {
             int intValue2 = this.startSneaking.wv().intValue();
             int intValue3 = this.placeDelay.wv().intValue();
             int intValue4 = this.stopSneaking.wv().intValue();
             if (this.agE > 0) {
                 this.agE--;
-                this.agB = 0;
+                this.sneakingTicks = 0;
                 this.agC = 0;
             }
 
-            if (this.agB >= 0) {
+            if (this.sneakingTicks >= 0) {
                 aEg.gameSettings.keyBindSneak.setPressed(true);
             } else {
-                if (this.acu > 0) {
-                    this.agB = (int)(intValue4);
+                if (this.ticksOnAir > 0) {
+                    this.sneakingTicks = (int)(intValue4);
                 }
 
                 if ((
-                        this.acu > 0
+                        this.ticksOnAir > 0
                             || PlayerUtil.p(aEg.thePlayer.motionX * intValue2, -0.0784000015258789, aEg.thePlayer.motionZ * intValue2) instanceof BlockAir
                     )
                     && this.agC <= 0) {
-                    this.agB = (int)(intValue2 + intValue3 + intValue4);
+                    this.sneakingTicks = (int)(intValue2 + intValue3 + intValue4);
                     this.agC = this.sneakEvery.wv().intValue();
                 }
             }
@@ -1387,7 +1387,7 @@ public class Scaffold extends Module {
             return new Vector2f(var4, var5);
         }
 
-        EnumFacing enumfacing = var2.va();
+        EnumFacing enumfacing = var2.getEnumFacing();
         float f13 = aEg.thePlayer.pl;
         float degrees = (float)Math.toDegrees(MoveUtil.direction());
         ArrayList arraylist = new ArrayList();
@@ -1439,15 +1439,15 @@ public class Scaffold extends Module {
     }
 
     @Generated
-    public void M(int var1) {
-        this.acu = var1;
+    public void setTicksOnAir(int var1) {
+        this.ticksOnAir = var1;
     }
 
     public void kj() {
         this.c(true, true, true, true, true, true);
     }
 
-    public void jF() {
+    public void calculateRotations() {
         double d = 0.0;
         int i5_hi = 0;
         int name = Integer.parseInt(String.valueOf(this.yawOffset.wo().getName()));
@@ -1455,7 +1455,7 @@ public class Scaffold extends Module {
         double d4 = this.rotationSpeed.wA().doubleValue();
         float f6 = (float)MathUtil.l(rotationSpeed, d4);
         MovementFix movementfix = this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF;
-        EnumFacingOffset aib = this.acr != null ? this.acr : this.agw;
+        EnumFacingOffset aib = this.enumFacing != null ? this.enumFacing : this.agw;
         if (aib != null) {
             String s = this.getDisplayName();
             switch (s) {
@@ -1464,21 +1464,21 @@ public class Scaffold extends Module {
                     if (this.agH
                         && !aEg.gameSettings.keyBindPickBlock.isKeyDown()
                         && aib != null
-                        && (aEg.objectMouseOver.sideHit != aib.va() || !aEg.objectMouseOver.getBlockPos().equals(this.blockFace))) {
+                        && (aEg.objectMouseOver.sideHit != aib.getEnumFacing() || !aEg.objectMouseOver.getBlockPos().equals(this.blockFace))) {
                         this.D(name);
                     }
                     break;
                 case "Breesily":
                     if (this.agH && aib != null) {
-                        if (aib.va() == EnumFacing.UP) {
-                            this.act = 90.0F;
+                        if (aib.getEnumFacing() == EnumFacing.UP) {
+                            this.targetPitch = 90.0F;
                         } else {
-                            Double d5 = (double)((float)(Math.toDegrees(Math.atan2(aib.vb().zCoord, aib.vb().xCoord)) % 360.0) - 90.0F);
+                            Double d5 = (double)((float)(Math.toDegrees(Math.atan2(aib.getOffset().zCoord, aib.getOffset().xCoord)) % 360.0) - 90.0F);
                             Double d6 = 80.0;
-                            this.acs = (float)d5.doubleValue() + this.agz;
-                            this.act = (float)d6.doubleValue() + this.agA;
+                            this.targetYaw = (float)d5.doubleValue() + this.agz;
+                            this.targetPitch = (float)d6.doubleValue() + this.agA;
                         }
-                    } else if (Math.random() > 0.99 || this.act % 90.0F == 0.0F) {
+                    } else if (Math.random() > 0.99 || this.targetPitch % 90.0F == 0.0F) {
                         this.agz = (float)(Math.random() - 0.5);
                         this.agA = (float)(Math.random() - 0.5);
                     }
@@ -1525,11 +1525,11 @@ public class Scaffold extends Module {
                     this.D(name);
                     if (aib != null
                         && (
-                            this.acu <= 0
-                                || aef.a(RotationComponent.fk, aib.va(), this.blockFace, this.rayCast.wo().getName().equals("Strict"))
+                            this.ticksOnAir <= 0
+                                || aef.a(RotationComponent.fk, aib.getEnumFacing(), this.blockFace, this.rayCast.wo().getName().equals("Strict"))
                                 || aEg.thePlayer.cqL < 2 && aEg.thePlayer.onGround
                         )) {
-                        this.acs = (float)Math.toDegrees(MoveUtil.direction(aEg.thePlayer.pl, this.jp, this.jq)) - name;
+                        this.targetYaw = (float)Math.toDegrees(MoveUtil.direction(aEg.thePlayer.pl, this.forward, this.strafe)) - name;
                     }
                     break;
                 case "Eagle":
@@ -1564,8 +1564,8 @@ public class Scaffold extends Module {
                         f8 += 90.0F;
                     }
 
-                    this.acs = f8 + this.agz / 2.0F;
-                    this.act = f9 + this.agA / 2.0F;
+                    this.targetYaw = f8 + this.agz / 2.0F;
+                    this.targetPitch = f9 + this.agA / 2.0F;
                     break;
                 case "Telly":
                     if (this.agG == 0 && this.watchdogTelly.wo()) {
@@ -1582,30 +1582,30 @@ public class Scaffold extends Module {
                         if (enoughMovementForSprinting2 != 0) {
                             float degrees = (float)Math.toDegrees(MoveUtil.direction());
                             Float f13 = (float)(85.0 + Math.random() * 0.5);
-                            this.acs = degrees;
-                            this.act = f13;
-                            RotationComponent.setRotations(RotationUtil.m(new Vector2f(this.acs, this.act)), 180.0, MovementFix.NORMAL);
+                            this.targetYaw = degrees;
+                            this.targetPitch = f13;
+                            RotationComponent.setRotations(RotationUtil.m(new Vector2f(this.targetYaw, this.targetPitch)), 180.0, MovementFix.NORMAL);
                             int k6_hi = 1;
                             this.agN = true;
                         } else {
                             int notKeyDown = !aEg.thePlayer.onGround || !MoveUtil.enoughMovementForSprinting() || this.blockDiagonalAscend.wo() && aEg.gameSettings.keyBindJump.isKeyDown() && notAbs == 0 || !aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.cqL > 1 && this.agK > 3 ? 0 : 1;
                             if (notKeyDown != 0) {
                                 Vector2f vector2f = this.a(this.blockFace, aib, 360.0F, 0.0F, 90.0F, -45);
-                                this.acs = vector2f.x;
-                                this.act = (float)(vector2f.y + Math.random() * 0.5);
-                                RotationComponent.setRotations(RotationUtil.m(new Vector2f(this.acs, this.act)), 10.0, MovementFix.NORMAL);
+                                this.targetYaw = vector2f.x;
+                                this.targetPitch = (float)(vector2f.y + Math.random() * 0.5);
+                                RotationComponent.setRotations(RotationUtil.m(new Vector2f(this.targetYaw, this.targetPitch)), 10.0, MovementFix.NORMAL);
                                 int i7_hi = 1;
                                 this.agN = true;
                             } else {
-                                int kl2 = aib != null && !aef.a(RotationComponent.fk, aib.va(), this.blockFace, this.kl()) ? 1 : 0;
+                                int kl2 = aib != null && !aef.a(RotationComponent.fk, aib.getEnumFacing(), this.blockFace, this.kl()) ? 1 : 0;
                                 int keyDown = aEg.thePlayer.onGround && !aEg.gameSettings.keyBindJump.isKeyDown() ? 1 : 0;
                                 if ((kl2 != 0 || keyDown != 0 || this.agK <= 5 || aib == null) && aib != null) {
                                     Vector2f vector2f1 = this.a(
                                         this.blockFace,
                                         aib,
                                         kl2 != 0 ? this.kl() : false,
-                                        (float)(this.acs + Math.random() * 0.5),
-                                        (float)(this.act + Math.random() * 0.5),
+                                        (float)(this.targetYaw + Math.random() * 0.5),
+                                        (float)(this.targetPitch + Math.random() * 0.5),
                                         45.0F
                                     );
                                     int wo2 = this.agN && this.rotationBlockBoost.wo() && !aEg.thePlayer.onGround ? 1 : 0;
@@ -1624,8 +1624,8 @@ public class Scaffold extends Module {
                                         f15 = this.watchdogTellyRotationSpeed.wA().floatValue();
                                     }
 
-                                    this.acs = this.b(this.acs, vector2f1.x, (float)MathUtil.l(f14, f15));
-                                    this.act = this.b(this.act, vector2f1.y, (float)MathUtil.l(f14, f15));
+                                    this.targetYaw = this.b(this.targetYaw, vector2f1.x, (float)MathUtil.l(f14, f15));
+                                    this.targetPitch = this.b(this.targetPitch, vector2f1.y, (float)MathUtil.l(f14, f15));
                                 }
                             }
                         }
@@ -1651,12 +1651,12 @@ public class Scaffold extends Module {
                         if (tR2 >= 0
                             && aEg.thePlayer.tR <= (this.sameY.wo().getName().equals("Off") ? 7 : 10)
                             && (!aEg.thePlayer.onGround || !aEg.gameSettings.keyBindJump.isKeyDown())) {
-                            if (aib != null && !aef.a(RotationComponent.fk, aib.va(), this.blockFace, this.rayCast.wo().getName().equals("Strict"))) {
+                            if (aib != null && !aef.a(RotationComponent.fk, aib.getEnumFacing(), this.blockFace, this.rayCast.wo().getName().equals("Strict"))) {
                                 this.D(45);
                             }
                         } else {
                             this.D(Integer.parseInt(String.valueOf(this.yawOffset.wo().getName())));
-                            this.acs = aEg.thePlayer.pl;
+                            this.targetYaw = aEg.thePlayer.pl;
                         }
 
                         if (aEg.thePlayer.tR <= 0 && aEg.thePlayer.cqL < 2 || aEg.thePlayer.onGround && aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.cqL < 2) {
@@ -1670,8 +1670,8 @@ public class Scaffold extends Module {
 
                         if (tR3 < 3 || aEg.thePlayer.tR > (this.sameY.wo().getName().equals("Off") ? 7 : 10)) {
                             this.D(Integer.parseInt(String.valueOf(this.yawOffset.wo().getName())));
-                            this.acs = aEg.thePlayer.pl;
-                        } else if (aib != null && !aef.a(RotationComponent.fk, aib.va(), this.blockFace, this.rayCast.wo().getName().equals("Strict"))) {
+                            this.targetYaw = aEg.thePlayer.pl;
+                        } else if (aib != null && !aef.a(RotationComponent.fk, aib.getEnumFacing(), this.blockFace, this.rayCast.wo().getName().equals("Strict"))) {
                             this.D(0);
                         }
 
@@ -1686,8 +1686,8 @@ public class Scaffold extends Module {
                         aEg.Az();
                     }
 
-                    this.acs = aEg.thePlayer.pl - aEg.thePlayer.pl % 90.0F - 180.0F + 45 * (aEg.thePlayer.pl > 0.0F ? 1 : -1);
-                    this.act = 76.4F;
+                    this.targetYaw = aEg.thePlayer.pl - aEg.thePlayer.pl % 90.0F - 180.0F + 45 * (aEg.thePlayer.pl > 0.0F ? 1 : -1);
+                    this.targetPitch = 76.4F;
                     movementfix = MovementFix.TRADITIONAL;
                     Double d11 = 0.15;
                     int notAbs2 = !(Math.abs(aEg.thePlayer.posX % 1.0) > 1.0 - d11) && !(Math.abs(aEg.thePlayer.posX % 1.0) < d11) ? 0 : 1;
@@ -1699,7 +1699,7 @@ public class Scaffold extends Module {
                     aEg.gameSettings.keyBindForward.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindBack.getKeyCode()));
                     aEg.gameSettings.keyBindLeft.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindRight.getKeyCode()));
                     this.agI++;
-                    if (Math.abs(MathHelper.wrapAngleTo180_double(this.acs - RotationComponent.fn.getX())) > 10.0) {
+                    if (Math.abs(MathHelper.wrapAngleTo180_double(this.targetYaw - RotationComponent.fn.getX())) > 10.0) {
                         this.agI = (int)(Math.random() * 4.0);
                         this.agz = (float)(Math.random() - 0.5) / 10.0F;
                         this.agA = (float)(Math.random() - 0.5) / 10.0F;
@@ -1716,16 +1716,16 @@ public class Scaffold extends Module {
                         aEg.gameSettings.keyBindSneak.setPressed(false);
                     }
 
-                    this.acs = this.acs + this.agz;
-                    this.act = this.act + this.agA;
+                    this.targetYaw = this.targetYaw + this.agz;
+                    this.targetPitch = this.targetPitch + this.agA;
             }
 
             if (!this.rotationMode.wo().getName().equals("Grim")
                 && f6 != 0.0F
                 && this.blockFace != null
-                && (this.acr != null || this.agw != null)
+                && (this.enumFacing != null || this.agw != null)
                 && (!this.sprint.wo().getName().equals("Watchdog Prediction") || !aEg.thePlayer.onGround)) {
-                RotationComponent.setRotations(new Vector2f(this.acs, this.act), f6, movementfix);
+                RotationComponent.setRotations(new Vector2f(this.targetYaw, this.targetPitch), f6, movementfix);
             }
         }
     }
@@ -1733,11 +1733,11 @@ public class Scaffold extends Module {
     public Vec3 getHitVec() {
         Vec3 vec3 = new Vec3(this.blockFace.getX() + Math.random(), this.blockFace.getY() + Math.random(), this.blockFace.getZ() + Math.random());
         MovingObjectPosition movingobjectposition = aef.c(RotationComponent.fk, aEg.playerController.getBlockReachDistance());
-        if (this.acr == null) {
+        if (this.enumFacing == null) {
             return vec3;
         }
 
-        switch (this.acr.va()) {
+        switch (this.enumFacing.getEnumFacing()) {
             case NORTH:
                 vec3.zCoord = this.blockFace.getZ();
                 break;
@@ -1761,7 +1761,7 @@ public class Scaffold extends Module {
             && movingobjectposition.getBlockPos() != null
             && movingobjectposition.hitVec != null
             && movingobjectposition.getBlockPos().equals(this.blockFace)
-            && movingobjectposition.sideHit == this.acr.va()) {
+            && movingobjectposition.sideHit == this.enumFacing.getEnumFacing()) {
             vec3 = movingobjectposition.hitVec;
         }
 

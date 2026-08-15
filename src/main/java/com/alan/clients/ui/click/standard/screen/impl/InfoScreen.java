@@ -15,10 +15,10 @@ public class InfoScreen implements Screen, InstanceAccess {
     }
 
     @Override
-    public void b(int var1, int var2, float var3) {
+    public void onRender(int var1, int var2, float var3) {
         Vector2f vector2f = this.getStandardClickGUI().getScale();
         Vector2f vector2f1 = this.getStandardClickGUI().getPosition();
-        double d0 = this.getStandardClickGUI().oY().aym;
+        double d0 = this.getStandardClickGUI().getSidebar().aym;
         FontManager.MAIN.a(32, FontWeight.REGULAR).a(Client.b, vector2f.getX() + d0 + 20.0, vector2f.getY() + 20.0F, Color.WHITE.getRGB());
         FontManager.MAIN
             .a(16, FontWeight.REGULAR)
@@ -31,7 +31,7 @@ public class InfoScreen implements Screen, InstanceAccess {
         FontManager.MAIN.a(17, FontWeight.REGULAR).a("6.9.5", vector2f.getX() + d0 + 20.0, vector2f.getY() + 50.0F, new Color(255, 255, 255, 164).getRGB());
         double now = System.currentTimeMillis() / 1000.0 % 45.0 * 11.0;
         ScissorUtil.hK();
-        ScissorUtil.a(new ScaledResolution(aEg), vector2f.getX() + d0, vector2f.getY() + 90.0F, vector2f1.getX(), vector2f1.getY() - 175.0F);
+        ScissorUtil.scissor(new ScaledResolution(aEg), vector2f.getX() + d0, vector2f.getY() + 90.0F, vector2f1.getX(), vector2f1.getY() - 175.0F);
         FontManager.MAIN
             .a(17, FontWeight.REGULAR)
             .a(qt(), vector2f.getX() + d0 + 20.0, vector2f.getY() + 100.0F - now + (vector2f1.getY() - 175.0F), new Color(164, 164, 164, 64).getRGB());

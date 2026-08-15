@@ -24,7 +24,7 @@ public class ShaderRenderManager {
     public final Listener<fu> kP = var1 -> this.b(aiz.OVERLAY);
     @EventLink(value = -1)
     public final Listener<Render2DEvent> onRender2D = var1 -> {
-        GuiIngameCache.w(0.0F);
+        GuiIngameCache.renderGameOverlay(0.0F);
         this.b(aiz.OVERLAY);
     };
     @EventLink

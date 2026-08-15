@@ -11,9 +11,9 @@ import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.opengl.Display;
 
 public class AlphaShader extends aix {
-    private final RiseShaderProgram aPU = new RiseShaderProgram("alpha.frag", "vertex.vsh");
-    private Framebuffer aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
-    private float aoJ;
+    private final RiseShaderProgram alphaProgram = new RiseShaderProgram("alpha.frag", "vertex.vsh");
+    private Framebuffer inputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+    private float alpha;
 
     public AlphaShader() {
     }
@@ -25,17 +25,17 @@ public class AlphaShader extends aix {
                 this.update();
                 this.setActive(true);
                 if (this.isActive()) {
-                    this.aPV.bindFramebuffer(true);
+                    this.inputFramebuffer.bindFramebuffer(true);
                     runnables.forEach(Runnable::run);
                     aEg.getFramebuffer().bindFramebuffer(true);
-                    int i = this.aPU.getProgramId();
-                    this.aPU.rt();
+                    int i = this.alphaProgram.getProgramId();
+                    this.alphaProgram.rt();
                     ShaderUniforms.uniform1i(i, "u_diffuse_sampler", 0);
-                    ShaderUniforms.uniform1f(i, "u_alpha", this.aoJ);
+                    ShaderUniforms.uniform1f(i, "u_alpha", this.alpha);
                     GlStateManager.enableBlend();
                     GlStateManager.blendFunc(770, 771);
                     GlStateManager.alphaFunc(516, 0.0F);
-                    this.aPV.bindFramebufferTexture();
+                    this.inputFramebuffer.bindFramebufferTexture();
                     RiseShaderProgram.vN();
                     GlStateManager.disableBlend();
                     RiseShaderProgram.stop();
@@ -46,18 +46,18 @@ public class AlphaShader extends aix {
 
     @Override
     public void update() {
-        if (aEg.displayWidth == this.aPV.framebufferWidth && aEg.displayHeight == this.aPV.framebufferHeight) {
-            this.aPV.framebufferClear();
+        if (aEg.displayWidth == this.inputFramebuffer.framebufferWidth && aEg.displayHeight == this.inputFramebuffer.framebufferHeight) {
+            this.inputFramebuffer.framebufferClear();
         } else {
-            this.aPV.deleteFramebuffer();
-            this.aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+            this.inputFramebuffer.deleteFramebuffer();
+            this.inputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
         }
 
-        this.aPV.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
+        this.inputFramebuffer.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
     }
 
     @Generated
-    public void p(float var1) {
-        this.aoJ = var1;
+    public void setAlpha(float var1) {
+        this.alpha = var1;
     }
 }

@@ -8,7 +8,7 @@ import lombok.Generated;
 import net.minecraft.entity.EntityLivingBase;
 
 public final class AttackEvent extends CancellableEvent {
-    private EntityLivingBase jE;
+    private EntityLivingBase living;
 
     @Override
     public ScriptEvent<? extends Event> getScriptEvent() {
@@ -16,17 +16,17 @@ public final class AttackEvent extends CancellableEvent {
     }
 
     @Generated
-    public EntityLivingBase dc() {
-        return this.jE;
+    public EntityLivingBase getLiving() {
+        return this.living;
     }
 
     @Generated
-    public void b(EntityLivingBase living) {
-        this.jE = living;
+    public void setLiving(EntityLivingBase living) {
+        this.living = living;
     }
 
     @Generated
     public AttackEvent(EntityLivingBase living) {
-        this.jE = living;
+        this.living = living;
     }
 }

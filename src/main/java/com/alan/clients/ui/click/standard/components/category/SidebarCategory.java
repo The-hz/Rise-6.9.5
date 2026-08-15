@@ -36,15 +36,15 @@ public final class SidebarCategory implements InstanceAccess {
     }
 
     public void pF() {
-        RiseClickGUI riseclickgui = Client.a.v();
+        RiseClickGUI riseclickgui = Client.a.getStandardClickGUI();
         Color color = UIColors.SECONDARY.Y((int)this.axT);
-        this.animation.h(this.ayo ? 700L : 2000L);
+        this.animation.setDuration(this.ayo ? 700L : 2000L);
         this.animation.Q(this.ayo ? 0.0 : -this.aym / 1.5);
         RenderUtil.a(
             riseclickgui.axI.x,
             riseclickgui.axI.y,
-            this.aym + this.animation.sG(),
-            riseclickgui.alh.y,
+            this.aym + this.animation.getValue(),
+            riseclickgui.position.y,
             this.getStandardClickGUI().getRound(),
             color,
             true,
@@ -52,20 +52,20 @@ public final class SidebarCategory implements InstanceAccess {
             false,
             true
         );
-        this.ayp.h(1000L);
+        this.ayp.setDuration(1000L);
         this.ayp.Q(riseclickgui.oZ().qa() ? 255.0 : 0.0);
-        RenderUtil.c(
-            riseclickgui.axI.x + this.aym + this.animation.sG(),
+        RenderUtil.horizontalCenteredGradient(
+            riseclickgui.axI.x + this.aym + this.animation.getValue(),
             riseclickgui.axI.y,
             30.0,
-            riseclickgui.alh.y,
-            ColorUtil.d(Color.BLACK, (int)Math.min(this.ayp.sG(), this.axT / 7.0)),
+            riseclickgui.position.y,
+            ColorUtil.withBlue(Color.BLACK, (int)Math.min(this.ayp.getValue(), this.axT / 7.0)),
             new Color(0, 0, 0, 0)
         );
     }
 
     public void renderSidebar(float var1, float var2) {
-        RiseClickGUI riseclickgui = Client.a.v();
+        RiseClickGUI riseclickgui = Client.a.getStandardClickGUI();
         long now = System.currentTimeMillis();
         if (this.lastTime == 0L) {
             this.lastTime = now;
@@ -73,14 +73,14 @@ public final class SidebarCategory implements InstanceAccess {
 
         boolean flag = riseclickgui.axK.qa();
         if (this.ayo = (!Mouse.isButtonDown(0) || this.ayo)
-                && GUIUtil.c(riseclickgui.axI.x - 200.0F, riseclickgui.axI.y, this.ayo ? 310.0 : 210.0, riseclickgui.alh.y, var1, var2)
+                && GUIUtil.c(riseclickgui.axI.x - 200.0F, riseclickgui.axI.y, this.ayo ? 310.0 : 210.0, riseclickgui.position.y, var1, var2)
             || !flag) {
             this.axT = Math.min(this.axT + (now - this.lastTime) * 2L, 255.0);
         } else {
             this.axT = Math.max(this.axT - (float)(now - this.lastTime) * 1.5F, 0.0);
         }
 
-        if (GUIUtil.c(riseclickgui.axI.x, riseclickgui.axI.y, this.ayn > 0.0 ? 70.0 : 10.0, riseclickgui.alh.y, var1, var2) && flag) {
+        if (GUIUtil.c(riseclickgui.axI.x, riseclickgui.axI.y, this.ayn > 0.0 ? 70.0 : 10.0, riseclickgui.position.y, var1, var2) && flag) {
             this.ayn = Math.min(this.ayn + (now - this.lastTime) * 2L, 255.0);
         } else {
             this.ayn = Math.max(this.ayn - (now - this.lastTime), 0.0);
@@ -90,15 +90,15 @@ public final class SidebarCategory implements InstanceAccess {
         double d0 = 10.0;
 
         for (CategoryComponent categoryComponent : this.categories) {
-            categoryComponent.a(d0 += 19.5, this.aym + this.animation.sG(), (int)this.axT, riseclickgui.axK);
+            categoryComponent.render(d0 += 19.5, this.aym + this.animation.getValue(), (int)this.axT, riseclickgui.axK);
         }
 
-        float f = (float)(riseclickgui.axI.getX() + 9.0F + this.animation.sG());
+        float f = (float)(riseclickgui.axI.getX() + 9.0F + this.animation.getValue());
         float f1 = riseclickgui.axI.getY() + (24.75F - FontManager.MAIN.a(42, FontWeight.REGULAR).height() / 2.0F);
-        FontManager.MAIN.a(32, FontWeight.REGULAR).a(Client.b, f + 5.0F, f1 + 2.0F, ColorUtil.d(Color.WHITE, (int)this.axT).hashCode());
+        FontManager.MAIN.a(32, FontWeight.REGULAR).a(Client.b, f + 5.0F, f1 + 2.0F, ColorUtil.withBlue(Color.WHITE, (int)this.axT).hashCode());
         FontManager.MAIN
             .a(16, FontWeight.REGULAR)
-            .a("6.9.5", f + 5.0F + FontManager.MAIN.a(32, FontWeight.REGULAR).getStringWidth(Client.b), f1, ColorUtil.d(this.rz().rA(), (int)Math.min(this.axT, 200.0)).getRGB());
+            .a("6.9.5", f + 5.0F + FontManager.MAIN.a(32, FontWeight.REGULAR).getStringWidth(Client.b), f1, ColorUtil.withBlue(this.rz().rA(), (int)Math.min(this.axT, 200.0)).getRGB());
     }
 
     public void preRenderClickGUI() {

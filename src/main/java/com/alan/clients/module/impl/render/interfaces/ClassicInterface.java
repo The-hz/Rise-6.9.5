@@ -25,8 +25,8 @@ import java.util.Date;
 import net.minecraft.client.Minecraft;
 
 public class ClassicInterface extends Mode<Interface> {
-    private final ModeValue ass = new ClassicArrayListColorModeValue(this, "ArrayList Color Mode", this);
-    private final ModeValue ast = new ArrayListAlignmentModeValue(this, "ArrayList Alignment", this);
+    private final ModeValue arrayListColorMode = new ClassicArrayListColorModeValue(this, "ArrayList Color Mode", this);
+    private final ModeValue arrayListAlignment = new ArrayListAlignmentModeValue(this, "ArrayList Alignment", this);
     private final BooleanValue arraylistSideBar = new BooleanValue("Arraylist Side Bar", this, false);
     private final BooleanValue arraylistBackground = new BooleanValue("Arraylist Background", this, false);
     private final BooleanValue showFps = new BooleanValue("Show Fps", this, false);
@@ -42,24 +42,24 @@ public class ClassicInterface extends Mode<Interface> {
             Color[] acolor = new Color[]{new Color(91, 206, 250), new Color(245, 169, 184), Color.WHITE, new Color(245, 169, 184)};
             int j = 0;
             this.getParent().n(agc.height() + 2.0F);
-            this.getParent().a(agc);
-            this.getParent().o(3.0F);
+            this.getParent().setWidthComparator(agc);
+            this.getParent().setEdgeOffset(3.0F);
             double d0 = aEg.jY.getScaledHeight() - 10;
             String s = String.valueOf(Math.round(aEg.thePlayer.posX));
             String s1 = String.valueOf(Math.round(aEg.thePlayer.posY));
             String s2 = String.valueOf(Math.round(aEg.thePlayer.posZ));
 
-            for (ArrayListEntry zc : this.getParent().lL()) {
-                if (zc.ath != 0.0F) {
+            for (ArrayListEntry zc : this.getParent().getActiveEntries()) {
+                if (zc.animationTime != 0.0F) {
                     boolean flag = !zc.getTag().isEmpty() && this.getParent().suffix.wo();
-                    double d1 = zc.nr().getX();
-                    double d2 = zc.nr().getY();
-                    if (this.ast.wo().getName().equals("Left")) {
-                        d2 = zc.nr().getY() + agc.height() + 2.0;
+                    double d1 = zc.getPosition().getX();
+                    double d2 = zc.getPosition().getY();
+                    if (this.arrayListAlignment.wo().getName().equals("Left")) {
+                        d2 = zc.getPosition().getY() + agc.height() + 2.0;
                         if (this.arraylistSideBar.wo()) {
-                            d1 = 3.0F + zc.ath - 8.0F;
+                            d1 = 3.0F + zc.animationTime - 8.0F;
                         } else {
-                            d1 = 3.0F + zc.ath - 10.0F;
+                            d1 = 3.0F + zc.animationTime - 10.0F;
                         }
                     }
 
@@ -68,12 +68,12 @@ public class ClassicInterface extends Mode<Interface> {
                     label88: {
                         label87: {
                             {
-                                color = zc.nw();
+                                color = zc.getColor();
                                 color1 = this.rz().rA();
-                                String s3 = this.ass.wo().getName();
+                                String s3 = this.arrayListColorMode.wo().getName();
                                 switch (s3) {
                                     case "Fade":
-                                        color1 = this.rz().getAccentColor(new Vector2d(0.0, zc.nr().getY()));
+                                        color1 = this.rz().getAccentColor(new Vector2d(0.0, zc.getPosition().getY()));
                                         break label88;
                                     case "Rainbow":
                                         break label87;
@@ -92,14 +92,14 @@ public class ClassicInterface extends Mode<Interface> {
                     }
 
                     if (this.arraylistBackground.wo()) {
-                        RenderUtil.d(d1 - 2.0, d2 - 2.0, zc.atj + zc.atk + 4.0F, this.getParent().aoq, Themes.rK());
+                        RenderUtil.d(d1 - 2.0, d2 - 2.0, zc.nameWidth + zc.tagWidth + 4.0F, this.getParent().moduleSpacing, Themes.rK());
                     }
 
                     if (this.arraylistSideBar.wo()) {
-                        if (this.ast.wo().getName().equals("Left")) {
-                            RenderUtil.d(d1 - (this.arraylistBackground.wo() ? 2 : 3), d2 - 2.0, 1.0, this.getParent().aoq, color1);
+                        if (this.arrayListAlignment.wo().getName().equals("Left")) {
+                            RenderUtil.d(d1 - (this.arraylistBackground.wo() ? 2 : 3), d2 - 2.0, 1.0, this.getParent().moduleSpacing, color1);
                         } else {
-                            RenderUtil.d(d1 + (zc.atj + zc.atk) + 2.0, d2 - 2.0, 1.0, this.getParent().aoq, color1);
+                            RenderUtil.d(d1 + (zc.nameWidth + zc.tagWidth) + 2.0, d2 - 2.0, 1.0, this.getParent().moduleSpacing, color1);
                         }
                     }
 
@@ -107,14 +107,14 @@ public class ClassicInterface extends Mode<Interface> {
                     i++;
                     j = (j + 1) % acolor.length;
                     if (flag) {
-                        agc.b(zc.nz(), d1 + zc.nu() + 3.0, d2, -3355444);
+                        agc.b(zc.getDisplayTag(), d1 + zc.getNameWidth() + 3.0, d2, -3355444);
                     }
 
-                    zc.b(color1);
+                    zc.setColor(color1);
                 }
             }
 
-            int k = this.ass.wo().getName().equals("Rainbow") ? R(1000) : this.rz().rA().getRGB();
+            int k = this.arrayListColorMode.wo().getName().equals("Rainbow") ? R(1000) : this.rz().rA().getRGB();
             agc.b(this.nn(), 3.0, 3.0, k);
             if (this.showCoordinates.wo()) {
                 agc.b("X:§7 " + s, 3.0, d0 - aEg.fontRendererObj.height() * 2.0F, k);
@@ -125,16 +125,16 @@ public class ClassicInterface extends Mode<Interface> {
     };
     @EventLink
     public final Listener<TickEvent> onTick = var1x -> aMR.execute(() -> {
-        for (ArrayListEntry zc : this.getParent().lL()) {
-            if (zc.ath != 0.0F) {
+        for (ArrayListEntry zc : this.getParent().getActiveEntries()) {
+            if (zc.animationTime != 0.0F) {
                 agc agc = Client.a.getLocale() == Locale.ZH_ZH ? FontManager.MAIN.a(18, FontWeight.REGULAR) : aEg.fontRendererObj;
                 zc.y(!zc.getTag().isEmpty() && this.getParent().suffix.wo());
-                String s = (this.getParent().lowercase.wo() ? zc.nx().toLowerCase() : zc.nx()).replace(this.getParent().lH().wo() ? " " : "", "");
-                String s1 = (this.getParent().lowercase.wo() ? zc.getTag().toLowerCase() : zc.getTag()).replace(this.getParent().lH().wo() ? " " : "", "");
-                zc.t(agc.getStringWidth(s));
-                zc.u(zc.nA() ? agc.getStringWidth(s1) + 3 : 0.0F);
-                zc.ap(s);
-                zc.aq(s1);
+                String s = (this.getParent().lowercase.wo() ? zc.getTranslatedName().toLowerCase() : zc.getTranslatedName()).replace(this.getParent().getRemoveSpaces().wo() ? " " : "", "");
+                String s1 = (this.getParent().lowercase.wo() ? zc.getTag().toLowerCase() : zc.getTag()).replace(this.getParent().getRemoveSpaces().wo() ? " " : "", "");
+                zc.setNameWidth(agc.getStringWidth(s));
+                zc.u(zc.isHasTag() ? agc.getStringWidth(s1) + 3 : 0.0F);
+                zc.setDisplayName(s);
+                zc.setDisplayTag(s1);
             }
         }
     });

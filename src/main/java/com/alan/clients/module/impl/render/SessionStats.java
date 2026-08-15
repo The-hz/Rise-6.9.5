@@ -20,7 +20,7 @@ public final class SessionStats extends Module {
     public SessionStats() {
     }
 
-    public DragValue mg() {
+    public DragValue getPosition() {
         return this.position;
     }
 }

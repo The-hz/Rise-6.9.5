@@ -37,6 +37,6 @@ public final class AntiBot extends Module {
 
     @Override
     public void onDisable() {
-        Client.a.x().clear();
+        Client.a.getBotManager().clear();
     }
 }

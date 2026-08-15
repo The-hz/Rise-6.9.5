@@ -29,7 +29,7 @@ public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
     private static TextBox usernameBox;
     private static GuiScreen reference;
     private Animation animation;
-    private static final Runnable TEXT_BOX_RUNNABLE = () -> usernameBox.I(true);
+    private static final Runnable TEXT_BOX_RUNNABLE = () -> usernameBox.setSelected(true);
     private static final Runnable CANCEL_RUNNABLE = () -> aEg.displayGuiScreen(new AccountManagerScreen(reference));
     private static final Runnable GENERATE_RANDOM_RUNNABLE = () -> new Thread(() -> {
         String s = aff.sy();
@@ -38,7 +38,7 @@ public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
         }
     }, "Account generation thread").start();
     private static final Runnable ADD_RUNNABLE = () -> {
-        String s = usernameBox.XS;
+        String s = usernameBox.text;
         if (validate(s)) {
             aeo aeo = new aeo(s);
             AccountManagerScreen.addAccount(aeo);
@@ -47,7 +47,7 @@ public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
         }
     };
     private static final Runnable LOGIN_RUNNABLE = () -> {
-        String s = usernameBox.XS;
+        String s = usernameBox.text;
         if (validate(s)) {
             new aeo(s).se();
             CANCEL_RUNNABLE.run();
@@ -75,7 +75,7 @@ public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
         }
 
         this.b(ShaderQueueType.REGULAR).c(() -> {
-            FONT_RENDERER.c("Select your username", this.width / 2, this.height / 2 - 64 + this.animation.sG(), Color.WHITE.getRGB());
+            FONT_RENDERER.drawString("Select your username", this.width / 2, this.height / 2 - 64 + this.animation.getValue(), Color.WHITE.getRGB());
             usernameBox.draw();
         });
     }
@@ -94,7 +94,7 @@ public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
 
     @Override
     protected void keyTyped(char var1, int var2) {
-        if (usernameBox.tO()) {
+        if (usernameBox.isSelected()) {
             usernameBox.key(var1, var2);
         }
     }
@@ -113,7 +113,7 @@ public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
         this.menuButtons[3] = new MenuTextButton(vector2d.x + f + b1, vector2d.y + (b0 + b1) * 2, f, b0, LOGIN_RUNNABLE, "Login");
         this.menuButtons[4] = new MenuTextButton(vector2d.x + (f + b1) * 2.0F, vector2d.y + (b0 + b1) * 2, f, b0, CANCEL_RUNNABLE, "Cancel");
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
-        this.animation.R(-200.0);
+        this.animation.setStartValue(-200.0);
     }
 
     private static boolean validate(String var0) {

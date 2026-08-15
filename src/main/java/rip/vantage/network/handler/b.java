@@ -79,7 +79,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                 () -> {
                     HashMap hashmap = new HashMap();
 
-                    for (Module module : Client.a.g().ef()) {
+                    for (Module module : Client.a.g().getAll()) {
                         module.setEnabled(false);
                         String s = module.getModuleInfo().aliases()[0];
                         hashmap.put(s, module);
@@ -101,7 +101,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                         }
 
                         for (Value value : module.getAllValues()) {
-                            value.setValueAsObject(value.ws());
+                            value.setValueAsObject(value.getDefaultValue());
                         }
                     }
 
@@ -111,7 +111,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                         if (!flag) {
                             String[] astring1 = s3.split("th_");
                             if (astring1.length > 1) {
-                                rip.vantage.util.NativeBridge.a(() -> Client.a.k().a(Themes.valueOf(astring1[1])));
+                                rip.vantage.util.NativeBridge.a(() -> Client.a.getThemeManager().a(Themes.valueOf(astring1[1])));
                             }
 
                             flag = true;
@@ -331,13 +331,13 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
         Client.a.e().d(new er(var1));
     }
 
-    public void a(rip.vantage.commons.packet.impl.server.general.a var1) {
+    public void handle(rip.vantage.commons.packet.impl.server.general.a var1) {
         c.eRC.aX();
         this.eRz.aX();
     }
 
     @Override
-    public void a(S2CPacketProofOfWorkChallenge packet) {
+    public void handle(S2CPacketProofOfWorkChallenge packet) {
         byte[] abyte = packet.getChallenge();
         if (abyte != null && abyte.length == 32) {
             long i = packet.getTimestamp();
@@ -362,22 +362,22 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStartRecording packet) {
+    public void handle(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStartRecording packet) {
         Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(S2CPacketStopRecording packet) {
+    public void handle(S2CPacketStopRecording packet) {
         Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureRequest packet) {
+    public void handle(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureRequest packet) {
         Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureCancel packet) {
+    public void handle(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureCancel packet) {
         Client.a.e().d(new er(packet));
     }
 
@@ -397,16 +397,16 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorPing packet) {
+    public void handle(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorPing packet) {
         Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.protection.h var1) {
+    public void handle(rip.vantage.commons.packet.impl.server.protection.h var1) {
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.protection.S2CPacketJdkUnlockGrant packet) {
+    public void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketJdkUnlockGrant packet) {
         Client.a.e().d(new er(packet));
     }
 }

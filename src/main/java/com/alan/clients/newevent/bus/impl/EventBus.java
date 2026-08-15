@@ -28,14 +28,14 @@ import lombok.Generated;
 public final class EventBus<Event>
 implements InstanceAccess,
 Bus<Event> {
-    private final Map<Type, List<CallSite<Event>>> iV;
-    private final Map<Type, List<Listener<Event>>> iW;
+    private final Map<Type, List<CallSite<Event>>> callSiteMap;
+    private final Map<Type, List<Listener<Event>>> listenerCache;
     private final ConcurrentLinkedQueue<Function<Event, Boolean>> iX = new ConcurrentLinkedQueue();
     private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
 
     public EventBus() {
-        this.iV = new HashMap<Type, List<CallSite<Event>>>();
-        this.iW = new HashMap<Type, List<Listener<Event>>>();
+        this.callSiteMap = new HashMap<Type, List<CallSite<Event>>>();
+        this.listenerCache = new HashMap<Type, List<Listener<Event>>>();
     }
 
     @Override
@@ -52,15 +52,15 @@ Bus<Event> {
                     Listener listener = (Listener)LOOKUP.unreflectGetter(field).invokeWithArguments(object);
                     byte by2 = eventLink.value();
                     CallSite callSite3 = new CallSite(object, listener, by2);
-                    if (this.iV.containsKey(type)) {
-                        List<CallSite<Event>> list = this.iV.get(type);
+                    if (this.callSiteMap.containsKey(type)) {
+                        List<CallSite<Event>> list = this.callSiteMap.get(type);
                         list.add(callSite3);
                         list.sort((callSite, callSite2) -> callSite2.priority - callSite.priority);
                         continue;
                     }
                     ArrayList arrayList = new ArrayList(1);
                     arrayList.add(callSite3);
-                    this.iV.put(type, arrayList);
+                    this.callSiteMap.put(type, arrayList);
                 }
                 catch (Throwable throwable) {
                     return;
@@ -74,8 +74,8 @@ Bus<Event> {
     }
 
     private void populateListenerCache() {
-        Map<Type, List<CallSite<Event>>> map = this.iV;
-        Map<Type, List<Listener<Event>>> map2 = this.iW;
+        Map<Type, List<CallSite<Event>>> map = this.callSiteMap;
+        Map<Type, List<Listener<Event>>> map2 = this.listenerCache;
         for (Type type : map.keySet()) {
             List<CallSite<Event>> list = map.get(type);
             int size = list.size();
@@ -89,7 +89,7 @@ Bus<Event> {
 
     @Override
     public void c(Object object) {
-        Iterator<List<CallSite<Event>>> iterator = this.iV.values().iterator();
+        Iterator<List<CallSite<Event>>> iterator = this.callSiteMap.values().iterator();
         while (iterator.hasNext()) {
             iterator.next().removeIf(callSite -> {
                 if (callSite.owner != object) return false;
@@ -105,7 +105,7 @@ Bus<Event> {
             if (!(EventBus.aEg.theWorld != null && aEg.getNetHandler() != null && (EventBus.aEg.getNetHandler().doneLoadingTerrain || event instanceof PacketSendEvent) || event instanceof er || event instanceof fu || event instanceof ServerKickEvent || event instanceof GameEvent || event instanceof WorldChangeEvent || event instanceof ServerJoinEvent)) {
                 return;
             }
-            List list = this.iW.getOrDefault(event.getClass(), Collections.emptyList());
+            List list = this.listenerCache.getOrDefault(event.getClass(), Collections.emptyList());
             int n2 = 0;
             int size = list.size();
             while (n2 < size) {
@@ -147,13 +147,13 @@ Bus<Event> {
     }
 
     @Generated
-    public Map<Type, List<CallSite<Event>>> cJ() {
-        return this.iV;
+    public Map<Type, List<CallSite<Event>>> getCallSiteMap() {
+        return this.callSiteMap;
     }
 
     @Generated
-    public Map<Type, List<Listener<Event>>> cK() {
-        return this.iW;
+    public Map<Type, List<Listener<Event>>> getListenerCache() {
+        return this.listenerCache;
     }
 
     static class CallSite<Event> {

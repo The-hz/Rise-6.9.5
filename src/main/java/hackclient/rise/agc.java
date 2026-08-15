@@ -14,9 +14,9 @@ public abstract class agc {
 
     public abstract int getStringWidth(String var1);
 
-    public abstract int c(String var1, double var2, double var4, int var6);
+    public abstract int drawString(String var1, double var2, double var4, int var6);
 
-    public abstract int d(String var1, double var2, double var4, int var6);
+    public abstract int drawCenteredString(String var1, double var2, double var4, int var6);
 
     public abstract float height();
 

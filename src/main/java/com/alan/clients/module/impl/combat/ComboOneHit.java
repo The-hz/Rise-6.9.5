@@ -21,7 +21,7 @@ public final class ComboOneHit extends Module {
     @EventLink
     public final Listener<AttackEvent> onAttack = var1 -> {
         for (int i = 0; i < this.packets.wo().intValue(); i++) {
-            PacketUtil.l(new C02PacketUseEntity(var1.dc(), Action.ATTACK));
+            PacketUtil.send(new C02PacketUseEntity(var1.getLiving(), Action.ATTACK));
         }
     };
 

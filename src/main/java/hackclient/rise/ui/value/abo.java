@@ -108,9 +108,9 @@ public class abo extends ValueComponent {
             Color color1 = colorvalue.wo();
             double d7 = d0 + d3 * 2.0 + 15.0;
             double d8 = d1 + d2 + d3 + d3 + this.getStandardClickGUI().round - 11.0;
-            FontManager.MAIN.a(17, FontWeight.REGULAR).c(color1.getRed() + "", d7 + d3, d8, UIColors.SECONDARY_TEXT.pW());
-            FontManager.MAIN.a(17, FontWeight.REGULAR).c(color1.getGreen() + "", d7 + 30.0, d8, UIColors.SECONDARY_TEXT.pW());
-            FontManager.MAIN.a(17, FontWeight.REGULAR).c(color1.getBlue() + "", d7 + d3 * 6.0, d8, UIColors.SECONDARY_TEXT.pW());
+            FontManager.MAIN.a(17, FontWeight.REGULAR).drawString(color1.getRed() + "", d7 + d3, d8, UIColors.SECONDARY_TEXT.pW());
+            FontManager.MAIN.a(17, FontWeight.REGULAR).drawString(color1.getGreen() + "", d7 + 30.0, d8, UIColors.SECONDARY_TEXT.pW());
+            FontManager.MAIN.a(17, FontWeight.REGULAR).drawString(color1.getBlue() + "", d7 + d3 * 6.0, d8, UIColors.SECONDARY_TEXT.pW());
             double d9 = d8 + 13.0;
             FontManager.MAIN
                 .a(13, FontWeight.REGULAR)
@@ -139,7 +139,7 @@ public class abo extends ValueComponent {
             GuiScreen.setClipboardString(String.format("#%02X%02X%02X", color1.getRed(), color1.getGreen(), color1.getBlue()));
         }
 
-        this.ayU = (this.getStandardClickGUI().axX == null || this.ayU)
+        this.ayU = (this.getStandardClickGUI().overlayPresent == null || this.ayU)
             && (
                 this.ayV
                     || GUIUtil.c(this.position.x + 10.0 + f, this.position.y + this.azb * 0.55, this.aza, 52.0, var1, var2)

@@ -50,7 +50,7 @@ import net.minecraft.util.ResourceLocation;
 public final class ItemUtil {
     private static final List<Item> WHITELISTED_ITEMS = Arrays.asList(Items.fishing_rod, Items.water_bucket, Items.bucket, Items.arrow, Items.bow, Items.snowball, Items.egg, Items.ender_pearl, Items.clay_ball, Items.fire_charge);
 
-    public static boolean u(ItemStack itemStack) {
+    public static boolean useful(ItemStack itemStack) {
         Item item = itemStack.getItem();
         if (item instanceof ItemPotion) {
             ItemPotion itemPotion = (ItemPotion)item;

@@ -27,7 +27,7 @@ import org.lwjgl.opengl.GL11;
 @ModuleInfo(aliases = "module.render.blackholeorbit.name", description = "module.render.blackholeorbit.description", category = Category.RENDER)
 public final class BlackHoleOrbit extends Module {
     private final DragValue position = new DragValue("Position", this, new Vector2d(260.0, 140.0), false);
-    private Interface amf;
+    private Interface interfaceModule;
     private static final double amg = 190.0;
     private static final double amh = 135.0;
     private static final double ami = 120000.0;
@@ -66,12 +66,12 @@ public final class BlackHoleOrbit extends Module {
 
     private void c(Vector2d var1) {
         double d0 = this.ll();
-        RenderUtil.roundedRectangle(var1.x, var1.y, 190.0, 135.0, d0, ColorUtil.d(Themes.rK(), 140));
+        RenderUtil.roundedRectangle(var1.x, var1.y, 190.0, 135.0, d0, ColorUtil.withBlue(Themes.rK(), 140));
         String s = this.getName();
         FontManager.MAIN.a(18, FontWeight.BOLD).b(s, var1.x + 10.0, var1.y + 11.0, this.rz().rA().getRGB());
         double d1 = var1.x + 10.0;
         double d2 = var1.y + 28.0;
-        RenderUtil.roundedRectangle(d1, d2, 170.0, 97.0, Math.max(3.0, d0 - 1.0), ColorUtil.d(Color.BLACK, 55));
+        RenderUtil.roundedRectangle(d1, d2, 170.0, 97.0, Math.max(3.0, d0 - 1.0), ColorUtil.withBlue(Color.BLACK, 55));
         double d3 = d1 + 85.0;
         double d4 = d2 + 52.38;
         RenderUtil.g(d1, d2, 170.0, 97.0);
@@ -97,17 +97,17 @@ public final class BlackHoleOrbit extends Module {
         double d2 = vector2d.y + 28.0;
         double d3 = d1 + 85.0;
         double d4 = d2 + 52.38;
-        Color color = ColorUtil.d(this.rz().rA(), 55);
+        Color color = ColorUtil.withBlue(this.rz().rA(), 55);
         RenderUtil.c(d3, d4, 26.0, color);
     }
 
     private void f(double var1, double var3) {
         Color color = this.rz().rA();
         Color color1 = this.rz().rB();
-        RenderUtil.c(var1, var3, 22.0, ColorUtil.d(ColorUtil.a(color, color1, 0.5), 35));
-        RenderUtil.c(var1, var3, 18.0, ColorUtil.d(ColorUtil.a(color1, color, 0.65), 28));
-        RenderUtil.c(var1, var3, 15.5, ColorUtil.d(new Color(10, 10, 12), 255));
-        RenderUtil.c(var1, var3, 13.0, ColorUtil.d(Color.BLACK, 255));
+        RenderUtil.c(var1, var3, 22.0, ColorUtil.withBlue(ColorUtil.a(color, color1, 0.5), 35));
+        RenderUtil.c(var1, var3, 18.0, ColorUtil.withBlue(ColorUtil.a(color1, color, 0.65), 28));
+        RenderUtil.c(var1, var3, 15.5, ColorUtil.withBlue(new Color(10, 10, 12), 255));
+        RenderUtil.c(var1, var3, 13.0, ColorUtil.withBlue(Color.BLACK, 255));
     }
 
     private void lj() {
@@ -120,11 +120,11 @@ public final class BlackHoleOrbit extends Module {
             double d1 = c(d0, 0.004166666666666667, 0.05);
             this.a(this.ams, d1);
             this.a(this.amt, d1);
-            if (this.ams.dj) {
+            if (this.ams.active) {
                 this.amu.h(this.ams.x, this.ams.y);
             }
 
-            if (this.amt.dj) {
+            if (this.amt.active) {
                 this.amv.h(this.amt.x, this.amt.y);
             }
 
@@ -145,17 +145,17 @@ public final class BlackHoleOrbit extends Module {
     }
 
     private void a(OrbitBody var1, double var2) {
-        if (!var1.dj) {
+        if (!var1.active) {
             var1.amD -= var2;
             if (var1.amD <= 0.0) {
-                var1.dj = true;
+                var1.active = true;
                 this.a(var1, var1.amB);
             }
         } else {
             double d0 = var1.x * var1.x + var1.y * var1.y + 9.0;
             double d1 = Math.sqrt(d0);
             if (d1 <= 14.0) {
-                var1.dj = false;
+                var1.active = false;
                 var1.amD = 0.65;
             } else {
                 double d2 = 1.0 / (d0 * d1);
@@ -175,7 +175,7 @@ public final class BlackHoleOrbit extends Module {
                 if (!var1.amC && d11 >= 2.35) {
                     var1.amC = true;
                     this.b(var1, d11);
-                    var1.dj = false;
+                    var1.active = false;
                     var1.amD = 1.1;
                 }
             }
@@ -203,12 +203,12 @@ public final class BlackHoleOrbit extends Module {
             this.a(var1, var3, wo);
         }
 
-        RenderUtil.c(var1, var3, 13.2, ColorUtil.d(Color.WHITE, 10));
+        RenderUtil.c(var1, var3, 13.2, ColorUtil.withBlue(Color.WHITE, 10));
     }
 
     private void a(double var1, double var3, OrbitBody var5, TrailBuffer var6, Color var7) {
-        if (var5.dj) {
-            int i = var6.lm();
+        if (var5.active) {
+            int i = var6.size();
             if (i > 1) {
                 for (int j = 0; j < i; j++) {
                     double d0 = (double)j / (i - 1);
@@ -216,7 +216,7 @@ public final class BlackHoleOrbit extends Module {
                     double d2 = 1.2 + 1.2 * d0;
                     double d3 = var1 + var6.O(j);
                     double d4 = var3 + var6.P(j);
-                    RenderUtil.c(d3, d4, d2, ColorUtil.d(var7, (int)d1));
+                    RenderUtil.c(d3, d4, d2, ColorUtil.withBlue(var7, (int)d1));
                 }
             }
 
@@ -234,21 +234,21 @@ public final class BlackHoleOrbit extends Module {
             double d15 = Math.atan2(var5.y, var5.x);
             double d16 = var1 + var5.x;
             double d17 = var3 + var5.y;
-            Color color = ColorUtil.d(var7, k);
+            Color color = ColorUtil.withBlue(var7, k);
             this.a(d16, d17, 4.4 * d12, 4.4 * d13, d15, color);
-            Color color1 = ColorUtil.d(Color.WHITE, (int)(110.0 * d14));
+            Color color1 = ColorUtil.withBlue(Color.WHITE, (int)(110.0 * d14));
             this.a(d16 - 0.7, d17 - 0.7, Math.max(1.0, 2.4200000000000004), Math.max(0.8, 1.2320000000000002), d15, color1);
         }
     }
 
     private void a(double var1, double var3, OrbitParticle var5) {
-        int i = var5.amI.lm();
+        int i = var5.amI.size();
         if (i > 1) {
             for (int j = 0; j < i; j++) {
                 double d0 = (double)j / (i - 1);
                 double d1 = 110.0 * (d0 * d0);
                 double d2 = 0.8 + 0.9 * d0;
-                RenderUtil.c(var1 + var5.amI.O(j), var3 + var5.amI.P(j), d2, ColorUtil.d(var5.amH, (int)d1));
+                RenderUtil.c(var1 + var5.amI.O(j), var3 + var5.amI.P(j), d2, ColorUtil.withBlue(var5.amH, (int)d1));
             }
         }
 
@@ -265,15 +265,15 @@ public final class BlackHoleOrbit extends Module {
         double d13 = u((d4 - 13.2) / 5.0) * d12;
         int k = (int)(170.0 * d13);
         double d14 = Math.atan2(var5.y, var5.x);
-        this.a(var1 + var5.x, var3 + var5.y, var5.amE * d10, var5.amE * d11, d14, ColorUtil.d(var5.amH, k));
+        this.a(var1 + var5.x, var3 + var5.y, var5.amE * d10, var5.amE * d11, d14, ColorUtil.withBlue(var5.amH, k));
     }
 
     private void b(double var1, double var3, double var5, double var7, double var9, double var11) {
         int i = (int)Math.ceil(var5 / 8.0);
         int j = (int)Math.ceil(var7 / 8.0);
-        Color color = ColorUtil.d(Color.BLACK, 18);
-        Color color1 = ColorUtil.d(Color.BLACK, 10);
-        Color color2 = ColorUtil.d(this.rz().rA(), 55);
+        Color color = ColorUtil.withBlue(Color.BLACK, 18);
+        Color color1 = ColorUtil.withBlue(Color.BLACK, 10);
+        Color color2 = ColorUtil.withBlue(this.rz().rA(), 55);
 
         for (int k = 0; k < j; k++) {
             for (int l = 0; l < i; l++) {
@@ -285,11 +285,11 @@ public final class BlackHoleOrbit extends Module {
                 double d5 = d3 - var11;
                 double d6 = d4 * d4 + d5 * d5 + 9.0;
                 double d7 = 120000.0 / d6;
-                if (this.ams.dj) {
+                if (this.ams.active) {
                     d7 += 4000.0 / (v(d2 - (var9 + this.ams.x)) + v(d3 - (var11 + this.ams.y)) + 25.0);
                 }
 
-                if (this.amt.dj) {
+                if (this.amt.active) {
                     d7 += 4000.0 / (v(d2 - (var9 + this.amt.x)) + v(d3 - (var11 + this.amt.y)) + 25.0);
                 }
 
@@ -304,7 +304,7 @@ public final class BlackHoleOrbit extends Module {
                 double d12 = c(d10 * 8.0E-4, -1.6, 1.6);
                 double d13 = c(d11 * 8.0E-4, -1.6, 1.6);
                 Color color3 = (l + k & 1) == 0 ? color : color1;
-                Color color4 = ColorUtil.d(ColorUtil.a(color2, color3, d8), (int)(30.0 + 110.0 * d8));
+                Color color4 = ColorUtil.withBlue(ColorUtil.a(color2, color3, d8), (int)(30.0 + 110.0 * d8));
                 RenderUtil.d(d0 + d12, d1 + d13, 7.0, 7.0, color4);
             }
         }
@@ -331,7 +331,7 @@ public final class BlackHoleOrbit extends Module {
             wo.amE = ThreadLocalRandom.current().nextDouble(1.0, 1.8);
             wo.amG = 1.6 + ThreadLocalRandom.current().nextDouble(0.0, 1.0);
             wo.amF = 0.0;
-            wo.amH = ColorUtil.d(ColorUtil.a(this.rz().rA(), this.rz().rB(), ThreadLocalRandom.current().nextDouble()), 255);
+            wo.amH = ColorUtil.withBlue(ColorUtil.a(this.rz().rA(), this.rz().rB(), ThreadLocalRandom.current().nextDouble()), 255);
             wo.amI = new TrailBuffer(54);
             this.amw.add(wo);
         }
@@ -342,7 +342,7 @@ public final class BlackHoleOrbit extends Module {
         GlStateManager.translate(var1, var3, 0.0);
         GlStateManager.rotate((float)Math.toDegrees(var9), 0.0F, 0.0F, 1.0F);
         RenderUtil.rt();
-        ColorUtil.d(color);
+        ColorUtil.glColor(color);
         GL11.glBegin(6);
         GL11.glVertex2d(0.0, 0.0);
 
@@ -372,7 +372,7 @@ public final class BlackHoleOrbit extends Module {
         var1.x = Math.cos(d1) * d0;
         var1.y = Math.sin(d1) * d0;
         var1.amC = false;
-        var1.dj = true;
+        var1.active = true;
         var1.amD = 0.0;
         double d2 = Math.sqrt(120000.0 / d0);
         double d3 = -Math.sin(d1);
@@ -383,11 +383,11 @@ public final class BlackHoleOrbit extends Module {
     }
 
     private double ll() {
-        if (this.amf == null) {
-            this.amf = this.e(Interface.class);
+        if (this.interfaceModule == null) {
+            this.interfaceModule = this.e(Interface.class);
         }
 
-        return this.amf != null ? this.amf.lD() : 4.0;
+        return this.interfaceModule != null ? this.interfaceModule.getRoundingRadius() : 4.0;
     }
 
     private static double u(double var0) {

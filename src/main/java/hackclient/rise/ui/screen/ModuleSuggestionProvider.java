@@ -58,7 +58,7 @@ implements SuggestionProvider {
                                         String string5 = stringArray2[0] == null ? "" : stringArray2[0].toLowerCase(Locale.ROOT);
                                         string4 = string5.trim().toLowerCase(Locale.ROOT).replace(" ", "");
                                         arrayList3 = new ArrayList<Module>();
-                                        iterator3 = Client.a.g().ef().iterator();
+                                        iterator3 = Client.a.g().getAll().iterator();
                                         break block21;
                                     }
                                     String string6 = stringArray2[0];

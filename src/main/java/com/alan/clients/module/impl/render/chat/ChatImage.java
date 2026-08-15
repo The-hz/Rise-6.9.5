@@ -6,40 +6,40 @@ import java.util.Arrays;
 public class ChatImage {
     private static final int are = 300;
     private static final int arf = 200;
-    private final String arg;
+    private final String url;
     private final int arh;
-    private final int ari;
+    private final int chatLineId;
     private final long arj;
     private volatile BufferedImage[] ark;
-    private volatile int[] arl = new int[0];
-    private volatile int[] arm = new int[]{100};
-    private volatile int arn;
-    private volatile int aro;
+    private volatile int[] textureIds = new int[0];
+    private volatile int[] frameDelays = new int[]{100};
+    private volatile int width;
+    private volatile int height;
     private volatile boolean loaded;
-    private volatile boolean arp;
+    private volatile boolean failed;
     private volatile boolean arq;
     private volatile long arr = System.currentTimeMillis();
 
     public ChatImage(String var1, int var2, int var3) {
-        this.arg = var1;
+        this.url = var1;
         this.arh = var2;
-        this.ari = var3;
+        this.chatLineId = var3;
         this.arj = System.currentTimeMillis();
     }
 
-    public String mY() {
-        return this.arg;
+    public String getUrl() {
+        return this.url;
     }
 
-    public int mZ() {
+    public int getUpdateCounter() {
         return this.arh;
     }
 
-    public int na() {
-        return this.ari;
+    public int getChatLineId() {
+        return this.chatLineId;
     }
 
-    public long nb() {
+    public long getCreatedTime() {
         return this.arj;
     }
 
@@ -47,12 +47,12 @@ public class ChatImage {
         return this.loaded;
     }
 
-    public boolean nc() {
-        return this.arp;
+    public boolean isFailed() {
+        return this.failed;
     }
 
-    public int[] nd() {
-        return this.arl;
+    public int[] getTextureIds() {
+        return this.textureIds;
     }
 
     public synchronized void b(BufferedImage image) {
@@ -61,18 +61,18 @@ public class ChatImage {
 
     public synchronized void a(BufferedImage[] images, int[] var2) {
         this.ark = images;
-        this.arn = images[0].getWidth();
-        this.aro = images[0].getHeight();
+        this.width = images[0].getWidth();
+        this.height = images[0].getHeight();
         this.loaded = true;
-        this.arp = false;
+        this.failed = false;
         this.arq = true;
-        this.arl = new int[images.length];
-        Arrays.fill(this.arl, -1);
-        this.arm = var2 != null && var2.length == images.length ? var2 : new int[images.length];
+        this.textureIds = new int[images.length];
+        Arrays.fill(this.textureIds, -1);
+        this.frameDelays = var2 != null && var2.length == images.length ? var2 : new int[images.length];
 
-        for (int i = 0; i < this.arm.length; i++) {
-            if (this.arm[i] <= 0) {
-                this.arm[i] = 100;
+        for (int i = 0; i < this.frameDelays.length; i++) {
+            if (this.frameDelays[i] <= 0) {
+                this.frameDelays[i] = 100;
             }
         }
 
@@ -80,35 +80,35 @@ public class ChatImage {
     }
 
     public synchronized boolean ne() {
-        return this.arq && this.ark != null && this.arl.length > 0 && this.arl[0] < 0;
+        return this.arq && this.ark != null && this.textureIds.length > 0 && this.textureIds[0] < 0;
     }
 
-    public synchronized BufferedImage[] nf() {
+    public synchronized BufferedImage[] getFrames() {
         return this.ark;
     }
 
     public synchronized void a(int[] var1) {
-        this.arl = var1;
+        this.textureIds = var1;
         this.arq = false;
         this.ark = null;
     }
 
-    public synchronized void ng() {
-        this.arp = true;
+    public synchronized void markFailed() {
+        this.failed = true;
         this.loaded = false;
         this.arq = false;
         this.ark = null;
-        this.arl = new int[0];
+        this.textureIds = new int[0];
     }
 
     public int nh() {
-        int[] aint = this.arl;
+        int[] aint = this.textureIds;
         if (aint != null && aint.length != 0) {
             if (aint.length == 1) {
                 return aint[0];
             }
 
-            int[] aint1 = this.arm;
+            int[] aint1 = this.frameDelays;
             int i = 0;
 
             for (int j : aint1) {
@@ -133,11 +133,11 @@ public class ChatImage {
         return -1;
     }
 
-    public int q(float var1) {
-        if (this.arn > 0 && this.aro > 0) {
+    public int getRenderWidth(float var1) {
+        if (this.width > 0 && this.height > 0) {
             float f = Math.min(var1, 300.0F);
-            float f1 = (float)this.arn / this.aro;
-            int i = Math.min(this.arn, (int)f);
+            float f1 = (float)this.width / this.height;
+            int i = Math.min(this.width, (int)f);
             int j = Math.max(1, Math.round(i / f1));
             if (j > 200) {
                 short short1 = 200;
@@ -149,10 +149,10 @@ public class ChatImage {
         return Math.min((int)var1, 300);
     }
 
-    public int r(float var1) {
-        if (this.arn > 0 && this.aro > 0) {
-            float f = (float)this.arn / this.aro;
-            int i = Math.min(this.arn, Math.min((int)var1, 300));
+    public int getRenderHeight(float var1) {
+        if (this.width > 0 && this.height > 0) {
+            float f = (float)this.width / this.height;
+            int i = Math.min(this.width, Math.min((int)var1, 300));
             return Math.min(Math.max(1, Math.round(i / f)), 200);
         }
         return 0;

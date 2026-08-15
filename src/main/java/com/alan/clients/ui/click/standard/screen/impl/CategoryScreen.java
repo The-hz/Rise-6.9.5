@@ -17,8 +17,8 @@ import rip.vantage.commons.util.time.a;
 public final class CategoryScreen implements Screen, InstanceAccess {
     private final a azA = new a();
     public agk scrollUtil = new agk();
-    public ArrayList<ModuleComponent> azB;
-    public Category axt;
+    public ArrayList<ModuleComponent> relevantModules;
+    public Category category;
     private double azC;
     private double azD;
 
@@ -26,16 +26,16 @@ public final class CategoryScreen implements Screen, InstanceAccess {
     }
 
     @Override
-    public void b(int var1, int var2, float var3) {
-        if (this.axt != null) {
+    public void onRender(int var1, int var2, float var3) {
+        if (this.category != null) {
             RiseClickGUI riseclickgui = this.getStandardClickGUI();
             this.scrollUtil.qx();
             double d0 = riseclickgui.axI.y + 7.0F + this.scrollUtil.tE();
             this.azD = d0;
             double d1 = 0.0;
 
-            for (ModuleComponent moduleComponent : this.azB) {
-                moduleComponent.draw(new Vector2d(riseclickgui.axI.x + riseclickgui.axJ.aym + 8.0, d0), var1, var2, var3);
+            for (ModuleComponent moduleComponent : this.relevantModules) {
+                moduleComponent.draw(new Vector2d(riseclickgui.axI.x + riseclickgui.sidebar.aym + 8.0, d0), var1, var2, var3);
                 d0 += moduleComponent.scale.y + 7.0F;
                 d1 += moduleComponent.scale.y + 7.0F;
             }
@@ -44,15 +44,15 @@ public final class CategoryScreen implements Screen, InstanceAccess {
             double d2 = 7.0;
             double d3 = riseclickgui.getScale().getX() + riseclickgui.getPosition().getX() - 4.0F;
             double d4 = riseclickgui.getScale().getY() + d2;
-            this.scrollUtil.a(new Vector2d(d3, d4), this.getStandardClickGUI().alh.y - d2 * 2.0);
-            this.scrollUtil.V(-d1 + riseclickgui.alh.y - 7.0);
+            this.scrollUtil.a(new Vector2d(d3, d4), this.getStandardClickGUI().position.y - d2 * 2.0);
+            this.scrollUtil.V(-d1 + riseclickgui.position.y - 7.0);
             this.azA.aX();
         }
     }
 
     @Override
-    public void a(char var1, int var2) {
-        Iterator iterator = this.qf().iterator();
+    public void onKey(char var1, int var2) {
+        Iterator iterator = this.getRelevantModules().iterator();
 
         while (iterator.hasNext()) {
             ((ModuleComponent)iterator.next()).key(var1, var2);
@@ -61,8 +61,8 @@ public final class CategoryScreen implements Screen, InstanceAccess {
 
     @Override
     public void f(int var1, int var2, int var3) {
-        if (this.azB != null) {
-            Iterator iterator = this.azB.iterator();
+        if (this.relevantModules != null) {
+            Iterator iterator = this.relevantModules.iterator();
 
             while (iterator.hasNext()) {
                 ((ModuleComponent)iterator.next()).click(var1, var2, var3);
@@ -72,8 +72,8 @@ public final class CategoryScreen implements Screen, InstanceAccess {
 
     @Override
     public void oG() {
-        if (this.axt != null) {
-            Iterator iterator = this.qf().iterator();
+        if (this.category != null) {
+            Iterator iterator = this.getRelevantModules().iterator();
 
             while (iterator.hasNext()) {
                 ((ModuleComponent)iterator.next()).pz();
@@ -83,8 +83,8 @@ public final class CategoryScreen implements Screen, InstanceAccess {
 
     @Override
     public void pY() {
-        if (this.axt != null) {
-            Iterator iterator = this.qf().iterator();
+        if (this.category != null) {
+            Iterator iterator = this.getRelevantModules().iterator();
 
             while (iterator.hasNext()) {
                 ((ModuleComponent)iterator.next()).ci();
@@ -94,20 +94,20 @@ public final class CategoryScreen implements Screen, InstanceAccess {
 
     @Override
     public void aT() {
-        this.axt = this.oH();
-        if (this.axt != null) {
-            this.azB = Client.a
-                .v()
+        this.category = this.oH();
+        if (this.category != null) {
+            this.relevantModules = Client.a
+                .getStandardClickGUI()
                 .getModuleList()
                 .stream()
-                .filter(var1 -> var1.getModule().getModuleInfo().category() == this.axt)
+                .filter(var1 -> var1.getModule().getModuleInfo().category() == this.category)
                 .collect(Collectors.toCollection(ArrayList::new));
         }
     }
 
     private Category oH() {
         for (Category category : Category.values()) {
-            if (category.ec() == this.getStandardClickGUI().oZ()) {
+            if (category.getClickGUIScreen() == this.getStandardClickGUI().oZ()) {
                 return category;
             }
         }
@@ -121,13 +121,13 @@ public final class CategoryScreen implements Screen, InstanceAccess {
     }
 
     @Generated
-    public agk qe() {
+    public agk getScrollUtil() {
         return this.scrollUtil;
     }
 
     @Generated
-    public ArrayList<ModuleComponent> qf() {
-        return this.azB;
+    public ArrayList<ModuleComponent> getRelevantModules() {
+        return this.relevantModules;
     }
 
     @Generated
@@ -141,18 +141,18 @@ public final class CategoryScreen implements Screen, InstanceAccess {
     }
 
     @Generated
-    public void a(agk scrollUtil) {
+    public void setScrollUtil(agk scrollUtil) {
         this.scrollUtil = scrollUtil;
     }
 
     @Generated
     public void b(ArrayList<ModuleComponent> moduleComponents) {
-        this.azB = moduleComponents;
+        this.relevantModules = moduleComponents;
     }
 
     @Generated
     public void b(Category category) {
-        this.axt = category;
+        this.category = category;
     }
 
     @Generated

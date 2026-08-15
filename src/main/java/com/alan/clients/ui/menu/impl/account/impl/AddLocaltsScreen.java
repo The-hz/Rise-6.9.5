@@ -101,16 +101,16 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
     private static boolean productModalOpen;
     private static int productPage;
     private static final Runnable API_KEY_BOX_RUNNABLE = () -> {
-        apiKeyBox.I(true);
-        quantityBox.I(false);
+        apiKeyBox.setSelected(true);
+        quantityBox.setSelected(false);
     };
     private static final Runnable QUANTITY_BOX_RUNNABLE = () -> {
-        quantityBox.I(true);
-        apiKeyBox.I(false);
+        quantityBox.setSelected(true);
+        apiKeyBox.setSelected(false);
     };
     private static final Runnable CANCEL_RUNNABLE = () -> aEg.displayGuiScreen(new AccountManagerScreen(reference));
     private static final Runnable OPEN_LATEST_ORDER_RUNNABLE = () -> new Thread(() -> {
-        String s = apiKeyBox.XS.trim();
+        String s = apiKeyBox.text.trim();
         if (s.isEmpty()) {
             statusMessage = "Enter your Localts API key first";
             statusColor = Color.RED;
@@ -149,7 +149,7 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
         }
     };
     private static final Runnable CHECK_STATUS_RUNNABLE = () -> new Thread(() -> {
-        String s = apiKeyBox.XS.trim();
+        String s = apiKeyBox.text.trim();
         if (s.isEmpty()) {
             statusMessage = "Enter your Localts API key first";
             statusColor = Color.RED;
@@ -168,14 +168,14 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
         }
     }, "Localts stock check thread").start();
     private static final Runnable PURCHASE_RUNNABLE = () -> {
-        String s = apiKeyBox.XS.trim();
+        String s = apiKeyBox.text.trim();
         if (s.isEmpty()) {
             statusMessage = "Enter your Localts API key first";
             statusColor = Color.RED;
         } else {
             int i;
             try {
-                i = Integer.parseInt(quantityBox.XS.trim());
+                i = Integer.parseInt(quantityBox.text.trim());
                 if (i < 1) {
                     throw new NumberFormatException();
                 }
@@ -493,9 +493,9 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
         if (var2 == 1) {
             this.closeWithEscape();
         } else {
-            if (apiKeyBox.tO()) {
+            if (apiKeyBox.isSelected()) {
                 apiKeyBox.key(var1, var2);
-            } else if (productModalOpen && quantityBox.tO()) {
+            } else if (productModalOpen && quantityBox.isSelected()) {
                 quantityBox.key(var1, var2);
             }
         }
@@ -503,8 +503,8 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
 
     private void closeWithEscape() {
         productModalOpen = false;
-        quantityBox.I(false);
-        apiKeyBox.I(false);
+        quantityBox.setSelected(false);
+        apiKeyBox.setSelected(false);
         aEg.displayGuiScreen(new AccountManagerScreen(reference));
     }
 
@@ -601,23 +601,23 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
         TITLE_FONT.a("Localts Marketplace", i + 18, j + 16, Color.WHITE.getRGB());
         INFO_FONT.a("Choose an account type, view its preview, then buy inside Rise.", i + 19, j + 49, new Color(176, 187, 212).getRGB());
         if (localtsUsername.isEmpty()) {
-            INFO_FONT.d("5% off in Rise", i + k - 18, j + 18, new Color(118, 221, 178).getRGB());
-            TOOLTIP_FONT.d("In stock: NFA • Cookies", i + k - 18, j + 38, new Color(176, 187, 212).getRGB());
+            INFO_FONT.drawCenteredString("5% off in Rise", i + k - 18, j + 18, new Color(118, 221, 178).getRGB());
+            TOOLTIP_FONT.drawCenteredString("In stock: NFA • Cookies", i + k - 18, j + 38, new Color(176, 187, 212).getRGB());
         } else {
-            LABEL_FONT.d(localtsUsername, i + k - 18, j + 15, Color.WHITE.getRGB());
-            INFO_FONT.d(localtsCredits < 0 ? "Checking credits..." : localtsCredits + " credits", i + k - 18, j + 36, new Color(118, 221, 178).getRGB());
-            TOOLTIP_FONT.d("5% off in Rise", i + k - 18, j + 53, new Color(176, 187, 212).getRGB());
+            LABEL_FONT.drawCenteredString(localtsUsername, i + k - 18, j + 15, Color.WHITE.getRGB());
+            INFO_FONT.drawCenteredString(localtsCredits < 0 ? "Checking credits..." : localtsCredits + " credits", i + k - 18, j + 36, new Color(118, 221, 178).getRGB());
+            TOOLTIP_FONT.drawCenteredString("5% off in Rise", i + k - 18, j + 53, new Color(176, 187, 212).getRGB());
         }
 
-        LABEL_FONT.c("Localts API Key", this.width / 2, j + 70, new Color(176, 187, 212).getRGB());
+        LABEL_FONT.drawString("Localts API Key", this.width / 2, j + 70, new Color(176, 187, 212).getRGB());
         RenderUtil.roundedRectangle(this.width / 2 - 176, j + 84, 352.0, 22.0, 7.0, new Color(9, 12, 20, 150));
-        apiKeyBox.h(new Vector2d(this.width / 2, centeredTextY(j + 84, 22.0, INFO_FONT)));
+        apiKeyBox.setPosition(new Vector2d(this.width / 2, centeredTextY(j + 84, 22.0, INFO_FONT)));
         float f = this.apiHelpX();
         float f1 = this.apiHelpY();
         RenderUtil.c(f, f1, 7.0, this.isHelpHovered(var1, var2) ? new Color(109, 160, 255) : new Color(92, 107, 141));
-        TOOLTIP_FONT.c("?", f, centeredTextY(f1, 0.0, TOOLTIP_FONT), Color.WHITE.getRGB());
+        TOOLTIP_FONT.drawString("?", f, centeredTextY(f1, 0.0, TOOLTIP_FONT), Color.WHITE.getRGB());
         if (products.isEmpty()) {
-            INFO_FONT.c("Loading Localts products...", this.width / 2, this.cardsY() + 85, new Color(176, 187, 212).getRGB());
+            INFO_FONT.drawString("Loading Localts products...", this.width / 2, this.cardsY() + 85, new Color(176, 187, 212).getRGB());
         } else {
             for (int j1 = 0; j1 < 4; j1++) {
                 int k1 = productPage * 4 + j1;
@@ -632,18 +632,18 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
         int i1 = this.cardsY() + 230;
         float f2 = centeredTextY(i1, 18.0, INFO_FONT);
         RenderUtil.roundedRectangle(i + 12, i1, 30.0, 18.0, 6.0, new Color(49, 58, 84, 225));
-        INFO_FONT.c("‹", i + 27, f2, Color.WHITE.getRGB());
+        INFO_FONT.drawString("‹", i + 27, f2, Color.WHITE.getRGB());
         RenderUtil.roundedRectangle(i + k - 42, i1, 30.0, 18.0, 6.0, new Color(49, 58, 84, 225));
-        INFO_FONT.c("›", i + k - 27, f2, Color.WHITE.getRGB());
-        INFO_FONT.c(productPage + 1 + " / " + (this.maxProductPage() + 1), this.width / 2, f2, new Color(176, 187, 212).getRGB());
-        INFO_FONT.c(statusMessage, this.width / 2, this.cardsY() + 256, statusColor.getRGB());
+        INFO_FONT.drawString("›", i + k - 27, f2, Color.WHITE.getRGB());
+        INFO_FONT.drawString(productPage + 1 + " / " + (this.maxProductPage() + 1), this.width / 2, f2, new Color(176, 187, 212).getRGB());
+        INFO_FONT.drawString(statusMessage, this.width / 2, this.cardsY() + 256, statusColor.getRGB());
         if (this.isHelpHovered(var1, var2)) {
             float f3 = 198.0F;
             float f4 = Math.max(i + 12, Math.min(this.apiHelpX() - f3 / 2.0F, i + k - 12 - f3));
             float f5 = j + 109;
             RenderUtil.roundedRectangle(f4, f5, f3, 32.0, 6.0, new Color(9, 12, 20, 250));
-            TOOLTIP_FONT.c("Opens Localts Settings to", f4 + f3 / 2.0F, f5 + 7.0F, Color.WHITE.getRGB());
-            TOOLTIP_FONT.c("create or manage your API key", f4 + f3 / 2.0F, f5 + 19.0F, new Color(176, 187, 212).getRGB());
+            TOOLTIP_FONT.drawString("Opens Localts Settings to", f4 + f3 / 2.0F, f5 + 7.0F, Color.WHITE.getRGB());
+            TOOLTIP_FONT.drawString("create or manage your API key", f4 + f3 / 2.0F, f5 + 19.0F, new Color(176, 187, 212).getRGB());
         }
     }
 
@@ -661,22 +661,22 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
         if (resourcelocation != null) {
             RenderUtil.image(resourcelocation, l, j + 5, k, k, Color.WHITE);
         } else {
-            INFO_FONT.c(this.productTag(var1), i + this.cardWidth() / 2, j + 47, new Color(145, 164, 210).getRGB());
+            INFO_FONT.drawString(this.productTag(var1), i + this.cardWidth() / 2, j + 47, new Color(145, 164, 210).getRGB());
         }
 
         LABEL_FONT.a(shorten(var1.aFD, 22), i + 8, j + 122, Color.WHITE.getRGB());
         TOOLTIP_FONT.a(shorten(var1.aFE.isEmpty() ? var1.aFF : var1.aFE, 34), i + 8, j + 139, new Color(175, 185, 208).getRGB());
         this.drawTag(i + 8, j + 158, this.productTag(var1), this.productTagColor(var1));
         INFO_FONT.a(var1.aFG + " credits", i + 8, j + 186, new Color(118, 221, 178).getRGB());
-        INFO_FONT.d(
+        INFO_FONT.drawCenteredString(
             var1.aFH + " stock", i + this.cardWidth() - 8, j + 186, var1.aFH > 0 ? new Color(176, 187, 212).getRGB() : new Color(235, 125, 125).getRGB()
         );
-        TOOLTIP_FONT.c("Click to view", i + this.cardWidth() / 2, j + 204, new Color(175, 185, 208).getRGB());
+        TOOLTIP_FONT.drawString("Click to view", i + this.cardWidth() / 2, j + 204, new Color(175, 185, 208).getRGB());
     }
 
     private void drawTag(float var1, float var2, String var3, Color color) {
         float f = TOOLTIP_FONT.getStringWidth(var3) + 20;
-        RenderUtil.roundedRectangle(var1, var2, f, 15.0, 7.0, ColorUtil.d(color, 55));
+        RenderUtil.roundedRectangle(var1, var2, f, 15.0, 7.0, ColorUtil.withBlue(color, 55));
         TOOLTIP_FONT.a(var3, var1 + 10.0F, centeredTextY(var2, 15.0, TOOLTIP_FONT), color.getRGB());
     }
 
@@ -703,8 +703,8 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
                 selectedProductIndex = j;
                 LocaltsConfig.bw(products.get(j).aFC);
                 productModalOpen = true;
-                apiKeyBox.I(false);
-                quantityBox.I(false);
+                apiKeyBox.setSelected(false);
+                quantityBox.setSelected(false);
                 return true;
             }
         }
@@ -726,7 +726,7 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
             if (resourcelocation != null) {
                 RenderUtil.image(resourcelocation, k + 14, l + 14, 166.0F, 166.0F, Color.WHITE);
             } else {
-                INFO_FONT.c(this.productTag(aew), k + 97, l + 83, new Color(145, 164, 210).getRGB());
+                INFO_FONT.drawString(this.productTag(aew), k + 97, l + 83, new Color(145, 164, 210).getRGB());
             }
 
             TITLE_FONT.a(shorten(aew.aFD, 28), k + 198, l + 21, Color.WHITE.getRGB());
@@ -748,24 +748,24 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
             RenderUtil.roundedRectangle(k + 14, l + 199, i - 28, 1.0, 0.0, new Color(67, 78, 108, 180));
             int i1 = k + i / 2 - 54;
             int j1 = l + 213;
-            LABEL_FONT.d("Quantity", i1 - 16, centeredTextY(j1, 25.0, LABEL_FONT), new Color(176, 187, 212).getRGB());
+            LABEL_FONT.drawCenteredString("Quantity", i1 - 16, centeredTextY(j1, 25.0, LABEL_FONT), new Color(176, 187, 212).getRGB());
             RenderUtil.roundedRectangle(i1 + 31, j1, 54.0, 25.0, 6.0, new Color(13, 16, 27, 220));
-            quantityBox.h(new Vector2d(i1 + 58, centeredTextY(j1, 25.0, QUANTITY_FONT)));
+            quantityBox.setPosition(new Vector2d(i1 + 58, centeredTextY(j1, 25.0, QUANTITY_FONT)));
             quantityBox.draw();
             RenderUtil.roundedRectangle(i1 + 90, j1, 26.0, 25.0, 6.0, new Color(49, 58, 84, 225));
-            INFO_FONT.c("+", i1 + 103, centeredTextY(j1, 25.0, INFO_FONT), Color.WHITE.getRGB());
+            INFO_FONT.drawString("+", i1 + 103, centeredTextY(j1, 25.0, INFO_FONT), Color.WHITE.getRGB());
             RenderUtil.roundedRectangle(i1, j1, 26.0, 25.0, 6.0, new Color(49, 58, 84, 225));
-            INFO_FONT.c("−", i1 + 13, centeredTextY(j1, 25.0, INFO_FONT), Color.WHITE.getRGB());
-            INFO_FONT.c("Total: " + this.purchaseTotal(aew) + " credits", k + i / 2, l + 251, new Color(118, 221, 178).getRGB());
+            INFO_FONT.drawString("−", i1 + 13, centeredTextY(j1, 25.0, INFO_FONT), Color.WHITE.getRGB());
+            INFO_FONT.drawString("Total: " + this.purchaseTotal(aew) + " credits", k + i / 2, l + 251, new Color(118, 221, 178).getRGB());
             RenderUtil.roundedRectangle(k + 14, l + j - 54, i - 28, 36.0, 7.0, aew.aFH > 0 ? new Color(62, 120, 98) : new Color(77, 59, 68));
-            INFO_FONT.c(
+            INFO_FONT.drawString(
                 aew.aFH > 0 ? "Purchase " + this.purchaseTotal(aew) + " credits" : "Out of stock",
                 this.width / 2,
                 centeredTextY(l + j - 54, 36.0, INFO_FONT),
                 Color.WHITE.getRGB()
             );
-            INFO_FONT.c("×", k + i - 22, centeredTextY(l + 8, 28.0, INFO_FONT), Color.WHITE.getRGB());
-            TOOLTIP_FONT.c("Click outside or × to close", k + i / 2, l + j - 74, new Color(146, 159, 190).getRGB());
+            INFO_FONT.drawString("×", k + i - 22, centeredTextY(l + 8, 28.0, INFO_FONT), Color.WHITE.getRGB());
+            TOOLTIP_FONT.drawString("Click outside or × to close", k + i / 2, l + j - 74, new Color(146, 159, 190).getRGB());
         }
     }
 
@@ -790,20 +790,20 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
                     LocaltsProduct aew = selectedProduct();
                     if (aew != null && aew.aFH > 0) {
                         productModalOpen = false;
-                        quantityBox.I(false);
+                        quantityBox.setSelected(false);
                         PURCHASE_RUNNABLE.run();
                     }
                 }
             } else {
                 productModalOpen = false;
-                quantityBox.I(false);
+                quantityBox.setSelected(false);
             }
         }
     }
 
     private int quantity() {
         try {
-            return Math.max(1, Integer.parseInt(quantityBox.XS.trim()));
+            return Math.max(1, Integer.parseInt(quantityBox.text.trim()));
         } catch (Exception exception) {
             return 1;
         }
@@ -811,7 +811,7 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
 
     private void setQuantity(int var1) {
         quantityBox.bW(String.valueOf(var1));
-        quantityBox.ar(quantityBox.XS.length());
+        quantityBox.ar(quantityBox.text.length());
     }
 
     private int purchaseTotal(LocaltsProduct var1) {

@@ -14,7 +14,7 @@ public final class ChamsESP extends Mode<ESP> {
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         Color color = this.rz().rA();
-        ESPComponent.a(new cq(new ESPColor(color, color, color)));
+        ESPComponent.add(new cq(new ESPColor(color, color, color)));
     };
 
     public ChamsESP(String var1, ESP esp) {

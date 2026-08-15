@@ -13,9 +13,9 @@ import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.opengl.GL11;
 
 public class GuiIngameCache implements InstanceAccess {
-    private static final Minecraft aBJ = Minecraft.getMinecraft();
+    private static final Minecraft MC = Minecraft.getMinecraft();
     private static Framebuffer aBK;
-    public static boolean aBL;
+    public static boolean dirty;
     private static ScaledResolution jY = new ScaledResolution(aEg);
     private static final Tessellator aBM = Tessellator.getInstance();
     private static final WorldRenderer aBN = aBM.getWorldRenderer();
@@ -23,14 +23,14 @@ public class GuiIngameCache implements InstanceAccess {
     public GuiIngameCache() {
     }
 
-    public static void w(float var0) {
+    public static void renderGameOverlay(float var0) {
         if (jY.getScaledWidth() != aEg.displayWidth || jY.getScaledHeight() != aEg.displayHeight) {
             jY = new ScaledResolution(aEg);
         }
 
         OpenGlHelper.isFramebufferEnabled();
-        int i = aBJ.displayWidth;
-        int j = aBJ.displayHeight;
+        int i = MC.displayWidth;
+        int j = MC.displayHeight;
         GlStateManager.enableBlend();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         aEg.getTextureManager().bindTexture(Gui.icons);
@@ -47,12 +47,12 @@ public class GuiIngameCache implements InstanceAccess {
             GlStateManager.tryBlendFuncSeparate(1, 771, 1, 771);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             aBK.bindFramebufferTexture();
-            a(0.0F, 0.0F, jY.getScaledWidth(), jY.getScaledHeight(), 0.0F, 1.0F, 1.0F, 0.0F, 9728);
+            drawTexturedRect(0.0F, 0.0F, jY.getScaledWidth(), jY.getScaledHeight(), 0.0F, 1.0F, 1.0F, 0.0F, 9728);
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         }
 
-        if (aBL) {
-            aBK = a(aBK, i, j);
+        if (dirty) {
+            aBK = refreshFramebuffer(aBK, i, j);
             aBK.framebufferClear();
             aBK.bindFramebuffer(false);
             GlStateManager.disableBlend();
@@ -61,16 +61,16 @@ public class GuiIngameCache implements InstanceAccess {
             GlStateManager.disableLighting();
             GlStateManager.disableFog();
             GlStateManager.bKk = true;
-            aBJ.ingameGUI.renderGameOverlay(var0);
+            MC.ingameGUI.renderGameOverlay(var0);
             GlStateManager.bKk = false;
-            aBJ.getFramebuffer().bindFramebuffer(false);
+            MC.getFramebuffer().bindFramebuffer(false);
             GlStateManager.enableBlend();
-            aBL = false;
+            dirty = false;
         }
     }
 
-    public static void k(int var0, int var1) {
-        aBJ.getTextureManager().bindTexture(Gui.icons);
+    public static void renderCrosshair(int var0, int var1) {
+        MC.getTextureManager().bindTexture(Gui.icons);
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(775, 769, 1, 0);
         GlStateManager.enableAlpha();
@@ -82,7 +82,7 @@ public class GuiIngameCache implements InstanceAccess {
         aBM.draw();
     }
 
-    public static void a(float var0, float var1, float var2, float var3, float var4, float var5, float var6, float var7, int var8) {
+    public static void drawTexturedRect(float var0, float var1, float var2, float var3, float var4, float var5, float var6, float var7, int var8) {
         GlStateManager.enableTexture2D();
         GL11.glTexParameteri(3553, 10241, var8);
         GL11.glTexParameteri(3553, 10240, var8);
@@ -96,7 +96,7 @@ public class GuiIngameCache implements InstanceAccess {
         GL11.glTexParameteri(3553, 10240, 9728);
     }
 
-    public static Framebuffer a(Framebuffer framebuffer, int var1, int var2) {
+    public static Framebuffer refreshFramebuffer(Framebuffer framebuffer, int var1, int var2) {
         if (framebuffer == null) {
             framebuffer = new Framebuffer(var1, var2, true);
             framebuffer.setFramebufferFilter(9728);

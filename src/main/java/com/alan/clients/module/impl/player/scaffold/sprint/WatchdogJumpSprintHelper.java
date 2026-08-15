@@ -13,7 +13,7 @@ import com.alan.clients.util.player.MoveUtil;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
 public final class WatchdogJumpSprintHelper implements InstanceAccess {
-    private Scaffold ajR;
+    private Scaffold scaffold;
     private static final double ajS = 0.001;
     private boolean ajT;
     @EventLink(value = 3)
@@ -22,7 +22,7 @@ public final class WatchdogJumpSprintHelper implements InstanceAccess {
             this.unregister();
         } else {
             if (!var1x.isOnGround() && !aEg.thePlayer.onGround) {
-                if (!this.ajR.isEnabled()) {
+                if (!this.scaffold.isEnabled()) {
                     this.unregister();
                 }
             } else {
@@ -45,7 +45,7 @@ public final class WatchdogJumpSprintHelper implements InstanceAccess {
             if (this.e(Scaffold.class).isEnabled() && aEg.gameSettings.keyBindSneak.isPressed()) {
                 MoveUtil.stop();
                 aEg.timer.dzD = 0.5F;
-                PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+                PacketUtil.send(new C03PacketPlayer(aEg.thePlayer.onGround));
             }
         }
     };
@@ -57,7 +57,7 @@ public final class WatchdogJumpSprintHelper implements InstanceAccess {
     };
 
     public WatchdogJumpSprintHelper(Scaffold scaffold) {
-        this.ajR = scaffold;
+        this.scaffold = scaffold;
     }
 
     private void unregister() {
@@ -66,7 +66,7 @@ public final class WatchdogJumpSprintHelper implements InstanceAccess {
     }
 
     private boolean kC() {
-        return this.ajR.isEnabled() || this.ajT;
+        return this.scaffold.isEnabled() || this.ajT;
     }
 
     public void onEnable() {

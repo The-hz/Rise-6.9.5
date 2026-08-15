@@ -47,7 +47,7 @@ public class BlinkNoSlow extends Mode<NoSlow> {
                     BlinkComponent.blink();
                     BlinkComponent.enabled = true;
                     var1x.setCancelled();
-                    PacketUtil.m(packet);
+                    PacketUtil.sendNoEvent(packet);
                     afi.b("Started");
                 }
             }

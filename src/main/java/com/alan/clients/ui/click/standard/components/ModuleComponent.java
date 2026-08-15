@@ -26,8 +26,8 @@ import rip.vantage.commons.util.time.a;
 
 public class ModuleComponent implements InstanceAccess {
     public Module module;
-    public Vector2f scale = this.getStandardClickGUI().po();
-    public boolean axv;
+    public Vector2f scale = this.getStandardClickGUI().getModuleDefaultScale();
+    public boolean expanded;
     public ArrayList<ValueComponent> valueList = new ArrayList<>();
     public Vector2d position;
     public double opacity;
@@ -35,12 +35,12 @@ public class ModuleComponent implements InstanceAccess {
     public Animation axx = new Animation(Easing.LINEAR, 50L);
     public Animation aye = new Animation(Easing.LINEAR, 200L);
     public Animation ayf = new Animation(Easing.LINEAR, 5000L);
-    public boolean ayg;
+    public boolean mouseDown;
 
     public ModuleComponent(Module module) {
         this.module = module;
-        this.aye.T(this.scale.y);
-        this.ayf.T(0.0);
+        this.aye.setValue(this.scale.y);
+        this.ayf.setValue(0.0);
         module.getAllValues().forEach(var1x -> {
             ValueComponent valueComponent = var1x.wl();
             if (valueComponent != null) {
@@ -55,14 +55,14 @@ public class ModuleComponent implements InstanceAccess {
         float f1 = f;
         boolean flag = position != null
             && !(position.y + this.scale.y < this.getStandardClickGUI().axI.y)
-            && !(position.y > this.getStandardClickGUI().axI.y + this.getStandardClickGUI().alh.y);
+            && !(position.y > this.getStandardClickGUI().axI.y + this.getStandardClickGUI().position.y);
         if (flag) {
             RiseClickGUI riseclickgui = this.getStandardClickGUI();
             RenderUtil.roundedRectangle(position.x, position.y, this.scale.x, this.scale.y, 6.0, UIColors.OVERLAY.pV());
             Color color = UIColors.TEXT.Y(this.module.isEnabled() ? 255 : 200);
             boolean flag1 = GUIUtil.c(position.x, position.y, this.scale.x, this.scale.y, var2, var3);
-            this.axx.Q(flag1 ? (this.ayg ? 35.0 : 20.0) : 0.0);
-            RenderUtil.roundedRectangle(position.x, position.y, this.scale.x, this.scale.y, 6.0, ColorUtil.d(Color.BLACK, (int)this.axx.sG()));
+            this.axx.Q(flag1 ? (this.mouseDown ? 35.0 : 20.0) : 0.0);
+            RenderUtil.roundedRectangle(position.x, position.y, this.scale.x, this.scale.y, 6.0, ColorUtil.withBlue(Color.BLACK, (int)this.axx.getValue()));
             if (riseclickgui.pa() instanceof SearchScreen) {
                 FontManager.MAIN
                     .a(15, FontWeight.REGULAR)
@@ -70,7 +70,7 @@ public class ModuleComponent implements InstanceAccess {
                         "(" + ahd.ce(this.module.getModuleInfo().category().getName()) + ")",
                         (float)(position.getX() + FontManager.MAIN.a(20, FontWeight.REGULAR).getStringWidth(this.module.getName()) + 10.0),
                         (float)position.getY() + 10.0F,
-                        ColorUtil.d(color, 64).hashCode()
+                        ColorUtil.withBlue(color, 64).hashCode()
                     );
             }
 
@@ -82,18 +82,18 @@ public class ModuleComponent implements InstanceAccess {
                     (float)position.y + 8.0F,
                     this.module.isEnabled() ? this.rz().getAccentColor(new Vector2d(0.0, position.y / 5.0)).getRGB() : color.getRGB()
                 );
-            FontManager.MAIN.a(15, FontWeight.REGULAR).a(ahd.ce(this.module.getModuleInfo().description()), (float)position.x + 6.0F, (float)position.y + 25.0F, ColorUtil.d(color, 70).hashCode());
-            this.scale = new Vector2f(this.getStandardClickGUI().axY.x, f1);
+            FontManager.MAIN.a(15, FontWeight.REGULAR).a(ahd.ce(this.module.getModuleInfo().description()), (float)position.x + 6.0F, (float)position.y + 25.0F, ColorUtil.withBlue(color, 70).hashCode());
+            this.scale = new Vector2f(this.getStandardClickGUI().moduleDefaultScale.x, f1);
         }
 
-        if (!this.aye.isFinished() || this.axv) {
+        if (!this.aye.isFinished() || this.expanded) {
             for (ValueComponent valueComponent : this.getValueList()) {
-                if ((valueComponent.getValue() == null || valueComponent.getValue().wm() == null || !valueComponent.getValue().wm().getAsBoolean()) && (valueComponent.getValue().wn() == null || !valueComponent.getValue().wn().getAsBoolean())) {
-                    valueComponent.U(valueComponent.position == null ? 0 : (valueComponent.position.y < position.y + this.aye.sG() + 15.0 ? (int)this.ayf.sG() : 0));
-                    valueComponent.U(valueComponent.getValue().wm() == null ? valueComponent.pT() : Math.max(valueComponent.pT() - 40, 0));
+                if ((valueComponent.getValue() == null || valueComponent.getValue().getHideIf() == null || !valueComponent.getValue().getHideIf().getAsBoolean()) && (valueComponent.getValue().wn() == null || !valueComponent.getValue().wn().getAsBoolean())) {
+                    valueComponent.U(valueComponent.position == null ? 0 : (valueComponent.position.y < position.y + this.aye.getValue() + 15.0 ? (int)this.ayf.getValue() : 0));
+                    valueComponent.U(valueComponent.getValue().getHideIf() == null ? valueComponent.pT() : Math.max(valueComponent.pT() - 40, 0));
                     if (flag) {
                         valueComponent.draw(
-                            new Vector2d(position.x + 6.0 + (valueComponent.getValue().wm() == null ? 0 : 10) + (valueComponent.getValue().wn() == null ? 0 : 10), (float)(position.y + f1 + 1.0)),
+                            new Vector2d(position.x + 6.0 + (valueComponent.getValue().getHideIf() == null ? 0 : 10) + (valueComponent.getValue().wn() == null ? 0 : 10), (float)(position.y + f1 + 1.0)),
                             var2,
                             var3,
                             var4
@@ -107,19 +107,19 @@ public class ModuleComponent implements InstanceAccess {
             f1--;
         }
 
-        this.aye.h(Math.min((long)f1 * 3L, 450L));
+        this.aye.setDuration(Math.min((long)f1 * 3L, 450L));
         this.aye.setEasing(Easing.EASE_OUT_EXPO);
-        this.aye.Q(this.axv ? f1 : f);
-        this.scale.y = (float)this.aye.sG();
-        this.ayf.h(this.axv ? this.aye.sB() / 2L : this.aye.sB() / 3L);
-        this.ayf.Q(this.axv ? 255.0 : 0.0);
+        this.aye.Q(this.expanded ? f1 : f);
+        this.scale.y = (float)this.aye.getValue();
+        this.ayf.setDuration(this.expanded ? this.aye.getDuration() / 2L : this.aye.getDuration() / 3L);
+        this.ayf.Q(this.expanded ? 255.0 : 0.0);
     }
 
     public void key(char var1, int var2) {
         if (this.position != null
             && !(this.position.y + this.scale.y < this.getStandardClickGUI().axI.y)
-            && !(this.position.y > this.getStandardClickGUI().axI.y + this.getStandardClickGUI().alh.y)) {
-            if (this.oJ()) {
+            && !(this.position.y > this.getStandardClickGUI().axI.y + this.getStandardClickGUI().position.y)) {
+            if (this.isExpanded()) {
                 Iterator iterator = this.getValueList().iterator();
 
                 while (iterator.hasNext()) {
@@ -132,14 +132,14 @@ public class ModuleComponent implements InstanceAccess {
     public void click(int var1, int var2, int var3) {
         if (this.position != null
             && !(this.position.y + this.scale.y < this.getStandardClickGUI().axI.y)
-            && !(this.position.y > this.getStandardClickGUI().axI.y + this.getStandardClickGUI().alh.y)) {
+            && !(this.position.y > this.getStandardClickGUI().axI.y + this.getStandardClickGUI().position.y)) {
             Vector2f vector2f = this.getStandardClickGUI().axI;
-            Vector2f vector2f1 = this.getStandardClickGUI().alh;
+            Vector2f vector2f1 = this.getStandardClickGUI().position;
             boolean flag = var3 == 0;
             boolean flag1 = var3 == 1;
             boolean flag2 = GUIUtil.c(vector2f.x, vector2f.y, vector2f1.x, vector2f1.y, var1, var2);
-            if (GUIUtil.c(this.position.x, this.position.y, this.scale.x, this.getStandardClickGUI().axY.getY() - 3.0F, var1, var2) && this.getStandardClickGUI().axX == null) {
-                this.ayg = true;
+            if (GUIUtil.c(this.position.x, this.position.y, this.scale.x, this.getStandardClickGUI().moduleDefaultScale.getY() - 3.0F, var1, var2) && this.getStandardClickGUI().overlayPresent == null) {
+                this.mouseDown = true;
                 double d0 = 0.0;
 
                 for (ValueComponent ablxx : this.valueList) {
@@ -151,7 +151,7 @@ public class ModuleComponent implements InstanceAccess {
                         this.module.toggle();
                     }
                 } else if (flag1 && this.module.getValues().size() != 0 && d0 != 0.0) {
-                    this.axv = !this.axv;
+                    this.expanded = !this.expanded;
 
                     for (ValueComponent valueComponent : this.getValueList()) {
                         if (valueComponent instanceof abn abn) {
@@ -163,9 +163,9 @@ public class ModuleComponent implements InstanceAccess {
                 }
             }
 
-            if (this.oJ()) {
+            if (this.isExpanded()) {
                 for (ValueComponent ablx : this.getValueList()) {
-                    if ((ablx.getValue() == null || ablx.getValue().wm() == null || !ablx.getValue().wm().getAsBoolean())
+                    if ((ablx.getValue() == null || ablx.getValue().getHideIf() == null || !ablx.getValue().getHideIf().getAsBoolean())
                         && (ablx.getValue().wn() == null || !ablx.getValue().wn().getAsBoolean())
                         && ablx.e(var1, var2, var3)) {
                         break;
@@ -178,11 +178,11 @@ public class ModuleComponent implements InstanceAccess {
     public void ci() {
         if (this.position != null) {
             if (!(this.position.y + this.scale.y < this.getStandardClickGUI().axI.y)
-                && !(this.position.y > this.getStandardClickGUI().axI.y + this.getStandardClickGUI().alh.y)) {
-                if (!this.aye.isFinished() || this.axv) {
+                && !(this.position.y > this.getStandardClickGUI().axI.y + this.getStandardClickGUI().position.y)) {
+                if (!this.aye.isFinished() || this.expanded) {
                     for (ValueComponent valueComponent : this.getValueList()) {
                         if (valueComponent.getValue() != null
-                            && (valueComponent.getValue().wm() == null || !valueComponent.getValue().wm().getAsBoolean())
+                            && (valueComponent.getValue().getHideIf() == null || !valueComponent.getValue().getHideIf().getAsBoolean())
                             && (valueComponent.getValue().wn() == null || !valueComponent.getValue().wn().getAsBoolean())) {
                             valueComponent.released();
                         }
@@ -193,8 +193,8 @@ public class ModuleComponent implements InstanceAccess {
     }
 
     public void pz() {
-        this.ayg = false;
-        if (this.oJ()) {
+        this.mouseDown = false;
+        if (this.isExpanded()) {
             Iterator iterator = this.getValueList().iterator();
 
             while (iterator.hasNext()) {
@@ -214,8 +214,8 @@ public class ModuleComponent implements InstanceAccess {
     }
 
     @Generated
-    public boolean oJ() {
-        return this.axv;
+    public boolean isExpanded() {
+        return this.expanded;
     }
 
     @Generated
@@ -254,7 +254,7 @@ public class ModuleComponent implements InstanceAccess {
     }
 
     @Generated
-    public boolean pD() {
-        return this.ayg;
+    public boolean isMouseDown() {
+        return this.mouseDown;
     }
 }

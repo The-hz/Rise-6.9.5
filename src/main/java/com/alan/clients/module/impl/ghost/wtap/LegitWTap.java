@@ -8,24 +8,24 @@ import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.value.Mode;
 
 public class LegitWTap extends Mode<WTap> {
-    private boolean Cu;
-    private boolean Cv;
+    private boolean unsprint;
+    private boolean wTap;
     @EventLink
     public final Listener<AttackEvent> onAttack = var1x -> {
-        this.Cv = Math.random() * 100.0 < this.getParent().chance.wo().doubleValue() && var1x.dc().hurtTime >= 6;
-        if (this.Cv && !this.Cu) {
+        this.wTap = Math.random() * 100.0 < this.getParent().chance.wo().doubleValue() && var1x.getLiving().hurtTime >= 6;
+        if (this.wTap && !this.unsprint) {
             if (aEg.thePlayer.isSprinting() || aEg.gameSettings.cgG.isKeyDown()) {
                 aEg.gameSettings.cgG.setPressed(true);
-                this.Cu = true;
+                this.unsprint = true;
             }
         }
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
-        if (this.Cv) {
-            if (this.Cu && Math.random() * 100.0 < this.getParent().chance.wo().doubleValue()) {
+        if (this.wTap) {
+            if (this.unsprint && Math.random() * 100.0 < this.getParent().chance.wo().doubleValue()) {
                 aEg.gameSettings.cgG.setPressed(false);
-                this.Cu = false;
+                this.unsprint = false;
             }
         }
     };

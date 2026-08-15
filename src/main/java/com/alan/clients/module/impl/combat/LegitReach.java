@@ -40,16 +40,16 @@ public final class LegitReach extends Module {
     public BooleanValue renderRealLocation = new BooleanValue("Render Real Location", this, true);
     public BooleanValue watchdogMode = new BooleanValue("Watchdog Mode", this, false);
     private Vec3 realTargetPosition = new Vec3(0.0, 0.0, 0.0);
-    private final Animation pV = new Animation(Easing.LINEAR, 50L);
-    private final Animation pW = new Animation(Easing.LINEAR, 50L);
-    private final Animation pX = new Animation(Easing.LINEAR, 50L);
+    private final Animation xAnimation = new Animation(Easing.LINEAR, 50L);
+    private final Animation yAnimation = new Animation(Easing.LINEAR, 50L);
+    private final Animation zAnimation = new Animation(Easing.LINEAR, 50L);
     public Entity targetEntity;
-    public boolean pZ;
+    public boolean isActive;
     @EventLink
     public final Listener<PostMotionEvent> onPostMotion = var1 -> {
         List list = TargetComponent.f(9.0);
         if (list.isEmpty()) {
-            this.pZ = true;
+            this.isActive = true;
             this.targetEntity = null;
         } else {
             Entity entity = (Entity)list.get(0);
@@ -61,7 +61,7 @@ public final class LegitReach extends Module {
             }
 
             Speed speed = this.e(Speed.class);
-            boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).fastFall.wo();
+            boolean flag = speed.isEnabled() && speed.getMode().wo() instanceof GrimSpeed && ((GrimSpeed)speed.getMode().wo()).fastFall.wo();
             if (this.targetEntity != null
                 && (aEg.thePlayer.isSwingInProgress || this.e(KillAura.class).isEnabled())
                 && !flag
@@ -140,18 +140,18 @@ public final class LegitReach extends Module {
     public final Listener<Render3DEvent> onRender3D = var1 -> {
         if (this.targetEntity != null && this.renderRealLocation.wo()) {
             if (this.watchdogMode.wo()) {
-                this.pV.h(0L);
-                this.pW.h(0L);
-                this.pX.h(0L);
+                this.xAnimation.setDuration(0L);
+                this.yAnimation.setDuration(0L);
+                this.zAnimation.setDuration(0L);
             } else {
-                this.pV.h(150L);
-                this.pW.h(150L);
-                this.pX.h(150L);
+                this.xAnimation.setDuration(150L);
+                this.yAnimation.setDuration(150L);
+                this.zAnimation.setDuration(150L);
             }
 
-            this.pV.Q(this.realTargetPosition.xCoord);
-            this.pW.Q(this.realTargetPosition.yCoord);
-            this.pX.Q(this.realTargetPosition.zCoord);
+            this.xAnimation.Q(this.realTargetPosition.xCoord);
+            this.yAnimation.Q(this.realTargetPosition.yCoord);
+            this.zAnimation.Q(this.realTargetPosition.zCoord);
             GlStateManager.pushMatrix();
             GlStateManager.pushAttrib();
             GlStateManager.enableBlend();
@@ -159,12 +159,12 @@ public final class LegitReach extends Module {
             GlStateManager.disableLighting();
             GL11.glDepthMask(false);
             double d0 = 0.14;
-            RenderUtil.color(ColorUtil.d(this.rz().rA(), 50));
+            RenderUtil.color(ColorUtil.withBlue(this.rz().rA(), 50));
             RenderUtil.drawBoundingBox(
                 aEg.thePlayer
                     .getEntityBoundingBox()
                     .offset(-aEg.thePlayer.posX, -aEg.thePlayer.posY, -aEg.thePlayer.posZ)
-                    .offset(this.pV.sG(), this.pW.sG(), this.pX.sG())
+                    .offset(this.xAnimation.getValue(), this.yAnimation.getValue(), this.zAnimation.getValue())
                     .expand(d0, d0, d0)
             );
             GlStateManager.enableTexture2D();

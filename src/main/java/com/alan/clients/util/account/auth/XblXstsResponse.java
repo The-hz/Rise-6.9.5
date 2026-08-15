@@ -6,10 +6,10 @@ import com.google.gson.annotations.SerializedName;
 class XblXstsResponse {
     @Expose
     @SerializedName("Token")
-    public String aFa;
+    public String Token;
     @Expose
     @SerializedName("DisplayClaims")
-    public DisplayClaims aFb;
+    public DisplayClaims DisplayClaims;
 
     private XblXstsResponse() {
     }

@@ -255,7 +255,7 @@ public final class PlayerUtil implements InstanceAccess {
         return false;
     }
 
-    public static void h(int var0, boolean var1) {
+    public static void sendClick(int var0, boolean var1) {
         int i = var0 == 0 ? aEg.gameSettings.cgK.getKeyCode() : aEg.gameSettings.cgI.getKeyCode();
         KeyBinding.setKeyBindState(i, var1);
         if (var1) {
@@ -285,7 +285,7 @@ public final class PlayerUtil implements InstanceAccess {
         return flag;
     }
 
-    public static EnumFacingOffset e(Vec3 vec) {
+    public static EnumFacingOffset getEnumFacing(Vec3 vec) {
         return a(vec, false);
     }
 
@@ -313,7 +313,7 @@ public final class PlayerUtil implements InstanceAccess {
         }
 
         arraylist.sort(Comparator.comparingDouble(var0x -> {
-            double degrees = Math.toDegrees(Math.atan2(((EnumFacingOffset)var0x).vb().zCoord, ((EnumFacingOffset)var0x).vb().xCoord)) % 360.0;
+            double degrees = Math.toDegrees(Math.atan2(((EnumFacingOffset)var0x).getOffset().zCoord, ((EnumFacingOffset)var0x).getOffset().xCoord)) % 360.0;
             double d1 = RotationComponent.fk.x % 360.0F + 90.0F;
             return Math.abs(MathUtil.n(degrees, d1));
         }));

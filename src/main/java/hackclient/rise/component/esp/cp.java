@@ -24,7 +24,7 @@ public class cp extends ESP implements InstanceAccess {
     }
 
     @Override
-    public void cp() {
+    public void render3D() {
         EntityLivingBase entitylivingbase = (EntityLivingBase)this.target;
         if (aEg.getRenderManager() != null && entitylivingbase != null) {
             GL11.glPushMatrix();
@@ -59,7 +59,7 @@ public class cp extends ESP implements InstanceAccess {
             }
 
             this.hV++;
-            RenderUtil.color(ColorUtil.d(flag ? Color.red : this.rz().rA(), 60));
+            RenderUtil.color(ColorUtil.withBlue(flag ? Color.red : this.rz().rA(), 60));
             RenderUtil.drawBoundingBox(new AxisAlignedBB(d0 - f1 + 0.1, d1 + f2 + 0.1, d2 - f1 + 0.1, d0 + f1 - 0.1, d1, d2 + f1 - 0.1));
             GL11.glDisable(2848);
             GL11.glEnable(3553);

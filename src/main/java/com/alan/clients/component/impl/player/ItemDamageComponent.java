@@ -28,14 +28,14 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 public final class ItemDamageComponent extends Component {
-    public static boolean dj;
-    private static boolean dk;
+    public static boolean active;
+    private static boolean stop;
     private static int dl;
     private static int dm;
     public static ItemDamageType dn;
     @EventLink(value = 0)
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
-        if (dj) {
+        if (active) {
             int i = SlotUtil.findItem(Items.bow);
             int j = SlotUtil.findItem(Items.fishing_rod);
             int k = SlotUtil.findItem(Items.clay_ball);
@@ -76,13 +76,13 @@ public final class ItemDamageComponent extends Component {
                             switch (dm) {
                                 case 3:
                                     SlotComponent slotcomponent7 = this.d(SlotComponent.class);
-                                    PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                                    PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
                                     break label53;
                                 case 7:
-                                    PacketUtil.l(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+                                    PacketUtil.send(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
                                     break label53;
                                 case 40:
-                                    dj = false;
+                                    active = false;
                                 default:
                                     break label53;
                             }
@@ -90,21 +90,21 @@ public final class ItemDamageComponent extends Component {
                             switch (dm) {
                                 case 3:
                                     SlotComponent slotcomponent5 = this.d(SlotComponent.class);
-                                    PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                                    PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
                                     break;
                                 case 95:
-                                    dj = false;
+                                    active = false;
                             }
 
                             if (aEg.thePlayer.hurtTime == 9) {
                                 SlotComponent slotcomponent6 = this.d(SlotComponent.class);
-                                PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                                PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
                             }
                             break;
                         case CLAY:
                             if (dm == 3) {
                                 SlotComponent slotcomponent4 = this.d(SlotComponent.class);
-                                PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                                PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
                             }
                             break;
                         case PROJECTILES:
@@ -114,38 +114,38 @@ public final class ItemDamageComponent extends Component {
                                 case 5:
                                 case 6:
                                     SlotComponent slotcomponent9 = this.d(SlotComponent.class);
-                                    PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                                    PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
                                     break label53;
                                 case 100:
-                                    dj = false;
+                                    active = false;
                                 default:
                                     break label53;
                             }
                         default:
-                            dj = false;
+                            active = false;
                     }
                 } else {
-                    dj = false;
+                    active = false;
                 }
 
                 if (aEg.thePlayer.hurtTime == 9) {
-                    dj = false;
+                    active = false;
                 }
 
-                dk = true;
+                stop = true;
             }
         }
     };
     @EventLink
     public final Listener<MoveInputEvent> onMove = var0 -> {
-        if (dk && dj) {
+        if (stop && active) {
             var0.setForward(0.0F);
             var0.setStrafe(0.0F);
         }
     };
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {
-        if (dj) {
+        if (active) {
             RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, -90.0F), MathUtil.l(8.0, 10.0), MovementFix.NORMAL);
         }
     };
@@ -154,10 +154,10 @@ public final class ItemDamageComponent extends Component {
         Packet packet = var0.getPacket();
         if (packet instanceof S12PacketEntityVelocity) {
             if (((S12PacketEntityVelocity)packet).getEntityID() == aEg.thePlayer.getEntityId()) {
-                dj = false;
+                active = false;
             }
         } else if (packet instanceof S27PacketExplosion) {
-            dj = false;
+            active = false;
         }
     };
 
@@ -165,8 +165,8 @@ public final class ItemDamageComponent extends Component {
     }
 
     public static void damage(boolean var0) {
-        dj = true;
-        dk = var0;
+        active = true;
+        stop = var0;
         dl = aEg.thePlayer.inventory.currentItem;
         dm = 0;
         dn = null;

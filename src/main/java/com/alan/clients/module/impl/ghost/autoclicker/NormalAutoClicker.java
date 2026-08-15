@@ -19,19 +19,19 @@ public class NormalAutoClicker extends Mode<AutoClicker> {
     private final BooleanValue hitSelect = new BooleanValue("Hit Select", this, false);
     private final BooleanValue breakBlocks = new BooleanValue("Break Blocks", this, true);
     private final BooleanValue butterFly = new BooleanValue("ButterFly", this, true);
-    private final a Cq = new a();
-    private int Cr;
-    private int BV;
+    private final a clickStopWatch = new a();
+    private int ticksDown;
+    private int attackTicks;
     private long nextSwing;
     @EventLink
     public final Listener<TickEvent> onTick = var1x -> {
-        this.BV++;
-        if (this.Cq.T(this.nextSwing) && (!this.hitSelect.wo() || this.BV >= 10 || aEg.thePlayer.hurtTime > 0 && this.Cq.T(this.nextSwing)) && aEg.currentScreen == null) {
+        this.attackTicks++;
+        if (this.clickStopWatch.T(this.nextSwing) && (!this.hitSelect.wo() || this.attackTicks >= 10 || aEg.thePlayer.hurtTime > 0 && this.clickStopWatch.T(this.nextSwing)) && aEg.currentScreen == null) {
             long i = (long)(this.cps.wv().longValue() * 1.5);
             if (aEg.gameSettings.cgK.isKeyDown()) {
-                this.Cr++;
+                this.ticksDown++;
             } else {
-                this.Cr = 0;
+                this.ticksDown = 0;
             }
 
             if (this.nextSwing >= 100L && this.butterFly.wo()) {
@@ -41,28 +41,28 @@ public class NormalAutoClicker extends Mode<AutoClicker> {
             }
 
             if (this.rightClick.wo() && aEg.gameSettings.cgI.isKeyDown() && !aEg.gameSettings.cgK.isKeyDown()) {
-                PlayerUtil.h(1, true);
+                PlayerUtil.sendClick(1, true);
                 if (Math.random() > 0.9) {
-                    PlayerUtil.h(1, true);
+                    PlayerUtil.sendClick(1, true);
                 }
             }
 
             if (!this.leftClick.wo()
-                || this.Cr <= 1
+                || this.ticksDown <= 1
                 || aEg.gameSettings.cgI.isKeyDown()
                 || this.breakBlocks.wo() && aEg.objectMouseOver != null && aEg.objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
                 if (!this.breakBlocks.wo()) {
                     aEg.playerController.curBlockDamageMP = 0.0F;
                 }
             } else {
-                PlayerUtil.h(0, true);
+                PlayerUtil.sendClick(0, true);
             }
 
-            this.Cq.aX();
+            this.clickStopWatch.aX();
         }
     };
     @EventLink
-    public final Listener<AttackEvent> onAttack = var1x -> this.BV = 0;
+    public final Listener<AttackEvent> onAttack = var1x -> this.attackTicks = 0;
 
     public NormalAutoClicker(String var1, AutoClicker autoClicker) {
         super(var1, autoClicker);

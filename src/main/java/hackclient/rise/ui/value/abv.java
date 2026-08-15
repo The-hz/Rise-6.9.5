@@ -30,10 +30,10 @@ public class abv extends ValueComponent {
         this.height = 28.0;
         String s = ahd.ce(this.value.getName());
         FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, this.position.x, this.position.y, UIColors.SECONDARY_TEXT.Z(this.ayD));
-        this.azo.setColor(ColorUtil.d(this.azo.getColor(), this.ayD));
+        this.azo.setColor(ColorUtil.withBlue(this.azo.getColor(), this.ayD));
         this.position = new Vector2d(this.position.x, this.position.y + 14.0);
-        this.azo.h(this.position);
-        this.azo.z(230.5F);
+        this.azo.setPosition(this.position);
+        this.azo.setWidth(230.5F);
         this.azo.draw();
         stringvalue.n(this.azo.getText());
     }

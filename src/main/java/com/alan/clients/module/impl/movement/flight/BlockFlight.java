@@ -42,7 +42,7 @@ public class BlockFlight extends Mode<Flight> {
         if (SlotComponent.getItemStack() != null) {
             slotcomponent = this.d(SlotComponent.class);
             if (SlotComponent.getItemStack().getItem() instanceof ItemBlock && PlayerUtil.p(0.0, -1.0, 0.0) instanceof BlockAir) {
-                PacketUtil.l(new m());
+                PacketUtil.send(new m());
                 aEg.playerController
                     .onPlayerRightClick(
                         aEg.thePlayer,

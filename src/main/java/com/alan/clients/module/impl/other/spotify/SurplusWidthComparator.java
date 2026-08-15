@@ -5,24 +5,24 @@ import java.util.Comparator;
 import java.util.List;
 
 public class SurplusWidthComparator implements Comparator<Integer> {
-    final int XK;
+    final int size;
     final int[] XL;
     final int[] XM;
     final List XN;
 
     public SurplusWidthComparator(Spotify spotify, int var2, int[] var3, int[] var4, List var5) {
-        this.XK = var2;
+        this.size = var2;
         this.XL = var3;
         this.XM = var4;
         this.XN = var5;
     }
 
     public int a(Integer var1, Integer var2) {
-        if (var1 == this.XK - 1) {
+        if (var1 == this.size - 1) {
             return 1;
         }
 
-        if (var2 == this.XK - 1) {
+        if (var2 == this.size - 1) {
             return -1;
         }
 

@@ -74,7 +74,7 @@ public class Speed extends Module {
     }
 
     @Generated
-    public ModeValue hl() {
+    public ModeValue getMode() {
         return this.mode;
     }
 }

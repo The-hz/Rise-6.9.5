@@ -40,9 +40,9 @@ public class TargetStrafe extends Module {
     private final BooleanValue behind = new BooleanValue("Behind", this, false);
     private float yaw;
     private EntityLivingBase target;
-    private boolean cp;
+    private boolean left;
     private boolean EV;
-    private boolean dj;
+    private boolean active;
     private boolean EW = false;
     @EventLink(value = 1)
     public final Listener<WorldChangeEvent> onWorldChange = var1 -> {
@@ -65,13 +65,13 @@ public class TargetStrafe extends Module {
     };
     @EventLink(value = 3)
     public final Listener<JumpEvent> onJump = var1 -> {
-        if (this.target != null && this.dj) {
+        if (this.target != null && this.active) {
             var1.setYaw(this.yaw);
         }
     };
     @EventLink(value = 3)
     public final Listener<StrafeEvent> onStrafe = var1 -> {
-        if (this.target != null && this.dj) {
+        if (this.target != null && this.active) {
             var1.setYaw(this.yaw);
         }
     };
@@ -80,7 +80,7 @@ public class TargetStrafe extends Module {
         Module module = this.e(Scaffold.class);
         KillAura killaura = this.e(KillAura.class);
         if (module != null && !module.isEnabled() && killaura != null && killaura.isEnabled()) {
-            this.dj = true;
+            this.active = true;
             Module module1 = this.e(Speed.class);
             Module module2 = this.e(Flight.class);
             if ((!this.holdJump.wo() || aEg.gameSettings.keyBindJump.isKeyDown())
@@ -100,15 +100,15 @@ public class TargetStrafe extends Module {
                             boolean flag = aEg.gameSettings.keyBindLeft.isKeyDown();
                             boolean flag1 = aEg.gameSettings.keyBindRight.isKeyDown();
                             if (flag && !flag1) {
-                                this.cp = true;
+                                this.left = true;
                             } else if (flag1 && !flag) {
-                                this.cp = false;
+                                this.left = false;
                             }
 
                             if (this.behind.wo()) {
                                 this.yaw = this.target.pl + 180.0F;
                             } else {
-                                this.yaw = RotationUtil.y(this.target).getX() + 135 * (this.cp ? -1 : 1);
+                                this.yaw = RotationUtil.y(this.target).getX() + 135 * (this.left ? -1 : 1);
                             }
 
                             double d0 = this.range.wo().doubleValue() + Math.random() / 100.0;
@@ -125,13 +125,13 @@ public class TargetStrafe extends Module {
                 this.target = null;
             }
         } else {
-            this.dj = false;
+            this.active = false;
             this.target = null;
         }
     };
     @EventLink(value = 1)
     public final Listener<Render3DEvent> onRender3D = var1 -> {
-        if (this.circle.wo() && this.target != null && this.dj) {
+        if (this.circle.wo() && this.target != null && this.active) {
             this.j(var1.getPartialTicks());
         }
     };
@@ -145,9 +145,9 @@ public class TargetStrafe extends Module {
     }
 
     private void j(float var1) {
-        double d0 = MathInterpolation.l(this.target.posX, this.target.lastTickPosX, var1) - aEg.getRenderManager().viewerPosX;
-        double d1 = MathInterpolation.l(this.target.posY, this.target.lastTickPosY, var1) - aEg.getRenderManager().viewerPosY;
-        double d2 = MathInterpolation.l(this.target.posZ, this.target.lastTickPosZ, var1) - aEg.getRenderManager().viewerPosZ;
+        double d0 = MathInterpolation.interpolate(this.target.posX, this.target.lastTickPosX, var1) - aEg.getRenderManager().viewerPosX;
+        double d1 = MathInterpolation.interpolate(this.target.posY, this.target.lastTickPosY, var1) - aEg.getRenderManager().viewerPosY;
+        double d2 = MathInterpolation.interpolate(this.target.posZ, this.target.lastTickPosZ, var1) - aEg.getRenderManager().viewerPosZ;
         GlStateManager.pushMatrix();
         GlStateManager.disableTexture2D();
         GlStateManager.enableBlend();
@@ -158,7 +158,7 @@ public class TargetStrafe extends Module {
         GL11.glEnable(2832);
         GL11.glHint(3153, 4354);
         GL11.glBegin(0);
-        ColorUtil.d(this.rz().rD());
+        ColorUtil.glColor(this.rz().rD());
         double range = this.range.wo().doubleValue();
         double d4 = Math.PI * 2;
 
@@ -188,7 +188,7 @@ public class TargetStrafe extends Module {
                 GL11.glEnable(2832);
                 GL11.glHint(3153, 4354);
                 GL11.glBegin(0);
-                ColorUtil.d(this.rz().rD());
+                ColorUtil.glColor(this.rz().rD());
 
                 for (int j = 0; j < 360; j += this.dots.wo().intValue()) {
                     double d8 = j * d4 / 360.0;

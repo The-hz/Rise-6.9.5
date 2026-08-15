@@ -137,7 +137,7 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
     }
 
     @Generated
-    public Listener<ChatInputEvent> nP() {
+    public Listener<ChatInputEvent> getOnChatInput() {
         return this.onChatInput;
     }
 
@@ -197,12 +197,12 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
     }
 
     @Generated
-    public Listener<PreMotionEvent> nO() {
+    public Listener<PreMotionEvent> getOnPreMotion() {
         return this.onPreMotion;
     }
 
     @Generated
-    public Listener<PacketSendEvent> nQ() {
+    public Listener<PacketSendEvent> getOnPacketSend() {
         return this.onPacketSend;
     }
 

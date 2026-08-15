@@ -9,14 +9,14 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 
 public class FontUtil {
-    private static final IResourceManager aIT = InstanceAccess.aEg.getResourceManager();
+    private static final IResourceManager RESOURCE_MANAGER = InstanceAccess.aEg.getResourceManager();
 
     public FontUtil() {
     }
 
     public static Font p(String var0, int var1) {
         try {
-            return Font.createFont(0, aIT.getResource(new ResourceLocation(var0)).getInputStream()).deriveFont((float)var1);
+            return Font.createFont(0, RESOURCE_MANAGER.getResource(new ResourceLocation(var0)).getInputStream()).deriveFont((float)var1);
         } catch (FontFormatException | IOException fontformatexception) {
             return null;
         }

@@ -44,14 +44,14 @@ public class WatchdogFlight extends Mode<Flight> {
     private boolean IP;
     private int IQ;
     private boolean IR;
-    private AntiFireBall IS;
-    private final ArrayList<Packet<?>> IT = new ArrayList<>();
+    private AntiFireBall antiFireBall;
+    private final ArrayList<Packet<?>> packets = new ArrayList<>();
     a bN = new a();
     private boolean dj;
     private boolean tt;
     private boolean vq;
     int IU = -1;
-    double IV = 0.0;
+    double speed = 0.0;
     double IW = -1.0;
     private int dE;
     @EventLink(value = 1)
@@ -81,14 +81,14 @@ public class WatchdogFlight extends Mode<Flight> {
                             aEg.thePlayer.motionY = this.IW;
                             var1x.setCancelled();
                             this.dj = true;
-                            this.IT.add(s12packetentityvelocity);
+                            this.packets.add(s12packetentityvelocity);
                         } else if (!var1x.isCancelled() && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                             var1x.setCancelled();
                         }
                         break;
                     case S32PacketConfirmTransaction s32packetconfirmtransaction:
                         if (this.dj) {
-                            this.IT.add(s32packetconfirmtransaction);
+                            this.packets.add(s32packetconfirmtransaction);
                             var1x.setCancelled();
                         }
                         break;
@@ -106,7 +106,7 @@ public class WatchdogFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> IZ = var0 -> {
+    public final Listener<StrafeEvent> onStrafeMedium = var0 -> {
         if (aEg.thePlayer.ae == 1) {
             double d0 = (
                     MathHelper.wrapAngleTo180_double(
@@ -195,16 +195,16 @@ public class WatchdogFlight extends Mode<Flight> {
                 % 360.0
                 % 90.0
                 / 90.0;
-            this.IV = 1.05 + 0.35 * (1.0 - 4.0 * d0 * (1.0 - d0));
+            this.speed = 1.05 + 0.35 * (1.0 - 4.0 * d0 * (1.0 - d0));
             if (!aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                MoveUtil.strafe(this.IV);
+                MoveUtil.strafe(this.speed);
             } else {
-                MoveUtil.strafe(this.IV);
+                MoveUtil.strafe(this.speed);
             }
         }
 
         if (this.dE >= 999 && this.dj) {
-            MoveUtil.strafe(this.IV);
+            MoveUtil.strafe(this.speed);
         }
 
         if (aEg.thePlayer.tR == 1) {
@@ -216,7 +216,7 @@ public class WatchdogFlight extends Mode<Flight> {
         if (this.IQ == 0) {
             RotationComponent.d(false);
             RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl - 180.0F, 89.0F), 10.0, MovementFix.OFF);
-            int i = this.hr();
+            int i = this.getFireballSlot();
             if (i != -1 && i != aEg.thePlayer.inventory.currentItem) {
                 this.qI = aEg.thePlayer.inventory.currentItem;
                 aEg.thePlayer.inventory.currentItem = i;
@@ -225,11 +225,11 @@ public class WatchdogFlight extends Mode<Flight> {
 
         if (this.IQ == 1) {
             if (!this.IP) {
-                PacketUtil.l(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getHeldItem()));
+                PacketUtil.send(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getHeldItem()));
                 this.IP = true;
-                if (this.IS != null && this.IS.isEnabled()) {
-                    this.IS.aaW = 1500;
-                    this.IS.aaV.aX();
+                if (this.antiFireBall != null && this.antiFireBall.isEnabled()) {
+                    this.antiFireBall.aaW = 1500;
+                    this.antiFireBall.aaV.aX();
                 }
             }
         } else if (this.IQ == 2 && this.qI != -1) {
@@ -277,10 +277,10 @@ public class WatchdogFlight extends Mode<Flight> {
             new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             BlinkComponent.dispatch();
             MoveUtil.strafe();
-            this.IT.forEach(PacketUtil::p);
+            this.packets.forEach(PacketUtil::receive);
             aEg.thePlayer.motionY = 0.005;
             MoveUtil.strafe(1.59F);
-            this.IT.clear();
+            this.packets.clear();
             this.tt = false;
         }
     };
@@ -298,9 +298,9 @@ public class WatchdogFlight extends Mode<Flight> {
             this.e(Scaffold.class).toggle();
         }
 
-        this.IS = Client.a.g().c(AntiFireBall.class);
+        this.antiFireBall = Client.a.g().c(AntiFireBall.class);
         this.dE = 0;
-        if (this.hr() == -1) {
+        if (this.getFireballSlot() == -1) {
             afi.b("Could not find Fireball");
             this.toggle();
         } else {
@@ -352,8 +352,8 @@ public class WatchdogFlight extends Mode<Flight> {
             aEg.thePlayer.inventory.currentItem = this.IU;
         }
 
-        this.IT.forEach(PacketUtil::p);
-        this.IT.clear();
+        this.packets.forEach(PacketUtil::receive);
+        this.packets.clear();
         if (this.qI != -1) {
             aEg.thePlayer.inventory.currentItem = this.qI;
         }
@@ -362,7 +362,7 @@ public class WatchdogFlight extends Mode<Flight> {
         this.IN = IO = this.IP = false;
     }
 
-    private int hr() {
+    private int getFireballSlot() {
         int i = -1;
 
         for (int j = 0; j < 9; j++) {

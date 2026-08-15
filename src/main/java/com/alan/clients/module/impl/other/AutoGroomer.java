@@ -20,8 +20,8 @@ import net.minecraft.network.play.client.C01PacketChatMessage;
 public final class AutoGroomer extends Module {
     private final Random random = new Random();
     private final char[] chars = new char[]{'⛍', '⛌', '⛗', '⛗', '⛟'};
-    private final List<Integer> Tv = new ArrayList<>();
-    private final List<String> Tw = Arrays.asList(
+    private final List<Integer> ids = new ArrayList<>();
+    private final List<String> messages = Arrays.asList(
         "can I have some tittie pics?",
         "do you wanna be above or below?",
         "I am gonna be pounding you 24/7",
@@ -53,7 +53,7 @@ public final class AutoGroomer extends Module {
     @EventLink
     private final Listener<PreMotionEvent> pre = var1 -> {
         if (!this.dm.wo() && aEg.thePlayer.ticksExisted % 69 == 0) {
-            String s = this.Tw.get(this.random.nextInt(this.Tw.size()));
+            String s = this.messages.get(this.random.nextInt(this.messages.size()));
             if (this.chatBypass.wo()) {
                 StringBuilder stringbuilder = new StringBuilder(s.length() * 2);
 
@@ -71,10 +71,10 @@ public final class AutoGroomer extends Module {
             for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
                 if (entityplayer != aEg.thePlayer
                     && !entityplayer.isInvisible()
-                    && !Client.a.x().a(entityplayer)
+                    && !Client.a.getBotManager().a(entityplayer)
                     && entityplayer.getDistanceSqToEntity(aEg.thePlayer) < 64.0
-                    && (!this.Tv.contains(entityplayer.getEntityId()) || this.spam.wo())) {
-                    String s1 = this.Tw.get(this.random.nextInt(this.Tw.size()));
+                    && (!this.ids.contains(entityplayer.getEntityId()) || this.spam.wo())) {
+                    String s1 = this.messages.get(this.random.nextInt(this.messages.size()));
                     if (this.chatBypass.wo()) {
                         StringBuilder stringbuilder1 = new StringBuilder(s1.length() * 2);
 
@@ -88,24 +88,24 @@ public final class AutoGroomer extends Module {
                     }
 
                     aEg.getNetHandler().addToSendQueue(new C01PacketChatMessage("/msg " + entityplayer.getName() + " " + s1));
-                    this.Tv.add(entityplayer.getEntityId());
+                    this.ids.add(entityplayer.getEntityId());
                 }
             }
         }
     };
     @EventLink
-    private final Listener<WorldChangeEvent> worldChange = var1 -> this.Tv.clear();
+    private final Listener<WorldChangeEvent> worldChange = var1 -> this.ids.clear();
 
     public AutoGroomer() {
     }
 
     @Override
     public void onDisable() {
-        this.Tv.clear();
+        this.ids.clear();
     }
 
     @Override
     public void onEnable() {
-        this.Tv.clear();
+        this.ids.clear();
     }
 }

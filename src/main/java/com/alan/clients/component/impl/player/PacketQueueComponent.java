@@ -35,7 +35,7 @@ public final class PacketQueueComponent extends Component {
             cT.clear();
         } else {
             if (aEg.thePlayer.ticksExisted < 10 && cP) {
-                Client.a.p().tn();
+                Client.a.getConfigManager().tn();
                 cP = false;
             }
 
@@ -57,18 +57,18 @@ public final class PacketQueueComponent extends Component {
                             var0.setCancelled();
                         }
                     } else if (packet instanceof C03PacketPlayer) {
-                        cQ.forEach(PacketUtil::m);
+                        cQ.forEach(PacketUtil::sendNoEvent);
                         cQ.clear();
                         cS = false;
                     }
                 }
             } else {
-                cQ.forEach(PacketUtil::m);
+                cQ.forEach(PacketUtil::sendNoEvent);
                 cQ.clear();
                 cR = false;
                 cT.clear();
                 if (aEg.thePlayer.ticksExisted < 10 && cP) {
-                    Client.a.p().tn();
+                    Client.a.getConfigManager().tn();
                     cP = false;
                 }
             }

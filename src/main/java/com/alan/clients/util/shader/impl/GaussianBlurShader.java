@@ -16,10 +16,10 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL13;
 
 public class GaussianBlurShader extends aix {
-    private final RiseShaderProgram aQc = new RiseShaderProgram("blur.frag", "vertex.vsh");
-    private Framebuffer aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
-    private Framebuffer aPZ = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
-    private GaussianKernel aQa = new GaussianKernel(0);
+    private final RiseShaderProgram blurProgram = new RiseShaderProgram("blur.frag", "vertex.vsh");
+    private Framebuffer inputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+    private Framebuffer outputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+    private GaussianKernel gaussianKernel = new GaussianKernel(0);
     public static final int aQd = 12;
     public static final float aQe = 3.0F;
     int aQf = 12;
@@ -36,26 +36,26 @@ public class GaussianBlurShader extends aix {
                 this.amf = this.e(Interface.class);
             }
 
-            int i = this.amf != null ? this.amf.ly() : 12;
-            float f = this.amf != null ? this.amf.lz() : 3.0F;
+            int i = this.amf != null ? this.amf.getBlurRadius() : 12;
+            float f = this.amf != null ? this.amf.getBlurCompression() : 3.0F;
             boolean flag = System.getProperty("os.name").toLowerCase().contains("mac");
             switch (var1) {
                 case CAMERA:
-                    this.aPV.bindFramebuffer(true);
+                    this.inputFramebuffer.bindFramebuffer(true);
                     runnables.forEach(Runnable::run);
                     aEg.getFramebuffer().bindFramebuffer(true);
                     break;
                 case OVERLAY:
-                    this.aPV.bindFramebuffer(true);
+                    this.inputFramebuffer.bindFramebuffer(true);
                     runnables.forEach(Runnable::run);
-                    int j = this.aQc.getProgramId();
-                    this.aPZ.bindFramebuffer(true);
-                    this.aQc.rt();
-                    if (this.aQa.getSize() != i) {
-                        this.aQa = new GaussianKernel(i);
-                        this.aQa.uR();
+                    int j = this.blurProgram.getProgramId();
+                    this.outputFramebuffer.bindFramebuffer(true);
+                    this.blurProgram.rt();
+                    if (this.gaussianKernel.getSize() != i) {
+                        this.gaussianKernel = new GaussianKernel(i);
+                        this.gaussianKernel.uR();
                         FloatBuffer floatbuffer = BufferUtils.createFloatBuffer(i);
-                        floatbuffer.put(this.aQa.vS());
+                        floatbuffer.put(this.gaussianKernel.getKernel());
                         floatbuffer.flip();
                         ShaderUniforms.uniform1f(j, "u_radius", (float)i);
                         ShaderUniforms.uniformFB(j, "u_kernel", floatbuffer);
@@ -72,9 +72,9 @@ public class GaussianBlurShader extends aix {
                     RiseShaderProgram.vN();
                     aEg.getFramebuffer().bindFramebuffer(true);
                     ShaderUniforms.uniform2f(j, "u_direction", 0.0F, f);
-                    this.aPZ.bindFramebufferTexture();
+                    this.outputFramebuffer.bindFramebufferTexture();
                     GL13.glActiveTexture(flag ? 33986 : 34004);
-                    this.aPV.bindFramebufferTexture();
+                    this.inputFramebuffer.bindFramebufferTexture();
                     GL13.glActiveTexture(33984);
                     RiseShaderProgram.vN();
                     GlStateManager.disableBlend();
@@ -88,22 +88,22 @@ public class GaussianBlurShader extends aix {
         this.setActive(false);
         int i = aEg.displayWidth;
         int j = aEg.displayHeight;
-        if (this.aPV.ah(i, j)) {
-            this.aPV.deleteFramebuffer();
-            this.aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+        if (this.inputFramebuffer.ah(i, j)) {
+            this.inputFramebuffer.deleteFramebuffer();
+            this.inputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
         } else {
-            this.aPV.framebufferClear();
+            this.inputFramebuffer.framebufferClear();
         }
 
-        if (this.aPZ.ah(i, j)) {
-            this.aPZ.deleteFramebuffer();
-            this.aPZ = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+        if (this.outputFramebuffer.ah(i, j)) {
+            this.outputFramebuffer.deleteFramebuffer();
+            this.outputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
         } else {
-            this.aPZ.framebufferClear();
+            this.outputFramebuffer.framebufferClear();
         }
 
-        this.aPV.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
-        this.aPZ.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
+        this.inputFramebuffer.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
+        this.outputFramebuffer.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
     }
 
     @Generated

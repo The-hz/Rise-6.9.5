@@ -21,7 +21,7 @@ public final class SpeedLimit extends Check {
 
     @Override
     public void handle(Packet<?> packet) {
-        if (PacketUtil.b(packet) && ((S14PacketEntity)packet).entityId == this.data.getPlayer().getEntityId() || packet instanceof z && ((z)packet).cqK == this.data.getPlayer().getEntityId()) {
+        if (PacketUtil.isRelMove(packet) && ((S14PacketEntity)packet).entityId == this.data.getPlayer().getEntityId() || packet instanceof z && ((z)packet).cqK == this.data.getPlayer().getEntityId()) {
             if (this.data.getPlayer().isInvisible()) {
                 return;
             }
@@ -61,7 +61,7 @@ public final class SpeedLimit extends Check {
                 this.K();
                 this.ai = this.ah;
             } else {
-                this.b(0.2F);
+                this.decreaseBufferBy(0.2F);
             }
 
             this.aj.aX();

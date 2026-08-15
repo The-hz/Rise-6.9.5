@@ -34,7 +34,7 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
         }
 
         Entity entity = this.ava.target;
-        boolean flag = !this.ava.inWorld || this.ava.rG.T(1000L);
+        boolean flag = !this.ava.inWorld || this.ava.stopwatch.T(1000L);
         if (entity == null || flag) {
             this.avb.reset();
             this.avc.reset();
@@ -59,14 +59,14 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
         double d7 = d6 + d5;
         if (this.avd != entity) {
             this.avc.reset();
-            this.avc.T(this.ave);
+            this.avc.setValue(this.ave);
             this.avc.Q(d7);
             this.avd = entity;
         } else {
             this.avc.Q(d7);
         }
 
-        double d8 = this.avc.sG();
+        double d8 = this.avc.getValue();
         double d9 = 42.0;
         RenderUtil.d(d0, d1, d8, d9, new Color(40, 40, 40, 255));
         aEg.fontRendererObj.b(s1, d0 + 44.0, d1 + 10.0, Color.WHITE.getRGB());
@@ -74,8 +74,8 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
         RenderUtil.d(d0 + 44.0, d1 + 22.0, d10, 11.0, new Color(21, 21, 21, 150));
         double d11 = d10 * (d2 / d3);
         this.avb.Q(d11);
-        double d12 = this.avb.sG();
-        RenderUtil.d(d0 + 44.0, d1 + 22.0, d12, 11.0, ColorUtil.a(this.rz().rB(), 0.5F));
+        double d12 = this.avb.getValue();
+        RenderUtil.d(d0 + 44.0, d1 + 22.0, d12, 11.0, ColorUtil.brighter(this.rz().rB(), 0.5F));
         double d13 = d11;
         RenderUtil.d(d0 + 44.0, d1 + 22.0, d13, 11.0, this.rz().rA());
         String s2 = String.format("%.1f%%", d4);
@@ -84,7 +84,7 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
         if (this.nF()) {
             this.b(ShaderQueueType.BLOOM).c(() -> {
                 RenderUtil.d(d0 + 44.0, d1 + 22.0, d13, 11.0, this.rz().rA());
-                RenderUtil.d(d0 + 44.0, d1 + 22.0, d12, 11.0, ColorUtil.a(this.rz().rB(), 0.5F));
+                RenderUtil.d(d0 + 44.0, d1 + 22.0, d12, 11.0, ColorUtil.brighter(this.rz().rB(), 0.5F));
             });
         }
 
@@ -105,7 +105,7 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
         }
 
         Entity entity = this.ava.target;
-        boolean flag = !this.ava.inWorld || this.ava.rG.T(1000L);
+        boolean flag = !this.ava.inWorld || this.ava.stopwatch.T(1000L);
         if (entity == null || flag) {
             return;
         }

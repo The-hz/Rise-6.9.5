@@ -101,9 +101,9 @@ extends Module {
             AttackEvent attackEvent = new AttackEvent(this.qX);
             Client.a.e().d(attackEvent);
             if (!attackEvent.isCancelled()) {
-                PacketUtil.l(new m());
+                PacketUtil.send(new m());
                 afi.c("attacked", new Object[0]);
-                PacketUtil.l(new C02PacketUseEntity((Entity)this.qX, C02PacketUseEntity.Action.ATTACK));
+                PacketUtil.send(new C02PacketUseEntity((Entity)this.qX, C02PacketUseEntity.Action.ATTACK));
             }
             this.qX = null;
         }
@@ -155,7 +155,7 @@ extends Module {
             this.cR = false;
             afi.c("Dispatching " + this.ra.size() + " packets", new Object[0]);
             while (!this.ra.isEmpty()) {
-                PacketUtil.m(this.ra.poll());
+                PacketUtil.sendNoEvent(this.ra.poll());
             }
             this.qW = false;
             afi.c("Stopped blinking", new Object[0]);

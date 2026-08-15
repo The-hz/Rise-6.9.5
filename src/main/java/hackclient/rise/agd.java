@@ -31,42 +31,42 @@ import org.lwjgl.opengl.GL11;
 
 public class agd extends agc implements IResourceManagerReloadListener {
     private static final ResourceLocation[] unicodePageLocations = new ResourceLocation[256];
-    private final int[] aHT = new int[256];
+    private final int[] charWidth = new int[256];
     public static int aHU = 9;
     public Random aHV = new Random();
     private final byte[] glyphWidth = new byte[65536];
-    private final int[] aHX = new int[32];
-    private ResourceLocation aHY;
+    private final int[] colorCode = new int[32];
+    private ResourceLocation locationFontTexture;
     private final TextureManager renderEngine;
     private float aIa;
     private float aIb;
-    private boolean aIc;
-    private boolean aId;
-    private float aIe;
-    private float aIf;
-    private float aIg;
-    private float aoJ;
-    private int aIh;
-    private boolean aIi;
-    private boolean aIj;
-    private boolean aIk;
-    private boolean aIl;
-    private boolean aIm;
+    private boolean unicodeFlag;
+    private boolean bidiFlag;
+    private float red;
+    private float blue;
+    private float green;
+    private float alpha;
+    private int textColor;
+    private boolean randomStyle;
+    private boolean boldStyle;
+    private boolean italicStyle;
+    private boolean underlineStyle;
+    private boolean strikethroughStyle;
     public GameSettings gameSettings;
-    public ResourceLocation aIo;
-    public float aIp = 1.0F;
+    public ResourceLocation locationFontTextureBase;
+    public float offsetBold = 1.0F;
     private final float[] charWidthFloat = new float[256];
-    private boolean aIr = false;
-    private final f aIs = new f();
+    private boolean blend = false;
+    private final f blendState = new f();
 
     public agd(GameSettings gameSettings, ResourceLocation location, TextureManager renderEngine, boolean var4) {
         this.gameSettings = gameSettings;
-        this.aIo = location;
-        this.aHY = location;
+        this.locationFontTextureBase = location;
+        this.locationFontTexture = location;
         this.renderEngine = renderEngine;
-        this.aIc = var4;
-        this.aHY = net.optifine.util.l.R(this.aIo);
-        this.bindTexture(this.aHY);
+        this.unicodeFlag = var4;
+        this.locationFontTexture = net.optifine.util.l.R(this.locationFontTextureBase);
+        this.bindTexture(this.locationFontTexture);
 
         for (int i = 0; i < 32; i++) {
             int j = (i >> 3 & 1) * 85;
@@ -92,44 +92,44 @@ public class agd extends agc implements IResourceManagerReloadListener {
                 i1 /= 4;
             }
 
-            this.aHX[i] = (k & 0xFF) << 16 | (l & 0xFF) << 8 | i1 & 0xFF;
+            this.colorCode[i] = (k & 0xFF) << 16 | (l & 0xFF) << 8 | i1 & 0xFF;
         }
 
-        this.ts();
+        this.readGlyphSizes();
     }
 
     @Override
     public void onResourceManagerReload(IResourceManager iResourceManager) {
-        this.aHY = net.optifine.util.l.R(this.aIo);
+        this.locationFontTexture = net.optifine.util.l.R(this.locationFontTextureBase);
 
         for (int i = 0; i < unicodePageLocations.length; i++) {
             unicodePageLocations[i] = null;
         }
 
-        this.tr();
-        this.ts();
+        this.readFontTexture();
+        this.readGlyphSizes();
     }
 
-    private void tr() {
+    private void readFontTexture() {
         BufferedImage bufferedimage;
         try {
-            bufferedimage = TextureUtil.readBufferedImage(this.getResourceInputStream(this.aHY));
+            bufferedimage = TextureUtil.readBufferedImage(this.getResourceInputStream(this.locationFontTexture));
         } catch (IOException ioexception) {
             throw new RuntimeException(ioexception);
         }
 
-        Properties properties = net.optifine.util.l.Q(this.aHY);
-        this.aIr = net.optifine.util.l.b(properties, "blend", false);
+        Properties properties = net.optifine.util.l.Q(this.locationFontTexture);
+        this.blend = net.optifine.util.l.b(properties, "blend", false);
         int i = bufferedimage.getWidth();
         int j = bufferedimage.getHeight();
         int k = i / 16;
         int l = j / 16;
         float f = i / 128.0F;
         float f1 = a.F(f, 1.0F, 2.0F);
-        this.aIp = 1.0F / f1;
+        this.offsetBold = 1.0F / f1;
         float f2 = net.optifine.util.l.a(properties, "offsetBold", -1.0F);
         if (f2 >= 0.0F) {
-            this.aIp = f2;
+            this.offsetBold = f2;
         }
 
         int[] aint = new int[i * j];
@@ -174,12 +174,12 @@ public class agd extends agc implements IResourceManagerReloadListener {
 
         net.optifine.util.l.a(properties, this.charWidthFloat);
 
-        for (int l2 = 0; l2 < this.aHT.length; l2++) {
-            this.aHT[l2] = Math.round(this.charWidthFloat[l2]);
+        for (int l2 = 0; l2 < this.charWidth.length; l2++) {
+            this.charWidth[l2] = Math.round(this.charWidthFloat[l2]);
         }
     }
 
-    private void ts() {
+    private void readGlyphSizes() {
         InputStream inputstream = null;
 
         try {
@@ -192,20 +192,20 @@ public class agd extends agc implements IResourceManagerReloadListener {
         }
     }
 
-    private float a(char var1, boolean var2) {
+    private float renderChar(char var1, boolean var2) {
         if (var1 != ' ' && var1 != 160) {
             int i = "ÀÁÂÈÊËÍÓÔÕÚßãõğİıŒœŞşŴŵžȇ\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αβΓπΣσμτΦΘΩδ∞∅∈∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■\u0000"
                 .indexOf(var1);
-            return i != -1 && !this.aIc ? this.renderDefaultChar(i, var2) : this.b(var1, var2);
+            return i != -1 && !this.unicodeFlag ? this.renderDefaultChar(i, var2) : this.renderUnicodeChar(var1, var2);
         }
-        return !this.aIc ? this.charWidthFloat[var1] : 4.0F;
+        return !this.unicodeFlag ? this.charWidthFloat[var1] : 4.0F;
     }
 
     private float renderDefaultChar(int var1, boolean var2) {
         int i = var1 % 16 * 8;
         int j = var1 / 16 * 8;
         int k = var2 ? 1 : 0;
-        this.bindTexture(this.aHY);
+        this.bindTexture(this.locationFontTexture);
         float f = this.charWidthFloat[var1];
         GL11.glBegin(5);
         GL11.glTexCoord2f(i / 128.0F, j / 128.0F);
@@ -233,7 +233,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
         this.bindTexture(this.getUnicodePageLocation(var1));
     }
 
-    private float b(char var1, boolean var2) {
+    private float renderUnicodeChar(char var1, boolean var2) {
         if (this.glyphWidth[var1] == 0) {
             return 0.0F;
         }
@@ -274,14 +274,14 @@ public class agd extends agc implements IResourceManagerReloadListener {
     @Override
     public int b(String var1, double var2, double var4, int var6, boolean var7) {
         var4--;
-        this.tw();
-        if (this.aIr) {
-            GlStateManager.b(this.aIs);
+        this.enableAlpha();
+        if (this.blend) {
+            GlStateManager.b(this.blendState);
             GlStateManager.enableBlend();
             GlStateManager.blendFunc(770, 771);
         }
 
-        this.tt();
+        this.resetStyles();
         int i;
         if (var7) {
             i = this.renderString(var1, (float)var2 + 1.0F, (float)var4 + 1.0F, var6, true);
@@ -290,14 +290,14 @@ public class agd extends agc implements IResourceManagerReloadListener {
             i = this.renderString(var1, (float)var2, (float)var4, var6, false);
         }
 
-        if (this.aIr) {
-            GlStateManager.c(this.aIs);
+        if (this.blend) {
+            GlStateManager.c(this.blendState);
         }
 
         return i;
     }
 
-    private String bQ(String var1) {
+    private String bidiReorder(String var1) {
         try {
             Bidi bidi = new Bidi(new ArabicShaping(8).shape(var1), 127);
             bidi.setReorderingMode(0);
@@ -307,12 +307,12 @@ public class agd extends agc implements IResourceManagerReloadListener {
         }
     }
 
-    private void tt() {
-        this.aIi = false;
-        this.aIj = false;
-        this.aIk = false;
-        this.aIl = false;
-        this.aIm = false;
+    private void resetStyles() {
+        this.randomStyle = false;
+        this.boldStyle = false;
+        this.italicStyle = false;
+        this.underlineStyle = false;
+        this.strikethroughStyle = false;
     }
 
     private void renderStringAtPos(String var1, boolean var2) {
@@ -321,11 +321,11 @@ public class agd extends agc implements IResourceManagerReloadListener {
             if (c0 == 167 && i + 1 < var1.length()) {
                 int j = "0123456789abcdefklmnor".indexOf(var1.toLowerCase(Locale.ENGLISH).charAt(i + 1));
                 if (j < 16) {
-                    this.aIi = false;
-                    this.aIj = false;
-                    this.aIm = false;
-                    this.aIl = false;
-                    this.aIk = false;
+                    this.randomStyle = false;
+                    this.boldStyle = false;
+                    this.strikethroughStyle = false;
+                    this.underlineStyle = false;
+                    this.italicStyle = false;
                     if (j < 0) {
                         j = 15;
                     }
@@ -334,47 +334,47 @@ public class agd extends agc implements IResourceManagerReloadListener {
                         j += 16;
                     }
 
-                    int k = this.aHX[j];
+                    int k = this.colorCode[j];
                     if (a.aoh()) {
                         k = s.bB(j, k);
                     }
 
-                    this.aIh = k;
-                    this.setColor((k >> 16) / 255.0F, (k >> 8 & 0xFF) / 255.0F, (k & 0xFF) / 255.0F, this.aoJ);
+                    this.textColor = k;
+                    this.setColor((k >> 16) / 255.0F, (k >> 8 & 0xFF) / 255.0F, (k & 0xFF) / 255.0F, this.alpha);
                 } else if (j == 17) {
-                    this.aIj = true;
+                    this.boldStyle = true;
                 } else if (j == 21) {
-                    this.aIi = false;
-                    this.aIj = false;
-                    this.aIm = false;
-                    this.aIl = false;
-                    this.aIk = false;
-                    this.setColor(this.aIe, this.aIf, this.aIg, this.aoJ);
+                    this.randomStyle = false;
+                    this.boldStyle = false;
+                    this.strikethroughStyle = false;
+                    this.underlineStyle = false;
+                    this.italicStyle = false;
+                    this.setColor(this.red, this.blue, this.green, this.alpha);
                 }
 
                 i++;
             } else {
-                float f = !this.aIc ? this.aIp : 0.5F;
-                boolean flag = (c0 == 0 || this.aIc) && var2;
+                float f = !this.unicodeFlag ? this.offsetBold : 0.5F;
+                boolean flag = (c0 == 0 || this.unicodeFlag) && var2;
                 if (flag) {
                     this.aIa -= f;
                     this.aIb -= f;
                 }
 
-                float f1 = this.a(c0, this.aIk);
+                float f1 = this.renderChar(c0, this.italicStyle);
                 if (flag) {
                     this.aIa += f;
                     this.aIb += f;
                 }
 
-                if (this.aIj) {
+                if (this.boldStyle) {
                     this.aIa += f;
                     if (flag) {
                         this.aIa -= f;
                         this.aIb -= f;
                     }
 
-                    this.a(c0, this.aIk);
+                    this.renderChar(c0, this.italicStyle);
                     this.aIa -= f;
                     if (flag) {
                         this.aIa += f;
@@ -384,18 +384,18 @@ public class agd extends agc implements IResourceManagerReloadListener {
                     f1 += f;
                 }
 
-                this.y(f1);
+                this.doDraw(f1);
             }
         }
     }
 
-    protected void y(float var1) {
-        if (this.aIl) {
+    protected void doDraw(float var1) {
+        if (this.underlineStyle) {
             Tessellator tessellator = Tessellator.getInstance();
             WorldRenderer worldrenderer = tessellator.getWorldRenderer();
             GlStateManager.disableTexture2D();
             worldrenderer.begin(7, DefaultVertexFormats.POSITION);
-            int i = this.aIl ? -1 : 0;
+            int i = this.underlineStyle ? -1 : 0;
             worldrenderer.pos(this.aIa + i, this.aIb + 9, 0.0).endVertex();
             worldrenderer.pos(this.aIa + var1, this.aIb + 9, 0.0).endVertex();
             worldrenderer.pos(this.aIa + var1, this.aIb + 9 - 1.0F, 0.0).endVertex();
@@ -408,8 +408,8 @@ public class agd extends agc implements IResourceManagerReloadListener {
     }
 
     private int renderStringAligned(String var1, int var2, int var3, int var4, int var5, boolean var6) {
-        if (this.aId) {
-            int i = this.getStringWidth(this.bQ(var1));
+        if (this.bidiFlag) {
+            int i = this.getStringWidth(this.bidiReorder(var1));
             var2 = var2 + var4 - i;
         }
 
@@ -421,8 +421,8 @@ public class agd extends agc implements IResourceManagerReloadListener {
             return 0;
         }
 
-        if (this.aId) {
-            var1 = this.bQ(var1);
+        if (this.bidiFlag) {
+            var1 = this.bidiReorder(var1);
         }
 
         if ((var4 & -67108864) == 0) {
@@ -433,11 +433,11 @@ public class agd extends agc implements IResourceManagerReloadListener {
             var4 = (var4 & 16579836) >> 2 | var4 & 0xFF000000;
         }
 
-        this.aIe = (var4 >> 16 & 0xFF) / 255.0F;
-        this.aIf = (var4 >> 8 & 0xFF) / 255.0F;
-        this.aIg = (var4 & 0xFF) / 255.0F;
-        this.aoJ = (var4 >> 24 & 0xFF) / 255.0F;
-        this.setColor(this.aIe, this.aIf, this.aIg, this.aoJ);
+        this.red = (var4 >> 16 & 0xFF) / 255.0F;
+        this.blue = (var4 >> 8 & 0xFF) / 255.0F;
+        this.green = (var4 & 0xFF) / 255.0F;
+        this.alpha = (var4 >> 24 & 0xFF) / 255.0F;
+        this.setColor(this.red, this.blue, this.green, this.alpha);
         this.aIa = var2;
         this.aIb = var3;
         this.renderStringAtPos(var1, var5);
@@ -469,7 +469,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
 
             f += f1;
             if (flag && f1 > 0.0F) {
-                f += this.aIc ? 1.0F : this.aIp;
+                f += this.unicodeFlag ? 1.0F : this.offsetBold;
             }
         }
 
@@ -477,12 +477,12 @@ public class agd extends agc implements IResourceManagerReloadListener {
     }
 
     @Override
-    public int c(String var1, double var2, double var4, int var6) {
+    public int drawString(String var1, double var2, double var4, int var6) {
         return this.b(var1, var2 - (this.getStringWidth(var1) >> 1), var4, var6, false);
     }
 
     @Override
-    public int d(String var1, double var2, double var4, int var6) {
+    public int drawCenteredString(String var1, double var2, double var4, int var6) {
         return this.b(var1, var2 - this.getStringWidth(var1), var4, var6, false);
     }
 
@@ -508,7 +508,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
         if (var1 != ' ' && var1 != 160) {
             int i = "ÀÁÂÈÊËÍÓÔÕÚßãõğİıŒœŞşŴŵžȇ\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αβΓπΣσμτΦΘΩδ∞∅∈∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■\u0000"
                 .indexOf(var1);
-            if (var1 > 0 && i != -1 && !this.aIc) {
+            if (var1 > 0 && i != -1 && !this.unicodeFlag) {
                 return this.charWidthFloat[i];
             }
 
@@ -574,7 +574,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
         return stringbuilder.toString();
     }
 
-    private String bR(String var1) {
+    private String trimStringNewline(String var1) {
         while (var1 != null && var1.endsWith("\n")) {
             var1 = var1.substring(0, var1.length() - 1);
         }
@@ -583,24 +583,24 @@ public class agd extends agc implements IResourceManagerReloadListener {
     }
 
     public void a(String var1, int var2, int var3, int var4, int var5) {
-        if (this.aIr) {
-            GlStateManager.b(this.aIs);
+        if (this.blend) {
+            GlStateManager.b(this.blendState);
             GlStateManager.enableBlend();
             GlStateManager.blendFunc(770, 771);
         }
 
-        this.tt();
-        this.aIh = var5;
-        var1 = this.bR(var1);
+        this.resetStyles();
+        this.textColor = var5;
+        var1 = this.trimStringNewline(var1);
         this.renderSplitString(var1, var2, var3, var4, false);
-        if (this.aIr) {
-            GlStateManager.c(this.aIs);
+        if (this.blend) {
+            GlStateManager.c(this.blendState);
         }
     }
 
     private void renderSplitString(String var1, int var2, int var3, int var4, boolean var5) {
         for (String s : this.listFormattedStringToWidth(var1, var4)) {
-            this.renderStringAligned(s, var2, var3, var4, this.aIh, var5);
+            this.renderStringAligned(s, var2, var3, var4, this.textColor, var5);
             var3 += 9;
         }
     }
@@ -610,15 +610,15 @@ public class agd extends agc implements IResourceManagerReloadListener {
     }
 
     public void C(boolean var1) {
-        this.aIc = var1;
+        this.unicodeFlag = var1;
     }
 
     public boolean tu() {
-        return this.aIc;
+        return this.unicodeFlag;
     }
 
     public void D(boolean var1) {
-        this.aId = var1;
+        this.bidiFlag = var1;
     }
 
     public List<String> listFormattedStringToWidth(String var1, int var2) {
@@ -630,7 +630,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
             return var1;
         }
 
-        int i = this.o(var1, var2);
+        int i = this.sizeStringToWidth(var1, var2);
         if (var1.length() <= i) {
             return var1;
         }
@@ -642,7 +642,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
         return s + "\n" + this.wrapFormattedStringToWidth(s1, var2);
     }
 
-    private int o(String var1, int var2) {
+    private int sizeStringToWidth(String var1, int var2) {
         int i = var1.length();
         float f = 0.0F;
         int j = 0;
@@ -668,7 +668,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
                         char c1 = var1.charAt(++j);
                         if (c1 == 'l' || c1 == 'L') {
                             flag = true;
-                        } else if (c1 == 'r' || c1 == 'R' || d(c1)) {
+                        } else if (c1 == 'r' || c1 == 'R' || isFormatColor(c1)) {
                             flag = false;
                         }
                     }
@@ -689,11 +689,11 @@ public class agd extends agc implements IResourceManagerReloadListener {
         return j != i && k != -1 && k < j ? k : j;
     }
 
-    private static boolean d(char var0) {
+    private static boolean isFormatColor(char var0) {
         return var0 >= '0' && var0 <= '9' || var0 >= 'a' && var0 <= 'f' || var0 >= 'A' && var0 <= 'F';
     }
 
-    private static boolean e(char var0) {
+    private static boolean isFormatSpecial(char var0) {
         return var0 >= 'k' && var0 <= 'o' || var0 >= 'K' && var0 <= 'O' || var0 == 'r' || var0 == 'R';
     }
 
@@ -705,9 +705,9 @@ public class agd extends agc implements IResourceManagerReloadListener {
         while ((i = var0.indexOf(167, i + 1)) != -1) {
             if (i < j - 1) {
                 char c0 = var0.charAt(i + 1);
-                if (d(c0)) {
+                if (isFormatColor(c0)) {
                     stringbuilder = new StringBuilder("§" + c0);
-                } else if (e(c0)) {
+                } else if (isFormatSpecial(c0)) {
                     stringbuilder.append("§").append(c0);
                 }
             }
@@ -717,13 +717,13 @@ public class agd extends agc implements IResourceManagerReloadListener {
     }
 
     public boolean tv() {
-        return this.aId;
+        return this.bidiFlag;
     }
 
     public int getColorCode(char var1) {
         int i = "0123456789abcdef".indexOf(var1);
-        if (i >= 0 && i < this.aHX.length) {
-            int j = this.aHX[i];
+        if (i >= 0 && i < this.colorCode.length) {
+            int j = this.colorCode[i];
             if (a.aoh()) {
                 j = s.bB(i, j);
             }
@@ -737,7 +737,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
         GlStateManager.color(var1, var2, var3, var4);
     }
 
-    protected void tw() {
+    protected void enableAlpha() {
         GlStateManager.enableAlpha();
     }
 

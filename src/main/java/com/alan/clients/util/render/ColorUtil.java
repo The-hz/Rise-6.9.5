@@ -12,7 +12,7 @@ public final class ColorUtil {
     private ColorUtil() {
     }
 
-    public static void aA(int var0) {
+    public static void glColor(int var0) {
         float f = (var0 >> 24 & 0xFF) / 255.0F;
         float f1 = (var0 >> 16 & 0xFF) / 255.0F;
         float f2 = (var0 >> 8 & 0xFF) / 255.0F;
@@ -20,17 +20,17 @@ public final class ColorUtil {
         GL11.glColor4f(f1, f2, f3, f);
     }
 
-    public static void d(Color color) {
+    public static void glColor(Color color) {
         GL11.glColor4f(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, color.getAlpha() / 255.0F);
     }
 
-    public static Color a(Color color, float var1) {
+    public static Color brighter(Color color, float var1) {
         return new Color(
             Math.max((int)(color.getRed() * var1), 0), Math.max((int)(color.getGreen() * var1), 0), Math.max((int)(color.getBlue() * var1), 0), color.getAlpha()
         );
     }
 
-    public static Color b(Color color, float var1) {
+    public static Color darker(Color color, float var1) {
         int i = color.getRed();
         int j = color.getGreen();
         int k = color.getBlue();
@@ -55,19 +55,19 @@ public final class ColorUtil {
         return new Color(Math.min((int)(i / var1), 255), Math.min((int)(j / var1), 255), Math.min((int)(k / var1), 255), l);
     }
 
-    public static Color a(Color color, int var1) {
+    public static Color withAlpha(Color color, int var1) {
         return new Color(var1, color.getGreen(), color.getBlue());
     }
 
-    public static Color b(Color color, int var1) {
+    public static Color withRed(Color color, int var1) {
         return new Color(color.getRed(), var1, color.getBlue());
     }
 
-    public static Color c(Color color, int var1) {
+    public static Color withGreen(Color color, int var1) {
         return new Color(color.getRed(), color.getGreen(), var1);
     }
 
-    public static Color d(Color color, int var1) {
+    public static Color withBlue(Color color, int var1) {
         return var1 == color.getAlpha() ? color : new Color(color.getRed(), color.getGreen(), color.getBlue(), (int)MathUtil.c(0.0, 255.0, var1));
     }
 
@@ -89,11 +89,11 @@ public final class ColorUtil {
 
     public static void a(agc var0, String var1, double var2, double var4, boolean var6) {
         float f = 0.0F;
-        ThemeManager adu = Client.a.k();
+        ThemeManager adu = Client.a.getThemeManager();
 
         for (int i = 0; i < var1.length(); i++) {
             String s = String.valueOf(var1.charAt(i));
-            Color color = a(adu.rz().rA(), adu.rz().rB(), Math.sin(i * 0.095) * 0.5 + 0.5);
+            Color color = a(adu.getTheme().rA(), adu.getTheme().rB(), Math.sin(i * 0.095) * 0.5 + 0.5);
             if (var6) {
                 var0.b(s, var2 + f, var4, color.getRGB());
             } else {

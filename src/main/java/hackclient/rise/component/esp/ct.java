@@ -21,7 +21,7 @@ public class ct extends ESP {
     }
 
     @Override
-    public void cp() {
+    public void render3D() {
         float f = aEg.timer.bWm;
         EntityLivingBase entitylivingbase = (EntityLivingBase)this.target;
         if (aEg.getRenderManager() != null && entitylivingbase != null) {
@@ -40,8 +40,8 @@ public class ct extends ESP {
             aEg.getRenderManager();
             double d5 = d12 - RenderManager.bUP;
             double d6 = d5 - d4;
-            Color color = this.hP.cr();
-            Color color1 = this.hP.cs();
+            Color color = this.espColor.cr();
+            Color color1 = this.espColor.cs();
             long now = System.currentTimeMillis();
             double d7 = 0.002;
             byte b0 = 64;

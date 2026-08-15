@@ -18,7 +18,7 @@ public final class Particles extends Module {
     private final BooleanValue alwaysSharpness = new BooleanValue("Always Sharpness", this, true);
     @EventLink
     public final Listener<AttackEvent> onAttack = var1 -> {
-        EntityLivingBase entitylivingbase = var1.dc();
+        EntityLivingBase entitylivingbase = var1.getLiving();
         if (aEg.thePlayer.fallDistance > 0.0F || this.alwaysCrit.wo() || this.alwaysSharpness.wo()) {
             for (int i = 0; i <= this.multiplier.wo().intValue(); i++) {
                 if (this.alwaysCrit.wo()) {

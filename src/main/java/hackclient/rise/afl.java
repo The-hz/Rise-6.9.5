@@ -9,7 +9,7 @@ public class afl implements InstanceAccess {
     public afl() {
     }
 
-    public static Vector2d sW() {
+    public static Vector2d getMouse() {
         ScaledResolution scaledresolution = aEg.jY;
         int i = Mouse.getX() * scaledresolution.getScaledWidth() / aEg.displayWidth;
         int j = scaledresolution.getScaledHeight() - Mouse.getY() * scaledresolution.getScaledHeight() / aEg.displayHeight - 1;

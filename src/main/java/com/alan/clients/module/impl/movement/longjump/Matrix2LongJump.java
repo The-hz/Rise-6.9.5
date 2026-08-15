@@ -29,7 +29,7 @@ public class Matrix2LongJump extends Mode<LongJump> {
     private double KY;
     private double KZ;
     private double La;
-    private boolean Lb;
+    private boolean hadViewBobbing;
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         if (var1x.getPacket() instanceof S08PacketPlayerPosLook s08packetplayerposlook) {
@@ -46,7 +46,7 @@ public class Matrix2LongJump extends Mode<LongJump> {
                 packetwrapper.sendToServer(Protocol1_9To1_8.class);
             }
 
-            PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, false));
+            PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, false));
             aEg.thePlayer.setPosition(d0, d1, d2);
             aEg.thePlayer.jump();
             this.getParent().setEnabled(false);
@@ -99,7 +99,7 @@ public class Matrix2LongJump extends Mode<LongJump> {
     @Override
     public void onDisable() {
         this.Hs = false;
-        if (this.Lb) {
+        if (this.hadViewBobbing) {
             aEg.gameSettings.cfG = true;
         }
     }
@@ -107,9 +107,9 @@ public class Matrix2LongJump extends Mode<LongJump> {
     @Override
     public void onEnable() {
         if (aEg.gameSettings.cfG) {
-            this.Lb = true;
+            this.hadViewBobbing = true;
         } else {
-            this.Lb = false;
+            this.hadViewBobbing = false;
         }
 
         this.KY = aEg.thePlayer.posX;

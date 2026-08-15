@@ -15,7 +15,7 @@ public class NetworkUtil implements InstanceAccess {
     public NetworkUtil() {
     }
 
-    public static String t(String var0, String var1) {
+    public static String requestLine(String var0, String var1) {
         try {
             HttpURLConnection httpurlconnection = (HttpURLConnection)new URL(var0).openConnection();
             httpurlconnection.setRequestMethod(var1);

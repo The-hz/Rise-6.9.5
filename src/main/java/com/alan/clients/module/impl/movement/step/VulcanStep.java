@@ -22,7 +22,7 @@ public class VulcanStep extends Mode<Step> {
     public final Listener<StepEvent> onStep = var0 -> {
         if (var0.getHeight() > 0.6) {
             aEg.timer.dzD = 0.5F;
-            PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.5, aEg.thePlayer.posZ, true));
+            PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.5, aEg.thePlayer.posZ, true));
         }
     };
 

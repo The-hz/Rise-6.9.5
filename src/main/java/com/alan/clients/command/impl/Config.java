@@ -24,7 +24,7 @@ public final class Config extends Command {
 
     @Override
     public void execute(String[] var1) {
-        ConfigManager configManager = this.rN().p();
+        ConfigManager configManager = this.rN().getConfigManager();
         String s = var1[1].toLowerCase();
         switch (var1.length) {
             case 2:

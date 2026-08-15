@@ -9,7 +9,7 @@ public class ProfileResponse {
     public String aEZ;
     @Expose
     @SerializedName("name")
-    public String gK;
+    public String name;
 
     public ProfileResponse() {
     }

@@ -14,8 +14,8 @@ import rip.vantage.commons.util.time.a;
 
 public final class WatchdogCriticals extends Mode<Criticals> {
     private final NumberValue delay = new NumberValue("Delay", this, 500, 0, 1000, 50);
-    private final double[] rU = new double[]{1.0E-6, MoveUtil.predictedMotion(0.03125, 1)};
-    private final a rV = new a();
+    private final double[] offsets = new double[]{1.0E-6, MoveUtil.predictedMotion(0.03125, 1)};
+    private final a stopwatch = new a();
     public static boolean gD;
     public static boolean pw;
     private int hV;
@@ -72,9 +72,9 @@ public final class WatchdogCriticals extends Mode<Criticals> {
     };
     @EventLink
     public final Listener<AttackEvent> onAttack = var1x -> {
-        if (aEg.thePlayer.onGround && !aEg.thePlayer.isOnLadder() && this.rV.T(this.delay.wo().longValue())) {
-            aEg.thePlayer.onCriticalHit(var1x.dc());
-            this.rV.aX();
+        if (aEg.thePlayer.onGround && !aEg.thePlayer.isOnLadder() && this.stopwatch.T(this.delay.wo().longValue())) {
+            aEg.thePlayer.onCriticalHit(var1x.getLiving());
+            this.stopwatch.aX();
             pw = true;
         }
     };

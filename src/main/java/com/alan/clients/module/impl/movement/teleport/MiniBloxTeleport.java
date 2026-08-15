@@ -37,7 +37,7 @@ extends Mode<Teleport> {
     @EventLink
     public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = CancellableEvent::setCancelled;
     @EventLink
-    public final Listener<Render2DEvent> onRender2D = render2DEvent -> FontManager.MAIN.a(17, FontWeight.LIGHT).c("hold sneak to teleport", (float)MiniBloxTeleport.aEg.jY.getScaledWidth() / 2.0f, (float)MiniBloxTeleport.aEg.jY.getScaledHeight() / 2.0f + 30.0f, this.rz().rA().getRGB());
+    public final Listener<Render2DEvent> onRender2D = render2DEvent -> FontManager.MAIN.a(17, FontWeight.LIGHT).drawString("hold sneak to teleport", (float)MiniBloxTeleport.aEg.jY.getScaledWidth() / 2.0f, (float)MiniBloxTeleport.aEg.jY.getScaledHeight() / 2.0f + 30.0f, this.rz().rA().getRGB());
     @EventLink
     public final Listener<Render3DEvent> onRender3D = render3DEvent -> {
         float f2 = MiniBloxTeleport.aEg.timer.bWm;
@@ -51,7 +51,7 @@ extends Mode<Teleport> {
         double d5 = entityPlayerSP.prevPosY + (entityPlayerSP.posY - entityPlayerSP.prevPosY) * (double)f2;
         double d6 = entityPlayerSP.prevPosZ + (entityPlayerSP.posZ - entityPlayerSP.prevPosZ) * (double)f2 + Math.cos(d2) * d3;
         this.Sx = new ahy(d4, d5, d6);
-        Color color = ColorUtil.d(this.rz().rA(), 100);
+        Color color = ColorUtil.withBlue(this.rz().rA(), 100);
         if (color.getAlpha() <= 0) {
             return;
         }
@@ -87,7 +87,7 @@ extends Mode<Teleport> {
             MiniBloxTeleport.aEg.thePlayer.setPosition(MiniBloxTeleport.aEg.thePlayer.posX, MiniBloxTeleport.aEg.thePlayer.posY - 1.0E-4, MiniBloxTeleport.aEg.thePlayer.posZ);
         }
         for (ahy ahy2 : list) {
-            PacketUtil.m(new C03PacketPlayer.C04PacketPlayerPosition(ahy2.getX(), ahy2.getY(), ahy2.getZ(), true));
+            PacketUtil.sendNoEvent(new C03PacketPlayer.C04PacketPlayerPosition(ahy2.getX(), ahy2.getY(), ahy2.getZ(), true));
         }
     };
     @EventLink

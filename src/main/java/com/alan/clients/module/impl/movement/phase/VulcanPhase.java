@@ -27,7 +27,7 @@ public class VulcanPhase extends Mode<Phase> {
     public boolean El;
     @EventLink
     public Listener<PushOutOfBlockEvent> onPushOutOfBlock;
-    public int Og;
+    public int setbacks;
     public int qH;
     public int Oh;
     public boolean ys = false;
@@ -58,7 +58,7 @@ public class VulcanPhase extends Mode<Phase> {
         this.Jq = true;
         this.GQ = true;
         this.Oh = 0;
-        this.Og = 0;
+        this.setbacks = 0;
         this.ys = false;
         this.El = true;
         if (aEg.thePlayer.onGround) {
@@ -73,7 +73,7 @@ public class VulcanPhase extends Mode<Phase> {
     public VulcanPhase(String var1, Phase phase) {
         super(var1, phase);
         this.El = true;
-        this.Og = 0;
+        this.setbacks = 0;
         this.Oh = 0;
         this.qH = 0;
         this.Oi = false;
@@ -166,10 +166,10 @@ public class VulcanPhase extends Mode<Phase> {
         this.onPacketReceive = var1x -> {
             if (var1x.getPacket() instanceof S08PacketPlayerPosLook) {
                 this.ys = true;
-                this.Og++;
+                this.setbacks++;
             }
 
-            if (this.Og > 4) {
+            if (this.setbacks > 4) {
                 this.Jq = false;
             } else {
                 this.Jq = true;

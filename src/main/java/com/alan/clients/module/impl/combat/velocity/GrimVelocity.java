@@ -44,7 +44,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 public final class GrimVelocity extends Mode<Velocity> {
-    private final BooleanValue tL = new BooleanValue("Smart Combat (for High Ping)", this, false);
+    private final BooleanValue smartCombatForHighPing = new BooleanValue("Smart Combat (for High Ping)", this, false);
     private final BooleanValue rotations = new BooleanValue("Rotate", this, true);
     private int tN;
     private final Set<BlockPos> tO = new HashSet<>();
@@ -75,7 +75,7 @@ public final class GrimVelocity extends Mode<Velocity> {
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         Speed speed = this.e(Speed.class);
-        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).fastFall.wo();
+        boolean flag = speed.isEnabled() && speed.getMode().wo() instanceof GrimSpeed && ((GrimSpeed)speed.getMode().wo()).fastFall.wo();
         if (!tt && aEg.thePlayer.Zl >= 7 && !aEg.thePlayer.isInWeb && !flag) {
             Packet<?> packet = var1x.getPacket();
             if (packet instanceof S12PacketEntityVelocity s12packetentityvelocity
@@ -133,7 +133,7 @@ public final class GrimVelocity extends Mode<Velocity> {
     @EventLink
     public final Listener<MoveEvent> onMove = var1x -> {
         Speed speed = this.e(Speed.class);
-        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).fastFall.wo();
+        boolean flag = speed.isEnabled() && speed.getMode().wo() instanceof GrimSpeed && ((GrimSpeed)speed.getMode().wo()).fastFall.wo();
         if (aEg.thePlayer.Zl >= 7 && !aEg.thePlayer.isInWeb && !flag || !aEg.thePlayer.onGround) {
             if (this.tP) {
                 var1x.setCancelled();
@@ -142,7 +142,7 @@ public final class GrimVelocity extends Mode<Velocity> {
             if (aEg.thePlayer.tR > 25 && dj) {
                 dj = false;
                 tt = true;
-                this.tT.forEach(PacketUtil::p);
+                this.tT.forEach(PacketUtil::receive);
                 this.tT.clear();
                 tt = false;
             }
@@ -153,7 +153,7 @@ public final class GrimVelocity extends Mode<Velocity> {
             this.tO.clear();
             dj = false;
             this.uc = false;
-            this.tT.forEach(PacketUtil::p);
+            this.tT.forEach(PacketUtil::receive);
             this.tT.clear();
             tt = false;
         }
@@ -161,7 +161,7 @@ public final class GrimVelocity extends Mode<Velocity> {
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
         Speed speed = this.e(Speed.class);
-        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).fastFall.wo();
+        boolean flag = speed.isEnabled() && speed.getMode().wo() instanceof GrimSpeed && ((GrimSpeed)speed.getMode().wo()).fastFall.wo();
         if (aEg.thePlayer.Zl >= 7 && !aEg.thePlayer.isInWeb) {
             if (aEg.thePlayer.cqL > 3 && aEg.thePlayer.onGround && dj) {
                 aEg.thePlayer.jump();
@@ -185,7 +185,7 @@ public final class GrimVelocity extends Mode<Velocity> {
     @EventLink
     public final Listener<JumpEvent> onJump = var1x -> {
         Speed speed = this.e(Speed.class);
-        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).fastFall.wo();
+        boolean flag = speed.isEnabled() && speed.getMode().wo() instanceof GrimSpeed && ((GrimSpeed)speed.getMode().wo()).fastFall.wo();
         if (aEg.thePlayer.Zl >= 7 && !aEg.thePlayer.isInWeb && !flag && aEg.thePlayer.onGround && dj) {
             this.tP = true;
             dj = false;
@@ -193,7 +193,7 @@ public final class GrimVelocity extends Mode<Velocity> {
             BlinkComponent.dispatch();
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             double d0 = aEg.thePlayer.motionY;
-            this.tT.forEach(PacketUtil::p);
+            this.tT.forEach(PacketUtil::receive);
             this.tT.clear();
             aEg.thePlayer.motionX = vector2d.getX();
             aEg.thePlayer.motionZ = vector2d.getY();
@@ -204,12 +204,12 @@ public final class GrimVelocity extends Mode<Velocity> {
     @EventLink
     public final Listener<TickEvent> onTick = var1x -> {
         Speed speed = this.e(Speed.class);
-        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).fastFall.wo();
+        boolean flag = speed.isEnabled() && speed.getMode().wo() instanceof GrimSpeed && ((GrimSpeed)speed.getMode().wo()).fastFall.wo();
         if (this.tP && !flag) {
             BlockPos blockpos = new BlockPos(aEg.thePlayer);
             if (this.rotations.wo()) {
                 tQ = true;
-                if (!this.tL.wo()) {
+                if (!this.smartCombatForHighPing.wo()) {
                     RotationComponent.d(false);
                     RotationComponent.setRotations(
                         new Vector2f(aEg.thePlayer.pl, (float)(90.0 - Math.random() * 0.1)), 10.0, MovementFix.NORMAL
@@ -258,7 +258,7 @@ public final class GrimVelocity extends Mode<Velocity> {
     public void onDisable() {
         dk = false;
         tQ = false;
-        this.tT.forEach(PacketUtil::p);
+        this.tT.forEach(PacketUtil::receive);
         this.tT.clear();
         dj = false;
     }
@@ -267,7 +267,7 @@ public final class GrimVelocity extends Mode<Velocity> {
     public void onEnable() {
         dk = false;
         tQ = false;
-        this.tT.forEach(PacketUtil::p);
+        this.tT.forEach(PacketUtil::receive);
         this.tT.clear();
         dj = false;
         this.tP = false;

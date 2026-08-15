@@ -37,7 +37,7 @@ public class Grim191181Flight extends Mode<Flight> {
         this.onPostStrafe = var1x -> {
             aEg.timer.dzD = this.timer.wo().floatValue();
             if (!this.Eo && aEg.thePlayer.fallDistance > 0.0F) {
-                PacketUtil.l(new C03PacketPlayer(true));
+                PacketUtil.send(new C03PacketPlayer(true));
                 aEg.thePlayer.fallDistance = 0.0F;
                 this.Eo = true;
             }

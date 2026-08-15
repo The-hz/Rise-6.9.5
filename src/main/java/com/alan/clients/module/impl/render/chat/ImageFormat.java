@@ -8,12 +8,12 @@ enum ImageFormat {
     WEBP,
     UNKNOWN;
 
-    private static final ImageFormat[] $VALUES = nl();
+    private static final ImageFormat[] $VALUES = createValues();
 
     ImageFormat() {
     }
 
-    private static ImageFormat[] nl() {
+    private static ImageFormat[] createValues() {
         return new ImageFormat[]{PNG, JPEG, GIF, BMP, WEBP, UNKNOWN};
     }
 }

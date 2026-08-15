@@ -26,8 +26,8 @@ import net.minecraft.network.play.client.m;
 @ModuleInfo(aliases = "module.render.freecam.name", description = "module.render.freecam.description", category = Category.RENDER)
 public final class FreeCam extends Module {
     private final NumberValue speed = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
-    private aka Ft;
-    private aka ant;
+    private aka position;
+    private aka delta;
     private Vector2f rotation;
     private boolean sprinting;
     @EventLink
@@ -63,20 +63,20 @@ public final class FreeCam extends Module {
 
     @Override
     public void onEnable() {
-        this.Ft = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
-        this.ant = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
+        this.position = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
+        this.delta = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
         this.rotation = new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
         this.sprinting = aEg.gameSettings.cgG.isKeyDown();
     }
 
     @Override
     public void onDisable() {
-        aEg.thePlayer.setPosition(this.Ft.getX(), this.Ft.getY(), this.Ft.getZ());
+        aEg.thePlayer.setPosition(this.position.getX(), this.position.getY(), this.position.getZ());
         aEg.thePlayer.pl = this.rotation.getX();
         aEg.thePlayer.rotationPitch = this.rotation.getY();
-        aEg.thePlayer.motionX = this.ant.getX();
-        aEg.thePlayer.motionY = this.ant.getY();
-        aEg.thePlayer.motionZ = this.ant.getZ();
+        aEg.thePlayer.motionX = this.delta.getX();
+        aEg.thePlayer.motionY = this.delta.getY();
+        aEg.thePlayer.motionZ = this.delta.getZ();
         aEg.gameSettings.cgG.setPressed(this.sprinting);
     }
 
@@ -86,13 +86,13 @@ public final class FreeCam extends Module {
     }
 
     @Generated
-    public aka lo() {
-        return this.Ft;
+    public aka getPosition() {
+        return this.position;
     }
 
     @Generated
-    public aka lp() {
-        return this.ant;
+    public aka getDelta() {
+        return this.delta;
     }
 
     @Generated
@@ -106,27 +106,27 @@ public final class FreeCam extends Module {
     }
 
     @Generated
-    public Listener<BlockAABBEvent> lq() {
+    public Listener<BlockAABBEvent> getBlockAABBEventListener() {
         return this.blockAABBEventListener;
     }
 
     @Generated
-    public Listener<PacketSendEvent> lr() {
+    public Listener<PacketSendEvent> getSend() {
         return this.send;
     }
 
     @Generated
-    public Listener<StrafeEvent> ls() {
+    public Listener<StrafeEvent> getOnStrafe() {
         return this.onStrafe;
     }
 
     @Generated
-    public Listener<PreMotionEvent> kK() {
+    public Listener<PreMotionEvent> getOnPreMotionEvent() {
         return this.onPreMotionEvent;
     }
 
     @Generated
-    public Listener<MoveInputEvent> lt() {
+    public Listener<MoveInputEvent> getOnMovementInput() {
         return this.onMovementInput;
     }
 }

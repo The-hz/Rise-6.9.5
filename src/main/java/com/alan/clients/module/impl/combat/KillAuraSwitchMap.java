@@ -3,26 +3,26 @@ package com.alan.clients.module.impl.combat;
 import net.minecraft.item.Item.ToolMaterial;
 
 public class KillAuraSwitchMap {
-    public static final int[] pe = new int[ToolMaterial.values().length];
+    public static final int[] TOOL_MATERIAL_SWITCH_MAP = new int[ToolMaterial.values().length];
 
     static {
         try {
-            pe[ToolMaterial.WOOD.ordinal()] = 1;
+            TOOL_MATERIAL_SWITCH_MAP[ToolMaterial.WOOD.ordinal()] = 1;
         } catch (NoSuchFieldError nosuchfielderror3) {
         }
 
         try {
-            pe[ToolMaterial.STONE.ordinal()] = 2;
+            TOOL_MATERIAL_SWITCH_MAP[ToolMaterial.STONE.ordinal()] = 2;
         } catch (NoSuchFieldError nosuchfielderror2) {
         }
 
         try {
-            pe[ToolMaterial.IRON.ordinal()] = 3;
+            TOOL_MATERIAL_SWITCH_MAP[ToolMaterial.IRON.ordinal()] = 3;
         } catch (NoSuchFieldError nosuchfielderror1) {
         }
 
         try {
-            pe[ToolMaterial.GOLD.ordinal()] = 4;
+            TOOL_MATERIAL_SWITCH_MAP[ToolMaterial.GOLD.ordinal()] = 4;
         } catch (NoSuchFieldError nosuchfielderror) {
         }
     }

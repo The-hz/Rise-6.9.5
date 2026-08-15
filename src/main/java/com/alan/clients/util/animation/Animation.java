@@ -4,48 +4,48 @@ import lombok.Generated;
 
 public class Animation {
     private Easing easing;
-    private long aGg;
-    private long aGh;
-    private long fa;
-    private double aGi;
-    private double aGj;
-    private double aGk;
+    private long duration;
+    private long millis;
+    private long startTime;
+    private double startValue;
+    private double destinationValue;
+    private double value;
     private boolean finished;
 
     public Animation(Easing easing, long var2) {
         this.easing = easing;
-        this.fa = System.currentTimeMillis();
-        this.aGg = var2;
+        this.startTime = System.currentTimeMillis();
+        this.duration = var2;
     }
 
     public void Q(double var1) {
-        this.aGh = System.currentTimeMillis();
-        if (this.aGj != var1) {
-            this.aGj = var1;
+        this.millis = System.currentTimeMillis();
+        if (this.destinationValue != var1) {
+            this.destinationValue = var1;
             this.reset();
         } else {
-            this.finished = this.aGh - this.aGg > this.fa;
+            this.finished = this.millis - this.duration > this.startTime;
             if (this.finished) {
-                this.aGk = var1;
+                this.value = var1;
                 return;
             }
         }
 
         double d0 = this.easing.getFunction().apply(this.sz());
-        if (this.aGk > var1) {
-            this.aGk = this.aGi - (this.aGi - var1) * d0;
+        if (this.value > var1) {
+            this.value = this.startValue - (this.startValue - var1) * d0;
         } else {
-            this.aGk = this.aGi + (var1 - this.aGi) * d0;
+            this.value = this.startValue + (var1 - this.startValue) * d0;
         }
     }
 
     public double sz() {
-        return (double)(System.currentTimeMillis() - this.fa) / this.aGg;
+        return (double)(System.currentTimeMillis() - this.startTime) / this.duration;
     }
 
     public void reset() {
-        this.fa = System.currentTimeMillis();
-        this.aGi = this.aGk;
+        this.startTime = System.currentTimeMillis();
+        this.startValue = this.value;
         this.finished = false;
     }
 
@@ -55,33 +55,33 @@ public class Animation {
     }
 
     @Generated
-    public long sB() {
-        return this.aGg;
+    public long getDuration() {
+        return this.duration;
     }
 
     @Generated
-    public long sC() {
-        return this.aGh;
+    public long getMillis() {
+        return this.millis;
     }
 
     @Generated
-    public long sD() {
-        return this.fa;
+    public long getStartTime() {
+        return this.startTime;
     }
 
     @Generated
-    public double sE() {
-        return this.aGi;
+    public double getStartValue() {
+        return this.startValue;
     }
 
     @Generated
-    public double sF() {
-        return this.aGj;
+    public double getDestinationValue() {
+        return this.destinationValue;
     }
 
     @Generated
-    public double sG() {
-        return this.aGk;
+    public double getValue() {
+        return this.value;
     }
 
     @Generated
@@ -95,33 +95,33 @@ public class Animation {
     }
 
     @Generated
-    public void h(long var1) {
-        this.aGg = var1;
+    public void setDuration(long var1) {
+        this.duration = var1;
     }
 
     @Generated
-    public void i(long var1) {
-        this.aGh = var1;
+    public void setMillis(long var1) {
+        this.millis = var1;
     }
 
     @Generated
-    public void j(long var1) {
-        this.fa = var1;
+    public void setStartTime(long var1) {
+        this.startTime = var1;
     }
 
     @Generated
-    public void R(double var1) {
-        this.aGi = var1;
+    public void setStartValue(double var1) {
+        this.startValue = var1;
     }
 
     @Generated
-    public void S(double var1) {
-        this.aGj = var1;
+    public void setDestinationValue(double var1) {
+        this.destinationValue = var1;
     }
 
     @Generated
-    public void T(double var1) {
-        this.aGk = var1;
+    public void setValue(double var1) {
+        this.value = var1;
     }
 
     @Generated

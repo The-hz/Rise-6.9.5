@@ -16,7 +16,7 @@ public final class VerusRegenRegen extends Mode<Regen> {
         if (aEg.thePlayer.getHealth() < this.health.wo().floatValue()) {
             for (int i = 0; i < 30; i++) {
                 if (aEg.thePlayer.onGround) {
-                    PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, true));
+                    PacketUtil.sendNoEvent(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, true));
                 }
             }
         }

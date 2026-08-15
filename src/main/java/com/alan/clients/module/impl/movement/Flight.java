@@ -111,7 +111,7 @@ public class Flight extends Module {
             if (this.entityDragon == null) {
                 this.entityDragon = new EntityDragon(aEg.theWorld);
                 aEg.theWorld.addEntityToWorld(-1, this.entityDragon);
-                Client.a.x().b(this, this.entityDragon);
+                Client.a.getBotManager().b(this, this.entityDragon);
             }
 
             Vector3d vector3d = new Vector3d(
@@ -124,7 +124,7 @@ public class Flight extends Module {
     };
     @EventLink
     public final Listener<AttackEvent> onAttack = var1 -> {
-        if (var1.dc() == this.entityDragon) {
+        if (var1.getLiving() == this.entityDragon) {
             var1.setCancelled();
         }
     };

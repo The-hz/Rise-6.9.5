@@ -7,15 +7,15 @@ import com.alan.clients.value.Mode;
 import lombok.Generated;
 
 public class TargetInfoModeWrapper<I extends Module> extends Mode<Interface> {
-    private final Mode<TargetInfo> atf;
+    private final Mode<TargetInfo> mode;
 
     public TargetInfoModeWrapper(String var1, Interface var2, Mode<TargetInfo> mode) {
         super(var1, var2);
-        this.atf = mode;
+        this.mode = mode;
     }
 
     @Generated
-    public Mode<TargetInfo> np() {
-        return this.atf;
+    public Mode<TargetInfo> getMode() {
+        return this.mode;
     }
 }

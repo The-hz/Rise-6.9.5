@@ -52,9 +52,9 @@ import rip.vantage.commons.util.time.a;
 
 public class RiseClickGUI extends GuiScreen implements aha {
     public Vector2f axI = new Vector2f(-1.0F, -1.0F);
-    public Vector2f alh = new Vector2f(416.0F, 338.0F);
-    public SidebarCategory axJ = new SidebarCategory();
-    public Screen axK = Category.SEARCH.ec();
+    public Vector2f position = new Vector2f(416.0F, 338.0F);
+    public SidebarCategory sidebar = new SidebarCategory();
+    public Screen axK = Category.SEARCH.getClickGUIScreen();
     public Screen axL = this.axK;
     public Screen axM = this.axK;
     public float axN;
@@ -63,16 +63,16 @@ public class RiseClickGUI extends GuiScreen implements aha {
     public a axP = new a();
     public a rG = new a();
     public ConcurrentLinkedQueue<ModuleComponent> moduleList = new ConcurrentLinkedQueue<>();
-    public Vector2f axR;
+    public Vector2f mouse;
     public double axS;
     public double axT;
     public double axU;
     public int round = 7;
     Vector2d translate;
-    public ValueComponent axX;
-    public Vector2f axY = new Vector2f(283.0F, 38.0F);
-    public Animation hB = new Animation(Easing.EASE_IN_EXPO, 300L);
-    public Animation axZ = new Animation(Easing.EASE_IN_EXPO, 300L);
+    public ValueComponent overlayPresent;
+    public Vector2f moduleDefaultScale = new Vector2f(283.0F, 38.0F);
+    public Animation scaleAnimation = new Animation(Easing.EASE_IN_EXPO, 300L);
+    public Animation opacityAnimation = new Animation(Easing.EASE_IN_EXPO, 300L);
     private final PinyinInputHandler aya = new PinyinInputHandler();
     private TextBox ayb;
     ShaderRenderQueue ayc = new ShaderRenderQueue(new AlphaShader());
@@ -112,7 +112,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
         System.out.println("PRE RMC");
         if (!Client.a.getSecurityManager().nN()) {
             System.out.println("RMC");
-            ArrayList arraylist = Client.a.g().ef();
+            ArrayList arraylist = Client.a.g().getAll();
             arraylist.sort((var0, var1) -> Collator.getInstance().compare(((Module)var0).getName(), ((Module)var1).getName()));
             arraylist.forEach(var1 -> this.moduleList.add(new ModuleComponent((Module)var1)));
         }
@@ -127,8 +127,8 @@ public class RiseClickGUI extends GuiScreen implements aha {
         aMR.execute(
             () -> {
                 this.round = 12;
-                this.hB.reset();
-                this.hB.T(0.0);
+                this.scaleAnimation.reset();
+                this.scaleAnimation.setValue(0.0);
                 ScaledResolution scaledresolution = aEg.jY;
                 this.axM = this.axK;
                 this.axP.aX();
@@ -138,10 +138,10 @@ public class RiseClickGUI extends GuiScreen implements aha {
                 this.axK.aT();
                 if (this.axI.x < 0.0F
                     || this.axI.y < 0.0F
-                    || this.axI.x + this.alh.x > scaledresolution.getScaledWidth()
-                    || this.axI.y + this.alh.y > scaledresolution.getScaledHeight()) {
-                    this.axI.x = scaledresolution.getScaledWidth() / 2.0F - this.alh.x / 2.0F;
-                    this.axI.y = scaledresolution.getScaledHeight() / 2.0F - this.alh.y / 2.0F;
+                    || this.axI.x + this.position.x > scaledresolution.getScaledWidth()
+                    || this.axI.y + this.position.y > scaledresolution.getScaledHeight()) {
+                    this.axI.x = scaledresolution.getScaledWidth() / 2.0F - this.position.x / 2.0F;
+                    this.axI.y = scaledresolution.getScaledHeight() / 2.0F - this.position.y / 2.0F;
                 }
 
                 this.moduleList.forEach(var0 -> var0.getValueList().forEach(var0x -> {
@@ -170,11 +170,11 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     public void cj() {
-        this.alh = new Vector2f(400.0F, 300.0F);
+        this.position = new Vector2f(400.0F, 300.0F);
         if (this.axS > 0.99) {
             this.oT();
         } else {
-            ((AlphaShader)this.ayc.dU()).p((float)this.axT);
+            ((AlphaShader)this.ayc.dU()).setAlpha((float)this.axT);
             this.ayc.c(this::oT);
             this.ayc.a(aiz.OVERLAY);
             this.ayc.clear();
@@ -182,10 +182,10 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     public void oT() {
-        if (this.axR != null) {
+        if (this.mouse != null) {
             Minecraft minecraft = Minecraft.getMinecraft();
-            int i = (int)this.axR.x;
-            int j = (int)this.axR.y;
+            int i = (int)this.mouse.x;
+            int j = (int)this.mouse.y;
             float f = minecraft.getTimer().bWm;
             if (this.dragging) {
                 if (this.axK instanceof ThemeScreen) {
@@ -196,21 +196,21 @@ public class RiseClickGUI extends GuiScreen implements aha {
                 this.axI.y = j + this.axO;
             }
 
-            this.axZ.setEasing(minecraft.currentScreen == Client.a.v() ? Easing.EASE_OUT_EXPO : Easing.LINEAR);
-            this.axZ.h(minecraft.currentScreen == Client.a.v() ? 300L : 100L);
-            this.axZ.Q(minecraft.currentScreen == Client.a.v() ? 1.0 : 0.0);
-            this.axT = this.axZ.sG();
-            this.hB.setEasing(minecraft.currentScreen == Client.a.v() ? Easing.EASE_OUT_EXPO : Easing.LINEAR);
-            this.hB.Q(minecraft.currentScreen == Client.a.v() ? 1.0 : 0.0);
-            this.axS = this.hB.sG();
-            if (minecraft.currentScreen == Client.a.v() && this.axS == 0.0) {
+            this.opacityAnimation.setEasing(minecraft.currentScreen == Client.a.getStandardClickGUI() ? Easing.EASE_OUT_EXPO : Easing.LINEAR);
+            this.opacityAnimation.setDuration(minecraft.currentScreen == Client.a.getStandardClickGUI() ? 300L : 100L);
+            this.opacityAnimation.Q(minecraft.currentScreen == Client.a.getStandardClickGUI() ? 1.0 : 0.0);
+            this.axT = this.opacityAnimation.getValue();
+            this.scaleAnimation.setEasing(minecraft.currentScreen == Client.a.getStandardClickGUI() ? Easing.EASE_OUT_EXPO : Easing.LINEAR);
+            this.scaleAnimation.Q(minecraft.currentScreen == Client.a.getStandardClickGUI() ? 1.0 : 0.0);
+            this.axS = this.scaleAnimation.getValue();
+            if (minecraft.currentScreen == Client.a.getStandardClickGUI() && this.axS == 0.0) {
                 this.axS = 0.01;
             }
 
             if (this.axS == 0.0) {
                 Client.a.g().c(ClickGUI.class).setEnabled(false);
             } else {
-                this.translate = new Vector2d((this.axI.x + this.alh.x / 2.0F) * (1.0 - this.axS), (this.axI.y + this.alh.y / 2.0F) * (1.0 - this.axS));
+                this.translate = new Vector2d((this.axI.x + this.position.x / 2.0F) * (1.0 - this.axS), (this.axI.y + this.position.y / 2.0F) * (1.0 - this.axS));
                 Runnable runnable = () -> {
                     GlStateManager.pushMatrix();
                     if (this.axS != 1.0) {
@@ -221,18 +221,18 @@ public class RiseClickGUI extends GuiScreen implements aha {
                 runnable.run();
                 this.b(ShaderQueueType.BLOOM, 2).c(runnable);
                 if (this.axS > 0.993) {
-                    RenderUtil.dropShadow(18, this.axI.x, this.axI.y, this.alh.x, this.alh.y, 30.0, this.round * 1.3);
+                    RenderUtil.dropShadow(18, this.axI.x, this.axI.y, this.position.x, this.position.y, 30.0, this.round * 1.3);
                 }
 
-                RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, this.round, UIColors.BACKGROUND.pV());
+                RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.position.x, this.position.y, this.round, UIColors.BACKGROUND.pV());
                 Runnable runnable1 = () -> {
                     GL11.glEnable(3089);
                     byte b0 = 1;
                     RenderUtil.g(
                         this.axI.x * this.axS + this.translate.x + b0,
                         this.axI.y * this.axS + this.translate.y + b0,
-                        this.alh.x * this.axS - b0 * 2,
-                        this.alh.y * this.axS - b0 * 2
+                        this.position.x * this.axS - b0 * 2,
+                        this.position.y * this.axS - b0 * 2
                     );
                 };
                 runnable1.run();
@@ -243,12 +243,12 @@ public class RiseClickGUI extends GuiScreen implements aha {
                 };
                 this.b(ShaderQueueType.BLOOM, 2).c(runnable2);
                 short short1 = 200;
-                (this.axL = this.axP.T(short1) ? this.axK : this.axM).b(i, j, f);
+                (this.axL = this.axP.T(short1) ? this.axK : this.axM).onRender(i, j, f);
                 if (agx.isEnabled()) {
                     double d0 = this.axI.x * this.axS + this.translate.x + 1.0;
                     double d1 = this.axI.y * this.axS + this.translate.y + 1.0;
-                    double d2 = this.alh.x * this.axS - 2.0;
-                    double d3 = this.alh.y * this.axS - 2.0;
+                    double d2 = this.position.x * this.axS - 2.0;
+                    double d3 = this.position.y * this.axS - 2.0;
                     TextBox textBox = this.oU();
                     if (textBox != this.ayb) {
                         this.aya.aX();
@@ -261,9 +261,9 @@ public class RiseClickGUI extends GuiScreen implements aha {
                         if (s != null && !s.isEmpty()) {
                             float f1 = textBox.tL();
                             float f2 = textBox.tM();
-                            FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, f1, f2, ColorUtil.d(Color.WHITE, 210).getRGB());
+                            FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, f1, f2, ColorUtil.withBlue(Color.WHITE, 210).getRGB());
                             RenderUtil.d(
-                                f1, f2 + FontManager.MAIN.a(16, FontWeight.REGULAR).height() + 1.0F, FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s), 1.0, ColorUtil.d(Color.WHITE, 140)
+                                f1, f2 + FontManager.MAIN.a(16, FontWeight.REGULAR).height() + 1.0F, FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s), 1.0, ColorUtil.withBlue(Color.WHITE, 140)
                             );
                             if (list != null && !list.isEmpty()) {
                                 StringBuilder stringbuilder = new StringBuilder();
@@ -291,7 +291,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
                                 double d8 = f1 - 2.0F;
                                 double d9 = f2 + FontManager.MAIN.a(16, FontWeight.REGULAR).height() + 6.0F;
                                 double d10 = 8.0;
-                                Color color = ColorUtil.d(Color.WHITE, 255);
+                                Color color = ColorUtil.withBlue(Color.WHITE, 255);
                                 this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(d8, d9, d6, d7, d10, color));
                                 this.b(ShaderQueueType.BLOOM, 2).c(() -> {
                                     GL11.glDisable(3089);
@@ -304,8 +304,8 @@ public class RiseClickGUI extends GuiScreen implements aha {
                                     GL11.glDisable(3089);
                                 }
 
-                                RenderUtil.roundedRectangle(d8, d9, d6, d7, d10, ColorUtil.d(UIColors.BACKGROUND.pV(), (int)Math.min(220.0, this.axT * 255.0)));
-                                FontManager.MAIN.a(16, FontWeight.REGULAR).a(s2, d8 + d5, d9 + d5, ColorUtil.d(Color.WHITE, 240).getRGB());
+                                RenderUtil.roundedRectangle(d8, d9, d6, d7, d10, ColorUtil.withBlue(UIColors.BACKGROUND.pV(), (int)Math.min(220.0, this.axT * 255.0)));
+                                FontManager.MAIN.a(16, FontWeight.REGULAR).a(s2, d8 + d5, d9 + d5, ColorUtil.withBlue(Color.WHITE, 240).getRGB());
                                 if (flag1) {
                                     GL11.glEnable(3089);
                                     RenderUtil.g(d0, d1, d2, d3);
@@ -324,17 +324,17 @@ public class RiseClickGUI extends GuiScreen implements aha {
                         )
                     );
                 if (this.axP.getElapsedTime() <= short1 * 2) {
-                    RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, this.round, UIColors.BACKGROUND.Y(k));
+                    RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.position.x, this.position.y, this.round, UIColors.BACKGROUND.Y(k));
                 }
 
-                this.axJ.pF();
+                this.sidebar.pF();
 
                 for (int l = 0; l <= 8; l++) {
                     double d4 = l * 50;
-                    RenderUtil.c(this.axI.x + this.axJ.aym - d4 / 2.0, this.axI.y + this.alh.y / 2.0F - d4 / 2.0, d4, ColorUtil.d(this.rz().rA(), 1));
+                    RenderUtil.c(this.axI.x + this.sidebar.aym - d4 / 2.0, this.axI.y + this.position.y / 2.0F - d4 / 2.0, d4, ColorUtil.withBlue(this.rz().rA(), 1));
                 }
 
-                this.axJ.renderSidebar(i, j);
+                this.sidebar.renderSidebar(i, j);
                 Runnable runnable3 = () -> {
                     GL11.glDisable(3089);
                     GlStateManager.popMatrix();
@@ -350,11 +350,11 @@ public class RiseClickGUI extends GuiScreen implements aha {
 
     @Override
     public void drawScreen(int var1, int var2, float var3) {
-        this.axR = new Vector2f(var1, var2);
+        this.mouse = new Vector2f(var1, var2);
     }
 
     public void ci() {
-        this.translate = new Vector2d((this.axI.x + this.alh.x / 2.0F) * (1.0 - this.axS), (this.axI.y + this.alh.y / 2.0F) * (1.0 - this.axS));
+        this.translate = new Vector2d((this.axI.x + this.position.x / 2.0F) * (1.0 - this.axS), (this.axI.y + this.position.y / 2.0F) * (1.0 - this.axS));
         GlStateManager.pushMatrix();
         if (this.axS != 1.0) {
             GlStateManager.translate(this.translate.x, this.translate.y, 0.0);
@@ -362,28 +362,28 @@ public class RiseClickGUI extends GuiScreen implements aha {
         }
 
         GL11.glEnable(3089);
-        RenderUtil.g(this.axI.x * this.axS + this.translate.x, this.axI.y * this.axS + this.translate.y, this.alh.x * this.axS, (this.alh.y - 4.0F) * this.axS);
+        RenderUtil.g(this.axI.x * this.axS + this.translate.x, this.axI.y * this.axS + this.translate.y, this.position.x * this.axS, (this.position.y - 4.0F) * this.axS);
         this.axL.pY();
-        this.axJ.preRenderClickGUI();
+        this.sidebar.preRenderClickGUI();
         GL11.glDisable(3089);
         GlStateManager.popMatrix();
     }
 
     @Override
     public void mouseClicked(int var1, int var2, int var3) {
-        if (GUIUtil.c(this.axI.x, this.axI.y, this.alh.x, 15.0, var1, var2) && this.axX == null) {
+        if (GUIUtil.c(this.axI.x, this.axI.y, this.position.x, 15.0, var1, var2) && this.overlayPresent == null) {
             this.axN = this.axI.x - var1;
             this.axO = this.axI.y - var2;
             this.dragging = true;
-        } else if (GUIUtil.c(this.axI.getX(), this.axI.getY(), this.alh.getX(), this.alh.getY(), var1, var2)) {
-            if (this.axX == null) {
-                this.axJ.clickSidebar(var1, var2, var3);
+        } else if (GUIUtil.c(this.axI.getX(), this.axI.getY(), this.position.getX(), this.position.getY(), var1, var2)) {
+            if (this.overlayPresent == null) {
+                this.sidebar.clickSidebar(var1, var2, var3);
             }
 
             this.axK.f(var1, var2, var3);
         }
 
-        this.axX = null;
+        this.overlayPresent = null;
     }
 
     @Override
@@ -411,7 +411,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
         }
 
         super.keyTyped(var1, var2);
-        this.axK.a(var1, var2);
+        this.axK.onKey(var1, var2);
     }
 
     private TextBox oU() {
@@ -434,7 +434,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
 
             for (ModuleComponent moduleComponent : this.moduleList) {
                 for (ValueComponent valueComponent : moduleComponent.getValueList()) {
-                    if (valueComponent instanceof abv abv && abv.azo != null && abv.azo.ayU) {
+                    if (valueComponent instanceof abv abv && abv.azo != null && abv.azo.selected) {
                         return abv.azo;
                     }
                 }
@@ -446,12 +446,12 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     public void switchScreen(Category category) {
-        if (!category.ec().equals(this.axK)) {
+        if (!category.getClickGUIScreen().equals(this.axK)) {
             this.axM = this.getStandardClickGUI().axK;
-            this.axK = category.ec();
+            this.axK = category.getClickGUIScreen();
             this.axP.aX();
             this.axK.aT();
-            SearchScreen searchScreen = (SearchScreen)Category.SEARCH.ec();
+            SearchScreen searchScreen = (SearchScreen)Category.SEARCH.getClickGUIScreen();
             searchScreen.relevantModules = searchScreen.getRelevantModules(searchScreen.azR.getText());
         }
     }
@@ -462,7 +462,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
             this.axK = screen;
             this.axP.aX();
             this.axK.aT();
-            SearchScreen searchScreen = (SearchScreen)Category.SEARCH.ec();
+            SearchScreen searchScreen = (SearchScreen)Category.SEARCH.getClickGUIScreen();
             searchScreen.relevantModules = searchScreen.getRelevantModules(searchScreen.azR.getText());
         }
     }
@@ -472,15 +472,15 @@ public class RiseClickGUI extends GuiScreen implements aha {
 
         while (iterator.hasNext()) {
             for (ValueComponent valueComponent : ((ModuleComponent)iterator.next()).getValueList()) {
-                if (valueComponent instanceof abv && valueComponent.position != null && ((abv)valueComponent).azo.ayU && !((abv)valueComponent).azo.aJv.T(50L)) {
+                if (valueComponent instanceof abv && valueComponent.position != null && ((abv)valueComponent).azo.selected && !((abv)valueComponent).azo.aJv.T(50L)) {
                     return true;
                 }
 
-                if (valueComponent instanceof abt && ((abt)valueComponent).azm.tO() && !((abt)valueComponent).azm.aJv.T(50L)) {
+                if (valueComponent instanceof abt && ((abt)valueComponent).azm.isSelected() && !((abt)valueComponent).azm.aJv.T(50L)) {
                     return true;
                 }
 
-                if (valueComponent instanceof abn && ((abn)valueComponent).ayS.tO() && !((abn)valueComponent).ayS.aJv.T(50L)) {
+                if (valueComponent instanceof abn && ((abn)valueComponent).ayS.isSelected() && !((abn)valueComponent).ayS.aJv.T(50L)) {
                     return true;
                 }
             }
@@ -496,12 +496,12 @@ public class RiseClickGUI extends GuiScreen implements aha {
 
     @Generated
     public Vector2f getPosition() {
-        return this.alh;
+        return this.position;
     }
 
     @Generated
-    public SidebarCategory oY() {
-        return this.axJ;
+    public SidebarCategory getSidebar() {
+        return this.sidebar;
     }
 
     @Generated
@@ -530,7 +530,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public boolean pe() {
+    public boolean isDragging() {
         return this.dragging;
     }
 
@@ -550,8 +550,8 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public Vector2f ph() {
-        return this.axR;
+    public Vector2f getMouse() {
+        return this.mouse;
     }
 
     @Generated
@@ -580,23 +580,23 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public ValueComponent pn() {
-        return this.axX;
+    public ValueComponent getOverlayPresent() {
+        return this.overlayPresent;
     }
 
     @Generated
-    public Vector2f po() {
-        return this.axY;
+    public Vector2f getModuleDefaultScale() {
+        return this.moduleDefaultScale;
     }
 
     @Generated
-    public Animation mE() {
-        return this.hB;
+    public Animation getScaleAnimation() {
+        return this.scaleAnimation;
     }
 
     @Generated
-    public Animation pp() {
-        return this.axZ;
+    public Animation getOpacityAnimation() {
+        return this.opacityAnimation;
     }
 
     @Generated

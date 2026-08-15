@@ -11,7 +11,7 @@ public final class DuplicateUniqueIDCheckAntiBot extends Mode<AntiBot> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         if (aEg.theWorld.playerEntities.stream().anyMatch(var1xxx -> var1xxx.getEntityId() == var1xx.getEntityId() && var1xxx != var1xx)) {
-            Client.a.x().b(this, var1xx);
+            Client.a.getBotManager().b(this, var1xx);
         }
     });
 
@@ -21,6 +21,6 @@ public final class DuplicateUniqueIDCheckAntiBot extends Mode<AntiBot> {
 
     @Override
     public void onDisable() {
-        Client.a.x().a(this);
+        Client.a.getBotManager().a(this);
     }
 }

@@ -16,7 +16,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 
 public class MatrixSpeed extends Mode<Speed> {
-    private final NumberValue PV = new NumberValue("Timer Boost (on sneak)", this, 30, 1, 100, 0.1);
+    private final NumberValue timerBoostOnSneak = new NumberValue("Timer Boost (on sneak)", this, 30, 1, 100, 0.1);
     private int PD = 0;
     @EventLink
     public final Listener<JumpEvent> onJump = var1x -> this.PD++;
@@ -59,15 +59,15 @@ public class MatrixSpeed extends Mode<Speed> {
         if (aEg.gameSettings.keyBindSneak.isKeyDown()) {
             this.PD = 0;
             MoveUtil.strafe(0.07);
-            aEg.timer.dzD = this.PV.wo().floatValue();
+            aEg.timer.dzD = this.timerBoostOnSneak.wo().floatValue();
         } else {
             this.PD++;
             if (this.PD == 1) {
-                PacketUtil.m(
+                PacketUtil.sendNoEvent(
                     new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false)
                 );
-                PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, false));
-                PacketUtil.m(
+                PacketUtil.sendNoEvent(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, false));
+                PacketUtil.sendNoEvent(
                     new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false)
                 );
             }

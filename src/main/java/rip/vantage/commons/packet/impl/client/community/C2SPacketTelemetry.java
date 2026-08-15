@@ -24,7 +24,7 @@ public final class C2SPacketTelemetry extends rip.vantage.commons.packet.api.abs
 
     @Override
     public void handle(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
-        handler.a(this);
+        handler.handle(this);
     }
 
     @Override

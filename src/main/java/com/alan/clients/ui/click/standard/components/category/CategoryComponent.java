@@ -30,8 +30,8 @@ public final class CategoryComponent implements InstanceAccess {
         this.category = category;
     }
 
-    public void a(double var1, double var3, double var5, Screen screen) {
-        RiseClickGUI riseclickgui = Client.a.v();
+    public void render(double var1, double var3, double var5, Screen screen) {
+        RiseClickGUI riseclickgui = Client.a.getStandardClickGUI();
         if (System.currentTimeMillis() - this.lastTime > 300L) {
             this.lastTime = System.currentTimeMillis();
         }
@@ -39,18 +39,18 @@ public final class CategoryComponent implements InstanceAccess {
         long now = System.currentTimeMillis();
         this.x = (float)(riseclickgui.axI.x - (69.0 - var3) - 21.0);
         this.y = (float)(riseclickgui.axI.y + var1) + 16.0F;
-        this.animation.h(200L);
-        this.animation.Q(screen.equals(this.category.ec()) ? 255.0 : 0.0);
-        double d0 = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(ahd.ce(this.category.getName())) + 8.0 + this.category.eb().getStringWidth(this.category.ea());
+        this.animation.setDuration(200L);
+        this.animation.Q(screen.equals(this.category.getClickGUIScreen()) ? 255.0 : 0.0);
+        double d0 = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(ahd.ce(this.category.getName())) + 8.0 + this.category.getFontRenderer().getStringWidth(this.category.getIcon());
         GlStateManager.pushMatrix();
         RenderUtil.roundedRectangle(
-            this.x, this.y - 5.5, d0 + 8.0, 15.0, 5.0, ColorUtil.d(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.sG(), var5)).darker()
+            this.x, this.y - 5.5, d0 + 8.0, 15.0, 5.0, ColorUtil.withBlue(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.getValue(), var5)).darker()
         );
-        int j = new Color(255, 255, 255, Math.min(screen.equals(this.category.ec()) ? 255 : 200, (int)var5)).hashCode();
-        this.category.eb().a(this.category.ea(), (float)(this.x + this.animation.sG() / 80.0 + 3.0), this.y, j);
+        int j = new Color(255, 255, 255, Math.min(screen.equals(this.category.getClickGUIScreen()) ? 255 : 200, (int)var5)).hashCode();
+        this.category.getFontRenderer().a(this.category.getIcon(), (float)(this.x + this.animation.getValue() / 80.0 + 3.0), this.y, j);
         FontManager.MAIN
             .a(16, FontWeight.REGULAR)
-            .a(ahd.ce(this.category.getName()), (float)(this.x + this.animation.sG() / 80.0 + 3.0 + 4.0) + FontManager.ICONS_1.o(17).getStringWidth(this.category.ea()), this.y, j);
+            .a(ahd.ce(this.category.getName()), (float)(this.x + this.animation.getValue() / 80.0 + 3.0 + 4.0) + FontManager.ICONS_1.o(17).getStringWidth(this.category.getIcon()), this.y, j);
         GlStateManager.popMatrix();
         this.lastTime = now;
     }
@@ -64,9 +64,9 @@ public final class CategoryComponent implements InstanceAccess {
     }
 
     public void bloom(double var1) {
-        double d0 = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(ahd.ce(this.category.getName())) + 8.0 + this.category.eb().getStringWidth(this.category.ea());
+        double d0 = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(ahd.ce(this.category.getName())) + 8.0 + this.category.getFontRenderer().getStringWidth(this.category.getIcon());
         RenderUtil.roundedRectangle(
-            this.x, this.y - 5.0F, d0 + 8.0, 14.0, 5.0, ColorUtil.d(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.sG(), var1)).darker()
+            this.x, this.y - 5.0F, d0 + 8.0, 14.0, 5.0, ColorUtil.withBlue(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.getValue(), var1)).darker()
         );
     }
 

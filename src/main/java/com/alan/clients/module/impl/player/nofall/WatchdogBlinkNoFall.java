@@ -43,9 +43,9 @@ public final class WatchdogBlinkNoFall extends Mode<NoFall> {
 
             if (this.aiX <= 0 && FallDistanceComponent.cY > 2.9 && !this.e(Scaffold.class).isEnabled()) {
                 var1x.setPosY(var1x.getPosY() + 1.0E-13);
-                PacketUtil.l(new C08PacketPlayerBlockPlacement(BlockPos.ORIGIN, 0, new ItemStack(Items.water_bucket, 1), 0.5F, 0.5F, 0.5F));
+                PacketUtil.send(new C08PacketPlayerBlockPlacement(BlockPos.ORIGIN, 0, new ItemStack(Items.water_bucket, 1), 0.5F, 0.5F, 0.5F));
                 aEg.timer.dzD = 0.5F;
-                PacketUtil.l(new C03PacketPlayer(true));
+                PacketUtil.send(new C03PacketPlayer(true));
                 FallDistanceComponent.cY = 0.0F;
             }
         }
@@ -53,7 +53,7 @@ public final class WatchdogBlinkNoFall extends Mode<NoFall> {
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1x -> {
         if (this.aiX > 0) {
-            aEg.fontRendererObj.c("Blinking: " + this.aiX, aEg.jY.getScaledWidth() / 2.0, aEg.jY.getScaledHeight() / 2.0 + 20.0, -1);
+            aEg.fontRendererObj.drawString("Blinking: " + this.aiX, aEg.jY.getScaledWidth() / 2.0, aEg.jY.getScaledHeight() / 2.0 + 20.0, -1);
         }
     };
 

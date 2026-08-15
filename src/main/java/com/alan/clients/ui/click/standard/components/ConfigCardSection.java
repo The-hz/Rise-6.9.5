@@ -18,35 +18,35 @@ import lombok.Generated;
 import org.jetbrains.annotations.NotNull;
 
 public class ConfigCardSection extends ArrayList<ConfigCard> implements InstanceAccess {
-    private String gK;
+    private String name;
     private static float aAe = 10.0F;
     private Vector2f axI;
     private agk scrollUtil = new agk();
 
     public ConfigCardSection(int var1, String var2) {
         super(var1);
-        this.gK = var2;
+        this.name = var2;
     }
 
     public ConfigCardSection(String var1) {
-        this.gK = var1;
+        this.name = var1;
     }
 
     public ConfigCardSection(@NotNull Collection<? extends ConfigCard> var1, String var2) {
         super(var1);
-        this.gK = var2;
+        this.name = var2;
     }
 
     public void j(Vector2f vec2) {
         try {
             RiseClickGUI riseclickgui = this.getStandardClickGUI();
             this.axI = new Vector2f(vec2.x, vec2.y);
-            FontManager.MAIN.a(18, FontWeight.REGULAR).a(this.gK, this.axI.x, this.axI.y, Color.WHITE.getRGB());
+            FontManager.MAIN.a(18, FontWeight.REGULAR).a(this.name, this.axI.x, this.axI.y, Color.WHITE.getRGB());
             String s = this.size() + "";
-            FontManager.MAIN.a(18, FontWeight.REGULAR).a(s, this.axI.x + FontManager.MAIN.a(18, FontWeight.REGULAR).getStringWidth(this.gK) + 10 / 2.0F, this.axI.y, this.rz().rA().getRGB());
+            FontManager.MAIN.a(18, FontWeight.REGULAR).a(s, this.axI.x + FontManager.MAIN.a(18, FontWeight.REGULAR).getStringWidth(this.name) + 10 / 2.0F, this.axI.y, this.rz().rA().getRGB());
             if (!this.isEmpty()) {
                 this.scrollUtil.E(this.qz());
-                this.scrollUtil.V(-this.size() * (10 + this.get(0).oX().x) + this.getStandardClickGUI().alh.x - this.getStandardClickGUI().axJ.aym - 10);
+                this.scrollUtil.V(-this.size() * (10 + this.get(0).oX().x) + this.getStandardClickGUI().position.x - this.getStandardClickGUI().sidebar.aym - 10);
                 if (!this.scrollUtil.bd()) {
                     this.scrollUtil.aJc = (float)Math.round(this.scrollUtil.aJc / (10 + this.get(0).oX().x)) * (10 + this.get(0).oX().x);
                 }
@@ -55,7 +55,7 @@ public class ConfigCardSection extends ArrayList<ConfigCard> implements Instance
                 this.axI.x = (float)(this.axI.x + this.scrollUtil.tE());
 
                 for (ConfigCard aci : this) {
-                    if (!(this.axI.x > riseclickgui.getScale().x + riseclickgui.getPosition().x) && !(this.axI.x + aci.oX().x < riseclickgui.axI.x + riseclickgui.axJ.aym)) {
+                    if (!(this.axI.x > riseclickgui.getScale().x + riseclickgui.getPosition().x) && !(this.axI.x + aci.oX().x < riseclickgui.axI.x + riseclickgui.sidebar.aym)) {
                         aci.j(this.axI);
                     }
 
@@ -92,22 +92,22 @@ public class ConfigCardSection extends ArrayList<ConfigCard> implements Instance
     public boolean qz() {
         return this.isEmpty()
             ? false
-            : GUIUtil.a(this.getStandardClickGUI().axI, this.getStandardClickGUI().alh, afl.sW())
+            : GUIUtil.a(this.getStandardClickGUI().axI, this.getStandardClickGUI().position, afl.getMouse())
                 && GUIUtil.a(
-                    new Vector2f((float)(this.getStandardClickGUI().axI.x + this.getStandardClickGUI().axJ.aym), this.axI.y),
-                    new Vector2f((float)(this.getStandardClickGUI().alh.x - this.getStandardClickGUI().axJ.aym), this.get(0).oX().y + 20 + 10.0F),
-                    afl.sW()
+                    new Vector2f((float)(this.getStandardClickGUI().axI.x + this.getStandardClickGUI().sidebar.aym), this.axI.y),
+                    new Vector2f((float)(this.getStandardClickGUI().position.x - this.getStandardClickGUI().sidebar.aym), this.get(0).oX().y + 20 + 10.0F),
+                    afl.getMouse()
                 );
     }
 
     public void init() {
-        this.qe().setScroll(0.0);
-        this.qe().U(0.0);
+        this.getScrollUtil().setScroll(0.0);
+        this.getScrollUtil().U(0.0);
     }
 
     @Generated
     public String getName() {
-        return this.gK;
+        return this.name;
     }
 
     @Generated
@@ -116,13 +116,13 @@ public class ConfigCardSection extends ArrayList<ConfigCard> implements Instance
     }
 
     @Generated
-    public agk qe() {
+    public agk getScrollUtil() {
         return this.scrollUtil;
     }
 
     @Generated
     public void setName(String name) {
-        this.gK = name;
+        this.name = name;
     }
 
     @Generated
@@ -131,7 +131,7 @@ public class ConfigCardSection extends ArrayList<ConfigCard> implements Instance
     }
 
     @Generated
-    public void a(agk scrollUtil) {
+    public void setScrollUtil(agk scrollUtil) {
         this.scrollUtil = scrollUtil;
     }
 }

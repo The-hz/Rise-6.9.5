@@ -129,6 +129,6 @@ public class a {
         if (mc != null) {
             mc.displayGuiScreen(new hackclient.rise.adr());
         }
-        Client.a.p().tn();
+        Client.a.getConfigManager().tn();
     }
 }

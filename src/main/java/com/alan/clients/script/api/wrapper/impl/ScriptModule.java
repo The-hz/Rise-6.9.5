@@ -52,8 +52,8 @@ public final class ScriptModule extends ScriptHandlerWrapper<Module> {
         }
 
         this.wrapped.getValues().clear();
-        Client.a.g().e(this.wrapped);
-        Client.a.v().oS();
+        Client.a.g().remove(this.wrapped);
+        Client.a.getStandardClickGUI().oS();
     }
 
     public String getName() {

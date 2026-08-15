@@ -34,14 +34,14 @@ InstanceAccess {
     private boolean typedWhileOpen;
 
     @Override
-    public void b(int n2, int n3, float f2) {
+    public void onRender(int n2, int n3, float f2) {
         double d2;
         RiseClickGUI riseClickGUI = this.getStandardClickGUI();
         this.axT = this.scrollUtil.tD() < 0.0 ? (this.axT -= (double)(this.azS.getElapsedTime() * 4L)) : (this.axT += (double)(this.azS.getElapsedTime() * 4L));
         this.axT = Math.min(Math.max(0.0, this.axT), 255.0);
-        this.azR.setColor(ColorUtil.d(UIColors.TEXT.pV(), (int)this.axT));
-        Vector2d vector2d = new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.axJ.aym + ((double)riseClickGUI.alh.x - riseClickGUI.axJ.aym) / 2.0, (float)((double)(riseClickGUI.axI.y + 17.0f) + this.scrollUtil.tE()));
-        this.azR.h(vector2d);
+        this.azR.setColor(ColorUtil.withBlue(UIColors.TEXT.pV(), (int)this.axT));
+        Vector2d vector2d = new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.sidebar.aym + ((double)riseClickGUI.position.x - riseClickGUI.sidebar.aym) / 2.0, (float)((double)(riseClickGUI.axI.y + 17.0f) + this.scrollUtil.tE()));
+        this.azR.setPosition(vector2d);
         String string = this.azR.aJm;
         if (riseClickGUI.a(this.azR)) {
             this.azR.aJm = "";
@@ -55,23 +55,23 @@ InstanceAccess {
         while (true) {
             if (!iterator.hasNext()) {
                 this.azC = d2;
-                this.scrollUtil.V(-d3 + (double)riseClickGUI.alh.y - 37.0);
+                this.scrollUtil.V(-d3 + (double)riseClickGUI.position.y - 37.0);
                 double d4 = 7.0;
                 double d5 = riseClickGUI.getScale().getX() + riseClickGUI.getPosition().getX() - 4.0f;
                 double d6 = (double)riseClickGUI.getScale().getY() + d4;
-                this.scrollUtil.a(new Vector2d(d5, d6 + 28.0), (double)this.getStandardClickGUI().alh.y - d4 * 2.0 - 28.0);
+                this.scrollUtil.a(new Vector2d(d5, d6 + 28.0), (double)this.getStandardClickGUI().position.y - d4 * 2.0 - 28.0);
                 this.azS.aX();
                 return;
             }
             ModuleComponent moduleComponent = iterator.next();
-            moduleComponent.draw(new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.axJ.aym + 8.0, d2), n2, n3, f2);
+            moduleComponent.draw(new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.sidebar.aym + 8.0, d2), n2, n3, f2);
             d2 += (double)(moduleComponent.scale.y + 7.0f);
             d3 += (double)(moduleComponent.scale.y + 7.0f);
         }
     }
 
     @Override
-    public void a(char c2, int n2) {
+    public void onKey(char c2, int n2) {
         if (n2 == 208 || n2 == 200) {
             return;
         }
@@ -80,12 +80,12 @@ InstanceAccess {
             this.setSearchBarText("");
         }
         if (!this.getStandardClickGUI().oV()) {
-            this.azR.I(true);
+            this.azR.setSelected(true);
             this.azR.key(c2, n2);
             this.scrollUtil.U(0.0);
         }
         this.relevantModules = this.getRelevantModules(this.azR.getText());
-        Iterator<ModuleComponent> iterator = this.qf().iterator();
+        Iterator<ModuleComponent> iterator = this.getRelevantModules().iterator();
         while (iterator.hasNext()) {
             iterator.next().key(c2, n2);
         }
@@ -102,7 +102,7 @@ InstanceAccess {
 
     @Override
     public void oG() {
-        Iterator<ModuleComponent> iterator = this.qf().iterator();
+        Iterator<ModuleComponent> iterator = this.getRelevantModules().iterator();
         while (iterator.hasNext()) {
             iterator.next().pz();
         }
@@ -110,7 +110,7 @@ InstanceAccess {
 
     @Override
     public void pY() {
-        Iterator<ModuleComponent> iterator = this.qf().iterator();
+        Iterator<ModuleComponent> iterator = this.getRelevantModules().iterator();
         while (iterator.hasNext()) {
             iterator.next().ci();
         }
@@ -127,7 +127,7 @@ InstanceAccess {
         ArrayList<String> arrayList2 = new ArrayList<String>(Arrays.asList(string.toLowerCase().split(" ")));
         arrayList2.add(string.toLowerCase().replaceAll(" ", ""));
         for (String string2 : arrayList2) {
-            for (ModuleComponent moduleComponent : Client.a.v().getModuleList()) {
+            for (ModuleComponent moduleComponent : Client.a.getStandardClickGUI().getModuleList()) {
                 String[] stringArray = moduleComponent.getModule().getAliases();
                 int length = stringArray.length;
                 for (int i2 = 0; i2 < length; ++i2) {
@@ -145,7 +145,7 @@ InstanceAccess {
     }
 
     @Generated
-    public TextBox qr() {
+    public TextBox getSearchBar() {
         return this.azR;
     }
 
@@ -155,12 +155,12 @@ InstanceAccess {
     }
 
     @Generated
-    public agk qe() {
+    public agk getScrollUtil() {
         return this.scrollUtil;
     }
 
     @Generated
-    public ArrayList<ModuleComponent> qf() {
+    public ArrayList<ModuleComponent> getRelevantModules() {
         return this.relevantModules;
     }
 
@@ -180,12 +180,12 @@ InstanceAccess {
     }
 
     @Generated
-    public boolean qs() {
+    public boolean isTypedWhileOpen() {
         return this.typedWhileOpen;
     }
 
     @Generated
-    public void a(agk scrollUtil) {
+    public void setScrollUtil(agk scrollUtil) {
         this.scrollUtil = scrollUtil;
     }
 

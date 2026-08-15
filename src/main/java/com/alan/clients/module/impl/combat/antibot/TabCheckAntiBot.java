@@ -17,18 +17,18 @@ public class TabCheckAntiBot extends Mode<AntiBot> {
             for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
                 if (entityplayer != aEg.thePlayer) {
                     if (aEg.getNetHandler().getPlayerInfo(entityplayer.getUniqueID()) == null) {
-                        Client.a.x().b(this, entityplayer);
+                        Client.a.getBotManager().b(this, entityplayer);
                     } else {
-                        Client.a.x().c(this, entityplayer);
+                        Client.a.getBotManager().c(this, entityplayer);
                     }
                 }
             }
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> onWorldChange = var1x -> Client.a.x().a(this);
+    public final Listener<WorldChangeEvent> onWorldChange = var1x -> Client.a.getBotManager().a(this);
     @EventLink
-    public final Listener<TeleportEvent> onTeleport = var1x -> Client.a.x().a(this);
+    public final Listener<TeleportEvent> onTeleport = var1x -> Client.a.getBotManager().a(this);
 
     public TabCheckAntiBot(String var1, AntiBot antiBot) {
         super(var1, antiBot);
@@ -36,6 +36,6 @@ public class TabCheckAntiBot extends Mode<AntiBot> {
 
     @Override
     public void onDisable() {
-        Client.a.x().a(this);
+        Client.a.getBotManager().a(this);
     }
 }

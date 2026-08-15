@@ -139,9 +139,9 @@ public class bo extends Component {
                 return;
             }
 
-            String s3 = h(var1);
+            String s3 = escapeJson(var1);
             int l = var2.length;
-            String s = h(var3);
+            String s = escapeJson(var3);
             int l2 = l;
             String s1 = s3;
             String s2 = "{\"id\":30,\"a\":\"" + s1 + "\",\"b\":" + l2 + ",\"c\":\"" + s + "\"}";
@@ -161,7 +161,7 @@ public class bo extends Component {
         zipoutputstream.closeEntry();
         zipoutputstream.putNextEntry(new ZipEntry("metaData.json"));
         String s = this.bE();
-        String s4 = h(var2);
+        String s4 = escapeJson(var2);
         String s1 = s;
         long k = var5;
         long l = var3;
@@ -768,7 +768,7 @@ public class bo extends Component {
         }
     }
 
-    public static String h(String var0) {
+    public static String escapeJson(String var0) {
         return var0 == null ? "" : var0.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 

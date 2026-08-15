@@ -47,10 +47,10 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
     private static GuiScreen reference;
     private Animation animation;
     private static String statusMessage = "Enter Session- or Refresh-Token";
-    private static final Runnable FOCUS_BOX = () -> sessionBox.I(true);
+    private static final Runnable FOCUS_BOX = () -> sessionBox.setSelected(true);
     private static final Runnable CANCEL = () -> aEg.displayGuiScreen(new AccountManagerScreen(reference));
     private static final Runnable LOGIN = () -> new Thread(() -> {
-        String s = sessionBox.XS.trim();
+        String s = sessionBox.text.trim();
         if (s.isEmpty()) {
             statusMessage = "Nothing to log in with";
         } else {
@@ -87,7 +87,7 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             String s = (String)clipboard.getData(DataFlavor.stringFlavor);
             if (s != null && !s.trim().isEmpty()) {
-                sessionBox.XS = s.trim();
+                sessionBox.text = s.trim();
                 LOGIN.run();
             } else {
                 statusMessage = "Clipboard is empty";
@@ -115,7 +115,7 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
         this.menuButtons[2] = new MenuTextButton(vector2d.x + f + b1, vector2d.y + b0 + b1, f, b0, CANCEL, "Cancel");
         this.menuButtons[3] = new MenuTextButton(vector2d.x, vector2d.y + 2 * (b0 + b1), short1, b0, PASTE_AND_LOGIN, "Paste and Log In");
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
-        this.animation.R(-200.0);
+        this.animation.setStartValue(-200.0);
     }
 
     @Override
@@ -134,7 +134,7 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
         }
 
         this.b(ShaderQueueType.REGULAR).c(() -> {
-            FONT_RENDERER.c(statusMessage, this.width / 2.0F, this.height / 2.0F - 64.0F + this.animation.sG(), Color.WHITE.getRGB());
+            FONT_RENDERER.drawString(statusMessage, this.width / 2.0F, this.height / 2.0F - 64.0F + this.animation.getValue(), Color.WHITE.getRGB());
             sessionBox.draw();
         });
     }
@@ -153,7 +153,7 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
 
     @Override
     protected void keyTyped(char var1, int var2) {
-        if (sessionBox.tO()) {
+        if (sessionBox.isSelected()) {
             sessionBox.key(var1, var2);
         }
     }

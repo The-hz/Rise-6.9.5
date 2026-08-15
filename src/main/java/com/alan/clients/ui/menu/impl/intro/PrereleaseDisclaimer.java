@@ -32,27 +32,27 @@ public class PrereleaseDisclaimer extends GuiScreen {
         ScaledResolution scaledresolution = new ScaledResolution(aEg);
         FontManager.MAIN
             .a(24, FontWeight.REGULAR)
-            .c(
+            .drawString(
                 "Note: This is private prerelease software",
                 scaledresolution.getScaledWidth() / 2.0,
                 scaledresolution.getScaledHeight() / 2.0 - 70.0,
-                ColorUtil.d(Color.WHITE, (int)this.fadeAnimation.sG()).getRGB()
+                ColorUtil.withBlue(Color.WHITE, (int)this.fadeAnimation.getValue()).getRGB()
             );
         FontManager.MAIN
             .a(24, FontWeight.REGULAR)
-            .c(
+            .drawString(
                 "Features, interfaces and sequences are not final and can be expected to change at any time",
                 scaledresolution.getScaledWidth() / 2.0,
                 scaledresolution.getScaledHeight() / 2.0 - 50.0,
-                ColorUtil.d(Color.WHITE, (int)this.fadeAnimation.sG()).getRGB()
+                ColorUtil.withBlue(Color.WHITE, (int)this.fadeAnimation.getValue()).getRGB()
             );
         FontManager.MAIN
             .a(16, FontWeight.REGULAR)
-            .c(
+            .drawString(
                 "© Rise Client 2022. All Rights Reserved",
                 scaledresolution.getScaledWidth() / 2.0,
                 scaledresolution.getScaledHeight() / 2.0 + 70.0,
-                ColorUtil.d(Color.WHITE, (int)this.fadeAnimation.sG() / 2).getRGB()
+                ColorUtil.withBlue(Color.WHITE, (int)this.fadeAnimation.getValue() / 2).getRGB()
             );
         if (this.aCt.T(5000L)) {
             aEg.displayGuiScreen(new LoginMenu());

@@ -30,15 +30,15 @@ public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
     private static GuiScreen reference;
     private AccountViewModel<?> accountViewModel;
     private Animation animation;
-    private static final Runnable TEXT_BOX_RUNNABLE = () -> usernameBox.I(true);
+    private static final Runnable TEXT_BOX_RUNNABLE = () -> usernameBox.setSelected(true);
     private final Runnable CANCEL_RUNNABLE = () -> aEg.displayGuiScreen(new AccountManagerScreen(reference));
     private final Runnable UPDATE_RUNNABLE = () -> {
-        String s = usernameBox.XS;
+        String s = usernameBox.text;
         if (this.validate(s)) {
             System.out.println("Updating username to " + s);
             this.accountViewModel.getAccount().setName(s);
             this.accountViewModel.getAccount().se();
-            Client.a.q().update();
+            Client.a.getAltManager().update();
             this.CANCEL_RUNNABLE.run();
             System.out.println("Write");
         }
@@ -58,7 +58,7 @@ public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
         this.animation.Q(0.0);
         aiv.aPL.a(aiz.OVERLAY, var3, null);
         this.b(ShaderQueueType.BLUR).c(BACKGROUND_RUNNABLE);
-        FONT_RENDERER.c("Update your username", this.width / 2, this.height / 2 - 64 + this.animation.sG(), Color.WHITE.getRGB());
+        FONT_RENDERER.drawString("Update your username", this.width / 2, this.height / 2 - 64 + this.animation.getValue(), Color.WHITE.getRGB());
         this.accountViewModel.draw();
         MenuButton[] aadh = this.menuButtons;
         int i = aadh.length;
@@ -84,7 +84,7 @@ public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
 
     @Override
     protected void keyTyped(char var1, int var2) {
-        if (usernameBox.tO()) {
+        if (usernameBox.isSelected()) {
             usernameBox.key(var1, var2);
         }
     }
@@ -105,7 +105,7 @@ public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
         this.menuButtons[1] = new MenuTextButton(vector2d1.x, vector2d1.y + b0 + b1, f, b0, this.UPDATE_RUNNABLE, "Update");
         this.menuButtons[2] = new MenuTextButton(vector2d1.x + f + b1, vector2d1.y + b0 + b1, f, b0, this.CANCEL_RUNNABLE, "Back");
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
-        this.animation.R(-200.0);
+        this.animation.setStartValue(-200.0);
     }
 
     private boolean validate(String var1) {

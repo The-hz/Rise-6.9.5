@@ -70,59 +70,59 @@ import rip.vantage.commons.util.time.a;
 @ModuleInfo(aliases={"module.other.test.name"}, description="module.other.test.description", category=Category.MOVEMENT)
 public final class Test
 extends Module {
-    private final ArrayList<Integer> Ya = new ArrayList();
-    private final ArrayList<Double> Yb = new ArrayList();
-    private final ArrayList<Float> Yc = new ArrayList();
-    private final ArrayList<Packet<?>> Yd = new ArrayList();
-    private final ArrayList<Packet<?>> Ye = new ArrayList();
-    private int ug;
+    private final ArrayList<Integer> integerArrayList = new ArrayList();
+    private final ArrayList<Double> doubleArrayList = new ArrayList();
+    private final ArrayList<Float> floatArrayList = new ArrayList();
+    private final ArrayList<Packet<?>> packetArrayOutList = new ArrayList();
+    private final ArrayList<Packet<?>> packetArrayInList = new ArrayList();
+    private int anInt;
     private int LM;
-    private boolean Eo;
-    private boolean LL;
-    private boolean yc;
-    private double Yf;
-    private double Yg;
-    private double Hy;
-    private double Hz;
-    private double HA;
+    private boolean aBoolean;
+    private boolean aBoolean2;
+    private boolean delay;
+    private double aDouble;
+    private double aDouble2;
+    private double serverPosX;
+    private double serverPosY;
+    private double serverPosZ;
     private float Yh;
     private float Yi;
-    private Vec3 Yj;
-    private Vec3 Yk;
-    private Vec3 Yl;
+    private Vec3 lastPosition;
+    private Vec3 currentPosition;
+    private Vec3 lastCurrentPosition;
     private Entity entity;
     private Packet<?> aPacket;
     private EntityOtherPlayerMP otherEntity;
-    private final List<Packet<?>> Yo = new ArrayList();
+    private final List<Packet<?>> packets = new ArrayList();
     private final ConcurrentLinkedQueue<TimedPacket> timedPackets = new ConcurrentLinkedQueue();
-    private final a Yq = new a();
-    private double Yr;
-    private double cl;
-    private double xv;
+    private final a timerUtil = new a();
+    private double startPosY;
+    private double distance;
+    private double moveSpeed;
     private double y;
-    private double at;
-    private double au;
-    private double av;
-    private int FX;
-    private int Ys;
-    public static boolean zK;
-    public static boolean Yt;
-    private BlockPos Yu;
+    private double lastX;
+    private double lastY;
+    private double lastZ;
+    private int stage;
+    private int bestBlockStack;
+    public static boolean set;
+    public static boolean doFly;
+    private BlockPos startPos;
     private final DecimalFormat format = new DecimalFormat("0.0");
-    private Vec3 Yw;
-    private BlockPos Yx;
+    private Vec3 targetBlock;
+    private BlockPos blockFace;
     private final DragValue positionValue = new DragValue("Position", (Module)this, new Vector2d(255.0, 255.0));
-    public Vec3 Jd = new Vec3(0.0, 0.0, 0.0);
+    public Vec3 position = new Vec3(0.0, 0.0, 0.0);
     private final StringValue runIf = new StringValue("Run If () ->", (Module)this, "onGround");
-    private final SupplierValue YA = new SupplierValue("Test Curve", this);
-    private final ArrayList<Entity> YB = new ArrayList();
-    private final ArrayList<aka> YC = new ArrayList();
+    private final SupplierValue testCurve = new SupplierValue("Test Curve", this);
+    private final ArrayList<Entity> entities = new ArrayList();
+    private final ArrayList<aka> positions = new ArrayList();
     private World world;
-    private boolean Lw;
-    private double Lx;
-    private boolean YD;
+    private boolean reset;
+    private double speed;
+    private boolean placeHolder;
     Executor threadPool = Executors.newFixedThreadPool(1);
-    Pathfinder YF;
+    Pathfinder pathfinder;
     EntityPlayerSP YG;
     adz<BlockPos> YH = new adz(2);
     private final HashMap<Double, HashMap<Integer, Tuple<Double, Boolean>>> YI = new HashMap();
@@ -132,11 +132,11 @@ extends Module {
     Vector2d YM = null;
     @EventLink
     public final Listener<MouseOverEvent> onMouseOver = mouseOverEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
     };
     @EventLink(value=0)
     public final Listener<PacketReceiveEvent> receive = packetReceiveEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
         Packet<?> packet = packetReceiveEvent.getPacket();
         if (packet instanceof S20PacketEntityProperties) {
             Iterator iterator = ((S20PacketEntityProperties)packet).func_149441_d().iterator();
@@ -151,48 +151,48 @@ extends Module {
     };
     @EventLink
     public final Listener<PacketSendEvent> send = packetSendEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
     };
     @EventLink
     public final Listener<TeleportEvent> teleport = teleportEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
     };
     @EventLink
     public final Listener<BlockAABBEvent> blockAABB = blockAABBEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
     };
     @EventLink
     public final Listener<Render2DEvent> render2D = render2DEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
     };
     @EventLink
     public final Listener<Render3DEvent> render3D = render3DEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
     };
     private HashMap<Integer, Integer> YU = new HashMap();
     public static double YV;
     @EventLink
     public final Listener<PreUpdateEvent> preUpdate = preUpdateEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
         Test.aEg.gameSettings.keyBindSneak.setPressed(PlayerUtil.p(0.0, MoveUtil.predictedMotion(Test.aEg.thePlayer.motionY), 0.0) instanceof BlockSlime && Test.aEg.thePlayer.motionY < -0.1);
     };
     @EventLink
     public final Listener<WaterEvent> water = waterEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
     };
     @EventLink
     public final Listener<AttackEvent> attack = attackEvent -> {
         ++this.LM;
-        this.YD = true;
+        this.placeHolder = true;
     };
     @EventLink
     public final Listener<WorldChangeEvent> worldChange = worldChangeEvent -> {
-        this.Yx = null;
-        this.YD = true;
+        this.blockFace = null;
+        this.placeHolder = true;
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = preMotionEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
         if (Test.aEg.thePlayer.tR == 0) {
             preMotionEvent.setPosY(Test.aEg.thePlayer.posY - 0.01);
         }
@@ -203,48 +203,48 @@ extends Module {
     };
     @EventLink
     public final Listener<GuiClickEvent> onGuiClick = guiClickEvent -> {
-        int n2 = guiClickEvent.cL();
-        int n3 = guiClickEvent.cM();
+        int n2 = guiClickEvent.getMouseX();
+        int n3 = guiClickEvent.getMouseY();
         ArrayList<Vector2d> arrayList = new ArrayList<Vector2d>(this.YL);
         arrayList.sort((vector2d, vector2d2) -> (int)(MathOperation.EUCLIDEAN_DISTANCE.a(vector2d.getX() - (double)n2, vector2d.getY() - (double)n3) - MathOperation.EUCLIDEAN_DISTANCE.a(vector2d2.getX() - (double)n2, vector2d2.getY() - (double)n3)));
         this.YM = (Vector2d)arrayList.stream().findFirst().get();
     };
     @EventLink
     public final Listener<ClickEvent> onClick = clickEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
     };
     @EventLink
     public final Listener<PostMotionEvent> onPostMotionEvent = postMotionEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
     };
     @EventLink
     public final Listener<TickEvent> onTick = tickEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = strafeEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
     };
     @EventLink
     public final Listener<PostStrafeEvent> onPostStrafe = postStrafeEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
     };
-    public final Listener<JumpEvent> Zi = jumpEvent -> {
-        this.YD = true;
+    public final Listener<JumpEvent> onJump = jumpEvent -> {
+        this.placeHolder = true;
     };
     @EventLink
     public final Listener<MoveInputEvent> onMoveInput = moveInputEvent -> {
-        this.YD = true;
+        this.placeHolder = true;
     };
 
     @Override
     public void onDisable() {
         double d2 = 0.0;
-        for (double d3 : this.Yb) {
+        for (double d3 : this.doubleArrayList) {
             d2 += d3;
         }
-        double d4 = d2 / (double)this.Yb.size();
-        this.YD = true;
+        double d4 = d2 / (double)this.doubleArrayList.size();
+        this.placeHolder = true;
         Test.aEg.gameSettings.keyBindSneak.setPressed(Keyboard.isKeyDown(Test.aEg.gameSettings.keyBindSneak.getKeyCode()));
         Test.aEg.gameSettings.keyBindJump.setPressed(Keyboard.isKeyDown(Test.aEg.gameSettings.keyBindJump.getKeyCode()));
         Test.aEg.gameSettings.keyBindRight.setPressed(Keyboard.isKeyDown(Test.aEg.gameSettings.keyBindRight.getKeyCode()));
@@ -253,12 +253,12 @@ extends Module {
 
     @Override
     public void onEnable() {
-        this.Yb.clear();
-        this.YD = true;
-        this.Eo = false;
-        this.Yx = null;
+        this.doubleArrayList.clear();
+        this.placeHolder = true;
+        this.aBoolean = false;
+        this.blockFace = null;
         this.YH.clear();
-        this.ug = 0;
+        this.anInt = 0;
         this.LM = 0;
         this.YL.clear();
         this.YL.add(new Vector2d(100.0, 500.0));

@@ -50,14 +50,14 @@ public class AntiFireBall extends Module {
 
                     MoveUtil.strafe(0.0);
                     if (entity.getDistanceToEntity(aEg.thePlayer) <= 3.0F && !this.aaX.contains(entity.getUniqueID())) {
-                        PacketUtil.l(new m());
-                        PacketUtil.l(new C02PacketUseEntity(entity, Action.ATTACK));
+                        PacketUtil.send(new m());
+                        PacketUtil.send(new C02PacketUseEntity(entity, Action.ATTACK));
                         this.aaX.add(entity.getUniqueID());
                         break;
                     }
 
-                    PlayerUtil.h(0, true);
-                    PlayerUtil.h(0, false);
+                    PlayerUtil.sendClick(0, true);
+                    PlayerUtil.sendClick(0, false);
                     break;
                 }
             }

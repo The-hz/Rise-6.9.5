@@ -19,7 +19,7 @@ final class BindSuggestionProvider implements SuggestionProvider {
     @Override
     public void a(SuggestionContext suggestionContext) {
         try {
-            Client.a.p().update();
+            Client.a.getConfigManager().update();
         } catch (Throwable throwable) {
         }
     }

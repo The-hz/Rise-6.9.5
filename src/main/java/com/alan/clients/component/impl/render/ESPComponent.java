@@ -25,7 +25,7 @@ public class ESPComponent extends Component {
         }
     };
     @EventLink(value = 4)
-    public final Listener<ff> he = var0 -> {
+    public final Listener<ff> onLimitedRender2D = var0 -> {
         if (esps != null && !esps.isEmpty()) {
             Iterator iterator = esps.iterator();
 
@@ -37,7 +37,7 @@ public class ESPComponent extends Component {
     @EventLink(value = 4)
     public final Listener<Render3DEvent> onRender3D = var0 -> {
         if (esps != null && !esps.isEmpty()) {
-            esps.forEach(ESP::cp);
+            esps.forEach(ESP::render3D);
         }
     };
     @EventLink(value = 4)
@@ -57,7 +57,7 @@ public class ESPComponent extends Component {
     public ESPComponent() {
     }
 
-    public static void a(ESP esp) {
+    public static void add(ESP esp) {
         esps.removeIf(var1 -> esp.getClass() == var1.getClass() && esp.target == var1.target);
         esps.add(esp);
     }

@@ -35,7 +35,7 @@ public abstract class Check implements aha {
         return this.U = Math.min(10000.0, this.U + 1.0);
     }
 
-    public final double a(double var1) {
+    public final double increaseBufferBy(double var1) {
         return this.U = Math.min(10000.0, this.U + var1);
     }
 
@@ -43,7 +43,7 @@ public abstract class Check implements aha {
         return this.U = Math.max(0.0, this.U - 1.0);
     }
 
-    public final double b(double var1) {
+    public final double decreaseBufferBy(double var1) {
         return this.U = Math.max(0.0, this.U - var1);
     }
 
@@ -51,11 +51,11 @@ public abstract class Check implements aha {
         this.U = 0.0;
     }
 
-    public final void c(double var1) {
+    public final void setBuffer(double var1) {
         this.U = var1;
     }
 
-    public final void d(double var1) {
+    public final void multiplyBuffer(double var1) {
         this.U *= var1;
     }
 

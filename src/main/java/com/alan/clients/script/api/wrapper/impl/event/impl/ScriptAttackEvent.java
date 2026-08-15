@@ -10,7 +10,7 @@ public class ScriptAttackEvent extends CancellableScriptEvent<AttackEvent> {
     }
 
     public ScriptEntityLiving getTarget() {
-        return new ScriptEntityLiving(this.wrapped.dc());
+        return new ScriptEntityLiving(this.wrapped.getLiving());
     }
 
     @Override

@@ -24,17 +24,17 @@ public final class ConfigScreen implements Screen, InstanceAccess {
     public final TextBox azM = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(20, FontWeight.REGULAR), Color.WHITE, TextAlign.CENTER, "Start typing to search...", 150.0F);
     private final a azN = new a();
     public agk scrollUtil = new agk();
-    public ArrayList<ModuleComponent> azB = new ArrayList<>();
+    public ArrayList<ModuleComponent> relevantModules = new ArrayList<>();
     private double axT = 255.0;
     private double azC;
     private double azD;
-    private boolean azO;
+    private boolean typedWhileOpen;
 
     public ConfigScreen() {
     }
 
     @Override
-    public void b(int var1, int var2, float var3) {
+    public void onRender(int var1, int var2, float var3) {
         RiseClickGUI riseclickgui = this.getStandardClickGUI();
         if (this.scrollUtil.tD() < 0.0) {
             this.axT = this.axT - this.azN.getElapsedTime() * 4L;
@@ -45,42 +45,42 @@ public final class ConfigScreen implements Screen, InstanceAccess {
         this.axT = Math.min(Math.max(0.0, this.axT), 255.0);
         this.azM.setColor(UIColors.TEXT.Y((int)this.axT));
         Vector2d vector2d = new Vector2d(
-            riseclickgui.axI.x + riseclickgui.axJ.aym + (riseclickgui.alh.x - riseclickgui.axJ.aym) / 2.0,
+            riseclickgui.axI.x + riseclickgui.sidebar.aym + (riseclickgui.position.x - riseclickgui.sidebar.aym) / 2.0,
             (float)(riseclickgui.axI.y + 17.0F + this.scrollUtil.tE())
         );
-        this.azM.h(vector2d);
+        this.azM.setPosition(vector2d);
         this.azM.draw();
         this.scrollUtil.qx();
         double d0 = riseclickgui.axI.y + 35.0F + this.scrollUtil.tE();
         this.azD = d0;
         double d1 = 0.0;
 
-        for (ModuleComponent moduleComponent : this.azB) {
-            moduleComponent.draw(new Vector2d(riseclickgui.axI.x + riseclickgui.axJ.aym + 4.0, d0), var1, var2, var3);
+        for (ModuleComponent moduleComponent : this.relevantModules) {
+            moduleComponent.draw(new Vector2d(riseclickgui.axI.x + riseclickgui.sidebar.aym + 4.0, d0), var1, var2, var3);
             d0 += moduleComponent.scale.y + 5.0F;
             d1 += moduleComponent.scale.y + 5.0F;
         }
 
         this.azC = d0;
-        this.scrollUtil.V(-d1 + riseclickgui.alh.y - 37.0);
+        this.scrollUtil.V(-d1 + riseclickgui.position.y - 37.0);
         this.azN.aX();
     }
 
     @Override
-    public void a(char var1, int var2) {
-        if (!this.azO && var1 != 0 && !Character.isISOControl(var1)) {
-            this.azO = true;
+    public void onKey(char var1, int var2) {
+        if (!this.typedWhileOpen && var1 != 0 && !Character.isISOControl(var1)) {
+            this.typedWhileOpen = true;
             this.aH(" ");
         }
 
         if (!this.oV()) {
-            this.azM.I(true);
+            this.azM.setSelected(true);
         }
 
         this.azM.key(var1, var2);
         this.scrollUtil.U(0.0);
-        this.azB = this.aG(this.azM.getText());
-        Iterator iterator = this.qf().iterator();
+        this.relevantModules = this.getRelevantModules(this.azM.getText());
+        Iterator iterator = this.getRelevantModules().iterator();
 
         while (iterator.hasNext()) {
             ((ModuleComponent)iterator.next()).key(var1, var2);
@@ -89,7 +89,7 @@ public final class ConfigScreen implements Screen, InstanceAccess {
 
     @Override
     public void f(int var1, int var2, int var3) {
-        Iterator iterator = this.azB.iterator();
+        Iterator iterator = this.relevantModules.iterator();
 
         while (iterator.hasNext()) {
             ((ModuleComponent)iterator.next()).click(var1, var2, var3);
@@ -100,7 +100,7 @@ public final class ConfigScreen implements Screen, InstanceAccess {
 
     @Override
     public void oG() {
-        Iterator iterator = this.qf().iterator();
+        Iterator iterator = this.getRelevantModules().iterator();
 
         while (iterator.hasNext()) {
             ((ModuleComponent)iterator.next()).pz();
@@ -109,7 +109,7 @@ public final class ConfigScreen implements Screen, InstanceAccess {
 
     @Override
     public void pY() {
-        Iterator iterator = this.qf().iterator();
+        Iterator iterator = this.getRelevantModules().iterator();
 
         while (iterator.hasNext()) {
             ((ModuleComponent)iterator.next()).ci();
@@ -118,14 +118,14 @@ public final class ConfigScreen implements Screen, InstanceAccess {
 
     @Override
     public void aT() {
-        this.azB = this.aG(this.azM.getText());
-        this.azO = false;
+        this.relevantModules = this.getRelevantModules(this.azM.getText());
+        this.typedWhileOpen = false;
     }
 
-    public ArrayList<ModuleComponent> aG(String var1) {
+    public ArrayList<ModuleComponent> getRelevantModules(String var1) {
         ArrayList arraylist = new ArrayList();
 
-        for (ModuleComponent moduleComponent : Client.a.v().getModuleList()) {
+        for (ModuleComponent moduleComponent : Client.a.getStandardClickGUI().getModuleList()) {
             String[] astring = moduleComponent.getModule().getAliases();
             int i = astring.length;
 
@@ -142,15 +142,15 @@ public final class ConfigScreen implements Screen, InstanceAccess {
 
     public void aH(String var1) {
         this.azM.bW(var1);
-        this.azB = this.aG(this.azM.getText());
+        this.relevantModules = this.getRelevantModules(this.azM.getText());
     }
 
     public boolean oV() {
-        Iterator iterator = this.azB.iterator();
+        Iterator iterator = this.relevantModules.iterator();
 
         while (iterator.hasNext()) {
             for (ValueComponent valueComponent : ((ModuleComponent)iterator.next()).getValueList()) {
-                if (valueComponent instanceof abv && ((abv)valueComponent).azo.ayU) {
+                if (valueComponent instanceof abv && ((abv)valueComponent).azo.selected) {
                     return true;
                 }
             }
@@ -160,7 +160,7 @@ public final class ConfigScreen implements Screen, InstanceAccess {
     }
 
     @Generated
-    public TextBox qr() {
+    public TextBox getSearchBar() {
         return this.azM;
     }
 
@@ -170,13 +170,13 @@ public final class ConfigScreen implements Screen, InstanceAccess {
     }
 
     @Generated
-    public agk qe() {
+    public agk getScrollUtil() {
         return this.scrollUtil;
     }
 
     @Generated
-    public ArrayList<ModuleComponent> qf() {
-        return this.azB;
+    public ArrayList<ModuleComponent> getRelevantModules() {
+        return this.relevantModules;
     }
 
     @Generated
@@ -195,18 +195,18 @@ public final class ConfigScreen implements Screen, InstanceAccess {
     }
 
     @Generated
-    public boolean qs() {
-        return this.azO;
+    public boolean isTypedWhileOpen() {
+        return this.typedWhileOpen;
     }
 
     @Generated
-    public void a(agk scrollUtil) {
+    public void setScrollUtil(agk scrollUtil) {
         this.scrollUtil = scrollUtil;
     }
 
     @Generated
-    public void b(ArrayList<ModuleComponent> moduleComponents) {
-        this.azB = moduleComponents;
+    public void setModuleComponents(ArrayList<ModuleComponent> moduleComponents) {
+        this.relevantModules = moduleComponents;
     }
 
     @Generated
@@ -225,7 +225,7 @@ public final class ConfigScreen implements Screen, InstanceAccess {
     }
 
     @Generated
-    public void A(boolean var1) {
-        this.azO = var1;
+    public void setTypedWhileOpen(boolean var1) {
+        this.typedWhileOpen = var1;
     }
 }

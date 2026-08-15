@@ -30,9 +30,9 @@ public final class aby implements Screen, InstanceAccess {
     }
 
     @Override
-    public void b(int var1, int var2, float var3) {
+    public void onRender(int var1, int var2, float var3) {
         Vector2f vector2f = new Vector2f(this.H.getScale()).h(this.azz, 0.0F);
-        RenderUtil.roundedRectangle(vector2f.getX(), vector2f.getY() + this.azz, this.H.alh.x - this.azz * 2.0F, 100.0, this.H.getRound(), UIColors.SECONDARY.pV());
+        RenderUtil.roundedRectangle(vector2f.getX(), vector2f.getY() + this.azz, this.H.position.x - this.azz * 2.0F, 100.0, this.H.getRound(), UIColors.SECONDARY.pV());
         this.azx.b(this.rz().rA());
         this.azx.i(new Vector2f(vector2f.h(this.azz, 0.0F)));
         this.azx.qx();
@@ -44,7 +44,7 @@ public final class aby implements Screen, InstanceAccess {
         RenderUtil.roundedRectangle(
             vector2f2.getX(),
             vector2f2.getY(),
-            this.H.alh.x - this.azz * 2.0F,
+            this.H.position.x - this.azz * 2.0F,
             this.H.getPosition().getY() - (vector2f2.getY() - this.H.getScale().getY()) - this.azz,
             this.H.getRound(),
             UIColors.SECONDARY.pV()
@@ -52,16 +52,16 @@ public final class aby implements Screen, InstanceAccess {
         Vector2f vector2f3 = vector2f2.h(0.0F, this.azz);
 
         for (ValueComponent valueComponent : this.pA()) {
-            if (valueComponent.getValue() == null || valueComponent.getValue().wm() == null || !valueComponent.getValue().wm().getAsBoolean()) {
+            if (valueComponent.getValue() == null || valueComponent.getValue().getHideIf() == null || !valueComponent.getValue().getHideIf().getAsBoolean()) {
                 valueComponent.U(200);
-                valueComponent.draw(new Vector2d(vector2f3.x + 1.0F + this.azz + (valueComponent.getValue().wm() == null ? 0 : 10), vector2f3.y), var1, var2, var3);
+                valueComponent.draw(new Vector2d(vector2f3.x + 1.0F + this.azz + (valueComponent.getValue().getHideIf() == null ? 0 : 10), vector2f3.y), var1, var2, var3);
                 vector2f3 = vector2f3.h(0.0F, (float)valueComponent.getHeight());
             }
         }
     }
 
     @Override
-    public void a(char var1, int var2) {
+    public void onKey(char var1, int var2) {
         Iterator iterator = this.pA().iterator();
 
         while (iterator.hasNext()) {
@@ -72,7 +72,7 @@ public final class aby implements Screen, InstanceAccess {
     @Override
     public void f(int var1, int var2, int var3) {
         for (ValueComponent valueComponent : this.pA()) {
-            if ((valueComponent.getValue() == null || valueComponent.getValue().wm() == null || !valueComponent.getValue().wm().getAsBoolean()) && valueComponent.e(var1, var2, var3)) {
+            if ((valueComponent.getValue() == null || valueComponent.getValue().getHideIf() == null || !valueComponent.getValue().getHideIf().getAsBoolean()) && valueComponent.e(var1, var2, var3)) {
                 break;
             }
         }
@@ -105,7 +105,7 @@ public final class aby implements Screen, InstanceAccess {
             for (Field field : var0.getClass().getDeclaredFields()) {
                 if (field.getType().equals(TextBox.class)) {
                     try {
-                        return ((TextBox)field.get(var0)).tO();
+                        return ((TextBox)field.get(var0)).isSelected();
                     } catch (IllegalAccessException illegalaccessexception) {
                     }
                 }

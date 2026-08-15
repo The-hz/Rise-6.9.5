@@ -46,7 +46,7 @@ public final class JumpCircles extends Module {
         Iterator iterator = this.aoy.iterator();
 
         while (iterator.hasNext()) {
-            if (((JumpCircle)iterator.next()).aoJ > 0.0F) {
+            if (((JumpCircle)iterator.next()).alpha > 0.0F) {
                 return;
             }
 
@@ -56,16 +56,16 @@ public final class JumpCircles extends Module {
     @EventLink
     private final Listener<Render3DEvent> onRender3D = var1 -> {
         for (JumpCircle xl : this.aoy) {
-            Vec3 vec3 = xl.ma();
+            Vec3 vec3 = xl.getPosition();
             double d1 = vec3.yCoord;
             aEg.getRenderManager();
             double d0 = d1 - RenderManager.bUP;
             xl.y(0.004F);
-            if (xl.mb() <= 2.0) {
+            if (xl.getRadius() <= 2.0) {
                 this.lY();
-                this.aoz.Q(xl.aoJ = xl.aoJ - (float)(xl.mb() / 4.0));
+                this.aoz.Q(xl.alpha = xl.alpha - (float)(xl.getRadius() / 4.0));
                 if (xl.mc() > 0.0F) {
-                    xl.p(xl.aoJ = xl.aoJ - (float)(xl.mb() / 4.0));
+                    xl.setAlpha(xl.alpha = xl.alpha - (float)(xl.getRadius() / 4.0));
                 }
 
                 this.a(xl, vec3, d0);
@@ -102,7 +102,7 @@ public final class JumpCircles extends Module {
 
         for (int i = 0; i <= 360; i++) {
             Color color = this.e(Interface.class).rz().getAccentColor(new Vector2d(i, i));
-            double[] adouble = this.c(vec.xCoord, vec.zCoord, i, var1.aoI);
+            double[] adouble = this.c(vec.xCoord, vec.zCoord, i, var1.radius);
             double d2 = adouble[0];
             aEg.getRenderManager();
             double d0 = d2 - RenderManager.bUO;

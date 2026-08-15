@@ -73,7 +73,7 @@ public class aju {
                     + System.getenv("NUMBER_OF_PROCESSORS");
             } else {
                 s = "VANTAGE_"
-                    + operatingSystem.wc()
+                    + operatingSystem.getOs()
                     + System.getProperty("os.arch")
                     + Runtime.getRuntime().availableProcessors()
                     + System.getenv("PROCESSOR_IDENTIFIER")

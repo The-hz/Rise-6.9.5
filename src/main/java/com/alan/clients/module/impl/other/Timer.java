@@ -81,10 +81,10 @@ public final class Timer extends Module {
                 double d0 = aEg.thePlayer.posX;
                 double d1 = aEg.thePlayer.posY;
                 double d2 = aEg.thePlayer.posZ;
-                PacketUtil.l(new C04PacketPlayerPosition(d0, d1, d2, true));
-                PacketUtil.l(new C04PacketPlayerPosition(d0, d1 - 1.0E-16, d2, true));
-                PacketUtil.l(new C04PacketPlayerPosition(d0, d1 + 0.07, d2, true));
-                PacketUtil.l(new C04PacketPlayerPosition(d0, d1, d2, true));
+                PacketUtil.send(new C04PacketPlayerPosition(d0, d1, d2, true));
+                PacketUtil.send(new C04PacketPlayerPosition(d0, d1 - 1.0E-16, d2, true));
+                PacketUtil.send(new C04PacketPlayerPosition(d0, d1 + 0.07, d2, true));
+                PacketUtil.send(new C04PacketPlayerPosition(d0, d1, d2, true));
                 aEg.timer.dzD = this.timer.wo().floatValue();
             } else if (this.watchdog.wo()) {
             }
@@ -102,7 +102,7 @@ public final class Timer extends Module {
             MoveUtil.stop();
             aEg.timer.dzD = 1.0F;
             if (aEg.thePlayer.onGround) {
-                Zk.forEach(var0 -> PacketUtil.n(var0.getPacket()));
+                Zk.forEach(var0 -> PacketUtil.queue(var0.getPacket()));
                 Zk.clear();
                 BlinkComponent.dispatch();
             }

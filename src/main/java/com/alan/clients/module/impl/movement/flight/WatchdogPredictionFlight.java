@@ -23,7 +23,7 @@ import net.minecraft.util.MathHelper;
 public class WatchdogPredictionFlight
 extends Mode<Flight> {
     @EventLink
-    public Listener<TeleportEvent> FK = teleportEvent -> {
+    public Listener<TeleportEvent> onTeleport = teleportEvent -> {
         this.ys = this.ys;
     };
     @EventLink
@@ -70,7 +70,7 @@ extends Mode<Flight> {
     @EventLink
     public Listener<PacketSendEvent> onPacketSend;
     @EventLink
-    public Listener<TeleportEvent> FO;
+    public Listener<TeleportEvent> onTeleportMedium;
 
 
     public WatchdogPredictionFlight(String string, Flight flight) {
@@ -93,7 +93,7 @@ extends Mode<Flight> {
                 C03PacketPlayer.C04PacketPlayerPosition unused0 = (C03PacketPlayer.C04PacketPlayerPosition)packet;
             }
         };
-        this.FO = teleportEvent -> {};
+        this.onTeleportMedium = teleportEvent -> {};
     }
 
     @Override

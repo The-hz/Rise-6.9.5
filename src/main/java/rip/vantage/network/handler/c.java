@@ -31,11 +31,11 @@ public class c {
     }
 
     @OnOpen
-    public void a(Session session) {
+    public void onOpen(Session session) {
     }
 
     @OnMessage
-    public void kk(String var1) {
+    public void onMessage(String var1) {
     }
 
     public void aKO() {

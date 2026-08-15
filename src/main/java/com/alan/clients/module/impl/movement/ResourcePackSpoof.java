@@ -18,7 +18,7 @@ public final class ResourcePackSpoof extends Module {
     public final Listener<PacketReceiveEvent> onPacketReceive = var0 -> {
         if (var0.getPacket() instanceof S48PacketResourcePackSend s48packetresourcepacksend) {
             var0.setCancelled();
-            PacketUtil.l(new C19PacketResourcePackStatus(s48packetresourcepacksend.getHash(), Action.SUCCESSFULLY_LOADED));
+            PacketUtil.send(new C19PacketResourcePackStatus(s48packetresourcepacksend.getHash(), Action.SUCCESSFULLY_LOADED));
             afi.b("Spoofed resource pack from " + s48packetresourcepacksend.getURL());
         }
     };

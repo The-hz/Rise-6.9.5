@@ -33,8 +33,8 @@ public final class KeyStrokes extends Module {
 
         this.position.n(new Vector2d(72.0, 72.0));
         this.b(ShaderQueueType.REGULAR).c(() -> this.keyStrokes.forEach(var1x -> var1x.c(this.position.apP)));
-        this.b(ShaderQueueType.BLUR).c(() -> this.keyStrokes.forEach(var1x -> var1x.d(this.position.apP)));
-        this.b(ShaderQueueType.BLOOM).c(() -> this.keyStrokes.forEach(var1x -> var1x.e(this.position.apP)));
+        this.b(ShaderQueueType.BLUR).c(() -> this.keyStrokes.forEach(var1x -> var1x.blur(this.position.apP)));
+        this.b(ShaderQueueType.BLOOM).c(() -> this.keyStrokes.forEach(var1x -> var1x.bloom(this.position.apP)));
     };
 
     public KeyStrokes() {

@@ -22,39 +22,39 @@ public enum Category {
     THEME("category.themes", FontManager.ICONS_2.o(17), "U", 10, new ThemeScreen()),
     LANGUAGE("category.language", FontManager.ICONS_2.o(17), "U", 10, new LanguageScreen());
 
-    private final String ln;
-    private final String lo;
+    private final String name;
+    private final String icon;
     private final int color;
-    private final agc lq;
-    public final Screen lr;
-    private static final Category[] $VALUES = ee();
+    private final agc fontRenderer;
+    public final Screen clickGUIScreen;
+    private static final Category[] $VALUES = createValues();
 
     Category(String var3, agc var4, String var5, int color, Screen screen) {
-        this.ln = var3;
-        this.lo = var5;
+        this.name = var3;
+        this.icon = var5;
         this.color = color;
-        this.lr = screen;
-        this.lq = var4;
+        this.clickGUIScreen = screen;
+        this.fontRenderer = var4;
     }
 
     @Generated
-    public String ea() {
-        return this.lo;
+    public String getIcon() {
+        return this.icon;
     }
 
     @Generated
-    public agc eb() {
-        return this.lq;
+    public agc getFontRenderer() {
+        return this.fontRenderer;
     }
 
     @Generated
-    public Screen ec() {
-        return this.lr;
+    public Screen getClickGUIScreen() {
+        return this.clickGUIScreen;
     }
 
     @Generated
     public String getName() {
-        return this.ln;
+        return this.name;
     }
 
     @Generated
@@ -62,7 +62,7 @@ public enum Category {
         return this.color;
     }
 
-    private static Category[] ee() {
+    private static Category[] createValues() {
         return new Category[]{SEARCH, COMBAT, MOVEMENT, PLAYER, RENDER, EXPLOIT, GHOST, SCRIPT, THEME, LANGUAGE};
     }
 }

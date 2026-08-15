@@ -26,7 +26,7 @@ public final class MurderMystery extends Module {
     private final Set<Integer> Vd = new HashSet<>();
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
-        if (var1.getPacket() instanceof e e && e.getEquipmentSlot() == 0 && e.getItemStack() != null && this.i(e.getItemStack()) && !this.Vd.contains(e.getEntityID())
+        if (var1.getPacket() instanceof e e && e.getEquipmentSlot() == 0 && e.getItemStack() != null && this.isMeleeWeapon(e.getItemStack()) && !this.Vd.contains(e.getEntityID())
             )
          {
             Entity entity = aEg.theWorld.getEntityByID(e.getEntityID());
@@ -57,7 +57,7 @@ public final class MurderMystery extends Module {
     public MurderMystery() {
     }
 
-    private boolean i(ItemStack stack) {
+    private boolean isMeleeWeapon(ItemStack stack) {
         return stack.hasTagCompound() && stack.getTagCompound().hasKey("ExtraAttributes", 10)
             ? stack.getTagCompound().getCompoundTag("ExtraAttributes").hasKey("MELEE", 1)
             : false;

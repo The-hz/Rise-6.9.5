@@ -12,26 +12,26 @@ import java.awt.Color;
 import lombok.Generated;
 
 public class ThemeKeyColorComponent implements InstanceAccess {
-    private final KeyColors ayz;
+    private final KeyColors color;
     private aka ayu = new aka(0.0, 0.0, 0.0);
-    private final Animation ayA = new Animation(Easing.EASE_OUT_QUINT, 500L);
-    private final Animation ayB = new Animation(Easing.EASE_OUT_QUINT, 500L);
+    private final Animation dimAnimation = new Animation(Easing.EASE_OUT_QUINT, 500L);
+    private final Animation bloomAnimation = new Animation(Easing.EASE_OUT_QUINT, 500L);
 
-    public void a(double var1, double var3, double var5, boolean var7) {
-        this.ayA.sG();
+    public void draw(double var1, double var3, double var5, boolean var7) {
+        this.dimAnimation.getValue();
         RenderUtil.roundedRectangle(var1, var3, var5, 17.0, 5.0, new Color(18, 21, 30));
-        RenderUtil.roundedRectangle(var1 + 0.5, var3 + 0.5, var5 - 1.0, 16.0, 4.0, this.ayz.nw());
-        RenderUtil.roundedRectangle(var1, var3, var5, 17.0, 5.0, new Color(25, 25, 25, (int)((1.0 - this.ayA.sG()) * 128.0)));
+        RenderUtil.roundedRectangle(var1 + 0.5, var3 + 0.5, var5 - 1.0, 16.0, 4.0, this.color.getColor());
+        RenderUtil.roundedRectangle(var1, var3, var5, 17.0, 5.0, new Color(25, 25, 25, (int)((1.0 - this.dimAnimation.getValue()) * 128.0)));
         this.b(ShaderQueueType.BLOOM).c(() -> {
-            RenderUtil.roundedRectangle(var1, var3, var5, 17.0, 5.0, new Color(18, 21, 30, (int)(this.ayB.sG() * 255.0)));
-            RenderUtil.roundedRectangle(var1 + 0.5, var3 + 0.5, var5 - 1.0, 16.0, 4.0, ColorUtil.d(this.ayz.nw(), (int)(this.ayB.sG() * 255.0)));
+            RenderUtil.roundedRectangle(var1, var3, var5, 17.0, 5.0, new Color(18, 21, 30, (int)(this.bloomAnimation.getValue() * 255.0)));
+            RenderUtil.roundedRectangle(var1 + 0.5, var3 + 0.5, var5 - 1.0, 16.0, 4.0, ColorUtil.withBlue(this.color.getColor(), (int)(this.bloomAnimation.getValue() * 255.0)));
         });
         this.ayu = new aka(var1, var3, var5);
     }
 
     @Generated
-    public KeyColors pP() {
-        return this.ayz;
+    public KeyColors getColor() {
+        return this.color;
     }
 
     @Generated
@@ -40,17 +40,17 @@ public class ThemeKeyColorComponent implements InstanceAccess {
     }
 
     @Generated
-    public Animation pQ() {
-        return this.ayA;
+    public Animation getDimAnimation() {
+        return this.dimAnimation;
     }
 
     @Generated
-    public Animation pR() {
-        return this.ayB;
+    public Animation getBloomAnimation() {
+        return this.bloomAnimation;
     }
 
     @Generated
     public ThemeKeyColorComponent(KeyColors var1) {
-        this.ayz = var1;
+        this.color = var1;
     }
 }

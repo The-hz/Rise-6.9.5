@@ -16,7 +16,7 @@ public final class TowerWatchdog extends Check {
 
     @Override
     public void handle(Packet<?> packet) {
-        if (PacketUtil.b(packet) && ((S14PacketEntity)packet).entityId == this.data.getPlayer().getEntityId() || packet instanceof z && ((z)packet).cqK == this.data.getPlayer().getEntityId()) {
+        if (PacketUtil.isRelMove(packet) && ((S14PacketEntity)packet).entityId == this.data.getPlayer().getEntityId() || packet instanceof z && ((z)packet).cqK == this.data.getPlayer().getEntityId()) {
             if (this.data.getPlayer().isInvisible()) {
                 return;
             }

@@ -15,7 +15,7 @@ public class PacketAntiVoid extends Mode<AntiVoid> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (aEg.thePlayer.fallDistance > this.distance.wo().floatValue() && !PlayerUtil.vh()) {
-            PacketUtil.l(new C04PacketPlayerPosition());
+            PacketUtil.send(new C04PacketPlayerPosition());
         }
     };
 

@@ -10,36 +10,36 @@ import lombok.Generated;
 import net.minecraft.client.Minecraft;
 
 public final class b {
-    public final Map<UUID, PlayerData> M = new ConcurrentHashMap<>();
-    private final n N = new n();
-    private final AlertManager O = new AlertManager();
+    public final Map<UUID, PlayerData> playerMap = new ConcurrentHashMap<>();
+    private final n registrationListener = new n();
+    private final AlertManager alertManager = new AlertManager();
 
     public b() {
         CheckManager.setup();
     }
 
-    public void F() {
-        for (PlayerData playerdata : this.M.values()) {
+    public void incrementTick() {
+        for (PlayerData playerdata : this.playerMap.values()) {
             if (Minecraft.getMinecraft().theWorld.playerEntities.contains(playerdata.getPlayer())) {
                 playerdata.incrementTick();
             } else {
-                this.N.a(playerdata.getPlayer().getUniqueID());
+                this.registrationListener.handleDestroy(playerdata.getPlayer().getUniqueID());
             }
         }
     }
 
     @Generated
-    public Map<UUID, PlayerData> G() {
-        return this.M;
+    public Map<UUID, PlayerData> getPlayerMap() {
+        return this.playerMap;
     }
 
     @Generated
     public n H() {
-        return this.N;
+        return this.registrationListener;
     }
 
     @Generated
-    public AlertManager I() {
-        return this.O;
+    public AlertManager getAlertManager() {
+        return this.alertManager;
     }
 }

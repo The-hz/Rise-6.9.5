@@ -16,8 +16,8 @@ public class AdaptiveRefreshRateComponent extends Component {
     private boolean bI;
     private boolean bJ;
     private boolean bK;
-    private int bL;
-    private float bM;
+    private int disabledFor;
+    private float health;
     public final a bN = new a();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1 -> {
@@ -26,25 +26,25 @@ public class AdaptiveRefreshRateComponent extends Component {
             || aEg.gameSettings.keyBindPlayerList.isKeyDown() != this.bI
             || aEg.gameSettings.bJf != this.bJ
             || aEg.thePlayer.ticksExisted <= 10
-            || this.bL > 0) {
-            GuiIngameCache.aBL = true;
+            || this.disabledFor > 0) {
+            GuiIngameCache.dirty = true;
             this.bI = aEg.gameSettings.keyBindPlayerList.isKeyDown();
             this.bJ = aEg.gameSettings.bJf;
             this.bK = false;
         }
 
-        if (this.bM != aEg.thePlayer.getHealth()) {
-            this.bL = 3;
-            this.bM = aEg.thePlayer.getHealth();
+        if (this.health != aEg.thePlayer.getHealth()) {
+            this.disabledFor = 3;
+            this.health = aEg.thePlayer.getHealth();
         }
 
-        this.bL--;
+        this.disabledFor--;
     };
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (aEg.currentScreen != null) {
             this.bK = true;
-            GuiIngameCache.aBL = true;
+            GuiIngameCache.dirty = true;
         }
     };
     @EventLink
@@ -56,7 +56,7 @@ public class AdaptiveRefreshRateComponent extends Component {
         }
 
         if (packet instanceof net.minecraft.network.play.server.o) {
-            this.bL = 5;
+            this.disabledFor = 5;
         }
     };
 

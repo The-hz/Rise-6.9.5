@@ -18,7 +18,7 @@ public final class CubecraftBedrockCheckAntiBot extends Mode<AntiBot> {
                 afi.c("Detected bot by formatting pattern: " + s);
             }
 
-            Client.a.x().b(this, var1xx);
+            Client.a.getBotManager().b(this, var1xx);
         }
     });
 
@@ -37,6 +37,6 @@ public final class CubecraftBedrockCheckAntiBot extends Mode<AntiBot> {
 
     @Override
     public void onDisable() {
-        Client.a.x().a(this);
+        Client.a.getBotManager().a(this);
     }
 }

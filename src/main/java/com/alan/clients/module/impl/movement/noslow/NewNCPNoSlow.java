@@ -78,7 +78,7 @@ public class NewNCPNoSlow extends Mode<NoSlow> {
 
     private void hE() {
         if (this.disable > 10 && !BadPacketsComponent.bad(false, true, true, false, false) && Client.a.g().c(KillAura.class).jE == null) {
-            PacketUtil.l(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 5, null, 0.0F, 0.0F, 0.0F));
+            PacketUtil.send(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 5, null, 0.0F, 0.0F, 0.0F));
         }
     }
 }

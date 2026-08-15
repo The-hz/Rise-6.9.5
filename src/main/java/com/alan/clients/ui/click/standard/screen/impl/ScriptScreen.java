@@ -69,7 +69,7 @@ InstanceAccess {
     };
 
     @Override
-    public void b(int n2, int n3, float f2) {
+    public void onRender(int n2, int n3, float f2) {
         if (!this.azK) {
             Client.a.e().b(this);
             this.azK = true;
@@ -83,9 +83,9 @@ InstanceAccess {
             acj2.qF();
         }
         this.scrollUtil.E(azE);
-        vector2f.x = (float)((double)vector2f.x + (riseClickGUI.axJ.aym + (double)10));
+        vector2f.x = (float)((double)vector2f.x + (riseClickGUI.sidebar.aym + (double)10));
         vector2f.y = (float)((double)vector2f.y + (this.scrollUtil.tE() + (double)10));
-        vector2f2.x = (float)((double)vector2f2.x + ((double)-20 - riseClickGUI.axJ.aym));
+        vector2f2.x = (float)((double)vector2f2.x + ((double)-20 - riseClickGUI.sidebar.aym));
         Vector2f vector2f3 = new Vector2f(vector2f2.x, 110.0f);
         RenderUtil.roundedRectangle(vector2f.x, vector2f.y, vector2f3.x, vector2f3.y, 10.0, UIColors.OVERLAY.Y(UIColors.OVERLAY.pV().getAlpha() * 2));
         vector2f.y += vector2f3.y + (float)20;
@@ -104,19 +104,19 @@ InstanceAccess {
                 double d3 = 7.0;
                 double d4 = riseClickGUI.getScale().getX() + riseClickGUI.getPosition().getX() - 4.0f;
                 double d5 = (double)riseClickGUI.getScale().getY() + d3;
-                this.scrollUtil.a(new Vector2d(d4, d5), (double)this.getStandardClickGUI().alh.y - d3 * 2.0);
-                this.scrollUtil.V(-((double)vector2f.y - this.scrollUtil.tE() - (double)riseClickGUI.axI.y) + (double)riseClickGUI.alh.y - 7.0);
+                this.scrollUtil.a(new Vector2d(d4, d5), (double)this.getStandardClickGUI().position.y - d3 * 2.0);
+                this.scrollUtil.V(-((double)vector2f.y - this.scrollUtil.tE() - (double)riseClickGUI.axI.y) + (double)riseClickGUI.position.y - 7.0);
                 double d6 = riseClickGUI.axS - 0.99;
                 return;
             }
             ModuleComponent moduleComponent = iterator.next();
-            moduleComponent.draw(new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.axJ.aym + 8.0, vector2f.y), n2, n3, f2);
+            moduleComponent.draw(new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.sidebar.aym + 8.0, vector2f.y), n2, n3, f2);
             vector2f.y += moduleComponent.scale.y + 7.0f;
         }
     }
 
     @Override
-    public void a(char c2, int n2) {
+    public void onKey(char c2, int n2) {
         Iterator<ModuleComponent> iterator = this.azI.iterator();
         while (iterator.hasNext()) {
             iterator.next().key(c2, n2);
@@ -168,10 +168,10 @@ InstanceAccess {
         for (int i2 = 0; i2 < length; ++i2) {
             acjArray[i2].init();
         }
-        Client.a.p().update();
+        Client.a.getConfigManager().update();
         this.azH.clear();
-        Client.a.p().forEach(configFile -> this.azH.add(new ConfigCard("Click to load", configFile.getName(), configFile::te)));
-        this.azI = Client.a.v().getModuleList().stream().filter(abd2 -> {
+        Client.a.getConfigManager().forEach(configFile -> this.azH.add(new ConfigCard("Click to load", configFile.getName(), configFile::te)));
+        this.azI = Client.a.getStandardClickGUI().getModuleList().stream().filter(abd2 -> {
             if (abd2.getModule().getModuleInfo().category() != Category.SCRIPT) return false;
             return true;
         }).collect(Collectors.toCollection(ArrayList::new));
@@ -179,7 +179,7 @@ InstanceAccess {
         new Thread(() -> {
             ArrayList<Triple<String, String, String>> arrayList = this.qi();
             this.azF.clear();
-            arrayList.forEach(ajt2 -> this.azF.add(new ConfigCard("Click to load", (String)ajt2.vT(), () -> a.aKB().aKK().sendMessage(new C2SPacketConfig(NetworkUtil.aY("https://raw.githubusercontent.com/risellc/RiseOnlineConfigs/main/" + ((String)ajt2.vT()).toLowerCase() + ".json")).aJk()))));
+            arrayList.forEach(ajt2 -> this.azF.add(new ConfigCard("Click to load", (String)ajt2.getFirst(), () -> a.aKB().aKK().sendMessage(new C2SPacketConfig(NetworkUtil.aY("https://raw.githubusercontent.com/risellc/RiseOnlineConfigs/main/" + ((String)ajt2.getFirst()).toLowerCase() + ".json")).aJk()))));
         }).start();
     }
 
@@ -202,7 +202,7 @@ InstanceAccess {
     }
 
     @Generated
-    public agk qe() {
+    public agk getScrollUtil() {
         return this.scrollUtil;
     }
 
@@ -237,7 +237,7 @@ InstanceAccess {
     }
 
     @Generated
-    public Animation mB() {
+    public Animation getAnimation() {
         return this.animation;
     }
 
@@ -282,7 +282,7 @@ InstanceAccess {
     }
 
     @Generated
-    public void a(Animation animation) {
+    public void setAnimation(Animation animation) {
         this.animation = animation;
     }
 }

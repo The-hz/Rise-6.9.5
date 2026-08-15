@@ -45,26 +45,26 @@ import org.lwjgl.opengl.GL11;
 public class LagBreak
 extends Module {
     public int ps;
-    public int pt;
+    public int blinkTicks;
     private static final int pu = 6;
-    private EntityOtherPlayerMP pv;
+    private EntityOtherPlayerMP fakePlayer;
     private boolean pw;
     private int px;
     private int py;
     private int pz;
     private float pA;
     private float pB;
-    private float pC;
+    private float lastRadius;
     private final NumberValue maxLagTicks = new NumberValue("Max Lag Ticks", this, (Number)9, (Number)1, (Number)40, (Number)1);
     private final NumberValue range = new NumberValue("Range", this, (Number)10, (Number)8, (Number)15, (Number)0.1);
     private final NumberValue minimumRange = new NumberValue("Minimum Range", this, (Number)0, (Number)0, (Number)3, (Number)0.1);
     private final ModeValue visualMode = new ModeValue("Visual Mode", this).add(new Mode[]{new SubMode("Percentage")}).add(new Mode[]{new SubMode("Circle")}).add(new Mode[]{new SubMode("Text")}).setDefault("Percentage");
     private final NumberValue circleRadius = new NumberValue("Circle Radius", this, (Number)16, (Number)8, (Number)40, (Number)1, () -> {
-        if (this.gm()) return false;
+        if (this.isCircleMode()) return false;
         return true;
     });
     private final NumberValue circleThickness = new NumberValue("Circle Thickness", this, (Number)1.5, (Number)0.5, (Number)5, (Number)0.1, () -> {
-        if (this.gm()) return false;
+        if (this.isCircleMode()) return false;
         return true;
     });
     private final BooleanValue dispatchOnAttack = new BooleanValue("Dispatch On Attack", (Module)this, (Boolean)true);
@@ -75,10 +75,10 @@ extends Module {
             this.gl();
             return;
         }
-        if (this.pt > 0) {
+        if (this.blinkTicks > 0) {
             BlinkComponent.blink();
         }
-        if (this.pt <= 0) {
+        if (this.blinkTicks <= 0) {
             if (this.py <= 0) return;
         }
         float f2 = this.go();
@@ -86,7 +86,7 @@ extends Module {
             ProgressBarComponent.a(f2, 0.75f, false, true, 10);
             return;
         }
-        if (!this.gm()) return;
+        if (!this.isCircleMode()) return;
         this.g(f2);
     };
     @EventLink
@@ -99,8 +99,8 @@ extends Module {
         if (LagBreak.aEg.thePlayer == null || LagBreak.aEg.theWorld == null) {
             return;
         }
-        this.pt = LagBreak.aEg.thePlayer.ticksExisted - this.px - 1;
-        if (this.pt > 0 && this.py > 0) {
+        this.blinkTicks = LagBreak.aEg.thePlayer.ticksExisted - this.px - 1;
+        if (this.blinkTicks > 0 && this.py > 0) {
             this.py = 0;
             this.pA = 0.0f;
             this.pz = 0;
@@ -110,34 +110,34 @@ extends Module {
         boolean bl2 = entityLivingBase != null && PlayerUtil.v((Entity)entityLivingBase) <= 5.0 && this.a(entityLivingBase, 12.0f, 20.0f);
         int n2 = entityLivingBase != null ? (int)MathUtil.l(9.0, 16.0) : (int)MathUtil.l(10.0, 18.0);
         boolean bl3 = false;
-        if (this.pt >= ((Number)this.maxLagTicks.wo()).intValue() || this.e(Scaffold.class).isEnabled() || LagBreak.aEg.gameSettings.cgI.isKeyDown() || !MoveUtil.isMoving() || entityLivingBase == null || PlayerUtil.v((Entity)entityLivingBase) > ((Number)this.range.wo()).doubleValue() || WatchdogPredictionVelocity.dj || LagBreak.aEg.thePlayer.Zl < 2) {
+        if (this.blinkTicks >= ((Number)this.maxLagTicks.wo()).intValue() || this.e(Scaffold.class).isEnabled() || LagBreak.aEg.gameSettings.cgI.isKeyDown() || !MoveUtil.isMoving() || entityLivingBase == null || PlayerUtil.v((Entity)entityLivingBase) > ((Number)this.range.wo()).doubleValue() || WatchdogPredictionVelocity.dj || LagBreak.aEg.thePlayer.Zl < 2) {
             bl3 = true;
         }
         if (!((Boolean)this.dispatchOnAttack.wo()).booleanValue()) {
             if (!bl3 && bl) {
                 bl3 = true;
             }
-            if (!bl3 && this.pt >= n2 && !bl2) {
+            if (!bl3 && this.blinkTicks >= n2 && !bl2) {
                 bl3 = true;
             }
         }
         if (bl3) {
-            this.gk();
+            this.dispatchBlink();
         }
         if (entityLivingBase != null && PlayerUtil.v((Entity)entityLivingBase) < ((Number)this.minimumRange.wo()).doubleValue()) {
-            this.gk();
+            this.dispatchBlink();
         }
         if (LagBreak.aEg.thePlayer.ae < 2 && ((Boolean)this.dispatchOnHurtime.wo()).booleanValue()) {
-            this.gk();
+            this.dispatchBlink();
         }
         if (this.pw) {
-            this.gk();
+            this.dispatchBlink();
             this.pw = false;
         }
     };
     @EventLink(value=1)
     public final Listener<PacketSendEvent> onPacketSend = packetSendEvent -> {
-        if (!((Boolean)this.dispatchOnAttack.wo()).booleanValue() || this.pt <= 0 || LagBreak.aEg.thePlayer == null) {
+        if (!((Boolean)this.dispatchOnAttack.wo()).booleanValue() || this.blinkTicks <= 0 || LagBreak.aEg.thePlayer == null) {
             return;
         }
         Packet<?> packet = packetSendEvent.dq();
@@ -161,7 +161,7 @@ extends Module {
             this.gl();
             return;
         }
-        if (this.pt <= 0) {
+        if (this.blinkTicks <= 0) {
             if (this.py <= 0) return;
         }
         block4: {
@@ -206,7 +206,7 @@ extends Module {
         this.py = 0;
         this.pz = 0;
         this.pA = 0.0f;
-        this.pC = this.pB = ((Number)this.circleRadius.wo()).floatValue();
+        this.lastRadius = this.pB = ((Number)this.circleRadius.wo()).floatValue();
         if (LagBreak.aEg.thePlayer != null) {
             this.px = LagBreak.aEg.thePlayer.ticksExisted;
         }
@@ -214,12 +214,12 @@ extends Module {
 
     @Override
     public void onDisable() {
-        this.gj();
+        this.removeFakePlayer();
         BlinkComponent.dispatch();
     }
 
-    public boolean bd() {
-        if (this.pt <= 0) return false;
+    public boolean isBlinking() {
+        if (this.blinkTicks <= 0) return false;
         return true;
     }
 
@@ -229,16 +229,16 @@ extends Module {
         }
     }
 
-    private void gj() {
-        if (this.pv != null) {
-            Client.a.x().c(this, (Entity)this.pv);
-            LagBreak.aEg.theWorld.removeEntityFromWorld(this.pv.getEntityId());
-            this.pv = null;
+    private void removeFakePlayer() {
+        if (this.fakePlayer != null) {
+            Client.a.getBotManager().c(this, (Entity)this.fakePlayer);
+            LagBreak.aEg.theWorld.removeEntityFromWorld(this.fakePlayer.getEntityId());
+            this.fakePlayer = null;
         }
     }
 
-    private void gk() {
-        if (this.pt > 0) {
+    private void dispatchBlink() {
+        if (this.blinkTicks > 0) {
             this.pA = this.gn();
             this.py = 6;
             this.pz = 0;
@@ -248,19 +248,19 @@ extends Module {
         if (LagBreak.aEg.thePlayer != null) {
             this.px = LagBreak.aEg.thePlayer.ticksExisted;
         }
-        this.pt = 0;
-        this.gj();
+        this.blinkTicks = 0;
+        this.removeFakePlayer();
     }
 
     private void gl() {
-        if (this.pt > 0) {
+        if (this.blinkTicks > 0) {
             BlinkComponent.dispatch();
             BlinkComponent.disable();
         }
         this.py = 0;
         this.pA = 0.0f;
         this.pz = 0;
-        this.pt = 0;
+        this.blinkTicks = 0;
         this.pw = false;
         if (LagBreak.aEg.thePlayer != null) {
             this.px = LagBreak.aEg.thePlayer.ticksExisted;
@@ -268,18 +268,18 @@ extends Module {
         ProgressBarComponent.stop();
     }
 
-    private boolean gm() {
+    private boolean isCircleMode() {
         return ((Mode)this.visualMode.wo()).getName().equals("Circle");
     }
 
     private float gn() {
         int n2 = Math.max(1, ((Number)this.maxLagTicks.wo()).intValue() - 1);
-        return MathHelper.clamp_float((float)((float)this.pt / (float)n2), (float)0.0f, (float)1.0f);
+        return MathHelper.clamp_float((float)((float)this.blinkTicks / (float)n2), (float)0.0f, (float)1.0f);
     }
 
     private float go() {
         if (this.py <= 0) {
-            if (this.pt <= 0) return 0.0f;
+            if (this.blinkTicks <= 0) return 0.0f;
             float f2 = this.gn();
             return f2;
         }
@@ -293,8 +293,8 @@ extends Module {
         float f3 = (float)LagBreak.aEg.jY.getScaledHeight() / 2.0f;
         int n2 = this.rz().rA().getRGB();
         int n3 = new Color(0, 0, 0, 200).getRGB();
-        FontManager.MAIN.a(17, FontWeight.LIGHT).c("Blinking: " + this.pt, f2 + 1.0f, f3 + 10.0f + 1.0f, n3);
-        FontManager.MAIN.a(17, FontWeight.LIGHT).c("Blinking: " + this.pt, f2, f3 + 10.0f, n2);
+        FontManager.MAIN.a(17, FontWeight.LIGHT).drawString("Blinking: " + this.blinkTicks, f2 + 1.0f, f3 + 10.0f + 1.0f, n3);
+        FontManager.MAIN.a(17, FontWeight.LIGHT).drawString("Blinking: " + this.blinkTicks, f2, f3 + 10.0f, n2);
     }
 
     private void a(Render2DEvent render2DEvent, float f2) {
@@ -302,7 +302,7 @@ extends Module {
         int scaledHeight = render2DEvent.getScaledResolution().getScaledHeight();
         float f3 = (float)scaledWidth / 2.0f;
         float f4 = (float)scaledHeight / 2.0f;
-        float f5 = MathUtil.lerp(this.pC, this.pB, LagBreak.aEg.timer.bWm);
+        float f5 = MathUtil.lerp(this.lastRadius, this.pB, LagBreak.aEg.timer.bWm);
         double d2 = 360.0 * (double)f2;
         double d3 = 270.0 + d2;
         GL11.glPushMatrix();
@@ -321,7 +321,7 @@ extends Module {
 
     private void g(float f2) {
         float f3 = ((Number)this.circleRadius.wo()).floatValue() + f2 * 5.0f;
-        this.pC = this.pB;
+        this.lastRadius = this.pB;
         this.pB = MathUtil.lerp(this.pB, f3, 0.35f);
     }
 

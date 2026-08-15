@@ -11,9 +11,9 @@ public final class FuncraftCheckAntiBot extends Mode<AntiBot> {
     @EventLink
     private final Listener<PreUpdateEvent> onPreUpdate = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         if (var1xx.getDisplayName().getUnformattedText().contains("§")) {
-            Client.a.x().c(this, var1xx);
+            Client.a.getBotManager().c(this, var1xx);
         } else {
-            Client.a.x().b(this, var1xx);
+            Client.a.getBotManager().b(this, var1xx);
         }
     });
 
@@ -23,6 +23,6 @@ public final class FuncraftCheckAntiBot extends Mode<AntiBot> {
 
     @Override
     public void onDisable() {
-        Client.a.x().a(this);
+        Client.a.getBotManager().a(this);
     }
 }

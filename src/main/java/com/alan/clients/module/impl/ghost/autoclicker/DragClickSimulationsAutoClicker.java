@@ -24,7 +24,7 @@ public class DragClickSimulationsAutoClicker extends Mode<AutoClicker> {
                 }
             } else if (Math.random() < 0.95) {
                 this.Ch--;
-                PlayerUtil.h(0, true);
+                PlayerUtil.sendClick(0, true);
             }
         }
     };

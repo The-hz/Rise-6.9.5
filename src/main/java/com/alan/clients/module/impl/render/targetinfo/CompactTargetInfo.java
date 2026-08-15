@@ -47,11 +47,11 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
         this.b(ShaderQueueType.REGULAR, 1).c(NotificationComponent::cj);
         Entity entity = this.aui.target;
         if (entity != null) {
-            boolean flag = !this.aui.inWorld || this.aui.rG.T(1000L);
-            this.auXX.h(flag ? 400L : 850L);
+            boolean flag = !this.aui.inWorld || this.aui.stopwatch.T(1000L);
+            this.auXX.setDuration(flag ? 400L : 850L);
             this.auXX.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
             this.auXX.Q(flag ? 0.0 : 1.0);
-            if (!(this.auXX.sG() <= 0.0)) {
+            if (!(this.auXX.getValue() <= 0.0)) {
                 String s = entity.getName();
                 String s1 = bf.c(s, s);
                 double d0 = this.aui.position.x;
@@ -64,15 +64,15 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
                 double d4 = Math.max(d2 + 15.0, 70.0);
                 this.auY.Q(d3 / abstractclientplayer.getMaxHealth() * d4);
                 this.auY.setEasing(Easing.EASE_OUT_QUINT);
-                this.auY.h(250L);
-                double d5 = this.auY.sG();
+                this.auY.setDuration(250L);
+                double d5 = this.auY.getValue();
                 double d6 = (abstractclientplayer.hurtTime == 0 ? 0.0F : abstractclientplayer.hurtTime - aEg.timer.bWm) * 0.5;
                 byte b0 = 35;
                 double d7 = d6 / 2.0;
                 double d8 = 47 + d4 + 4.0 + 6.0;
                 double d9 = 47;
                 this.aui.positionValue.n(new Vector2d(d8, d9));
-                double d10 = this.auXX.sG();
+                double d10 = this.auXX.getValue();
                 this.b(ShaderQueueType.REGULAR).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d8 / 2.0) * (1.0 - d10), (d1 + d9 / 2.0) * (1.0 - d10), 0.0);
@@ -87,10 +87,10 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
                         RenderUtil.roundedRectangle(d0, d1, d8 - 3.5, d9 - 5.0, 8.0, color);
                     }
 
-                    RenderUtil.roundedOutlineGradientRectangle(d0, d1, d8 - 3.5, d9 - 5.0, 8.0, 0.5, ColorUtil.d(this.rz().rA(), 200), ColorUtil.d(this.rz().rB(), 200));
+                    RenderUtil.roundedOutlineGradientRectangle(d0, d1, d8 - 3.5, d9 - 5.0, 8.0, 0.5, ColorUtil.withBlue(this.rz().rA(), 200), ColorUtil.withBlue(this.rz().rB(), 200));
                     GlStateManager.pushMatrix();
                     this.auT.b(s1, d0 + 6.0 + b0 + 7.0 - 2.5, d1 + 6.0 + 4.0 + 1.0, Color.WHITE.hashCode());
-                    this.auT.c(String.valueOf(Math.round(f)), d0 + b0 + d4 + 4.5, d1 + 6.0 + 4.0 + 1.0, color2.hashCode());
+                    this.auT.drawString(String.valueOf(Math.round(f)), d0 + b0 + d4 + 4.5, d1 + 6.0 + 4.0 + 1.0, color2.hashCode());
                     GlStateManager.popMatrix();
                     GlStateManager.popMatrix();
                     GlStateManager.pushMatrix();
@@ -101,7 +101,7 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
                     this.rz();
                     Color color3 = Themes.rK();
                     this.rz();
-                    color3 = ColorUtil.d(color3, (int)(Themes.rK().getAlpha() / 1.7F));
+                    color3 = ColorUtil.withBlue(color3, (int)(Themes.rK().getAlpha() / 1.7F));
                     this.rz();
                     RenderUtil.a(d11, d12, d4, 6.0, 3.0, color3, Themes.rK(), true);
                     RenderUtil.a(d0 + 6.0 + b0 + 7.0 - 2.5, d1 + 6.0 + b0 - 4.0 - 10.0, d5, 6.0, 3.0, color2, color1, false);
@@ -139,12 +139,12 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
     }
 
     private void a(AbstractClientPlayer abstractClientPlayer, double var2, double var4, double var6) {
-        ais.vK();
-        ais.vL();
+        ais.initStencil();
+        ais.bindWriteStencilBuffer();
         double d0 = this.rz().getRound() * 2;
         this.rz();
         RenderUtil.roundedRectangle(var2, var4, var6, var6, d0, Themes.rK());
-        ais.aD(1);
+        ais.bindReadStencilBuffer(1);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);
         GlStateManager.alphaFunc(516, 0.0F);
@@ -155,8 +155,8 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
         aEg.getTextureManager().bindTexture(resourcelocation);
         Gui.drawScaledCustomSizeModalRect(var2, var4, 4.0F, 4.0F, 4.0F, 4.0F, var6, var6, 32.0F, 32.0F);
         GlStateManager.disableBlend();
-        ais.vM();
+        ais.uninitStencilBuffer();
         float f1 = 0.5F;
-        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.d(Color.BLACK, 40));
+        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.withBlue(Color.BLACK, 40));
     }
 }

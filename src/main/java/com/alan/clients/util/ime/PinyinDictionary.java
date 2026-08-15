@@ -23,12 +23,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 public final class PinyinDictionary {
-    private final NavigableMap<String, List<String>> aJL;
+    private final NavigableMap<String, List<String>> navigableMap;
     private static final int aJM = 64;
     private static final String[] aJN = new String[]{"rise/ime/rise.dict.yaml", "rise/ime/rise_extra_common_words.dict.yaml", "rise/ime/luna_pinyin.sogou2.dict.yaml"};
 
     private PinyinDictionary(NavigableMap<String, List<String>> navigableMap) {
-        this.aJL = navigableMap;
+        this.navigableMap = navigableMap;
     }
 
     public List<String> s(String string, int n) {
@@ -36,7 +36,7 @@ public final class PinyinDictionary {
             return Collections.emptyList();
         }
         String string2 = string.toLowerCase(Locale.ROOT);
-        List list = (List)this.aJL.get(string2);
+        List list = (List)this.navigableMap.get(string2);
         if (list != null && !list.isEmpty()) {
             return PinyinDictionary.a(string2, list, n);
         }
@@ -46,7 +46,7 @@ public final class PinyinDictionary {
         ArrayList<String> arrayList = new ArrayList<String>(n);
         String string3 = string2;
         String string4 = string2 + "\uffff";
-        Iterator iterator = this.aJL.subMap(string3, true, string4, true).values().iterator();
+        Iterator iterator = this.navigableMap.subMap(string3, true, string4, true).values().iterator();
         while (iterator.hasNext()) {
             for (String string5 : (Iterable<String>)(List)iterator.next()) {
                 if (string5 == null || string5.isEmpty()) continue;

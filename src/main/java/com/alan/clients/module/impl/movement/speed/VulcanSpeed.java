@@ -424,7 +424,7 @@ public final class VulcanSpeed extends Mode<Speed> {
                     BlockPos blockpos = new BlockPos(aEg.thePlayer).down();
                     int l = EnumFacing.UP.getIndex();
                     SlotComponent slotcomponent1 = this.d(SlotComponent.class);
-                    PacketUtil.l(new C08PacketPlayerBlockPlacement(blockpos, l, SlotComponent.getItemStack(), 0.0F, 1.0F, 0.0F));
+                    PacketUtil.send(new C08PacketPlayerBlockPlacement(blockpos, l, SlotComponent.getItemStack(), 0.0F, 1.0F, 0.0F));
                 }
 
                 switch (aEg.thePlayer.tR) {

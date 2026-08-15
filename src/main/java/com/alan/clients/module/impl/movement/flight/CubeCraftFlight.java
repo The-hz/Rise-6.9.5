@@ -50,6 +50,6 @@ public class CubeCraftFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        DamageUtil.a(DamageType.POSITION, 3.42F, 1, false, false);
+        DamageUtil.damagePlayer(DamageType.POSITION, 3.42F, 1, false, false);
     }
 }

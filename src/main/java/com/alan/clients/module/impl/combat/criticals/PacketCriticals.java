@@ -13,16 +13,16 @@ import rip.vantage.commons.util.time.a;
 public final class PacketCriticals extends Mode<Criticals> {
     private final NumberValue delay = new NumberValue("Delay", this, 500, 0, 1000, 1);
     private final double[] offsets = new double[]{0.42, 0.0};
-    private final a rM = new a();
+    private final a stopwatch = new a();
     @EventLink
     public final Listener<AttackEvent> onAttack = var1x -> {
-        if (this.rM.T(this.delay.wo().longValue()) && aEg.thePlayer.cqL > 0) {
+        if (this.stopwatch.T(this.delay.wo().longValue()) && aEg.thePlayer.cqL > 0) {
             for (double d0 : this.offsets) {
-                PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d0, aEg.thePlayer.posZ, false));
+                PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d0, aEg.thePlayer.posZ, false));
             }
 
-            aEg.thePlayer.onCriticalHit(var1x.dc());
-            this.rM.aX();
+            aEg.thePlayer.onCriticalHit(var1x.getLiving());
+            this.stopwatch.aX();
         }
     };
 

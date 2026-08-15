@@ -19,7 +19,7 @@ public class AntiSuffocate extends Module {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.thePlayer.isEntityInsideOpaqueBlock()) {
-            PacketUtil.l(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, new BlockPos(aEg.thePlayer).down(), EnumFacing.UP));
+            PacketUtil.send(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, new BlockPos(aEg.thePlayer).down(), EnumFacing.UP));
             if (this.swing.wo()) {
                 aEg.thePlayer.swingItem();
             }

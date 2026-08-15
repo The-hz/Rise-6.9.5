@@ -34,10 +34,10 @@ public class Stealer extends Module {
     private final BooleanValue ignoreTrash = new BooleanValue("Ignore Trash", this, true);
     private final BooleanValue respectManagerRules = new BooleanValue("Respect Manager Rules", this, true);
     private final BooleanValue guiDetection = new BooleanValue("Gui Detection", this, true);
-    private final a ahm = new a();
+    private final a stopwatch = new a();
     private long nextClick;
-    private int ahn;
-    private int aho;
+    private int lastClick;
+    private int lastSteal;
     private int ahp;
     private boolean fY;
     private boolean ahq;
@@ -52,7 +52,7 @@ public class Stealer extends Module {
                 int j = this.firstItemDelay.wA().intValue();
                 if (i > 0 || j > 0) {
                     this.nextClick = Math.round(MathUtil.l(i, j));
-                    this.ahm.aX();
+                    this.stopwatch.aX();
                     this.ahq = true;
                     return;
                 }
@@ -60,34 +60,34 @@ public class Stealer extends Module {
                 this.ahq = true;
             }
 
-            if (this.guiDetection.wo() && GUIDetectionComponent.inGUI() || !this.ahm.T(this.nextClick)) {
+            if (this.guiDetection.wo() && GUIDetectionComponent.inGUI() || !this.stopwatch.T(this.nextClick)) {
                 return;
             }
 
-            this.aho++;
+            this.lastSteal++;
 
             for (int k = 0; k < containerchest.inventorySlots.size(); k++) {
                 ItemStack itemstack = containerchest.getLowerChestInventory().getStackInSlot(k);
-                if (itemstack != null && this.aho > 1 && (!this.ignoreTrash.wo() || ItemUtil.u(itemstack)) && (!this.respectManagerRules.wo() || !this.r(itemstack))) {
+                if (itemstack != null && this.lastSteal > 1 && (!this.ignoreTrash.wo() || ItemUtil.useful(itemstack)) && (!this.respectManagerRules.wo() || !this.r(itemstack))) {
                     this.nextClick = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
                     aEg.playerController.windowClick(containerchest.windowId, k, 0, 1, aEg.thePlayer);
-                    this.ahm.aX();
-                    this.ahn = 0;
+                    this.stopwatch.aX();
+                    this.lastClick = 0;
                     if (this.nextClick > 0L) {
                         return;
                     }
                 }
             }
 
-            this.ahn++;
-            if (this.ahn > 1 && this.ahp > 2.0 + 2.0 * Math.random()) {
+            this.lastClick++;
+            if (this.lastClick > 1 && this.ahp > 2.0 + 2.0 * Math.random()) {
                 aEg.thePlayer.closeScreen();
                 this.fY = true;
             }
         } else {
-            this.ahn = 0;
+            this.lastClick = 0;
             this.ahp = 0;
-            this.aho = 0;
+            this.lastSteal = 0;
             this.ahq = false;
         }
     };
@@ -95,7 +95,7 @@ public class Stealer extends Module {
     public Stealer() {
     }
 
-    public boolean kv() {
+    public boolean hasClosedScreen() {
         return this.fY;
     }
 
@@ -104,9 +104,9 @@ public class Stealer extends Module {
             Item item = stack.getItem();
             Manager manager = this.e(Manager.class);
             Container container = aEg.thePlayer.inventoryContainer;
-            if (manager != null && SelectorDetectionComponent.a(stack, true) && manager.jP()) {
+            if (manager != null && SelectorDetectionComponent.a(stack, true) && manager.shouldDropCustomItems()) {
                 return true;
-            } else if (!ItemUtil.u(stack)) {
+            } else if (!ItemUtil.useful(stack)) {
                 return true;
             } else if (item instanceof ItemSword) {
                 return !ItemUtil.b(stack, container);
@@ -119,11 +119,11 @@ public class Stealer extends Module {
             } else if (item instanceof net.minecraft.item.be) {
                 return this.a(var0 -> var0 instanceof net.minecraft.item.be) >= 1;
             }
-            int i = manager != null ? manager.jL() : 128;
-            int j = manager != null ? manager.jM() : 1;
-            int k = manager != null ? manager.jN() : 16;
-            int l = manager != null ? manager.jO() : 16;
-            int i1 = manager != null ? manager.jK() : 512;
+            int i = manager != null ? manager.getArrowLimit() : 128;
+            int j = manager != null ? manager.getBucketLimit() : 1;
+            int k = manager != null ? manager.getSnowballEggLimit() : 16;
+            int l = manager != null ? manager.getEnderPearlLimit() : 16;
+            int i1 = manager != null ? manager.getBlockLimit() : 512;
             if (item == Items.arrow) {
                 return this.a(Items.arrow) + stack.stackSize > i;
             } else if (item == Items.ender_pearl) {

@@ -85,11 +85,11 @@ public class WatchdogPredictiSprint extends Mode<Scaffold> {
         this.El = true;
         this.dk = true;
         SlotComponent slotcomponent = this.d(SlotComponent.class);
-        PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+        PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
         slotcomponent = this.d(SlotComponent.class);
-        PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+        PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
         slotcomponent = this.d(SlotComponent.class);
-        PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+        PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
         MathHelper.wrapAngleTo180_float(this.gZ);
         RotationComponent.d(false);
         double d0 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));

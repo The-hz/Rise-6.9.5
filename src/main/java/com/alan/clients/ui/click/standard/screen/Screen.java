@@ -1,10 +1,10 @@
 package com.alan.clients.ui.click.standard.screen;
 
 public interface Screen {
-    default void b(int var1, int var2, float var3) {
+    default void onRender(int var1, int var2, float var3) {
     }
 
-    default void a(char var1, int var2) {
+    default void onKey(char var1, int var2) {
     }
 
     default void f(int var1, int var2, int var3) {

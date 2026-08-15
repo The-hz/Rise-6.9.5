@@ -72,14 +72,14 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
         this.b(ShaderQueueType.BLUR).c(BACKGROUND_RUNNABLE);
         this.adHoverAnimation.Q(MouseUtil.isHovered(this.adX, this.adY, this.adWidth, this.adHeight, var1, var2) ? 100.0 : 45.0);
         this.b(ShaderQueueType.REGULAR)
-            .c(() -> FONT_RENDERER.c("Select your login method", this.width / 2, this.height / 2 - 76 + this.animation.sG(), Color.WHITE.getRGB()));
-        Color color = ColorUtil.d(Color.BLACK, 150);
-        Color color1 = ColorUtil.d(Color.WHITE, (int)(150.0 + this.adHoverAnimation.sG()));
+            .c(() -> FONT_RENDERER.drawString("Select your login method", this.width / 2, this.height / 2 - 76 + this.animation.getValue(), Color.WHITE.getRGB()));
+        Color color = ColorUtil.withBlue(Color.BLACK, 150);
+        Color color1 = ColorUtil.withBlue(Color.WHITE, (int)(150.0 + this.adHoverAnimation.getValue()));
         this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, Color.WHITE));
         this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.roundedRectangle(this.adX + 0.5F, this.adY + 0.5F, this.adWidth - 1, this.adHeight - 1, 6.0, color));
         this.b(ShaderQueueType.REGULAR).c(() -> {
-            RenderUtil.roundedRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, ColorUtil.d(MenuColors.aBV, (int)this.adHoverAnimation.sG() - 15));
-            RenderUtil.roundedOutlineGradientRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, 1.0, ColorUtil.d(MenuColors.aBP, 32), ColorUtil.d(MenuColors.aBO, 32));
+            RenderUtil.roundedRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, ColorUtil.withBlue(MenuColors.aBV, (int)this.adHoverAnimation.getValue() - 15));
+            RenderUtil.roundedOutlineGradientRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, 1.0, ColorUtil.withBlue(MenuColors.aBP, 32), ColorUtil.withBlue(MenuColors.aBO, 32));
             int k = this.adX + 14;
             int l = this.adY + (this.adHeight - 24) / 2;
             RenderUtil.image(LOCALTS_RESOURCE, k, l, 24.0F, 24.0F, color1);
@@ -103,7 +103,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
                 float f2 = (float)(adi.getX() + adi.oM() / 2.0 - f1 / 2.0F);
                 float f3 = (float)(adi.getY() + adi.da() - f - 10.0);
                 RenderUtil.roundedRectangle(f2, f3, f1, f, 7.0, new Color(38, 132, 93, 225));
-                DISCOUNT_FONT_RENDERER.c(s, f2 + f1 / 2.0F, centeredTextY(f3, f, DISCOUNT_FONT_RENDERER), Color.WHITE.getRGB());
+                DISCOUNT_FONT_RENDERER.drawString(s, f2 + f1 / 2.0F, centeredTextY(f3, f, DISCOUNT_FONT_RENDERER), Color.WHITE.getRGB());
             }
         });
     }
@@ -150,7 +150,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
         }
 
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
-        this.animation.R(-200.0);
+        this.animation.setStartValue(-200.0);
         this.adHoverAnimation = new Animation(Easing.LINEAR, 200L);
         this.adWidth = 60 + AD_FONT_RENDERER.getStringWidth("Need alts? Localts purchases in Rise are 5% off — Click here!");
         this.adHeight = 40;

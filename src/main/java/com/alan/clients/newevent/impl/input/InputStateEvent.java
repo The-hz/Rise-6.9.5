@@ -8,9 +8,9 @@ public class InputStateEvent implements Event {
     private boolean ji;
     private boolean cp;
     private boolean co;
-    private boolean gD;
+    private boolean jump;
     private boolean jj;
-    private boolean jk;
+    private boolean sprint;
 
     @Generated
     public boolean cR() {
@@ -34,7 +34,7 @@ public class InputStateEvent implements Event {
 
     @Generated
     public boolean isJump() {
-        return this.gD;
+        return this.jump;
     }
 
     @Generated
@@ -44,7 +44,7 @@ public class InputStateEvent implements Event {
 
     @Generated
     public boolean isSprint() {
-        return this.jk;
+        return this.sprint;
     }
 
     @Generated
@@ -69,7 +69,7 @@ public class InputStateEvent implements Event {
 
     @Generated
     public void setJump(boolean jump) {
-        this.gD = jump;
+        this.jump = jump;
     }
 
     @Generated
@@ -79,7 +79,7 @@ public class InputStateEvent implements Event {
 
     @Generated
     public void setSprint(boolean sprint) {
-        this.jk = sprint;
+        this.sprint = sprint;
     }
 
     @Generated
@@ -88,8 +88,8 @@ public class InputStateEvent implements Event {
         this.ji = var2;
         this.cp = var3;
         this.co = var4;
-        this.gD = var5;
+        this.jump = var5;
         this.jj = var6;
-        this.jk = var7;
+        this.sprint = var7;
     }
 }

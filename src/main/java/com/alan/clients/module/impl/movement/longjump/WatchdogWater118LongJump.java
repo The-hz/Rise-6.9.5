@@ -56,7 +56,7 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
 
     @Override
     public void onDisable() {
-        this.KM.forEach(PacketUtil::p);
+        this.KM.forEach(PacketUtil::receive);
         this.KM.clear();
         this.Kv = false;
         this.Kx = 0;
@@ -114,8 +114,8 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
             if (WatchdogWater118LongJump.aEg.thePlayer.inWater) {
                 MoveUtil.stop();
                 WatchdogWater118LongJump.aEg.timer.dzD = 0.33f;
-                PacketUtil.l(new C03PacketPlayer(true));
-                PacketUtil.l(new C03PacketPlayer.C04PacketPlayerPosition(WatchdogWater118LongJump.aEg.thePlayer.posX, WatchdogWater118LongJump.aEg.thePlayer.posY + 0.068, WatchdogWater118LongJump.aEg.thePlayer.posZ, true));
+                PacketUtil.send(new C03PacketPlayer(true));
+                PacketUtil.send(new C03PacketPlayer.C04PacketPlayerPosition(WatchdogWater118LongJump.aEg.thePlayer.posX, WatchdogWater118LongJump.aEg.thePlayer.posY + 0.068, WatchdogWater118LongJump.aEg.thePlayer.posZ, true));
             }
             final boolean b = MoveUtil.speed() < 0.205;
             return;
@@ -179,7 +179,7 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
                 this.dj = false;
                 this.tt = true;
                 new Vector2d(WatchdogWater118LongJump.aEg.thePlayer.motionX, WatchdogWater118LongJump.aEg.thePlayer.motionZ);
-                this.KM.forEach(PacketUtil::p);
+                this.KM.forEach(PacketUtil::receive);
                 if (this.IW > 0.41) {
                     ++this.Kx;
                 }
@@ -209,7 +209,7 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
 
     @Override
     public void onEnable() {
-        this.KM.forEach(PacketUtil::p);
+        this.KM.forEach(PacketUtil::receive);
         this.KM.clear();
         if (WatchdogWater118LongJump.aEg.thePlayer.onGround) {
             MoveUtil.stop();

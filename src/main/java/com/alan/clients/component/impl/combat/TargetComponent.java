@@ -57,7 +57,7 @@ public class TargetComponent extends Component implements InstanceAccess {
             .stream()
             .filter(
                 var5x -> var5x instanceof EntityLivingBase
-                    && !Client.a.x().a(var5x)
+                    && !Client.a.getBotManager().a(var5x)
                     && var5x != aEg.getRenderViewEntity()
                     && (!FriendManager.isFriend(var5x.getName()) || var5)
                     && (!(var5x instanceof EntityPlayer) || var0)

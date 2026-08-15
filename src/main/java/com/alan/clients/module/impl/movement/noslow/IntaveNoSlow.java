@@ -29,7 +29,7 @@ public class IntaveNoSlow extends Mode<NoSlow> {
                 if (item instanceof ItemSword && this.getParent().sword.wo()) {
                     PacketQueueComponent.cR = true;
                     if (aEg.thePlayer.ticksExisted % 5 == 0) {
-                        PacketUtil.l(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+                        PacketUtil.send(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
                         PacketQueueComponent.dispatch();
                         aEg.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getCurrentEquippedItem()));
                     }

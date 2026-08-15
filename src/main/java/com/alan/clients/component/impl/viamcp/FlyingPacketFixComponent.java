@@ -61,7 +61,7 @@ public final class FlyingPacketFixComponent extends Component {
                 && c07packetplayerdigging.getStatus() != Action.RELEASE_USE_ITEM) {
             }
 
-            if (Breaker.abQ != null) {
+            if (Breaker.targetBlock != null) {
                 this.e(Breaker.class).attackWhileBreaking.wo();
             }
 

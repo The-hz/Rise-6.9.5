@@ -31,17 +31,17 @@ public class RiseGuiNewChat extends GuiNewChat
         if (n != 0) {
             this.deleteChatLine(n);
         }
-        final List a = GuiUtilRenderComponents.a(chatComponent, (int)(this.asf.mA().aHe.x - 19.0), this.mc.fontRendererObj, false, false);
+        final List a = GuiUtilRenderComponents.a(chatComponent, (int)(this.asf.getDragValue().aHe.x - 19.0), this.mc.fontRendererObj, false, false);
         final boolean chatOpen = this.getChatOpen();
         Object obj = Collections.emptyList();
-        if ((boolean)this.asf.my().wo()) {
+        if ((boolean)this.asf.getImageChat().wo()) {
             final String unformattedText = chatComponent.getUnformattedText();
-            final ChatImageManager mz = this.asf.mz();
+            final ChatImageManager mz = this.asf.getImageManager();
             obj = mz.Y(unformattedText);
             System.out.println("[ChatImage] detected urls=" + String.valueOf(obj));
             final Iterator iterator = ((List)obj).iterator();
             while (iterator.hasNext()) {
-                mz.b(new ChatImage((String)iterator.next(), n2, n));
+                mz.queueImage(new ChatImage((String)iterator.next(), n2, n));
             }
         }
         for (int i = 0; i < a.size(); ++i) {

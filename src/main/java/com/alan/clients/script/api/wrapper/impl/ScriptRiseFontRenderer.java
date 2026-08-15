@@ -25,7 +25,7 @@ public class ScriptRiseFontRenderer extends ScriptFontRenderer<FontRenderer> {
 
     @Override
     public void drawCentered(String var1, double var2, double var4, int[] var6) {
-        this.wrapped.c(var1, var2, var4, RenderAPI.intArrayToColor(var6).getRGB());
+        this.wrapped.drawString(var1, var2, var4, RenderAPI.intArrayToColor(var6).getRGB());
     }
 
     @Override

@@ -65,10 +65,10 @@ public class Clutch extends Module {
 
                 this.Yw = PlayerUtil.getPlacePossibility(vec3i.getX(), vec3i.getY(), vec3i.getZ());
                 if (this.Yw != null) {
-                    this.acr = PlayerUtil.e(this.Yw);
+                    this.acr = PlayerUtil.getEnumFacing(this.Yw);
                     if (this.acr != null) {
                         BlockPos blockpos = new BlockPos(this.Yw.xCoord, this.Yw.yCoord, this.Yw.zCoord);
-                        this.Yx = blockpos.add(this.acr.vb().xCoord, this.acr.vb().yCoord, this.acr.vb().zCoord);
+                        this.Yx = blockpos.add(this.acr.getOffset().xCoord, this.acr.getOffset().yCoord, this.acr.getOffset().zCoord);
                         if (this.Yx != null && this.acr != null) {
                             this.jF();
                             if (this.Yw != null && this.acr != null && this.Yx != null) {
@@ -77,16 +77,16 @@ public class Clutch extends Module {
                                 if (i == SlotComponent.bQ()) {
                                     if (!BadPacketsComponent.bad(false, true, false, false, true)
                                         && this.acu > MathUtil.l(this.placeDelay.wo().intValue(), this.placeDelay.wA().intValue())
-                                        && aef.overBlock(this.acr.va(), this.Yx, true)) {
+                                        && aef.overBlock(this.acr.getEnumFacing(), this.Yx, true)) {
                                         Vec3 vec3 = aef.c(RotationComponent.fk, aEg.playerController.getBlockReachDistance()).hitVec;
                                         PlayerControllerMP playercontrollermp = aEg.playerController;
                                         EntityPlayerSP entityplayersp = aEg.thePlayer;
                                         WorldClient worldclient = aEg.theWorld;
                                         SlotComponent slotcomponent3 = this.d(SlotComponent.class);
                                         if (playercontrollermp.onPlayerRightClick(
-                                            entityplayersp, worldclient, SlotComponent.getItemStack(), this.Yx, this.acr.va(), vec3
+                                            entityplayersp, worldclient, SlotComponent.getItemStack(), this.Yx, this.acr.getEnumFacing(), vec3
                                         )) {
-                                            PacketUtil.l(new m());
+                                            PacketUtil.send(new m());
                                         }
 
                                         aEg.rightClickDelayTimer = 0;
@@ -107,7 +107,7 @@ public class Clutch extends Module {
                                         }
                                     } else if (Math.random() > 0.92 && aEg.rightClickDelayTimer <= 0) {
                                         SlotComponent slotcomponent2 = this.d(SlotComponent.class);
-                                        PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                                        PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
                                         aEg.rightClickDelayTimer = 0;
                                     }
                                 }
@@ -131,7 +131,7 @@ public class Clutch extends Module {
     }
 
     public void jF() {
-        if (this.acu > 0 && !aef.a(RotationComponent.fk, this.acr.va(), this.Yx, true)) {
+        if (this.acu > 0 && !aef.a(RotationComponent.fk, this.acr.getEnumFacing(), this.Yx, true)) {
             this.D(0);
         }
 
@@ -153,7 +153,7 @@ public class Clutch extends Module {
             entityplayersp.setPosition(entityplayersp.posX, entityplayersp.posY + d0, entityplayersp.posZ);
             if (movingobjectposition != null
                 && new BlockPos(this.Yx).equals(movingobjectposition.getBlockPos())
-                && this.acr.va() == movingobjectposition.sideHit) {
+                && this.acr.getEnumFacing() == movingobjectposition.sideHit) {
                 Vector2f vector2f = RotationUtil.h(movingobjectposition.hitVec);
                 this.acs = vector2f.x;
                 this.act = vector2f.y;
@@ -161,7 +161,7 @@ public class Clutch extends Module {
             }
         }
 
-        Vector2f vector2f1 = RotationUtil.a(new aka(this.Yx.getX(), this.Yx.getY(), this.Yx.getZ()), this.acr.va());
+        Vector2f vector2f1 = RotationUtil.a(new aka(this.Yx.getX(), this.Yx.getY(), this.Yx.getZ()), this.acr.getEnumFacing());
         this.acs = vector2f1.x;
         this.act = vector2f1.y;
     }

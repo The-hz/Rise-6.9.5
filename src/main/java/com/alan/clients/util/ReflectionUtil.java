@@ -16,9 +16,9 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class ReflectionUtil {
-    public static Class<?>[] ba(String string) {
+    public static Class<?>[] getClassesInPackage(String string) {
         try {
-            Set<String> set = ReflectionUtil.a(Paths.get(ReflectionUtil.rX(), new String[0]).toFile());
+            Set<String> set = ReflectionUtil.getClassNamesFromJarFile(Paths.get(ReflectionUtil.rX(), new String[0]).toFile());
             ArrayList arrayList = new ArrayList();
             for (String string2 : set) {
                 try {
@@ -31,15 +31,15 @@ public class ReflectionUtil {
             return (Class[])arrayList.toArray(new Class[0]);
         }
         catch (Exception exception) {
-            File file = ReflectionUtil.bb(string);
+            File file = ReflectionUtil.getPackageDirectory(string);
             if (!file.exists()) {
                 throw new IllegalArgumentException("Could not get directory resource for package " + string);
             }
-            return ReflectionUtil.b(string, file);
+            return ReflectionUtil.getClassesInPackage(string, file);
         }
     }
 
-    public static Set<String> a(File file) throws java.io.IOException {
+    public static Set<String> getClassNamesFromJarFile(File file) throws java.io.IOException {
         HashSet<String> hashSet;
         HashSet<String> hashSet2 = new HashSet<String>();
         JarFile jarFile = new JarFile(file);
@@ -67,7 +67,7 @@ public class ReflectionUtil {
         return hashSet;
     }
 
-    private static Class<?>[] b(String string, File file) {
+    private static Class<?>[] getClassesInPackage(String string, File file) {
         ArrayList arrayList = new ArrayList();
         String[] stringArray = Objects.requireNonNull(file.list());
         int length = stringArray.length;
@@ -75,7 +75,7 @@ public class ReflectionUtil {
         while (n3 < length) {
             String string2 = stringArray[n3];
             if (string2.endsWith(".class")) {
-                String string3 = ReflectionUtil.u(string, string2);
+                String string3 = ReflectionUtil.buildClassname(string, string2);
                 try {
                     arrayList.add(Class.forName(string3));
                 }
@@ -84,18 +84,18 @@ public class ReflectionUtil {
                 }
             } else if (!string2.contains(".")) {
                 String string4 = string + (string.endsWith(".") ? "" : ".") + string2;
-                arrayList.addAll(Arrays.asList(ReflectionUtil.b(string4, ReflectionUtil.bb(string4))));
+                arrayList.addAll(Arrays.asList(ReflectionUtil.getClassesInPackage(string4, ReflectionUtil.getPackageDirectory(string4))));
             }
             ++n3;
         }
         return (Class[])arrayList.toArray(new Class[0]);
     }
 
-    public static String u(String string, String string2) {
+    public static String buildClassname(String string, String string2) {
         return string + "." + string2.replace(".class", "");
     }
 
-    private static File bb(String string) {
+    private static File getPackageDirectory(String string) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         if (classLoader == null) {
             throw new IllegalStateException("Can't get class loader.");
@@ -107,7 +107,7 @@ public class ReflectionUtil {
         return new File(uRL.getFile());
     }
 
-    public static boolean bc(String string) {
+    public static boolean dirExist(String string) {
         if (Thread.currentThread().getContextClassLoader().getResource(string.replace('.', '/')) == null) return false;
         return true;
     }

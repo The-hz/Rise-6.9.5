@@ -30,7 +30,7 @@ import net.minecraft.util.MathHelper;
 import rip.vantage.commons.util.time.a;
 
 public class Watchdog1171FullBlockPhase extends Mode<Phase> {
-    public final BooleanValue Ow = new BooleanValue("Smart Mode (if you want it to be always be toggled on)", this, false);
+    public final BooleanValue smartModeIfYouWantItToBeAlwaysBeToggledOn = new BooleanValue("Smart Mode (if you want it to be always be toggled on)", this, false);
     public final BooleanValue silent = new BooleanValue("Silent", this, false);
     private boolean Op;
     private final a Oy = new a();
@@ -48,7 +48,7 @@ public class Watchdog1171FullBlockPhase extends Mode<Phase> {
                         && !aEg.gameSettings.keyBindJump.isKeyDown()
                         && !this.e(Scaffold.class).isEnabled()
                         && !(aEg.currentScreen instanceof GuiContainer)
-                    || !this.Ow.wo() && flag && this.Op
+                    || !this.smartModeIfYouWantItToBeAlwaysBeToggledOn.wo() && flag && this.Op
             )
             && !PlayerUtil.vk()) {
             this.Op = false;
@@ -57,9 +57,9 @@ public class Watchdog1171FullBlockPhase extends Mode<Phase> {
                 double d0 = blockpos.getX() + 0.5;
                 double d1 = blockpos.getY();
                 double d2 = blockpos.getZ() + 0.5;
-                PacketUtil.m(new C04PacketPlayerPosition(d0, d1, d2, aEg.thePlayer.onGround));
+                PacketUtil.sendNoEvent(new C04PacketPlayerPosition(d0, d1, d2, aEg.thePlayer.onGround));
             } else {
-                PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX + 0.5, aEg.thePlayer.posY, aEg.thePlayer.posZ + 0.5, aEg.thePlayer.onGround));
+                PacketUtil.sendNoEvent(new C04PacketPlayerPosition(aEg.thePlayer.posX + 0.5, aEg.thePlayer.posY, aEg.thePlayer.posZ + 0.5, aEg.thePlayer.onGround));
             }
         }
     };
@@ -75,7 +75,7 @@ public class Watchdog1171FullBlockPhase extends Mode<Phase> {
             float f = s08packetplayerposlook.getYaw();
             float f1 = s08packetplayerposlook.getPitch();
             this.Op = true;
-            PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
+            PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
             if (!this.silent.wo()) {
                 aEg.thePlayer.setPosition(d0, d1, d2);
             }

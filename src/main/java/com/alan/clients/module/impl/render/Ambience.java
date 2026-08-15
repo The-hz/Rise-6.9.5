@@ -109,12 +109,12 @@ public final class Ambience extends Module {
     }
 
     @Generated
-    public NumberValue kG() {
+    public NumberValue getTime() {
         return this.time;
     }
 
     @Generated
-    public NumberValue jG() {
+    public NumberValue getSpeed() {
         return this.speed;
     }
 
@@ -129,17 +129,17 @@ public final class Ambience extends Module {
     }
 
     @Generated
-    public Listener<Render3DEvent> kJ() {
+    public Listener<Render3DEvent> getOnRender3D() {
         return this.onRender3D;
     }
 
     @Generated
-    public Listener<PreMotionEvent> kK() {
+    public Listener<PreMotionEvent> getOnPreMotionEvent() {
         return this.onPreMotionEvent;
     }
 
     @Generated
-    public Listener<PacketReceiveEvent> kL() {
+    public Listener<PacketReceiveEvent> getOnPacketReceiveEvent() {
         return this.onPacketReceiveEvent;
     }
 }

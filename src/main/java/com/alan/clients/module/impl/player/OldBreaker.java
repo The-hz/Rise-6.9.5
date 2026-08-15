@@ -53,7 +53,7 @@ public class OldBreaker extends Module {
     public final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Normal")).add(new SubMode("Instant")).setDefault("Normal");
     public final BooleanValue bed = new BooleanValue("Bed", this, true);
     public final BooleanValue keepBreakProgressWhenOutOfRange = new BooleanValue("Keep Break Progress When Out Of Range", this, true);
-    public final BooleanValue ael = new BooleanValue("Cancel velocity whilst breaking, so you don't slow down in air", this, true);
+    public final BooleanValue cancelVelocityWhilstBreakingSoYouDontSlowDownInAir = new BooleanValue("Cancel velocity whilst breaking, so you don't slow down in air", this, true);
     public final BooleanValue throughWalls = new BooleanValue("Through Walls", this, true);
     private final BooleanValue emptySurrounding = new BooleanValue("Empty Surrounding", this, false, () -> !this.throughWalls.wo());
     public final BooleanValue rotations = new BooleanValue("Rotate", this, true);
@@ -61,18 +61,18 @@ public class OldBreaker extends Module {
     public final BooleanValue whiteListOwnBed = new BooleanValue("Whitelist Own Bed", this, true);
     public final BooleanValue slowDownInAir = new BooleanValue("Slow Down In Air", this, true);
     private final ListValue<MovementFix> movementCorrection = new ListValue<>("Movement Correction", this);
-    private aka abQ;
-    private aka abR;
-    private aka abS;
+    private aka targetBlock;
+    private aka lastBlock;
+    private aka home;
     private int aaW;
     private boolean ji;
-    private float abU;
+    private float breakProgress;
     private Animation abV = new Animation(Easing.LINEAR, 50L);
     @EventLink
     public final Listener<Render3DEvent> onRender3D = var1 -> {
-        if (this.abQ != null) {
-            Vector3i akb = new Vector3i((int)Math.floor(this.abQ.getX()), (int)Math.floor(this.abQ.getY()), (int)Math.floor(this.abQ.getZ()));
-            this.abV.Q(this.abU);
+        if (this.targetBlock != null) {
+            Vector3i akb = new Vector3i((int)Math.floor(this.targetBlock.getX()), (int)Math.floor(this.targetBlock.getY()), (int)Math.floor(this.targetBlock.getZ()));
+            this.abV.Q(this.breakProgress);
             this.b(ShaderQueueType.BLOOM).c(() -> {
                 GlStateManager.pushMatrix();
                 GlStateManager.pushAttrib();
@@ -81,7 +81,7 @@ public class OldBreaker extends Module {
                 GlStateManager.disableLighting();
                 GL11.glDepthMask(false);
                 RenderUtil.color(this.rz().rA());
-                RenderUtil.drawBoundingBox(new AxisAlignedBB(akb.we(), akb.wf(), akb.wi(), akb.we() + 1, akb.wf() + 1.0 * this.abV.sG(), akb.wi() + 1));
+                RenderUtil.drawBoundingBox(new AxisAlignedBB(akb.we(), akb.wf(), akb.wi(), akb.we() + 1, akb.wf() + 1.0 * this.abV.getValue(), akb.wi() + 1));
                 GlStateManager.enableTexture2D();
                 GlStateManager.enableLighting();
                 GlStateManager.disableBlend();
@@ -94,7 +94,7 @@ public class OldBreaker extends Module {
     };
     @EventLink(value = 4)
     public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
-        if (this.ael.wo() && this.abQ != null) {
+        if (this.cancelVelocityWhilstBreakingSoYouDontSlowDownInAir.wo() && this.targetBlock != null) {
             if (var1.getPacket() instanceof S12PacketEntityVelocity s12packetentityvelocity && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                 var1.setCancelled();
                 s12packetentityvelocity.motionY = 0;
@@ -105,39 +105,39 @@ public class OldBreaker extends Module {
     };
     @EventLink(value = 4)
     public final Listener<BlockDamageEvent> onBlockDamage = var1 -> {
-        this.abU = aEg.playerController.curBlockDamageMP;
+        this.breakProgress = aEg.playerController.curBlockDamageMP;
         afi.b("Updated Damage");
         afi.b(var1.getBlockPos());
-        afi.b(this.abQ.getX() + ", " + this.abQ.getY() + ", " + this.abQ.getZ());
+        afi.b(this.targetBlock.getX() + ", " + this.targetBlock.getY() + ", " + this.targetBlock.getZ());
     };
     @EventLink(value = 4)
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         this.aaW--;
         if (this.aaW <= 0) {
             if (aEg.playerController.curBlockDamageMP == 0.0F || aEg.playerController.curBlockDamageMP >= 1.0F) {
-                this.abU = 0.0F;
+                this.breakProgress = 0.0F;
             }
 
-            if (this.abQ == null
-                || aEg.thePlayer.getDistance(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()) > 4.0
-                || PlayerUtil.o(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()) instanceof BlockAir) {
+            if (this.targetBlock == null
+                || aEg.thePlayer.getDistance(this.targetBlock.getX(), this.targetBlock.getY(), this.targetBlock.getZ()) > 4.0
+                || PlayerUtil.o(this.targetBlock.getX(), this.targetBlock.getY(), this.targetBlock.getZ()) instanceof BlockAir) {
                 this.jv();
                 if (this.ji) {
                     aEg.gameSettings.cgK.setPressed(false);
                     this.ji = false;
                 }
 
-                if (this.abQ == null) {
+                if (this.targetBlock == null) {
                     return;
                 }
             }
 
-            this.jD();
+            this.destroy();
         }
     };
     @EventLink
     public final Listener<MouseOverEvent> onMouseOver = var1 -> {
-        if (this.abQ != null) {
+        if (this.targetBlock != null) {
             MovingObjectPosition movingobjectposition = this.kc();
             if (!this.e(movingobjectposition)) {
                 afi.b("Not Target");
@@ -149,7 +149,7 @@ public class OldBreaker extends Module {
     @EventLink
     public final Listener<TeleportEvent> onTeleport = var1 -> {
         if (aEg.thePlayer.getDistance(var1.getPosX(), var1.getPosY(), var1.getPosZ()) > 40.0) {
-            this.abS = new aka(var1.getPosX(), var1.getPosY(), var1.getPosZ());
+            this.home = new aka(var1.getPosX(), var1.getPosY(), var1.getPosZ());
         }
     };
 
@@ -163,16 +163,16 @@ public class OldBreaker extends Module {
 
     @Override
     public void onEnable() {
-        this.abQ = null;
-        this.abU = 0.0F;
+        this.targetBlock = null;
+        this.breakProgress = 0.0F;
         this.aaW = 0;
         this.ji = false;
-        this.abR = null;
+        this.lastBlock = null;
     }
 
     @Override
     public void onDisable() {
-        this.abQ = null;
+        this.targetBlock = null;
         if (this.ji) {
             aEg.gameSettings.cgK.setPressed(false);
             this.ji = false;
@@ -180,20 +180,20 @@ public class OldBreaker extends Module {
     }
 
     public void jv() {
-        if (this.abQ == null
-            || PlayerUtil.o(this.abQ.x, this.abQ.y, this.abQ.z) instanceof BlockAir
-            || aEg.thePlayer.getDistance(this.abQ.x, this.abQ.y - aEg.thePlayer.getEyeHeight(), this.abQ.z) > 4.5) {
-            if (this.abR != null && !this.keepBreakProgressWhenOutOfRange.wo()) {
+        if (this.targetBlock == null
+            || PlayerUtil.o(this.targetBlock.x, this.targetBlock.y, this.targetBlock.z) instanceof BlockAir
+            || aEg.thePlayer.getDistance(this.targetBlock.x, this.targetBlock.y - aEg.thePlayer.getEyeHeight(), this.targetBlock.z) > 4.5) {
+            if (this.lastBlock != null && !this.keepBreakProgressWhenOutOfRange.wo()) {
                 aEg.playerController.curBlockDamageMP = 0.0F;
             }
 
-            this.abR = this.abQ;
-            this.abQ = this.jx();
+            this.lastBlock = this.targetBlock;
+            this.targetBlock = this.block();
         }
     }
 
-    public void jw() {
-        BlockPos blockpos = new BlockPos(Math.floor(this.abQ.getX()), Math.floor(this.abQ.getY()), Math.floor(this.abQ.getZ()));
+    public void rotate() {
+        BlockPos blockpos = new BlockPos(Math.floor(this.targetBlock.getX()), Math.floor(this.targetBlock.getY()), Math.floor(this.targetBlock.getZ()));
         float f = PlayerUtil.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos);
         if (!this.onlyRotateAtStartAndStop.wo() || aEg.playerController.curBlockDamageMP == 0.0F || aEg.playerController.curBlockDamageMP >= 1.0F - f - 0.001) {
             if (this.rotations.wo()) {
@@ -205,15 +205,15 @@ public class OldBreaker extends Module {
     public Vector2f jE() {
         return RotationUtil.d(
             new aka(
-                Math.floor(this.abQ.getX()) + 0.5 + (Math.random() - 0.5) / 4.0,
-                Math.floor(this.abQ.getY()) + 0.1,
-                Math.floor(this.abQ.getZ()) + 0.5 + (Math.random() - 0.5) / 4.0
+                Math.floor(this.targetBlock.getX()) + 0.5 + (Math.random() - 0.5) / 4.0,
+                Math.floor(this.targetBlock.getY()) + 0.1,
+                Math.floor(this.targetBlock.getZ()) + 0.5 + (Math.random() - 0.5) / 4.0
             )
         );
     }
 
-    public aka jx() {
-        if (this.abS != null && aEg.thePlayer.getDistanceSq(this.abS.getX(), this.abS.getY(), this.abS.getZ()) < 1225.0 && this.whiteListOwnBed.wo()) {
+    public aka block() {
+        if (this.home != null && aEg.thePlayer.getDistanceSq(this.home.getX(), this.home.getY(), this.home.getZ()) < 1225.0 && this.whiteListOwnBed.wo()) {
             return null;
         }
 
@@ -313,7 +313,7 @@ public class OldBreaker extends Module {
         Client.a.e().d(blockdamageevent);
     }
 
-    public void jD() {
+    public void destroy() {
         boolean flag = this.slowDownInAir.wo();
         boolean onGround = aEg.thePlayer.onGround;
         if (!flag) {
@@ -323,19 +323,19 @@ public class OldBreaker extends Module {
         label26: {
             BlockPos blockpos;
             {
-                blockpos = new BlockPos(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ());
+                blockpos = new BlockPos(this.targetBlock.getX(), this.targetBlock.getY(), this.targetBlock.getZ());
                 aEg.objectMouseOver = this.kc();
-                aEg.playerController.curBlockDamageMP = this.abU;
+                aEg.playerController.curBlockDamageMP = this.breakProgress;
                 String s = this.mode.wo().getName();
                 switch (s) {
                     case "Instant":
-                        this.jw();
+                        this.rotate();
                         this.l(blockpos);
                         aEg.thePlayer.swingItem();
-                        PacketUtil.l(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockpos, EnumFacing.UP));
+                        PacketUtil.send(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockpos, EnumFacing.UP));
                         aEg.thePlayer.swingItem();
-                        PacketUtil.l(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockpos, EnumFacing.UP));
-                        this.abQ = null;
+                        PacketUtil.send(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockpos, EnumFacing.UP));
+                        this.targetBlock = null;
                         this.aaW = 20;
                         aEg.playerController.onPlayerDestroyBlock(blockpos, EnumFacing.DOWN);
                         break label26;
@@ -347,7 +347,7 @@ public class OldBreaker extends Module {
             }
 
             this.l(blockpos);
-            this.jw();
+            this.rotate();
             aEg.gameSettings.cgK.setPressed(true);
             this.ji = true;
         }
@@ -363,9 +363,9 @@ public class OldBreaker extends Module {
 
         if (!this.e(movingobjectposition)) {
             movingobjectposition = new MovingObjectPosition(
-                new Vec3(this.abQ.getX() + Math.random(), this.abQ.getY() + 1.0, this.abQ.getZ() + Math.random()),
+                new Vec3(this.targetBlock.getX() + Math.random(), this.targetBlock.getY() + 1.0, this.targetBlock.getZ() + Math.random()),
                 EnumFacing.UP,
-                new BlockPos(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ())
+                new BlockPos(this.targetBlock.getX(), this.targetBlock.getY(), this.targetBlock.getZ())
             );
         }
 
@@ -373,20 +373,20 @@ public class OldBreaker extends Module {
     }
 
     private boolean e(MovingObjectPosition hit) {
-        return hit != null && hit.typeOfHit == MovingObjectType.BLOCK && hit.getBlockPos().h(new aka(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()));
+        return hit != null && hit.typeOfHit == MovingObjectType.BLOCK && hit.getBlockPos().h(new aka(this.targetBlock.getX(), this.targetBlock.getY(), this.targetBlock.getZ()));
     }
 
     private MovingObjectPosition g(Vector2f vec2) {
-        Block block = PlayerUtil.c(this.abQ);
+        Block block = PlayerUtil.c(this.targetBlock);
         AxisAlignedBB axisalignedbb = block.getCollisionBoundingBox(
-            aEg.theWorld, new BlockPos(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()), block.getDefaultState()
+            aEg.theWorld, new BlockPos(this.targetBlock.getX(), this.targetBlock.getY(), this.targetBlock.getZ()), block.getDefaultState()
         );
         Vec3 vec3 = aEg.thePlayer.getPositionEyes(1.0F);
         Vec3 vec = aEg.thePlayer.getVectorForRotation(vec2.getY(), vec2.getX());
         Vec3 vec32 = vec3.addVector(vec.xCoord * 4.5, vec.yCoord * 4.5, vec.zCoord * 4.5);
         MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
         if (movingobjectposition != null) {
-            movingobjectposition.a(new BlockPos(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()));
+            movingobjectposition.a(new BlockPos(this.targetBlock.getX(), this.targetBlock.getY(), this.targetBlock.getZ()));
         }
 
         return movingobjectposition;

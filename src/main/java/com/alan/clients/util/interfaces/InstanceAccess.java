@@ -23,7 +23,7 @@ public interface InstanceAccess {
     }
 
     default RiseClickGUI getStandardClickGUI() {
-        return this.rN().v();
+        return this.rN().getStandardClickGUI();
     }
 
     default ShaderRenderQueue b(ShaderQueueType var1) {
@@ -39,7 +39,7 @@ public interface InstanceAccess {
     }
 
     default Themes rz() {
-        return this.rN().k().rz();
+        return this.rN().getThemeManager().getTheme();
     }
 
     default <T extends Module> T e(Class<T> type) {

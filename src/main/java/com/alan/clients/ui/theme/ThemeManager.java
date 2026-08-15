@@ -4,18 +4,18 @@ import com.alan.clients.ui.theme.Themes;
 import lombok.Generated;
 
 public final class ThemeManager {
-    private Themes aCW = Themes.BLEND;
+    private Themes theme = Themes.BLEND;
 
     public ThemeManager() {
     }
 
     @Generated
     public void a(Themes themes) {
-        this.aCW = themes;
+        this.theme = themes;
     }
 
     @Generated
-    public Themes rz() {
-        return this.aCW;
+    public Themes getTheme() {
+        return this.theme;
     }
 }

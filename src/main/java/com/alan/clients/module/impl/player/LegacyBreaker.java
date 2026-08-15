@@ -195,7 +195,7 @@ extends Module {
                     this.m(this.aeQ);
                 }
                 if ((n9 = SlotUtil.findTool(this.aeQ)) != -1) {
-                    PacketUtil.l(new l(n9));
+                    PacketUtil.send(new l(n9));
                 }
                 if (n9 != -1) {
                     this.aeJ = SlotUtil.getPlayerRelativeBlockHardness((EntityPlayer)entityPlayerSP, (World)LegacyBreaker.aEg.theWorld, this.aeQ, n9);
@@ -208,7 +208,7 @@ extends Module {
                     this.aeJ *= ((Number)this.airMultiplier.wo()).floatValue();
                 }
                 if (this.aeK == 0.0f) {
-                    PacketUtil.l(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, this.aeQ, EnumFacing.DOWN));
+                    PacketUtil.send(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, this.aeQ, EnumFacing.DOWN));
                 }
                 LegacyBreaker.aEg.thePlayer.swingItem();
                 this.aeK += this.aeJ;
@@ -216,12 +216,12 @@ extends Module {
                 float f3 = PlayerUtil.p(this.aeQ.getX(), this.aeQ.getY(), this.aeQ.getZ()) instanceof BlockBed ? 1.0f - ((Number)this.fastBreakBed.wo()).floatValue() : 1.0f - ((Number)this.fastBreak.wo()).floatValue();
                 if (this.aeK >= f3) {
                     this.aeK = 0.0f;
-                    PacketUtil.l(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, this.aeQ, EnumFacing.DOWN));
+                    PacketUtil.send(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, this.aeQ, EnumFacing.DOWN));
                     LegacyBreaker.aEg.playerController.onPlayerDestroyBlock(this.aeQ, EnumFacing.UP);
                 }
                 if (n9 != -1) {
                     this.d(SlotComponent.class);
-                    PacketUtil.l(new l(SlotComponent.bQ()));
+                    PacketUtil.send(new l(SlotComponent.bQ()));
                 }
             }
         }
@@ -337,7 +337,7 @@ extends Module {
     }
 
     @Generated
-    public boolean kd() {
+    public boolean isBreaking() {
         return this.aeR;
     }
 }

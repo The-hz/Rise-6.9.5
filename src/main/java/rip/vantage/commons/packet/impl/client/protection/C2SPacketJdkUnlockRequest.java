@@ -42,7 +42,7 @@ public final class C2SPacketJdkUnlockRequest extends rip.vantage.commons.packet.
 
     @Override
     public void handle(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
-        handler.a(this);
+        handler.handle(this);
     }
 
     @Override

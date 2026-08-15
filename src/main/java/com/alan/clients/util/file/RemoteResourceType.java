@@ -12,14 +12,14 @@ public enum RemoteResourceType {
 
     private final String aAh;
     private final String aAi;
-    private final String aAj;
+    private final String type;
     private static final RemoteResourceType[] $VALUES = qH();
 
     @Generated
     RemoteResourceType(String var3, String var4, String var5) {
         this.aAh = var3;
         this.aAi = var4;
-        this.aAj = var5;
+        this.type = var5;
     }
 
     //add code
@@ -35,7 +35,7 @@ public enum RemoteResourceType {
 
     @Generated
     public String getType() {
-        return this.aAj;
+        return this.type;
     }
 
     private static RemoteResourceType[] qH() {

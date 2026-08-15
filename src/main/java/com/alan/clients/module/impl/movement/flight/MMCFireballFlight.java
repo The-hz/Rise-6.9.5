@@ -35,7 +35,7 @@ public class MMCFireballFlight extends Mode<Flight> {
         if (i != -1) {
             this.hQ++;
             if (this.hQ == 4) {
-                PacketUtil.l(
+                PacketUtil.send(
                     new C06PacketPlayerPosLook(
                         aEg.thePlayer.posX, aEg.thePlayer.posY - 8.0, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false
                     )

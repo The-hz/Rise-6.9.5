@@ -16,8 +16,8 @@ import rip.vantage.commons.util.vantage.VantageClient;
 @ModuleInfo(aliases={"module.other.irc.name"}, description="module.other.irc.description", category=Category.RENDER, autoEnabled=true)
 public final class IRC
 extends Module {
-    private static final String UJ = "[Rise] ";
-    private static final String[] UK = new String[]{".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp"};
+    private static final String CHAT_PREFIX = "[Rise] ";
+    private static final String[] IMAGE_EXTENSIONS = new String[]{".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp"};
     @EventLink
     public final Listener<ChatInputEvent> onChatInput = chatInputEvent -> {
         String string = chatInputEvent.getMessage();
@@ -28,7 +28,7 @@ extends Module {
         }
     };
     @EventLink
-    public final Listener<er> UM = er2 -> {
+    public final Listener<er> onVantagePacketReceive = er2 -> {
         if (!(er2.dd() instanceof rip.vantage.commons.packet.impl.server.community.S2CPacketChatMessage)) {
             return;
         }
@@ -37,14 +37,14 @@ extends Module {
         String string = b2.getMessage();
         String string2 = "\u00a7" + b2.getAuthor();
         String string3 = String.valueOf(EnumChatFormatting.GRAY) + string;
-        if (this.B(string)) {
+        if (this.isTruncatedAttachment(string)) {
             afi.d(afi.getPrefix() + String.valueOf(EnumChatFormatting.RED) + "Discord attachment URL arrived truncated before the client. The bridge/backend must send the full link.", new Object[0]);
         }
         Object object = Math.random() > 0.9 ? String.valueOf(EnumChatFormatting.GRAY) + " Start your msg with # to chat" : "";
-        afi.d(UJ + string2 + String.valueOf(EnumChatFormatting.GRAY) + ": " + string3 + (String)object, new Object[0]);
+        afi.d(CHAT_PREFIX + string2 + String.valueOf(EnumChatFormatting.GRAY) + ": " + string3 + (String)object, new Object[0]);
     };
 
-    private boolean B(String string) {
+    private boolean isTruncatedAttachment(String string) {
         if (string == null) {
             return false;
         }
@@ -52,7 +52,7 @@ extends Module {
         if (!string2.contains("discordapp.com/attachments/") && !string2.contains("discord.com/attachments/")) {
             return false;
         }
-        for (String string3 : UK) {
+        for (String string3 : IMAGE_EXTENSIONS) {
             if (!string2.contains(string3)) continue;
             return false;
         }

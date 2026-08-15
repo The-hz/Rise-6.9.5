@@ -6,14 +6,14 @@ import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
 
 public class ROGQShader {
-    private final RiseShaderProgram aQn = new RiseShaderProgram("rogq.frag", "vertex.vsh");
+    private final RiseShaderProgram program = new RiseShaderProgram("rogq.frag", "vertex.vsh");
 
     public ROGQShader() {
     }
 
     public void draw(float var1, float var2, float var3, float var4, float var5, float var6, Color color, Color var8) {
-        int i = this.aQn.getProgramId();
-        this.aQn.rt();
+        int i = this.program.getProgramId();
+        this.program.rt();
         ShaderUniforms.uniform2f(i, "u_size", var3, var4);
         ShaderUniforms.uniform1f(i, "u_radius", var5);
         ShaderUniforms.uniform1f(i, "u_border_size", var6);
@@ -21,7 +21,7 @@ public class ROGQShader {
         ShaderUniforms.uniform4f(i, "u_color_2", var8.getRed() / 255.0F, var8.getGreen() / 255.0F, var8.getBlue() / 255.0F, var8.getAlpha() / 255.0F);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);
-        RiseShaderProgram.h(var1, var2, var3, var4);
+        RiseShaderProgram.drawQuad(var1, var2, var3, var4);
         GlStateManager.disableBlend();
         RiseShaderProgram.stop();
     }

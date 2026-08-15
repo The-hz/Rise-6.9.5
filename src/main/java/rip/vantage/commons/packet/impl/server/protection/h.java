@@ -13,7 +13,7 @@ public class h extends rip.vantage.commons.packet.api.abstracts.AbstractS2CPacke
 
     @Override
     public void handle(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
-        handler.a(this);
+        handler.handle(this);
     }
 
     @Override

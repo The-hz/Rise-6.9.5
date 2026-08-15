@@ -54,7 +54,7 @@ public class GrimPhase extends Mode<Phase> {
                 boolean flag1 = aEg.thePlayer.onGround;
 
                 for (int i = 0; i < this.semiPackets.wo().intValue(); i++) {
-                    PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, flag1));
+                    PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, flag1));
                 }
 
                 this.NX = true;
@@ -90,7 +90,7 @@ public class GrimPhase extends Mode<Phase> {
             if (!this.releaseMode.wo().getName().equals("None")) {
                 this.A(this.releaseMode.wo().getName());
             } else {
-                PacketUtil.m(
+                PacketUtil.sendNoEvent(
                     new C06PacketPlayerPosLook(
                         aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, aEg.thePlayer.onGround
                     )
@@ -99,7 +99,7 @@ public class GrimPhase extends Mode<Phase> {
         }
 
         if (aEg.thePlayer != null && !this.NU.isEmpty()) {
-            this.NU.forEach(PacketUtil::m);
+            this.NU.forEach(PacketUtil::sendNoEvent);
             this.NU.clear();
         }
     }
@@ -120,8 +120,8 @@ public class GrimPhase extends Mode<Phase> {
                 String s = var1.toLowerCase();
                 switch (s) {
                     case "simple":
-                        PacketUtil.m(new C06PacketPlayerPosLook(d0 - 5000.0, d1, d2 - 5000.0, f, f1, false));
-                        PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
+                        PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0 - 5000.0, d1, d2 - 5000.0, f, f1, false));
+                        PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
                         return;
                     case "double":
                         break label44;
@@ -132,15 +132,15 @@ public class GrimPhase extends Mode<Phase> {
                 }
             }
 
-            PacketUtil.m(new C06PacketPlayerPosLook(d0, d1 + 0.0625, d2, f, f1, false));
-            PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, false));
-            PacketUtil.m(new C06PacketPlayerPosLook(d0, d1 + 0.03125, d2, f, f1, true));
-            PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
+            PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0, d1 + 0.0625, d2, f, f1, false));
+            PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, false));
+            PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0, d1 + 0.03125, d2, f, f1, true));
+            PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
             return;
         }
 
-        PacketUtil.m(new C06PacketPlayerPosLook(d0 - 5000.0, d1, d2 - 5000.0, f, f1, false));
-        PacketUtil.m(new C06PacketPlayerPosLook(d0 + 5000.0, d1, d2 + 5000.0, f, f1, false));
-        PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
+        PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0 - 5000.0, d1, d2 - 5000.0, f, f1, false));
+        PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0 + 5000.0, d1, d2 + 5000.0, f, f1, false));
+        PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
     }
 }

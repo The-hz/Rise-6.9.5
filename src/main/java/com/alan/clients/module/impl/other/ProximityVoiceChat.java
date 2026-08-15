@@ -24,7 +24,7 @@ public class ProximityVoiceChat extends Module {
     private final BooleanValue listenToYourself = new BooleanValue("Listen to yourself", this, false);
     private final NumberValue sampleRate = new NumberValue("Sample Rate", this, 16000, 8000, 192000, 4000);
     private final NumberValue sampleSizeInBits = new NumberValue("Sample Size in bits", this, 16, 8, 32, 1);
-    public final ModeValue VC = new ModeValue("Channel (dont)", this)
+    public final ModeValue channelDont = new ModeValue("Channel (dont)", this)
         .add(new SubMode("Mono"))
         .add(new SubMode("Stereo"))
         .add(new SubMode("Quadraphonic"))
@@ -33,13 +33,13 @@ public class ProximityVoiceChat extends Module {
     private Thread VD;
     private SourceDataLine VE;
     private TargetDataLine VF;
-    private boolean VG = false;
+    private boolean talking = false;
     private int VH = 0;
     @EventLink
     public final Listener<TickEvent> onTick = var1 -> {
         if (Keyboard.isKeyDown(45)) {
-            if (!this.VG) {
-                this.VG = true;
+            if (!this.talking) {
+                this.talking = true;
                 this.VH = 0;
                 this.hK();
                 afi.b("Start Talking");
@@ -47,9 +47,9 @@ public class ProximityVoiceChat extends Module {
                 afi.b("Talking");
                 this.VH++;
             }
-        } else if (this.VG) {
+        } else if (this.talking) {
             afi.b("Stop talking");
-            this.VG = false;
+            this.talking = false;
             this.disable();
         }
     };
@@ -116,7 +116,7 @@ public class ProximityVoiceChat extends Module {
     private AudioFormat getAudioFormat() {
         label44: {
             {
-                String s = this.VC.wo().getName();
+                String s = this.channelDont.wo().getName();
                 switch (s) {
                     case "Stereo":
                         byte b5 = 2;

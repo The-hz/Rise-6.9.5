@@ -31,11 +31,11 @@ import rip.vantage.commons.util.time.a;
 public class DragComponent extends Component {
     private static DragValue selectedValue = null;
     private static Vector2d offset;
-    private static final ArrayList<Module> bT = new ArrayList<>();
+    private static final ArrayList<Module> modules = new ArrayList<>();
     private static final Animation animationAlpha = new Animation(Easing.LINEAR, 600L);
     public static final a bV = new a();
     public static final a bW = new a();
-    public static ArrayList<SnapLine> bX = new ArrayList<>();
+    public static ArrayList<SnapLine> snaps = new ArrayList<>();
     public static SnapLine bY;
     @EventLink(value = -2)
     public final Listener<Render2DEvent> onRender2D = var0 -> {
@@ -51,49 +51,49 @@ public class DragComponent extends Component {
             }
 
             animationAlpha.setEasing(Easing.LINEAR);
-            animationAlpha.h(300L);
+            animationAlpha.setDuration(300L);
             animationAlpha.Q(flag ? 100.0 : 0.0);
-            if (animationAlpha.sG() <= 0.0 && bV.T(0L)) {
+            if (animationAlpha.getValue() <= 0.0 && bV.T(0L)) {
                 selectedValue = null;
             }
 
-            bT.clear();
+            modules.clear();
             Client.a
                 .g()
-                .ef()
+                .getAll()
                 .stream()
                 .filter(var0x -> var0x.isEnabled() && var0x.getValues().stream().anyMatch(var0xx -> var0xx instanceof DragValue))
-                .forEach(bT::add);
+                .forEach(modules::add);
             if (selectedValue != null) {
                 Vector2d vector2d = MouseUtil.rU();
                 double d0 = vector2d.x + offset.x;
                 double d1 = vector2d.y + offset.y;
                 selectedValue.atg = new Vector2d(d0, d1);
-                bX.clear();
-                double d2 = Client.a.k().rz().qd();
-                bX.add(new SnapLine(i / 2.0F, 5.0, SnapAxis.HORIZONTAL, true, true, true));
-                bX.add(new SnapLine(j / 2.0F, 5.0, SnapAxis.VERTICAL, true, true, true));
-                bX.add(new SnapLine(j - d2, 5.0, SnapAxis.VERTICAL, false, false, true));
-                bX.add(new SnapLine(d2, 5.0, SnapAxis.VERTICAL, false, true, false));
-                bX.add(new SnapLine(i - d2, 5.0, SnapAxis.HORIZONTAL, false, false, true));
-                bX.add(new SnapLine(d2, 5.0, SnapAxis.HORIZONTAL, false, true, false));
-                Iterator iterator = bT.iterator();
+                snaps.clear();
+                double d2 = Client.a.getThemeManager().getTheme().qd();
+                snaps.add(new SnapLine(i / 2.0F, 5.0, SnapAxis.HORIZONTAL, true, true, true));
+                snaps.add(new SnapLine(j / 2.0F, 5.0, SnapAxis.VERTICAL, true, true, true));
+                snaps.add(new SnapLine(j - d2, 5.0, SnapAxis.VERTICAL, false, false, true));
+                snaps.add(new SnapLine(d2, 5.0, SnapAxis.VERTICAL, false, true, false));
+                snaps.add(new SnapLine(i - d2, 5.0, SnapAxis.HORIZONTAL, false, false, true));
+                snaps.add(new SnapLine(d2, 5.0, SnapAxis.HORIZONTAL, false, true, false));
+                Iterator iterator = modules.iterator();
 
                 while (iterator.hasNext()) {
                     Optional optional = ((Module)iterator.next()).getValues().stream().filter(var0x -> var0x instanceof DragValue).findFirst();
                     DragValue dragvalue = (DragValue)optional.get();
                     if (dragvalue != selectedValue) {
-                        bX.add(new SnapLine(dragvalue.apP.x + dragvalue.aHe.x + d2, 5.0, SnapAxis.HORIZONTAL, false, true, false));
-                        bX.add(new SnapLine(dragvalue.apP.x - d2, 5.0, SnapAxis.HORIZONTAL, false, false, true));
-                        bX.add(new SnapLine(dragvalue.apP.y, 5.0, SnapAxis.VERTICAL, false, false, true));
-                        bX.add(new SnapLine(dragvalue.apP.y + dragvalue.aHe.y, 5.0, SnapAxis.VERTICAL, false, true, false));
+                        snaps.add(new SnapLine(dragvalue.apP.x + dragvalue.aHe.x + d2, 5.0, SnapAxis.HORIZONTAL, false, true, false));
+                        snaps.add(new SnapLine(dragvalue.apP.x - d2, 5.0, SnapAxis.HORIZONTAL, false, false, true));
+                        snaps.add(new SnapLine(dragvalue.apP.y, 5.0, SnapAxis.VERTICAL, false, false, true));
+                        snaps.add(new SnapLine(dragvalue.apP.y + dragvalue.aHe.y, 5.0, SnapAxis.VERTICAL, false, true, false));
                     }
                 }
 
                 bY = null;
-                Color color = ColorUtil.d(Color.WHITE, 60);
+                Color color = ColorUtil.withBlue(Color.WHITE, 60);
 
-                for (SnapLine av : bX) {
+                for (SnapLine av : snaps) {
                     switch (av.cm) {
                         case VERTICAL:
                             double d3 = Double.MAX_VALUE;
@@ -129,9 +129,9 @@ public class DragComponent extends Component {
                 }
             }
 
-            for (Module module : bT) {
+            for (Module module : modules) {
                 DragValue dragvalue1 = (DragValue)module.getValues().stream().filter(var0x -> var0x instanceof DragValue).findFirst().get();
-                float f = Client.a.k().rz().qd();
+                float f = Client.a.getThemeManager().getTheme().qd();
                 dragvalue1.apP.x = Math.max(f, dragvalue1.apP.x);
                 dragvalue1.apP.x = Math.min(i - dragvalue1.aHe.x - f, dragvalue1.apP.x);
                 dragvalue1.apP.y = Math.max(f, dragvalue1.apP.y);
@@ -153,15 +153,15 @@ public class DragComponent extends Component {
     public final Listener<GuiClickEvent> onGuiClick = var0 -> {
         if (var0.cN() == 0) {
             if (aEg.currentScreen instanceof GuiChat) {
-                Iterator iterator = bT.iterator();
+                Iterator iterator = modules.iterator();
 
                 while (iterator.hasNext()) {
                     for (Value value : ((Module)iterator.next()).getValues()) {
                         if (value instanceof DragValue dragvalue) {
                             Vector2d vector2d = dragvalue.apP;
                             Vector2d vector2d1 = dragvalue.aHe;
-                            float f = var0.cL();
-                            float f1 = var0.cM();
+                            float f = var0.getMouseX();
+                            float f1 = var0.getMouseY();
                             if (!dragvalue.aRb && GUIUtil.mouseOver(vector2d, vector2d1, f, f1)) {
                                 selectedValue = dragvalue;
                                 offset = new Vector2d(vector2d.x - f, vector2d.y - f1);

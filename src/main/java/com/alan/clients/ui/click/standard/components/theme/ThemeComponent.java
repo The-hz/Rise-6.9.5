@@ -14,44 +14,44 @@ import java.awt.Color;
 import lombok.Generated;
 
 public class ThemeComponent implements InstanceAccess {
-    private final Themes ayt;
+    private final Themes activeTheme;
     private aka ayu = new aka(0.0, 0.0, 0.0);
-    private final Animation ayv = new Animation(Easing.EASE_OUT_QUINT, 500L);
-    private final Animation ayw = new Animation(Easing.EASE_OUT_QUINT, 500L);
-    private final Animation ayx = new Animation(Easing.EASE_OUT_QUINT, 500L);
-    private final Animation ayy = new Animation(Easing.EASE_OUT_QUINT, 500L);
+    private final Animation xAnimation = new Animation(Easing.EASE_OUT_QUINT, 500L);
+    private final Animation yAnimation = new Animation(Easing.EASE_OUT_QUINT, 500L);
+    private final Animation opacityAnimation = new Animation(Easing.EASE_OUT_QUINT, 500L);
+    private final Animation selectorAnimation = new Animation(Easing.EASE_OUT_QUINT, 500L);
 
-    public void k(double var1, double var3) {
-        int i = (int)this.ayx.sG();
-        boolean flag = this.ayt.equals(this.rz());
-        Color color = flag ? new Color(15, 19, 26, (int)this.ayx.sG()) : new Color(18, 21, 30, i);
-        double d0 = this.ayv.sG();
-        double d1 = this.ayw.sG() + var1;
+    public void draw(double var1, double var3) {
+        int i = (int)this.opacityAnimation.getValue();
+        boolean flag = this.activeTheme.equals(this.rz());
+        Color color = flag ? new Color(15, 19, 26, (int)this.opacityAnimation.getValue()) : new Color(18, 21, 30, i);
+        double d0 = this.xAnimation.getValue();
+        double d1 = this.yAnimation.getValue() + var1;
         RenderUtil.roundedRectangle(d0, d1, var3, 50.0, 10.0, color);
-        if (this.ayt.isTriColor()) {
-            RenderUtil.a(d0, d1, var3, 30.0, 9.0, ColorUtil.d(this.ayt.rA(), i), ColorUtil.d(this.ayt.rB(), i), ColorUtil.d(this.ayt.rC(), i), false, true, true, false, false);
+        if (this.activeTheme.isTriColor()) {
+            RenderUtil.a(d0, d1, var3, 30.0, 9.0, ColorUtil.withBlue(this.activeTheme.rA(), i), ColorUtil.withBlue(this.activeTheme.rB(), i), ColorUtil.withBlue(this.activeTheme.rC(), i), false, true, true, false, false);
         } else {
-            RenderUtil.a(d0, d1, var3, 30.0, 9.0, ColorUtil.d(this.ayt.rA(), i), ColorUtil.d(this.ayt.rB(), i), false, true, true, false, false);
+            RenderUtil.a(d0, d1, var3, 30.0, 9.0, ColorUtil.withBlue(this.activeTheme.rA(), i), ColorUtil.withBlue(this.activeTheme.rB(), i), false, true, true, false, false);
         }
 
         RenderUtil.d(d0, d1 + 30.0, var3, 10.0, color);
-        FontManager.MAIN.a(16, FontWeight.REGULAR).c(this.ayt.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, flag ? ColorUtil.d(this.rz().rA(), i).getRGB() : new Color(255, 255, 255, i).getRGB());
-        this.ayy.Q(this.ayt.equals(this.rz()) ? 255.0 : 0.0);
-        int j = (int)Math.min(this.ayy.sG(), i);
+        FontManager.MAIN.a(16, FontWeight.REGULAR).drawString(this.activeTheme.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, flag ? ColorUtil.withBlue(this.rz().rA(), i).getRGB() : new Color(255, 255, 255, i).getRGB());
+        this.selectorAnimation.Q(this.activeTheme.equals(this.rz()) ? 255.0 : 0.0);
+        int j = (int)Math.min(this.selectorAnimation.getValue(), i);
         if (j > 0 && this.getStandardClickGUI().axS > 0.8) {
             this.b(ShaderQueueType.BLOOM, 3)
                 .c(
                     () -> {
-                        if (this.ayt.isTriColor()) {
+                        if (this.activeTheme.isTriColor()) {
                             RenderUtil.a(
                                 d0,
                                 d1,
                                 var3,
                                 30.0,
                                 10.0,
-                                ColorUtil.d(this.ayt.rA(), i),
-                                ColorUtil.d(this.ayt.rB(), i),
-                                ColorUtil.d(this.ayt.rC(), i),
+                                ColorUtil.withBlue(this.activeTheme.rA(), i),
+                                ColorUtil.withBlue(this.activeTheme.rB(), i),
+                                ColorUtil.withBlue(this.activeTheme.rC(), i),
                                 false,
                                 true,
                                 true,
@@ -60,11 +60,11 @@ public class ThemeComponent implements InstanceAccess {
                             );
                         } else {
                             RenderUtil.a(
-                                d0 + 1.0, d1, var3 - 2.0, 30.0, 10.0, ColorUtil.d(this.ayt.rA(), j), ColorUtil.d(this.ayt.rB(), j), false, true, true, false, false
+                                d0 + 1.0, d1, var3 - 2.0, 30.0, 10.0, ColorUtil.withBlue(this.activeTheme.rA(), j), ColorUtil.withBlue(this.activeTheme.rB(), j), false, true, true, false, false
                             );
                         }
 
-                        FontManager.MAIN.a(16, FontWeight.REGULAR).c(this.ayt.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, ColorUtil.d(this.ayt.rA(), j).getRGB());
+                        FontManager.MAIN.a(16, FontWeight.REGULAR).drawString(this.activeTheme.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, ColorUtil.withBlue(this.activeTheme.rA(), j).getRGB());
                     }
                 );
         }
@@ -73,8 +73,8 @@ public class ThemeComponent implements InstanceAccess {
     }
 
     @Generated
-    public Themes pK() {
-        return this.ayt;
+    public Themes getActiveTheme() {
+        return this.activeTheme;
     }
 
     @Generated
@@ -83,27 +83,27 @@ public class ThemeComponent implements InstanceAccess {
     }
 
     @Generated
-    public Animation pM() {
-        return this.ayv;
+    public Animation getXAnimation() {
+        return this.xAnimation;
     }
 
     @Generated
-    public Animation pN() {
-        return this.ayw;
+    public Animation getYAnimation() {
+        return this.yAnimation;
     }
 
     @Generated
-    public Animation pp() {
-        return this.ayx;
+    public Animation getOpacityAnimation() {
+        return this.opacityAnimation;
     }
 
     @Generated
-    public Animation pO() {
-        return this.ayy;
+    public Animation getSelectorAnimation() {
+        return this.selectorAnimation;
     }
 
     @Generated
     public ThemeComponent(Themes themes) {
-        this.ayt = themes;
+        this.activeTheme = themes;
     }
 }

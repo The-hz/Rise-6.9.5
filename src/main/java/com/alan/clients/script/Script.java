@@ -70,7 +70,7 @@ public final class Script {
         } catch (Exception exception) {
             throw new ScriptException(exception);
         } finally {
-            Client.a.v().oS();
+            Client.a.getStandardClickGUI().oS();
             this.engine = null;
             this.apiHandler = null;
             this.loaded = false;

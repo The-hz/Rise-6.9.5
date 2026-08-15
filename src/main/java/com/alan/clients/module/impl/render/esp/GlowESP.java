@@ -14,7 +14,7 @@ public final class GlowESP extends Mode<ESP> {
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         Color color = this.rz().rA();
-        ESPComponent.a(new cr(new ESPColor(color, color, color)));
+        ESPComponent.add(new cr(new ESPColor(color, color, color)));
     };
 
     public GlowESP(String var1, ESP esp) {

@@ -47,7 +47,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
     private int ajA = 0;
     private int ajr;
     public final BooleanValue placeExtraBlocks = new BooleanValue("Place Extra blocks", this, false);
-    private final WatchdogJumpSprintHelper ajC;
+    private final WatchdogJumpSprintHelper helper;
     @EventLink(value = 3)
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         this.getParent().agF = 1;
@@ -251,7 +251,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
 
     public WatchdogJumpSprint(String var1, Scaffold scaffold) {
         super(var1, scaffold);
-        this.ajC = new WatchdogJumpSprintHelper(scaffold);
+        this.helper = new WatchdogJumpSprintHelper(scaffold);
     }
 
     @Override
@@ -291,19 +291,19 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
         if (flag) {
             if (aEg.thePlayer.cqL > 2 && aEg.thePlayer.ticksExisted % 3 == 1) {
                 aEg.timer.dzD = 0.5F;
-                PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+                PacketUtil.send(new C03PacketPlayer(aEg.thePlayer.onGround));
             } else if (aEg.thePlayer.cqL > 2 && aEg.thePlayer.ticksExisted % 3 == 2) {
                 aEg.timer.dzD = 0.33F;
-                PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
-                PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+                PacketUtil.send(new C03PacketPlayer(aEg.thePlayer.onGround));
+                PacketUtil.send(new C03PacketPlayer(aEg.thePlayer.onGround));
             } else if (aEg.thePlayer.cqL > 2) {
                 aEg.timer.dzD = 0.5F;
-                PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+                PacketUtil.send(new C03PacketPlayer(aEg.thePlayer.onGround));
             }
         } else if (aEg.thePlayer.cqL > 2) {
             aEg.timer.dzD = 0.33F;
-            PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
-            PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
+            PacketUtil.send(new C03PacketPlayer(aEg.thePlayer.onGround));
+            PacketUtil.send(new C03PacketPlayer(aEg.thePlayer.onGround));
         }
 
         ajx = false;
@@ -311,7 +311,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
     }
 
     @Generated
-    public WatchdogJumpSprintHelper kB() {
-        return this.ajC;
+    public WatchdogJumpSprintHelper getHelper() {
+        return this.helper;
     }
 }

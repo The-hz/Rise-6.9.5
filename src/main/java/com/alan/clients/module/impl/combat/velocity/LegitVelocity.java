@@ -16,13 +16,13 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 public final class LegitVelocity extends Mode<Velocity> {
     public final NumberValue chance = new NumberValue("Chance", this, 100, 0, 100, 1);
     public final BooleanValue legitTiming = new BooleanValue("Legit Timing", this, false);
-    private boolean gD;
+    private boolean jump;
     @EventLink
-    public final Listener<PreMotionEvent> onPreMotion = var1x -> this.gD = false;
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> this.jump = false;
     @EventLink
     public final Listener<MoveInputEvent> onMoveInput = var1x -> {
         if (!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress) {
-            if (this.gD && Math.random() * 100.0 < this.chance.wo().doubleValue()) {
+            if (this.jump && Math.random() * 100.0 < this.chance.wo().doubleValue()) {
                 var1x.setJump(true);
                 ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_21_2);
             }
@@ -36,7 +36,7 @@ public final class LegitVelocity extends Mode<Velocity> {
                     && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()
                     && s12packetentityvelocity.motionY > 0
                     && (!this.legitTiming.wo() || aEg.thePlayer.ae <= 14 || aEg.thePlayer.cqL <= 1)) {
-                    this.gD = true;
+                    this.jump = true;
                 }
             }
         }

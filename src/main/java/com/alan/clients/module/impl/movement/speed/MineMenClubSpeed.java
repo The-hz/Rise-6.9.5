@@ -25,13 +25,13 @@ public class MineMenClubSpeed extends Mode<Speed> {
     @EventLink
     public final Listener<JumpEvent> onJump = var1x -> this.PD++;
     private double ue;
-    private double ud;
-    private double uf;
+    private double velocityX;
+    private double velocityZ;
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         if (var1x.getPacket() instanceof S12PacketEntityVelocity s12packetentityvelocity && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
-            this.ud = s12packetentityvelocity.getMotionX() / 8000.0;
-            this.uf = s12packetentityvelocity.getMotionZ() / 8000.0;
+            this.velocityX = s12packetentityvelocity.getMotionX() / 8000.0;
+            this.velocityZ = s12packetentityvelocity.getMotionZ() / 8000.0;
             this.ue = s12packetentityvelocity.getMotionZ() / 8000.0;
         }
     };
@@ -117,7 +117,7 @@ public class MineMenClubSpeed extends Mode<Speed> {
 
     @Override
     public void onEnable() {
-        this.ud = 0.0;
-        this.uf = 0.0;
+        this.velocityX = 0.0;
+        this.velocityZ = 0.0;
     }
 }

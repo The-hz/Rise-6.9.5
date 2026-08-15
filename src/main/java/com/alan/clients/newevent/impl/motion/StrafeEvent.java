@@ -9,10 +9,10 @@ import com.alan.clients.util.player.MoveUtil;
 import lombok.Generated;
 
 public final class StrafeEvent extends CancellableEvent implements InstanceAccess {
-    private float jp;
-    private float jq;
-    private float jC;
-    private float gZ;
+    private float forward;
+    private float strafe;
+    private float friction;
+    private float yaw;
 
     public void setSpeed(double var1, double var3) {
         this.setFriction((float)(this.getForward() != 0.0F && this.getStrafe() != 0.0F ? var1 * 0.98F : var1));
@@ -32,49 +32,49 @@ public final class StrafeEvent extends CancellableEvent implements InstanceAcces
 
     @Generated
     public float getForward() {
-        return this.jp;
+        return this.forward;
     }
 
     @Generated
     public float getStrafe() {
-        return this.jq;
+        return this.strafe;
     }
 
     @Generated
     public float getFriction() {
-        return this.jC;
+        return this.friction;
     }
 
     @Generated
     public float getYaw() {
-        return this.gZ;
+        return this.yaw;
     }
 
     @Generated
     public void setForward(float forward) {
-        this.jp = forward;
+        this.forward = forward;
     }
 
     @Generated
     public void setStrafe(float strafe) {
-        this.jq = strafe;
+        this.strafe = strafe;
     }
 
     @Generated
     public void setFriction(float friction) {
-        this.jC = friction;
+        this.friction = friction;
     }
 
     @Generated
     public void setYaw(float var1) {
-        this.gZ = var1;
+        this.yaw = var1;
     }
 
     @Generated
     public StrafeEvent(float var1, float var2, float var3, float var4) {
-        this.jp = var1;
-        this.jq = var2;
-        this.jC = var3;
-        this.gZ = var4;
+        this.forward = var1;
+        this.strafe = var2;
+        this.friction = var3;
+        this.yaw = var4;
     }
 }

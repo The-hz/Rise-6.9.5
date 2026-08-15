@@ -6,9 +6,9 @@ import com.alan.clients.script.api.wrapper.impl.event.impl.ScriptMoveEvent;
 import lombok.Generated;
 
 public final class MoveEvent extends CancellableEvent {
-    private double gW;
-    private double gX;
-    private double gY;
+    private double posX;
+    private double posY;
+    private double posZ;
 
     @Override
     public ScriptEvent<?> getScriptEvent() {
@@ -17,38 +17,38 @@ public final class MoveEvent extends CancellableEvent {
 
     @Generated
     public double getPosX() {
-        return this.gW;
+        return this.posX;
     }
 
     @Generated
     public double getPosY() {
-        return this.gX;
+        return this.posY;
     }
 
     @Generated
     public double getPosZ() {
-        return this.gY;
+        return this.posZ;
     }
 
     @Generated
     public void setPosX(double var1) {
-        this.gW = var1;
+        this.posX = var1;
     }
 
     @Generated
     public void setPosY(double var1) {
-        this.gX = var1;
+        this.posY = var1;
     }
 
     @Generated
     public void setPosZ(double var1) {
-        this.gY = var1;
+        this.posZ = var1;
     }
 
     @Generated
     public MoveEvent(double var1, double var3, double var5) {
-        this.gW = var1;
-        this.gX = var3;
-        this.gY = var5;
+        this.posX = var1;
+        this.posY = var3;
+        this.posZ = var5;
     }
 }

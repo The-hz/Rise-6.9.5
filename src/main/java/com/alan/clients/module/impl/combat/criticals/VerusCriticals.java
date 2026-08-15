@@ -18,10 +18,10 @@ public final class VerusCriticals extends Mode<Criticals> {
     public final Listener<AttackEvent> onAttack = var1x -> {
         if (this.rQ.T(this.delay.wo().longValue()) && aEg.thePlayer.cqL > 2 && aEg.thePlayer.hurtTime != 0) {
             for (double d0 : this.rP) {
-                PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d0, aEg.thePlayer.posZ, false));
+                PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d0, aEg.thePlayer.posZ, false));
             }
 
-            aEg.thePlayer.onCriticalHit(var1x.dc());
+            aEg.thePlayer.onCriticalHit(var1x.getLiving());
             this.rQ.aX();
         }
     };

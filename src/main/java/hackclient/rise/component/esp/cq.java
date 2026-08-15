@@ -19,7 +19,7 @@ public class cq extends ESP implements InstanceAccess {
     }
 
     @Override
-    public void cp() {
+    public void render3D() {
         boolean flag = Client.a.g().c(com.alan.clients.module.impl.render.ESP.class).staticColor.wo();
         float f = aEg.timer.bWm;
 

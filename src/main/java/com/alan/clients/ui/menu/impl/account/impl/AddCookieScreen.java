@@ -51,7 +51,7 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
     private static String[] cookie_string;
     private Animation animation;
     private static final Gson gson = new Gson();
-    private static final Runnable TEXT_BOX_RUNNABLE = () -> usernameBox.I(true);
+    private static final Runnable TEXT_BOX_RUNNABLE = () -> usernameBox.setSelected(true);
     private static final Runnable CANCEL_RUNNABLE = () -> aEg.displayGuiScreen(new AccountManagerScreen(reference));
     private static final Runnable SELECT_FILE_RUNNABLE = () -> new Thread(() -> {
         FileDialog filedialog = new FileDialog((Frame)null, "Select Cookie File");
@@ -171,15 +171,15 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
                             return;
                         }
 
-                        ProfileResponse f = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.aEU), ProfileResponse.class);
+                        ProfileResponse f = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.access_token), ProfileResponse.class);
                         if (f == null) {
                             text_to_render = "Error (Invalid Acc)";
                             return;
                         }
 
                         String s9 = MicrosoftLogin.extractRefreshTokenFromCookies(stringbuilder1.toString());
-                        MicrosoftAccount aep = new MicrosoftAccount(f.gK, f.aEZ, e.aEU, s9);
-                        System.out.println("Name: " + f.gK + ", UUID: " + f.aEZ + ", AccessToken: " + e.aEU);
+                        MicrosoftAccount aep = new MicrosoftAccount(f.name, f.aEZ, e.access_token, s9);
+                        System.out.println("Name: " + f.name + ", UUID: " + f.aEZ + ", AccessToken: " + e.access_token);
                         aep.se();
                         System.out.println("[DEBUG] Proceeding to CANCEL_RUNNABLE");
                         AccountManagerScreen.addAccount(aep);
@@ -208,7 +208,7 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
         aiv.aPL.a(aiz.OVERLAY, var3, null);
         this.b(ShaderQueueType.BLUR).c(BACKGROUND_RUNNABLE);
         this.b(ShaderQueueType.REGULAR).c(() -> {
-            FONT_RENDERER.c(text_to_render, this.width / 2, this.height / 2 - 64 + this.animation.sG(), Color.WHITE.getRGB());
+            FONT_RENDERER.drawString(text_to_render, this.width / 2, this.height / 2 - 64 + this.animation.getValue(), Color.WHITE.getRGB());
             usernameBox.draw();
         });
         MenuButton[] aadh = this.menuButtons;
@@ -233,7 +233,7 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
 
     @Override
     protected void keyTyped(char var1, int var2) {
-        if (usernameBox.tO()) {
+        if (usernameBox.isSelected()) {
             usernameBox.key(var1, var2);
         }
     }
@@ -260,6 +260,6 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
         this.menuButtons[2] = new MenuTextButton(vector2d.x, vector2d.y + (b0 + b1) * 2, short1 / 2 * 1.5, b0, LOGIN_RUNNABLE, "Login & Add");
         this.menuButtons[3] = new MenuTextButton(vector2d.x + short1 / 2 * 1.5 + b1, vector2d.y + (b0 + b1) * 2, short1 / 2 * 0.5 - b1, b0, CANCEL_RUNNABLE, "Cancel");
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
-        this.animation.R(-200.0);
+        this.animation.setStartValue(-200.0);
     }
 }

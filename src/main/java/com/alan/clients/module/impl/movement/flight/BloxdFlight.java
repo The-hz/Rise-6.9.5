@@ -26,7 +26,7 @@ public class BloxdFlight extends Mode<Flight> {
             Random random = new Random();
             float f = random.nextFloat();
             float f1 = random.nextFloat();
-            PacketUtil.l(
+            PacketUtil.send(
                 new C08PacketPlayerBlockPlacement(
                     new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ),
                     EnumFacing.UP.getIndex(),

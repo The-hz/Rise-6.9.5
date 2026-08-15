@@ -20,7 +20,7 @@ public class cr extends ESP implements InstanceAccess
 {
 
 
-    public void cp() {
+    public void render3D() {
         this.b(ShaderQueueType.BLOOM).c(() -> {
             final float bWm = cr.aEg.timer.bWm;
             final Iterator iterator = TargetComponent.bR().iterator();

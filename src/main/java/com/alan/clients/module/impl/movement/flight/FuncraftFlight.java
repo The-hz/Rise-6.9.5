@@ -16,22 +16,22 @@ public final class FuncraftFlight extends Mode<Flight> {
     private final NumberValue speed = new NumberValue("Speed", this, 1.2, 0.8, 2, 0.05);
     private final BooleanValue vanillaKickBypass = new BooleanValue("Vanilla Kick Bypass", this, true);
     private double moveSpeed;
-    private int FX;
-    private int hV;
+    private int stage;
+    private int ticks;
     @EventLink
     private final Listener<PreMotionEvent> preMotionEventListener = var0 -> var0.setOnGround(true);
     @EventLink(value = 4)
     private final Listener<MoveEvent> moveEventListener = var1x -> {
         if (!MoveUtil.isMoving() || aEg.thePlayer.isCollidedHorizontally) {
-            this.FX = -1;
+            this.stage = -1;
         }
 
-        if (this.vanillaKickBypass.wo() && this.hV > 125) {
-            this.FX = -1;
-            this.hV = 0;
-            PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX + 5.0, aEg.thePlayer.posY + 1.0, aEg.thePlayer.posZ + 5.0, true));
+        if (this.vanillaKickBypass.wo() && this.ticks > 125) {
+            this.stage = -1;
+            this.ticks = 0;
+            PacketUtil.sendNoEvent(new C04PacketPlayerPosition(aEg.thePlayer.posX + 5.0, aEg.thePlayer.posY + 1.0, aEg.thePlayer.posZ + 5.0, true));
         } else {
-            switch (this.FX) {
+            switch (this.stage) {
                 case -1:
                     aEg.thePlayer.motionY = 0.0;
                     var1x.setPosY(-1.0E-5);
@@ -56,7 +56,7 @@ public final class FuncraftFlight extends Mode<Flight> {
 
             aEg.thePlayer.jumpMovementFactor = 0.0F;
             MoveUtil.setMoveEvent(var1x, Math.max(this.moveSpeed, MoveUtil.getAllowedHorizontalDistance()));
-            this.FX++;
+            this.stage++;
         }
     };
 
@@ -67,7 +67,7 @@ public final class FuncraftFlight extends Mode<Flight> {
     @Override
     public void onEnable() {
         this.moveSpeed = 0.0;
-        this.FX = aEg.thePlayer.onGround ? 0 : -1;
-        this.hV = 0;
+        this.stage = aEg.thePlayer.onGround ? 0 : -1;
+        this.ticks = 0;
     }
 }

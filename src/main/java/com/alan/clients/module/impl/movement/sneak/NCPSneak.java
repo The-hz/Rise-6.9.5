@@ -14,10 +14,10 @@ public class NCPSneak extends Mode<Sneak> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
         aEg.thePlayer.movementInput.sneak = aEg.thePlayer.sendQueue.doneLoadingTerrain;
-        PacketUtil.l(new C0BPacketEntityAction(aEg.thePlayer, Action.STOP_SNEAKING));
+        PacketUtil.send(new C0BPacketEntityAction(aEg.thePlayer, Action.STOP_SNEAKING));
     };
     @EventLink
-    public final Listener<PostMotionEvent> onPostMotion = var0 -> PacketUtil.l(new C0BPacketEntityAction(aEg.thePlayer, Action.START_SNEAKING));
+    public final Listener<PostMotionEvent> onPostMotion = var0 -> PacketUtil.send(new C0BPacketEntityAction(aEg.thePlayer, Action.START_SNEAKING));
 
     public NCPSneak(String var1, Sneak sneak) {
         super(var1, sneak);
@@ -25,6 +25,6 @@ public class NCPSneak extends Mode<Sneak> {
 
     @Override
     public void onDisable() {
-        PacketUtil.l(new C0BPacketEntityAction(aEg.thePlayer, Action.STOP_SNEAKING));
+        PacketUtil.send(new C0BPacketEntityAction(aEg.thePlayer, Action.STOP_SNEAKING));
     }
 }

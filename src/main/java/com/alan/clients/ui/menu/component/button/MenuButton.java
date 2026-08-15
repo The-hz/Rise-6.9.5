@@ -7,8 +7,8 @@ import com.alan.clients.util.MouseUtil;
 
 public class MenuButton extends MenuComponent {
     private final Runnable runnable;
-    private final Animation aBX = new Animation(Easing.EASE_OUT_QUINT, 500L);
-    private final Animation aBY = new Animation(Easing.EASE_OUT_SINE, 250L);
+    private final Animation animation = new Animation(Easing.EASE_OUT_QUINT, 500L);
+    private final Animation hoverAnimation = new Animation(Easing.EASE_OUT_SINE, 250L);
 
     public MenuButton(double var1, double var3, double var5, double var7, Runnable runnable) {
         super(var1, var3, var5, var7);
@@ -16,18 +16,18 @@ public class MenuButton extends MenuComponent {
     }
 
     public void draw(int var1, int var2, float var3) {
-        this.aBY.Q(MouseUtil.isHovered(this.getX(), this.getY(), this.oM(), this.da(), var1, var2) ? 100.0 : 45.0);
+        this.hoverAnimation.Q(MouseUtil.isHovered(this.getX(), this.getY(), this.oM(), this.da(), var1, var2) ? 100.0 : 45.0);
     }
 
     public void runAction() {
         this.runnable.run();
     }
 
-    public Animation mB() {
-        return this.aBX;
+    public Animation getAnimation() {
+        return this.animation;
     }
 
-    public Animation oL() {
-        return this.aBY;
+    public Animation getHoverAnimation() {
+        return this.hoverAnimation;
     }
 }

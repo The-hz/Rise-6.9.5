@@ -13,20 +13,20 @@ import hackclient.rise.aka;
 import com.alan.clients.component.impl.player.FallDistanceComponent;
 
 public class BlinkAntiVoid extends Mode<AntiVoid> {
-    private aka Ft;
-    private aka EC;
+    private aka position;
+    private aka motion;
     private Vector2f ka;
     @EventLink
     public final Listener<PostMotionEvent> onPreUpdate = var1x -> {
         if (aEg.thePlayer.ticksExisted > 60) {
-            if (this.Ft == null || this.EC == null || this.ka == null || PlayerUtil.a(50.0, true)) {
-                this.Ft = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
-                this.EC = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
+            if (this.position == null || this.motion == null || this.ka == null || PlayerUtil.a(50.0, true)) {
+                this.position = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
+                this.motion = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
                 this.ka = new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
             } else if (FallDistanceComponent.cY > 4.0F) {
-                aEg.thePlayer.setPosition(this.Ft.x, this.Ft.y, this.Ft.z);
+                aEg.thePlayer.setPosition(this.position.x, this.position.y, this.position.z);
                 aEg.thePlayer.motionX = 0.0;
-                aEg.thePlayer.motionY = MoveUtil.predictedMotion(this.EC.y);
+                aEg.thePlayer.motionY = MoveUtil.predictedMotion(this.motion.y);
                 aEg.thePlayer.motionZ = 0.0;
                 aEg.thePlayer.pl = this.ka.x;
                 aEg.thePlayer.rotationPitch = this.ka.y;

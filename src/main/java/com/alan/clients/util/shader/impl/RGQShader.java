@@ -6,7 +6,7 @@ import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
 
 public class RGQShader {
-    private final RiseShaderProgram aQl = new RiseShaderProgram("rgq.glsl", "vertex.vsh");
+    private final RiseShaderProgram program = new RiseShaderProgram("rgq.glsl", "vertex.vsh");
 
     public RGQShader() {
     }
@@ -25,8 +25,8 @@ public class RGQShader {
         boolean var11,
         boolean var12
     ) {
-        int i = this.aQl.getProgramId();
-        this.aQl.rt();
+        int i = this.program.getProgramId();
+        this.program.rt();
         ShaderUniforms.uniform2f(i, "u_size", var3, var4);
         ShaderUniforms.uniform1f(i, "u_radius", var5);
         ShaderUniforms.uniform4f(i, "u_first_color", color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, color.getAlpha() / 255.0F);
@@ -35,7 +35,7 @@ public class RGQShader {
         ShaderUniforms.uniform1i(i, "u_direction", var8 ? 1 : 0);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);
-        RiseShaderProgram.h(var1, var2, var3, var4);
+        RiseShaderProgram.drawQuad(var1, var2, var3, var4);
         GlStateManager.disableBlend();
         RiseShaderProgram.stop();
     }

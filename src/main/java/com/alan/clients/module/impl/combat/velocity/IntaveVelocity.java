@@ -9,25 +9,25 @@ import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.value.Mode;
 
 public final class IntaveVelocity extends Mode<Velocity> {
-    private boolean pw;
+    private boolean attacked;
     private boolean ux;
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress) {
-            if (this.pw && !this.ux && aEg.thePlayer.isSprinting()) {
+            if (this.attacked && !this.ux && aEg.thePlayer.isSprinting()) {
                 aEg.thePlayer.motionX *= 0.6;
                 aEg.thePlayer.motionZ *= 0.6;
                 aEg.thePlayer.setSprinting(false);
             }
 
-            this.pw = false;
+            this.attacked = false;
             this.ux = false;
         }
     };
     @EventLink
     public final Listener<HitSlowDownEvent> onHitSlowDown = var1x -> this.ux = true;
     @EventLink
-    public final Listener<AttackEvent> onAttack = var1x -> this.pw = true;
+    public final Listener<AttackEvent> onAttack = var1x -> this.attacked = true;
 
     public IntaveVelocity(String var1, Velocity velocity) {
         super(var1, velocity);

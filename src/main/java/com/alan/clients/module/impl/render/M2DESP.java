@@ -82,10 +82,10 @@ extends Module {
                             RenderUtil.d(d2 - 0.5, d3 - 0.5, d6 + 1.5, 1.5, color3);
                             RenderUtil.d(d4 - 0.5, d3 + 1.0, 1.5, d7, color3);
                             RenderUtil.d(d2 - 0.5, d5 - 0.5, d6, 1.5, color3);
-                            RenderUtil.c(d2, d3 + 0.5, 0.5, d7 - 0.5, color, color2);
-                            RenderUtil.c(d2, d3, d6, 0.5, color, color2);
-                            RenderUtil.c(d4, d3, 0.5, d7, color, color2);
-                            RenderUtil.c(d2, d5, d6 + 0.5, 0.5, color, color2);
+                            RenderUtil.horizontalCenteredGradient(d2, d3 + 0.5, 0.5, d7 - 0.5, color, color2);
+                            RenderUtil.horizontalCenteredGradient(d2, d3, d6, 0.5, color, color2);
+                            RenderUtil.horizontalCenteredGradient(d4, d3, 0.5, d7, color, color2);
+                            RenderUtil.horizontalCenteredGradient(d2, d5, d6 + 0.5, 0.5, color, color2);
                             this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, d7, color, color2, d6, d4, d5));
                             break block90;
                         }
@@ -151,7 +151,7 @@ extends Module {
                         }
                     }
                     Color color5 = new Color(ColorUtil.a(this.rz().rA(), this.rz().rB(), f3).getRGB());
-                    RenderUtil.a(d2 - 2.0, d3 + d8, 0.5, d5 - d3 - d8 + 0.5, color5, this.rz().rB());
+                    RenderUtil.horizontalGradient(d2 - 2.0, d3 + d8, 0.5, d5 - d3 - d8 + 0.5, color5, this.rz().rB());
                     this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, d8, d5, color5));
                     break block72;
                 }
@@ -162,7 +162,7 @@ extends Module {
             float f4 = (float)entityLivingBase.getTotalArmorValue() / 20.0f;
             if (!(f4 > 0.0f)) continue;
             RenderUtil.d(d2 - 0.5, d5 + 1.5, d4 - d2 + 1.5, 1.5, new Color(0, 0, 0, 180));
-            RenderUtil.c(d2, d5 + 2.0, (d6 + 0.5) * (double)f4, 0.5, this.rz().rA(), ColorUtil.a(this.rz().rA(), this.rz().rB(), f4));
+            RenderUtil.horizontalCenteredGradient(d2, d5 + 2.0, (d6 + 0.5) * (double)f4, 0.5, this.rz().rA(), ColorUtil.a(this.rz().rA(), this.rz().rB(), f4));
             this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d5, d4, d6, f4));
         }
     };
@@ -171,7 +171,7 @@ extends Module {
         if (((Boolean)this.glow.wo()).booleanValue()) {
             GlStateManager.pushMatrix();
             RenderUtil.d(d2 - 0.5, d3 + 1.5, d4 - d2 + 1.5, 1.5, new Color(0, 0, 0, 180));
-            RenderUtil.c(d2, d3 + 2.0, (d5 + 2.0) * (double)f2, 0.5, this.rz().rA(), ColorUtil.a(this.rz().rA(), this.rz().rB(), f2));
+            RenderUtil.horizontalCenteredGradient(d2, d3 + 2.0, (d5 + 2.0) * (double)f2, 0.5, this.rz().rA(), ColorUtil.a(this.rz().rA(), this.rz().rB(), f2));
             GlStateManager.popMatrix();
         }
     }
@@ -179,7 +179,7 @@ extends Module {
     private  void a(double d2, double d3, double d4, double d5, Color color) {
         if (((Boolean)this.glow.wo()).booleanValue()) {
             GlStateManager.pushMatrix();
-            RenderUtil.a(d2 - 2.0, d3 + d4, 2.0, d5 - d3 - d4 + 0.5, color, this.rz().rB());
+            RenderUtil.horizontalGradient(d2 - 2.0, d3 + d4, 2.0, d5 - d3 - d4 + 0.5, color, this.rz().rB());
             GlStateManager.popMatrix();
         }
     }
@@ -218,10 +218,10 @@ extends Module {
     private  void a(double d2, double d3, double d4, Color color, Color color2, double d5, double d6, double d7) {
         GlStateManager.pushMatrix();
         if (((Boolean)this.glow.wo()).booleanValue()) {
-            RenderUtil.c(d2, d3 + 0.5, 0.5, d4 - 0.5, color, color2);
-            RenderUtil.c(d2, d3, d5, 0.5, color, color2);
-            RenderUtil.c(d6, d3, 0.5, d4, color, color2);
-            RenderUtil.c(d2, d7, d5 + 0.5, 0.5, color, color2);
+            RenderUtil.horizontalCenteredGradient(d2, d3 + 0.5, 0.5, d4 - 0.5, color, color2);
+            RenderUtil.horizontalCenteredGradient(d2, d3, d5, 0.5, color, color2);
+            RenderUtil.horizontalCenteredGradient(d6, d3, 0.5, d4, color, color2);
+            RenderUtil.horizontalCenteredGradient(d2, d7, d5 + 0.5, 0.5, color, color2);
         }
         GlStateManager.popMatrix();
     }

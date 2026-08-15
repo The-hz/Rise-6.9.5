@@ -5,21 +5,21 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
 
 public class EnumFacingOffset {
-    public EnumFacing aOa;
-    private final Vec3 aOb;
+    public EnumFacing enumFacing;
+    private final Vec3 offset;
 
     public EnumFacingOffset(EnumFacing facing, Vec3 vec) {
-        this.aOa = facing;
-        this.aOb = vec;
+        this.enumFacing = facing;
+        this.offset = vec;
     }
 
     @Generated
-    public EnumFacing va() {
-        return this.aOa;
+    public EnumFacing getEnumFacing() {
+        return this.enumFacing;
     }
 
     @Generated
-    public Vec3 vb() {
-        return this.aOb;
+    public Vec3 getOffset() {
+        return this.offset;
     }
 }

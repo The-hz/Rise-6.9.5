@@ -9,7 +9,7 @@ public class ais implements InstanceAccess {
     public ais() {
     }
 
-    private static void b(Framebuffer framebuffer) {
+    private static void recreate(Framebuffer framebuffer) {
         GL30.glDeleteRenderbuffers(framebuffer.depthBuffer);
         int i = GL30.glGenRenderbuffers();
         GL30.glBindRenderbuffer(36161, i);
@@ -20,35 +20,35 @@ public class ais implements InstanceAccess {
 
     public static void c(Framebuffer framebuffer) {
         if (framebuffer != null && framebuffer.depthBuffer > -1) {
-            b(framebuffer);
+            recreate(framebuffer);
             framebuffer.depthBuffer = -1;
         }
     }
 
-    public static void vK() {
-        d(aEg.getFramebuffer());
+    public static void initStencil() {
+        initStencil(aEg.getFramebuffer());
     }
 
-    public static void d(Framebuffer framebuffer) {
+    public static void initStencil(Framebuffer framebuffer) {
         framebuffer.bindFramebuffer(false);
         c(framebuffer);
         GL11.glClear(1280);
         GL11.glEnable(2960);
     }
 
-    public static void vL() {
+    public static void bindWriteStencilBuffer() {
         GL11.glStencilFunc(519, 1, 1);
         GL11.glStencilOp(7681, 7681, 7681);
         GL11.glColorMask(false, false, false, false);
     }
 
-    public static void aD(int var0) {
+    public static void bindReadStencilBuffer(int var0) {
         GL11.glColorMask(true, true, true, true);
         GL11.glStencilFunc(514, var0, 1);
         GL11.glStencilOp(7680, 7680, 7680);
     }
 
-    public static void vM() {
+    public static void uninitStencilBuffer() {
         GL11.glDisable(2960);
     }
 }

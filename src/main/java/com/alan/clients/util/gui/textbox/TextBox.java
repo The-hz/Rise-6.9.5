@@ -19,20 +19,20 @@ import org.lwjgl.input.Keyboard;
 import rip.vantage.commons.util.time.a;
 
 public class TextBox {
-    public String XS = "";
-    public boolean ayU;
+    public String text = "";
+    public boolean selected;
     public int aJk;
     public Vector2d position;
     public float width;
     public agc lq;
     public Color color;
-    public TextAlign aJl;
+    public TextAlign textAlign;
     public String aJm;
-    public boolean aJn;
+    public boolean hideCharacters;
     private int aJo;
     private int aJp = 32767;
     private String aJq = tN();
-    private double gW;
+    private double posX;
     private double aJr;
     private double aJs;
     private float aJt;
@@ -43,10 +43,10 @@ public class TextBox {
         this.position = position;
         this.lq = var2;
         this.color = color;
-        this.aJl = var4;
+        this.textAlign = var4;
         this.aJm = var5;
         this.width = width;
-        this.aJn = var7;
+        this.hideCharacters = var7;
     }
 
     public TextBox(Vector2d vector2d, agc var2, Color var3, TextAlign var4, String var5, float var6) {
@@ -61,10 +61,10 @@ public class TextBox {
     public void draw() {
         this.aJv.aX();
         Keyboard.enableRepeatEvents(true);
-        this.aJk = Math.max(0, Math.min(this.aJk, this.XS.length()));
+        this.aJk = Math.max(0, Math.min(this.aJk, this.text.length()));
         this.aJu = (float)this.position.y;
         boolean flag = this.isEmpty();
-        String s = flag ? this.aJm : (this.aJn ? "*".repeat(this.XS.length()) : this.XS);
+        String s = flag ? this.aJm : (this.hideCharacters ? "*".repeat(this.text.length()) : this.text);
         String s1;
         if (flag) {
             this.aJo = 0;
@@ -82,34 +82,34 @@ public class TextBox {
         double now = System.currentTimeMillis();
         double d1 = Math.min(Math.abs(now - this.aJs), 500.0);
         this.aJs = now;
-        switch (this.aJl) {
+        switch (this.textAlign) {
             case CENTER:
 
                 for (int i = 0; i < d1; i++) {
-                    this.gW = (this.gW * 19.0 + (this.position.x - f / 2.0F)) / 20.0;
+                    this.posX = (this.posX * 19.0 + (this.position.x - f / 2.0F)) / 20.0;
                 }
                 break;
             case LEFT:
             default:
-                this.gW = this.position.x;
+                this.posX = this.position.x;
         }
 
         if (flag) {
             this.lq
                 .a(
                     s1,
-                    this.gW,
+                    this.posX,
                     this.position.y,
-                    new Color(this.color.getRed(), this.color.getBlue(), this.color.getGreen(), (int)(this.color.getAlpha() * (this.ayU ? 0.3F : 0.2F))).hashCode()
+                    new Color(this.color.getRed(), this.color.getBlue(), this.color.getGreen(), (int)(this.color.getAlpha() * (this.selected ? 0.3F : 0.2F))).hashCode()
                 );
         } else {
-            this.lq.a(s1, this.gW, this.position.y, this.color.hashCode());
+            this.lq.a(s1, this.posX, this.position.y, this.color.hashCode());
         }
 
-        if (this.ayU) {
+        if (this.selected) {
             String s2 = this.c(s, this.aJo, this.aJk);
             float f1 = this.lq.getStringWidth(s2);
-            this.aJt = (float)(this.gW + f1);
+            this.aJt = (float)(this.posX + f1);
 
             for (int j = 0; j < d1; j++) {
                 this.aJr = (this.aJr * 19.0 + (f1 - 2.0F)) / 20.0;
@@ -118,7 +118,7 @@ public class TextBox {
             (this.lq == Minecraft.getMinecraft().fontRendererObj ? FontManager.MAIN.a(18, FontWeight.REGULAR) : this.lq)
                 .a(
                     "|",
-                    (float)(this.gW + this.aJr + 1.0),
+                    (float)(this.posX + this.aJr + 1.0),
                     this.position.y - 1.0,
                     new Color(
                             this.color.getRed(),
@@ -161,32 +161,32 @@ public class TextBox {
 
     public void click(int var1, int var2, int var3) {
         Vector2d vector2d = this.getPosition();
-        boolean flag = GUIUtil.c(vector2d.x + (this.aJl == TextAlign.CENTER ? -this.width / 2.0F : 0.0F), vector2d.y, this.width, this.lq.height(), var1, var2);
-        this.ayU = var3 == 0 && flag;
-        if (this.ayU) {
-            this.aJk = this.XS.length();
+        boolean flag = GUIUtil.c(vector2d.x + (this.textAlign == TextAlign.CENTER ? -this.width / 2.0F : 0.0F), vector2d.y, this.width, this.lq.height(), var1, var2);
+        this.selected = var3 == 0 && flag;
+        if (this.selected) {
+            this.aJk = this.text.length();
         }
     }
 
     public void key(char var1, int var2) {
-        if (this.ayU && var2 != 28) {
-            this.aJk = Math.max(0, Math.min(this.aJk, this.XS.length()));
+        if (this.selected && var2 != 28) {
+            this.aJk = Math.max(0, Math.min(this.aJk, this.text.length()));
             String s = String.valueOf(var1);
             boolean flag = Keyboard.isKeyDown(29) || Keyboard.isKeyDown(157) || Keyboard.isKeyDown(219) || Keyboard.isKeyDown(220);
             if (var2 != 208 && var2 != 200) {
                 if (flag && var2 == 47) {
                     try {
                         String s1 = (String)Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-                        int i = this.XS.length();
+                        int i = this.text.length();
                         this.addText(s1, this.aJk);
-                        this.aJk = this.aJk + (this.XS.length() - i);
+                        this.aJk = this.aJk + (this.text.length() - i);
                     } catch (UnsupportedFlavorException | IOException unsupportedflavorexception) {
                     }
                 } else if (flag && var2 == 46) {
-                    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(this.XS), null);
-                } else if (var2 == 211 && !this.XS.isEmpty()) {
+                    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(this.text), null);
+                } else if (var2 == 211 && !this.text.isEmpty()) {
                     this.aq(this.aJk + 1);
-                } else if (var2 == 14 && !this.XS.isEmpty()) {
+                } else if (var2 == 14 && !this.text.isEmpty()) {
                     this.aq(this.aJk);
                     this.aJk--;
                     if (flag) {
@@ -198,7 +198,7 @@ public class TextBox {
                 } else if (var2 == 205) {
                     this.aJk++;
                     if (flag) {
-                        this.aJk = this.XS.length();
+                        this.aJk = this.text.length();
                     }
                 } else if (var2 == 203) {
                     this.aJk--;
@@ -207,14 +207,14 @@ public class TextBox {
                     }
                 } else {
                     if (this.m(var1)) {
-                        int j = this.XS.length();
+                        int j = this.text.length();
                         this.addText(s, this.aJk);
-                        if (this.XS.length() > j) {
+                        if (this.text.length() > j) {
                             this.aJk++;
                         }
                     }
 
-                    this.aJk = Math.max(0, Math.min(this.aJk, this.XS.length()));
+                    this.aJk = Math.max(0, Math.min(this.aJk, this.text.length()));
                 }
             }
         }
@@ -222,12 +222,12 @@ public class TextBox {
 
     public int bV(String var1) {
         if (var1 != null && !var1.isEmpty()) {
-            this.aJk = Math.max(0, Math.min(this.aJk, this.XS.length()));
-            int i = this.XS.length();
+            this.aJk = Math.max(0, Math.min(this.aJk, this.text.length()));
+            int i = this.text.length();
             this.addText(var1, this.aJk);
-            int j = this.XS.length() - i;
+            int j = this.text.length() - i;
             if (j > 0) {
-                this.aJk = Math.max(0, Math.min(this.aJk + j, this.XS.length()));
+                this.aJk = Math.max(0, Math.min(this.aJk + j, this.text.length()));
             }
 
             return j;
@@ -256,24 +256,24 @@ public class TextBox {
             }
 
             if (stringbuilder.length() != 0) {
-                if (this.XS.length() + stringbuilder.length() <= this.aJp) {
-                    int j = Math.max(0, Math.min(var2, this.XS.length()));
-                    StringBuilder stringbuilder1 = new StringBuilder(this.XS);
+                if (this.text.length() + stringbuilder.length() <= this.aJp) {
+                    int j = Math.max(0, Math.min(var2, this.text.length()));
+                    StringBuilder stringbuilder1 = new StringBuilder(this.text);
                     stringbuilder1.insert(j, stringbuilder);
-                    this.XS = stringbuilder1.toString();
+                    this.text = stringbuilder1.toString();
                 }
             }
         }
     }
 
     private void aq(int var1) {
-        if (var1 > 0 && var1 <= this.XS.length()) {
-            this.XS = new StringBuilder(this.XS).deleteCharAt(var1 - 1).toString();
+        if (var1 > 0 && var1 <= this.text.length()) {
+            this.text = new StringBuilder(this.text).deleteCharAt(var1 - 1).toString();
         }
     }
 
     public boolean isEmpty() {
-        return this.XS.trim().isEmpty();
+        return this.text.trim().isEmpty();
     }
 
     private static String tN() {
@@ -290,12 +290,12 @@ public class TextBox {
 
     @Generated
     public String getText() {
-        return this.XS;
+        return this.text;
     }
 
     @Generated
-    public boolean tO() {
-        return this.ayU;
+    public boolean isSelected() {
+        return this.selected;
     }
 
     @Generated
@@ -309,7 +309,7 @@ public class TextBox {
     }
 
     @Generated
-    public float ty() {
+    public float getWidth() {
         return this.width;
     }
 
@@ -324,8 +324,8 @@ public class TextBox {
     }
 
     @Generated
-    public TextAlign tQ() {
-        return this.aJl;
+    public TextAlign getTextAlign() {
+        return this.textAlign;
     }
 
     @Generated
@@ -334,8 +334,8 @@ public class TextBox {
     }
 
     @Generated
-    public boolean tS() {
-        return this.aJn;
+    public boolean isHideCharacters() {
+        return this.hideCharacters;
     }
 
     @Generated
@@ -355,7 +355,7 @@ public class TextBox {
 
     @Generated
     public double getPosX() {
-        return this.gW;
+        return this.posX;
     }
 
     @Generated
@@ -375,12 +375,12 @@ public class TextBox {
 
     @Generated
     public void bW(String var1) {
-        this.XS = var1;
+        this.text = var1;
     }
 
     @Generated
-    public void I(boolean var1) {
-        this.ayU = var1;
+    public void setSelected(boolean var1) {
+        this.selected = var1;
     }
 
     @Generated
@@ -389,12 +389,12 @@ public class TextBox {
     }
 
     @Generated
-    public void h(Vector2d var1) {
+    public void setPosition(Vector2d var1) {
         this.position = var1;
     }
 
     @Generated
-    public void z(float width) {
+    public void setWidth(float width) {
         this.width = width;
     }
 
@@ -409,8 +409,8 @@ public class TextBox {
     }
 
     @Generated
-    public void a(TextAlign var1) {
-        this.aJl = var1;
+    public void setTextAlign(TextAlign var1) {
+        this.textAlign = var1;
     }
 
     @Generated
@@ -419,8 +419,8 @@ public class TextBox {
     }
 
     @Generated
-    public void J(boolean var1) {
-        this.aJn = var1;
+    public void setHideCharacters(boolean var1) {
+        this.hideCharacters = var1;
     }
 
     @Generated
@@ -440,7 +440,7 @@ public class TextBox {
 
     @Generated
     public void setPosX(double var1) {
-        this.gW = var1;
+        this.posX = var1;
     }
 
     @Generated

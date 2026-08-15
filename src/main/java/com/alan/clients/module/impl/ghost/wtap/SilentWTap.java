@@ -17,7 +17,7 @@ public final class SilentWTap extends Mode<WTap> {
         }
     };
     @EventLink
-    public final Listener<AttackEvent> onAttack = var1x -> this.jE = var1x.dc();
+    public final Listener<AttackEvent> onAttack = var1x -> this.jE = var1x.getLiving();
 
     public SilentWTap(String var1, WTap wTap) {
         super(var1, wTap);

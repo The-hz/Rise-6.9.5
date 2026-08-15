@@ -50,7 +50,7 @@ public final class FlightPrediction extends Check {
 
     @Override
     public void handle(Packet<?> packet) {
-        if (PacketUtil.b(packet) && ((S14PacketEntity)packet).entityId == this.data.getPlayer().getEntityId() || packet instanceof z && ((z)packet).cqK == this.data.getPlayer().getEntityId()) {
+        if (PacketUtil.isRelMove(packet) && ((S14PacketEntity)packet).entityId == this.data.getPlayer().getEntityId() || packet instanceof z && ((z)packet).cqK == this.data.getPlayer().getEntityId()) {
             EntityOtherPlayerMP entityotherplayermp = this.data.getPlayer();
             if (!this.af && this.data.ae() <= 20) {
                 this.af = true;
@@ -174,15 +174,15 @@ public final class FlightPrediction extends Check {
                     this.ad++;
                     if (this.ad > 1) {
                         this.ad = 0;
-                        this.a(0.11);
+                        this.increaseBufferBy(0.11);
                     }
                 }
 
                 if (d4 < this.MINIMUM_OFFSET_TO_FLAG) {
-                    this.b(0.1F);
+                    this.decreaseBufferBy(0.1F);
                 }
 
-                this.a(d4);
+                this.increaseBufferBy(d4);
                 if (this.Q() > 0.3) {
                     this.J();
                     this.M();

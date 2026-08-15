@@ -39,9 +39,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockPos;
 
 public final class PathFinder {
-    private final ArrayList<Node> aNL = new ArrayList();
-    private ArrayList<ahy> aNM = new ArrayList();
-    private final ArrayList<Node> aNN = new ArrayList();
+    private final ArrayList<Node> hubsToWork = new ArrayList();
+    private ArrayList<ahy> path = new ArrayList();
+    private final ArrayList<Node> hubs = new ArrayList();
     private final double minDistanceSquared = 9.5;
     private final boolean nearest = true;
     private final ahy aNQ;
@@ -54,7 +54,7 @@ public final class PathFinder {
     }
 
     public ArrayList<ahy> getPath() {
-        return this.aNM;
+        return this.path;
     }
 
     public void uR() {
@@ -62,35 +62,35 @@ public final class PathFinder {
     }
 
     public void compute(int n2, int n3) {
-        this.aNM.clear();
-        this.aNL.clear();
+        this.path.clear();
+        this.hubsToWork.clear();
         ArrayList<ahy> arrayList = new ArrayList<ahy>();
         arrayList.add(this.aNQ);
-        this.aNL.add(new Node(this.aNQ, null, arrayList, this.aNQ.c(this.aNR), 0.0, 0.0));
+        this.hubsToWork.add(new Node(this.aNQ, null, arrayList, this.aNQ.c(this.aNR), 0.0, 0.0));
         block0: for (int i2 = 0; i2 < n2; ++i2) {
             ahy ahy2;
             Node ahx2;
             ahy ahy3;
-            this.aNL.sort(new NodeComparator());
+            this.hubsToWork.sort(new NodeComparator());
             int n4 = 0;
-            if (this.aNL.size() == 0) break;
-            Iterator<Node> iterator = new ArrayList<Node>(this.aNL).iterator();
+            if (this.hubsToWork.size() == 0) break;
+            Iterator<Node> iterator = new ArrayList<Node>(this.hubsToWork).iterator();
             do {
                 if (!iterator.hasNext()) continue block0;
                 ahx2 = iterator.next();
                 if (++n4 > n3) {
                     continue block0;
                 }
-                this.aNL.remove(ahx2);
-                this.aNN.add(ahx2);
+                this.hubsToWork.remove(ahx2);
+                this.hubs.add(ahx2);
                 for (ahy ahy4 : aNS) {
                     ahy ahy5 = ahx2.uS().d(ahy4).uX();
                     if (PathFinder.checkPositionValidity(ahy5, false) && this.a(ahx2, ahy5, 0.0)) break block0;
                 }
             } while ((!PathFinder.checkPositionValidity(ahy3 = ahx2.uS().n(0.0, 1.0, 0.0).uX(), false) || !this.a(ahx2, ahy3, 0.0)) && (!PathFinder.checkPositionValidity(ahy2 = ahx2.uS().n(0.0, -1.0, 0.0).uX(), false) || !this.a(ahx2, ahy2, 0.0)));
         }
-        this.aNN.sort(new NodeComparator());
-        this.aNM = this.aNN.get(0).uQ();
+        this.hubs.sort(new NodeComparator());
+        this.path = this.hubs.get(0).uQ();
     }
 
     public static boolean checkPositionValidity(ahy ahy2, boolean bl) {
@@ -99,16 +99,16 @@ public final class PathFinder {
 
     public static boolean a(int n2, int n3, int n4, boolean bl) {
         BlockPos blockPos = new BlockPos(n2, n3 - 1, n4);
-        if (PathFinder.o(new BlockPos(n2, n3, n4))) return false;
-        if (PathFinder.o(new BlockPos(n2, n3 + 1, n4))) return false;
-        if (!PathFinder.o(blockPos)) {
+        if (PathFinder.isBlockSolid(new BlockPos(n2, n3, n4))) return false;
+        if (PathFinder.isBlockSolid(new BlockPos(n2, n3 + 1, n4))) return false;
+        if (!PathFinder.isBlockSolid(blockPos)) {
             if (bl) return false;
         }
-        if (!PathFinder.p(blockPos)) return false;
+        if (!PathFinder.isSafeToWalkOn(blockPos)) return false;
         return true;
     }
 
-    private static boolean o(BlockPos blockPos) {
+    private static boolean isBlockSolid(BlockPos blockPos) {
         Block block = PlayerUtil.block(blockPos);
         if (block.isFullBlock()) return true;
         if (block instanceof BlockSlab) return true;
@@ -142,7 +142,7 @@ public final class PathFinder {
         return true;
     }
 
-    private static boolean p(BlockPos blockPos) {
+    private static boolean isSafeToWalkOn(BlockPos blockPos) {
         Block block = Minecraft.getMinecraft().theWorld.getBlockState(blockPos).getBlock();
         if (block instanceof BlockFence) return false;
         if (block instanceof BlockWall) return false;
@@ -150,11 +150,11 @@ public final class PathFinder {
     }
 
     public Node a(ahy ahy2) {
-        for (Node ahx2 : this.aNN) {
+        for (Node ahx2 : this.hubs) {
             if (ahx2.uS().getX() != ahy2.getX() || ahx2.uS().getY() != ahy2.getY() || ahx2.uS().getZ() != ahy2.getZ()) continue;
             return ahx2;
         }
-        for (Node ahx3 : this.aNL) {
+        for (Node ahx3 : this.hubsToWork) {
             if (ahx3.uS().getX() != ahy2.getX() || ahx3.uS().getY() != ahy2.getY() || ahx3.uS().getZ() != ahy2.getZ()) continue;
             return ahx3;
         }
@@ -182,13 +182,13 @@ public final class PathFinder {
         if (!(ahy2.getX() == this.aNR.getX() && ahy2.getY() == this.aNR.getY() && ahy2.getZ() == this.aNR.getZ() || ahy2.c(this.aNR) <= 9.5)) {
             ArrayList<ahy> arrayList = new ArrayList<ahy>(ahx2.uQ());
             arrayList.add(ahy2);
-            this.aNL.add(new Node(ahy2, ahx2, arrayList, ahy2.c(this.aNR), d2, d3));
+            this.hubsToWork.add(new Node(ahy2, ahx2, arrayList, ahy2.c(this.aNR), d2, d3));
             return false;
         }
         if (ahx2 == null) return false;
-        this.aNM.clear();
-        this.aNM = ahx2.uQ();
-        this.aNM.add(ahy2);
+        this.path.clear();
+        this.path = ahx2.uQ();
+        this.path.add(ahy2);
         return true;
     }
 }

@@ -28,7 +28,7 @@ public class Blink extends Module {
         if (aEg.thePlayer.ticksExisted > this.next && this.pulse.wo()) {
             this.gi();
             BlinkComponent.dispatch();
-            this.gj();
+            this.deSpawnEntity();
         }
     };
     @EventLink
@@ -44,7 +44,7 @@ public class Blink extends Module {
 
     @Override
     public void onDisable() {
-        this.gj();
+        this.deSpawnEntity();
     }
 
     public void gi() {
@@ -53,9 +53,9 @@ public class Blink extends Module {
         }
     }
 
-    public void gj() {
+    public void deSpawnEntity() {
         if (this.blinkEntity != null) {
-            Client.a.x().c(this, this.blinkEntity);
+            Client.a.getBotManager().c(this, this.blinkEntity);
             aEg.theWorld.removeEntityFromWorld(this.blinkEntity.getEntityId());
             this.blinkEntity = null;
         }

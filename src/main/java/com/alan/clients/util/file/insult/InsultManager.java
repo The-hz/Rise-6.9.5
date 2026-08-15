@@ -17,7 +17,7 @@ public final class InsultManager extends ArrayList<InsultFile> {
         }
     }
 
-    public InsultFile bO(String var1) {
+    public InsultFile get(String var1) {
         for (InsultFile insultFile : this) {
             if (insultFile.getFile().getName().equalsIgnoreCase(var1 + ".txt")) {
                 return insultFile;
@@ -29,7 +29,7 @@ public final class InsultManager extends ArrayList<InsultFile> {
 
     public void set(String var1) {
         File file1 = new File(INSULT_DIRECTORY, var1 + ".txt");
-        InsultFile aga = this.bO(var1);
+        InsultFile aga = this.get(var1);
         if (aga == null) {
             aga = new InsultFile(file1, FileType.INSULT);
             this.add(aga);
@@ -59,7 +59,7 @@ public final class InsultManager extends ArrayList<InsultFile> {
     }
 
     public boolean delete(String var1) {
-        InsultFile insultFile = this.bO(var1);
+        InsultFile insultFile = this.get(var1);
         if (insultFile == null) {
             return false;
         }

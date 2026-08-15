@@ -54,7 +54,7 @@ public class NCPStep extends Mode<Step> {
                 aEg.timer.dzD = this.timer.wo().floatValue();
 
                 for (double d1 : adouble) {
-                    PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + (d1 + Math.random() / 2000.0), aEg.thePlayer.posZ, false));
+                    PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + (d1 + Math.random() / 2000.0), aEg.thePlayer.posZ, false));
                 }
             }
         }

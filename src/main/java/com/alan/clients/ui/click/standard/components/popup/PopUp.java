@@ -14,11 +14,11 @@ public class PopUp implements InstanceAccess {
     }
 
     public void draw() {
-        RiseClickGUI riseclickgui = Client.a.v();
+        RiseClickGUI riseclickgui = Client.a.getStandardClickGUI();
         double d0 = riseclickgui.axI.x;
         double d1 = riseclickgui.axI.y;
-        double d2 = riseclickgui.alh.x;
-        double d3 = riseclickgui.alh.y;
+        double d2 = riseclickgui.position.x;
+        double d3 = riseclickgui.position.y;
         if (this.scale != null) {
             RenderUtil.dropShadow(
                 60, (float)(d0 + d2 / 2.0 - this.scale.x / 2.0F), (float)(d1 + d3 / 2.0 - this.scale.y / 2.0F), this.scale.x, this.scale.y, 50.0, 34.0

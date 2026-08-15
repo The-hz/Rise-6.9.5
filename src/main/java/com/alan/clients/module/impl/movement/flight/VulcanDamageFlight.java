@@ -18,15 +18,15 @@ public class VulcanDamageFlight extends Mode<Flight> {
     private int hQ;
     private int hV;
     private boolean IJ;
-    public final BooleanValue IK = new BooleanValue("Self Damage (May Flag More) if not fly will wait for fall damage", this, true);
+    public final BooleanValue selfDamageMayFlagMoreIfNotFlyWillWaitForFallDamage = new BooleanValue("Self Damage (May Flag More) if not fly will wait for fall damage", this, true);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (this.IK.wo()) {
+        if (this.selfDamageMayFlagMoreIfNotFlyWillWaitForFallDamage.wo()) {
             MoveUtil.stop();
         }
 
         if (aEg.thePlayer.ae == 1) {
-            PacketUtil.l(
+            PacketUtil.send(
                 new C06PacketPlayerPosLook(
                     aEg.thePlayer.posX, aEg.thePlayer.posY - 2.0, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false
                 )
@@ -70,8 +70,8 @@ public class VulcanDamageFlight extends Mode<Flight> {
         this.hQ = 0;
         this.hV = 0;
         this.IJ = false;
-        if (this.IK.wo()) {
-            DamageUtil.a(DamageType.POSITION, 3.42F, 1, false, false);
+        if (this.selfDamageMayFlagMoreIfNotFlyWillWaitForFallDamage.wo()) {
+            DamageUtil.damagePlayer(DamageType.POSITION, 3.42F, 1, false, false);
         } else {
             afi.b("take fall damage or turn on self damage");
         }

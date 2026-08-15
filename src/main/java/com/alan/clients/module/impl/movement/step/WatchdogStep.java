@@ -22,13 +22,13 @@ public class WatchdogStep extends Mode<Step> {
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {};
     @EventLink
-    public final Listener<PreMotionEvent> Sr = var0 -> {};
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {};
     private double height;
     private int hV;
     private long Ss;
     private boolean JM = false;
     @EventLink
-    public final Listener<PreMotionEvent> St = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionMedium = var1x -> {
         if (!this.e(Scaffold.class).isEnabled()) {
             if (aEg.thePlayer.onGround && !PlayerUtil.vj() && !aEg.gameSettings.keyBindJump.isKeyDown()) {
                 aEg.thePlayer.stepHeight = 1.0F;
@@ -63,7 +63,7 @@ public class WatchdogStep extends Mode<Step> {
 
                     for (double d1 : adouble) {
                         aEg.timer.dzD = 0.25F;
-                        PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d1, aEg.thePlayer.posZ, false));
+                        PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d1, aEg.thePlayer.posZ, false));
                         this.hV = 0;
                     }
                 }

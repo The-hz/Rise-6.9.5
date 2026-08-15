@@ -17,7 +17,7 @@ public class FastUse extends Module {
     public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         if (aEg.thePlayer.isUsingItem()) {
             for (int i = 0; i <= this.speed.wo().intValue(); i++) {
-                PacketUtil.l(
+                PacketUtil.send(
                     new C06PacketPlayerPosLook(
                         aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, aEg.thePlayer.onGround
                     )

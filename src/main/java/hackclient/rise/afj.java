@@ -50,7 +50,7 @@ public final class afj {
     }
 
     private File sK() {
-        return new File(DataManager.aHQ, "command_usage.json");
+        return new File(DataManager.DATA_DIRECTORY, "command_usage.json");
     }
 
     private synchronized void sL() {

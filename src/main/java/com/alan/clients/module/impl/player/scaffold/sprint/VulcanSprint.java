@@ -16,13 +16,13 @@ import net.minecraft.network.play.client.C0BPacketEntityAction;
 
 public class VulcanSprint extends Mode<Scaffold> {
     private final NumberValue speed = new NumberValue("Speed", this, 1.3, 0.9, 1.3, 0.05);
-    private int dm;
-    private int ajr;
+    private int time;
+    private int block;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         aEg.thePlayer.setSprinting(false);
         double d0 = this.speed.wo().doubleValue();
-        if (!aEg.gameSettings.keyBindJump.isKeyDown() && d0 > 0.9 && aEg.thePlayer.cqL >= 2 && this.ajr <= 10) {
+        if (!aEg.gameSettings.keyBindJump.isKeyDown() && d0 > 0.9 && aEg.thePlayer.cqL >= 2 && this.block <= 10) {
             MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() * d0);
             aEg.thePlayer.jump();
             aEg.thePlayer.motionY = 0.012500047683714;
@@ -32,21 +32,21 @@ public class VulcanSprint extends Mode<Scaffold> {
             MoveUtil.strafe();
         }
 
-        this.dm++;
-        this.ajr++;
-        switch (this.dm) {
+        this.time++;
+        this.block++;
+        switch (this.time) {
             case 1:
-                PacketUtil.l(new C0BPacketEntityAction(aEg.thePlayer, Action.START_SNEAKING));
+                PacketUtil.send(new C0BPacketEntityAction(aEg.thePlayer, Action.START_SNEAKING));
                 break;
             case 10:
-                this.dm = 0;
+                this.time = 0;
         }
     };
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         Packet packet = var1x.dq();
         if (packet instanceof C08PacketPlayerBlockPlacement && ((C08PacketPlayerBlockPlacement)packet).getPlacedBlockDirection() != 255) {
-            this.ajr = 0;
+            this.block = 0;
         }
     };
 
@@ -56,8 +56,8 @@ public class VulcanSprint extends Mode<Scaffold> {
 
     @Override
     public void onDisable() {
-        if (this.dm == 1) {
-            PacketUtil.l(new C0BPacketEntityAction(aEg.thePlayer, Action.STOP_SNEAKING));
+        if (this.time == 1) {
+            PacketUtil.send(new C0BPacketEntityAction(aEg.thePlayer, Action.STOP_SNEAKING));
         }
     }
 }

@@ -28,7 +28,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public final class SlotUtil implements InstanceAccess {
-    public static final List<Block> aPj = Arrays.asList(
+    public static final List<Block> blacklist = Arrays.asList(
         Blocks.enchanting_table,
         Blocks.chest,
         Blocks.ender_chest,
@@ -51,7 +51,7 @@ public final class SlotUtil implements InstanceAccess {
         Blocks.redstone_torch,
         Blocks.pumpkin
     );
-    public static final List<Block> aPk = Arrays.asList(
+    public static final List<Block> interactList = Arrays.asList(
         Blocks.enchanting_table,
         Blocks.chest,
         Blocks.ender_chest,
@@ -135,7 +135,7 @@ public final class SlotUtil implements InstanceAccess {
         return -1;
     }
 
-    public static int h(Block block) {
+    public static int findBlock(Block block) {
         for (int i = 0; i < 9; i++) {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
             if (itemstack == null) {
@@ -173,7 +173,7 @@ public final class SlotUtil implements InstanceAccess {
         return var0 < 9 && var0 >= 0 ? aEg.thePlayer.inventory.mainInventory[var0] : null;
     }
 
-    public static float a(Block block, int var1) {
+    public static float getStrVsBlock(Block block, int var1) {
         float f = 1.0F;
         if (aEg.thePlayer.inventory.mainInventory[var1] != null) {
             f *= aEg.thePlayer.inventory.mainInventory[var1].getStrVsBlock(block);
@@ -185,7 +185,7 @@ public final class SlotUtil implements InstanceAccess {
     public static float getPlayerRelativeBlockHardness(EntityPlayer player, World world, BlockPos pos, int var3) {
         Block block = aEg.theWorld.getBlockState(pos).getBlock();
         float f = block.getBlockHardness(world, pos);
-        return f < 0.0F ? 0.0F : (!canHeldItemHarvest(block, var3) ? c(block, var3) / f / 100.0F : c(block, var3) / f / 30.0F);
+        return f < 0.0F ? 0.0F : (!canHeldItemHarvest(block, var3) ? getToolDigEfficiency(block, var3) / f / 100.0F : getToolDigEfficiency(block, var3) / f / 30.0F);
     }
 
     public static boolean canHeldItemHarvest(Block block, int var1) {
@@ -281,8 +281,8 @@ public final class SlotUtil implements InstanceAccess {
         return f1 > 1.0F ? 0.0F : (int)Math.ceil(1.0F / f1);
     }
 
-    public static float c(Block block, int var1) {
-        float f = a(block, var1);
+    public static float getToolDigEfficiency(Block block, int var1) {
+        float f = getStrVsBlock(block, var1);
         if (f > 1.0F) {
             int i = EnchantmentHelper.getEfficiencyModifier(aEg.thePlayer);
             ItemStack itemstack = getCurrentItemInSlot(var1);

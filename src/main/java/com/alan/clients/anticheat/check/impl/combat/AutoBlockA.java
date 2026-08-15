@@ -27,16 +27,16 @@ public final class AutoBlockA extends Check {
             int i = this.a(this.data.getPlayer());
             int j = this.data.W();
             if (i != -1 && j > i) {
-                if (this.a(1.0) > 2.0) {
+                if (this.increaseBufferBy(1.0) > 2.0) {
                     this.J();
                 }
             } else {
-                this.b(0.1F);
+                this.decreaseBufferBy(0.1F);
             }
         }
 
-        if (PacketUtil.b(packet) && ((S14PacketEntity)packet).entityId == this.data.getPlayer().getEntityId() && !this.data.V()) {
-            this.b(0.985F);
+        if (PacketUtil.isRelMove(packet) && ((S14PacketEntity)packet).entityId == this.data.getPlayer().getEntityId() && !this.data.V()) {
+            this.decreaseBufferBy(0.985F);
         }
     }
 

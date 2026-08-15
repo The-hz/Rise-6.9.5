@@ -12,7 +12,7 @@ public final class Stuck extends Command {
 
     @Override
     public void execute(String[] var1) {
-        PacketUtil.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, -1.0, aEg.thePlayer.posZ, false));
+        PacketUtil.sendNoEvent(new C04PacketPlayerPosition(aEg.thePlayer.posX, -1.0, aEg.thePlayer.posZ, false));
         afi.b("command.stuck.sent");
     }
 }

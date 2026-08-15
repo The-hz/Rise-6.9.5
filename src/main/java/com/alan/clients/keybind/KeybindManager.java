@@ -37,7 +37,7 @@ public class KeybindManager {
         }
     };
     @EventLink(value = 0)
-    public final Listener<MouseButtonEvent> bm = var1 -> {
+    public final Listener<MouseButtonEvent> onMouseButton = var1 -> {
         if (Minecraft.getMinecraft().currentScreen == null) {
             int i = var1.cW() - 100;
             this.aP().stream().filter(var1x -> var1x.getKey() == i).forEach(Bindable::onKey);
@@ -53,8 +53,8 @@ public class KeybindManager {
 
     public List<Bindable> aP() {
         ArrayList arraylist = new ArrayList();
-        arraylist.addAll(Client.a.g().ef());
-        arraylist.addAll(Client.a.p());
+        arraylist.addAll(Client.a.g().getAll());
+        arraylist.addAll(Client.a.getConfigManager());
         return arraylist;
     }
 

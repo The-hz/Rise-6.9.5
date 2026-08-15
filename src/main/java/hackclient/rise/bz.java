@@ -8,16 +8,16 @@ public enum bz {
     Developer("c"),
     Gato("b");
 
-    private final String gA;
+    private final String colorCode;
     private static final bz[] $VALUES = cc();
 
     bz(String var3) {
-        this.gA = var3;
+        this.colorCode = var3;
     }
 
     @Generated
-    public String bU() {
-        return this.gA;
+    public String getColorCode() {
+        return this.colorCode;
     }
 
     private static bz[] cc() {

@@ -15,17 +15,17 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.util.MathHelper;
 
 public class MineLandFlight extends Mode<Flight> {
-    private double Hy;
-    private double Hz;
-    private double HA;
+    private double serverPosX;
+    private double serverPosY;
+    private double serverPosZ;
     private boolean teleported;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (!this.teleported) {
             double d0 = MoveUtil.direction();
             if (aEg.thePlayer.ticksExisted % 3 == 0) {
-                PacketUtil.l(new C03PacketPlayer(aEg.thePlayer.onGround));
-                aEg.thePlayer.setPosition(this.Hy, this.Hz, this.HA);
+                PacketUtil.send(new C03PacketPlayer(aEg.thePlayer.onGround));
+                aEg.thePlayer.setPosition(this.serverPosX, this.serverPosY, this.serverPosZ);
             }
 
             var1x.setPosY(var1x.getPosY() - 1.1 + (aEg.thePlayer.ticksExisted % 3 == 0 ? 0.42F : 0.0F));
@@ -53,9 +53,9 @@ public class MineLandFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        this.Hy = aEg.thePlayer.posX;
-        this.Hz = aEg.thePlayer.posY;
-        this.HA = aEg.thePlayer.posZ;
+        this.serverPosX = aEg.thePlayer.posX;
+        this.serverPosY = aEg.thePlayer.posY;
+        this.serverPosZ = aEg.thePlayer.posZ;
         this.teleported = false;
     }
 }

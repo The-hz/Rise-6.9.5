@@ -34,7 +34,7 @@ public class S2CPacketStartRecording extends rip.vantage.commons.packet.api.abst
 
     @Override
     public void handle(rip.vantage.commons.handler.api.S2CPacketHandler handler) {
-        handler.a(this);
+        handler.handle(this);
     }
 
     public S2CPacketStartRecording(JSONObject json) {

@@ -61,7 +61,7 @@ public final class ProtocolFixComponent extends Component {
     private static long iv = 0L;
     private static final long iw = 2000L;
     @EventLink(value = 1)
-    public final Listener<PacketEncodeEvent> ix = var0 -> {};
+    public final Listener<PacketEncodeEvent> onPacketEncode = var0 -> {};
     @EventLink
     public final Listener<TickEvent> onTick = var1 -> {
         this.is = 0;
@@ -106,7 +106,7 @@ public final class ProtocolFixComponent extends Component {
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         String s = a.aKB().bX();
-        if (Breaker.abQ == null && !this.e(KillAura.class).isEnabled()) {
+        if (Breaker.targetBlock == null && !this.e(KillAura.class).isEnabled()) {
             KillAura.nS = false;
         }
 

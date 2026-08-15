@@ -16,7 +16,7 @@ final class ConfigSuggestionProvider implements SuggestionProvider {
     @Override
     public void a(SuggestionContext suggestionContext) {
         try {
-            Client.a.p().update();
+            Client.a.getConfigManager().update();
         } catch (Throwable throwable) {
         }
     }
@@ -64,7 +64,7 @@ final class ConfigSuggestionProvider implements SuggestionProvider {
         String s5 = astring[1] == null ? "" : astring[1].toLowerCase(Locale.ROOT);
         ArrayList arraylist1 = new ArrayList();
 
-        for (ConfigFile configfile : Client.a.p()) {
+        for (ConfigFile configfile : Client.a.getConfigManager()) {
             String s6 = configfile.getFile().getName().replace(".json", "");
             String s7 = s6.toLowerCase(Locale.ROOT);
             if (s5.isEmpty() || s7.startsWith(s5)) {

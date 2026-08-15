@@ -55,7 +55,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
     private final NumberValue maxAttacks = new NumberValue("Max Attacks", this, 3, 1, 10, 1, () -> !this.u("Reduce"));
     private final BooleanValue delayRelease = new BooleanValue("Delay Release", this, false, () -> !this.u("Reduce"));
     private final NumberValue delaySpeedThreshold = new NumberValue("Delay Speed Threshold", this, 0.6, 0.1, 2, 0.05, () -> !this.u("Reduce") || !this.delayRelease.wo());
-    private final NumberValue sN = new NumberValue("Delay Timeout (ms)", this, 5000, 50, 10000, 50, () -> !this.u("Reduce") || !this.delayRelease.wo());
+    private final NumberValue delayTimeoutMs = new NumberValue("Delay Timeout (ms)", this, 5000, 50, 10000, 50, () -> !this.u("Reduce") || !this.delayRelease.wo());
     private final BooleanValue delayLogging = new BooleanValue("Delay Logging", this, false, () -> !this.u("Reduce") || !this.delayRelease.wo());
     private final NumberValue jumpResetTick = new NumberValue("Jump Reset Tick", this, 1, 0, 9, 1, () -> !this.u("Jump Reset"));
     private final NumberValue grimLevel = new NumberValue("Grim Level", this, 0.001, 0.001, 0.1, 0.001, () -> !this.u("Grim Full"));
@@ -69,13 +69,13 @@ public final class GrimTestVelocity extends Mode<Velocity> {
     private long sX;
     private boolean sY;
     private int sZ;
-    private final Random ta = new Random();
+    private final Random random = new Random();
     private final Queue<Packet<?>> tb = new ConcurrentLinkedQueue<>();
     private boolean tc;
     private Vec3 td;
     private long te;
     private boolean tf;
-    private boolean tg;
+    private boolean skipNextDelay;
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
@@ -85,8 +85,8 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                     float f1 = c03packetplayer.getPitch();
                     if (this.h(f) || this.h(f1)) {
                         float f2 = this.grimLevel.wo().floatValue();
-                        float f3 = f + (this.ta.nextBoolean() ? 1 : -1) * f2;
-                        float f4 = f1 + (this.ta.nextBoolean() ? 1 : -1) * f2;
+                        float f3 = f + (this.random.nextBoolean() ? 1 : -1) * f2;
+                        float f4 = f1 + (this.random.nextBoolean() ? 1 : -1) * f2;
                         if (c03packetplayer instanceof C06PacketPlayerPosLook) {
                             var1x.setPacket(
                                 new C06PacketPlayerPosLook(
@@ -120,7 +120,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
             }
 
             if (this.u("Reduce") && this.delayRelease.wo() && packet instanceof S08PacketPlayerPosLook && !this.tc) {
-                this.tg = true;
+                this.skipNextDelay = true;
                 this.t("Flag detected, skipping next delay.");
             }
 
@@ -160,7 +160,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                             return;
                         }
 
-                        if (this.delayRelease.wo() && !this.tg) {
+                        if (this.delayRelease.wo() && !this.skipNextDelay) {
                             if (d3 >= this.delaySpeedThreshold.wo().doubleValue()) {
                                 var1x.setCancelled();
                                 this.tc = true;
@@ -173,8 +173,8 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                             this.t("Weak KB (speed: " + String.format("%.3f", d3) + "), normal reduce.");
                         }
 
-                        if (this.tg) {
-                            this.tg = false;
+                        if (this.skipNextDelay) {
+                            this.skipNextDelay = false;
                             this.t("Flagged, using normal reduce this time.");
                         }
 
@@ -250,7 +250,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
 
                 if (!this.tf) {
                     long k = System.currentTimeMillis() - this.te;
-                    if (k >= this.sN.wo().longValue()) {
+                    if (k >= this.delayTimeoutMs.wo().longValue()) {
                         aEg.thePlayer.setVelocity(this.td.xCoord, this.td.yCoord, this.td.zCoord);
                         this.t("Timeout (" + k + "ms), applying full KB.");
                         this.tf = true;
@@ -262,8 +262,8 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                 }
             }
 
-            if (this.tg && aEg.thePlayer.hurtTime == 0) {
-                this.tg = false;
+            if (this.skipNextDelay && aEg.thePlayer.hurtTime == 0) {
+                this.skipNextDelay = false;
             }
 
             if (this.u("Reduce") && this.pY != null && this.sV > 0) {
@@ -324,7 +324,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
             while (!this.tb.isEmpty()) {
                 Packet packet = this.tb.poll();
                 if (packet != null) {
-                    PacketUtil.p(packet);
+                    PacketUtil.receive(packet);
                 }
             }
         } else {

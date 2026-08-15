@@ -39,10 +39,10 @@ extends Module {
     private final BooleanValue replaceIPWithRiseWebsite = new BooleanValue("Replace IP with Rise Website", (Module)this, (Boolean)true);
     private Collection<Score> collection;
     private ScoreObjective scoreObjective;
-    private int apB;
+    private int maxWidth;
     private Interface amf;
-    private final int apC = 3;
-    private final int apD = 9;
+    private final int padding = 3;
+    private final int fontHeight = 9;
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         if (this.scoreObjective == null) {
@@ -52,18 +52,18 @@ extends Module {
             this.amf = this.e(Interface.class);
         }
         Vector2i ajz2 = new Vector2i((int)this.position.apP.x, (int)this.position.apP.y);
-        boolean bl = ((Mode)this.amf.lM().wo()).getName().equals("Rise");
-        int n2 = this.amf != null ? (int)this.amf.lD() : (bl ? 5 : 1);
+        boolean bl = ((Mode)this.amf.getInformationType().wo()).getName().equals("Rise");
+        int n2 = this.amf != null ? (int)this.amf.getRoundingRadius() : (bl ? 5 : 1);
         this.b(ShaderQueueType.REGULAR).c(() -> {
             int n3 = this.collection.size();
-            int n4 = this.apD * n3 + 3;
+            int n4 = this.fontHeight * n3 + 3;
             if (((Boolean)this.outline.wo()).booleanValue()) {
-                RenderUtil.roundedOutlineGradientRectangle(ajz2.ald - 1, ajz2.ale - 1, this.apB + 12 + 2, n4 + this.apD + 3 + 2, n2, 1.0, ColorUtil.d(this.rz().rA(), 100), ColorUtil.d(this.rz().rB(), 100));
+                RenderUtil.roundedOutlineGradientRectangle(ajz2.ald - 1, ajz2.ale - 1, this.maxWidth + 12 + 2, n4 + this.fontHeight + 3 + 2, n2, 1.0, ColorUtil.withBlue(this.rz().rA(), 100), ColorUtil.withBlue(this.rz().rB(), 100));
             }
         });
-        this.b(ShaderQueueType.BLUR).c(() -> this.a(ajz2.ald, ajz2.ale, Color.WHITE, false, n2, false));
-        this.b(ShaderQueueType.BLOOM).c(() -> this.a(ajz2.ald, ajz2.ale, bl ? this.rz().rE() : Color.BLACK, false, n2 + 1, true));
-        this.b(ShaderQueueType.REGULAR, 1).c(() -> this.a(ajz2.ald, ajz2.ale, (Boolean)this.blurColor.wo() != false ? new Color(this.rz().rB().getRed(), this.rz().rB().getGreen(), this.rz().rB().getBlue(), 60) : new Color(0, 0, 0, 100), true, n2, false));
+        this.b(ShaderQueueType.BLUR).c(() -> this.renderScoreboard(ajz2.ald, ajz2.ale, Color.WHITE, false, n2, false));
+        this.b(ShaderQueueType.BLOOM).c(() -> this.renderScoreboard(ajz2.ald, ajz2.ale, bl ? this.rz().rE() : Color.BLACK, false, n2 + 1, true));
+        this.b(ShaderQueueType.REGULAR, 1).c(() -> this.renderScoreboard(ajz2.ald, ajz2.ale, (Boolean)this.blurColor.wo() != false ? new Color(this.rz().rB().getRed(), this.rz().rB().getGreen(), this.rz().rB().getBlue(), 60) : new Color(0, 0, 0, 100), true, n2, false));
     };
     @EventLink
     public final Listener<TickEvent> onTick = tickEvent -> {
@@ -78,17 +78,17 @@ extends Module {
             return true;
         }).collect(Collectors.toList());
         this.collection = list.size() > 15 ? Lists.newArrayList(Iterables.skip(list, list.size() - 15)) : list;
-        this.apB = ScoreBoard.aEg.fontRendererObj.getStringWidth(this.scoreObjective.getDisplayName());
+        this.maxWidth = ScoreBoard.aEg.fontRendererObj.getStringWidth(this.scoreObjective.getDisplayName());
         Iterator<Score> iterator = collection.iterator();
         while (true) {
             if (!iterator.hasNext()) {
-                this.apB += 2;
+                this.maxWidth += 2;
                 return;
             }
             Score score2 = iterator.next();
             String string = ScorePlayerTeam.formatPlayerName(this.scoreObjective.getScoreboard().getPlayersTeam(score2.getPlayerName()), score2.getPlayerName());
             String string2 = this.X(string);
-            this.apB = Math.max(this.apB, ScoreBoard.aEg.fontRendererObj.getStringWidth(string2));
+            this.maxWidth = Math.max(this.maxWidth, ScoreBoard.aEg.fontRendererObj.getStringWidth(string2));
         }
     };
 
@@ -117,16 +117,16 @@ extends Module {
         return ServerUtil.vw();
     }
 
-    private void a(int n2, int n3, Color color, boolean bl, int n4, boolean bl2) {
+    private void renderScoreboard(int n2, int n3, Color color, boolean bl, int n4, boolean bl2) {
         agd fontRendererObj = ScoreBoard.aEg.fontRendererObj;
         int size = this.collection.size();
-        int n6 = this.apD * size + 3;
-        Vector2d vector2d = new Vector2d(this.apB + 12, n6 + this.apD + 3);
+        int n6 = this.fontHeight * size + 3;
+        Vector2d vector2d = new Vector2d(this.maxWidth + 12, n6 + this.fontHeight + 3);
         this.position.n(vector2d);
         if (bl2) {
-            RenderUtil.roundedRectangle((float)n2 + 0.5f, (float)n3 + 0.5f, this.apB + 12 - 1, n6 + this.apD + 3 - 1, n4, color);
+            RenderUtil.roundedRectangle((float)n2 + 0.5f, (float)n3 + 0.5f, this.maxWidth + 12 - 1, n6 + this.fontHeight + 3 - 1, n4, color);
         } else {
-            RenderUtil.roundedRectangle(n2, n3, this.apB + 12, n6 + this.apD + 3, n4, color);
+            RenderUtil.roundedRectangle(n2, n3, this.maxWidth + 12, n6 + this.fontHeight + 3, n4, color);
         }
         if (!bl) {
             return;
@@ -134,11 +134,11 @@ extends Module {
         int n7 = 0x20FFFFFF;
         int n8 = (int)((double)n3 + 4.5);
         String string = this.scoreObjective.getDisplayName();
-        fontRendererObj.b(string, (float)(n2 += 6) + (float)this.apB / 2.0f - (float)fontRendererObj.getStringWidth(string) / 2.0f, n8, n7);
+        fontRendererObj.b(string, (float)(n2 += 6) + (float)this.maxWidth / 2.0f - (float)fontRendererObj.getStringWidth(string) / 2.0f, n8, n7);
         Iterator<Score> iterator = this.collection.iterator();
         while (iterator.hasNext()) {
             Score score = iterator.next();
-            n8 += this.apD;
+            n8 += this.fontHeight;
             String string2 = ScorePlayerTeam.formatPlayerName(this.scoreObjective.getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName());
             String string3 = this.X(string2);
             if (((Boolean)this.replaceIPWithRiseWebsite.wo()).booleanValue() && string3.equals(this.mf())) {

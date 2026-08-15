@@ -80,7 +80,7 @@ public final class FastBreak extends Module {
     }
 
     @Generated
-    public NumberValue jG() {
+    public NumberValue getSpeed() {
         return this.speed;
     }
 }

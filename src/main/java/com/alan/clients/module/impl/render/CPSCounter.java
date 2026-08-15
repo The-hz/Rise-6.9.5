@@ -25,7 +25,7 @@ public final class CPSCounter extends Module {
     private final BooleanValue showTitle = new BooleanValue("Title", this, false);
     private final DragValue position = new DragValue("Position", this, new Vector2d(200.0, 200.0));
     private final Vector2f scale = new Vector2f(22.0F, 22.0F);
-    private final adz<Boolean> amW = new adz<>(20);
+    private final adz<Boolean> clicks = new adz<>(20);
     private boolean clicked;
     private int cps;
     @EventLink
@@ -62,8 +62,8 @@ public final class CPSCounter extends Module {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         this.cps = 0;
-        this.amW.add(this.clicked);
-        this.amW.forEach(var1x -> {
+        this.clicks.add(this.clicked);
+        this.clicks.forEach(var1x -> {
             if (var1x) {
                 this.cps++;
             }

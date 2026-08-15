@@ -57,10 +57,10 @@ public final class PlayerData {
     private double aL;
     private double aM;
     private double aN;
-    private boolean aO;
+    private boolean onGround;
     private boolean aP;
     private boolean aQ;
-    private int aR;
+    private int groundTicks;
     private boolean aS;
     private boolean aT;
     private final a aU = new a();
@@ -75,9 +75,9 @@ public final class PlayerData {
     private final a bd = new a();
     private final a be = new a();
     private final a bf = new a();
-    private boolean bg;
-    private boolean bh;
-    private boolean bi;
+    private boolean sneaking;
+    private boolean sprinting;
+    private boolean usingItem;
     private int bj;
     private Item bk;
 
@@ -92,8 +92,8 @@ public final class PlayerData {
     public void handle(Packet<?> packet) {
         if (this.player.ticksExisted <= 80) {
             this.aV.aX();
-        } else if (!Client.a.x().a(this.player) && this.player.adr && !this.player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer)) {
-            if (PacketUtil.b(packet)) {
+        } else if (!Client.a.getBotManager().a(this.player) && this.player.adr && !this.player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer)) {
+            if (PacketUtil.isRelMove(packet)) {
                 S14PacketEntity s14packetentity = (S14PacketEntity)packet;
                 if (s14packetentity.entityId == this.player.getEntityId()) {
                     if (this.player.hurtTime != 0 && this.as > 9 && this.aZ > 40) {
@@ -130,8 +130,8 @@ public final class PlayerData {
                     }
 
                     this.aV.aX();
-                    this.aP = this.aO;
-                    this.aO = !(PlayerUtil.o(this.x - 0.5, this.y - 0.43, this.z - 0.5) instanceof BlockAir)
+                    this.aP = this.onGround;
+                    this.onGround = !(PlayerUtil.o(this.x - 0.5, this.y - 0.43, this.z - 0.5) instanceof BlockAir)
                         || !(PlayerUtil.o(this.x + 0.5, this.y - 0.43, this.z - 0.5) instanceof BlockAir)
                         || !(PlayerUtil.o(this.x + 0.5, this.y - 0.43, this.z + 0.5) instanceof BlockAir)
                         || !(PlayerUtil.o(this.x - 0.5, this.y - 0.43, this.z + 0.5) instanceof BlockAir);
@@ -140,16 +140,16 @@ public final class PlayerData {
                         || !(PlayerUtil.o(this.x + 0.5, this.y - 0.99, this.z - 0.5) instanceof BlockAir)
                         || !(PlayerUtil.o(this.x + 0.5, this.y - 0.99, this.z + 0.5) instanceof BlockAir)
                         || !(PlayerUtil.o(this.x - 0.5, this.y - 0.99, this.z + 0.5) instanceof BlockAir);
-                    if (this.aO) {
+                    if (this.onGround) {
                         this.aH = this.aE;
                         this.aI = this.aF;
                         this.aJ = this.aG;
                         this.aE = this.x;
                         this.aF = this.y;
                         this.aG = this.z;
-                        this.aR++;
+                        this.groundTicks++;
                     } else {
-                        this.aR = 0;
+                        this.groundTicks = 0;
                     }
 
                     if (this.aF - this.y > 2.5) {
@@ -195,16 +195,16 @@ public final class PlayerData {
                         boolean flag = (b0 & 2) != 0;
                         boolean flag1 = (b0 & 8) != 0;
                         boolean flag2 = (b0 & 16) != 0;
-                        this.bg = flag;
-                        this.bh = flag1;
+                        this.sneaking = flag;
+                        this.sprinting = flag1;
                         if (flag2) {
-                            if (!this.bi) {
-                                this.bi = true;
+                            if (!this.usingItem) {
+                                this.usingItem = true;
                             }
 
                             this.bj++;
                         } else {
-                            this.bi = false;
+                            this.usingItem = false;
                             this.bj = 0;
                         }
                     }
@@ -257,11 +257,11 @@ public final class PlayerData {
     }
 
     public boolean isSprinting() {
-        return this.bh;
+        return this.sprinting;
     }
 
     public boolean isUsingItem() {
-        return this.bi;
+        return this.usingItem;
     }
 
     public int W() {
@@ -433,7 +433,7 @@ public final class PlayerData {
 
     @Generated
     public boolean isOnGround() {
-        return this.aO;
+        return this.onGround;
     }
 
     @Generated
@@ -448,7 +448,7 @@ public final class PlayerData {
 
     @Generated
     public int getGroundTicks() {
-        return this.aR;
+        return this.groundTicks;
     }
 
     @Generated
@@ -518,6 +518,6 @@ public final class PlayerData {
 
     @Generated
     public boolean isSneaking() {
-        return this.bg;
+        return this.sneaking;
     }
 }

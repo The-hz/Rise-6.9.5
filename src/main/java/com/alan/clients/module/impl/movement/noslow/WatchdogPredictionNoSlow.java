@@ -108,7 +108,7 @@ public class WatchdogPredictionNoSlow extends Mode<NoSlow> {
         }
 
         if (this.getParent().sword.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
-            PacketUtil.l(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
+            PacketUtil.send(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
             PacketQueueComponent.dispatch();
             if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_19)) {
                 UserConnection userconnection = Via.getManager().getConnectionManager().getConnections().iterator().next();
@@ -118,7 +118,7 @@ public class WatchdogPredictionNoSlow extends Mode<NoSlow> {
                 packetwrapper.sendToServer(Protocol1_19To1_18_2.class);
             } else {
                 SlotComponent slotcomponent = this.d(SlotComponent.class);
-                PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
             }
 
             var1x.setCancelled();

@@ -19,7 +19,7 @@ public final class Piercing extends Module {
     public final Listener<ClickEvent> onClick = var1 -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             if (aEg.objectMouseOver == null || aEg.objectMouseOver.typeOfHit != MovingObjectType.ENTITY) {
-                MovingObjectPosition movingobjectposition = aef.a(RotationComponent.bH(), this.gq(), this.gr(), aEg.thePlayer, true);
+                MovingObjectPosition movingobjectposition = aef.rayCast(RotationComponent.bH(), this.getReachRange(), this.getHitBoxExpand(), aEg.thePlayer, true);
                 if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.ENTITY) {
                     aEg.objectMouseOver = movingobjectposition;
                     aEg.pointedEntity = movingobjectposition.entityHit;
@@ -31,12 +31,12 @@ public final class Piercing extends Module {
     public Piercing() {
     }
 
-    public double gq() {
+    public double getReachRange() {
         Reach reach = this.e(Reach.class);
         return reach != null && reach.isEnabled() ? Math.max(reach.range.wo().doubleValue(), reach.range.wA().doubleValue()) : 3.0;
     }
 
-    public float gr() {
+    public float getHitBoxExpand() {
         HitBox hitbox = this.e(HitBox.class);
         return hitbox != null && hitbox.isEnabled() ? hitbox.expand.wo().floatValue() : 0.0F;
     }

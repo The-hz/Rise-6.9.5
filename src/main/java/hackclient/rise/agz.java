@@ -145,18 +145,18 @@ public class agz {
     public static final int aMM = 227;
     public static final int aMN = 228;
     public static final int aMO = 229;
-    private static final String[] aMP = new String[256];
-    private static final Map<String, Integer> aMQ = new HashMap<>(253);
+    private static final String[] keyName = new String[256];
+    private static final Map<String, Integer> keyMap = new HashMap<>(253);
 
     public agz() {
     }
 
-    public static synchronized String au(int var0) {
-        return aMP[var0];
+    public static synchronized String getKeyName(int var0) {
+        return keyName[var0];
     }
 
-    public static synchronized int cd(String var0) {
-        Integer integer = aMQ.get(var0);
+    public static synchronized int getKeyIndex(String var0) {
+        Integer integer = keyMap.get(var0);
         return integer == null ? 0 : integer;
     }
 
@@ -177,8 +177,8 @@ public class agz {
                     && !field.getName().endsWith("WIN")) {
                     int k = field.getInt(null);
                     String s = field.getName().substring(10);
-                    aMP[k] = s;
-                    aMQ.put(s, k);
+                    keyName[k] = s;
+                    keyMap.put(s, k);
                 }
             }
         } catch (Exception exception) {

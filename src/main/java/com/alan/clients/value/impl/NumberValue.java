@@ -10,36 +10,36 @@ import java.util.function.BooleanSupplier;
 import lombok.Generated;
 
 public class NumberValue extends Value<Number> {
-    private final Number aRe;
-    private final Number aRf;
-    private final Number aRg;
+    private final Number min;
+    private final Number max;
+    private final Number decimalPlaces;
 
     public NumberValue(String var1, Module module, Number var3, Number var4, Number var5, Number var6) {
         super(var1, module, var3);
-        this.aRg = var6;
-        this.aRe = var4;
-        this.aRf = var5;
+        this.decimalPlaces = var6;
+        this.min = var4;
+        this.max = var5;
     }
 
     public NumberValue(String var1, Mode<?> mode, Number var3, Number var4, Number var5, Number var6) {
         super(var1, mode, var3);
-        this.aRg = var6;
-        this.aRe = var4;
-        this.aRf = var5;
+        this.decimalPlaces = var6;
+        this.min = var4;
+        this.max = var5;
     }
 
     public NumberValue(String var1, Module module, Number var3, Number var4, Number var5, Number var6, BooleanSupplier booleanSupplier) {
         super(var1, module, var3, booleanSupplier);
-        this.aRg = var6;
-        this.aRe = var4;
-        this.aRf = var5;
+        this.decimalPlaces = var6;
+        this.min = var4;
+        this.max = var5;
     }
 
     public NumberValue(String var1, Mode<?> mode, Number var3, Number var4, Number var5, Number var6, BooleanSupplier booleanSupplier) {
         super(var1, mode, var3, booleanSupplier);
-        this.aRg = var6;
-        this.aRe = var4;
-        this.aRf = var5;
+        this.decimalPlaces = var6;
+        this.min = var4;
+        this.max = var5;
     }
 
     @Override
@@ -52,18 +52,18 @@ public class NumberValue extends Value<Number> {
     }
 
     @Generated
-    public Number wx() {
-        return this.aRe;
+    public Number getMin() {
+        return this.min;
     }
 
     @Generated
-    public Number wy() {
-        return this.aRf;
+    public Number getMax() {
+        return this.max;
     }
 
     @Generated
-    public Number wz() {
-        return this.aRg;
+    public Number getDecimalPlaces() {
+        return this.decimalPlaces;
     }
 
     @Override

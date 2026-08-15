@@ -27,7 +27,7 @@ implements SuggestionProvider {
         String string2 = stringArray[0] == null ? "" : stringArray[0].toLowerCase(Locale.ROOT);
         String string3 = string2 == null ? "" : string2.trim().toLowerCase(Locale.ROOT).replace(" ", "");
         ArrayList<Module> arrayList = new ArrayList<Module>();
-        for (Module module3 : Client.a.g().ef()) {
+        for (Module module3 : Client.a.g().getAll()) {
             if (module3 == null || !string3.isEmpty() && this.b(module3, string3) <= 1) continue;
             arrayList.add(module3);
         }

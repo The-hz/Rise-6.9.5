@@ -40,7 +40,7 @@ public class Translator extends Module {
                     switch (s1) {
                         case "Delay":
                             var1.setCancelled();
-                            this.U(s);
+                            this.translate(s);
                             return;
                         case "Resend":
                             break;
@@ -49,7 +49,7 @@ public class Translator extends Module {
                     }
                 }
 
-                this.U(s);
+                this.translate(s);
             }
         }
     };
@@ -57,12 +57,12 @@ public class Translator extends Module {
     public Translator() {
     }
 
-    public void U(String var1) {
+    public void translate(String var1) {
         this.translatorThread
             .execute(
                 () -> {
                     JSONArray jsonarray = new JSONArray(
-                        NetworkUtil.t("https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=" + URLEncoder.encode(var1), "GET")
+                        NetworkUtil.requestLine("https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=" + URLEncoder.encode(var1), "GET")
                     );
                     String sxx = jsonarray.getJSONArray(0).getJSONArray(0).getString(0);
                     s sx = new s(sxx);

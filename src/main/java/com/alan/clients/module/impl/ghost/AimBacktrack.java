@@ -22,23 +22,23 @@ import net.minecraft.util.MovingObjectPosition;
 @ModuleInfo(aliases = "module.ghost.aimbacktrack.name", description = "module.ghost.aimbacktract.description", category = Category.GHOST)
 public class AimBacktrack extends Module {
     private final NumberValue backtrack = new NumberValue("Rotation Backtrack Amount", this, 1, 1, 20, 1);
-    private adz<Vector2f> AB = new adz<>(1);
+    private adz<Vector2f> previousRotations = new adz<>(1);
     private boolean attacked;
     private int lastSize;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (this.lastSize != this.backtrack.wo().intValue()) {
-            this.AB = new adz<>(this.backtrack.wo().intValue());
+            this.previousRotations = new adz<>(this.backtrack.wo().intValue());
             this.lastSize = this.backtrack.wo().intValue();
         }
 
-        this.AB.add(new Vector2f(var1.getYaw(), var1.getPitch()));
+        this.previousRotations.add(new Vector2f(var1.getYaw(), var1.getPitch()));
         this.attacked = false;
     };
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         if (var1.dq() instanceof m && aEg.objectMouseOver.typeOfHit == MovingObjectType.MISS) {
-            for (Vector2f vector2f : this.AB) {
+            for (Vector2f vector2f : this.previousRotations) {
                 Reach reach = this.e(Reach.class);
                 MovingObjectPosition movingobjectposition = aef.c(vector2f, reach.isEnabled() ? 3.0 + reach.range.wo().doubleValue() : 3.0);
                 if (movingobjectposition.entityHit != null && !this.attacked && movingobjectposition.entityHit instanceof EntityLivingBase) {

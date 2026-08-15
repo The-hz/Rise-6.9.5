@@ -85,7 +85,7 @@ public class Spotify extends Module {
     public final DragValue positionValue = new DragValue("Position", this, new Vector2d(200.0, 200.0));
     private final NumberValue refreshTicks = new NumberValue("Refresh Ticks", this, 10, 1, 20, 1);
     private final BooleanValue debug = new BooleanValue("Debug", this, false);
-    private final BooleanValue VW = new BooleanValue("Show Lyrics (Spotify)", this, true);
+    private final BooleanValue showLyricsSpotify = new BooleanValue("Show Lyrics (Spotify)", this, true);
     private final NumberValue lyricLines = new NumberValue("Lyric Lines", this, 1, 1, 12, 1);
     private final ModeValue lyricsProvider = new ModeValue("Lyrics Provider", this)
         .add(new SubMode("LRCLIB"))
@@ -100,17 +100,17 @@ public class Spotify extends Module {
         "Lyrics Endpoint Header", this, "", () -> !"Spotify".equals(this.musicService.wo().getName()) || "LRCLIB".equals(this.lyricsProvider.wo().getName())
     );
     private final BooleanValue karaokeFill = new BooleanValue("Karaoke Fill", this, true);
-    private final NumberValue Wc = new NumberValue("Karaoke Speed (x)", this, 1.25, 0.25, 3.0, 0.05);
+    private final NumberValue karaokeSpeedX = new NumberValue("Karaoke Speed (x)", this, 1.25, 0.25, 3.0, 0.05);
     public String Wd = "";
-    public String We = "Loading...";
-    public String Wf = "Loading...";
+    public String song = "Loading...";
+    public String artist = "Loading...";
     public String Wg;
-    public String Wh = "1:43";
-    public String Wi = "2:56";
+    public String progress = "1:43";
+    public String length = "2:56";
     public String Wj;
     private String Wk = "";
-    public int Wl = 1;
-    public int Wm = 1;
+    public int durationMs = 1;
+    public int progressMs = 1;
     public int hV = 0;
     public int Wn = -1;
     public FontManager Wo = FontManager.MAIN;
@@ -151,16 +151,16 @@ public class Spotify extends Module {
     private float WX = 0.0F;
     private static final int WY = 520;
     private volatile boolean WZ = false;
-    private Thread Xa;
+    private Thread pollerThread;
     private volatile boolean Xb = false;
-    private volatile String Xc = "";
-    private volatile String Xd = "";
+    private volatile String clientId = "";
+    private volatile String clientSecret = "";
     private volatile long Xe = 0L;
     private volatile long Xf = 0L;
     private final Minecraft Xg = Minecraft.getMinecraft();
-    private static final int Xh = 4000;
-    private static final int Xi = 6000;
-    private static final String Xj = "RiseClient/SpotifyModule";
+    private static final int CONNECT_TIMEOUT_MS = 4000;
+    private static final int READ_TIMEOUT_MS = 6000;
+    private static final String USER_AGENT = "RiseClient/SpotifyModule";
     private volatile String Xk = "";
     private volatile boolean Xl = false;
     private volatile BufferedImage Xm = null;
@@ -188,7 +188,7 @@ public class Spotify extends Module {
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (this.debug.wo()) {
-            afi.b("Song: " + this.We);
+            afi.b("Song: " + this.song);
         }
 
         int i = this.ib();
@@ -199,9 +199,9 @@ public class Spotify extends Module {
 
         int j = i + b0;
         this.B(j);
-        this.Wh = String.format("%d:%02d", i / 1000 / 60, i / 1000 % 60);
-        this.Wi = String.format("%d:%02d", this.Wl / 1000 / 60, this.Wl / 1000 % 60);
-        boolean flag = this.VW.wo() && this.Ww;
+        this.progress = String.format("%d:%02d", i / 1000 / 60, i / 1000 % 60);
+        this.length = String.format("%d:%02d", this.durationMs / 1000 / 60, this.durationMs / 1000 % 60);
+        boolean flag = this.showLyricsSpotify.wo() && this.Ww;
         boolean flag1 = flag && this.WA < 0;
         float f = flag1 ? 18.0F : 18.0F;
         double d0 = this.positionValue.aHe.getX() - 25.0;
@@ -271,7 +271,7 @@ public class Spotify extends Module {
                         color,
                         false
                     );
-                    RenderUtil.a(d1, this.positionValue.apP.getY() + 45.0, i * 100.0 / Math.max(1, this.Wl), 6.0, 3.0, this.rz().rA(), this.rz().rB(), true);
+                    RenderUtil.a(d1, this.positionValue.apP.getY() + 45.0, i * 100.0 / Math.max(1, this.durationMs), 6.0, 3.0, this.rz().rA(), this.rz().rB(), true);
                 }
             );
         this.b(ShaderQueueType.REGULAR)
@@ -281,7 +281,7 @@ public class Spotify extends Module {
                     if (this.WW > 0L) {
                         float f9 = (float)(l1 - this.WW) / 520.0F;
                         if (f9 < 1.0F) {
-                            f8 += (1.0F - this.k(f9)) * 2.0F;
+                            f8 += (1.0F - this.easeOutCubic(f9)) * 2.0F;
                         }
                     }
 
@@ -294,8 +294,8 @@ public class Spotify extends Module {
                     Color color1 = Themes.rK();
                     this.rz();
                     RenderUtil.a(d13, d14, d15, d16, d17, color1, Themes.rK(), false);
-                    float f10 = this.d(this.We, 20);
-                    float f11 = this.d(this.Wf, 16);
+                    float f10 = this.d(this.song, 20);
+                    float f11 = this.d(this.artist, 16);
                     this.Wu = f10 > 105.0F;
                     this.Wv = f11 > 105.0F;
                     if (!this.Wu && !this.Wv) {
@@ -308,8 +308,8 @@ public class Spotify extends Module {
                         }
                     }
 
-                    this.a(this.We, d1, this.positionValue.apP.getY() + 15.0, 20, this.Wu);
-                    this.a(this.Wf, d1, this.positionValue.apP.getY() + 30.0, 16, this.Wv);
+                    this.a(this.song, d1, this.positionValue.apP.getY() + 15.0, 20, this.Wu);
+                    this.a(this.artist, d1, this.positionValue.apP.getY() + 30.0, 16, this.Wv);
                     this.hX();
                     if (this.Wn == -1 && this.Wg != null && !this.Wg.isEmpty()) {
                         this.a(this.Wg, this.Xp);
@@ -328,7 +328,7 @@ public class Spotify extends Module {
                     RenderUtil.a(
                         d1,
                         this.positionValue.apP.getY() + 45.0,
-                        i * (this.positionValue.aHe.getX() - 75.0) / Math.max(1, this.Wl),
+                        i * (this.positionValue.aHe.getX() - 75.0) / Math.max(1, this.durationMs),
                         6.0,
                         3.0,
                         this.rz().getAccentColor(new Vector2d(d1, 0.0)),
@@ -336,9 +336,9 @@ public class Spotify extends Module {
                         false
                     );
                     double d2 = d1 + this.positionValue.aHe.getX() - 75.0;
-                    double d3 = this.d(this.Wi, 13);
-                    this.a(this.Wh + " / ", d2 - d3, this.positionValue.apP.getY() + 38.5, 13, new Color(255, 255, 255, 128).getRGB());
-                    this.a(this.Wi, d2, this.positionValue.apP.getY() + 38.5, 13, new Color(255, 255, 255, 48).getRGB());
+                    double d3 = this.d(this.length, 13);
+                    this.a(this.progress + " / ", d2 - d3, this.positionValue.apP.getY() + 38.5, 13, new Color(255, 255, 255, 128).getRGB());
+                    this.a(this.length, d2, this.positionValue.apP.getY() + 38.5, 13, new Color(255, 255, 255, 48).getRGB());
                     if (flag) {
                         double d4 = this.positionValue.apP.getX() + 12.5;
                         double d5 = this.positionValue.apP.getX() + this.positionValue.aHe.getX() - 12.5 - d4;
@@ -349,7 +349,7 @@ public class Spotify extends Module {
                         if (this.WW > 0L) {
                             float f14 = (float)(l1 - this.WW) / 520.0F;
                             if (f14 < 1.0F) {
-                                f13 = this.k(Math.max(0.0F, Math.min(1.0F, f14)));
+                                f13 = this.easeOutCubic(Math.max(0.0F, Math.min(1.0F, f14)));
                             }
                         }
 
@@ -503,12 +503,12 @@ public class Spotify extends Module {
         long i = file1.exists() ? file1.lastModified() : 0L;
         if (i != this.Xe) {
             this.Xe = i;
-            String s = this.Xc;
-            String s1 = this.Xd;
+            String s = this.clientId;
+            String s1 = this.clientSecret;
             Map map = this.aS();
-            this.Xc = String.valueOf(map.getOrDefault("client_id", ""));
-            this.Xd = String.valueOf(map.getOrDefault("client_secret", ""));
-            boolean flag = !Objects.equals(s, this.Xc) || !Objects.equals(s1, this.Xd);
+            this.clientId = String.valueOf(map.getOrDefault("client_id", ""));
+            this.clientSecret = String.valueOf(map.getOrDefault("client_secret", ""));
+            boolean flag = !Objects.equals(s, this.clientId) || !Objects.equals(s1, this.clientSecret);
             if (flag) {
                 afi.b("Spotify credentials updated. Re-auth will be requested.");
                 this.Wd = "";
@@ -517,7 +517,7 @@ public class Spotify extends Module {
     }
 
     private boolean hQ() {
-        return this.Xc != null && !this.Xc.isEmpty() && this.Xd != null && !this.Xd.isEmpty();
+        return this.clientId != null && !this.clientId.isEmpty() && this.clientSecret != null && !this.clientSecret.isEmpty();
     }
 
     private void hR() {
@@ -525,7 +525,7 @@ public class Spotify extends Module {
             if (!this.Xb) {
                 boolean flag = this.Wd == null || this.Wd.isEmpty() || this.Xf > 0L;
                 if (flag && this.hQ()) {
-                    this.ia();
+                    this.startAuthFlow();
                     this.Xf = 0L;
                 }
             }
@@ -665,7 +665,7 @@ public class Spotify extends Module {
     private float a(int var1, int var2) {
         if (this.Wx && var1 >= 0 && var1 < this.Wy.size()) {
             int i = this.Wy.get(var1).XR;
-            int j = var1 + 1 < this.Wy.size() ? this.Wy.get(var1 + 1).XR : this.Wl;
+            int j = var1 + 1 < this.Wy.size() ? this.Wy.get(var1 + 1).XR : this.durationMs;
             if (j <= i) {
                 return 1.0F;
             }
@@ -682,7 +682,7 @@ public class Spotify extends Module {
         if (this.Wx && var1 >= 0 && var1 < this.Wy.size()) {
             LyricLine sl = this.Wy.get(var1);
             if (sl.XT == null || sl.XT.isEmpty()) {
-                int i = var1 + 1 < this.Wy.size() ? this.Wy.get(var1 + 1).XR : this.Wl;
+                int i = var1 + 1 < this.Wy.size() ? this.Wy.get(var1 + 1).XR : this.durationMs;
                 sl.XT = this.a(sl.XS, sl.XR, i);
             }
 
@@ -755,7 +755,7 @@ public class Spotify extends Module {
         }
 
         this.XH = var2;
-        float f1 = this.a(var1, var3) * this.Wc.wo().floatValue();
+        float f1 = this.a(var1, var3) * this.karaokeSpeedX.wo().floatValue();
         if (now < this.XG) {
             f1 *= 8.0F;
         }
@@ -790,24 +790,24 @@ public class Spotify extends Module {
 
         int i = Math.max(1, this.Wz.size());
         double d0 = (double)var1 / i;
-        return (int)Math.round(this.Wl * d0);
+        return (int)Math.round(this.durationMs * d0);
     }
 
     private int y(int var1) {
         if (this.Wx) {
-            return var1 + 1 < this.Wy.size() ? this.Wy.get(var1 + 1).XR : this.Wl;
+            return var1 + 1 < this.Wy.size() ? this.Wy.get(var1 + 1).XR : this.durationMs;
         }
 
         int i = Math.max(1, this.Wz.size());
         double d0 = (double)(var1 + 1) / i;
-        return (int)Math.round(this.Wl * d0);
+        return (int)Math.round(this.durationMs * d0);
     }
 
     private float a(float var1, float var2, float var3) {
         return Math.max(var2, Math.min(var3, var1));
     }
 
-    public void hT() {
+    public void pollCider() {
         try {
             long now = System.nanoTime();
             HttpURLConnection httpurlconnection = (HttpURLConnection)new URL("http://localhost:10767/api/v1/playback/now-playing").openConnection();
@@ -821,11 +821,11 @@ public class Spotify extends Module {
                 JSONObject jsonobject = new JSONObject(scanner.hasNext() ? scanner.next() : "");
                 if (jsonobject.getString("status").equals("ok")) {
                     JSONObject jsonobject1 = jsonobject.getJSONObject("info");
-                    this.We = jsonobject1.getString("name");
-                    this.Wf = jsonobject1.getString("artistName");
-                    this.Wl = jsonobject1.getInt("durationInMillis");
+                    this.song = jsonobject1.getString("name");
+                    this.artist = jsonobject1.getString("artistName");
+                    this.durationMs = jsonobject1.getInt("durationInMillis");
                     this.Wg = jsonobject1.getJSONObject("artwork").getString("url").replace("{w}x{h}", "600x600");
-                    this.Wm = (int)(this.Wl - jsonobject1.getDouble("remainingTime") * 1000.0);
+                    this.progressMs = (int)(this.durationMs - jsonobject1.getDouble("remainingTime") * 1000.0);
                     long j = (System.nanoTime() - now) / 1000000L;
                     long k = Math.min(150L, Math.max(0L, j / 2L));
                     this.WB = System.currentTimeMillis() - k;
@@ -839,7 +839,7 @@ public class Spotify extends Module {
         }
     }
 
-    public void hU() {
+    public void pollSpotify() {
         try {
             long now = System.nanoTime();
             HttpURLConnection httpurlconnection = (HttpURLConnection)new URL("https://api.spotify.com/v1/me/player?market=US").openConnection();
@@ -859,16 +859,16 @@ public class Spotify extends Module {
                     JSONObject jsonobject = new JSONObject(bufferedreader.lines().reduce("", String::concat));
                     if (jsonobject.has("item")) {
                         JSONObject jsonobject1 = jsonobject.getJSONObject("item");
-                        this.We = jsonobject1.getString("name");
-                        this.Wf = jsonobject1.getJSONArray("artists")
+                        this.song = jsonobject1.getString("name");
+                        this.artist = jsonobject1.getJSONArray("artists")
                             .toList()
                             .stream()
                             .map(var0 -> ((Map)var0).get("name").toString())
                             .reduce((var0, var1) -> var0 + ", " + var1)
                             .orElse("");
                         this.Wg = jsonobject1.getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url");
-                        this.Wl = jsonobject1.getInt("duration_ms");
-                        this.Wm = jsonobject.getInt("progress_ms");
+                        this.durationMs = jsonobject1.getInt("duration_ms");
+                        this.progressMs = jsonobject.getInt("progress_ms");
                         long i1 = jsonobject.optLong("timestamp", k);
                         long j1 = Math.max(0L, k - i1);
                         long k1 = Math.max(0L, l / 2L);
@@ -883,7 +883,7 @@ public class Spotify extends Module {
                             long i2 = ++this.Xp;
                             this.d(i2);
                             this.Xu = i2;
-                            this.a(this.We, this.Wf, this.Wk, i2);
+                            this.a(this.song, this.artist, this.Wk, i2);
                             if (this.Wg != null && !this.Wg.isEmpty()) {
                                 this.Xv = i2;
                                 this.Xw = this.Wg;
@@ -893,7 +893,7 @@ public class Spotify extends Module {
                             long j2 = this.Xp;
                             if (flag1 && this.Xu != j2) {
                                 this.Xu = j2;
-                                this.a(this.We, this.Wf, this.Wk, j2);
+                                this.a(this.song, this.artist, this.Wk, j2);
                             }
 
                             if (flag2 && (this.Xv != j2 || !Objects.equals(this.Xw, this.Wg))) {
@@ -909,9 +909,9 @@ public class Spotify extends Module {
                 long k2 = this.Xq == 0L ? Long.MAX_VALUE : k - this.Xq;
                 boolean flag3 = k2 >= 1500L && this.Xr >= 3;
                 if (flag3) {
-                    this.Wf = this.We = "No data";
+                    this.artist = this.song = "No data";
                     this.Wg = "";
-                    this.Wm = this.Wl = 999;
+                    this.progressMs = this.durationMs = 999;
                     this.Ww = false;
                     this.Wy = new ArrayList<>();
                     this.Wz = new ArrayList<>();
@@ -958,12 +958,12 @@ public class Spotify extends Module {
                 }
             }
 
-            JSONObject jsonobject = this.a(var1, s, this.Wl);
+            JSONObject jsonobject = this.a(var1, s, this.durationMs);
             if (jsonobject == null) {
-                JSONObject jsonobject1 = this.b(var1, s, this.Wl);
+                JSONObject jsonobject1 = this.b(var1, s, this.durationMs);
                 if (jsonobject1 != null) {
                     if (jsonobject1.optString("syncedLyrics", "").isEmpty() && jsonobject1.optString("plainLyrics", "").isEmpty()) {
-                        jsonobject = this.a(jsonobject1.optString("trackName", var1), jsonobject1.optString("artistName", s), this.Wl);
+                        jsonobject = this.a(jsonobject1.optString("trackName", var1), jsonobject1.optString("artistName", s), this.durationMs);
                     } else {
                         jsonobject = jsonobject1;
                     }
@@ -1333,7 +1333,7 @@ public class Spotify extends Module {
 
         for (int j = 0; j < arraylist.size(); j++) {
             LyricLine sl = (LyricLine)arraylist.get(j);
-            int k = j + 1 < arraylist.size() ? ((LyricLine)arraylist.get(j + 1)).XR : this.Wl;
+            int k = j + 1 < arraylist.size() ? ((LyricLine)arraylist.get(j + 1)).XR : this.durationMs;
             if (sl.XT == null || sl.XT.isEmpty()) {
                 sl.XT = this.a(sl.XS, sl.XR, k);
             }
@@ -1420,7 +1420,7 @@ public class Spotify extends Module {
         JSONObject jsonobject = null;
         double d0 = Double.MAX_VALUE;
 
-        for (String s : this.j(var1, var2)) {
+        for (String s : this.buildSearchUrls(var1, var2)) {
             try {
                 JSONArray jsonarray = this.M(s);
                 if (jsonarray != null) {
@@ -1456,7 +1456,7 @@ public class Spotify extends Module {
         return jsonobject;
     }
 
-    private List<String> j(String var1, String var2) {
+    private List<String> buildSearchUrls(String var1, String var2) {
         ArrayList arraylist = new ArrayList();
 
         try {
@@ -1628,7 +1628,7 @@ public class Spotify extends Module {
                         ParsedLyricLine sm = this.h(s1.trim(), (Integer)arraylist1.get(0));
 
                         for (int l : (Iterable<Integer>)arraylist1) {
-                            LyricLine slx = new LyricLine(l, sm.XV, this.f(sm.XW), true);
+                            LyricLine slx = new LyricLine(l, sm.XV, this.f(sm.words), true);
                             arraylist.add(slx);
                             afi.c("Enhanced line parsed: [" + l + "ms] \"" + slx.XS + "\" | words=" + slx.XT.size());
                         }
@@ -1647,7 +1647,7 @@ public class Spotify extends Module {
 
         for (int i1 = 0; i1 < arraylist.size(); i1++) {
             LyricLine sl = (LyricLine)arraylist.get(i1);
-            int j1 = i1 + 1 < arraylist.size() ? ((LyricLine)arraylist.get(i1 + 1)).XR : this.Wl;
+            int j1 = i1 + 1 < arraylist.size() ? ((LyricLine)arraylist.get(i1 + 1)).XR : this.durationMs;
             if (!sl.XT.isEmpty()) {
                 for (int k1 = 0; k1 < sl.XT.size(); k1++) {
                     if (k1 + 1 < sl.XT.size()) {
@@ -2038,15 +2038,15 @@ public class Spotify extends Module {
             }
 
             return k;
-        } else if (!this.Wx && !this.Wz.isEmpty() && this.Wl > 0) {
-            int i1 = (int)Math.floor((double)var1 / this.Wl * this.Wz.size());
+        } else if (!this.Wx && !this.Wz.isEmpty() && this.durationMs > 0) {
+            int i1 = (int)Math.floor((double)var1 / this.durationMs * this.Wz.size());
             return Math.max(0, Math.min(this.Wz.size() - 1, i1));
         }
         return -1;
     }
 
     private int hV() {
-        return this.z(this.Wm);
+        return this.z(this.progressMs);
     }
 
     private int hW() {
@@ -2060,7 +2060,7 @@ public class Spotify extends Module {
         return var1 >= 0 && var1 < this.Wz.size() ? this.Wz.get(var1) : "";
     }
 
-    private String R(String var1) {
+    private String requestAccessToken(String var1) {
         Map map = this.aS();
         String s = (String)map.get("client_id");
         String s1 = (String)map.get("client_secret");
@@ -2151,7 +2151,7 @@ public class Spotify extends Module {
                     }
 
                     if (s != null) {
-                        this.R(s);
+                        this.requestAccessToken(s);
                         break;
                     }
                 } catch (SocketException socketexception1) {
@@ -2253,19 +2253,19 @@ public class Spotify extends Module {
         this.Xw = "";
     }
 
-    private void hY() {
+    private void startPoller() {
         if (!this.WZ) {
             this.WZ = true;
-            this.Xa = new Thread(() -> {
+            this.pollerThread = new Thread(() -> {
                 while (this.WZ) {
                     try {
                         this.hP();
                         this.hR();
                         String s = this.musicService.wo().getName();
                         if ("Cider".equals(s)) {
-                            this.hT();
+                            this.pollCider();
                         } else if (this.Wd != null && !this.Wd.isEmpty()) {
-                            this.hU();
+                            this.pollSpotify();
                         }
                     } catch (Throwable throwable) {
                         throwable.printStackTrace();
@@ -2280,24 +2280,24 @@ public class Spotify extends Module {
                     }
                 }
             }, "SpotifyPoller");
-            this.Xa.setDaemon(true);
-            this.Xa.start();
+            this.pollerThread.setDaemon(true);
+            this.pollerThread.start();
         }
     }
 
     private void hZ() {
         this.WZ = false;
-        if (this.Xa != null) {
+        if (this.pollerThread != null) {
             try {
-                this.Xa.interrupt();
+                this.pollerThread.interrupt();
             } catch (Throwable throwable) {
             }
 
-            this.Xa = null;
+            this.pollerThread = null;
         }
     }
 
-    public void ia() {
+    public void startAuthFlow() {
         if (!this.Xb) {
             this.Xb = true;
             new Thread(() -> {
@@ -2319,7 +2319,7 @@ public class Spotify extends Module {
                     .browse(
                         new URI(
                             "https://accounts.spotify.com/authorize?response_type=code&client_id="
-                                + URLEncoder.encode(this.Xc, "UTF-8")
+                                + URLEncoder.encode(this.clientId, "UTF-8")
                                 + "&redirect_uri="
                                 + URLEncoder.encode("http://127.0.0.1:8888/callback", "UTF-8")
                                 + "&scope="
@@ -2354,24 +2354,24 @@ public class Spotify extends Module {
             if (!this.hQ()) {
                 afi.b("Spotify: Missing client credentials. Set them before connecting.");
             } else if (this.Wd.isEmpty()) {
-                this.ia();
+                this.startAuthFlow();
             }
         }
 
         if ("Cider".equals(s1)) {
-            this.hT();
+            this.pollCider();
         } else if (!this.Wd.isEmpty()) {
-            this.hU();
+            this.pollSpotify();
         }
 
-        this.Wj = this.We;
+        this.Wj = this.song;
         this.Wn = -1;
         this.hX();
         if (this.Wg != null && !this.Wg.isEmpty()) {
             this.a(this.Wg, this.Xp);
         }
 
-        this.hY();
+        this.startPoller();
     }
 
     @Override
@@ -2381,19 +2381,19 @@ public class Spotify extends Module {
 
     private int ib() {
         long now = System.currentTimeMillis() - this.WB;
-        int j = this.Wm + (int)now;
+        int j = this.progressMs + (int)now;
         if (j < 0) {
             j = 0;
         }
 
-        if (this.Wl > 0 && j > this.Wl) {
-            j = this.Wl;
+        if (this.durationMs > 0 && j > this.durationMs) {
+            j = this.durationMs;
         }
 
         return j;
     }
 
-    private float k(float var1) {
+    private float easeOutCubic(float var1) {
         if (var1 <= 0.0F) {
             return 0.0F;
         }
@@ -2408,7 +2408,7 @@ public class Spotify extends Module {
 
     private float ic() {
         float f = (float)(System.currentTimeMillis() - this.WD) / 260.0F;
-        return this.k(Math.min(1.0F, Math.max(0.0F, f)));
+        return this.easeOutCubic(Math.min(1.0F, Math.max(0.0F, f)));
     }
 
     private void B(int var1) {

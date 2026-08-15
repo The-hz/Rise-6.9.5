@@ -152,7 +152,7 @@ public class LagFlight extends Mode<Flight> {
                                     switch (s) {
                                         case "Packet":
                                             double d2 = var1x.getPosY();
-                                            PacketUtil.m(new C04PacketPlayerPosition(d0, d2, d1, this.spoofGround.wo()));
+                                            PacketUtil.sendNoEvent(new C04PacketPlayerPosition(d0, d2, d1, this.spoofGround.wo()));
                                             break label54;
                                         case "VoidTP":
                                             break label53;
@@ -168,12 +168,12 @@ public class LagFlight extends Mode<Flight> {
                                 }
 
                                 double d4 = var1x.getPosY() + this.offsetSize.wo().doubleValue();
-                                PacketUtil.m(new C04PacketPlayerPosition(d0, d4, d1, this.spoofGround.wo()));
+                                PacketUtil.sendNoEvent(new C04PacketPlayerPosition(d0, d4, d1, this.spoofGround.wo()));
                                 break label54;
                             }
 
                             double d3 = var1x.getPosY() - this.offsetSize.wo().doubleValue();
-                            PacketUtil.m(new C04PacketPlayerPosition(d0, d3, d1, this.spoofGround.wo()));
+                            PacketUtil.sendNoEvent(new C04PacketPlayerPosition(d0, d3, d1, this.spoofGround.wo()));
                             break label54;
                         }
 
@@ -202,7 +202,7 @@ public class LagFlight extends Mode<Flight> {
         if (this.c06ToC04.wo() && this.GS == 1) {
             if (packet instanceof C06PacketPlayerPosLook c06packetplayerposlook) {
                 var1x.setCancelled();
-                PacketUtil.m(
+                PacketUtil.sendNoEvent(
                     new C04PacketPlayerPosition(
                         c06packetplayerposlook.afD(), c06packetplayerposlook.afE(), c06packetplayerposlook.afF(), c06packetplayerposlook.isOnGround()
                     )

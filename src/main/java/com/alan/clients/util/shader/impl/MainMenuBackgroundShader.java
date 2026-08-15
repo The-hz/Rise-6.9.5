@@ -11,7 +11,7 @@ import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.opengl.Display;
 
 public class MainMenuBackgroundShader extends aix {
-    private final RiseShaderProgram aQi = new RiseShaderProgram("main_menu/background.frag", "vertex.vsh");
+    private final RiseShaderProgram program = new RiseShaderProgram("main_menu/background.frag", "vertex.vsh");
     private Framebuffer tempFBO = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
 
     public MainMenuBackgroundShader() {
@@ -22,13 +22,13 @@ public class MainMenuBackgroundShader extends aix {
         if (Display.isVisible()) {
             if (var1 == aiz.OVERLAY) {
                 this.update();
-                int i = this.aQi.getProgramId();
+                int i = this.program.getProgramId();
                 new ScaledResolution(aEg);
                 GlStateManager.enableBlend();
                 GlStateManager.blendFunc(770, 771);
                 GlStateManager.disableAlpha();
                 aEg.getFramebuffer().bindFramebuffer(true);
-                this.aQi.rt();
+                this.program.rt();
                 ShaderUniforms.uniform2f(i, "resolution", (float)aEg.displayWidth, (float)aEg.displayHeight);
                 ShaderUniforms.uniform1f(i, "time", (float)(System.currentTimeMillis() - aEg.Bx()) / 1000.0F);
                 RiseShaderProgram.vN();

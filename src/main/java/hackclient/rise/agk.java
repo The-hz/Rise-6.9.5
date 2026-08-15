@@ -52,7 +52,7 @@ public class agk implements InstanceAccess {
         if (this.aJf) {
             double d2 = vector2d.x;
             double d3 = vector2d.y + var2 * d0 - d1 * d0;
-            Color color = ColorUtil.d(Color.WHITE, 60);
+            Color color = ColorUtil.withBlue(Color.WHITE, 60);
             RenderUtil.roundedRectangle(d2, d3, 1.0, d1, 0.5, color);
         }
     }

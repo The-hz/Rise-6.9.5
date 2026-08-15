@@ -102,8 +102,8 @@ public final class Module extends Command {
         if (var1 instanceof NumberValue numbervalue) {
             try {
                 double d0 = Double.parseDouble(var2);
-                double d1 = numbervalue.wx().doubleValue();
-                double d2 = numbervalue.wy().doubleValue();
+                double d1 = numbervalue.getMin().doubleValue();
+                double d2 = numbervalue.getMax().doubleValue();
                 if (!(d0 < d1) && !(d0 > d2)) {
                     numbervalue.n(d0);
                 } else {

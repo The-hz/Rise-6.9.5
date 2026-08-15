@@ -61,7 +61,7 @@ public final class SlotComponent extends Component {
                 )
                 && aEg.currentScreen == null;
             if (flag != fZ) {
-                animation.T(flag ? 1.1 : 1.0);
+                animation.setValue(flag ? 1.1 : 1.0);
             }
 
             fZ = flag;
@@ -72,9 +72,9 @@ public final class SlotComponent extends Component {
                 gd = this.a(gb, stackSize);
             }
 
-            animation.h(900L);
+            animation.setDuration(900L);
             animation.Q(flag ? 1.0 : 1.1);
-            double d0 = animation.sG();
+            double d0 = animation.getValue();
             double d1 = 1.0 - 10.0 * Math.abs(1.0 - d0);
             double d2 = Math.max(0.0, Math.min(1.0, d1));
             boolean flag1 = flag ? itemstack1.getItem() instanceof ItemBlock : gb;
@@ -105,14 +105,14 @@ public final class SlotComponent extends Component {
                     this.rz();
                     Color color = Themes.rK();
                     this.rz();
-                    RenderUtil.roundedRectangle(d4, d5, d3, 22.0, d9, ColorUtil.d(color, (int)(Themes.rK().getAlpha() * d7)));
+                    RenderUtil.roundedRectangle(d4, d5, d3, 22.0, d9, ColorUtil.withBlue(color, (int)(Themes.rK().getAlpha() * d7)));
                     if (flag1) {
                         float f = this.ge.getStringWidth("Amount:") + 2;
-                        this.ge.b("Amount:", d4 + 6.0 + 16.0, d6, ColorUtil.d(Color.WHITE, (int)(255.0 * d7)).getRGB());
-                        this.gf.b(s, d4 + 6.0 + 16.0 + f, d6, ColorUtil.d(this.rz().rA(), (int)(255.0 * d7)).getRGB());
+                        this.ge.b("Amount:", d4 + 6.0 + 16.0, d6, ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d7)).getRGB());
+                        this.gf.b(s, d4 + 6.0 + 16.0 + f, d6, ColorUtil.withBlue(this.rz().rA(), (int)(255.0 * d7)).getRGB());
                     }
 
-                    RenderUtil.a(d4 + 3.0, d5 + 3.0, ColorUtil.d(Color.WHITE, (int)(255.0 * d7)).getRGB(), itemstack2);
+                    RenderUtil.a(d4 + 3.0, d5 + 3.0, ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d7)).getRGB(), itemstack2);
                     GlStateManager.popMatrix();
                 });
                 double d8 = d2;
@@ -123,7 +123,7 @@ public final class SlotComponent extends Component {
                             GlStateManager.translate((d4 + d3 * 0.5) * (1.0 - d0), (d5 + 11.0) * (1.0 - d0), 0.0);
                             GlStateManager.scale(d0, d0, 0.0);
                             RenderUtil.roundedRectangle(
-                                d4 + 0.5, d5 + 0.5, d3 - 1.0, 21.0, this.rz().getRound() + 1, ColorUtil.d(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d8))
+                                d4 + 0.5, d5 + 0.5, d3 - 1.0, 21.0, this.rz().getRound() + 1, ColorUtil.withBlue(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d8))
                             );
                             GlStateManager.popMatrix();
                         }
@@ -151,7 +151,7 @@ public final class SlotComponent extends Component {
             inventoryplayer.cIU = true;
             fX = var1;
             fY = false;
-            animation.T(1.1);
+            animation.setValue(1.1);
             aEg.playerController.syncCurrentPlayItem();
             dj = false;
         }

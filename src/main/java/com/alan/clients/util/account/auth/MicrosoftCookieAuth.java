@@ -32,7 +32,7 @@ public final class MicrosoftCookieAuth {
     public static MSAAuthResult a(JsonArray var0) {
         HashSet hashset = new HashSet();
 
-        for (AltAccount altAccount : Client.a.q().tl()) {
+        for (AltAccount altAccount : Client.a.getAltManager().getAccounts()) {
             if (altAccount.sh() != null) {
                 hashset.add(altAccount.sh().toLowerCase());
             }
@@ -155,11 +155,11 @@ public final class MicrosoftCookieAuth {
                     ),
                     McResponse.class
                 );
-                if (e != null && e.aEU != null) {
-                    ProfileResponse f = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.aEU), ProfileResponse.class);
-                    if (f != null && f.aEZ != null && f.gK != null) {
+                if (e != null && e.access_token != null) {
+                    ProfileResponse f = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.access_token), ProfileResponse.class);
+                    if (f != null && f.aEZ != null && f.name != null) {
                         String s10 = MicrosoftLogin.extractRefreshTokenFromCookies(s);
-                        return new LoginData(e.aEU, s10, f.aEZ, f.gK);
+                        return new LoginData(e.access_token, s10, f.aEZ, f.name);
                     }
                     return new LoginData();
                 } else {

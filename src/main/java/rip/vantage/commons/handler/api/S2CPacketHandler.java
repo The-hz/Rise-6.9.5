@@ -7,23 +7,23 @@ import rip.vantage.commons.packet.impl.server.protection.S2CPacketConfig;
 import rip.vantage.commons.packet.impl.server.protection.h;
 
 public interface S2CPacketHandler extends PacketHandler {
-    void a(h var1);
+    void handle(h var1);
 
     void handle(rip.vantage.commons.packet.impl.server.management.S2CPacketHudRefresh packet);
 
     void handle(S2CPacketServerJoin packet);
 
-    void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStopRecording packet);
+    void handle(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStopRecording packet);
 
     void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketEntityListRequest packet);
 
-    void a(S2CPacketJdkUnlockGrant packet);
+    void handle(S2CPacketJdkUnlockGrant packet);
 
     void handle(rip.vantage.commons.packet.impl.server.community.S2CPacketUserData packet);
 
-    void a(S2CPacketMonitorPing packet);
+    void handle(S2CPacketMonitorPing packet);
 
-    void a(rip.vantage.commons.packet.impl.server.protection.S2CPacketProofOfWorkChallenge packet);
+    void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketProofOfWorkChallenge packet);
 
     void b(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorCommand packet);
 
@@ -31,17 +31,17 @@ public interface S2CPacketHandler extends PacketHandler {
 
     void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketAccount packet);
 
-    void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureRequest packet);
+    void handle(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureRequest packet);
 
     void b(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorConsent packet);
 
     void handle(rip.vantage.commons.packet.impl.server.community.S2CPacketConfigList packet);
 
-    void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStartRecording packet);
+    void handle(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStartRecording packet);
 
     void handle(S2CPacketConfig packet);
 
-    void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureCancel packet);
+    void handle(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureCancel packet);
 
     void b(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorRequest packet);
 

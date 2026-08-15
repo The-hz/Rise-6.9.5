@@ -30,7 +30,7 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
         }
 
         Entity entity = this.aui.target;
-        boolean flag = !this.aui.inWorld || this.aui.rG.T(1000L);
+        boolean flag = !this.aui.inWorld || this.aui.stopwatch.T(1000L);
         if (entity == null || flag) {
             return;
         }
@@ -63,7 +63,7 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
         double d2 = Math.min(!this.aui.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
         Color color = c(f, abstractclientplayer.getMaxHealth());
         double d3 = d0 + 40.0;
-        RenderUtil.d(d3, d1 + 25.0, 91.0, 5.0, ColorUtil.d(color, 50));
+        RenderUtil.d(d3, d1 + 25.0, 91.0, 5.0, ColorUtil.withBlue(color, 50));
         RenderUtil.d(d3, d1 + 25.0, 91.0 * (d2 / abstractclientplayer.getMaxHealth()), 6.0, color);
         RenderUtil.d(d3, d1 + 25.0, 91.0, 1.0, Color.BLACK);
         RenderUtil.d(d3, d1 + 30.0, 91.0, 1.0, Color.BLACK);

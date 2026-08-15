@@ -22,13 +22,13 @@ import net.minecraft.util.EnumChatFormatting;
 
 @ModuleInfo(aliases = "module.other.bwutils.name", description = "module.other.bwutils.description", category = Category.PLAYER)
 public final class BedwarsUtils extends Module {
-    private final Collection<EntityPlayer> TE = new HashSet<>();
-    private final Collection<EntityPlayer> TF = new HashSet<>();
-    private final Collection<EntityPlayer> TG = new HashSet<>();
-    private final Collection<EntityPlayer> TH = new HashSet<>();
-    private final Collection<EntityPlayer> TI = new HashSet<>();
-    private final Collection<EntityPlayer> TJ = new HashSet<>();
-    private final Collection<EntityPlayer> TK = new HashSet<>();
+    private final Collection<EntityPlayer> ironSwordPlayers = new HashSet<>();
+    private final Collection<EntityPlayer> diamondSwordPlayers = new HashSet<>();
+    private final Collection<EntityPlayer> stoneSwordPlayers = new HashSet<>();
+    private final Collection<EntityPlayer> diamondArmorPlayers = new HashSet<>();
+    private final Collection<EntityPlayer> chainArmorPlayers = new HashSet<>();
+    private final Collection<EntityPlayer> ironArmorPlayers = new HashSet<>();
+    private final Collection<EntityPlayer> invisiblePlayers = new HashSet<>();
     private final BooleanValue swordReveal = new BooleanValue("Sword Reveal", this, true);
     private final BooleanValue includeStone = new BooleanValue("Include Stone", this, false, () -> !this.swordReveal.wo());
     private final BooleanValue armorReveal = new BooleanValue("Armor Reveal", this, true);
@@ -39,20 +39,20 @@ public final class BedwarsUtils extends Module {
     private final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
             if (aEg.thePlayer == null && aEg.theWorld == null) {
-                this.TF.clear();
-                this.TE.clear();
-                this.TG.clear();
-                this.TH.clear();
-                this.TJ.clear();
-                this.TI.clear();
-                this.TK.clear();
+                this.diamondSwordPlayers.clear();
+                this.ironSwordPlayers.clear();
+                this.stoneSwordPlayers.clear();
+                this.diamondArmorPlayers.clear();
+                this.ironArmorPlayers.clear();
+                this.chainArmorPlayers.clear();
+                this.invisiblePlayers.clear();
             } else {
                 if (entityplayer.getHeldItem() != null) {
                     Item item = entityplayer.getHeldItem().getItem();
                     if (this.swordReveal.wo() && item instanceof ItemSword) {
                         String s = ((ItemSword)item).getToolMaterialName().toLowerCase();
-                        if (s.contains("iron") && !this.TE.contains(entityplayer)) {
-                            this.TE.add(entityplayer);
+                        if (s.contains("iron") && !this.ironSwordPlayers.contains(entityplayer)) {
+                            this.ironSwordPlayers.add(entityplayer);
                             afi.b(
                                 "Player "
                                     + EnumChatFormatting.RED
@@ -64,8 +64,8 @@ public final class BedwarsUtils extends Module {
                             );
                         }
 
-                        if (s.contains("emerald") && !this.TF.contains(entityplayer)) {
-                            this.TF.add(entityplayer);
+                        if (s.contains("emerald") && !this.diamondSwordPlayers.contains(entityplayer)) {
+                            this.diamondSwordPlayers.add(entityplayer);
                             afi.b(
                                 "Player "
                                     + EnumChatFormatting.RED
@@ -77,8 +77,8 @@ public final class BedwarsUtils extends Module {
                             );
                         }
 
-                        if (s.contains("stone") && !this.TG.contains(entityplayer)) {
-                            this.TG.add(entityplayer);
+                        if (s.contains("stone") && !this.stoneSwordPlayers.contains(entityplayer)) {
+                            this.stoneSwordPlayers.add(entityplayer);
                             if (this.includeStone.wo()) {
                                 afi.b(
                                     "Player "
@@ -93,9 +93,9 @@ public final class BedwarsUtils extends Module {
                         }
 
                         if (s.contains("wood")) {
-                            this.TG.remove(entityplayer);
-                            this.TE.remove(entityplayer);
-                            this.TF.remove(entityplayer);
+                            this.stoneSwordPlayers.remove(entityplayer);
+                            this.ironSwordPlayers.remove(entityplayer);
+                            this.diamondSwordPlayers.remove(entityplayer);
                         }
                     }
                 }
@@ -103,8 +103,8 @@ public final class BedwarsUtils extends Module {
                 if (this.armorReveal.wo()) {
                     ItemStack itemstack = entityplayer.getCurrentArmor(1);
                     if (itemstack != null && itemstack.getItem() instanceof ItemArmor) {
-                        if (((ItemArmor)itemstack.getItem()).getArmorMaterial().equals(ArmorMaterial.CHAIN) && !this.TI.contains(entityplayer)) {
-                            this.TI.add(entityplayer);
+                        if (((ItemArmor)itemstack.getItem()).getArmorMaterial().equals(ArmorMaterial.CHAIN) && !this.chainArmorPlayers.contains(entityplayer)) {
+                            this.chainArmorPlayers.add(entityplayer);
                             afi.b(
                                 "Player "
                                     + EnumChatFormatting.RED
@@ -116,8 +116,8 @@ public final class BedwarsUtils extends Module {
                             );
                         }
 
-                        if (((ItemArmor)itemstack.getItem()).getArmorMaterial().equals(ArmorMaterial.IRON) && !this.TJ.contains(entityplayer)) {
-                            this.TJ.add(entityplayer);
+                        if (((ItemArmor)itemstack.getItem()).getArmorMaterial().equals(ArmorMaterial.IRON) && !this.ironArmorPlayers.contains(entityplayer)) {
+                            this.ironArmorPlayers.add(entityplayer);
                             afi.b(
                                 "Player "
                                     + EnumChatFormatting.RED
@@ -129,8 +129,8 @@ public final class BedwarsUtils extends Module {
                             );
                         }
 
-                        if (((ItemArmor)itemstack.getItem()).getArmorMaterial().equals(ArmorMaterial.DIAMOND) && !this.TH.contains(entityplayer)) {
-                            this.TH.add(entityplayer);
+                        if (((ItemArmor)itemstack.getItem()).getArmorMaterial().equals(ArmorMaterial.DIAMOND) && !this.diamondArmorPlayers.contains(entityplayer)) {
+                            this.diamondArmorPlayers.add(entityplayer);
                             afi.b(
                                 "Player "
                                     + EnumChatFormatting.RED
@@ -143,17 +143,17 @@ public final class BedwarsUtils extends Module {
                         }
 
                         if (((ItemArmor)itemstack.getItem()).getArmorMaterial().equals(ArmorMaterial.LEATHER)) {
-                            this.TH.remove(entityplayer);
-                            this.TJ.remove(entityplayer);
-                            this.TI.remove(entityplayer);
+                            this.diamondArmorPlayers.remove(entityplayer);
+                            this.ironArmorPlayers.remove(entityplayer);
+                            this.chainArmorPlayers.remove(entityplayer);
                         }
                     }
                 }
 
                 if (this.invisibleCheck.wo()) {
                     if (entityplayer.getActivePotionEffect(Potion.invisibility) != null) {
-                        if (!this.TK.contains(entityplayer)) {
-                            this.TK.add(entityplayer);
+                        if (!this.invisiblePlayers.contains(entityplayer)) {
+                            this.invisiblePlayers.add(entityplayer);
                             afi.b(
                                 "Player "
                                     + EnumChatFormatting.RED
@@ -164,8 +164,8 @@ public final class BedwarsUtils extends Module {
                                     + "Invisible"
                             );
                         }
-                    } else if (this.TK.contains(entityplayer)) {
-                        this.TK.remove(entityplayer);
+                    } else if (this.invisiblePlayers.contains(entityplayer)) {
+                        this.invisiblePlayers.remove(entityplayer);
                         afi.b(
                             "Player "
                                 + EnumChatFormatting.RED
@@ -204,13 +204,13 @@ public final class BedwarsUtils extends Module {
     };
     @EventLink
     private final Listener<WorldChangeEvent> onWorldChange = var1 -> {
-        this.TF.clear();
-        this.TE.clear();
-        this.TG.clear();
-        this.TI.clear();
-        this.TJ.clear();
-        this.TH.clear();
-        this.TK.clear();
+        this.diamondSwordPlayers.clear();
+        this.ironSwordPlayers.clear();
+        this.stoneSwordPlayers.clear();
+        this.chainArmorPlayers.clear();
+        this.ironArmorPlayers.clear();
+        this.diamondArmorPlayers.clear();
+        this.invisiblePlayers.clear();
     };
 
     public BedwarsUtils() {

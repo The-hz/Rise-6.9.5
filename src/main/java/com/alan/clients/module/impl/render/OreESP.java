@@ -30,7 +30,7 @@ public final class OreESP extends Module {
     public static List<Integer> aqa = Arrays.asList(
         10, 11, 8, 9, 14, 15, 16, 21, 41, 42, 46, 48, 52, 56, 57, 61, 62, 73, 74, 84, 89, 103, 116, 117, 118, 120, 129, 133, 137, 145, 152, 153, 154
     );
-    public static List<BlockPos> aqb = new CopyOnWriteArrayList<>();
+    public static List<BlockPos> orePositions = new CopyOnWriteArrayList<>();
     private final a aqc = new a();
     private final NumberValue opacity = new NumberValue("Opacity", this, 160, 0, 255, 1);
     private final NumberValue worldOpacity = new NumberValue("World Opacity", this, 50, 0, 255, 1);
@@ -61,9 +61,9 @@ public final class OreESP extends Module {
     @EventLink
     public final Listener<Render3DEvent> onRender3D = var1 -> {
         if (this.eSP.wo() || this.tracers.wo()) {
-            for (BlockPos blockpos : aqb) {
+            for (BlockPos blockpos : orePositions) {
                 Block block = aEg.theWorld.getBlockState(blockpos).getBlock();
-                Color color = this.f(block);
+                Color color = this.getOreColor(block);
                 if (color != null) {
                     this.a(blockpos, color.getRed(), color.getGreen(), color.getBlue());
                 }
@@ -86,14 +86,14 @@ public final class OreESP extends Module {
     }
 
     private void w(boolean var1) {
-        aqb.clear();
+        orePositions.clear();
         aEg.renderGlobal.loadRenderers();
         apZ = var1;
     }
 
     private void mh() {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
-            aqb.clear();
+            orePositions.clear();
             int i = this.distance.wo().intValue();
             BlockPos blockpos = new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
 
@@ -103,7 +103,7 @@ public final class OreESP extends Module {
                         BlockPos blockpos1 = blockpos.add(j, k, l);
                         Block block = aEg.theWorld.getBlockState(blockpos1).getBlock();
                         if (this.e(block)) {
-                            aqb.add(blockpos1);
+                            orePositions.add(blockpos1);
                         }
                     }
                 }
@@ -126,7 +126,7 @@ public final class OreESP extends Module {
         return true;
     }
 
-    private Color f(Block block) {
+    private Color getOreColor(Block block) {
         if (block == Blocks.diamond_ore) {
             return new Color(0, 255, 255);
         } else if (block == Blocks.iron_ore) {
@@ -151,7 +151,7 @@ public final class OreESP extends Module {
         }
 
         if (this.tracers.wo()) {
-            this.b(pos, color);
+            this.drawTracer(pos, color);
         }
     }
 
@@ -166,7 +166,7 @@ public final class OreESP extends Module {
         GL11.glDisable(2929);
         GL11.glDepthMask(false);
         GL11.glDisable(2884);
-        ColorUtil.d(color);
+        ColorUtil.glColor(color);
         this.e(new AxisAlignedBB(dx, dy, dz, dx + 1.0, dy + 1.0, dz + 1.0));
         GL11.glEnable(2884);
         GL11.glDepthMask(true);
@@ -176,7 +176,7 @@ public final class OreESP extends Module {
         GL11.glPopMatrix();
     }
 
-    private void b(BlockPos pos, Color color) {
+    private void drawTracer(BlockPos pos, Color color) {
         double d0 = pos.getX() + 0.5 - aEg.getRenderManager().viewerPosX;
         double d1 = pos.getY() + 0.5 - aEg.getRenderManager().viewerPosY;
         double d2 = pos.getZ() + 0.5 - aEg.getRenderManager().viewerPosZ;
@@ -218,22 +218,22 @@ public final class OreESP extends Module {
         GL11.glEnd();
     }
 
-    public static boolean mi() {
+    public static boolean isESPEnabled() {
         OreESP oreesp = Client.a.g().c(OreESP.class);
         return oreesp != null && oreesp.eSP.wo();
     }
 
-    public static int mj() {
+    public static int getScanDistance() {
         OreESP oreesp = Client.a.g().c(OreESP.class);
         return oreesp != null ? oreesp.distance.wo().intValue() : 42;
     }
 
-    public static boolean mk() {
+    public static boolean isModuleEnabled() {
         OreESP oreesp = Client.a.g().c(OreESP.class);
         return oreesp != null && oreesp.isEnabled();
     }
 
-    public static float ml() {
+    public static float getWorldOpacity() {
         OreESP oreesp = Client.a.g().c(OreESP.class);
         return oreesp != null && oreesp.isEnabled() ? oreesp.worldOpacity.wo().floatValue() / 255.0F : 1.0F;
     }

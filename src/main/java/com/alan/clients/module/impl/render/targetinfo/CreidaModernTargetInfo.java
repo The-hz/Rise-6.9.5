@@ -39,7 +39,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
     private final BooleanValue particles = new BooleanValue("Particles", this, true);
     private final agc aur = FontManager.MAIN.a(22, FontWeight.LIGHT);
     private final agc aus = FontManager.MAIN.a(22, FontWeight.MEDIUM);
-    private final ModeValue aut = new CreidaBackgroundModeValue(this, "Background Mode", this);
+    private final ModeValue backgroundMode = new CreidaBackgroundModeValue(this, "Background Mode", this);
     private TargetInfo aui;
     private final int auu = 10;
     private final int auv = 6;
@@ -57,11 +57,11 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
         this.b(ShaderQueueType.REGULAR, 1).c(NotificationComponent::cj);
         Entity entity = this.aui.target;
         if (entity != null) {
-            boolean flag = !this.aui.inWorld || this.aui.rG.T(1000L);
-            this.auxx.h(flag ? 400L : 850L);
+            boolean flag = !this.aui.inWorld || this.aui.stopwatch.T(1000L);
+            this.auxx.setDuration(flag ? 400L : 850L);
             this.auxx.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
             this.auxx.Q(flag ? 0.0 : 1.0);
-            if (!(this.auxx.sG() <= 0.0)) {
+            if (!(this.auxx.getValue() <= 0.0)) {
                 String s = entity.getName();
                 String s1 = bf.c(s, s);
                 double d0 = this.aui.position.x;
@@ -75,16 +75,16 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                 double d5 = Math.max(d2 + 35.0 - d4, 75.0);
                 this.auy.Q(d3 / abstractclientplayer.getMaxHealth() * d5);
                 this.auy.setEasing(Easing.EASE_OUT_QUINT);
-                this.auy.h(250L);
-                double d6 = this.auy.sG();
+                this.auy.setDuration(250L);
+                double d6 = this.auy.getValue();
                 double d7 = (abstractclientplayer.hurtTime == 0 ? 0.0F : abstractclientplayer.hurtTime - aEg.timer.bWm) * 0.5;
                 byte b0 = 32;
                 this.auz.Q(d7 / 2.0);
-                double d8 = this.auz.sG();
+                double d8 = this.auz.getValue();
                 double d9 = 52 + d5 + 4.0 + d4 + 10.0;
                 double d10 = 42;
                 this.aui.positionValue.n(new Vector2d(d9, d10));
-                double d11 = this.auxx.sG();
+                double d11 = this.auxx.getValue();
                 this.b(ShaderQueueType.REGULAR).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d9 / 2.0) * (1.0 - d11), (d1 + d10 / 2.0) * (1.0 - d11), 0.0);
@@ -95,12 +95,12 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                     Color color1 = Themes.rK();
                     Color color2 = this.rz().rA();
                     Color color3 = this.rz().rB();
-                    if (this.aut.wo().getName().equals("Tint")) {
+                    if (this.backgroundMode.wo().getName().equals("Tint")) {
                         Color color4 = this.rz().getAccentColor(new Vector2d(d0, d1));
                         Color color5 = this.rz().getAccentColor(new Vector2d(d0, d1 + d10));
                         color = new Color(color4.getRed() / 5, color4.getGreen() / 5, color4.getBlue() / 5, 128);
                         color1 = new Color(color5.getRed() / 5, color5.getGreen() / 5, color5.getBlue() / 5, 128);
-                    } else if (this.aut.wo().getName().equals("Solid")) {
+                    } else if (this.backgroundMode.wo().getName().equals("Solid")) {
                         Color color6 = this.rz().rA();
                         Color color7 = this.rz().rB();
                         color = new Color(color6.getRed(), color6.getGreen(), color6.getBlue(), 128);
@@ -121,7 +121,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                     this.rz();
                     Color color8 = Themes.rK();
                     this.rz();
-                    color8 = ColorUtil.d(color8, (int)(Themes.rK().getAlpha() / 1.7F));
+                    color8 = ColorUtil.withBlue(color8, (int)(Themes.rK().getAlpha() / 1.7F));
                     this.rz();
                     RenderUtil.a(d12, d13, d5, 6.5, 3.5, color8, Themes.rK(), true);
                     RenderUtil.b(d0 + 10.0 + b0 + 6.0, d1 + 10.0 + b0 - 4.0 - 7.0, d6, 6.5, 3.5, color3, color2, false);
@@ -135,8 +135,8 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                     RenderUtil.color(ColorUtil.a(Color.RED, Color.WHITE, d7 / 9.0));
                     RenderUtil.dropShadow(3, d0 + 10.0 + d8, d1 + 10.0 + d8, b0 - d7, b0 - d7, 20.0, this.rz().getRound() * 2);
                     this.auz.Q(d7 / 2.0);
-                    double d12 = this.auz.sG() == 0.0 ? 1.0 : this.auz.sG();
-                    System.out.println(this.auz.sG());
+                    double d12 = this.auz.getValue() == 0.0 ? 1.0 : this.auz.getValue();
+                    System.out.println(this.auz.getValue());
                     this.a(abstractclientplayer, d0 + 10.0 + d12 / 2.0, d1 + 10.0 + d12 / 2.0, b0 - d7 / 2.0);
                     GlStateManager.popMatrix();
                 });
@@ -154,7 +154,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                     RenderUtil.roundedRectangle(d0 + 3.5, d1 + 5.5, d9 - 2.0, d10 - 1.0, 12.0, this.rz().rE());
                     Color color = this.rz().rA();
                     Color color1 = this.rz().rB();
-                    RenderUtil.b(d0 + 10.0 + b0 + 6.0, d1 + 10.0 + b0 - 4.0 - 7.0, d6, 6.0, 3.0, ColorUtil.d(color1, 255), ColorUtil.d(color, 255), false);
+                    RenderUtil.b(d0 + 10.0 + b0 + 6.0, d1 + 10.0 + b0 - 4.0 - 7.0, d6, 6.0, 3.0, ColorUtil.withBlue(color1, 255), ColorUtil.withBlue(color, 255), false);
                     GlStateManager.popMatrix();
                 });
             }
@@ -164,7 +164,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
     public final Listener<TickEvent> onTick = var1x -> {
         if (this.aui != null) {
             Entity entity = this.aui.target;
-            if (entity != null && !(this.auxx.sG() <= 0.0) && this.particles.wo()) {
+            if (entity != null && !(this.auxx.getValue() <= 0.0) && this.particles.wo()) {
                 double d0 = (((AbstractClientPlayer)entity).hurtTime == 0 ? 0.0F : ((AbstractClientPlayer)entity).hurtTime - aEg.timer.bWm) * 0.5;
                 if (d0 > 0.0) {
                     for (int i = 0; i < d0 * Math.random() / 2.0; i++) {
@@ -185,11 +185,11 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
     }
 
     private void a(AbstractClientPlayer abstractClientPlayer, double var2, double var4, double var6) {
-        ais.vK();
-        ais.vL();
+        ais.initStencil();
+        ais.bindWriteStencilBuffer();
         this.rz();
         RenderUtil.roundedRectangle(var2, var4, var6, var6, 7.0, Themes.rK());
-        ais.aD(1);
+        ais.bindReadStencilBuffer(1);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);
         GlStateManager.alphaFunc(516, 0.0F);
@@ -200,8 +200,8 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
         aEg.getTextureManager().bindTexture(resourcelocation);
         Gui.drawScaledCustomSizeModalRect(var2, var4, 4.0F, 4.0F, 4.0F, 4.0F, var6, var6, 32.0F, 32.0F);
         GlStateManager.disableBlend();
-        ais.vM();
+        ais.uninitStencilBuffer();
         float f1 = 0.5F;
-        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.d(Color.BLACK, 40));
+        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.withBlue(Color.BLACK, 40));
     }
 }

@@ -82,11 +82,11 @@ extends Menu {
         System.out.println("Started with " + n4 + " threads");
         this.servers.clear();
         this.done = false;
-        this.a(ServerIP.a(adt3, adt2), ServerIP.b(adt3, adt2), Math.min(n3, n2), Math.max(n3, n2));
+        this.a(ServerIP.min(adt3, adt2), ServerIP.max(adt3, adt2), Math.min(n3, n2), Math.max(n3, n2));
     }
 
     private void a(ServerIP serverIP, ServerIP adt3, int n2, int n3) {
-        ServerIP adt4 = new ServerIP(serverIP.ru(), serverIP.rv(), serverIP.rw(), serverIP.getThird());
+        ServerIP adt4 = new ServerIP(serverIP.getFirst(), serverIP.getSecond(), serverIP.rw(), serverIP.getThird());
         for (int i2 = 0; i2 < 4; ++i2) {
             for (int i3 = serverIP.getPart(i2); i3 <= adt3.getPart(i2); ++i3) {
                 adt4.setPart(i2, i3);
@@ -99,7 +99,7 @@ extends Menu {
                             return;
                         }
                         System.out.println("CHECKING " + String.valueOf(adt5) + ":" + n5);
-                        ServerData serverData = ServerUtil.d(adt5.toString(), n5, 500);
+                        ServerData serverData = ServerUtil.isOnline(adt5.toString(), n5, 500);
                         if (serverData != null) {
                             this.servers.add(serverData);
                         }

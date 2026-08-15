@@ -21,7 +21,7 @@ public class EntityKillEventComponent extends Component implements aha {
         }
     };
     @EventLink(value = 1)
-    public final Listener<AttackEvent> onAttackEvent = var1 -> this.target = var1.dc();
+    public final Listener<AttackEvent> onAttackEvent = var1 -> this.target = var1.getLiving();
     @EventLink(value = 1)
     public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.target = null;
 

@@ -37,12 +37,12 @@ public class MatrixStep extends Mode<Step> {
     public final Listener<StepEvent> onStep = var1x -> {
         if (var1x.getHeight() > 1.0) {
             if (this.instantValue.wo()) {
-                PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.41999998688698, aEg.thePlayer.posZ, false));
-                PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.7531999805212, aEg.thePlayer.posZ, false));
-                PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 1.00133597911215, aEg.thePlayer.posZ, true));
-                PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 1.42133596599913, aEg.thePlayer.posZ, false));
-                PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 1.75453595963335, aEg.thePlayer.posZ, false));
-                PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 2.0026719582243, aEg.thePlayer.posZ, false));
+                PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.41999998688698, aEg.thePlayer.posZ, false));
+                PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.7531999805212, aEg.thePlayer.posZ, false));
+                PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 1.00133597911215, aEg.thePlayer.posZ, true));
+                PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 1.42133596599913, aEg.thePlayer.posZ, false));
+                PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 1.75453595963335, aEg.thePlayer.posZ, false));
+                PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 2.0026719582243, aEg.thePlayer.posZ, false));
                 aEg.timer.dzD = 0.14285715F;
             } else {
                 this.doJump = true;
@@ -52,8 +52,8 @@ public class MatrixStep extends Mode<Step> {
         } else {
             if (var1x.getHeight() > 0.6F) {
                 aEg.timer.dzD = 0.33333F;
-                PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.42F, aEg.thePlayer.posZ, false));
-                PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.42F, aEg.thePlayer.posZ, true));
+                PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.42F, aEg.thePlayer.posZ, false));
+                PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.42F, aEg.thePlayer.posZ, true));
             }
         }
     };

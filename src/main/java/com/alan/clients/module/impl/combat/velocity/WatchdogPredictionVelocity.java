@@ -111,7 +111,7 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<PreUpdateEvent> vE = var0 -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {
         if (BlinkComponent.enabled) {
             dj = true;
         }
@@ -121,7 +121,7 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<PreUpdateEvent> vF = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdateMedium = var1x -> {
         if (dj) {
             ;
         }
@@ -150,14 +150,14 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
                 if (f1 <= f2 || f1 >= 360.0F - f2) {
                     tt = true;
                     dj = false;
-                    this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::p);
+                    this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::receive);
                     this.vA.clear();
                     tt = false;
                     this.tR = 0;
                 } else if (aEg.thePlayer.tR > 13) {
                     tt = true;
                     dj = false;
-                    this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::p);
+                    this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::receive);
                     this.vA.clear();
                     tt = false;
                 }
@@ -169,7 +169,7 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
 
                 tt = true;
                 dj = false;
-                this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::p);
+                this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::receive);
                 this.vA.clear();
                 tt = false;
             }

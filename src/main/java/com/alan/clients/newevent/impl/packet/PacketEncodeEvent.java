@@ -24,7 +24,7 @@ public final class PacketEncodeEvent extends CancellableEvent {
     }
 
     @Generated
-    public void k(int var1) {
+    public void setId(int var1) {
         this.id = var1;
     }
 

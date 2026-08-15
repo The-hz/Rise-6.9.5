@@ -52,15 +52,15 @@ public class RiseAPI {
         RiseAPI$1 riseapi$1 = new RiseAPI$1(this, new ScriptModuleInfo(var1, var2), atomicreference);
         atomicreference.set(getModule(riseapi$1));
         Client.a.g().add(riseapi$1);
-        if (Client.a.v() != null) {
-            Client.a.v().oS();
+        if (Client.a.getStandardClickGUI() != null) {
+            Client.a.getStandardClickGUI().oS();
         }
 
         return (ScriptModule)atomicreference.get();
     }
 
     public ScriptModule[] getModules() {
-        ArrayList arraylist = Client.a.g().ef();
+        ArrayList arraylist = Client.a.g().getAll();
         ScriptModule[] ascriptmodule = new ScriptModule[arraylist.size()];
 
         for (int i = 0; i < arraylist.size(); i++) {
@@ -168,7 +168,7 @@ public class RiseAPI {
     }
 
     public boolean isBot(int var1) {
-        return Client.a.x().a(Minecraft.getMinecraft().theWorld.getEntityByID(var1));
+        return Client.a.getBotManager().a(Minecraft.getMinecraft().theWorld.getEntityByID(var1));
     }
 
     public boolean isFriend(String var1) {

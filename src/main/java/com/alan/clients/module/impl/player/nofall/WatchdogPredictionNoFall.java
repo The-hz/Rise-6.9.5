@@ -39,7 +39,7 @@ public class WatchdogPredictionNoFall extends Mode<NoFall> {
                 Vec3 vec31 = new Vec3(vec3.xCoord, 0.0, vec3.zCoord);
                 MovingObjectPosition movingobjectposition = aEg.theWorld.rayTraceBlocks(vec3, vec31, false, false, false);
                 if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.BLOCK && movingobjectposition.hitVec != null) {
-                    PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, movingobjectposition.hitVec.yCoord, aEg.thePlayer.posZ, true));
+                    PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, movingobjectposition.hitVec.yCoord, aEg.thePlayer.posZ, true));
                     aEg.thePlayer.fallDistance = 0.0F;
                 }
             }

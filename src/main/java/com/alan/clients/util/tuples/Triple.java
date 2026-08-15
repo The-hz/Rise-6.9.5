@@ -1,42 +1,42 @@
 package com.alan.clients.util.tuples;
 
 public class Triple<A, B, C> {
-    private A aQu;
-    private B aQv;
-    private C aQw;
+    private A first;
+    private B second;
+    private C third;
 
     public Triple(A var1, B var2, C var3) {
-        this.aQu = var1;
-        this.aQv = var2;
-        this.aQw = var3;
+        this.first = var1;
+        this.second = var2;
+        this.third = var3;
     }
 
-    public A vT() {
-        return this.aQu;
+    public A getFirst() {
+        return this.first;
     }
 
-    public void j(A var1) {
-        this.aQu = var1;
+    public void setFirst(A var1) {
+        this.first = var1;
     }
 
-    public B vU() {
-        return this.aQv;
+    public B getSecond() {
+        return this.second;
     }
 
-    public void k(B var1) {
-        this.aQv = var1;
+    public void setSecond(B var1) {
+        this.second = var1;
     }
 
-    public C vV() {
-        return this.aQw;
+    public C getThird() {
+        return this.third;
     }
 
-    public void l(C var1) {
-        this.aQw = var1;
+    public void setThird(C var1) {
+        this.third = var1;
     }
 
     @Override
     public String toString() {
-        return this.vT().toString() + " " + this.vU() + " " + this.vV();
+        return this.getFirst().toString() + " " + this.getSecond() + " " + this.getThird();
     }
 }

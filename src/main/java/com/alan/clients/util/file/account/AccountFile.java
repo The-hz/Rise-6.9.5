@@ -59,7 +59,7 @@ extends com.alan.clients.util.file.File {
             if (jsonObject == null) {
                 return false;
             }
-            List<AltAccount> list = Client.a.q().tl();
+            List<AltAccount> list = Client.a.getAltManager().getAccounts();
             list.clear();
             JsonArray jsonArray = jsonObject.getAsJsonArray("data");
             if (jsonArray != null) {
@@ -105,7 +105,7 @@ extends com.alan.clients.util.file.File {
             if (!this.getFile().exists()) {
                 this.getFile().createNewFile();
             }
-            if ((list = Client.a.q().tl()).isEmpty()) {
+            if ((list = Client.a.getAltManager().getAccounts()).isEmpty()) {
                 return true;
             }
             JsonObject jsonObject = new JsonObject();

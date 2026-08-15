@@ -73,7 +73,7 @@ public final class Nuker extends Module {
                 if (aEg.thePlayer.capabilities.allowFlying && !aEg.thePlayer.capabilities.isFlying) {
                     PlayerCapabilities playercapabilities = aEg.thePlayer.capabilities;
                     playercapabilities.isFlying = true;
-                    PacketUtil.m(new C13PacketPlayerAbilities(playercapabilities));
+                    PacketUtil.sendNoEvent(new C13PacketPlayerAbilities(playercapabilities));
                 }
 
                 new Thread(
@@ -83,14 +83,14 @@ public final class Nuker extends Module {
                             );
                             if (list != null) {
                                 for (ahy ahyx : (Iterable<ahy>)list) {
-                                    PacketUtil.m(new C04PacketPlayerPosition(ahyx.getX(), ahyx.getY(), ahyx.getZ(), false));
+                                    PacketUtil.sendNoEvent(new C04PacketPlayerPosition(ahyx.getX(), ahyx.getY(), ahyx.getZ(), false));
                                 }
 
                                 this.nuke(d0, blockpos.getX(), blockpos.getY(), blockpos.getZ());
                                 Collections.reverse(list);
 
                                 for (ahy ahy : (Iterable<ahy>)list) {
-                                    PacketUtil.m(new C04PacketPlayerPosition(ahy.getX(), ahy.getY(), ahy.getZ(), false));
+                                    PacketUtil.sendNoEvent(new C04PacketPlayerPosition(ahy.getX(), ahy.getY(), ahy.getZ(), false));
                                 }
                             }
                         }
@@ -121,10 +121,10 @@ public final class Nuker extends Module {
                         if (!(aEg.theWorld.getBlockState(blockpos).getBlock() instanceof BlockAir)) {
                             if (this.rotations.wo()) {
                                 Vector2f vector2f = RotationUtil.d(new aka(blockpos.getX(), blockpos.getY(), blockpos.getZ()));
-                                PacketUtil.m(new C05PacketPlayerLook(vector2f.x, vector2f.y, false));
+                                PacketUtil.sendNoEvent(new C05PacketPlayerLook(vector2f.x, vector2f.y, false));
                             }
 
-                            PacketUtil.m(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockpos, EnumFacing.UP));
+                            PacketUtil.sendNoEvent(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockpos, EnumFacing.UP));
                             if (this.swing.wo()) {
                                 aEg.thePlayer.swingItem();
                             }

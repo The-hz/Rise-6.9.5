@@ -14,19 +14,19 @@ import com.alan.clients.util.shader.impl.RQShader;
 import com.alan.clients.util.shader.impl.TriRGQShader;
 
 public interface aiv {
-    AlphaShader aPA = new AlphaShader();
+    AlphaShader ALPHA_SHADER = new AlphaShader();
     aix aPB = new BloomShader();
     aix aPC = new BloomShader();
     aix aPD = new BloomShader();
     GaussianBlurShader aPE = new GaussianBlurShader();
     GaussianBlurShader aPF = new GaussianBlurShader();
-    aix aPG = new OutlineShader();
-    RQShader aPH = new RQShader();
-    RGQShader aPI = new RGQShader();
-    ROQShader aPJ = new ROQShader();
-    ROGQShader aPK = new ROGQShader();
+    aix OUTLINE_SHADER = new OutlineShader();
+    RQShader RQ_SHADER = new RQShader();
+    RGQShader RGQ_SHADER = new RGQShader();
+    ROQShader ROQ_SHADER = new ROQShader();
+    ROGQShader ROGQ_SHADER = new ROGQShader();
     aix aPL = new MainMenuBackgroundShader();
-    aix aPM = new BAWShader();
-    RGQTestShader aPN = new RGQTestShader();
-    TriRGQShader aPO = new TriRGQShader();
+    aix BAW_SHADER = new BAWShader();
+    RGQTestShader RGQ_TEST_SHADER = new RGQTestShader();
+    TriRGQShader TRI_RGQ_SHADER = new TriRGQShader();
 }

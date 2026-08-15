@@ -29,7 +29,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.opengl.GL11;
 
 public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
-    private static final AltManager ALT_MANAGER = Client.a.q();
+    private static final AltManager ALT_MANAGER = Client.a.getAltManager();
     private static final Runnable ADD_ACCOUNT_RUNNABLE = () -> aEg.displayGuiScreen(new AddAccountScreen());
     private static final Runnable CANCEL_RUNNABLE = () -> aEg.displayGuiScreen(new adr());
     private static final Runnable BACKGROUND_RUNNABLE = () -> {
@@ -76,7 +76,7 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
             accountviewmodel.draw();
         }
 
-        ScissorUtil.a(new ScaledResolution(aEg), 0.0, 0.0, this.width, this.height - 48);
+        ScissorUtil.scissor(new ScaledResolution(aEg), 0.0, 0.0, this.width, this.height - 48);
         ScissorUtil.disable();
         GL11.glPopMatrix();
 
@@ -95,7 +95,7 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
 
             for (AccountViewModel accountviewmodel : ACCOUNT_DISPLAY_LIST) {
                 if (accountviewmodel.isRemovable()) {
-                    ALT_MANAGER.tl().remove(accountviewmodel.getAccount());
+                    ALT_MANAGER.getAccounts().remove(accountviewmodel.getAccount());
                     arraylist.add(accountviewmodel);
                 }
             }
@@ -155,7 +155,7 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
             ACCOUNT_DISPLAY_LIST.clear();
             ALT_MANAGER.tk();
 
-            for (AltAccount altAccount : ALT_MANAGER.tl()) {
+            for (AltAccount altAccount : ALT_MANAGER.getAccounts()) {
                 addDisplay(altAccount);
             }
 
@@ -165,7 +165,7 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
 
     public static void addAccount(AltAccount account) {
         addDisplay(account);
-        ALT_MANAGER.tl().add(account);
+        ALT_MANAGER.getAccounts().add(account);
         ALT_MANAGER.update();
     }
 

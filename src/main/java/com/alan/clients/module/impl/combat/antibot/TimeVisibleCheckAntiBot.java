@@ -11,9 +11,9 @@ public final class TimeVisibleCheckAntiBot extends Mode<AntiBot> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         if (var1xx.crF < 20) {
-            Client.a.x().b(this, var1xx);
+            Client.a.getBotManager().b(this, var1xx);
         } else if (var1xx.ticksExisted > 20) {
-            Client.a.x().c(this, var1xx);
+            Client.a.getBotManager().c(this, var1xx);
         }
     });
 
@@ -23,6 +23,6 @@ public final class TimeVisibleCheckAntiBot extends Mode<AntiBot> {
 
     @Override
     public void onDisable() {
-        Client.a.x().a(this);
+        Client.a.getBotManager().a(this);
     }
 }

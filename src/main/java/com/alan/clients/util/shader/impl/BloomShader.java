@@ -17,10 +17,10 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL13;
 
 public class BloomShader extends aix {
-    private final RiseShaderProgram aPY = new RiseShaderProgram("bloom.frag", "vertex.vsh");
-    private Framebuffer aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
-    private Framebuffer aPZ = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
-    private GaussianKernel aQa = new GaussianKernel(0);
+    private final RiseShaderProgram bloomProgram = new RiseShaderProgram("bloom.frag", "vertex.vsh");
+    private Framebuffer inputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+    private Framebuffer outputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+    private GaussianKernel gaussianKernel = new GaussianKernel(0);
     private Interface amf;
 
     public BloomShader() {
@@ -34,7 +34,7 @@ public class BloomShader extends aix {
                 case CAMERA:
                     RendererLivingEntity.bWd = 0.0F;
                     RendererLivingEntity.bWe = 0.0F;
-                    this.aPV.bindFramebuffer(true);
+                    this.inputFramebuffer.bindFramebuffer(true);
 
                     for (Runnable runnable : runnables) {
                         runnable.run();
@@ -47,7 +47,7 @@ public class BloomShader extends aix {
                     aEg.entityRenderer.IU();
                     break;
                 case OVERLAY:
-                    this.aPV.bindFramebuffer(true);
+                    this.inputFramebuffer.bindFramebuffer(true);
 
                     for (Runnable runnable1 : runnables) {
                         runnable1.run();
@@ -57,16 +57,16 @@ public class BloomShader extends aix {
                         this.amf = this.e(Interface.class);
                     }
 
-                    int i = this.amf != null ? this.amf.lA() : 14;
-                    float f = this.amf != null ? this.amf.lB() : 2.0F;
-                    int j = this.aPY.getProgramId();
-                    this.aPZ.bindFramebuffer(true);
-                    this.aPY.rt();
-                    if (this.aQa.getSize() != i) {
-                        this.aQa = new GaussianKernel(i);
-                        this.aQa.uR();
+                    int i = this.amf != null ? this.amf.getBloomRadius() : 14;
+                    float f = this.amf != null ? this.amf.getBloomCompression() : 2.0F;
+                    int j = this.bloomProgram.getProgramId();
+                    this.outputFramebuffer.bindFramebuffer(true);
+                    this.bloomProgram.rt();
+                    if (this.gaussianKernel.getSize() != i) {
+                        this.gaussianKernel = new GaussianKernel(i);
+                        this.gaussianKernel.uR();
                         FloatBuffer floatbuffer = BufferUtils.createFloatBuffer(i);
-                        floatbuffer.put(this.aQa.vS());
+                        floatbuffer.put(this.gaussianKernel.getKernel());
                         floatbuffer.flip();
                         ShaderUniforms.uniform1f(j, "u_radius", (float)i);
                         ShaderUniforms.uniformFB(j, "u_kernel", floatbuffer);
@@ -79,14 +79,14 @@ public class BloomShader extends aix {
                     GlStateManager.enableBlend();
                     GlStateManager.blendFunc(1, 770);
                     GlStateManager.alphaFunc(516, 0.0F);
-                    this.aPV.bindFramebufferTexture();
+                    this.inputFramebuffer.bindFramebufferTexture();
                     RiseShaderProgram.vN();
                     aEg.getFramebuffer().bindFramebuffer(true);
                     GlStateManager.blendFunc(770, 771);
                     ShaderUniforms.uniform2f(j, "u_direction", 0.0F, f);
-                    this.aPZ.bindFramebufferTexture();
+                    this.outputFramebuffer.bindFramebufferTexture();
                     GL13.glActiveTexture(flag ? 33987 : 34000);
-                    this.aPV.bindFramebufferTexture();
+                    this.inputFramebuffer.bindFramebufferTexture();
                     GL13.glActiveTexture(33984);
                     RiseShaderProgram.vN();
                     GlStateManager.disableBlend();
@@ -99,21 +99,21 @@ public class BloomShader extends aix {
     public void update() {
         int i = aEg.displayWidth;
         int j = aEg.displayHeight;
-        if (this.aPV.ah(i, j)) {
-            this.aPV.deleteFramebuffer();
-            this.aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+        if (this.inputFramebuffer.ah(i, j)) {
+            this.inputFramebuffer.deleteFramebuffer();
+            this.inputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
         } else {
-            this.aPV.framebufferClear();
+            this.inputFramebuffer.framebufferClear();
         }
 
-        if (this.aPZ.ah(i, j)) {
-            this.aPZ.deleteFramebuffer();
-            this.aPZ = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
+        if (this.outputFramebuffer.ah(i, j)) {
+            this.outputFramebuffer.deleteFramebuffer();
+            this.outputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
         } else {
-            this.aPZ.framebufferClear();
+            this.outputFramebuffer.framebufferClear();
         }
 
-        this.aPV.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
-        this.aPZ.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
+        this.inputFramebuffer.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
+        this.outputFramebuffer.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
     }
 }

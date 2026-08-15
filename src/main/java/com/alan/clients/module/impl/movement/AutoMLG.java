@@ -237,8 +237,8 @@ public class AutoMLG extends Module {
                         this.a(movingobjectposition.getBlockPos(), movingobjectposition.sideHit, movingobjectposition);
                         ItemStack itemstack1 = SlotComponent.getItemStack();
                         if (itemstack1 != null && itemstack1.getItem() == Items.water_bucket) {
-                            PacketUtil.l(new m());
-                            PacketUtil.l(new C08PacketPlayerBlockPlacement(itemstack1));
+                            PacketUtil.send(new m());
+                            PacketUtil.send(new C08PacketPlayerBlockPlacement(itemstack1));
                             boolean flag1 = true;
                             if (flag1) {
                                 this.CG = this.d(movingobjectposition);
@@ -301,7 +301,7 @@ public class AutoMLG extends Module {
             if (this.qH >= this.pickupDelay.wo().intValue()) {
                 ItemStack itemstack1 = SlotComponent.getItemStack();
                 if (itemstack1 != null && itemstack1.getItem() == Items.bucket && blockpos != null && this.a(itemstack1, blockpos)) {
-                    PacketUtil.l(new m());
+                    PacketUtil.send(new m());
                     cg.e("Auto MLG", "MLG successful!");
                     this.gS();
                     if (this.autoDisable.wo()) {

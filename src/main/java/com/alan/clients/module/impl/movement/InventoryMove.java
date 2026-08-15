@@ -13,12 +13,12 @@ import com.alan.clients.value.impl.ModeValue;
 
 @ModuleInfo(aliases = "module.movement.inventorymove.name", description = "module.movement.inventorymove.description", category = Category.MOVEMENT)
 public class InventoryMove extends Module {
-    private final GrimInventoryMove Dy = new GrimInventoryMove("Grim", this);
+    private final GrimInventoryMove grimBypass = new GrimInventoryMove("Grim", this);
     private final ModeValue bypassMode = new ModeValue("Bypass Mode", this)
         .add(new NormalBypass("Normal", this))
         .add(new BufferAbuseBypass("Buffer Abuse", this))
         .add(new CancelBypass("Cancel", this))
-        .add(this.Dy)
+        .add(this.grimBypass)
         .add(new Grim2Bypass("Grim 2", this))
         .add(new WatchdogBypass("Watchdog", this))
         .setDefault("Normal");
@@ -26,11 +26,11 @@ public class InventoryMove extends Module {
     public InventoryMove() {
     }
 
-    public boolean hj() {
+    public boolean isGrimBypass() {
         return this.bypassMode.wo() != null && this.bypassMode.wo().getName().equalsIgnoreCase("Grim");
     }
 
-    public int hk() {
-        return this.Dy.hu();
+    public int getExtraSprintTicks() {
+        return this.grimBypass.getManagerExtraSprintTicks();
     }
 }

@@ -29,9 +29,9 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 public class VerusSpeed extends Mode<Speed> {
-    private int hV;
+    private int ticks;
     private boolean QL;
-    private boolean QM;
+    private boolean lastStopped;
     private int QN;
     private boolean Lw;
     private double Lx;
@@ -52,30 +52,30 @@ public class VerusSpeed extends Mode<Speed> {
             switch (this.mode.wo().getName()) {
                 case "Fast":
                     if (!(aEg.thePlayer.moveForward > 0.0F)) {
-                        this.QM = true;
+                        this.lastStopped = true;
                         return;
                     } else if (aEg.thePlayer.onGround) {
                         if (MoveUtil.speed() > 0.3) {
-                            this.QM = false;
+                            this.lastStopped = false;
                         }
 
                         var1x.setOnGround(true);
                         MoveUtil.strafe(0.41);
                         aEg.thePlayer.motionY = 0.42F;
                         aEg.timer.dzD = 2.1F;
-                        this.hV = 0;
-                    } else if (this.hV >= 10) {
+                        this.ticks = 0;
+                    } else if (this.ticks >= 10) {
                         this.QL = true;
                         MoveUtil.strafe(0.35F);
                         return;
                     } else {
                         if (this.QL) {
-                            if (this.QM) {
+                            if (this.lastStopped) {
                                 MoveUtil.strafe(0.2);
-                            } else if (this.hV <= 1) {
+                            } else if (this.ticks <= 1) {
                                 MoveUtil.strafe(0.35F);
                             } else {
-                                MoveUtil.strafe(0.69F - (this.hV - 2.0F) * 0.019F);
+                                MoveUtil.strafe(0.69F - (this.ticks - 2.0F) * 0.019F);
                             }
                         }
 
@@ -85,7 +85,7 @@ public class VerusSpeed extends Mode<Speed> {
                         aEg.thePlayer.onGround = true;
                     }
                 default:
-                    this.hV++;
+                    this.ticks++;
             }
         }
     };
@@ -156,7 +156,7 @@ public class VerusSpeed extends Mode<Speed> {
                     Random random = new Random();
                     float f2 = random.nextFloat();
                     float f3 = random.nextFloat();
-                    PacketUtil.l(
+                    PacketUtil.send(
                         new C08PacketPlayerBlockPlacement(
                             new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ),
                             EnumFacing.UP.getIndex(),
@@ -262,7 +262,7 @@ public class VerusSpeed extends Mode<Speed> {
             Random random = new Random();
             float f = random.nextFloat();
             float f1 = random.nextFloat();
-            PacketUtil.l(
+            PacketUtil.send(
                 new C08PacketPlayerBlockPlacement(
                     new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ),
                     EnumFacing.UP.getIndex(),
@@ -274,8 +274,8 @@ public class VerusSpeed extends Mode<Speed> {
             );
         }
 
-        this.QL = this.QM = false;
-        this.hV = 0;
+        this.QL = this.lastStopped = false;
+        this.ticks = 0;
     }
 
     @Override
@@ -284,7 +284,7 @@ public class VerusSpeed extends Mode<Speed> {
             Random random = new Random();
             float f = random.nextFloat();
             float f1 = random.nextFloat();
-            PacketUtil.l(
+            PacketUtil.send(
                 new C08PacketPlayerBlockPlacement(
                     new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ),
                     EnumFacing.UP.getIndex(),

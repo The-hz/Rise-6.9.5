@@ -103,24 +103,24 @@ public enum EntityPositionPacket {
         return null;
     });
 
-    private final Class<? extends Packet<?>> gT;
-    private final BiFunction<Packet<?>, Map<Integer, EntityPositionSnapshot>, Map<Integer, EntityPositionSnapshot>> gU;
+    private final Class<? extends Packet<?>> clazz;
+    private final BiFunction<Packet<?>, Map<Integer, EntityPositionSnapshot>, Map<Integer, EntityPositionSnapshot>> biFunction;
     private static final EntityPositionPacket[] $VALUES = EntityPositionPacket.cf();
 
 
 
     private EntityPositionPacket(Class<? extends Packet<?>> clazz, BiFunction<Packet<?>, Map<Integer, EntityPositionSnapshot>, Map<Integer, EntityPositionSnapshot>> biFunction) {
-        this.gT = clazz;
-        this.gU = biFunction;
+        this.clazz = clazz;
+        this.biFunction = biFunction;
     }
 
     public Map<Integer, EntityPositionSnapshot> a(Packet<?> packet, Map<Integer, EntityPositionSnapshot> map) {
-        return this.gU.apply(packet, map);
+        return this.biFunction.apply(packet, map);
     }
 
     @Generated
-    public Class<? extends Packet<?>> ce() {
-        return this.gT;
+    public Class<? extends Packet<?>> getClazz() {
+        return this.clazz;
     }
 
     private static EntityPositionPacket[] cf() {

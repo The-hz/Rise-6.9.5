@@ -51,7 +51,7 @@ extends Mode<Velocity> {
     public Listener<PacketReceiveEvent> onPacketReceive;
     public boolean tv;
     @EventLink(value=0)
-    public Listener<PreUpdateEvent> tH;
+    public Listener<PreUpdateEvent> onPreUpdateVeryLow;
     @EventLink
     public Listener<PreMotionEvent> onPreMotion;
     @EventLink
@@ -67,16 +67,16 @@ extends Mode<Velocity> {
     public BooleanValue extraHit;
     public static boolean dk;
     @EventLink(value=2)
-    public Listener<PreUpdateEvent> tI;
+    public Listener<PreUpdateEvent> onPreUpdate;
     public static boolean tt;
     public NumberValue teleportDisableTicks;
     public BooleanValue onSwingDisableOnAura;
     public boolean gD;
 
     public static Vec3 a(Vec3 vec, AxisAlignedBB axisAlignedBB) {
-        double d5 = GrimReduceVelocity.c(vec.xCoord, axisAlignedBB.minX, axisAlignedBB.maxX);
-        double d6 = GrimReduceVelocity.c(vec.yCoord, axisAlignedBB.minY, axisAlignedBB.maxY);
-        double d7 = GrimReduceVelocity.c(vec.zCoord, axisAlignedBB.minZ, axisAlignedBB.maxZ);
+        double d5 = GrimReduceVelocity.clamp(vec.xCoord, axisAlignedBB.minX, axisAlignedBB.maxX);
+        double d6 = GrimReduceVelocity.clamp(vec.yCoord, axisAlignedBB.minY, axisAlignedBB.maxY);
+        double d7 = GrimReduceVelocity.clamp(vec.zCoord, axisAlignedBB.minZ, axisAlignedBB.maxZ);
         return new Vec3(d5, d6, d7);
     }
 
@@ -102,7 +102,7 @@ extends Mode<Velocity> {
             Packet<?> packet4;
             S12PacketEntityVelocity s12PacketEntityVelocity;
             Speed speed = this.e(Speed.class);
-            int wo2 = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && (Boolean)((GrimSpeed)speed.hl().wo()).fastFall.wo() != false ? 1 : 0;
+            int wo2 = speed.isEnabled() && speed.getMode().wo() instanceof GrimSpeed && (Boolean)((GrimSpeed)speed.getMode().wo()).fastFall.wo() != false ? 1 : 0;
             if (tt || GrimReduceVelocity.aEg.thePlayer.Zl < 3 || GrimReduceVelocity.aEg.thePlayer.isInWeb || !((Boolean)this.delayTillGround.wo()).booleanValue() && !((Boolean)this.delayPlus.wo()).booleanValue() || wo2 != 0) {
                 return;
             }
@@ -143,7 +143,7 @@ extends Mode<Velocity> {
                 }
             }
         };
-        this.tH = preUpdateEvent -> {
+        this.onPreUpdateVeryLow = preUpdateEvent -> {
             List<EntityLivingBase> list;
             EntityLivingBase entityLivingBase;
             this.tv = false;
@@ -164,7 +164,7 @@ extends Mode<Velocity> {
                 }
             }
             Speed speed = this.e(Speed.class);
-            int wo2 = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && (Boolean)((GrimSpeed)speed.hl().wo()).fastFall.wo() != false ? 1 : 0;
+            int wo2 = speed.isEnabled() && speed.getMode().wo() instanceof GrimSpeed && (Boolean)((GrimSpeed)speed.getMode().wo()).fastFall.wo() != false ? 1 : 0;
             if (GrimReduceVelocity.aEg.thePlayer.ticksExisted <= 20) return;
             if (wo2 != 0) {
                 return;
@@ -206,19 +206,19 @@ extends Mode<Velocity> {
             if (ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
                 if ((Boolean)this.extraHit.wo() == false) return;
                 GrimReduceVelocity.aEg.playerController.attackEntity((EntityPlayer)GrimReduceVelocity.aEg.thePlayer, (Entity)entityLivingBase);
-                PacketUtil.l(new m());
+                PacketUtil.send(new m());
                 return;
             }
             if ((Boolean)this.extraHit.wo() == false) return;
-            PacketUtil.l(new m());
+            PacketUtil.send(new m());
             GrimReduceVelocity.aEg.playerController.attackEntity((EntityPlayer)GrimReduceVelocity.aEg.thePlayer, (Entity)entityLivingBase);
         };
-        this.tI = preUpdateEvent -> {
+        this.onPreUpdate = preUpdateEvent -> {
             if (GrimReduceVelocity.aEg.thePlayer.onGround && dj && (Boolean)this.delayPlus.wo() == false || GrimReduceVelocity.aEg.thePlayer.Zl < 3 && dj || ((Boolean)this.delayPlus.wo()).booleanValue() && (GrimReduceVelocity.aEg.thePlayer.onGround || !((Boolean)this.delayTillGround.wo()).booleanValue()) && dj && (this.e(KillAura.class).jE == null || PlayerUtil.v((Entity)this.e(KillAura.class).jE) < 2.7 || GrimReduceVelocity.aEg.thePlayer.aY == 1)) {
                 dj = false;
                 tt = true;
                 BlinkComponent.dispatch();
-                this.tu.forEach(p -> PacketUtil.p(p));
+                this.tu.forEach(p -> PacketUtil.receive(p));
                 this.tu.clear();
                 tt = false;
             }
@@ -226,7 +226,7 @@ extends Mode<Velocity> {
                 dj = false;
                 tt = true;
                 BlinkComponent.dispatch();
-                this.tu.forEach(p -> PacketUtil.p(p));
+                this.tu.forEach(p -> PacketUtil.receive(p));
                 this.tu.clear();
                 tt = false;
             }
@@ -245,7 +245,7 @@ extends Mode<Velocity> {
         };
     }
 
-    public static double c(double d2, double d3, double d4) {
+    public static double clamp(double d2, double d3, double d4) {
         double d5;
         if (d2 < d3) {
             d5 = d3;

@@ -53,7 +53,7 @@ extends Mode<LongJump> {
                 this.Lj = 0xFFFFFFC0 ^ 0xFFFFFFC0;
                 return;
             }
-            PacketUtil.m(new C03PacketPlayer(false));
+            PacketUtil.sendNoEvent(new C03PacketPlayer(false));
             l5_hi++;
         }
     };
@@ -71,7 +71,7 @@ extends Mode<LongJump> {
             this.Li = 1;
             int i = 0;
             while (i < 20) {
-                PacketUtil.m(new C03PacketPlayer(false));
+                PacketUtil.sendNoEvent(new C03PacketPlayer(false));
                 i++;
             }
         }

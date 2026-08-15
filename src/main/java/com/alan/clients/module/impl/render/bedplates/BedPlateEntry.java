@@ -16,19 +16,19 @@ public class BedPlateEntry {
         this.alQ = var4;
     }
 
-    public aka kT() {
+    public aka getPosition() {
         return this.alO;
     }
 
-    public double kU() {
+    public double getDistanceSquared() {
         return this.alP;
     }
 
-    public BedPlateInfo kV() {
+    public BedPlateInfo getInfo() {
         return this.alQ;
     }
 
-    public boolean kW() {
+    public boolean isVisible() {
         return this.alR;
     }
 
@@ -36,7 +36,7 @@ public class BedPlateEntry {
         this.alR = var1;
     }
 
-    public double[] kX() {
+    public double[] getProjectedPosition() {
         return this.alS;
     }
 
@@ -45,7 +45,7 @@ public class BedPlateEntry {
         this.alT = 0;
     }
 
-    public int kY() {
+    public int getCacheAge() {
         return this.alT;
     }
 

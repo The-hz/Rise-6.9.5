@@ -37,13 +37,13 @@ public final class AdvancedAntiBot extends Mode<AntiBot> {
             for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
                 if (entityplayer != aEg.thePlayer) {
                     if (!this.ro) {
-                        Client.a.x().c(this, entityplayer);
+                        Client.a.getBotManager().c(this, entityplayer);
                     } else {
                         UUID uuid = entityplayer.getUniqueID();
                         if (this.rp.contains(uuid)) {
-                            Client.a.x().c(this, entityplayer);
+                            Client.a.getBotManager().c(this, entityplayer);
                         } else {
-                            Client.a.x().b(this, entityplayer);
+                            Client.a.getBotManager().b(this, entityplayer);
                         }
                     }
                 }
@@ -54,7 +54,7 @@ public final class AdvancedAntiBot extends Mode<AntiBot> {
     public final Listener<WorldChangeEvent> onWorldChange = var1x -> {
         this.ro = false;
         this.rp.clear();
-        Client.a.x().a(this);
+        Client.a.getBotManager().a(this);
     };
 
     public AdvancedAntiBot(String var1, AntiBot antiBot) {
@@ -65,6 +65,6 @@ public final class AdvancedAntiBot extends Mode<AntiBot> {
     public void onDisable() {
         this.ro = false;
         this.rp.clear();
-        Client.a.x().a(this);
+        Client.a.getBotManager().a(this);
     }
 }

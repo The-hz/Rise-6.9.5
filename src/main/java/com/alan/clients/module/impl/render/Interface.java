@@ -37,8 +37,8 @@ import rip.vantage.commons.util.time.a;
 
 @ModuleInfo(aliases = "module.render.interface.name", description = "module.render.interface.description", category = Category.RENDER, autoEnabled = true)
 public final class Interface extends Module {
-    private final ModeValue anX = new InterfaceModeValue(this, "Mode", this);
-    private final ModeValue anY = new ModulesToShowModeValue(this, "Modules to Show", this);
+    private final ModeValue mode = new InterfaceModeValue(this, "Mode", this);
+    private final ModeValue modulesToShow = new ModulesToShowModeValue(this, "Modules to Show", this);
     public BooleanValue suffix = new BooleanValue("Suffix", this, true);
     public BooleanValue lowercase = new BooleanValue("Lowercase", this, false);
     public BooleanValue removeSpaces = new BooleanValue("Remove Spaces", this, false);
@@ -50,14 +50,14 @@ public final class Interface extends Module {
     private final NumberValue bloomCompression = new NumberValue("Bloom Compression", this, 2.0, 1.0, 10.0, 0.1);
     private final NumberValue backgroundAlpha = new NumberValue("Background Alpha", this, 110, 0, 255, 1);
     private final NumberValue roundingRadius = new NumberValue("Rounding Radius", this, 5, 0, 20, 0.5);
-    private List<ArrayListEntry> aok = new ArrayList<>();
-    private List<ArrayListEntry> aol = new ArrayList<>();
-    private ModeValue aom = new InformationTypeModeValue(this, "Information Type", this);
+    private List<ArrayListEntry> allEntries = new ArrayList<>();
+    private List<ArrayListEntry> activeEntries = new ArrayList<>();
+    private ModeValue informationType = new InformationTypeModeValue(this, "Information Type", this);
     private final a aon = new a();
     private final a aoo = new a();
-    public agc aop = FontManager.MAIN.a(20, FontWeight.MEDIUM);
-    public float aoq = 12.0F;
-    public float aor;
+    public agc widthComparator = FontManager.MAIN.a(20, FontWeight.MEDIUM);
+    public float moduleSpacing = 12.0F;
+    public float edgeOffset;
     @EventLink
     public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.lv();
     @EventLink
@@ -71,7 +71,7 @@ public final class Interface extends Module {
     a aov = new a();
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> aMR.execute(() -> {
-        Themes.c(new Color(0, 0, 0, this.aoc.wo() ? this.lC() : 150));
+        Themes.c(new Color(0, 0, 0, this.aoc.wo() ? this.getBackgroundAlpha() : 150));
         if (this.aov.T(15000L)) {
             this.lx();
             this.aov.aX();
@@ -79,9 +79,9 @@ public final class Interface extends Module {
 
         this.aoo.aX();
 
-        for (ArrayListEntry zc : this.aol) {
-            if (zc.ath != 0.0F) {
-                for (Value value : zc.dl().getValues()) {
+        for (ArrayListEntry zc : this.activeEntries) {
+            if (zc.animationTime != 0.0F) {
+                for (Value value : zc.getModule().getValues()) {
                     if (value instanceof ModeValue) {
                         String s = ((ModeValue)value).wo().getName();
                         if ("Bloxd".equalsIgnoreCase(s)) {
@@ -101,36 +101,36 @@ public final class Interface extends Module {
     });
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1 -> {
-        for (ArrayListEntry zcx : this.aok) {
-            float f = this.anX.wo().getName().equals("Classic") ? 10.0F : 100.0F;
-            if (zcx.dl().isEnabled()) {
-                zcx.ath = Math.min(zcx.ath + (float)this.aon.getElapsedTime() / f, 10.0F);
+        for (ArrayListEntry zcx : this.allEntries) {
+            float f = this.mode.wo().getName().equals("Classic") ? 10.0F : 100.0F;
+            if (zcx.getModule().isEnabled()) {
+                zcx.animationTime = Math.min(zcx.animationTime + (float)this.aon.getElapsedTime() / f, 10.0F);
             } else {
-                zcx.ath = Math.max(zcx.ath - (float)this.aon.getElapsedTime() / f, 0.0F);
+                zcx.animationTime = Math.max(zcx.animationTime - (float)this.aon.getElapsedTime() / f, 0.0F);
             }
         }
 
         float f1 = var1.getScaledResolution().getScaledWidth();
         Vector2f vector2f = new Vector2f(0.0F, 0.0F);
 
-        for (ArrayListEntry zc : this.aol) {
-            if (zc.ath != 0.0F) {
-                zc.atg = new Vector2d(f1 - zc.nu() - zc.nv(), vector2f.getY());
-                if (!zc.dl().isEnabled() && zc.ath < 10.0F) {
-                    zc.atg = new Vector2d(f1 + zc.nu() + zc.nv(), vector2f.getY());
+        for (ArrayListEntry zc : this.activeEntries) {
+            if (zc.animationTime != 0.0F) {
+                zc.targetPosition = new Vector2d(f1 - zc.getNameWidth() - zc.getTagWidth(), vector2f.getY());
+                if (!zc.getModule().isEnabled() && zc.animationTime < 10.0F) {
+                    zc.targetPosition = new Vector2d(f1 + zc.getNameWidth() + zc.getTagWidth(), vector2f.getY());
                 } else {
-                    vector2f.setY(vector2f.getY() + this.aoq);
+                    vector2f.setY(vector2f.getY() + this.moduleSpacing);
                 }
 
-                float f2 = this.aor;
-                float f3 = this.aor;
-                zc.atg.x -= f2;
-                zc.atg.y += f3;
-                if (!(Math.abs(zc.nr().getX() - zc.atg.x) > 0.5) && !(Math.abs(zc.nr().getY() - zc.atg.y) > 0.5) && (zc.ath == 0.0F || zc.ath == 10.0F)) {
-                    zc.apP = zc.atg;
+                float f2 = this.edgeOffset;
+                float f3 = this.edgeOffset;
+                zc.targetPosition.x -= f2;
+                zc.targetPosition.y += f3;
+                if (!(Math.abs(zc.getPosition().getX() - zc.targetPosition.x) > 0.5) && !(Math.abs(zc.getPosition().getY() - zc.targetPosition.y) > 0.5) && (zc.animationTime == 0.0F || zc.animationTime == 10.0F)) {
+                    zc.position = zc.targetPosition;
                 } else {
-                    zc.apP.x = MathUtil.m(zc.apP.x, zc.atg.x, 0.015F * (float)this.aon.getElapsedTime());
-                    zc.apP.y = MathUtil.m(zc.apP.y, zc.atg.y, 0.015F * (float)this.aon.getElapsedTime());
+                    zc.position.x = MathUtil.m(zc.position.x, zc.targetPosition.x, 0.015F * (float)this.aon.getElapsedTime());
+                    zc.position.y = MathUtil.m(zc.position.y, zc.targetPosition.y, 0.015F * (float)this.aon.getElapsedTime());
                 }
             }
         }
@@ -143,127 +143,127 @@ public final class Interface extends Module {
     }
 
     public void lv() {
-        this.aok.clear();
+        this.allEntries.clear();
         Client.a
             .g()
-            .ef()
+            .getAll()
             .stream()
-            .sorted(Comparator.comparingDouble(var1 -> -this.aop.getStringWidth(var1.getName())))
-            .forEach(var1 -> this.aok.add(new ArrayListEntry(var1)));
+            .sorted(Comparator.comparingDouble(var1 -> -this.widthComparator.getStringWidth(var1.getName())))
+            .forEach(var1 -> this.allEntries.add(new ArrayListEntry(var1)));
         this.lx();
     }
 
     public void createArrayList() {
-        this.aol = this.aok
+        this.activeEntries = this.allEntries
             .stream()
             .filter(var1 -> var1.a(this))
-            .sorted(Comparator.comparingDouble(var0 -> -var0.nu() - var0.nv()))
+            .sorted(Comparator.comparingDouble(var0 -> -var0.getNameWidth() - var0.getTagWidth()))
             .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void lx() {
-        for (ArrayListEntry zc : this.aok) {
-            zc.ao(zc.dl().getName());
+        for (ArrayListEntry zc : this.allEntries) {
+            zc.setTranslatedName(zc.getModule().getName());
         }
     }
 
-    public int ly() {
+    public int getBlurRadius() {
         return this.blurRadius.wo().intValue();
     }
 
-    public float lz() {
+    public float getBlurCompression() {
         return this.blurCompression.wo().floatValue();
     }
 
-    public int lA() {
+    public int getBloomRadius() {
         return this.bloomRadius.wo().intValue();
     }
 
-    public float lB() {
+    public float getBloomCompression() {
         return this.bloomCompression.wo().floatValue();
     }
 
-    public int lC() {
+    public int getBackgroundAlpha() {
         return this.backgroundAlpha.wo().intValue();
     }
 
-    public double lD() {
+    public double getRoundingRadius() {
         return this.roundingRadius.wo().doubleValue();
     }
 
     @Generated
-    public ModeValue hl() {
-        return this.anX;
+    public ModeValue getMode() {
+        return this.mode;
     }
 
     @Generated
-    public ModeValue lE() {
-        return this.anY;
+    public ModeValue getModulesToShow() {
+        return this.modulesToShow;
     }
 
     @Generated
-    public BooleanValue lF() {
+    public BooleanValue getSuffix() {
         return this.suffix;
     }
 
     @Generated
-    public BooleanValue lG() {
+    public BooleanValue getLowercase() {
         return this.lowercase;
     }
 
     @Generated
-    public BooleanValue lH() {
+    public BooleanValue getRemoveSpaces() {
         return this.removeSpaces;
     }
 
     @Generated
-    public BooleanValue lI() {
+    public BooleanValue getShaders() {
         return this.aoc;
     }
 
     @Generated
-    public BooleanValue lJ() {
+    public BooleanValue getToggleNotifications() {
         return this.toggleNotifications;
     }
 
     @Generated
-    public List<ArrayListEntry> lK() {
-        return this.aok;
+    public List<ArrayListEntry> getAllEntries() {
+        return this.allEntries;
     }
 
     @Generated
-    public List<ArrayListEntry> lL() {
-        return this.aol;
+    public List<ArrayListEntry> getActiveEntries() {
+        return this.activeEntries;
     }
 
     @Generated
-    public ModeValue lM() {
-        return this.aom;
+    public ModeValue getInformationType() {
+        return this.informationType;
     }
 
     @Generated
-    public a lN() {
+    public a getAnimationStopWatch() {
         return this.aon;
     }
 
     @Generated
-    public a lO() {
+    public a getPreUpdateStopWatch() {
         return this.aoo;
     }
 
     @Generated
-    public agc lP() {
-        return this.aop;
+    public agc getWidthComparator() {
+        return this.widthComparator;
     }
 
     @Generated
-    public float lQ() {
-        return this.aoq;
+    public float getModuleSpacing() {
+        return this.moduleSpacing;
     }
 
     @Generated
-    public float lR() {
-        return this.aor;
+    public float getEdgeOffset() {
+        return this.edgeOffset;
     }
 
     @Generated
@@ -272,91 +272,91 @@ public final class Interface extends Module {
     }
 
     @Generated
-    public Listener<ServerJoinEvent> lS() {
+    public Listener<ServerJoinEvent> getOnServerJoin() {
         return this.onServerJoin;
     }
 
     @Generated
-    public Listener<ModuleToggleEvent> lT() {
+    public Listener<ModuleToggleEvent> getOnModuleToggle() {
         return this.onModuleToggle;
     }
 
     @Generated
-    public a lU() {
+    public a getNameUpdateStopWatch() {
         return this.aov;
     }
 
     @Generated
-    public Listener<PreUpdateEvent> lV() {
+    public Listener<PreUpdateEvent> getOnPreUpdate() {
         return this.onPreUpdate;
     }
 
     @Generated
-    public Listener<Render2DEvent> lW() {
+    public Listener<Render2DEvent> getOnRender2D() {
         return this.onRender2D;
     }
 
     @Generated
-    public void a(BooleanValue suffix) {
+    public void setSuffix(BooleanValue suffix) {
         this.suffix = suffix;
     }
 
     @Generated
-    public void b(BooleanValue lowercase) {
+    public void setLowercase(BooleanValue lowercase) {
         this.lowercase = lowercase;
     }
 
     @Generated
-    public void c(BooleanValue removeSpaces) {
+    public void setRemoveSpaces(BooleanValue removeSpaces) {
         this.removeSpaces = removeSpaces;
     }
 
     @Generated
-    public void d(BooleanValue booleanValue) {
+    public void setShaders(BooleanValue booleanValue) {
         this.aoc = booleanValue;
     }
 
     @Generated
-    public void e(BooleanValue toggleNotifications) {
+    public void setToggleNotifications(BooleanValue toggleNotifications) {
         this.toggleNotifications = toggleNotifications;
     }
 
     @Generated
-    public void n(List<ArrayListEntry> var1) {
-        this.aok = var1;
+    public void setAllEntries(List<ArrayListEntry> var1) {
+        this.allEntries = var1;
     }
 
     @Generated
-    public void o(List<ArrayListEntry> var1) {
-        this.aol = var1;
+    public void setActiveEntries(List<ArrayListEntry> var1) {
+        this.activeEntries = var1;
     }
 
     @Generated
-    public void a(ModeValue modeValue) {
-        this.aom = modeValue;
+    public void setInformationType(ModeValue modeValue) {
+        this.informationType = modeValue;
     }
 
     @Generated
-    public void a(agc var1) {
-        this.aop = var1;
+    public void setWidthComparator(agc var1) {
+        this.widthComparator = var1;
     }
 
     @Generated
-    public void a(a var1) {
+    public void setNameUpdateStopWatch(a var1) {
         this.aov = var1;
     }
 
     @Generated
     public void n(float var1) {
-        this.aoq = var1;
+        this.moduleSpacing = var1;
     }
 
     @Generated
-    public void o(float var1) {
-        this.aor = var1;
+    public void setEdgeOffset(float var1) {
+        this.edgeOffset = var1;
     }
 
-    private static void a(ArrayListEntry var0) {
-        var0.apP = var0.atg;
+    private static void snapToTarget(ArrayListEntry var0) {
+        var0.position = var0.targetPosition;
     }
 }

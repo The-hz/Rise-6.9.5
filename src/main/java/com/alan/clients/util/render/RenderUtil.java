@@ -86,7 +86,7 @@ public final class RenderUtil implements InstanceAccess {
     public static void d(double var0, double var2, double var4, double var6, Color var8) {
         rt();
         if (var8 != null) {
-            ColorUtil.d(var8);
+            ColorUtil.glColor(var8);
         }
 
         GL11.glBegin(7);
@@ -140,15 +140,15 @@ public final class RenderUtil implements InstanceAccess {
         d(var0 - var4 / 2.0, var2 - var6 / 2.0, var4, var6, null);
     }
 
-    public static void a(double var0, double var2, double var4, double var6, Color var8, Color var9) {
+    public static void horizontalGradient(double var0, double var2, double var4, double var6, Color var8, Color var9) {
         rt();
         GlStateManager.alphaFunc(516, 0.0F);
         GL11.glShadeModel(7425);
         GL11.glBegin(7);
-        ColorUtil.d(var8);
+        ColorUtil.glColor(var8);
         GL11.glVertex2d(var0, var2);
         GL11.glVertex2d(var0 + var4, var2);
-        ColorUtil.d(var9);
+        ColorUtil.glColor(var9);
         GL11.glVertex2d(var0 + var4, var2 + var6);
         GL11.glVertex2d(var0, var2 + var6);
         GL11.glEnd();
@@ -160,20 +160,20 @@ public final class RenderUtil implements InstanceAccess {
         GL11.glBegin(var0);
     }
 
-    public static void b(double var0, double var2, double var4, double var6, Color var8, Color var9) {
+    public static void gradientCentered(double var0, double var2, double var4, double var6, Color var8, Color var9) {
         var0 -= var4 / 2.0;
         var2 -= var6 / 2.0;
-        a(var0, var2, var4, var6, var8, var9);
+        horizontalGradient(var0, var2, var4, var6, var8, var9);
     }
 
-    public static void c(double var0, double var2, double var4, double var6, Color var8, Color var9) {
+    public static void horizontalCenteredGradient(double var0, double var2, double var4, double var6, Color var8, Color var9) {
         rt();
         GL11.glShadeModel(7425);
         GL11.glBegin(7);
-        ColorUtil.d(var8);
+        ColorUtil.glColor(var8);
         GL11.glVertex2d(var0, var2);
         GL11.glVertex2d(var0, var2 + var6);
-        ColorUtil.d(var9);
+        ColorUtil.glColor(var9);
         GL11.glVertex2d(var0 + var4, var2 + var6);
         GL11.glVertex2d(var0 + var4, var2);
         GL11.glEnd();
@@ -181,8 +181,8 @@ public final class RenderUtil implements InstanceAccess {
         stop();
     }
 
-    public static void d(double var0, double var2, double var4, double var6, Color var8, Color var9) {
-        c(var0 - var4 / 2.0, var2 - var6 / 2.0, var4, var6, var8, var9);
+    public static void verticalGradient(double var0, double var2, double var4, double var6, Color var8, Color var9) {
+        horizontalCenteredGradient(var0 - var4 / 2.0, var2 - var6 / 2.0, var4, var6, var8, var9);
     }
 
     public static void image(ResourceLocation location, float var1, float var2, float var3, float var4, Color var5) {
@@ -375,11 +375,11 @@ public final class RenderUtil implements InstanceAccess {
     }
 
     public static void a(double var0, double var2, double var4, double var6, double var8, Color var10, Color var11, boolean var12) {
-        aiv.aPI.draw(var0, var2, var4, var6, var8, var10, var11, var12);
+        aiv.RGQ_SHADER.draw(var0, var2, var4, var6, var8, var10, var11, var12);
     }
 
     public static void b(double var0, double var2, double var4, double var6, double var8, Color var10, Color var11, boolean var12) {
-        aiv.aPN.draw(var0, var2, var4, var6, var8, var10, var11, var12);
+        aiv.RGQ_TEST_SHADER.draw(var0, var2, var4, var6, var8, var10, var11, var12);
     }
 
     public static void a(
@@ -396,7 +396,7 @@ public final class RenderUtil implements InstanceAccess {
         boolean var15,
         boolean var16
     ) {
-        aiv.aPN.a((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10, var11, var12, var13, var14, var15, var16);
+        aiv.RGQ_TEST_SHADER.a((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10, var11, var12, var13, var14, var15, var16);
     }
 
     public static void a(
@@ -414,7 +414,7 @@ public final class RenderUtil implements InstanceAccess {
         boolean var16,
         boolean var17
     ) {
-        aiv.aPO.a((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10, var11, var12, var13, var14, var15, var16, var17);
+        aiv.TRI_RGQ_SHADER.a((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10, var11, var12, var13, var14, var15, var16, var17);
     }
 
     public static void b(
@@ -431,25 +431,25 @@ public final class RenderUtil implements InstanceAccess {
         boolean var15,
         boolean var16
     ) {
-        aiv.aPI.c(var0, var2, var4, var6, var8, var10, var11, var12, var13, var14, var15, var16);
+        aiv.RGQ_SHADER.c(var0, var2, var4, var6, var8, var10, var11, var12, var13, var14, var15, var16);
     }
 
     public static void roundedRectangle(double var0, double var2, double var4, double var6, double var8, Color var10) {
-        aiv.aPH.d((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10);
+        aiv.RQ_SHADER.draw((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10);
     }
 
     public static void a(
         double var0, double var2, double var4, double var6, double var8, Color var10, boolean var11, boolean var12, boolean var13, boolean var14
     ) {
-        aiv.aPH.a((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10, var11, var12, var13, var14);
+        aiv.RQ_SHADER.a((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10, var11, var12, var13, var14);
     }
 
     public static void roundedOutlineRectangle(double var0, double var2, double var4, double var6, double var8, double var10, Color var12) {
-        aiv.aPJ.b(var0, var2, var4, var6, var8, var10, var12);
+        aiv.ROQ_SHADER.b(var0, var2, var4, var6, var8, var10, var12);
     }
 
     public static void roundedOutlineGradientRectangle(double var0, double var2, double var4, double var6, double var8, double var10, Color var12, Color var13) {
-        aiv.aPK.b(var0, var2, var4, var6, var8, var10, var12, var13);
+        aiv.ROGQ_SHADER.b(var0, var2, var4, var6, var8, var10, var12, var13);
     }
 
     public static void vI() {
@@ -461,7 +461,7 @@ public final class RenderUtil implements InstanceAccess {
     }
 
     public static void f(double var0, double var2, double var4, double var6, Color var8) {
-        ColorUtil.d(var8);
+        ColorUtil.glColor(var8);
         GL11.glBegin(7);
         GL11.glVertex2d(var0, var2);
         GL11.glVertex2d(var0 + var4, var2);

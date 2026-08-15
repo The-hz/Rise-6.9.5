@@ -72,7 +72,7 @@ public class FireBallLongJump extends Mode<LongJump> {
             SlotComponent.setSlot(i);
             if (this.tick == 2) {
                 SlotComponent slotcomponent1 = this.d(SlotComponent.class);
-                PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
             }
 
             RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 90.0F), 10.0, MovementFix.OFF);

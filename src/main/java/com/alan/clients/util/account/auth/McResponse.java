@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class McResponse {
     @Expose
     @SerializedName("access_token")
-    public String aEU;
+    public String access_token;
 
     public McResponse() {
     }

@@ -66,7 +66,7 @@ public class Grim2Flight extends Mode<Flight> {
 
         if (packet instanceof C02PacketUseEntity && this.Gj && !Gl.isEmpty()) {
             while (!Gl.isEmpty()) {
-                PacketUtil.m(Gl.poll());
+                PacketUtil.sendNoEvent(Gl.poll());
             }
         }
     };
@@ -75,7 +75,7 @@ public class Grim2Flight extends Mode<Flight> {
         Packet packet = var1x.getPacket();
         if (packet instanceof S08PacketPlayerPosLook && this.Gj && !Gl.isEmpty()) {
             while (!Gl.isEmpty()) {
-                PacketUtil.m(Gl.poll());
+                PacketUtil.sendNoEvent(Gl.poll());
             }
         }
 
@@ -110,7 +110,7 @@ public class Grim2Flight extends Mode<Flight> {
         this.Gj = false;
 
         while (!Gl.isEmpty()) {
-            PacketUtil.m(Gl.poll());
+            PacketUtil.sendNoEvent(Gl.poll());
         }
 
         super.onDisable();

@@ -44,7 +44,7 @@ public class AppleSkin extends Module {
             return;
         }
 
-        FoodValues yc = FoodHelper.s(itemstack);
+        FoodValues yc = FoodHelper.getFoodValues(itemstack);
         int k = yc.hunger;
         float f = yc.getSaturationIncrement();
         int l = foodstats.getFoodLevel() + k;
@@ -90,8 +90,8 @@ public class AppleSkin extends Module {
                 this.foodBarOffsets.set(j, wf);
             }
 
-            wf.ald = k - var1;
-            wf.ale = l;
+            wf.offsetX = k - var1;
+            wf.offsetY = l;
         }
     }
 
@@ -111,8 +111,8 @@ public class AppleSkin extends Module {
             for (int l = j; l < k; l++) {
                 FoodBarOffset wf = this.foodBarOffsets.get(l);
                 if (wf != null) {
-                    int i1 = var5 + wf.ald;
-                    int j1 = var6 + wf.ale;
+                    int i1 = var5 + wf.offsetX;
+                    int j1 = var6 + wf.offsetY;
                     byte b0 = 52;
                     byte b1 = 25;
 
@@ -161,8 +161,8 @@ public class AppleSkin extends Module {
             for (int l = j; l < k; l++) {
                 FoodBarOffset wf = this.foodBarOffsets.get(l);
                 if (wf != null) {
-                    int i1 = var3 + wf.ald;
-                    int j1 = var4 + wf.ale;
+                    int i1 = var3 + wf.offsetX;
+                    int j1 = var4 + wf.offsetY;
                     byte b0 = 52;
                     byte b1 = 25;
                     if (var6) {

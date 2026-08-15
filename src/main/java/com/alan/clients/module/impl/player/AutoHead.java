@@ -21,11 +21,11 @@ import rip.vantage.commons.util.time.a;
 public class AutoHead extends Module {
     private final NumberValue health = new NumberValue("Health", this, 15, 1, 20, 1);
     private final BoundsNumberValue delay = new BoundsNumberValue("Delay", this, 500, 1000, 50, 5000, 50);
-    private final a abf = new a();
+    private final a stopWatch = new a();
     private long nextUse;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
-        if (this.abf.T(this.nextUse) && !(aEg.thePlayer.getAbsorptionAmount() > 0.0F) && !this.e(Scaffold.class).isEnabled()) {
+        if (this.stopWatch.T(this.nextUse) && !(aEg.thePlayer.getAbsorptionAmount() > 0.0F) && !this.e(Scaffold.class).isEnabled()) {
             for (int i = 0; i < 9; i++) {
                 ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
                 if (itemstack != null && itemstack.getItem() instanceof ItemSkull && !(aEg.thePlayer.getHealth() > this.health.wo().floatValue())) {
@@ -34,9 +34,9 @@ public class AutoHead extends Module {
                     if (!BadPacketsComponent.aW()) {
                         aEg.playerController.syncCurrentPlayItem();
                         SlotComponent slotcomponent1 = this.d(SlotComponent.class);
-                        PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
+                        PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
                         this.nextUse = Math.round(MathUtil.l(this.delay.wo().longValue(), this.delay.wA().longValue()));
-                        this.abf.aX();
+                        this.stopWatch.aX();
                     }
                 }
             }

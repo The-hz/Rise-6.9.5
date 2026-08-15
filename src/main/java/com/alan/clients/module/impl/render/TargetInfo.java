@@ -45,11 +45,11 @@ public final class TargetInfo extends Module {
     public Entity target;
     public double distanceSq;
     public boolean inWorld;
-    public a rG = new a();
+    public a stopwatch = new a();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.currentScreen instanceof GuiChat) {
-            this.rG.aX();
+            this.stopwatch.aX();
             this.target = aEg.thePlayer;
         }
 
@@ -62,9 +62,9 @@ public final class TargetInfo extends Module {
     };
     @EventLink
     public final Listener<AttackEvent> onAttack = var1 -> {
-        if (var1.dc() instanceof AbstractClientPlayer) {
-            this.target = var1.dc();
-            this.rG.aX();
+        if (var1.getLiving() instanceof AbstractClientPlayer) {
+            this.target = var1.getLiving();
+            this.stopwatch.aX();
         }
     };
     @EventLink

@@ -74,18 +74,18 @@ public final class StandardVelocity extends Mode<Velocity> {
     @Override
     public void onEnable() {
         this.uR = 0;
-        this.a(false);
+        this.setFlag(false);
     }
 
     public StandardVelocity(String var1, Velocity velocity) {
         super(var1, velocity);
     }
 
-    public Boolean gB() {
+    public Boolean getFlag() {
         return this.uQ;
     }
 
-    public void a(Boolean var1) {
+    public void setFlag(Boolean var1) {
         this.uQ = var1;
     }
 }

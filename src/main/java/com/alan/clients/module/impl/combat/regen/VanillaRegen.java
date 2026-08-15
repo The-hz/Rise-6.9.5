@@ -16,7 +16,7 @@ public final class VanillaRegen extends Mode<Regen> {
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (aEg.thePlayer.getHealth() < this.health.wo().floatValue()) {
             for (int i = 0; i < this.packets.wo().intValue(); i++) {
-                PacketUtil.l(
+                PacketUtil.send(
                     new C06PacketPlayerPosLook(
                         aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, aEg.thePlayer.onGround
                     )

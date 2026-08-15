@@ -7,13 +7,13 @@ import com.alan.clients.script.api.wrapper.impl.event.impl.ScriptPreMotionEvent;
 import lombok.Generated;
 
 public final class PreMotionEvent extends CancellableEvent {
-    private double gW;
-    private double gX;
-    private double gY;
-    private float gZ;
-    private float ha;
-    private boolean aO;
-    private boolean jx;
+    private double posX;
+    private double posY;
+    private double posZ;
+    private float yaw;
+    private float pitch;
+    private boolean onGround;
+    private boolean sprinting;
 
     @Override
     public ScriptEvent<? extends Event> getScriptEvent() {
@@ -22,82 +22,82 @@ public final class PreMotionEvent extends CancellableEvent {
 
     @Generated
     public double getPosX() {
-        return this.gW;
+        return this.posX;
     }
 
     @Generated
     public double getPosY() {
-        return this.gX;
+        return this.posY;
     }
 
     @Generated
     public double getPosZ() {
-        return this.gY;
+        return this.posZ;
     }
 
     @Generated
     public float getYaw() {
-        return this.gZ;
+        return this.yaw;
     }
 
     @Generated
     public float getPitch() {
-        return this.ha;
+        return this.pitch;
     }
 
     @Generated
     public boolean isOnGround() {
-        return this.aO;
+        return this.onGround;
     }
 
     @Generated
     public boolean isSprinting() {
-        return this.jx;
+        return this.sprinting;
     }
 
     @Generated
     public void setPosX(double var1) {
-        this.gW = var1;
+        this.posX = var1;
     }
 
     @Generated
     public void setPosY(double var1) {
-        this.gX = var1;
+        this.posY = var1;
     }
 
     @Generated
     public void setPosZ(double var1) {
-        this.gY = var1;
+        this.posZ = var1;
     }
 
     @Generated
     public void setYaw(float var1) {
-        this.gZ = var1;
+        this.yaw = var1;
     }
 
     @Generated
     public void setPitch(float pitch) {
-        this.ha = pitch;
+        this.pitch = pitch;
     }
 
     @Generated
     public void setOnGround(boolean onGround) {
-        this.aO = onGround;
+        this.onGround = onGround;
     }
 
     @Generated
     public void setSprinting(boolean sprinting) {
-        this.jx = sprinting;
+        this.sprinting = sprinting;
     }
 
     @Generated
     public PreMotionEvent(double var1, double var3, double var5, float var7, float var8, boolean var9, boolean var10) {
-        this.gW = var1;
-        this.gX = var3;
-        this.gY = var5;
-        this.gZ = var7;
-        this.ha = var8;
-        this.aO = var9;
-        this.jx = var10;
+        this.posX = var1;
+        this.posY = var3;
+        this.posZ = var5;
+        this.yaw = var7;
+        this.pitch = var8;
+        this.onGround = var9;
+        this.sprinting = var10;
     }
 }

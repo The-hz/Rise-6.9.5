@@ -61,7 +61,7 @@ public final class AimAssist extends Module {
                     Vector2f vector2f1 = this.gN();
                     Vector2f vector2f2 = this.b(this.target, d0, flag);
                     float f = Math.abs(MathHelper.wrapAngleTo180_float(RotationUtil.y(this.target).getX() - vector2f.getX()));
-                    if (flag || RotationUtil.a(vector2f2, this.target, d0, false, this.gP() ? this.gr() : 0.0F)) {
+                    if (flag || RotationUtil.a(vector2f2, this.target, d0, false, this.isBlatant() ? this.gr() : 0.0F)) {
                         if (!(f > this.fOV.wo().intValue())) {
                             if (this.limitItems.wo()) {
                                 SlotComponent slotcomponent = this.d(SlotComponent.class);
@@ -100,7 +100,7 @@ public final class AimAssist extends Module {
             return false;
         }
 
-        MovingObjectPosition movingobjectposition = aef.a(vec2, aEg.playerController.getBlockReachDistance(), 0.0F, aEg.thePlayer, false);
+        MovingObjectPosition movingobjectposition = aef.rayCast(vec2, aEg.playerController.getBlockReachDistance(), 0.0F, aEg.thePlayer, false);
         return movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.BLOCK;
     }
 
@@ -123,7 +123,7 @@ public final class AimAssist extends Module {
             return true;
         }
 
-        MovingObjectPosition movingobjectposition = aef.a(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), 3.0, 0.0F, aEg.thePlayer, false);
+        MovingObjectPosition movingobjectposition = aef.rayCast(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), 3.0, 0.0F, aEg.thePlayer, false);
         return movingobjectposition == null || movingobjectposition.typeOfHit != MovingObjectType.ENTITY;
     }
 
@@ -138,11 +138,11 @@ public final class AimAssist extends Module {
     }
 
     private Vector2f a(Vector2f vec2, Vector2f var2, boolean var3) {
-        return new Vector2f(var2.getX(), !this.gP() && !var3 ? vec2.getY() : var2.getY());
+        return new Vector2f(var2.getX(), !this.isBlatant() && !var3 ? vec2.getY() : var2.getY());
     }
 
     private Vector2f b(EntityLivingBase living, double var2, boolean var4) {
-        if (!this.gP() && !var4) {
+        if (!this.isBlatant() && !var4) {
             return RotationUtil.y(living);
         }
 
@@ -161,7 +161,7 @@ public final class AimAssist extends Module {
     private double n(double var1) {
         Piercing piercing = this.e(Piercing.class);
         if (piercing != null && piercing.isEnabled()) {
-            return Math.max(var1, piercing.gq());
+            return Math.max(var1, piercing.getReachRange());
         }
 
         Reach reach = this.e(Reach.class);
@@ -171,7 +171,7 @@ public final class AimAssist extends Module {
     private float gr() {
         Piercing piercing = this.e(Piercing.class);
         if (piercing != null && piercing.isEnabled()) {
-            return piercing.gr();
+            return piercing.getHitBoxExpand();
         }
 
         HitBox hitbox = this.e(HitBox.class);
@@ -183,7 +183,7 @@ public final class AimAssist extends Module {
         return piercing != null && piercing.isEnabled();
     }
 
-    private boolean gP() {
+    private boolean isBlatant() {
         return this.mode.wo().getName().equals("Blatant");
     }
 }

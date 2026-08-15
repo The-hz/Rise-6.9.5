@@ -48,14 +48,14 @@ implements InstanceAccess {
     }
 
     public static MovingObjectPosition rayCast(Vector2f vector2f, double d2, float f2) {
-        return aef.a(vector2f, d2, f2, aef.aEg.thePlayer);
+        return aef.rayCast(vector2f, d2, f2, aef.aEg.thePlayer);
     }
 
-    public static MovingObjectPosition a(Vector2f vector2f, double d2, float f2, Entity entity) {
-        return aef.a(vector2f, d2, f2, entity, false);
+    public static MovingObjectPosition rayCast(Vector2f vector2f, double d2, float f2, Entity entity) {
+        return aef.rayCast(vector2f, d2, f2, entity, false);
     }
 
-    public static MovingObjectPosition a(Vector2f vector2f, double d2, float f2, Entity entity, boolean bl) {
+    public static MovingObjectPosition rayCast(Vector2f vector2f, double d2, float f2, Entity entity, boolean bl) {
         float f3 = aef.aEg.timer.bWm;
         MovingObjectPosition movingObjectPosition = null;
         if (entity == null) return null;
@@ -128,7 +128,7 @@ implements InstanceAccess {
         return true;
     }
 
-    public static Boolean a(Vector2f vector2f, BlockPos blockPos) {
+    public static Boolean overBlock(Vector2f vector2f, BlockPos blockPos) {
         return aef.a(vector2f, EnumFacing.UP, blockPos, false);
     }
 

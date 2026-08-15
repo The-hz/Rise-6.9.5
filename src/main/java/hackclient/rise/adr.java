@@ -47,27 +47,27 @@ public final class adr extends Menu {
             double d0 = this.aCF.getY() - agc.height();
             this.animation.Q(d0);
             String s = this.rice ? "Rice" : Client.b;
-            double d1 = this.animation.sG();
-            Color color = ColorUtil.d(Color.WHITE, (int)(d1 / d0 * 200.0));
+            double d1 = this.animation.getValue();
+            Color color = ColorUtil.withBlue(Color.WHITE, (int)(d1 / d0 * 200.0));
             this.b(ShaderQueueType.REGULAR)
                 .c(
                     () -> {
-                        agc.c(s, this.width / 2.0F, d1, color.getRGB());
+                        agc.drawString(s, this.width / 2.0F, d1, color.getRGB());
                         FontManager.MAIN
                             .a(16, FontWeight.REGULAR)
-                            .d(
+                            .drawCenteredString(
                                 "Made with <3 by Alan and The_Bi11iona1re",
                                 scaledresolution.getScaledWidth() - 5,
                                 scaledresolution.getScaledHeight() - 20,
-                                ColorUtil.d(aBS, 100).getRGB()
+                                ColorUtil.withBlue(aBS, 100).getRGB()
                             );
                         FontManager.MAIN
                             .a(12, FontWeight.REGULAR)
-                            .d(
+                            .drawCenteredString(
                                 "© Rise Client 2026. All Rights Reserved",
                                 scaledresolution.getScaledWidth() - 5,
                                 scaledresolution.getScaledHeight() - 10,
-                                ColorUtil.d(aBS, 100).getRGB()
+                                ColorUtil.withBlue(aBS, 100).getRGB()
                             );
                         if (!System.getProperty("java.vm.vendor").toLowerCase().contains("oracle corporation")) {
                             FontManager.MAIN.a(32, FontWeight.BOLD);

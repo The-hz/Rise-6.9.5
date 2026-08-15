@@ -11,17 +11,17 @@ import rip.vantage.commons.packet.impl.client.protection.C2SPacketJdkUnlockReque
 public interface C2SPacketHandler extends PacketHandler {
     void handle(f var1);
 
-    void a(C2SPacketTelemetry packet);
+    void handle(C2SPacketTelemetry packet);
 
     void handle(rip.vantage.commons.packet.impl.client.protection.d var1);
 
-    void a(C2SPacketJdkUnlockRequest packet);
+    void handle(C2SPacketJdkUnlockRequest packet);
 
     void handle(rip.vantage.commons.packet.impl.client.community.C2SPacketConfigRequest packet);
 
     void handle(rip.vantage.commons.packet.impl.client.general.a var1);
 
-    void a(C2SPacketDetectionReport packet);
+    void handle(C2SPacketDetectionReport packet);
 
     void handle(rip.vantage.commons.packet.impl.client.community.C2SPacketChatMessage packet);
 
@@ -29,7 +29,7 @@ public interface C2SPacketHandler extends PacketHandler {
 
     void handle(rip.vantage.commons.packet.impl.client.community.C2SPacketConfigListRequest packet);
 
-    void a(C2SPacketStoreDelivery packet);
+    void handle(C2SPacketStoreDelivery packet);
 
     void handle(rip.vantage.commons.packet.impl.client.protection.C2SPacketAuthentication packet);
 

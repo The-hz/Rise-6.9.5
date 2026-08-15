@@ -10,7 +10,7 @@ public class ConstantManager
     @EventLink
     public Listener<er> aHd;
     public static double aHb;
-    public static float aHc;
+    public static float J;
 
 
     public ConstantManager() {
@@ -33,7 +33,7 @@ public class ConstantManager
                     throw new SecurityException("EC91");
                 }
                 ConstantManager.aHb = b.getB();
-                ConstantManager.aHc = b.getC();
+                ConstantManager.J = b.getC();
             }
         });
         Client.a.e().b((Object)this);
@@ -41,7 +41,7 @@ public class ConstantManager
 
     static {
         ConstantManager.aHb = 6.283185307179586;
-        ConstantManager.aHc = 180.0f;
+        ConstantManager.J = 180.0f;
     }
 
 }

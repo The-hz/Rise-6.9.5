@@ -9,93 +9,93 @@ import java.awt.Color;
 import lombok.Generated;
 
 public final class ArrayListEntry {
-    public Module cg;
-    public Vector2d apP = new Vector2d(5000.0, 0.0);
-    public Vector2d atg = new Vector2d(5000.0, 0.0);
-    public float ath;
-    public String ati = "";
-    public float atj = 0.0F;
-    public float atk;
-    public Color amH = Color.WHITE;
-    public String atl = "";
+    public Module module;
+    public Vector2d position = new Vector2d(5000.0, 0.0);
+    public Vector2d targetPosition = new Vector2d(5000.0, 0.0);
+    public float animationTime;
+    public String tag = "";
+    public float nameWidth = 0.0F;
+    public float tagWidth;
+    public Color color = Color.WHITE;
+    public String translatedName = "";
     public boolean atm = false;
-    public String atn = "";
-    public String ato = "";
-    public boolean atp;
+    public String displayName = "";
+    public String displayTag = "";
+    public boolean hasTag;
 
     public float nq() {
-        return this.atj + this.atk;
+        return this.nameWidth + this.tagWidth;
     }
 
     public ArrayListEntry(Module module) {
-        this.cg = module;
+        this.module = module;
     }
 
     public boolean a(Interface var1) {
-        if (this.dl() instanceof ClickGUI) {
+        if (this.getModule() instanceof ClickGUI) {
             return false;
         }
 
-        if (!this.dl().getModuleInfo().allowDisable()) {
+        if (!this.getModule().getModuleInfo().allowDisable()) {
             return false;
         }
 
-        String s = var1.lE().wo().getName();
+        String s = var1.getModulesToShow().wo().getName();
         switch (s) {
             case "All":
                 return true;
             case "Exclude render":
-                return !this.dl().getModuleInfo().category().equals(Category.RENDER);
+                return !this.getModule().getModuleInfo().category().equals(Category.RENDER);
             case "Only bound":
-                return this.dl().getKey() != 0;
+                return this.getModule().getKey() != 0;
             default:
                 return true;
         }
     }
 
     @Generated
-    public Module dl() {
-        return this.cg;
+    public Module getModule() {
+        return this.module;
     }
 
     @Generated
-    public Vector2d nr() {
-        return this.apP;
+    public Vector2d getPosition() {
+        return this.position;
     }
 
     @Generated
-    public Vector2d ns() {
-        return this.atg;
+    public Vector2d getTargetPosition() {
+        return this.targetPosition;
     }
 
     @Generated
-    public float nt() {
-        return this.ath;
+    public float getAnimationTime() {
+        return this.animationTime;
     }
 
     @Generated
     public String getTag() {
-        return this.ati;
+        return this.tag;
     }
 
     @Generated
-    public float nu() {
-        return this.atj;
+    public float getNameWidth() {
+        return this.nameWidth;
     }
 
     @Generated
-    public float nv() {
-        return this.atk;
+    public float getTagWidth() {
+        return this.tagWidth;
     }
 
     @Generated
-    public Color nw() {
-        return this.amH;
+    public Color getColor() {
+        return this.color;
     }
 
     @Generated
-    public String nx() {
-        return this.atl;
+    public String getTranslatedName() {
+        return this.translatedName;
     }
 
     @Generated
@@ -105,62 +105,62 @@ public final class ArrayListEntry {
 
     @Generated
     public String getDisplayName() {
-        return this.atn;
+        return this.displayName;
     }
 
     @Generated
-    public String nz() {
-        return this.ato;
+    public String getDisplayTag() {
+        return this.displayTag;
     }
 
     @Generated
-    public boolean nA() {
-        return this.atp;
+    public boolean isHasTag() {
+        return this.hasTag;
     }
 
     @Generated
-    public void k(Module module) {
-        this.cg = module;
+    public void setModule(Module module) {
+        this.module = module;
     }
 
     @Generated
     public void h(Vector2d var1) {
-        this.apP = var1;
+        this.position = var1;
     }
 
     @Generated
-    public void i(Vector2d vector2d) {
-        this.atg = vector2d;
+    public void setTargetPosition(Vector2d vector2d) {
+        this.targetPosition = vector2d;
     }
 
     @Generated
-    public void s(float var1) {
-        this.ath = var1;
+    public void setAnimationTime(float var1) {
+        this.animationTime = var1;
     }
 
     @Generated
     public void an(String var1) {
-        this.ati = var1;
+        this.tag = var1;
     }
 
     @Generated
-    public void t(float var1) {
-        this.atj = var1;
+    public void setNameWidth(float var1) {
+        this.nameWidth = var1;
     }
 
     @Generated
     public void u(float var1) {
-        this.atk = var1;
+        this.tagWidth = var1;
     }
 
     @Generated
-    public void b(Color color) {
-        this.amH = color;
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     @Generated
-    public void ao(String var1) {
-        this.atl = var1;
+    public void setTranslatedName(String var1) {
+        this.translatedName = var1;
     }
 
     @Generated
@@ -169,17 +169,17 @@ public final class ArrayListEntry {
     }
 
     @Generated
-    public void ap(String var1) {
-        this.atn = var1;
+    public void setDisplayName(String var1) {
+        this.displayName = var1;
     }
 
     @Generated
-    public void aq(String var1) {
-        this.ato = var1;
+    public void setDisplayTag(String var1) {
+        this.displayTag = var1;
     }
 
     @Generated
     public void y(boolean var1) {
-        this.atp = var1;
+        this.hasTag = var1;
     }
 }

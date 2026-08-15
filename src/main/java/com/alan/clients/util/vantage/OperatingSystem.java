@@ -5,15 +5,15 @@ public enum OperatingSystem {
     MACOSX("MacOS"),
     LINUX("Linux");
 
-    private final String aQC;
+    private final String os;
     private static final OperatingSystem[] $VALUES = wd();
 
     OperatingSystem(String var3) {
-        this.aQC = var3;
+        this.os = var3;
     }
 
-    public String wc() {
-        return this.aQC;
+    public String getOs() {
+        return this.os;
     }
 
     private static OperatingSystem[] wd() {

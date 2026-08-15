@@ -28,9 +28,9 @@ public class RotationsMimic extends Mode<Mimic> {
             float f2 = f - 180.0F;
             float f3 = -f1;
             this.sh.Q(f2);
-            this.sg.x = (float)this.sh.sG();
+            this.sg.x = (float)this.sh.getValue();
             this.si.Q(f3);
-            this.sg.y = (float)this.si.sG();
+            this.sg.y = (float)this.si.getValue();
             Vector2f vector2f = RotationUtil.a(new Vector2f(f2, f3), RotationUtil.y(entitylivingbase), 1000.0);
             Vector2f vector2f1 = RotationUtil.a(
                 new Vector2f(f2, f3), RotationUtil.y(entitylivingbase), (Math.abs(vector2f.getX()) + Math.abs(vector2f.getY())) / (vector2f.getX() > 90.0F ? 1.05 : 1.5)
@@ -41,8 +41,8 @@ public class RotationsMimic extends Mode<Mimic> {
             this.fu.x = this.fu.x + (float)((Math.random() - 0.5) * this.fu.getX() / 10.0);
             this.fu.y = this.fu.y + (float)((Math.random() - 0.5) * this.fu.getY() / 10.0);
         } else {
-            this.sh.T(aEg.thePlayer.pl);
-            this.si.T(aEg.thePlayer.rotationPitch);
+            this.sh.setValue(aEg.thePlayer.pl);
+            this.si.setValue(aEg.thePlayer.rotationPitch);
             this.fu = new Vector2f(0.0F, 0.0F);
         }
     };

@@ -65,7 +65,7 @@ public final class aal {
     public void a(McqBFVadWB mcqBFVadWB) {
         try {
             for (ProtectionCheck protectionCheck : this.awT) {
-                if (protectionCheck.nY() == mcqBFVadWB && protectionCheck.check()) {
+                if (protectionCheck.getTrigger() == mcqBFVadWB && protectionCheck.check()) {
                     this.ob();
                 }
             }

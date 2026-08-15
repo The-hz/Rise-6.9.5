@@ -14,7 +14,7 @@ public class PacketNoFall extends Mode<NoFall> {
     public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
         float f = FallDistanceComponent.cY;
         if (FallDistanceComponent.cY > 3.1 + aEg.thePlayer.motionY) {
-            PacketUtil.l(new C03PacketPlayer(true));
+            PacketUtil.send(new C03PacketPlayer(true));
             f = 0.0F;
         }
 

@@ -8,16 +8,16 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 
 public class GuiClosePatchComponent extends Component {
-    private boolean cF;
+    private boolean inGUI;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1 -> {
-        if (aEg.currentScreen == null && this.cF) {
+        if (aEg.currentScreen == null && this.inGUI) {
             for (KeyBinding keybinding : aEg.gameSettings.keyBindings) {
                 keybinding.setPressed(GameSettings.isKeyDown(keybinding));
             }
         }
 
-        this.cF = aEg.currentScreen != null;
+        this.inGUI = aEg.currentScreen != null;
     };
 
     public GuiClosePatchComponent() {

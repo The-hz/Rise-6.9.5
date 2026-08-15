@@ -37,7 +37,7 @@ public class MatrixNoFall extends Mode<NoFall> {
         if (var1x.dq() instanceof C03PacketPlayer c03packetplayer && this.aiN) {
             aEg.timer.dzD = 0.5F;
             c03packetplayer.aO = false;
-            PacketUtil.m(new C03PacketPlayer(true));
+            PacketUtil.sendNoEvent(new C03PacketPlayer(true));
             this.aiN = false;
         }
     };

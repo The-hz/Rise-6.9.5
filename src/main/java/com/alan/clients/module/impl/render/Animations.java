@@ -279,7 +279,7 @@ public final class Animations extends Module {
                                                                                                 itemrenderer.doBlockTransformations();
                                                                                                 GlStateManager.translate(-0.05F, 0.3F, 0.3F);
                                                                                                 GlStateManager.rotate(-f2 * 140.0F, 8.0F, 0.0F, 8.0F);
-                                                                                                GlStateManager.rotate(f2 * ConstantManager.aHc, 8.0F, 0.0F, 8.0F);
+                                                                                                GlStateManager.rotate(f2 * ConstantManager.J, 8.0F, 0.0F, 8.0F);
                                                                                                 break label274;
                                                                                             }
 

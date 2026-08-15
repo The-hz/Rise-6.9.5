@@ -22,18 +22,18 @@ public enum FontManager {
 
     Supplier<agc> kx;
     agc ky;
-    String gK;
+    String name;
     final String kz;
     private final HashMap<Integer, FontRenderer> kA = new HashMap<>();
     private static final FontManager[] $VALUES = dQ();
 
     FontManager(String var3, String var4) {
-        this.gK = var3;
+        this.name = var3;
         this.kz = var4;
     }
 
     FontManager(String var3, Supplier<agc> supplier) {
-        this.gK = var3;
+        this.name = var3;
         this.kz = "";
         this.ky = (agc)supplier.get();
         this.kx = supplier;
@@ -75,12 +75,12 @@ public enum FontManager {
             if (!this.kA.containsKey(i)) {
                 Font font = null;
                 String s = "unknown";
-                if (this.gK.contains(":")) {
-                    s = this.gK;
+                if (this.name.contains(":")) {
+                    s = this.name;
                     font = FontUtil.q(s, var1);
                 } else {
                     for (String s1 : var2.getAliases()) {
-                        s = "rise/font/" + String.format(this.gK, s1) + "." + this.kz;
+                        s = "rise/font/" + String.format(this.name, s1) + "." + this.kz;
                         font = FontUtil.p(s, var1);
                         if (font != null) {
                             break;
@@ -190,12 +190,12 @@ public enum FontManager {
 
     @Generated
     public void setName(String name) {
-        this.gK = name;
+        this.name = name;
     }
 
     @Generated
     public String getName() {
-        return this.gK;
+        return this.name;
     }
 
     @Generated

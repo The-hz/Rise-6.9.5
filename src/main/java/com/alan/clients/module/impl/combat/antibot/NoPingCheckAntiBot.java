@@ -13,7 +13,7 @@ public final class NoPingCheckAntiBot extends Mode<AntiBot> {
     public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         NetworkPlayerInfo networkplayerinfo = aEg.getNetHandler().getPlayerInfo(var1xx.getUniqueID());
         if (networkplayerinfo != null && networkplayerinfo.getResponseTime() < 0) {
-            Client.a.x().b(this, var1xx);
+            Client.a.getBotManager().b(this, var1xx);
         }
     });
 
@@ -23,6 +23,6 @@ public final class NoPingCheckAntiBot extends Mode<AntiBot> {
 
     @Override
     public void onDisable() {
-        Client.a.x().a(this);
+        Client.a.getBotManager().a(this);
     }
 }

@@ -9,7 +9,7 @@ public final class RenderItemEvent extends CancellableEvent {
     private EnumAction enumAction;
     private boolean useItem;
     private float kl;
-    private float jZ;
+    private float partialTicks;
     private float km;
     private ItemStack itemToRender;
 
@@ -30,7 +30,7 @@ public final class RenderItemEvent extends CancellableEvent {
 
     @Generated
     public float getPartialTicks() {
-        return this.jZ;
+        return this.partialTicks;
     }
 
     @Generated
@@ -59,8 +59,8 @@ public final class RenderItemEvent extends CancellableEvent {
     }
 
     @Generated
-    public void e(float var1) {
-        this.jZ = var1;
+    public void setPartialTicks(float var1) {
+        this.partialTicks = var1;
     }
 
     @Generated
@@ -78,7 +78,7 @@ public final class RenderItemEvent extends CancellableEvent {
         this.enumAction = enumAction;
         this.useItem = useItem;
         this.kl = var3;
-        this.jZ = var4;
+        this.partialTicks = var4;
         this.km = var5;
         this.itemToRender = itemToRender;
     }

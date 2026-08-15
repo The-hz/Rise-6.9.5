@@ -14,21 +14,21 @@ import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 
 @ModuleInfo(aliases = "module.player.polardetector.name", description = "module.player.polardetector.description", category = Category.PLAYER)
 public class PolarDetector extends Module {
-    boolean afF = false;
+    boolean polarEnabled = false;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         if (aEg.thePlayer.ticksExisted == 30) {
-            afi.b(this.afF ? "Polar is enabled" : "Polar is disabled");
+            afi.b(this.polarEnabled ? "Polar is enabled" : "Polar is disabled");
         }
     };
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         if (var1.dq() instanceof C0FPacketConfirmTransaction) {
-            this.afF = true;
+            this.polarEnabled = true;
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.afF = false;
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.polarEnabled = false;
 
     public PolarDetector() {
     }

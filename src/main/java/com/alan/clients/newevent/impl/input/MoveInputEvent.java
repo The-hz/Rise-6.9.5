@@ -6,10 +6,10 @@ import com.alan.clients.script.api.wrapper.impl.event.impl.ScriptMoveInputEvent;
 import lombok.Generated;
 
 public class MoveInputEvent implements Event {
-    private float jp;
-    private float jq;
-    private boolean gD;
-    private boolean jr;
+    private float forward;
+    private float strafe;
+    private boolean jump;
+    private boolean sneak;
     private double sneakSlowDownMultiplier;
 
     @Override
@@ -19,22 +19,22 @@ public class MoveInputEvent implements Event {
 
     @Generated
     public float getForward() {
-        return this.jp;
+        return this.forward;
     }
 
     @Generated
     public float getStrafe() {
-        return this.jq;
+        return this.strafe;
     }
 
     @Generated
     public boolean isJump() {
-        return this.gD;
+        return this.jump;
     }
 
     @Generated
     public boolean isSneak() {
-        return this.jr;
+        return this.sneak;
     }
 
     @Generated
@@ -44,22 +44,22 @@ public class MoveInputEvent implements Event {
 
     @Generated
     public void setForward(float forward) {
-        this.jp = forward;
+        this.forward = forward;
     }
 
     @Generated
     public void setStrafe(float strafe) {
-        this.jq = strafe;
+        this.strafe = strafe;
     }
 
     @Generated
     public void setJump(boolean jump) {
-        this.gD = jump;
+        this.jump = jump;
     }
 
     @Generated
     public void setSneak(boolean sneak) {
-        this.jr = sneak;
+        this.sneak = sneak;
     }
 
     @Generated
@@ -69,10 +69,10 @@ public class MoveInputEvent implements Event {
 
     @Generated
     public MoveInputEvent(float var1, float var2, boolean var3, boolean var4, double var5) {
-        this.jp = var1;
-        this.jq = var2;
-        this.gD = var3;
-        this.jr = var4;
+        this.forward = var1;
+        this.strafe = var2;
+        this.jump = var3;
+        this.sneak = var4;
         this.sneakSlowDownMultiplier = var5;
     }
 }

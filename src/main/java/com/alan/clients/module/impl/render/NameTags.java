@@ -44,7 +44,7 @@ public final class NameTags extends Module {
     }
 
     @Generated
-    public Map<String, Integer> md() {
+    public Map<String, Integer> getWidthCache() {
         return this.aoW;
     }
 }

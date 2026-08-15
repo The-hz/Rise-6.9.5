@@ -26,17 +26,17 @@ public class Reach extends Module {
     private final NumberValue bufferDecrease = new NumberValue("Buffer Decrease", this, 1, 0.1, 10, 0.1, () -> !this.bufferAbuse.wo());
     private final NumberValue maxBuffer = new NumberValue("Max Buffer", this, 5, 1, 200, 1, () -> !this.bufferAbuse.wo());
     private final BooleanValue bufferAbuse = new BooleanValue("Buffer Abuse", this, false);
-    private int BU;
-    private int BV;
+    private int lastId;
+    private int attackTicks;
     private double combo;
     @EventLink
-    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> this.BV++;
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> this.attackTicks++;
     @EventLink
     public final Listener<MouseOverEvent> onMouseOver = var1 -> {
         double d0 = MathUtil.l(this.range.wo().doubleValue(), this.range.wA().doubleValue());
         var1.setRange(d0);
         if (!this.gR()) {
-            MovingObjectPosition movingobjectposition = aef.a(RotationComponent.bH(), d0, var1.dB(), aEg.thePlayer, false);
+            MovingObjectPosition movingobjectposition = aef.rayCast(RotationComponent.bH(), d0, var1.dB(), aEg.thePlayer, false);
             if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.ENTITY) {
                 var1.a(movingobjectposition);
             }
@@ -46,10 +46,10 @@ public class Reach extends Module {
     public final Listener<ea> BY = var0 -> aEg.objectMouseOver = aef.c(RotationComponent.fk, 4.5);
     @EventLink
     public final Listener<AttackEvent> onAttackEvent = var1 -> {
-        EntityLivingBase entitylivingbase = var1.dc();
+        EntityLivingBase entitylivingbase = var1.getLiving();
         if (this.bufferAbuse.wo()) {
             if (aef.c(RotationComponent.fk, 3.0).typeOfHit != MovingObjectType.ENTITY) {
-                if ((this.BV > 9 || entitylivingbase.getEntityId() != this.BU) && this.combo < this.maxBuffer.wo().intValue()) {
+                if ((this.attackTicks > 9 || entitylivingbase.getEntityId() != this.lastId) && this.combo < this.maxBuffer.wo().intValue()) {
                     this.combo++;
                 } else {
                     var1.setCancelled();
@@ -61,8 +61,8 @@ public class Reach extends Module {
             this.combo = 0.0;
         }
 
-        this.BU = entitylivingbase.getEntityId();
-        this.BV = 0;
+        this.lastId = entitylivingbase.getEntityId();
+        this.attackTicks = 0;
     };
 
     public Reach() {
@@ -77,7 +77,7 @@ public class Reach extends Module {
             return false;
         }
 
-        MovingObjectPosition movingobjectposition = aef.a(
+        MovingObjectPosition movingobjectposition = aef.rayCast(
             new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), aEg.playerController.getBlockReachDistance(), 0.0F, aEg.thePlayer, false
         );
         return movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.BLOCK;
