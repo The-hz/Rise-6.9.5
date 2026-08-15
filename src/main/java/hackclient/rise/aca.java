@@ -75,8 +75,8 @@ InstanceAccess {
             this.azK = true;
         }
         RiseClickGUI riseClickGUI = this.getStandardClickGUI();
-        Vector2f vector2f = new Vector2f(this.getStandardClickGUI().oW().x, this.getStandardClickGUI().oW().y);
-        Vector2f vector2f2 = new Vector2f(this.getStandardClickGUI().oX().x, this.getStandardClickGUI().oX().y);
+        Vector2f vector2f = new Vector2f(this.getStandardClickGUI().getScale().x, this.getStandardClickGUI().getScale().y);
+        Vector2f vector2f2 = new Vector2f(this.getStandardClickGUI().getPosition().x, this.getStandardClickGUI().getPosition().y);
         double d2 = riseClickGUI.axS - 0.99;
         azE = true;
         for (acj acj2 : this.azJ) {
@@ -97,21 +97,21 @@ InstanceAccess {
             catch (ConcurrentModificationException concurrentModificationException) {}
         }
         gb.MAIN.a(18, gd.REGULAR).a("Your Scripts", vector2f.x, vector2f.y, Color.WHITE.getRGB());
-        vector2f.y += (float)10 + gb.MAIN.a(18, gd.REGULAR).tq();
+        vector2f.y += (float)10 + gb.MAIN.a(18, gd.REGULAR).height();
         Iterator<abd> iterator = this.azI.iterator();
         while (true) {
             if (!iterator.hasNext()) {
                 double d3 = 7.0;
-                double d4 = riseClickGUI.oW().getX() + riseClickGUI.oX().getX() - 4.0f;
-                double d5 = (double)riseClickGUI.oW().getY() + d3;
+                double d4 = riseClickGUI.getScale().getX() + riseClickGUI.getPosition().getX() - 4.0f;
+                double d5 = (double)riseClickGUI.getScale().getY() + d3;
                 this.scrollUtil.a(new Vector2d(d4, d5), (double)this.getStandardClickGUI().alh.y - d3 * 2.0);
                 this.scrollUtil.V(-((double)vector2f.y - this.scrollUtil.tE() - (double)riseClickGUI.axI.y) + (double)riseClickGUI.alh.y - 7.0);
                 double d6 = riseClickGUI.axS - 0.99;
                 return;
             }
             abd abd2 = iterator.next();
-            abd2.a(new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.axJ.aym + 8.0, vector2f.y), n2, n3, f2);
-            vector2f.y += abd2.alh.y + 7.0f;
+            abd2.draw(new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.axJ.aym + 8.0, vector2f.y), n2, n3, f2);
+            vector2f.y += abd2.scale.y + 7.0f;
         }
     }
 
@@ -119,7 +119,7 @@ InstanceAccess {
     public void a(char c2, int n2) {
         Iterator<abd> iterator = this.azI.iterator();
         while (iterator.hasNext()) {
-            iterator.next().b(c2, n2);
+            iterator.next().key(c2, n2);
         }
     }
 
@@ -136,7 +136,7 @@ InstanceAccess {
         Iterator<abd> iterator = this.azI.iterator();
         while (iterator.hasNext()) {
             abd abd2 = iterator.next();
-            abd2.d(n2, n3, n4);
+            abd2.click(n2, n3, n4);
         }
         return;
     }
@@ -171,8 +171,8 @@ InstanceAccess {
         Client.a.p().update();
         this.azH.clear();
         Client.a.p().forEach(configFile -> this.azH.add(new aci("Click to load", configFile.getName(), configFile::te)));
-        this.azI = Client.a.v().pg().stream().filter(abd2 -> {
-            if (abd2.dl().getModuleInfo().category() != Category.SCRIPT) return false;
+        this.azI = Client.a.v().getModuleList().stream().filter(abd2 -> {
+            if (abd2.getModule().getModuleInfo().category() != Category.SCRIPT) return false;
             return true;
         }).collect(Collectors.toCollection(ArrayList::new));
         a.aKB().aKK().sendMessage(new rip.vantage.commons.packet.impl.client.community.a().aJk());

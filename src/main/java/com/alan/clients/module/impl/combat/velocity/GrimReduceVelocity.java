@@ -58,33 +58,33 @@ extends Mode<Velocity> {
     public static Object[] fld_0oOOoOo0O00O_21;
     public ArrayList<Packet<?>> tu = new ArrayList();
     public static Object[] oO00O0OO0ooO;
-    public NumberValue ty;
+    public NumberValue reduceTicks;
     @EventLink
-    public Listener<PacketReceiveEvent> tG;
+    public Listener<PacketReceiveEvent> onPacketReceive;
     public boolean tv;
-    @EventLink(cH=0)
+    @EventLink(value=0)
     public Listener<PreUpdateEvent> tH;
     @EventLink
-    public Listener<PreMotionEvent> tJ;
+    public Listener<PreMotionEvent> onPreMotion;
     @EventLink
-    public Listener<MoveInputEvent> tK;
-    public BooleanValue tC;
-    public BooleanValue tB;
+    public Listener<MoveInputEvent> onMoveInput;
+    public BooleanValue delayPlus;
+    public BooleanValue rotations;
     public static float jq;
     public static Object Oo0o00000O00;
-    public BooleanValue tw = new BooleanValue("Delay till Ground", (Mode<?>)this, (Boolean)true);
-    public NumberValue tF;
+    public BooleanValue delayTillGround = new BooleanValue("Delay till Ground", (Mode<?>)this, (Boolean)true);
+    public NumberValue range;
     public static float jp;
-    public BooleanValue tE;
+    public BooleanValue stopSprint;
     public static Object[] o0Oo000O0oO;
-    public BooleanValue tx = new BooleanValue("Jump Reset", (Mode<?>)this, (Boolean)true);
-    public BooleanValue tD;
+    public BooleanValue jumpReset = new BooleanValue("Jump Reset", (Mode<?>)this, (Boolean)true);
+    public BooleanValue extraHit;
     public static boolean dk;
-    @EventLink(cH=2)
+    @EventLink(value=2)
     public Listener<PreUpdateEvent> tI;
     public static boolean tt;
-    public NumberValue tz;
-    public BooleanValue tA;
+    public NumberValue teleportDisableTicks;
+    public BooleanValue onSwingDisableOnAura;
     public static Object[] fld_0OOOoo00o0_22;
     public boolean gD;
 
@@ -325,26 +325,26 @@ extends Mode<Velocity> {
 
     public GrimReduceVelocity(String string, Velocity velocity) {
         super(string, velocity);
-        this.ty = new NumberValue("Reduce Ticks", this, (Number)14, (Number)1, (Number)20, (Number)1);
-        this.tz = new NumberValue("Teleport Disable Ticks", this, (Number)2, (Number)1, (Number)7, (Number)1);
-        this.tA = new BooleanValue("On Swing Disable on Aura", (Mode<?>)this, (Boolean)true);
-        this.tB = new BooleanValue("Rotate", (Mode<?>)this, (Boolean)false);
-        this.tC = new BooleanValue("Delay Plus", (Mode<?>)this, (Boolean)false);
-        this.tD = new BooleanValue("Extra Hit", (Mode<?>)this, (Boolean)true);
-        this.tE = new BooleanValue("Stop Sprint", (Mode<?>)this, (Boolean)true);
-        this.tF = new NumberValue("Range", this, (Number)8, (Number)1, (Number)100, (Number)1);
-        this.tG = packetReceiveEvent -> {
+        this.reduceTicks = new NumberValue("Reduce Ticks", this, (Number)14, (Number)1, (Number)20, (Number)1);
+        this.teleportDisableTicks = new NumberValue("Teleport Disable Ticks", this, (Number)2, (Number)1, (Number)7, (Number)1);
+        this.onSwingDisableOnAura = new BooleanValue("On Swing Disable on Aura", (Mode<?>)this, (Boolean)true);
+        this.rotations = new BooleanValue("Rotate", (Mode<?>)this, (Boolean)false);
+        this.delayPlus = new BooleanValue("Delay Plus", (Mode<?>)this, (Boolean)false);
+        this.extraHit = new BooleanValue("Extra Hit", (Mode<?>)this, (Boolean)true);
+        this.stopSprint = new BooleanValue("Stop Sprint", (Mode<?>)this, (Boolean)true);
+        this.range = new NumberValue("Range", this, (Number)8, (Number)1, (Number)100, (Number)1);
+        this.onPacketReceive = packetReceiveEvent -> {
             Packet<?> packet;
             Packet<?> packet2;
             Packet<?> packet3;
             Packet<?> packet4;
             S12PacketEntityVelocity s12PacketEntityVelocity;
             Speed speed = this.e(Speed.class);
-            int wo2 = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && (Boolean)((GrimSpeed)speed.hl().wo()).Px.wo() != false ? 1 : 0;
-            if (tt || GrimReduceVelocity.aEg.thePlayer.Zl < 3 || GrimReduceVelocity.aEg.thePlayer.isInWeb || !((Boolean)this.tw.wo()).booleanValue() && !((Boolean)this.tC.wo()).booleanValue() || wo2 != 0) {
+            int wo2 = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && (Boolean)((GrimSpeed)speed.hl().wo()).fastFall.wo() != false ? 1 : 0;
+            if (tt || GrimReduceVelocity.aEg.thePlayer.Zl < 3 || GrimReduceVelocity.aEg.thePlayer.isInWeb || !((Boolean)this.delayTillGround.wo()).booleanValue() && !((Boolean)this.delayPlus.wo()).booleanValue() || wo2 != 0) {
                 return;
             }
-            Packet<?> packet5 = packetReceiveEvent.dq();
+            Packet<?> packet5 = packetReceiveEvent.getPacket();
             if (packet5 instanceof S12PacketEntityVelocity && (s12PacketEntityVelocity = (S12PacketEntityVelocity)packet5).getEntityID() == GrimReduceVelocity.aEg.thePlayer.getEntityId()) {
                 this.gD = true;
                 this.tu.add((Packet<?>)s12PacketEntityVelocity);
@@ -352,28 +352,28 @@ extends Mode<Velocity> {
                 packetReceiveEvent.setCancelled();
                 boolean cfr_ignored_0 = GrimReduceVelocity.aEg.thePlayer.onGround;
             }
-            if ((packet4 = packetReceiveEvent.dq()) instanceof S32PacketConfirmTransaction) {
+            if ((packet4 = packetReceiveEvent.getPacket()) instanceof S32PacketConfirmTransaction) {
                 S32PacketConfirmTransaction s32PacketConfirmTransaction = (S32PacketConfirmTransaction)packet4;
                 if (dj) {
                     this.tu.add((Packet<?>)s32PacketConfirmTransaction);
                     packetReceiveEvent.setCancelled();
                 }
             }
-            if ((packet3 = packetReceiveEvent.dq()) instanceof S14PacketEntity) {
+            if ((packet3 = packetReceiveEvent.getPacket()) instanceof S14PacketEntity) {
                 S14PacketEntity s14PacketEntity = (S14PacketEntity)packet3;
                 if (dj) {
                     this.tu.add((Packet<?>)s14PacketEntity);
                     packetReceiveEvent.setCancelled();
                 }
             }
-            if ((packet2 = packetReceiveEvent.dq()) instanceof ad) {
+            if ((packet2 = packetReceiveEvent.getPacket()) instanceof ad) {
                 ad ad2 = (ad)packet2;
                 if (dj) {
                     this.tu.add((Packet<?>)ad2);
                     packetReceiveEvent.setCancelled();
                 }
             }
-            if ((packet = packetReceiveEvent.dq()) instanceof z) {
+            if ((packet = packetReceiveEvent.getPacket()) instanceof z) {
                 z z2 = (z)packet;
                 if (dj) {
                     this.tu.add((Packet<?>)z2);
@@ -386,32 +386,32 @@ extends Mode<Velocity> {
             EntityLivingBase entityLivingBase;
             this.tv = false;
             KillAura killAura = this.e(KillAura.class);
-            List<EntityLivingBase> list2 = bv.f(((Number)this.tF.wo()).intValue());
+            List<EntityLivingBase> list2 = bv.f(((Number)this.range.wo()).intValue());
             List<EntityLivingBase> list3 = bv.bR();
             EntityLivingBase entityLivingBase2 = killAura.isEnabled() && killAura.jE != null ? killAura.jE : this.e(list3);
             if (entityLivingBase2 == null) {
                 return;
             }
-            if (GrimReduceVelocity.aEg.thePlayer.ae < 7 && ((Boolean)this.tB.wo()).booleanValue() && !this.e(Scaffold.class).isEnabled()) {
+            if (GrimReduceVelocity.aEg.thePlayer.ae < 7 && ((Boolean)this.rotations.wo()).booleanValue() && !this.e(Scaffold.class).isEnabled()) {
                 this.l((Entity)entityLivingBase2);
             }
-            if (((Boolean)((Velocity)this.wj()).qQ.wo()).booleanValue() && !GrimReduceVelocity.aEg.thePlayer.isSwingInProgress) {
+            if (((Boolean)((Velocity)this.getParent()).onSwing.wo()).booleanValue() && !GrimReduceVelocity.aEg.thePlayer.isSwingInProgress) {
                 if (this.e(KillAura.class).jE == null) return;
-                if (!((Boolean)this.tA.wo()).booleanValue()) {
+                if (!((Boolean)this.onSwingDisableOnAura.wo()).booleanValue()) {
                     return;
                 }
             }
             Speed speed = this.e(Speed.class);
-            int wo2 = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && (Boolean)((GrimSpeed)speed.hl().wo()).Px.wo() != false ? 1 : 0;
+            int wo2 = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && (Boolean)((GrimSpeed)speed.hl().wo()).fastFall.wo() != false ? 1 : 0;
             if (GrimReduceVelocity.aEg.thePlayer.ticksExisted <= 20) return;
             if (wo2 != 0) {
                 return;
             }
             entityLivingBase = killAura.isEnabled() && killAura.jE != null ? killAura.jE : this.e(list2);
-            if (GrimReduceVelocity.aEg.thePlayer.ae <= ((Number)this.ty.wo()).intValue() && !bb.a(false, false, false, true, false) && !this.e(Scaffold.class).isEnabled() && GrimReduceVelocity.aEg.thePlayer.Zl > ((Number)this.tz.wo()).intValue()) {
+            if (GrimReduceVelocity.aEg.thePlayer.ae <= ((Number)this.reduceTicks.wo()).intValue() && !bb.bad(false, false, false, true, false) && !this.e(Scaffold.class).isEnabled() && GrimReduceVelocity.aEg.thePlayer.Zl > ((Number)this.teleportDisableTicks.wo()).intValue()) {
                 this.tv = true;
             }
-            if ((list = bv.f(((Number)this.tF.wo()).intValue())) == null || list.isEmpty()) {
+            if ((list = bv.f(((Number)this.range.wo()).intValue())) == null || list.isEmpty()) {
                 if (killAura == null) return;
                 if (killAura.jE == null) {
                     return;
@@ -420,7 +420,7 @@ extends Mode<Velocity> {
             if (killAura.isEnabled() && killAura.jE != null) {
                 EntityLivingBase entityLivingBase4 = killAura.jE;
                 MovingObjectPosition movingObjectPosition = GrimReduceVelocity.aEg.objectMouseOver;
-                if (!((double)GrimReduceVelocity.aEg.thePlayer.getDistanceToEntity((Entity)entityLivingBase4) <= 3.0 || movingObjectPosition != null && movingObjectPosition.entityHit == entityLivingBase4 || ((Number)this.tF.wo()).intValue() <= 3)) {
+                if (!((double)GrimReduceVelocity.aEg.thePlayer.getDistanceToEntity((Entity)entityLivingBase4) <= 3.0 || movingObjectPosition != null && movingObjectPosition.entityHit == entityLivingBase4 || ((Number)this.range.wo()).intValue() <= 3)) {
                     RotationComponent.d(false);
                     RotationComponent.setRotations(new Vector2f(GrimReduceVelocity.aEg.thePlayer.pl, (float)(90.0 - Math.random() * 0.1)), 10.0, MovementFix.NORMAL);
                 }
@@ -431,28 +431,28 @@ extends Mode<Velocity> {
                 Vec3 vec32 = new Vec3((axisAlignedBB.minX + axisAlignedBB.maxX) * 0.5, (axisAlignedBB.minY + axisAlignedBB.maxY) * 0.5, (axisAlignedBB.minZ + axisAlignedBB.maxZ) * 0.5).subtract(vec3).normalize();
                 Vec3 vec33 = vec3.addVector(vec32.xCoord * 3.0, vec32.yCoord * 3.0, vec32.zCoord * 3.0);
                 MovingObjectPosition movingObjectPosition = axisAlignedBB.calculateIntercept(vec3, vec33);
-                if (!((movingObjectPosition != null ? vec3.distanceTo(movingObjectPosition.hitVec) : vec3.distanceTo(GrimReduceVelocity.a(vec3, axisAlignedBB))) <= 3.0) && GrimReduceVelocity.aEg.thePlayer.ae <= ((Number)this.ty.wo()).intValue() && !bb.a(false, false, false, true, false)) {
+                if (!((movingObjectPosition != null ? vec3.distanceTo(movingObjectPosition.hitVec) : vec3.distanceTo(GrimReduceVelocity.a(vec3, axisAlignedBB))) <= 3.0) && GrimReduceVelocity.aEg.thePlayer.ae <= ((Number)this.reduceTicks.wo()).intValue() && !bb.bad(false, false, false, true, false)) {
                     RotationComponent.d(false);
                     RotationComponent.setRotations(new Vector2f(GrimReduceVelocity.aEg.thePlayer.pl, (float)(90.0 - Math.random() * 0.2)), 10.0, MovementFix.NORMAL);
                 }
             }
             if (entityLivingBase == null) return;
-            if (GrimReduceVelocity.aEg.thePlayer.ae > ((Number)this.ty.wo()).intValue() + 1) return;
-            if (bb.a(false, false, false, true, false)) return;
+            if (GrimReduceVelocity.aEg.thePlayer.ae > ((Number)this.reduceTicks.wo()).intValue() + 1) return;
+            if (bb.bad(false, false, false, true, false)) return;
             if (this.e(Scaffold.class).isEnabled()) return;
-            if (GrimReduceVelocity.aEg.thePlayer.Zl <= ((Number)this.tz.wo()).intValue()) return;
+            if (GrimReduceVelocity.aEg.thePlayer.Zl <= ((Number)this.teleportDisableTicks.wo()).intValue()) return;
             if (ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
-                if ((Boolean)this.tD.wo() == false) return;
+                if ((Boolean)this.extraHit.wo() == false) return;
                 GrimReduceVelocity.aEg.playerController.attackEntity((EntityPlayer)GrimReduceVelocity.aEg.thePlayer, (Entity)entityLivingBase);
                 ahj.l(new m());
                 return;
             }
-            if ((Boolean)this.tD.wo() == false) return;
+            if ((Boolean)this.extraHit.wo() == false) return;
             ahj.l(new m());
             GrimReduceVelocity.aEg.playerController.attackEntity((EntityPlayer)GrimReduceVelocity.aEg.thePlayer, (Entity)entityLivingBase);
         };
         this.tI = preUpdateEvent -> {
-            if (GrimReduceVelocity.aEg.thePlayer.onGround && dj && (Boolean)this.tC.wo() == false || GrimReduceVelocity.aEg.thePlayer.Zl < 3 && dj || ((Boolean)this.tC.wo()).booleanValue() && (GrimReduceVelocity.aEg.thePlayer.onGround || !((Boolean)this.tw.wo()).booleanValue()) && dj && (this.e(KillAura.class).jE == null || aih.v((Entity)this.e(KillAura.class).jE) < 2.7 || GrimReduceVelocity.aEg.thePlayer.aY == 1)) {
+            if (GrimReduceVelocity.aEg.thePlayer.onGround && dj && (Boolean)this.delayPlus.wo() == false || GrimReduceVelocity.aEg.thePlayer.Zl < 3 && dj || ((Boolean)this.delayPlus.wo()).booleanValue() && (GrimReduceVelocity.aEg.thePlayer.onGround || !((Boolean)this.delayTillGround.wo()).booleanValue()) && dj && (this.e(KillAura.class).jE == null || aih.v((Entity)this.e(KillAura.class).jE) < 2.7 || GrimReduceVelocity.aEg.thePlayer.aY == 1)) {
                 dj = false;
                 tt = true;
                 BlinkComponent.dispatch();
@@ -469,14 +469,14 @@ extends Mode<Velocity> {
                 tt = false;
             }
         };
-        this.tJ = preMotionEvent -> {
+        this.onPreMotion = preMotionEvent -> {
             this.gD = false;
         };
-        this.tK = moveInputEvent -> {
-            if (this.gD && ((Boolean)this.tx.wo()).booleanValue()) {
+        this.onMoveInput = moveInputEvent -> {
+            if (this.gD && ((Boolean)this.jumpReset.wo()).booleanValue()) {
                 moveInputEvent.setJump(true);
             }
-            if (GrimReduceVelocity.aEg.thePlayer.ae < 7 && ((Boolean)this.tB.wo()).booleanValue() && !this.e(Scaffold.class).isEnabled()) {
+            if (GrimReduceVelocity.aEg.thePlayer.ae < 7 && ((Boolean)this.rotations.wo()).booleanValue() && !this.e(Scaffold.class).isEnabled()) {
                 moveInputEvent.setForward(1.0f);
                 moveInputEvent.setStrafe(0.0f);
             }

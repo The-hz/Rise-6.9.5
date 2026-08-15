@@ -13,7 +13,7 @@ public final class VulcanLongJump extends Mode<LongJump> {
     private boolean ignore;
     private int ticks;
     @EventLink
-    public final Listener<PreMotionEvent> LI = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         this.ticks++;
         if (aEg.thePlayer.fallDistance > 0.0F && this.ticks % 2 == 0) {
             double d0;
@@ -66,8 +66,8 @@ public final class VulcanLongJump extends Mode<LongJump> {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> LJ = var1x -> {
-        if (var1x.dq() instanceof S08PacketPlayerPosLook && this.ignore) {
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1x -> {
+        if (var1x.getPacket() instanceof S08PacketPlayerPosLook && this.ignore) {
             var1x.setCancelled();
             this.ignore = false;
         }

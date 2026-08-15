@@ -24,7 +24,7 @@ import org.lwjgl.opengl.GL11;
 public class ExhibitionTargetInfo extends Mode<TargetInfo> {
     private TargetInfo aui;
     @EventLink
-    public final Listener<Render2DEvent> auC = var1x -> {
+    public final Listener<Render2DEvent> onRender2D = var1x -> {
         if (this.aui == null) {
             this.aui = this.e(TargetInfo.class);
         }
@@ -60,7 +60,7 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
             );
         GlStateManager.popMatrix();
         this.aui.positionValue.aHe = new Vector2d(140.0, 50.0);
-        double d2 = Math.min(!this.aui.inWorld ? 0.0 : ahg.a(f, 1), abstractclientplayer.getMaxHealth());
+        double d2 = Math.min(!this.aui.inWorld ? 0.0 : ahg.round(f, 1), abstractclientplayer.getMaxHealth());
         Color color = c(f, abstractclientplayer.getMaxHealth());
         double d3 = d0 + 40.0;
         RenderUtil.d(d3, d1 + 25.0, 91.0, 5.0, aip.d(color, 50));

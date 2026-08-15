@@ -7,7 +7,7 @@ import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.value.Mode;
 
 public class DisabledSprint extends Mode<Scaffold> {
-    @EventLink(cH = 0)
+    @EventLink(value = 0)
     public final Listener<StrafeEvent> onPreMotionEvent = var0 -> {
         aEg.gameSettings.cgG.setPressed(false);
         aEg.thePlayer.setSprinting(false);

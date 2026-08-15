@@ -58,10 +58,10 @@ public final class da extends Component {
     private static boolean iu = false;
     private static long iv = 0L;
     private static final long iw = 2000L;
-    @EventLink(cH = 1)
+    @EventLink(value = 1)
     public final Listener<fj> ix = var0 -> {};
     @EventLink
-    public final Listener<TickEvent> iy = var1 -> {
+    public final Listener<TickEvent> onTick = var1 -> {
         this.is = 0;
         String s = a.aKB().bX();
         s.equals("zaikoyano");
@@ -83,7 +83,7 @@ public final class da extends Component {
 
         if (s != null
             && !s.isBlank()
-            && (Objects.equals(LastConnectionComponent.port, "35565") || Objects.equals(LastConnectionComponent.ip, "testnet.hypixel.net") || Client.a.s().nN())
+            && (Objects.equals(LastConnectionComponent.port, "35565") || Objects.equals(LastConnectionComponent.ip, "testnet.hypixel.net") || Client.a.getSecurityManager().nN())
             && aEg.thePlayer.ticksExisted > 100
             && (this.e(KillAura.class).isEnabled() || this.e(Speed.class).isEnabled() || this.e(Scaffold.class).isEnabled())) {
             double d0;
@@ -102,7 +102,7 @@ public final class da extends Component {
         int j = (d1 = Math.random() - 1.0E-5) == 0.0 ? 0 : (d1 < 0.0 ? -1 : 1);
     };
     @EventLink
-    public final Listener<PacketSendEvent> iz = var1 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         String s = a.aKB().bX();
         if (Breaker.abQ == null && !this.e(KillAura.class).isEnabled()) {
             KillAura.nS = false;
@@ -199,9 +199,9 @@ public final class da extends Component {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> iA = var0 -> MoveUtil.enoughMovementForSprinting();
-    @EventLink(cH = 1)
-    public final Listener<PreMotionEvent> iB = var0 -> {
+    public final Listener<MoveInputEvent> onMoveInput = var0 -> MoveUtil.enoughMovementForSprinting();
+    @EventLink(value = 1)
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (cB() && aEg.thePlayer != null) {
             ;
         }

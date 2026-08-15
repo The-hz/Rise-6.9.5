@@ -31,15 +31,15 @@ public class Grim2Flight extends Mode<Flight> {
     private int Gk = 0;
     public static final Queue<Packet<?>> Gl = new LinkedList<>();
     @EventLink
-    public final Listener<WorldChangeEvent> Gm = var1x -> {
-        this.wj().toggle();
+    public final Listener<WorldChangeEvent> onWorldChange = var1x -> {
+        this.getParent().toggle();
         this.Gk = 0;
         this.Gi = false;
         this.Gj = false;
         Gl.clear();
     };
     @EventLink
-    public final Listener<PreMotionEvent> Gn = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (this.Gi) {
             this.Gk++;
             if (this.Gk >= 8) {
@@ -53,7 +53,7 @@ public class Grim2Flight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> Go = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         Packet packet = var1x.dq();
         if (packet instanceof C0FPacketConfirmTransaction && this.Gj) {
             var1x.setCancelled(true);
@@ -71,8 +71,8 @@ public class Grim2Flight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> Gp = var1x -> {
-        Packet packet = var1x.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        Packet packet = var1x.getPacket();
         if (packet instanceof S08PacketPlayerPosLook && this.Gj && !Gl.isEmpty()) {
             while (!Gl.isEmpty()) {
                 ahj.m(Gl.poll());

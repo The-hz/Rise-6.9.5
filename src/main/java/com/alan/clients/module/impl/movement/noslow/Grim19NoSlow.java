@@ -25,7 +25,7 @@ import net.minecraft.item.ItemSword;
 public class Grim19NoSlow extends Mode<NoSlow> {
     int MM;
     @EventLink
-    public final Listener<PreMotionEvent> MN = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.isUsingItem() && ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9)) {
             UserConnection userconnection = Via.getManager().getConnectionManager().getConnections().iterator().next();
             if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_19)) {
@@ -47,20 +47,20 @@ public class Grim19NoSlow extends Mode<NoSlow> {
         }
     };
     @EventLink
-    public final Listener<SlowDownEvent> MO = var1x -> {
-        if (this.wj().DO.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
+    public final Listener<SlowDownEvent> onSlowDown = var1x -> {
+        if (this.getParent().food.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
             var1x.setCancelled();
         }
 
-        if (this.wj().DP.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion) {
+        if (this.getParent().potion.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion) {
             var1x.setCancelled();
         }
 
-        if (this.wj().DQ.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
+        if (this.getParent().sword.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
             var1x.setCancelled();
         }
 
-        if (this.wj().DR.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
+        if (this.getParent().bow.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
             var1x.setCancelled();
         }
     };

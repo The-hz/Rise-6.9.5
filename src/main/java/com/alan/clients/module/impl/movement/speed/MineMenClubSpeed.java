@@ -21,22 +21,22 @@ public class MineMenClubSpeed extends Mode<Speed> {
     private static float Qa = 0.0F;
     private static final float Qb = 45.0F;
     private int PD = 0;
-    public final BooleanValue Qc = new BooleanValue("allow more strafing", this, true);
+    public final BooleanValue allowMoreStrafing = new BooleanValue("allow more strafing", this, true);
     @EventLink
-    public final Listener<JumpEvent> Qd = var1x -> this.PD++;
+    public final Listener<JumpEvent> onJump = var1x -> this.PD++;
     private double ue;
     private double ud;
     private double uf;
     @EventLink
-    public final Listener<PacketReceiveEvent> Qe = var1x -> {
-        if (var1x.dq() instanceof S12PacketEntityVelocity s12packetentityvelocity && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        if (var1x.getPacket() instanceof S12PacketEntityVelocity s12packetentityvelocity && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
             this.ud = s12packetentityvelocity.getMotionX() / 8000.0;
             this.uf = s12packetentityvelocity.getMotionZ() / 8000.0;
             this.ue = s12packetentityvelocity.getMotionZ() / 8000.0;
         }
     };
     @EventLink
-    public final Listener<MoveEvent> Qf = var1x -> {
+    public final Listener<MoveEvent> onMove = var1x -> {
         double d0 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
         double d1 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
         double d2 = d0 / 1.4;
@@ -47,13 +47,13 @@ public class MineMenClubSpeed extends Mode<Speed> {
 
             if (ahg.n(d0, d1) < 90.0) {
                 MoveUtil.strafe();
-            } else if (this.Qc.wo()) {
+            } else if (this.allowMoreStrafing.wo()) {
                 MoveUtil.strafe(MoveUtil.speed() * 0.7);
             }
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> Qg = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (this.PD % 2 == 1) {
             ;
         }
@@ -72,7 +72,7 @@ public class MineMenClubSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> Qh = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
         MoveUtil.roundToGround(var0.getPosY());
         if (aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();

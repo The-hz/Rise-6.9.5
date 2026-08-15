@@ -15,26 +15,26 @@ import net.minecraft.network.play.server.c;
 public class ax
 extends Component {
     @EventLink
-    public Listener<PreMotionEvent> ct;
+    public Listener<PreMotionEvent> onPreMotion;
     public static String cs;
     @EventLink
-    public Listener<ServerJoinEvent> cv;
+    public Listener<ServerJoinEvent> onServerJoin;
     public Pattern cq = Pattern.compile("Your new API key is (.*)");
     @EventLink
-    public Listener<PacketReceiveEvent> cu;
+    public Listener<PacketReceiveEvent> onPacketReceive;
     public static boolean cr;
 
     static {
     }
 
     public ax() {
-        this.ct = preMotionEvent -> {
+        this.onPreMotion = preMotionEvent -> {
             if (!cr && ax.aEg.thePlayer.ticksExisted == 2) {
                 ahm.vn();
             }
         };
-        this.cu = packetReceiveEvent -> {
-            Packet<?> packet = packetReceiveEvent.dq();
+        this.onPacketReceive = packetReceiveEvent -> {
+            Packet<?> packet = packetReceiveEvent.getPacket();
             if (packet instanceof c) {
                 if (!ahm.vn()) {
                     return;
@@ -51,7 +51,7 @@ extends Component {
                 }
             }
         };
-        this.cv = serverJoinEvent -> {
+        this.onServerJoin = serverJoinEvent -> {
             cr = false;
         };
     }

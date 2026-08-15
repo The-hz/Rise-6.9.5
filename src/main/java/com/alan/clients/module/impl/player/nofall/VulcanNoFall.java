@@ -9,7 +9,7 @@ import hackclient.rise.bd;
 
 public class VulcanNoFall extends Mode<NoFall> {
     @EventLink
-    public final Listener<PreMotionEvent> aiS = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (bd.cY > 3.0F) {
             var0.setOnGround(true);
             aEg.thePlayer.onGround = true;

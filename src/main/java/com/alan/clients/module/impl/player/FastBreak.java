@@ -20,13 +20,13 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 @ModuleInfo(aliases = "module.player.fastbreak.name", description = "module.player.fastbreak.description", category = Category.PLAYER)
 public final class FastBreak extends Module {
     public final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Percentage")).add(new SubMode("Ticks")).setDefault("Ticks");
-    public final NumberValue acz = new NumberValue("Speed", this, 50, 0, 100, 1, () -> this.mode.wo().getName().equals("Ticks"));
-    public final NumberValue acA = new NumberValue("Ticks", this, 1, 1, 100, 1, () -> this.mode.wo().getName().equals("Percentage"));
-    public final BooleanValue acB = new BooleanValue("Ignore Mining Fatigue", this, false);
-    public final BooleanValue acC = new BooleanValue("Equal Air/Ground Dig", this, true);
+    public final NumberValue speed = new NumberValue("Speed", this, 50, 0, 100, 1, () -> this.mode.wo().getName().equals("Ticks"));
+    public final NumberValue ticks = new NumberValue("Ticks", this, 1, 1, 100, 1, () -> this.mode.wo().getName().equals("Percentage"));
+    public final BooleanValue ignoreMiningFatigue = new BooleanValue("Ignore Mining Fatigue", this, false);
+    public final BooleanValue equalAirGroundDig = new BooleanValue("Equal Air/Ground Dig", this, true);
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
-        if (this.acB.wo()) {
+        if (this.ignoreMiningFatigue.wo()) {
             aEg.thePlayer.removePotionEffect(Potion.digSlowdown.getId());
         }
 
@@ -52,13 +52,13 @@ public final class FastBreak extends Module {
 
                 switch (b0) {
                     case 0:
-                        d0 = this.acz.wo().doubleValue() / 100.0;
-                        if (aEg.thePlayer.tR == 1 && this.acC.wo()) {
+                        d0 = this.speed.wo().doubleValue() / 100.0;
+                        if (aEg.thePlayer.tR == 1 && this.equalAirGroundDig.wo()) {
                             aEg.playerController.curBlockDamageMP /= 5.0F;
                             d0 = 0.8F;
                         }
 
-                        if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.onGround && this.acC.wo()) {
+                        if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.onGround && this.equalAirGroundDig.wo()) {
                             aEg.playerController.curBlockDamageMP *= 5.0F;
                             d0 -= 0.8F;
                         }
@@ -72,13 +72,13 @@ public final class FastBreak extends Module {
 
             if (aEg.objectMouseOver != null && aEg.objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
                 BlockPos blockpos = aEg.objectMouseOver.getBlockPos();
-                d0 = aih.q(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos) * this.acA.wo().intValue();
-                if (aEg.thePlayer.tR == 1 && this.acC.wo()) {
+                d0 = aih.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos) * this.ticks.wo().intValue();
+                if (aEg.thePlayer.tR == 1 && this.equalAirGroundDig.wo()) {
                     aEg.playerController.curBlockDamageMP /= 5.0F;
                     d0 = 0.81F;
                 }
 
-                if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.onGround && this.acC.wo()) {
+                if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.onGround && this.equalAirGroundDig.wo()) {
                     aEg.playerController.curBlockDamageMP *= 5.0F;
                     d0 -= 0.81F;
                 }
@@ -95,6 +95,6 @@ public final class FastBreak extends Module {
 
     @Generated
     public NumberValue jG() {
-        return this.acz;
+        return this.speed;
     }
 }

@@ -47,14 +47,14 @@ public final class AutoGroomer extends Module {
         "Daddy's gonna eat that pussy tonight.",
         "Daddy's all bricked up now."
     );
-    private final BooleanValue Tx = new BooleanValue("Chat Bypass", this, false);
-    private final BooleanValue Ty = new BooleanValue("DM Messages", this, false);
-    private final BooleanValue Tz = new BooleanValue("Spam", this, false);
+    private final BooleanValue chatBypass = new BooleanValue("Chat Bypass", this, false);
+    private final BooleanValue dm = new BooleanValue("DM Messages", this, false);
+    private final BooleanValue spam = new BooleanValue("Spam", this, false);
     @EventLink
-    private final Listener<PreMotionEvent> TA = var1 -> {
-        if (!this.Ty.wo() && aEg.thePlayer.ticksExisted % 69 == 0) {
+    private final Listener<PreMotionEvent> pre = var1 -> {
+        if (!this.dm.wo() && aEg.thePlayer.ticksExisted % 69 == 0) {
             String s = this.Tw.get(this.random.nextInt(this.Tw.size()));
-            if (this.Tx.wo()) {
+            if (this.chatBypass.wo()) {
                 StringBuilder stringbuilder = new StringBuilder(s.length() * 2);
 
                 for (int i = 0; i < s.length(); i++) {
@@ -67,15 +67,15 @@ public final class AutoGroomer extends Module {
             }
 
             aEg.thePlayer.sendChatMessage(s);
-        } else if (!this.Tz.wo() || aEg.thePlayer.ticksExisted % 20 == 0) {
+        } else if (!this.spam.wo() || aEg.thePlayer.ticksExisted % 20 == 0) {
             for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
                 if (entityplayer != aEg.thePlayer
                     && !entityplayer.isInvisible()
                     && !Client.a.x().a(entityplayer)
                     && entityplayer.getDistanceSqToEntity(aEg.thePlayer) < 64.0
-                    && (!this.Tv.contains(entityplayer.getEntityId()) || this.Tz.wo())) {
+                    && (!this.Tv.contains(entityplayer.getEntityId()) || this.spam.wo())) {
                     String s1 = this.Tw.get(this.random.nextInt(this.Tw.size()));
-                    if (this.Tx.wo()) {
+                    if (this.chatBypass.wo()) {
                         StringBuilder stringbuilder1 = new StringBuilder(s1.length() * 2);
 
                         for (int j = 0; j < s1.length(); j++) {
@@ -94,7 +94,7 @@ public final class AutoGroomer extends Module {
         }
     };
     @EventLink
-    private final Listener<WorldChangeEvent> TB = var1 -> this.Tv.clear();
+    private final Listener<WorldChangeEvent> worldChange = var1 -> this.Tv.clear();
 
     public AutoGroomer() {
     }

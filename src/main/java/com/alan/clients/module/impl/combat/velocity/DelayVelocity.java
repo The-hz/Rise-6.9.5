@@ -25,9 +25,9 @@ public class DelayVelocity extends Mode<Velocity> {
     private final Deque<il> tn = new ArrayDeque<>();
     private boolean to = false;
     @EventLink
-    public final Listener<PacketReceiveEvent> tp = var1x -> {
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1x -> {
         if (!this.to && aEg.thePlayer != null) {
-            Packet packet = var1x.dq();
+            Packet packet = var1x.getPacket();
             if (packet instanceof S12PacketEntityVelocity s12packetentityvelocity) {
                 if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                     var1x.setCancelled();
@@ -51,7 +51,7 @@ public class DelayVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<TickEvent> tq = var1x -> {
+    public final Listener<TickEvent> onTick = var1x -> {
         if (aEg.thePlayer != null && !this.tn.isEmpty()) {
             int i = aEg.thePlayer.ticksExisted;
 

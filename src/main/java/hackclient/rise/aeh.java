@@ -15,8 +15,8 @@ import net.minecraft.client.renderer.ThreadDownloadImageData;
 import net.minecraft.util.ResourceLocation;
 
 public class aeh implements InstanceAccess {
-    private static final Map<String, ResourceLocation> aEq = new HashMap<>();
-    private static final String aEr = "https://api.mojang.com/users/profiles/minecraft/";
+    private static final Map<String, ResourceLocation> SKIN_CACHE = new HashMap<>();
+    private static final String NAME_TO_UUID = "https://api.mojang.com/users/profiles/minecraft/";
     private static final String[] aEs = new String[]{
         "https://mc-heads.net/avatar/%s/%d", "https://minotar.net/avatar/%s/%d", "https://cravatar.eu/helmavatar/%s/%d.png"
     };
@@ -27,15 +27,15 @@ public class aeh implements InstanceAccess {
 
     public static ResourceLocation a(aei var0, String var1, int var2) {
         String s = var1 + "_" + var0.name() + "_" + var2;
-        if (aEq.containsKey(s)) {
-            return aEq.get(s);
+        if (SKIN_CACHE.containsKey(s)) {
+            return SKIN_CACHE.get(s);
         }
 
         String s1 = b(var0, var1, var2);
         ResourceLocation resourcelocation = new ResourceLocation("skins/" + var1 + "_" + var0.name() + "_" + var2);
         ThreadDownloadImageData threaddownloadimagedata = new ThreadDownloadImageData(null, s1, null, null);
         aEg.getTextureManager().loadTexture(resourcelocation, threaddownloadimagedata);
-        aEq.put(s, resourcelocation);
+        SKIN_CACHE.put(s, resourcelocation);
         AbstractClientPlayer.getDownloadImageSkin(resourcelocation, var1);
         return resourcelocation;
     }
@@ -69,7 +69,7 @@ public class aeh implements InstanceAccess {
 
     public static void rY() {
         aEt = (aEt + 1) % aEs.length;
-        aEq.clear();
+        SKIN_CACHE.clear();
     }
 
     public static String rZ() {

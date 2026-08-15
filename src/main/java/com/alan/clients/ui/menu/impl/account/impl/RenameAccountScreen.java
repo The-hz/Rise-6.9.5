@@ -64,19 +64,19 @@ public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
         int i = aadh.length;
 
         for (int j = 0; j < i; j++) {
-            aadh[j].c(var1, var2, var3);
+            aadh[j].draw(var1, var2, var3);
         }
 
-        usernameBox.pJ();
+        usernameBox.draw();
     }
 
     @Override
     public void mouseClicked(int var1, int var2, int var3) {
-        usernameBox.d(var1, var2, var3);
+        usernameBox.click(var1, var2, var3);
 
         for (adh adh : this.menuButtons) {
-            if (aeb.a(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
-                adh.rm();
+            if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+                adh.runAction();
                 break;
             }
         }
@@ -85,7 +85,7 @@ public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
     @Override
     protected void keyTyped(char var1, int var2) {
         if (usernameBox.tO()) {
-            usernameBox.b(var1, var2);
+            usernameBox.key(var1, var2);
         }
     }
 

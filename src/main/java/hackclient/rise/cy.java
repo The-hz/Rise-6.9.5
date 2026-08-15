@@ -23,8 +23,8 @@ import net.minecraft.network.play.client.C16PacketClientStatus;
 public final class cy extends Component {
     public static double il = 0.0;
     private boolean im;
-    @EventLink(cH = 0)
-    public final Listener<PacketSendEvent> in = var1 -> {
+    @EventLink(value = 0)
+    public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         TerrainSpeed terrainspeed = this.e(TerrainSpeed.class);
         if (aEg.thePlayer.ticksExisted < 2) {
             il = 0.0;
@@ -32,10 +32,10 @@ public final class cy extends Component {
 
         if ((
                 ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)
-                    || "Bloxd".equals(terrainspeed.Fe.wo().getName()) && terrainspeed.isEnabled() && !this.e(LongJump.class).isEnabled()
+                    || "Bloxd".equals(terrainspeed.mode.wo().getName()) && terrainspeed.isEnabled() && !this.e(LongJump.class).isEnabled()
             )
             && var1.dq() instanceof C03PacketPlayer c03packetplayer) {
-            if ("Bloxd".equals(terrainspeed.Fe.wo().getName())
+            if ("Bloxd".equals(terrainspeed.mode.wo().getName())
                 && terrainspeed.isEnabled()
                 && !this.e(LongJump.class).isEnabled()
                 && !c03packetplayer.isMoving()
@@ -62,7 +62,7 @@ public final class cy extends Component {
             }
 
             if (Breaker.abQ != null) {
-                this.e(Breaker.class).abJ.wo();
+                this.e(Breaker.class).attackWhileBreaking.wo();
             }
 
             if (!(packet instanceof C0EPacketClickWindow)
@@ -79,7 +79,7 @@ public final class cy extends Component {
         }
     };
     @EventLink
-    public final Listener<PreUpdateEvent> io = var1 -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         if (!this.e(KillAura.class).isEnabled()) {
             double d0;
             int i = (d0 = il - 10.0) == 0.0 ? 0 : (d0 < 0.0 ? -1 : 1);

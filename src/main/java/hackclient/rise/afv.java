@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class afv {
-    public static final File aHH = new File(afr.aHy, "alts");
+    public static final File aHH = new File(afr.DIRECTORY, "alts");
     private final List<ael> aHI = new ArrayList<>();
 
     public afv() {
@@ -30,7 +30,7 @@ public class afv {
     }
 
     public boolean update() {
-        return this.tj().tf();
+        return this.tj().write();
     }
 
     private File sK() {

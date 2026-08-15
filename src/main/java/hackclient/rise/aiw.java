@@ -13,14 +13,14 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
 public class aiw implements InstanceAccess {
-    private static final IResourceManager aPP = aEg.getResourceManager();
+    private static final IResourceManager RESOURCE_MANAGER = aEg.getResourceManager();
 
     public aiw() {
     }
 
-    public static int H(String var0, String var1) {
-        String s = cl(var0);
-        String s1 = cl(var1);
+    public static int createShader(String var0, String var1) {
+        String s = getShaderResource(var0);
+        String s1 = getShaderResource(var1);
         if (var0 != null && var1 != null) {
             int i = GL20.glCreateShader(35632);
             int j = GL20.glCreateShader(35633);
@@ -28,11 +28,11 @@ public class aiw implements InstanceAccess {
             GL20.glShaderSource(j, s1);
             GL20.glCompileShader(i);
             GL20.glCompileShader(j);
-            if (!aE(i)) {
+            if (!compileShader(i)) {
                 return -1;
             }
 
-            if (!aE(j)) {
+            if (!compileShader(j)) {
                 return -1;
             }
 
@@ -51,7 +51,7 @@ public class aiw implements InstanceAccess {
         return -1;
     }
 
-    private static boolean aE(int var0) {
+    private static boolean compileShader(int var0) {
         boolean flag = GL20.glGetShaderi(var0, 35713) == 1;
         if (flag) {
             return true;
@@ -64,9 +64,9 @@ public class aiw implements InstanceAccess {
         return false;
     }
 
-    public static String cl(String var0) {
+    public static String getShaderResource(String var0) {
         try {
-            InputStream inputstream = aPP.getResource(new ResourceLocation("rise/shader/" + var0)).getInputStream();
+            InputStream inputstream = RESOURCE_MANAGER.getResource(new ResourceLocation("rise/shader/" + var0)).getInputStream();
             InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
             BufferedReader bufferedreader = new BufferedReader(inputstreamreader);
             String s = "";

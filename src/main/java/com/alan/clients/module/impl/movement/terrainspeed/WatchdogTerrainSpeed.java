@@ -19,7 +19,7 @@ public final class WatchdogTerrainSpeed extends Mode<TerrainSpeed> {
     private int SE;
     private int SF;
     @EventLink
-    public final Listener<StrafeEvent> Ta = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aih.o(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.5, aEg.thePlayer.posZ) instanceof BlockSlab
             && aEg.thePlayer.posY == Math.floor(aEg.thePlayer.posY) + 0.5
             && !this.e(Scaffold.class).isEnabled()
@@ -55,7 +55,7 @@ public final class WatchdogTerrainSpeed extends Mode<TerrainSpeed> {
         }
     };
     @EventLink
-    public final Listener<MoveEvent> Tb = var1x -> {
+    public final Listener<MoveEvent> onMove = var1x -> {
         if (this.SE < 2) {
             var1x.setPosY(-0.0784);
             aEg.gameSettings.keyBindJump.setPressed(false);

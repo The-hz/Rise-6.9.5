@@ -10,12 +10,12 @@ public class ajo {
     }
 
     public void a(float var1, float var2, float var3, float var4, float var5, Color var6, boolean var7, boolean var8, boolean var9, boolean var10) {
-        int i = this.aQp.vO();
+        int i = this.aQp.getProgramId();
         this.aQp.rt();
-        aja.a(i, "u_size", var3, var4);
-        aja.a(i, "u_radius", var5);
-        aja.a(i, "u_color", var6.getRed() / 255.0F, var6.getGreen() / 255.0F, var6.getBlue() / 255.0F, var6.getAlpha() / 255.0F);
-        aja.a(i, "u_edges", var7 ? 1.0F : 0.0F, var8 ? 1.0F : 0.0F, var9 ? 1.0F : 0.0F, var10 ? 1.0F : 0.0F);
+        aja.uniform2f(i, "u_size", var3, var4);
+        aja.uniform1f(i, "u_radius", var5);
+        aja.uniform4f(i, "u_color", var6.getRed() / 255.0F, var6.getGreen() / 255.0F, var6.getBlue() / 255.0F, var6.getAlpha() / 255.0F);
+        aja.uniform4f(i, "u_edges", var7 ? 1.0F : 0.0F, var8 ? 1.0F : 0.0F, var9 ? 1.0F : 0.0F, var10 ? 1.0F : 0.0F);
         GlStateManager.enableBlend();
         aiy.h(var1, var2, var3, var4);
         GlStateManager.disableBlend();

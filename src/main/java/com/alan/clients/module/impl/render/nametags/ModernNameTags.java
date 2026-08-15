@@ -25,12 +25,12 @@ import net.minecraft.potion.Potion;
 
 public class ModernNameTags
 extends Mode<NameTags> {
-    private final BooleanValue atA = new BooleanValue("Show Health", (Mode<?>)this, (Boolean)true);
+    private final BooleanValue health = new BooleanValue("Show Health", (Mode<?>)this, (Boolean)true);
     private final BooleanValue atB = new BooleanValue("Overlays (Bloom/Blur)", (Mode<?>)this, (Boolean)true);
     private final agc atC = gb.MAIN.a(14, gd.LIGHT);
     @EventLink
-    public final Listener<Render2DEvent> atD = render2DEvent -> {
-        List<EntityLivingBase> list = bv.b((Boolean)((NameTags)this.wj()).aoZ.wo(), (Boolean)((NameTags)this.wj()).apa.wo(), (Boolean)((NameTags)this.wj()).apb.wo(), (Boolean)((NameTags)this.wj()).apc.wo(), (Boolean)((NameTags)this.wj()).apd.wo(), true);
+    public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
+        List<EntityLivingBase> list = bv.b((Boolean)((NameTags)this.getParent()).player.wo(), (Boolean)((NameTags)this.getParent()).invisibles.wo(), (Boolean)((NameTags)this.getParent()).animals.wo(), (Boolean)((NameTags)this.getParent()).mobs.wo(), (Boolean)((NameTags)this.getParent()).playerTeammates.wo(), true);
         if (ModernNameTags.aEg.gameSettings.thirdPersonView != 0) {
             list.add((EntityLivingBase)ModernNameTags.aEg.thePlayer);
         }
@@ -43,12 +43,12 @@ extends Mode<NameTags> {
             Vector4d vector4d = ProjectionComponent.e((Entity)entityLivingBase);
             if (vector4d == null) continue;
             String string = entityLivingBase.getName();
-            double d2 = ((NameTags)this.wj()).a(string, gb.MAIN.a(17, gd.LIGHT));
+            double d2 = ((NameTags)this.getParent()).a(string, gb.MAIN.a(17, gd.LIGHT));
             HealthBypass healthBypass = this.e(HealthBypass.class);
             float f2 = healthBypass != null && healthBypass.isEnabled() ? HealthBypass.B(entityLivingBase) : entityLivingBase.getHealth();
             double d3 = vector4d.x + (vector4d.z - vector4d.x) / 2.0;
             double d4 = vector4d.y - 2.0;
-            double d5 = (double)(gb.MAIN.a(17, gd.LIGHT).tq() - 2.0f + ((Boolean)this.atA.wo() != false ? this.atC.tq() : 0.0f)) + 4.0;
+            double d5 = (double)(gb.MAIN.a(17, gd.LIGHT).height() - 2.0f + ((Boolean)this.health.wo() != false ? this.atC.height() : 0.0f)) + 4.0;
             double d6 = d4 - d5 + 1.0;
             boolean bl = entityLivingBase.isPotionActive(Potion.damageBoost);
             Color color2 = new Color(255, 30, 30, 235);
@@ -58,17 +58,17 @@ extends Mode<NameTags> {
             Color color5 = new Color(255, 40, 40, color4.getAlpha());
             Color color6 = color = bl ? ModernNameTags.a(color4, color5, 0.35f) : color4;
             if (((Boolean)this.atB.wo()).booleanValue()) {
-                this.b(gg.BLOOM).c(() -> RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0 + 0.5, d6 + 0.5, d2 + 4.0 - 1.0, d5 - 1.0, this.rz().pl(), color3));
+                this.b(gg.BLOOM).c(() -> RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0 + 0.5, d6 + 0.5, d2 + 4.0 - 1.0, d5 - 1.0, this.rz().getRound(), color3));
             }
             this.b(gg.REGULAR).c(() -> {
-                RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0, d6, d2 + 4.0, d5, this.rz().pl() - 1, color);
+                RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0, d6, d2 + 4.0, d5, this.rz().getRound() - 1, color);
                 gb.MAIN.a(17, gd.LIGHT).c(string, d3 - 0.5, d6 - 0.5 + 4.0, this.rz().rA().getRGB());
-                if (((Boolean)this.atA.wo()).booleanValue()) {
+                if (((Boolean)this.health.wo()).booleanValue()) {
                     this.atC.c(String.valueOf((int)f2), d3, d4 + 5.0 - 2.0 - (double)9, Color.WHITE.getRGB());
                 }
             });
             if (!((Boolean)this.atB.wo()).booleanValue()) continue;
-            this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0, d6, d2 + 4.0, d5, this.rz().pl(), color3));
+            this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0, d6, d2 + 4.0, d5, this.rz().getRound(), color3));
         }
         return;
     };

@@ -16,10 +16,10 @@ import net.minecraft.util.IChatComponent;
 
 @ModuleInfo(aliases = "module.other.hypixelautoplay.name", description = "module.other.hypixelautoplay.description", category = Category.PLAYER)
 public final class HypixelAutoPlay extends Module {
-    private final ModeValue TC = new ModeValue("Mode", this).add(new SubMode("Hypixel")).setDefault("Hypixel");
+    private final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Hypixel")).setDefault("Hypixel");
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
-        if (var1.dq() instanceof c c && this.TC.wo().getName().equals("Hypixel")) {
+        if (var1.getPacket() instanceof c c && this.mode.wo().getName().equals("Hypixel")) {
             if (c.isChat()) {
                 return;
             }
@@ -30,7 +30,7 @@ public final class HypixelAutoPlay extends Module {
                 while (iterator.hasNext()) {
                     for (String s : ((IChatComponent)iterator.next()).toString().split("'")) {
                         if (s.startsWith("/play") && !s.contains(".")) {
-                            afi.i(s);
+                            afi.send(s);
                             cg.a("Auto Play", "Joined a new game", 7000);
                             break;
                         }

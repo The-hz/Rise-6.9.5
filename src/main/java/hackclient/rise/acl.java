@@ -108,7 +108,7 @@ extends GuiScreen {
     private long aAY;
     private long aAZ;
     @EventLink
-    public final Listener<Render2DEvent> aBa = render2DEvent -> {
+    public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         if (acl.aEg.currentScreen != this) {
             return;
         }
@@ -135,7 +135,7 @@ extends GuiScreen {
         this.aAt.ar(1);
         this.aAw.T(0.0);
         this.aAw.R(0.0);
-        Client.a.i().aQ().forEach(command -> this.aAy.add(new acr((Command)command)));
+        Client.a.getCommandManager().aQ().forEach(command -> this.aAy.add(new acr((Command)command)));
         this.aAz = new ArrayList<acr>(this.aAy);
         this.re();
         Client.a.e().b((Object)this);
@@ -261,7 +261,7 @@ extends GuiScreen {
                 return;
             }
         }
-        this.aAt.b(c2, n2);
+        this.aAt.key(c2, n2);
         this.qL();
     }
 
@@ -305,11 +305,11 @@ extends GuiScreen {
                         if (this.ac(n4)) {
                             return;
                         }
-                        if (n4 == 0 && !aeb.a(this.aAF, this.aAG, this.aAH, this.aAI, n2, n3)) {
+                        if (n4 == 0 && !aeb.isHovered(this.aAF, this.aAG, this.aAH, this.aAI, n2, n3)) {
                             aEg.displayGuiScreen(this.aAs);
                             return;
                         }
-                        this.aAt.d(n2, n3, n4);
+                        this.aAt.click(n2, n3, n4);
                         if (n4 != 0 || (n6 = this.j(n2, n3)) == -1) break block5;
                         this.aAP = n6;
                         if (!this.aAC) break block6;
@@ -387,16 +387,16 @@ extends GuiScreen {
         double d4 = this.aAG + -0.5;
         double d5 = this.aAH - -1.0;
         this.aAt.z((float)(d5 - 24.0));
-        this.aAt.h(new Vector2d(d3 + 12.0, d4 + (this.aAJ - (double)this.aAt.eb().tq()) / 2.0 + 1.5));
-        this.aAt.b(aip.d(Color.WHITE, (int)(255.0 * d2)));
+        this.aAt.h(new Vector2d(d3 + 12.0, d4 + (this.aAJ - (double)this.aAt.eb().height()) / 2.0 + 1.5));
+        this.aAt.setColor(aip.d(Color.WHITE, (int)(255.0 * d2)));
         this.aAt.I(true);
         String string2 = this.aAt.aJm;
         if (agx.isEnabled() && this.aAu.uc() && (string = this.aAu.uo()) != null && !string.isEmpty()) {
             this.aAt.aJm = "";
         }
-        this.aAt.pJ();
+        this.aAt.draw();
         this.aAt.aJm = string2;
-        this.k(d3 + 12.0, d4 + (this.aAJ - (double)this.aAt.eb().tq()) / 2.0 + 1.5, d2);
+        this.k(d3 + 12.0, d4 + (this.aAJ - (double)this.aAt.eb().height()) / 2.0 + 1.5, d2);
         if (agx.isEnabled() && this.aAu.uc()) {
             String string3 = this.aAu.uo();
             List<String> list = this.aAu.up();
@@ -405,7 +405,7 @@ extends GuiScreen {
                 float f3 = this.aAt.tM();
                 int n2 = aip.d(Color.WHITE, (int)(215.0 * d2)).getRGB();
                 aAp.a(string3, f2, f3, n2);
-                RenderUtil.d(f2, f3 + aAp.tq() + 1.0f, aAp.getStringWidth(string3), 1.0, aip.d(Color.WHITE, (int)(160.0 * d2)));
+                RenderUtil.d(f2, f3 + aAp.height() + 1.0f, aAp.getStringWidth(string3), 1.0, aip.d(Color.WHITE, (int)(160.0 * d2)));
                 if (list != null && !list.isEmpty()) {
                     StringBuilder stringBuilder = new StringBuilder();
                     int n3 = Math.min(9, list.size());
@@ -425,9 +425,9 @@ extends GuiScreen {
                     String string5 = stringBuilder.toString();
                     double d6 = 6.0;
                     double d7 = (double)aAp.getStringWidth(string5) + d6 * 2.0;
-                    double d8 = (double)aAp.tq() + d6 * 2.0;
+                    double d8 = (double)aAp.height() + d6 * 2.0;
                     double d9 = f2 - 2.0f;
-                    double d10 = f3 + aAp.tq() + 6.0f;
+                    double d10 = f3 + aAp.height() + 6.0f;
                     double d11 = 8.0;
                     this.b(gg.BLOOM).c(() -> RenderUtil.roundedRectangle(d9, d10, d7, d8, d11 + 2.0, this.rz().rE()));
                     RenderUtil.roundedRectangle(d9, d10, d7, d8, d11, aip.d(adv.rK(), 190));
@@ -577,19 +577,19 @@ extends GuiScreen {
         if (n4 == 0) {
             agc agc2 = gb.MAIN.a(15, gd.REGULAR);
             String string = this.rd();
-            agc2.c(string, this.aAK + this.aAM / 2.0, this.aAL + this.aAN / 2.0 - (double)agc2.tq() / 2.0, aip.d(Color.WHITE, (int)(180.0 * d2)).getRGB());
+            agc2.c(string, this.aAK + this.aAM / 2.0, this.aAL + this.aAN / 2.0 - (double)agc2.height() / 2.0, aip.d(Color.WHITE, (int)(180.0 * d2)).getRGB());
         }
         RenderUtil.vJ();
         this.aAv.a(new Vector2d(this.aAK + this.aAM - 4.0, this.aAL + 6.0), this.aAN - 12.0);
     }
 
     private void a(acr acr2, double d2, double d3, double d4, double d5) {
-        double d6 = d3 + (28.0 - (double)aAp.tq()) / 2.0;
+        double d6 = d3 + (28.0 - (double)aAp.height()) / 2.0;
         int n2 = aip.d(Color.WHITE, (int)(255.0 * d5)).getRGB();
         String string = "." + acr2.aBk;
         aAp.a(string, d2, d6, n2);
         double d7 = d2 + (double)aAp.getStringWidth(string) + 10.0;
-        double d8 = d6 + (double)aAp.tq() - (double)aAq.tq() - 1.0;
+        double d8 = d6 + (double)aAp.height() - (double)aAq.height() - 1.0;
         StringBuilder stringBuilder = new StringBuilder();
         if (acr2.aBm != null && !acr2.aBm.isEmpty()) {
             stringBuilder.append(acr2.aBm);
@@ -615,12 +615,12 @@ extends GuiScreen {
     }
 
     private void a(acy acy2, double d2, double d3, double d4, double d5) {
-        double d6 = d3 + (28.0 - (double)aAp.tq()) / 2.0;
+        double d6 = d3 + (28.0 - (double)aAp.height()) / 2.0;
         int n2 = aip.d(Color.WHITE, (int)(250.0 * d5)).getRGB();
         String string = acy2.aBz;
         aAp.a(string, d2, d6, n2);
         double d7 = d2 + (double)aAp.getStringWidth(string) + 10.0;
-        double d8 = d6 + (double)aAp.tq() - (double)aAq.tq();
+        double d8 = d6 + (double)aAp.height() - (double)aAq.height();
         if (!acy2.aBA.isEmpty()) {
             int n3 = aip.d(Color.WHITE, (int)(220.0 * d5)).getRGB();
             aAq.a(acy2.aBA, d7, d8, n3);
@@ -641,7 +641,7 @@ extends GuiScreen {
             double d4 = Math.max(0.0, Math.min(1.0, d3));
             int n2 = (int)((double)this.statusColor.getAlpha() * d4);
             agc agc2 = gb.MAIN.a(13, gd.MEDIUM);
-            agc2.a(this.statusMessage, this.aAF + -0.5, this.aAG + this.aAI - -0.5 - (double)agc2.tq() + 4.0, aip.d(this.statusColor, n2).getRGB());
+            agc2.a(this.statusMessage, this.aAF + -0.5, this.aAG + this.aAI - -0.5 - (double)agc2.height() + 4.0, aip.d(this.statusColor, n2).getRGB());
         }
     }
 
@@ -754,7 +754,7 @@ extends GuiScreen {
         if (string.isEmpty()) {
             return;
         }
-        u u2 = Client.a.i().a(string, false);
+        u u2 = Client.a.getCommandManager().a(string, false);
         if (u2 == u.EXECUTED) {
             aEg.displayGuiScreen(this.aAs);
             return;
@@ -792,7 +792,7 @@ extends GuiScreen {
             return;
         }
         String string = ".bind " + stringArray[0].replace(" ", "") + " " + Bind.c(n2);
-        u u2 = Client.a.i().a(string, false);
+        u u2 = Client.a.getCommandManager().a(string, false);
         if (u2 == u.EXECUTED) {
             aEg.displayGuiScreen(this.aAs);
             return;
@@ -824,7 +824,7 @@ extends GuiScreen {
 
     private void a(acr acr2) {
         String string = "." + acr2.aBk;
-        if (Client.a.i().a(string, false) == u.EXECUTED) {
+        if (Client.a.getCommandManager().a(string, false) == u.EXECUTED) {
             aEg.displayGuiScreen(this.aAs);
             return;
         }
@@ -1124,7 +1124,7 @@ extends GuiScreen {
             if (string == null || string.isEmpty()) {
                 return ".";
             }
-            Object t2 = Client.a.i().b(string);
+            Object t2 = Client.a.getCommandManager().get(string);
             if (t2 == null) {
                 return "." + string;
             }
@@ -1493,7 +1493,7 @@ extends GuiScreen {
             stringArray = string3.isEmpty() ? new String[]{} : string3.split("\\s+");
             if (stringArray.length >= 3 && "load".equalsIgnoreCase(stringArray[1]) && "latest".equalsIgnoreCase(stringArray[2])) {
                 try {
-                    Object t2 = Client.a.i().b("config");
+                    Object t2 = Client.a.getCommandManager().get("config");
                     if (t2 != null) {
                         String string4 = stringArray[0];
                         for (String string5 : ((Command)t2).getExpressions()) {
@@ -1594,7 +1594,7 @@ extends GuiScreen {
             catch (Throwable throwable) {}
         }
         this.aAV = true;
-        if (Client.a.i().a(this.aAR, false) == u.EXECUTED) {
+        if (Client.a.getCommandManager().a(this.aAR, false) == u.EXECUTED) {
             aEg.displayGuiScreen(this.aAs);
             return;
         }
@@ -1606,13 +1606,13 @@ extends GuiScreen {
         if (string == null) {
             return;
         }
-        double d6 = d3 + (28.0 - (double)aAp.tq()) / 2.0;
+        double d6 = d3 + (28.0 - (double)aAp.height()) / 2.0;
         int n2 = aip.d(Color.WHITE, (int)(255.0 * d5)).getRGB();
         String string4 = ahd.ce("ui.command.palette.suggested.meta");
         int n3 = aip.d(Color.WHITE, (int)(175.0 * d5)).getRGB();
         double d7 = aAq.getStringWidth(string4);
         double d8 = d2 + Math.max(0.0, d4 - d7);
-        double d9 = d6 + (double)aAp.tq() - (double)aAq.tq() - 1.0;
+        double d9 = d6 + (double)aAp.height() - (double)aAq.height() - 1.0;
         aAq.a(string4, d8, d9, n3);
         string3 = string2 == null ? "" : ahd.ce(string2);
         if (string2 != null && string2.equals(string3)) {
@@ -1664,7 +1664,7 @@ extends GuiScreen {
         if (this.aAQ == null) {
             return;
         }
-        if (Client.a.i().a(this.aAQ, false) == u.EXECUTED) {
+        if (Client.a.getCommandManager().a(this.aAQ, false) == u.EXECUTED) {
             aEg.displayGuiScreen(this.aAs);
             return;
         }
@@ -1675,13 +1675,13 @@ extends GuiScreen {
         if (string == null) {
             return;
         }
-        double d6 = d3 + (28.0 - (double)aAp.tq()) / 2.0;
+        double d6 = d3 + (28.0 - (double)aAp.height()) / 2.0;
         int n2 = aip.d(Color.WHITE, (int)(255.0 * d5)).getRGB();
         String string2 = ahd.ce("ui.command.palette.previous.meta");
         int n3 = aip.d(Color.WHITE, (int)(165.0 * d5)).getRGB();
         double d7 = aAq.getStringWidth(string2);
         double d8 = d2 + Math.max(0.0, d4 - d7);
-        double d9 = d6 + (double)aAp.tq() - (double)aAq.tq() - 1.0;
+        double d9 = d6 + (double)aAp.height() - (double)aAq.height() - 1.0;
         aAq.a(string2, d8, d9, n3);
         double d10 = Math.max(0.0, d4 - d7 - 10.0);
         String string3 = this.a(aAp, string, d10);
@@ -1793,7 +1793,7 @@ extends GuiScreen {
         }
         try {
             String[] stringArray;
-            Object t2 = Client.a.i().b(string2);
+            Object t2 = Client.a.getCommandManager().get(string2);
             if (t2 != null && (stringArray = ((Command)t2).getExpressions()) != null && stringArray.length > 0 && stringArray[0] != null && !stringArray[0].trim().isEmpty()) {
                 return stringArray[0].trim().toLowerCase(Locale.ROOT);
             }
@@ -1831,7 +1831,7 @@ extends GuiScreen {
     }
 
     private int j(int n2, int n3) {
-        if (!aeb.a(this.aAK, this.aAL, this.aAM, this.aAN, n2, n3)) {
+        if (!aeb.isHovered(this.aAK, this.aAL, this.aAM, this.aAN, n2, n3)) {
             return -1;
         }
         int n4 = this.qR();

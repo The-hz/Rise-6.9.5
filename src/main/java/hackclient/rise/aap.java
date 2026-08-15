@@ -64,22 +64,22 @@ extends ade {
             int count = menuButtons.length;
             for (int i = 0; i < count; i++) {
                 final adh adh = menuButtons[i];
-                if (aeb.a(adh.getX(), adh.getY(), adh.oM(), adh.da(), n, n2)) {
-                    adh.rm();
+                if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), n, n2)) {
+                    adh.runAction();
                     break;
                 }
             }
-            this.aCy.d(n, n2, n3);
+            this.aCy.click(n, n2, n3);
         }
     }
 
     @Override
     public void keyTyped(char c2, int n) {
-        this.aCy.b(c2, n);
+        this.aCy.key(c2, n);
         if (n != 15) {
             if (n != 28) return;
             if (this.aCy.getText().isEmpty()) return;
-            this.aCx.rm();
+            this.aCx.runAction();
             return;
         }
         this.aCy.I(!this.aCy.tO());
@@ -229,12 +229,12 @@ extends ade {
         }
         ScaledResolution scaledResolution = aap.aEg.jY;
         this.b(gg.BLUR).c(() -> RenderUtil.d(0.0, 0.0, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight(), Color.BLACK));
-        this.aCw.c(n, n2, f);
-        this.aCx.c(n, n2, f);
+        this.aCw.draw(n, n2, f);
+        this.aCx.draw(n, n2, f);
         this.b(gg.REGULAR).c(() -> {
             double d = 0.0;
-            this.aCy.pJ();
-            double d3 = this.aCw.getY() - (double)this.aCu.tq();
+            this.aCy.draw();
+            double d3 = this.aCw.getY() - (double)this.aCu.height();
             this.animation.Q(d3);
             double d4 = this.animation.sG();
             Color color = aip.d(Color.WHITE, (int)(d4 / d3 * 200.0));

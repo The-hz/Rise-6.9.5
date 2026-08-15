@@ -22,11 +22,11 @@ import net.minecraft.util.AxisAlignedBB;
 
 public class VulcanPhase extends Mode<Phase> {
     @EventLink
-    public Listener<BlockAABBEvent> Ok;
+    public Listener<BlockAABBEvent> onBlockAABB;
     public boolean Oi;
     public boolean El;
     @EventLink
-    public Listener<PushOutOfBlockEvent> Oo;
+    public Listener<PushOutOfBlockEvent> onPushOutOfBlock;
     public int Og;
     public int qH;
     public int Oh;
@@ -35,13 +35,13 @@ public class VulcanPhase extends Mode<Phase> {
     public boolean GQ;
     public boolean JM = false;
     @EventLink
-    public Listener<TickEvent> Ol;
+    public Listener<TickEvent> onTick;
     @EventLink
-    public Listener<PacketReceiveEvent> On;
+    public Listener<PacketReceiveEvent> onPacketReceive;
     @EventLink
-    public Listener<PreMotionEvent> Oj;
+    public Listener<PreMotionEvent> onPreMotion;
     @EventLink
-    public Listener<StrafeEvent> Om;
+    public Listener<StrafeEvent> onStrafe;
 
     static {
     }
@@ -79,7 +79,7 @@ public class VulcanPhase extends Mode<Phase> {
         this.Oi = false;
         this.Jq = true;
         this.GQ = true;
-        this.Oj = var1x -> {
+        this.onPreMotion = var1x -> {
             aEg.thePlayer.cameraYaw = 0.1F;
             if (this.Oh > 25 && aih.vk()) {
                 double d0;
@@ -104,25 +104,25 @@ public class VulcanPhase extends Mode<Phase> {
                 ;
             }
         };
-        this.Ok = var1x -> {
+        this.onBlockAABB = var1x -> {
             double d0 = 0.0;
             if (aih.vk()) {
-                var1x.a(null);
-                if (!(var1x.df() instanceof BlockAir) && !aEg.gameSettings.keyBindSneak.isKeyDown()) {
-                    double d3 = var1x.dg().getX();
-                    double d4 = var1x.dg().getY();
-                    double d5 = var1x.dg().getZ();
+                var1x.setBoundingBox(null);
+                if (!(var1x.getBlock() instanceof BlockAir) && !aEg.gameSettings.keyBindSneak.isKeyDown()) {
+                    double d3 = var1x.getBlockPos().getX();
+                    double d4 = var1x.getBlockPos().getY();
+                    double d5 = var1x.getBlockPos().getZ();
                     if (d4 < aEg.thePlayer.posY) {
-                        var1x.a(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d3, d4, d5));
+                        var1x.setBoundingBox(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d3, d4, d5));
                     }
                 }
             } else if (!this.ys) {
-                if (var1x.df() instanceof BlockAir && !aEg.thePlayer.isSneaking()) {
-                    double d6 = var1x.dg().getX();
-                    double d7 = var1x.dg().getY();
-                    double d8 = var1x.dg().getZ();
+                if (var1x.getBlock() instanceof BlockAir && !aEg.thePlayer.isSneaking()) {
+                    double d6 = var1x.getBlockPos().getX();
+                    double d7 = var1x.getBlockPos().getY();
+                    double d8 = var1x.getBlockPos().getZ();
                     if (d7 < aEg.thePlayer.posY) {
-                        var1x.a(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d6, d7, d8));
+                        var1x.setBoundingBox(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d6, d7, d8));
                     }
                 }
             } else if (this.ys && !aih.vk()) {
@@ -130,8 +130,8 @@ public class VulcanPhase extends Mode<Phase> {
                 this.e(Phase.class).toggle();
             }
         };
-        this.Ol = var0 -> {};
-        this.Om = var1x -> {
+        this.onTick = var0 -> {};
+        this.onStrafe = var1x -> {
             int vx2 = aik.vx();
             if ((!aEg.gameSettings.keyBindJump.isKeyDown() || aEg.thePlayer.hurtTime <= 0)
                 && !aEg.gameSettings.keyBindSneak.isKeyDown()
@@ -163,8 +163,8 @@ public class VulcanPhase extends Mode<Phase> {
                 }
             }
         };
-        this.On = var1x -> {
-            if (var1x.dq() instanceof S08PacketPlayerPosLook) {
+        this.onPacketReceive = var1x -> {
+            if (var1x.getPacket() instanceof S08PacketPlayerPosLook) {
                 this.ys = true;
                 this.Og++;
             }
@@ -175,6 +175,6 @@ public class VulcanPhase extends Mode<Phase> {
                 this.Jq = true;
             }
         };
-        this.Oo = var0 -> var0.setCancelled();
+        this.onPushOutOfBlock = var0 -> var0.setCancelled();
     }
 }

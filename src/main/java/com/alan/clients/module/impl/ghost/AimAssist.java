@@ -28,30 +28,30 @@ import net.minecraft.util.MovingObjectPosition;
 
 @ModuleInfo(aliases = "module.ghost.aimassist.name", description = "module.ghost.aimassist.description", category = Category.GHOST)
 public final class AimAssist extends Module {
-    private final ModeValue Ak = new ModeValue("Mode", this).add(new SubMode("Legit")).add(new SubMode("Blatant")).setDefault("Legit");
-    private final NumberValue Al = new NumberValue("Speed", this, 2, 1, 180, 1);
-    private final BooleanValue Am = new BooleanValue("Silent", this, false);
-    private final BooleanValue An = new BooleanValue("Require Swinging", this, true);
-    private final BooleanValue Ao = new BooleanValue("Sticky", this, false);
-    private final BooleanValue Ap = new BooleanValue("Require Mouse Movement", this, false);
-    private final BooleanValue Aq = new BooleanValue("Limit Items", this, false);
-    private final BooleanValue Ar = new BooleanValue("Aim Whilst on Target", this, false);
-    private final NumberValue As = new NumberValue("FOV", this, 90, 0, 360, 1);
-    private final BooleanValue At = new BooleanValue("Targets", this, false);
-    public final BooleanValue Au = new BooleanValue("Player", this, true, () -> !this.At.wo());
-    public final BooleanValue Av = new BooleanValue("Invisibles", this, false, () -> !this.At.wo());
-    public final BooleanValue Aw = new BooleanValue("Animals", this, false, () -> !this.At.wo());
-    public final BooleanValue Ax = new BooleanValue("Mobs", this, false, () -> !this.At.wo());
-    public final BooleanValue Ay = new BooleanValue("Player Teammates", this, true, () -> !this.At.wo());
+    private final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Legit")).add(new SubMode("Blatant")).setDefault("Legit");
+    private final NumberValue speed = new NumberValue("Speed", this, 2, 1, 180, 1);
+    private final BooleanValue silent = new BooleanValue("Silent", this, false);
+    private final BooleanValue requireSwinging = new BooleanValue("Require Swinging", this, true);
+    private final BooleanValue sticky = new BooleanValue("Sticky", this, false);
+    private final BooleanValue requireMouseMovement = new BooleanValue("Require Mouse Movement", this, false);
+    private final BooleanValue limitItems = new BooleanValue("Limit Items", this, false);
+    private final BooleanValue aimWhilstOnTarget = new BooleanValue("Aim Whilst on Target", this, false);
+    private final NumberValue fOV = new NumberValue("FOV", this, 90, 0, 360, 1);
+    private final BooleanValue showTargets = new BooleanValue("Targets", this, false);
+    public final BooleanValue player = new BooleanValue("Player", this, true, () -> !this.showTargets.wo());
+    public final BooleanValue invisibles = new BooleanValue("Invisibles", this, false, () -> !this.showTargets.wo());
+    public final BooleanValue animals = new BooleanValue("Animals", this, false, () -> !this.showTargets.wo());
+    public final BooleanValue mobs = new BooleanValue("Mobs", this, false, () -> !this.showTargets.wo());
+    public final BooleanValue playerTeammates = new BooleanValue("Player Teammates", this, true, () -> !this.showTargets.wo());
     EntityLivingBase target;
     @EventLink
-    public final Listener<PreUpdateEvent> Az = var1 -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         double d0 = this.n(4.0);
         Vector2f vector2f = new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
         if (this.d(vector2f)) {
             this.e(vector2f);
         } else {
-            List list = bv.a(d0, this.Au.wo(), this.Av.wo(), this.Aw.wo(), this.Ax.wo(), this.Ay.wo());
+            List list = bv.a(d0, this.player.wo(), this.invisibles.wo(), this.animals.wo(), this.mobs.wo(), this.playerTeammates.wo());
             if (list.isEmpty()) {
                 this.target = null;
             } else {
@@ -62,8 +62,8 @@ public final class AimAssist extends Module {
                     Vector2f vector2f2 = this.b(this.target, d0, flag);
                     float f = Math.abs(MathHelper.wrapAngleTo180_float(aiu.y(this.target).getX() - vector2f.getX()));
                     if (flag || aiu.a(vector2f2, this.target, d0, false, this.gP() ? this.gr() : 0.0F)) {
-                        if (!(f > this.As.wo().intValue())) {
-                            if (this.Aq.wo()) {
+                        if (!(f > this.fOV.wo().intValue())) {
+                            if (this.limitItems.wo()) {
                                 SlotComponent slotcomponent = this.d(SlotComponent.class);
                                 if (SlotComponent.getItemStack() == null) {
                                     return;
@@ -79,7 +79,7 @@ public final class AimAssist extends Module {
                             if (this.s(flag)) {
                                 Vector2f vector2f3 = this.a(vector2f1, vector2f2, flag);
                                 RotationComponent.d(false);
-                                RotationComponent.a(vector2f3, d1 / 36.0, MovementFix.NORMAL, null, this.Am.wo(), !this.Am.wo());
+                                RotationComponent.a(vector2f3, d1 / 36.0, MovementFix.NORMAL, null, this.silent.wo(), !this.silent.wo());
                             }
                         }
                     }
@@ -111,15 +111,15 @@ public final class AimAssist extends Module {
     }
 
     private boolean s(boolean var1) {
-        if (this.Ap.wo() && aEg.bgr.dyD == 0 && aEg.bgr.dyE == 0) {
+        if (this.requireMouseMovement.wo() && aEg.bgr.dyD == 0 && aEg.bgr.dyE == 0) {
             return false;
         }
 
-        if (this.An.wo() && !aEg.thePlayer.isSwingInProgress) {
+        if (this.requireSwinging.wo() && !aEg.thePlayer.isSwingInProgress) {
             return false;
         }
 
-        if (this.Ar.wo()) {
+        if (this.aimWhilstOnTarget.wo()) {
             return true;
         }
 
@@ -128,11 +128,11 @@ public final class AimAssist extends Module {
     }
 
     private Vector2f gN() {
-        return this.Am.wo() ? RotationComponent.bH() : new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
+        return this.silent.wo() ? RotationComponent.bH() : new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
     }
 
     private double i(float var1) {
-        double d0 = this.Al.wo().doubleValue() * (this.Ao.wo() ? 10 : 1);
+        double d0 = this.speed.wo().doubleValue() * (this.sticky.wo() ? 10 : 1);
         double d1 = Math.min(1.0, var1 / 45.0);
         return Math.max(0.05, d0 * (0.35 + d1 * 0.65));
     }
@@ -165,7 +165,7 @@ public final class AimAssist extends Module {
         }
 
         Reach reach = this.e(Reach.class);
-        return reach != null && reach.isEnabled() ? Math.max(var1, reach.BQ.wA().doubleValue()) : var1;
+        return reach != null && reach.isEnabled() ? Math.max(var1, reach.range.wA().doubleValue()) : var1;
     }
 
     private float gr() {
@@ -184,6 +184,6 @@ public final class AimAssist extends Module {
     }
 
     private boolean gP() {
-        return this.Ak.wo().getName().equals("Blatant");
+        return this.mode.wo().getName().equals("Blatant");
     }
 }

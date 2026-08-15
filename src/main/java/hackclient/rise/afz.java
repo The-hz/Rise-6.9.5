@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class afz extends ArrayList<afy> {
-    public static final File aHQ = new File(afr.aHy, "data");
+    public static final File aHQ = new File(afr.DIRECTORY, "data");
 
     public afz() {
     }
@@ -49,7 +49,7 @@ public class afz extends ArrayList<afy> {
             System.out.println("Overwriting existing config...");
         }
 
-        afy.tf();
+        afy.write();
         System.out.println("Config saved to files.");
     }
 
@@ -76,6 +76,6 @@ public class afz extends ArrayList<afy> {
         }
 
         this.remove(afy);
-        return afy.sK().delete();
+        return afy.getFile().delete();
     }
 }

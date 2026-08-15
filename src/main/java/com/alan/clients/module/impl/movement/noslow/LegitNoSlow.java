@@ -27,7 +27,7 @@ public class LegitNoSlow extends Mode<NoSlow> {
     private boolean Nm;
     private int Nn;
     @EventLink
-    public final Listener<PreMotionEvent> No = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer != null && aEg.thePlayer.getHeldItem() != null) {
             if (bc.cR) {
                 this.Nj++;
@@ -49,7 +49,7 @@ public class LegitNoSlow extends Mode<NoSlow> {
         }
     };
     @EventLink
-    public final Listener<SlowDownEvent> Np = var1x -> {
+    public final Listener<SlowDownEvent> onSlowDown = var1x -> {
         if (!this.hG()) {
             this.hH();
         } else {
@@ -72,9 +72,9 @@ public class LegitNoSlow extends Mode<NoSlow> {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> Nq = var1x -> {
-        if (var1x.dq() instanceof S29PacketSoundEffect) {
-            S29PacketSoundEffect s29packetsoundeffect = (S29PacketSoundEffect)var1x.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        if (var1x.getPacket() instanceof S29PacketSoundEffect) {
+            S29PacketSoundEffect s29packetsoundeffect = (S29PacketSoundEffect)var1x.getPacket();
             if (s29packetsoundeffect.getSoundName() != null && s29packetsoundeffect.getSoundName().contains("random.burp")) {
                 this.Nk = true;
             }
@@ -118,11 +118,11 @@ public class LegitNoSlow extends Mode<NoSlow> {
     private boolean b(ItemStack var1, boolean var2) {
         Item item = var1.getItem();
         if (item instanceof ItemFood) {
-            return this.wj().DO.wo();
+            return this.getParent().food.wo();
         } else if (item instanceof ItemPotion) {
-            return this.wj().DP.wo() && !ItemPotion.isSplash(var1.getMetadata());
+            return this.getParent().potion.wo() && !ItemPotion.isSplash(var1.getMetadata());
         }
-        return item instanceof ItemSword ? this.wj().DQ.wo() : var2 && item instanceof ItemBow && this.wj().DR.wo();
+        return item instanceof ItemSword ? this.getParent().sword.wo() : var2 && item instanceof ItemBow && this.getParent().bow.wo();
     }
 
     private void gx() {

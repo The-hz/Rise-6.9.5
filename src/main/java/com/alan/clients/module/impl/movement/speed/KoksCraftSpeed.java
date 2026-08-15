@@ -8,7 +8,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 
 public class KoksCraftSpeed extends Mode<Speed> {
-    int dE;
+    int jumps;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (aEg.thePlayer.onGround) {
@@ -17,11 +17,11 @@ public class KoksCraftSpeed extends Mode<Speed> {
             }
 
             aEg.thePlayer.jump();
-            this.dE++;
+            this.jumps++;
         }
 
         if (aEg.thePlayer.tR == 1 && aEg.thePlayer.hurtTime == 0) {
-            aEg.thePlayer.motionY = MoveUtil.predictedMotion(aEg.thePlayer.motionY, this.dE % 2 == 0 ? 2 : 4);
+            aEg.thePlayer.motionY = MoveUtil.predictedMotion(aEg.thePlayer.motionY, this.jumps % 2 == 0 ? 2 : 4);
         }
     };
 
@@ -31,6 +31,6 @@ public class KoksCraftSpeed extends Mode<Speed> {
 
     @Override
     public void onEnable() {
-        this.dE = 0;
+        this.jumps = 0;
     }
 }

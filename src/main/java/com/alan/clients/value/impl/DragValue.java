@@ -102,7 +102,7 @@ public class DragValue extends Value implements InstanceAccess {
     }
 
     @Generated
-    public void d(ScaledResolution var1) {
+    public void setLastScaledResolution(ScaledResolution var1) {
         this.lastScaledResolution = var1;
     }
 

@@ -15,13 +15,13 @@ public class za extends Mode<Interface> {
     private agc ky;
     private final ResourceLocation atc = new ResourceLocation("rise/logo/wurst.png");
     @EventLink
-    public final Listener<Render2DEvent> atd = var1x -> {
+    public final Listener<Render2DEvent> onRender2D = var1x -> {
         if (aEg != null && !aEg.gameSettings.bJf && aEg.theWorld != null && aEg.thePlayer != null) {
-            this.wj().n(this.ky.tq() + 1.0F);
-            this.wj().a(this.ky);
-            this.wj().o(4.0F);
+            this.getParent().n(this.ky.height() + 1.0F);
+            this.getParent().a(this.ky);
+            this.getParent().o(4.0F);
 
-            for (zc zc : this.wj().lL()) {
+            for (zc zc : this.getParent().lL()) {
                 if (zc.ath != 0.0F) {
                     double d0 = zc.nr().getX();
                     double d1 = zc.nr().getY();
@@ -36,8 +36,8 @@ public class za extends Mode<Interface> {
         }
     };
     @EventLink
-    public final Listener<TickEvent> ate = var1x -> aMR.execute(() -> {
-        for (zc zc : this.wj().lL()) {
+    public final Listener<TickEvent> onTick = var1x -> aMR.execute(() -> {
+        for (zc zc : this.getParent().lL()) {
             if (zc.ath != 0.0F) {
                 String s = zc.nx();
                 zc.t(this.ky.getStringWidth(s));
@@ -49,6 +49,6 @@ public class za extends Mode<Interface> {
 
     public za(String var1, Interface var2) {
         super(var1, var2);
-        this.ky = Client.a.d() == ahc.ZH_ZH ? gb.MAIN.a(18, gd.REGULAR) : aEg.fontRendererObj;
+        this.ky = Client.a.getLocale() == ahc.ZH_ZH ? gb.MAIN.a(18, gd.REGULAR) : aEg.fontRendererObj;
     }
 }

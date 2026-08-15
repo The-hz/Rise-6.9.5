@@ -22,21 +22,21 @@ public class abj implements InstanceAccess {
         double d0 = this.ayv.sG();
         double d1 = this.ayw.sG() + var1;
         RenderUtil.roundedRectangle(d0, d1, var3, 50.0, 10.0, color);
-        if (this.ayt.rJ()) {
+        if (this.ayt.isTriColor()) {
             RenderUtil.a(d0, d1, var3, 30.0, 9.0, aip.d(this.ayt.rA(), i), aip.d(this.ayt.rB(), i), aip.d(this.ayt.rC(), i), false, true, true, false, false);
         } else {
             RenderUtil.a(d0, d1, var3, 30.0, 9.0, aip.d(this.ayt.rA(), i), aip.d(this.ayt.rB(), i), false, true, true, false, false);
         }
 
         RenderUtil.d(d0, d1 + 30.0, var3, 10.0, color);
-        gb.MAIN.a(16, gd.REGULAR).c(this.ayt.rF(), d0 + var3 / 2.0, d1 + 37.0, flag ? aip.d(this.rz().rA(), i).getRGB() : new Color(255, 255, 255, i).getRGB());
+        gb.MAIN.a(16, gd.REGULAR).c(this.ayt.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, flag ? aip.d(this.rz().rA(), i).getRGB() : new Color(255, 255, 255, i).getRGB());
         this.ayy.Q(this.ayt.equals(this.rz()) ? 255.0 : 0.0);
         int j = (int)Math.min(this.ayy.sG(), i);
         if (j > 0 && this.getStandardClickGUI().axS > 0.8) {
             this.b(gg.BLOOM, 3)
                 .c(
                     () -> {
-                        if (this.ayt.rJ()) {
+                        if (this.ayt.isTriColor()) {
                             RenderUtil.a(
                                 d0,
                                 d1,
@@ -58,7 +58,7 @@ public class abj implements InstanceAccess {
                             );
                         }
 
-                        gb.MAIN.a(16, gd.REGULAR).c(this.ayt.rF(), d0 + var3 / 2.0, d1 + 37.0, aip.d(this.ayt.rA(), j).getRGB());
+                        gb.MAIN.a(16, gd.REGULAR).c(this.ayt.getThemeName(), d0 + var3 / 2.0, d1 + 37.0, aip.d(this.ayt.rA(), j).getRGB());
                     }
                 );
         }

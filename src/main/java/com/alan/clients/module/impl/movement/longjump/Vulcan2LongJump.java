@@ -9,7 +9,7 @@ import com.alan.clients.value.Mode;
 public final class Vulcan2LongJump extends Mode<LongJump> {
     private int hV;
     @EventLink
-    public final Listener<PreMotionEvent> LG = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         this.hV++;
         if (this.hV == 1) {
             aEg.thePlayer.motionY = 0.0;

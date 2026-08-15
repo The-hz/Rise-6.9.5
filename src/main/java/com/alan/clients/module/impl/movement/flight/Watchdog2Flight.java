@@ -15,14 +15,14 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 public class Watchdog2Flight extends Mode<Flight> {
     private boolean Fg;
     @EventLink
-    public final Listener<PreMotionEvent> Fh = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (aEg.thePlayer.ae == 1) {
             aEg.thePlayer.motionZ *= 1.004;
             aEg.thePlayer.motionX *= 1.004;
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> Fi = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.tR == 20) {
             this.Fg = true;
         }
@@ -42,15 +42,15 @@ public class Watchdog2Flight extends Mode<Flight> {
         MoveUtil.strafe();
     };
     @EventLink
-    public final Listener<PreUpdateEvent> Fj = var0 -> {};
-    @EventLink(cH = 0)
-    public final Listener<PacketReceiveEvent> Fk = var0 -> {
-        if (var0.dq() instanceof S12PacketEntityVelocity s12packetentityvelocity && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
+    public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {};
+    @EventLink(value = 0)
+    public final Listener<PacketReceiveEvent> onPacketReceive = var0 -> {
+        if (var0.getPacket() instanceof S12PacketEntityVelocity s12packetentityvelocity && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
             aEg.thePlayer.motionY = s12packetentityvelocity.getMotionY() / 8000.0;
         }
     };
     @EventLink
-    private final Listener<MoveEvent> Fl = var0 -> {};
+    private final Listener<MoveEvent> onMove = var0 -> {};
 
     public Watchdog2Flight(String var1, Flight var2) {
         super(var1, var2);

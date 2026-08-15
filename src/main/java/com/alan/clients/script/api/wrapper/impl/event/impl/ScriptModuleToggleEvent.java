@@ -10,7 +10,7 @@ public class ScriptModuleToggleEvent extends ScriptEvent<ModuleToggleEvent> {
     }
 
     public ScriptModule getModule() {
-        return new ScriptModule(this.wrapped.dl());
+        return new ScriptModule(this.wrapped.getModule());
     }
 
     @Override

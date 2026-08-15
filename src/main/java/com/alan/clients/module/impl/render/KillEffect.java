@@ -17,23 +17,23 @@ import net.minecraft.util.EnumParticleTypes;
 
 @ModuleInfo(aliases = "module.render.killeffect.name", description = "module.render.killeffect.description", category = Category.RENDER)
 public final class KillEffect extends Module {
-    private final BooleanValue aoR = new BooleanValue("Lightning", this, true);
-    private final BooleanValue aoS = new BooleanValue("Blood Explosion", this, true);
-    private final BooleanValue aoT = new BooleanValue("Explosion", this, true);
+    private final BooleanValue lightning = new BooleanValue("Lightning", this, true);
+    private final BooleanValue bloodExplosion = new BooleanValue("Blood Explosion", this, true);
+    private final BooleanValue explosion = new BooleanValue("Explosion", this, true);
     private EntityLivingBase target;
     @EventLink
-    public final Listener<PreMotionEvent> aoU = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (this.target != null && !aEg.theWorld.loadedEntityList.contains(this.target)) {
-            if (this.aoR.wo()) {
+            if (this.lightning.wo()) {
                 EntityLightningBolt entitylightningbolt = new EntityLightningBolt(aEg.theWorld, this.target.posX, this.target.posY, this.target.posZ);
                 aEg.theWorld.addEntityToWorld((int)(-Math.random() * 100000.0), entitylightningbolt);
                 String s = "ambient.weather.thunder";
                 String s1 = "random.explode";
-                ajr.a(s, 10000.0F, 0.95F);
-                ajr.a(s1, 2.0F, 0.57F);
+                ajr.playSound(s, 10000.0F, 0.95F);
+                ajr.playSound(s1, 2.0F, 0.57F);
             }
 
-            if (this.aoT.wo()) {
+            if (this.explosion.wo()) {
                 for (int i = 0; i <= 8; i++) {
                     aEg.effectRenderer.emitParticleAtEntity(this.target, EnumParticleTypes.FLAME);
                 }
@@ -41,7 +41,7 @@ public final class KillEffect extends Module {
                 ajr.cm("item.fireCharge.use");
             }
 
-            if (this.aoS.wo()) {
+            if (this.bloodExplosion.wo()) {
                 double d0 = this.target.posY;
                 double d1 = this.target.posY + this.target.height + 0.4;
                 double d2 = 0.4;
@@ -71,7 +71,7 @@ public final class KillEffect extends Module {
         }
     };
     @EventLink
-    public final Listener<AttackEvent> aoV = var1 -> {
+    public final Listener<AttackEvent> onAttack = var1 -> {
         EntityLivingBase entitylivingbase = var1.dc();
         if (entitylivingbase instanceof EntityLivingBase) {
             this.target = entitylivingbase;

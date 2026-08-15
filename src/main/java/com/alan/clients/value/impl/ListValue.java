@@ -59,7 +59,7 @@ public class ListValue<T> extends Value<T> {
     }
 
     @Generated
-    public List<T> wF() {
+    public List<T> getModes() {
         return this.modes;
     }
 

@@ -139,13 +139,13 @@ public final class BlinkComponent extends Component {
     );
     public static Tuple<Class[], Boolean>[] ec = new Tuple[]{dV, dW, dX, dY, dZ, ea, eb};
     @EventLink
-    public final Listener<PacketSendEvent> ed = var1 -> var1.setCancelled(this.a(var1.dq(), var1).isCancelled());
+    public final Listener<PacketSendEvent> onPacketSend = var1 -> var1.setCancelled(this.a(var1.dq(), var1).isCancelled());
     @EventLink
-    public final Listener<PacketReceiveEvent> ee = var1 -> var1.setCancelled(this.a(var1.dq(), var1).isCancelled());
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> var1.setCancelled(this.a(var1.getPacket(), var1).isCancelled());
     @EventLink
-    public final Listener<WorldChangeEvent> ef = var0 -> bl();
+    public final Listener<WorldChangeEvent> onWorldChange = var0 -> bl();
     @EventLink
-    public final Listener<PostMotionEvent> eg = var0 -> {
+    public final Listener<PostMotionEvent> onPostMotion = var0 -> {
         if (aEg.currentScreen instanceof GuiDownloadTerrain) {
             bl();
         } else {
@@ -376,7 +376,7 @@ public final class BlinkComponent extends Component {
 
                     i++;
                     iterator.remove();
-                    arraylist.add(br.dq());
+                    arraylist.add(br.getPacket());
                 }
             }
 
@@ -406,7 +406,7 @@ public final class BlinkComponent extends Component {
                     }
 
                     iterator.remove();
-                    arraylist.add(br.dq());
+                    arraylist.add(br.getPacket());
                 }
             }
 
@@ -430,7 +430,7 @@ public final class BlinkComponent extends Component {
         ArrayList arraylist = new ArrayList();
         synchronized (dR) {
             for (ahk ahk : packets) {
-                arraylist.add(ahk.dq());
+                arraylist.add(ahk.getPacket());
             }
 
             packets.clear();
@@ -454,7 +454,7 @@ public final class BlinkComponent extends Component {
                     }
 
                     iterator.remove();
-                    arraylist.add(ahk.dq());
+                    arraylist.add(ahk.getPacket());
                 } else {
                     br.c(var0);
                     if (br.bt()) {
@@ -462,7 +462,7 @@ public final class BlinkComponent extends Component {
                     }
 
                     iterator.remove();
-                    arraylist.add(br.dq());
+                    arraylist.add(br.getPacket());
                 }
             }
         }
@@ -480,7 +480,7 @@ public final class BlinkComponent extends Component {
             }
 
             iterator.remove();
-            var0.add(ahk.dq());
+            var0.add(ahk.getPacket());
         }
     }
 

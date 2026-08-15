@@ -12,5 +12,5 @@ public abstract class a implements InstanceAccess {
         this.axc = var2;
     }
 
-    public abstract boolean j(Packet<?> var1);
+    public abstract boolean handle(Packet<?> var1);
 }

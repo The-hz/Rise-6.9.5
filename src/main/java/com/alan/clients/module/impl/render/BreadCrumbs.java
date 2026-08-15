@@ -20,9 +20,9 @@ import org.lwjgl.opengl.GL11;
 @ModuleInfo(aliases = "module.render.breadcrumbs.name", description = "module.render.breadcrumbs.description", category = Category.RENDER)
 public class BreadCrumbs extends Module {
     private final List<ws> amO = new ArrayList<>();
-    private final NumberValue amP = new NumberValue("Time", this, 15, 1, 150, 0.1);
+    private final NumberValue time = new NumberValue("Time", this, 15, 1, 150, 0.1);
     @EventLink
-    public final Listener<PreMotionEvent> amQ = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         if (aEg.thePlayer.lastTickPosX != aEg.thePlayer.posX
             || aEg.thePlayer.lastTickPosY != aEg.thePlayer.posY
             || aEg.thePlayer.lastTickPosZ != aEg.thePlayer.posZ) {
@@ -30,10 +30,10 @@ public class BreadCrumbs extends Module {
         }
 
         long i = System.currentTimeMillis();
-        this.amO.removeIf(var3 -> i - var3.sk > this.amP.wo().intValue() * 100L);
+        this.amO.removeIf(var3 -> i - var3.sk > this.time.wo().intValue() * 100L);
     };
     @EventLink
-    public final Listener<Render3DEvent> amR = var1 -> this.m(this.amO);
+    public final Listener<Render3DEvent> onRender3D = var1 -> this.m(this.amO);
 
     public BreadCrumbs() {
     }
@@ -60,7 +60,7 @@ public class BreadCrumbs extends Module {
             double d0 = vec3.xCoord - RenderManager.bUO;
             double d1 = vec3.yCoord - RenderManager.bUP;
             double d2 = vec3.zCoord - RenderManager.bUQ;
-            float f = 1.0F - (float)(i - ws.sk) / (this.amP.wo().intValue() * 100);
+            float f = 1.0F - (float)(i - ws.sk) / (this.time.wo().intValue() * 100);
             float f1 = Math.max(0.0F, Math.min(1.0F, f));
             Color color = this.rz().rD();
             GL11.glColor4f(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, f1);

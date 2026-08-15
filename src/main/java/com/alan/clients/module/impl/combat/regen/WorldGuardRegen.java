@@ -23,7 +23,7 @@ public final class WorldGuardRegen extends Mode<Regen> {
     private float gZ;
     private float ha;
     @EventLink
-    public final Listener<PreMotionEvent> ss = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (!aEg.thePlayer.onGround || !(aEg.thePlayer.getHealth() < this.health.wo().floatValue())) {
             this.gZ = var1x.getYaw();
             this.ha = var1x.getPitch();
@@ -36,7 +36,7 @@ public final class WorldGuardRegen extends Mode<Regen> {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> st = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         Packet packet = var1x.dq();
         if (packet instanceof C02PacketUseEntity && aEg.thePlayer.onGround && aEg.thePlayer.getHealth() < this.health.wo().floatValue() && this.ticks <= 1) {
             C02PacketUseEntity c02packetuseentity = (C02PacketUseEntity)packet;
@@ -49,19 +49,19 @@ public final class WorldGuardRegen extends Mode<Regen> {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> su = var1x -> {
-        if (var1x.dq() instanceof S2DPacketOpenWindow && this.ticks <= 1) {
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1x -> {
+        if (var1x.getPacket() instanceof S2DPacketOpenWindow && this.ticks <= 1) {
             var1x.setCancelled();
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> sv = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.onGround && aEg.thePlayer.getHealth() < this.health.wo().floatValue() && this.ticks <= 1) {
             var1x.setSpeed(0.0);
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> sw = var1x -> {
+    public final Listener<MoveInputEvent> onMove = var1x -> {
         if (aEg.thePlayer.onGround && aEg.thePlayer.getHealth() < this.health.wo().floatValue() && this.ticks <= 1) {
             var1x.setJump(false);
         }

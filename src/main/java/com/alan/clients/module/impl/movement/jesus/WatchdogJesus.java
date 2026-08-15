@@ -20,19 +20,19 @@ import net.minecraft.util.AxisAlignedBB;
 public class WatchdogJesus extends Mode<Jesus> {
     private Boolean KG = false;
     @EventLink
-    public final Listener<BlockAABBEvent> KH = var1x -> {
-        if (var1x.df() instanceof BlockLiquid && !aEg.thePlayer.inWater) {
+    public final Listener<BlockAABBEvent> onBlockAABB = var1x -> {
+        if (var1x.getBlock() instanceof BlockLiquid && !aEg.thePlayer.inWater) {
             this.KG = true;
-            int i = var1x.dg().getX();
-            int j = var1x.dg().getY();
-            int k = var1x.dg().getZ();
-            var1x.a(AxisAlignedBB.fromBounds(i, j, k, i + 1, j + 1, k + 1));
+            int i = var1x.getBlockPos().getX();
+            int j = var1x.getBlockPos().getY();
+            int k = var1x.getBlockPos().getZ();
+            var1x.setBoundingBox(AxisAlignedBB.fromBounds(i, j, k, i + 1, j + 1, k + 1));
         } else {
             this.KG = false;
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> KI = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (aih.vl() && !aEg.thePlayer.inWater) {
             aEg.thePlayer.onGround = true;
             var0.setPosY(var0.getPosY() - (aEg.thePlayer.ticksExisted % 2 == 0 ? 0.0625 : 0.0325));
@@ -40,7 +40,7 @@ public class WatchdogJesus extends Mode<Jesus> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> KJ = var0 -> {
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (aih.vl() && aEg.thePlayer.ae > 10 && !aEg.thePlayer.inWater) {
             if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13)) {
                 var0.setSpeed(0.204);
@@ -55,9 +55,9 @@ public class WatchdogJesus extends Mode<Jesus> {
             MoveUtil.strafe(0.18);
         }
     };
-    @EventLink(cH = 0)
-    public final Listener<PacketReceiveEvent> KK = var1x -> {
-        Packet packet = var1x.dq();
+    @EventLink(value = 0)
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        Packet packet = var1x.getPacket();
         if (packet instanceof S12PacketEntityVelocity && this.KG || packet instanceof S12PacketEntityVelocity && (aih.vl() || aEg.thePlayer.inWater)) {
             S12PacketEntityVelocity s12packetentityvelocity = (S12PacketEntityVelocity)packet;
             if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {

@@ -22,15 +22,15 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 
 public class WatchdogSemiBlockPhase extends Mode<Phase> {
-    private final NumberValue OH = new NumberValue("Amount", this, 1, 0.1, 1.5, 0.1);
-    private final NumberValue OI = new NumberValue("Timer", this, 0.1, 0.1, 1, 0.1);
-    private final BooleanValue OJ = new BooleanValue("Packet", this, false);
+    private final NumberValue amount = new NumberValue("Amount", this, 1, 0.1, 1.5, 0.1);
+    private final NumberValue timer = new NumberValue("Timer", this, 0.1, 0.1, 1, 0.1);
+    private final BooleanValue packet = new BooleanValue("Packet", this, false);
     private boolean OK;
     private boolean Od;
     private double OL;
     private double OM;
     @EventLink
-    public final Listener<PreMotionEvent> ON = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         this.Od = false;
         double d0 = Math.toRadians(aEg.thePlayer.pl);
         double d1 = Math.sin(d0);
@@ -39,14 +39,14 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
             aEg.thePlayer.setPosition(aEg.thePlayer.posX - d1 * 0.01, aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * 0.01);
             this.Od = true;
         } else if (this.OK && aih.vk()) {
-            aEg.timer.dzD = this.OI.wo().floatValue();
-            if (!this.OJ.wo()) {
+            aEg.timer.dzD = this.timer.wo().floatValue();
+            if (!this.packet.wo()) {
                 aEg.thePlayer
-                    .setPosition(aEg.thePlayer.posX - d1 * this.OH.wo().doubleValue(), aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * this.OH.wo().doubleValue());
+                    .setPosition(aEg.thePlayer.posX - d1 * this.amount.wo().doubleValue(), aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * this.amount.wo().doubleValue());
             } else {
                 ahj.m(
                     new C04PacketPlayerPosition(
-                        aEg.thePlayer.posX - d1 * this.OH.wo().doubleValue(), aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * this.OH.wo().doubleValue(), false
+                        aEg.thePlayer.posX - d1 * this.amount.wo().doubleValue(), aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * this.amount.wo().doubleValue(), false
                     )
                 );
             }
@@ -55,33 +55,33 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> OO = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (this.OK && aih.vk()) {
             MoveUtil.stop();
         }
     };
     @EventLink
-    public final Listener<PushOutOfBlockEvent> OP = CancellableEvent::setCancelled;
+    public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = CancellableEvent::setCancelled;
     @EventLink
-    public final Listener<BlockAABBEvent> OQ = var1x -> {
-        if (var1x.df() instanceof BlockAir && this.Od) {
-            double d2 = var1x.dg().getX();
-            double d0 = var1x.dg().getY();
-            d2 = var1x.dg().getZ();
+    public final Listener<BlockAABBEvent> onBlockAABB = var1x -> {
+        if (var1x.getBlock() instanceof BlockAir && this.Od) {
+            double d2 = var1x.getBlockPos().getX();
+            double d0 = var1x.getBlockPos().getY();
+            d2 = var1x.getBlockPos().getZ();
             double d1;
             int i = (d1 = d0 - aEg.thePlayer.posY) == 0.0 ? 0 : (d1 < 0.0 ? -1 : 1);
         }
     };
     @EventLink
-    private final Listener<MoveEvent> OR = var1x -> {
+    private final Listener<MoveEvent> onMove = var1x -> {
         if (this.OK) {
             aih.vk();
         }
     };
     @EventLink
-    private final Listener<PacketReceiveEvent> OS = var1x -> {
-        if (var1x.dq() instanceof S08PacketPlayerPosLook) {
-            S08PacketPlayerPosLook s08packetplayerposlook = (S08PacketPlayerPosLook)var1x.dq();
+    private final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        if (var1x.getPacket() instanceof S08PacketPlayerPosLook) {
+            S08PacketPlayerPosLook s08packetplayerposlook = (S08PacketPlayerPosLook)var1x.getPacket();
             double d0 = s08packetplayerposlook.getX();
             double d1 = s08packetplayerposlook.getZ();
             double d2 = Math.abs(d0 - this.OL);

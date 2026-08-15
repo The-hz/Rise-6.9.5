@@ -14,7 +14,7 @@ public class VulcanGravityJesus extends Mode<Jesus> {
     private int Km = 0;
     private double gX = 50.0;
     @EventLink
-    public final Listener<PreMotionEvent> Kn = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (!aEg.gameSettings.keyBindJump.isPressed()
             && aEg.thePlayer.isInWater()
             && this.Kl

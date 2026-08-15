@@ -17,9 +17,9 @@ import net.minecraft.util.Tuple;
 public class ClickerMimic extends Mode<Mimic> {
     private long sc;
     private HashMap<String, Tuple<ArrayList<Integer>, Integer>> sd = new HashMap<>();
-    @EventLink(cH = 0)
-    public final Listener<PacketReceiveEvent> se = var1x -> {
-        Packet packet = var1x.dq();
+    @EventLink(value = 0)
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        Packet packet = var1x.getPacket();
         if (packet instanceof m) {
             int i = ((m)packet).getEntityID();
             if (i == aEg.thePlayer.getEntityId()) {
@@ -38,8 +38,8 @@ public class ClickerMimic extends Mode<Mimic> {
             tuple.k(j);
         }
     };
-    @EventLink(cH = 0)
-    public final Listener<PreUpdateEvent> sf = var1x -> {
+    @EventLink(value = 0)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.gameSettings.cgK.isKeyDown()) {
             if (aEg.gameSettings.keyBindSneak.isKeyDown()) {
                 this.sd = new HashMap<>();

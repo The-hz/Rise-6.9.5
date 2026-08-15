@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
 
 public final class aen {
-    private static final String aET = "https://api.minecraftservices.com/minecraft/profile";
+    private static final String CLIENT_ID = "https://api.minecraftservices.com/minecraft/profile";
 
     private aen() {
     }
@@ -35,7 +35,7 @@ public final class aen {
         }
 
         try {
-            String s2 = akc.I(aET, s);
+            String s2 = akc.getBearerResponse(CLIENT_ID, s);
             if (s2 == null || s2.trim().isEmpty()) {
                 throw new IOException("Invalid/expired token");
             }

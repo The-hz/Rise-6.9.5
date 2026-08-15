@@ -251,7 +251,7 @@ public final class ScriptModule extends ScriptHandlerWrapper<Module> {
 
     public void setSettingVisibility(String var1, boolean var2) {
         try {
-            this.wrapped.getValues().stream().filter(var1x -> var1x.getName().equalsIgnoreCase(var1)).findFirst().get().a(() -> !var2);
+            this.wrapped.getValues().stream().filter(var1x -> var1x.getName().equalsIgnoreCase(var1)).findFirst().get().setHideIf(() -> !var2);
         } catch (Exception exception) {
         }
     }

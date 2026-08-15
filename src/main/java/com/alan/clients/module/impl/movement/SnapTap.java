@@ -22,7 +22,7 @@ public class SnapTap extends Module {
     private long Ec;
     private long Ed;
     @EventLink
-    public final Listener<MoveInputEvent> Ee = var1 -> {
+    public final Listener<MoveInputEvent> onMoveInput = var1 -> {
         boolean flag = aEg.gameSettings.keyBindForward.isKeyDown();
         boolean flag1 = aEg.gameSettings.keyBindBack.isKeyDown();
         boolean flag2 = aEg.gameSettings.keyBindLeft.isKeyDown();

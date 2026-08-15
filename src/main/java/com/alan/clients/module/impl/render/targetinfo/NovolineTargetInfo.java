@@ -28,7 +28,7 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
     private Entity avd = null;
     private double ave = 0.0;
     @EventLink
-    private final Listener<Render2DEvent> avf = var1x -> {
+    private final Listener<Render2DEvent> onRender2D = var1x -> {
         if (this.ava == null) {
             this.ava = this.e(TargetInfo.class);
         }
@@ -49,7 +49,7 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
         float f = healthbypass != null && healthbypass.isEnabled()
             ? HealthBypass.B(abstractclientplayer)
             : abstractclientplayer.getHealth();
-        double d2 = Math.min(!this.ava.inWorld ? 0.0 : ahg.a(f, 1), abstractclientplayer.getMaxHealth());
+        double d2 = Math.min(!this.ava.inWorld ? 0.0 : ahg.round(f, 1), abstractclientplayer.getMaxHealth());
         double d3 = abstractclientplayer.getMaxHealth();
         double d4 = d2 / d3 * 100.0;
         String s = entity.getName();

@@ -53,11 +53,11 @@ public class Speed extends Module {
         .add(new Grim2Speed("Grim 2", this))
         .add(new OldNCPYPortSpeed("Old NCP Y-port", this))
         .setDefault("Vanilla");
-    private final BooleanValue Eh = new BooleanValue("Disable on Teleport", this, false);
-    private final BooleanValue Ei = new BooleanValue("Stop on Disable", this, false);
+    private final BooleanValue disableOnTeleport = new BooleanValue("Disable on Teleport", this, false);
+    private final BooleanValue stopOnDisable = new BooleanValue("Stop on Disable", this, false);
     @EventLink
     public final Listener<TeleportEvent> onTeleport = var1 -> {
-        if (this.Eh.wo()) {
+        if (this.disableOnTeleport.wo()) {
             this.toggle();
         }
     };
@@ -68,7 +68,7 @@ public class Speed extends Module {
     @Override
     public void onDisable() {
         aEg.timer.dzD = 1.0F;
-        if (this.Ei.wo()) {
+        if (this.stopOnDisable.wo()) {
             MoveUtil.stop();
         }
     }

@@ -14,15 +14,15 @@ import org.lwjgl.input.Keyboard;
 
 public class VerusDownwards extends Mode<Scaffold> {
     int bj;
-    @EventLink(cH = 0)
-    public final Listener<StrafeEvent> ajc = var0 -> {
+    @EventLink(value = 0)
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (Keyboard.isKeyDown(aEg.gameSettings.keyBindSneak.getKeyCode())) {
             aEg.gameSettings.cgG.setPressed(false);
             aEg.thePlayer.setSprinting(false);
         }
     };
-    @EventLink(cH = 3)
-    public final Listener<PreUpdateEvent> ajd = var1x -> {
+    @EventLink(value = 3)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (Keyboard.isKeyDown(aEg.gameSettings.keyBindSneak.getKeyCode()) && aEg.thePlayer.crH <= 20) {
             this.bj++;
             if (aEg.thePlayer.posY % 1.0 != 0.0) {
@@ -30,14 +30,14 @@ public class VerusDownwards extends Mode<Scaffold> {
             }
 
             if (aEg.thePlayer.motionY <= 0.0 && this.bj >= 15) {
-                this.wj().agy = this.wj().agy.v(0.0, -1.0, 0.0);
+                this.getParent().agy = this.getParent().agy.v(0.0, -1.0, 0.0);
             }
         } else {
             this.bj = 1000;
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> aje = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (var1x.dq() instanceof C08PacketPlayerBlockPlacement c08packetplayerblockplacement
             && !c08packetplayerblockplacement.getPosition().h(new aka(-1.0, -1.0, -1.0))) {
             c08packetplayerblockplacement.getPlacedBlockDirection();

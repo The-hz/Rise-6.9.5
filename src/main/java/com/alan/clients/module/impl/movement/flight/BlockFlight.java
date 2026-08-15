@@ -21,12 +21,12 @@ import net.minecraft.util.Vec3;
 
 public class BlockFlight extends Mode<Flight> {
     @EventLink
-    public final Listener<PreUpdateEvent> FC = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         SlotComponent slotcomponent = this.d(SlotComponent.class);
         SlotComponent.setSlot(aik.vx());
     };
     @EventLink
-    public final Listener<PreMotionEvent> FD = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.gameSettings.keyBindJump.isKeyDown() && aih.ay(3) && aEg.thePlayer.ae > 15) {
             if (Math.abs(MoveUtil.predictedMotion(0.42F) - aEg.thePlayer.motionY) < 1.0E-4) {
                 var1x.setOnGround(true);

@@ -55,16 +55,16 @@ public final class VulcanVelocity extends Mode<Velocity> {
     boolean vd = false;
     boolean ve;
     boolean vf = false;
-    public final BooleanValue vg = new BooleanValue("Stack", this, true);
+    public final BooleanValue stack = new BooleanValue("Stack", this, true);
     boolean vh;
-    public final BooleanValue vi = new BooleanValue("Ping Spoof", this, true);
+    public final BooleanValue pingSpoof = new BooleanValue("Ping Spoof", this, true);
     private double vj;
     private double vk;
     private double vl;
-    public final BooleanValue vm = new BooleanValue("Always Cancel Vertical", this, true);
-    public final BooleanValue vn = new BooleanValue("Backtrack", this, false);
-    public final BooleanValue vo = new BooleanValue("Damage Boost", this, false);
-    private final NumberValue vp = new NumberValue("Damage Boost Speed", this, 1, 1, 10, 0.01);
+    public final BooleanValue alwaysCancelVertical = new BooleanValue("Always Cancel Vertical", this, true);
+    public final BooleanValue backtrack = new BooleanValue("Backtrack", this, false);
+    public final BooleanValue damageBoost = new BooleanValue("Damage Boost", this, false);
+    private final NumberValue damageBoostSpeed = new NumberValue("Damage Boost Speed", this, 1, 1, 10, 0.01);
     private boolean dj;
     private boolean tt;
     private boolean vq;
@@ -73,7 +73,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
     private int sG;
     private final ArrayList<Packet<?>> vr = new ArrayList<>();
     @EventLink
-    public final Listener<PacketReceiveEvent> vs = var1x -> {
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1x -> {
         if (!this.tt
             && !this.e(LongJump.class).isEnabled()
             && !this.e(Flight.class).isEnabled()
@@ -83,13 +83,13 @@ public final class VulcanVelocity extends Mode<Velocity> {
                     || WatchdogDolphin118Jesus.Km >= 30
             )
             && !this.e(Speed.class).isEnabled()) {
-            switch (var1x.dq()) {
+            switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
                     if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()
                         && !aih.vk()
                         && (
                             aEg.thePlayer.cqL <= 0
-                                || !this.vm.wo()
+                                || !this.alwaysCancelVertical.wo()
                                 || this.e(Speed.class).isEnabled()
                                 || aEg.thePlayer.isJumping
                                 || aEg.gameSettings.keyBindJump.isKeyDown()
@@ -97,7 +97,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                 || !(s12packetentityvelocity.getMotionY() / 8000.0 > 0.08)
                                 || aEg.thePlayer.Zl <= 11
                         )) {
-                        if (this.vg.wo() && this.sG < 1 && !aEg.thePlayer.onGround && Math.random() < 0.73 && aEg.thePlayer.tR <= 13
+                        if (this.stack.wo() && this.sG < 1 && !aEg.thePlayer.onGround && Math.random() < 0.73 && aEg.thePlayer.tR <= 13
                             || aEg.thePlayer.inWater
                             || this.e(Scaffold.class).isEnabled()
                                 && (
@@ -159,36 +159,36 @@ public final class VulcanVelocity extends Mode<Velocity> {
                     }
                     break;
                 case S32PacketConfirmTransaction s32packetconfirmtransaction:
-                    if (this.dj && this.vi.wo()) {
+                    if (this.dj && this.pingSpoof.wo()) {
                         this.vr.add(s32packetconfirmtransaction);
                         var1x.setCancelled();
                     }
                     break;
                 case a a:
-                    if (this.dj && this.vi.wo()) {
+                    if (this.dj && this.pingSpoof.wo()) {
                         var1x.setCancelled();
                     }
                     break;
                 case S16PacketEntityLook s16packetentitylook:
-                    if ((this.vd || this.dj) && this.vn.wo() && !this.vf) {
+                    if ((this.vd || this.dj) && this.backtrack.wo() && !this.vf) {
                         this.vr.add(s16packetentitylook);
                         var1x.setCancelled();
                     }
                     break;
                 case S15PacketEntityRelMove s15packetentityrelmove:
-                    if ((this.vd || this.dj) && this.vn.wo() && !this.vf) {
+                    if ((this.vd || this.dj) && this.backtrack.wo() && !this.vf) {
                         this.vr.add(s15packetentityrelmove);
                         var1x.setCancelled();
                     }
                     break;
                 case S17PacketEntityLookMove s17packetentitylookmove:
-                    if ((this.vd || this.dj) && this.vn.wo() && !this.vf) {
+                    if ((this.vd || this.dj) && this.backtrack.wo() && !this.vf) {
                         this.vr.add(s17packetentitylookmove);
                         var1x.setCancelled();
                     }
                     break;
                 case aa aa:
-                    if ((this.vd || this.dj) && this.vn.wo() && !this.vf) {
+                    if ((this.vd || this.dj) && this.backtrack.wo() && !this.vf) {
                         this.vr.add(aa);
                         var1x.setCancelled();
                     }
@@ -200,7 +200,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
             list.sort(Comparator.comparingDouble(var0 -> ((EntityLivingBase)var0).hurtTime));
             if (list.isEmpty()) {
                 this.pY = null;
-                if (this.vn.wo()) {
+                if (this.backtrack.wo()) {
                     this.tt = true;
                     this.vr
                         .stream()
@@ -219,7 +219,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                 }
             } else {
                 Entity entity = (Entity)list.get(0);
-                if (this.vn.wo()) {
+                if (this.backtrack.wo()) {
                     if (entity != this.pY) {
                         this.pY = entity;
                         this.pU.xCoord = entity.posX;
@@ -354,7 +354,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                         this.tt = false;
                     }
 
-                    Packet packet = var1x.dq();
+                    Packet packet = var1x.getPacket();
                     if (packet instanceof S14PacketEntity s14packetentity) {
                         if (s14packetentity.entityId == this.pY.getEntityId()) {
                             this.pU.xCoord = this.pU.xCoord + s14packetentity.agC() / 32.0;
@@ -368,10 +368,10 @@ public final class VulcanVelocity extends Mode<Velocity> {
             }
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<JumpEvent> vt = var0 -> {};
-    @EventLink(cH = 4)
-    public final Listener<PreMotionEvent> vu = var1x -> {
+    @EventLink(value = 4)
+    public final Listener<JumpEvent> onJump = var0 -> {};
+    @EventLink(value = 4)
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if ((aEg.thePlayer.ae != 1 || !MoveUtil.isMoving()) && aEg.thePlayer.ae == 1) {
             aEg.thePlayer.motionX *= -1.0;
             aEg.thePlayer.motionZ *= -1.0;
@@ -391,8 +391,8 @@ public final class VulcanVelocity extends Mode<Velocity> {
             this.tt = false;
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<PreUpdateEvent> vv = var1x -> {
+    @EventLink(value = 4)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (Breaker.ir && this.dj) {
             this.dj = false;
             this.tt = true;
@@ -433,12 +433,12 @@ public final class VulcanVelocity extends Mode<Velocity> {
             this.tt = false;
         }
 
-        if (this.vd && !this.dj && this.vn.wo()) {
+        if (this.vd && !this.dj && this.backtrack.wo()) {
             BlinkComponent.a(50, true, false, false, false, true, false);
         }
     };
-    @EventLink(cH = 2)
-    public final Listener<PostStrafeEvent> vw = var1x -> {
+    @EventLink(value = 2)
+    public final Listener<PostStrafeEvent> onPostStrafe = var1x -> {
         if (aEg.thePlayer.tR > 12 && this.dj) {
             this.dj = false;
             this.tt = true;
@@ -455,8 +455,8 @@ public final class VulcanVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<Render3DEvent> vx = var1x -> {
-        if (this.pY != null && this.vn.wo() && (this.vd || this.dj)) {
+    public final Listener<Render3DEvent> onRender3D = var1x -> {
+        if (this.pY != null && this.backtrack.wo() && (this.vd || this.dj)) {
             GlStateManager.pushMatrix();
             GlStateManager.pushAttrib();
             GlStateManager.enableBlend();

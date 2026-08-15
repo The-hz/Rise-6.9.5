@@ -26,8 +26,8 @@ public final class aby implements abx, InstanceAccess {
 
     @Override
     public void b(int var1, int var2, float var3) {
-        Vector2f vector2f = new Vector2f(this.H.oW()).h(this.azz, 0.0F);
-        RenderUtil.roundedRectangle(vector2f.getX(), vector2f.getY() + this.azz, this.H.alh.x - this.azz * 2.0F, 100.0, this.H.pl(), abw.SECONDARY.pV());
+        Vector2f vector2f = new Vector2f(this.H.getScale()).h(this.azz, 0.0F);
+        RenderUtil.roundedRectangle(vector2f.getX(), vector2f.getY() + this.azz, this.H.alh.x - this.azz * 2.0F, 100.0, this.H.getRound(), abw.SECONDARY.pV());
         this.azx.b(this.rz().rA());
         this.azx.i(new Vector2f(vector2f.h(this.azz, 0.0F)));
         this.azx.qx();
@@ -40,17 +40,17 @@ public final class aby implements abx, InstanceAccess {
             vector2f2.getX(),
             vector2f2.getY(),
             this.H.alh.x - this.azz * 2.0F,
-            this.H.oX().getY() - (vector2f2.getY() - this.H.oW().getY()) - this.azz,
-            this.H.pl(),
+            this.H.getPosition().getY() - (vector2f2.getY() - this.H.getScale().getY()) - this.azz,
+            this.H.getRound(),
             abw.SECONDARY.pV()
         );
         Vector2f vector2f3 = vector2f2.h(0.0F, this.azz);
 
         for (abl abl : this.pA()) {
-            if (abl.pS() == null || abl.pS().wm() == null || !abl.pS().wm().getAsBoolean()) {
+            if (abl.getValue() == null || abl.getValue().wm() == null || !abl.getValue().wm().getAsBoolean()) {
                 abl.U(200);
-                abl.a(new Vector2d(vector2f3.x + 1.0F + this.azz + (abl.pS().wm() == null ? 0 : 10), vector2f3.y), var1, var2, var3);
-                vector2f3 = vector2f3.h(0.0F, (float)abl.da());
+                abl.draw(new Vector2d(vector2f3.x + 1.0F + this.azz + (abl.getValue().wm() == null ? 0 : 10), vector2f3.y), var1, var2, var3);
+                vector2f3 = vector2f3.h(0.0F, (float)abl.getHeight());
             }
         }
     }
@@ -60,14 +60,14 @@ public final class aby implements abx, InstanceAccess {
         Iterator iterator = this.pA().iterator();
 
         while (iterator.hasNext()) {
-            ((abl)iterator.next()).b(var1, var2);
+            ((abl)iterator.next()).key(var1, var2);
         }
     }
 
     @Override
     public void f(int var1, int var2, int var3) {
         for (abl abl : this.pA()) {
-            if ((abl.pS() == null || abl.pS().wm() == null || !abl.pS().wm().getAsBoolean()) && abl.e(var1, var2, var3)) {
+            if ((abl.getValue() == null || abl.getValue().wm() == null || !abl.getValue().wm().getAsBoolean()) && abl.e(var1, var2, var3)) {
                 break;
             }
         }
@@ -84,7 +84,7 @@ public final class aby implements abx, InstanceAccess {
 
     @Override
     public void pY() {
-        new Vector2f(this.H.oW());
+        new Vector2f(this.H.getScale());
         this.azx.pY();
         this.azy.pY();
     }

@@ -7,18 +7,18 @@ public class adt {
     private final int aCS;
     private final int aCT;
     private final int aCU;
-    private final String[] aCV;
+    private final String[] split;
 
-    public int ai(int var1) {
-        return Integer.parseInt(this.aCV[var1]);
+    public int getPart(int var1) {
+        return Integer.parseInt(this.split[var1]);
     }
 
-    public void l(int var1, int var2) {
-        this.aCV[var1] = String.valueOf(var2);
+    public void setPart(int var1, int var2) {
+        this.split[var1] = String.valueOf(var2);
     }
 
     public adt(int var1, int var2, int var3, int var4) {
-        this.aCV = new String[]{String.valueOf(var1), String.valueOf(var2), String.valueOf(var3), String.valueOf(var4)};
+        this.split = new String[]{String.valueOf(var1), String.valueOf(var2), String.valueOf(var3), String.valueOf(var4)};
         this.aCR = var1;
         this.aCS = var2;
         this.aCT = var3;
@@ -26,11 +26,11 @@ public class adt {
     }
 
     public adt(String var1) {
-        this.aCV = var1.split("\\.");
-        this.aCR = Integer.parseInt(this.aCV[0]);
-        this.aCS = Integer.parseInt(this.aCV[1]);
-        this.aCT = Integer.parseInt(this.aCV[2]);
-        this.aCU = Integer.parseInt(this.aCV[3]);
+        this.split = var1.split("\\.");
+        this.aCR = Integer.parseInt(this.split[0]);
+        this.aCS = Integer.parseInt(this.split[1]);
+        this.aCT = Integer.parseInt(this.split[2]);
+        this.aCU = Integer.parseInt(this.split[3]);
     }
 
     public static adt a(adt var0, adt var1) {
@@ -51,7 +51,7 @@ public class adt {
 
     @Override
     public String toString() {
-        return this.aCV[0] + "." + this.aCV[1] + "." + this.aCV[2] + "." + this.aCV[3];
+        return this.split[0] + "." + this.split[1] + "." + this.split[2] + "." + this.split[3];
     }
 
     @Generated
@@ -70,12 +70,12 @@ public class adt {
     }
 
     @Generated
-    public int rx() {
+    public int getThird() {
         return this.aCU;
     }
 
     @Generated
-    public String[] ry() {
-        return this.aCV;
+    public String[] getSplit() {
+        return this.split;
     }
 }

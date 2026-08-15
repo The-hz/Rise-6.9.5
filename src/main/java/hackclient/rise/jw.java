@@ -19,19 +19,19 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class jw extends Mode<Disabler> {
-    private final NumberValue xN = new NumberValue("Ticks", this, 5, 1, 20, 1);
+    private final NumberValue ticks = new NumberValue("Ticks", this, 5, 1, 20, 1);
     public List<Packet<?>> xO = new ArrayList<>();
     @EventLink
-    public final Listener<PacketSendEvent> xP = var0 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         Packet packet = var0.dq();
         if (packet instanceof C03PacketPlayer) {
             ;
         }
     };
-    @EventLink(cH = 4)
+    @EventLink(value = 4)
     public final Listener<PreUpdateEvent> xQ = var0 -> aih.p(0.0, -1.0, 0.0);
     @EventLink
-    public final Listener<PreMotionEvent> xR = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (Math.abs(aEg.thePlayer.posY - Math.round(aEg.thePlayer.posY)) > 0.03
             && aEg.thePlayer.onGround
             && !(aih.o(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.5, aEg.thePlayer.posZ) instanceof BlockStairs)) {
@@ -46,7 +46,7 @@ public class jw extends Mode<Disabler> {
             var1x.setPosY(var1x.getPosY() + 0.001);
         }
     };
-    @EventLink(cH = 4)
+    @EventLink(value = 4)
     public final Listener<PreUpdateEvent> xS = var0 -> {
         if (aEg.thePlayer.ticksExisted < 2) {
             cg.a(
@@ -57,11 +57,11 @@ public class jw extends Mode<Disabler> {
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> xT = var0 -> afi.b(
+    public final Listener<WorldChangeEvent> onWorldChange = var0 -> afi.b(
         "once you're in the game kill yourself and land on the ground while spectating, then you'll be able to highjump and speed"
     );
     @EventLink
-    public final Listener<BlockAABBEvent> xU = var0 -> var0.dh();
+    public final Listener<BlockAABBEvent> onBlockAABB = var0 -> var0.dh();
 
     public jw(String var1, Disabler var2) {
         super(var1, var2);
@@ -70,14 +70,14 @@ public class jw extends Mode<Disabler> {
     @Override
     public void onEnable() {
         aEg.thePlayer.setPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.001, aEg.thePlayer.posZ);
-        if (this.wj().wJ.wo()) {
+        if (this.getParent().deprecated.wo()) {
             ;
         }
     }
 
     @Override
     public void onDisable() {
-        if (this.wj().wJ.wo()) {
+        if (this.getParent().deprecated.wo()) {
             ;
         }
     }

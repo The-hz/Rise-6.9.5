@@ -25,7 +25,7 @@ public class aka {
         return this.v(-var1, -var3, -var5);
     }
 
-    public aka f(aka var1) {
+    public aka subtract(aka var1) {
         return this.v(-var1.x, -var1.y, -var1.z);
     }
 

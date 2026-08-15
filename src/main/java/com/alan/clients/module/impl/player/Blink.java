@@ -17,22 +17,22 @@ import net.minecraft.client.entity.EntityOtherPlayerMP;
 
 @ModuleInfo(aliases = "module.player.blink.name", description = "module.player.blink.description", category = Category.PLAYER)
 public class Blink extends Module {
-    public BooleanValue yz = new BooleanValue("Pulse", this, false);
-    public BoundsNumberValue delay = new BoundsNumberValue("Delay", this, 2, 2, 2, 40, 1, () -> !this.yz.wo());
+    public BooleanValue pulse = new BooleanValue("Pulse", this, false);
+    public BoundsNumberValue delay = new BoundsNumberValue("Delay", this, 2, 2, 2, 40, 1, () -> !this.pulse.wo());
     public int next;
     private EntityOtherPlayerMP blinkEntity;
     @EventLink
-    public final Listener<PreMotionEvent> abt = var0 -> BlinkComponent.blink();
+    public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> BlinkComponent.blink();
     @EventLink
-    public final Listener<PostMotionEvent> abu = var1 -> {
-        if (aEg.thePlayer.ticksExisted > this.next && this.yz.wo()) {
+    public final Listener<PostMotionEvent> onPostMotion = var1 -> {
+        if (aEg.thePlayer.ticksExisted > this.next && this.pulse.wo()) {
             this.gi();
             BlinkComponent.dispatch();
             this.gj();
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> abv = var1 -> this.gi();
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.gi();
 
     public Blink() {
     }

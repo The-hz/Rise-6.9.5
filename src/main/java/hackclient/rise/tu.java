@@ -42,17 +42,17 @@ import org.lwjgl.opengl.GL11;
 
 @ModuleInfo(aliases = "module.player.breaker.name", description = "module.player.breaker.description", category = Category.PLAYER)
 public class tu extends Module {
-    public final ModeValue aei = new ModeValue("Mode", this).add(new SubMode("Normal")).add(new SubMode("Instant")).setDefault("Normal");
-    public final BooleanValue aej = new BooleanValue("Bed", this, true);
-    public final BooleanValue aek = new BooleanValue("Keep Break Progress When Out Of Range", this, true);
+    public final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Normal")).add(new SubMode("Instant")).setDefault("Normal");
+    public final BooleanValue bed = new BooleanValue("Bed", this, true);
+    public final BooleanValue keepBreakProgressWhenOutOfRange = new BooleanValue("Keep Break Progress When Out Of Range", this, true);
     public final BooleanValue ael = new BooleanValue("Cancel velocity whilst breaking, so you don't slow down in air", this, true);
-    public final BooleanValue aem = new BooleanValue("Through Walls", this, true);
-    private final BooleanValue aen = new BooleanValue("Empty Surrounding", this, false, () -> !this.aem.wo());
-    public final BooleanValue aeo = new BooleanValue("Rotate", this, true);
-    public final BooleanValue aep = new BooleanValue("Only Rotate at Start and Stop", this, true);
-    public final BooleanValue aeq = new BooleanValue("Whitelist Own Bed", this, true);
-    public final BooleanValue aer = new BooleanValue("Slow Down In Air", this, true);
-    private final ListValue<MovementFix> aes = new ListValue<>("Movement Correction", this);
+    public final BooleanValue throughWalls = new BooleanValue("Through Walls", this, true);
+    private final BooleanValue emptySurrounding = new BooleanValue("Empty Surrounding", this, false, () -> !this.throughWalls.wo());
+    public final BooleanValue rotations = new BooleanValue("Rotate", this, true);
+    public final BooleanValue onlyRotateAtStartAndStop = new BooleanValue("Only Rotate at Start and Stop", this, true);
+    public final BooleanValue whiteListOwnBed = new BooleanValue("Whitelist Own Bed", this, true);
+    public final BooleanValue slowDownInAir = new BooleanValue("Slow Down In Air", this, true);
+    private final ListValue<MovementFix> movementCorrection = new ListValue<>("Movement Correction", this);
     private aka abQ;
     private aka abR;
     private aka abS;
@@ -61,7 +61,7 @@ public class tu extends Module {
     private float abU;
     private Animation abV = new Animation(Easing.LINEAR, 50L);
     @EventLink
-    public final Listener<Render3DEvent> aet = var1 -> {
+    public final Listener<Render3DEvent> onRender3D = var1 -> {
         if (this.abQ != null) {
             akb akb = new akb((int)Math.floor(this.abQ.getX()), (int)Math.floor(this.abQ.getY()), (int)Math.floor(this.abQ.getZ()));
             this.abV.Q(this.abU);
@@ -84,10 +84,10 @@ public class tu extends Module {
             });
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<PacketReceiveEvent> aeu = var1 -> {
+    @EventLink(value = 4)
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
         if (this.ael.wo() && this.abQ != null) {
-            if (var1.dq() instanceof S12PacketEntityVelocity s12packetentityvelocity && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
+            if (var1.getPacket() instanceof S12PacketEntityVelocity s12packetentityvelocity && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                 var1.setCancelled();
                 s12packetentityvelocity.motionY = 0;
                 s12packetentityvelocity.motionX = 0;
@@ -95,15 +95,15 @@ public class tu extends Module {
             }
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<BlockDamageEvent> aev = var1 -> {
+    @EventLink(value = 4)
+    public final Listener<BlockDamageEvent> onBlockDamage = var1 -> {
         this.abU = aEg.playerController.curBlockDamageMP;
         afi.b("Updated Damage");
-        afi.b(var1.dg());
+        afi.b(var1.getBlockPos());
         afi.b(this.abQ.getX() + ", " + this.abQ.getY() + ", " + this.abQ.getZ());
     };
-    @EventLink(cH = 4)
-    public final Listener<PreUpdateEvent> aew = var1 -> {
+    @EventLink(value = 4)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         this.aaW--;
         if (this.aaW <= 0) {
             if (aEg.playerController.curBlockDamageMP == 0.0F || aEg.playerController.curBlockDamageMP >= 1.0F) {
@@ -128,7 +128,7 @@ public class tu extends Module {
         }
     };
     @EventLink
-    public final Listener<MouseOverEvent> aex = var1 -> {
+    public final Listener<MouseOverEvent> onMouseOver = var1 -> {
         if (this.abQ != null) {
             MovingObjectPosition movingobjectposition = this.kc();
             if (!this.e(movingobjectposition)) {
@@ -139,7 +139,7 @@ public class tu extends Module {
         }
     };
     @EventLink
-    public final Listener<TeleportEvent> aey = var1 -> {
+    public final Listener<TeleportEvent> onTeleport = var1 -> {
         if (aEg.thePlayer.getDistance(var1.getPosX(), var1.getPosY(), var1.getPosZ()) > 40.0) {
             this.abS = new aka(var1.getPosX(), var1.getPosY(), var1.getPosZ());
         }
@@ -147,10 +147,10 @@ public class tu extends Module {
 
     public tu() {
         for (MovementFix movementfix : MovementFix.values()) {
-            this.aes.add(movementfix);
+            this.movementCorrection.add(movementfix);
         }
 
-        this.aes.setDefault(MovementFix.OFF);
+        this.movementCorrection.setDefault(MovementFix.OFF);
     }
 
     @Override
@@ -175,7 +175,7 @@ public class tu extends Module {
         if (this.abQ == null
             || aih.o(this.abQ.x, this.abQ.y, this.abQ.z) instanceof BlockAir
             || aEg.thePlayer.getDistance(this.abQ.x, this.abQ.y - aEg.thePlayer.getEyeHeight(), this.abQ.z) > 4.5) {
-            if (this.abR != null && !this.aek.wo()) {
+            if (this.abR != null && !this.keepBreakProgressWhenOutOfRange.wo()) {
                 aEg.playerController.curBlockDamageMP = 0.0F;
             }
 
@@ -186,10 +186,10 @@ public class tu extends Module {
 
     public void jw() {
         BlockPos blockpos = new BlockPos(Math.floor(this.abQ.getX()), Math.floor(this.abQ.getY()), Math.floor(this.abQ.getZ()));
-        float f = aih.q(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos);
-        if (!this.aep.wo() || aEg.playerController.curBlockDamageMP == 0.0F || aEg.playerController.curBlockDamageMP >= 1.0F - f - 0.001) {
-            if (this.aeo.wo()) {
-                RotationComponent.setRotations(this.jE(), 10.0, this.aes.wo());
+        float f = aih.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos);
+        if (!this.onlyRotateAtStartAndStop.wo() || aEg.playerController.curBlockDamageMP == 0.0F || aEg.playerController.curBlockDamageMP >= 1.0F - f - 0.001) {
+            if (this.rotations.wo()) {
+                RotationComponent.setRotations(this.jE(), 10.0, this.movementCorrection.wo());
             }
         }
     }
@@ -205,7 +205,7 @@ public class tu extends Module {
     }
 
     public aka jx() {
-        if (this.abS != null && aEg.thePlayer.getDistanceSq(this.abS.getX(), this.abS.getY(), this.abS.getZ()) < 1225.0 && this.aeq.wo()) {
+        if (this.abS != null && aEg.thePlayer.getDistanceSq(this.abS.getX(), this.abS.getY(), this.abS.getZ()) < 1225.0 && this.whiteListOwnBed.wo()) {
             return null;
         }
 
@@ -225,8 +225,8 @@ public class tu extends Module {
                                             .distanceTo(new Vec3(aEg.thePlayer.posX, aEg.thePlayer.posY - aEg.thePlayer.getEyeHeight(), aEg.thePlayer.posZ))
                                         > 4.5
                                 )) {
-                                if (this.aem.wo()) {
-                                    if (this.aen.wo()) {
+                                if (this.throughWalls.wo()) {
+                                    if (this.emptySurrounding.wo()) {
                                         aka akax2 = akax;
                                         double d0 = Double.MAX_VALUE;
                                         boolean flag = false;
@@ -306,7 +306,7 @@ public class tu extends Module {
     }
 
     public void jD() {
-        boolean flag = this.aer.wo();
+        boolean flag = this.slowDownInAir.wo();
         boolean flag1 = aEg.thePlayer.onGround;
         if (!flag) {
             aEg.thePlayer.onGround = true;
@@ -318,7 +318,7 @@ public class tu extends Module {
                 blockpos = new BlockPos(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ());
                 aEg.objectMouseOver = this.kc();
                 aEg.playerController.curBlockDamageMP = this.abU;
-                String s = this.aei.wo().getName();
+                String s = this.mode.wo().getName();
                 byte b0 = -1;
                 switch (s.hashCode()) {
                     case -1955878649:

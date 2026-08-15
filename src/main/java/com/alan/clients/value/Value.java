@@ -53,7 +53,7 @@ public abstract class Value<T> {
         var2.getValues().add(this);
     }
 
-    public void m(Object var1) {
+    public void setValueAsObject(Object var1) {
         if (this.valueChangeConsumer != null) {
             this.valueChangeConsumer.accept((T)var1);
         }
@@ -105,7 +105,7 @@ public abstract class Value<T> {
     }
 
     @Generated
-    public boolean wp() {
+    public boolean isVisible() {
         return this.visible;
     }
 
@@ -115,7 +115,7 @@ public abstract class Value<T> {
     }
 
     @Generated
-    public Consumer<T> wr() {
+    public Consumer<T> getValueChangeConsumer() {
         return this.valueChangeConsumer;
     }
 
@@ -125,7 +125,7 @@ public abstract class Value<T> {
     }
 
     @Generated
-    public void a(BooleanSupplier var1) {
+    public void setHideIf(BooleanSupplier var1) {
         this.aQJ = var1;
     }
 
@@ -135,7 +135,7 @@ public abstract class Value<T> {
     }
 
     @Generated
-    public void M(boolean var1) {
+    public void setVisible(boolean var1) {
         this.visible = var1;
     }
 
@@ -145,7 +145,7 @@ public abstract class Value<T> {
     }
 
     @Generated
-    public void c(Consumer<T> var1) {
+    public void setValueChangeConsumer(Consumer<T> var1) {
         this.valueChangeConsumer = var1;
     }
 }

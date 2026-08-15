@@ -13,15 +13,15 @@ import hackclient.rise.afi;
 
 public class PolarSpeed extends Mode<Speed> {
     private int PD = 0;
-    @EventLink(cH = 4)
-    public final Listener<PreUpdateEvent> PE = var0 -> {
+    @EventLink(value = 4)
+    public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {
         aEg.timer.dzD = 1.009F;
         if (!aEg.thePlayer.onGround && aEg.gameSettings.keyBindForward.isKeyDown()) {
             RotationComponent.bd();
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<StrafeEvent> PF = var1x -> {
+    @EventLink(value = 4)
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.tR == 5 && this.PD % 2 != 0) {
             aEg.thePlayer.motionY -= 0.03;
         }
@@ -37,7 +37,7 @@ public class PolarSpeed extends Mode<Speed> {
         MoveUtil.moveFlying(0.002);
     };
     @EventLink
-    public final Listener<JumpEvent> PG = var1x -> this.PD++;
+    public final Listener<JumpEvent> onJump = var1x -> this.PD++;
 
     public PolarSpeed(String var1, Speed var2) {
         super(var1, var2);

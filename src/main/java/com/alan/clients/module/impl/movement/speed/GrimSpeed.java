@@ -26,14 +26,14 @@ import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import net.minecraft.entity.EntityLivingBase;
 
 public class GrimSpeed extends Mode<Speed> {
-    private final NumberValue Pu = new NumberValue("Bounding Box Size", this, 0.4, 0, 1, 0.1);
-    private final NumberValue Pv = new NumberValue("in Player Speed", this, 0.08, 0, 0.08, 0.01);
-    private final NumberValue Pw = new NumberValue("Move Flying Increase", this, 1.0E-4, 0, 0.001, 1.0E-5);
-    public final BooleanValue Px = new BooleanValue("Fast Fall", this, true);
+    private final NumberValue boundingBoxSize = new NumberValue("Bounding Box Size", this, 0.4, 0, 1, 0.1);
+    private final NumberValue inPlayerSpeed = new NumberValue("in Player Speed", this, 0.08, 0, 0.08, 0.01);
+    private final NumberValue moveFlyingIncrease = new NumberValue("Move Flying Increase", this, 1.0E-4, 0, 0.001, 1.0E-5);
+    public final BooleanValue fastFall = new BooleanValue("Fast Fall", this, true);
     private int Gq = 0;
     private int Py = 0;
-    @EventLink(cH = 1)
-    public final Listener<PreUpdateEvent> Pz = var1x -> {
+    @EventLink(value = 1)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (!aEg.thePlayer.onGround) {
             this.Gq++;
         } else {
@@ -44,15 +44,15 @@ public class GrimSpeed extends Mode<Speed> {
             && !aEg.thePlayer.onGround
             && (!aEg.gameSettings.keyBindForward.isKeyDown() || !aEg.gameSettings.keyBindRight.isKeyDown())
             && (!aEg.gameSettings.keyBindForward.isKeyDown() || !aEg.gameSettings.keyBindLeft.isKeyDown())
-            && !this.Px.wo()) {
+            && !this.fastFall.wo()) {
             RotationComponent.setRotations(
                 new Vector2f((float)(aEg.thePlayer.pl + 45.0F + Math.random()), aEg.thePlayer.rotationPitch), 10.0, MovementFix.NORMAL
             );
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<PreMotionEvent> PA = var1x -> {
-        if (this.Px.wo()) {
+    @EventLink(value = 4)
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
+        if (this.fastFall.wo()) {
             if (this.Py == 0) {
                 this.Py = var1x.isOnGround() ? 1 : 0;
             } else {
@@ -65,9 +65,9 @@ public class GrimSpeed extends Mode<Speed> {
             }
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<PostMotionEvent> PB = var1x -> {
-        if (this.Px.wo()) {
+    @EventLink(value = 4)
+    public final Listener<PostMotionEvent> onPostMotion = var1x -> {
+        if (this.fastFall.wo()) {
             if (!aEg.thePlayer.onGround && this.Py >= 0) {
                 if (this.Gq < 1 || this.Gq > 5) {
                     return;
@@ -81,8 +81,8 @@ public class GrimSpeed extends Mode<Speed> {
             }
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<StrafeEvent> PC = var1x -> {
+    @EventLink(value = 4)
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         aEg.theWorld
             .loadedEntityList
             .stream()
@@ -92,11 +92,11 @@ public class GrimSpeed extends Mode<Speed> {
                 var1xx -> var1xx != aEg.thePlayer
                     && aEg.thePlayer
                         .getEntityBoundingBox()
-                        .expand(this.Pu.wo().doubleValue(), this.Pu.wo().doubleValue(), this.Pu.wo().doubleValue())
+                        .expand(this.boundingBoxSize.wo().doubleValue(), this.boundingBoxSize.wo().doubleValue(), this.boundingBoxSize.wo().doubleValue())
                         .intersectsWith(var1xx.getEntityBoundingBox())
             )
-            .forEach(var1xx -> MoveUtil.moveFlying(this.Pv.wo().doubleValue()));
-        MoveUtil.moveFlying(this.Pw.wo().doubleValue());
+            .forEach(var1xx -> MoveUtil.moveFlying(this.inPlayerSpeed.wo().doubleValue()));
+        MoveUtil.moveFlying(this.moveFlyingIncrease.wo().doubleValue());
         if ((!GrimVelocity.dj && (GrimVelocity.tS == 0 || GrimVelocity.tS >= 6) || !aEg.thePlayer.onGround)
             && aEg.thePlayer.hurtTime == 0
             && aEg.thePlayer.onGround

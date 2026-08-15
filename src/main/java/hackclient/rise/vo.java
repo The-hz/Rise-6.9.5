@@ -15,8 +15,8 @@ public final class vo implements InstanceAccess {
     private Scaffold ajR;
     private static final double ajS = 0.001;
     private boolean ajT;
-    @EventLink(cH = 3)
-    public final Listener<PreMotionEvent> ajU = var1x -> {
+    @EventLink(value = 3)
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (!this.kC()) {
             this.unregister();
         } else {
@@ -25,7 +25,7 @@ public final class vo implements InstanceAccess {
                     this.unregister();
                 }
             } else {
-                if (!this.e(Disabler.class).wu.wo() || !this.e(Disabler.class).isEnabled()) {
+                if (!this.e(Disabler.class).watchdogFly.wo() || !this.e(Disabler.class).isEnabled()) {
                     if (aEg.thePlayer.ticksExisted % 3 == 0 && aEg.thePlayer.cqL > 2 && !aEg.gameSettings.keyBindJump.isKeyDown()) {
                         if (this.e(Scaffold.class).isEnabled() && !aEg.gameSettings.cgI.isKeyDown() && !aEg.gameSettings.keyBindSneak.isKeyDown()) {
                             var1x.setPosY(var1x.getPosY() + 0.001);
@@ -48,8 +48,8 @@ public final class vo implements InstanceAccess {
             }
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<JumpEvent> ajV = var1x -> {
+    @EventLink(value = 4)
+    public final Listener<JumpEvent> onJump = var1x -> {
         if (aEg.thePlayer.ticksExisted % 3 == 1 && aEg.thePlayer.cqL > 2 && this.e(Scaffold.class).isEnabled()) {
             var1x.setCancelled();
         }

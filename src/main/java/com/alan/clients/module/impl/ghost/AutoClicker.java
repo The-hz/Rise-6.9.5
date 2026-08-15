@@ -26,13 +26,13 @@ public class AutoClicker extends Module {
     private double AJ;
     private double AK;
     @EventLink
-    public final Listener<ClickEvent> AL = var1 -> {
+    public final Listener<ClickEvent> onClick = var1 -> {
         this.AI.aX();
         this.AJ = (Math.random() - 0.5) * 4.0;
         this.AK = (Math.random() - 0.5) * 4.0;
     };
     @EventLink
-    public final Listener<Render3DEvent> AM = var1 -> {
+    public final Listener<Render3DEvent> onRender3D = var1 -> {
         aEg.leftClickCounter = -1;
         if (!this.AI.T(100L) && this.jitter.wo() && aEg.gameSettings.cgK.isKeyDown()) {
             EntityRenderer.bIp = (float)((Math.random() - 0.5) * 400.0 / Minecraft.getDebugFPS() * this.AJ);

@@ -34,9 +34,9 @@ import net.minecraft.util.EnumChatFormatting;
 public final class ScoreBoard
 extends Module {
     private final DragValue position = new DragValue("Position", (Module)this, new Vector2d(200.0, 200.0));
-    private final BooleanValue apw = new BooleanValue("Outline", (Module)this, (Boolean)false, () -> true);
-    private final BooleanValue apx = new BooleanValue("Blur color", (Module)this, (Boolean)false, () -> true);
-    private final BooleanValue apy = new BooleanValue("Replace IP with Rise Website", (Module)this, (Boolean)true);
+    private final BooleanValue outline = new BooleanValue("Outline", (Module)this, (Boolean)false, () -> true);
+    private final BooleanValue blurColor = new BooleanValue("Blur color", (Module)this, (Boolean)false, () -> true);
+    private final BooleanValue replaceIPWithRiseWebsite = new BooleanValue("Replace IP with Rise Website", (Module)this, (Boolean)true);
     private Collection<Score> collection;
     private ScoreObjective scoreObjective;
     private int apB;
@@ -44,7 +44,7 @@ extends Module {
     private final int apC = 3;
     private final int apD = 9;
     @EventLink
-    public final Listener<Render2DEvent> apE = render2DEvent -> {
+    public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         if (this.scoreObjective == null) {
             return;
         }
@@ -57,16 +57,16 @@ extends Module {
         this.b(gg.REGULAR).c(() -> {
             int n3 = this.collection.size();
             int n4 = this.apD * n3 + 3;
-            if (((Boolean)this.apw.wo()).booleanValue()) {
+            if (((Boolean)this.outline.wo()).booleanValue()) {
                 RenderUtil.roundedOutlineGradientRectangle(ajz2.ald - 1, ajz2.ale - 1, this.apB + 12 + 2, n4 + this.apD + 3 + 2, n2, 1.0, aip.d(this.rz().rA(), 100), aip.d(this.rz().rB(), 100));
             }
         });
         this.b(gg.BLUR).c(() -> this.a(ajz2.ald, ajz2.ale, Color.WHITE, false, n2, false));
         this.b(gg.BLOOM).c(() -> this.a(ajz2.ald, ajz2.ale, bl ? this.rz().rE() : Color.BLACK, false, n2 + 1, true));
-        this.b(gg.REGULAR, 1).c(() -> this.a(ajz2.ald, ajz2.ale, (Boolean)this.apx.wo() != false ? new Color(this.rz().rB().getRed(), this.rz().rB().getGreen(), this.rz().rB().getBlue(), 60) : new Color(0, 0, 0, 100), true, n2, false));
+        this.b(gg.REGULAR, 1).c(() -> this.a(ajz2.ald, ajz2.ale, (Boolean)this.blurColor.wo() != false ? new Color(this.rz().rB().getRed(), this.rz().rB().getGreen(), this.rz().rB().getBlue(), 60) : new Color(0, 0, 0, 100), true, n2, false));
     };
     @EventLink
-    public final Listener<TickEvent> apF = tickEvent -> {
+    public final Listener<TickEvent> onTick = tickEvent -> {
         this.scoreObjective = this.getScoreObjective();
         if (this.scoreObjective == null) {
             return;
@@ -96,7 +96,7 @@ extends Module {
     }
 
     private boolean W(String string) {
-        if (!((Boolean)this.apy.wo()).booleanValue()) {
+        if (!((Boolean)this.replaceIPWithRiseWebsite.wo()).booleanValue()) {
             return false;
         }
         String string2 = EnumChatFormatting.getTextWithoutFormattingCodes(string);
@@ -141,7 +141,7 @@ extends Module {
             n8 += this.apD;
             String string2 = ScorePlayerTeam.formatPlayerName(this.scoreObjective.getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName());
             String string3 = this.X(string2);
-            if (((Boolean)this.apy.wo()).booleanValue() && string3.equals(this.mf())) {
+            if (((Boolean)this.replaceIPWithRiseWebsite.wo()).booleanValue() && string3.equals(this.mf())) {
                 this.a(agd2, string3, n2, n8);
                 continue;
             }
@@ -150,7 +150,7 @@ extends Module {
     }
 
     private String mf() {
-        return String.valueOf((Object)this.rz().rH()) + "riseclient.com";
+        return String.valueOf((Object)this.rz().getChatAccentColor()) + "riseclient.com";
     }
 
     private void a(agd agd2, String string, int n2, int n3) {

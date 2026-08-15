@@ -18,14 +18,14 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class CubeCraftFlight extends Mode<Flight> {
     private final NumberValue speed = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
-    private final BooleanValue FQ = new BooleanValue("Send Flying", this, false);
+    private final BooleanValue sendFlying = new BooleanValue("Send Flying", this, false);
     @EventLink
-    public final Listener<StrafeEvent> FR = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         float f = this.speed.wo().floatValue();
         var1x.setSpeed(f);
     };
     @EventLink
-    public final Listener<PreMotionEvent> FS = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         float f = this.speed.wo().floatValue();
         aEg.thePlayer.motionY = -1.0E-10 + (aEg.gameSettings.keyBindJump.isKeyDown() ? f : 0.0) - (aEg.gameSettings.keyBindSneak.isKeyDown() ? f : 0.0);
         if (aEg.thePlayer.getDistance(aEg.thePlayer.lastReportedPosX, aEg.thePlayer.lastReportedPosY, aEg.thePlayer.lastReportedPosZ) <= 10.0F - f - 0.15) {
@@ -33,10 +33,10 @@ public class CubeCraftFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> FT = var0 -> var0.setSneak(false);
+    public final Listener<MoveInputEvent> onMove = var0 -> var0.setSneak(false);
     @EventLink
-    public final Listener<PacketSendEvent> FU = var1x -> {
-        if (!this.FQ.wo()) {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
+        if (!this.sendFlying.wo()) {
             Packet packet = var1x.dq();
             if (packet instanceof C03PacketPlayer && !((C03PacketPlayer)packet).isMoving() && !bb.aW()) {
                 var1x.setCancelled();

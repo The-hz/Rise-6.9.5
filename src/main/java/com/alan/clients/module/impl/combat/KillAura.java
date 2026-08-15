@@ -142,193 +142,193 @@ import rip.vantage.commons.util.time.a;
 @ModuleInfo(aliases = {"module.combat.killaura.name", "Aura", "Force Field"}, description = "module.combat.killaura.description", category = Category.COMBAT)
 public class KillAura extends Module {
    public MovingObjectPosition movingObjectPosition;
-   public BooleanValue mb;
-   public BooleanValue mO;
+   public BooleanValue blockSlowdown;
+   public BooleanValue rayCast;
    public int oB;
    public int ov;
    public int op;
    public static Object Oo0o00000O00;
-   public NumberValue mk;
+   public NumberValue fOV;
    public int oH;
-   public NumberValue na;
-   public NumberValue mg;
-   public BooleanValue no;
-   public BooleanValue nx;
+   public NumberValue advancedOvershootMax;
+   public NumberValue randomizeFactor;
+   public BooleanValue advancedSwing;
+   public BooleanValue badPacketsCheck;
    public int of;
    public List<EntityLivingBase> oM;
-   public NumberValue mW;
+   public NumberValue advancedDampedDistance;
    public boolean oJ;
-   public BooleanValue ny;
+   public BooleanValue showTargets;
    public boolean ob;
-   public BooleanValue mM;
-   public BooleanValue nJ;
+   public BooleanValue coloredSigmaRing;
+   public BooleanValue extra;
    public boolean oI;
-   public NumberValue nr;
+   public NumberValue advancedTriggerReaction;
    public EntityLivingBase jE;
-   public BooleanValue nm;
+   public BooleanValue advancedFlickGuard;
    public static Object[] o0Oo000O0oO = new Object[358];
    @EventLink
-   public Listener<Render2DEvent> pd;
-   public BooleanValue mu;
+   public Listener<Render2DEvent> onRender2D;
+   public BooleanValue keepSprint;
    public ModeValue lV;
-   public NumberValue mU;
+   public NumberValue advancedGravity;
    @EventLink
-   public Listener<SlowDownEvent> pc;
-   public BooleanValue nM;
+   public Listener<SlowDownEvent> onSlowDown;
+   public BooleanValue fireAspect;
    public boolean oD;
    public static boolean nS;
    public static Object[] oO00O0OO0ooO;
-   public BooleanValue mv;
-   public BooleanValue nI;
+   public BooleanValue oldPredictionKeepSprint;
+   public BooleanValue axes;
    public static boolean cK;
    public long ox;
    public static boolean nR;
-   public BooleanValue mw;
+   public BooleanValue oldMovefixBoost;
    public int oC;
    public boolean oc;
    public int mA;
    @EventLink
    public Listener<PreUpdateEvent> oS;
    public float oz;
-   public ModeValue lT;
+   public ModeValue mode;
    public boolean mz;
    public boolean nU;
    public boolean oE;
-   public BooleanValue lY;
+   public BooleanValue hideSecondSword;
    public double mJ;
-   public BoundsNumberValue lU;
+   public BoundsNumberValue switchDelay;
    public float om;
    public int ot;
    @EventLink
-   public Listener<PostMotionEvent> oU;
-   public BooleanValue ml;
+   public Listener<PostMotionEvent> onPostMotion;
+   public BooleanValue showFOVCircle;
    public int nZ;
-   public BooleanValue lZ;
+   public BooleanValue rightClickOnly;
    public float ol;
    public int my;
-   public NumberValue nd;
-   public NumberValue ns;
+   public NumberValue advancedMinStep;
+   public NumberValue advancedTriggerReactionJitter;
    public a nP;
-   public BooleanValue mr;
-   public NumberValue nn;
-   public ModeValue md;
-   public BooleanValue nv;
-   public BooleanValue mn;
+   public BooleanValue silentRotations;
+   public NumberValue advancedFlickMax;
+   public ModeValue sorting;
+   public BooleanValue noSwing;
+   public BooleanValue velocityBoost;
    @EventLink
    public Listener<ea> oX;
    public aka os;
    public int mF;
    public boolean oF;
-   public NumberValue ne;
-   public NumberValue nf;
+   public NumberValue advancedPrediction;
+   public NumberValue advancedDeadzone;
    public gu mD;
    public float ok;
    public List<EntityLivingBase> nV;
    public int oa;
    public a nO;
    public int oA;
-   public BooleanValue nu;
+   public BooleanValue attackWhilstScaffolding;
    public Entity target;
    public float oi;
-   public BooleanValue mP;
-   public NumberValue nj;
-   public NumberValue ng;
-   public BooleanValue ma;
-   public BooleanValue lW;
+   public BooleanValue subtickRaycast;
+   public NumberValue advancedPaceJitter;
+   public NumberValue advancedAnchor;
+   public BooleanValue preventServersideBlocking;
+   public BooleanValue newYouNeedThisToggledOnCurreFake;
    public aka oq;
    public long nT;
-   public BooleanValue nK;
+   public BooleanValue sharpness;
    @EventLink
-   public Listener<WorldChangeEvent> oQ;
+   public Listener<WorldChangeEvent> onWorldChange;
    public Map<Entity, Integer> oL;
-   @EventLink(cH = 3)
-   public Listener<PacketSendEvent> oW;
-   public BooleanValue mq;
-   public BooleanValue nD;
+   @EventLink(value = 3)
+   public Listener<PacketSendEvent> onPacketSend;
+   public BooleanValue knockbackDisplacementDebug;
+   public BooleanValue playerTeammates;
    public Queue<Packet<?>> nN;
    @EventLink
-   public Listener<MouseOverEvent> oT;
+   public Listener<MouseOverEvent> onMouseOver;
    public static float og;
    public int mH;
-   public NumberValue mZ;
+   public NumberValue advancedOvershootScale;
    public Random od;
    public adz<EntityLivingBase> oK;
    public int oo;
    public Animation oO;
-   public BooleanValue nH;
-   public NumberValue mV;
+   public BooleanValue swords;
+   public NumberValue advancedWind;
    public boolean ow;
-   public BoundsNumberValue mm;
+   public BoundsNumberValue cps;
    public Vector2f mG;
-   public NumberValue nq;
-   public ModeValue mN;
-   public BooleanValue nF;
+   public NumberValue advancedAimReactionJitter;
+   public ModeValue boxMode;
+   public BooleanValue weapons;
    public int oe;
    public boolean mK;
    @EventLink
-   public Listener<HitSlowDownEvent> pa;
-   public NumberValue mX;
+   public Listener<HitSlowDownEvent> onHitSlowDown;
+   public NumberValue advancedMaxStep;
    @EventLink
    public Listener<en> pb;
-   public BooleanValue mQ;
-   public BooleanValue lX;
-   @EventLink(cH = 3)
-   public Listener<RenderItemEvent> oV;
+   public BooleanValue throughWalls;
+   public BooleanValue fallbackToWatchdog;
+   @EventLink(value = 3)
+   public Listener<RenderItemEvent> onRenderItem;
    public boolean oG;
-   public NumberValue np;
+   public NumberValue advancedAimReaction;
    public static boolean nQ;
-   public BooleanValue nB;
-   public BooleanValue mp;
-   public BooleanValue nA;
-   public NumberValue nh;
-   public BooleanValue nG;
-   public BooleanValue nC;
+   public BooleanValue animals;
+   public BooleanValue knockbackDisplacement;
+   public BooleanValue invisibles;
+   public NumberValue advancedHoldTicks;
+   public BooleanValue fist;
+   public BooleanValue mobs;
    public boolean mC;
    public String mE;
    public int nW;
-   public NumberValue nb;
-   public BooleanValue mx;
-   public BooleanValue mS;
-   public BoundsNumberValue mj;
-   public NumberValue mY;
+   public NumberValue advancedGaussian;
+   public BooleanValue newUniversalKeepSprint;
+   public BooleanValue advanced;
+   public BoundsNumberValue rotationSpeed;
+   public NumberValue advancedOvershootChance;
    public ListValue<MovementFix> movementCorrection;
    public aka or;
-   public NumberValue mi;
-   public ModeValue mT;
-   public BooleanValue nw;
-   public BooleanValue mt;
+   public NumberValue rotationRange;
+   public ModeValue rotationMode;
+   public BooleanValue autoDisable;
+   public BooleanValue showMovementArc;
    @EventLink
-   public Listener<ClickEvent> oY;
-   public NumberValue mh;
-   public BooleanValue mf;
+   public Listener<ClickEvent> onClick;
+   public NumberValue range;
+   public BooleanValue randomize19Speed;
    public int hV;
    public int oy;
-   public BooleanValue nz;
+   public BooleanValue player;
    public Animation oN;
    @EventLink
-   public Listener<JumpEvent> oZ;
+   public Listener<JumpEvent> onJump;
    public Vector2f nt;
-   public NumberValue ni;
+   public NumberValue advancedCruiseFloor;
    public int nY;
-   public NumberValue mo;
+   public NumberValue boostTicks;
    public String nE;
    public static Object[] fld_0OOOoo00o0_17;
-   public ModeValue me;
-   public NumberValue nc;
+   public ModeValue clickMode;
+   public NumberValue advancedAccuracy;
    public float oj;
    public Vector2f on;
-   public NumberValue nl;
+   public NumberValue advancedBurstStrength;
    @EventLink
-   public Listener<PreMotionEvent> oP;
+   public Listener<PreMotionEvent> onPreMotionEvent;
    public long ou;
    public static boolean mB;
    public static Object[] fld_0oOOoOo0O00O_18;
-   public NumberValue nk;
-   @EventLink(cH = 3)
+   public NumberValue advancedBurstChance;
+   @EventLink(value = 3)
    public Listener<PreUpdateEvent> oR;
-   public BooleanValue nL;
+   public BooleanValue knockback;
    public int nX;
-   public ModeValue mL;
+   public ModeValue espMode;
    public static float oh;
 
    public Tuple<Boolean, Double> eo() {
@@ -338,7 +338,7 @@ public class KillAura extends Module {
       double var64 = 0.0;
       var64 = -1.0;
       int var50_lo = 0;
-      var52 = this.me.wo().getName();
+      var52 = this.clickMode.wo().getName();
       int var50_hi = -1;
       switch (((String)var52).hashCode()) {
          case 1505775:
@@ -355,7 +355,7 @@ public class KillAura extends Module {
       switch (var50_hi) {
          case 0:
          case 1:
-            if (this.me.wo().getName().equals("1.9+ With 1.8 Animations") && Math.random() > 0.2) {
+            if (this.clickMode.wo().getName().equals("1.9+ With 1.8 Animations") && Math.random() > 0.2) {
                RenderUtil.E(this.jE);
             }
 
@@ -395,8 +395,8 @@ public class KillAura extends Module {
                }
             }
 
-            if (this.mf.wo()) {
-               var53 -= Math.random() * this.mg.wo().doubleValue();
+            if (this.randomize19Speed.wo()) {
+               var53 -= Math.random() * this.randomizeFactor.wo().doubleValue();
             }
 
             var64 = 1.0 / var53 * 20.0 - 1.0;
@@ -427,7 +427,7 @@ public class KillAura extends Module {
          this.ox = 0L;
          return false;
       }
-      int notDistanceToEntity = (this.mO.wo() || !(aEg.thePlayer.getDistanceToEntity(var1) <= var3)) && (var2 == null || var2.entityHit != var1) ? 0 : 1;
+      int notDistanceToEntity = (this.rayCast.wo() || !(aEg.thePlayer.getDistanceToEntity(var1) <= var3)) && (var2 == null || var2.entityHit != var1) ? 0 : 1;
       if (notDistanceToEntity == 0) {
          this.ow = false;
          this.ov = Integer.MIN_VALUE;
@@ -441,14 +441,14 @@ public class KillAura extends Module {
       }
       this.ov = entityId;
       this.ow = true;
-      var88 = this.a(this.nr.wo().doubleValue(), this.ns.wo().doubleValue(), 0L, 450L);
+      var88 = this.a(this.advancedTriggerReaction.wo().doubleValue(), this.advancedTriggerReactionJitter.wo().doubleValue(), 0L, 450L);
       this.ox = var92 + var88;
       return var88 <= 0L;
    }
 
    public boolean eG() {
       int keyDown = (int)(aEg.gameSettings.cgI.isKeyDown() ? 1L : 0L);
-      if (!this.eA() || !this.lZ.wo()) {
+      if (!this.eA() || !this.rightClickOnly.wo()) {
          this.oH = -1;
          this.oI = (keyDown) != 0;
          return false;
@@ -490,7 +490,7 @@ public class KillAura extends Module {
          var37 = ((AxisAlignedBB)var37).expand(var44, var44, var44);
          var46 = aiu.a(var1, (AxisAlignedBB)var37, true, var2, var4, var44);
       } else {
-         var46 = aiu.a(var1, true, var2);
+         var46 = aiu.calculate(var1, true, var2);
       }
 
       this.mG = (Vector2f)var46;
@@ -539,10 +539,10 @@ public class KillAura extends Module {
       if (this.jE == null) {
          return var1;
       }
-      var153 = this.mX.wo().floatValue();
-      var154 = this.mW.wo().floatValue();
-      var181 = Math.max(0.25F, this.nd.wo().floatValue());
-      var192 = MathHelper.clamp_float(this.nc.wo().floatValue() / 100.0F, 0.4F, 1.0F);
+      var153 = this.advancedMaxStep.wo().floatValue();
+      var154 = this.advancedDampedDistance.wo().floatValue();
+      var181 = Math.max(0.25F, this.advancedMinStep.wo().floatValue());
+      var192 = MathHelper.clamp_float(this.advancedAccuracy.wo().floatValue() / 100.0F, 0.4F, 1.0F);
       if (this.om <= 0.001F) {
          this.om = var153;
       }
@@ -586,18 +586,18 @@ public class KillAura extends Module {
       var203 = ((Vector2f)var205).y - ((Vector2f)var147).y;
       var160 = (float)Math.hypot(var180, var203);
       var213 = Math.max(0.001F, var160);
-      var155 = this.nf.wo().floatValue();
-      var197 = aef.a((Vector2f)var147, this.mh.wo().doubleValue() + 0.15, this.en(), aEg.thePlayer, this.em());
+      var155 = this.advancedDeadzone.wo().floatValue();
+      var197 = aef.a((Vector2f)var147, this.range.wo().doubleValue() + 0.15, this.en(), aEg.thePlayer, this.em());
       int flag = (MovingObjectPosition)var197 != null && ((MovingObjectPosition)var197).typeOfHit == MovingObjectType.ENTITY && ((MovingObjectPosition)var197).entityHit == this.jE ? 1 : 0;
       if (var184_hi == 0 && flag != 0 && var160 <= var155) {
-         this.ot = Math.max(this.ot, this.nh.wo().intValue());
+         this.ot = Math.max(this.ot, this.advancedHoldTicks.wo().intValue());
       }
 
       if (var184_hi == 0 && this.ot > 0 && flag != 0 && var160 <= var155 * 1.35F) {
          this.ot--;
          this.ok *= 0.42F;
          this.ol *= 0.42F;
-         return aiu.b(new Vector2f(((Vector2f)var147).x, ((Vector2f)var147).y), (Vector2f)var147);
+         return aiu.applySensitivityPatch(new Vector2f(((Vector2f)var147).x, ((Vector2f)var147).y), (Vector2f)var147);
       }
       if (this.ot > 0) {
          this.ot--;
@@ -606,9 +606,9 @@ public class KillAura extends Module {
       if (var160 < 0.001F) {
          this.ok *= 0.6F;
          this.ol *= 0.6F;
-         return aiu.b(new Vector2f(((Vector2f)var147).x, MathHelper.clamp_float(((Vector2f)var147).y, -90.0F, 90.0F)), (Vector2f)var147);
+         return aiu.applySensitivityPatch(new Vector2f(((Vector2f)var147).x, MathHelper.clamp_float(((Vector2f)var147).y, -90.0F, 90.0F)), (Vector2f)var147);
       }
-      var204 = Math.min(this.mV.wo().floatValue(), var160);
+      var204 = Math.min(this.advancedWind.wo().floatValue(), var160);
       if (var160 >= var154) {
          this.oi = this.oi / og + this.b(var204 / oh, var204);
          this.oj = this.oj / og + this.b(var204 / oh, var204);
@@ -624,7 +624,7 @@ public class KillAura extends Module {
          }
       }
 
-      var206 = this.mU.wo().floatValue();
+      var206 = this.advancedGravity.wo().floatValue();
       if (var160 < 3.5F) {
          var206 *= 0.82F + var192 * 0.12F;
       }
@@ -632,16 +632,16 @@ public class KillAura extends Module {
       this.ok = this.ok + (this.oi + var206 * var180 / var213);
       this.ol = this.ol + (this.oj + var206 * var203 / var213);
       var212 = 1.0F;
-      var175 = this.nj.wo().floatValue();
+      var175 = this.advancedPaceJitter.wo().floatValue();
       if (var175 > 1.0E-4F) {
          var212 += this.b(var175 * 0.42F, var175);
       }
 
       if (var184_hi == 0 && var160 > var155 * 1.6F && var160 < var154 * 1.45F) {
-         var187 = this.nk.wo().floatValue() / 100.0F;
+         var187 = this.advancedBurstChance.wo().floatValue() / 100.0F;
          if (this.oy <= 0 && var187 > 1.0E-4F && this.od.nextFloat() < var187 * 0.12F) {
             this.oy = 1 + this.od.nextInt(2);
-            this.oz = this.nl.wo().floatValue() * (0.65F + this.od.nextFloat() * 0.55F);
+            this.oz = this.advancedBurstStrength.wo().floatValue() * (0.65F + this.od.nextFloat() * 0.55F);
          }
       }
 
@@ -670,7 +670,7 @@ public class KillAura extends Module {
          this.ol *= 0.94F;
       }
 
-      var189 = this.ni.wo().floatValue();
+      var189 = this.advancedCruiseFloor.wo().floatValue();
       if (var184_hi == 0 && var189 > 0.01F && var160 > var155 * 1.25F && var160 < 14.0F) {
          var216 = var189 * (0.86F + this.od.nextFloat() * 0.24F);
          var166 = (float)Math.hypot(this.ok, this.ol);
@@ -702,7 +702,7 @@ public class KillAura extends Module {
          this.ol *= 0.55F;
       }
 
-      var210 = this.nb.wo().floatValue();
+      var210 = this.advancedGaussian.wo().floatValue();
       if (var210 > 0.0F && var160 > 0.35F) {
          var209 = MathHelper.clamp_float(var160 / 16.0F, 0.25F, 1.0F);
          var209 *= 1.05F - var192 * 0.35F;
@@ -715,12 +715,12 @@ public class KillAura extends Module {
          var214 = MathHelper.clamp_float(var214, -89.9F, 89.9F);
       }
 
-      if (this.nm.wo() && var184_hi == 0) {
+      if (this.advancedFlickGuard.wo() && var184_hi == 0) {
          var209 = MathHelper.wrapAngleTo180_float(var177 - ((Vector2f)var147).x);
          var208 = var214 - ((Vector2f)var147).y;
          var188 = (float)Math.hypot(var209, var208);
          if (var188 > 0.001F) {
-            var215 = this.nn.wo().floatValue();
+            var215 = this.advancedFlickMax.wo().floatValue();
             var163 = MathHelper.clamp_float(var160 / 24.0F, 0.0F, 1.0F);
             var215 *= 0.85F + var163 * 0.4F;
             var215 *= 0.92F + this.od.nextFloat() * 0.2F;
@@ -734,7 +734,7 @@ public class KillAura extends Module {
          }
       }
 
-      return aiu.b(new Vector2f(var177, var214), (Vector2f)var147);
+      return aiu.applySensitivityPatch(new Vector2f(var177, var214), (Vector2f)var147);
    }
 
    public void eW() {
@@ -742,7 +742,7 @@ public class KillAura extends Module {
       this.oj = 0.0F;
       this.ok = 0.0F;
       this.ol = 0.0F;
-      this.om = this.mX.wo().floatValue();
+      this.om = this.advancedMaxStep.wo().floatValue();
       this.on = null;
       this.oo = 0;
       this.oq = null;
@@ -759,7 +759,7 @@ public class KillAura extends Module {
    }
 
    public boolean eX() {
-      if (!this.lZ.wo() || aEg.gameSettings.cgI.isKeyDown()) {
+      if (!this.rightClickOnly.wo() || aEg.gameSettings.cgI.isKeyDown()) {
          SlotComponent var10000 = this.d(SlotComponent.class);
          if (SlotComponent.getItemStack() != null) {
             var10000 = this.d(SlotComponent.class);
@@ -776,8 +776,8 @@ public class KillAura extends Module {
       super();
       int var822 = 0;
       var822 = -1696500114;
-      this.lT = new ModeValue("Attack Mode", this).add(new SubMode("Single")).add(new SubMode("Switch")).add(new SubMode("Multiple")).setDefault("Single");
-      this.lU = new BoundsNumberValue("Switch Delay", this, 0, 0, 0, 10, 1, () -> !this.lT.wo().getName().equals("Switch"));
+      this.mode = new ModeValue("Attack Mode", this).add(new SubMode("Single")).add(new SubMode("Switch")).add(new SubMode("Multiple")).setDefault("Single");
+      this.switchDelay = new BoundsNumberValue("Switch Delay", this, 0, 0, 0, 10, 1, () -> !this.mode.wo().getName().equals("Switch"));
       this.lV = new ModeValue("Auto Block", this)
          .add(new SubMode("None"))
          .add(new SubMode("Fake"))
@@ -796,40 +796,40 @@ public class KillAura extends Module {
          .add(new SubMode("Dual Sword"))
          .add(new SubMode("Watchdog 1.8"))
          .setDefault("None");
-      this.lW = new BooleanValue("New (you need this toggled on curreFake", this, false, () -> !this.lV.wo().getName().equals("Watchdog"));
-      this.lX = new BooleanValue("Fallback to Watchdog", this, false, () -> !this.eB());
-      this.lY = new BooleanValue("Hide Second Sword", this, true, () -> (!this.eB() ? 1 : 73 ^ 82 ^ 27) != 0);
-      this.lZ = new BooleanValue(
+      this.newYouNeedThisToggledOnCurreFake = new BooleanValue("New (you need this toggled on curreFake", this, false, () -> !this.lV.wo().getName().equals("Watchdog"));
+      this.fallbackToWatchdog = new BooleanValue("Fallback to Watchdog", this, false, () -> !this.eB());
+      this.hideSecondSword = new BooleanValue("Hide Second Sword", this, true, () -> (!this.eB() ? 1 : 73 ^ 82 ^ 27) != 0);
+      this.rightClickOnly = new BooleanValue(
          "Right Click Only", this, false, () -> this.lV.wo().getName().equals("None") || this.lV.wo().getName().equals("Fake")
       );
-      this.ma = new BooleanValue(
+      this.preventServersideBlocking = new BooleanValue(
          "Prevent Serverside Blocking",
          this,
          false,
          () -> (!this.lV.wo().getName().equals("None") && !this.lV.wo().getName().equals("Fake") ? 1 : 105 - 105) != 0
       );
-      this.mb = new BooleanValue(
+      this.blockSlowdown = new BooleanValue(
          "Block Slowdown", this, false, () -> this.lV.wo().getName().equals("None") || this.lV.wo().getName().equals("Fake")
       );
-      this.md = new ModeValue("Sorting", this).add(new SubMode("Distance")).add(new SubMode("Health")).add(new SubMode("Hurt Time")).setDefault("Distance");
-      this.me = new ModeValue("Click Delay Mode", this)
+      this.sorting = new ModeValue("Sorting", this).add(new SubMode("Distance")).add(new SubMode("Health")).add(new SubMode("Hurt Time")).setDefault("Distance");
+      this.clickMode = new ModeValue("Click Delay Mode", this)
          .add(new SubMode("Normal"))
          .add(new SubMode("Hit Select"))
          .add(new SubMode("1.9+"))
          .add(new SubMode("1.9+ With 1.8 Animations"))
          .setDefault("Normal");
-      this.mf = new BooleanValue("Randomize 1.9+ Speed", this, false, () -> (!this.me.wo().getName().contains("1.9+") ? 1 : (-57 ^ 17) - -42) != 0);
-      this.mg = new NumberValue("Randomize Factor", this, 0.2, 0.05, 1.0, 0.05, () -> !this.mf.wo() || !this.me.wo().getName().contains("1.9+"));
-      this.mh = new NumberValue("Range", this, 3, 3, 6, 0.1);
-      this.mi = new NumberValue("Rotation Range", this, 3, 0, 6, 0.1);
-      this.mj = new BoundsNumberValue("Rotation speed", this, 5, 10, 0, 10, 1);
-      this.mk = new NumberValue("FOV", this, 360, 0, 360, 1);
-      this.ml = new BooleanValue("Show FOV Circle", this, false, () -> (this.mk.wo().doubleValue() >= 360.0 ? 1 : -109 - -109) != 0);
-      this.mm = new BoundsNumberValue("CPS", this, 10, 15, 1, 20, 1);
-      this.mn = new BooleanValue("Velocity Boost", this, false);
-      this.mo = new NumberValue("Boost Ticks", this, 4, 1, 10, 1, () -> {
+      this.randomize19Speed = new BooleanValue("Randomize 1.9+ Speed", this, false, () -> (!this.clickMode.wo().getName().contains("1.9+") ? 1 : (-57 ^ 17) - -42) != 0);
+      this.randomizeFactor = new NumberValue("Randomize Factor", this, 0.2, 0.05, 1.0, 0.05, () -> !this.randomize19Speed.wo() || !this.clickMode.wo().getName().contains("1.9+"));
+      this.range = new NumberValue("Range", this, 3, 3, 6, 0.1);
+      this.rotationRange = new NumberValue("Rotation Range", this, 3, 0, 6, 0.1);
+      this.rotationSpeed = new BoundsNumberValue("Rotation speed", this, 5, 10, 0, 10, 1);
+      this.fOV = new NumberValue("FOV", this, 360, 0, 360, 1);
+      this.showFOVCircle = new BooleanValue("Show FOV Circle", this, false, () -> (this.fOV.wo().doubleValue() >= 360.0 ? 1 : -109 - -109) != 0);
+      this.cps = new BoundsNumberValue("CPS", this, 10, 15, 1, 20, 1);
+      this.velocityBoost = new BooleanValue("Velocity Boost", this, false);
+      this.boostTicks = new NumberValue("Boost Ticks", this, 4, 1, 10, 1, () -> {
          boolean var10000;
-         if (!this.mn.wo()) {
+         if (!this.velocityBoost.wo()) {
             var10000 = true;
          } else {
             byte var4x = 11;
@@ -840,17 +840,17 @@ public class KillAura extends Module {
 
          return var10000;
       });
-      this.mp = new BooleanValue("Knockback Displacement", this, true);
-      this.mq = new BooleanValue("Knockback Displacement Debug", this, false, () -> (!this.eV() ? 1 : -94 ^ -94) != 0);
-      this.mr = new BooleanValue("Silent Rotations", this, true);
+      this.knockbackDisplacement = new BooleanValue("Knockback Displacement", this, true);
+      this.knockbackDisplacementDebug = new BooleanValue("Knockback Displacement Debug", this, false, () -> (!this.eV() ? 1 : -94 ^ -94) != 0);
+      this.silentRotations = new BooleanValue("Silent Rotations", this, true);
       this.movementCorrection = new ListValue<>("Movement correction", this);
-      this.mt = new BooleanValue(
+      this.showMovementArc = new BooleanValue(
          "Show Movement Arc", this, false, () -> (this.movementCorrection.wo() == MovementFix.OFF ? 1 : -71 - -57 ^ -14) != 0
       );
-      this.mu = new BooleanValue("Keep sprint", this, false);
-      this.mv = new BooleanValue("Old Prediction Keep sprint", this, false);
-      this.mw = new BooleanValue("Old Movefix Boost", this, false);
-      this.mx = new BooleanValue("New Universal Keep sprint", this, false);
+      this.keepSprint = new BooleanValue("Keep sprint", this, false);
+      this.oldPredictionKeepSprint = new BooleanValue("Old Prediction Keep sprint", this, false);
+      this.oldMovefixBoost = new BooleanValue("Old Movefix Boost", this, false);
+      this.newUniversalKeepSprint = new BooleanValue("New Universal Keep sprint", this, false);
       this.my = 0;
       this.mz = false;
       this.mA = -1;
@@ -858,17 +858,17 @@ public class KillAura extends Module {
       this.mE = "";
       this.mF = -1;
       this.mH = -1;
-      this.mL = new ModeValue("Target ESP Mode", this).add(new SubMode("Ring")).add(new SubMode("Box")).add(new SubMode("None")).setDefault("Ring");
-      this.mM = new BooleanValue("Colored Sigma Ring", this, true, () -> !this.mL.wo().getName().equals("Ring"));
-      this.mN = new ModeValue("Box Mode", this, () -> (!this.mL.wo().getName().equals("Box") ? 1 : 60 ^ 60) != 0)
+      this.espMode = new ModeValue("Target ESP Mode", this).add(new SubMode("Ring")).add(new SubMode("Box")).add(new SubMode("None")).setDefault("Ring");
+      this.coloredSigmaRing = new BooleanValue("Colored Sigma Ring", this, true, () -> !this.espMode.wo().getName().equals("Ring"));
+      this.boxMode = new ModeValue("Box Mode", this, () -> (!this.espMode.wo().getName().equals("Box") ? 1 : 60 ^ 60) != 0)
          .add(new SubMode("Above"))
          .add(new SubMode("Full"))
          .setDefault("Ring");
-      this.mO = new BooleanValue("Ray cast", this, false);
-      this.mP = new BooleanValue("Subtick Raycast", this, true, () -> !this.mO.wo());
-      this.mQ = new BooleanValue("Through Walls", this, false, () -> {
+      this.rayCast = new BooleanValue("Ray cast", this, false);
+      this.subtickRaycast = new BooleanValue("Subtick Raycast", this, true, () -> !this.rayCast.wo());
+      this.throughWalls = new BooleanValue("Through Walls", this, false, () -> {
          boolean var10000;
-         if (!this.mO.wo()) {
+         if (!this.rayCast.wo()) {
             var10000 = true;
          } else {
             byte var4x = -74;
@@ -879,8 +879,8 @@ public class KillAura extends Module {
 
          return var10000;
       });
-      this.mS = new BooleanValue("Advanced", this, false);
-      this.mT = new ModeValue("Rotation Mode", this, () -> !this.mS.wo())
+      this.advanced = new BooleanValue("Advanced", this, false);
+      this.rotationMode = new ModeValue("Rotation Mode", this, () -> !this.advanced.wo())
          .add(new SubMode("Legit/Normal"))
          .add(new SubMode("Snap"))
          .add(new SubMode("NCP"))
@@ -888,16 +888,16 @@ public class KillAura extends Module {
          .add(new SubMode("Advanced"))
          .add(new SubMode("Grim"))
          .setDefault("Legit/Normal");
-      this.mU = new NumberValue("Advanced Gravity", this, 9, 1, 20, 0.1, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.mV = new NumberValue("Advanced Wind", this, 6, 0, 10, 0.1, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.mW = new NumberValue("Advanced Damped Distance", this, 12, 1, 45, 1, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.mX = new NumberValue("Advanced Max Step", this, 15, 3, 60, 0.5, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : 104 + -104) != 0);
-      this.mY = new NumberValue("Advanced Overshoot Chance", this, 77, 0, 100, 1, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.mZ = new NumberValue("Advanced Overshoot Scale", this, 0.0, 0.0, 0.6, 0.01, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.na = new NumberValue("Advanced Overshoot Max", this, 17, 2, 45, 0.5, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.nb = new NumberValue("Advanced Gaussian", this, 0.0, 0, 0.6, 0.01, () -> {
+      this.advancedGravity = new NumberValue("Advanced Gravity", this, 9, 1, 20, 0.1, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedWind = new NumberValue("Advanced Wind", this, 6, 0, 10, 0.1, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedDampedDistance = new NumberValue("Advanced Damped Distance", this, 12, 1, 45, 1, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedMaxStep = new NumberValue("Advanced Max Step", this, 15, 3, 60, 0.5, () -> (!this.rotationMode.wo().getName().equals("Advanced") ? 1 : 104 + -104) != 0);
+      this.advancedOvershootChance = new NumberValue("Advanced Overshoot Chance", this, 77, 0, 100, 1, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedOvershootScale = new NumberValue("Advanced Overshoot Scale", this, 0.0, 0.0, 0.6, 0.01, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedOvershootMax = new NumberValue("Advanced Overshoot Max", this, 17, 2, 45, 0.5, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedGaussian = new NumberValue("Advanced Gaussian", this, 0.0, 0, 0.6, 0.01, () -> {
          boolean var10000;
-         if (!this.mT.wo().getName().equals("Advanced")) {
+         if (!this.rotationMode.wo().getName().equals("Advanced")) {
             var10000 = true;
          } else {
             byte var6 = 104;
@@ -908,23 +908,23 @@ public class KillAura extends Module {
 
          return var10000;
       });
-      this.nc = new NumberValue("Advanced Accuracy", this, 40, 40, 100, 1, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : -88 - -88) != 0);
-      this.nd = new NumberValue("Advanced Min Step", this, 0, 0.0, 8.0, 0.1, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.ne = new NumberValue("Advanced Prediction", this, 1.0, 0, 3.5, 0.05, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.nf = new NumberValue("Advanced Deadzone", this, 1.0, 0.25, 4.5, 0.05, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.ng = new NumberValue(
-         "Advanced Anchor", this, 0.0, 0.0, 0.7, 0.01, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : (28 ^ -53) - -41) != 0
+      this.advancedAccuracy = new NumberValue("Advanced Accuracy", this, 40, 40, 100, 1, () -> (!this.rotationMode.wo().getName().equals("Advanced") ? 1 : -88 - -88) != 0);
+      this.advancedMinStep = new NumberValue("Advanced Min Step", this, 0, 0.0, 8.0, 0.1, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedPrediction = new NumberValue("Advanced Prediction", this, 1.0, 0, 3.5, 0.05, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedDeadzone = new NumberValue("Advanced Deadzone", this, 1.0, 0.25, 4.5, 0.05, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedAnchor = new NumberValue(
+         "Advanced Anchor", this, 0.0, 0.0, 0.7, 0.01, () -> (!this.rotationMode.wo().getName().equals("Advanced") ? 1 : (28 ^ -53) - -41) != 0
       );
-      this.nh = new NumberValue("Advanced Hold Ticks", this, 2, 0, 8, 1, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.ni = new NumberValue("Advanced Cruise Floor", this, 1.0, 0.0, 5.0, 0.05, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.nj = new NumberValue("Advanced Pace Jitter", this, 0.0, 0.0, 0.8, 0.01, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.nk = new NumberValue(
-         "Advanced Burst Chance", this, 21, 0, 100, 1, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : -18 + -54 - -72) != 0
+      this.advancedHoldTicks = new NumberValue("Advanced Hold Ticks", this, 2, 0, 8, 1, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedCruiseFloor = new NumberValue("Advanced Cruise Floor", this, 1.0, 0.0, 5.0, 0.05, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedPaceJitter = new NumberValue("Advanced Pace Jitter", this, 0.0, 0.0, 0.8, 0.01, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedBurstChance = new NumberValue(
+         "Advanced Burst Chance", this, 21, 0, 100, 1, () -> (!this.rotationMode.wo().getName().equals("Advanced") ? 1 : -18 + -54 - -72) != 0
       );
-      this.nl = new NumberValue("Advanced Burst Strength", this, 0.0, 0.0, 1.0, 0.01, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.nm = new BooleanValue("Advanced Flick Guard", this, true, () -> {
+      this.advancedBurstStrength = new NumberValue("Advanced Burst Strength", this, 0.0, 0.0, 1.0, 0.01, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedFlickGuard = new BooleanValue("Advanced Flick Guard", this, true, () -> {
          int var10000;
-         if (!this.mT.wo().getName().equals("Advanced")) {
+         if (!this.rotationMode.wo().getName().equals("Advanced")) {
             var10000 = 1;
          } else {
             int var6 = -56;
@@ -935,12 +935,12 @@ public class KillAura extends Module {
 
          return var10000 != 0;
       });
-      this.nn = new NumberValue("Advanced Flick Max", this, 29, 4, 60, 0.5, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : -9 + 9) != 0);
-      this.no = new BooleanValue("Advanced Swing", this, true, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.np = new NumberValue("Advanced Aim Reaction", this, 180, 30, 450, 5, () -> !this.mT.wo().getName().equals("Advanced"));
-      this.nq = new NumberValue("Advanced Aim Reaction Jitter", this, 44, 0, 220, 1, () -> {
+      this.advancedFlickMax = new NumberValue("Advanced Flick Max", this, 29, 4, 60, 0.5, () -> (!this.rotationMode.wo().getName().equals("Advanced") ? 1 : -9 + 9) != 0);
+      this.advancedSwing = new BooleanValue("Advanced Swing", this, true, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedAimReaction = new NumberValue("Advanced Aim Reaction", this, 180, 30, 450, 5, () -> !this.rotationMode.wo().getName().equals("Advanced"));
+      this.advancedAimReactionJitter = new NumberValue("Advanced Aim Reaction Jitter", this, 44, 0, 220, 1, () -> {
          boolean var10000;
-         if (!this.mT.wo().getName().equals("Advanced")) {
+         if (!this.rotationMode.wo().getName().equals("Advanced")) {
             var10000 = true;
          } else {
             byte var6 = -105;
@@ -951,14 +951,14 @@ public class KillAura extends Module {
 
          return var10000;
       });
-      this.nr = new NumberValue(
-         "Advanced Trigger Reaction", this, 95, 0, 300, 5, () -> (!this.mT.wo().getName().equals("Advanced") ? 1 : 123 - 123) != 0
+      this.advancedTriggerReaction = new NumberValue(
+         "Advanced Trigger Reaction", this, 95, 0, 300, 5, () -> (!this.rotationMode.wo().getName().equals("Advanced") ? 1 : 123 - 123) != 0
       );
-      this.ns = new NumberValue("Advanced Trigger Reaction Jitter", this, 30, 0, 140, 1, () -> !this.mT.wo().getName().equals("Advanced"));
+      this.advancedTriggerReactionJitter = new NumberValue("Advanced Trigger Reaction Jitter", this, 30, 0, 140, 1, () -> !this.rotationMode.wo().getName().equals("Advanced"));
       this.nt = null;
-      this.nu = new BooleanValue("Attack whilst Scaffolding", this, false, () -> {
+      this.attackWhilstScaffolding = new BooleanValue("Attack whilst Scaffolding", this, false, () -> {
          boolean var10000;
-         if (!this.mS.wo()) {
+         if (!this.advanced.wo()) {
             var10000 = true;
          } else {
             byte var4x = 105;
@@ -969,16 +969,16 @@ public class KillAura extends Module {
 
          return var10000;
       });
-      this.nv = new BooleanValue("No swing", this, false, () -> !this.mS.wo());
-      this.nw = new BooleanValue("Auto disable", this, false, () -> !this.mS.wo());
-      this.nx = new BooleanValue("BadPackets check", this, true, () -> (!this.mS.wo() ? 1 : 175 - 54 + -121) != 0);
-      this.ny = new BooleanValue("Targets", this, false);
-      this.nz = new BooleanValue("Player", this, true, () -> !this.ny.wo());
-      this.nA = new BooleanValue("Invisibles", this, false, () -> !this.ny.wo());
-      this.nB = new BooleanValue("Animals", this, false, () -> !this.ny.wo());
-      this.nC = new BooleanValue("Mobs", this, false, () -> {
+      this.noSwing = new BooleanValue("No swing", this, false, () -> !this.advanced.wo());
+      this.autoDisable = new BooleanValue("Auto disable", this, false, () -> !this.advanced.wo());
+      this.badPacketsCheck = new BooleanValue("BadPackets check", this, true, () -> (!this.advanced.wo() ? 1 : 175 - 54 + -121) != 0);
+      this.showTargets = new BooleanValue("Targets", this, false);
+      this.player = new BooleanValue("Player", this, true, () -> !this.showTargets.wo());
+      this.invisibles = new BooleanValue("Invisibles", this, false, () -> !this.showTargets.wo());
+      this.animals = new BooleanValue("Animals", this, false, () -> !this.showTargets.wo());
+      this.mobs = new BooleanValue("Mobs", this, false, () -> {
          boolean var10000;
-         if (!this.ny.wo()) {
+         if (!this.showTargets.wo()) {
             var10000 = true;
          } else {
             byte var4x = -29;
@@ -989,15 +989,15 @@ public class KillAura extends Module {
 
          return var10000;
       });
-      this.nD = new BooleanValue("Player Teammates", this, true, () -> !this.ny.wo());
+      this.playerTeammates = new BooleanValue("Player Teammates", this, true, () -> !this.showTargets.wo());
       this.nE = null;
-      this.nF = new BooleanValue("Weapons", this, false);
-      this.nG = new BooleanValue("Fist", this, false, () -> (!this.nF.wo() ? 1 : -92 - -92) != 0);
-      this.nH = new BooleanValue("Swords", this, true, () -> !this.nF.wo());
-      this.nI = new BooleanValue("Axes", this, false, () -> (!this.nF.wo() ? 1 : (103 ^ 74) + -45) != 0);
-      this.nJ = new BooleanValue("Extra", this, false, () -> {
+      this.weapons = new BooleanValue("Weapons", this, false);
+      this.fist = new BooleanValue("Fist", this, false, () -> (!this.weapons.wo() ? 1 : -92 - -92) != 0);
+      this.swords = new BooleanValue("Swords", this, true, () -> !this.weapons.wo());
+      this.axes = new BooleanValue("Axes", this, false, () -> (!this.weapons.wo() ? 1 : (103 ^ 74) + -45) != 0);
+      this.extra = new BooleanValue("Extra", this, false, () -> {
          int var10000;
-         if (!this.nF.wo()) {
+         if (!this.weapons.wo()) {
             var10000 = 1;
          } else {
             int var4x = 38;
@@ -1008,9 +1008,9 @@ public class KillAura extends Module {
 
          return var10000 != 0;
       });
-      this.nK = new BooleanValue("Sharpness", this, false, () -> (!this.nF.wo() ? 1 : -13 - -13) != 0);
-      this.nL = new BooleanValue("Knockback", this, false, () -> !this.nF.wo());
-      this.nM = new BooleanValue("Fire aspect", this, false, () -> !this.nF.wo());
+      this.sharpness = new BooleanValue("Sharpness", this, false, () -> (!this.weapons.wo() ? 1 : -13 - -13) != 0);
+      this.knockback = new BooleanValue("Knockback", this, false, () -> !this.weapons.wo());
+      this.fireAspect = new BooleanValue("Fire aspect", this, false, () -> !this.weapons.wo());
       this.nN = new ConcurrentLinkedQueue<>();
       this.nO = new a();
       this.nP = new a();
@@ -1031,7 +1031,7 @@ public class KillAura extends Module {
       this.oM = new ArrayList<>();
       this.oN = new Animation(Easing.EASE_OUT_CUBIC, 300L);
       this.oO = new Animation(Easing.EASE_OUT_CUBIC, 250L);
-      this.oP = var1x -> {
+      this.onPreMotionEvent = var1x -> {
          Object var136 = null;
          Object var144 = null;
          Object var151 = null;
@@ -1054,7 +1054,7 @@ public class KillAura extends Module {
                nQ = false;
             }
 
-            if (!be.aY()) {
+            if (!be.inGUI()) {
                if (this.jE == null || aEg.thePlayer.isDead || this.e(Scaffold.class).isEnabled()) {
                   if (this.eA()) {
                      this.q(true);
@@ -1086,10 +1086,10 @@ public class KillAura extends Module {
                }
 
                if (this.jE != null) {
-                  if (!this.mL.wo().getName().equals("None")) {
+                  if (!this.espMode.wo().getName().equals("None")) {
                      this.ei();
                      List var2;
-                     if (this.lT.wo().getName().equals("Single")) {
+                     if (this.mode.wo().getName().equals("Single")) {
                         var2 = new ArrayList();
                         if (this.jE != null) {
                            var2.add(this.jE);
@@ -1103,11 +1103,11 @@ public class KillAura extends Module {
                      while (((Iterator)var168).hasNext()) {
                         var136 = (EntityLivingBase)((Iterator)var168).next();
                         var144 = new hackclient.rise.cn(this.rz().rA(), this.rz().rB(), this.rz().rA());
-                        if (!this.mM.wo()) {
+                        if (!this.coloredSigmaRing.wo()) {
                            var144 = new hackclient.rise.cn(Color.WHITE, Color.WHITE, Color.WHITE);
                         }
 
-                        var151 = this.mL.wo().getName();
+                        var151 = this.espMode.wo().getName();
                         int var117_hi = -1;
                         switch (((String)var151).hashCode()) {
                            case 66987:
@@ -1126,7 +1126,7 @@ public class KillAura extends Module {
                               cf.a(new ct((EntityLivingBase)var136, (hackclient.rise.cn)var144));
                               break;
                            case 1:
-                              var160 = this.mN.wo().getName();
+                              var160 = this.boxMode.wo().getName();
                               int var152_hi = -1;
                               switch (((String)var160).hashCode()) {
                                  case 2201263:
@@ -1154,13 +1154,13 @@ public class KillAura extends Module {
             }
          }
       };
-      this.oQ = var1x -> {
+      this.onWorldChange = var1x -> {
          this.oB = -1;
          this.oC = -1;
          this.oH = -1;
          this.oJ = false;
          this.eW();
-         if (this.nw.wo()) {
+         if (this.autoDisable.wo()) {
             this.toggle();
          }
       };
@@ -1176,7 +1176,7 @@ public class KillAura extends Module {
             } else {
                this.eH();
                this.eI();
-               if (aEg.thePlayer.isSprinting() || this.jE == null || !this.mx.wo()) {
+               if (aEg.thePlayer.isSprinting() || this.jE == null || !this.newUniversalKeepSprint.wo()) {
                   this.mC = false;
                }
 
@@ -1210,7 +1210,7 @@ public class KillAura extends Module {
                      afi.b("USE THIS AUTOBLOCK CONFIG ON 1.8 NOT 1.20 instead use Watchdog 1.12 Autoblock on 1.20");
                   }
 
-                  if (this.mT.wo().getName().equals("Grim") && aEg.thePlayer.ticksExisted % 20 == 0) {
+                  if (this.rotationMode.wo().getName().equals("Grim") && aEg.thePlayer.ticksExisted % 20 == 0) {
                      int newerThan2 = ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_17) && !ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_20_5) ? 1 : 0;
                      if (newerThan2 == 0) {
                         afi.b("OnTick rotation only works correctly on versions 1.17-1.20.6. Please switch to a version in that range.");
@@ -1218,13 +1218,13 @@ public class KillAura extends Module {
                   }
 
                   aEg.entityRenderer.getMouseOver(1.0F);
-                  nR = !bb.a(false, false, false, true, true);
-                  if (aEg.thePlayer.getHealth() <= 0.0 && this.nw.wo()) {
+                  nR = !bb.bad(false, false, false, true, true);
+                  if (aEg.thePlayer.getHealth() <= 0.0 && this.autoDisable.wo()) {
                      this.toggle();
                   }
 
-                  if (!this.e(Scaffold.class).isEnabled() || this.nu.wo()) {
-                     if (Breaker.abT && this.e(Breaker.class).isEnabled() && !this.e(Breaker.class).abJ.wo()) {
+                  if (!this.e(Scaffold.class).isEnabled() || this.attackWhilstScaffolding.wo()) {
+                     if (Breaker.abT && this.e(Breaker.class).isEnabled() && !this.e(Breaker.class).attackWhileBreaking.wo()) {
                         this.jE = null;
                         this.ek();
                      } else if (!this.eY()) {
@@ -1238,9 +1238,9 @@ public class KillAura extends Module {
                         int jJ2 = (Manager)var220 != null && ((Manager)var220).isEnabled() && ((Manager)var220).jJ() ? 1 : 0;
                         int jJ3 = (OldManager)var249 != null && ((OldManager)var249).isEnabled() && ((OldManager)var249).jJ() ? 1 : 0;
                         int enabled = (Stealer)var221 != null && ((Stealer)var221).isEnabled() && aEg.currentScreen instanceof GuiChest ? 1 : 0;
-                        int notFlag = !be.aY() && !aEg.gameSettings.cgI.isKeyDown() && !bb.a(true, false, false, false, true, false) && jJ3 == 0 && enabled == 0 ? 0 : 1;
+                        int notFlag = !be.inGUI() && !aEg.gameSettings.cgI.isKeyDown() && !bb.a(true, false, false, false, true, false) && jJ3 == 0 && enabled == 0 ? 0 : 1;
                         if (aEg.thePlayer.ticksExisted % 20 == 0 && !this.lV.wo().getName().equals("Watchdog 1.8")) {
-                           this.nX = (int)(this.mi.wo().doubleValue() + Math.random() * 0.5);
+                           this.nX = (int)(this.rotationRange.wo().doubleValue() + Math.random() * 0.5);
                         }
 
                         if (aEg.thePlayer.ticksExisted % 2 == 0 && this.lV.wo().getName().equals("Watchdog 1.8") && notFlag == 0) {
@@ -1248,10 +1248,10 @@ public class KillAura extends Module {
                         }
 
                         if (notFlag != 0 && this.lV.wo().getName().equals("Watchdog 1.8")) {
-                           this.nX = (int)(this.mi.wo().doubleValue() + Math.random() * 0.5);
+                           this.nX = (int)(this.rotationRange.wo().doubleValue() + Math.random() * 0.5);
                         }
 
-                        if (!be.aY()) {
+                        if (!be.inGUI()) {
                            this.ei();
                            if (this.nV.isEmpty()) {
                               this.jE = null;
@@ -1275,7 +1275,7 @@ public class KillAura extends Module {
                                     .map(Entry::getKey)
                                     .map(EntityLivingBase.class::cast)
                                     .collect(Collectors.toList());
-                                 if (this.lT.wo().getName().equals("Single") && this.jE != null) {
+                                 if (this.mode.wo().getName().equals("Single") && this.jE != null) {
                                     this.oM.clear();
                                     this.oM.add(this.jE);
                                  }
@@ -1319,22 +1319,22 @@ public class KillAura extends Module {
             }
          }
       };
-      this.oT = var1x -> var1x.i(var1x.dA() + this.mh.wo().doubleValue() - 3.0);
-      this.oU = var1x -> {
+      this.onMouseOver = var1x -> var1x.setRange(var1x.dA() + this.range.wo().doubleValue() - 3.0);
+      this.onPostMotion = var1x -> {
          if (!this.oJ) {
             if (this.jE != null && this.eX()) {
                this.eM();
             }
          }
       };
-      this.oV = var1x -> {
+      this.onRenderItem = var1x -> {
          if (this.jE != null && !this.lV.wo().getName().equals("None") && this.eX()) {
-            var1x.a(EnumAction.BLOCK);
-            var1x.k(true);
+            var1x.setEnumAction(EnumAction.BLOCK);
+            var1x.setUseItem(true);
          }
       };
       this.hV = 0;
-      this.oW = var1x -> {
+      this.onPacketSend = var1x -> {
          Object var16 = null;
          if (!var1x.isCancelled()) {
             var16 = var1x.dq();
@@ -1344,7 +1344,7 @@ public class KillAura extends Module {
                cK = false;
             }
 
-            this.d(var1x);
+            this.packetBlock(var1x);
          }
       };
       this.oX = var1x -> {
@@ -1376,7 +1376,7 @@ public class KillAura extends Module {
                   switch (var39_hi) {
                      case 0:
                      case 1:
-                        if (!this.ma.wo()) {
+                        if (!this.preventServersideBlocking.wo()) {
                            return;
                         }
 
@@ -1402,30 +1402,30 @@ public class KillAura extends Module {
             }
          }
       };
-      this.oY = var1x -> {
+      this.onClick = var1x -> {
          if (this.lV.wo().getName().equals("Watchdog") && this.jE != null && this.nY == 2) {
             var1x.setCancelled();
          }
       };
-      this.oZ = var1x -> {
-         if (this.mx.wo() && this.mC && !aEg.thePlayer.isSprinting()) {
+      this.onJump = var1x -> {
+         if (this.newUniversalKeepSprint.wo() && this.mC && !aEg.thePlayer.isSprinting()) {
             var1x.setCancelled();
          } else {
-            if (!this.lV.wo().getName().equals("Watchdog") || this.lZ.wo() && !aEg.gameSettings.cgI.isKeyDown()) {
-               if (this.mv.wo() && aEg.thePlayer.ticksExisted % 2 == 0 && mB && this.jE != null && aih.v(this.jE) <= 3.0 + MoveUtil.speed()) {
+            if (!this.lV.wo().getName().equals("Watchdog") || this.rightClickOnly.wo() && !aEg.gameSettings.cgI.isKeyDown()) {
+               if (this.oldPredictionKeepSprint.wo() && aEg.thePlayer.ticksExisted % 2 == 0 && mB && this.jE != null && aih.v(this.jE) <= 3.0 + MoveUtil.speed()) {
                   var1x.setCancelled();
                }
-            } else if (!this.lW.wo() && this.mv.wo() && this.nY == 2 && mB && this.jE != null && aih.v(this.jE) <= 3.0 + MoveUtil.speed()) {
+            } else if (!this.newYouNeedThisToggledOnCurreFake.wo() && this.oldPredictionKeepSprint.wo() && this.nY == 2 && mB && this.jE != null && aih.v(this.jE) <= 3.0 + MoveUtil.speed()) {
                var1x.setCancelled();
             }
          }
       };
-      this.pa = var1x -> {
+      this.onHitSlowDown = var1x -> {
          if (this.lV.wo().getName().equals("Watchdog")
             && this.jE != null
             && aih.v(this.jE) <= 3.0 + MoveUtil.speed()
-            && this.mv.wo()
-            && this.lW.wo()
+            && this.oldPredictionKeepSprint.wo()
+            && this.newYouNeedThisToggledOnCurreFake.wo()
             && aEg.thePlayer.ae >= 7) {
             var1x.setSlowDown(1.0);
          }
@@ -1434,14 +1434,14 @@ public class KillAura extends Module {
          if (this.lV.wo().getName().equals("Watchdog")
             && this.jE != null
             && aih.v(this.jE) <= 3.0 + MoveUtil.speed()
-            && this.mv.wo()
-            && this.lW.wo()
+            && this.oldPredictionKeepSprint.wo()
+            && this.newYouNeedThisToggledOnCurreFake.wo()
             && aEg.thePlayer.ae > 7) {
             aEg.thePlayer.setSprinting(false);
          }
 
-         if (!this.lV.wo().getName().equals("Watchdog") || this.lZ.wo() && !aEg.gameSettings.cgI.isKeyDown()) {
-            if (this.mv.wo()
+         if (!this.lV.wo().getName().equals("Watchdog") || this.rightClickOnly.wo() && !aEg.gameSettings.cgI.isKeyDown()) {
+            if (this.oldPredictionKeepSprint.wo()
                && aEg.thePlayer.ticksExisted % 2 == 0
                && mB
                && this.jE != null
@@ -1449,8 +1449,8 @@ public class KillAura extends Module {
                && (aEg.thePlayer.ae >= 7 || this.eZ())) {
                aEg.thePlayer.setSprinting(false);
             }
-         } else if (!this.lW.wo()
-            && this.mv.wo()
+         } else if (!this.newYouNeedThisToggledOnCurreFake.wo()
+            && this.oldPredictionKeepSprint.wo()
             && this.nY > 1
             && mB
             && this.jE != null
@@ -1459,7 +1459,7 @@ public class KillAura extends Module {
             aEg.thePlayer.setSprinting(false);
          }
       };
-      this.pc = var1x -> {
+      this.onSlowDown = var1x -> {
          Object var72 = null;
          var72 = this.lV.wo().getName();
          int var66_hi = -1;
@@ -1515,12 +1515,12 @@ public class KillAura extends Module {
                }
          }
 
-         if (this.mb.wo() && nQ && this.eX()) {
+         if (this.blockSlowdown.wo() && nQ && this.eX()) {
             var1x.setCancelled(false);
             var1x.k(true);
          }
       };
-      this.pd = var1x -> {
+      this.onRender2D = var1x -> {
          float var121 = 0.0F;
          double var122 = 0.0;
          Object var126 = null;
@@ -1548,10 +1548,10 @@ public class KillAura extends Module {
          double var183 = 0.0;
          double var186 = 0.0;
          Object var189 = null;
-         if (this.ml.wo() && !(this.mk.wo().doubleValue() >= 360.0) || this.mt.wo()) {
-            var181 = this.mk.wo().doubleValue();
-            int scaledWidth = var1x.dx().getScaledWidth();
-            int scaledHeight = var1x.dx().getScaledHeight();
+         if (this.showFOVCircle.wo() && !(this.fOV.wo().doubleValue() >= 360.0) || this.showMovementArc.wo()) {
+            var181 = this.fOV.wo().doubleValue();
+            int scaledWidth = var1x.getScaledResolution().getScaledWidth();
+            int scaledHeight = var1x.getScaledResolution().getScaledHeight();
             var149 = scaledWidth / 2.0F;
             var121 = scaledHeight / 2.0F;
             var127 = this.jE;
@@ -1559,14 +1559,14 @@ public class KillAura extends Module {
             int var143_hi = 0;
             if ((EntityLivingBase)var127 == null) {
                var145 = Double.MAX_VALUE;
-               var152 = this.mh.wo().doubleValue() + 3.0;
+               var152 = this.range.wo().doubleValue() + 3.0;
                var189 = aEg.theWorld.loadedEntityList.iterator();
 
                while (((Iterator)var189).hasNext()) {
                   var126 = (Entity)((Iterator)var189).next();
                   if ((Entity)var126 instanceof EntityLivingBase && (Entity)var126 != aEg.thePlayer) {
                      var138 = (EntityLivingBase)((Entity)var126);
-                     if (!((EntityLivingBase)var138).isDead && (!((EntityLivingBase)var138).isInvisible() || this.nA.wo())) {
+                     if (!((EntityLivingBase)var138).isDead && (!((EntityLivingBase)var138).isInvisible() || this.invisibles.wo())) {
                         var140 = (double)aEg.thePlayer.getDistanceToEntity((EntityLivingBase)var138);
                         if ((Double)var140 < (Double)var145 && (Double)var140 <= (Double)var152) {
                            var145 = (Double)var140;
@@ -1602,7 +1602,7 @@ public class KillAura extends Module {
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             GL11.glLineWidth(1.5F);
-            if (this.ml.wo() && var181 < 360.0) {
+            if (this.showFOVCircle.wo() && var181 < 360.0) {
                var140 = var181 / 2.0;
                var186 = 270.0 + (Double)var126;
                var132 = var186 - (Double)var140;
@@ -1622,7 +1622,7 @@ public class KillAura extends Module {
                GL11.glEnd();
             }
 
-            if (this.mt.wo() && this.movementCorrection.wo() != MovementFix.OFF && this.jE != null && RotationComponent.fk != null) {
+            if (this.showMovementArc.wo() && this.movementCorrection.wo() != MovementFix.OFF && this.jE != null && RotationComponent.fk != null) {
                var140 = RotationComponent.fk.x;
                var150 = MathHelper.wrapAngleTo180_float((Float)var140 - aEg.thePlayer.pl);
                var122 = 270.0 + var150 - 45.0;
@@ -1750,16 +1750,16 @@ public class KillAura extends Module {
       float var52 = 0.0F;
       float var53 = 0.0F;
       float var54 = 0.0F;
-      var37 = this.mY.wo().floatValue();
+      var37 = this.advancedOvershootChance.wo().floatValue();
       if (!(var37 <= 0.0F)) {
-         var52 = MathHelper.clamp_float(this.nc.wo().floatValue() / 100.0F, 0.4F, 1.0F);
+         var52 = MathHelper.clamp_float(this.advancedAccuracy.wo().floatValue() / 100.0F, 0.4F, 1.0F);
          var40 = var37 * (1.15F - var52 * 0.35F);
          var51 = MathHelper.wrapAngleTo180_float(var2.x - var1.x);
          var39 = var2.y - var1.y;
          var42 = (float)Math.hypot(var51, var39);
          if (!(var42 < 9.0F) && !(this.od.nextFloat() * 100.0F > var40)) {
-            var45 = this.mZ.wo().floatValue();
-            var54 = Math.min(this.na.wo().floatValue(), Math.max(1.5F, var42 * var45));
+            var45 = this.advancedOvershootScale.wo().floatValue();
+            var54 = Math.min(this.advancedOvershootMax.wo().floatValue(), Math.max(1.5F, var42 * var45));
             var54 *= 0.9F + (1.0F - var52) * 0.35F;
             var47 = Math.max(0.001F, var42);
             var49 = var51 / var47;
@@ -1795,7 +1795,7 @@ public class KillAura extends Module {
 
       BlinkComponent.dispatch();
       if (ahm.vn()) {
-         if (!this.mb.wo()) {
+         if (!this.blockSlowdown.wo()) {
             SlotComponent.setSlot(nextInt2);
             SlotComponent.setSlot(bQ2);
          }
@@ -1803,7 +1803,7 @@ public class KillAura extends Module {
          this.p(true);
       } else {
          this.p(true);
-         if (!this.mb.wo()) {
+         if (!this.blockSlowdown.wo()) {
             SlotComponent.setSlot(nextInt2);
             SlotComponent.setSlot(bQ2);
          }
@@ -2069,7 +2069,7 @@ public class KillAura extends Module {
 
             switch (this.nY) {
                case 1:
-                  this.nU = !this.lW.wo();
+                  this.nU = !this.newYouNeedThisToggledOnCurreFake.wo();
                   if (!nQ) {
                      ;
                   }
@@ -2082,7 +2082,7 @@ public class KillAura extends Module {
                      nextInt3 = ThreadLocalRandom.current().nextInt(9);
                   }
 
-                  if (ahm.vn() && Math.random() > 0.5 && !this.mb.wo() && !this.nU) {
+                  if (ahm.vn() && Math.random() > 0.5 && !this.blockSlowdown.wo() && !this.nU) {
                      SlotComponent.setSlot(nextInt3);
                      SlotComponent.setSlot(bQ2);
                      this.p(false);
@@ -2110,7 +2110,7 @@ public class KillAura extends Module {
 
                      nR = false;
                      BlinkComponent.bf();
-                     if (!this.mb.wo()) {
+                     if (!this.blockSlowdown.wo()) {
                         SlotComponent.setSlot(nextInt4);
                         SlotComponent.setSlot(bQ3);
                      }
@@ -2137,7 +2137,7 @@ public class KillAura extends Module {
                      nR = false;
                      BlinkComponent.bf();
                      if (ahm.vn()) {
-                        if (!this.mb.wo()) {
+                        if (!this.blockSlowdown.wo()) {
                            SlotComponent.setSlot(nextInt5);
                            SlotComponent.setSlot(bQ4);
                         }
@@ -2145,7 +2145,7 @@ public class KillAura extends Module {
                         this.p(true);
                      } else {
                         this.p(true);
-                        if (!this.mb.wo()) {
+                        if (!this.blockSlowdown.wo()) {
                            SlotComponent.setSlot(nextInt5);
                            SlotComponent.setSlot(bQ4);
                         }
@@ -2159,7 +2159,7 @@ public class KillAura extends Module {
                   return;
             }
          case 9:
-            nR = this.eK() && !bb.a(false, false, false, true, true) && !ahm.vn() || this.eK() && !bb.a(false, false, false, true, true) && Math.random() < 0.6;
+            nR = this.eK() && !bb.bad(false, false, false, true, true) && !ahm.vn() || this.eK() && !bb.bad(false, false, false, true, true) && Math.random() < 0.6;
             break;
          case 10:
             BlinkComponent.bf();
@@ -2198,7 +2198,7 @@ public class KillAura extends Module {
       return this.nO.T(this.nT - 50L)
          && this.jE != null
          && (this.nP.T((long)(var38 * 50.0) - 50L) || booleanValue2 != 0)
-         && (!this.me.wo().getName().equals("Hit Select") || this.jE.hurtTime <= PingSpoofComponent.getPing() / 50L - 1L || aEg.thePlayer.ae <= 11)
+         && (!this.clickMode.wo().getName().equals("Hit Select") || this.jE.hurtTime <= PingSpoofComponent.getPing() / 50L - 1L || aEg.thePlayer.ae <= 11)
          && nR;
    }
 
@@ -2331,10 +2331,10 @@ public class KillAura extends Module {
             break;
          case 1:
             if (aEg.thePlayer.getHeldItem() != null && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
-               if (this.nY == 1 && Math.random() > 0.2 || this.nY == 2 || this.lZ.wo() && !aEg.gameSettings.cgI.isKeyDown()) {
+               if (this.nY == 1 && Math.random() > 0.2 || this.nY == 2 || this.rightClickOnly.wo() && !aEg.gameSettings.cgI.isKeyDown()) {
                   var1 = -1.0;
-                  if (this.mv.wo() && !this.eX()) {
-                     if (aEg.thePlayer.ticksExisted % 2 != 1 && this.mv.wo() && aEg.thePlayer.ae >= 7) {
+                  if (this.oldPredictionKeepSprint.wo() && !this.eX()) {
+                     if (aEg.thePlayer.ticksExisted % 2 != 1 && this.oldPredictionKeepSprint.wo() && aEg.thePlayer.ae >= 7) {
                         var1 = 500.0;
                      } else {
                         var1 = -1.0;
@@ -2348,7 +2348,7 @@ public class KillAura extends Module {
             }
             break;
          case 2:
-            if (aEg.thePlayer.ticksExisted % 2 != 1 && this.mv.wo() && aEg.thePlayer.ae >= 131 - 124) {
+            if (aEg.thePlayer.ticksExisted % 2 != 1 && this.oldPredictionKeepSprint.wo() && aEg.thePlayer.ae >= 131 - 124) {
                var1 = 500.0;
             } else {
                var1 = -1.0;
@@ -2360,7 +2360,7 @@ public class KillAura extends Module {
             }
             break;
          case 3:
-            if (aEg.thePlayer.ticksExisted % 2 != 1 && this.mv.wo() && (aEg.thePlayer.ae >= 7 || this.eZ())) {
+            if (aEg.thePlayer.ticksExisted % 2 != 1 && this.oldPredictionKeepSprint.wo() && (aEg.thePlayer.ae >= 7 || this.eZ())) {
                var1 = 500.0;
             } else {
                var1 = -1.0;
@@ -2372,20 +2372,20 @@ public class KillAura extends Module {
             }
       }
 
-      if (this.me.wo().getName().equals("Normal") && this.mv.wo()) {
+      if (this.clickMode.wo().getName().equals("Normal") && this.oldPredictionKeepSprint.wo()) {
          var115 = this.c(this.jE);
          if (!this.lV.wo().getName().equals("Watchdog")) {
-            if (aEg.thePlayer.ticksExisted % 2 != 1 && this.mv.wo() && aEg.thePlayer.ae >= 7) {
+            if (aEg.thePlayer.ticksExisted % 2 != 1 && this.oldPredictionKeepSprint.wo() && aEg.thePlayer.ae >= 7) {
                var1 = 500.0;
             } else {
                var1 = -1.0;
-               if (aEg.thePlayer.cqL < 3 && aEg.thePlayer.onGround && this.mw.wo()) {
+               if (aEg.thePlayer.cqL < 3 && aEg.thePlayer.onGround && this.oldMovefixBoost.wo()) {
                   RotationComponent.d(false);
                   var125 = this.a(this.jE, aEg.thePlayer.pl);
                   RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, var125), 10.0, MovementFix.NORMAL);
                }
             }
-         } else if (aEg.thePlayer.cqL < 3 && aEg.thePlayer.onGround && this.mw.wo() && this.nY == 1 && aEg.thePlayer.ae > 7) {
+         } else if (aEg.thePlayer.cqL < 3 && aEg.thePlayer.onGround && this.oldMovefixBoost.wo() && this.nY == 1 && aEg.thePlayer.ae > 7) {
             RotationComponent.d(false);
             var125 = this.a(this.jE, aEg.thePlayer.pl);
             RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, var125), 10.0, MovementFix.NORMAL);
@@ -2398,8 +2398,8 @@ public class KillAura extends Module {
    public long o(boolean var1) {
       double var8 = 0.0;
       double var10 = 0.0;
-      var10 = this.np.wo().doubleValue();
-      var8 = this.nq.wo().doubleValue();
+      var10 = this.advancedAimReaction.wo().doubleValue();
+      var8 = this.advancedAimReactionJitter.wo().doubleValue();
       if (var1) {
          var10 *= 0.6;
          var8 *= 0.5;
@@ -2410,7 +2410,7 @@ public class KillAura extends Module {
 
    public MovingObjectPosition a(Vector2f var1, double var2) {
       this.movingObjectPosition = null;
-      if (this.mP.wo()) {
+      if (this.subtickRaycast.wo()) {
          aEg.entityRenderer.getMouseOver(1.0F);
          if (this.a(aEg.objectMouseOver, this.jE)) {
             this.movingObjectPosition = aEg.objectMouseOver;
@@ -2465,14 +2465,14 @@ public class KillAura extends Module {
             this.oq = (aka)var73;
             this.ou = var86 + this.o(false);
          } else {
-            var103 = ((aka)var73).f(this.oq);
+            var103 = ((aka)var73).subtract(this.oq);
             var84 = 0.028 + Math.min(0.2, var74 * 0.006);
             var101 = ((aka)var103).wg();
             var76 = 0.36 + Math.min(0.85, var74 * 0.07);
             int flag = var101 > var76 ? 1 : 0;
             int flag2 = var86 >= this.ou ? 1 : 0;
             if (var101 > (Double)var84 && (flag2 != 0 || flag != 0)) {
-               var89 = this.ng.wo().doubleValue();
+               var89 = this.advancedAnchor.wo().doubleValue();
                var98 = Math.min(0.7, Math.max(0.08, var89 + var101 * 0.32));
                var96 = ((AxisAlignedBB)var95).expand(0.12, 0.12, 0.12);
                this.oq = this.a(this.oq.e(((aka)var103).ag(var98)), (AxisAlignedBB)var96);
@@ -2482,7 +2482,7 @@ public class KillAura extends Module {
 
          var103 = (AxisAlignedBB)var95;
          var84 = new Vec3(this.oq.x, this.oq.y, this.oq.z);
-         return aiu.h(aiu.a(this.jE, (AxisAlignedBB)var103, (Vec3)var84, this.mh.wo().doubleValue(), this.em(), this.en()));
+         return aiu.h(aiu.a(this.jE, (AxisAlignedBB)var103, (Vec3)var84, this.range.wo().doubleValue(), this.em(), this.en()));
       }
       return aiu.y(this.jE);
    }
@@ -2587,8 +2587,8 @@ public class KillAura extends Module {
       Object var23 = null;
       Object var25 = null;
       var16 = aEg.thePlayer.Ty().v(0.0, aEg.thePlayer.getEyeHeight(), 0.0).g(new aka(this.jE.posX, this.jE.posY + this.jE.height * 0.75, this.jE.posZ));
-      var20 = Math.min(3.5, Math.max(0.0, this.ne.wo().doubleValue() + var16 * 0.017));
-      var23 = this.or.f(this.os);
+      var20 = Math.min(3.5, Math.max(0.0, this.advancedPrediction.wo().doubleValue() + var16 * 0.017));
+      var23 = this.or.subtract(this.os);
       var18 = Math.max(0.35, Math.min(this.jE.height * 0.82, this.jE.height - 0.12));
       var25 = (new aka(this.jE.posX, this.jE.posY + var18, this.jE.posZ)).e(((aka)var23).ag(var20));
       var15 = this.jE.getEntityBoundingBox().expand(0.18, 0.1, 0.18);
@@ -2653,7 +2653,7 @@ public class KillAura extends Module {
       this.mE = "";
       this.mF = -1;
       this.eW();
-      if (this.lZ.wo() && Math.random() > 0.7) {
+      if (this.rightClickOnly.wo() && Math.random() > 0.7) {
          afi.b("hold right click to autoblock or turn off right click to autoblock");
       }
    }
@@ -2694,7 +2694,7 @@ public class KillAura extends Module {
       Object var26 = null;
       var26 = this.eo();
       int notBooleanValue = !this.nO.T(this.nT) || !this.nP.T((long)((Double)((Tuple)var26).getSecond() * 50.0)) && !((Boolean)((Tuple)var26).getFirst()).booleanValue() ? 0 : 1;
-      return notBooleanValue != 0 && aEg.thePlayer.getDistanceToEntity(this.jE) <= this.mh.wo().doubleValue() + 0.5;
+      return notBooleanValue != 0 && aEg.thePlayer.getDistanceToEntity(this.jE) <= this.range.wo().doubleValue() + 0.5;
    }
 
    public void doAttack(List<EntityLivingBase> var1) {
@@ -2706,7 +2706,7 @@ public class KillAura extends Module {
       Object var355 = null;
       Object var361 = null;
       Object var363 = null;
-      if (!this.mx.wo() || this.jE == null || this.eq() || !this.er() || !this.ep()) {
+      if (!this.newUniversalKeepSprint.wo() || this.jE == null || this.eq() || !this.er() || !this.ep()) {
          int eR2 = (int)(this.eR() ? 1L : 0L);
          if (eR2 == 0) {
             this.ov = Integer.MIN_VALUE;
@@ -2714,13 +2714,13 @@ public class KillAura extends Module {
             this.ox = 0L;
          }
 
-         if (!this.mT.wo().getName().equals("Grim") || !this.fa()) {
-            if (!this.eA() && this.mn.wo() && this.jE != null && (nR || !this.nx.wo())) {
+         if (!this.rotationMode.wo().getName().equals("Grim") || !this.fa()) {
+            if (!this.eA() && this.velocityBoost.wo() && this.jE != null && (nR || !this.badPacketsCheck.wo())) {
                int ae2 = aEg.thePlayer.ae;
-               int intValue2 = this.mo.wo().intValue();
+               int intValue2 = this.boostTicks.wo().intValue();
                if (ae2 < intValue2 && aEg.thePlayer.ticksExisted != this.mA) {
                   this.mA = aEg.thePlayer.ticksExisted;
-                  int equals2 = this.mT.wo().getName().equals("Grim") && this.nt != null ? 1 : 0;
+                  int equals2 = this.rotationMode.wo().getName().equals("Grim") && this.nt != null ? 1 : 0;
                   if (equals2 != 0) {
                      var258 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.nt.getX() - aEg.thePlayer.pl);
                      ahj.l(
@@ -2730,7 +2730,7 @@ public class KillAura extends Module {
                      );
                   }
 
-                  var258 = this.lT.wo().getName();
+                  var258 = this.mode.wo().getName();
                   int var260_hi = -1;
                   switch (((String)var258).hashCode()) {
                      case -1818398616:
@@ -2752,17 +2752,17 @@ public class KillAura extends Module {
                   switch (var260_hi) {
                      case 0:
                      case 1:
-                        var259 = this.a(equals2 != 0 ? this.nt : RotationComponent.fk, this.mh.wo().doubleValue());
+                        var259 = this.a(equals2 != 0 ? this.nt : RotationComponent.fk, this.range.wo().doubleValue());
                         if ((MovingObjectPosition)var259 != null) {
                            this.b((MovingObjectPosition)var259);
-                        } else if (!this.mO.wo()) {
+                        } else if (!this.rayCast.wo()) {
                            this.d(this.jE);
                         }
 
                         this.e(this.jE);
                         break;
                      case 2:
-                        var363 = this.mh.wo().doubleValue();
+                        var363 = this.range.wo().doubleValue();
                         final double var363a = (Double)var363;
                         var1.stream().filter(var2 -> {
                            boolean var10000;
@@ -2777,7 +2777,7 @@ public class KillAura extends Module {
 
                            return var10000;
                         }).forEach(var1x -> {
-                           if (!this.mO.wo()) {
+                           if (!this.rayCast.wo()) {
                               this.d(var1x);
                            }
 
@@ -2805,14 +2805,14 @@ public class KillAura extends Module {
             int t = eA2 != 0 ? (this.oC != -1 && aEg.thePlayer.ticksExisted - this.oC < 2 ? 0 : 1) : (!this.nO.T(this.nT) || !this.nP.T((long)(var277 * 50.0)) && booleanValue2 == 0 ? 0 : 1);
             if (t != 0 && this.jE != null) {
                if (eA2 == 0) {
-                  var363 = (long)(this.mm.wv().longValue() * 1.5);
+                  var363 = (long)(this.cps.wv().longValue() * 1.5);
                   this.nT = 1000L / (Long)var363;
                }
 
                if ((eA2 != 0 || Math.sin(this.nT) + 1.0 > Math.random() || this.nO.T(this.nT + 500L) || Math.random() > 0.5)
-                  && (nR || !this.nx.wo())) {
-                  var363 = this.mh.wo().doubleValue();
-                  int equals3 = this.mT.wo().getName().equals("Grim") && this.nt != null ? 1 : 0;
+                  && (nR || !this.badPacketsCheck.wo())) {
+                  var363 = this.range.wo().doubleValue();
+                  int equals3 = this.rotationMode.wo().getName().equals("Grim") && this.nt != null ? 1 : 0;
                   var355 = equals3 != 0 ? this.nt : RotationComponent.fk;
                   var361 = this.a((Vector2f)var355, (Double)var363);
                   if (equals3 != 0) {
@@ -2824,7 +2824,7 @@ public class KillAura extends Module {
                      );
                   }
 
-                  var304 = this.lT.wo().getName();
+                  var304 = this.mode.wo().getName();
                   int var331_hi = -1;
                   switch (((String)var304).hashCode()) {
                      case -1818398616:
@@ -2846,7 +2846,7 @@ public class KillAura extends Module {
                   switch (var331_hi) {
                      case 0:
                      case 1:
-                        int notWo = (!(aEg.thePlayer.getDistanceToEntity(this.jE) <= (Double)var363) || this.mO.wo()) && ((MovingObjectPosition)var361 == null || ((MovingObjectPosition)var361).entityHit != this.jE) ? 0 : 1;
+                        int notWo = (!(aEg.thePlayer.getDistanceToEntity(this.jE) <= (Double)var363) || this.rayCast.wo()) && ((MovingObjectPosition)var361 == null || ((MovingObjectPosition)var361).entityHit != this.jE) ? 0 : 1;
                         if (notWo != 0) {
                            if (eR2 == 0 || this.a(this.jE, (MovingObjectPosition)var361, (Double)var363)) {
                               if ((MovingObjectPosition)var361 != null) {
@@ -2858,7 +2858,7 @@ public class KillAura extends Module {
                               this.e(this.jE);
                            }
                         } else if ((MovingObjectPosition)var361 == null || ((MovingObjectPosition)var361).typeOfHit != MovingObjectType.ENTITY) {
-                           var316 = this.me.wo().getName();
+                           var316 = this.clickMode.wo().getName();
                            int var308_hi = -1;
                            switch (((String)var316).hashCode()) {
                               case -1955878649:
@@ -2893,7 +2893,7 @@ public class KillAura extends Module {
                         var1.removeIf(var2 -> aEg.thePlayer.getDistanceToEntity(var2) > var363b);
                         if (!var1.isEmpty()) {
                            var1.forEach(var1x -> {
-                              if (!this.mO.wo()) {
+                              if (!this.rayCast.wo()) {
                                  this.d(var1x);
                               }
 
@@ -3051,7 +3051,7 @@ public class KillAura extends Module {
    public boolean eZ() {
       Object var11 = null;
       var11 = this.e(Speed.class);
-      return ((Speed)var11).isEnabled() && ((Speed)var11).hl().wo() instanceof GrimSpeed && ((GrimSpeed)((Speed)var11).hl().wo()).Px.wo();
+      return ((Speed)var11).isEnabled() && ((Speed)var11).hl().wo() instanceof GrimSpeed && ((GrimSpeed)((Speed)var11).hl().wo()).fastFall.wo();
    }
 
    public boolean a(AxisAlignedBB var1, Predicate<Block> var2) {
@@ -3113,7 +3113,7 @@ public class KillAura extends Module {
                && !bb.a((-9 - 4 ^ -13) != 0, true, false, false, false, true)
                && !this.e(LongJump.class).isEnabled()
                && !SlotComponent.dj
-               && (aEg.thePlayer.ticksExisted % 2 == 0 || !this.mv.wo() || aEg.thePlayer.ae < 7 && !this.eZ())) {
+               && (aEg.thePlayer.ticksExisted % 2 == 0 || !this.oldPredictionKeepSprint.wo() || aEg.thePlayer.ae < 7 && !this.eZ())) {
                this.block(true, false);
             }
       }
@@ -3128,7 +3128,7 @@ public class KillAura extends Module {
       return this.nO.T(this.nT - 1L)
          && this.jE != null
          && (this.nP.T((long)(var26 * 50.0) - 50L) || booleanValue2 != 0)
-         && (!this.me.wo().getName().equals("Hit Select") || this.jE.hurtTime <= PingSpoofComponent.getPing() / 50L - 1L || aEg.thePlayer.ae <= 11)
+         && (!this.clickMode.wo().getName().equals("Hit Select") || this.jE.hurtTime <= PingSpoofComponent.getPing() / 50L - 1L || aEg.thePlayer.ae <= 11)
          && nR;
    }
 
@@ -3443,23 +3443,23 @@ public class KillAura extends Module {
 
          this.my = Math.max(this.my, 1);
          mB = true;
-         if (!this.nv.wo() && !ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
+         if (!this.noSwing.wo() && !ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
             aEg.thePlayer.swingItem();
          }
 
-         if (flag != 0 && !this.mT.wo().getName().equals("Grim")) {
+         if (flag != 0 && !this.rotationMode.wo().getName().equals("Grim")) {
             this.b(var4);
             this.a("forced", var4);
          }
 
-         if (this.mu.wo()
+         if (this.keepSprint.wo()
                && (
                   aEg.thePlayer.ae >= 7
                      || !this.e(Velocity.class).isEnabled()
                      || !this.e(Velocity.class).mode.wo().getName().equals("Grim Reduce")
-                     || this.e(Velocity.class).mode.wo().getName().equals("Grim Reduce") && !((GrimReduceVelocity)this.e(Velocity.class).mode.wo()).tE.wo()
+                     || this.e(Velocity.class).mode.wo().getName().equals("Grim Reduce") && !((GrimReduceVelocity)this.e(Velocity.class).mode.wo()).stopSprint.wo()
                )
-            || !this.lW.wo() && this.mv.wo() && (aEg.thePlayer.ae >= 7 || this.eZ()) && var1 != null) {
+            || !this.newYouNeedThisToggledOnCurreFake.wo() && this.oldPredictionKeepSprint.wo() && (aEg.thePlayer.ae >= 7 || this.eZ()) && var1 != null) {
             aEg.playerController.syncCurrentPlayItem();
             ahj.l(new C02PacketUseEntity((EntityLivingBase)var79, Action.ATTACK));
             if (this.eC() && this.eX()) {
@@ -3494,7 +3494,7 @@ public class KillAura extends Module {
             var6.gh();
          }
 
-         if (!this.nv.wo() && ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
+         if (!this.noSwing.wo() && ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
             aEg.thePlayer.swingItem();
          }
 
@@ -3535,7 +3535,7 @@ public class KillAura extends Module {
       Object var51 = null;
       Object var52 = null;
       Object var69 = null;
-      if (this.mq.wo() && aEg.thePlayer != null) {
+      if (this.knockbackDisplacementDebug.wo() && aEg.thePlayer != null) {
          if (var2 == null) {
             var51 = String.format("%s hurt=%d", var1, this.jE == null ? -1 : this.jE.hurtTime);
          } else {
@@ -3569,25 +3569,25 @@ public class KillAura extends Module {
    public boolean eY() {
       Object var29 = null;
       Object var37 = null;
-      if (!this.nF.wo()) {
+      if (!this.weapons.wo()) {
          return true;
       }
       var37 = aEg.thePlayer.getHeldItem();
       if ((ItemStack)var37 == null) {
-         return this.nG.wo();
+         return this.fist.wo();
       }
       var29 = ((ItemStack)var37).getItem();
-      if ((Item)var29 instanceof ItemSword && this.nH.wo()) {
+      if ((Item)var29 instanceof ItemSword && this.swords.wo()) {
          return true;
-      } else if ((Item)var29 instanceof ItemAxe && this.nI.wo()) {
+      } else if ((Item)var29 instanceof ItemAxe && this.axes.wo()) {
          return true;
-      } else if (!this.nJ.wo() || !((Item)var29 instanceof ItemTool) && !((Item)var29 instanceof ItemHoe)) {
-         if (this.nK.wo() && EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, (ItemStack)var37) > 0) {
+      } else if (!this.extra.wo() || !((Item)var29 instanceof ItemTool) && !((Item)var29 instanceof ItemHoe)) {
+         if (this.sharpness.wo() && EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, (ItemStack)var37) > 0) {
             return true;
          }
-         return this.nL.wo() && EnchantmentHelper.getEnchantmentLevel(Enchantment.knockback.effectId, (ItemStack)var37) > 0
+         return this.knockback.wo() && EnchantmentHelper.getEnchantmentLevel(Enchantment.knockback.effectId, (ItemStack)var37) > 0
             ? true
-            : this.nM.wo() && EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, (ItemStack)var37) > 0;
+            : this.fireAspect.wo() && EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, (ItemStack)var37) > 0;
       } else {
          return true;
       }
@@ -3604,18 +3604,18 @@ public class KillAura extends Module {
       if (this.oG) {
          if (!this.lV.wo().getName().equals("Watchdog")) {
             this.oG = false;
-         } else if (flag == 0 || !this.lX.wo()) {
+         } else if (flag == 0 || !this.fallbackToWatchdog.wo()) {
             if (!nQ || this.ez()) {
                this.mz = false;
                this.oG = false;
-               this.lV.wF().stream().filter(var0 -> var0.getName().equals("Dual Sword")).findFirst().ifPresent(this.lV::c);
+               this.lV.getModes().stream().filter(var0 -> var0.getName().equals("Dual Sword")).findFirst().ifPresent(this.lV::update);
                int var10000 = ((int[])var58)[1];
             }
          }
-      } else if (this.eA() && this.lX.wo() && flag != 0) {
+      } else if (this.eA() && this.fallbackToWatchdog.wo() && flag != 0) {
          this.q(true);
          this.oE = false;
-         this.lV.wF().stream().filter(var0 -> var0.getName().equals("Watchdog")).findFirst().ifPresent(this.lV::c);
+         this.lV.getModes().stream().filter(var0 -> var0.getName().equals("Watchdog")).findFirst().ifPresent(this.lV::update);
          this.oG = true;
       }
    }
@@ -3650,7 +3650,7 @@ public class KillAura extends Module {
       Object var12 = null;
       var12 = this.e(Piercing.class);
       int var10000;
-      if (!this.mO.wo() || !this.mQ.wo() && ((Piercing)var12 == null || !((Piercing)var12).isEnabled())) {
+      if (!this.rayCast.wo() || !this.throughWalls.wo() && ((Piercing)var12 == null || !((Piercing)var12).isEnabled())) {
          int var5 = 112;
          var5 = (byte)-70;
          var5 -= -70;
@@ -3678,10 +3678,10 @@ public class KillAura extends Module {
    }
 
    public Vector2f c(EntityLivingBase var1) {
-      return this.a(var1, this.mh.wo().doubleValue(), this.em());
+      return this.a(var1, this.range.wo().doubleValue(), this.em());
    }
 
-   public void d(PacketSendEvent var1) {
+   public void packetBlock(PacketSendEvent var1) {
       Object var36 = null;
       Object var39 = null;
       var39 = var1.dq();
@@ -3708,7 +3708,7 @@ public class KillAura extends Module {
 
    public boolean p(int var1) {
       Object var24 = null;
-      if (this.eA() && this.lY.wo()) {
+      if (this.eA() && this.hideSecondSword.wo()) {
          var24 = this.eD();
          return ((int[])var24)[1] != -1 && var1 == ((int[])var24)[1];
       }
@@ -3749,12 +3749,12 @@ public class KillAura extends Module {
    }
 
    public boolean eV() {
-      return this.mp.wo();
+      return this.knockbackDisplacement.wo();
    }
 
    public void eu() {
       if (this.eR()) {
-         if (this.no.wo() && !this.nv.wo()) {
+         if (this.advancedSwing.wo() && !this.noSwing.wo()) {
             aEg.thePlayer.swingItem();
             this.nP.aX();
          }
@@ -3764,9 +3764,9 @@ public class KillAura extends Module {
    public void ei() {
       double var37 = 0.0;
       Object var43 = null;
-      var37 = this.mh.wo().doubleValue();
+      var37 = this.range.wo().doubleValue();
       this.nV = bv.f(var37);
-      if (this.lT.wo().getName().equals("Switch")) {
+      if (this.mode.wo().getName().equals("Switch")) {
          this.nV.removeAll(this.oK);
       }
 
@@ -3775,13 +3775,13 @@ public class KillAura extends Module {
          this.nV = bv.f(var37 + this.nX);
       }
 
-      if (this.mk.wo().doubleValue() < 360.0) {
-         var43 = this.mk.wo().doubleValue() / 2.0;
+      if (this.fOV.wo().doubleValue() < 360.0) {
+         var43 = this.fOV.wo().doubleValue() / 2.0;
          final double var43a = (Double)var43;
          this.nV.removeIf(var3 -> !this.a(var3, var43a));
       }
 
-      var43 = this.md.wo().getName();
+      var43 = this.sorting.wo().getName();
       int var31_hi = -1;
       switch (((String)var43).hashCode()) {
          case -2137395588:
@@ -3821,7 +3821,7 @@ public class KillAura extends Module {
       }
       var16 = aEg.thePlayer.getPositionEyes(1.0F);
       var15 = aEg.thePlayer.getVectorForRotation(RotationComponent.fk.getY(), RotationComponent.fk.getX());
-      var12 = this.mh.wo().doubleValue();
+      var12 = this.range.wo().doubleValue();
       var17 = ((Vec3)var16).addVector(((Vec3)var15).xCoord * var12, ((Vec3)var15).yCoord * var12, ((Vec3)var15).zCoord * var12);
       var14 = var1.getEntityBoundingBox().expand(0.1, 0.1, 0.1).calculateIntercept((Vec3)var16, (Vec3)var17);
       return (MovingObjectPosition)var14 != null && ((MovingObjectPosition)var14).hitVec != null
@@ -3863,12 +3863,12 @@ public class KillAura extends Module {
       Object var181 = null;
       Object var184 = null;
       Object var186 = null;
-      var179 = this.mj.wv().floatValue();
+      var179 = this.rotationSpeed.wv().floatValue();
       if (!this.eR()) {
          this.eW();
       }
 
-      var133 = this.mT.wo().getName();
+      var133 = this.rotationMode.wo().getName();
       int var167_hi = -1;
       switch (((String)var133).hashCode()) {
          case -1631405611:
@@ -3909,9 +3909,9 @@ public class KillAura extends Module {
             if (var179 != 0.0F) {
                RotationComponent.a(
                   (Vector2f)var171, var179, this.movementCorrection.wo() == MovementFix.OFF ? MovementFix.OFF : this.movementCorrection.wo(), var1 -> {
-                     nS = aiu.a(var1, this.jE, this.mh.wo().doubleValue(), this.em(), this.en());
+                     nS = aiu.a(var1, this.jE, this.range.wo().doubleValue(), this.em(), this.en());
                      return nS;
-                  }, this.mr.wo()
+                  }, this.silentRotations.wo()
                );
             }
             break;
@@ -3938,7 +3938,7 @@ public class KillAura extends Module {
                      var179,
                      this.movementCorrection.wo() == MovementFix.OFF ? MovementFix.OFF : this.movementCorrection.wo(),
                      null,
-                     this.mr.wo()
+                     this.silentRotations.wo()
                   );
                } else {
                   RotationComponent.a(
@@ -3946,7 +3946,7 @@ public class KillAura extends Module {
                      var179,
                      this.movementCorrection.wo() == MovementFix.OFF ? MovementFix.OFF : this.movementCorrection.wo(),
                      null,
-                     this.mr.wo()
+                     this.silentRotations.wo()
                   );
                }
             }
@@ -3960,7 +3960,7 @@ public class KillAura extends Module {
                   var179,
                   this.movementCorrection.wo() == MovementFix.OFF ? MovementFix.OFF : this.movementCorrection.wo(),
                   null,
-                  this.mr.wo()
+                  this.silentRotations.wo()
                );
             } else {
                RotationComponent.d(false);
@@ -3968,22 +3968,22 @@ public class KillAura extends Module {
             break;
          case 3:
             var170 = this.a(this.jE, this.c(this.jE));
-            var134 = aef.a((Vector2f)var170, this.mh.wo().floatValue(), this.en(), aEg.thePlayer, this.em());
+            var134 = aef.a((Vector2f)var170, this.range.wo().floatValue(), this.en(), aEg.thePlayer, this.em());
             int flag = (MovingObjectPosition)var134 != null && ((MovingObjectPosition)var134).entityHit == this.jE ? 1 : 0;
             int var155_hi = 1;
-            if (this.mO.wo()) {
-               var186 = aef.a((Vector2f)var170, this.mh.wo().floatValue(), this.en(), aEg.thePlayer, this.em());
+            if (this.rayCast.wo()) {
+               var186 = aef.a((Vector2f)var170, this.range.wo().floatValue(), this.en(), aEg.thePlayer, this.em());
                var155_hi = (MovingObjectPosition)var186 != null && ((MovingObjectPosition)var186).entityHit == this.jE ? 1 : 0;
             }
 
-            if (var179 != 0.0F && this.et() && flag != 0 && var155_hi != 0 && this.mO.wo()) {
+            if (var179 != 0.0F && this.et() && flag != 0 && var155_hi != 0 && this.rayCast.wo()) {
                RotationComponent.d(false);
                RotationComponent.a(
                   (Vector2f)var170,
                   var179,
                   this.movementCorrection.wo() == MovementFix.OFF ? MovementFix.OFF : this.movementCorrection.wo(),
                   null,
-                  this.mr.wo()
+                  this.silentRotations.wo()
                );
             } else {
                RotationComponent.d(false);
@@ -3992,7 +3992,7 @@ public class KillAura extends Module {
                   var179 * 10.0F / 18.0F,
                   this.movementCorrection.wo() == MovementFix.OFF ? MovementFix.OFF : this.movementCorrection.wo(),
                   null,
-                  this.mr.wo()
+                  this.silentRotations.wo()
                );
             }
             break;
@@ -4004,7 +4004,7 @@ public class KillAura extends Module {
                   var179,
                   this.movementCorrection.wo() == MovementFix.OFF ? MovementFix.OFF : this.movementCorrection.wo(),
                   null,
-                  this.mr.wo()
+                  this.silentRotations.wo()
                );
             }
             break;
@@ -4068,7 +4068,7 @@ public class KillAura extends Module {
 
    public boolean eR() {
       boolean var10000;
-      if (this.mT.wo() != null && "Advanced".equals(this.mT.wo().getName())) {
+      if (this.rotationMode.wo() != null && "Advanced".equals(this.rotationMode.wo().getName())) {
          var10000 = true;
       } else {
          byte var6 = -123;

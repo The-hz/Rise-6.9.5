@@ -11,13 +11,13 @@ import net.minecraft.entity.EntityLivingBase;
 public final class SilentWTap extends Mode<WTap> {
     private EntityLivingBase jE;
     @EventLink
-    public final Listener<PreMotionEvent> Cy = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (this.jE != null && this.jE.hurtTime == 9) {
             var1x.setSprinting(false);
         }
     };
     @EventLink
-    public final Listener<AttackEvent> Cz = var1x -> this.jE = var1x.dc();
+    public final Listener<AttackEvent> onAttack = var1x -> this.jE = var1x.dc();
 
     public SilentWTap(String var1, WTap var2) {
         super(var1, var2);

@@ -12,10 +12,10 @@ import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Keyboard;
 
 public class q {
-    @EventLink(cH = 0)
-    public final Listener<KeyboardInputEvent> bl = var1 -> {
+    @EventLink(value = 0)
+    public final Listener<KeyboardInputEvent> onKeyboardInput = var1 -> {
         if (!var1.isCancelled()) {
-            if (var1.cO() == 25 && GuiScreen.isCtrlKeyDown() && GuiScreen.isShiftKeyDown()) {
+            if (var1.getKeyCode() == 25 && GuiScreen.isCtrlKeyDown() && GuiScreen.isShiftKeyDown()) {
                 if (Keyboard.isRepeatEvent()) {
                     var1.setCancelled();
                 } else {
@@ -26,12 +26,12 @@ public class q {
 
                     var1.setCancelled();
                 }
-            } else if (var1.cQ() == null) {
-                this.aP().stream().filter(var1x -> var1x.getKey() == var1.cO()).forEach(p::onKey);
+            } else if (var1.getGuiScreen() == null) {
+                this.aP().stream().filter(var1x -> var1x.getKey() == var1.getKeyCode()).forEach(p::onKey);
             }
         }
     };
-    @EventLink(cH = 0)
+    @EventLink(value = 0)
     public final Listener<dy> bm = var1 -> {
         if (Minecraft.getMinecraft().currentScreen == null) {
             int i = var1.cW() - 100;

@@ -13,19 +13,19 @@ import hackclient.rise.ahz;
 import hackclient.rise.aia;
 
 public class DamageDeprecatedFlight extends Mode<Flight> {
-    private final NumberValue Jj = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
+    private final NumberValue speed = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
     @EventLink
-    public final Listener<StrafeEvent> Jk = var1x -> {
-        float f = this.Jj.wo().floatValue();
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
+        float f = this.speed.wo().floatValue();
         var1x.setSpeed(f);
     };
     @EventLink
-    public final Listener<PreMotionEvent> Jl = var1x -> {
-        float f = this.Jj.wo().floatValue();
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
+        float f = this.speed.wo().floatValue();
         aEg.thePlayer.motionY = 0.0 + (aEg.gameSettings.keyBindJump.isKeyDown() ? f : 0.0) - (aEg.gameSettings.keyBindSneak.isKeyDown() ? f : 0.0);
     };
     @EventLink
-    public final Listener<MoveInputEvent> Jm = var0 -> var0.setSneak(false);
+    public final Listener<MoveInputEvent> onMoveInput = var0 -> var0.setSneak(false);
 
     public DamageDeprecatedFlight(String var1, Flight var2) {
         super(var1, var2);

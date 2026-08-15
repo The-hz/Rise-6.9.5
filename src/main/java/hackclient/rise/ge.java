@@ -23,7 +23,7 @@ public class ge implements InstanceAccess {
             } else {
                 this.kL.a(var1, 0.0F, this.kK);
                 if (var1 == aiz.OVERLAY) {
-                    this.kL.ju();
+                    this.kL.update();
                 }
             }
         }

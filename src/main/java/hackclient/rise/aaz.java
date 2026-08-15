@@ -10,7 +10,7 @@ public final class aaz extends a {
     }
 
     @Override
-    public boolean j(Packet<?> var1) {
+    public boolean handle(Packet<?> var1) {
         return !(var1 instanceof S08PacketPlayerPosLook s08packetplayerposlook)
             ? false
             : Math.abs(s08packetplayerposlook.x) > 1.0E9 || Math.abs(s08packetplayerposlook.y) > 1.0E9 || Math.abs(s08packetplayerposlook.z) > 1.0E9;

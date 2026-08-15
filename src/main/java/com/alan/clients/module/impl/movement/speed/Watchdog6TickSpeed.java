@@ -48,27 +48,27 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
     private double Mh;
     public static double Mi;
     @EventLink
-    public final Listener<PacketReceiveEvent> Rf = var0 -> {
-        switch (var0.dq()) {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var0 -> {
+        switch (var0.getPacket()) {
             default:
                 break;
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> Rg = var0 -> {
+    public final Listener<MoveInputEvent> onMoveInput = var0 -> {
         if (hQ < 23 && hQ > 7) {
             var0.setJump(false);
         }
     };
     @EventLink
-    public final Listener<MoveEvent> Rh = var0 -> {
+    public final Listener<MoveEvent> onMove = var0 -> {
         if (hQ < 23 && hQ > 7) {
             var0.setPosZ(0.0);
             var0.setPosX(0.0);
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> Ri = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.onGround) {
             this.Re = false;
         }
@@ -217,13 +217,13 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<PreUpdateEvent> Rj = var0 -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {
         if (hQ > 44) {
             ;
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> Rk = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         aEg.thePlayer.getEntityBoundingBox();
         hQ++;
         if (hQ < 23) {
@@ -236,7 +236,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<JumpEvent> Rl = var1x -> {
+    public final Listener<JumpEvent> onJump = var1x -> {
         if (hQ >= 23 && hQ >= 8 && !this.Re && aEg.thePlayer.csk >= 6) {
             var1x.setJumpMotion(0.4F);
         } else {
@@ -244,7 +244,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<PostStrafeEvent> Rm = var0 -> {
+    public final Listener<PostStrafeEvent> onPostStrafe = var0 -> {
         double d0 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
         double d1 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
         if (ahg.n(d0, d1) > 90.0) {
@@ -270,7 +270,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
             aEg.thePlayer.jump();
         } else {
             afi.b("start on the ground");
-            this.wj().setEnabled(false);
+            this.getParent().setEnabled(false);
         }
 
         this.Md = aEg.thePlayer.posX;

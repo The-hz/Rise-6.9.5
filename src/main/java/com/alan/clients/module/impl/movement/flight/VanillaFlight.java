@@ -14,13 +14,13 @@ public class VanillaFlight extends Mode<Flight> {
     private static final double Iz = 10.0;
     private final NumberValue speed = new NumberValue("Speed", this, 1, 0.1, 10, 0.1);
     @EventLink
-    public final Listener<PreMotionEvent> IB = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         float f = this.speed.wo().floatValue();
         double d0 = (aEg.gameSettings.keyBindJump.isKeyDown() ? f : 0.0) - (aEg.gameSettings.keyBindSneak.isKeyDown() ? f : 0.0);
         aEg.thePlayer.motionY = d0;
     };
     @EventLink
-    public final Listener<StrafeEvent> IC = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         float f = this.speed.wo().floatValue();
         double d0 = aEg.thePlayer.motionY;
         double d1 = Math.sqrt(f * f + d0 * d0);
@@ -34,7 +34,7 @@ public class VanillaFlight extends Mode<Flight> {
         aEg.thePlayer.motionY = d0;
     };
     @EventLink
-    public final Listener<MoveInputEvent> ID = var0 -> var0.setSneak(false);
+    public final Listener<MoveInputEvent> onMove = var0 -> var0.setSneak(false);
 
     public VanillaFlight(String var1, Flight var2) {
         super(var1, var2);

@@ -205,7 +205,7 @@ public class PlayerAPI extends ScriptEntityLiving {
 
     public void damage(boolean var1, float var2) {
         if (!var1) {
-            bk.a(var2);
+            bk.setActive(var2);
         } else {
             ahz.ab(0.5);
         }

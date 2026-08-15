@@ -21,12 +21,12 @@ public class afy extends File {
 
     @Override
     public boolean te() {
-        if (!this.sK().exists()) {
+        if (!this.getFile().exists()) {
             return false;
         }
 
         try {
-            FileReader filereader = new FileReader(this.sK());
+            FileReader filereader = new FileReader(this.getFile());
             BufferedReader bufferedreader = new BufferedReader(filereader);
             JsonObject jsonobject = this.A().fromJson(bufferedreader, JsonObject.class);
             bufferedreader.close();
@@ -38,15 +38,15 @@ public class afy extends File {
     }
 
     @Override
-    public boolean tf() {
+    public boolean write() {
         try {
-            this.sK().createNewFile();
+            this.getFile().createNewFile();
             JsonObject jsonobject = new JsonObject();
             JsonObject jsonobject1 = new JsonObject();
             jsonobject1.addProperty("version", "6");
             jsonobject1.addProperty("creationDate", aHO.format(new Date()));
             jsonobject.add("Metadata", jsonobject1);
-            FileWriter filewriter = new FileWriter(this.sK());
+            FileWriter filewriter = new FileWriter(this.getFile());
             BufferedWriter bufferedwriter = new BufferedWriter(filewriter);
             this.A().toJson(jsonobject, bufferedwriter);
             bufferedwriter.flush();

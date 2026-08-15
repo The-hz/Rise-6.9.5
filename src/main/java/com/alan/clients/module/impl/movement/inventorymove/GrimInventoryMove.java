@@ -21,9 +21,9 @@ public final class GrimInventoryMove extends Mode<InventoryMove> {
         aEg.gameSettings.keyBindLeft,
         aEg.gameSettings.keyBindJump
     };
-    private final NumberValue JE = new NumberValue("Manager Extra Sprint Ticks", this, 9, 0, 20, 1);
+    private final NumberValue managerExtraSprintTicks = new NumberValue("Manager Extra Sprint Ticks", this, 9, 0, 20, 1);
     @EventLink
-    public final Listener<PreUpdateEvent> JF = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.currentScreen != null && !(aEg.currentScreen instanceof GuiChat) && aEg.currentScreen != this.getStandardClickGUI()) {
             for (KeyBinding keybinding : this.JD) {
                 keybinding.setPressed(GameSettings.isKeyDown(keybinding));
@@ -42,6 +42,6 @@ public final class GrimInventoryMove extends Mode<InventoryMove> {
     }
 
     public int hu() {
-        return this.JE.wo().intValue();
+        return this.managerExtraSprintTicks.wo().intValue();
     }
 }

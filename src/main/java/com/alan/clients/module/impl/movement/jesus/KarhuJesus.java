@@ -12,16 +12,16 @@ import net.minecraft.util.AxisAlignedBB;
 
 public class KarhuJesus extends Mode<Jesus> {
     @EventLink
-    public final Listener<BlockAABBEvent> Ko = var0 -> {
-        if (var0.df() instanceof BlockLiquid && !aEg.gameSettings.keyBindSneak.isKeyDown()) {
-            int i = var0.dg().getX();
-            int j = var0.dg().getY();
-            int k = var0.dg().getZ();
-            var0.a(AxisAlignedBB.fromBounds(i, j, k, i + 1, j + 1, k + 1));
+    public final Listener<BlockAABBEvent> onBlockAABB = var0 -> {
+        if (var0.getBlock() instanceof BlockLiquid && !aEg.gameSettings.keyBindSneak.isKeyDown()) {
+            int i = var0.getBlockPos().getX();
+            int j = var0.getBlockPos().getY();
+            int k = var0.getBlockPos().getZ();
+            var0.setBoundingBox(AxisAlignedBB.fromBounds(i, j, k, i + 1, j + 1, k + 1));
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> Kp = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
         if (aih.vl()) {
             var0.setPosY(var0.getPosY() - (aEg.thePlayer.ticksExisted % 2 == 0 ? 0.015625 : 0.0));
             var0.setOnGround(false);

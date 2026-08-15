@@ -9,7 +9,7 @@ public class ScriptServerKickEvent extends ScriptEvent<ServerKickEvent> {
     }
 
     public String[] getReason() {
-        return this.wrapped.dm().toArray(new String[0]);
+        return this.wrapped.getMessage().toArray(new String[0]);
     }
 
     @Override

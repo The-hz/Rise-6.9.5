@@ -16,17 +16,17 @@ import lombok.Generated;
 import org.lwjgl.input.Mouse;
 
 public final class abf implements InstanceAccess {
-    private final List<abe> ayl;
+    private final List<abe> categories;
     public double aym = 100.0;
     private double axT;
     private double ayn;
     private boolean ayo;
-    private long ayj = 0L;
+    private long lastTime = 0L;
     private Animation animation = new Animation(Easing.EASE_OUT_EXPO, 300L);
     private Animation ayp = new Animation(Easing.LINEAR, 300L);
 
     public abf() {
-        this.ayl = Arrays.stream(Category.values()).map(abe::new).collect(Collectors.toList());
+        this.categories = Arrays.stream(Category.values()).map(abe::new).collect(Collectors.toList());
     }
 
     public void pF() {
@@ -39,7 +39,7 @@ public final class abf implements InstanceAccess {
             riseclickgui.axI.y,
             this.aym + this.animation.sG(),
             riseclickgui.alh.y,
-            this.getStandardClickGUI().pl(),
+            this.getStandardClickGUI().getRound(),
             color,
             true,
             false,
@@ -58,67 +58,67 @@ public final class abf implements InstanceAccess {
         );
     }
 
-    public void d(float var1, float var2) {
+    public void renderSidebar(float var1, float var2) {
         RiseClickGUI riseclickgui = Client.a.v();
         long i = System.currentTimeMillis();
-        if (this.ayj == 0L) {
-            this.ayj = i;
+        if (this.lastTime == 0L) {
+            this.lastTime = i;
         }
 
         boolean flag = riseclickgui.axK.qa();
         if (this.ayo = (!Mouse.isButtonDown(0) || this.ayo)
                 && agj.c(riseclickgui.axI.x - 200.0F, riseclickgui.axI.y, this.ayo ? 310.0 : 210.0, riseclickgui.alh.y, var1, var2)
             || !flag) {
-            this.axT = Math.min(this.axT + (i - this.ayj) * 2L, 255.0);
+            this.axT = Math.min(this.axT + (i - this.lastTime) * 2L, 255.0);
         } else {
-            this.axT = Math.max(this.axT - (float)(i - this.ayj) * 1.5F, 0.0);
+            this.axT = Math.max(this.axT - (float)(i - this.lastTime) * 1.5F, 0.0);
         }
 
         if (agj.c(riseclickgui.axI.x, riseclickgui.axI.y, this.ayn > 0.0 ? 70.0 : 10.0, riseclickgui.alh.y, var1, var2) && flag) {
-            this.ayn = Math.min(this.ayn + (i - this.ayj) * 2L, 255.0);
+            this.ayn = Math.min(this.ayn + (i - this.lastTime) * 2L, 255.0);
         } else {
-            this.ayn = Math.max(this.ayn - (i - this.ayj), 0.0);
+            this.ayn = Math.max(this.ayn - (i - this.lastTime), 0.0);
         }
 
-        this.ayj = i;
+        this.lastTime = i;
         double d0 = 10.0;
 
-        for (abe abe : this.ayl) {
+        for (abe abe : this.categories) {
             abe.a(d0 += 19.5, this.aym + this.animation.sG(), (int)this.axT, riseclickgui.axK);
         }
 
         float f = (float)(riseclickgui.axI.getX() + 9.0F + this.animation.sG());
-        float f1 = riseclickgui.axI.getY() + (24.75F - gb.MAIN.a(42, gd.REGULAR).tq() / 2.0F);
+        float f1 = riseclickgui.axI.getY() + (24.75F - gb.MAIN.a(42, gd.REGULAR).height() / 2.0F);
         gb.MAIN.a(32, gd.REGULAR).a(Client.b, f + 5.0F, f1 + 2.0F, aip.d(Color.WHITE, (int)this.axT).hashCode());
         gb.MAIN
             .a(16, gd.REGULAR)
             .a("6.9.5", f + 5.0F + gb.MAIN.a(32, gd.REGULAR).getStringWidth(Client.b), f1, aip.d(this.rz().rA(), (int)Math.min(this.axT, 200.0)).getRGB());
     }
 
-    public void ci() {
-        Iterator iterator = this.ayl.iterator();
+    public void preRenderClickGUI() {
+        Iterator iterator = this.categories.iterator();
 
         while (iterator.hasNext()) {
-            ((abe)iterator.next()).F(this.axT);
+            ((abe)iterator.next()).bloom(this.axT);
         }
     }
 
-    public void b(float var1, float var2, int var3) {
+    public void clickSidebar(float var1, float var2, int var3) {
         if (this.axT > 0.0) {
-            Iterator iterator = this.ayl.iterator();
+            Iterator iterator = this.categories.iterator();
 
             while (iterator.hasNext()) {
-                ((abe)iterator.next()).a(var1, var2, var3);
+                ((abe)iterator.next()).click(var1, var2, var3);
             }
         }
     }
 
     public void pE() {
         if (this.axT > 0.0) {
-            Iterator iterator = this.ayl.iterator();
+            Iterator iterator = this.categories.iterator();
 
             while (iterator.hasNext()) {
-                ((abe)iterator.next()).pE();
+                ((abe)iterator.next()).release();
             }
         }
     }

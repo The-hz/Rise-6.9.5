@@ -13,18 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class l {
-    public static final Class<?>[] ak = new Class[]{
+    public static final Class<?>[] CHECKS = new Class[]{
         SpeedLimit.class, FlightPrediction.class, AutoBlockA.class, AutoBlockB.class, VelocityCancel.class, TowerWatchdog.class
     };
-    private static final List<Constructor<?>> al = new ArrayList<>();
+    private static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();
 
     public l() {
     }
 
-    public static List<Check> a(PlayerData var0) {
+    public static List<Check> loadChecks(PlayerData var0) {
         ArrayList arraylist = new ArrayList();
 
-        for (Constructor constructor : al) {
+        for (Constructor constructor : CONSTRUCTORS) {
             try {
                 arraylist.add((Check)constructor.newInstance(var0));
             } catch (Exception exception) {
@@ -35,10 +35,10 @@ public final class l {
         return arraylist;
     }
 
-    public static void U() {
-        for (Class oclass : ak) {
+    public static void setup() {
+        for (Class oclass : CHECKS) {
             try {
-                al.add(oclass.getConstructor(PlayerData.class));
+                CONSTRUCTORS.add(oclass.getConstructor(PlayerData.class));
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

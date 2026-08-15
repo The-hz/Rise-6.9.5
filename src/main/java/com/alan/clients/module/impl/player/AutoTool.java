@@ -17,15 +17,15 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 public class AutoTool extends Module {
     private int blockBreak;
     private BlockPos blockPos;
-    @EventLink(cH = 4)
-    public final Listener<BlockDamageEvent> abq = var1 -> {
+    @EventLink(value = 4)
+    public final Listener<BlockDamageEvent> onBlockDamage = var1 -> {
         if (!this.e(Scaffold.class).isEnabled()) {
-            if (var1.dj() == aEg.thePlayer) {
-                if (!(aEg.thePlayer.getDistanceSq(var1.dg()) > 49.0)) {
+            if (var1.getPlayer() == aEg.thePlayer) {
+                if (!(aEg.thePlayer.getDistanceSq(var1.getBlockPos()) > 49.0)) {
                     if (this.jt()) {
-                        if (var1.dg().equals(aEg.objectMouseOver.getBlockPos())) {
+                        if (var1.getBlockPos().equals(aEg.objectMouseOver.getBlockPos())) {
                             this.blockBreak = 15;
-                            this.blockPos = var1.dg();
+                            this.blockPos = var1.getBlockPos();
                             this.ju();
                         }
                     }
@@ -34,7 +34,7 @@ public class AutoTool extends Module {
         }
     };
     @EventLink
-    public final Listener<BlockBreakEvent> abr = var1 -> {
+    public final Listener<BlockBreakEvent> onBlockBreak = var1 -> {
         this.blockBreak = 0;
         this.blockPos = null;
     };
@@ -58,7 +58,7 @@ public class AutoTool extends Module {
             } else if (aEg.objectMouseOver != null && this.blockBreak > 0 && this.blockPos != null) {
                 if (aEg.objectMouseOver.typeOfHit == MovingObjectType.BLOCK && this.blockPos.equals(aEg.objectMouseOver.getBlockPos())) {
                     this.blockBreak--;
-                    int i = aik.r(this.blockPos);
+                    int i = aik.findTool(this.blockPos);
                     if (i != -1) {
                         SlotComponent slotcomponent = this.d(SlotComponent.class);
                         SlotComponent.setSlot(i);

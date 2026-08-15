@@ -67,8 +67,8 @@ public class RiseClickGUI extends GuiScreen implements aha {
     public double axS;
     public double axT;
     public double axU;
-    public int axV = 7;
-    Vector2d axW;
+    public int round = 7;
+    Vector2d translate;
     public abl axX;
     public Vector2f axY = new Vector2f(283.0F, 38.0F);
     public Animation hB = new Animation(Easing.EASE_IN_EXPO, 300L);
@@ -76,7 +76,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     private final agw aya = new agw();
     private agm ayb;
     ge ayc = new ge(new ajb());
-    @EventLink(cH = 0)
+    @EventLink(value = 0)
     public final Listener<AlphaEvent> onAlpha = var1 -> {
         if (this.axS <= 0.99) {
             this.oT();
@@ -110,7 +110,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     public void oS() {
         this.moduleList.clear();
         System.out.println("PRE RMC");
-        if (!Client.a.s().nN()) {
+        if (!Client.a.getSecurityManager().nN()) {
             System.out.println("RMC");
             ArrayList arraylist = Client.a.g().ef();
             arraylist.sort((var0, var1) -> Collator.getInstance().compare(((Module)var0).getName(), ((Module)var1).getName()));
@@ -126,7 +126,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
 
         aMR.execute(
             () -> {
-                this.axV = 12;
+                this.round = 12;
                 this.hB.reset();
                 this.hB.T(0.0);
                 ScaledResolution scaledresolution = aEg.jY;
@@ -144,7 +144,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
                     this.axI.y = scaledresolution.getScaledHeight() / 2.0F - this.alh.y / 2.0F;
                 }
 
-                this.moduleList.forEach(var0 -> var0.pA().forEach(var0x -> {
+                this.moduleList.forEach(var0 -> var0.getValueList().forEach(var0x -> {
                     if (var0x instanceof abt) {
                         ((abt)var0x).pU();
                     } else if (var0x instanceof abn) {
@@ -153,7 +153,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
                 }));
             }
         );
-        if (Client.a.s().nN()) {
+        if (Client.a.getSecurityManager().nN()) {
             this.moduleList.clear();
         }
     }
@@ -196,11 +196,11 @@ public class RiseClickGUI extends GuiScreen implements aha {
                 this.axI.y = j + this.axO;
             }
 
-            this.axZ.a(minecraft.currentScreen == Client.a.v() ? Easing.EASE_OUT_EXPO : Easing.LINEAR);
+            this.axZ.setEasing(minecraft.currentScreen == Client.a.v() ? Easing.EASE_OUT_EXPO : Easing.LINEAR);
             this.axZ.h(minecraft.currentScreen == Client.a.v() ? 300L : 100L);
             this.axZ.Q(minecraft.currentScreen == Client.a.v() ? 1.0 : 0.0);
             this.axT = this.axZ.sG();
-            this.hB.a(minecraft.currentScreen == Client.a.v() ? Easing.EASE_OUT_EXPO : Easing.LINEAR);
+            this.hB.setEasing(minecraft.currentScreen == Client.a.v() ? Easing.EASE_OUT_EXPO : Easing.LINEAR);
             this.hB.Q(minecraft.currentScreen == Client.a.v() ? 1.0 : 0.0);
             this.axS = this.hB.sG();
             if (minecraft.currentScreen == Client.a.v() && this.axS == 0.0) {
@@ -210,27 +210,27 @@ public class RiseClickGUI extends GuiScreen implements aha {
             if (this.axS == 0.0) {
                 Client.a.g().c(ClickGUI.class).setEnabled(false);
             } else {
-                this.axW = new Vector2d((this.axI.x + this.alh.x / 2.0F) * (1.0 - this.axS), (this.axI.y + this.alh.y / 2.0F) * (1.0 - this.axS));
+                this.translate = new Vector2d((this.axI.x + this.alh.x / 2.0F) * (1.0 - this.axS), (this.axI.y + this.alh.y / 2.0F) * (1.0 - this.axS));
                 Runnable runnable = () -> {
                     GlStateManager.pushMatrix();
                     if (this.axS != 1.0) {
-                        GlStateManager.translate(this.axW.x, this.axW.y, 0.0);
+                        GlStateManager.translate(this.translate.x, this.translate.y, 0.0);
                         GlStateManager.scale(this.axS, this.axS, 0.0);
                     }
                 };
                 runnable.run();
                 this.b(gg.BLOOM, 2).c(runnable);
                 if (this.axS > 0.993) {
-                    RenderUtil.dropShadow(18, this.axI.x, this.axI.y, this.alh.x, this.alh.y, 30.0, this.axV * 1.3);
+                    RenderUtil.dropShadow(18, this.axI.x, this.axI.y, this.alh.x, this.alh.y, 30.0, this.round * 1.3);
                 }
 
-                RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, this.axV, abw.BACKGROUND.pV());
+                RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, this.round, abw.BACKGROUND.pV());
                 Runnable runnable1 = () -> {
                     GL11.glEnable(3089);
                     byte b0 = 1;
                     RenderUtil.g(
-                        this.axI.x * this.axS + this.axW.x + b0,
-                        this.axI.y * this.axS + this.axW.y + b0,
+                        this.axI.x * this.axS + this.translate.x + b0,
+                        this.axI.y * this.axS + this.translate.y + b0,
                         this.alh.x * this.axS - b0 * 2,
                         this.alh.y * this.axS - b0 * 2
                     );
@@ -245,8 +245,8 @@ public class RiseClickGUI extends GuiScreen implements aha {
                 short short1 = 200;
                 (this.axL = this.axP.T(short1) ? this.axK : this.axM).b(i, j, f);
                 if (agx.isEnabled()) {
-                    double d0 = this.axI.x * this.axS + this.axW.x + 1.0;
-                    double d1 = this.axI.y * this.axS + this.axW.y + 1.0;
+                    double d0 = this.axI.x * this.axS + this.translate.x + 1.0;
+                    double d1 = this.axI.y * this.axS + this.translate.y + 1.0;
                     double d2 = this.alh.x * this.axS - 2.0;
                     double d3 = this.alh.y * this.axS - 2.0;
                     agm agm = this.oU();
@@ -263,7 +263,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
                             float f2 = agm.tM();
                             gb.MAIN.a(16, gd.REGULAR).a(s, f1, f2, aip.d(Color.WHITE, 210).getRGB());
                             RenderUtil.d(
-                                f1, f2 + gb.MAIN.a(16, gd.REGULAR).tq() + 1.0F, gb.MAIN.a(16, gd.REGULAR).getStringWidth(s), 1.0, aip.d(Color.WHITE, 140)
+                                f1, f2 + gb.MAIN.a(16, gd.REGULAR).height() + 1.0F, gb.MAIN.a(16, gd.REGULAR).getStringWidth(s), 1.0, aip.d(Color.WHITE, 140)
                             );
                             if (list != null && !list.isEmpty()) {
                                 StringBuilder stringbuilder = new StringBuilder();
@@ -287,9 +287,9 @@ public class RiseClickGUI extends GuiScreen implements aha {
                                 String s2 = stringbuilder.toString();
                                 double d5 = 6.0;
                                 double d6 = gb.MAIN.a(16, gd.REGULAR).getStringWidth(s2) + d5 * 2.0;
-                                double d7 = gb.MAIN.a(16, gd.REGULAR).tq() + d5 * 2.0 - 5.0;
+                                double d7 = gb.MAIN.a(16, gd.REGULAR).height() + d5 * 2.0 - 5.0;
                                 double d8 = f1 - 2.0F;
-                                double d9 = f2 + gb.MAIN.a(16, gd.REGULAR).tq() + 6.0F;
+                                double d9 = f2 + gb.MAIN.a(16, gd.REGULAR).height() + 6.0F;
                                 double d10 = 8.0;
                                 Color color = aip.d(Color.WHITE, 255);
                                 this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(d8, d9, d6, d7, d10, color));
@@ -324,7 +324,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
                         )
                     );
                 if (this.axP.aKx() <= short1 * 2) {
-                    RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, this.axV, abw.BACKGROUND.Y(k));
+                    RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, this.round, abw.BACKGROUND.Y(k));
                 }
 
                 this.axJ.pF();
@@ -334,7 +334,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
                     RenderUtil.c(this.axI.x + this.axJ.aym - d4 / 2.0, this.axI.y + this.alh.y / 2.0F - d4 / 2.0, d4, aip.d(this.rz().rA(), 1));
                 }
 
-                this.axJ.d(i, j);
+                this.axJ.renderSidebar(i, j);
                 Runnable runnable3 = () -> {
                     GL11.glDisable(3089);
                     GlStateManager.popMatrix();
@@ -354,17 +354,17 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     public void ci() {
-        this.axW = new Vector2d((this.axI.x + this.alh.x / 2.0F) * (1.0 - this.axS), (this.axI.y + this.alh.y / 2.0F) * (1.0 - this.axS));
+        this.translate = new Vector2d((this.axI.x + this.alh.x / 2.0F) * (1.0 - this.axS), (this.axI.y + this.alh.y / 2.0F) * (1.0 - this.axS));
         GlStateManager.pushMatrix();
         if (this.axS != 1.0) {
-            GlStateManager.translate(this.axW.x, this.axW.y, 0.0);
+            GlStateManager.translate(this.translate.x, this.translate.y, 0.0);
             GlStateManager.scale(this.axS, this.axS, 0.0);
         }
 
         GL11.glEnable(3089);
-        RenderUtil.g(this.axI.x * this.axS + this.axW.x, this.axI.y * this.axS + this.axW.y, this.alh.x * this.axS, (this.alh.y - 4.0F) * this.axS);
+        RenderUtil.g(this.axI.x * this.axS + this.translate.x, this.axI.y * this.axS + this.translate.y, this.alh.x * this.axS, (this.alh.y - 4.0F) * this.axS);
         this.axL.pY();
-        this.axJ.ci();
+        this.axJ.preRenderClickGUI();
         GL11.glDisable(3089);
         GlStateManager.popMatrix();
     }
@@ -377,7 +377,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
             this.dragging = true;
         } else if (agj.c(this.axI.getX(), this.axI.getY(), this.alh.getX(), this.alh.getY(), var1, var2)) {
             if (this.axX == null) {
-                this.axJ.b(var1, var2, var3);
+                this.axJ.clickSidebar(var1, var2, var3);
             }
 
             this.axK.f(var1, var2, var3);
@@ -433,7 +433,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
             }
 
             for (abd abd : this.moduleList) {
-                for (abl abl : abd.pA()) {
+                for (abl abl : abd.getValueList()) {
                     if (abl instanceof abv abv && abv.azo != null && abv.azo.ayU) {
                         return abv.azo;
                     }
@@ -452,7 +452,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
             this.axP.aX();
             this.axK.aT();
             acf acf = (acf)Category.SEARCH.ec();
-            acf.azB = acf.aG(acf.azR.getText());
+            acf.relevantModules = acf.getRelevantModules(acf.azR.getText());
         }
     }
 
@@ -463,7 +463,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
             this.axP.aX();
             this.axK.aT();
             acf acf = (acf)Category.SEARCH.ec();
-            acf.azB = acf.aG(acf.azR.getText());
+            acf.relevantModules = acf.getRelevantModules(acf.azR.getText());
         }
     }
 
@@ -471,8 +471,8 @@ public class RiseClickGUI extends GuiScreen implements aha {
         Iterator iterator = this.moduleList.iterator();
 
         while (iterator.hasNext()) {
-            for (abl abl : ((abd)iterator.next()).pA()) {
-                if (abl instanceof abv && abl.apP != null && ((abv)abl).azo.ayU && !((abv)abl).azo.aJv.T(50L)) {
+            for (abl abl : ((abd)iterator.next()).getValueList()) {
+                if (abl instanceof abv && abl.position != null && ((abv)abl).azo.ayU && !((abv)abl).azo.aJv.T(50L)) {
                     return true;
                 }
 
@@ -490,12 +490,12 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public Vector2f oW() {
+    public Vector2f getScale() {
         return this.axI;
     }
 
     @Generated
-    public Vector2f oX() {
+    public Vector2f getPosition() {
         return this.alh;
     }
 
@@ -545,7 +545,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public ConcurrentLinkedQueue<abd> pg() {
+    public ConcurrentLinkedQueue<abd> getModuleList() {
         return this.moduleList;
     }
 
@@ -570,13 +570,13 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public int pl() {
-        return this.axV;
+    public int getRound() {
+        return this.round;
     }
 
     @Generated
-    public Vector2d pm() {
-        return this.axW;
+    public Vector2d getTranslate() {
+        return this.translate;
     }
 
     @Generated
@@ -615,7 +615,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public Listener<AlphaEvent> pt() {
+    public Listener<AlphaEvent> getOnAlpha() {
         return this.onAlpha;
     }
 }

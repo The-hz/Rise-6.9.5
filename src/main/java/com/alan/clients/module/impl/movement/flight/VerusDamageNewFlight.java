@@ -20,12 +20,12 @@ public class VerusDamageNewFlight extends Mode<Flight> {
     private int It;
     private int hV;
     private boolean El;
-    private final NumberValue Iu = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
+    private final NumberValue speed = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
     private double y;
     @EventLink
-    public final Listener<TeleportEvent> Iv = var0 -> {};
+    public final Listener<TeleportEvent> onTeleport = var0 -> {};
     @EventLink
-    public final Listener<PreMotionEvent> Iw = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (!this.El && aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();
         }
@@ -46,22 +46,22 @@ public class VerusDamageNewFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> Ix = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (this.El) {
-            float f = this.Iu.wo().floatValue();
+            float f = this.speed.wo().floatValue();
             var1x.setSpeed(f);
         }
     };
     @EventLink
-    public final Listener<BlockAABBEvent> Iy = var1x -> {
-        if (var1x.df() instanceof BlockAir
+    public final Listener<BlockAABBEvent> onBlockAABB = var1x -> {
+        if (var1x.getBlock() instanceof BlockAir
             && !aEg.gameSettings.keyBindSneak.isKeyDown()
             && (aEg.thePlayer.posY < this.y + 1.0 || aEg.gameSettings.keyBindJump.isKeyDown())) {
-            double d0 = var1x.dg().getX();
-            double d1 = var1x.dg().getY();
-            double d2 = var1x.dg().getZ();
+            double d0 = var1x.getBlockPos().getX();
+            double d1 = var1x.getBlockPos().getY();
+            double d2 = var1x.getBlockPos().getZ();
             if (d1 < aEg.thePlayer.posY) {
-                var1x.a(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
+                var1x.setBoundingBox(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
             }
         }
     };

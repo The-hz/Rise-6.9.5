@@ -30,26 +30,26 @@ import net.minecraft.util.Vec3;
 @ModuleInfo(aliases = "module.combat.throwableaura.name", description = "module.combat.throwableaura.description", category = Category.COMBAT)
 public class ThrowableAura extends Module {
     public int qH;
-    public BooleanValue qy;
+    public BooleanValue players;
     public int qI;
     public EntityLivingBase jE;
-    public BooleanValue qB;
-    public NumberValue qw;
+    public BooleanValue prediction;
+    public NumberValue fOV;
     public boolean qJ;
-    public BooleanValue qx;
-    public BooleanValue qC;
-    public NumberValue qu;
-    public NumberValue qt;
-    public BooleanValue qA;
+    public BooleanValue playerTeammates;
+    public BooleanValue moduleCheck;
+    public NumberValue minimumRange;
+    public NumberValue range;
+    public BooleanValue autoSwitch;
     @EventLink
-    public Listener<PreUpdateEvent> qK;
-    public BooleanValue qF;
-    public BooleanValue qE;
-    public BooleanValue qG;
-    public NumberValue qv;
-    public NumberValue qs = new NumberValue("Rotation Range", this, 8.0, 1.0, 15.0, 0.1);
-    public BooleanValue qz;
-    public BooleanValue qD;
+    public Listener<PreUpdateEvent> onPreUpdate;
+    public BooleanValue eggs;
+    public BooleanValue snowballs;
+    public BooleanValue throughWalls;
+    public NumberValue throwDelay;
+    public NumberValue rotationRange = new NumberValue("Rotation Range", this, 8.0, 1.0, 15.0, 0.1);
+    public BooleanValue mobs;
+    public BooleanValue antiBot;
 
     @Override
     public void onEnable() {
@@ -68,7 +68,7 @@ public class ThrowableAura extends Module {
 
     @Override
     public void onDisable() {
-        if (this.qA.wo() && this.qI != -1 && aEg.thePlayer != null) {
+        if (this.autoSwitch.wo() && this.qI != -1 && aEg.thePlayer != null) {
             aEg.thePlayer.inventory.currentItem = this.qI;
         }
 
@@ -78,7 +78,7 @@ public class ThrowableAura extends Module {
     }
 
     public boolean s(EntityLivingBase var1) {
-        Vec3 vec3 = this.qB.wo() ? this.i(var1) : var1.getPositionVector().addVector(0.0, var1.getEyeHeight() * 0.5, 0.0);
+        Vec3 vec3 = this.prediction.wo() ? this.i(var1) : var1.getPositionVector().addVector(0.0, var1.getEyeHeight() * 0.5, 0.0);
         Vec3 vec31 = aEg.thePlayer.getPositionEyes(1.0F);
         Vec3 vec32 = aEg.thePlayer.getLookVec().normalize();
         Vec3 vec33 = vec3.subtract(vec31).normalize();
@@ -106,7 +106,7 @@ public class ThrowableAura extends Module {
     }
 
     public boolean gs() {
-        if (!this.qC.wo()) {
+        if (!this.moduleCheck.wo()) {
             return true;
         }
 
@@ -115,7 +115,7 @@ public class ThrowableAura extends Module {
     }
 
     public void h(Entity var1) {
-        Vec3 vec3 = this.qB.wo() ? this.i(var1) : var1.getPositionVector().addVector(0.0, var1.getEyeHeight() * 0.5, 0.0);
+        Vec3 vec3 = this.prediction.wo() ? this.i(var1) : var1.getPositionVector().addVector(0.0, var1.getEyeHeight() * 0.5, 0.0);
         Vec3 vec31 = aEg.thePlayer.getPositionEyes(1.0F);
         double d6 = vec3.xCoord - vec31.xCoord;
         double d7 = vec3.yCoord - vec31.yCoord;
@@ -132,37 +132,37 @@ public class ThrowableAura extends Module {
     }
 
     public ThrowableAura() {
-        this.qt = new NumberValue("Range", this, 6.0, 1.0, 12.0, 0.1);
-        this.qu = new NumberValue("Minimum Range", this, 3.0, 1.0, 10.0, 0.1);
-        this.qv = new NumberValue("Throw Delay", this, 5.0, 0.0, 100.0, 1.0);
-        this.qw = new NumberValue("FOV", this, 180.0, 30.0, 360.0, 1.0);
-        this.qx = new BooleanValue("Player Teammates", this, true);
-        this.qy = new BooleanValue("Players", this, true);
-        this.qz = new BooleanValue("Mobs", this, true);
-        this.qA = new BooleanValue("Auto Switch", this, true);
-        this.qB = new BooleanValue("Prediction", this, true);
-        this.qC = new BooleanValue("Module Check", this, true);
-        this.qD = new BooleanValue("AntiBot", this, true);
-        this.qE = new BooleanValue("Snowballs", this, true);
-        this.qF = new BooleanValue("Eggs", this, true);
-        this.qG = new BooleanValue("Through Walls", this, true);
+        this.range = new NumberValue("Range", this, 6.0, 1.0, 12.0, 0.1);
+        this.minimumRange = new NumberValue("Minimum Range", this, 3.0, 1.0, 10.0, 0.1);
+        this.throwDelay = new NumberValue("Throw Delay", this, 5.0, 0.0, 100.0, 1.0);
+        this.fOV = new NumberValue("FOV", this, 180.0, 30.0, 360.0, 1.0);
+        this.playerTeammates = new BooleanValue("Player Teammates", this, true);
+        this.players = new BooleanValue("Players", this, true);
+        this.mobs = new BooleanValue("Mobs", this, true);
+        this.autoSwitch = new BooleanValue("Auto Switch", this, true);
+        this.prediction = new BooleanValue("Prediction", this, true);
+        this.moduleCheck = new BooleanValue("Module Check", this, true);
+        this.antiBot = new BooleanValue("AntiBot", this, true);
+        this.snowballs = new BooleanValue("Snowballs", this, true);
+        this.eggs = new BooleanValue("Eggs", this, true);
+        this.throughWalls = new BooleanValue("Through Walls", this, true);
         this.qI = -1;
-        this.qK = var1 -> {
+        this.onPreUpdate = var1 -> {
             if (aEg.thePlayer != null && aEg.theWorld != null && !this.qJ) {
                 if (this.gs()) {
-                    if (this.qH < this.qv.wo().intValue()) {
+                    if (this.qH < this.throwDelay.wo().intValue()) {
                         this.qH++;
                     } else {
                         this.qH = 0;
                         this.jE = this.gt();
                         if (this.jE != null) {
                             double d1 = aEg.thePlayer.getDistanceToEntity(this.jE);
-                            if (!(d1 > this.qt.wo().doubleValue()) && !(d1 <= this.qu.wo().doubleValue())) {
+                            if (!(d1 > this.range.wo().doubleValue()) && !(d1 <= this.minimumRange.wo().doubleValue())) {
                                 int gu2 = this.gu();
                                 if (gu2 != -1) {
                                     if (this.s(this.jE) && this.t(this.jE)) {
                                         int currentItem2 = aEg.thePlayer.inventory.currentItem;
-                                        if (this.qA.wo() && currentItem2 != gu2) {
+                                        if (this.autoSwitch.wo() && currentItem2 != gu2) {
                                             if (this.qI == -1) {
                                                 this.qI = currentItem2;
                                             }
@@ -172,7 +172,7 @@ public class ThrowableAura extends Module {
 
                                         ItemStack itemstack = aEg.thePlayer.getHeldItem();
                                         if (!this.g(itemstack)) {
-                                            if (this.qA.wo() && this.qI != -1) {
+                                            if (this.autoSwitch.wo() && this.qI != -1) {
                                                 aEg.thePlayer.inventory.currentItem = this.qI;
                                                 this.qI = -1;
                                             }
@@ -190,7 +190,7 @@ public class ThrowableAura extends Module {
                                                 killaura.jE = entitylivingbase;
                                             }
 
-                                            if (this.qA.wo() && this.qI != -1) {
+                                            if (this.autoSwitch.wo() && this.qI != -1) {
                                                 aEg.thePlayer.inventory.currentItem = this.qI;
                                                 this.qI = -1;
                                             }
@@ -214,20 +214,20 @@ public class ThrowableAura extends Module {
             return true;
         }
 
-        MovingObjectPosition movingobjectposition = aef.a(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), this.qt.wo().doubleValue(), 0.1F);
+        MovingObjectPosition movingobjectposition = aef.rayCast(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), this.range.wo().doubleValue(), 0.1F);
         return movingobjectposition != null && movingobjectposition.entityHit == var1;
     }
 
     public int gu() {
-        if (this.qE.wo()) {
-            int e2 = aik.e(Items.snowball);
+        if (this.snowballs.wo()) {
+            int e2 = aik.findItem(Items.snowball);
             if (e2 != -1) {
                 return e2;
             }
         }
 
-        if (this.qF.wo()) {
-            int e3 = aik.e(Items.egg);
+        if (this.eggs.wo()) {
+            int e3 = aik.findItem(Items.egg);
             if (e3 != -1) {
                 return e3;
             }
@@ -237,7 +237,7 @@ public class ThrowableAura extends Module {
     }
 
     public boolean g(ItemStack var1) {
-        return var1 == null ? false : this.qE.wo() && var1.getItem() == Items.snowball || this.qF.wo() && var1.getItem() == Items.egg;
+        return var1 == null ? false : this.snowballs.wo() && var1.getItem() == Items.snowball || this.eggs.wo() && var1.getItem() == Items.egg;
     }
 
     public boolean b(KillAura var1) {
@@ -246,7 +246,7 @@ public class ThrowableAura extends Module {
             return false;
         }
 
-        double d1 = var1.mh.wo().doubleValue();
+        double d1 = var1.range.wo().doubleValue();
         MovingObjectPosition movingobjectposition = aef.c(RotationComponent.fk, d1);
         return (MovingObjectPosition)movingobjectposition != null && movingobjectposition.entityHit == (EntityLivingBase)entitylivingbase
             ? true ^ true
@@ -257,30 +257,30 @@ public class ThrowableAura extends Module {
         return aEg.theWorld.loadedEntityList.stream().filter(EntityLivingBase.class::isInstance).map(EntityLivingBase.class::cast).filter(var1 -> {
             if (var1 != aEg.thePlayer && var1.isEntityAlive()) {
                 double d1 = aEg.thePlayer.getDistanceToEntity(var1);
-                if (d1 > this.qs.wo().doubleValue() || d1 <= this.qu.wo().doubleValue()) {
+                if (d1 > this.rotationRange.wo().doubleValue() || d1 <= this.minimumRange.wo().doubleValue()) {
                     return true ^ true;
                 } else if (!this.r(var1)) {
                     return false;
-                } else if (this.qG.wo() && !aEg.thePlayer.canEntityBeSeen(var1)) {
+                } else if (this.throughWalls.wo() && !aEg.thePlayer.canEntityBeSeen(var1)) {
                     return false;
-                } else if (this.qD.wo() && Client.a.x().a(var1)) {
+                } else if (this.antiBot.wo() && Client.a.x().a(var1)) {
                     return false;
                 } else if (var1 instanceof EntityPlayer) {
-                    return !this.qy.wo() ? false : !this.qx.wo() || !aih.D(var1);
+                    return !this.players.wo() ? false : !this.playerTeammates.wo() || !aih.sameTeam(var1);
                 }
-                return var1 instanceof IMob ? this.qz.wo() : false;
+                return var1 instanceof IMob ? this.mobs.wo() : false;
             }
             return false;
         }).min(Comparator.comparingDouble(var0 -> aEg.thePlayer.getDistanceSqToEntity(var0))).orElse(null);
     }
 
     public boolean r(EntityLivingBase var1) {
-        if (this.qw.wo().doubleValue() >= 360.0) {
+        if (this.fOV.wo().doubleValue() >= 360.0) {
             return true;
         }
 
         Vec3 vec3 = aEg.thePlayer.getLookVec().normalize();
         Vec3 vec31 = var1.getPositionVector().addVector(0.0, var1.getEyeHeight() * 0.5, 0.0).subtract(aEg.thePlayer.getPositionEyes(1.0F)).normalize();
-        return Math.toDegrees(Math.acos(MathHelper.clamp_double(vec3.dotProduct(vec31), -1.0, 1.0))) <= this.qw.wo().doubleValue() / 2.0;
+        return Math.toDegrees(Math.acos(MathHelper.clamp_double(vec3.dotProduct(vec31), -1.0, 1.0))) <= this.fOV.wo().doubleValue() / 2.0;
     }
 }

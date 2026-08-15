@@ -18,7 +18,7 @@ import net.minecraft.util.Vec3;
 public final class aef
 implements InstanceAccess {
     public static MovingObjectPosition c(Vector2f vector2f, double d2) {
-        return aef.a(vector2f, d2, 0.0f);
+        return aef.rayCast(vector2f, d2, 0.0f);
     }
 
     public static boolean t(Entity entity) {
@@ -28,7 +28,7 @@ implements InstanceAccess {
             return false;
         }
         if (entity.crB > 100.0 || !(entity instanceof EntityPlayer)) {
-            MovingObjectPosition movingObjectPosition = aef.a(vector2f, n2, 0.2f);
+            MovingObjectPosition movingObjectPosition = aef.rayCast(vector2f, n2, 0.2f);
             if (movingObjectPosition == null) return false;
             if (movingObjectPosition.typeOfHit != MovingObjectPosition.MovingObjectType.ENTITY) return false;
             return true;
@@ -37,7 +37,7 @@ implements InstanceAccess {
         while (d2 >= -1.0) {
             for (double d3 = 1.0; d3 >= -1.0; d3 -= 1.0) {
                 for (double d4 = 1.0; d4 >= -1.0; d4 -= 1.0) {
-                    MovingObjectPosition movingObjectPosition = aef.a(aiu.d(entity.Ty().v((entity.getEntityBoundingBox().maxX - entity.getEntityBoundingBox().minX) * d3, (entity.getEntityBoundingBox().maxY - entity.getEntityBoundingBox().minY) * d2, (entity.getEntityBoundingBox().maxZ - entity.getEntityBoundingBox().minZ) * d4)), n2, 0.2f);
+                    MovingObjectPosition movingObjectPosition = aef.rayCast(aiu.d(entity.Ty().v((entity.getEntityBoundingBox().maxX - entity.getEntityBoundingBox().minX) * d3, (entity.getEntityBoundingBox().maxY - entity.getEntityBoundingBox().minY) * d2, (entity.getEntityBoundingBox().maxZ - entity.getEntityBoundingBox().minZ) * d4)), n2, 0.2f);
                     if (movingObjectPosition == null || movingObjectPosition.typeOfHit != MovingObjectPosition.MovingObjectType.ENTITY) continue;
                     return true;
                 }
@@ -47,7 +47,7 @@ implements InstanceAccess {
         return false;
     }
 
-    public static MovingObjectPosition a(Vector2f vector2f, double d2, float f2) {
+    public static MovingObjectPosition rayCast(Vector2f vector2f, double d2, float f2) {
         return aef.a(vector2f, d2, f2, aef.aEg.thePlayer);
     }
 
@@ -113,7 +113,7 @@ implements InstanceAccess {
         return true;
     }
 
-    public static boolean a(EnumFacing enumFacing, BlockPos blockPos, boolean bl) {
+    public static boolean overBlock(EnumFacing enumFacing, BlockPos blockPos, boolean bl) {
         MovingObjectPosition movingObjectPosition = aef.aEg.objectMouseOver;
         if (movingObjectPosition == null) {
             return false;

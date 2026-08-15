@@ -63,26 +63,26 @@ import rip.vantage.commons.util.time.a;
 
 @ModuleInfo(aliases = {"module.player.manager.name", "Manager"}, description = "module.player.manager.description", category = Category.PLAYER)
 public class Manager extends Module {
-    private final BoundsNumberValue acL = new BoundsNumberValue("Delay", this, 100, 150, 0, 500, 50);
-    private final BooleanValue acM = new BooleanValue("Legit", this, false);
-    private final BooleanValue acN = new BooleanValue("Drop Custom Items", this, false);
-    private final BooleanValue acO = new BooleanValue("Use Custom Items", this, false);
-    private final BooleanValue acP = new BooleanValue("Prioritize Splash Potions", this, false);
-    private final NumberValue acQ = new NumberValue("Block Limit", this, 512, 0, 512, 4);
-    private final NumberValue acR = new NumberValue("Arrow Limit", this, 128, 0, 512, 4);
-    private final NumberValue acS = new NumberValue("Bucket Limit", this, 1, 0, 4, 1);
-    private final NumberValue acT = new NumberValue("Snowball/Egg Limit", this, 16, 0, 64, 1);
-    private final NumberValue acU = new NumberValue("Ender Pearl Limit", this, 16, 0, 64, 1);
-    private final NumberValue acV = new NumberValue("Sword Slot", this, 1, 0, 9, 1);
-    private final NumberValue acW = new NumberValue("Second Sword Slot", this, 2, 0, 9, 1);
-    private final NumberValue acX = new NumberValue("Pickaxe Slot", this, 2, 0, 9, 1);
-    private final NumberValue acY = new NumberValue("Axe Slot", this, 3, 0, 9, 1);
-    private final NumberValue acZ = new NumberValue("Shovel Slot", this, 4, 0, 9, 1);
-    private final BoundsNumberValue ada = new BoundsNumberValue("Block Slot", this, 5, 5, 0, 9, 1);
-    private final BoundsNumberValue adb = new BoundsNumberValue("Potion Slot", this, 6, 6, 0, 9, 1);
-    private final NumberValue adc = new NumberValue("Bow Slot", this, 7, 0, 9, 1);
+    private final BoundsNumberValue delay = new BoundsNumberValue("Delay", this, 100, 150, 0, 500, 50);
+    private final BooleanValue legit = new BooleanValue("Legit", this, false);
+    private final BooleanValue dropCustomItems = new BooleanValue("Drop Custom Items", this, false);
+    private final BooleanValue useCustomItems = new BooleanValue("Use Custom Items", this, false);
+    private final BooleanValue prioritizeSplashPotions = new BooleanValue("Prioritize Splash Potions", this, false);
+    private final NumberValue blockLimit = new NumberValue("Block Limit", this, 512, 0, 512, 4);
+    private final NumberValue arrowLimit = new NumberValue("Arrow Limit", this, 128, 0, 512, 4);
+    private final NumberValue bucketLimit = new NumberValue("Bucket Limit", this, 1, 0, 4, 1);
+    private final NumberValue snowballEggLimit = new NumberValue("Snowball/Egg Limit", this, 16, 0, 64, 1);
+    private final NumberValue enderPearlLimit = new NumberValue("Ender Pearl Limit", this, 16, 0, 64, 1);
+    private final NumberValue swordSlot = new NumberValue("Sword Slot", this, 1, 0, 9, 1);
+    private final NumberValue secondSwordSlot = new NumberValue("Second Sword Slot", this, 2, 0, 9, 1);
+    private final NumberValue pickaxeSlot = new NumberValue("Pickaxe Slot", this, 2, 0, 9, 1);
+    private final NumberValue axeSlot = new NumberValue("Axe Slot", this, 3, 0, 9, 1);
+    private final NumberValue shovelSlot = new NumberValue("Shovel Slot", this, 4, 0, 9, 1);
+    private final BoundsNumberValue blockSlot = new BoundsNumberValue("Block Slot", this, 5, 5, 0, 9, 1);
+    private final BoundsNumberValue potionSlot = new BoundsNumberValue("Potion Slot", this, 6, 6, 0, 9, 1);
+    private final NumberValue bowSlot = new NumberValue("Bow Slot", this, 7, 0, 9, 1);
     private final NumberValue add = new NumberValue("Rod Slot", this, 8, 0, 9, 1);
-    private final BoundsNumberValue ade = new BoundsNumberValue("Food Slot", this, 9, 9, 0, 9, 1);
+    private final BoundsNumberValue foodSlot = new BoundsNumberValue("Food Slot", this, 9, 9, 0, 9, 1);
     private static final int adf = 39;
     private static final int adg = 38;
     private static final int adh = 37;
@@ -105,8 +105,8 @@ public class Manager extends Module {
     private boolean adx = false;
     private int ady = 0;
     private int adz = 0;
-    @EventLink(cH = 2)
-    public final Listener<PreMotionEvent> adA = var1 -> {
+    @EventLink(value = 2)
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             if (aEg.thePlayer.ticksExisted > 40) {
                 if (this.s(4.5)) {
@@ -115,7 +115,7 @@ public class Manager extends Module {
                     this.adj--;
                 }
 
-                if (this.adu && aEg.currentScreen == null && this.ads && !bb.a(false, false, false, false, true) && (this.adj == 0 || this.adq >= 10)) {
+                if (this.adu && aEg.currentScreen == null && this.ads && !bb.bad(false, false, false, false, true) && (this.adj == 0 || this.adq >= 10)) {
                     ahj.l(new q(aEg.thePlayer.inventoryContainer.windowId));
                     this.jX();
                     this.adu = false;
@@ -130,7 +130,7 @@ public class Manager extends Module {
 
                 this.BV++;
                 this.adq++;
-                if (this.acM.wo() && !(aEg.currentScreen instanceof GuiInventory)) {
+                if (this.legit.wo() && !(aEg.currentScreen instanceof GuiInventory)) {
                     this.ado.aX();
                     this.u(false);
                 } else if (!this.ado.T(this.nextClick) || this.adp < 10 || this.BV < 10 || this.adq < 10 || this.e(Scaffold.class).isEnabled()) {
@@ -195,7 +195,7 @@ public class Manager extends Module {
                         }
 
                         return k;
-                    }, this.acQ.wo().intValue())) {
+                    }, this.blockLimit.wo().intValue())) {
                         this.jQ();
                     } else if (this.b(var1x -> {
                         int k = 0;
@@ -209,7 +209,7 @@ public class Manager extends Module {
                         }
 
                         return k;
-                    }, this.acR.wo().intValue())) {
+                    }, this.arrowLimit.wo().intValue())) {
                         this.jQ();
                     } else if (this.b(var1x -> {
                         int k = 0;
@@ -226,7 +226,7 @@ public class Manager extends Module {
                         }
 
                         return k;
-                    }, this.acS.wo().intValue())) {
+                    }, this.bucketLimit.wo().intValue())) {
                         this.jQ();
                     } else if (this.b(var1x -> {
                         int k = 0;
@@ -243,7 +243,7 @@ public class Manager extends Module {
                         }
 
                         return k;
-                    }, this.acT.wo().intValue())) {
+                    }, this.snowballEggLimit.wo().intValue())) {
                         this.jQ();
                     } else if (this.b(var1x -> {
                         int k = 0;
@@ -257,7 +257,7 @@ public class Manager extends Module {
                         }
 
                         return k;
-                    }, this.acU.wo().intValue())) {
+                    }, this.enderPearlLimit.wo().intValue())) {
                         this.jQ();
                     } else {
                         int i = this.jS();
@@ -279,7 +279,7 @@ public class Manager extends Module {
         }
     };
     @EventLink
-    public final Listener<AttackEvent> adB = var1 -> this.BV = 0;
+    public final Listener<AttackEvent> onAttack = var1 -> this.BV = 0;
     @EventLink
     public final Listener<en> adC = var1 -> {
         if (this.jY() && this.adv > 0) {
@@ -295,7 +295,7 @@ public class Manager extends Module {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> adD = var1 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         if (var1.dq() instanceof C08PacketPlayerBlockPlacement) {
             C08PacketPlayerBlockPlacement c08packetplayerblockplacement = (C08PacketPlayerBlockPlacement)var1.dq();
             if (c08packetplayerblockplacement.getStack() == null || c08packetplayerblockplacement.getStack().getItem() != Items.water_bucket) {
@@ -319,27 +319,27 @@ public class Manager extends Module {
     }
 
     public int jK() {
-        return this.acQ.wo().intValue();
+        return this.blockLimit.wo().intValue();
     }
 
     public int jL() {
-        return this.acR.wo().intValue();
+        return this.arrowLimit.wo().intValue();
     }
 
     public int jM() {
-        return this.acS.wo().intValue();
+        return this.bucketLimit.wo().intValue();
     }
 
     public int jN() {
-        return this.acT.wo().intValue();
+        return this.snowballEggLimit.wo().intValue();
     }
 
     public int jO() {
-        return this.acU.wo().intValue();
+        return this.enderPearlLimit.wo().intValue();
     }
 
     public boolean jP() {
-        return this.acN.wo();
+        return this.dropCustomItems.wo();
     }
 
     private boolean s(double var1) {
@@ -506,9 +506,9 @@ public class Manager extends Module {
         var1.sort((var1x, var2x) -> Float.compare(this.j(aEg.thePlayer.inventory.getStackInSlot(var2x)), this.j(aEg.thePlayer.inventory.getStackInSlot(var1x))));
         if (!var1.isEmpty()) {
             var2.adJ = (Integer)var1.get(0);
-            boolean flag = this.acV.wo().intValue() != 0
-                && this.acW.wo().intValue() != 0
-                && this.acW.wo().intValue() != this.acV.wo().intValue();
+            boolean flag = this.swordSlot.wo().intValue() != 0
+                && this.secondSwordSlot.wo().intValue() != 0
+                && this.secondSwordSlot.wo().intValue() != this.swordSlot.wo().intValue();
             byte b0 = 1;
             if (flag && var1.size() > 1) {
                 var2.adK = (Integer)var1.get(1);
@@ -546,24 +546,24 @@ public class Manager extends Module {
             return true;
         } else if (this.b(3, var1.adI)) {
             return true;
-        } else if (this.a(var1.adJ, this.acV)) {
+        } else if (this.a(var1.adJ, this.swordSlot)) {
             return true;
-        } else if (this.a(var1.adK, this.acW)) {
+        } else if (this.a(var1.adK, this.secondSwordSlot)) {
             return true;
-        } else if (!this.a(var1, this.acX) && this.a(var1.adL, this.acX)) {
+        } else if (!this.a(var1, this.pickaxeSlot) && this.a(var1.adL, this.pickaxeSlot)) {
             return true;
-        } else if (!this.a(var1, this.acY) && this.a(var1.adM, this.acY)) {
+        } else if (!this.a(var1, this.axeSlot) && this.a(var1.adM, this.axeSlot)) {
             return true;
-        } else if (!this.a(var1, this.acZ) && this.a(var1.adN, this.acZ)) {
+        } else if (!this.a(var1, this.shovelSlot) && this.a(var1.adN, this.shovelSlot)) {
             return true;
-        } else if (!this.a(var1, this.adc) && this.a(var1.adO, this.adc)) {
+        } else if (!this.a(var1, this.bowSlot) && this.a(var1.adO, this.bowSlot)) {
             return true;
         }
         int i = this.add.wo().intValue();
-        int j = this.adc.wo().intValue();
+        int j = this.bowSlot.wo().intValue();
         if (!this.a(var1, this.add) && i != 0 && (j == 0 || i != j || var1.adO == -1) && this.a(var1.adP, this.add)) {
             return true;
-        } else if (this.a(var1.adQ, this.ada)) {
+        } else if (this.a(var1.adQ, this.blockSlot)) {
             return true;
         } else if (this.b(var1)) {
             return true;
@@ -581,7 +581,7 @@ public class Manager extends Module {
             }
 
             return k;
-        }, this.acQ.wo().intValue())) {
+        }, this.blockLimit.wo().intValue())) {
             return true;
         } else if (this.a(var1x -> {
             int k = 0;
@@ -595,7 +595,7 @@ public class Manager extends Module {
             }
 
             return k;
-        }, this.acR.wo().intValue())) {
+        }, this.arrowLimit.wo().intValue())) {
             return true;
         } else if (this.a(var1x -> {
             int k = 0;
@@ -612,7 +612,7 @@ public class Manager extends Module {
             }
 
             return k;
-        }, this.acS.wo().intValue())) {
+        }, this.bucketLimit.wo().intValue())) {
             return true;
         } else if (this.a(var1x -> {
             int k = 0;
@@ -629,7 +629,7 @@ public class Manager extends Module {
             }
 
             return k;
-        }, this.acT.wo().intValue())) {
+        }, this.snowballEggLimit.wo().intValue())) {
             return true;
         } else if (this.a(var1x -> {
             int k = 0;
@@ -643,7 +643,7 @@ public class Manager extends Module {
             }
 
             return k;
-        }, this.acU.wo().intValue())) {
+        }, this.enderPearlLimit.wo().intValue())) {
             return true;
         } else {
             return this.jS() != -1
@@ -686,7 +686,7 @@ public class Manager extends Module {
 
     private boolean a(tr var1, NumberValue var2) {
         int i = var2.wo().intValue();
-        return i != 0 && (var1.adJ != -1 && this.acV.wo().intValue() == i || var1.adK != -1 && this.acW.wo().intValue() == i);
+        return i != 0 && (var1.adJ != -1 && this.swordSlot.wo().intValue() == i || var1.adK != -1 && this.secondSwordSlot.wo().intValue() == i);
     }
 
     private boolean a(List<ts> var1, BoundsNumberValue var2) {
@@ -715,8 +715,8 @@ public class Manager extends Module {
     }
 
     private boolean b(tr var1) {
-        int i = this.adb.wo().intValue();
-        int j = this.adb.wA().intValue();
+        int i = this.potionSlot.wo().intValue();
+        int j = this.potionSlot.wA().intValue();
         if (i != 0 && i <= j) {
             ArrayList arraylist = new ArrayList();
 
@@ -734,7 +734,7 @@ public class Manager extends Module {
             arraylist.sort((var1x, var2) -> {
                 boolean flag = ItemPotion.isSplash(((ts)var1x).aeh.getMetadata());
                 boolean flag1 = ItemPotion.isSplash(((ts)var2).aeh.getMetadata());
-                if (this.acP.wo()) {
+                if (this.prioritizeSplashPotions.wo()) {
                     if (flag && !flag1) {
                         return -1;
                     }
@@ -744,8 +744,8 @@ public class Manager extends Module {
                     }
                 }
 
-                int k1 = aih.ax(((ItemPotion)((ts)var1x).aeh.getItem()).getEffects(((ts)var1x).aeh).get(0).getPotionID());
-                return Integer.compare(aih.ax(((ItemPotion)((ts)var2).aeh.getItem()).getEffects(((ts)var2).aeh).get(0).getPotionID()), k1);
+                int k1 = aih.potionRanking(((ItemPotion)((ts)var1x).aeh.getItem()).getEffects(((ts)var1x).aeh).get(0).getPotionID());
+                return Integer.compare(aih.potionRanking(((ItemPotion)((ts)var2).aeh.getItem()).getEffects(((ts)var2).aeh).get(0).getPotionID()), k1);
             });
             int k = j - i + 1;
 
@@ -763,8 +763,8 @@ public class Manager extends Module {
     }
 
     private boolean c(tr var1) {
-        int i = this.ade.wo().intValue();
-        int j = this.ade.wA().intValue();
+        int i = this.foodSlot.wo().intValue();
+        int j = this.foodSlot.wA().intValue();
         if (i == 0 || i > j) {
             return false;
         }
@@ -865,38 +865,38 @@ public class Manager extends Module {
     }
 
     private boolean d(tr var1) {
-        if (this.b(var1.adJ, this.acV)) {
+        if (this.b(var1.adJ, this.swordSlot)) {
             return true;
         }
 
-        if (this.b(var1.adK, this.acW)) {
+        if (this.b(var1.adK, this.secondSwordSlot)) {
             return true;
         }
 
-        if (!this.a(var1, this.acX) && this.b(var1.adL, this.acX)) {
+        if (!this.a(var1, this.pickaxeSlot) && this.b(var1.adL, this.pickaxeSlot)) {
             return true;
         }
 
-        if (!this.a(var1, this.acY) && this.b(var1.adM, this.acY)) {
+        if (!this.a(var1, this.axeSlot) && this.b(var1.adM, this.axeSlot)) {
             return true;
         }
 
-        if (!this.a(var1, this.acZ) && this.b(var1.adN, this.acZ)) {
+        if (!this.a(var1, this.shovelSlot) && this.b(var1.adN, this.shovelSlot)) {
             return true;
         }
 
-        if (!this.a(var1, this.adc) && this.b(var1.adO, this.adc)) {
+        if (!this.a(var1, this.bowSlot) && this.b(var1.adO, this.bowSlot)) {
             return true;
         }
 
         int i = this.add.wo().intValue();
-        int j = this.adc.wo().intValue();
+        int j = this.bowSlot.wo().intValue();
         return !this.a(var1, this.add) && i != 0 && (j == 0 || i != j || var1.adO == -1) && this.b(var1.adP, this.add);
     }
 
     private boolean e(tr var1) {
-        int i = this.ada.wo().intValue();
-        int j = this.ada.wA().intValue();
+        int i = this.blockSlot.wo().intValue();
+        int j = this.blockSlot.wA().intValue();
         if (i != 0 && i <= j) {
             var1.adQ.sort(Comparator.comparingInt(var0 -> -var0.aeh.stackSize));
             int k = j - i + 1;
@@ -916,8 +916,8 @@ public class Manager extends Module {
     }
 
     private boolean f(tr var1) {
-        int i = this.adb.wo().intValue();
-        int j = this.adb.wA().intValue();
+        int i = this.potionSlot.wo().intValue();
+        int j = this.potionSlot.wA().intValue();
         if (i != 0 && i <= j) {
             ArrayList arraylist = new ArrayList();
 
@@ -931,7 +931,7 @@ public class Manager extends Module {
             arraylist.sort((var1x, var2) -> {
                 boolean flag = ItemPotion.isSplash(((ts)var1x).aeh.getMetadata());
                 boolean flag1 = ItemPotion.isSplash(((ts)var2).aeh.getMetadata());
-                if (this.acP.wo()) {
+                if (this.prioritizeSplashPotions.wo()) {
                     if (flag && !flag1) {
                         return -1;
                     }
@@ -941,8 +941,8 @@ public class Manager extends Module {
                     }
                 }
 
-                int k1 = aih.ax(((ItemPotion)((ts)var1x).aeh.getItem()).getEffects(((ts)var1x).aeh).get(0).getPotionID());
-                return Integer.compare(aih.ax(((ItemPotion)((ts)var2).aeh.getItem()).getEffects(((ts)var2).aeh).get(0).getPotionID()), k1);
+                int k1 = aih.potionRanking(((ItemPotion)((ts)var1x).aeh.getItem()).getEffects(((ts)var1x).aeh).get(0).getPotionID());
+                return Integer.compare(aih.potionRanking(((ItemPotion)((ts)var2).aeh.getItem()).getEffects(((ts)var2).aeh).get(0).getPotionID()), k1);
             });
             int k = j - i + 1;
 
@@ -961,8 +961,8 @@ public class Manager extends Module {
     }
 
     private boolean g(tr var1) {
-        int i = this.ade.wo().intValue();
-        int j = this.ade.wA().intValue();
+        int i = this.foodSlot.wo().intValue();
+        int j = this.foodSlot.wA().intValue();
         if (i != 0 && i <= j) {
             var1.adS
                 .sort(
@@ -1098,7 +1098,7 @@ public class Manager extends Module {
                 this.adx = true;
                 this.ady = 0;
             } else {
-                if (this.jU() && !this.ads && aEg.currentScreen == null && !bb.a(false, false, false, false, true)) {
+                if (this.jU() && !this.ads && aEg.currentScreen == null && !bb.bad(false, false, false, false, true)) {
                     ahj.l(new C16PacketClientStatus(EnumState.OPEN_INVENTORY_ACHIEVEMENT));
                     this.jX();
                     this.ads = true;
@@ -1112,7 +1112,7 @@ public class Manager extends Module {
     private void u(boolean var1) {
         if (this.adx) {
             if (this.ads) {
-                if (var1 && aEg.currentScreen == null && !bb.a(false, false, false, false, true)) {
+                if (var1 && aEg.currentScreen == null && !bb.bad(false, false, false, false, true)) {
                     this.ads = false;
                 } else {
                     this.adu = true;
@@ -1241,7 +1241,7 @@ public class Manager extends Module {
     }
 
     private void jZ() {
-        this.nextClick = Math.round(ahg.l(this.acL.wo().intValue(), this.acL.wA().intValue()));
+        this.nextClick = Math.round(ahg.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
         this.ado.aX();
         this.adr = true;
         this.adz = 0;
@@ -1252,7 +1252,7 @@ public class Manager extends Module {
             return false;
         }
 
-        boolean flag = var2 ? !this.acN.wo() : !this.acO.wo();
+        boolean flag = var2 ? !this.dropCustomItems.wo() : !this.useCustomItems.wo();
         return !bt.a(var1, flag);
     }
 

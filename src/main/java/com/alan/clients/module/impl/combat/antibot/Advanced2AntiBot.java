@@ -21,7 +21,7 @@ public final class Advanced2AntiBot extends Mode<AntiBot> {
     private final Set<String> rk = new HashSet<>();
     private final Map<String, Integer> rl = new HashMap<>();
     @EventLink
-    public final Listener<PreMotionEvent> rm = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.theWorld != null && aEg.thePlayer != null) {
             for (Object object : aEg.theWorld.playerEntities) {
                 if (object instanceof EntityPlayer entityplayer && entityplayer != aEg.thePlayer) {
@@ -77,7 +77,7 @@ public final class Advanced2AntiBot extends Mode<AntiBot> {
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> rn = var1x -> {
+    public final Listener<WorldChangeEvent> onWorldChange = var1x -> {
         Client.a.x().a(this);
         this.ri.clear();
         this.rj.clear();

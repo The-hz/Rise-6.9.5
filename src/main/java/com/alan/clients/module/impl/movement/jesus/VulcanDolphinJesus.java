@@ -12,7 +12,7 @@ import net.minecraft.potion.Potion;
 public class VulcanDolphinJesus extends Mode<Jesus> {
     private int Km = 0;
     @EventLink
-    public final Listener<PreMotionEvent> Kt = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.isInWater()) {
             this.Km = 0;
             MoveUtil.strafe(0.335 - Math.random() / 1000.0);
@@ -26,7 +26,7 @@ public class VulcanDolphinJesus extends Mode<Jesus> {
         this.Km++;
     };
     @EventLink
-    public final Listener<StrafeEvent> Ku = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.isInWater() && this.Km < 10) {
             aEg.thePlayer.motionY = 0.01 - Math.random() / 1000.0;
             this.Km++;

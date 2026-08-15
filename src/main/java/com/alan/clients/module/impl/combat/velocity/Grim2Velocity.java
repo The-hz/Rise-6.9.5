@@ -18,16 +18,16 @@ import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public final class Grim2Velocity extends Mode<Velocity> {
-    private final BooleanValue um = new BooleanValue("Full Rotation Fix", this, true);
-    private final BooleanValue un = new BooleanValue("Fake S08", this, true);
-    private final BooleanValue uo = new BooleanValue("Cancel Velocity", this, true);
+    private final BooleanValue fullRotationFix = new BooleanValue("Full Rotation Fix", this, true);
+    private final BooleanValue fakeS08 = new BooleanValue("Fake S08", this, true);
+    private final BooleanValue cancelVelocity = new BooleanValue("Cancel Velocity", this, true);
     private final NumberValue up = new NumberValue("Rotation Noise", this, 0.001, 0.0, 0.1, 0.001);
-    private final BooleanValue uq = new BooleanValue("Debug Log", this, false);
+    private final BooleanValue debugLog = new BooleanValue("Debug Log", this, false);
     private final Random ur = new Random();
     @EventLink
-    public final Listener<PacketSendEvent> us = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
-            if (this.um.wo() && var1x.dq() instanceof C03PacketPlayer c03packetplayer && c03packetplayer.afG()) {
+            if (this.fullRotationFix.wo() && var1x.dq() instanceof C03PacketPlayer c03packetplayer && c03packetplayer.afG()) {
                 float f = c03packetplayer.getYaw();
                 float f1 = c03packetplayer.getPitch();
                 if (this.h(f) || this.h(f1)) {
@@ -43,17 +43,17 @@ public final class Grim2Velocity extends Mode<Velocity> {
                         c03packetplayer1 = new C05PacketPlayerLook(f3, f4, c03packetplayer.isOnGround());
                     }
 
-                    var1x.e(c03packetplayer1);
+                    var1x.setPacket(c03packetplayer1);
                     this.debug("Full rotation bypass");
                 }
             }
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> ut = var1x -> {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
-            Packet packet = var1x.dq();
-            if (this.un.wo() && packet instanceof S08PacketPlayerPosLook s08packetplayerposlook) {
+            Packet packet = var1x.getPacket();
+            if (this.fakeS08.wo() && packet instanceof S08PacketPlayerPosLook s08packetplayerposlook) {
                 aEg.thePlayer.setPosition(s08packetplayerposlook.getX(), s08packetplayerposlook.getY(), s08packetplayerposlook.getZ());
                 aEg.thePlayer.motionX = 0.0;
                 aEg.thePlayer.motionY = 0.0;
@@ -62,7 +62,7 @@ public final class Grim2Velocity extends Mode<Velocity> {
                 this.debug("Fake S08");
             }
 
-            if (this.uo.wo()
+            if (this.cancelVelocity.wo()
                 && packet instanceof S12PacketEntityVelocity s12packetentityvelocity
                 && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                 var1x.setCancelled(true);
@@ -81,7 +81,7 @@ public final class Grim2Velocity extends Mode<Velocity> {
     }
 
     private void debug(String var1) {
-        if (this.uq.wo()) {
+        if (this.debugLog.wo()) {
             afi.b("§8[§cGrimVelocity2§8] §7" + var1);
         }
     }

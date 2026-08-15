@@ -10,7 +10,7 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 
 public final class NoPingCheckAntiBot extends Mode<AntiBot> {
     @EventLink
-    public final Listener<PreMotionEvent> rC = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         NetworkPlayerInfo networkplayerinfo = aEg.getNetHandler().getPlayerInfo(var1xx.getUniqueID());
         if (networkplayerinfo != null && networkplayerinfo.getResponseTime() < 0) {
             Client.a.x().b(this, var1xx);

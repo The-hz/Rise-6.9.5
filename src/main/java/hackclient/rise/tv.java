@@ -25,7 +25,7 @@ import net.minecraft.item.ItemTool;
 public final class tv
 extends Module {
     @EventLink
-    public final Listener<PreUpdateEvent> aez = preUpdateEvent -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = preUpdateEvent -> {
         Container container = tv.aEg.thePlayer.inventoryContainer;
         if (tv.aEg.currentScreen instanceof GuiInventory && tv.aEg.thePlayer.openContainer == container) {
             int n2 = -1;

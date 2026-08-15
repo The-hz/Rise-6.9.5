@@ -12,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class TabCheckAntiBot extends Mode<AntiBot> {
     @EventLink
-    public final Listener<PreMotionEvent> rw = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.theWorld != null && aEg.thePlayer != null) {
             for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
                 if (entityplayer != aEg.thePlayer) {
@@ -26,9 +26,9 @@ public class TabCheckAntiBot extends Mode<AntiBot> {
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> rx = var1x -> Client.a.x().a(this);
+    public final Listener<WorldChangeEvent> onWorldChange = var1x -> Client.a.x().a(this);
     @EventLink
-    public final Listener<TeleportEvent> ry = var1x -> Client.a.x().a(this);
+    public final Listener<TeleportEvent> onTeleport = var1x -> Client.a.x().a(this);
 
     public TabCheckAntiBot(String var1, AntiBot var2) {
         super(var1, var2);

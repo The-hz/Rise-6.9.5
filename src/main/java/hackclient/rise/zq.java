@@ -49,7 +49,7 @@ public class zq extends SecurityFeature {
     public String awy;
     public static Pattern awe;
     @EventLink
-    public Listener<WorldChangeEvent> awC;
+    public Listener<WorldChangeEvent> onWorldChange;
     public static Object Oo0o00000O00;
     public static Pattern awc;
     public static String avW;
@@ -63,11 +63,11 @@ public class zq extends SecurityFeature {
     public static Pattern awm;
     public Map<Integer, aai> awn = new HashMap<>();
     @EventLink
-    public Listener<ServerKickEvent> awD;
+    public Listener<ServerKickEvent> onServerKick;
     public static Pattern awa;
     public static Object[] fld_0oOOoOo0O00O_66;
     @EventLink
-    public Listener<PacketReceiveEvent> awB;
+    public Listener<PacketReceiveEvent> onPacketReceive;
     public static Pattern awl;
     public long aws;
     public Set<String> awp;
@@ -78,7 +78,7 @@ public class zq extends SecurityFeature {
     public static Object[] oO00O0OO0ooO;
     public static double avT;
     @EventLink
-    public Listener<TickEvent> awA;
+    public Listener<TickEvent> onTick;
     public static Object[] o0Oo000O0oO = new Object[540];
     public static aag[] awi;
     public Set<Integer> awo = new HashSet<>();
@@ -86,7 +86,7 @@ public class zq extends SecurityFeature {
     public static int avU;
     public static int avV;
     @EventLink
-    public Listener<ServerJoinEvent> awE;
+    public Listener<ServerJoinEvent> onServerJoin;
     public boolean awx;
     public static Pattern awk;
     public static Pattern[] avZ;
@@ -351,14 +351,14 @@ public class zq extends SecurityFeature {
         this.awu = -1;
         this.awy = "";
         this.awz = new ConcurrentHashMap<>();
-        this.awA = var1 -> {
+        this.onTick = var1 -> {
             this.nT();
             this.nW();
             this.nV();
         };
-        this.awB = var1 -> {
-            if (var1.dq() instanceof c) {
-                c c = (c)var1.dq();
+        this.onPacketReceive = var1 -> {
+            if (var1.getPacket() instanceof c) {
+                c c = (c)var1.getPacket();
                 String s = c.getChatComponent() != null ? c.getChatComponent().getUnformattedText() : "";
                 int flag = !this.a(c, s) ? 1 : 0;
                 String s1 = this.ax(s);
@@ -383,7 +383,7 @@ public class zq extends SecurityFeature {
                 }
             }
         };
-        this.awC = var1 -> {
+        this.onWorldChange = var1 -> {
             this.av("world_change");
             if (this.avH) {
                 this.avG = aEg != null ? aEg.theWorld : null;
@@ -392,8 +392,8 @@ public class zq extends SecurityFeature {
                 this.avG = null;
             }
         };
-        this.awD = var1 -> this.av("server_kick");
-        this.awE = var1 -> this.av("server_join");
+        this.onServerKick = var1 -> this.av("server_kick");
+        this.onServerJoin = var1 -> this.av("server_join");
     }
 
     public String aB(String var1) {
@@ -413,7 +413,7 @@ public class zq extends SecurityFeature {
                 int size2 = this.awo.size();
                 int empty = !this.awp.isEmpty() ? 1 : 0;
                 if (l >= 30000L && size2 < 5 && !this.awx && empty == 0) {
-                    Client.a.s().at(this.getReason());
+                    Client.a.getSecurityManager().at(this.getReason());
                 }
 
                 this.nU();
@@ -1217,7 +1217,7 @@ public class zq extends SecurityFeature {
     }
 
     @Override
-    public boolean nG() {
+    public boolean run() {
         return false;
     }
 

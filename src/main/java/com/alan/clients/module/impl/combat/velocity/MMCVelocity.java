@@ -17,18 +17,18 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 public final class MMCVelocity extends Mode<Velocity> {
     private boolean gD;
     @EventLink
-    public final Listener<PacketReceiveEvent> uH = var1x -> {
-        Packet packet = var1x.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1x -> {
+        Packet packet = var1x.getPacket();
         if (packet instanceof S12PacketEntityVelocity && ((S12PacketEntityVelocity)packet).getEntityID() == aEg.thePlayer.getEntityId()) {
             this.gD = true;
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> uI = var1x -> {
-        if (!this.wj().qQ.wo() || aEg.thePlayer.isSwingInProgress) {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
+        if (!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress) {
             bv.f(7.0);
             if (aEg.thePlayer.onGround && aEg.thePlayer.hurtTime > 0) {
-                bb.a(false, true, false, false, false);
+                bb.bad(false, true, false, false, false);
             }
 
             if (aEg.thePlayer.ae == 1) {
@@ -46,8 +46,8 @@ public final class MMCVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> uJ = var1x -> {
-        if (!this.wj().qQ.wo() || aEg.thePlayer.isSwingInProgress) {
+    public final Listener<MoveInputEvent> onMoveInput = var1x -> {
+        if (!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress) {
             ;
         }
     };

@@ -17,7 +17,7 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 public class pd extends Mode<NoSlow> {
     private boolean enabled;
     @EventLink
-    public final Listener<PreUpdateEvent> Nb = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.thePlayer.isUsingItem()) {
             SlotComponent slotcomponent = this.d(SlotComponent.class);
             if (SlotComponent.getItemStack().getItem() instanceof ItemFood) {
@@ -31,7 +31,7 @@ public class pd extends Mode<NoSlow> {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> Nc = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         Packet packet = var1x.dq();
         if (packet instanceof C07PacketPlayerDigging) {
             afi.b("digging " + ((C07PacketPlayerDigging)packet).getStatus() + " " + var1x.isCancelled());
@@ -52,7 +52,7 @@ public class pd extends Mode<NoSlow> {
         }
     };
     @EventLink
-    public final Listener<SlowDownEvent> Nd = var1x -> {
+    public final Listener<SlowDownEvent> onSlowDown = var1x -> {
         SlotComponent slotcomponent = this.d(SlotComponent.class);
         if (SlotComponent.getItemStack() != null) {
             slotcomponent = this.d(SlotComponent.class);

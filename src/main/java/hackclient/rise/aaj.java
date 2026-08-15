@@ -4,9 +4,9 @@ import lombok.Generated;
 
 public abstract class aaj {
     private final aak awL;
-    private final boolean awM;
+    private final boolean exemptDev;
 
-    public abstract boolean nX() throws java.lang.IllegalAccessException, java.lang.reflect.InvocationTargetException;
+    public abstract boolean check() throws java.lang.IllegalAccessException, java.lang.reflect.InvocationTargetException;
 
     @Generated
     public aak nY() {
@@ -15,12 +15,12 @@ public abstract class aaj {
 
     @Generated
     public boolean nZ() {
-        return this.awM;
+        return this.exemptDev;
     }
 
     @Generated
     public aaj(aak var1, boolean var2) {
         this.awL = var1;
-        this.awM = var2;
+        this.exemptDev = var2;
     }
 }

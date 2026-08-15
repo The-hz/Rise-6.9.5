@@ -12,8 +12,8 @@ import com.alan.clients.value.Mode;
 
 public class vl extends Mode<Scaffold> {
     private boolean El;
-    @EventLink(cH = 3)
-    private final Listener<PreUpdateEvent> ajH = var1x -> {
+    @EventLink(value = 3)
+    private final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.thePlayer.onGround && !aEg.gameSettings.keyBindJump.isKeyDown()) {
             aEg.timer.dzD = 1.0029F;
             MoveUtil.preventDiagonalSpeed();
@@ -26,8 +26,8 @@ public class vl extends Mode<Scaffold> {
             this.El = false;
         }
     };
-    @EventLink(cH = 3)
-    private final Listener<PreMotionEvent> ajI = var1x -> {
+    @EventLink(value = 3)
+    private final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.onGround) {
             var1x.setPosY(var1x.getPosY() + 1.0E-13);
         }
@@ -39,11 +39,11 @@ public class vl extends Mode<Scaffold> {
         }
     };
     @EventLink
-    public final Listener<JumpEvent> ajJ = var0 -> var0.setJumpMotion(0.42F);
-    @EventLink(cH = 4)
-    public final Listener<KeyboardInputEvent> ajK = var0 -> {
-        if (var0.cQ() == null && !var0.isCancelled()) {
-            if (var0.cO() == 57) {
+    public final Listener<JumpEvent> onJump = var0 -> var0.setJumpMotion(0.42F);
+    @EventLink(value = 4)
+    public final Listener<KeyboardInputEvent> onKeyboardInput = var0 -> {
+        if (var0.getGuiScreen() == null && !var0.isCancelled()) {
+            if (var0.getKeyCode() == 57) {
                 var0.setCancelled();
             }
         }

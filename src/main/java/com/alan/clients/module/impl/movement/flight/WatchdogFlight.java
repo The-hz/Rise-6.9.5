@@ -54,12 +54,12 @@ public class WatchdogFlight extends Mode<Flight> {
     double IV = 0.0;
     double IW = -1.0;
     private int dE;
-    @EventLink(cH = 1)
-    public final Listener<PacketReceiveEvent> IX = var1x -> {
+    @EventLink(value = 1)
+    public final Listener<PacketReceiveEvent> receive = var1x -> {
         if (!this.tt) {
             if (aEg.thePlayer != null && aEg.theWorld != null) {
-                if (var1x.dq() instanceof S12PacketEntityVelocity) {
-                    if (((S12PacketEntityVelocity)var1x.dq()).getEntityID() != aEg.thePlayer.getEntityId()) {
+                if (var1x.getPacket() instanceof S12PacketEntityVelocity) {
+                    if (((S12PacketEntityVelocity)var1x.getPacket()).getEntityID() != aEg.thePlayer.getEntityId()) {
                         return;
                     }
 
@@ -71,7 +71,7 @@ public class WatchdogFlight extends Mode<Flight> {
                     }
                 }
 
-                switch (var1x.dq()) {
+                switch (var1x.getPacket()) {
                     case S12PacketEntityVelocity s12packetentityvelocity:
                         if (!var1x.isCancelled() && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && !this.vq) {
                             this.IW = aEg.thePlayer.motionY;
@@ -98,7 +98,7 @@ public class WatchdogFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> IY = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (var1x.dq() instanceof C08PacketPlayerBlockPlacement
             && ((C08PacketPlayerBlockPlacement)var1x.dq()).getStack() != null
             && ((C08PacketPlayerBlockPlacement)var1x.dq()).getStack().getItem() instanceof ItemFireball) {
@@ -147,7 +147,7 @@ public class WatchdogFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> Ja = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (!this.dj && aEg.thePlayer.tR < 7) {
             aEg.thePlayer.crd = true;
         }
@@ -156,7 +156,7 @@ public class WatchdogFlight extends Mode<Flight> {
             aEg.gameSettings.keyBindJump.setPressed(false);
         }
 
-        if (this.e(LongJump.class).DE.wo() && !bk.bd() && aEg.thePlayer.onGround && this.dE >= 999) {
+        if (this.e(LongJump.class).autoDisable.wo() && !bk.bd() && aEg.thePlayer.onGround && this.dE >= 999) {
             ;
         }
 
@@ -263,8 +263,8 @@ public class WatchdogFlight extends Mode<Flight> {
             MoveUtil.useDiagonalSpeed();
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<PostStrafeEvent> Jb = var1x -> {
+    @EventLink(value = 4)
+    public final Listener<PostStrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.hurtTime > 0) {
             this.dE = 999;
         }
@@ -285,7 +285,7 @@ public class WatchdogFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<PostMotionEvent> Jc = var1x -> {};
+    public final Listener<PostMotionEvent> onPostMotion = var1x -> {};
 
     public WatchdogFlight(String var1, Flight var2) {
         super(var1, var2);

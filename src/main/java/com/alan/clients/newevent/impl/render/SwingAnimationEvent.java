@@ -12,7 +12,7 @@ public final class SwingAnimationEvent extends CancellableEvent {
     }
 
     @Generated
-    public void m(int var1) {
+    public void setAnimationEnd(int var1) {
         this.animationEnd = var1;
     }
 

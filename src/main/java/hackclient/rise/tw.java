@@ -50,15 +50,15 @@ import org.lwjgl.opengl.GL11;
 @ModuleInfo(aliases={"module.player.breaker.name"}, description="module.player.breaker.description", category=Category.PLAYER)
 public class tw
 extends Module {
-    public final ModeValue aeA = new ModeValue("Mode", this).add(new Mode[]{new SubMode("Through Walls")}).add(new Mode[]{new SubMode("Surroundings")}).setDefault("Through Walls");
-    private final NumberValue aeB = new NumberValue("Range", this, (Number)4, (Number)1, (Number)5, (Number)0.1);
-    public final BooleanValue aeC = new BooleanValue("Rotate", (Module)this, (Boolean)true);
-    public final BooleanValue aeD = new BooleanValue("Movement Correction", (Module)this, (Boolean)false);
-    public final BooleanValue aeE = new BooleanValue("Whitelist Friendly Bed", (Module)this, (Boolean)false);
-    public final BooleanValue aeF = new BooleanValue("Aura Check", (Module)this, (Boolean)false);
-    private final NumberValue aeG = new NumberValue("FastBreak", this, (Number)0, (Number)0, (Number)1, (Number)0.1);
-    private final NumberValue aeH = new NumberValue("FastBreak bed", this, (Number)0, (Number)0, (Number)1, (Number)0.1);
-    private final NumberValue aeI = new NumberValue("Air Multiplier", this, (Number)1, (Number)0, (Number)3, (Number)0.1);
+    public final ModeValue mode = new ModeValue("Mode", this).add(new Mode[]{new SubMode("Through Walls")}).add(new Mode[]{new SubMode("Surroundings")}).setDefault("Through Walls");
+    private final NumberValue range = new NumberValue("Range", this, (Number)4, (Number)1, (Number)5, (Number)0.1);
+    public final BooleanValue rotations = new BooleanValue("Rotate", (Module)this, (Boolean)true);
+    public final BooleanValue movementCorrection = new BooleanValue("Movement Correction", (Module)this, (Boolean)false);
+    public final BooleanValue whitelistFriendlyBed = new BooleanValue("Whitelist Friendly Bed", (Module)this, (Boolean)false);
+    public final BooleanValue auraCheck = new BooleanValue("Aura Check", (Module)this, (Boolean)false);
+    private final NumberValue fastBreak = new NumberValue("FastBreak", this, (Number)0, (Number)0, (Number)1, (Number)0.1);
+    private final NumberValue fastBreakBed = new NumberValue("FastBreak bed", this, (Number)0, (Number)0, (Number)1, (Number)0.1);
+    private final NumberValue airMultiplier = new NumberValue("Air Multiplier", this, (Number)1, (Number)0, (Number)3, (Number)0.1);
     private float aeJ;
     private float aeK;
     private int BV;
@@ -70,12 +70,12 @@ extends Module {
     private BlockPos aeP;
     private BlockPos aeQ;
     boolean aeR = false;
-    @EventLink(cH=4)
-    public final Listener<WorldChangeEvent> aeS = worldChangeEvent -> {
+    @EventLink(value=4)
+    public final Listener<WorldChangeEvent> onWorldChange = worldChangeEvent -> {
         this.aeL = true;
     };
-    @EventLink(cH=4)
-    public final Listener<TeleportEvent> aeT = teleportEvent -> {
+    @EventLink(value=4)
+    public final Listener<TeleportEvent> onTeleport = teleportEvent -> {
         if (tw.aEg.thePlayer.getDistance(teleportEvent.getPosX(), teleportEvent.getPosY(), teleportEvent.getPosZ()) > 30.0) {
             if (this.aeL) {
                 this.aeL = false;
@@ -84,8 +84,8 @@ extends Module {
             this.aeO = new Vec3(teleportEvent.getPosX(), teleportEvent.getPosY(), teleportEvent.getPosZ());
         }
     };
-    @EventLink(cH=4)
-    public final Listener<PreUpdateEvent> aeU = preUpdateEvent -> {
+    @EventLink(value=4)
+    public final Listener<PreUpdateEvent> onPreUpdate = preUpdateEvent -> {
         block27: {
             ArrayList<BlockPos> arrayList;
             Scaffold scaffold = this.e(Scaffold.class);
@@ -95,16 +95,16 @@ extends Module {
             EntityPlayerSP entityPlayerSP = tw.aEg.thePlayer;
             ++this.BV;
             --this.aaW;
-            if (this.aaW > 0 || ((Boolean)this.aeE.wo()).booleanValue() && this.aeO != null && entityPlayerSP.getDistanceSq(this.aeO.xCoord, this.aeO.yCoord, this.aeO.zCoord) < 1500.0) {
+            if (this.aaW > 0 || ((Boolean)this.whitelistFriendlyBed.wo()).booleanValue() && this.aeO != null && entityPlayerSP.getDistanceSq(this.aeO.xCoord, this.aeO.yCoord, this.aeO.zCoord) < 1500.0) {
                 return;
             }
             boolean bl = false;
             int n2 = 0;
             int n3 = 0;
             int n4 = 0;
-            int n5 = -((Number)this.aeB.wo()).intValue() + 1;
+            int n5 = -((Number)this.range.wo()).intValue() + 1;
             block0: while (true) {
-                if (n5 > ((Number)this.aeB.wo()).intValue() + 1) {
+                if (n5 > ((Number)this.range.wo()).intValue() + 1) {
                     arrayList = new ArrayList<BlockPos>();
                     if (bl) break;
                     if (this.aeR) {
@@ -113,14 +113,14 @@ extends Module {
                     this.aeR = false;
                     break block27;
                 }
-                int n6 = -((Number)this.aeB.wo()).intValue() + 1;
+                int n6 = -((Number)this.range.wo()).intValue() + 1;
                 while (true) {
-                    if (n6 <= ((Number)this.aeB.wo()).intValue() + 1) {
+                    if (n6 <= ((Number)this.range.wo()).intValue() + 1) {
                     } else {
                         ++n5;
                         continue block0;
                     }
-                    for (int i2 = -((Number)this.aeB.wo()).intValue() + 1; i2 <= ((Number)this.aeB.wo()).intValue() + 1; ++i2) {
+                    for (int i2 = -((Number)this.range.wo()).intValue() + 1; i2 <= ((Number)this.range.wo()).intValue() + 1; ++i2) {
                         Block block = aih.p(n5, n6, i2);
                         if (!(block instanceof BlockBed)) continue;
                         bl = true;
@@ -171,7 +171,7 @@ extends Module {
                 }
                 ++n8;
             }
-            if (n7 > 0 || !((Mode)this.aeA.wo()).getName().equals("Surroundings")) {
+            if (n7 > 0 || !((Mode)this.mode.wo()).getName().equals("Surroundings")) {
                 this.aeQ = this.aeP;
             } else {
                 float f2 = 1.0E8f;
@@ -189,23 +189,23 @@ extends Module {
                     this.aeQ = new BlockPos(entityPlayerSP.posX + (double)blockPos.getX(), entityPlayerSP.posY + (double)blockPos.getY(), entityPlayerSP.posZ + (double)blockPos.getZ());
                 }
             }
-            if (this.aeQ.j((Vec3i)entityPlayerSP.getPosition()) <= (double)((Number)this.aeB.wo()).floatValue()) {
+            if (this.aeQ.j((Vec3i)entityPlayerSP.getPosition()) <= (double)((Number)this.range.wo()).floatValue()) {
                 int n9;
-                if (((Boolean)this.aeC.wo()).booleanValue()) {
+                if (((Boolean)this.rotations.wo()).booleanValue()) {
                     this.m(this.aeQ);
                 }
-                if ((n9 = aik.r(this.aeQ)) != -1) {
+                if ((n9 = aik.findTool(this.aeQ)) != -1) {
                     ahj.l(new l(n9));
                 }
                 if (n9 != -1) {
-                    this.aeJ = aik.a((EntityPlayer)entityPlayerSP, (World)tw.aEg.theWorld, this.aeQ, n9);
+                    this.aeJ = aik.getPlayerRelativeBlockHardness((EntityPlayer)entityPlayerSP, (World)tw.aEg.theWorld, this.aeQ, n9);
                 } else {
                     WorldClient worldClient = tw.aEg.theWorld;
                     this.d(SlotComponent.class);
-                    this.aeJ = aik.a((EntityPlayer)entityPlayerSP, (World)worldClient, this.aeQ, SlotComponent.bQ());
+                    this.aeJ = aik.getPlayerRelativeBlockHardness((EntityPlayer)entityPlayerSP, (World)worldClient, this.aeQ, SlotComponent.bQ());
                 }
                 if (!tw.aEg.thePlayer.onGround) {
-                    this.aeJ *= ((Number)this.aeI.wo()).floatValue();
+                    this.aeJ *= ((Number)this.airMultiplier.wo()).floatValue();
                 }
                 if (this.aeK == 0.0f) {
                     ahj.l(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, this.aeQ, EnumFacing.DOWN));
@@ -213,7 +213,7 @@ extends Module {
                 tw.aEg.thePlayer.swingItem();
                 this.aeK += this.aeJ;
                 tw.aEg.theWorld.sendBlockBreakProgress(entityPlayerSP.getEntityId(), this.aeQ, (int)(this.aeK * 10.0f - 1.0f));
-                float f3 = aih.p(this.aeQ.getX(), this.aeQ.getY(), this.aeQ.getZ()) instanceof BlockBed ? 1.0f - ((Number)this.aeH.wo()).floatValue() : 1.0f - ((Number)this.aeG.wo()).floatValue();
+                float f3 = aih.p(this.aeQ.getX(), this.aeQ.getY(), this.aeQ.getZ()) instanceof BlockBed ? 1.0f - ((Number)this.fastBreakBed.wo()).floatValue() : 1.0f - ((Number)this.fastBreak.wo()).floatValue();
                 if (this.aeK >= f3) {
                     this.aeK = 0.0f;
                     ahj.l(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, this.aeQ, EnumFacing.DOWN));
@@ -228,8 +228,8 @@ extends Module {
         tw.aEg.playerController.curBlockDamageMP = this.aeK;
     };
     @EventLink
-    public final Listener<AttackEvent> aeV = attackEvent -> {
-        if (((Boolean)this.aeE.wo()).booleanValue()) {
+    public final Listener<AttackEvent> onAttack = attackEvent -> {
+        if (((Boolean)this.whitelistFriendlyBed.wo()).booleanValue()) {
             this.BV = 0;
         } else if (this.BV < 10) {
             ++this.BV;
@@ -241,16 +241,16 @@ extends Module {
         this.aeR = false;
     };
     @EventLink
-    public final Listener<Render2DEvent> aeW = render2DEvent -> {
+    public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         if (this.aeR) {
-            ScaledResolution scaledResolution = render2DEvent.dx();
+            ScaledResolution scaledResolution = render2DEvent.getScaledResolution();
             double d2 = (double)scaledResolution.getScaledHeight() * 0.8;
             RenderUtil.a(((float)scaledResolution.getScaledWidth() - tw.aEg.playerController.curBlockDamageMP * 100.0f) / 2.0f, d2, tw.aEg.playerController.curBlockDamageMP * 100.0f, 10.0, 4.0, this.rz().rA(), this.rz().rB(), true);
             RenderUtil.color(Color.WHITE);
         }
     };
     @EventLink
-    public final Listener<Render3DEvent> aeX = render3DEvent -> {
+    public final Listener<Render3DEvent> onRender3D = render3DEvent -> {
         if (!this.aeR) return;
         try {
             double d2 = this.aeQ.getX();
@@ -326,10 +326,10 @@ extends Module {
     }
 
     public void m(BlockPos blockPos) {
-        if (!((Boolean)this.aeC.wo()).booleanValue()) {
+        if (!((Boolean)this.rotations.wo()).booleanValue()) {
             return;
         }
-        RotationComponent.setRotations(aiu.s(blockPos), 10.0, (Boolean)this.aeD.wo() != false ? MovementFix.NORMAL : MovementFix.OFF);
+        RotationComponent.setRotations(aiu.s(blockPos), 10.0, (Boolean)this.movementCorrection.wo() != false ? MovementFix.NORMAL : MovementFix.OFF);
         tw.aEg.objectMouseOver.a(blockPos);
         tw.aEg.objectMouseOver.sideHit = EnumFacing.UP;
         tw.aEg.objectMouseOver.hitVec = new Vec3(Math.random(), 1.0, Math.random());

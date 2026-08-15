@@ -20,20 +20,20 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C0EPacketClickWindow;
 
 public class BufferAbuseBypass extends Mode<InventoryMove> {
-    private final NumberValue Jn = new NumberValue("Clicks", this, 3, 2, 10, 1);
-    private final NumberValue Jo = new NumberValue("Amount", this, 5, 1, 10, 1);
+    private final NumberValue clicksSetting = new NumberValue("Clicks", this, 3, 2, 10, 1);
+    private final NumberValue amount = new NumberValue("Amount", this, 5, 1, 10, 1);
     private final ConcurrentLinkedQueue<Packet<?>> Jp = new ConcurrentLinkedQueue<>();
     private boolean Jq;
     private boolean GU;
     private int Jr;
     @EventLink
-    public final Listener<PreMotionEvent> Js = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (this.ht()) {
             if (!this.GU) {
                 if (!this.Jq) {
                     this.Jq = true;
                 } else {
-                    for (int i = 0; i < this.Jo.wo().intValue(); i++) {
+                    for (int i = 0; i < this.amount.wo().intValue(); i++) {
                         ahj.m(new C0EPacketClickWindow());
                     }
 
@@ -48,19 +48,19 @@ public class BufferAbuseBypass extends Mode<InventoryMove> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> Jt = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (this.ht() && !this.GU) {
             var1x.setCancelled();
         }
     };
     @EventLink
-    public final Listener<JumpEvent> Ju = var1x -> {
+    public final Listener<JumpEvent> onJump = var1x -> {
         if (this.ht() && !this.GU) {
             var1x.setCancelled();
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> Jv = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         Packet packet = var1x.dq();
         if (packet instanceof C0EPacketClickWindow) {
             if (this.ht() && !this.GU) {
@@ -73,7 +73,7 @@ public class BufferAbuseBypass extends Mode<InventoryMove> {
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> Jw = var1x -> this.Jp.clear();
+    public final Listener<WorldChangeEvent> onWorldChange = var1x -> this.Jp.clear();
     private final KeyBinding[] Jx = new KeyBinding[]{
         aEg.gameSettings.keyBindForward,
         aEg.gameSettings.keyBindBack,
@@ -82,7 +82,7 @@ public class BufferAbuseBypass extends Mode<InventoryMove> {
         aEg.gameSettings.keyBindJump
     };
     @EventLink
-    public final Listener<PreUpdateEvent> Jy = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (!(aEg.currentScreen instanceof GuiChat) && aEg.currentScreen != this.getStandardClickGUI()) {
             for (KeyBinding keybinding : this.Jx) {
                 keybinding.setPressed(GameSettings.isKeyDown(keybinding));
@@ -95,6 +95,6 @@ public class BufferAbuseBypass extends Mode<InventoryMove> {
     }
 
     private boolean ht() {
-        return this.Jr > 0 && this.Jr % this.Jn.wo().intValue() == 0;
+        return this.Jr > 0 && this.Jr % this.clicksSetting.wo().intValue() == 0;
     }
 }

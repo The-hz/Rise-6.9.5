@@ -36,8 +36,8 @@ public class WatchdogAntiVoid extends Mode<AntiVoid> {
     private int ahW;
     private boolean bh;
     private final NumberValue distance = new NumberValue("Distance", this, 3, 0, 10, 0.1);
-    @EventLink(cH = 1)
-    public final Listener<MoveEvent> ahY = var1x -> {
+    @EventLink(value = 1)
+    public final Listener<MoveEvent> onMove = var1x -> {
         if (aEg.thePlayer.ticksExisted > 75) {
             if (!this.e(Flight.class).isEnabled()) {
                 boolean flag = false;

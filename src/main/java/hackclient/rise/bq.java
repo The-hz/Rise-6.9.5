@@ -25,11 +25,11 @@ public class bq extends Component {
     public List<Integer> fM;
     public int fb;
     @EventLink
-    public Listener<WorldChangeEvent> fT;
+    public Listener<WorldChangeEvent> onWorldChange;
     public String fc;
     public static float fE;
     @EventLink
-    public Listener<Render2DEvent> fS;
+    public Listener<Render2DEvent> onRender2D;
     public static int fC;
     public String eZ;
     public volatile boolean eF;
@@ -61,8 +61,8 @@ public class bq extends Component {
     public bq() {
         this.fM = new ArrayList<>();
         this.fR = var1 -> {};
-        this.fS = var1 -> {};
-        this.fT = var1 -> {};
+        this.onRender2D = var1 -> {};
+        this.onWorldChange = var1 -> {};
     }
 
     public byte[] a(List<byte[]> var1, List<Integer> var2) {

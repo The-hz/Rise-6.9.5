@@ -12,7 +12,7 @@ import com.alan.clients.value.impl.BooleanValue;
 public final class HurtColor extends Module {
     private final BooleanValue oldDamage = new BooleanValue("1.7 Damage Animation", this, true);
     @EventLink
-    public final Listener<HurtRenderEvent> onHurtRender = var1 -> var1.n(this.oldDamage.wo());
+    public final Listener<HurtRenderEvent> onHurtRender = var1 -> var1.setOldDamage(this.oldDamage.wo());
 
     public HurtColor() {
     }

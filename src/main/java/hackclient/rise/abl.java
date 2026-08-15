@@ -6,38 +6,38 @@ import com.alan.clients.value.Value;
 import lombok.Generated;
 
 public abstract class abl implements InstanceAccess {
-    public double jy = 14.0;
-    public Vector2d apP;
-    public Value<?> ayC;
+    public double height = 14.0;
+    public Vector2d position;
+    public Value<?> value;
     public int ayD = 255;
 
     public abl(Value<?> var1) {
-        this.ayC = var1;
+        this.value = var1;
     }
 
-    public abstract void a(Vector2d var1, int var2, int var3, float var4);
+    public abstract void draw(Vector2d var1, int var2, int var3, float var4);
 
     public abstract boolean e(int var1, int var2, int var3);
 
     public abstract void pz();
 
-    public abstract void ci();
+    public abstract void released();
 
-    public abstract void b(char var1, int var2);
+    public abstract void key(char var1, int var2);
 
     @Generated
-    public double da() {
-        return this.jy;
+    public double getHeight() {
+        return this.height;
     }
 
     @Generated
-    public Vector2d nr() {
-        return this.apP;
+    public Vector2d getPosition() {
+        return this.position;
     }
 
     @Generated
-    public Value<?> pS() {
-        return this.ayC;
+    public Value<?> getValue() {
+        return this.value;
     }
 
     @Generated

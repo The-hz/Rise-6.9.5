@@ -47,40 +47,40 @@ import org.lwjgl.opengl.GL11;
 public class Watchdog2LongJump extends Mode<LongJump>
 {
     public static int hQ;
-    public BooleanValue LT;
+    public BooleanValue flyMode;
     public boolean LY;
     @EventLink
-    public Listener<Render3DEvent> Mq;
+    public Listener<Render3DEvent> onRender3D;
     public static boolean LW;
     public static double Mi;
     public static boolean LX;
     @EventLink
-    public Listener<PreMotionEvent> Mo;
+    public Listener<PreMotionEvent> onPreMotion;
     public double Mh;
     @EventLink
-    public Listener<PreUpdateEvent> Mn;
+    public Listener<PreUpdateEvent> onPreUpdate;
     @EventLink
-    public Listener<MoveEvent> Ml;
+    public Listener<MoveEvent> onMove;
     public boolean Mc;
     @EventLink
-    public Listener<JumpEvent> Mp;
+    public Listener<JumpEvent> onJump;
     public double jy;
     public double Me;
-    public NumberValue LV;
+    public NumberValue delayBoostGoFurtherWithLessHe;
     public double Mf;
     @EventLink
-    public Listener<MoveInputEvent> Mk;
+    public Listener<MoveInputEvent> onMoveInput;
     public List<BlockPos> Mb;
     @EventLink
-    public Listener<StrafeEvent> Mm;
+    public Listener<StrafeEvent> onStrafe;
     public double Md;
     @EventLink
-    public Listener<PacketReceiveEvent> Mj;
+    public Listener<PacketReceiveEvent> onPacketReceive;
     public static int LZ;
     public static int Ma;
     public BooleanValue LU;
     public double Mg;
-    public BooleanValue LS;
+    public BooleanValue timer;
 
     @Override
     public void onDisable() {
@@ -128,14 +128,14 @@ public class Watchdog2LongJump extends Mode<LongJump>
 
     public Watchdog2LongJump(final String s, final LongJump longJump) {
         super(s, longJump);
-        this.LS = new BooleanValue("Timer", this, false);
-        this.LT = new BooleanValue("Fly Mode", this, false);
+        this.timer = new BooleanValue("Timer", this, false);
+        this.flyMode = new BooleanValue("Fly Mode", this, false);
         this.LU = new BooleanValue("Allow Damage Move", this, false);
-        this.LV = new NumberValue("Delay Boost (go further with less height)", this, 2, 0, 8, 1);
+        this.delayBoostGoFurtherWithLessHe = new NumberValue("Delay Boost (go further with less height)", this, 2, 0, 8, 1);
         this.Mb = new ArrayList<BlockPos>();
         this.Mc = false;
-        this.Mj = (packetReceiveEvent -> {
-            final Packet packet = packetReceiveEvent.dq();
+        this.onPacketReceive = (packetReceiveEvent -> {
+            final Packet packet = packetReceiveEvent.getPacket();
             Objects.requireNonNull(packet);
             switch (packet) {
                 case S12PacketEntityVelocity s12PacketEntityVelocity: {
@@ -165,22 +165,22 @@ public class Watchdog2LongJump extends Mode<LongJump>
             }
             return;
         });
-        this.Mk = (moveInputEvent -> {
+        this.onMoveInput = (moveInputEvent -> {
             if (Watchdog2LongJump.hQ < Watchdog2LongJump.Ma && Watchdog2LongJump.hQ > 7) {
                 moveInputEvent.setForward(100.0f);
                 moveInputEvent.setJump(false);
             }
             return;
         });
-        this.Ml = (moveEvent -> {
+        this.onMove = (moveEvent -> {
             if (Watchdog2LongJump.hQ < Watchdog2LongJump.Ma && (Watchdog2LongJump.hQ > 7 || !this.LU.wo())) {
                 moveEvent.setPosZ(0.0);
                 moveEvent.setPosX(0.0);
             }
             return;
         });
-        this.Mm = (p0 -> {
-            if ((Watchdog2LongJump.aEg.thePlayer.posY > this.jy || Watchdog2LongJump.aEg.thePlayer.tR < 14) && this.LT.wo()) {
+        this.onStrafe = (p0 -> {
+            if ((Watchdog2LongJump.aEg.thePlayer.posY > this.jy || Watchdog2LongJump.aEg.thePlayer.tR < 14) && this.flyMode.wo()) {
                 cl.cn();
             }
             final int tr = Watchdog2LongJump.aEg.thePlayer.tR;
@@ -205,13 +205,13 @@ public class Watchdog2LongJump extends Mode<LongJump>
             }
             return;
         });
-        this.Mn = (p0 -> {
+        this.onPreUpdate = (p0 -> {
             if (Watchdog2LongJump.hQ > 44) {
                 final int hq = Watchdog2LongJump.hQ;
             }
             return;
         });
-        this.Mo = (preMotionEvent -> {
+        this.onPreMotion = (preMotionEvent -> {
             final AxisAlignedBB axisAlignedBB = Watchdog2LongJump.aEg.thePlayer.getEntityBoundingBox();
             final WorldClient theWorld = Watchdog2LongJump.aEg.theWorld;
             double minX = axisAlignedBB.minX;
@@ -251,7 +251,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
                 this.Mg = Watchdog2LongJump.aEg.thePlayer.pl;
                 this.Mh = Watchdog2LongJump.aEg.thePlayer.rotationPitch;
             }
-            else if (Watchdog2LongJump.hQ > 8 && Watchdog2LongJump.hQ <= Watchdog2LongJump.LZ + this.LV.wo().intValue()) {
+            else if (Watchdog2LongJump.hQ > 8 && Watchdog2LongJump.hQ <= Watchdog2LongJump.LZ + this.delayBoostGoFurtherWithLessHe.wo().intValue()) {
                 Watchdog2LongJump.aEg.thePlayer.pl = (float)this.Mg;
             }
             preMotionEvent.setPitch((float)this.Mh);
@@ -259,13 +259,13 @@ public class Watchdog2LongJump extends Mode<LongJump>
             final int hq2 = Watchdog2LongJump.hQ;
             if ((Watchdog2LongJump.aEg.thePlayer.onGround && ((Watchdog2LongJump.hQ > 67 && !this.LY) || (Watchdog2LongJump.hQ > 40 && this.LY))) || Watchdog2LongJump.aEg.thePlayer.Zl == 1) {
                 MoveUtil.stop();
-                this.wj().setEnabled(false);
+                this.getParent().setEnabled(false);
             }
-            if (this.LT.wo()) {
+            if (this.flyMode.wo()) {
                 Watchdog2LongJump.aEg.thePlayer.cameraYaw = 0.1f;
             }
             ++Watchdog2LongJump.hQ;
-            if (Watchdog2LongJump.hQ < Watchdog2LongJump.LZ + this.LV.wo().intValue()) {
+            if (Watchdog2LongJump.hQ < Watchdog2LongJump.LZ + this.delayBoostGoFurtherWithLessHe.wo().intValue()) {
                 BlinkComponent.a(500, true, true, true, true);
             }
             if (Watchdog2LongJump.hQ < Watchdog2LongJump.LZ) {
@@ -304,7 +304,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
             else if (Watchdog2LongJump.hQ == Watchdog2LongJump.LZ) {
                 preMotionEvent.setPosY(preMotionEvent.getPosY() + 1.0E-13);
                 ahj.l(new C03PacketPlayer(true));
-                if (this.LS.wo()) {
+                if (this.timer.wo()) {
                     Watchdog2LongJump.aEg.timer.dzD = 0.5f;
                 }
                 Watchdog2LongJump.LW = true;
@@ -394,13 +394,13 @@ public class Watchdog2LongJump extends Mode<LongJump>
             }
             return;
         });
-        this.Mp = (jumpEvent -> {
+        this.onJump = (jumpEvent -> {
             if (Watchdog2LongJump.hQ > 45) {
                 jumpEvent.setJumpMotion(0.42f);
             }
             return;
         });
-        this.Mq = (p0 -> {
+        this.onRender3D = (p0 -> {
             if (!this.Mc) {
                 this.hy();
             }
@@ -445,7 +445,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
         }
         else {
             afi.b("start on the ground", new Object[0]);
-            this.wj().setEnabled(false);
+            this.getParent().setEnabled(false);
         }
         this.Md = Watchdog2LongJump.aEg.thePlayer.posX;
         this.Me = Watchdog2LongJump.aEg.thePlayer.posY;

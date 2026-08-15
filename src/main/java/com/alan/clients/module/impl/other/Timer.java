@@ -40,23 +40,23 @@ public final class Timer extends Module {
     private int Zl;
     private long Ss;
     private final BoundsNumberValue timer = new BoundsNumberValue("Timer", this, 1, 2, 0.1, 20, 0.05);
-    public final BooleanValue Zn = new BooleanValue("Watchdog", this, false);
-    public final BooleanValue Zo = new BooleanValue("Compensate Low Timer", this, false);
-    public final NumberValue Zp = new NumberValue("Compensate Speed", this, 1.5, 1.0, 5.0, 0.05, () -> !this.Zo.wo());
-    public final NumberValue Zq = new NumberValue("Balance Multiplier", this, 1, 0.1, 10.0, 0.05, () -> !this.Zo.wo());
+    public final BooleanValue watchdog = new BooleanValue("Watchdog", this, false);
+    public final BooleanValue compensateLowTimer = new BooleanValue("Compensate Low Timer", this, false);
+    public final NumberValue compensateSpeed = new NumberValue("Compensate Speed", this, 1.5, 1.0, 5.0, 0.05, () -> !this.compensateLowTimer.wo());
+    public final NumberValue balanceMultiplier = new NumberValue("Balance Multiplier", this, 1, 0.1, 10.0, 0.05, () -> !this.compensateLowTimer.wo());
     private double yC = 0.0;
     private boolean Zr;
-    @EventLink(cH = 2)
-    public final Listener<PreMotionEvent> Zs = var1 -> {
-        if (!this.Zn.wo()) {
+    @EventLink(value = 2)
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
+        if (!this.watchdog.wo()) {
             if (!this.Zr) {
                 aEg.timer.dzD = (float)ahg.l(this.timer.wo().floatValue(), this.timer.wA().floatValue());
             }
 
-            if (this.Zo.wo() && this.Zr) {
-                aEg.timer.dzD = this.Zp.wo().floatValue();
+            if (this.compensateLowTimer.wo() && this.Zr) {
+                aEg.timer.dzD = this.compensateSpeed.wo().floatValue();
             }
-        } else if (this.Zn.wo()) {
+        } else if (this.watchdog.wo()) {
             var1.setOnGround(true);
             if (this.HJ && System.currentTimeMillis() > this.Ss) {
                 aEg.thePlayer.motionX *= 0.0;
@@ -66,16 +66,16 @@ public final class Timer extends Module {
             }
         }
     };
-    @EventLink(cH = 3)
-    public final Listener<PreUpdateEvent> Zt = var1 -> {
-        if (this.Zn.wo()) {
+    @EventLink(value = 3)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
+        if (this.watchdog.wo()) {
             BlinkComponent.a(9999999, false, false, false, false, true);
             aEg.thePlayer.crd = true;
         }
     };
     @EventLink
-    public final Listener<TickEvent> Zu = var1 -> {
-        if (this.Zn.wo() && !this.HJ) {
+    public final Listener<TickEvent> onTick = var1 -> {
+        if (this.watchdog.wo() && !this.HJ) {
             if (aEg.thePlayer.onGround) {
                 this.Zl++;
                 double d0 = aEg.thePlayer.posX;
@@ -86,31 +86,31 @@ public final class Timer extends Module {
                 ahj.l(new C04PacketPlayerPosition(d0, d1 + 0.07, d2, true));
                 ahj.l(new C04PacketPlayerPosition(d0, d1, d2, true));
                 aEg.timer.dzD = this.timer.wo().floatValue();
-            } else if (this.Zn.wo()) {
+            } else if (this.watchdog.wo()) {
             }
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> Zv = var1 -> {
-        if (this.Zn.wo() && aEg.thePlayer.onGround && this.Zl == 0) {
+    public final Listener<MoveInputEvent> onMoveInput = var1 -> {
+        if (this.watchdog.wo() && aEg.thePlayer.onGround && this.Zl == 0) {
             MoveUtil.stop();
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> Zw = var1 -> {
-        if (this.Zn.wo() && this.HJ) {
+    public final Listener<StrafeEvent> onStrafe = var1 -> {
+        if (this.watchdog.wo() && this.HJ) {
             MoveUtil.stop();
             aEg.timer.dzD = 1.0F;
             if (aEg.thePlayer.onGround) {
-                Zk.forEach(var0 -> ahj.n(var0.dq()));
+                Zk.forEach(var0 -> ahj.n(var0.getPacket()));
                 Zk.clear();
                 BlinkComponent.dispatch();
             }
         }
     };
-    @EventLink(cH = 0)
-    public final Listener<PacketSendEvent> Zx = var1 -> {
-        if (this.Zo.wo()) {
+    @EventLink(value = 0)
+    public final Listener<PacketSendEvent> onPacketSend = var1 -> {
+        if (this.compensateLowTimer.wo()) {
             Packet packet = var1.dq();
             if (packet instanceof C03PacketPlayer && (!var1.isCancelled() || bc.cR)) {
                 if (this.Zr) {
@@ -123,12 +123,12 @@ public final class Timer extends Module {
                         }
                     }
                 } else if (this.ig()) {
-                    this.yC = this.yC + this.Zq.wo().doubleValue();
+                    this.yC = this.yC + this.balanceMultiplier.wo().doubleValue();
                 }
             }
         }
 
-        if (this.Zn.wo() && aEg.thePlayer.onGround) {
+        if (this.watchdog.wo() && aEg.thePlayer.onGround) {
             Packet packet1 = var1.dq();
             if (packet1 instanceof S32PacketConfirmTransaction) {
                 Zk.add(new ahk(packet1));
@@ -137,9 +137,9 @@ public final class Timer extends Module {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> Zy = var1 -> {
-        if (this.Zn.wo()) {
-            Packet packet = var1.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
+        if (this.watchdog.wo()) {
+            Packet packet = var1.getPacket();
             if (packet instanceof S12PacketEntityVelocity) {
                 var1.setCancelled();
             }
@@ -149,20 +149,20 @@ public final class Timer extends Module {
             }
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<TeleportEvent> Zz = var0 -> {};
+    @EventLink(value = 4)
+    public final Listener<TeleportEvent> onTeleport = var0 -> {};
     @EventLink
-    public final Listener<JumpEvent> ZA = var1 -> {
-        if (this.Zn.wo()) {
+    public final Listener<JumpEvent> onJump = var1 -> {
+        if (this.watchdog.wo()) {
             var1.setCancelled();
         }
     };
     @EventLink
-    public final Listener<KeyboardInputEvent> ZB = var1 -> {
-        if (this.Zo.wo() && var1.cO() == this.e(Timer.class).getKey() && this.isEnabled()) {
+    public final Listener<KeyboardInputEvent> onKeyboardInput = var1 -> {
+        if (this.compensateLowTimer.wo() && var1.getKeyCode() == this.e(Timer.class).getKey() && this.isEnabled()) {
             if (!this.Zr && this.yC > 0.0) {
                 this.Zr = true;
-                aEg.timer.dzD = this.Zp.wo().floatValue();
+                aEg.timer.dzD = this.compensateSpeed.wo().floatValue();
                 var1.setCancelled();
                 return;
             }
@@ -173,14 +173,14 @@ public final class Timer extends Module {
             }
         }
 
-        if (this.Zn.wo() && var1.cO() == this.e(Timer.class).getKey() && !this.HJ) {
+        if (this.watchdog.wo() && var1.getKeyCode() == this.e(Timer.class).getKey() && !this.HJ) {
             this.Ss = System.currentTimeMillis() + 200L;
             this.HJ = true;
             afi.b("sent");
             var1.setCancelled();
         }
 
-        if (this.Zn.wo() && this.HJ) {
+        if (this.watchdog.wo() && this.HJ) {
             var1.setCancelled();
         }
     };
@@ -192,7 +192,7 @@ public final class Timer extends Module {
     public void onEnable() {
         this.yC = 0.0;
         this.Zr = false;
-        if (this.Zn.wo()) {
+        if (this.watchdog.wo()) {
             aEg.thePlayer.stepHeight = 0.0F;
             this.HJ = false;
             this.Zl = 0;
@@ -206,7 +206,7 @@ public final class Timer extends Module {
             aEg.timer.dzD = 1.0F;
         }
 
-        if (this.Zn.wo()) {
+        if (this.watchdog.wo()) {
             aEg.thePlayer.stepHeight = 0.6F;
             aEg.thePlayer.motionX *= 0.0;
             aEg.thePlayer.motionZ *= 0.0;

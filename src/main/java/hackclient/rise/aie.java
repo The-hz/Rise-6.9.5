@@ -48,7 +48,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 
 public final class aie {
-    private static final List<Item> aOo = Arrays.asList(Items.fishing_rod, Items.water_bucket, Items.bucket, Items.arrow, Items.bow, Items.snowball, Items.egg, Items.ender_pearl, Items.clay_ball, Items.fire_charge);
+    private static final List<Item> WHITELISTED_ITEMS = Arrays.asList(Items.fishing_rod, Items.water_bucket, Items.bucket, Items.arrow, Items.bow, Items.snowball, Items.egg, Items.ender_pearl, Items.clay_ball, Items.fire_charge);
 
     public static boolean u(ItemStack itemStack) {
         Item item = itemStack.getItem();
@@ -71,7 +71,7 @@ public final class aie {
         if (item instanceof ItemArmor) return true;
         if (item instanceof ItemFood) return true;
         if (item instanceof ItemPotion) return true;
-        if (!aOo.contains(item)) return false;
+        if (!WHITELISTED_ITEMS.contains(item)) return false;
         return true;
     }
 
@@ -243,13 +243,13 @@ public final class aie {
         return 0;
     }
 
-    public static ItemStack F(String string, String string2) {
+    public static ItemStack getCustomSkull(String string, String string2) {
         String string3 = String.format("{\"textures\":{\"SKIN\":{\"url\":\"%s\"}}}", string2);
         String string4 = Base64.getEncoder().encodeToString(string3.getBytes());
-        return aie.cf(String.format("skull 1 3 {SkullOwner:{Id:\"%s\",Name:\"%s\",Properties:{textures:[{Value:\"%s\"}]}}}", UUID.randomUUID(), string, string4));
+        return aie.getItemStack(String.format("skull 1 3 {SkullOwner:{Id:\"%s\",Name:\"%s\",Properties:{textures:[{Value:\"%s\"}]}}}", UUID.randomUUID(), string, string4));
     }
 
-    public static ItemStack cf(String string) {
+    public static ItemStack getItemStack(String string) {
         try {
             String string2 = string.replace('&', '\u00a7');
             int n2 = 1;
@@ -278,7 +278,7 @@ public final class aie {
         }
     }
 
-    public String G(String string, String string2) {
+    public String getCustomSkullNBT(String string, String string2) {
         String string3 = String.format("{\"textures\":{\"SKIN\":{\"url\":\"%s\"}}}", string2);
         String string4 = Base64.getEncoder().encodeToString(string3.getBytes());
         return String.format("SkullOwner:{Id:\"%s\",Name:\"%s\",Properties:{textures:[{Value:\"%s\"}]}}", UUID.randomUUID(), string, string4);

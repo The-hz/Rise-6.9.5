@@ -13,7 +13,7 @@ import com.alan.clients.value.impl.NumberValue;
 import rip.vantage.commons.util.time.a;
 
 public final class WatchdogCriticals extends Mode<Criticals> {
-    private final NumberValue rT = new NumberValue("Delay", this, 500, 0, 1000, 50);
+    private final NumberValue delay = new NumberValue("Delay", this, 500, 0, 1000, 50);
     private final double[] rU = new double[]{1.0E-6, MoveUtil.predictedMotion(0.03125, 1)};
     private final a rV = new a();
     public static boolean gD;
@@ -22,9 +22,9 @@ public final class WatchdogCriticals extends Mode<Criticals> {
     private int rW;
     private int rX;
     @EventLink
-    public final Listener<StrafeEvent> rY = var0 -> {};
+    public final Listener<StrafeEvent> onStrafe = var0 -> {};
     @EventLink
-    public final Listener<PreMotionEvent> rZ = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (aEg.thePlayer.onGround && pw) {
             aEg.thePlayer.crd = true;
             aEg.thePlayer.stepHeight = 0.1F;
@@ -71,15 +71,15 @@ public final class WatchdogCriticals extends Mode<Criticals> {
         }
     };
     @EventLink
-    public final Listener<AttackEvent> sa = var1x -> {
-        if (aEg.thePlayer.onGround && !aEg.thePlayer.isOnLadder() && this.rV.T(this.rT.wo().longValue())) {
+    public final Listener<AttackEvent> onAttack = var1x -> {
+        if (aEg.thePlayer.onGround && !aEg.thePlayer.isOnLadder() && this.rV.T(this.delay.wo().longValue())) {
             aEg.thePlayer.onCriticalHit(var1x.dc());
             this.rV.aX();
             pw = true;
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<JumpEvent> sb = var1x -> {
+    @EventLink(value = 4)
+    public final Listener<JumpEvent> onJump = var1x -> {
         if (this.hV <= 4 && this.rW <= 4 && aEg.thePlayer.cqL > 2) {
             var1x.setCancelled();
         }

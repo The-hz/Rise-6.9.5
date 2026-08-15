@@ -6,18 +6,18 @@ import lombok.Generated;
 
 public class adm extends adh {
     private agc lq = gb.MAIN.a(24, gd.BOLD);
-    public String gK;
+    public String name;
     private float aCh = 5.0F;
     private int aCi = 32;
 
     public adm(double var1, double var3, double var5, double var7, Runnable var9, String var10) {
         super(var1, var3, var5, var7, var9);
-        this.gK = var10;
+        this.name = var10;
     }
 
     @Override
-    public void c(int var1, int var2, float var3) {
-        super.c(var1, var2, var3);
+    public void draw(int var1, int var2, float var3) {
+        super.draw(var1, var2, var3);
         double d0 = this.getY();
         Color color = aip.d(Color.BLACK, 150);
         Color color1 = aip.d(aBT, (int)(150.0 + this.oL().sG()));
@@ -26,7 +26,7 @@ public class adm extends adh {
         this.b(gg.REGULAR).c(() -> {
             RenderUtil.roundedRectangle(this.getX(), d0, this.oM(), this.da(), this.aCh, aip.d(aBV, (int)this.oL().sG() - 15));
             RenderUtil.roundedOutlineGradientRectangle(this.getX(), d0, this.oM(), this.da(), this.aCh, 1.0, aip.d(aBP, this.aCi), aip.d(aBO, this.aCi));
-            this.lq.c(this.gK, (float)(this.getX() + this.oM() / 2.0), (float)(d0 + this.da() / 2.0 - 4.0), color1.getRGB());
+            this.lq.c(this.name, (float)(this.getX() + this.oM() / 2.0), (float)(d0 + this.da() / 2.0 - 4.0), color1.getRGB());
         });
     }
 

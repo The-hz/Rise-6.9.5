@@ -47,7 +47,7 @@ public class VerusSpeed extends Mode<Speed> {
         .add(new SubMode("LowHop"))
         .setDefault("Hop");
     @EventLink
-    public final Listener<PreMotionEvent> QQ = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (MoveUtil.isMoving()) {
             switch (this.mode.wo().getName()) {
                 case "Fast":
@@ -90,7 +90,7 @@ public class VerusSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> QR = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         switch (this.mode.wo().getName()) {
             case "Hop":
                 double d0 = MoveUtil.getAllowedHorizontalDistance();
@@ -152,7 +152,7 @@ public class VerusSpeed extends Mode<Speed> {
 
             if (!aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.tR < 2) {
                 int i = aik.vx();
-                if (!bb.a(false, true, false, false, false) && !this.e(Scaffold.class).isEnabled()) {
+                if (!bb.bad(false, true, false, false, false) && !this.e(Scaffold.class).isEnabled()) {
                     Random random = new Random();
                     float f2 = random.nextFloat();
                     float f3 = random.nextFloat();
@@ -178,12 +178,12 @@ public class VerusSpeed extends Mode<Speed> {
                     MoveUtil.strafe(0.4645);
                 }
 
-                bb.a(false, true, true, false, false);
-                if (!bb.a(false, true, false, false, false) & this.cJ) {
+                bb.bad(false, true, true, false, false);
+                if (!bb.bad(false, true, false, false, false) & this.cJ) {
                     this.QN = aEg.thePlayer.ticksExisted + 2;
                 }
 
-                if (!bb.a(false, true, false, false, false) & aEg.thePlayer.ticksExisted % 10 == 1) {
+                if (!bb.bad(false, true, false, false, false) & aEg.thePlayer.ticksExisted % 10 == 1) {
                     this.QN = aEg.thePlayer.ticksExisted + 2;
                 }
 
@@ -210,7 +210,7 @@ public class VerusSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<MoveEvent> QS = var1x -> {
+    public final Listener<MoveEvent> onMove = var1x -> {
         if (MoveUtil.isMoving()) {
             if (this.mode.wo().getName().equals("LowHop")) {
                 if (aEg.thePlayer.onGround) {
@@ -231,19 +231,19 @@ public class VerusSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> QT = var1x -> {
+    public final Listener<MoveInputEvent> onMoveInput = var1x -> {
         var1x.setJump(false);
         var1x.setSneak(false);
         this.jp = var1x.getForward();
         this.jq = var1x.getStrafe();
     };
     @EventLink
-    public final Listener<AttackEvent> QU = var1x -> {
+    public final Listener<AttackEvent> onAttack = var1x -> {
         this.cJ = true;
         this.QO = 10;
     };
-    @EventLink(cH = 1)
-    Listener<PreUpdateEvent> dq = var1x -> {
+    @EventLink(value = 1)
+    Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (this.mode.wo().getName().equals("Hop")) {
             RotationComponent.setRotations(
                 new Vector2f((float)Math.toDegrees(MoveUtil.g(this.jp, this.jq)), aEg.thePlayer.rotationPitch), 2.0, MovementFix.BACKWARDS_SPRINT
@@ -258,7 +258,7 @@ public class VerusSpeed extends Mode<Speed> {
     @Override
     public void onEnable() {
         this.GQ = true;
-        if (this.mode.wo().getName().equals("yPort") && !bb.a(true, true, true, true, true) && !this.e(Scaffold.class).isEnabled()) {
+        if (this.mode.wo().getName().equals("yPort") && !bb.bad(true, true, true, true, true) && !this.e(Scaffold.class).isEnabled()) {
             Random random = new Random();
             float f = random.nextFloat();
             float f1 = random.nextFloat();
@@ -280,7 +280,7 @@ public class VerusSpeed extends Mode<Speed> {
 
     @Override
     public void onDisable() {
-        if (this.mode.wo().getName().equals("yPort") && !bb.a(true, true, true, true, true) && !this.e(Scaffold.class).isEnabled()) {
+        if (this.mode.wo().getName().equals("yPort") && !bb.bad(true, true, true, true, true) && !this.e(Scaffold.class).isEnabled()) {
             Random random = new Random();
             float f = random.nextFloat();
             float f1 = random.nextFloat();

@@ -21,9 +21,9 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.BlockPos;
 
 public class WatchdogPacketNoFall extends Mode<NoFall> {
-    public final BooleanValue aiV = new BooleanValue("Prediction", this, false);
+    public final BooleanValue prediction = new BooleanValue("Prediction", this, false);
     @EventLink
-    public final Listener<PreMotionEvent> aiW = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         boolean flag = false;
 
         for (int i = 0; i <= 200; i++) {
@@ -41,9 +41,9 @@ public class WatchdogPacketNoFall extends Mode<NoFall> {
             && !flag
             && !this.e(Scaffold.class).isEnabled()
             && !this.e(LongJump.class).isEnabled()
-            && (!this.e(Flight.class).isEnabled() || !this.aiV.wo())
-            && (!this.e(Speed.class).isEnabled() || !this.aiV.wo())) {
-            if (!this.e(Disabler.class).wu.wo() || !this.e(Disabler.class).isEnabled()) {
+            && (!this.e(Flight.class).isEnabled() || !this.prediction.wo())
+            && (!this.e(Speed.class).isEnabled() || !this.prediction.wo())) {
+            if (!this.e(Disabler.class).watchdogFly.wo() || !this.e(Disabler.class).isEnabled()) {
                 var1x.setPosY(var1x.getPosY() + 1.0E-13);
             }
 
@@ -52,10 +52,10 @@ public class WatchdogPacketNoFall extends Mode<NoFall> {
             bd.cY = 0.0F;
         } else if (bd.cY > 3.1 + aEg.thePlayer.motionY
             && !this.e(Scaffold.class).isEnabled()
-            && (!this.e(Flight.class).isEnabled() || !this.aiV.wo())
+            && (!this.e(Flight.class).isEnabled() || !this.prediction.wo())
             && (!this.e(LongJump.class).isEnabled() || !Client.a.g().c(LongJump.class).mode.wo().getName().equals("Watchdog 2"))) {
             if (!flag || this.e(LongJump.class).isEnabled() && Client.a.g().c(LongJump.class).mode.wo().getName().equals("Watchdog Fire Ball 2")) {
-                if (!this.e(Disabler.class).wu.wo() || !this.e(Disabler.class).isEnabled()) {
+                if (!this.e(Disabler.class).watchdogFly.wo() || !this.e(Disabler.class).isEnabled()) {
                     var1x.setPosY(var1x.getPosY() + 1.0E-13);
                 }
 
@@ -75,8 +75,8 @@ public class WatchdogPacketNoFall extends Mode<NoFall> {
         if (bd.cY > 3.1 + aEg.thePlayer.motionY
             && !flag
             && this.e(Speed.class).isEnabled()
-            && this.aiV.wo()
-            && (!this.e(Disabler.class).wu.wo() || !this.e(Disabler.class).isEnabled())) {
+            && this.prediction.wo()
+            && (!this.e(Disabler.class).watchdogFly.wo() || !this.e(Disabler.class).isEnabled())) {
             var1x.setPosY(var1x.getPosY() + 1.0E-13);
             ahj.l(new C03PacketPlayer(true));
             aEg.timer.dzD = 0.5F;

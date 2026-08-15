@@ -10,7 +10,7 @@ public final class aav extends a {
     }
 
     @Override
-    public boolean j(Packet<?> var1) {
+    public boolean handle(Packet<?> var1) {
         return !(var1 instanceof S27PacketExplosion s27packetexplosion)
             ? false
             : s27packetexplosion.func_149149_c() >= 127.0F || s27packetexplosion.func_149144_d() >= 127.0F || s27packetexplosion.func_149147_e() >= 127.0F;

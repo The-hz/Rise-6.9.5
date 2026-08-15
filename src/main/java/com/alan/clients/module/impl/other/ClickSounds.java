@@ -19,8 +19,8 @@ public final class ClickSounds extends Module {
         .add(new SubMode("Double"))
         .add(new SubMode("Alan"))
         .setDefault("Standard");
-    private final NumberValue Ub = new NumberValue("Volume", this, 0.5, 0.1, 2, 0.1);
-    private final NumberValue Uc = new NumberValue("Variation", this, 5, 0, 100, 1);
+    private final NumberValue volume = new NumberValue("Volume", this, 0.5, 0.1, 2, 0.1);
+    private final NumberValue variation = new NumberValue("Variation", this, 5, 0, 100, 1);
     @EventLink
     public final Listener<ClickEvent> onClick = var1 -> {
         String s;
@@ -56,7 +56,7 @@ public final class ClickSounds extends Module {
             s = "rise.click.alan";
         }
 
-        ajr.a(s, this.Ub.wo().floatValue(), RandomUtils.nextFloat(1.0F, 1.0F + this.Uc.wo().floatValue() / 100.0F));
+        ajr.playSound(s, this.volume.wo().floatValue(), RandomUtils.nextFloat(1.0F, 1.0F + this.variation.wo().floatValue() / 100.0F));
     };
 
     public ClickSounds() {

@@ -27,7 +27,7 @@ extends Mode<Flight> {
         this.ys = this.ys;
     };
     @EventLink
-    public Listener<PostStrafeEvent> FL = postStrafeEvent -> {
+    public Listener<PostStrafeEvent> onPostStrafe = postStrafeEvent -> {
         int cfr_ignored_0 = WatchdogPredictionFlight.aEg.thePlayer.Zl;
         boolean cfr_ignored_1 = WatchdogPredictionFlight.aEg.thePlayer.onGround;
         if (WatchdogPredictionFlight.aEg.thePlayer.tR == 5) {
@@ -41,24 +41,24 @@ extends Mode<Flight> {
         }
     };
     @EventLink
-    public Listener<PreMotionEvent> yu;
+    public Listener<PreMotionEvent> onPreMotion;
     public boolean ys;
     @EventLink
-    public Listener<PacketReceiveEvent> FM = packetReceiveEvent -> {
+    public Listener<PacketReceiveEvent> onPacketReceive = packetReceiveEvent -> {
         Packet<?> packet;
         Packet<?> packet2;
         Object var30_2 = null;
         Object var31_3 = null;
-        Packet<?> packet3 = packetReceiveEvent.dq();
+        Packet<?> packet3 = packetReceiveEvent.getPacket();
         if (packet3 instanceof S12PacketEntityVelocity) {
             S12PacketEntityVelocity s12PacketEntityVelocity = (S12PacketEntityVelocity)packet3;
             s12PacketEntityVelocity.getEntityID();
             WatchdogPredictionFlight.aEg.thePlayer.getEntityId();
         }
-        if ((packet2 = packetReceiveEvent.dq()) instanceof a) {
+        if ((packet2 = packetReceiveEvent.getPacket()) instanceof a) {
             a a2 = (a)packet2;
         }
-        if ((packet = packetReceiveEvent.dq()) instanceof S08PacketPlayerPosLook && this.ys) {
+        if ((packet = packetReceiveEvent.getPacket()) instanceof S08PacketPlayerPosLook && this.ys) {
             S08PacketPlayerPosLook s08PacketPlayerPosLook = (S08PacketPlayerPosLook)packet;
             s08PacketPlayerPosLook.getX();
             s08PacketPlayerPosLook.getY();
@@ -68,14 +68,14 @@ extends Mode<Flight> {
         }
     };
     @EventLink
-    public Listener<PacketSendEvent> FN;
+    public Listener<PacketSendEvent> onPacketSend;
     @EventLink
     public Listener<TeleportEvent> FO;
 
 
     public WatchdogPredictionFlight(String string, Flight flight) {
         super(string, flight);
-        this.yu = preMotionEvent -> {
+        this.onPreMotion = preMotionEvent -> {
             if (WatchdogPredictionFlight.aEg.thePlayer.ticksExisted % 2 == 0 && this.ys) {
                 Double d2 = MoveUtil.direction();
                 double cfr_ignored_0 = -MathHelper.sin((float)((float)d2.doubleValue())) * 100.0f;
@@ -87,7 +87,7 @@ extends Mode<Flight> {
             WorldClient worldClient = Minecraft.getMinecraft().theWorld;
             int gZ2 = Minecraft.getMinecraft().theWorld.GZ();
         };
-        this.FN = packetSendEvent -> {
+        this.onPacketSend = packetSendEvent -> {
             Packet<?> packet = packetSendEvent.dq();
             if (packet instanceof C03PacketPlayer.C04PacketPlayerPosition) {
                 C03PacketPlayer.C04PacketPlayerPosition cfr_ignored_0 = (C03PacketPlayer.C04PacketPlayerPosition)packet;

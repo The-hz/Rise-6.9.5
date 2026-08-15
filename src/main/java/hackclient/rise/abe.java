@@ -12,59 +12,59 @@ import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
 
 public final class abe implements InstanceAccess {
-    private final Animation ayh = new Animation(Easing.LINEAR, 500L);
-    public final Category ayi;
-    private long ayj = 0L;
-    private double ayk;
+    private final Animation animation = new Animation(Easing.LINEAR, 500L);
+    public final Category category;
+    private long lastTime = 0L;
+    private double selectorOpacity;
     private float x;
     private float y;
-    private boolean ji;
+    private boolean down;
 
     public abe(Category var1) {
-        this.ayi = var1;
+        this.category = var1;
     }
 
     public void a(double var1, double var3, double var5, abx var7) {
         RiseClickGUI riseclickgui = Client.a.v();
-        if (System.currentTimeMillis() - this.ayj > 300L) {
-            this.ayj = System.currentTimeMillis();
+        if (System.currentTimeMillis() - this.lastTime > 300L) {
+            this.lastTime = System.currentTimeMillis();
         }
 
         long i = System.currentTimeMillis();
         this.x = (float)(riseclickgui.axI.x - (69.0 - var3) - 21.0);
         this.y = (float)(riseclickgui.axI.y + var1) + 16.0F;
-        this.ayh.h(200L);
-        this.ayh.Q(var7.equals(this.ayi.ec()) ? 255.0 : 0.0);
-        double d0 = gb.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.ayi.getName())) + 8.0 + this.ayi.eb().getStringWidth(this.ayi.ea());
+        this.animation.h(200L);
+        this.animation.Q(var7.equals(this.category.ec()) ? 255.0 : 0.0);
+        double d0 = gb.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.category.getName())) + 8.0 + this.category.eb().getStringWidth(this.category.ea());
         GlStateManager.pushMatrix();
         RenderUtil.roundedRectangle(
-            this.x, this.y - 5.5, d0 + 8.0, 15.0, 5.0, aip.d(this.rz().j(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.ayh.sG(), var5)).darker()
+            this.x, this.y - 5.5, d0 + 8.0, 15.0, 5.0, aip.d(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.sG(), var5)).darker()
         );
-        int j = new Color(255, 255, 255, Math.min(var7.equals(this.ayi.ec()) ? 255 : 200, (int)var5)).hashCode();
-        this.ayi.eb().a(this.ayi.ea(), (float)(this.x + this.ayh.sG() / 80.0 + 3.0), this.y, j);
+        int j = new Color(255, 255, 255, Math.min(var7.equals(this.category.ec()) ? 255 : 200, (int)var5)).hashCode();
+        this.category.eb().a(this.category.ea(), (float)(this.x + this.animation.sG() / 80.0 + 3.0), this.y, j);
         gb.MAIN
             .a(16, gd.REGULAR)
-            .a(ahd.ce(this.ayi.getName()), (float)(this.x + this.ayh.sG() / 80.0 + 3.0 + 4.0) + gb.ICONS_1.o(17).getStringWidth(this.ayi.ea()), this.y, j);
+            .a(ahd.ce(this.category.getName()), (float)(this.x + this.animation.sG() / 80.0 + 3.0 + 4.0) + gb.ICONS_1.o(17).getStringWidth(this.category.ea()), this.y, j);
         GlStateManager.popMatrix();
-        this.ayj = i;
+        this.lastTime = i;
     }
 
-    public void a(float var1, float var2, int var3) {
+    public void click(float var1, float var2, int var3) {
         boolean flag = var3 == 0;
         if (agj.c(this.x - 11.0F, this.y - 5.0F, 70.0, 22.0, var1, var2) && flag) {
-            this.getStandardClickGUI().switchScreen(this.ayi);
-            this.ji = true;
+            this.getStandardClickGUI().switchScreen(this.category);
+            this.down = true;
         }
     }
 
-    public void F(double var1) {
-        double d0 = gb.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.ayi.getName())) + 8.0 + this.ayi.eb().getStringWidth(this.ayi.ea());
+    public void bloom(double var1) {
+        double d0 = gb.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.category.getName())) + 8.0 + this.category.eb().getStringWidth(this.category.ea());
         RenderUtil.roundedRectangle(
-            this.x, this.y - 5.0F, d0 + 8.0, 14.0, 5.0, aip.d(this.rz().j(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.ayh.sG(), var1)).darker()
+            this.x, this.y - 5.0F, d0 + 8.0, 14.0, 5.0, aip.d(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.sG(), var1)).darker()
         );
     }
 
-    public void pE() {
-        this.ji = false;
+    public void release() {
+        this.down = false;
     }
 }

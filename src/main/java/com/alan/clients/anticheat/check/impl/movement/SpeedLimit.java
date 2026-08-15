@@ -21,8 +21,8 @@ public final class SpeedLimit extends Check {
 
     @Override
     public void handle(Packet<?> var1) {
-        if (o.b(var1) && ((S14PacketEntity)var1).entityId == this.data.Y().getEntityId() || var1 instanceof z && ((z)var1).cqK == this.data.Y().getEntityId()) {
-            if (this.data.Y().isInvisible()) {
+        if (o.b(var1) && ((S14PacketEntity)var1).entityId == this.data.getPlayer().getEntityId() || var1 instanceof z && ((z)var1).cqK == this.data.getPlayer().getEntityId()) {
+            if (this.data.getPlayer().isInvisible()) {
                 return;
             }
 
@@ -42,7 +42,7 @@ public final class SpeedLimit extends Check {
                 d0 *= 1.0 - d1 / 300.0;
             }
 
-            if (this.data.Y().isBlocking()) {
+            if (this.data.getPlayer().isBlocking()) {
                 d0 *= 0.7;
             }
 

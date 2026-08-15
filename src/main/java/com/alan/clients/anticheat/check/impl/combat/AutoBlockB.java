@@ -17,12 +17,12 @@ public final class AutoBlockB extends Check {
     @Override
     public void handle(Packet<?> var1) {
         if (var1 instanceof ad ad
-            && ad.getEntityId() == this.data.Y().getEntityId()
+            && ad.getEntityId() == this.data.getPlayer().getEntityId()
             && ad.func_149376_c() != null
             && this.data.W() > 1
             && this.data.isUsingItem()
             && this.data.isSprinting()) {
-            ItemStack itemstack = this.data.Y().getHeldItem();
+            ItemStack itemstack = this.data.getPlayer().getHeldItem();
             if (itemstack != null && itemstack.getItem() instanceof ItemSword && this.a(1.0) >= 4.0) {
                 this.J();
                 this.M();

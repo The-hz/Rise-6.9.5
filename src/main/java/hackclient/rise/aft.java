@@ -47,11 +47,11 @@ extends com.alan.clients.util.file.File {
 
     @Override
     public boolean te() {
-        if (!this.sK().exists()) {
+        if (!this.getFile().exists()) {
             return false;
         }
         try {
-            FileReader fileReader = new FileReader(this.sK());
+            FileReader fileReader = new FileReader(this.getFile());
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             JsonObject jsonObject = this.A().fromJson((Reader)bufferedReader, JsonObject.class);
             bufferedReader.close();
@@ -99,11 +99,11 @@ extends com.alan.clients.util.file.File {
     }
 
     @Override
-    public boolean tf() {
+    public boolean write() {
         try {
             List<ael> list;
-            if (!this.sK().exists()) {
-                this.sK().createNewFile();
+            if (!this.getFile().exists()) {
+                this.getFile().createNewFile();
             }
             if ((list = Client.a.q().tl()).isEmpty()) {
                 return true;
@@ -119,7 +119,7 @@ extends com.alan.clients.util.file.File {
                 System.out.println("writing account: " + ael2.getName());
             }
             jsonObject.add("data", jsonArray);
-            FileWriter fileWriter = new FileWriter(this.sK());
+            FileWriter fileWriter = new FileWriter(this.getFile());
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             this.A().toJson((JsonElement)jsonObject, (Appendable)bufferedWriter);
             bufferedWriter.flush();

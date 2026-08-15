@@ -11,13 +11,13 @@ import net.minecraft.potion.Potion;
 
 public class VerusTower extends Mode<Scaffold> {
     @EventLink
-    public final Listener<PreMotionEvent> akg = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (aEg.gameSettings.keyBindJump.isKeyDown() && aih.ay(1)) {
             aEg.thePlayer.motionY = 0.8F;
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> akh = var0 -> {
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (aEg.thePlayer.motionY < 0.77) {
             aEg.thePlayer.isPotionActive(Potion.moveSpeed);
         }

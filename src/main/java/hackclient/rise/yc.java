@@ -1,16 +1,16 @@
 package hackclient.rise;
 
 public class yc {
-    public final int aqt;
-    public final float aqu;
+    public final int hunger;
+    public final float saturationModifier;
 
     public yc(int var1, float var2) {
-        this.aqt = var1;
-        this.aqu = var2;
+        this.hunger = var1;
+        this.saturationModifier = var2;
     }
 
-    public float mm() {
-        return this.aqt * this.aqu * 2.0F;
+    public float getSaturationIncrement() {
+        return this.hunger * this.saturationModifier * 2.0F;
     }
 
     @Override
@@ -18,12 +18,12 @@ public class yc {
         if (this == var1) {
             return true;
         }
-        return !(var1 instanceof yc yc) ? false : this.aqt == yc.aqt && Float.compare(yc.aqu, this.aqu) == 0;
+        return !(var1 instanceof yc yc) ? false : this.hunger == yc.hunger && Float.compare(yc.saturationModifier, this.saturationModifier) == 0;
     }
 
     @Override
     public int hashCode() {
-        int i = this.aqt;
-        return 31 * i + (this.aqu != 0.0F ? Float.floatToIntBits(this.aqu) : 0);
+        int i = this.hunger;
+        return 31 * i + (this.saturationModifier != 0.0F ? Float.floatToIntBits(this.saturationModifier) : 0);
     }
 }

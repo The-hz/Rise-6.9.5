@@ -21,8 +21,8 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 
 public class FireBallLongJump extends Mode<LongJump> {
     public ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Custom")).add(new SubMode("Hypixel")).setDefault("Hypixel");
-    private final NumberValue KT = new NumberValue("Height", this, 1, 0.42, 9, 0.1, () -> !this.mode.wo().getName().equals("Custom"));
-    private final NumberValue KU = new NumberValue("Speed", this, 1, 0.1, 3, 0.1, () -> !this.mode.wo().getName().equals("Custom"));
+    private final NumberValue height = new NumberValue("Height", this, 1, 0.42, 9, 0.1, () -> !this.mode.wo().getName().equals("Custom"));
+    private final NumberValue speed = new NumberValue("Speed", this, 1, 0.1, 3, 0.1, () -> !this.mode.wo().getName().equals("Custom"));
     private int tick;
     private double moveSpeed = 0.0;
     private float yawAtDamage;
@@ -70,12 +70,12 @@ public class FireBallLongJump extends Mode<LongJump> {
             }
 
             if (aEg.thePlayer.ae <= 1) {
-                aEg.thePlayer.motionY = this.KT.wo().doubleValue();
-                MoveUtil.strafe(this.KU.wo().doubleValue());
+                aEg.thePlayer.motionY = this.height.wo().doubleValue();
+                MoveUtil.strafe(this.speed.wo().doubleValue());
             }
         }
 
-        int i = aik.e(Items.fire_charge);
+        int i = aik.findItem(Items.fire_charge);
         if (aEg.thePlayer.cqL == 1) {
             MoveUtil.stop();
         }

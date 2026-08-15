@@ -12,8 +12,8 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 public class bj extends Component {
     public static final ConcurrentLinkedQueue<Packet<?>> dA = new ConcurrentLinkedQueue<>();
     public static boolean cR;
-    @EventLink(cH = 1)
-    public final Listener<PacketSendEvent> dB = var0 -> {
+    @EventLink(value = 1)
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         if (aEg.thePlayer == null) {
             cR = false;
             dA.clear();
@@ -35,7 +35,7 @@ public class bj extends Component {
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> dC = var0 -> {
+    public final Listener<WorldChangeEvent> onWorldChange = var0 -> {
         cR = false;
         dA.clear();
     };

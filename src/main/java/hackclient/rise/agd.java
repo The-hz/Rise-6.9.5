@@ -30,14 +30,14 @@ import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.GL11;
 
 public class agd extends agc implements IResourceManagerReloadListener {
-    private static final ResourceLocation[] aHS = new ResourceLocation[256];
+    private static final ResourceLocation[] unicodePageLocations = new ResourceLocation[256];
     private final int[] aHT = new int[256];
     public static int aHU = 9;
     public Random aHV = new Random();
-    private final byte[] aHW = new byte[65536];
+    private final byte[] glyphWidth = new byte[65536];
     private final int[] aHX = new int[32];
     private ResourceLocation aHY;
-    private final TextureManager aHZ;
+    private final TextureManager renderEngine;
     private float aIa;
     private float aIb;
     private boolean aIc;
@@ -52,21 +52,21 @@ public class agd extends agc implements IResourceManagerReloadListener {
     private boolean aIk;
     private boolean aIl;
     private boolean aIm;
-    public GameSettings aIn;
+    public GameSettings gameSettings;
     public ResourceLocation aIo;
     public float aIp = 1.0F;
-    private final float[] aIq = new float[256];
+    private final float[] charWidthFloat = new float[256];
     private boolean aIr = false;
     private final f aIs = new f();
 
     public agd(GameSettings var1, ResourceLocation var2, TextureManager var3, boolean var4) {
-        this.aIn = var1;
+        this.gameSettings = var1;
         this.aIo = var2;
         this.aHY = var2;
-        this.aHZ = var3;
+        this.renderEngine = var3;
         this.aIc = var4;
         this.aHY = net.optifine.util.l.R(this.aIo);
-        this.a(this.aHY);
+        this.bindTexture(this.aHY);
 
         for (int i = 0; i < 32; i++) {
             int j = (i >> 3 & 1) * 85;
@@ -102,8 +102,8 @@ public class agd extends agc implements IResourceManagerReloadListener {
     public void onResourceManagerReload(IResourceManager var1) {
         this.aHY = net.optifine.util.l.R(this.aIo);
 
-        for (int i = 0; i < aHS.length; i++) {
-            aHS[i] = null;
+        for (int i = 0; i < unicodePageLocations.length; i++) {
+            unicodePageLocations[i] = null;
         }
 
         this.tr();
@@ -113,7 +113,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
     private void tr() {
         BufferedImage bufferedimage;
         try {
-            bufferedimage = TextureUtil.readBufferedImage(this.b(this.aHY));
+            bufferedimage = TextureUtil.readBufferedImage(this.getResourceInputStream(this.aHY));
         } catch (IOException ioexception) {
             throw new RuntimeException(ioexception);
         }
@@ -169,13 +169,13 @@ public class agd extends agc implements IResourceManagerReloadListener {
                 }
             }
 
-            this.aIq[i1] = (l1 + 1) / f + 1.0F;
+            this.charWidthFloat[i1] = (l1 + 1) / f + 1.0F;
         }
 
-        net.optifine.util.l.a(properties, this.aIq);
+        net.optifine.util.l.a(properties, this.charWidthFloat);
 
         for (int l2 = 0; l2 < this.aHT.length; l2++) {
-            this.aHT[l2] = Math.round(this.aIq[l2]);
+            this.aHT[l2] = Math.round(this.charWidthFloat[l2]);
         }
     }
 
@@ -183,8 +183,8 @@ public class agd extends agc implements IResourceManagerReloadListener {
         InputStream inputstream = null;
 
         try {
-            inputstream = this.b(new ResourceLocation("font/glyph_sizes.bin"));
-            inputstream.read(this.aHW);
+            inputstream = this.getResourceInputStream(new ResourceLocation("font/glyph_sizes.bin"));
+            inputstream.read(this.glyphWidth);
         } catch (IOException ioexception) {
             throw new RuntimeException(ioexception);
         } finally {
@@ -196,17 +196,17 @@ public class agd extends agc implements IResourceManagerReloadListener {
         if (var1 != ' ' && var1 != 160) {
             int i = "ÀÁÂÈÊËÍÓÔÕÚßãõğİıŒœŞşŴŵžȇ\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αβΓπΣσμτΦΘΩδ∞∅∈∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■\u0000"
                 .indexOf(var1);
-            return i != -1 && !this.aIc ? this.g(i, var2) : this.b(var1, var2);
+            return i != -1 && !this.aIc ? this.renderDefaultChar(i, var2) : this.b(var1, var2);
         }
-        return !this.aIc ? this.aIq[var1] : 4.0F;
+        return !this.aIc ? this.charWidthFloat[var1] : 4.0F;
     }
 
-    private float g(int var1, boolean var2) {
+    private float renderDefaultChar(int var1, boolean var2) {
         int i = var1 % 16 * 8;
         int j = var1 / 16 * 8;
         int k = var2 ? 1 : 0;
-        this.a(this.aHY);
-        float f = this.aIq[var1];
+        this.bindTexture(this.aHY);
+        float f = this.charWidthFloat[var1];
         GL11.glBegin(5);
         GL11.glTexCoord2f(i / 128.0F, j / 128.0F);
         GL11.glVertex3f(this.aIa + k, this.aIb, 0.0F);
@@ -220,28 +220,28 @@ public class agd extends agc implements IResourceManagerReloadListener {
         return f;
     }
 
-    private ResourceLocation an(int var1) {
-        if (aHS[var1] == null) {
-            aHS[var1] = new ResourceLocation(String.format("textures/font/unicode_page_%02x.png", var1));
-            aHS[var1] = net.optifine.util.l.R(aHS[var1]);
+    private ResourceLocation getUnicodePageLocation(int var1) {
+        if (unicodePageLocations[var1] == null) {
+            unicodePageLocations[var1] = new ResourceLocation(String.format("textures/font/unicode_page_%02x.png", var1));
+            unicodePageLocations[var1] = net.optifine.util.l.R(unicodePageLocations[var1]);
         }
 
-        return aHS[var1];
+        return unicodePageLocations[var1];
     }
 
-    private void ao(int var1) {
-        this.a(this.an(var1));
+    private void loadGlyphTexture(int var1) {
+        this.bindTexture(this.getUnicodePageLocation(var1));
     }
 
     private float b(char var1, boolean var2) {
-        if (this.aHW[var1] == 0) {
+        if (this.glyphWidth[var1] == 0) {
             return 0.0F;
         }
 
         int i = var1 / 256;
-        this.ao(i);
-        int j = this.aHW[var1] >>> 4;
-        int k = this.aHW[var1] & 15;
+        this.loadGlyphTexture(i);
+        int j = this.glyphWidth[var1] >>> 4;
+        int k = this.glyphWidth[var1] & 15;
         float f = j;
         float f1 = k + 1;
         float f2 = var1 % 16 * 16 + f;
@@ -284,10 +284,10 @@ public class agd extends agc implements IResourceManagerReloadListener {
         this.tt();
         int i;
         if (var7) {
-            i = this.a(var1, (float)var2 + 1.0F, (float)var4 + 1.0F, var6, true);
-            i = Math.max(i, this.a(var1, (float)var2, (float)var4, var6, false));
+            i = this.renderString(var1, (float)var2 + 1.0F, (float)var4 + 1.0F, var6, true);
+            i = Math.max(i, this.renderString(var1, (float)var2, (float)var4, var6, false));
         } else {
-            i = this.a(var1, (float)var2, (float)var4, var6, false);
+            i = this.renderString(var1, (float)var2, (float)var4, var6, false);
         }
 
         if (this.aIr) {
@@ -315,7 +315,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
         this.aIm = false;
     }
 
-    private void f(String var1, boolean var2) {
+    private void renderStringAtPos(String var1, boolean var2) {
         for (int i = 0; i < var1.length(); i++) {
             char c0 = var1.charAt(i);
             if (c0 == 167 && i + 1 < var1.length()) {
@@ -340,7 +340,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
                     }
 
                     this.aIh = k;
-                    this.a((k >> 16) / 255.0F, (k >> 8 & 0xFF) / 255.0F, (k & 0xFF) / 255.0F, this.aoJ);
+                    this.setColor((k >> 16) / 255.0F, (k >> 8 & 0xFF) / 255.0F, (k & 0xFF) / 255.0F, this.aoJ);
                 } else if (j == 17) {
                     this.aIj = true;
                 } else if (j == 21) {
@@ -349,7 +349,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
                     this.aIm = false;
                     this.aIl = false;
                     this.aIk = false;
-                    this.a(this.aIe, this.aIf, this.aIg, this.aoJ);
+                    this.setColor(this.aIe, this.aIf, this.aIg, this.aoJ);
                 }
 
                 i++;
@@ -407,16 +407,16 @@ public class agd extends agc implements IResourceManagerReloadListener {
         this.aIa += var1;
     }
 
-    private int a(String var1, int var2, int var3, int var4, int var5, boolean var6) {
+    private int renderStringAligned(String var1, int var2, int var3, int var4, int var5, boolean var6) {
         if (this.aId) {
             int i = this.getStringWidth(this.bQ(var1));
             var2 = var2 + var4 - i;
         }
 
-        return this.a(var1, (float)var2, (float)var3, var5, var6);
+        return this.renderString(var1, (float)var2, (float)var3, var5, var6);
     }
 
-    private int a(String var1, float var2, float var3, int var4, boolean var5) {
+    private int renderString(String var1, float var2, float var3, int var4, boolean var5) {
         if (var1 == null) {
             return 0;
         }
@@ -437,10 +437,10 @@ public class agd extends agc implements IResourceManagerReloadListener {
         this.aIf = (var4 >> 8 & 0xFF) / 255.0F;
         this.aIg = (var4 & 0xFF) / 255.0F;
         this.aoJ = (var4 >> 24 & 0xFF) / 255.0F;
-        this.a(this.aIe, this.aIf, this.aIg, this.aoJ);
+        this.setColor(this.aIe, this.aIf, this.aIg, this.aoJ);
         this.aIa = var2;
         this.aIb = var3;
-        this.f(var1, var5);
+        this.renderStringAtPos(var1, var5);
         return (int)this.aIa;
     }
 
@@ -455,7 +455,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
 
         for (int i = 0; i < var1.length(); i++) {
             char c0 = var1.charAt(i);
-            float f1 = this.c(c0);
+            float f1 = this.getCharWidthFloat(c0);
             if (f1 < 0.0F && i < var1.length() - 1) {
                 c0 = var1.charAt(++i);
                 if (c0 == 'l' || c0 == 'L') {
@@ -487,7 +487,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
     }
 
     @Override
-    public float tq() {
+    public float height() {
         return 9;
     }
 
@@ -497,10 +497,10 @@ public class agd extends agc implements IResourceManagerReloadListener {
     }
 
     public int b(char var1) {
-        return Math.round(this.c(var1));
+        return Math.round(this.getCharWidthFloat(var1));
     }
 
-    private float c(char var1) {
+    private float getCharWidthFloat(char var1) {
         if (var1 == 167) {
             return -1.0F;
         }
@@ -509,12 +509,12 @@ public class agd extends agc implements IResourceManagerReloadListener {
             int i = "ÀÁÂÈÊËÍÓÔÕÚßãõğİıŒœŞşŴŵžȇ\u0000\u0000\u0000\u0000\u0000\u0000\u0000 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u0000ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αβΓπΣσμτΦΘΩδ∞∅∈∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■\u0000"
                 .indexOf(var1);
             if (var1 > 0 && i != -1 && !this.aIc) {
-                return this.aIq[i];
+                return this.charWidthFloat[i];
             }
 
-            if (this.aHW[var1] != 0) {
-                int j = this.aHW[var1] >>> 4;
-                int k = this.aHW[var1] & 15;
+            if (this.glyphWidth[var1] != 0) {
+                int j = this.glyphWidth[var1] >>> 4;
+                int k = this.glyphWidth[var1] & 15;
                 if (k > 7) {
                     k = 15;
                     j = 0;
@@ -525,7 +525,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
             }
             return 0.0F;
         } else {
-            return this.aIq[32];
+            return this.charWidthFloat[32];
         }
     }
 
@@ -543,7 +543,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
 
         for (int k = i; k >= 0 && k < var1.length() && f < var2; k += j) {
             char c0 = var1.charAt(k);
-            float f1 = this.c(c0);
+            float f1 = this.getCharWidthFloat(c0);
             if (flag) {
                 flag = false;
                 if (c0 == 'l' || c0 == 'L') {
@@ -592,15 +592,15 @@ public class agd extends agc implements IResourceManagerReloadListener {
         this.tt();
         this.aIh = var5;
         var1 = this.bR(var1);
-        this.a(var1, var2, var3, var4, false);
+        this.renderSplitString(var1, var2, var3, var4, false);
         if (this.aIr) {
             GlStateManager.c(this.aIs);
         }
     }
 
-    private void a(String var1, int var2, int var3, int var4, boolean var5) {
+    private void renderSplitString(String var1, int var2, int var3, int var4, boolean var5) {
         for (String s : this.listFormattedStringToWidth(var1, var4)) {
-            this.a(s, var2, var3, var4, this.aIh, var5);
+            this.renderStringAligned(s, var2, var3, var4, this.aIh, var5);
             var3 += 9;
         }
     }
@@ -622,10 +622,10 @@ public class agd extends agc implements IResourceManagerReloadListener {
     }
 
     public List<String> listFormattedStringToWidth(String var1, int var2) {
-        return Arrays.asList(this.n(var1, var2).split("\n"));
+        return Arrays.asList(this.wrapFormattedStringToWidth(var1, var2).split("\n"));
     }
 
-    String n(String var1, int var2) {
+    String wrapFormattedStringToWidth(String var1, int var2) {
         if (var1.length() <= 1) {
             return var1;
         }
@@ -639,7 +639,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
         char c0 = var1.charAt(i);
         boolean flag = c0 == ' ' || c0 == '\n';
         String s1 = getFormatFromString(s) + var1.substring(i + (flag ? 1 : 0));
-        return s + "\n" + this.n(s1, var2);
+        return s + "\n" + this.wrapFormattedStringToWidth(s1, var2);
     }
 
     private int o(String var1, int var2) {
@@ -733,7 +733,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
         return 16777215;
     }
 
-    protected void a(float var1, float var2, float var3, float var4) {
+    protected void setColor(float var1, float var2, float var3, float var4) {
         GlStateManager.color(var1, var2, var3, var4);
     }
 
@@ -741,11 +741,11 @@ public class agd extends agc implements IResourceManagerReloadListener {
         GlStateManager.enableAlpha();
     }
 
-    protected void a(ResourceLocation var1) {
-        this.aHZ.bindTexture(var1);
+    protected void bindTexture(ResourceLocation var1) {
+        this.renderEngine.bindTexture(var1);
     }
 
-    protected InputStream b(ResourceLocation var1) throws IOException {
+    protected InputStream getResourceInputStream(ResourceLocation var1) throws IOException {
         return Minecraft.getMinecraft().getResourceManager().getResource(var1).getInputStream();
     }
 }

@@ -11,9 +11,9 @@ import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 @ModuleInfo(aliases = "module.movement.nojumpdelay.name", description = "module.movement.nojumpdelay.description", category = Category.MOVEMENT)
 public class NoJumpDelay extends Module {
     @EventLink
-    public final Listener<PreUpdateEvent> DM = var1 -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         Scaffold scaffold = this.e(Scaffold.class);
-        if (!scaffold.isEnabled() || !scaffold.afJ.wo().getName().equals("Telly") || !aEg.gameSettings.keyBindJump.isKeyDown() || !scaffold.kh()) {
+        if (!scaffold.isEnabled() || !scaffold.mode.wo().getName().equals("Telly") || !aEg.gameSettings.keyBindJump.isKeyDown() || !scaffold.kh()) {
             aEg.thePlayer.jumpTicks = 0;
         }
     };

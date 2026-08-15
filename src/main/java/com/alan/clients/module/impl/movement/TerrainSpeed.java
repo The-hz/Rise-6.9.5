@@ -9,7 +9,7 @@ import com.alan.clients.value.impl.ModeValue;
 
 @ModuleInfo(aliases = "module.movement.terrainspeed.name", description = "module.movement.terrainspeed.description", category = Category.MOVEMENT)
 public class TerrainSpeed extends Module {
-    public final ModeValue Fe = new ModeValue("Mode", this)
+    public final ModeValue mode = new ModeValue("Mode", this)
         .add(new WatchdogTerrainSpeed("Watchdog", this))
         .add(new BloxdTerrainSpeed("Bloxd", this))
         .setDefault("Watchdog");

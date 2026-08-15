@@ -9,31 +9,31 @@ import com.alan.clients.util.player.MoveUtil;
 import lombok.Generated;
 
 public final class bk extends Component {
-    private static boolean dj;
-    private static float dD;
-    private static int dE;
+    private static boolean active;
+    private static float timer;
+    private static int jumps;
     @EventLink
-    public final Listener<PreMotionEvent> dF = var0 -> {
-        if (dj) {
-            if (dE < 4) {
-                aEg.timer.dzD = dD;
+    public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
+        if (active) {
+            if (jumps < 4) {
+                aEg.timer.dzD = timer;
                 if (aEg.thePlayer.onGround) {
                     aEg.thePlayer.jump();
-                    dE++;
+                    jumps++;
                 }
 
                 var0.setOnGround(false);
             } else if (aEg.thePlayer.tR >= 11) {
                 aEg.timer.dzD = 1.0F;
-                dj = false;
-                dD = 1.0F;
-                dE = 0;
+                active = false;
+                timer = 1.0F;
+                jumps = 0;
             }
         }
     };
     @EventLink
-    public final Listener<PostStrafeEvent> dG = var0 -> {
-        if (dj) {
+    public final Listener<PostStrafeEvent> onPostStrafe = var0 -> {
+        if (active) {
             MoveUtil.stop();
         }
     };
@@ -41,19 +41,19 @@ public final class bk extends Component {
     public bk() {
     }
 
-    public static void a(float var0) {
-        dj = true;
-        dD = var0;
-        dE = 0;
+    public static void setActive(float var0) {
+        active = true;
+        timer = var0;
+        jumps = 0;
     }
 
     @Generated
     public static boolean bd() {
-        return dj;
+        return active;
     }
 
     @Generated
     public static int be() {
-        return dE;
+        return jumps;
     }
 }

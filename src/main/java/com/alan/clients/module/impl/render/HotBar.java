@@ -44,12 +44,12 @@ public class HotBar extends Module {
     private float anP = 0.0F;
     private Interface interfaceModule;
     private KillAura gj;
-    public final BooleanValue anQ = new BooleanValue("Show XP Bar", this, true);
+    public final BooleanValue showXPBar = new BooleanValue("Show XP Bar", this, true);
     private final agc anR = gb.MAIN.a(18, gd.MEDIUM);
     @EventLink
-    public final Listener<Render2DEvent> anS = var1 -> {
+    public final Listener<Render2DEvent> onPreMotionEvent = var1 -> {
         if (aEg.getRenderViewEntity() instanceof EntityPlayer) {
-            ScaledResolution scaledresolution = var1.dx();
+            ScaledResolution scaledresolution = var1.getScaledResolution();
             EntityPlayer entityplayer = (EntityPlayer)aEg.getRenderViewEntity();
             this.structure.apP = new Vector2d(
                 (int)(scaledresolution.getScaledWidth() / 2.0F - 92.0F), scaledresolution.getScaledHeight() - 21 - Client.a.k().rz().qd() - 17.5
@@ -61,7 +61,7 @@ public class HotBar extends Module {
 
             String s = this.interfaceModule.lM().wo().getName();
             int i = scaledresolution.getScaledWidth() / 2;
-            this.anO = ahg.e(this.anO, i - 92 + entityplayer.inventory.currentItem * 20, 0.03F * (float)this.anN.aKx());
+            this.anO = ahg.lerp(this.anO, i - 92 + entityplayer.inventory.currentItem * 20, 0.03F * (float)this.anN.aKx());
             this.anN.aX();
             if ("Rise".equals(s)) {
                 double d0 = this.interfaceModule != null ? this.interfaceModule.lD() : 9.0;
@@ -73,7 +73,7 @@ public class HotBar extends Module {
                     );
             }
 
-            if (this.anQ.wo() && entityplayer.experience > 0.0F && "Rise".equals(s)) {
+            if (this.showXPBar.wo() && entityplayer.experience > 0.0F && "Rise".equals(s)) {
                 double d1 = this.interfaceModule != null ? Math.min(this.interfaceModule.lD(), 2.0) : 2.0;
                 this.b(gg.BLUR)
                     .c(
@@ -88,7 +88,7 @@ public class HotBar extends Module {
                 GlStateManager.enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                 RenderHelper.enableGUIStandardItemLighting();
-                if (this.anQ.wo() && entityplayer.experience > 0.0F) {
+                if (this.showXPBar.wo() && entityplayer.experience > 0.0F) {
                     this.a(scaledresolution, entityplayer);
                 }
 
@@ -133,12 +133,12 @@ public class HotBar extends Module {
                     );
             }
 
-            if ("Rise".equals(s) && this.anQ.wo() && entityplayer.experienceLevel > 0) {
+            if ("Rise".equals(s) && this.showXPBar.wo() && entityplayer.experienceLevel > 0) {
                 this.b(gg.REGULAR, 1).c(() -> {
                     String s1 = String.valueOf(entityplayer.experienceLevel);
                     float f = this.anR.getStringWidth(s1);
                     float f1 = (scaledresolution.getScaledWidth() - f) / 2.0F;
-                    float f2 = (float)(this.structure.apP.y - this.anR.tq() + 17.0);
+                    float f2 = (float)(this.structure.apP.y - this.anR.height() + 17.0);
                     GlStateManager.enableBlend();
                     this.anR.b(s1, f1, f2, Color.WHITE.getRGB());
                     GlStateManager.disableBlend();
@@ -147,7 +147,7 @@ public class HotBar extends Module {
                     String s1 = String.valueOf(entityplayer.experienceLevel);
                     float f = this.anR.getStringWidth(s1);
                     float f1 = (scaledresolution.getScaledWidth() - f) / 2.0F;
-                    float f2 = (float)(this.structure.apP.y - this.anR.tq() + 17.0);
+                    float f2 = (float)(this.structure.apP.y - this.anR.height() + 17.0);
                     GlStateManager.enableBlend();
                     this.anR.b(s1, f1, f2, this.rz().rD().getRGB());
                     GlStateManager.disableBlend();
@@ -182,7 +182,7 @@ public class HotBar extends Module {
                         return;
                     }
 
-                    this.anP = ahg.e(this.anP, f, 0.1F);
+                    this.anP = ahg.lerp(this.anP, f, 0.1F);
                     double d0 = this.structure.apP.x + 1.0;
                     double d1 = this.structure.apP.y + 14.4;
                     double d2 = this.structure.aHe.x - 1.0;
@@ -200,7 +200,7 @@ public class HotBar extends Module {
             }
         }
 
-        if (this.anQ.wo()) {
+        if (this.showXPBar.wo()) {
             float f1 = var2.experience;
             if (!(f1 <= 0.0F)) {
                 int i = (int)(f1 * 182.0F);

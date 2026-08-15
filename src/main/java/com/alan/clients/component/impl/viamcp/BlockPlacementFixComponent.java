@@ -18,7 +18,7 @@ import net.minecraft.network.play.client.C0EPacketClickWindow;
 import net.minecraft.network.play.client.m;
 
 public final class BlockPlacementFixComponent extends Component {
-    @EventLink(cH = 0)
+    @EventLink(value = 0)
     public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13)) {
             UserConnection userconnection = Via.getManager().getConnectionManager().getConnections().iterator().next();

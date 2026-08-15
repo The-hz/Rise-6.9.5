@@ -19,15 +19,15 @@ import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 import net.minecraft.network.play.server.z;
 
 public class WatchdogReduceVelocity extends Mode<Velocity> {
-    private final BooleanValue vI = new BooleanValue("Cancel On Ground", this, true);
-    private final BooleanValue vJ = new BooleanValue("Cancel On Attack", this, true);
-    private final BooleanValue vK = new BooleanValue("Cancel Explosions", this, true);
+    private final BooleanValue cancelOnGround = new BooleanValue("Cancel On Ground", this, true);
+    private final BooleanValue cancelOnAttack = new BooleanValue("Cancel On Attack", this, true);
+    private final BooleanValue cancelExplosions = new BooleanValue("Cancel Explosions", this, true);
     private final List<Packet<?>> vL = new ArrayList<>();
     private boolean vM = false;
     @EventLink
-    public final Listener<PacketReceiveEvent> vN = var1x -> {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         if (!this.vM && aEg.thePlayer != null) {
-            Packet packet = var1x.dq();
+            Packet packet = var1x.getPacket();
             if (packet instanceof S12PacketEntityVelocity s12packetentityvelocity) {
                 if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                     var1x.setCancelled();
@@ -53,8 +53,8 @@ public class WatchdogReduceVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> vO = var1x -> {
-        if (this.vJ.wo()) {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
+        if (this.cancelOnAttack.wo()) {
             Packet packet = var1x.dq();
             if (packet instanceof C02PacketUseEntity && ((C02PacketUseEntity)packet).getAction() == Action.ATTACK) {
                 this.v("attack");
@@ -62,8 +62,8 @@ public class WatchdogReduceVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> vP = var1x -> {
-        if (this.vI.wo()) {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
+        if (this.cancelOnGround.wo()) {
             if (aEg.thePlayer.onGround && !this.vL.isEmpty()) {
                 this.v("ground");
             }

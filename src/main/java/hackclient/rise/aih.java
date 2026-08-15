@@ -33,18 +33,18 @@ import net.minecraft.util.Vec3i;
 import net.minecraft.util.Vector3d;
 
 public final class aih implements InstanceAccess {
-    private static final HashMap<Integer, Integer> aOK = new aii();
+    private static final HashMap<Integer, Integer> GOOD_POTIONS = new aii();
 
     public static Block o(double var0, double var2, double var4) {
         return aEg.theWorld.getBlockState(new BlockPos(var0, var2, var4)).getBlock();
     }
 
-    public static Block q(BlockPos var0) {
+    public static Block block(BlockPos var0) {
         return aEg.theWorld.getBlockState(var0).getBlock();
     }
 
     public static Block a(Vec3i var0) {
-        return q(new BlockPos(var0));
+        return block(new BlockPos(var0));
     }
 
     public static Block c(aka var0) {
@@ -52,10 +52,10 @@ public final class aih implements InstanceAccess {
     }
 
     public static Block a(Vector3d var0) {
-        return q(new BlockPos(new Vec3i(var0.x, var0.y, var0.z)));
+        return block(new BlockPos(new Vec3i(var0.x, var0.y, var0.z)));
     }
 
-    public static double a(BlockPos var0, BlockPos var1) {
+    public static double distance(BlockPos var0, BlockPos var1) {
         double d0 = var0.getX() - var1.getX();
         double d1 = var0.getY() - var1.getY();
         double d2 = var0.getZ() - var1.getZ();
@@ -83,7 +83,7 @@ public final class aih implements InstanceAccess {
         return o(aEg.thePlayer.posX + var0, aEg.thePlayer.posY + var2, aEg.thePlayer.posZ + var4);
     }
 
-    public static Block o(double var0, double var2) {
+    public static Block blockAheadOfPlayer(double var0, double var2) {
         return p(-Math.sin(MoveUtil.direction()) * var0, var2, Math.cos(MoveUtil.direction()) * var0);
     }
 
@@ -91,11 +91,11 @@ public final class aih implements InstanceAccess {
         return var0.getName();
     }
 
-    public static String R() {
+    public static String name() {
         return aEg.thePlayer.getName();
     }
 
-    public static boolean D(EntityLivingBase var0) {
+    public static boolean sameTeam(EntityLivingBase var0) {
         if (var0.getTeam() != null && aEg.thePlayer.getTeam() != null) {
             char c0 = var0.getDisplayName().getFormattedText().charAt(1);
             char c1 = aEg.thePlayer.getDisplayName().getFormattedText().charAt(1);
@@ -174,11 +174,11 @@ public final class aih implements InstanceAccess {
     }
 
     public static boolean aw(int var0) {
-        return aOK.containsKey(var0);
+        return GOOD_POTIONS.containsKey(var0);
     }
 
-    public static int ax(int var0) {
-        return aOK.getOrDefault(var0, -1);
+    public static int potionRanking(int var0) {
+        return GOOD_POTIONS.getOrDefault(var0, -1);
     }
 
     public static boolean vj() {
@@ -331,7 +331,7 @@ public final class aih implements InstanceAccess {
         return null;
     }
 
-    public static Vec3 q(double var0, double var2, double var4) {
+    public static Vec3 getPlacePossibility(double var0, double var2, double var4) {
         return a(var0, var2, var4, (Integer)null);
     }
 

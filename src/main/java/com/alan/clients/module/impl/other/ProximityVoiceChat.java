@@ -21,9 +21,9 @@ import org.lwjgl.input.Keyboard;
 
 @ModuleInfo(aliases = "module.other.proximityvoicechat.name", description = "module.other.proximityvoicechat.description", category = Category.PLAYER)
 public class ProximityVoiceChat extends Module {
-    private final BooleanValue Vz = new BooleanValue("Listen to yourself", this, false);
-    private final NumberValue VA = new NumberValue("Sample Rate", this, 16000, 8000, 192000, 4000);
-    private final NumberValue VB = new NumberValue("Sample Size in bits", this, 16, 8, 32, 1);
+    private final BooleanValue listenToYourself = new BooleanValue("Listen to yourself", this, false);
+    private final NumberValue sampleRate = new NumberValue("Sample Rate", this, 16000, 8000, 192000, 4000);
+    private final NumberValue sampleSizeInBits = new NumberValue("Sample Size in bits", this, 16, 8, 32, 1);
     public final ModeValue VC = new ModeValue("Channel (dont)", this)
         .add(new SubMode("Mono"))
         .add(new SubMode("Stereo"))
@@ -36,7 +36,7 @@ public class ProximityVoiceChat extends Module {
     private boolean VG = false;
     private int VH = 0;
     @EventLink
-    public final Listener<TickEvent> VI = var1 -> {
+    public final Listener<TickEvent> onTick = var1 -> {
         if (Keyboard.isKeyDown(45)) {
             if (!this.VG) {
                 this.VG = true;
@@ -81,7 +81,7 @@ public class ProximityVoiceChat extends Module {
 
                 while (true) {
                     int i = this.VF.read(abyte, 0, abyte.length);
-                    if (this.Vz.wo()) {
+                    if (this.listenToYourself.wo()) {
                         this.VE.write(abyte, 0, i);
                     }
                 }
@@ -138,22 +138,22 @@ public class ProximityVoiceChat extends Module {
                 switch (b0) {
                     case 0:
                         byte b5 = 2;
-                        return new AudioFormat(this.VA.wo().floatValue(), this.VB.wo().intValue(), b5, true, false);
+                        return new AudioFormat(this.sampleRate.wo().floatValue(), this.sampleSizeInBits.wo().intValue(), b5, true, false);
                     case 1:
                         break label44;
                     case 2:
                         break;
                     default:
                         byte b2 = 1;
-                        return new AudioFormat(this.VA.wo().floatValue(), this.VB.wo().intValue(), b2, true, false);
+                        return new AudioFormat(this.sampleRate.wo().floatValue(), this.sampleSizeInBits.wo().intValue(), b2, true, false);
                 }
             }
 
             byte b3 = 6;
-            return new AudioFormat(this.VA.wo().floatValue(), this.VB.wo().intValue(), b3, true, false);
+            return new AudioFormat(this.sampleRate.wo().floatValue(), this.sampleSizeInBits.wo().intValue(), b3, true, false);
         }
 
         byte b4 = 4;
-        return new AudioFormat(this.VA.wo().floatValue(), this.VB.wo().intValue(), b4, true, false);
+        return new AudioFormat(this.sampleRate.wo().floatValue(), this.sampleSizeInBits.wo().intValue(), b4, true, false);
     }
 }

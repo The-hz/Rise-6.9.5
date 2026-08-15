@@ -27,23 +27,23 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 public class NoClip extends Module {
     private final BooleanValue block = new BooleanValue("Block", this, false);
     @EventLink
-    public final Listener<BlockAABBEvent> DJ = var0 -> {
+    public final Listener<BlockAABBEvent> onBlockAABB = var0 -> {
         if (aih.vk()) {
-            var0.a(null);
-            if (!(var0.df() instanceof BlockAir) && !aEg.gameSettings.keyBindSneak.isKeyDown()) {
-                double d0 = var0.dg().getX();
-                double d1 = var0.dg().getY();
-                double d2 = var0.dg().getZ();
+            var0.setBoundingBox(null);
+            if (!(var0.getBlock() instanceof BlockAir) && !aEg.gameSettings.keyBindSneak.isKeyDown()) {
+                double d0 = var0.getBlockPos().getX();
+                double d1 = var0.getBlockPos().getY();
+                double d2 = var0.getBlockPos().getZ();
                 if (d1 < aEg.thePlayer.posY) {
-                    var0.a(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
+                    var0.setBoundingBox(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
                 }
             }
         }
     };
     @EventLink
-    public final Listener<PushOutOfBlockEvent> DK = CancellableEvent::setCancelled;
+    public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = CancellableEvent::setCancelled;
     @EventLink
-    public final Listener<PreUpdateEvent> DL = var1 -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         aEg.thePlayer.noClip = true;
         if (this.block.wo()) {
             int i = aik.vx();

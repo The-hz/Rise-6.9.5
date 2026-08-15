@@ -15,26 +15,26 @@ import net.minecraft.item.ItemSword;
 
 public class MatrixNoSlow extends Mode<NoSlow> {
     @EventLink
-    public final Listener<SlowDownEvent> Ne = var1x -> {
-        if (this.wj().DO.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
+    public final Listener<SlowDownEvent> onSlowDown = var1x -> {
+        if (this.getParent().food.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
             var1x.setCancelled();
         }
 
-        if (this.wj().DP.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion) {
+        if (this.getParent().potion.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion) {
             var1x.setCancelled();
         }
 
-        if (this.wj().DQ.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
+        if (this.getParent().sword.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
             var1x.setCancelled();
         }
 
-        if (this.wj().DR.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
+        if (this.getParent().bow.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
             var1x.setCancelled();
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> Nf = var1x -> {
-        if (this.wj().DO.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
+        if (this.getParent().food.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
             if (aEg.thePlayer.cqL > 1) {
                 MoveUtil.strafe(0.0265);
             } else if (!this.e(Speed.class).isEnabled()) {
@@ -46,7 +46,7 @@ public class MatrixNoSlow extends Mode<NoSlow> {
             }
         }
 
-        if (this.wj().DP.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion) {
+        if (this.getParent().potion.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion) {
             if (aEg.thePlayer.cqL > 1) {
                 MoveUtil.strafe(0.0265);
             } else if (!this.e(Speed.class).isEnabled()) {
@@ -58,7 +58,7 @@ public class MatrixNoSlow extends Mode<NoSlow> {
             }
         }
 
-        if (this.wj().DQ.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
+        if (this.getParent().sword.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
             if (aEg.thePlayer.cqL > 1) {
                 MoveUtil.strafe(0.0265);
             } else if (!this.e(Speed.class).isEnabled()) {
@@ -70,7 +70,7 @@ public class MatrixNoSlow extends Mode<NoSlow> {
             }
         }
 
-        if (this.wj().DR.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
+        if (this.getParent().bow.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
             if (aEg.thePlayer.cqL > 1) {
                 MoveUtil.strafe(0.0265);
             } else if (!this.e(Speed.class).isEnabled()) {

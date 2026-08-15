@@ -12,7 +12,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 
 public class OldNCPYPortSpeed extends Mode<Speed> {
-    public final BooleanValue QA = new BooleanValue("Smooth Camera", this, false);
+    public final BooleanValue smoothCamera = new BooleanValue("Smooth Camera", this, false);
     private boolean Lw;
     private double Lx;
     private boolean HJ;
@@ -21,7 +21,7 @@ public class OldNCPYPortSpeed extends Mode<Speed> {
     private double QC;
     private final double QD = 0.2873;
     @EventLink
-    public final Listener<PreMotionEvent> QE = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         double d0 = aEg.thePlayer.posX - aEg.thePlayer.lastTickPosX;
         double d1 = aEg.thePlayer.posZ - aEg.thePlayer.lastTickPosZ;
         this.QC = Math.sqrt(d0 * d0 + d1 * d1);
@@ -32,7 +32,7 @@ public class OldNCPYPortSpeed extends Mode<Speed> {
     @EventLink
     public final Listener<MoveInputEvent> QF = var0 -> var0.setJump(false);
     @EventLink
-    public final Listener<StrafeEvent> QG = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         MoveUtil.isMoving();
         switch (this.FX) {
             case 2:
@@ -72,7 +72,7 @@ public class OldNCPYPortSpeed extends Mode<Speed> {
     @EventLink
     public final Listener<MoveInputEvent> QH = var0 -> var0.setJump(false);
     @EventLink
-    public final Listener<JumpEvent> QI = var0 -> var0.setJumpMotion(0.4F);
+    public final Listener<JumpEvent> onJump = var0 -> var0.setJumpMotion(0.4F);
 
     public OldNCPYPortSpeed(String var1, Speed var2) {
         super(var1, var2);

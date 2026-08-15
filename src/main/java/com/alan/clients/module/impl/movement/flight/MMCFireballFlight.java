@@ -22,8 +22,8 @@ public class MMCFireballFlight extends Mode<Flight> {
     private int hQ;
     private int hV;
     @EventLink
-    public final Listener<PreUpdateEvent> Jg = var1x -> {
-        int i = aik.e(Items.fire_charge);
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
+        int i = aik.findItem(Items.fire_charge);
         if (this.hQ > 10) {
             BlinkComponent.a(30000, true, true, false, false, false);
         }
@@ -54,7 +54,7 @@ public class MMCFireballFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> Jh = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         aEg.thePlayer.motionY = 0.0F + (aEg.gameSettings.keyBindJump.isKeyDown() ? 0.42F : 0.0F) - (aEg.gameSettings.keyBindSneak.isKeyDown() ? 0.42F : 0.0F);
         if (aEg.thePlayer.getDistance(aEg.thePlayer.lastReportedPosX, aEg.thePlayer.lastReportedPosY, aEg.thePlayer.lastReportedPosZ) <= 8.58F) {
             if (this.hQ > 4) {
@@ -64,12 +64,12 @@ public class MMCFireballFlight extends Mode<Flight> {
             this.hV++;
             if (this.hV >= 8) {
                 MoveUtil.stop();
-                this.wj().toggle();
+                this.getParent().toggle();
             }
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> Ji = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (this.hQ > 4) {
             var1x.setSpeed(2.0);
         }

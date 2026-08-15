@@ -47,7 +47,7 @@ public final class TargetInfo extends Module {
     public boolean inWorld;
     public a rG = new a();
     @EventLink
-    public final Listener<PreMotionEvent> apR = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.currentScreen instanceof GuiChat) {
             this.rG.aX();
             this.target = aEg.thePlayer;
@@ -61,14 +61,14 @@ public final class TargetInfo extends Module {
         }
     };
     @EventLink
-    public final Listener<AttackEvent> apS = var1 -> {
+    public final Listener<AttackEvent> onAttack = var1 -> {
         if (var1.dc() instanceof AbstractClientPlayer) {
             this.target = var1.dc();
             this.rG.aX();
         }
     };
     @EventLink
-    public final Listener<Render2DEvent> apT = var1 -> {
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (this.target != null) {
             if (this.followPlayer.wo() && this.target != aEg.thePlayer) {
                 Vector4d vector4d = ProjectionComponent.e(this.target);

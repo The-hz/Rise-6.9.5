@@ -37,16 +37,16 @@ import rip.vantage.commons.util.time.a;
 
 @ModuleInfo(aliases = "module.other.debugger.name", category = Category.PLAYER, description = "module.other.debugger.description")
 public final class Debugger extends Module implements aha {
-    private final BooleanValue Up = new BooleanValue("Transactions", this, true);
-    private final BooleanValue Uq = new BooleanValue("Keep Alive", this, true);
-    private final BooleanValue Ur = new BooleanValue("Teleport", this, true);
-    private final BooleanValue Us = new BooleanValue("Velocity", this, true);
-    private final BooleanValue Ut = new BooleanValue("Abilities", this, true);
-    private final BooleanValue Uu = new BooleanValue("Display All", this, true);
-    private final BooleanValue Uv = new BooleanValue("Blacklist", this, true, () -> !this.Uu.wo());
-    private final BooleanValue Uw = new BooleanValue("Time Since Move", this, true, () -> !this.Uu.wo());
-    private final BooleanValue Ux = new BooleanValue("Dev Panel", this, false);
-    private final BooleanValue Uy = new BooleanValue("Event Calls", this, false);
+    private final BooleanValue transaction = new BooleanValue("Transactions", this, true);
+    private final BooleanValue keepAlive = new BooleanValue("Keep Alive", this, true);
+    private final BooleanValue teleport = new BooleanValue("Teleport", this, true);
+    private final BooleanValue velocity = new BooleanValue("Velocity", this, true);
+    private final BooleanValue abilities = new BooleanValue("Abilities", this, true);
+    private final BooleanValue displayAll = new BooleanValue("Display All", this, true);
+    private final BooleanValue blacklist = new BooleanValue("Blacklist", this, true, () -> !this.displayAll.wo());
+    private final BooleanValue timeSinceMove = new BooleanValue("Time Since Move", this, true, () -> !this.displayAll.wo());
+    private final BooleanValue devPanel = new BooleanValue("Dev Panel", this, false);
+    private final BooleanValue eventCalls = new BooleanValue("Event Calls", this, false);
     private final DragValue position = new DragValue("", this, new Vector2d(200.0, 200.0), true);
     private final DateTimeFormatter date = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private final ArrayList<String> UB = new ArrayList<>();
@@ -55,24 +55,24 @@ public final class Debugger extends Module implements aha {
     private boolean measuring;
     private a bN = new a();
     @EventLink
-    public final Listener<PacketSendEvent> UF = var1 -> {};
+    public final Listener<PacketSendEvent> onPacketSend = var1 -> {};
     @EventLink
-    public final Listener<PacketReceiveEvent> UG = var1 -> {
-        Packet packet = var1.dq();
-        if (this.Up.wo() && packet instanceof S32PacketConfirmTransaction s32packetconfirmtransaction) {
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1 -> {
+        Packet packet = var1.getPacket();
+        if (this.transaction.wo() && packet instanceof S32PacketConfirmTransaction s32packetconfirmtransaction) {
             afi.b(
                 EnumChatFormatting.RED + " Transaction " + EnumChatFormatting.RESET + " (ID: %s)   (WindowID: %s)",
                 s32packetconfirmtransaction.actionNumber,
                 s32packetconfirmtransaction.windowId
             );
-        } else if (this.Uq.wo() && packet instanceof net.minecraft.network.play.server.a a) {
+        } else if (this.keepAlive.wo() && packet instanceof net.minecraft.network.play.server.a a) {
             afi.b(EnumChatFormatting.GREEN + " Keep Alive " + EnumChatFormatting.RESET + " (ID: %s)", a.func_149134_c());
-        } else if (this.Ur.wo() && packet instanceof S08PacketPlayerPosLook s08packetplayerposlook) {
+        } else if (this.teleport.wo() && packet instanceof S08PacketPlayerPosLook s08packetplayerposlook) {
             afi.b(
                 EnumChatFormatting.BLUE + " Server Teleport " + EnumChatFormatting.RESET + " (Position: %s)",
-                ahg.a(s08packetplayerposlook.x, 3) + " " + ahg.a(s08packetplayerposlook.y, 3) + " " + ahg.a(s08packetplayerposlook.z, 3)
+                ahg.round(s08packetplayerposlook.x, 3) + " " + ahg.round(s08packetplayerposlook.y, 3) + " " + ahg.round(s08packetplayerposlook.z, 3)
             );
-        } else if (this.Us.wo() && packet instanceof S12PacketEntityVelocity s12packetentityvelocity) {
+        } else if (this.velocity.wo() && packet instanceof S12PacketEntityVelocity s12packetentityvelocity) {
             if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                 afi.b(
                     EnumChatFormatting.LIGHT_PURPLE + " Velocity " + EnumChatFormatting.RESET + " (DeltaX: %s) (DeltaY: %s)  (DeltaZ: %s) ",
@@ -81,14 +81,14 @@ public final class Debugger extends Module implements aha {
                     s12packetentityvelocity.motionZ / 8000.0
                 );
             }
-        } else if (this.Us.wo() && packet instanceof S27PacketExplosion s27packetexplosion) {
+        } else if (this.velocity.wo() && packet instanceof S27PacketExplosion s27packetexplosion) {
             afi.b(
                 EnumChatFormatting.LIGHT_PURPLE + " Explosion (Velocity) " + EnumChatFormatting.RESET + " (DeltaX: %s) (DeltaY: %s)  (DeltaZ: %s) ",
                 s27packetexplosion.func_149149_c(),
                 s27packetexplosion.func_149144_d(),
                 s27packetexplosion.func_149147_e()
             );
-        } else if (this.Ut.wo() && packet instanceof S39PacketPlayerAbilities s39packetplayerabilities) {
+        } else if (this.abilities.wo() && packet instanceof S39PacketPlayerAbilities s39packetplayerabilities) {
             afi.b(
                 EnumChatFormatting.YELLOW
                     + " Abilities "
@@ -101,8 +101,8 @@ public final class Debugger extends Module implements aha {
         }
     };
     @EventLink
-    public final Listener<Render2DEvent> UH = var1 -> {
-        if (this.Ux.wo()) {
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
+        if (this.devPanel.wo()) {
             double d0 = 10.0;
             this.position.aHe = new Vector2d(180.0, 207.0);
             this.b(gg.REGULAR, 1).c(() -> {
@@ -110,20 +110,20 @@ public final class Debugger extends Module implements aha {
                 double d2 = this.position.apP.y;
                 double d3 = this.position.aHe.x;
                 double d4 = this.position.aHe.y;
-                double d5 = this.rz().pl();
+                double d5 = this.rz().getRound();
                 this.rz();
                 RenderUtil.roundedRectangle(d1, d2, d3, d4, d5, adv.rK());
             });
             this.b(gg.BLUR)
                 .c(
                     () -> RenderUtil.roundedRectangle(
-                        this.position.apP.x, this.position.apP.y, this.position.aHe.x, this.position.aHe.y, this.rz().pl(), Color.BLACK
+                        this.position.apP.x, this.position.apP.y, this.position.aHe.x, this.position.aHe.y, this.rz().getRound(), Color.BLACK
                     )
                 );
             this.b(gg.BLOOM)
                 .c(
                     () -> RenderUtil.roundedRectangle(
-                        this.position.apP.x, this.position.apP.y, this.position.aHe.x, this.position.aHe.y, this.rz().pl(), this.rz().rE()
+                        this.position.apP.x, this.position.apP.y, this.position.aHe.x, this.position.aHe.y, this.rz().getRound(), this.rz().rE()
                     )
                 );
             this.b(gg.REGULAR, 1)
@@ -148,7 +148,7 @@ public final class Debugger extends Module implements aha {
                             .a("Hidden due to not in dev mode", this.position.apP.x + d0, this.position.apP.y + d0 * 5.0, Color.WHITE.hashCode());
                         aEg.fontRendererObj
                             .a("Hidden due to not in dev mode", this.position.apP.x + d0, this.position.apP.y + d0 * 6.0, Color.WHITE.hashCode());
-                        aEg.fontRendererObj.a("ESPs Amount: " + cf.hc.size(), this.position.apP.x + d0, this.position.apP.y + d0 * 8.0, Color.WHITE.hashCode());
+                        aEg.fontRendererObj.a("ESPs Amount: " + cf.esps.size(), this.position.apP.x + d0, this.position.apP.y + d0 * 8.0, Color.WHITE.hashCode());
                         aEg.fontRendererObj.a("Performance", this.position.apP.x + d0, this.position.apP.y + d0 * 9.0, this.rz().rA().hashCode());
                         aEg.fontRendererObj
                             .a("ThreadLag: " + this.threadLag, this.position.apP.x + d0, this.position.apP.y + d0 * 16.0, Color.WHITE.hashCode());
@@ -159,11 +159,11 @@ public final class Debugger extends Module implements aha {
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> UI = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (!this.measuring) {
             long i = System.currentTimeMillis();
             this.measuring = true;
-            boolean flag = aEg.thePlayer.ticksExisted % 100 == 0 && this.Uy.wo();
+            boolean flag = aEg.thePlayer.ticksExisted % 100 == 0 && this.eventCalls.wo();
             aMR.execute(() -> {
                 this.threadLag = System.currentTimeMillis() - i;
                 this.measuring = false;

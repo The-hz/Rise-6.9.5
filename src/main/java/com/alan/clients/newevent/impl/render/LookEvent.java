@@ -13,7 +13,7 @@ public final class LookEvent implements Event {
     }
 
     @Generated
-    public void a(Vector2f var1) {
+    public void setRotation(Vector2f var1) {
         this.rotation = var1;
     }
 

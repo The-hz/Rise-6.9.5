@@ -29,11 +29,11 @@ import rip.vantage.commons.util.time.a;
 
 @ModuleInfo(aliases = {"module.player.stealer.name", "Stealer"}, description = "module.player.stealer.description", category = Category.PLAYER)
 public class Stealer extends Module {
-    private final BoundsNumberValue ahh = new BoundsNumberValue("Delay", this, 100, 150, 0, 500, 50);
-    private final BoundsNumberValue ahi = new BoundsNumberValue("First Item Delay", this, 0, 0, 0, 500, 50);
-    private final BooleanValue ahj = new BooleanValue("Ignore Trash", this, true);
-    private final BooleanValue ahk = new BooleanValue("Respect Manager Rules", this, true);
-    private final BooleanValue ahl = new BooleanValue("Gui Detection", this, true);
+    private final BoundsNumberValue delay = new BoundsNumberValue("Delay", this, 100, 150, 0, 500, 50);
+    private final BoundsNumberValue firstItemDelay = new BoundsNumberValue("First Item Delay", this, 0, 0, 0, 500, 50);
+    private final BooleanValue ignoreTrash = new BooleanValue("Ignore Trash", this, true);
+    private final BooleanValue respectManagerRules = new BooleanValue("Respect Manager Rules", this, true);
+    private final BooleanValue guiDetection = new BooleanValue("Gui Detection", this, true);
     private final a ahm = new a();
     private long nextClick;
     private int ahn;
@@ -48,8 +48,8 @@ public class Stealer extends Module {
             this.fY = false;
             ContainerChest containerchest = (ContainerChest)aEg.thePlayer.openContainer;
             if (this.ahp == 1 && !this.ahq) {
-                int i = this.ahi.wo().intValue();
-                int j = this.ahi.wA().intValue();
+                int i = this.firstItemDelay.wo().intValue();
+                int j = this.firstItemDelay.wA().intValue();
                 if (i > 0 || j > 0) {
                     this.nextClick = Math.round(ahg.l(i, j));
                     this.ahm.aX();
@@ -60,7 +60,7 @@ public class Stealer extends Module {
                 this.ahq = true;
             }
 
-            if (this.ahl.wo() && be.aY() || !this.ahm.T(this.nextClick)) {
+            if (this.guiDetection.wo() && be.inGUI() || !this.ahm.T(this.nextClick)) {
                 return;
             }
 
@@ -68,8 +68,8 @@ public class Stealer extends Module {
 
             for (int k = 0; k < containerchest.inventorySlots.size(); k++) {
                 ItemStack itemstack = containerchest.getLowerChestInventory().getStackInSlot(k);
-                if (itemstack != null && this.aho > 1 && (!this.ahj.wo() || aie.u(itemstack)) && (!this.ahk.wo() || !this.r(itemstack))) {
-                    this.nextClick = Math.round(ahg.l(this.ahh.wo().intValue(), this.ahh.wA().intValue()));
+                if (itemstack != null && this.aho > 1 && (!this.ignoreTrash.wo() || aie.u(itemstack)) && (!this.respectManagerRules.wo() || !this.r(itemstack))) {
+                    this.nextClick = Math.round(ahg.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
                     aEg.playerController.windowClick(containerchest.windowId, k, 0, 1, aEg.thePlayer);
                     this.ahm.aX();
                     this.ahn = 0;

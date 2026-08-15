@@ -22,7 +22,7 @@ import org.lwjgl.opengl.GL11;
 
 @ModuleInfo(aliases = "module.render.animations.name", description = "module.render.animations.description", category = Category.RENDER)
 public final class Animations extends Module {
-    private final ModeValue akK = new ModeValue("Block Animation", this)
+    private final ModeValue blockAnimation = new ModeValue("Block Animation", this)
         .add(new SubMode("None"))
         .add(new SubMode("1.7"))
         .add(new SubMode("1.7 Accurate"))
@@ -51,37 +51,37 @@ public final class Animations extends Module {
         .add(new SubMode("Tap"))
         .add(new SubMode("XIV"))
         .setDefault("None");
-    public final ModeValue akL = new ModeValue("Swing Animation", this)
+    public final ModeValue swingAnimation = new ModeValue("Swing Animation", this)
         .add(new SubMode("None"))
         .add(new SubMode("Punch"))
         .add(new SubMode("Shove"))
         .add(new SubMode("Smooth"))
         .add(new SubMode("1.9+"))
         .setDefault("None");
-    private final BooleanValue akM = new BooleanValue("Update Position Only When Blocking", this, true);
-    public final NumberValue akN = new NumberValue("Swing Speed", this, 1, -200, 50, 1);
-    private final NumberValue akO = new NumberValue("X", this, 0.0F, -2.0F, 2.0F, 0.05F);
-    private final NumberValue akP = new NumberValue("Y", this, 0.0F, -2.0F, 2.0F, 0.05F);
-    private final NumberValue akQ = new NumberValue("Z", this, 0.0F, -2.0F, 2.0F, 0.05F);
-    private final NumberValue akR = new NumberValue("Scale", this, 1, 0.1, 2, 0.1);
-    private final BooleanValue akS = new BooleanValue("Always Show", this, false);
+    private final BooleanValue updatePositionOnlyWhenBlocking = new BooleanValue("Update Position Only When Blocking", this, true);
+    public final NumberValue swingSpeed = new NumberValue("Swing Speed", this, 1, -200, 50, 1);
+    private final NumberValue x = new NumberValue("X", this, 0.0F, -2.0F, 2.0F, 0.05F);
+    private final NumberValue y = new NumberValue("Y", this, 0.0F, -2.0F, 2.0F, 0.05F);
+    private final NumberValue z = new NumberValue("Z", this, 0.0F, -2.0F, 2.0F, 0.05F);
+    private final NumberValue scale = new NumberValue("Scale", this, 1, 0.1, 2, 0.1);
+    private final BooleanValue alwaysShow = new BooleanValue("Always Show", this, false);
     @EventLink
-    public final Listener<RenderItemEvent> akT = var1 -> {
-        if (!(var1.dG().getItem() instanceof ItemMap)) {
-            if (!this.akM.wo()) {
-                GlStateManager.translate(this.akO.wo().floatValue(), this.akP.wo().floatValue(), this.akQ.wo().floatValue());
+    public final Listener<RenderItemEvent> onRenderItem = var1 -> {
+        if (!(var1.getItemToRender().getItem() instanceof ItemMap)) {
+            if (!this.updatePositionOnlyWhenBlocking.wo()) {
+                GlStateManager.translate(this.x.wo().floatValue(), this.y.wo().floatValue(), this.z.wo().floatValue());
             }
 
             double d0 = 0.0;
-            double d1 = this.akR.wo().doubleValue();
+            double d1 = this.scale.wo().doubleValue();
             EnumAction enumaction = var1.dD();
             ItemRenderer itemrenderer = aEg.getItemRenderer();
-            float f = this.akS.wo() && var1.db() ? 0.0F : var1.dE();
+            float f = this.alwaysShow.wo() && var1.db() ? 0.0F : var1.dE();
             float f1 = var1.dF();
             float f2 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float)abs.aHb);
             if (var1.db() && enumaction == EnumAction.BLOCK) {
-                if (this.akM.wo()) {
-                    GlStateManager.translate(this.akO.wo().floatValue(), this.akP.wo().floatValue(), this.akQ.wo().floatValue());
+                if (this.updatePositionOnlyWhenBlocking.wo()) {
+                    GlStateManager.translate(this.x.wo().floatValue(), this.y.wo().floatValue(), this.z.wo().floatValue());
                 }
 
                 label274: {
@@ -111,7 +111,7 @@ public final class Animations extends Module {
                                                                                                                 label250: {
                                                                                                                     label293: {
                                                                                                                         label248: {
-                                                                                                                            String s = this.akK.wo().getName();
+                                                                                                                            String s = this.blockAnimation.wo().getName();
                                                                                                                             byte b0 = -1;
                                                                                                                             switch (s.hashCode()) {
                                                                                                                                 case -2022880414:
@@ -639,7 +639,7 @@ public final class Animations extends Module {
                         label158: {
                             label157: {
                                 label156: {
-                                    String s1 = this.akL.wo().getName();
+                                    String s1 = this.swingAnimation.wo().getName();
                                     byte b26 = -1;
                                     switch (s1.hashCode()) {
                                         case -1814666802:
@@ -676,7 +676,7 @@ public final class Animations extends Module {
                                         case 0:
                                             itemrenderer.doItemUsedTransformations(f1);
                                             itemrenderer.transformFirstPersonItem(f, f1);
-                                            if (!this.akM.wo()) {
+                                            if (!this.updatePositionOnlyWhenBlocking.wo()) {
                                                 GlStateManager.scale(d1, d1, d1);
                                             }
                                             break label160;
@@ -695,7 +695,7 @@ public final class Animations extends Module {
 
                                 itemrenderer.transformFirstPersonItem(f, f1);
                                 itemrenderer.doItemUsedTransformations(f1);
-                                if (!this.akM.wo()) {
+                                if (!this.updatePositionOnlyWhenBlocking.wo()) {
                                     GlStateManager.scale(d1, d1, d1);
                                 }
                                 break label160;
@@ -703,7 +703,7 @@ public final class Animations extends Module {
 
                             itemrenderer.doItemUsedTransformations(f1);
                             itemrenderer.transformFirstPersonItem(f, f1);
-                            if (!this.akM.wo()) {
+                            if (!this.updatePositionOnlyWhenBlocking.wo()) {
                                 GlStateManager.scale(d1, d1, d1);
                             }
                             break label160;
@@ -711,7 +711,7 @@ public final class Animations extends Module {
 
                         itemrenderer.transformFirstPersonItem(f, f);
                         itemrenderer.doItemUsedTransformations(f1);
-                        if (!this.akM.wo()) {
+                        if (!this.updatePositionOnlyWhenBlocking.wo()) {
                             GlStateManager.scale(d1, d1, d1);
                         }
                         break label160;
@@ -719,7 +719,7 @@ public final class Animations extends Module {
 
                     itemrenderer.transformFirstPersonItem(f, f1);
                     itemrenderer.doItemUsedTransformations(f);
-                    if (!this.akM.wo()) {
+                    if (!this.updatePositionOnlyWhenBlocking.wo()) {
                         GlStateManager.scale(d1, d1, d1);
                     }
                 }
@@ -729,15 +729,15 @@ public final class Animations extends Module {
         }
     };
     @EventLink
-    public final Listener<SwingAnimationEvent> akU = var1 -> {
+    public final Listener<SwingAnimationEvent> onSwingAnimation = var1 -> {
         int i = var1.dK();
         TerrainSpeed terrainspeed = this.e(TerrainSpeed.class);
-        if (terrainspeed.isEnabled() && "Bloxd".equals(terrainspeed.Fe.wo().getName())) {
+        if (terrainspeed.isEnabled() && "Bloxd".equals(terrainspeed.mode.wo().getName())) {
             i = (int)(i * 1.5F);
         }
 
-        int j = (int)(i * (-this.akN.wo().floatValue() / 100.0F + 1.0F));
-        var1.m(j);
+        int j = (int)(i * (-this.swingSpeed.wo().floatValue() / 100.0F + 1.0F));
+        var1.setAnimationEnd(j);
     };
 
     public Animations() {

@@ -15,24 +15,24 @@ import java.util.Deque;
 
 @ModuleInfo(aliases = "module.player.watchdogblink.name", description = "module.player.watchdogblink.description", category = Category.PLAYER)
 public class WatchdogBlink extends Module {
-    public NumberValue ahu = new NumberValue("Interval", this, 4, 1, 20, 1);
-    public NumberValue ahv = new NumberValue("Disable Ticks", this, 15, 1, 40, 1);
+    public NumberValue interval = new NumberValue("Interval", this, 4, 1, 20, 1);
+    public NumberValue disableTicks = new NumberValue("Disable Ticks", this, 15, 1, 40, 1);
     private final Deque<Integer> ahw = new ArrayDeque<>();
     private int ahx;
     private int qH;
     private boolean ahy;
     private boolean ahz;
     @EventLink
-    public final Listener<PreMotionEvent> ahA = var0 -> BlinkComponent.blink();
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> BlinkComponent.blink();
     @EventLink
-    public final Listener<PostMotionEvent> ahB = var1 -> {
+    public final Listener<PostMotionEvent> onPostMotion = var1 -> {
         int i = BlinkComponent.bg() - this.ahx;
         if (i > 0) {
             this.ahw.add(i);
         }
 
         if (this.ahy) {
-            this.N(this.ahv.wo().intValue());
+            this.N(this.disableTicks.wo().intValue());
             if (this.ahw.isEmpty() && !BlinkComponent.bh()) {
                 this.ahz = true;
                 super.setEnabled(false);
@@ -41,7 +41,7 @@ public class WatchdogBlink extends Module {
             }
         } else {
             this.qH++;
-            if (this.qH >= this.ahu.wo().intValue()) {
+            if (this.qH >= this.interval.wo().intValue()) {
                 this.qH = 0;
                 this.N(1);
             }
@@ -50,7 +50,7 @@ public class WatchdogBlink extends Module {
         this.ahx = BlinkComponent.bg();
     };
     @EventLink
-    public final Listener<WorldChangeEvent> ahC = var1 -> {
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> {
         this.ahw.clear();
         this.qH = 0;
         this.ahy = false;

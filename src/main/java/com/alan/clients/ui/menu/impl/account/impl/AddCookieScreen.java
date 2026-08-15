@@ -159,7 +159,7 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
                         String s7 = s6.split("\"Token\":\"")[1].split("\"")[0];
                         String s8 = "XBL3.0 x=" + s6.split(Pattern.quote("{\"DisplayClaims\":{\"xui\":[{\"uhs\":\""))[1].split("\"")[0] + ";" + s7;
                         e e = gson.fromJson(
-                            akc.a(
+                            akc.postExternal(
                                 "https://api.minecraftservices.com/authentication/login_with_xbox",
                                 "{\"identityToken\":\"" + s8 + "\",\"ensureLegacyEnabled\":true}",
                                 true
@@ -171,7 +171,7 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
                             return;
                         }
 
-                        f f = gson.fromJson(akc.I("https://api.minecraftservices.com/minecraft/profile", e.aEU), f.class);
+                        f f = gson.fromJson(akc.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.aEU), f.class);
                         if (f == null) {
                             text_to_render = "Error (Invalid Acc)";
                             return;
@@ -209,23 +209,23 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
         this.b(gg.BLUR).c(BACKGROUND_RUNNABLE);
         this.b(gg.REGULAR).c(() -> {
             FONT_RENDERER.c(text_to_render, this.width / 2, this.height / 2 - 64 + this.animation.sG(), Color.WHITE.getRGB());
-            usernameBox.pJ();
+            usernameBox.draw();
         });
         adh[] aadh = this.menuButtons;
         int i = aadh.length;
 
         for (int j = 0; j < i; j++) {
-            aadh[j].c(var1, var2, var3);
+            aadh[j].draw(var1, var2, var3);
         }
     }
 
     @Override
     public void mouseClicked(int var1, int var2, int var3) {
-        usernameBox.d(var1, var2, var3);
+        usernameBox.click(var1, var2, var3);
 
         for (adh adh : this.menuButtons) {
-            if (aeb.a(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
-                adh.rm();
+            if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+                adh.runAction();
                 break;
             }
         }
@@ -234,7 +234,7 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
     @Override
     protected void keyTyped(char var1, int var2) {
         if (usernameBox.tO()) {
-            usernameBox.b(var1, var2);
+            usernameBox.key(var1, var2);
         }
     }
 

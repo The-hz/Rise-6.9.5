@@ -50,8 +50,8 @@ public final class FlightPrediction extends Check {
 
     @Override
     public void handle(Packet<?> var1) {
-        if (o.b(var1) && ((S14PacketEntity)var1).entityId == this.data.Y().getEntityId() || var1 instanceof z && ((z)var1).cqK == this.data.Y().getEntityId()) {
-            EntityOtherPlayerMP entityotherplayermp = this.data.Y();
+        if (o.b(var1) && ((S14PacketEntity)var1).entityId == this.data.getPlayer().getEntityId() || var1 instanceof z && ((z)var1).cqK == this.data.getPlayer().getEntityId()) {
+            EntityOtherPlayerMP entityotherplayermp = this.data.getPlayer();
             if (!this.af && this.data.ae() <= 20) {
                 this.af = true;
                 this.ae = 0;

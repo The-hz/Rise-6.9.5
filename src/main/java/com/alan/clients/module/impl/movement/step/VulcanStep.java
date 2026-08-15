@@ -11,7 +11,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 
 public class VulcanStep extends Mode<Step> {
     @EventLink
-    public final Listener<PreMotionEvent> So = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
         if (aEg.thePlayer.cuz > 11) {
             aEg.thePlayer.stepHeight = 1.0F;
         } else {
@@ -19,8 +19,8 @@ public class VulcanStep extends Mode<Step> {
         }
     };
     @EventLink
-    public final Listener<StepEvent> Sp = var0 -> {
-        if (var0.da() > 0.6) {
+    public final Listener<StepEvent> onStep = var0 -> {
+        if (var0.getHeight() > 0.6) {
             aEg.timer.dzD = 0.5F;
             ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.5, aEg.thePlayer.posZ, true));
         }

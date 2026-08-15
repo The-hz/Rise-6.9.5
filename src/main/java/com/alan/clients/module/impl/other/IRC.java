@@ -19,7 +19,7 @@ extends Module {
     private static final String UJ = "[Rise] ";
     private static final String[] UK = new String[]{".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp"};
     @EventLink
-    public final Listener<ChatInputEvent> UL = chatInputEvent -> {
+    public final Listener<ChatInputEvent> onChatInput = chatInputEvent -> {
         String string = chatInputEvent.getMessage();
         if (string.startsWith("#") && string.length() > 1) {
             chatInputEvent.setCancelled();

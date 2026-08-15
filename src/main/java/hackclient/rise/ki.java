@@ -8,8 +8,8 @@ import com.alan.clients.value.Mode;
 
 public class ki extends Mode<Disabler> {
     @EventLink
-    public final Listener<PreMotionEvent> yL = var1x -> {
-        if (this.wj().wJ.wo()) {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
+        if (this.getParent().deprecated.wo()) {
             var1x.setSprinting(false);
         }
     };

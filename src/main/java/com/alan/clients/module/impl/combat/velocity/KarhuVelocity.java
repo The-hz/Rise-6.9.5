@@ -11,13 +11,13 @@ import net.minecraft.util.AxisAlignedBB;
 public final class KarhuVelocity extends Mode<Velocity> {
     @EventLink
     public final Listener<BlockAABBEvent> onBlockAABB = var1x -> {
-        if (!this.wj().qQ.wo() || aEg.thePlayer.isSwingInProgress) {
-            if (var1x.df() instanceof BlockAir && aEg.thePlayer.hurtTime > 0 && aEg.thePlayer.ae <= 9) {
-                double d0 = var1x.dg().getX();
-                double d1 = var1x.dg().getY();
-                double d2 = var1x.dg().getZ();
+        if (!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress) {
+            if (var1x.getBlock() instanceof BlockAir && aEg.thePlayer.hurtTime > 0 && aEg.thePlayer.ae <= 9) {
+                double d0 = var1x.getBlockPos().getX();
+                double d1 = var1x.getBlockPos().getY();
+                double d2 = var1x.getBlockPos().getZ();
                 if (d1 == Math.floor(aEg.thePlayer.posY) + 1.0) {
-                    var1x.a(AxisAlignedBB.fromBounds(0.0, 0.0, 0.0, 1.0, 0.0, 1.0).offset(d0, d1, d2));
+                    var1x.setBoundingBox(AxisAlignedBB.fromBounds(0.0, 0.0, 0.0, 1.0, 0.0, 1.0).offset(d0, d1, d2));
                 }
             }
         }

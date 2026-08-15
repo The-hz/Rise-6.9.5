@@ -29,13 +29,13 @@ import rip.vantage.commons.util.time.a;
 @ModuleInfo(aliases = "module.player.autopot.name", description = "module.player.autopot.description", category = Category.PLAYER)
 public class AutoPot extends Module {
     private final NumberValue health = new NumberValue("Health", this, 15, 1, 20, 1);
-    private final BoundsNumberValue abj = new BoundsNumberValue("Delay", this, 500, 1000, 50, 5000, 50);
-    private final BoundsNumberValue abk = new BoundsNumberValue("Rotation Speed", this, 5, 10, 0, 10, 1);
+    private final BoundsNumberValue delay = new BoundsNumberValue("Delay", this, 500, 1000, 50, 5000, 50);
+    private final BoundsNumberValue rotationSpeed = new BoundsNumberValue("Rotation Speed", this, 5, 10, 0, 10, 1);
     private final a abl = new a();
     private int attackTicks;
     private long nextThrow;
     @EventLink
-    public final Listener<PreUpdateEvent> abn = var1 -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         this.attackTicks++;
         if (aEg.currentScreen != null) {
             this.attackTicks = 0;
@@ -60,8 +60,8 @@ public class AutoPot extends Module {
                                     !aEg.thePlayer.isPotionActive(potioneffect.potionID)
                                         || aEg.thePlayer.getActivePotionEffect(potioneffect.potionID).duration == 0
                                 )) {
-                                double d0 = this.abk.wo().doubleValue();
-                                double d1 = this.abk.wA().doubleValue();
+                                double d0 = this.rotationSpeed.wo().doubleValue();
+                                double d1 = this.rotationSpeed.wA().doubleValue();
                                 float f = (float)ahg.l(d0, d1);
                                 RotationComponent.setRotations(
                                     new Vector2f((float)(aEg.thePlayer.pl + (Math.random() - 0.5) * 3.0), (float)(87.0 + Math.random() * 3.0)),
@@ -70,11 +70,11 @@ public class AutoPot extends Module {
                                 );
                                 SlotComponent slotcomponent = this.d(SlotComponent.class);
                                 SlotComponent.setSlot(i);
-                                if (RotationComponent.fk.y > 85.0F && !bb.a(false, true, false, true, false)) {
+                                if (RotationComponent.fk.y > 85.0F && !bb.bad(false, true, false, true, false)) {
                                     aEg.playerController.syncCurrentPlayItem();
                                     SlotComponent slotcomponent1 = this.d(SlotComponent.class);
                                     ahj.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
-                                    this.nextThrow = Math.round(ahg.l(this.abj.wo().longValue(), this.abj.wA().longValue()));
+                                    this.nextThrow = Math.round(ahg.l(this.delay.wo().longValue(), this.delay.wA().longValue()));
                                     this.abl.aX();
                                     break;
                                 }
@@ -86,7 +86,7 @@ public class AutoPot extends Module {
         }
     };
     @EventLink
-    public final Listener<AttackEvent> abo = var1 -> this.attackTicks = 0;
+    public final Listener<AttackEvent> onAttack = var1 -> this.attackTicks = 0;
 
     public AutoPot() {
     }

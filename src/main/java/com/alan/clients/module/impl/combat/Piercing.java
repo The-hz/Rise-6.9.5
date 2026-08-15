@@ -16,7 +16,7 @@ import net.minecraft.util.MovingObjectPosition;
 @ModuleInfo(aliases = {"Peircing", "Piercing"}, description = "Allows attacks to raycast through blocks", category = Category.COMBAT)
 public final class Piercing extends Module {
     @EventLink
-    public final Listener<ClickEvent> qg = var1 -> {
+    public final Listener<ClickEvent> onClick = var1 -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             if (aEg.objectMouseOver == null || aEg.objectMouseOver.typeOfHit != MovingObjectType.ENTITY) {
                 MovingObjectPosition movingobjectposition = aef.a(RotationComponent.bH(), this.gq(), this.gr(), aEg.thePlayer, true);
@@ -33,7 +33,7 @@ public final class Piercing extends Module {
 
     public double gq() {
         Reach reach = this.e(Reach.class);
-        return reach != null && reach.isEnabled() ? Math.max(reach.BQ.wo().doubleValue(), reach.BQ.wA().doubleValue()) : 3.0;
+        return reach != null && reach.isEnabled() ? Math.max(reach.range.wo().doubleValue(), reach.range.wA().doubleValue()) : 3.0;
     }
 
     public float gr() {

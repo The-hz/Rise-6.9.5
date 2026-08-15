@@ -32,7 +32,7 @@ public final class JumpCircles extends Module {
     private static final float aoD = 2.0F;
     private static final float aoE = 4.0F;
     @EventLink
-    private final Listener<PostMotionEvent> aoF = var1 -> {
+    private final Listener<PostMotionEvent> onPostMotion = var1 -> {
         if (aEg.thePlayer.onGround && this.aoA) {
             double d0 = ahg.m(aEg.thePlayer.prevPosX, aEg.thePlayer.posX, aEg.timer.bWm);
             double d1 = ahg.m(aEg.thePlayer.prevPosY, aEg.thePlayer.posY, aEg.timer.bWm);
@@ -54,7 +54,7 @@ public final class JumpCircles extends Module {
         }
     };
     @EventLink
-    private final Listener<Render3DEvent> aoG = var1 -> {
+    private final Listener<Render3DEvent> onRender3D = var1 -> {
         for (xl xl : this.aoy) {
             Vec3 vec3 = xl.ma();
             double d1 = vec3.yCoord;
@@ -101,7 +101,7 @@ public final class JumpCircles extends Module {
         GL11.glBegin(2);
 
         for (int i = 0; i <= 360; i++) {
-            Color color = this.e(Interface.class).rz().j(new Vector2d(i, i));
+            Color color = this.e(Interface.class).rz().getAccentColor(new Vector2d(i, i));
             double[] adouble = this.c(var2.xCoord, var2.zCoord, i, var1.aoI);
             double d2 = adouble[0];
             aEg.getRenderManager();

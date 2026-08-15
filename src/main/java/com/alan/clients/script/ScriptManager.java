@@ -26,7 +26,7 @@ import org.openjdk.nashorn.api.scripting.ClassFilter;
 import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory;
 
 public final class ScriptManager implements InstanceAccess {
-    public static final File SCRIPT_DIRECTORY = new File(afr.aHy, "scripts");
+    public static final File SCRIPT_DIRECTORY = new File(afr.DIRECTORY, "scripts");
     private static final FilenameFilter SCRIPT_FILE_FILTER = (var0, var1) -> var1.toLowerCase(Locale.ENGLISH).endsWith(".js");
     private static final ClassFilter SCRIPT_CLASS_FILTER = new ScriptClassFilter();
     private NashornScriptEngineFactory engineFactory;

@@ -36,18 +36,18 @@ import rip.vantage.commons.util.time.a;
 @ModuleInfo(aliases = "module.other.nuker.name", description = "module.other.nuker.description", category = Category.PLAYER)
 public final class Nuker extends Module {
     private final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Nearby")).add(new SubMode("Teleport")).setDefault("Nearby");
-    private final NumberValue Vk = new NumberValue("Delay", this, 150, 0, 5000, 50);
-    private final NumberValue Vl = new NumberValue("Range", this, 4, 1, 6, 0.5);
-    private final BooleanValue Vm = new BooleanValue("Rotations", this, false);
-    private final BooleanValue Vn = new BooleanValue("Scatter", this, false);
-    private final BooleanValue Vo = new BooleanValue("Swing", this, false);
+    private final NumberValue delay = new NumberValue("Delay", this, 150, 0, 5000, 50);
+    private final NumberValue range = new NumberValue("Range", this, 4, 1, 6, 0.5);
+    private final BooleanValue rotations = new BooleanValue("Rotations", this, false);
+    private final BooleanValue scatter = new BooleanValue("Scatter", this, false);
+    private final BooleanValue swing = new BooleanValue("Swing", this, false);
     private final a Vp = new a();
     @EventLink
-    public final Listener<PreMotionEvent> Vq = var1 -> {
-        if (!be.aY()) {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
+        if (!be.inGUI()) {
             double d0;
             label41: {
-                d0 = this.Vl.wo().doubleValue();
+                d0 = this.range.wo().doubleValue();
                 String s = this.mode.wo().getName();
                 byte b0 = -1;
                 switch (s.hashCode()) {
@@ -65,7 +65,7 @@ public final class Nuker extends Module {
 
                 switch (b0) {
                     case 0:
-                        if (this.Vp.T(this.Vk.wo().longValue())) {
+                        if (this.Vp.T(this.delay.wo().longValue())) {
                             new Thread(() -> this.nuke(d0, var1.getPosX(), var1.getPosY(), var1.getPosZ())).start();
                             this.Vp.aX();
                         }
@@ -78,7 +78,7 @@ public final class Nuker extends Module {
                 }
             }
 
-            if (aEg.gameSettings.cgI.isKeyDown() && this.Vp.T(this.Vk.wo().longValue())) {
+            if (aEg.gameSettings.cgI.isKeyDown() && this.Vp.T(this.delay.wo().longValue())) {
                 BlockPos blockpos = aEg.thePlayer.rayTrace(999.0, 1.0F).getBlockPos();
                 if (aEg.theWorld.getBlockState(blockpos).getBlock() instanceof BlockAir) {
                     return;
@@ -115,13 +115,13 @@ public final class Nuker extends Module {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> Vr = var0 -> {
-        if (var0.dq() instanceof c c && !c.isChat() && c.getChatComponent().getUnformattedText().equals("You can't build outside the plot!")) {
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var0 -> {
+        if (var0.getPacket() instanceof c c && !c.isChat() && c.getChatComponent().getUnformattedText().equals("You can't build outside the plot!")) {
             var0.setCancelled();
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> Vs = var1 -> this.toggle();
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.toggle();
 
     public Nuker() {
     }
@@ -130,16 +130,16 @@ public final class Nuker extends Module {
         for (double d0 = -var1; d0 < var1; d0++) {
             for (double d1 = var1; d1 > -var1; d1--) {
                 for (double d2 = -var1; d2 < var1; d2++) {
-                    if (!this.Vn.wo() || (aEg.thePlayer.ticksExisted % 2 == 0 ? d0 : d2) % 2.0 == 0.0) {
+                    if (!this.scatter.wo() || (aEg.thePlayer.ticksExisted % 2 == 0 ? d0 : d2) % 2.0 == 0.0) {
                         BlockPos blockpos = new BlockPos(var3 + d0, var5 + d1, var7 + d2);
                         if (!(aEg.theWorld.getBlockState(blockpos).getBlock() instanceof BlockAir)) {
-                            if (this.Vm.wo()) {
+                            if (this.rotations.wo()) {
                                 Vector2f vector2f = aiu.d(new aka(blockpos.getX(), blockpos.getY(), blockpos.getZ()));
                                 ahj.m(new C05PacketPlayerLook(vector2f.x, vector2f.y, false));
                             }
 
                             ahj.m(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockpos, EnumFacing.UP));
-                            if (this.Vo.wo()) {
+                            if (this.swing.wo()) {
                                 aEg.thePlayer.swingItem();
                             }
                         }

@@ -5,16 +5,16 @@ import java.awt.Color;
 import net.minecraft.util.ResourceLocation;
 
 public class adk extends adh {
-    private final ResourceLocation aCd;
+    private final ResourceLocation resourceLocation;
 
     public adk(double var1, double var3, double var5, double var7, Runnable var9, ResourceLocation var10) {
         super(var1, var3, var5, var7, var9);
-        this.aCd = var10;
+        this.resourceLocation = var10;
     }
 
     @Override
-    public void c(int var1, int var2, float var3) {
-        super.c(var1, var2, var3);
+    public void draw(int var1, int var2, float var3) {
+        super.draw(var1, var2, var3);
         double d0 = this.getY();
         double d1 = d0 / this.getY();
         Color color = aip.d(Color.BLACK, (int)(d1 * 100.0));
@@ -24,7 +24,7 @@ public class adk extends adh {
         this.b(gg.REGULAR).c(() -> {
             RenderUtil.roundedRectangle(this.getX(), d0, this.oM(), this.da(), 5.0, aip.d(Color.WHITE, (int)this.oL().sG() / 3));
             RenderUtil.roundedOutlineRectangle(this.getX(), d0, this.oM(), this.da(), 5.0, 0.5, aip.d(Color.WHITE, (int)this.oL().sG() / 3));
-            RenderUtil.image(this.aCd, this.getX() + this.oM() / 2.0 - 8.0, d0 + this.da() / 2.0 - 8.0, 16.0, 16.0, color1);
+            RenderUtil.image(this.resourceLocation, this.getX() + this.oM() / 2.0 - 8.0, d0 + this.da() / 2.0 - 8.0, 16.0, 16.0, color1);
         });
     }
 }

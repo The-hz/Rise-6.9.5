@@ -26,7 +26,7 @@ public class AimBacktrack extends Module {
     private boolean attacked;
     private int lastSize;
     @EventLink
-    public final Listener<PreMotionEvent> AD = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (this.lastSize != this.backtrack.wo().intValue()) {
             this.AB = new adz<>(this.backtrack.wo().intValue());
             this.lastSize = this.backtrack.wo().intValue();
@@ -36,11 +36,11 @@ public class AimBacktrack extends Module {
         this.attacked = false;
     };
     @EventLink
-    public final Listener<PacketSendEvent> AE = var1 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         if (var1.dq() instanceof m && aEg.objectMouseOver.typeOfHit == MovingObjectType.MISS) {
             for (Vector2f vector2f : this.AB) {
                 Reach reach = this.e(Reach.class);
-                MovingObjectPosition movingobjectposition = aef.c(vector2f, reach.isEnabled() ? 3.0 + reach.BQ.wo().doubleValue() : 3.0);
+                MovingObjectPosition movingobjectposition = aef.c(vector2f, reach.isEnabled() ? 3.0 + reach.range.wo().doubleValue() : 3.0);
                 if (movingobjectposition.entityHit != null && !this.attacked && movingobjectposition.entityHit instanceof EntityLivingBase) {
                     AttackEvent attackevent = new AttackEvent((EntityLivingBase)movingobjectposition.entityHit);
                     Client.a.e().d(attackevent);
@@ -54,7 +54,7 @@ public class AimBacktrack extends Module {
         }
     };
     @EventLink
-    public final Listener<AttackEvent> AF = var1 -> {
+    public final Listener<AttackEvent> onAttack = var1 -> {
         if (this.attacked) {
             var1.setCancelled();
         }

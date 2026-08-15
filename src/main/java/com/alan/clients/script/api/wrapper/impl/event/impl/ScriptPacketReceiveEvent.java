@@ -10,15 +10,15 @@ public class ScriptPacketReceiveEvent extends CancellableScriptEvent<PacketRecei
 
     public ScriptPacketReceiveEvent(PacketReceiveEvent var1) {
         super(var1);
-        this.wrappedPacket = ScriptPacketFactory.wrap(var1.dq());
+        this.wrappedPacket = ScriptPacketFactory.wrap(var1.getPacket());
     }
 
     public String getPacketName() {
-        return this.wrapped.dq().getClass().getSimpleName();
+        return this.wrapped.getPacket().getClass().getSimpleName();
     }
 
     public String getPacketClassName() {
-        return this.wrapped.dq().getClass().getName();
+        return this.wrapped.getPacket().getClass().getName();
     }
 
     public boolean isPacket(String var1) {

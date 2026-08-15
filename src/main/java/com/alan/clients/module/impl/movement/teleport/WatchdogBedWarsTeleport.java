@@ -11,7 +11,7 @@ import net.minecraft.util.Vec3;
 public final class WatchdogBedWarsTeleport extends Mode<Teleport> {
     public Vec3 Jd = new Vec3(0.0, 0.0, 0.0);
     @EventLink
-    public final Listener<PreMotionEvent> Sw = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         var1x.setPosY(this.Jd.yCoord);
         var1x.setPosX(this.Jd.xCoord);
         var1x.setPosZ(this.Jd.zCoord);

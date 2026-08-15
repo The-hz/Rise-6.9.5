@@ -18,21 +18,21 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 
 public class MatrixDamageFlight extends Mode<Flight> {
-    private final NumberValue Ia = new NumberValue("Timer Speed", this, 30, 1.0, 100.0, 0.1);
-    private final NumberValue Ib = new NumberValue("Speed", this, 0.07, 0.0, 1.0, 0.01);
-    private final BooleanValue Ic = new BooleanValue("No Speed", this, false);
-    private final BooleanValue Id = new BooleanValue("Detect Damage", this, true);
-    private final BooleanValue Ie = new BooleanValue("Auto Disable", this, true);
-    private final NumberValue If = new NumberValue("Fly Ticks", this, 1000, 0.0, 1600.0, 10.0, () -> !this.Id.wo());
-    private final BooleanValue Ig = new BooleanValue("Self Damage", this, true);
-    private final BooleanValue Ih = new BooleanValue("New Self Damage", this, false);
-    private final BooleanValue Ii = new BooleanValue("Packet", this, true);
-    private final ModeValue Ij = new ModeValue("Motion Y", this)
+    private final NumberValue timerSpeed = new NumberValue("Timer Speed", this, 30, 1.0, 100.0, 0.1);
+    private final NumberValue speed = new NumberValue("Speed", this, 0.07, 0.0, 1.0, 0.01);
+    private final BooleanValue noSpeed = new BooleanValue("No Speed", this, false);
+    private final BooleanValue detectDamage = new BooleanValue("Detect Damage", this, true);
+    private final BooleanValue autoDisable = new BooleanValue("Auto Disable", this, true);
+    private final NumberValue flyTicks = new NumberValue("Fly Ticks", this, 1000, 0.0, 1600.0, 10.0, () -> !this.detectDamage.wo());
+    private final BooleanValue selfDamage = new BooleanValue("Self Damage", this, true);
+    private final BooleanValue newSelfDamage = new BooleanValue("New Self Damage", this, false);
+    private final BooleanValue packet = new BooleanValue("Packet", this, true);
+    private final ModeValue motionY = new ModeValue("Motion Y", this)
         .add(new SubMode("None"))
         .add(new SubMode("Simple"))
         .add(new SubMode("Multiply"))
         .setDefault("None");
-    private final NumberValue Ik = new NumberValue("Motion", this, -0.01, -0.3, 0.3, 0.01, () -> this.Ij.wo().getName().equals("None"));
+    private final NumberValue motion = new NumberValue("Motion", this, -0.01, -0.3, 0.3, 0.01, () -> this.motionY.wo().getName().equals("None"));
     private float Il;
     private float Im;
     private int In;
@@ -40,12 +40,12 @@ public class MatrixDamageFlight extends Mode<Flight> {
     private int Io;
     private boolean Ip;
     @EventLink
-    public final Listener<PreMotionEvent> Iq = var1x -> {
-        if (this.Ig.wo() && aEg.thePlayer.hurtTime <= 0 && this.Hb < 4) {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
+        if (this.selfDamage.wo() && aEg.thePlayer.hurtTime <= 0 && this.Hb < 4) {
             var1x.setOnGround(false);
         }
 
-        if (this.Ih.wo() && bd.cY > 3.0F) {
+        if (this.newSelfDamage.wo() && bd.cY > 3.0F) {
             var1x.setOnGround(true);
             aEg.thePlayer.onGround = true;
             aEg.thePlayer.motionY = 0.0;
@@ -53,8 +53,8 @@ public class MatrixDamageFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> Ir = var1x -> {
-        if (this.Ig.wo() && !this.Ip && (this.Hb < 4 || !aEg.thePlayer.onGround)) {
+    public final Listener<MoveInputEvent> onMoveInput = var1x -> {
+        if (this.selfDamage.wo() && !this.Ip && (this.Hb < 4 || !aEg.thePlayer.onGround)) {
             var1x.setSneak(false);
             var1x.setJump(false);
             var1x.setStrafe(0.0F);
@@ -62,28 +62,28 @@ public class MatrixDamageFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<PreUpdateEvent> Is = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.thePlayer.hurtTime > 0 && !this.Ip && aEg.thePlayer.tR >= 3) {
-            this.Io = 20 * this.Ia.wo().intValue();
+            this.Io = 20 * this.timerSpeed.wo().intValue();
             this.Ip = true;
         }
 
-        if (this.Ig.wo() && aEg.thePlayer.hurtTime <= 0 && this.Hb < 4 && aEg.thePlayer.onGround) {
+        if (this.selfDamage.wo() && aEg.thePlayer.hurtTime <= 0 && this.Hb < 4 && aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();
             this.Hb++;
         }
 
-        if (!this.Id.wo() || this.In <= this.If.wo().intValue() && this.Ip) {
-            double d0 = this.Io > 0 ? this.Ib.wo().doubleValue() : 0.03;
-            if (!this.Ic.wo()) {
+        if (!this.detectDamage.wo() || this.In <= this.flyTicks.wo().intValue() && this.Ip) {
+            double d0 = this.Io > 0 ? this.speed.wo().doubleValue() : 0.03;
+            if (!this.noSpeed.wo()) {
                 MoveUtil.strafe(d0);
             }
 
             label76: {
                 label75: {
                     label74: {
-                        aEg.timer.dzD = this.Ia.wo().floatValue();
-                        String s = this.Ij.wo().getName();
+                        aEg.timer.dzD = this.timerSpeed.wo().floatValue();
+                        String s = this.motionY.wo().getName();
                         byte b0 = -1;
                         switch (s.hashCode()) {
                             case -1808631973:
@@ -117,11 +117,11 @@ public class MatrixDamageFlight extends Mode<Flight> {
                         }
                     }
 
-                    aEg.thePlayer.motionY = aEg.thePlayer.motionY * this.Ik.wo().doubleValue();
+                    aEg.thePlayer.motionY = aEg.thePlayer.motionY * this.motion.wo().doubleValue();
                     break label76;
                 }
 
-                aEg.thePlayer.motionY = this.Ik.wo().doubleValue();
+                aEg.thePlayer.motionY = this.motion.wo().doubleValue();
             }
 
             if (this.Io > 0) {
@@ -131,13 +131,13 @@ public class MatrixDamageFlight extends Mode<Flight> {
             this.In++;
         }
 
-        if (this.Id.wo() && this.Ip) {
-            if (!this.Ie.wo()) {
-                if (this.In >= this.If.wo().intValue()) {
-                    this.wj().toggle();
+        if (this.detectDamage.wo() && this.Ip) {
+            if (!this.autoDisable.wo()) {
+                if (this.In >= this.flyTicks.wo().intValue()) {
+                    this.getParent().toggle();
                 }
             } else if (this.Io <= 0) {
-                this.wj().toggle();
+                this.getParent().toggle();
             }
         }
     };
@@ -163,7 +163,7 @@ public class MatrixDamageFlight extends Mode<Flight> {
         this.Io = 0;
         this.Ip = false;
         aEg.timer.dzD = 1.0F;
-        if (this.Ii.wo()) {
+        if (this.packet.wo()) {
             ahj.m(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));
             ahj.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, false));
             ahj.m(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));

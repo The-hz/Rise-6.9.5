@@ -538,7 +538,7 @@ public final class afj {
             }
 
             try {
-                Module module = Client.a.g().q(s);
+                Module module = Client.a.g().get(s);
                 if (module != null) {
                     return this.b(module.getAliases(), module.getName());
                 }

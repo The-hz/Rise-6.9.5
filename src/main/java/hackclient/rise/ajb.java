@@ -18,16 +18,16 @@ public class ajb extends aix {
     public void a(aiz var1, float var2, List<Runnable> var3) {
         if (Display.isVisible()) {
             if (var1 == aiz.OVERLAY) {
-                this.ju();
-                this.c(true);
-                if (this.bd()) {
+                this.update();
+                this.setActive(true);
+                if (this.isActive()) {
                     this.aPV.bindFramebuffer(true);
                     var3.forEach(Runnable::run);
                     aEg.getFramebuffer().bindFramebuffer(true);
-                    int i = this.aPU.vO();
+                    int i = this.aPU.getProgramId();
                     this.aPU.rt();
-                    aja.a(i, "u_diffuse_sampler", 0);
-                    aja.a(i, "u_alpha", this.aoJ);
+                    aja.uniform1i(i, "u_diffuse_sampler", 0);
+                    aja.uniform1f(i, "u_alpha", this.aoJ);
                     GlStateManager.enableBlend();
                     GlStateManager.blendFunc(770, 771);
                     GlStateManager.alphaFunc(516, 0.0F);
@@ -41,7 +41,7 @@ public class ajb extends aix {
     }
 
     @Override
-    public void ju() {
+    public void update() {
         if (aEg.displayWidth == this.aPV.framebufferWidth && aEg.displayHeight == this.aPV.framebufferHeight) {
             this.aPV.framebufferClear();
         } else {

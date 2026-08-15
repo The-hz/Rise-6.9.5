@@ -8,17 +8,17 @@ public enum MovementFix {
     TRADITIONAL("Traditional"),
     BACKWARDS_SPRINT("Backwards Sprint");
 
-    final String gK;
+    final String name;
     private static final MovementFix[] $VALUES = cd();
 
     @Override
     public String toString() {
-        return this.gK;
+        return this.name;
     }
 
     @Generated
     MovementFix(String var3) {
-        this.gK = var3;
+        this.name = var3;
     }
 
     private static MovementFix[] cd() {

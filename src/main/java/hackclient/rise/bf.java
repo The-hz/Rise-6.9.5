@@ -27,12 +27,12 @@ public class bf extends Component implements InstanceAccess {
     public static List<String> dd = new ArrayList<>();
     public static List<String> de = new ArrayList<>();
     @EventLink
-    public final Listener<ServerJoinEvent> df = var0 -> {
+    public final Listener<ServerJoinEvent> onServerJoin = var0 -> {
         dc = new HashMap<>();
         dd = new ArrayList<>();
     };
     @EventLink
-    public final Listener<TickEvent> dg = var0 -> {
+    public final Listener<TickEvent> onTick = var0 -> {
         ce.ch();
         ce.cg();
 
@@ -84,8 +84,8 @@ public class bf extends Component implements InstanceAccess {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> di = var0 -> {
-        if (var0.dq() instanceof net.minecraft.network.play.server.c c) {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var0 -> {
+        if (var0.getPacket() instanceof net.minecraft.network.play.server.c c) {
             for (IChatComponent ichatcomponent : new ArrayList<>(c.getChatComponent().getSiblings())) {
                 if (ichatcomponent instanceof s) {
                     String s = ichatcomponent.getFormattedText();
@@ -103,7 +103,7 @@ public class bf extends Component implements InstanceAccess {
                 }
             }
 
-            var0.e(c);
+            var0.setPacket(c);
         }
     };
 
@@ -150,7 +150,7 @@ public class bf extends Component implements InstanceAccess {
     }
 
     public static String d(String var0, String var1) {
-        String s = Client.a.k().rz().rH().toString();
+        String s = Client.a.k().rz().getChatAccentColor().toString();
         return EnumChatFormatting.BOLD + var1 + var0 + EnumChatFormatting.RESET + s + " » " + EnumChatFormatting.RESET;
     }
 }

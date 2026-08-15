@@ -13,7 +13,7 @@ public class MatrixSprint extends Mode<Scaffold> {
     private int time;
     private boolean ignore;
     @EventLink
-    public final Listener<StrafeEvent> ajn = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         float f = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
         RotationComponent.d(false);
         this.e(Speed.class).setEnabled(false);

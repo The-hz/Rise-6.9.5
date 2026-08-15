@@ -12,7 +12,7 @@ import java.awt.Color;
 
 public class SkeletalESP extends Mode<ESP> {
     @EventLink
-    public final Listener<PreUpdateEvent> asi = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         Color color = this.rz().rA();
         cf.a(new cs(new cn(color, color, color)));
     };

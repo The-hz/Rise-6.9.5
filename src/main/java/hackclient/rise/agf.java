@@ -20,16 +20,16 @@ import org.lwjgl.opengl.GL11;
 public class agf extends agc {
     private static final String aIw = "ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String aIx = "0123456789abcdefklmnor";
-    private static final Color aIy = new Color(255, 255, 255, 0);
+    private static final Color TRANSPARENT_COLOR = new Color(255, 255, 255, 0);
     private static final float aIz = 0.5F;
     private static final float aIA = 2.0F;
-    private static final char aIB = '§';
-    private static final int[] aIC = new int[32];
+    private static final char COLOR_INVOKER = '§';
+    private static final int[] COLOR_CODES = new int[32];
     private static final int aID = 256;
     private static final int aIE = 65535;
     private static final int aIF = 4;
     private static final int aIG = 255;
-    private final Font aIH;
+    private final Font font;
     private final boolean aII;
     private final float aIJ;
     private final age[] aIK = new age[256];
@@ -59,9 +59,9 @@ public class agf extends agc {
     }
 
     public agf(Font var1, boolean var2, boolean var3, boolean var4) {
-        tz();
+        calculateColorCodes();
         this.aIN = var3;
-        this.aIH = var1;
+        this.font = var1;
         this.aII = var2;
         this.aIJ = (float)(
             var1.getStringBounds("ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", new FontRenderContext(new AffineTransform(), var3, var2)).getHeight()
@@ -76,9 +76,9 @@ public class agf extends agc {
     }
 
     public agf(Font var1, boolean var2, boolean var3) {
-        tz();
+        calculateColorCodes();
         this.aIN = var3;
-        this.aIH = var1;
+        this.font = var1;
         this.aII = var2;
         this.aIJ = (float)(
             var1.getStringBounds("ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", new FontRenderContext(new AffineTransform(), var3, var2)).getHeight()
@@ -89,8 +89,8 @@ public class agf extends agc {
     }
 
     public agf(Font var1, boolean var2) {
-        tz();
-        this.aIH = var1;
+        calculateColorCodes();
+        this.font = var1;
         this.aII = var2;
         this.aIJ = (float)(
             var1.getStringBounds("ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", new FontRenderContext(new AffineTransform(), true, var2)).getHeight()
@@ -100,7 +100,7 @@ public class agf extends agc {
         this.a(this.aIM, 1);
     }
 
-    public static void tz() {
+    public static void calculateColorCodes() {
         for (int i = 0; i < 32; i++) {
             int j = (i >> 3 & 1) * 85;
             int k = (i >> 2 & 1) * 170 + j;
@@ -116,12 +116,12 @@ public class agf extends agc {
                 i1 /= 4;
             }
 
-            aIC[i] = (k & 0xFF) << 16 | (l & 0xFF) << 8 | i1 & 0xFF;
+            COLOR_CODES[i] = (k & 0xFF) << 16 | (l & 0xFF) << 8 | i1 & 0xFF;
         }
     }
 
     public void a(age[] var1, int var2) {
-        Font font = this.aIH.deriveFont(var2);
+        Font font = this.font.deriveFont(var2);
         Graphics2D graphics2d = (Graphics2D)new BufferedImage(1, 1, 2).getGraphics();
         FontMetrics fontmetrics = graphics2d.getFontMetrics(font);
 
@@ -135,17 +135,17 @@ public class agf extends agc {
             graphics2d1.setFont(font);
             int j = bufferedimage.getWidth();
             int k = bufferedimage.getHeight();
-            graphics2d1.setColor(aIy);
+            graphics2d1.setColor(TRANSPARENT_COLOR);
             graphics2d1.fillRect(0, 0, j, k);
-            this.a(graphics2d1);
+            this.setRenderHints(graphics2d1);
             graphics2d1.drawString(c0 + "", 4, font.getSize());
             int l = GL11.glGenTextures();
-            this.a(l, bufferedimage, j, k);
+            this.uploadTexture(l, bufferedimage, j, k);
             var1[i] = new age(l, j, k);
         }
     }
 
-    public void a(Graphics2D var1) {
+    public void setRenderHints(Graphics2D var1) {
         var1.setColor(Color.WHITE);
         if (this.aIN) {
             var1.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -158,7 +158,7 @@ public class agf extends agc {
         );
     }
 
-    public void a(int var1, BufferedImage var2, int var3, int var4) {
+    public void uploadTexture(int var1, BufferedImage var2, int var3, int var4) {
         int[] aint = var2.getRGB(0, 0, var3, var4, new int[var3 * var4], 0, var3);
         ByteBuffer bytebuffer = BufferUtils.createByteBuffer(var3 * var4 * 4);
 
@@ -199,7 +199,7 @@ public class agf extends agc {
         return this.b(var1, var2, var4, var6, false);
     }
 
-    public void a(String var1, float var2, float var3, int var4) {
+    public void drawCenteredStringWithShadow(String var1, float var2, float var3, int var4) {
         this.b(var1, var2 - (this.getStringWidth(var1) >> 1), var3, var4, false);
     }
 
@@ -209,7 +209,7 @@ public class agf extends agc {
             return 0;
         }
 
-        if (bT(var1)) {
+        if (requiresInternationalFont(var1)) {
             return Minecraft.getMinecraft().fontRendererObj.b(var1, var2, var4, var6, var7);
         }
 
@@ -232,7 +232,7 @@ public class agf extends agc {
 
         try {
             char[] achar = s.toCharArray();
-            int i = (int)(this.tq() * 2.0F);
+            int i = (int)(this.height() * 2.0F);
 
             for (int j = 0; j < achar.length; j++) {
                 char c0 = achar[j];
@@ -241,8 +241,8 @@ public class agf extends agc {
                     d5 += i;
                 } else if (c0 == 167 && j + 1 < achar.length) {
                     int k = "0123456789abcdefklmnor".indexOf(achar[++j]);
-                    if (k >= 0 && k < aIC.length) {
-                        aip.d(new Color(aIC[k]));
+                    if (k >= 0 && k < COLOR_CODES.length) {
+                        aip.d(new Color(COLOR_CODES[k]));
                     }
                 } else {
                     char c1 = c0;
@@ -307,7 +307,7 @@ public class agf extends agc {
     @Override
     public int getStringWidth(String var1) {
         String s = var1.replaceAll("§l", "");
-        if (bT(s)) {
+        if (requiresInternationalFont(s)) {
             return Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
         }
 
@@ -352,7 +352,7 @@ public class agf extends agc {
     }
 
     @Override
-    public float tq() {
+    public float height() {
         return this.aIJ;
     }
 
@@ -388,7 +388,7 @@ public class agf extends agc {
         return c0 >= 'ꥠ' && c0 <= '\ua97f' ? true : c0 >= 'ힰ' && c0 <= '\ud7ff';
     }
 
-    private static boolean bT(String var0) {
+    private static boolean requiresInternationalFont(String var0) {
         if (var0 != null && !var0.isEmpty()) {
             for (int i = 0; i < var0.length(); i += Character.charCount(var0.codePointAt(i))) {
                 int j = var0.codePointAt(i);

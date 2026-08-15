@@ -19,7 +19,7 @@ public final class AdvancedAntiBot extends Mode<AntiBot> {
     private boolean ro;
     private final Set<UUID> rp = new HashSet<>();
     @EventLink
-    public final Listener<PreMotionEvent> rq = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (aEg.theWorld != null && aEg.thePlayer != null) {
             EntityLivingBase entitylivingbase = this.e(KillAura.class).jE;
             if (!this.ro && aEg.thePlayer.ticksExisted >= 150 && this.e(KillAura.class).isEnabled() && entitylivingbase != null && !entitylivingbase.isDead) {
@@ -51,7 +51,7 @@ public final class AdvancedAntiBot extends Mode<AntiBot> {
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> rr = var1x -> {
+    public final Listener<WorldChangeEvent> onWorldChange = var1x -> {
         this.ro = false;
         this.rp.clear();
         Client.a.x().a(this);

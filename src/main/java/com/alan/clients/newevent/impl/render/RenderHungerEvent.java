@@ -8,7 +8,7 @@ public final class RenderHungerEvent implements Event {
     private final ScaledResolution scaledResolution;
 
     @Generated
-    public ScaledResolution dx() {
+    public ScaledResolution getScaledResolution() {
         return this.scaledResolution;
     }
 

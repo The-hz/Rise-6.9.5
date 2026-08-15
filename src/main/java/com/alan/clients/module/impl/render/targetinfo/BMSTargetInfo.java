@@ -42,7 +42,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
     private Animation aum = new Animation(Easing.EASE_OUT_ELASTIC, 500L);
     private Animation aun = new Animation(Easing.EASE_OUT_SINE, 500L);
     @EventLink
-    public final Listener<Render2DEvent> auo = var1x -> {
+    public final Listener<Render2DEvent> onRender2D = var1x -> {
         if (this.aui == null) {
             this.aui = this.e(TargetInfo.class);
         }
@@ -51,7 +51,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
         if (entity != null) {
             boolean flag = !this.aui.inWorld || this.aui.rG.T(1000L);
             this.aum.h(flag ? 400L : 850L);
-            this.aum.a(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
+            this.aum.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
             this.aum.Q(flag ? 0.0 : 1.0);
             if (!(this.aum.sG() <= 0.0)) {
                 String s = entity.getName();
@@ -61,10 +61,10 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                 AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;
                 HealthBypass healthbypass = this.e(HealthBypass.class);
                 float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractclientplayer) : abstractclientplayer.getHealth();
-                double d2 = Math.min(!this.aui.inWorld ? 0.0 : ahg.a(f, 1), abstractclientplayer.getMaxHealth());
+                double d2 = Math.min(!this.aui.inWorld ? 0.0 : ahg.round(f, 1), abstractclientplayer.getMaxHealth());
                 double d3 = Math.max(0, 100);
                 this.aun.Q(d2 / abstractclientplayer.getMaxHealth() * d3);
-                this.aun.a(Easing.EASE_OUT_QUINT);
+                this.aun.setEasing(Easing.EASE_OUT_QUINT);
                 this.aun.h(250L);
                 double d4 = this.aun.sG();
                 double d5 = (abstractclientplayer.hurtTime == 0 ? 0.0F : abstractclientplayer.hurtTime - aEg.timer.bWm) * 0.0F;
@@ -137,7 +137,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
         }
     };
     @EventLink
-    public final Listener<TickEvent> aup = var1x -> {
+    public final Listener<TickEvent> onTick = var1x -> {
         if (this.aui != null) {
             Entity entity = this.aui.target;
             if (entity != null && !(this.aum.sG() <= 0.0)) {

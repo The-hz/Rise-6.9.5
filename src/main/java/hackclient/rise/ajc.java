@@ -17,8 +17,8 @@ public class ajc extends aix {
     public void a(aiz var1, float var2, List<Runnable> var3) {
         if (Display.isVisible()) {
             if (var1 == aiz.OVERLAY) {
-                this.ju();
-                this.aPW.vO();
+                this.update();
+                this.aPW.getProgramId();
                 new ScaledResolution(aEg);
                 GlStateManager.enableBlend();
                 GlStateManager.blendFunc(770, 771);
@@ -32,8 +32,8 @@ public class ajc extends aix {
     }
 
     @Override
-    public void ju() {
-        this.c(true);
+    public void update() {
+        this.setActive(true);
         if (aEg.displayWidth == this.aPX.framebufferWidth && aEg.displayHeight == this.aPX.framebufferHeight) {
             this.aPX.framebufferClear();
         } else {

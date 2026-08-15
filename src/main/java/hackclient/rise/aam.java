@@ -4,7 +4,7 @@ import com.alan.clients.Client;
 import java.lang.reflect.Method;
 
 public final class aam extends aaj {
-    private static final String[] awV = new String[]{
+    private static final String[] CLASS_NAMES = new String[]{
         "sun.instrument.InstrumentationImpl",
         "java.lang.instrument.Instrumentation",
         "java.lang.instrument.ClassDefinition",
@@ -12,24 +12,24 @@ public final class aam extends aaj {
         "java.lang.instrument.IllegalClassFormatException",
         "java.lang.instrument.UnmodifiableClassException"
     };
-    private final Method awW;
+    private final Method findLoadedClassMethod;
 
     public aam() throws NoSuchMethodException {
         super(aak.REPETITIVE, true);
 
         try {
-            this.awW = ClassLoader.class.getDeclaredMethod("findLoadedClass0", String.class);
+            this.findLoadedClassMethod = ClassLoader.class.getDeclaredMethod("findLoadedClass0", String.class);
         } catch (Throwable throwable) {
             throw throwable;
         }
     }
 
     @Override
-    public boolean nX() throws java.lang.IllegalAccessException, java.lang.reflect.InvocationTargetException {
+    public boolean check() throws java.lang.IllegalAccessException, java.lang.reflect.InvocationTargetException {
         ClassLoader classloader = ClassLoader.getSystemClassLoader();
 
-        for (String s : awV) {
-            if (this.awW.invoke(classloader, s) != null) {
+        for (String s : CLASS_NAMES) {
+            if (this.findLoadedClassMethod.invoke(classloader, s) != null) {
                 Client.a.f().oc();
                 return true;
             }

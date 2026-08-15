@@ -9,7 +9,7 @@ import hackclient.rise.bd;
 
 public final class VulcanCriticals extends Mode<Criticals> {
     @EventLink
-    public final Listener<PreMotionEvent> rS = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (aEg.thePlayer.ae <= 18 && bd.cY < 1.8) {
             var0.setOnGround(false);
         }

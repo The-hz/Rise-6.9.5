@@ -25,15 +25,15 @@ import net.minecraft.entity.EntityLivingBase;
 
 public class VanillaNameTags
 extends Mode<NameTags> {
-    private final BooleanValue atE = new BooleanValue("Show Team Tag", (Mode<?>)this, (Boolean)false);
-    private final BooleanValue atF = new BooleanValue("Show Target Tag", (Mode<?>)this, (Boolean)false);
-    private final BooleanValue atG = new BooleanValue("Show Friend Tag", (Mode<?>)this, (Boolean)false);
-    private final BooleanValue atH = new BooleanValue("Shortened Tags", (Mode<?>)this, (Boolean)false);
+    private final BooleanValue showTeamTag = new BooleanValue("Show Team Tag", (Mode<?>)this, (Boolean)false);
+    private final BooleanValue showTargetTag = new BooleanValue("Show Target Tag", (Mode<?>)this, (Boolean)false);
+    private final BooleanValue showFriendTag = new BooleanValue("Show Friend Tag", (Mode<?>)this, (Boolean)false);
+    private final BooleanValue shortenedTags = new BooleanValue("Shortened Tags", (Mode<?>)this, (Boolean)false);
     @EventLink
-    public final Listener<Render2DEvent> atI = render2DEvent -> {
+    public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         agd agd2 = VanillaNameTags.aEg.fontRendererObj;
         GlStateManager.pushMatrix();
-        List<EntityLivingBase> list = bv.b((Boolean)((NameTags)this.wj()).aoZ.wo(), (Boolean)((NameTags)this.wj()).apa.wo(), (Boolean)((NameTags)this.wj()).apb.wo(), (Boolean)((NameTags)this.wj()).apc.wo(), (Boolean)((NameTags)this.wj()).apd.wo(), true);
+        List<EntityLivingBase> list = bv.b((Boolean)((NameTags)this.getParent()).player.wo(), (Boolean)((NameTags)this.getParent()).invisibles.wo(), (Boolean)((NameTags)this.getParent()).animals.wo(), (Boolean)((NameTags)this.getParent()).mobs.wo(), (Boolean)((NameTags)this.getParent()).playerTeammates.wo(), true);
         if (VanillaNameTags.aEg.gameSettings.thirdPersonView != 0) {
             list.add((EntityLivingBase)VanillaNameTags.aEg.thePlayer);
         }
@@ -45,21 +45,21 @@ extends Mode<NameTags> {
             }
             EntityLivingBase entityLivingBase = iterator.next();
             Object object = entityLivingBase.getDisplayName().getUnformattedText();
-            if (((Boolean)this.atE.wo()).booleanValue() && aih.D(entityLivingBase)) {
-                object = "\u00a7a\u00a7l" + ((Boolean)this.atH.wo() != false ? "[TM]" : "[TEAM]") + "\u00a7r " + (String)object;
+            if (((Boolean)this.showTeamTag.wo()).booleanValue() && aih.sameTeam(entityLivingBase)) {
+                object = "\u00a7a\u00a7l" + ((Boolean)this.shortenedTags.wo() != false ? "[TM]" : "[TEAM]") + "\u00a7r " + (String)object;
             }
-            if (((Boolean)this.atF.wo()).booleanValue() && bx.n(entityLivingBase.getName())) {
-                object = "\u00a74\u00a7l" + ((Boolean)this.atH.wo() != false ? "[T]" : "[TARGET]") + "\u00a7r " + (String)object;
+            if (((Boolean)this.showTargetTag.wo()).booleanValue() && bx.n(entityLivingBase.getName())) {
+                object = "\u00a74\u00a7l" + ((Boolean)this.shortenedTags.wo() != false ? "[T]" : "[TARGET]") + "\u00a7r " + (String)object;
             }
-            if (((Boolean)this.atG.wo()).booleanValue() && bx.isFriend(entityLivingBase.getName())) {
-                object = "\u00a7b\u00a7l" + ((Boolean)this.atH.wo() != false ? "[F]" : "[FRIEND]") + "\u00a7r " + (String)object;
+            if (((Boolean)this.showFriendTag.wo()).booleanValue() && bx.isFriend(entityLivingBase.getName())) {
+                object = "\u00a7b\u00a7l" + ((Boolean)this.shortenedTags.wo() != false ? "[F]" : "[FRIEND]") + "\u00a7r " + (String)object;
             }
             entityLivingBase.Tc();
             Vector4d vector4d = ProjectionComponent.e((Entity)entityLivingBase);
             if (vector4d == null) continue;
             float f2 = 2.0f;
             int n2 = 8;
-            float f3 = ((NameTags)this.wj()).a((String)object, agd2);
+            float f3 = ((NameTags)this.getParent()).a((String)object, agd2);
             float f4 = (float)(vector4d.x + (vector4d.z - vector4d.x) / 2.0);
             float f5 = (float)vector4d.y - (float)n2;
             this.b(gg.BLOOM).c(() -> RenderUtil.d(f4 - f3 / 2.0f - f2, f5 - f2 - 3.0f, f3 + f2 * 2.0f, (float)n2 + f2 * 2.0f, this.rz().rE()));

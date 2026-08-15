@@ -13,7 +13,7 @@ import com.alan.clients.value.Mode;
 public class Vulcan2Flight extends Mode<Flight> {
     private static final double HD = 10.0;
     @EventLink
-    public final Listener<PreMotionEvent> HE = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         BlinkComponent.a(25000, true, false, false, false);
         if (MoveUtil.speed() < 0.2) {
             MoveUtil.strafe(0.2);
@@ -27,9 +27,9 @@ public class Vulcan2Flight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> HF = var0 -> {};
+    public final Listener<StrafeEvent> onStrafe = var0 -> {};
     @EventLink
-    public final Listener<MoveInputEvent> HG = var0 -> var0.setSneak(false);
+    public final Listener<MoveInputEvent> onMoveInput = var0 -> var0.setSneak(false);
 
     public Vulcan2Flight(String var1, Flight var2) {
         super(var1, var2);

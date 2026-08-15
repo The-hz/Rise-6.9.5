@@ -22,22 +22,22 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 @ModuleInfo(aliases = {"module.movement.stuck.name", "stasis"}, description = "module.movement.stuck.description", category = Category.MOVEMENT)
 public class Stuck extends Module {
     private aka EC;
-    private final BooleanValue ED = new BooleanValue("Rotate", this, false);
-    private final BooleanValue EE = new BooleanValue("Test", this, false);
-    private final NumberValue EF = new NumberValue("Pulse Ticks", this, 0, 0, 30, 1);
+    private final BooleanValue rotations = new BooleanValue("Rotate", this, false);
+    private final BooleanValue test = new BooleanValue("Test", this, false);
+    private final NumberValue pulseTicks = new NumberValue("Pulse Ticks", this, 0, 0, 30, 1);
     private boolean EG;
     private int EH;
     private int EI;
     @EventLink
-    public final Listener<PostStrafeEvent> EJ = var1 -> {
+    public final Listener<PostStrafeEvent> onPostStrafe = var1 -> {
         if (this.EG) {
             MoveUtil.stop();
             aEg.thePlayer.motionY = 0.0;
         }
     };
     @EventLink
-    public final Listener<TickEvent> EK = var1 -> {
-        int i = this.EF.wo().intValue();
+    public final Listener<TickEvent> onTick = var1 -> {
+        int i = this.pulseTicks.wo().intValue();
         if (i <= 0) {
             if (!this.EG) {
                 this.hm();
@@ -58,16 +58,16 @@ public class Stuck extends Module {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> EL = var1 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         Packet packet = var1.dq();
-        if (this.EE.wo()
+        if (this.test.wo()
             && this.EG
             && (packet instanceof C02PacketUseEntity || packet instanceof C07PacketPlayerDigging || packet instanceof C08PacketPlayerBlockPlacement)) {
             this.ho();
         }
 
         if (this.EG && packet instanceof C03PacketPlayer) {
-            if (!this.ED.wo()) {
+            if (!this.rotations.wo()) {
                 var1.setCancelled();
                 return;
             }

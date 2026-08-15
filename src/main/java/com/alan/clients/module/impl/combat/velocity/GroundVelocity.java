@@ -12,15 +12,15 @@ public final class GroundVelocity extends Mode<Velocity> {
     private final NumberValue delay = new NumberValue("Delay", this, 1, 0, 20, 1);
     private int ticks;
     @EventLink
-    public final Listener<PreMotionEvent> uv = var1x -> {
-        if (!this.wj().qQ.wo() || aEg.thePlayer.isSwingInProgress) {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
+        if (!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress) {
             if (aEg.thePlayer.ae == this.delay.wo().intValue()) {
                 aEg.thePlayer.onGround = true;
             }
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> uw = var1x -> {
+    public final Listener<MoveInputEvent> onMove = var1x -> {
         if (aEg.thePlayer.ae == this.delay.wo().intValue() + 1) {
             var1x.setJump(false);
         }

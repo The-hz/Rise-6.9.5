@@ -27,15 +27,15 @@ public class WatchdogGlideLongJump extends Mode<LongJump> {
     private int LM;
     private double LN;
     private int hV;
-    @EventLink(cH = 3)
-    public final Listener<PreMotionEvent> LO = var1x -> {
+    @EventLink(value = 3)
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         this.hV++;
         if (this.hV > 2) {
             this.hV = -1;
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> LP = var0 -> {
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (aEg.thePlayer.onGround) {
             MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() - 0.001);
             aEg.thePlayer.jump();
@@ -73,15 +73,15 @@ public class WatchdogGlideLongJump extends Mode<LongJump> {
         }
     };
     @EventLink
-    public final Listener<BlockAABBEvent> LQ = var0 -> {
-        Block block = var0.df();
-        BlockPos blockpos = var0.dg();
+    public final Listener<BlockAABBEvent> onBlockAABB = var0 -> {
+        Block block = var0.getBlock();
+        BlockPos blockpos = var0.getBlockPos();
         WorldClient worldclient = aEg.theWorld;
         IBlockState iblockstate = worldclient.getBlockState(blockpos);
         block.getCollisionBoundingBox(worldclient, blockpos, iblockstate);
     };
     @EventLink
-    public final Listener<JumpEvent> LR = var0 -> var0.setJumpMotion(0.42F);
+    public final Listener<JumpEvent> onJump = var0 -> var0.setJumpMotion(0.42F);
 
     public WatchdogGlideLongJump(String var1, LongJump var2) {
         super(var1, var2);

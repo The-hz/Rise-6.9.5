@@ -18,7 +18,7 @@ import net.minecraft.entity.Entity;
 public class WurstTargetInfo extends Mode<TargetInfo> {
     private TargetInfo aui;
     @EventLink
-    public final Listener<Render2DEvent> avn = var1x -> {
+    public final Listener<Render2DEvent> onRender2D = var1x -> {
         if (this.aui == null) {
             this.aui = this.e(TargetInfo.class);
         }
@@ -41,7 +41,7 @@ public class WurstTargetInfo extends Mode<TargetInfo> {
         float f = healthbypass != null && healthbypass.isEnabled()
             ? HealthBypass.B(abstractclientplayer)
             : abstractclientplayer.getHealth();
-        double d2 = Math.min(!this.aui.inWorld ? 0.0 : ahg.a(f, 1), abstractclientplayer.getMaxHealth());
+        double d2 = Math.min(!this.aui.inWorld ? 0.0 : ahg.round(f, 1), abstractclientplayer.getMaxHealth());
         RenderUtil.d(d0 + 4.0, d1 + 16.0, 177.0 * (d2 / abstractclientplayer.getMaxHealth()), 10.0, Color.ORANGE);
     };
 

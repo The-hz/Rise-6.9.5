@@ -16,17 +16,17 @@ public class gf {
     private final LinkedHashMap<Integer, LinkedHashMap<gg, ge>> kM = new LinkedHashMap<>();
     private final int kN = 3;
     private boolean kO;
-    @EventLink(cH = -1)
+    @EventLink(value = -1)
     public final Listener<fu> kP = var1 -> this.b(aiz.OVERLAY);
-    @EventLink(cH = -1)
-    public final Listener<Render2DEvent> kQ = var1 -> {
+    @EventLink(value = -1)
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
         add.w(0.0F);
         this.b(aiz.OVERLAY);
     };
     @EventLink
-    public final Listener<GameEvent> kR = var1 -> this.kO = Client.a.g().c(Interface.class).aoc.wo();
-    @EventLink(cH = -1)
-    public final Listener<Render3DEvent> kS = var1 -> this.b(aiz.CAMERA);
+    public final Listener<GameEvent> onGame = var1 -> this.kO = Client.a.g().c(Interface.class).aoc.wo();
+    @EventLink(value = -1)
+    public final Listener<Render3DEvent> onRender3D = var1 -> this.b(aiz.CAMERA);
 
     public gf() {
         try {

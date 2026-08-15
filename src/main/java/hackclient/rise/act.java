@@ -31,7 +31,7 @@ final class act implements ada {
             agb.update();
             ArrayList arraylist1 = new ArrayList();
             agb.forEach(var2 -> {
-                String s6 = var2.sK().getName().replace(".txt", "");
+                String s6 = var2.getFile().getName().replace(".txt", "");
                 String s7 = s6.toLowerCase(Locale.ROOT);
                 if (s5.isEmpty() || s7.startsWith(s5)) {
                     arraylist1.add(new acy(s6, "Insult file", ".insults delete <name>", s6, 1, false));

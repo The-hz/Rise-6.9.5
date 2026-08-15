@@ -7,13 +7,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 public class aju {
-    static String aQx = j(wa()) + "dleotn6oc94kb" + vX();
+    static String hwid = bytesToHex(generateHWID()) + "dleotn6oc94kb" + vX();
 
     public aju() {
     }
 
     public static String vW() {
-        return aQx;
+        return hwid;
     }
 
     private static String vX() {
@@ -21,7 +21,7 @@ public class aju {
         String s1 = vZ();
         return ajv.wb().equals(ajw.WINDOWS) && s.length() >= 5 && s1.length() >= 5
             ? new String(Base64.getEncoder().encode((s + "_" + s1).getBytes())).replaceAll("==", "")
-            : j(wa());
+            : bytesToHex(generateHWID());
     }
 
     private static String vY() {
@@ -56,7 +56,7 @@ public class aju {
         return stringbuilder.toString();
     }
 
-    private static byte[] wa() {
+    private static byte[] generateHWID() {
         try {
             ajw ajw = ajv.wb();
             MessageDigest messagedigest = MessageDigest.getInstance("SHA-256");
@@ -97,7 +97,7 @@ public class aju {
         }
     }
 
-    private static String j(byte[] var0) {
+    private static String bytesToHex(byte[] var0) {
         StringBuilder stringbuilder = new StringBuilder(2 * var0.length);
 
         for (byte b0 : var0) {

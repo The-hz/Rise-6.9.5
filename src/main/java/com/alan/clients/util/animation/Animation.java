@@ -50,7 +50,7 @@ public class Animation {
     }
 
     @Generated
-    public Easing sA() {
+    public Easing getEasing() {
         return this.easing;
     }
 
@@ -85,12 +85,12 @@ public class Animation {
     }
 
     @Generated
-    public boolean kv() {
+    public boolean isFinished() {
         return this.finished;
     }
 
     @Generated
-    public void a(Easing var1) {
+    public void setEasing(Easing var1) {
         this.easing = var1;
     }
 
@@ -125,7 +125,7 @@ public class Animation {
     }
 
     @Generated
-    public void B(boolean var1) {
+    public void setFinished(boolean var1) {
         this.finished = var1;
     }
 }

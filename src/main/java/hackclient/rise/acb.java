@@ -33,22 +33,22 @@ public final class acb implements abx, InstanceAccess {
         }
 
         this.axT = Math.min(Math.max(0.0, this.axT), 255.0);
-        this.azM.b(abw.TEXT.Y((int)this.axT));
+        this.azM.setColor(abw.TEXT.Y((int)this.axT));
         Vector2d vector2d = new Vector2d(
             riseclickgui.axI.x + riseclickgui.axJ.aym + (riseclickgui.alh.x - riseclickgui.axJ.aym) / 2.0,
             (float)(riseclickgui.axI.y + 17.0F + this.scrollUtil.tE())
         );
         this.azM.h(vector2d);
-        this.azM.pJ();
+        this.azM.draw();
         this.scrollUtil.qx();
         double d0 = riseclickgui.axI.y + 35.0F + this.scrollUtil.tE();
         this.azD = d0;
         double d1 = 0.0;
 
         for (abd abd : this.azB) {
-            abd.a(new Vector2d(riseclickgui.axI.x + riseclickgui.axJ.aym + 4.0, d0), var1, var2, var3);
-            d0 += abd.alh.y + 5.0F;
-            d1 += abd.alh.y + 5.0F;
+            abd.draw(new Vector2d(riseclickgui.axI.x + riseclickgui.axJ.aym + 4.0, d0), var1, var2, var3);
+            d0 += abd.scale.y + 5.0F;
+            d1 += abd.scale.y + 5.0F;
         }
 
         this.azC = d0;
@@ -67,13 +67,13 @@ public final class acb implements abx, InstanceAccess {
             this.azM.I(true);
         }
 
-        this.azM.b(var1, var2);
+        this.azM.key(var1, var2);
         this.scrollUtil.U(0.0);
         this.azB = this.aG(this.azM.getText());
         Iterator iterator = this.qf().iterator();
 
         while (iterator.hasNext()) {
-            ((abd)iterator.next()).b(var1, var2);
+            ((abd)iterator.next()).key(var1, var2);
         }
     }
 
@@ -82,10 +82,10 @@ public final class acb implements abx, InstanceAccess {
         Iterator iterator = this.azB.iterator();
 
         while (iterator.hasNext()) {
-            ((abd)iterator.next()).d(var1, var2, var3);
+            ((abd)iterator.next()).click(var1, var2, var3);
         }
 
-        this.azM.d(var1, var2, var3);
+        this.azM.click(var1, var2, var3);
     }
 
     @Override
@@ -115,8 +115,8 @@ public final class acb implements abx, InstanceAccess {
     public ArrayList<abd> aG(String var1) {
         ArrayList arraylist = new ArrayList();
 
-        for (abd abd : Client.a.v().pg()) {
-            String[] astring = abd.dl().getAliases();
+        for (abd abd : Client.a.v().getModuleList()) {
+            String[] astring = abd.getModule().getAliases();
             int i = astring.length;
 
             for (int j = 0; j < i; j++) {
@@ -139,7 +139,7 @@ public final class acb implements abx, InstanceAccess {
         Iterator iterator = this.azB.iterator();
 
         while (iterator.hasNext()) {
-            for (abl abl : ((abd)iterator.next()).pA()) {
+            for (abl abl : ((abd)iterator.next()).getValueList()) {
                 if (abl instanceof abv && ((abv)abl).azo.ayU) {
                     return true;
                 }

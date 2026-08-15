@@ -49,9 +49,9 @@ public final class Config extends Command {
                             afx.update();
                             afx.forEach(
                                 var1x -> {
-                                    String s4 = var1x.sK().getName().replace(".json", "");
+                                    String s4 = var1x.getFile().getName().replace(".json", "");
                                     String s5 = ".config load " + s4;
-                                    String s6 = this.rz().rH().toString();
+                                    String s6 = this.rz().getChatAccentColor().toString();
                                     s sx = new s(s6 + "> " + s4);
                                     s sxx = new s(String.format(ahd.ce("command.config.loadhover"), s4));
                                     sx.getChatStyle()
@@ -71,7 +71,7 @@ public final class Config extends Command {
 
                 try {
                     Desktop desktop = Desktop.getDesktop();
-                    File file1 = new File(String.valueOf(afx.aHL));
+                    File file1 = new File(String.valueOf(afx.CONFIG_DIRECTORY));
                     desktop.open(file1);
                     afi.b("command.config.folder");
                 } catch (IllegalArgumentException | IOException illegalargumentexception) {
@@ -104,7 +104,7 @@ public final class Config extends Command {
                     switch (b0) {
                         case 0:
                             afx.update();
-                            ConfigFile configfile = afx.bK(s1);
+                            ConfigFile configfile = afx.get(s1);
                             if (configfile != null) {
                                 CompletableFuture.runAsync(() -> {
                                     if (configfile.te()) {

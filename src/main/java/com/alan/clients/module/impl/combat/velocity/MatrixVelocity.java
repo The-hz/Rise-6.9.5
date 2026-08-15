@@ -16,14 +16,14 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 public class MatrixVelocity
 extends Mode<Velocity> {
     @EventLink
-    public Listener<StrafeEvent> uL;
+    public Listener<StrafeEvent> onStrafe;
     @EventLink
-    public Listener<TeleportEvent> uM;
-    @EventLink(cH=0)
-    public Listener<PacketReceiveEvent> uK = packetReceiveEvent -> {
+    public Listener<TeleportEvent> onTeleport;
+    @EventLink(value=0)
+    public Listener<PacketReceiveEvent> onPacketReceive = packetReceiveEvent -> {
         Object var11_2 = null;
         Object var12_3 = null;
-        Packet<?> packet = packetReceiveEvent.dq();
+        Packet<?> packet = packetReceiveEvent.getPacket();
         if (packet instanceof S12PacketEntityVelocity) {
             S12PacketEntityVelocity s12PacketEntityVelocity = (S12PacketEntityVelocity)packet;
             if (s12PacketEntityVelocity.getEntityID() == MatrixVelocity.aEg.thePlayer.getEntityId()) {
@@ -33,7 +33,7 @@ extends Mode<Velocity> {
                 }
                 return;
             }
-            packetReceiveEvent.e((Packet<?>)s12PacketEntityVelocity);
+            packetReceiveEvent.setPacket((Packet<?>)s12PacketEntityVelocity);
         }
     };
 
@@ -43,7 +43,7 @@ extends Mode<Velocity> {
 
     public MatrixVelocity(String string, Velocity velocity) {
         super(string, velocity);
-        this.uL = strafeEvent -> {
+        this.onStrafe = strafeEvent -> {
             if (!MoveUtil.isMoving() && MatrixVelocity.aEg.thePlayer.ae == 1) {
                 MatrixVelocity.aEg.thePlayer.motionX *= -0.1;
                 MatrixVelocity.aEg.thePlayer.motionZ *= -0.1;
@@ -59,7 +59,7 @@ extends Mode<Velocity> {
                 this.e(Flight.class).isEnabled();
             }
         };
-        this.uM = teleportEvent -> {
+        this.onTeleport = teleportEvent -> {
             double d2 = teleportEvent.getPosY() - (MatrixVelocity.aEg.thePlayer.posY - 2.0);
         };
     }

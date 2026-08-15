@@ -9,9 +9,9 @@ import de.florianmichael.vialoadingbase.ViaLoadingBase;
 
 public final class db extends Component {
     @EventLink
-    public final Listener<BlockAABBEvent> iC = var0 -> {
+    public final Listener<BlockAABBEvent> onBlockAABB = var0 -> {
         if (ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
-            var0.df();
+            var0.getBlock();
         }
     };
 

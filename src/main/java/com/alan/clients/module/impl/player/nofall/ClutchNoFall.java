@@ -35,15 +35,15 @@ public class ClutchNoFall extends Mode<NoFall> {
     private boolean aii = false;
     private boolean aij = false;
     private Vector2f aik = null;
-    @EventLink(cH = 2)
-    public final Listener<PreUpdateEvent> ail = var1x -> {
+    @EventLink(value = 2)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         switch (this.aic) {
             case IDLE:
                 if (aEg.thePlayer.onGround || aEg.thePlayer.motionY >= 0.0 || aEg.thePlayer.fallDistance < 2.0F) {
                     return;
                 }
 
-                this.CF = hackclient.rise.aik.e(Items.water_bucket);
+                this.CF = hackclient.rise.aik.findItem(Items.water_bucket);
                 if (this.CF == -1) {
                     return;
                 }
@@ -83,7 +83,7 @@ public class ClutchNoFall extends Mode<NoFall> {
             case WAIT_LAND:
                 if (aEg.thePlayer.onGround || this.aie.T(3000L)) {
                     if (this.CG != null) {
-                        this.aig = hackclient.rise.aik.e(Items.bucket);
+                        this.aig = hackclient.rise.aik.findItem(Items.bucket);
                         afi.b("S");
                         if (this.aig != -1) {
                             this.aic = uo.PICKUP;
@@ -112,7 +112,7 @@ public class ClutchNoFall extends Mode<NoFall> {
                 }
         }
     };
-    @EventLink(cH = 4)
+    @EventLink(value = 4)
     public final Listener<PreMotionEvent> aim = var1x -> {
         if (this.aic == uo.PLACE && this.aii) {
             RotationComponent.setRotations(this.aik, 10.0, MovementFix.NORMAL);
@@ -142,7 +142,7 @@ public class ClutchNoFall extends Mode<NoFall> {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> ain = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (this.aic == uo.PLACE && this.aii) {
             var1x.setCancelled(true);
             this.aii = false;

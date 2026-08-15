@@ -34,8 +34,8 @@ import net.minecraft.network.play.server.z;
 import net.minecraft.network.status.server.S01PacketPong;
 
 public class WatchdogPredictionVelocity extends Mode<Velocity> {
-    public final NumberValue vy = new NumberValue("Velocity to let through", this, 0.3, 0, 0.6, 0.01);
-    private final BooleanValue vz = new BooleanValue("Prevent Ghosting", this, true);
+    public final NumberValue velocityToLetThrough = new NumberValue("Velocity to let through", this, 0.3, 0, 0.6, 0.01);
+    private final BooleanValue preventGhosting = new BooleanValue("Prevent Ghosting", this, true);
     public static boolean dj = false;
     public static boolean tt;
     private int tR;
@@ -45,10 +45,10 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
     private double vC;
     private boolean gD;
     private int dE;
-    @EventLink(cH = 2)
-    public final Listener<PacketReceiveEvent> vD = var1x -> {
+    @EventLink(value = 2)
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         if (!tt && (!this.e(LongJump.class).isEnabled() || aEg.thePlayer.tR >= 29) && !this.e(Flight.class).isEnabled() && aEg.thePlayer.ticksExisted >= 50) {
-            switch (var1x.dq()) {
+            switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
                     if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && !var1x.isCancelled()) {
                         if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && s12packetentityvelocity.motionY > 0
@@ -94,14 +94,14 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
                 case S14PacketEntity s14packetentity:
                     break;
                 default:
-                    if (var1x.dq() instanceof S3BPacketScoreboardObjective
-                        || var1x.dq() instanceof S3CPacketUpdateScore
-                        || var1x.dq() instanceof bq
-                        || var1x.dq() instanceof S3EPacketTeams) {
+                    if (var1x.getPacket() instanceof S3BPacketScoreboardObjective
+                        || var1x.getPacket() instanceof S3CPacketUpdateScore
+                        || var1x.getPacket() instanceof bq
+                        || var1x.getPacket() instanceof S3EPacketTeams) {
                         return;
                     }
 
-                    Packet packet = var1x.dq();
+                    Packet packet = var1x.getPacket();
                     String s = packet.getClass().getName();
                     if (dj && s.startsWith("net.minecraft.network.play.server.")) {
                         var1x.setCancelled();
@@ -146,7 +146,7 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
 
             float f1 = Math.abs(f - this.ub);
             float f2 = 15.0F;
-            if (!aEg.thePlayer.onGround && (!(Math.random() > 0.98) || !this.vz.wo())) {
+            if (!aEg.thePlayer.onGround && (!(Math.random() > 0.98) || !this.preventGhosting.wo())) {
                 if (f1 <= f2 || f1 >= 360.0F - f2) {
                     tt = true;
                     dj = false;
@@ -162,9 +162,9 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
                     tt = false;
                 }
             } else {
-                if (aEg.thePlayer.tR > 3 && aEg.gameSettings.keyBindJump.isKeyDown() && this.vz.wo()) {
+                if (aEg.thePlayer.tR > 3 && aEg.gameSettings.keyBindJump.isKeyDown() && this.preventGhosting.wo()) {
                     double d0;
-                    int i = (d0 = Math.hypot(aEg.thePlayer.crI, aEg.thePlayer.crK) - this.vy.wo().doubleValue()) == 0.0 ? 0 : (d0 < 0.0 ? -1 : 1);
+                    int i = (d0 = Math.hypot(aEg.thePlayer.crI, aEg.thePlayer.crK) - this.velocityToLetThrough.wo().doubleValue()) == 0.0 ? 0 : (d0 < 0.0 ? -1 : 1);
                 }
 
                 tt = true;
@@ -176,9 +176,9 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<JumpEvent> vG = var1x -> this.dE++;
+    public final Listener<JumpEvent> onJump = var1x -> this.dE++;
     @EventLink
-    public final Listener<MoveInputEvent> vH = var1x -> {
+    public final Listener<MoveInputEvent> onMoveInput = var1x -> {
         if (this.gD) {
             if (!ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_12_1) || !aEg.thePlayer.isJumping) {
                 var1x.setJump(true);

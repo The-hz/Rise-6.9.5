@@ -18,7 +18,7 @@ public abstract class agc {
 
     public abstract int d(String var1, double var2, double var4, int var6);
 
-    public abstract float tq();
+    public abstract float height();
 
     public abstract void a(char var1, int var2, int var3, Color var4);
 }

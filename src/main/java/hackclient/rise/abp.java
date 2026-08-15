@@ -24,22 +24,22 @@ extends abl {
     }
 
     @Override
-    public void a(Vector2d vector2d, int n2, int n3, float f2) {
-        this.apP = vector2d;
-        this.apP.setX(this.apP.getX() + 2.5);
+    public void draw(Vector2d vector2d, int n2, int n3, float f2) {
+        this.position = vector2d;
+        this.position.setX(this.position.getX() + 2.5);
         if (this.YM != null) {
             this.YM.setY((double)n3 - vector2d.getY());
-            this.YM.setX(Math.min(Math.max(0.0, this.YM.getX()), this.jy * 5.0));
-            this.YM.setY(Math.min(Math.max(0.0, this.YM.getY()), this.jy - 7.0));
+            this.YM.setX(Math.min(Math.max(0.0, this.YM.getX()), this.height * 5.0));
+            this.YM.setY(Math.min(Math.max(0.0, this.YM.getY()), this.height - 7.0));
         }
         this.cj();
-        this.jy = 100.0;
+        this.height = 100.0;
     }
 
     private void cj() {
         Color color = aip.d(this.rz().rA(), this.pT());
         Color color2 = aip.d(this.rz().rB(), this.pT());
-        this.aze.forEach(vector2d -> RenderUtil.c(this.apP.getX() + vector2d.getX(), this.apP.getY() + vector2d.getY(), 2.5, color));
+        this.aze.forEach(vector2d -> RenderUtil.c(this.position.getX() + vector2d.getX(), this.position.getY() + vector2d.getY(), 2.5, color));
         for (float f2 = 0.0f; f2 <= 1.0f; f2 += 0.1f) {
             ArrayList<Vector2d> arrayList = new ArrayList<Vector2d>(this.aze);
             ArrayList<Vector2d> arrayList2 = new ArrayList<Vector2d>();
@@ -60,7 +60,7 @@ extends abl {
                 arrayList.removeAll(arrayList2);
                 arrayList2.clear();
             }
-            RenderUtil.c(arrayList.get(0).getX() + this.apP.getX(), arrayList.get(0).getY() + this.apP.getY(), 1.5, aip.d(color2, Math.min(200, color2.getAlpha())));
+            RenderUtil.c(arrayList.get(0).getX() + this.position.getX(), arrayList.get(0).getY() + this.position.getY(), 1.5, aip.d(color2, Math.min(200, color2.getAlpha())));
         }
     }
 
@@ -74,14 +74,14 @@ extends abl {
 
     @Override
     public boolean e(int n2, int n3, int n4) {
-        if (this.apP == null) {
+        if (this.position == null) {
             return false;
         }
-        if (!aeb.e(this.apP.getX(), this.apP.getY(), 400.0, this.jy)) {
+        if (!aeb.e(this.position.getX(), this.position.getY(), 400.0, this.height)) {
             return false;
         }
         ArrayList<Vector2d> arrayList = new ArrayList<Vector2d>(this.aze);
-        arrayList.sort((vector2d, vector2d2) -> (int)(sv.EUCLIDEAN_DISTANCE.a(vector2d.getX() + this.apP.getX() - (double)n2, vector2d.getY() + this.apP.getY() - (double)n3) - sv.EUCLIDEAN_DISTANCE.a(vector2d2.getX() + this.apP.getX() - (double)n2, vector2d2.getY() + this.apP.getY() - (double)n3)));
+        arrayList.sort((vector2d, vector2d2) -> (int)(sv.EUCLIDEAN_DISTANCE.a(vector2d.getX() + this.position.getX() - (double)n2, vector2d.getY() + this.position.getY() - (double)n3) - sv.EUCLIDEAN_DISTANCE.a(vector2d2.getX() + this.position.getX() - (double)n2, vector2d2.getY() + this.position.getY() - (double)n3)));
         this.YM = (Vector2d)arrayList.stream().findFirst().get();
         return true;
     }
@@ -92,13 +92,13 @@ extends abl {
     }
 
     @Override
-    public void ci() {
+    public void released() {
         this.cj();
     }
 
     @Override
-    public void b(char c2, int n2) {
-        if (this.apP == null) {
+    public void key(char c2, int n2) {
+        if (this.position == null) {
             return;
         }
     }

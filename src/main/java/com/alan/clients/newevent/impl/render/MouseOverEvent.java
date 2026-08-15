@@ -30,12 +30,12 @@ public class MouseOverEvent implements Event {
     }
 
     @Generated
-    public void i(double var1) {
+    public void setRange(double var1) {
         this.range = var1;
     }
 
     @Generated
-    public void c(float var1) {
+    public void setExpand(float var1) {
         this.expand = var1;
     }
 

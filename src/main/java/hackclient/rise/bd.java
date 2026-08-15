@@ -7,8 +7,8 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 
 public final class bd extends Component {
     public static float cY;
-    @EventLink(cH = 0)
-    public final Listener<PreMotionEvent> cZ = var0 -> {
+    @EventLink(value = 0)
+    public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
         double d0 = aEg.thePlayer.lastTickPosY - aEg.thePlayer.posY;
         if (d0 > 0.0) {
             cY = (float)(cY + d0);

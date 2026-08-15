@@ -33,13 +33,13 @@ public final class MiniBloxTeleport
 extends Mode<Teleport> {
     private ahy Sx = new ahy(0.0, 0.0, 0.0);
     @EventLink
-    public final Listener<TeleportEvent> Sy = teleportEvent -> this.toggle();
+    public final Listener<TeleportEvent> onTeleport = teleportEvent -> this.toggle();
     @EventLink
-    public final Listener<PushOutOfBlockEvent> Sz = CancellableEvent::setCancelled;
+    public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = CancellableEvent::setCancelled;
     @EventLink
-    public final Listener<Render2DEvent> SA = render2DEvent -> gb.MAIN.a(17, gd.LIGHT).c("hold sneak to teleport", (float)MiniBloxTeleport.aEg.jY.getScaledWidth() / 2.0f, (float)MiniBloxTeleport.aEg.jY.getScaledHeight() / 2.0f + 30.0f, this.rz().rA().getRGB());
+    public final Listener<Render2DEvent> onRender2D = render2DEvent -> gb.MAIN.a(17, gd.LIGHT).c("hold sneak to teleport", (float)MiniBloxTeleport.aEg.jY.getScaledWidth() / 2.0f, (float)MiniBloxTeleport.aEg.jY.getScaledHeight() / 2.0f + 30.0f, this.rz().rA().getRGB());
     @EventLink
-    public final Listener<Render3DEvent> SB = render3DEvent -> {
+    public final Listener<Render3DEvent> onRender3D = render3DEvent -> {
         float f2 = MiniBloxTeleport.aEg.timer.bWm;
         EntityPlayerSP entityPlayerSP = MiniBloxTeleport.aEg.thePlayer;
         if (entityPlayerSP == null) {
@@ -75,7 +75,7 @@ extends Mode<Teleport> {
         MiniBloxTeleport.aEg.entityRenderer.IU();
     };
     @EventLink
-    public final Listener<PreUpdateEvent> SC = preUpdateEvent -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = preUpdateEvent -> {
         if (!MiniBloxTeleport.aEg.gameSettings.keyBindSneak.isKeyDown()) {
             return;
         }
@@ -91,11 +91,11 @@ extends Mode<Teleport> {
         }
     };
     @EventLink
-    public final Listener<BlockAABBEvent> SD = blockAABBEvent -> {
-        if (blockAABBEvent.df() instanceof BlockAir) {
-            double cfr_ignored_1 = blockAABBEvent.dg().getX();
-            double d2 = blockAABBEvent.dg().getY();
-            double cfr_ignored_2 = blockAABBEvent.dg().getZ();
+    public final Listener<BlockAABBEvent> onBlockAABB = blockAABBEvent -> {
+        if (blockAABBEvent.getBlock() instanceof BlockAir) {
+            double cfr_ignored_1 = blockAABBEvent.getBlockPos().getX();
+            double d2 = blockAABBEvent.getBlockPos().getY();
+            double cfr_ignored_2 = blockAABBEvent.getBlockPos().getZ();
             double d3 = d2 - MiniBloxTeleport.aEg.thePlayer.posY;
             int cfr_ignored_3 = d3 == 0.0 ? 0 : (d3 < 0.0 ? -1 : 1);
         }

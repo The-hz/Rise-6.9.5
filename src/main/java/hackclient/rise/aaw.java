@@ -8,17 +8,17 @@ import net.minecraft.network.play.server.c;
 import net.minecraft.util.IChatComponent;
 
 public final class aaw extends a {
-    private static final Pattern axf = Pattern.compile(".*\\$\\{[^}]*}.*");
+    private static final Pattern PATTERN = Pattern.compile(".*\\$\\{[^}]*}.*");
 
     public aaw() {
         super("Log4J RCE Check", "Someone attempted to utilize the Log4J exploit");
     }
 
     @Override
-    public boolean j(Packet<?> var1) {
+    public boolean handle(Packet<?> var1) {
         if (var1 instanceof S29PacketSoundEffect) {
             String s = ((S29PacketSoundEffect)var1).getSoundName();
-            return axf.matcher(s).matches();
+            return PATTERN.matcher(s).matches();
         }
 
         if (!(var1 instanceof c)) {
@@ -26,6 +26,6 @@ public final class aaw extends a {
         }
 
         IChatComponent ichatcomponent = ((c)var1).getChatComponent();
-        return axf.matcher(ichatcomponent.getUnformattedText()).matches() || axf.matcher(ichatcomponent.getFormattedText()).matches();
+        return PATTERN.matcher(ichatcomponent.getUnformattedText()).matches() || PATTERN.matcher(ichatcomponent.getFormattedText()).matches();
     }
 }

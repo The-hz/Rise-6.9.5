@@ -9,7 +9,7 @@ public final class LimitedRender2DEvent implements Event {
     private final float partialTicks;
 
     @Generated
-    public ScaledResolution dx() {
+    public ScaledResolution getScaledResolution() {
         return this.scaledResolution;
     }
 

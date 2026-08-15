@@ -19,9 +19,9 @@ public final class FuncraftFlight extends Mode<Flight> {
     private int FX;
     private int hV;
     @EventLink
-    private final Listener<PreMotionEvent> FY = var0 -> var0.setOnGround(true);
-    @EventLink(cH = 4)
-    private final Listener<MoveEvent> FZ = var1x -> {
+    private final Listener<PreMotionEvent> preMotionEventListener = var0 -> var0.setOnGround(true);
+    @EventLink(value = 4)
+    private final Listener<MoveEvent> moveEventListener = var1x -> {
         if (!MoveUtil.isMoving() || aEg.thePlayer.isCollidedHorizontally) {
             this.FX = -1;
         }

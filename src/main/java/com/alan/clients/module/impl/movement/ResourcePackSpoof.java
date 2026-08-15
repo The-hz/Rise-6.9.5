@@ -15,8 +15,8 @@ import net.minecraft.network.play.server.S48PacketResourcePackSend;
 @ModuleInfo(aliases = "Resource Pack Spoof", description = "Allows you to pretend you loaded a resource pack a server requested", category = Category.MOVEMENT)
 public final class ResourcePackSpoof extends Module {
     @EventLink
-    public final Listener<PacketReceiveEvent> VJ = var0 -> {
-        if (var0.dq() instanceof S48PacketResourcePackSend s48packetresourcepacksend) {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var0 -> {
+        if (var0.getPacket() instanceof S48PacketResourcePackSend s48packetresourcepacksend) {
             var0.setCancelled();
             ahj.l(new C19PacketResourcePackStatus(s48packetresourcepacksend.getHash(), Action.SUCCESSFULLY_LOADED));
             afi.b("Spoofed resource pack from " + s48packetresourcepacksend.getURL());

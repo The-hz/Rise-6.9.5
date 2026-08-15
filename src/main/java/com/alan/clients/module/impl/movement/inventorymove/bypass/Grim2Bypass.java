@@ -27,7 +27,7 @@ public final class Grim2Bypass extends Mode<InventoryMove> {
         }
     };
     @EventLink
-    private final Listener<PreUpdateEvent> JJ = var1x -> {
+    private final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.currentScreen != null && !(aEg.currentScreen instanceof GuiChat) && aEg.currentScreen != this.getStandardClickGUI()) {
             for (KeyBinding keybinding : this.JH) {
                 keybinding.setPressed(GameSettings.isKeyDown(keybinding));

@@ -35,19 +35,19 @@ public final class SlotComponent extends Component {
     private static double gd = 38.0;
     private final agc ge = hackclient.rise.gb.MAIN.a(18, hackclient.rise.gd.LIGHT);
     private final agc gf = hackclient.rise.gb.MAIN.a(18, hackclient.rise.gd.MEDIUM);
-    @EventLink(cH = 4)
-    public final Listener<SyncCurrentItemEvent> gg = var0 -> {
+    @EventLink(value = 4)
+    public final Listener<SyncCurrentItemEvent> onSyncItem = var0 -> {
         InventoryPlayer inventoryplayer = aEg.thePlayer.inventory;
         var0.setSlot(inventoryplayer.cIU ? inventoryplayer.cIT : inventoryplayer.currentItem);
     };
-    @EventLink(cH = 4)
-    public final Listener<PreUpdateEvent> gh = var0 -> {
+    @EventLink(value = 4)
+    public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {
         InventoryPlayer inventoryplayer = aEg.thePlayer.inventory;
         inventoryplayer.cIU = false;
         inventoryplayer.cIT = inventoryplayer.currentItem;
     };
-    @EventLink(cH = 4)
-    public final Listener<Render2DEvent> gi = var1 -> {
+    @EventLink(value = 4)
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (!fY && aEg.thePlayer != null && fX) {
             ItemStack itemstack = getItemStack();
             ItemStack itemstack1 = itemstack != null && aEg.thePlayer.inventory.cIU ? itemstack : null;
@@ -81,17 +81,17 @@ public final class SlotComponent extends Component {
             String s = flag ? (flag1 ? String.valueOf(bN()) : String.valueOf(itemstack1.stackSize)) : stackSize;
             ItemStack itemstack2 = flag ? itemstack1 : itemStack;
             double d3 = flag ? this.a(flag1, s) : gd;
-            ScaledResolution scaledresolution = var1.dx();
+            ScaledResolution scaledresolution = var1.getScaledResolution();
             double d4 = scaledresolution.getScaledWidth() / 2.0 - d3 / 2.0;
             double d5 = scaledresolution.getScaledHeight() - 90;
-            double d6 = d5 + 11.0 - this.ge.tq() / 2.0 + 3.0;
+            double d6 = d5 + 11.0 - this.ge.height() / 2.0 + 3.0;
             if (d2 > 0.01 && itemstack2 != null) {
                 if (d2 > 0.15) {
                     this.b(hackclient.rise.gg.BLUR).c(() -> {
                         GlStateManager.pushMatrix();
                         GlStateManager.translate((d4 + d3 * 0.5) * (1.0 - d0), (d5 + 11.0) * (1.0 - d0), 0.0);
                         GlStateManager.scale(d0, d0, d0);
-                        RenderUtil.roundedRectangle(d4, d5, d3, 22.0, this.rz().pl(), Color.BLACK);
+                        RenderUtil.roundedRectangle(d4, d5, d3, 22.0, this.rz().getRound(), Color.BLACK);
                         GlStateManager.popMatrix();
                     });
                 }
@@ -101,7 +101,7 @@ public final class SlotComponent extends Component {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d4 + d3 * 0.5) * (1.0 - d0), (d5 + 11.0) * (1.0 - d0), 0.0);
                     GlStateManager.scale(d0, d0, d0);
-                    double d9 = this.rz().pl();
+                    double d9 = this.rz().getRound();
                     this.rz();
                     Color color = adv.rK();
                     this.rz();
@@ -123,14 +123,14 @@ public final class SlotComponent extends Component {
                             GlStateManager.translate((d4 + d3 * 0.5) * (1.0 - d0), (d5 + 11.0) * (1.0 - d0), 0.0);
                             GlStateManager.scale(d0, d0, 0.0);
                             RenderUtil.roundedRectangle(
-                                d4 + 0.5, d5 + 0.5, d3 - 1.0, 21.0, this.rz().pl() + 1, aip.d(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d8))
+                                d4 + 0.5, d5 + 0.5, d3 - 1.0, 21.0, this.rz().getRound() + 1, aip.d(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d8))
                             );
                             GlStateManager.popMatrix();
                         }
                     );
             }
 
-            if (!flag && animation.kv() && d0 >= 1.099) {
+            if (!flag && animation.isFinished() && d0 >= 1.099) {
                 fY = true;
             }
         }

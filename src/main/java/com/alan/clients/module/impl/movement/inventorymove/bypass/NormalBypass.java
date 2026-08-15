@@ -18,7 +18,7 @@ public final class NormalBypass extends Mode<InventoryMove> {
         aEg.gameSettings.keyBindJump
     };
     @EventLink
-    private final Listener<PreUpdateEvent> JL = var1x -> {
+    private final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.currentScreen != null && !(aEg.currentScreen instanceof GuiChat) && aEg.currentScreen != this.getStandardClickGUI()) {
             for (KeyBinding keybinding : this.JK) {
                 keybinding.setPressed(GameSettings.isKeyDown(keybinding));

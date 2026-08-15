@@ -26,7 +26,7 @@ import org.lwjgl.opengl.GL11;
 
 @ModuleInfo(aliases = "module.render.blackholeorbit.name", description = "module.render.blackholeorbit.description", category = Category.RENDER)
 public final class BlackHoleOrbit extends Module {
-    private final DragValue ame = new DragValue("Position", this, new Vector2d(260.0, 140.0), false);
+    private final DragValue position = new DragValue("Position", this, new Vector2d(260.0, 140.0), false);
     private Interface amf;
     private static final double amg = 190.0;
     private static final double amh = 135.0;
@@ -47,9 +47,9 @@ public final class BlackHoleOrbit extends Module {
     private final ArrayList<wo> amw = new ArrayList<>();
     private long amx = -1L;
     @EventLink
-    public final Listener<Render2DEvent> amy = var1 -> {
-        this.ame.n(new Vector2d(190.0, 135.0));
-        Vector2d vector2d = this.ame.apP;
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
+        this.position.n(new Vector2d(190.0, 135.0));
+        Vector2d vector2d = this.position.apP;
         this.b(gg.BLUR).c(() -> this.d(vector2d));
         this.b(gg.BLOOM).c(() -> this.e(vector2d));
         this.b(gg.REGULAR).c(() -> this.c(vector2d));

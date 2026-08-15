@@ -31,11 +31,11 @@ public class acg implements abx, InstanceAccess {
         double d0 = Math.ceil(this.azU.size() / 3.0);
         this.azW.V(-57.0 * Math.max(0.0, d0 - 3.0));
         double d1 = 7.0;
-        double d2 = this.getStandardClickGUI().oW().getX() + this.getStandardClickGUI().oX().getX() - 4.0F;
-        double d3 = this.getStandardClickGUI().oW().getY() + d1;
+        double d2 = this.getStandardClickGUI().getScale().getX() + this.getStandardClickGUI().getPosition().getX() - 4.0F;
+        double d3 = this.getStandardClickGUI().getScale().getY() + d1;
         this.azW.a(new Vector2d(d2, d3), this.getStandardClickGUI().alh.y - d1 * 2.0);
-        Vector2f vector2f = this.getStandardClickGUI().oW();
-        Vector2f vector2f1 = this.getStandardClickGUI().oX();
+        Vector2f vector2f = this.getStandardClickGUI().getScale();
+        Vector2f vector2f1 = this.getStandardClickGUI().getPosition();
         double d4 = this.getStandardClickGUI().oY().aym;
         double d5 = vector2f.getY() + 44.0F + this.azW.tE();
         double d6 = (vector2f1.getX() - d4 - 29.0) / 3.0;
@@ -101,7 +101,7 @@ public class acg implements abx, InstanceAccess {
             this.azU.forEach(var0 -> var0.pp().Q(255.0));
         } else {
             for (abj abj : this.azT) {
-                if (abj.pK().rI().contains(this.azX.pP())) {
+                if (abj.pK().getKeyColors().contains(this.azX.pP())) {
                     this.azU.add(abj);
                     abj.pp().Q(255.0);
                 }
@@ -119,8 +119,8 @@ public class acg implements abx, InstanceAccess {
     }
 
     public void qw() {
-        Vector2f vector2f = this.getStandardClickGUI().oW();
-        Vector2f vector2f1 = this.getStandardClickGUI().oX();
+        Vector2f vector2f = this.getStandardClickGUI().getScale();
+        Vector2f vector2f1 = this.getStandardClickGUI().getPosition();
         double d0 = this.getStandardClickGUI().oY().aym;
         double d1 = (vector2f1.getX() - d0 - 29.0) / 3.0;
 

@@ -43,7 +43,7 @@ public class ajf extends aix {
                 case 2:
                     this.aPV.bindFramebuffer(true);
                     var3.forEach(Runnable::run);
-                    int j = this.aQc.vO();
+                    int j = this.aQc.getProgramId();
                     this.aPZ.bindFramebuffer(true);
                     this.aQc.rt();
                     if (this.aQa.getSize() != i) {
@@ -52,21 +52,21 @@ public class ajf extends aix {
                         FloatBuffer floatbuffer = BufferUtils.createFloatBuffer(i);
                         floatbuffer.put(this.aQa.vS());
                         floatbuffer.flip();
-                        aja.a(j, "u_radius", (float)i);
-                        aja.a(j, "u_kernel", floatbuffer);
-                        aja.a(j, "u_diffuse_sampler", 0);
-                        aja.a(j, "u_other_sampler", flag ? 2 : 20);
+                        aja.uniform1f(j, "u_radius", (float)i);
+                        aja.uniformFB(j, "u_kernel", floatbuffer);
+                        aja.uniform1i(j, "u_diffuse_sampler", 0);
+                        aja.uniform1i(j, "u_other_sampler", flag ? 2 : 20);
                     }
 
-                    aja.a(j, "u_texel_size", 1.0F / aEg.displayWidth, 1.0F / aEg.displayHeight);
-                    aja.a(j, "u_direction", f, 0.0F);
+                    aja.uniform2f(j, "u_texel_size", 1.0F / aEg.displayWidth, 1.0F / aEg.displayHeight);
+                    aja.uniform2f(j, "u_direction", f, 0.0F);
                     GlStateManager.enableBlend();
                     GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                     GlStateManager.alphaFunc(516, 0.0F);
                     aEg.getFramebuffer().bindFramebufferTexture();
                     aiy.vN();
                     aEg.getFramebuffer().bindFramebuffer(true);
-                    aja.a(j, "u_direction", 0.0F, f);
+                    aja.uniform2f(j, "u_direction", 0.0F, f);
                     this.aPZ.bindFramebufferTexture();
                     GL13.glActiveTexture(flag ? 33986 : 34004);
                     this.aPV.bindFramebufferTexture();
@@ -79,8 +79,8 @@ public class ajf extends aix {
     }
 
     @Override
-    public void ju() {
-        this.c(false);
+    public void update() {
+        this.setActive(false);
         int i = aEg.displayWidth;
         int j = aEg.displayHeight;
         if (this.aPV.ah(i, j)) {

@@ -51,49 +51,49 @@ extends Mode<Interface> {
     private final a asH = new a();
     private final ModeValue asI = new yw(this, "ArrayList Color Mode", this);
     private final ModeValue asJ = new yx(this, "ArrayList Font", this);
-    private final StringValue asK = new StringValue("Custom Installed Font", (Mode<?>)this, "Arial", () -> {
+    private final StringValue customInstalledFont = new StringValue("Custom Installed Font", (Mode<?>)this, "Arial", () -> {
         if (((Mode)this.asJ.wo()).getName().equals("Custom")) return false;
         return true;
     });
     private final ModeValue asL = new yy(this, "Shader Effect", this);
-    private final BooleanValue asM = new BooleanValue("Drop Shadow", (Mode<?>)this, (Boolean)true);
-    private final BooleanValue asN = new BooleanValue("Sidebar", (Mode<?>)this, (Boolean)true);
-    private final BooleanValue asO = new BooleanValue("Particles on Kill", (Mode<?>)this, (Boolean)true);
+    private final BooleanValue dropShadow = new BooleanValue("Drop Shadow", (Mode<?>)this, (Boolean)true);
+    private final BooleanValue sidebar = new BooleanValue("Sidebar", (Mode<?>)this, (Boolean)true);
+    private final BooleanValue particles = new BooleanValue("Particles on Kill", (Mode<?>)this, (Boolean)true);
     private final ModeValue asP = new yz(this, "BackGround", this);
-    private final StringValue asQ = new StringValue("Custom Client Name", (Mode<?>)this, "");
+    private final StringValue customClientName = new StringValue("Custom Client Name", (Mode<?>)this, "");
     private boolean asR;
     private boolean asS;
     private boolean asT;
     private String asU;
     private float asV;
     private float asW;
-    private Color asX = new Color(0);
+    private Color logoColor = new Color(0);
     private final a asY = new a();
     @EventLink
-    public final Listener<Render2DEvent> asZ = render2DEvent -> {
+    public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         double d2;
         if (aEg == null || yv.aEg.gameSettings.bJf || yv.aEg.theWorld == null || yv.aEg.thePlayer == null) {
             return;
         }
         boolean bl = this.ky == gb.MINECRAFT.dM();
-        ((Interface)this.wj()).n(this.ky.tq() + (float)(bl ? 2 : 0));
-        ((Interface)this.wj()).a(this.ky);
-        ((Interface)this.wj()).o(10.0f);
-        float f2 = render2DEvent.dx().getScaledWidth();
-        float f3 = (float)render2DEvent.dx().getScaledHeight() - this.ky.tq() - 1.0f;
+        ((Interface)this.getParent()).n(this.ky.height() + (float)(bl ? 2 : 0));
+        ((Interface)this.getParent()).a(this.ky);
+        ((Interface)this.getParent()).o(10.0f);
+        float f2 = render2DEvent.getScaledResolution().getScaledWidth();
+        float f3 = (float)render2DEvent.getScaledResolution().getScaledHeight() - this.ky.height() - 1.0f;
         double d3 = d2 = bl ? 3.5 : 2.0;
         if (this.asR || this.asS) {
             this.b(gg.BLOOM).c(() -> {
-                for (zc zc2 : ((Interface)this.wj()).lL()) {
+                for (zc zc2 : ((Interface)this.getParent()).lL()) {
                     if (zc2.ath == 0.0f) continue;
                     double d32 = zc2.nr().getX();
                     double d4 = zc2.nr().getY();
                     Color color = zc2.nw();
                     if (this.asT) {
                         if (!bl) {
-                            RenderUtil.d(d32 - d2, d4 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.wj()).aoq, this.asR ? aip.d(color, 255) : this.rz().rE());
+                            RenderUtil.d(d32 - d2, d4 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.getParent()).aoq, this.asR ? aip.d(color, 255) : this.rz().rE());
                         } else {
-                            RenderUtil.d(d32 - d2 + 0.5, d4 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.wj()).aoq, this.asR ? aip.d(color, 255) : this.rz().rE());
+                            RenderUtil.d(d32 - d2 + 0.5, d4 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.getParent()).aoq, this.asR ? aip.d(color, 255) : this.rz().rE());
                         }
                     } else if (this.asR) {
                         this.a(zc2, d32 + 0.5, d4, color.getRGB());
@@ -103,7 +103,7 @@ extends Mode<Interface> {
                             this.ky.a(zc2.nz(), d32 + (double)zc2.nu() + 3.0, d4, Color.BLACK.getRGB());
                         }
                     }
-                    if (!((Boolean)this.asN.wo()).booleanValue()) continue;
+                    if (!((Boolean)this.sidebar.wo()).booleanValue()) continue;
                     RenderUtil.roundedRectangle(d32 + (double)zc2.nu() + (double)zc2.nv() + 2.0, d4 - 1.5, 2.0, 9.0, 1.0, color);
                 }
                 if (((Mode)this.asJ.wo()).getName().equals("Minecraft")) {
@@ -117,8 +117,8 @@ extends Mode<Interface> {
                     aip.a(this.asD, Client.b, 6.0, 6.0, true);
                     this.asF.b("", 39.0, 6.0, aip.d(Color.WHITE, 170).getRGB());
                 }
-                if (!((String)this.asQ.wo()).isEmpty()) {
-                    this.asF.a((String)this.asQ.wo(), (double)(6 + this.asD.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
+                if (!((String)this.customClientName.wo()).isEmpty()) {
+                    this.asF.a((String)this.customClientName.wo(), (double)(6 + this.asD.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
                 }
                 agc agc2 = gb.MAIN.a(18, gd.MEDIUM);
                 agc agc3 = gb.MAIN.a(18, gd.BOLD);
@@ -157,14 +157,14 @@ extends Mode<Interface> {
                         string4 = ((String[])arrayList.get(i))[1];
                         float f11 = agc4.getStringWidth(string7) + agc5.getStringWidth(" " + string4);
                         float f12 = f2 - f11 - 5.0f;
-                        float f13 = f3 - (agc5.tq() + 5.0f) * (float)(i + 1);
+                        float f13 = f3 - (agc5.height() + 5.0f) * (float)(i + 1);
                         agc4.b(string7, f12, f13, -3355444);
                         agc4.b(" " + string4, f12 + (float)agc4.getStringWidth(string7), f13, -3355444);
                     }
                 }
             });
         }
-        for (zc zc2 : ((Interface)this.wj()).lL()) {
+        for (zc zc2 : ((Interface)this.getParent()).lL()) {
             if (zc2.ath == 0.0f) continue;
             double d4 = zc2.nr().getX();
             double d5 = zc2.nr().getY();
@@ -172,10 +172,10 @@ extends Mode<Interface> {
             if (this.asT) {
                 Consumer<Color> consumer = color -> {
                     if (!bl) {
-                        RenderUtil.d(d4 - d2, d5 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.wj()).aoq, color);
+                        RenderUtil.d(d4 - d2, d5 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.getParent()).aoq, color);
                         return;
                     }
-                    RenderUtil.d(d4 - d2 + 0.5, d5 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.wj()).aoq, color);
+                    RenderUtil.d(d4 - d2 + 0.5, d5 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.getParent()).aoq, color);
                 };
                 this.b(gg.BLUR).c(() -> consumer.accept(Color.BLACK));
                 this.b(gg.REGULAR, 1).c(() -> {
@@ -184,7 +184,7 @@ extends Mode<Interface> {
                 });
             }
             this.b(gg.REGULAR, 1).c(() -> this.a(zc2, d4, d5 - 0.5, color2.getRGB()));
-            if (!((Boolean)this.asN.wo()).booleanValue()) continue;
+            if (!((Boolean)this.sidebar.wo()).booleanValue()) continue;
             RenderUtil.roundedRectangle(d4 + (double)zc2.nu() + (double)zc2.nv() + 2.0, d5 - 1.5, 2.0, 9.0, 1.0, color2);
         }
         if (this.asU == null) {
@@ -237,7 +237,7 @@ extends Mode<Interface> {
                 }).findFirst().orElse(null);
                 if (potionEffect3 == null) continue;
                 float f13 = f2 - (float)agc4.getStringWidth(string4) - (float)agc5.getStringWidth(" " + string7) - f10 - f12 - 5.0f;
-                float f14 = f3 - (agc5.tq() + 5.0f) * (float)(i + 1);
+                float f14 = f3 - (agc5.height() + 5.0f) * (float)(i + 1);
                 this.a(potionEffect3.getPotionID(), f13 + 4.0f, f14 + f11, 13.0f);
                 agc4.b(string4, f13 + f10 + f12, f14, -3355444);
                 agc4.b(" " + string7, f13 + f10 + f12 + (float)agc4.getStringWidth(string4), f14, -3355444);
@@ -255,8 +255,8 @@ extends Mode<Interface> {
             this.asF.b("", 39.0, 6.0, aip.d(Color.WHITE, 170).getRGB());
         }
         this.asF.b("", 39.0, 6.0, aip.d(Color.WHITE, 170).getRGB());
-        if (!((String)this.asQ.wo()).isEmpty()) {
-            this.asF.a((String)this.asQ.wo(), (double)(6 + this.asD.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
+        if (!((String)this.customClientName.wo()).isEmpty()) {
+            this.asF.a((String)this.customClientName.wo(), (double)(6 + this.asD.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
         }
         if (this.asY.T(7500L)) {
             this.asH.aX();
@@ -264,8 +264,8 @@ extends Mode<Interface> {
         }
     };
     @EventLink
-    public final Listener<KillEvent> ata = killEvent -> {
-        if (!this.asH.T(2000L) && ((Boolean)this.asO.wo()).booleanValue()) {
+    public final Listener<KillEvent> onKill = killEvent -> {
+        if (!this.asH.T(2000L) && ((Boolean)this.particles.wo()).booleanValue()) {
             for (int i = 0; i <= 10; ++i) {
                 NotificationComponent.a(new ait(new Vector2f(0.0f, 0.0f), new Vector2f((float)Math.random(), (float)Math.random())));
             }
@@ -273,7 +273,7 @@ extends Mode<Interface> {
         this.asH.aX();
     };
     @EventLink
-    public final Listener<TickEvent> atb = tickEvent -> {
+    public final Listener<TickEvent> onTick = tickEvent -> {
         if (yv.aEg.thePlayer == null || !yv.aEg.getNetHandler().doneLoadingTerrain) {
             return;
         }
@@ -291,7 +291,7 @@ extends Mode<Interface> {
                         this.asV = this.asE.getStringWidth("riseclient.com") + 2;
                         this.asU = (int)Math.floor(yv.aEg.thePlayer.posX) + ", " + (int)Math.floor(yv.aEg.thePlayer.posY) + ", " + (int)Math.floor(yv.aEg.thePlayer.posZ);
                         this.asW = this.asF.getStringWidth("XYZ:") + 2;
-                        this.asX = this.rz().rA();
+                        this.logoColor = this.rz().rA();
                         this.asT = ((Mode)this.asP.wo()).getName().equals("Normal");
                         String string = ((Mode)this.asJ.wo()).getName();
                         int n2 = -1;
@@ -337,7 +337,7 @@ extends Mode<Interface> {
                     }
                     break block105;
                 }
-                String string2 = (String)this.asK.wo();
+                String string2 = (String)this.customInstalledFont.wo();
                 if (Math.random() > 0.95) {
                     Optional<String> optional = gb.dN().stream().filter(string3 -> yv.o(string2, string3)).findFirst();
                     if (optional.isPresent() && !gb.CUSTOM.getName().equals(optional.get())) {
@@ -346,16 +346,16 @@ extends Mode<Interface> {
                     }
                 }
             }
-            for (zc zc2 : ((Interface)this.wj()).lL()) {
+            for (zc zc2 : ((Interface)this.getParent()).lL()) {
                 if (zc2.ath == 0.0f) continue;
                 String string4;
                 String string5;
                 Color color;
                 block80: {
                     block79: {
-                        zc2.y(!zc2.getTag().isEmpty() && ((Boolean)((Interface)this.wj()).anZ.wo()).booleanValue());
-                        string4 = (((Boolean)((Interface)this.wj()).aoa.wo()).booleanValue() ? zc2.nx().toLowerCase() : zc2.nx()).replace(((Boolean)((Interface)this.wj()).lH().wo()).booleanValue() ? " " : "", "");
-                        string5 = (((Boolean)((Interface)this.wj()).aoa.wo()).booleanValue() ? zc2.getTag().toLowerCase() : zc2.getTag()).replace(((Boolean)((Interface)this.wj()).lH().wo()).booleanValue() ? " " : "", "");
+                        zc2.y(!zc2.getTag().isEmpty() && ((Boolean)((Interface)this.getParent()).suffix.wo()).booleanValue());
+                        string4 = (((Boolean)((Interface)this.getParent()).lowercase.wo()).booleanValue() ? zc2.nx().toLowerCase() : zc2.nx()).replace(((Boolean)((Interface)this.getParent()).lH().wo()).booleanValue() ? " " : "", "");
+                        string5 = (((Boolean)((Interface)this.getParent()).lowercase.wo()).booleanValue() ? zc2.getTag().toLowerCase() : zc2.getTag()).replace(((Boolean)((Interface)this.getParent()).lH().wo()).booleanValue() ? " " : "", "");
                         color = this.rz().rA();
                         String string6 = ((Mode)this.asI.wo()).getName();
                         int n3 = -1;
@@ -372,7 +372,7 @@ extends Mode<Interface> {
                         }
                         switch (n3) {
                             case 0: {
-                                double d2 = this.rz().k(new Vector2d(0.0, 0.0));
+                                double d2 = this.rz().getBlendFactor(new Vector2d(0.0, 0.0));
                                 color = aip.a(color, this.rz().rB(), d2);
                                 break block80;
                             }
@@ -384,7 +384,7 @@ extends Mode<Interface> {
                             }
                         }
                     }
-                    color = this.rz().j(new Vector2d(0.0, zc2.nr().getY()));
+                    color = this.rz().getAccentColor(new Vector2d(0.0, zc2.nr().getY()));
                 }
                 zc2.b(color);
                 zc2.t(this.ky.getStringWidth(string4));
@@ -439,7 +439,7 @@ extends Mode<Interface> {
     }
 
     private void a(zc zc2, double d2, double d3, int n2) {
-        if (((Boolean)this.asM.wo()).booleanValue()) {
+        if (((Boolean)this.dropShadow.wo()).booleanValue()) {
             this.ky.b(zc2.getDisplayName(), d2, d3, n2);
             if (!zc2.nA()) return;
             this.ky.b(zc2.nz(), d2 + (double)zc2.nu() + 3.0, d3, -3355444);

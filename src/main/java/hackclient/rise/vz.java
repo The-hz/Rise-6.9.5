@@ -11,7 +11,7 @@ import de.florianmichael.vialoadingbase.ViaLoadingBase;
 
 public class vz extends Mode<Scaffold> {
     @EventLink
-    public final Listener<PreMotionEvent> akk = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (aEg.gameSettings.keyBindJump.isKeyDown()) {
             if (aEg.thePlayer.onGround && !MoveUtil.enoughMovementForSprinting()) {
                 aEg.thePlayer.jump();

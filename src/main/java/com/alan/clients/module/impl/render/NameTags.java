@@ -18,17 +18,17 @@ import lombok.Generated;
 @ModuleInfo(aliases = "module.render.nametags.name", description = "module.render.nametags.description", category = Category.RENDER)
 public final class NameTags extends Module {
     public final Map<String, Integer> aoW = new HashMap<>();
-    private final ModeValue aoX = new ModeValue("Mode", this)
+    private final ModeValue mode = new ModeValue("Mode", this)
         .add(new ModernNameTags("Modern", this))
         .add(new VanillaNameTags("Vanilla", this))
         .add(new ClassicNameTags("Classic", this))
         .setDefault("Modern");
-    private final BooleanValue aoY = new BooleanValue("Targets", this, false);
-    public final BooleanValue aoZ = new BooleanValue("Player", this, true, () -> !this.aoY.wo());
-    public final BooleanValue apa = new BooleanValue("Invisibles", this, false, () -> !this.aoY.wo());
-    public final BooleanValue apb = new BooleanValue("Animals", this, false, () -> !this.aoY.wo());
-    public final BooleanValue apc = new BooleanValue("Mobs", this, false, () -> !this.aoY.wo());
-    public final BooleanValue apd = new BooleanValue("Player Teammates", this, true, () -> !this.aoY.wo());
+    private final BooleanValue showTargets = new BooleanValue("Targets", this, false);
+    public final BooleanValue player = new BooleanValue("Player", this, true, () -> !this.showTargets.wo());
+    public final BooleanValue invisibles = new BooleanValue("Invisibles", this, false, () -> !this.showTargets.wo());
+    public final BooleanValue animals = new BooleanValue("Animals", this, false, () -> !this.showTargets.wo());
+    public final BooleanValue mobs = new BooleanValue("Mobs", this, false, () -> !this.showTargets.wo());
+    public final BooleanValue playerTeammates = new BooleanValue("Player Teammates", this, true, () -> !this.showTargets.wo());
     public final Listener<WorldChangeEvent> onRender2D = var1 -> this.aoW.clear();
 
     public NameTags() {

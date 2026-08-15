@@ -10,7 +10,7 @@ import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 
 public class kl extends Mode<Disabler> {
     @EventLink
-    public final Listener<PacketSendEvent> yU = var0 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         Packet packet = var0.dq();
         if (packet instanceof C0FPacketConfirmTransaction) {
             var0.setCancelled();

@@ -64,25 +64,25 @@ import org.lwjgl.opengl.GL11;
 
 @ModuleInfo(aliases = "module.player.breaker.name", description = "module.player.breaker.description", category = Category.PLAYER)
 public class Breaker extends Module {
-    public final ModeValue abw = new ModeValue("Mode", this).add(new SubMode("Normal")).add(new SubMode("Instant")).setDefault("Normal");
-    public final NumberValue abx = new NumberValue("Range", this, 4.5, 1, 6, 0.1);
-    public final BooleanValue aby = new BooleanValue("Bed", this, true);
-    public final BooleanValue abz = new BooleanValue("Keep Break Progress When Out Of Range", this, true);
+    public final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Normal")).add(new SubMode("Instant")).setDefault("Normal");
+    public final NumberValue range = new NumberValue("Range", this, 4.5, 1, 6, 0.1);
+    public final BooleanValue bed = new BooleanValue("Bed", this, true);
+    public final BooleanValue keepBreakProgressWhenOutOfRange = new BooleanValue("Keep Break Progress When Out Of Range", this, true);
     public final BooleanValue abA = new BooleanValue("Cancel velocity whilst breaking, so you don't slow down in air", this, true);
-    public final BooleanValue abB = new BooleanValue("Delay Velocity Until Bed Broken", this, false);
-    public final BooleanValue abC = new BooleanValue("Through Walls", this, true);
-    private final BooleanValue abD = new BooleanValue("Empty Surrounding", this, false, () -> !this.abC.wo());
-    private final ModeValue abE = new ModeValue("Surroundings", this).add(new SubMode("Single")).add(new SubMode("Full")).setDefault("Single");
-    private final NumberValue abF = new NumberValue("Surrounding Layers", this, 3, 1, 6, 1, () -> !this.abE.wo().getName().equals("Full"));
-    private final BooleanValue abG = new BooleanValue("Show Best Stand Position", this, false, () -> !this.abE.wo().getName().equals("Full"));
-    private final BooleanValue abH = new BooleanValue("Heypixel", this, false, () -> !this.abC.wo() || !this.abD.wo());
-    private final BooleanValue abI = new BooleanValue("Watchdog Ground Spoof", this, false);
-    public final BooleanValue abJ = new BooleanValue("Attack While Breaking", this, true);
-    private final BooleanValue abK = new BooleanValue("Show Breaker Percentage", this, true);
-    public final BooleanValue abL = new BooleanValue("Rotate", this, true);
-    public final BooleanValue abM = new BooleanValue("Only Rotate at Start and Stop", this, true);
-    public final BooleanValue abN = new BooleanValue("Whitelist Own Bed", this, true);
-    public final BooleanValue abO = new BooleanValue("Slow Down In Air", this, true);
+    public final BooleanValue delayVelocityUntilBedBroken = new BooleanValue("Delay Velocity Until Bed Broken", this, false);
+    public final BooleanValue throughWalls = new BooleanValue("Through Walls", this, true);
+    private final BooleanValue emptySurrounding = new BooleanValue("Empty Surrounding", this, false, () -> !this.throughWalls.wo());
+    private final ModeValue surroundings = new ModeValue("Surroundings", this).add(new SubMode("Single")).add(new SubMode("Full")).setDefault("Single");
+    private final NumberValue surroundingLayers = new NumberValue("Surrounding Layers", this, 3, 1, 6, 1, () -> !this.surroundings.wo().getName().equals("Full"));
+    private final BooleanValue showBestStandPosition = new BooleanValue("Show Best Stand Position", this, false, () -> !this.surroundings.wo().getName().equals("Full"));
+    private final BooleanValue heypixel = new BooleanValue("Heypixel", this, false, () -> !this.throughWalls.wo() || !this.emptySurrounding.wo());
+    private final BooleanValue watchdogGroundSpoof = new BooleanValue("Watchdog Ground Spoof", this, false);
+    public final BooleanValue attackWhileBreaking = new BooleanValue("Attack While Breaking", this, true);
+    private final BooleanValue showBreakerPercentage = new BooleanValue("Show Breaker Percentage", this, true);
+    public final BooleanValue rotations = new BooleanValue("Rotate", this, true);
+    public final BooleanValue onlyRotateAtStartAndStop = new BooleanValue("Only Rotate at Start and Stop", this, true);
+    public final BooleanValue whiteListOwnBed = new BooleanValue("Whitelist Own Bed", this, true);
+    public final BooleanValue slowDownInAir = new BooleanValue("Slow Down In Air", this, true);
     private final ListValue<MovementFix> movementCorrection = new ListValue<>("Movement Correction", this);
     public static aka abQ;
     public static aka abR;
@@ -105,9 +105,9 @@ public class Breaker extends Module {
     @EventLink
     public final Listener<Render3DEvent> acc = var1 -> {
         if (abQ != null) {
-            if (Client.a.g().c(FastBreak.class).isEnabled() && this.abK.wo()) {
-                ci.a((float)(1.21 * this.abU + (Double)Client.a.g().c(FastBreak.class).acz.wo() / 100.0));
-            } else if (this.abK.wo()) {
+            if (Client.a.g().c(FastBreak.class).isEnabled() && this.showBreakerPercentage.wo()) {
+                ci.a((float)(1.21 * this.abU + (Double)Client.a.g().c(FastBreak.class).speed.wo() / 100.0));
+            } else if (this.showBreakerPercentage.wo()) {
                 ci.a((float)(1.21 * this.abU));
             }
 
@@ -141,11 +141,11 @@ public class Breaker extends Module {
             this.b(gg.BLOOM).c(() -> this.a(axisalignedbb, this.rz().rA()));
         }
     };
-    @EventLink(cH = 2)
-    public final Listener<PacketReceiveEvent> ace = var1 -> {
-        Packet packet = var1.dq();
+    @EventLink(value = 2)
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
+        Packet packet = var1.getPacket();
         if (!tt) {
-            if (this.abB.wo()) {
+            if (this.delayVelocityUntilBedBroken.wo()) {
                 if (packet instanceof S12PacketEntityVelocity s12packetentityvelocity) {
                     if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && abT) {
                         this.acb = true;
@@ -183,10 +183,10 @@ public class Breaker extends Module {
             }
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<PacketSendEvent> acf = var1 -> {
+    @EventLink(value = 4)
+    public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         Packet packet = var1.dq();
-        if (packet instanceof C07PacketPlayerDigging && abQ != null && this.abI.wo()) {
+        if (packet instanceof C07PacketPlayerDigging && abQ != null && this.watchdogGroundSpoof.wo()) {
             C07PacketPlayerDigging c07packetplayerdigging = (C07PacketPlayerDigging)packet;
             if (c07packetplayerdigging.getStatus() == Action.START_DESTROY_BLOCK || c07packetplayerdigging.getStatus() == Action.STOP_DESTROY_BLOCK) {
                 iq = true;
@@ -194,8 +194,8 @@ public class Breaker extends Module {
             }
         }
     };
-    @EventLink(cH = 0)
-    public final Listener<PreMotionEvent> acg = var0 -> {
+    @EventLink(value = 0)
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         float f;
         int i = (f = aEg.playerController.curBlockDamageMP - 0.0F) == 0.0F ? 0 : (f < 0.0F ? -1 : 1);
         if (iq) {
@@ -209,17 +209,17 @@ public class Breaker extends Module {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> ach = var0 -> {
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (iq) {
             ;
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<BlockDamageEvent> aci = var1 -> this.abU = aEg.playerController.curBlockDamageMP;
-    @EventLink(cH = 4)
-    public final Listener<PreUpdateEvent> acj = var1 -> {
+    @EventLink(value = 4)
+    public final Listener<BlockDamageEvent> onBlockDamage = var1 -> this.abU = aEg.playerController.curBlockDamageMP;
+    @EventLink(value = 4)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         this.jA();
-        if (this.abB.wo() && !abT && this.acb) {
+        if (this.delayVelocityUntilBedBroken.wo() && !abT && this.acb) {
             tt = true;
             this.aca.forEach(ahj::p);
             this.aca.clear();
@@ -232,7 +232,7 @@ public class Breaker extends Module {
         if (this.aaW <= 0) {
             this.jz();
             if (abQ == null
-                || aEg.thePlayer.getDistance(abQ.getX(), abQ.getY(), abQ.getZ()) > this.abx.wo().doubleValue() + 2.5
+                || aEg.thePlayer.getDistance(abQ.getX(), abQ.getY(), abQ.getZ()) > this.range.wo().doubleValue() + 2.5
                 || aih.o(abQ.getX(), abQ.getY(), abQ.getZ()) instanceof BlockAir) {
                 this.jv();
                 if (this.ji) {
@@ -249,20 +249,20 @@ public class Breaker extends Module {
         }
     };
     @EventLink
-    public final Listener<MouseOverEvent> ack = var1 -> {
+    public final Listener<MouseOverEvent> onMouseOver = var1 -> {
         if (abQ != null) {
             BlockPos blockpos = new BlockPos(abQ.getX(), abQ.getY(), abQ.getZ());
             Vec3 vec3 = aEg.thePlayer.getPositionEyes(1.0F);
-            Vector2f vector2f = this.abM.wo() ? this.jE() : RotationComponent.fk;
+            Vector2f vector2f = this.onlyRotateAtStartAndStop.wo() ? this.jE() : RotationComponent.fk;
             Vec3 vec31 = aEg.thePlayer.getVectorForRotation(vector2f.getY(), vector2f.getX());
-            double d0 = this.abx.wo().doubleValue() + 1.0;
+            double d0 = this.range.wo().doubleValue() + 1.0;
             Vec3 vec32 = vec3.addVector(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0);
-            MovingObjectPosition movingobjectposition = aih.q(blockpos).collisionRayTrace(aEg.theWorld, blockpos, aEg.thePlayer.getPositionEyes(1.0F), vec32);
+            MovingObjectPosition movingobjectposition = aih.block(blockpos).collisionRayTrace(aEg.theWorld, blockpos, aEg.thePlayer.getPositionEyes(1.0F), vec32);
             var1.a(movingobjectposition);
         }
     };
     @EventLink
-    public final Listener<TeleportEvent> acl = var0 -> {
+    public final Listener<TeleportEvent> onTeleport = var0 -> {
         if (aEg.thePlayer.getDistance(var0.getPosX(), var0.getPosY(), var0.getPosZ()) > 40.0) {
             abS = new aka(var0.getPosX(), var0.getPosY(), var0.getPosZ());
         }
@@ -335,8 +335,8 @@ public class Breaker extends Module {
     public void jv() {
         if (abQ == null
             || aih.o(abQ.x, abQ.y, abQ.z) instanceof BlockAir
-            || aEg.thePlayer.getDistance(abQ.x, abQ.y - aEg.thePlayer.getEyeHeight(), abQ.z) > this.abx.wo().doubleValue() + 2.5) {
-            if (abR != null && !this.abz.wo()) {
+            || aEg.thePlayer.getDistance(abQ.x, abQ.y - aEg.thePlayer.getEyeHeight(), abQ.z) > this.range.wo().doubleValue() + 2.5) {
+            if (abR != null && !this.keepBreakProgressWhenOutOfRange.wo()) {
                 aEg.playerController.curBlockDamageMP = 0.0F;
             }
 
@@ -354,20 +354,20 @@ public class Breaker extends Module {
 
     public void jw() {
         BlockPos blockpos = new BlockPos(abQ.getX(), abQ.getY(), abQ.getZ());
-        float f = aih.q(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos);
-        if (!this.abM.wo() || aEg.playerController.curBlockDamageMP == 0.0F || !(aEg.playerController.curBlockDamageMP <= 1.0F - f - 0.001)) {
-            if (this.abL.wo()) {
+        float f = aih.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos);
+        if (!this.onlyRotateAtStartAndStop.wo() || aEg.playerController.curBlockDamageMP == 0.0F || !(aEg.playerController.curBlockDamageMP <= 1.0F - f - 0.001)) {
+            if (this.rotations.wo()) {
                 RotationComponent.setRotations(this.jE(), 10.0, this.movementCorrection.wo());
             }
         }
     }
 
     public aka jx() {
-        if (abS != null && aEg.thePlayer.getDistanceSq(abS.getX(), abS.getY(), abS.getZ()) < 1225.0 && this.abN.wo()) {
+        if (abS != null && aEg.thePlayer.getDistanceSq(abS.getX(), abS.getY(), abS.getZ()) < 1225.0 && this.whiteListOwnBed.wo()) {
             return null;
         }
 
-        if (this.abC.wo() && this.abD.wo() && this.abE.wo().getName().equals("Full")) {
+        if (this.throughWalls.wo() && this.emptySurrounding.wo() && this.surroundings.wo().getName().equals("Full")) {
             return this.jy();
         }
 
@@ -380,20 +380,20 @@ public class Breaker extends Module {
                     aka akax = new aka(aEg.thePlayer.posX + j, aEg.thePlayer.posY + k, aEg.thePlayer.posZ + l);
                     if (block instanceof BlockBed) {
                         if (++i > 1) {
-                            MovingObjectPosition movingobjectposition = aef.c(aiu.d(akax), this.abx.wo().floatValue() + 1.0F);
+                            MovingObjectPosition movingobjectposition = aef.c(aiu.d(akax), this.range.wo().floatValue() + 1.0F);
                             if (movingobjectposition != null
                                 && !(
                                     movingobjectposition.hitVec
                                             .distanceTo(new Vec3(aEg.thePlayer.posX, aEg.thePlayer.posY - aEg.thePlayer.getEyeHeight(), aEg.thePlayer.posZ))
-                                        > this.abx.wo().doubleValue() + 2.0
+                                        > this.range.wo().doubleValue() + 2.0
                                 )) {
-                                if (this.abC.wo()) {
-                                    if (this.abD.wo()) {
+                                if (this.throughWalls.wo()) {
+                                    if (this.emptySurrounding.wo()) {
                                         aka akax2 = akax;
                                         double d0 = Double.MAX_VALUE;
                                         boolean flag = false;
-                                        int i1 = this.abH.wo() ? 0 : 4;
-                                        int j1 = this.abH.wo() ? 1 : 0;
+                                        int i1 = this.heypixel.wo() ? 0 : 4;
+                                        int j1 = this.heypixel.wo() ? 1 : 0;
 
                                         for (int k1 = -i1; k1 <= i1; k1++) {
                                             for (int l1 = j1; l1 <= 1; l1++) {
@@ -409,7 +409,7 @@ public class Breaker extends Module {
                                                                         .getDistance(
                                                                             akax2.getX() + k1, akax2.getY() + l1 - aEg.thePlayer.getEyeHeight(), akax2.getZ() + i2
                                                                         )
-                                                                    > this.abx.wo().doubleValue() + 2.0
+                                                                    > this.range.wo().doubleValue() + 2.0
                                                             )) {
                                                                 double d1 = block1.wX();
                                                                 if (d1 < d0) {
@@ -489,8 +489,8 @@ public class Breaker extends Module {
     }
 
     private tg a(Vec3 var1, BlockPos var2, Vec3 var3) {
-        double d0 = this.abx.wo().doubleValue();
-        int i = this.abF.wo().intValue();
+        double d0 = this.range.wo().doubleValue();
+        int i = this.surroundingLayers.wo().intValue();
         ArrayList arraylist = new ArrayList();
         double d1 = 0.0;
 
@@ -505,7 +505,7 @@ public class Breaker extends Module {
             }
 
             if (!this.j(blockpos)) {
-                Block block = aih.q(blockpos);
+                Block block = aih.block(blockpos);
                 if (block instanceof BlockBed || block.getBlockHardness(aEg.theWorld, blockpos) < 0.0F || arraylist.size() >= i) {
                     return null;
                 }
@@ -557,7 +557,7 @@ public class Breaker extends Module {
     }
 
     private void jz() {
-        if (abQ != null && this.abC.wo() && this.abD.wo() && this.abE.wo().getName().equals("Full")) {
+        if (abQ != null && this.throughWalls.wo() && this.emptySurrounding.wo() && this.surroundings.wo().getName().equals("Full")) {
             Vec3 vec3 = new Vec3(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
             if (this.abX != null && !(this.abX.squareDistanceTo(vec3) < 0.25) && aEg.thePlayer.ticksExisted - this.abZ >= 5) {
                 this.abX = vec3;
@@ -579,7 +579,7 @@ public class Breaker extends Module {
                 if (tgx != null && !tgx.acn.get(0).equals(blockpos)) {
                     if (tgxx != null) {
                         double d0 = aEg.playerController.curBlockDamageMP
-                            / Math.max(aih.q(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos), 1.0E-4F);
+                            / Math.max(aih.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos), 1.0E-4F);
                         if (tgx.aco >= (tgxx.aco - d0) * 0.9) {
                             return;
                         }
@@ -605,7 +605,7 @@ public class Breaker extends Module {
     }
 
     private void jA() {
-        if (!this.abG.wo() || !this.abC.wo() || !this.abD.wo() || !this.abE.wo().getName().equals("Full")) {
+        if (!this.showBestStandPosition.wo() || !this.throughWalls.wo() || !this.emptySurrounding.wo() || !this.surroundings.wo().getName().equals("Full")) {
             this.blockPos = null;
         } else if (aEg.thePlayer.ticksExisted - this.abY >= 10) {
             this.abY = aEg.thePlayer.ticksExisted;
@@ -614,7 +614,7 @@ public class Breaker extends Module {
     }
 
     private BlockPos jB() {
-        double d0 = this.abx.wo().doubleValue();
+        double d0 = this.range.wo().doubleValue();
         int i = (int)Math.ceil(d0) + 1;
         List list = this.jC();
         if (list.isEmpty()) {
@@ -661,11 +661,11 @@ public class Breaker extends Module {
     private boolean i(BlockPos var1) {
         return this.j(var1)
             && this.j(var1.up())
-            && aih.q(var1.down()).getCollisionBoundingBox(aEg.theWorld, var1.down(), aEg.theWorld.getBlockState(var1.down())) != null;
+            && aih.block(var1.down()).getCollisionBoundingBox(aEg.theWorld, var1.down(), aEg.theWorld.getBlockState(var1.down())) != null;
     }
 
     private boolean j(BlockPos var1) {
-        return aih.q(var1).getCollisionBoundingBox(aEg.theWorld, var1, aEg.theWorld.getBlockState(var1)) == null;
+        return aih.block(var1).getCollisionBoundingBox(aEg.theWorld, var1, aEg.theWorld.getBlockState(var1)) == null;
     }
 
     private double a(Vec3 var1, BlockPos var2) {
@@ -720,7 +720,7 @@ public class Breaker extends Module {
     }
 
     public void jD() {
-        boolean flag = this.abO.wo();
+        boolean flag = this.slowDownInAir.wo();
         boolean flag1 = aEg.thePlayer.onGround;
         if (!flag) {
             aEg.thePlayer.onGround = true;
@@ -730,7 +730,7 @@ public class Breaker extends Module {
             BlockPos blockpos;
             label25: {
                 blockpos = new BlockPos(abQ.getX(), abQ.getY(), abQ.getZ());
-                String s = this.abw.wo().getName();
+                String s = this.mode.wo().getName();
                 byte b0 = -1;
                 switch (s.hashCode()) {
                     case -1955878649:

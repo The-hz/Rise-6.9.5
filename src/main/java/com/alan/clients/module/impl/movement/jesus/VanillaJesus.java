@@ -11,11 +11,11 @@ import net.minecraft.util.AxisAlignedBB;
 public class VanillaJesus extends Mode<Jesus> {
     @EventLink
     public final Listener<BlockAABBEvent> onBlockAABB = var0 -> {
-        if (var0.df() instanceof BlockLiquid && !aEg.gameSettings.keyBindSneak.isKeyDown()) {
-            int i = var0.dg().getX();
-            int j = var0.dg().getY();
-            int k = var0.dg().getZ();
-            var0.a(AxisAlignedBB.fromBounds(i, j, k, i + 1, j + 1, k + 1));
+        if (var0.getBlock() instanceof BlockLiquid && !aEg.gameSettings.keyBindSneak.isKeyDown()) {
+            int i = var0.getBlockPos().getX();
+            int j = var0.getBlockPos().getY();
+            int k = var0.getBlockPos().getZ();
+            var0.setBoundingBox(AxisAlignedBB.fromBounds(i, j, k, i + 1, j + 1, k + 1));
         }
     };
 

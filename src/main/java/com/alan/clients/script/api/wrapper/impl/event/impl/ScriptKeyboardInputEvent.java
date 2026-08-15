@@ -9,7 +9,7 @@ public class ScriptKeyboardInputEvent extends ScriptEvent<KeyboardInputEvent> {
     }
 
     public int getKey() {
-        return this.wrapped.cO();
+        return this.wrapped.getKeyCode();
     }
 
     @Override

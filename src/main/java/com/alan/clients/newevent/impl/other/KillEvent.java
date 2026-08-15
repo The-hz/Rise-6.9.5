@@ -7,7 +7,7 @@ import lombok.Generated;
 import net.minecraft.entity.Entity;
 
 public final class KillEvent implements Event {
-    Entity jM;
+    Entity entity;
 
     @Override
     public ScriptEvent<? extends Event> getScriptEvent() {
@@ -15,12 +15,12 @@ public final class KillEvent implements Event {
     }
 
     @Generated
-    public Entity dk() {
-        return this.jM;
+    public Entity getEntity() {
+        return this.entity;
     }
 
     @Generated
     public KillEvent(Entity var1) {
-        this.jM = var1;
+        this.entity = var1;
     }
 }

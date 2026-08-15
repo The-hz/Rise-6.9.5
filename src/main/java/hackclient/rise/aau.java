@@ -10,7 +10,7 @@ public final class aau extends a {
     }
 
     @Override
-    public boolean j(Packet<?> var1) {
+    public boolean handle(Packet<?> var1) {
         return !(var1 instanceof S2BPacketChangeGameState s2bpacketchangegamestate)
             ? false
             : s2bpacketchangegamestate.getGameState() == 5 && s2bpacketchangegamestate.func_149137_d() == 0.0F;

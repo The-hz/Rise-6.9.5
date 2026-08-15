@@ -11,7 +11,7 @@ import net.minecraft.potion.Potion;
 public class NCPPacketlessStep extends Mode<Step> {
     private boolean RW;
     @EventLink
-    public final Listener<PreMotionEvent> RX = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.onGround && aEg.thePlayer.isCollidedHorizontally && !aEg.thePlayer.isPotionActive(Potion.jump)) {
             aEg.thePlayer.jump();
             MoveUtil.stop();

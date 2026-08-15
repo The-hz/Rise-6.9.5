@@ -11,16 +11,16 @@ public class adj extends adm {
     }
 
     @Override
-    public void c(int var1, int var2, float var3) {
-        super.c(var1, var2, var3);
-        if (!aeb.a(this.getX(), this.getY(), this.oM(), this.da(), var1, var2)) {
-            this.gK = this.aCc;
+    public void draw(int var1, int var2, float var3) {
+        super.draw(var1, var2, var3);
+        if (!aeb.isHovered(this.getX(), this.getY(), this.oM(), this.da(), var1, var2)) {
+            this.name = this.aCc;
         }
     }
 
     @Override
-    public void rm() {
-        super.rm();
-        this.gK = this.aCb;
+    public void runAction() {
+        super.runAction();
+        this.name = this.aCb;
     }
 }

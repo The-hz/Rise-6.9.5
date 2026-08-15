@@ -14,19 +14,19 @@ import rip.vantage.commons.util.time.a;
 
 public class NormalAutoClicker extends Mode<AutoClicker> {
     private final BoundsNumberValue cps = new BoundsNumberValue("CPS", this, 8, 14, 1, 20, 0.1);
-    private final BooleanValue Cl = new BooleanValue("Right Click", this, false);
-    private final BooleanValue Cm = new BooleanValue("Left Click", this, true);
-    private final BooleanValue Cn = new BooleanValue("Hit Select", this, false);
-    private final BooleanValue Co = new BooleanValue("Break Blocks", this, true);
-    private final BooleanValue Cp = new BooleanValue("ButterFly", this, true);
+    private final BooleanValue rightClick = new BooleanValue("Right Click", this, false);
+    private final BooleanValue leftClick = new BooleanValue("Left Click", this, true);
+    private final BooleanValue hitSelect = new BooleanValue("Hit Select", this, false);
+    private final BooleanValue breakBlocks = new BooleanValue("Break Blocks", this, true);
+    private final BooleanValue butterFly = new BooleanValue("ButterFly", this, true);
     private final a Cq = new a();
     private int Cr;
     private int BV;
-    private long nT;
+    private long nextSwing;
     @EventLink
-    public final Listener<TickEvent> Cs = var1x -> {
+    public final Listener<TickEvent> onTick = var1x -> {
         this.BV++;
-        if (this.Cq.T(this.nT) && (!this.Cn.wo() || this.BV >= 10 || aEg.thePlayer.hurtTime > 0 && this.Cq.T(this.nT)) && aEg.currentScreen == null) {
+        if (this.Cq.T(this.nextSwing) && (!this.hitSelect.wo() || this.BV >= 10 || aEg.thePlayer.hurtTime > 0 && this.Cq.T(this.nextSwing)) && aEg.currentScreen == null) {
             long i = (long)(this.cps.wv().longValue() * 1.5);
             if (aEg.gameSettings.cgK.isKeyDown()) {
                 this.Cr++;
@@ -34,24 +34,24 @@ public class NormalAutoClicker extends Mode<AutoClicker> {
                 this.Cr = 0;
             }
 
-            if (this.nT >= 100L && this.Cp.wo()) {
-                this.nT = (long)(Math.random() * 100.0);
+            if (this.nextSwing >= 100L && this.butterFly.wo()) {
+                this.nextSwing = (long)(Math.random() * 100.0);
             } else {
-                this.nT = 1000L / i;
+                this.nextSwing = 1000L / i;
             }
 
-            if (this.Cl.wo() && aEg.gameSettings.cgI.isKeyDown() && !aEg.gameSettings.cgK.isKeyDown()) {
+            if (this.rightClick.wo() && aEg.gameSettings.cgI.isKeyDown() && !aEg.gameSettings.cgK.isKeyDown()) {
                 aih.h(1, true);
                 if (Math.random() > 0.9) {
                     aih.h(1, true);
                 }
             }
 
-            if (!this.Cm.wo()
+            if (!this.leftClick.wo()
                 || this.Cr <= 1
                 || aEg.gameSettings.cgI.isKeyDown()
-                || this.Co.wo() && aEg.objectMouseOver != null && aEg.objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
-                if (!this.Co.wo()) {
+                || this.breakBlocks.wo() && aEg.objectMouseOver != null && aEg.objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
+                if (!this.breakBlocks.wo()) {
                     aEg.playerController.curBlockDamageMP = 0.0F;
                 }
             } else {
@@ -62,7 +62,7 @@ public class NormalAutoClicker extends Mode<AutoClicker> {
         }
     };
     @EventLink
-    public final Listener<AttackEvent> Ct = var1x -> this.BV = 0;
+    public final Listener<AttackEvent> onAttack = var1x -> this.BV = 0;
 
     public NormalAutoClicker(String var1, AutoClicker var2) {
         super(var1, var2);

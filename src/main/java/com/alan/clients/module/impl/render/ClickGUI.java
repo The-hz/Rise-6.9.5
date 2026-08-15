@@ -17,10 +17,10 @@ import rip.vantage.commons.util.time.a;
 @ModuleInfo(aliases = "module.render.clickgui.name", description = "module.render.clickgui.description", category = Category.RENDER, keyBind = 54)
 public final class ClickGUI extends Module {
     private final a and = new a();
-    public final ModeValue ane = new ModeValue("Mode", this).add(new SubMode("Modern")).add(new SubMode("Dropdown")).setDefault("Modern");
-    @EventLink(cH = 3)
-    public final Listener<Render2DEvent> anf = var1 -> {
-        if (this.ane.wo().getName().equals("Modern")) {
+    public final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Modern")).add(new SubMode("Dropdown")).setDefault("Modern");
+    @EventLink(value = 3)
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
+        if (this.mode.wo().getName().equals("Modern")) {
             this.b(gg.REGULAR, 2).c(() -> Client.a.v().cj());
             this.b(gg.BLOOM, 3).c(() -> Client.a.v().ci());
         } else {
@@ -45,7 +45,7 @@ public final class ClickGUI extends Module {
 
     @Override
     public void onEnable() {
-        if (this.ane.wo().getName().equals("Modern")) {
+        if (this.mode.wo().getName().equals("Modern")) {
             aEg.displayGuiScreen(Client.a.v());
         } else {
             aEg.displayGuiScreen(Client.a.z());
@@ -60,6 +60,6 @@ public final class ClickGUI extends Module {
         Keyboard.enableRepeatEvents(false);
         Client.a.e().c(Client.a.v());
         Client.a.e().c(Client.a.z());
-        aMR.execute(() -> Client.a.p().to().tf());
+        aMR.execute(() -> Client.a.p().to().write());
     }
 }

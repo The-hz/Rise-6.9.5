@@ -12,7 +12,7 @@ import net.minecraft.entity.Entity;
 public class r {
     private final HashMap<Object, ArrayList<Integer>> bn = new HashMap<>();
     @EventLink
-    public final Listener<WorldChangeEvent> bo = var1 -> this.clear();
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.clear();
 
     public r() {
     }

@@ -39,17 +39,17 @@ public final class RenderItemEvent extends CancellableEvent {
     }
 
     @Generated
-    public ItemStack dG() {
+    public ItemStack getItemToRender() {
         return this.itemToRender;
     }
 
     @Generated
-    public void a(EnumAction var1) {
+    public void setEnumAction(EnumAction var1) {
         this.enumAction = var1;
     }
 
     @Generated
-    public void k(boolean var1) {
+    public void setUseItem(boolean var1) {
         this.useItem = var1;
     }
 
@@ -69,7 +69,7 @@ public final class RenderItemEvent extends CancellableEvent {
     }
 
     @Generated
-    public void f(ItemStack var1) {
+    public void setItemToRender(ItemStack var1) {
         this.itemToRender = var1;
     }
 

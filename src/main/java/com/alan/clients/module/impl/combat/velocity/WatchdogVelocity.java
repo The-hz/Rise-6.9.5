@@ -54,13 +54,13 @@ public final class WatchdogVelocity extends Mode<Velocity> {
     private long vc = -1L;
     boolean vd = false;
     boolean vf = false;
-    public final BooleanValue vQ = new BooleanValue("Stack", this, true);
+    public final BooleanValue stack = new BooleanValue("Stack", this, true);
     boolean vh;
-    public final BooleanValue vR = new BooleanValue("Ping Spoof", this, true);
-    public final BooleanValue vS = new BooleanValue("Always Cancel Vertical", this, false);
-    public final BooleanValue vT = new BooleanValue("Watchdog Backtrack", this, false);
+    public final BooleanValue pingSpoof = new BooleanValue("Ping Spoof", this, true);
+    public final BooleanValue alwaysCancelVertical = new BooleanValue("Always Cancel Vertical", this, false);
+    public final BooleanValue watchdogBacktrack = new BooleanValue("Watchdog Backtrack", this, false);
     public final BooleanValue vU = new BooleanValue("Damage Boost (not for hypixel)", this, false);
-    private final NumberValue vV = new NumberValue("Damage Boost Speed", this, 1, 1, 10, 0.01);
+    private final NumberValue damageBoostSpeed = new NumberValue("Damage Boost Speed", this, 1, 1, 10, 0.01);
     public static boolean dj;
     public static boolean tt;
     public static boolean vq;
@@ -69,7 +69,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
     private int sG;
     private final ArrayList<Packet<?>> vW = new ArrayList<>();
     @EventLink
-    public final Listener<PacketReceiveEvent> vX = var1x -> {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         if (!tt
             && !this.e(LongJump.class).isEnabled()
             && !this.e(Flight.class).isEnabled()
@@ -78,13 +78,13 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                     || !this.e(Jesus.class).mode.wo().getName().equals("Watchdog Dolphin 1.18+")
                     || WatchdogDolphin118Jesus.Km >= 30
             )) {
-            switch (var1x.dq()) {
+            switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
                     if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()
                         && !aih.vk()
                         && (
                             aEg.thePlayer.cqL <= 0
-                                || !this.vS.wo()
+                                || !this.alwaysCancelVertical.wo()
                                 || this.e(Speed.class).isEnabled()
                                 || aEg.thePlayer.isJumping
                                 || aEg.gameSettings.keyBindJump.isKeyDown()
@@ -92,7 +92,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                 || !(s12packetentityvelocity.getMotionY() / 8000.0 > 0.08)
                                 || aEg.thePlayer.Zl <= 11
                         )) {
-                        if (this.vQ.wo() && this.sG < 1 && !aEg.thePlayer.onGround && Math.random() < 0.73 && aEg.thePlayer.tR <= 13
+                        if (this.stack.wo() && this.sG < 1 && !aEg.thePlayer.onGround && Math.random() < 0.73 && aEg.thePlayer.tR <= 13
                             || aEg.thePlayer.inWater
                             || this.e(Scaffold.class).isEnabled()
                                 && (
@@ -148,40 +148,40 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                         s12packetentityvelocity.motionY *= 0;
                         aEg.thePlayer.motionX *= 0.9;
                         aEg.thePlayer.motionZ *= 0.9;
-                        var1x.e(s12packetentityvelocity);
+                        var1x.setPacket(s12packetentityvelocity);
                     }
                     break;
                 case S32PacketConfirmTransaction s32packetconfirmtransaction:
-                    if (dj && this.vR.wo()) {
+                    if (dj && this.pingSpoof.wo()) {
                         this.vW.add(s32packetconfirmtransaction);
                         var1x.setCancelled();
                     }
                     break;
                 case a a:
-                    if (dj && this.vR.wo()) {
+                    if (dj && this.pingSpoof.wo()) {
                         var1x.setCancelled();
                     }
                     break;
                 case S16PacketEntityLook s16packetentitylook:
-                    if ((this.vd || dj) && this.vT.wo() && !this.vf) {
+                    if ((this.vd || dj) && this.watchdogBacktrack.wo() && !this.vf) {
                         this.vW.add(s16packetentitylook);
                         var1x.setCancelled();
                     }
                     break;
                 case S15PacketEntityRelMove s15packetentityrelmove:
-                    if ((this.vd || dj) && this.vT.wo() && !this.vf) {
+                    if ((this.vd || dj) && this.watchdogBacktrack.wo() && !this.vf) {
                         this.vW.add(s15packetentityrelmove);
                         var1x.setCancelled();
                     }
                     break;
                 case S17PacketEntityLookMove s17packetentitylookmove:
-                    if ((this.vd || dj) && this.vT.wo() && !this.vf) {
+                    if ((this.vd || dj) && this.watchdogBacktrack.wo() && !this.vf) {
                         this.vW.add(s17packetentitylookmove);
                         var1x.setCancelled();
                     }
                     break;
                 case aa aa:
-                    if ((this.vd || dj) && this.vT.wo() && !this.vf) {
+                    if ((this.vd || dj) && this.watchdogBacktrack.wo() && !this.vf) {
                         this.vW.add(aa);
                         var1x.setCancelled();
                     }
@@ -193,7 +193,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
             list.sort(Comparator.comparingDouble(var0 -> ((EntityLivingBase)var0).hurtTime));
             if (list.isEmpty()) {
                 this.pY = null;
-                if (this.vT.wo()) {
+                if (this.watchdogBacktrack.wo()) {
                     tt = true;
                     this.vW
                         .stream()
@@ -212,7 +212,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                 }
             } else {
                 Entity entity = (Entity)list.get(0);
-                if (this.vT.wo()) {
+                if (this.watchdogBacktrack.wo()) {
                     if (entity != this.pY) {
                         this.pY = entity;
                         this.pU.xCoord = entity.posX;
@@ -347,7 +347,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                         tt = false;
                     }
 
-                    Packet packet = var1x.dq();
+                    Packet packet = var1x.getPacket();
                     if (packet instanceof S14PacketEntity s14packetentity) {
                         if (s14packetentity.entityId == this.pY.getEntityId()) {
                             this.pU.xCoord = this.pU.xCoord + s14packetentity.agC() / 32.0;
@@ -361,10 +361,10 @@ public final class WatchdogVelocity extends Mode<Velocity> {
             }
         }
     };
-    @EventLink(cH = 4)
+    @EventLink(value = 4)
     public final Listener<JumpEvent> vY = var0 -> {};
-    @EventLink(cH = 4)
-    public final Listener<PreMotionEvent> vZ = var1x -> {
+    @EventLink(value = 4)
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (Math.abs(aEg.thePlayer.posY - Math.round(aEg.thePlayer.posY)) > 0.01 && aEg.thePlayer.onGround) {
             this.vh = true;
         } else {
@@ -374,22 +374,22 @@ public final class WatchdogVelocity extends Mode<Velocity> {
         if (aEg.thePlayer.ae == 1
             && MoveUtil.isMoving()
             && (Math.abs(aEg.thePlayer.posY - Math.floor(aEg.thePlayer.posY)) < 0.03 || aEg.thePlayer.motionY < 0.0)
-            && this.vS.wo()) {
+            && this.alwaysCancelVertical.wo()) {
             MoveUtil.strafe();
         } else if (aEg.thePlayer.ae == 1
             && (Math.abs(aEg.thePlayer.posY - Math.floor(aEg.thePlayer.posY)) < 0.03 || aEg.thePlayer.motionY < 0.0)
-            && this.vS.wo()) {
+            && this.alwaysCancelVertical.wo()) {
             aEg.thePlayer.motionX *= -1.0;
             aEg.thePlayer.motionZ *= -1.0;
         }
 
-        if (this.vS.wo() && aEg.thePlayer.ae < 5 && aEg.thePlayer.onGround) {
+        if (this.alwaysCancelVertical.wo() && aEg.thePlayer.ae < 5 && aEg.thePlayer.onGround) {
             aEg.thePlayer.crd = true;
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<PreUpdateEvent> wa = var1x -> {
-        if (this.vd && !dj && this.vT.wo()) {
+    @EventLink(value = 4)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
+        if (this.vd && !dj && this.watchdogBacktrack.wo()) {
             BlinkComponent.a(50, true, false, false, false, false, false);
         }
 
@@ -433,7 +433,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
             tt = false;
         }
     };
-    @EventLink(cH = 2)
+    @EventLink(value = 2)
     public final Listener<JumpEvent> wb = var1x -> {
         if (aEg.thePlayer.onGround && dj && this.e(Speed.class).isEnabled()) {
             dj = false;
@@ -448,8 +448,8 @@ public final class WatchdogVelocity extends Mode<Velocity> {
             tt = false;
         }
     };
-    @EventLink(cH = 2)
-    public final Listener<PostStrafeEvent> wc = var1x -> {
+    @EventLink(value = 2)
+    public final Listener<PostStrafeEvent> onPostStrafe = var1x -> {
         if (aEg.thePlayer.tR > 12 && dj) {
             dj = false;
             tt = true;
@@ -466,8 +466,8 @@ public final class WatchdogVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<Render3DEvent> wd = var1x -> {
-        if (this.pY != null && this.vT.wo() && (this.vd || dj)) {
+    public final Listener<Render3DEvent> onRender3D = var1x -> {
+        if (this.pY != null && this.watchdogBacktrack.wo() && (this.vd || dj)) {
             GlStateManager.pushMatrix();
             GlStateManager.pushAttrib();
             GlStateManager.enableBlend();

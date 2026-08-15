@@ -9,15 +9,15 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 
 public class VanillaLongJump extends Mode<LongJump> {
-    private final NumberValue LD = new NumberValue("Height", this, 0.5, 0.1, 1, 0.01);
-    private final NumberValue LE = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
+    private final NumberValue height = new NumberValue("Height", this, 0.5, 0.1, 1, 0.01);
+    private final NumberValue speed = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.onGround) {
-            aEg.thePlayer.motionY = this.LD.wo().floatValue();
+            aEg.thePlayer.motionY = this.height.wo().floatValue();
         }
 
-        var1x.setSpeed(this.LE.wo().floatValue());
+        var1x.setSpeed(this.speed.wo().floatValue());
     };
 
     public VanillaLongJump(String var1, LongJump var2) {

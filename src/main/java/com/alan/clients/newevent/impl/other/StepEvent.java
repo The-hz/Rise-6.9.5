@@ -7,7 +7,7 @@ public final class StepEvent implements Event {
     private double height;
 
     @Generated
-    public double da() {
+    public double getHeight() {
         return this.height;
     }
 

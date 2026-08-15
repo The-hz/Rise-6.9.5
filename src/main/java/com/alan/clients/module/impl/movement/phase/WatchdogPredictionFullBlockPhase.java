@@ -29,7 +29,7 @@ public class WatchdogPredictionFullBlockPhase extends Mode<Phase> {
     @EventLink
     private Listener<TeleportEvent> FK = var1x -> this.ys = this.ys;
     @EventLink
-    private Listener<PostStrafeEvent> FL = var1x -> {
+    private Listener<PostStrafeEvent> onPostStrafe = var1x -> {
         MoveUtil.stop();
         if (aEg.thePlayer.tR == 5) {
             this.ys = true;
@@ -46,17 +46,17 @@ public class WatchdogPredictionFullBlockPhase extends Mode<Phase> {
         aEg.thePlayer.motionY = 0.0;
     };
     @EventLink
-    private Listener<PacketReceiveEvent> FM = var1x -> {
-        if (var1x.dq() instanceof S12PacketEntityVelocity s12packetentityvelocity) {
+    private Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        if (var1x.getPacket() instanceof S12PacketEntityVelocity s12packetentityvelocity) {
             s12packetentityvelocity.getEntityID();
             aEg.thePlayer.getEntityId();
         }
 
-        if (var1x.dq() instanceof a a) {
+        if (var1x.getPacket() instanceof a a) {
             ;
         }
 
-        Packet packet = var1x.dq();
+        Packet packet = var1x.getPacket();
         if (packet instanceof S08PacketPlayerPosLook && this.ys) {
             S08PacketPlayerPosLook s08packetplayerposlook = (S08PacketPlayerPosLook)packet;
             s08packetplayerposlook.getX();
@@ -67,7 +67,7 @@ public class WatchdogPredictionFullBlockPhase extends Mode<Phase> {
         }
     };
     @EventLink
-    private Listener<PreMotionEvent> yu = var0 -> {
+    private Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (aEg.thePlayer.ticksExisted % 2 == 0) {
             double d0 = MoveUtil.direction();
             double d1 = -MathHelper.sin((float)d0) * 100.0F;
@@ -83,7 +83,7 @@ public class WatchdogPredictionFullBlockPhase extends Mode<Phase> {
         PacketWrapper.create(ServerboundPackets1_9.ACCEPT_TELEPORTATION, userconnection1).write(Types.VAR_INT, 10);
     };
     @EventLink
-    private Listener<PacketSendEvent> FN = var0 -> {
+    private Listener<PacketSendEvent> onPacketSend = var0 -> {
         Packet packet = var0.dq();
         if (packet instanceof C04PacketPlayerPosition) {
             ;

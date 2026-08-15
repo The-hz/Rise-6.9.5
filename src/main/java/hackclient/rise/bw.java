@@ -12,9 +12,9 @@ public class bw extends Component {
     private Map<Integer, cd> gk = new HashMap<>();
     private final Map<Class<? extends Packet<?>>, cc> gl = new HashMap<>();
     @EventLink
-    public final Listener<PacketReceiveEvent> gm = var1 -> {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
         if (!var1.isCancelled()) {
-            Packet packet = var1.dq();
+            Packet packet = var1.getPacket();
             cc cc = this.gl.get(packet.getClass());
             if (cc != null) {
                 Map map = cc.a(packet, this.gk);

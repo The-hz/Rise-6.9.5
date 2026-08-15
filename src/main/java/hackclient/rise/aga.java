@@ -14,12 +14,12 @@ public final class aga extends File {
 
     @Override
     public boolean te() {
-        if (this.sK().exists() && this.sK().isFile() && this.sK().canRead()) {
+        if (this.getFile().exists() && this.getFile().isFile() && this.getFile().canRead()) {
             try {
                 Insults insults = Client.a.g().c(Insults.class);
-                String s = this.sK().getName().replace(".txt", "");
+                String s = this.getFile().getName().replace(".txt", "");
                 insults.mode.add(new SubMode(s));
-                insults.map.put(s, Files.readAllLines(this.sK().toPath()));
+                insults.map.put(s, Files.readAllLines(this.getFile().toPath()));
                 return true;
             } catch (Exception exception) {
                 exception.printStackTrace();
@@ -31,10 +31,10 @@ public final class aga extends File {
     }
 
     @Override
-    public boolean tf() {
+    public boolean write() {
         try {
-            if (!this.sK().exists()) {
-                this.sK().createNewFile();
+            if (!this.getFile().exists()) {
+                this.getFile().createNewFile();
             }
 
             return true;

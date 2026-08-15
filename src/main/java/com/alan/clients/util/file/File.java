@@ -15,7 +15,7 @@ public abstract class File implements InstanceAccess {
 
     public abstract boolean te();
 
-    public abstract boolean tf();
+    public abstract boolean write();
 
     public void a(String var1, ArrayList<String> var2) {
         PrintWriter printwriter;
@@ -36,7 +36,7 @@ public abstract class File implements InstanceAccess {
         ArrayList arraylist = new ArrayList();
 
         try {
-            FileReader filereader = new FileReader(this.sK());
+            FileReader filereader = new FileReader(this.getFile());
             new BufferedReader(filereader);
             return arraylist;
         } catch (FileNotFoundException filenotfoundexception) {
@@ -45,12 +45,12 @@ public abstract class File implements InstanceAccess {
     }
 
     @Generated
-    public java.io.File sK() {
+    public java.io.File getFile() {
         return this.file;
     }
 
     @Generated
-    public FileType th() {
+    public FileType getFileType() {
         return this.fileType;
     }
 

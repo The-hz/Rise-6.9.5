@@ -14,15 +14,15 @@ public final class b {
     private final AlertManager O = new AlertManager();
 
     public b() {
-        l.U();
+        l.setup();
     }
 
     public void F() {
         for (PlayerData playerdata : this.M.values()) {
-            if (Minecraft.getMinecraft().theWorld.playerEntities.contains(playerdata.Y())) {
+            if (Minecraft.getMinecraft().theWorld.playerEntities.contains(playerdata.getPlayer())) {
                 playerdata.incrementTick();
             } else {
-                this.N.a(playerdata.Y().getUniqueID());
+                this.N.a(playerdata.getPlayer().getUniqueID());
             }
         }
     }

@@ -121,7 +121,7 @@ extends Module {
     private boolean Lw;
     private double Lx;
     private boolean YD;
-    Executor YE = Executors.newFixedThreadPool(1);
+    Executor threadPool = Executors.newFixedThreadPool(1);
     ahp YF;
     EntityPlayerSP YG;
     adz<BlockPos> YH = new adz(2);
@@ -131,13 +131,13 @@ extends Module {
     List<Vector2d> YL = new ArrayList<Vector2d>();
     Vector2d YM = null;
     @EventLink
-    public final Listener<MouseOverEvent> YN = mouseOverEvent -> {
+    public final Listener<MouseOverEvent> onMouseOver = mouseOverEvent -> {
         this.YD = true;
     };
-    @EventLink(cH=0)
-    public final Listener<PacketReceiveEvent> YO = packetReceiveEvent -> {
+    @EventLink(value=0)
+    public final Listener<PacketReceiveEvent> receive = packetReceiveEvent -> {
         this.YD = true;
-        Packet<?> packet = packetReceiveEvent.dq();
+        Packet<?> packet = packetReceiveEvent.getPacket();
         if (packet instanceof S20PacketEntityProperties) {
             Iterator iterator = ((S20PacketEntityProperties)packet).func_149441_d().iterator();
             while (iterator.hasNext()) {
@@ -150,59 +150,59 @@ extends Module {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> YP = packetSendEvent -> {
+    public final Listener<PacketSendEvent> send = packetSendEvent -> {
         this.YD = true;
     };
     @EventLink
-    public final Listener<TeleportEvent> YQ = teleportEvent -> {
+    public final Listener<TeleportEvent> teleport = teleportEvent -> {
         this.YD = true;
     };
     @EventLink
-    public final Listener<BlockAABBEvent> YR = blockAABBEvent -> {
+    public final Listener<BlockAABBEvent> blockAABB = blockAABBEvent -> {
         this.YD = true;
     };
     @EventLink
-    public final Listener<Render2DEvent> YS = render2DEvent -> {
+    public final Listener<Render2DEvent> render2D = render2DEvent -> {
         this.YD = true;
     };
     @EventLink
-    public final Listener<Render3DEvent> YT = render3DEvent -> {
+    public final Listener<Render3DEvent> render3D = render3DEvent -> {
         this.YD = true;
     };
     private HashMap<Integer, Integer> YU = new HashMap();
     public static double YV;
     @EventLink
-    public final Listener<PreUpdateEvent> YW = preUpdateEvent -> {
+    public final Listener<PreUpdateEvent> preUpdate = preUpdateEvent -> {
         this.YD = true;
         Test.aEg.gameSettings.keyBindSneak.setPressed(aih.p(0.0, MoveUtil.predictedMotion(Test.aEg.thePlayer.motionY), 0.0) instanceof BlockSlime && Test.aEg.thePlayer.motionY < -0.1);
     };
     @EventLink
-    public final Listener<WaterEvent> YX = waterEvent -> {
+    public final Listener<WaterEvent> water = waterEvent -> {
         this.YD = true;
     };
     @EventLink
-    public final Listener<AttackEvent> YY = attackEvent -> {
+    public final Listener<AttackEvent> attack = attackEvent -> {
         ++this.LM;
         this.YD = true;
     };
     @EventLink
-    public final Listener<WorldChangeEvent> YZ = worldChangeEvent -> {
+    public final Listener<WorldChangeEvent> worldChange = worldChangeEvent -> {
         this.Yx = null;
         this.YD = true;
     };
     @EventLink
-    public final Listener<PreMotionEvent> Za = preMotionEvent -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = preMotionEvent -> {
         this.YD = true;
         if (Test.aEg.thePlayer.tR == 0) {
             preMotionEvent.setPosY(Test.aEg.thePlayer.posY - 0.01);
         }
     };
     @EventLink
-    public final Listener<GuiMouseReleaseEvent> Zb = guiMouseReleaseEvent -> {
+    public final Listener<GuiMouseReleaseEvent> onGuiMouseRelease = guiMouseReleaseEvent -> {
         this.YM = null;
     };
     @EventLink
-    public final Listener<GuiClickEvent> Zc = guiClickEvent -> {
+    public final Listener<GuiClickEvent> onGuiClick = guiClickEvent -> {
         int n2 = guiClickEvent.cL();
         int n3 = guiClickEvent.cM();
         ArrayList<Vector2d> arrayList = new ArrayList<Vector2d>(this.YL);
@@ -210,30 +210,30 @@ extends Module {
         this.YM = (Vector2d)arrayList.stream().findFirst().get();
     };
     @EventLink
-    public final Listener<ClickEvent> Zd = clickEvent -> {
+    public final Listener<ClickEvent> onClick = clickEvent -> {
         this.YD = true;
     };
     @EventLink
-    public final Listener<PostMotionEvent> Ze = postMotionEvent -> {
+    public final Listener<PostMotionEvent> onPostMotionEvent = postMotionEvent -> {
         this.YD = true;
     };
     @EventLink
-    public final Listener<TickEvent> Zf = tickEvent -> {
+    public final Listener<TickEvent> onTick = tickEvent -> {
         this.YD = true;
     };
     @EventLink
-    public final Listener<StrafeEvent> Zg = strafeEvent -> {
+    public final Listener<StrafeEvent> onStrafe = strafeEvent -> {
         this.YD = true;
     };
     @EventLink
-    public final Listener<PostStrafeEvent> Zh = postStrafeEvent -> {
+    public final Listener<PostStrafeEvent> onPostStrafe = postStrafeEvent -> {
         this.YD = true;
     };
     public final Listener<JumpEvent> Zi = jumpEvent -> {
         this.YD = true;
     };
     @EventLink
-    public final Listener<MoveInputEvent> Zj = moveInputEvent -> {
+    public final Listener<MoveInputEvent> onMoveInput = moveInputEvent -> {
         this.YD = true;
     };
 

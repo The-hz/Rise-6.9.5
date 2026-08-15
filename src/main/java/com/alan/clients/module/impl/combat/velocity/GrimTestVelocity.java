@@ -46,20 +46,20 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 
 public final class GrimTestVelocity extends Mode<Velocity> {
-    private final ModeValue sI = new ModeValue("Type", this)
+    private final ModeValue mode = new ModeValue("Type", this)
         .add(new SubMode("Reduce"))
         .add(new SubMode("Jump Reset"))
         .add(new SubMode("Grim Full"))
         .setDefault("Reduce");
-    private final NumberValue sJ = new NumberValue("Min Attacks", this, 2, 1, 5, 1, () -> !this.u("Reduce"));
-    private final NumberValue sK = new NumberValue("Max Attacks", this, 3, 1, 10, 1, () -> !this.u("Reduce"));
-    private final BooleanValue sL = new BooleanValue("Delay Release", this, false, () -> !this.u("Reduce"));
-    private final NumberValue sM = new NumberValue("Delay Speed Threshold", this, 0.6, 0.1, 2, 0.05, () -> !this.u("Reduce") || !this.sL.wo());
-    private final NumberValue sN = new NumberValue("Delay Timeout (ms)", this, 5000, 50, 10000, 50, () -> !this.u("Reduce") || !this.sL.wo());
-    private final BooleanValue sO = new BooleanValue("Delay Logging", this, false, () -> !this.u("Reduce") || !this.sL.wo());
-    private final NumberValue sP = new NumberValue("Jump Reset Tick", this, 1, 0, 9, 1, () -> !this.u("Jump Reset"));
-    private final NumberValue sQ = new NumberValue("Grim Level", this, 0.001, 0.001, 0.1, 0.001, () -> !this.u("Grim Full"));
-    private final BooleanValue sR = new BooleanValue("Logging", this, true);
+    private final NumberValue minAttacks = new NumberValue("Min Attacks", this, 2, 1, 5, 1, () -> !this.u("Reduce"));
+    private final NumberValue maxAttacks = new NumberValue("Max Attacks", this, 3, 1, 10, 1, () -> !this.u("Reduce"));
+    private final BooleanValue delayRelease = new BooleanValue("Delay Release", this, false, () -> !this.u("Reduce"));
+    private final NumberValue delaySpeedThreshold = new NumberValue("Delay Speed Threshold", this, 0.6, 0.1, 2, 0.05, () -> !this.u("Reduce") || !this.delayRelease.wo());
+    private final NumberValue sN = new NumberValue("Delay Timeout (ms)", this, 5000, 50, 10000, 50, () -> !this.u("Reduce") || !this.delayRelease.wo());
+    private final BooleanValue delayLogging = new BooleanValue("Delay Logging", this, false, () -> !this.u("Reduce") || !this.delayRelease.wo());
+    private final NumberValue jumpResetTick = new NumberValue("Jump Reset Tick", this, 1, 0, 9, 1, () -> !this.u("Jump Reset"));
+    private final NumberValue grimLevel = new NumberValue("Grim Level", this, 0.001, 0.001, 0.1, 0.001, () -> !this.u("Grim Full"));
+    private final BooleanValue logging = new BooleanValue("Logging", this, true);
     private Entity pY;
     private boolean sS;
     private int sT;
@@ -77,24 +77,24 @@ public final class GrimTestVelocity extends Mode<Velocity> {
     private boolean tf;
     private boolean tg;
     @EventLink
-    public final Listener<PacketSendEvent> th = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             if (this.u("Grim Full")) {
                 if (var1x.dq() instanceof C03PacketPlayer c03packetplayer && c03packetplayer.afG()) {
                     float f = c03packetplayer.getYaw();
                     float f1 = c03packetplayer.getPitch();
                     if (this.h(f) || this.h(f1)) {
-                        float f2 = this.sQ.wo().floatValue();
+                        float f2 = this.grimLevel.wo().floatValue();
                         float f3 = f + (this.ta.nextBoolean() ? 1 : -1) * f2;
                         float f4 = f1 + (this.ta.nextBoolean() ? 1 : -1) * f2;
                         if (c03packetplayer instanceof C06PacketPlayerPosLook) {
-                            var1x.e(
+                            var1x.setPacket(
                                 new C06PacketPlayerPosLook(
                                     c03packetplayer.afD(), c03packetplayer.afE(), c03packetplayer.afF(), f3, f4, c03packetplayer.isOnGround()
                                 )
                             );
                         } else if (c03packetplayer instanceof C05PacketPlayerLook) {
-                            var1x.e(new C05PacketPlayerLook(f3, f4, c03packetplayer.isOnGround()));
+                            var1x.setPacket(new C05PacketPlayerLook(f3, f4, c03packetplayer.isOnGround()));
                         }
                     }
                 }
@@ -102,9 +102,9 @@ public final class GrimTestVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> ti = var1x -> {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
-            Packet packet = var1x.dq();
+            Packet packet = var1x.getPacket();
             if (this.u("Grim Full")) {
                 if (packet instanceof S12PacketEntityVelocity s12packetentityvelocity && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                     var1x.setCancelled();
@@ -119,7 +119,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                 }
             }
 
-            if (this.u("Reduce") && this.sL.wo() && packet instanceof S08PacketPlayerPosLook && !this.tc) {
+            if (this.u("Reduce") && this.delayRelease.wo() && packet instanceof S08PacketPlayerPosLook && !this.tc) {
                 this.tg = true;
                 this.t("Flag detected, skipping next delay.");
             }
@@ -160,8 +160,8 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                             return;
                         }
 
-                        if (this.sL.wo() && !this.tg) {
-                            if (d3 >= this.sM.wo().doubleValue()) {
+                        if (this.delayRelease.wo() && !this.tg) {
+                            if (d3 >= this.delaySpeedThreshold.wo().doubleValue()) {
                                 var1x.setCancelled();
                                 this.tc = true;
                                 this.td = new Vec3(d0, d1, d2);
@@ -182,7 +182,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                         this.sY = !aEg.thePlayer.isSprinting();
                     }
                 } else if (this.u("Jump Reset")) {
-                    this.sT = this.sP.wo().intValue();
+                    this.sT = this.jumpResetTick.wo().intValue();
                 }
             }
 
@@ -216,7 +216,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<PreUpdateEvent> tj = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.thePlayer != null) {
             if (aEg.thePlayer.hurtTime == 0) {
                 this.sS = false;
@@ -287,7 +287,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> tk = var1x -> {
+    public final Listener<MoveInputEvent> onMoveInput = var1x -> {
         if (aEg.thePlayer != null && this.u("Jump Reset") && aEg.thePlayer.onGround && this.sT == 1) {
             var1x.setJump(true);
             this.sT = 0;
@@ -337,7 +337,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
     }
 
     private void t(String var1) {
-        if (this.sR.wo() && this.sO.wo()) {
+        if (this.logging.wo() && this.delayLogging.wo()) {
             afi.d("%s", "[Delay] " + var1);
         }
     }
@@ -348,8 +348,8 @@ public final class GrimTestVelocity extends Mode<Velocity> {
     }
 
     private int gz() {
-        int i = this.sJ.wo().intValue();
-        int j = this.sK.wo().intValue();
+        int i = this.minAttacks.wo().intValue();
+        int j = this.maxAttacks.wo().intValue();
         if (i < 1) {
             i = 1;
         }
@@ -390,6 +390,6 @@ public final class GrimTestVelocity extends Mode<Velocity> {
     }
 
     private boolean u(String var1) {
-        return this.sI.wo() != null && this.sI.wo().getName().equalsIgnoreCase(var1);
+        return this.mode.wo() != null && this.mode.wo().getName().equalsIgnoreCase(var1);
     }
 }

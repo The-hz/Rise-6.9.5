@@ -28,10 +28,10 @@ public class WatchdogNoSlow extends Mode<NoSlow> {
     private boolean vh;
     private Packet<?> NI;
     private KillAura NJ = null;
-    public final BooleanValue NK = new BooleanValue("Slow down on Slabs", this, true);
+    public final BooleanValue slowDownOnSlabs = new BooleanValue("Slow down on Slabs", this, true);
     @EventLink
-    public final Listener<PreMotionEvent> NL = var1x -> {
-        if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.isUsingItem() && this.NK.wo()) {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
+        if (aih.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.isUsingItem() && this.slowDownOnSlabs.wo()) {
             this.vh = false;
         }
 
@@ -78,31 +78,31 @@ public class WatchdogNoSlow extends Mode<NoSlow> {
         }
     };
     @EventLink
-    private final Listener<PacketSendEvent> NN = var1x -> {
+    private final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (this.NJ == null) {
             this.NJ = this.e(KillAura.class);
         }
     };
     @EventLink
-    public final Listener<SlowDownEvent> NO = var1x -> {
+    public final Listener<SlowDownEvent> onSlowDown = var1x -> {
         if (!this.vh || aEg.thePlayer.onGround) {
-            if (this.wj().DO.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
+            if (this.getParent().food.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
                 var1x.setCancelled();
             }
 
-            if (this.wj().DP.wo()
+            if (this.getParent().potion.wo()
                 && aEg.thePlayer.isUsingItem()
                 && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion
                 && !ItemPotion.isSplash(aEg.thePlayer.getHeldItem().getMetadata())) {
                 var1x.setCancelled();
             }
 
-            if (this.wj().DR.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
+            if (this.getParent().bow.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
                 var1x.setCancelled();
             }
         }
 
-        if (this.wj().DQ.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
+        if (this.getParent().sword.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
             SlotComponent slotcomponent = this.d(SlotComponent.class);
             ahj.l(new l(SlotComponent.bQ() % 7 + (int)(Math.random() * 2.0) + 1));
             slotcomponent = this.d(SlotComponent.class);

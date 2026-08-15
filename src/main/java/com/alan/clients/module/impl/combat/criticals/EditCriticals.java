@@ -16,7 +16,7 @@ public final class EditCriticals extends Mode<Criticals> {
     private boolean attacked;
     private int ticks;
     @EventLink
-    public final Listener<PreMotionEvent> rH = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (aEg.thePlayer.onGround && this.attacked) {
             this.ticks++;
             switch (this.ticks) {
@@ -35,7 +35,7 @@ public final class EditCriticals extends Mode<Criticals> {
         }
     };
     @EventLink
-    public final Listener<AttackEvent> rI = var1x -> {
+    public final Listener<AttackEvent> onAttackEvent = var1x -> {
         if (aEg.thePlayer.onGround && !aEg.thePlayer.isOnLadder() && this.rG.T(this.delay.wo().longValue())) {
             aEg.thePlayer.onCriticalHit(var1x.dc());
             this.rG.aX();

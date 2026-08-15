@@ -16,18 +16,18 @@ import java.util.Date;
 import net.minecraft.client.renderer.GlStateManager;
 
 public final class yr extends Mode<Interface> {
-    private final BooleanValue asm = new BooleanValue("Font", this, true);
+    private final BooleanValue font = new BooleanValue("Font", this, true);
     private static final agc asn = gb.MINECRAFT.dM();
-    private static final double aso = asn.tq() + 2.0F;
+    private static final double aso = asn.height() + 2.0F;
     private static final int asp = 1;
     @EventLink
-    public final Listener<Render2DEvent> asq = var1x -> {
-        for (zc zc : this.wj().lL()) {
-            float f = this.asm.wo() ? 11.0F : 10.0F;
-            this.wj().n(aEg.fontRendererObj.tq() + 3.0F);
+    public final Listener<Render2DEvent> onRender2D = var1x -> {
+        for (zc zc : this.getParent().lL()) {
+            float f = this.font.wo() ? 11.0F : 10.0F;
+            this.getParent().n(aEg.fontRendererObj.height() + 3.0F);
             float f1;
-            int i = (f1 = this.wj().aoq - f) == 0.0F ? 0 : (f1 < 0.0F ? -1 : 1);
-            this.wj().o(3.0F);
+            int i = (f1 = this.getParent().aoq - f) == 0.0F ? 0 : (f1 < 0.0F ? -1 : 1);
+            this.getParent().o(3.0F);
             double d0 = zc.nr().getX() - 1.0 - 2.0;
             double d1 = zc.nr().getY() + 1.0;
             double d2 = zc.atj + zc.atk + 2.0F + 3.0F;
@@ -35,8 +35,8 @@ public final class yr extends Mode<Interface> {
             this.b(gg.BLOOM).c(() -> RenderUtil.d(d0 - 1.0, d1 - 2.0, d2, aso + 1.0, new Color(0, 0, 0, 255)));
             this.b(gg.REGULAR, 1).c(() -> {
                 RenderUtil.d(d0 - 1.0, d1 - 2.0, d2, aso + 1.0, new Color(0, 0, 0, 110));
-                RenderUtil.d(d0 + zc.atj + zc.atk + 4.0, d1 - 2.0, 1.0, aso + 1.0, this.rz().j(new Vector2d(zc.nr().getX(), zc.nr().getY() / 1.5)));
-                this.a(zc, d0 + 1.0, d1, this.rz().j(new Vector2d(zc.nr().getX(), zc.nr().getY() / 1.5)).getRGB());
+                RenderUtil.d(d0 + zc.atj + zc.atk + 4.0, d1 - 2.0, 1.0, aso + 1.0, this.rz().getAccentColor(new Vector2d(zc.nr().getX(), zc.nr().getY() / 1.5)));
+                this.a(zc, d0 + 1.0, d1, this.rz().getAccentColor(new Vector2d(zc.nr().getX(), zc.nr().getY() / 1.5)).getRGB());
             });
         }
 
@@ -44,13 +44,13 @@ public final class yr extends Mode<Interface> {
             Date date = new Date();
             String s = new SimpleDateFormat("HH:mm:ss").format(date);
             String s1 = Client.b + " Client | 6.9.5 | " + aEg.thePlayer.getName() + " | " + s;
-            RenderUtil.roundedRectangle(2.0, 3.0, (this.asm.wo() ? 0 : 8) + this.nm().getStringWidth(s1), 15.0, 4.0, new Color(0, 0, 0, 100));
+            RenderUtil.roundedRectangle(2.0, 3.0, (this.font.wo() ? 0 : 8) + this.nm().getStringWidth(s1), 15.0, 4.0, new Color(0, 0, 0, 100));
             GlStateManager.resetColor();
             int j = 0;
 
             for (int k = 0; k < s1.length(); k++) {
                 char c0 = s1.charAt(k);
-                this.nm().b(String.valueOf(c0), 6 + j, 8.0, this.rz().j(new Vector2d(k, k)).getRGB());
+                this.nm().b(String.valueOf(c0), 6 + j, 8.0, this.rz().getAccentColor(new Vector2d(k, k)).getRGB());
                 j += this.nm().getStringWidth(String.valueOf(c0));
             }
         });
@@ -58,22 +58,22 @@ public final class yr extends Mode<Interface> {
             Date date = new Date();
             String s = new SimpleDateFormat("HH:mm:ss").format(date);
             String s1 = Client.b + " Client | 6.9.5 | " + aEg.thePlayer.getName() + " | " + s;
-            RenderUtil.roundedRectangle(2.0, 3.0, (this.asm.wo() ? 0 : 8) + this.nm().getStringWidth(s1), 15.0, 4.0, new Color(0, 0, 0, 255));
+            RenderUtil.roundedRectangle(2.0, 3.0, (this.font.wo() ? 0 : 8) + this.nm().getStringWidth(s1), 15.0, 4.0, new Color(0, 0, 0, 255));
         });
         this.b(gg.BLOOM).c(() -> {
             Date date = new Date();
             String s = new SimpleDateFormat("HH:mm:ss").format(date);
             String s1 = Client.b + " Client | 6.9.5 | " + aEg.thePlayer.getName() + " | " + s;
-            RenderUtil.roundedRectangle(2.0, 3.0, (this.asm.wo() ? 0 : 8) + this.nm().getStringWidth(s1) - 1, 15.0, 5.0, new Color(0, 0, 0, 255));
+            RenderUtil.roundedRectangle(2.0, 3.0, (this.font.wo() ? 0 : 8) + this.nm().getStringWidth(s1) - 1, 15.0, 5.0, new Color(0, 0, 0, 255));
         });
     };
     @EventLink
-    public final Listener<TickEvent> asr = var1x -> {
-        for (zc zc : this.wj().lL()) {
+    public final Listener<TickEvent> onTick = var1x -> {
+        for (zc zc : this.getParent().lL()) {
             if (zc.ath != 0.0F) {
-                zc.y(!zc.getTag().isEmpty() && this.wj().anZ.wo());
-                String s = (this.wj().aoa.wo() ? zc.nx().toLowerCase() : zc.nx()).replace(this.wj().lH().wo() ? " " : "", "");
-                String s1 = (this.wj().aoa.wo() ? zc.getTag().toLowerCase() : zc.getTag()).replace(this.wj().lH().wo() ? " " : "", "");
+                zc.y(!zc.getTag().isEmpty() && this.getParent().suffix.wo());
+                String s = (this.getParent().lowercase.wo() ? zc.nx().toLowerCase() : zc.nx()).replace(this.getParent().lH().wo() ? " " : "", "");
+                String s1 = (this.getParent().lowercase.wo() ? zc.getTag().toLowerCase() : zc.getTag()).replace(this.getParent().lH().wo() ? " " : "", "");
                 zc.t(this.nm().getStringWidth(s));
                 zc.u(zc.nA() ? this.nm().getStringWidth(s1) + 1 + 3 : 1.0F);
                 zc.ap(s);
@@ -87,7 +87,7 @@ public final class yr extends Mode<Interface> {
     }
 
     private agc nm() {
-        return this.asm.wo() ? gb.MAIN.a(24, gd.REGULAR) : gb.MINECRAFT.dM();
+        return this.font.wo() ? gb.MAIN.a(24, gd.REGULAR) : gb.MINECRAFT.dM();
     }
 
     private void a(zc var1, double var2, double var4, int var6) {

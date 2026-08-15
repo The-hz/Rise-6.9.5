@@ -13,21 +13,21 @@ import hackclient.rise.aih;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 
 public class NewNCPStep extends Mode<Step> {
-    private final NumberValue Sd = new NumberValue("Height", this, 1, 1, 1.5, 0.1);
-    private final NumberValue Se = new NumberValue("Timer", this, 0.5, 0.1, 1, 0.1);
+    private final NumberValue height = new NumberValue("Height", this, 1, 1, 1.5, 0.1);
+    private final NumberValue timer = new NumberValue("Timer", this, 0.5, 0.1, 1, 0.1);
     private double Sf;
     @EventLink
-    public final Listener<PreMotionEvent> Sg = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.onGround && !aih.vj()) {
-            aEg.thePlayer.stepHeight = this.Sd.wo().floatValue();
+            aEg.thePlayer.stepHeight = this.height.wo().floatValue();
         } else {
             aEg.thePlayer.stepHeight = 0.6F;
         }
     };
     @EventLink
-    public final Listener<StepEvent> Sh = var1x -> {
+    public final Listener<StepEvent> onStep = var1x -> {
         if (aEg.thePlayer.onGround && !aih.vj()) {
-            double d0 = var1x.da();
+            double d0 = var1x.getHeight();
             this.Sf = d0;
             if (!(d0 <= 0.6F)) {
                 double[] adouble;
@@ -39,7 +39,7 @@ public class NewNCPStep extends Mode<Step> {
                     adouble = new double[]{0.39F, 0.6938F};
                 }
 
-                aEg.timer.dzD = this.Se.wo().floatValue();
+                aEg.timer.dzD = this.timer.wo().floatValue();
 
                 for (double d1 : adouble) {
                     ahj.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d1, aEg.thePlayer.posZ, false));
@@ -48,7 +48,7 @@ public class NewNCPStep extends Mode<Step> {
         }
     };
     @EventLink
-    private final Listener<PacketSendEvent> Si = var1x -> {
+    private final Listener<PacketSendEvent> onPacketSend = var1x -> {
         double[] adouble;
         if (this.Sf > 1.015) {
             adouble = new double[]{0.42F, 0.7532F, 1.0, 0.98F};

@@ -16,19 +16,19 @@ public final class aay extends a {
     }
 
     @Override
-    public boolean j(Packet<?> var1) {
+    public boolean handle(Packet<?> var1) {
         if (var1 instanceof S48PacketResourcePackSend s48packetresourcepacksend) {
             String s = s48packetresourcepacksend.getURL();
             String s1 = s48packetresourcepacksend.getHash();
             if (s.toLowerCase().startsWith("level://")) {
-                return this.q(s, s1);
+                return this.check(s, s1);
             }
         }
 
         return false;
     }
 
-    private boolean q(String var1, String var2) {
+    private boolean check(String var1, String var2) {
         try {
             String s = new URI(var1).getScheme();
             boolean flag = "level".equals(s);

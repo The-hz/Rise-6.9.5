@@ -9,7 +9,7 @@ import com.alan.clients.value.Mode;
 
 public final class hk extends Mode<AntiBot> {
     @EventLink
-    public final Listener<PreMotionEvent> rs = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         String s = var1xx.getDisplayName().getUnformattedText();
         if (!r(s)) {
             afi.c("Detected bot (invalid colour start): " + s);

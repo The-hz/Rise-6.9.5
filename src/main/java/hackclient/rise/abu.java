@@ -5,15 +5,15 @@ import com.alan.clients.value.Value;
 import net.minecraft.util.ResourceLocation;
 
 public class abu extends abl {
-    private final ResourceLocation azn = new ResourceLocation("rise/icons/click.png");
+    private final ResourceLocation image = new ResourceLocation("rise/icons/click.png");
 
     public abu(Value<?> var1) {
         super(var1);
     }
 
     @Override
-    public void a(Vector2d var1, int var2, int var3, float var4) {
-        this.jy = 0.0;
+    public void draw(Vector2d var1, int var2, int var3, float var4) {
+        this.height = 0.0;
     }
 
     @Override
@@ -26,10 +26,10 @@ public class abu extends abl {
     }
 
     @Override
-    public void ci() {
+    public void released() {
     }
 
     @Override
-    public void b(char var1, int var2) {
+    public void key(char var1, int var2) {
     }
 }

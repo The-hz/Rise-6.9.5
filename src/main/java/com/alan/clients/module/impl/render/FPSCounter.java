@@ -40,20 +40,20 @@ public final class FPSCounter extends Module {
             double d3 = vector2d.y;
             double d4 = this.scale.x + 6.0F;
             double d5 = this.scale.y - 1.0F;
-            double d6 = this.rz().pl();
+            double d6 = this.rz().getRound();
             this.rz();
             RenderUtil.roundedRectangle(d2, d3, d4, d5, d6, adv.rK());
             this.position.n(new Vector2d(this.scale.x + 6.0F, this.scale.y - 1.0F));
             double d0 = vector2d.x + 3.0;
-            double d1 = vector2d.y + this.scale.y / 2.05F - gb.MAIN.a(20, gd.REGULAR).tq() / 4.0F;
+            double d1 = vector2d.y + this.scale.y / 2.05F - gb.MAIN.a(20, gd.REGULAR).height() / 4.0F;
             gb.MAIN.a(20, gd.BOLD).b(s, d0, d1, this.rz().rA().getRGB());
             gb.MAIN.a(20, gd.REGULAR).b(s1, d0 + f, d1, Color.WHITE.getRGB());
         });
-        this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(vector2d.x, vector2d.y, this.scale.x + 6.0F, this.scale.y - 1.0F, this.rz().pl() + 1, Color.BLACK));
+        this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(vector2d.x, vector2d.y, this.scale.x + 6.0F, this.scale.y - 1.0F, this.rz().getRound() + 1, Color.BLACK));
         this.b(gg.BLOOM)
             .c(
                 () -> RenderUtil.roundedRectangle(
-                    vector2d.x + 0.5, vector2d.y + 0.5, this.scale.x + 6.0F - 1.0F, this.scale.y - 2.0F, this.rz().pl() + 1, this.rz().rE()
+                    vector2d.x + 0.5, vector2d.y + 0.5, this.scale.x + 6.0F - 1.0F, this.scale.y - 2.0F, this.rz().getRound() + 1, this.rz().rE()
                 )
             );
     };

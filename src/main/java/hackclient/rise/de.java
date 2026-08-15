@@ -10,8 +10,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 
 public final class de extends Component {
-    @EventLink(cH = 1)
-    public final Listener<StrafeEvent> iG = var0 -> {
+    @EventLink(value = 1)
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_17)) {
             if (!aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                 return;

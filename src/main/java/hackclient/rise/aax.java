@@ -5,21 +5,21 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S2APacketParticles;
 
 public final class aax extends a {
-    private int axg;
+    private int particles;
 
     public aax() {
         super("ParticleCheck", "Server attempted to crash the client with a large amount of particles");
     }
 
     @Override
-    public boolean j(Packet<?> var1) {
+    public boolean handle(Packet<?> var1) {
         if (!(var1 instanceof S2APacketParticles s2apacketparticles)) {
             return false;
         }
-        this.axg = this.axg + s2apacketparticles.getParticleCount();
-        this.axg -= 6;
-        this.axg = Math.min(this.axg, 150);
-        return this.axg > 100
+        this.particles = this.particles + s2apacketparticles.getParticleCount();
+        this.particles -= 6;
+        this.particles = Math.min(this.particles, 150);
+        return this.particles > 100
             || s2apacketparticles.getParticleCount() < 1
             || Math.abs(s2apacketparticles.getParticleCount()) > 20
             || s2apacketparticles.getParticleSpeed() < 0.0F

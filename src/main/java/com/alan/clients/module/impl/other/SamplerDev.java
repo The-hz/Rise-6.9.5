@@ -20,7 +20,7 @@ public final class SamplerDev extends Module {
     private final HashMap<String, Vector2f> VK = new HashMap<>();
     private Vector2f Ul;
     @EventLink
-    public final Listener<PreMotionEvent> VL = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         EntityLivingBase entitylivingbase = bv.e(6.0);
         EntityPlayerSP entityplayersp = aEg.thePlayer;
         Vector2f vector2f = new Vector2f(entityplayersp.pl % 360.0F, entityplayersp.rotationPitch);

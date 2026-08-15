@@ -13,8 +13,8 @@ import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public class ao extends Component {
-    @EventLink(cH = 0)
-    public final Listener<PacketSendEvent> bC = var0 -> {
+    @EventLink(value = 0)
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         if (aEg != null && aEg.theWorld != null && !var0.isCancelled()) {
             Packet packet = var0.dq();
             if (packet instanceof C08PacketPlayerBlockPlacement && !((C08PacketPlayerBlockPlacement)packet).getPosition().h(new aka(-1.0, -1.0, -1.0))) {
@@ -22,12 +22,12 @@ public class ao extends Component {
             }
         }
     };
-    @EventLink(cH = 0)
-    public final Listener<AttackEvent> bD = var0 -> aEg.thePlayer.aY = 0;
-    @EventLink(cH = 0)
-    public final Listener<PacketReceiveEvent> bE = var0 -> {
+    @EventLink(value = 0)
+    public final Listener<AttackEvent> onAttack = var0 -> aEg.thePlayer.aY = 0;
+    @EventLink(value = 0)
+    public final Listener<PacketReceiveEvent> onPacketReceive = var0 -> {
         if (aEg != null && aEg.theWorld != null && !var0.isCancelled()) {
-            Packet packet = var0.dq();
+            Packet packet = var0.getPacket();
             if (packet instanceof S12PacketEntityVelocity s12packetentityvelocity) {
                 Entity entity = aEg.theWorld.getEntityByID(s12packetentityvelocity.getEntityID());
                 if (entity == null) {

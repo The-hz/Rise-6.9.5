@@ -30,7 +30,7 @@ public class bv extends Component implements InstanceAccess {
             gj = Client.a.g().c(KillAura.class);
         }
 
-        return b(gj.nz.wo(), gj.nA.wo(), gj.nB.wo(), gj.nC.wo(), gj.nD.wo()).stream().filter(var2 -> aih.v(var2) <= var0).collect(Collectors.toList());
+        return b(gj.player.wo(), gj.invisibles.wo(), gj.animals.wo(), gj.mobs.wo(), gj.playerTeammates.wo()).stream().filter(var2 -> aih.v(var2) <= var0).collect(Collectors.toList());
     }
 
     public static List<EntityLivingBase> a(double var0, boolean var2, boolean var3, boolean var4, boolean var5, boolean var6) {
@@ -42,7 +42,7 @@ public class bv extends Component implements InstanceAccess {
             gj = Client.a.g().c(KillAura.class);
         }
 
-        return b(gj.nz.wo(), gj.nA.wo(), gj.nB.wo(), gj.nC.wo(), gj.nD.wo());
+        return b(gj.player.wo(), gj.invisibles.wo(), gj.animals.wo(), gj.mobs.wo(), gj.playerTeammates.wo());
     }
 
     public static List<EntityLivingBase> b(boolean var0, boolean var1, boolean var2, boolean var3, boolean var4) {
@@ -65,7 +65,7 @@ public class bv extends Component implements InstanceAccess {
                     && !(var5x instanceof EntityArmorStand)
             )
             .map(var0x -> (EntityLivingBase)var0x)
-            .filter(var1x -> !(var1x instanceof EntityPlayer) || !aih.D(var1x) || var4)
+            .filter(var1x -> !(var1x instanceof EntityPlayer) || !aih.sameTeam(var1x) || var4)
             .collect(Collectors.toList());
     }
 }

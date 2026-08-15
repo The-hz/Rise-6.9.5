@@ -65,13 +65,13 @@ import rip.vantage.network.core.a;
 public final class Chat
 extends Module {
     private static final float aqv = 4.0f;
-    private final NumberValue aqw = new NumberValue("Open Height", this, (Number)130, (Number)0, (Number)200, (Number)1);
-    private final NumberValue aqx = new NumberValue("Width", this, (Number)320, (Number)40, (Number)320, (Number)1);
-    private final NumberValue aqy = new NumberValue("Max Closed Height", this, (Number)130, (Number)0, (Number)500, (Number)1);
-    private final NumberValue aqz = new NumberValue("Message disappearance speed", this, (Number)5000, (Number)0, (Number)5000, (Number)1);
-    private final BooleanValue aqA = new BooleanValue("Background", (Module)this, (Boolean)true);
-    private final BooleanValue aqB = new BooleanValue("Hide Player Source Messages", (Module)this, (Boolean)false);
-    private final BooleanValue aqC = new BooleanValue("Image Chat", (Module)this, (Boolean)true);
+    private final NumberValue openHeight = new NumberValue("Open Height", this, (Number)130, (Number)0, (Number)200, (Number)1);
+    private final NumberValue width = new NumberValue("Width", this, (Number)320, (Number)40, (Number)320, (Number)1);
+    private final NumberValue maxClosedHeight = new NumberValue("Max Closed Height", this, (Number)130, (Number)0, (Number)500, (Number)1);
+    private final NumberValue messageDisappearanceSpeed = new NumberValue("Message disappearance speed", this, (Number)5000, (Number)0, (Number)5000, (Number)1);
+    private final BooleanValue background = new BooleanValue("Background", (Module)this, (Boolean)true);
+    private final BooleanValue hidePlayerSourceMessages = new BooleanValue("Hide Player Source Messages", (Module)this, (Boolean)false);
+    private final BooleanValue imageChat = new BooleanValue("Image Chat", (Module)this, (Boolean)true);
     private final yf aqD = new yf();
     private final DragValue aqE = new DragValue("", this, new Vector2d(200.0, 200.0), false, true);
     private final Animation aqF = new Animation(Easing.EASE_OUT_EXPO, 500L);
@@ -84,7 +84,7 @@ extends Module {
     private static final String aqM = afi.getPrefix();
     private static final String aqN = "[Rise] ";
     private static final agw aqO = new agw();
-    private final BooleanValue aqP;
+    private final BooleanValue pinyinChineseIME;
     private static final String aqQ = Chat.mr();
     private static final int aqR = 100;
     private int aqS;
@@ -100,33 +100,33 @@ extends Module {
     private ArrayList<String> aqZ;
     private Interface amf;
     @EventLink
-    public final Listener<KeyboardInputEvent> ara;
+    public final Listener<KeyboardInputEvent> onKeyboardInput;
     @EventLink
-    public final Listener<PacketReceiveEvent> arb;
+    public final Listener<PacketReceiveEvent> onPacketReceive;
     @EventLink
     public final Listener<dt> arc;
     @EventLink
-    public final Listener<Render2DEvent> ard;
+    public final Listener<Render2DEvent> onRender2D;
 
     public Chat() {
         this.aqK = Chat.aEg.fontRendererObj;
         this.aqL = Chat.aEg.fontRendererObj;
-        this.aqP = new BooleanValue("Pinyin Chinese IME", (Module)this, (Boolean)false);
+        this.pinyinChineseIME = new BooleanValue("Pinyin Chinese IME", (Module)this, (Boolean)false);
         this.aqS = -1;
         this.aqT = "";
         this.aqU = new agm(new Vector2d(0.0, 0.0), this.aqL, Color.WHITE, agl.LEFT, "", 1000.0f, aqQ);
         this.bN = new rip.vantage.commons.util.time.a();
         this.aqY = new adz(20);
-        this.ara = keyboardInputEvent -> {
+        this.onKeyboardInput = keyboardInputEvent -> {
             char c2 = keyboardInputEvent.cP();
             if (c2 == '.' || c2 == '\u3002') {
                 String string;
-                if (keyboardInputEvent.cQ() == null) {
+                if (keyboardInputEvent.getGuiScreen() == null) {
                     aEg.displayGuiScreen(new acl(null));
                     keyboardInputEvent.setCancelled();
                     return;
                 }
-                if (keyboardInputEvent.cQ() instanceof c && ((string = this.mL().getText()) == null || string.trim().isEmpty())) {
+                if (keyboardInputEvent.getGuiScreen() instanceof c && ((string = this.mL().getText()) == null || string.trim().isEmpty())) {
                     aEg.displayGuiScreen(new acl(Chat.aEg.currentScreen));
                     keyboardInputEvent.setCancelled();
                     return;
@@ -134,11 +134,11 @@ extends Module {
             }
             if (c2 == '/' || c2 == '.') {
                 this.aqU.I(true);
-                this.aqU.b(c2, keyboardInputEvent.cO());
+                this.aqU.key(c2, keyboardInputEvent.getKeyCode());
             }
         };
-        this.arb = packetReceiveEvent -> {
-            Packet<?> packet = packetReceiveEvent.dq();
+        this.onPacketReceive = packetReceiveEvent -> {
+            Packet<?> packet = packetReceiveEvent.getPacket();
             if (packet instanceof S3APacketTabComplete) {
                 this.aqZ = new ArrayList<String>(Arrays.asList(((S3APacketTabComplete)packet).func_149630_c()));
                 for (String string : this.aqZ) {
@@ -153,7 +153,7 @@ extends Module {
             if (Character.getType(c2) == 18 || c2 >= '\uf700' && c2 <= '\uf8ff') {
                 c2 = '\u0000';
             }
-            if (bl && ((Boolean)this.aqP.wo()).booleanValue() && agx.isEnabled()) {
+            if (bl && ((Boolean)this.pinyinChineseIME.wo()).booleanValue() && agx.isEnabled()) {
                 this.aqU.ayU = true;
                 if (aqO.a(this.aqU, c2, n2)) {
                     return;
@@ -237,9 +237,9 @@ extends Module {
                 }
             }
             this.aqU.ayU = bl;
-            this.aqU.b(c2, n2);
+            this.aqU.key(c2, n2);
         };
-        this.ard = render2DEvent -> {
+        this.onRender2D = render2DEvent -> {
             this.mn();
             this.mq();
         };
@@ -254,17 +254,17 @@ extends Module {
         }
         boolean bl = ((Mode)this.amf.lM().wo()).getName().equals("Rise");
         this.ads = Chat.aEg.currentScreen instanceof c;
-        this.aqX = this.aqK.tq();
+        this.aqX = this.aqK.height();
         ArrayList<net.minecraft.client.gui.a> arrayList = new ArrayList<net.minecraft.client.gui.a>(Chat.aEg.ingameGUI.getChatGUI().drawnChatLines);
         int n2 = this.p(arrayList);
-        float f2 = Math.min((float)((Number)(this.ads ? this.aqw : this.aqy).wo()).intValue(), this.aqX * (float)n2 + (float)(n2 == 0 ? 0 : 7));
+        float f2 = Math.min((float)((Number)(this.ads ? this.openHeight : this.maxClosedHeight).wo()).intValue(), this.aqX * (float)n2 + (float)(n2 == 0 ? 0 : 7));
         this.aqI.Q(Math.min(f2, this.aqX * (this.ads ? f2 : (float)this.aqW) + (float)(this.aqX * (this.ads ? f2 : (float)this.aqW) == 0.0f ? 0 : 7)));
-        this.aqE.aHe = new Vector2d(((Number)this.aqx.wo()).doubleValue(), this.aqI.sG());
+        this.aqE.aHe = new Vector2d(((Number)this.width.wo()).doubleValue(), this.aqI.sG());
         this.aqE.apP = new Vector2d(this.rz().qd(), (double)(Chat.aEg.jY.getScaledHeight() - 10 - 20) - this.aqE.aHe.y);
         Vector2d vector2d = new Vector2d(this.aqE.apP.x + 5.0, this.aqE.apP.y + this.aqE.aHe.y - 1.5);
         Vector2d vector2d2 = new Vector2d(vector2d.getX(), vector2d.getY());
         double d2 = Math.min(this.aqE.aHe.y / 5.0, 6.0);
-        if (((Boolean)this.aqA.wo()).booleanValue()) {
+        if (((Boolean)this.background.wo()).booleanValue()) {
             if (bl) {
                 double d3 = this.amf != null ? this.amf.lD() : d2;
                 this.b(gg.REGULAR, 1).c(() -> RenderUtil.roundedRectangle(this.aqE.apP.x, this.aqE.apP.y, this.aqE.aHe.x, this.aqE.aHe.y, d3, adv.rK()));
@@ -294,17 +294,17 @@ extends Module {
                         }
                     }
                     if (this.aqV >= n2) break block29;
-                    if (!((Boolean)this.aqB.wo()).booleanValue()) break block30;
+                    if (!((Boolean)this.hidePlayerSourceMessages.wo()).booleanValue()) break block30;
                     Chat.aEg.ingameGUI.getChatGUI().drawnChatLines.removeIf(a2 -> a2.Dx().getFormattedText().contains(":"));
                     if (this.aqV >= Chat.aEg.ingameGUI.getChatGUI().drawnChatLines.size()) break block29;
                 }
                 this.aqF.T(this.aqF.sG() + (double)((float)(n2 - this.aqV) * this.aqX));
                 this.aqF.Q(this.aqF.sG());
                 this.aqW += n2 - this.aqV;
-                this.aqW = (int)Math.max(Math.min((float)((Number)this.aqy.wo()).intValue() / this.aqX, (float)this.aqW), 0.0f);
+                this.aqW = (int)Math.max(Math.min((float)((Number)this.maxClosedHeight.wo()).intValue() / this.aqX, (float)this.aqW), 0.0f);
             }
             this.aqV = n2;
-            if (this.bN.T(((Number)this.aqz.wo()).intValue()) || this.aqW == 0) {
+            if (this.bN.T(((Number)this.messageDisappearanceSpeed.wo()).intValue()) || this.aqW == 0) {
                 this.bN.aX();
                 this.aqW = Math.max(0, this.aqW - 1);
             }
@@ -338,7 +338,7 @@ extends Module {
                         }
                         this.amX = Mouse.isButtonDown(0);
                     }
-                    if (((Boolean)this.aqA.wo()).booleanValue()) {
+                    if (((Boolean)this.background.wo()).booleanValue()) {
                         this.aqJ.a(new Vector2d(this.aqE.apP.x + this.aqE.aHe.x - 5.0, this.aqE.apP.y + 5.0), this.aqE.aHe.y - 10.0);
                     }
                     GL11.glDisable(3089);
@@ -447,7 +447,7 @@ extends Module {
     }
 
     private float a(ye ye2) {
-        if (!((Boolean)this.aqC.wo()).booleanValue() || ye2 == null || ye2.nc() || !ye2.isLoaded()) {
+        if (!((Boolean)this.imageChat.wo()).booleanValue() || ye2 == null || ye2.nc() || !ye2.isLoaded()) {
             return 0.0f;
         }
         this.aqD.c(ye2);
@@ -455,11 +455,11 @@ extends Module {
     }
 
     private float mo() {
-        return Math.max(1.0f, (float)((Number)this.aqx.wo()).doubleValue() - 10.0f);
+        return Math.max(1.0f, (float)((Number)this.width.wo()).doubleValue() - 10.0f);
     }
 
     private ye a(net.minecraft.client.gui.a a2) {
-        if ((Boolean)this.aqC.wo() == false) return null;
+        if ((Boolean)this.imageChat.wo() == false) return null;
         if (a2 == null) return null;
         if (!a2.DB()) {
             return null;
@@ -501,7 +501,7 @@ extends Module {
             this.amf = this.e(Interface.class);
         }
         boolean bl = ((Mode)this.amf.lM().wo()).getName().equals("Rise");
-        if (!((Boolean)this.aqP.wo()).booleanValue()) {
+        if (!((Boolean)this.pinyinChineseIME.wo()).booleanValue()) {
             aqO.aX();
             agx.K(false);
             agx.setEnabled(false);
@@ -513,10 +513,10 @@ extends Module {
         }
         if (bl) {
             this.aqG.h(!this.ads ? 300L : 850L);
-            this.aqG.a(!this.ads ? Easing.EASE_IN_EXPO : Easing.EASE_OUT_ELASTIC);
+            this.aqG.setEasing(!this.ads ? Easing.EASE_IN_EXPO : Easing.EASE_OUT_ELASTIC);
         } else {
             this.aqG.h(0L);
-            this.aqG.a(!this.ads ? Easing.EASE_IN_EXPO : Easing.EASE_OUT_ELASTIC);
+            this.aqG.setEasing(!this.ads ? Easing.EASE_IN_EXPO : Easing.EASE_OUT_ELASTIC);
         }
         this.aqG.Q(!this.ads ? 0.0 : 1.0);
         this.aqH.Q(this.ads ? 255.0 : 0.0);
@@ -525,8 +525,8 @@ extends Module {
         if (this.aqG.sG() <= 0.0) {
             return;
         }
-        Vector2d vector2d = new Vector2d(this.rz().qd(), (float)Chat.aEg.jY.getScaledHeight() - this.rz().qd() - gb.MAIN.a(20, gd.REGULAR).tq() - 3.0f);
-        Vector2d vector2d2 = new Vector2d(this.aqE.aHe.x, (double)this.aqL.tq() + 7.5);
+        Vector2d vector2d = new Vector2d(this.rz().qd(), (float)Chat.aEg.jY.getScaledHeight() - this.rz().qd() - gb.MAIN.a(20, gd.REGULAR).height() - 3.0f);
+        Vector2d vector2d2 = new Vector2d(this.aqE.aHe.x, (double)this.aqL.height() + 7.5);
         Runnable runnable = () -> {
             GlStateManager.pushMatrix();
             GlStateManager.translate((vector2d.x + vector2d2.x / 2.0) * (1.0 - d2), (vector2d.y + vector2d2.y / 2.0) * (1.0 - d2), 0.0);
@@ -556,17 +556,17 @@ extends Module {
                 GlStateManager.popMatrix();
             });
         }
-        this.aqU.b(aip.d(Color.WHITE, (int)this.aqH.sG()));
+        this.aqU.setColor(aip.d(Color.WHITE, (int)this.aqH.sG()));
         this.aqU.c(this.aqL);
-        this.aqU.h(new Vector2d(this.rz().qd() + 5.0f, (float)Chat.aEg.jY.getScaledHeight() - this.aqL.tq() - this.rz().qd()));
+        this.aqU.h(new Vector2d(this.rz().qd() + 5.0f, (float)Chat.aEg.jY.getScaledHeight() - this.aqL.height() - this.rz().qd()));
         this.b(gg.REGULAR, 1).c(() -> {
             runnable.run();
-            this.aqU.pJ();
-            if (this.ads && ((Boolean)this.aqP.wo()).booleanValue()) {
+            this.aqU.draw();
+            if (this.ads && ((Boolean)this.pinyinChineseIME.wo()).booleanValue()) {
                 int n = Math.min(255, Math.max(0, (int)this.aqH.sG()));
                 String string2 = ahd.ce(agx.isEnabled() ? "ui.chat.pinyin_ime.hint.on" : "ui.chat.pinyin_ime.hint.off");
                 float f2 = (float)vector2d.x + 6.0f;
-                float f3 = (float)vector2d.y - this.aqL.tq() - 2.0f;
+                float f3 = (float)vector2d.y - this.aqL.height() - 2.0f;
                 ArrayList<String> arrayList = new ArrayList<String>(3);
                 arrayList.add(string2);
                 if (agx.isEnabled()) {
@@ -597,7 +597,7 @@ extends Module {
                     }
                 }
                 double d = 4.0;
-                double d3 = this.aqL.tq();
+                double d3 = this.aqL.height();
                 double d4 = 0.0;
                 for (String string3 : arrayList) {
                     if (string3 == null || string3.isEmpty()) continue;
@@ -628,7 +628,7 @@ extends Module {
                     this.aqL.b(string4, f2, f4, aip.d(Color.WHITE, Math.min(n, n3)).hashCode());
                 }
             }
-            if (this.ads && ((Boolean)this.aqP.wo()).booleanValue() && agx.isEnabled() && aqO.uc()) {
+            if (this.ads && ((Boolean)this.pinyinChineseIME.wo()).booleanValue() && agx.isEnabled() && aqO.uc()) {
                 String string5 = aqO.uo();
                 List<String> list = aqO.up();
                 if (string5 != null && !string5.isEmpty()) {
@@ -637,10 +637,10 @@ extends Module {
                     float f6 = this.aqU.tM();
                     this.aqL.b(string5, f5, f6, aip.d(new Color(220, 220, 220), n).hashCode());
                     double d = this.aqL.getStringWidth(string5);
-                    RenderUtil.d(f5, f6 + this.aqL.tq() + 1.0f, d, 1.0, aip.d(Color.WHITE, Math.min(n, 180)));
+                    RenderUtil.d(f5, f6 + this.aqL.height() + 1.0f, d, 1.0, aip.d(Color.WHITE, Math.min(n, 180)));
                     if (list != null && !list.isEmpty()) {
-                        float f7 = (float)this.aqU.nr().x;
-                        float f8 = f6 - this.aqL.tq() - 3.0f;
+                        float f7 = (float)this.aqU.getPosition().x;
+                        float f8 = f6 - this.aqL.height() - 3.0f;
                         StringBuilder stringBuilder = new StringBuilder();
                         int n4 = Math.min(9, list.size());
                         int n5 = aqO.un();
@@ -658,7 +658,7 @@ extends Module {
                         stringBuilder.append(aqO.ut());
                         String string7 = stringBuilder.toString();
                         double d11 = this.aqL.getStringWidth(string7) + 6;
-                        double d12 = this.aqL.tq() + 4.0f;
+                        double d12 = this.aqL.height() + 4.0f;
                         RenderUtil.d(f7 - 2.0f, f8 - 2.0f, d11, d12, aip.d(new Color(0, 0, 0), Math.min(n, 140)));
                         this.aqL.b(string7, f7 + 1.0f, f8, aip.d(Color.WHITE, n).hashCode());
                     }
@@ -707,37 +707,37 @@ extends Module {
 
     @Generated
     public NumberValue ms() {
-        return this.aqw;
+        return this.openHeight;
     }
 
     @Generated
     public NumberValue mt() {
-        return this.aqx;
+        return this.width;
     }
 
     @Generated
     public NumberValue mu() {
-        return this.aqy;
+        return this.maxClosedHeight;
     }
 
     @Generated
     public NumberValue mv() {
-        return this.aqz;
+        return this.messageDisappearanceSpeed;
     }
 
     @Generated
     public BooleanValue mw() {
-        return this.aqA;
+        return this.background;
     }
 
     @Generated
     public BooleanValue mx() {
-        return this.aqB;
+        return this.hidePlayerSourceMessages;
     }
 
     @Generated
     public BooleanValue my() {
-        return this.aqC;
+        return this.imageChat;
     }
 
     @Generated
@@ -787,7 +787,7 @@ extends Module {
 
     @Generated
     public BooleanValue mI() {
-        return this.aqP;
+        return this.pinyinChineseIME;
     }
 
     @Generated
@@ -852,12 +852,12 @@ extends Module {
 
     @Generated
     public Listener<KeyboardInputEvent> mU() {
-        return this.ara;
+        return this.onKeyboardInput;
     }
 
     @Generated
     public Listener<PacketReceiveEvent> mV() {
-        return this.arb;
+        return this.onPacketReceive;
     }
 
     @Generated
@@ -867,6 +867,6 @@ extends Module {
 
     @Generated
     public Listener<Render2DEvent> lW() {
-        return this.ard;
+        return this.onRender2D;
     }
 }

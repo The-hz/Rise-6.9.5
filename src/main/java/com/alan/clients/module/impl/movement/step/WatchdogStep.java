@@ -20,7 +20,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 public class WatchdogStep extends Mode<Step> {
     private boolean RW;
     @EventLink
-    public final Listener<PreUpdateEvent> Sq = var0 -> {};
+    public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {};
     @EventLink
     public final Listener<PreMotionEvent> Sr = var0 -> {};
     private double height;
@@ -38,9 +38,9 @@ public class WatchdogStep extends Mode<Step> {
         }
     };
     @EventLink
-    public final Listener<StepEvent> Su = var1x -> {
+    public final Listener<StepEvent> onStep = var1x -> {
         MoveUtil.strafe(MoveUtil.vd());
-        double d0 = var1x.da();
+        double d0 = var1x.getHeight();
         this.height = d0;
         if (this.e(Speed.class).isEnabled() && d0 > 0.6F) {
             this.e(Speed.class).setEnabled(false);
@@ -71,7 +71,7 @@ public class WatchdogStep extends Mode<Step> {
         }
     };
     @EventLink
-    public final Listener<TickEvent> Sv = var1x -> {
+    public final Listener<TickEvent> onTick = var1x -> {
         this.hV++;
         if (this.hV == 1) {
             aEg.timer.dzD = 1.0F;

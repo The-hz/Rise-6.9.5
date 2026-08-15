@@ -49,9 +49,9 @@ extends Mode<InventoryMove> {
     int dm;
     int JR;
     private final KeyBinding[] JS;
-    public final BooleanValue JT;
-    public final NumberValue JU;
-    public final BooleanValue JV;
+    public final BooleanValue predictionMode;
+    public final NumberValue ticks;
+    public final BooleanValue measureChestOpen;
     private int JW;
     private int JX;
     private int JY;
@@ -65,26 +65,26 @@ extends Mode<InventoryMove> {
     @EventLink
     private final Listener<PreMotionEvent> Kg;
     @EventLink
-    private final Listener<PacketSendEvent> Kh;
+    private final Listener<PacketSendEvent> onPacketSend;
     @EventLink
     public final Listener<PreMotionEvent> Ki;
-    @EventLink(cH=3)
+    @EventLink(value=3)
     Listener<MoveInputEvent> yv;
-    @EventLink(cH=1)
+    @EventLink(value=1)
     Listener<en> pb;
-    @EventLink(cH=1)
-    Listener<PreUpdateEvent> dq;
+    @EventLink(value=1)
+    Listener<PreUpdateEvent> onPreUpdate;
     @EventLink
     public final Listener<MoveInputEvent> Kj;
     @EventLink
-    public final Listener<MoveEvent> Kk;
+    public final Listener<MoveEvent> onMove;
 
     public WatchdogBypass(String string, InventoryMove inventoryMove) {
         super(string, inventoryMove);
         this.JS = new KeyBinding[]{WatchdogBypass.aEg.gameSettings.keyBindForward, WatchdogBypass.aEg.gameSettings.keyBindBack, WatchdogBypass.aEg.gameSettings.keyBindRight, WatchdogBypass.aEg.gameSettings.keyBindLeft, WatchdogBypass.aEg.gameSettings.keyBindJump};
-        this.JT = new BooleanValue("Prediction Mode", (Mode<?>)this, (Boolean)false);
-        this.JU = new NumberValue("Ticks", this, (Number)1, (Number)1, (Number)20, (Number)1);
-        this.JV = new BooleanValue("Measure Chest Open", (Mode<?>)this, (Boolean)true);
+        this.predictionMode = new BooleanValue("Prediction Mode", (Mode<?>)this, (Boolean)false);
+        this.ticks = new NumberValue("Ticks", this, (Number)1, (Number)1, (Number)20, (Number)1);
+        this.measureChestOpen = new BooleanValue("Measure Chest Open", (Mode<?>)this, (Boolean)true);
         this.JX = -1;
         this.JY = -1;
         this.JZ = -1;
@@ -102,9 +102,9 @@ extends Mode<InventoryMove> {
                 int cfr_ignored_1 = WatchdogBypass.aEg.thePlayer.ticksExisted % 2;
             }
         };
-        this.Kh = packetSendEvent -> {
+        this.onPacketSend = packetSendEvent -> {
             Packet<?> packet = packetSendEvent.dq();
-            if (!packetSendEvent.isCancelled() && WatchdogBypass.aEg.thePlayer != null && WatchdogBypass.aEg.theWorld != null && ((Boolean)this.JV.wo()).booleanValue() && packet instanceof C08PacketPlayerBlockPlacement) {
+            if (!packetSendEvent.isCancelled() && WatchdogBypass.aEg.thePlayer != null && WatchdogBypass.aEg.theWorld != null && ((Boolean)this.measureChestOpen.wo()).booleanValue() && packet instanceof C08PacketPlayerBlockPlacement) {
                 C08PacketPlayerBlockPlacement c08PacketPlayerBlockPlacement = (C08PacketPlayerBlockPlacement)packet;
                 BlockPos blockPos = c08PacketPlayerBlockPlacement.getPosition();
                 if (!(WatchdogBypass.aEg.currentScreen instanceof GuiChest) && this.h(blockPos)) {
@@ -112,7 +112,7 @@ extends Mode<InventoryMove> {
                     this.Kd = "C08 at " + String.valueOf(blockPos);
                     this.Ke = true;
                 }
-            } else if (!packetSendEvent.isCancelled() && WatchdogBypass.aEg.thePlayer != null && WatchdogBypass.aEg.theWorld != null && ((Boolean)this.JV.wo()).booleanValue() && packet instanceof C02PacketUseEntity) {
+            } else if (!packetSendEvent.isCancelled() && WatchdogBypass.aEg.thePlayer != null && WatchdogBypass.aEg.theWorld != null && ((Boolean)this.measureChestOpen.wo()).booleanValue() && packet instanceof C02PacketUseEntity) {
                 C02PacketUseEntity c02PacketUseEntity = (C02PacketUseEntity)packet;
                 Entity entity = c02PacketUseEntity.getEntityFromWorld((World)WatchdogBypass.aEg.theWorld);
                 if (!(WatchdogBypass.aEg.currentScreen instanceof GuiChest) && c02PacketUseEntity.getAction() != C02PacketUseEntity.Action.ATTACK && this.o(entity)) {
@@ -135,11 +135,11 @@ extends Mode<InventoryMove> {
             }
             if ((guiScreen = WatchdogBypass.aEg.currentScreen) instanceof GuiInventory) {
                 GuiInventory guiInventory = (GuiInventory)guiScreen;
-                if (!JP && !bb.a(false, false, false, false, true)) {
+                if (!JP && !bb.bad(false, false, false, false, true)) {
                     WatchdogBypass.aEg.thePlayer.sendQueue.u((Packet)new q(guiInventory.inventorySlots.windowId));
                 }
             }
-            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) && !((Boolean)this.JT.wo()).booleanValue()) {
+            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) && !((Boolean)this.predictionMode.wo()).booleanValue()) {
                 if (this.e(Speed.class).isEnabled() && !this.JM) {
                     WatchdogBypass.aEg.thePlayer.motionZ *= -0.1;
                     WatchdogBypass.aEg.thePlayer.motionX *= -0.1;
@@ -166,7 +166,7 @@ extends Mode<InventoryMove> {
                 this.e(Speed.class).setEnabled(true);
                 this.JM = false;
             }
-            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) && ((Boolean)this.JT.wo()).booleanValue() && !WatchdogBypass.aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
+            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) && ((Boolean)this.predictionMode.wo()).booleanValue() && !WatchdogBypass.aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                 KeyBinding[] keyBindingArray;
                 preMotionEvent.setSprinting(false);
                 WatchdogBypass.aEg.gameSettings.cgG.setPressed(false);
@@ -185,7 +185,7 @@ extends Mode<InventoryMove> {
             if (!(WatchdogBypass.aEg.currentScreen instanceof GuiChest)) {
                 if (!JP) return;
             }
-            if ((Boolean)this.JT.wo() == false) return;
+            if ((Boolean)this.predictionMode.wo() == false) return;
             preMotionEvent.setSprinting(false);
         };
         this.yv = moveInputEvent -> {
@@ -197,7 +197,7 @@ extends Mode<InventoryMove> {
                 WatchdogBypass.aEg.thePlayer.setSprinting(false);
             }
         };
-        this.dq = preUpdateEvent -> {
+        this.onPreUpdate = preUpdateEvent -> {
             if (WatchdogBypass.aEg.thePlayer == null || WatchdogBypass.aEg.theWorld == null || WatchdogBypass.aEg.thePlayer.ticksExisted < 50) {
                 return;
             }
@@ -232,7 +232,7 @@ extends Mode<InventoryMove> {
             if (!(WatchdogBypass.aEg.currentScreen instanceof GuiChest)) {
                 JQ = false;
             }
-            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) && ((Boolean)this.JT.wo()).booleanValue() && (WatchdogBypass.aEg.thePlayer.isPotionActive(Potion.moveSpeed) || !WatchdogBypass.aEg.thePlayer.onGround)) {
+            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) && ((Boolean)this.predictionMode.wo()).booleanValue() && (WatchdogBypass.aEg.thePlayer.isPotionActive(Potion.moveSpeed) || !WatchdogBypass.aEg.thePlayer.onGround)) {
                 moveInputEvent.setStrafe(0.0f);
                 moveInputEvent.setForward(0.0f);
             } else if (JP && !this.JN) {
@@ -252,8 +252,8 @@ extends Mode<InventoryMove> {
                 this.JN = false;
             }
         };
-        this.Kk = moveEvent -> {
-            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) && !((Boolean)this.JT.wo()).booleanValue() && !WatchdogBypass.aEg.thePlayer.onGround) {
+        this.onMove = moveEvent -> {
+            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) && !((Boolean)this.predictionMode.wo()).booleanValue() && !WatchdogBypass.aEg.thePlayer.onGround) {
                 moveEvent.setPosZ(0.0);
                 moveEvent.setPosX(0.0);
             }
@@ -298,7 +298,7 @@ extends Mode<InventoryMove> {
         if (this.JZ == -1) {
             this.JZ = WatchdogBypass.aEg.thePlayer.ticksExisted;
         }
-        if (!JQ && this.JY >= 0 && WatchdogBypass.aEg.thePlayer.ticksExisted - this.JZ >= this.JY - ((Number)this.JU.wo()).intValue()) {
+        if (!JQ && this.JY >= 0 && WatchdogBypass.aEg.thePlayer.ticksExisted - this.JZ >= this.JY - ((Number)this.ticks.wo()).intValue()) {
             JQ = true;
         }
     }

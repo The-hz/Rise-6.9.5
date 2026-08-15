@@ -45,11 +45,11 @@ public class acj extends ArrayList<aci> implements InstanceAccess {
                     this.scrollUtil.aJc = (float)Math.round(this.scrollUtil.aJc / (10 + this.get(0).oX().x)) * (10 + this.get(0).oX().x);
                 }
 
-                this.axI.y = this.axI.y + (10 + gb.MAIN.a(18, gd.REGULAR).tq());
+                this.axI.y = this.axI.y + (10 + gb.MAIN.a(18, gd.REGULAR).height());
                 this.axI.x = (float)(this.axI.x + this.scrollUtil.tE());
 
                 for (aci aci : this) {
-                    if (!(this.axI.x > riseclickgui.oW().x + riseclickgui.oX().x) && !(this.axI.x + aci.oX().x < riseclickgui.axI.x + riseclickgui.axJ.aym)) {
+                    if (!(this.axI.x > riseclickgui.getScale().x + riseclickgui.getPosition().x) && !(this.axI.x + aci.oX().x < riseclickgui.axI.x + riseclickgui.axJ.aym)) {
                         aci.j(this.axI);
                     }
 
@@ -64,7 +64,7 @@ public class acj extends ArrayList<aci> implements InstanceAccess {
     }
 
     public int getHeight() {
-        return (int)((this.isEmpty() ? 0.0F : this.get(0).oX().getY()) + 10 + gb.MAIN.a(18, gd.REGULAR).tq());
+        return (int)((this.isEmpty() ? 0.0F : this.get(0).oX().getY()) + 10 + gb.MAIN.a(18, gd.REGULAR).height());
     }
 
     public void f(int var1, int var2, int var3) {

@@ -36,7 +36,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 public class CreidaModernTargetInfo extends Mode<TargetInfo> {
-    private final BooleanValue auq = new BooleanValue("Particles", this, true);
+    private final BooleanValue particles = new BooleanValue("Particles", this, true);
     private final agc aur = gb.MAIN.a(22, gd.LIGHT);
     private final agc aus = gb.MAIN.a(22, gd.MEDIUM);
     private final ModeValue aut = new zy(this, "Background Mode", this);
@@ -48,7 +48,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
     private final Animation auy = new Animation(Easing.EASE_OUT_SINE, 500L);
     private final Animation auz = new Animation(Easing.EASE_IN_OUT_CUBIC, 300L);
     @EventLink
-    public final Listener<Render2DEvent> auA = var1x -> {
+    public final Listener<Render2DEvent> onRender2D = var1x -> {
         if (this.aui == null) {
             this.aui = this.e(TargetInfo.class);
         }
@@ -59,7 +59,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
         if (entity != null) {
             boolean flag = !this.aui.inWorld || this.aui.rG.T(1000L);
             this.auxx.h(flag ? 400L : 850L);
-            this.auxx.a(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
+            this.auxx.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
             this.auxx.Q(flag ? 0.0 : 1.0);
             if (!(this.auxx.sG() <= 0.0)) {
                 String s = entity.getName();
@@ -70,11 +70,11 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                 HealthBypass healthbypass = this.e(HealthBypass.class);
                 float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractclientplayer) : abstractclientplayer.getHealth();
                 double d2 = this.aus.getStringWidth(s1);
-                double d3 = Math.min(!this.aui.inWorld ? 0.0 : ahg.a(f, 1), abstractclientplayer.getMaxHealth());
+                double d3 = Math.min(!this.aui.inWorld ? 0.0 : ahg.round(f, 1), abstractclientplayer.getMaxHealth());
                 double d4 = this.aus.getStringWidth(String.valueOf(d3));
                 double d5 = Math.max(d2 + 35.0 - d4, 75.0);
                 this.auy.Q(d3 / abstractclientplayer.getMaxHealth() * d5);
-                this.auy.a(Easing.EASE_OUT_QUINT);
+                this.auy.setEasing(Easing.EASE_OUT_QUINT);
                 this.auy.h(250L);
                 double d6 = this.auy.sG();
                 double d7 = (abstractclientplayer.hurtTime == 0 ? 0.0F : abstractclientplayer.hurtTime - aEg.timer.bWm) * 0.5;
@@ -96,8 +96,8 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                     Color color2 = this.rz().rA();
                     Color color3 = this.rz().rB();
                     if (this.aut.wo().getName().equals("Tint")) {
-                        Color color4 = this.rz().j(new Vector2d(d0, d1));
-                        Color color5 = this.rz().j(new Vector2d(d0, d1 + d10));
+                        Color color4 = this.rz().getAccentColor(new Vector2d(d0, d1));
+                        Color color5 = this.rz().getAccentColor(new Vector2d(d0, d1 + d10));
                         color = new Color(color4.getRed() / 5, color4.getGreen() / 5, color4.getBlue() / 5, 128);
                         color1 = new Color(color5.getRed() / 5, color5.getGreen() / 5, color5.getBlue() / 5, 128);
                     } else if (this.aut.wo().getName().equals("Solid")) {
@@ -133,7 +133,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                     GlStateManager.translate((d0 + d9 / 2.0) * (1.0 - d11), (d1 + d10 / 2.0) * (1.0 - d11), 0.0);
                     GlStateManager.scale(d11, d11, 0.0);
                     RenderUtil.color(aip.a(Color.RED, Color.WHITE, d7 / 9.0));
-                    RenderUtil.dropShadow(3, d0 + 10.0 + d8, d1 + 10.0 + d8, b0 - d7, b0 - d7, 20.0, this.rz().pl() * 2);
+                    RenderUtil.dropShadow(3, d0 + 10.0 + d8, d1 + 10.0 + d8, b0 - d7, b0 - d7, 20.0, this.rz().getRound() * 2);
                     this.auz.Q(d7 / 2.0);
                     double d12 = this.auz.sG() == 0.0 ? 1.0 : this.auz.sG();
                     System.out.println(this.auz.sG());
@@ -161,10 +161,10 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
         }
     };
     @EventLink
-    public final Listener<TickEvent> auB = var1x -> {
+    public final Listener<TickEvent> onTick = var1x -> {
         if (this.aui != null) {
             Entity entity = this.aui.target;
-            if (entity != null && !(this.auxx.sG() <= 0.0) && this.auq.wo()) {
+            if (entity != null && !(this.auxx.sG() <= 0.0) && this.particles.wo()) {
                 double d0 = (((AbstractClientPlayer)entity).hurtTime == 0 ? 0.0F : ((AbstractClientPlayer)entity).hurtTime - aEg.timer.bWm) * 0.5;
                 if (d0 > 0.0) {
                     for (int i = 0; i < d0 * Math.random() / 2.0; i++) {
@@ -202,6 +202,6 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
         GlStateManager.disableBlend();
         ais.vM();
         float f1 = 0.5F;
-        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().pl() * 2, 0.5, aip.d(Color.BLACK, 40));
+        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, aip.d(Color.BLACK, 40));
     }
 }

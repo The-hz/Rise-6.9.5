@@ -19,33 +19,33 @@ import java.util.ArrayList;
 import net.minecraft.client.renderer.GlStateManager;
 
 public class au implements InstanceAccess {
-    public Module cg;
-    public DragValue ch;
+    public Module module;
+    public DragValue positionValue;
     public Animation animation = new Animation(Easing.EASE_OUT_ELASTIC, 300L);
-    public boolean ci;
-    public ArrayList<abl> cj = new ArrayList<>();
+    public boolean close;
+    public ArrayList<abl> valueList = new ArrayList<>();
 
     public au(Module var1, DragValue var2) {
-        this.cg = var1;
-        this.ch = var2;
+        this.module = var1;
+        this.positionValue = var2;
 
         for (Value value : var1.getAllValues()) {
             if (value instanceof ModeValue) {
-                this.cj.add(new abr(value));
+                this.valueList.add(new abr(value));
             } else if (value instanceof BooleanValue) {
-                this.cj.add(new abm(value));
+                this.valueList.add(new abm(value));
             } else if (value instanceof StringValue) {
-                this.cj.add(new abv(value));
+                this.valueList.add(new abv(value));
             } else if (value instanceof NumberValue) {
-                this.cj.add(new abt(value));
+                this.valueList.add(new abt(value));
             } else if (value instanceof BoundsNumberValue) {
-                this.cj.add(new abn(value));
+                this.valueList.add(new abn(value));
             } else if (value instanceof DragValue) {
-                this.cj.add(new abu(value));
+                this.valueList.add(new abu(value));
             } else if (value instanceof ListValue) {
-                this.cj.add(new abq(value));
+                this.valueList.add(new abq(value));
             } else if (value instanceof ColorValue) {
-                this.cj.add(new abo(value));
+                this.valueList.add(new abo(value));
             }
         }
     }
@@ -54,25 +54,25 @@ public class au implements InstanceAccess {
         double d0 = 100.0;
         double d1 = 100.0;
         this.animation.h(300L);
-        this.animation.a(this.ci ? Easing.EASE_IN_EXPO : Easing.EASE_OUT_EXPO);
-        this.animation.Q(this.ci ? 0.0 : 1.0);
+        this.animation.setEasing(this.close ? Easing.EASE_IN_EXPO : Easing.EASE_OUT_EXPO);
+        this.animation.Q(this.close ? 0.0 : 1.0);
         double d2 = this.animation.sG();
         if (!(d2 <= 1.0E-4)) {
             this.b(gg.REGULAR).c(() -> {
                 GlStateManager.pushMatrix();
-                GlStateManager.translate(this.ch.apP.x * (1.0 - d2), (this.ch.apP.y + this.ch.aHe.y / 2.0) * (1.0 - d2), 0.0);
+                GlStateManager.translate(this.positionValue.apP.x * (1.0 - d2), (this.positionValue.apP.y + this.positionValue.aHe.y / 2.0) * (1.0 - d2), 0.0);
                 GlStateManager.scale(d2, d2, 1.0);
-                double d3 = this.ch.apP.x - d0 - 10.0;
-                double d4 = this.ch.apP.y + this.ch.aHe.y / 2.0 - d1 / 2.0;
-                double d5 = this.rz().pl();
+                double d3 = this.positionValue.apP.x - d0 - 10.0;
+                double d4 = this.positionValue.apP.y + this.positionValue.aHe.y / 2.0 - d1 / 2.0;
+                double d5 = this.rz().getRound();
                 this.rz();
                 Color color = adv.rK();
                 double d6 = this.animation.sG();
                 this.rz();
                 RenderUtil.roundedRectangle(d3, d4, d0, d1, d5, aip.d(color, (int)(d6 * adv.rK().getAlpha())));
 
-                for (abl abl : this.cj) {
-                    if (abl.pS() != null && abl.pS().wm() != null && abl.pS().wm().getAsBoolean()) {
+                for (abl abl : this.valueList) {
+                    if (abl.getValue() != null && abl.getValue().wm() != null && abl.getValue().wm().getAsBoolean()) {
                     }
                 }
 
@@ -80,15 +80,15 @@ public class au implements InstanceAccess {
             });
             this.b(gg.BLUR).c(() -> {
                 GlStateManager.pushMatrix();
-                GlStateManager.translate(this.ch.apP.x * (1.0 - d2), (this.ch.apP.y + this.ch.aHe.y / 2.0) * (1.0 - d2), 0.0);
+                GlStateManager.translate(this.positionValue.apP.x * (1.0 - d2), (this.positionValue.apP.y + this.positionValue.aHe.y / 2.0) * (1.0 - d2), 0.0);
                 GlStateManager.scale(d2, d2, 1.0);
-                RenderUtil.roundedRectangle(this.ch.apP.x - d0 - 10.0, this.ch.apP.y + this.ch.aHe.y / 2.0 - d1 / 2.0, d0, d1, this.rz().pl(), Color.BLACK);
+                RenderUtil.roundedRectangle(this.positionValue.apP.x - d0 - 10.0, this.positionValue.apP.y + this.positionValue.aHe.y / 2.0 - d1 / 2.0, d0, d1, this.rz().getRound(), Color.BLACK);
                 GlStateManager.popMatrix();
             });
         }
     }
 
     public void close() {
-        this.ci = true;
+        this.close = true;
     }
 }

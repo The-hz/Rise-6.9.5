@@ -34,7 +34,7 @@ public final class Bind extends Command
             afi.b("Displaying all active binds", new Object[0]);
             Client.a.t().aP().forEach(p -> {
                 if (p.getKey() != 0) {
-                    final s s = new s(this.rz().rH().toString() + "> " + p.getAliases()[0] + "§f " + b(p.getKey()));
+                    final s s = new s(this.rz().getChatAccentColor().toString() + "> " + p.getAliases()[0] + "§f " + b(p.getKey()));
                     s.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, ".bind " + p.getName().replace((CharSequence)" ", (CharSequence)"") + " none")).setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (IChatComponent)new s("Click to remove " + p.getAliases()[0] + " bind")));
                     Bind.aEg.thePlayer.addChatMessage((IChatComponent)s);
                 }

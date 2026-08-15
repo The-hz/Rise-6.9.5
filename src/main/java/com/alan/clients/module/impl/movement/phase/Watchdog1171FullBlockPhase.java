@@ -31,18 +31,18 @@ import rip.vantage.commons.util.time.a;
 
 public class Watchdog1171FullBlockPhase extends Mode<Phase> {
     public final BooleanValue Ow = new BooleanValue("Smart Mode (if you want it to be always be toggled on)", this, false);
-    public final BooleanValue Ox = new BooleanValue("Silent", this, false);
+    public final BooleanValue silent = new BooleanValue("Silent", this, false);
     private boolean Op;
     private final a Oy = new a();
     private boolean ys;
     private static final int Oz = 10;
     private static final double OA = Math.cos(Math.toRadians(130.0));
     @EventLink
-    public final Listener<PreUpdateEvent> OB = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         AxisAlignedBB axisalignedbb = aEg.thePlayer.getEntityBoundingBox().expand(0.05, 0.0, 0.05);
         boolean flag = !aEg.theWorld.getCollidingBoundingBoxes(aEg.thePlayer, axisalignedbb).isEmpty();
         if ((
-                (aEg.thePlayer.isCollidedHorizontally && this.Ox.wo() || aEg.thePlayer.isCollidedHorizontally && !this.Ox.wo())
+                (aEg.thePlayer.isCollidedHorizontally && this.silent.wo() || aEg.thePlayer.isCollidedHorizontally && !this.silent.wo())
                         && this.Op
                         && aEg.thePlayer.cqL > 2
                         && !aEg.gameSettings.keyBindJump.isKeyDown()
@@ -64,9 +64,9 @@ public class Watchdog1171FullBlockPhase extends Mode<Phase> {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> OC = var1x -> {
-        Packet packet = var1x.dq();
-        if (packet instanceof S08PacketPlayerPosLook && !this.Op && (!this.Ox.wo() || aih.vk())) {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        Packet packet = var1x.getPacket();
+        if (packet instanceof S08PacketPlayerPosLook && !this.Op && (!this.silent.wo() || aih.vk())) {
             S08PacketPlayerPosLook s08packetplayerposlook = (S08PacketPlayerPosLook)packet;
             var1x.setCancelled();
             double d0 = s08packetplayerposlook.getX();
@@ -76,28 +76,28 @@ public class Watchdog1171FullBlockPhase extends Mode<Phase> {
             float f1 = s08packetplayerposlook.getPitch();
             this.Op = true;
             ahj.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
-            if (!this.Ox.wo()) {
+            if (!this.silent.wo()) {
                 aEg.thePlayer.setPosition(d0, d1, d2);
             }
         }
     };
     @EventLink
-    public final Listener<MoveEvent> OD = var1x -> {
-        if (!this.Op && !this.Ox.wo()) {
+    public final Listener<MoveEvent> onMove = var1x -> {
+        if (!this.Op && !this.silent.wo()) {
             var1x.setPosZ(0.0);
             var1x.setPosX(0.0);
         }
     };
     @EventLink
-    public final Listener<BlockAABBEvent> OE = var1x -> {
-        if (!this.Op && var1x.df() instanceof Block && this.Ox.wo()) {
-            BlockPos blockpos = var1x.dg();
+    public final Listener<BlockAABBEvent> onBlockAABB = var1x -> {
+        if (!this.Op && var1x.getBlock() instanceof Block && this.silent.wo()) {
+            BlockPos blockpos = var1x.getBlockPos();
             BlockPos blockpos1 = new BlockPos(
                 MathHelper.floor_double(aEg.thePlayer.posX),
                 (int)(aEg.thePlayer.getEntityBoundingBox().minY - 0.49),
                 MathHelper.floor_double(aEg.thePlayer.posZ)
             );
-            if (!blockpos.equals(blockpos1) && this.Ox.wo()) {
+            if (!blockpos.equals(blockpos1) && this.silent.wo()) {
                 if (aih.vk()) {
                     MoveUtil.strafe(-0.1);
                 }
@@ -107,9 +107,9 @@ public class Watchdog1171FullBlockPhase extends Mode<Phase> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> OF = var1x -> {};
+    public final Listener<MoveInputEvent> onMoveInput = var1x -> {};
     @EventLink
-    public final Listener<PushOutOfBlockEvent> OG = CancellableEvent::setCancelled;
+    public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = CancellableEvent::setCancelled;
 
     public Watchdog1171FullBlockPhase(String var1, Phase var2) {
         super(var1, var2);

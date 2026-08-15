@@ -37,7 +37,7 @@ public final class Data extends Module {
     private Vector2f Um = new Vector2f(0.0F, 0.0F);
     private double Un;
     @EventLink
-    public final Listener<PostMotionEvent> Uo = var1 -> {
+    public final Listener<PostMotionEvent> onPostMotion = var1 -> {
         this.by = bv.e(16.0);
         if (this.by == null) {
             this.Uh.aX();
@@ -56,14 +56,14 @@ public final class Data extends Module {
             jsonobject.add("targetOffsetPitch", JsonParser.parseString(Double.toString(vector2f3.getY())));
             double d0 = entityplayersp.getDistanceToEntity(this.by);
             jsonobject.add("distance", JsonParser.parseString(Double.toString(d0)));
-            double d1 = ahg.d(entityplayersp.prevPosX, entityplayersp.posY, entityplayersp.prevPosZ, this.by.posX, entityplayersp.posY, this.by.posZ)
-                - ahg.d(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ, this.by.posX, entityplayersp.posY, this.by.posZ);
+            double d1 = ahg.getDistance(entityplayersp.prevPosX, entityplayersp.posY, entityplayersp.prevPosZ, this.by.posX, entityplayersp.posY, this.by.posZ)
+                - ahg.getDistance(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ, this.by.posX, entityplayersp.posY, this.by.posZ);
             jsonobject.add("playerDeltaHorizontalDistance", JsonParser.parseString(Double.toString(d1)));
             System.out.println("Data " + d1);
             double d2 = entityplayersp.prevPosY - this.by.posY - (entityplayersp.posY - this.by.posY);
             jsonobject.add("playerDeltaVerticalDistance", JsonParser.parseString(Double.toString(d2)));
-            double d3 = ahg.d(this.Ui.getX(), this.by.posY, this.Ui.getZ(), entityplayersp.posX, this.by.posY, entityplayersp.posZ)
-                - ahg.d(this.by.posX, this.by.posY, this.by.posZ, entityplayersp.posX, this.by.posY, entityplayersp.posZ);
+            double d3 = ahg.getDistance(this.Ui.getX(), this.by.posY, this.Ui.getZ(), entityplayersp.posX, this.by.posY, entityplayersp.posZ)
+                - ahg.getDistance(this.by.posX, this.by.posY, this.by.posZ, entityplayersp.posX, this.by.posY, entityplayersp.posZ);
             jsonobject.add("enemyDeltaHorizontalDistance", JsonParser.parseString(Double.toString(d3)));
             double d4 = this.Ui.getY() - entityplayersp.posY - (this.by.posY - entityplayersp.posY);
             jsonobject.add("enemyDeltaVerticalDistance", JsonParser.parseString(Double.toString(d4)));

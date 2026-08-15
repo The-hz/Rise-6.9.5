@@ -15,7 +15,7 @@ import net.minecraft.scoreboard.Scoreboard;
 @ModuleInfo(aliases = "module.player.healthbypass.name", description = "module.player.healthbypass.description", category = Category.PLAYER)
 public final class HealthBypass extends Module {
     @EventLink
-    public final Listener<TickEvent> acG = var0 -> {
+    public final Listener<TickEvent> onTick = var0 -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             for (Entity entity : aEg.theWorld.loadedEntityList) {
                 if (entity instanceof EntityPlayer entityplayer && entityplayer != aEg.thePlayer) {

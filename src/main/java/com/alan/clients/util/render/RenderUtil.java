@@ -375,11 +375,11 @@ public final class RenderUtil implements InstanceAccess {
     }
 
     public static void a(double var0, double var2, double var4, double var6, double var8, Color var10, Color var11, boolean var12) {
-        aiv.aPI.c(var0, var2, var4, var6, var8, var10, var11, var12);
+        aiv.aPI.draw(var0, var2, var4, var6, var8, var10, var11, var12);
     }
 
     public static void b(double var0, double var2, double var4, double var6, double var8, Color var10, Color var11, boolean var12) {
-        aiv.aPN.c(var0, var2, var4, var6, var8, var10, var11, var12);
+        aiv.aPN.draw(var0, var2, var4, var6, var8, var10, var11, var12);
     }
 
     public static void a(

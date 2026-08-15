@@ -24,15 +24,15 @@ import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 
 public class Matrix2LongJump extends Mode<LongJump> {
-    private final BooleanValue KX = new BooleanValue("Silent", this, false);
+    private final BooleanValue silent = new BooleanValue("Silent", this, false);
     private boolean Hs;
     private double KY;
     private double KZ;
     private double La;
     private boolean Lb;
     @EventLink
-    public final Listener<PacketReceiveEvent> Lc = var1x -> {
-        if (var1x.dq() instanceof S08PacketPlayerPosLook s08packetplayerposlook) {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        if (var1x.getPacket() instanceof S08PacketPlayerPosLook s08packetplayerposlook) {
             var1x.setCancelled(true);
             double d0 = s08packetplayerposlook.getX();
             double d1 = s08packetplayerposlook.getY();
@@ -49,18 +49,18 @@ public class Matrix2LongJump extends Mode<LongJump> {
             ahj.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, false));
             aEg.thePlayer.setPosition(d0, d1, d2);
             aEg.thePlayer.jump();
-            this.wj().setEnabled(false);
+            this.getParent().setEnabled(false);
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> Ld = var0 -> {
+    public final Listener<MoveInputEvent> onMoveInput = var0 -> {
         if (!MoveUtil.isMoving()) {
             var0.setForward(1.0F);
         }
     };
     @EventLink
-    public final Listener<Render3DEvent> Le = var1x -> {
-        if (this.KX.wo()) {
+    public final Listener<Render3DEvent> onRender3D = var1x -> {
+        if (this.silent.wo()) {
             double d3 = aEg.timer.bWm;
             double d0 = this.KY;
             double d1 = this.La;
@@ -76,7 +76,7 @@ public class Matrix2LongJump extends Mode<LongJump> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> Lf = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();
         }

@@ -65,7 +65,7 @@ final class acq implements ada {
         ArrayList arraylist1 = new ArrayList();
 
         for (ConfigFile configfile : Client.a.p()) {
-            String s6 = configfile.sK().getName().replace(".json", "");
+            String s6 = configfile.getFile().getName().replace(".json", "");
             String s7 = s6.toLowerCase(Locale.ROOT);
             if (s5.isEmpty() || s7.startsWith(s5)) {
                 arraylist1.add(new acy(s6, "Config", ".config " + s4 + " " + s6, s6, 1, false));

@@ -116,11 +116,11 @@ public class bo extends Component {
     public boolean eK;
     public static UUID ev;
     @EventLink
-    public Listener<TickEvent> fh;
+    public Listener<TickEvent> onTick;
     public static Object[] oO00O0OO0ooO;
     public boolean eJ;
     @EventLink
-    public Listener<WorldChangeEvent> fi;
+    public Listener<WorldChangeEvent> onWorldChange;
     public byte eS;
     public long eI;
     public List<byte[]> eB;
@@ -1392,7 +1392,7 @@ public class bo extends Component {
                 }
             }
         };
-        this.fh = var1 -> {
+        this.onTick = var1 -> {
             if (this.eG && this.bu() && this.eH && System.currentTimeMillis() - this.eI > 1500L) {
                 this.eJ = true;
                 this.bw();
@@ -1416,7 +1416,7 @@ public class bo extends Component {
                 this.bD();
             }
         };
-        this.fi = var1 -> {
+        this.onWorldChange = var1 -> {
             this.bA();
             this.bF();
             if (this.eF) {

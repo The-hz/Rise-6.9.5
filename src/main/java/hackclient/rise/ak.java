@@ -15,7 +15,7 @@ public final class ak extends Command {
         if (var1.length != 2) {
             this.error(String.format(".%s <module>", var1[0]));
         } else {
-            Module module = Client.a.g().q(var1[1]);
+            Module module = Client.a.g().get(var1[1]);
             if (module == null) {
                 afi.b(ahd.ce("command.bind.invalidmodule"));
             } else {

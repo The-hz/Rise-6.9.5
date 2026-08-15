@@ -15,7 +15,7 @@ public final class ModuleToggleEvent implements Event {
     }
 
     @Generated
-    public Module dl() {
+    public Module getModule() {
         return this.module;
     }
 

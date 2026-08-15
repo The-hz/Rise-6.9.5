@@ -86,7 +86,7 @@ public final class PlayerData {
         this.ao = var1.serverPosX;
         this.ap = var1.serverPosY;
         this.aq = var1.serverPosZ;
-        this.checks = l.a(this);
+        this.checks = l.loadChecks(this);
     }
 
     public void handle(Packet<?> var1) {
@@ -277,12 +277,12 @@ public final class PlayerData {
     }
 
     @Generated
-    public EntityOtherPlayerMP Y() {
+    public EntityOtherPlayerMP getPlayer() {
         return this.player;
     }
 
     @Generated
-    public List<Check> Z() {
+    public List<Check> getChecks() {
         return this.checks;
     }
 
@@ -492,7 +492,7 @@ public final class PlayerData {
     }
 
     @Generated
-    public EntityPlayer aK() {
+    public EntityPlayer getLastAttackEntity() {
         return this.lastAttackEntity;
     }
 

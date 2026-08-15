@@ -21,7 +21,7 @@ public class abt extends abl {
         gb.MAIN.a(16, gd.REGULAR),
         abw.SECONDARY_TEXT.pV(),
         agl.LEFT,
-        ((NumberValue)this.ayC).ws().toString().replace(".0", ""),
+        ((NumberValue)this.value).ws().toString().replace(".0", ""),
         45.0F,
         "1234567890."
     );
@@ -32,7 +32,7 @@ public class abt extends abl {
     }
 
     public void pU() {
-        NumberValue numbervalue = (NumberValue)this.ayC;
+        NumberValue numbervalue = (NumberValue)this.value;
         this.azj = Math.min(
             Math.max(
                 0.0, (-numbervalue.wx().doubleValue() + numbervalue.wo().doubleValue()) / (-numbervalue.wx().doubleValue() + numbervalue.wy().doubleValue())
@@ -42,34 +42,34 @@ public class abt extends abl {
     }
 
     @Override
-    public void a(Vector2d var1, int var2, int var3, float var4) {
-        this.apP = var1;
-        NumberValue numbervalue = (NumberValue)this.ayC;
+    public void draw(Vector2d var1, int var2, int var3, float var4) {
+        this.position = var1;
+        NumberValue numbervalue = (NumberValue)this.value;
         String s = String.valueOf(numbervalue.wo().doubleValue());
-        String s1 = ahd.ce(this.ayC.getName());
+        String s1 = ahd.ce(this.value.getName());
         float f = gb.MAIN.a(16, gd.REGULAR).getStringWidth(s1) + 7;
         if (s.endsWith(".0")) {
             s = s.replace(".0", "");
         }
 
-        this.ayQ = agj.c(this.apP.x + f - 5.0, this.apP.y - 3.5, 110.0, this.jy, var2, var3);
+        this.ayQ = agj.c(this.position.x + f - 5.0, this.position.y - 3.5, 110.0, this.height, var2, var3);
         if (this.ayQ) {
             this.ayR = Math.min(1.0F, this.ayR + (float)this.azh.aKx() / 200.0F);
         } else {
             this.ayR = Math.max(0.0F, this.ayR - (float)this.azh.aKx() / 200.0F);
         }
 
-        gb.MAIN.a(16, gd.REGULAR).a(s1, this.apP.x, this.apP.y, abw.SECONDARY_TEXT.Z(this.ayD));
-        this.azm.h(new Vector2d(this.apP.x + f + 105.0, this.apP.y));
+        gb.MAIN.a(16, gd.REGULAR).a(s1, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
+        this.azm.h(new Vector2d(this.position.x + f + 105.0, this.position.y));
         if (!this.azm.tO()) {
             this.azm.bW(s);
         }
 
         this.azm.z(20.0F);
-        this.azm.b(aip.d(this.azm.nw(), this.ayD));
-        this.azm.pJ();
-        RenderUtil.roundedRectangle(this.apP.x + f, this.apP.y + 1.5, 100.0, 2.0, 1.0, abw.BACKGROUND.Y(this.ayD));
-        this.azk = this.apP.x + f;
+        this.azm.setColor(aip.d(this.azm.getColor(), this.ayD));
+        this.azm.draw();
+        RenderUtil.roundedRectangle(this.position.x + f, this.position.y + 1.5, 100.0, 2.0, 1.0, abw.BACKGROUND.Y(this.ayD));
+        this.azk = this.position.x + f;
         if (this.getStandardClickGUI().axS < 0.8) {
             this.azi = false;
         }
@@ -86,13 +86,13 @@ public class abt extends abl {
             this.azl = (this.azl * 29.0 + this.azj) / 30.0;
         }
 
-        RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.apP.y, 5.0, 5.0, 2.5, aip.d(this.rz().rA(), this.ayD));
+        RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, aip.d(this.rz().rA(), this.ayD));
         this.azh.aX();
     }
 
     @Override
     public boolean e(int var1, int var2, int var3) {
-        if (this.apP == null) {
+        if (this.position == null) {
             return false;
         }
 
@@ -101,7 +101,7 @@ public class abt extends abl {
             this.azi = true;
             return true;
         }
-        this.azm.d(var1, var2, var3);
+        this.azm.click(var1, var2, var3);
         return false;
     }
 
@@ -111,16 +111,16 @@ public class abt extends abl {
     }
 
     @Override
-    public void ci() {
-        if (this.apP != null) {
-            RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.apP.y, 5.0, 5.0, 2.5, aip.d(this.rz().rA(), this.ayD));
+    public void released() {
+        if (this.position != null) {
+            RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, aip.d(this.rz().rA(), this.ayD));
         }
     }
 
     @Override
-    public void b(char var1, int var2) {
+    public void key(char var1, int var2) {
         if (var2 == 28) {
-            NumberValue numbervalue = (NumberValue)this.ayC;
+            NumberValue numbervalue = (NumberValue)this.value;
             if (this.azm.getText().isEmpty()) {
                 numbervalue.n(numbervalue.ws());
             } else {
@@ -131,7 +131,7 @@ public class abt extends abl {
             this.azm.I(false);
             this.pU();
         } else {
-            this.azm.b(var1, var2);
+            this.azm.key(var1, var2);
         }
     }
 }

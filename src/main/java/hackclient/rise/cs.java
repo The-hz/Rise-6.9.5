@@ -37,11 +37,11 @@ public class cs extends cm implements InstanceAccess {
     }
 
     private void cv() {
-        GL11.glLineWidth(Client.a.g().c(ESP.class).anm.wo().floatValue());
+        GL11.glLineWidth(Client.a.g().c(ESP.class).width.wo().floatValue());
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(2848);
-        aip.d(Client.a.g().c(ESP.class).anl.wo() ? Color.WHITE : this.hP.cr());
+        aip.d(Client.a.g().c(ESP.class).whiteColor.wo() ? Color.WHITE : this.hP.cr());
         GL11.glDisable(2929);
         GL11.glDisable(3553);
         GL11.glDepthMask(false);

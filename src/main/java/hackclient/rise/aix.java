@@ -5,22 +5,22 @@ import java.util.List;
 import lombok.Generated;
 
 public abstract class aix implements InstanceAccess {
-    private boolean dj;
+    private boolean active;
 
     public aix() {
     }
 
     public abstract void a(aiz var1, float var2, List<Runnable> var3);
 
-    public abstract void ju();
+    public abstract void update();
 
     @Generated
-    public boolean bd() {
-        return this.dj;
+    public boolean isActive() {
+        return this.active;
     }
 
     @Generated
-    public void c(boolean var1) {
-        this.dj = var1;
+    public void setActive(boolean var1) {
+        this.active = var1;
     }
 }

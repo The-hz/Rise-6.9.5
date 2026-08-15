@@ -12,10 +12,10 @@ import hackclient.rise.bv;
 public final class AACVelocity extends Mode<Velocity> {
     private boolean jump;
     @EventLink
-    public final Listener<PreMotionEvent> sx = var1x -> {
-        if (!this.wj().qQ.wo() || aEg.thePlayer.isSwingInProgress) {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
+        if (!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress) {
             bv.f(7.0);
-            if (aEg.thePlayer.onGround && aEg.thePlayer.hurtTime > 0 && !bb.a(false, true, false, false, false)) {
+            if (aEg.thePlayer.onGround && aEg.thePlayer.hurtTime > 0 && !bb.bad(false, true, false, false, false)) {
                 aEg.thePlayer.motionX *= 0.6;
                 aEg.thePlayer.motionZ *= 0.6;
             }
@@ -24,8 +24,8 @@ public final class AACVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> sy = var1x -> {
-        if (!this.wj().qQ.wo() || aEg.thePlayer.isSwingInProgress) {
+    public final Listener<MoveInputEvent> onMove = var1x -> {
+        if (!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress) {
             if (this.jump) {
                 var1x.setJump(true);
             }

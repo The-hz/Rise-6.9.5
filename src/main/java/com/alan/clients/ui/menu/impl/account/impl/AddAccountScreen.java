@@ -37,7 +37,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
     private static final int AD_LOGO_SIZE = 24;
     private static final int AD_GAP = 8;
     private static final int AD_SIDE_PADDING = 14;
-    private static final float CENTER_REF_HEIGHT = gb.MAIN.a(24, gd.BOLD).tq();
+    private static final float CENTER_REF_HEIGHT = gb.MAIN.a(24, gd.BOLD).height();
     private static GuiScreen reference;
     private Animation animation;
     private Animation adHoverAnimation;
@@ -58,7 +58,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
     private final adi[] menuButtons = new adi[5];
 
     private static float centeredTextY(double var0, double var2, agc var4) {
-        return (float)(var0 + var2 / 2.0 - 4.0 * var4.tq() / CENTER_REF_HEIGHT);
+        return (float)(var0 + var2 / 2.0 - 4.0 * var4.height() / CENTER_REF_HEIGHT);
     }
 
     public AddAccountScreen() {
@@ -70,7 +70,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
         this.animation.Q(0.0);
         aiv.aPL.a(aiz.OVERLAY, var3, null);
         this.b(gg.BLUR).c(BACKGROUND_RUNNABLE);
-        this.adHoverAnimation.Q(aeb.a(this.adX, this.adY, this.adWidth, this.adHeight, var1, var2) ? 100.0 : 45.0);
+        this.adHoverAnimation.Q(aeb.isHovered(this.adX, this.adY, this.adWidth, this.adHeight, var1, var2) ? 100.0 : 45.0);
         this.b(gg.REGULAR)
             .c(() -> FONT_RENDERER.c("Select your login method", this.width / 2, this.height / 2 - 76 + this.animation.sG(), Color.WHITE.getRGB()));
         Color color = aip.d(Color.BLACK, 150);
@@ -91,7 +91,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
         int i = aadi.length;
 
         for (int j = 0; j < i; j++) {
-            aadi[j].c(var1, var2, var3);
+            aadi[j].draw(var1, var2, var3);
         }
 
         this.b(gg.REGULAR).c(() -> {
@@ -110,7 +110,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
 
     @Override
     public void mouseClicked(int var1, int var2, int var3) {
-        if (aeb.a(this.adX, this.adY, this.adWidth, this.adHeight, var1, var2)) {
+        if (aeb.isHovered(this.adX, this.adY, this.adWidth, this.adHeight, var1, var2)) {
             afe.A("login_ad", "https://localts.store/?campaign=rise");
 
             try {
@@ -120,8 +120,8 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
             }
         } else {
             for (adi adi : this.menuButtons) {
-                if (aeb.a(adi.getX(), adi.getY(), adi.oM(), adi.da(), var1, var2)) {
-                    adi.rm();
+                if (aeb.isHovered(adi.getX(), adi.getY(), adi.oM(), adi.da(), var1, var2)) {
+                    adi.runAction();
                     break;
                 }
             }

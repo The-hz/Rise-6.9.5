@@ -12,14 +12,14 @@ import net.minecraft.item.ItemBlock;
 
 @ModuleInfo(aliases = "module.ghost.safewalk.name", description = "module.ghost.safewalk.description", category = Category.GHOST)
 public class SafeWalk extends Module {
-    private final BooleanValue Ca = new BooleanValue("Blocks Only", this, false);
-    private final BooleanValue Cb = new BooleanValue("Backwards Only", this, false);
+    private final BooleanValue blocksOnly = new BooleanValue("Blocks Only", this, false);
+    private final BooleanValue backwardsOnly = new BooleanValue("Backwards Only", this, false);
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         boolean flag;
         label26: {
             label30: {
-                if (aEg.thePlayer.onGround && (!aEg.gameSettings.keyBindForward.isKeyDown() || !this.Cb.wo())) {
+                if (aEg.thePlayer.onGround && (!aEg.gameSettings.keyBindForward.isKeyDown() || !this.backwardsOnly.wo())) {
                     SlotComponent slotcomponent1 = this.d(SlotComponent.class);
                     if (SlotComponent.getItemStack() != null) {
                         SlotComponent slotcomponent = this.d(SlotComponent.class);
@@ -28,7 +28,7 @@ public class SafeWalk extends Module {
                         }
                     }
 
-                    if (!this.Ca.wo()) {
+                    if (!this.blocksOnly.wo()) {
                         break label30;
                     }
                 }

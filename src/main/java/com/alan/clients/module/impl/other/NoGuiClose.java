@@ -15,8 +15,8 @@ public class NoGuiClose extends Module {
     public BooleanValue chatonly = new BooleanValue("Chat Only", this, false);
     @EventLink
     public Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
-        var1.dq();
-        if (var1.dq() instanceof ay && (aEg.currentScreen instanceof GuiChat || !this.chatonly.wo())) {
+        var1.getPacket();
+        if (var1.getPacket() instanceof ay && (aEg.currentScreen instanceof GuiChat || !this.chatonly.wo())) {
             var1.setCancelled();
         }
     };

@@ -17,10 +17,10 @@ public class HitBox extends Module {
     public final NumberValue expand = new NumberValue("Expand Amount", this, 0, 0, 6, 0.01);
     private final BooleanValue effectRange = new BooleanValue("Effect range", this, true);
     @EventLink
-    public final Listener<MouseOverEvent> Bl = var1 -> {
-        var1.c(this.expand.wo().floatValue());
+    public final Listener<MouseOverEvent> onMouseOver = var1 -> {
+        var1.setExpand(this.expand.wo().floatValue());
         if (!this.effectRange.wo()) {
-            var1.i(var1.dA() - this.expand.wo().doubleValue());
+            var1.setRange(var1.dA() - this.expand.wo().doubleValue());
         }
     };
     @EventLink

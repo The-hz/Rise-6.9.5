@@ -27,7 +27,7 @@ public class cr extends cm implements InstanceAccess
                     if (!RenderUtil.isInViewFrustrum((Entity)entity)) {
                         continue;
                     }
-                    final Color color = (((EntityPlayer)entity).hurtTime > 0) ? Color.RED : this.a((EntityLivingBase)(EntityPlayer)entity);
+                    final Color color = (((EntityPlayer)entity).hurtTime > 0) ? Color.RED : this.getColor((EntityLivingBase)(EntityPlayer)entity);
                     if (((Color)color).getAlpha() <= 0) {
                         continue;
                     }

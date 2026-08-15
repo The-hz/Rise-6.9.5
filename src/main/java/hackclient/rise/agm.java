@@ -17,10 +17,10 @@ public class agm {
     public String XS = "";
     public boolean ayU;
     public int aJk;
-    public Vector2d apP;
+    public Vector2d position;
     public float width;
     public agc lq;
-    public Color amH;
+    public Color color;
     public agl aJl;
     public String aJm;
     public boolean aJn;
@@ -35,9 +35,9 @@ public class agm {
     public a aJv = new a();
 
     public agm(Vector2d var1, agc var2, Color var3, agl var4, String var5, float var6, boolean var7) {
-        this.apP = var1;
+        this.position = var1;
         this.lq = var2;
-        this.amH = var3;
+        this.color = var3;
         this.aJl = var4;
         this.aJm = var5;
         this.width = var6;
@@ -53,11 +53,11 @@ public class agm {
         this.aJq = var7;
     }
 
-    public void pJ() {
+    public void draw() {
         this.aJv.aX();
         Keyboard.enableRepeatEvents(true);
         this.aJk = Math.max(0, Math.min(this.aJk, this.XS.length()));
-        this.aJu = (float)this.apP.y;
+        this.aJu = (float)this.position.y;
         boolean flag = this.isEmpty();
         String s = flag ? this.aJm : (this.aJn ? "*".repeat(this.XS.length()) : this.XS);
         String s1;
@@ -81,12 +81,12 @@ public class agm {
             case 1:
 
                 for (int i = 0; i < d1; i++) {
-                    this.gW = (this.gW * 19.0 + (this.apP.x - f / 2.0F)) / 20.0;
+                    this.gW = (this.gW * 19.0 + (this.position.x - f / 2.0F)) / 20.0;
                 }
                 break;
             case 2:
             default:
-                this.gW = this.apP.x;
+                this.gW = this.position.x;
         }
 
         if (flag) {
@@ -94,11 +94,11 @@ public class agm {
                 .a(
                     s1,
                     this.gW,
-                    this.apP.y,
-                    new Color(this.amH.getRed(), this.amH.getBlue(), this.amH.getGreen(), (int)(this.amH.getAlpha() * (this.ayU ? 0.3F : 0.2F))).hashCode()
+                    this.position.y,
+                    new Color(this.color.getRed(), this.color.getBlue(), this.color.getGreen(), (int)(this.color.getAlpha() * (this.ayU ? 0.3F : 0.2F))).hashCode()
                 );
         } else {
-            this.lq.a(s1, this.gW, this.apP.y, this.amH.hashCode());
+            this.lq.a(s1, this.gW, this.position.y, this.color.hashCode());
         }
 
         if (this.ayU) {
@@ -114,12 +114,12 @@ public class agm {
                 .a(
                     "|",
                     (float)(this.gW + this.aJr + 1.0),
-                    this.apP.y - 1.0,
+                    this.position.y - 1.0,
                     new Color(
-                            this.amH.getRed(),
-                            this.amH.getBlue(),
-                            this.amH.getGreen(),
-                            this.amH.getAlpha() == 0 ? 0 : (int)((Math.sin(System.currentTimeMillis() / 150.0) + 1.0) / 2.0 * 255.0)
+                            this.color.getRed(),
+                            this.color.getBlue(),
+                            this.color.getGreen(),
+                            this.color.getAlpha() == 0 ? 0 : (int)((Math.sin(System.currentTimeMillis() / 150.0) + 1.0) / 2.0 * 255.0)
                         )
                         .hashCode()
                 );
@@ -154,16 +154,16 @@ public class agm {
         return var1.substring(i, j);
     }
 
-    public void d(int var1, int var2, int var3) {
-        Vector2d vector2d = this.nr();
-        boolean flag = agj.c(vector2d.x + (this.aJl == agl.CENTER ? -this.width / 2.0F : 0.0F), vector2d.y, this.width, this.lq.tq(), var1, var2);
+    public void click(int var1, int var2, int var3) {
+        Vector2d vector2d = this.getPosition();
+        boolean flag = agj.c(vector2d.x + (this.aJl == agl.CENTER ? -this.width / 2.0F : 0.0F), vector2d.y, this.width, this.lq.height(), var1, var2);
         this.ayU = var3 == 0 && flag;
         if (this.ayU) {
             this.aJk = this.XS.length();
         }
     }
 
-    public void b(char var1, int var2) {
+    public void key(char var1, int var2) {
         if (this.ayU && var2 != 28) {
             this.aJk = Math.max(0, Math.min(this.aJk, this.XS.length()));
             String s = String.valueOf(var1);
@@ -173,7 +173,7 @@ public class agm {
                     try {
                         String s1 = (String)Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
                         int i = this.XS.length();
-                        this.r(s1, this.aJk);
+                        this.addText(s1, this.aJk);
                         this.aJk = this.aJk + (this.XS.length() - i);
                     } catch (UnsupportedFlavorException | IOException unsupportedflavorexception) {
                     }
@@ -203,7 +203,7 @@ public class agm {
                 } else {
                     if (this.m(var1)) {
                         int j = this.XS.length();
-                        this.r(s, this.aJk);
+                        this.addText(s, this.aJk);
                         if (this.XS.length() > j) {
                             this.aJk++;
                         }
@@ -219,7 +219,7 @@ public class agm {
         if (var1 != null && !var1.isEmpty()) {
             this.aJk = Math.max(0, Math.min(this.aJk, this.XS.length()));
             int i = this.XS.length();
-            this.r(var1, this.aJk);
+            this.addText(var1, this.aJk);
             int j = this.XS.length() - i;
             if (j > 0) {
                 this.aJk = Math.max(0, Math.min(this.aJk + j, this.XS.length()));
@@ -239,7 +239,7 @@ public class agm {
         return this.aJq != null && !this.aJq.isEmpty() ? this.aJq.indexOf(var1) >= 0 || this.aJq.indexOf(Character.toLowerCase(var1)) >= 0 : true;
     }
 
-    private void r(String var1, int var2) {
+    private void addText(String var1, int var2) {
         if (var1 != null && !var1.isEmpty()) {
             StringBuilder stringbuilder = new StringBuilder(var1.length());
 
@@ -299,8 +299,8 @@ public class agm {
     }
 
     @Generated
-    public Vector2d nr() {
-        return this.apP;
+    public Vector2d getPosition() {
+        return this.position;
     }
 
     @Generated
@@ -314,8 +314,8 @@ public class agm {
     }
 
     @Generated
-    public Color nw() {
-        return this.amH;
+    public Color getColor() {
+        return this.color;
     }
 
     @Generated
@@ -385,7 +385,7 @@ public class agm {
 
     @Generated
     public void h(Vector2d var1) {
-        this.apP = var1;
+        this.position = var1;
     }
 
     @Generated
@@ -399,8 +399,8 @@ public class agm {
     }
 
     @Generated
-    public void b(Color var1) {
-        this.amH = var1;
+    public void setColor(Color var1) {
+        this.color = var1;
     }
 
     @Generated

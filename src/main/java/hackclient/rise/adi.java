@@ -14,8 +14,8 @@ public class adi extends adm {
     }
 
     @Override
-    public void c(int var1, int var2, float var3) {
-        this.oL().Q(aeb.a(this.getX(), this.getY(), this.oM(), this.da(), var1, var2) ? 100.0 : 45.0);
+    public void draw(int var1, int var2, float var3) {
+        this.oL().Q(aeb.isHovered(this.getX(), this.getY(), this.oM(), this.da(), var1, var2) ? 100.0 : 45.0);
         double d0 = this.getY();
         Color color = aip.d(Color.BLACK, 150);
         Color color1 = aip.d(Color.WHITE, (int)(150.0 + this.oL().sG()));
@@ -29,11 +29,11 @@ public class adi extends adm {
             agc agc = aBZ;
             float f = (float)(this.oM() - 8.0);
 
-            for (int i = 24; i > 11 && agc.getStringWidth(this.gK) > f; i--) {
+            for (int i = 24; i > 11 && agc.getStringWidth(this.name) > f; i--) {
                 agc = gb.MAIN.a(i, gd.BOLD);
             }
 
-            agc.c(this.gK, (float)(this.getX() + this.oM() / 2.0), (float)(d0 + this.da() / 2.0 - b0 / 2 - 24.0), color1.getRGB());
+            agc.c(this.name, (float)(this.getX() + this.oM() / 2.0), (float)(d0 + this.da() / 2.0 - b0 / 2 - 24.0), color1.getRGB());
         });
     }
 }

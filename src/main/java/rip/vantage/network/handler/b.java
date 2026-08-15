@@ -101,7 +101,7 @@ public final class b implements rip.vantage.commons.handler.api.c {
                         }
 
                         for (Value value : module.getAllValues()) {
-                            value.m(value.ws());
+                            value.setValueAsObject(value.ws());
                         }
                     }
 
@@ -261,9 +261,9 @@ public final class b implements rip.vantage.commons.handler.api.c {
                                             colorvalue.n(new Color(color.getRed(), j, color.getBlue(), color.getAlpha()));
                                         } else if (!(value1 instanceof DragValue dragvalue)) {
                                             if (value1 instanceof ListValue listvalue) {
-                                                for (Object object : listvalue.wF()) {
+                                                for (Object object : listvalue.getModes()) {
                                                     if (object.toString().equalsIgnoreCase(s3.split("_" + Pattern.quote(s7) + "_")[1])) {
-                                                        listvalue.m(object);
+                                                        listvalue.setValueAsObject(object);
                                                     }
                                                 }
                                             }

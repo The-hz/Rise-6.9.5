@@ -11,13 +11,13 @@ import com.alan.clients.value.impl.NumberValue;
 
 public final class BounceVelocity extends Mode<Velocity> {
     private final NumberValue tick = new NumberValue("Tick", this, 0, 0, 6, 1);
-    private final BooleanValue sA = new BooleanValue("Vertical", this, false);
-    private final BooleanValue sB = new BooleanValue("Horizontal", this, false);
+    private final BooleanValue vertical = new BooleanValue("Vertical", this, false);
+    private final BooleanValue horizontal = new BooleanValue("Horizontal", this, false);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
-        if (!this.wj().qQ.wo() || aEg.thePlayer.isSwingInProgress) {
+        if (!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress) {
             if (aEg.thePlayer.hurtTime == 9 - this.tick.wo().intValue()) {
-                if (this.sB.wo()) {
+                if (this.horizontal.wo()) {
                     if (MoveUtil.isMoving()) {
                         MoveUtil.strafe();
                     } else {
@@ -26,7 +26,7 @@ public final class BounceVelocity extends Mode<Velocity> {
                     }
                 }
 
-                if (this.sA.wo()) {
+                if (this.vertical.wo()) {
                     aEg.thePlayer.motionY *= -1.0;
                 }
             }

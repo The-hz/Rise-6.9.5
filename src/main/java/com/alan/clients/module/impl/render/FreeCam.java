@@ -31,9 +31,9 @@ public final class FreeCam extends Module {
     private Vector2f rotation;
     private boolean sprinting;
     @EventLink
-    public final Listener<BlockAABBEvent> anu = CancellableEvent::setCancelled;
+    public final Listener<BlockAABBEvent> blockAABBEventListener = CancellableEvent::setCancelled;
     @EventLink
-    public final Listener<PacketSendEvent> anv = var0 -> {
+    public final Listener<PacketSendEvent> send = var0 -> {
         Packet packet = var0.dq();
         if (packet instanceof m
             || packet instanceof C03PacketPlayer
@@ -46,17 +46,17 @@ public final class FreeCam extends Module {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> anw = var1 -> {
+    public final Listener<StrafeEvent> onStrafe = var1 -> {
         float f = this.speed.wo().floatValue();
         var1.setSpeed(f);
     };
     @EventLink
-    public final Listener<PreMotionEvent> anx = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         float f = this.speed.wo().floatValue();
         aEg.thePlayer.motionY = 0.0 + (aEg.gameSettings.keyBindJump.isKeyDown() ? f : 0.0) - (aEg.gameSettings.keyBindSneak.isKeyDown() ? f : 0.0);
     };
     @EventLink
-    public final Listener<MoveInputEvent> any = var0 -> var0.setSneak(false);
+    public final Listener<MoveInputEvent> onMovementInput = var0 -> var0.setSneak(false);
 
     public FreeCam() {
     }
@@ -81,7 +81,7 @@ public final class FreeCam extends Module {
     }
 
     @Generated
-    public NumberValue jG() {
+    public NumberValue getSpeed() {
         return this.speed;
     }
 
@@ -96,7 +96,7 @@ public final class FreeCam extends Module {
     }
 
     @Generated
-    public Vector2f dy() {
+    public Vector2f getRotation() {
         return this.rotation;
     }
 
@@ -107,26 +107,26 @@ public final class FreeCam extends Module {
 
     @Generated
     public Listener<BlockAABBEvent> lq() {
-        return this.anu;
+        return this.blockAABBEventListener;
     }
 
     @Generated
     public Listener<PacketSendEvent> lr() {
-        return this.anv;
+        return this.send;
     }
 
     @Generated
     public Listener<StrafeEvent> ls() {
-        return this.anw;
+        return this.onStrafe;
     }
 
     @Generated
     public Listener<PreMotionEvent> kK() {
-        return this.anx;
+        return this.onPreMotionEvent;
     }
 
     @Generated
     public Listener<MoveInputEvent> lt() {
-        return this.any;
+        return this.onMovementInput;
     }
 }

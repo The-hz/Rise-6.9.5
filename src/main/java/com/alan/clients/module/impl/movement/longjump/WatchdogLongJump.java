@@ -37,11 +37,11 @@ public class WatchdogLongJump extends Mode<LongJump> {
     double IW = -1.0;
     private int dE;
     private int hV;
-    private final BooleanValue MG = new BooleanValue("Smooth Camera", this, false);
-    @EventLink(cH = 1)
-    public final Listener<PacketReceiveEvent> MH = var1x -> {
+    private final BooleanValue smoothCamera = new BooleanValue("Smooth Camera", this, false);
+    @EventLink(value = 1)
+    public final Listener<PacketReceiveEvent> receive = var1x -> {
         if (!this.tt) {
-            switch (var1x.dq()) {
+            switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
                     if (!var1x.isCancelled() && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && !this.vq) {
                         this.IW = aEg.thePlayer.motionY;
@@ -67,8 +67,8 @@ public class WatchdogLongJump extends Mode<LongJump> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> MI = var1x -> {
-        if ((aEg.thePlayer.posY > this.jy || aEg.thePlayer.tR < 14) && this.MG.wo()) {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
+        if ((aEg.thePlayer.posY > this.jy || aEg.thePlayer.tR < 14) && this.smoothCamera.wo()) {
             cl.cn();
         }
 
@@ -133,12 +133,12 @@ public class WatchdogLongJump extends Mode<LongJump> {
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> MJ = var1x -> {
-        if (this.MG.wo()) {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
+        if (this.smoothCamera.wo()) {
             aEg.thePlayer.cameraYaw = 0.1F;
         }
 
-        if (this.e(LongJump.class).DE.wo() && !bk.bd() && aEg.thePlayer.onGround && this.dE >= 999 && !this.dj) {
+        if (this.e(LongJump.class).autoDisable.wo() && !bk.bd() && aEg.thePlayer.onGround && this.dE >= 999 && !this.dj) {
             this.e(LongJump.class).toggle();
         }
 
@@ -173,8 +173,8 @@ public class WatchdogLongJump extends Mode<LongJump> {
         aEg.thePlayer.isPotionActive(Potion.moveSpeed);
         MoveUtil.speed();
     };
-    @EventLink(cH = 4)
-    public final Listener<PostStrafeEvent> MK = var1x -> {
+    @EventLink(value = 4)
+    public final Listener<PostStrafeEvent> onPostStrafe = var1x -> {
         if (aEg.thePlayer.hurtTime > 0) {
             this.dE = 999;
         }
@@ -195,7 +195,7 @@ public class WatchdogLongJump extends Mode<LongJump> {
         }
     };
     @EventLink
-    public final Listener<PostMotionEvent> ML = var1x -> {};
+    public final Listener<PostMotionEvent> onPostMotion = var1x -> {};
 
     public WatchdogLongJump(String var1, LongJump var2) {
         super(var1, var2);

@@ -7,8 +7,8 @@ public class abi extends abh {
     }
 
     @Override
-    public void pJ() {
-        this.alh = new Vector2f(200.0F, 120.0F);
-        super.pJ();
+    public void draw() {
+        this.scale = new Vector2f(200.0F, 120.0F);
+        super.draw();
     }
 }

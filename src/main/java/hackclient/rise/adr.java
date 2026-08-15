@@ -19,7 +19,7 @@ public final class adr extends ade {
     private adm aCH;
     private adm aCI;
     private adh[] menuButtons;
-    private boolean aCJ;
+    private boolean rice;
 
     public adr() {
     }
@@ -32,13 +32,13 @@ public final class adr extends ade {
             this.b(gg.BLUR).c(() -> RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK));
 
             for (adh adh : this.menuButtons) {
-                adh.c(var1, var2, var3);
+                adh.draw(var1, var2, var3);
             }
 
             agc agc = gb.MAIN.a(64, gd.REGULAR);
-            double d0 = this.aCF.getY() - agc.tq();
+            double d0 = this.aCF.getY() - agc.height();
             this.animation.Q(d0);
-            String s = this.aCJ ? "Rice" : Client.b;
+            String s = this.rice ? "Rice" : Client.b;
             double d1 = this.animation.sG();
             Color color = aip.d(Color.WHITE, (int)(d1 / d0 * 200.0));
             this.b(gg.REGULAR)
@@ -83,8 +83,8 @@ public final class adr extends ade {
         if (this.menuButtons != null) {
             if (var3 == 0) {
                 for (adh adh : this.menuButtons) {
-                    if (aeb.a(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
-                        adh.rm();
+                    if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+                        adh.runAction();
                         break;
                     }
                 }
@@ -94,7 +94,7 @@ public final class adr extends ade {
 
     @Override
     public void initGui() {
-        this.aCJ = Math.random() > 0.98;
+        this.rice = Math.random() > 0.98;
         int i = this.width / 2;
         int j = this.height / 2;
         short short1 = 180;

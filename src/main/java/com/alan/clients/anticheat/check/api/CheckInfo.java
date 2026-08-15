@@ -14,5 +14,5 @@ public @interface CheckInfo {
 
     String description();
 
-    boolean T() default false;
+    boolean dev() default false;
 }

@@ -22,24 +22,24 @@ public class WatchdogBlinkPhase extends Mode<Phase> {
     private final a Oq = new a();
     private final WatchdogBlinkNoFall Or = null;
     @EventLink
-    public final Listener<PreUpdateEvent> Os = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (this.Op && !this.Oq.T(4000L)) {
             BlinkComponent.blink();
         }
     };
     @EventLink
-    public final Listener<BlockAABBEvent> Ot = var1x -> {
-        if (this.Op && BlinkComponent.enabled && var1x.df() instanceof BlockGlass) {
+    public final Listener<BlockAABBEvent> onBlockAABB = var1x -> {
+        if (this.Op && BlinkComponent.enabled && var1x.getBlock() instanceof BlockGlass) {
             var1x.setCancelled();
         }
 
-        if (this.Op && BlinkComponent.enabled && var1x.df() instanceof BlockBarrier) {
+        if (this.Op && BlinkComponent.enabled && var1x.getBlock() instanceof BlockBarrier) {
             var1x.setCancelled();
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> Ou = var1x -> {
-        Packet packet = var1x.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        Packet packet = var1x.getPacket();
         if (packet instanceof c) {
             label55: {
                 label56: {
@@ -119,7 +119,7 @@ public class WatchdogBlinkPhase extends Mode<Phase> {
         }
     };
     @EventLink
-    public final Listener<PushOutOfBlockEvent> Ov = CancellableEvent::setCancelled;
+    public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = CancellableEvent::setCancelled;
 
     public WatchdogBlinkPhase(String var1, Phase var2) {
         super(var1, var2);

@@ -17,7 +17,7 @@ public class MMCFlight extends Mode<Flight> {
     private boolean clipped;
     private int ticks;
     @EventLink
-    public final Listener<PreMotionEvent> Gz = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         this.ticks++;
         if (aEg.thePlayer.onGround) {
             MoveUtil.stop();
@@ -38,9 +38,9 @@ public class MMCFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> GA = var0 -> MoveUtil.strafe();
+    public final Listener<StrafeEvent> onStrafe = var0 -> MoveUtil.strafe();
     @EventLink
-    public final Listener<TeleportEvent> GB = var1x -> {
+    public final Listener<TeleportEvent> onTeleport = var1x -> {
         if (this.clipped) {
             var1x.setCancelled();
             this.clipped = false;

@@ -55,7 +55,7 @@ public final class Velocity extends Module {
         .add(new WatchdogReduceVelocity("Watchdog Reduce", this))
         .add(new GrimTestVelocity("Grim Test", this))
         .setDefault("Standard");
-    public final BooleanValue qQ = new BooleanValue("On Swing", this, false);
+    public final BooleanValue onSwing = new BooleanValue("On Swing", this, false);
 
     public Velocity() {
     }

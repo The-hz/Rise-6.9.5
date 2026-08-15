@@ -19,8 +19,8 @@ public final class FreeLook extends Module {
     public float anC;
     public float Il;
     public float Im;
-    @EventLink(cH = 1)
-    public final Listener<Render2DEvent> anD = var1 -> {
+    @EventLink(value = 1)
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (this.getKey() != 0 && Keyboard.isKeyDown(this.getKey())) {
             aEg.bgr.atf();
             float f = aEg.gameSettings.mouseSensitivity * 0.6F + 0.2F;
@@ -33,8 +33,8 @@ public final class FreeLook extends Module {
             this.setEnabled(false);
         }
     };
-    @EventLink(cH = 1)
-    public final Listener<TeleportEvent> anE = var1 -> {
+    @EventLink(value = 1)
+    public final Listener<TeleportEvent> onTeleport = var1 -> {
         this.anB = var1.getYaw();
         this.anC = var1.getPitch();
     };

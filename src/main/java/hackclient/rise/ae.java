@@ -12,7 +12,7 @@ public final class ae extends Command {
         if (var1.length <= 1) {
             this.error(String.format(".%s <message>", var1[0]));
         } else {
-            afi.i(String.join(" ", var1).substring(3).trim());
+            afi.send(String.join(" ", var1).substring(3).trim());
             afi.b("command.say.sent");
         }
     }

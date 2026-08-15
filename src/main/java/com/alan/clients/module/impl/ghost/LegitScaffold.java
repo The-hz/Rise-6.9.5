@@ -17,25 +17,25 @@ import net.minecraft.item.ItemBlock;
 
 @ModuleInfo(aliases = {"module.ghost.legitscaffold.name", "Eagle"}, description = "module.ghost.eagle.description", category = Category.GHOST)
 public class LegitScaffold extends Module {
-    private final BoundsNumberValue AU = new BoundsNumberValue("Length", this, 1, 1, 1, 4, 1);
-    private final NumberValue AV = new NumberValue("Sneak speed multiplier", this, 0.3, 0.2, 1, 0.05);
-    private final BooleanValue AW = new BooleanValue("Only on ground", this, false);
-    private final BooleanValue AX = new BooleanValue("Only when holding blocks", this, false);
-    private final BooleanValue AY = new BooleanValue("Only when moving backwards", this, false);
-    private final BooleanValue AZ = new BooleanValue("Only on Sneak", this, true);
+    private final BoundsNumberValue length = new BoundsNumberValue("Length", this, 1, 1, 1, 4, 1);
+    private final NumberValue slow = new NumberValue("Sneak speed multiplier", this, 0.3, 0.2, 1, 0.05);
+    private final BooleanValue groundOnly = new BooleanValue("Only on ground", this, false);
+    private final BooleanValue blocksOnly = new BooleanValue("Only when holding blocks", this, false);
+    private final BooleanValue backwardsOnly = new BooleanValue("Only when moving backwards", this, false);
+    private final BooleanValue onlyOnSneak = new BooleanValue("Only on Sneak", this, true);
     private boolean Ba;
     private int Bb;
     private int Bc;
     @EventLink
-    public final Listener<PreMotionEvent> Bd = var1 -> {
-        if (aEg.thePlayer.getHeldItem() != null && !(aEg.thePlayer.getHeldItem().getItem() instanceof ItemBlock) && this.AX.wo()) {
+    public final Listener<PreMotionEvent> onPreMotion = var1 -> {
+        if (aEg.thePlayer.getHeldItem() != null && !(aEg.thePlayer.getHeldItem().getItem() instanceof ItemBlock) && this.blocksOnly.wo()) {
             if (this.Ba) {
                 this.Ba = false;
             }
         } else {
-            if ((aEg.thePlayer.onGround || !this.AW.wo())
+            if ((aEg.thePlayer.onGround || !this.groundOnly.wo())
                 && aih.p(0.0, -1.0, 0.0) instanceof BlockAir
-                && (!aEg.gameSettings.keyBindForward.isKeyDown() || !this.AY.wo())) {
+                && (!aEg.gameSettings.keyBindForward.isKeyDown() || !this.backwardsOnly.wo())) {
                 if (!this.Ba) {
                     this.Ba = true;
                 }
@@ -44,7 +44,7 @@ public class LegitScaffold extends Module {
             }
 
             if (this.Ba) {
-                this.Bc = this.AU.wv().intValue();
+                this.Bc = this.length.wv().intValue();
                 aEg.gameSettings.cgG.setPressed(false);
             }
 
@@ -56,20 +56,20 @@ public class LegitScaffold extends Module {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> Be = var1 -> {
+    public final Listener<MoveInputEvent> onMoveInput = var1 -> {
         SlotComponent slotcomponent = this.d(SlotComponent.class);
         if (SlotComponent.getItemStack() != null) {
             slotcomponent = this.d(SlotComponent.class);
             if (SlotComponent.getItemStack().getItem() instanceof ItemBlock) {
                 var1.setSneak(
-                    this.Bc > 0 && (aEg.gameSettings.keyBindSneak.isKeyDown() || !this.AZ.wo()) || aEg.gameSettings.keyBindSneak.isKeyDown() && !this.AZ.wo()
+                    this.Bc > 0 && (aEg.gameSettings.keyBindSneak.isKeyDown() || !this.onlyOnSneak.wo()) || aEg.gameSettings.keyBindSneak.isKeyDown() && !this.onlyOnSneak.wo()
                 );
             }
         }
 
         this.Bc--;
         if (this.Bc > 0 && this.Bb <= 2) {
-            var1.setSneakSlowDownMultiplier(this.AV.wo().doubleValue());
+            var1.setSneakSlowDownMultiplier(this.slow.wo().doubleValue());
         }
     };
 

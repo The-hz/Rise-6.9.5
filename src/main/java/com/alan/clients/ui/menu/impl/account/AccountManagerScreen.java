@@ -82,7 +82,7 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
 
         for (adh adh : MENU_BUTTONS) {
             if (adh != null) {
-                adh.c(var1, var2, var3);
+                adh.draw(var1, var2, var3);
             }
         }
     }
@@ -109,8 +109,8 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
     @Override
     public void mouseClicked(int var1, int var2, int var3) {
         for (adh adh : MENU_BUTTONS) {
-            if (aeb.a(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
-                adh.rm();
+            if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+                adh.runAction();
                 return;
             }
         }

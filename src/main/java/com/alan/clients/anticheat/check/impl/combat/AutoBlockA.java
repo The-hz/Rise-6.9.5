@@ -23,8 +23,8 @@ public final class AutoBlockA extends Check {
 
     @Override
     public void handle(Packet<?> var1) {
-        if (var1 instanceof ad ad && ad.getEntityId() == this.data.Y().getEntityId() && ad.func_149376_c() != null) {
-            int i = this.a(this.data.Y());
+        if (var1 instanceof ad ad && ad.getEntityId() == this.data.getPlayer().getEntityId() && ad.func_149376_c() != null) {
+            int i = this.a(this.data.getPlayer());
             int j = this.data.W();
             if (i != -1 && j > i) {
                 if (this.a(1.0) > 2.0) {
@@ -35,7 +35,7 @@ public final class AutoBlockA extends Check {
             }
         }
 
-        if (o.b(var1) && ((S14PacketEntity)var1).entityId == this.data.Y().getEntityId() && !this.data.V()) {
+        if (o.b(var1) && ((S14PacketEntity)var1).entityId == this.data.getPlayer().getEntityId() && !this.data.V()) {
             this.b(0.985F);
         }
     }

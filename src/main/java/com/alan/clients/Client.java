@@ -96,7 +96,7 @@ public enum Client
     public com.alan.clients.security.b r;
 
     @Generated
-    public void a(final ScriptManager scriptManager) {
+    public void setScriptManager(final ScriptManager scriptManager) {
         this.scriptManager = scriptManager;
     }
 
@@ -258,7 +258,7 @@ public enum Client
 
     public void b() {
         if (this.p() != null && this.p().to() != null) {
-            this.p().to().tf();
+            this.p().to().write();
         }
     }
 
@@ -296,7 +296,7 @@ public enum Client
             com.alan.clients.module.impl.render.Interface interface_;
             if (this.moduleManager != null && (interface_ = this.moduleManager.c(com.alan.clients.module.impl.render.Interface.class)) != null) {
                 interface_.lv();
-                interface_.lw();
+                interface_.createArrayList();
             }
         } catch (Throwable throwable) {
         }
@@ -342,7 +342,7 @@ public enum Client
     }
 
     @Generated
-    public ahc d() {
+    public ahc getLocale() {
         return this.l;
     }
 
@@ -352,7 +352,7 @@ public enum Client
     }
 
     @Generated
-    public SecurityFeatureManager s() {
+    public SecurityFeatureManager getSecurityManager() {
         return this.securityManager;
     }
 
@@ -367,7 +367,7 @@ public enum Client
     }
 
     @Generated
-    public ExecutorService c() {
+    public ExecutorService getExecutor() {
         return this.executor;
     }
 
@@ -377,7 +377,7 @@ public enum Client
     }
 
     @Generated
-    public ScriptManager l() {
+    public ScriptManager getScriptManager() {
         return this.scriptManager;
     }
 
@@ -535,7 +535,7 @@ public enum Client
     }
 
     @Generated
-    public CommandManager i() {
+    public CommandManager getCommandManager() {
         return this.commandManager;
     }
 

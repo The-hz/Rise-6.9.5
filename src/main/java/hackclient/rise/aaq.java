@@ -9,7 +9,7 @@ public final class aaq extends aaj {
     }
 
     @Override
-    public boolean nX() {
+    public boolean check() {
         if (System.getSecurityManager() != null) {
             Client.a.f().oc();
             return true;

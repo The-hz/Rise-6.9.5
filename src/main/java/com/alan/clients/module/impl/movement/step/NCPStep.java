@@ -14,27 +14,27 @@ import net.minecraft.block.BlockAir;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 
 public class NCPStep extends Mode<Step> {
-    private final NumberValue RY = new NumberValue("Height", this, 1, 1, 2.5, 0.1);
-    private final NumberValue RZ = new NumberValue("Timer", this, 0.5, 0.1, 1, 0.1);
+    private final NumberValue height = new NumberValue("Height", this, 1, 1, 2.5, 0.1);
+    private final NumberValue timer = new NumberValue("Timer", this, 0.5, 0.1, 1, 0.1);
     private final BooleanValue reverse = new BooleanValue("Reverse", this, false);
     @EventLink
-    public final Listener<PreMotionEvent> Sb = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (aEg.thePlayer.onGround && !aih.vj()) {
-            aEg.thePlayer.stepHeight = this.RY.wo().floatValue();
+            aEg.thePlayer.stepHeight = this.height.wo().floatValue();
         } else {
             aEg.thePlayer.stepHeight = 0.6F;
         }
 
-        if (this.reverse.wo() && !(aih.p(0.0, -(this.RY.wo().intValue() + 1), 0.0) instanceof BlockAir) && !aih.vj()) {
-            for (int i = 1; i < this.RY.wo().intValue() + 1; i++) {
+        if (this.reverse.wo() && !(aih.p(0.0, -(this.height.wo().intValue() + 1), 0.0) instanceof BlockAir) && !aih.vj()) {
+            for (int i = 1; i < this.height.wo().intValue() + 1; i++) {
                 aEg.thePlayer.motionY -= i;
             }
         }
     };
     @EventLink
-    public final Listener<StepEvent> Sc = var1x -> {
+    public final Listener<StepEvent> onStep = var1x -> {
         if (aEg.thePlayer.onGround && !aih.vj()) {
-            double d0 = var1x.da();
+            double d0 = var1x.getHeight();
             if (!(d0 <= 0.6)) {
                 double[] adouble;
                 if (d0 > 2.019) {
@@ -51,7 +51,7 @@ public class NCPStep extends Mode<Step> {
                     adouble = new double[]{0.39, 0.6938};
                 }
 
-                aEg.timer.dzD = this.RZ.wo().floatValue();
+                aEg.timer.dzD = this.timer.wo().floatValue();
 
                 for (double d1 : adouble) {
                     ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + (d1 + Math.random() / 2000.0), aEg.thePlayer.posZ, false));

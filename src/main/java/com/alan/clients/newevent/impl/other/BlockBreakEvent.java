@@ -8,12 +8,12 @@ public final class BlockBreakEvent extends CancellableEvent {
     private BlockPos blockPos;
 
     @Generated
-    public BlockPos dg() {
+    public BlockPos getBlockPos() {
         return this.blockPos;
     }
 
     @Generated
-    public void a(BlockPos var1) {
+    public void setBlockPos(BlockPos var1) {
         this.blockPos = var1;
     }
 

@@ -34,10 +34,10 @@ import net.minecraft.util.AxisAlignedBB;
 public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
     private int SE;
     private int SF;
-    private final BooleanValue SG = new BooleanValue("Maximise Speed", this, true);
-    private final NumberValue SH = new NumberValue("Sneak Timer", this, 2.5, 1.6, 10, 0.1);
-    private final NumberValue SI = new NumberValue("Longjump Speed", this, 3, 0.1, 3, 0.05);
-    private final NumberValue SJ = new NumberValue("Height", this, 25, 10, 50, 1);
+    private final BooleanValue maximiseSpeed = new BooleanValue("Maximise Speed", this, true);
+    private final NumberValue sneakTimer = new NumberValue("Sneak Timer", this, 2.5, 1.6, 10, 0.1);
+    private final NumberValue longjumpSpeed = new NumberValue("Longjump Speed", this, 3, 0.1, 3, 0.05);
+    private final NumberValue height = new NumberValue("Height", this, 25, 10, 50, 1);
     private double xv;
     private boolean im;
     private static final double SK = 0.03333333333333333;
@@ -46,7 +46,7 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
     private int SM = 0;
     private long SN = 0L;
     @EventLink
-    public final Listener<StrafeEvent> SO = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         EntityPlayerSP entityplayersp = aEg.thePlayer;
         if (aEg.thePlayer.onGround && this.e(Flight.class).isEnabled()) {
             aEg.thePlayer.jump();
@@ -76,20 +76,20 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
         boolean flag = System.currentTimeMillis() < this.SN;
         double d0 = entityplayersp.isUsingItem() ? 0.06 : 0.26 + 0.025 * this.SM;
         if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
-            if (this.SG.wo()) {
+            if (this.maximiseSpeed.wo()) {
                 d0 += 0.105 + aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier() * 0.04;
             } else {
                 d0 += 0.1 + aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier() * 0.04;
             }
         }
 
-        if (this.SG.wo()) {
+        if (this.maximiseSpeed.wo()) {
             d0 += 0.00698;
         }
 
         var1x.setSpeed(flag ? 1.0 : d0);
         if (aEg.thePlayer.ae == 1) {
-            this.xv = this.SI.wo().doubleValue();
+            this.xv = this.longjumpSpeed.wo().doubleValue();
         }
 
         entityplayersp.motionY = this.SL.hI().y * 0.03333333333333333;
@@ -112,9 +112,9 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
         }
 
         if (aEg.thePlayer.isCollidedHorizontally && this.e(Flight.class).isEnabled()) {
-            this.SL.SW.y = this.SJ.wo().intValue();
-            this.SL.SU.y = this.SJ.wo().intValue();
-            this.SL.SV.y = this.SJ.wo().intValue();
+            this.SL.SW.y = this.height.wo().intValue();
+            this.SL.SU.y = this.height.wo().intValue();
+            this.SL.SV.y = this.height.wo().intValue();
         }
 
         if (this.e(Flight.class).isEnabled() && aEg.thePlayer.tR < 12 && this.SM < 3
@@ -144,11 +144,11 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
                 afi.b("Your Balance has ran out");
             }
         } else {
-            aEg.timer.dzD = this.SH.wo().floatValue();
+            aEg.timer.dzD = this.sneakTimer.wo().floatValue();
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> SP = var0 -> {
+    public final Listener<MoveInputEvent> onMoveInput = var0 -> {
         if (aEg.thePlayer.ae < 41) {
             MoveUtil.isMoving();
         }
@@ -156,14 +156,14 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
         var0.setSneak(false);
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> SQ = var1x -> {
-        if (var1x.dq() instanceof S12PacketEntityVelocity) {
-            S12PacketEntityVelocity s12packetentityvelocity = (S12PacketEntityVelocity)var1x.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        if (var1x.getPacket() instanceof S12PacketEntityVelocity) {
+            S12PacketEntityVelocity s12packetentityvelocity = (S12PacketEntityVelocity)var1x.getPacket();
             if (aEg.thePlayer != null && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                 this.SN = System.currentTimeMillis() + 1300L;
             }
-        } else if (var1x.dq() instanceof S3FPacketCustomPayload) {
-            S3FPacketCustomPayload s3fpacketcustompayload = (S3FPacketCustomPayload)var1x.dq();
+        } else if (var1x.getPacket() instanceof S3FPacketCustomPayload) {
+            S3FPacketCustomPayload s3fpacketcustompayload = (S3FPacketCustomPayload)var1x.getPacket();
             if ("bloxd:resyncphysics".equals(s3fpacketcustompayload.getChannelName())) {
                 PacketBuffer packetbuffer = s3fpacketcustompayload.getBufferData();
                 this.SM = 0;
@@ -174,7 +174,7 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> SR = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (var1x.dq() instanceof C03PacketPlayer c03packetplayer) {
             C03PacketPlayer c03packetplayer1 = (C03PacketPlayer)var1x.dq();
             if (!(c03packetplayer1 instanceof C06PacketPlayerPosLook) && (c03packetplayer.isMoving() || !aEg.thePlayer.onGround)) {
@@ -192,7 +192,7 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> SS = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.ticksExisted < 2) {
             aEg.getNetHandler().addToSendQueue(new C01PacketChatMessage("/servername Rise"));
         }
@@ -202,12 +202,12 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
         }
     };
     @EventLink
-    public final Listener<BlockAABBEvent> ST = var0 -> {
-        if (var0.df() instanceof BlockChest) {
-            double d0 = var0.dg().getX();
-            double d1 = var0.dg().getY();
-            double d2 = var0.dg().getZ();
-            var0.a(AxisAlignedBB.fromBounds(0.0, 0.0, 0.0, 1.0, 1.0, 1.0).offset(d0, d1, d2));
+    public final Listener<BlockAABBEvent> onBlockAABB = var0 -> {
+        if (var0.getBlock() instanceof BlockChest) {
+            double d0 = var0.getBlockPos().getX();
+            double d1 = var0.getBlockPos().getY();
+            double d2 = var0.getBlockPos().getZ();
+            var0.setBoundingBox(AxisAlignedBB.fromBounds(0.0, 0.0, 0.0, 1.0, 1.0, 1.0).offset(d0, d1, d2));
         }
 
         AxisAlignedBB axisalignedbb = var0.dh();

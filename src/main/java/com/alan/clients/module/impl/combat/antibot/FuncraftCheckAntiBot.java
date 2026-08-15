@@ -9,7 +9,7 @@ import com.alan.clients.value.Mode;
 
 public final class FuncraftCheckAntiBot extends Mode<AntiBot> {
     @EventLink
-    private final Listener<PreUpdateEvent> rv = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
+    private final Listener<PreUpdateEvent> onPreUpdate = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         if (var1xx.getDisplayName().getUnformattedText().contains("§")) {
             Client.a.x().c(this, var1xx);
         } else {

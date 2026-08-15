@@ -31,8 +31,8 @@ public final class RotationComponent extends Component {
     private static boolean fs = true;
     private static float ft;
     private static final Vector2f fu = new Vector2f(0.0F, 0.0F);
-    @EventLink(cH = 0)
-    public final Listener<PreUpdateEvent> fv = var0 -> {
+    @EventLink(value = 0)
+    public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {
         if (!dj || fk == null || fl == null || fm == null || fn == null) {
             fk = fl = fm = fn = new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
         }
@@ -46,35 +46,35 @@ public final class RotationComponent extends Component {
             aEg.thePlayer.setSprinting(false);
         }
     };
-    @EventLink(cH = 1)
-    public final Listener<MoveInputEvent> fw = var0 -> {
+    @EventLink(value = 1)
+    public final Listener<MoveInputEvent> onMove = var0 -> {
         if (dj && correctMovement == MovementFix.NORMAL && fk != null) {
             float f = fk.x;
             MoveUtil.fixMovement(var0, f);
         }
     };
-    @EventLink(cH = 0)
-    public final Listener<LookEvent> fx = var0 -> {
+    @EventLink(value = 0)
+    public final Listener<LookEvent> onLook = var0 -> {
         if (dj && fk != null && fs) {
-            var0.a(fk);
+            var0.setRotation(fk);
         }
     };
-    @EventLink(cH = 0)
-    public final Listener<StrafeEvent> fy = var0 -> {
+    @EventLink(value = 0)
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (dj && (correctMovement == MovementFix.NORMAL || correctMovement == MovementFix.TRADITIONAL) && fk != null) {
             var0.setYaw(fk.x);
         }
     };
-    @EventLink(cH = 0)
-    public final Listener<JumpEvent> fz = var0 -> {
+    @EventLink(value = 0)
+    public final Listener<JumpEvent> onJump = var0 -> {
         if (dj
             && (correctMovement == MovementFix.NORMAL || correctMovement == MovementFix.TRADITIONAL || correctMovement == MovementFix.BACKWARDS_SPRINT)
             && fk != null) {
             var0.setYaw(fk.x);
         }
     };
-    @EventLink(cH = 0)
-    public final Listener<PreMotionEvent> fA = var1 -> {
+    @EventLink(value = 0)
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (dj && fk != null) {
             float f = fk.x;
             float f1 = fk.y;
@@ -136,7 +136,7 @@ public final class RotationComponent extends Component {
     }
 
     private void bI() {
-        Vector2f vector2f = aiu.o(aiu.b(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), fl));
+        Vector2f vector2f = aiu.o(aiu.applySensitivityPatch(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), fl));
         aEg.thePlayer.pl = vector2f.x;
         aEg.thePlayer.rotationPitch = vector2f.y;
     }

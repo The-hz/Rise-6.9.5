@@ -32,15 +32,15 @@ public final class abz implements abx, InstanceAccess {
             double d1 = 0.0;
 
             for (abd abd : this.azB) {
-                abd.a(new Vector2d(riseclickgui.axI.x + riseclickgui.axJ.aym + 8.0, d0), var1, var2, var3);
-                d0 += abd.alh.y + 7.0F;
-                d1 += abd.alh.y + 7.0F;
+                abd.draw(new Vector2d(riseclickgui.axI.x + riseclickgui.axJ.aym + 8.0, d0), var1, var2, var3);
+                d0 += abd.scale.y + 7.0F;
+                d1 += abd.scale.y + 7.0F;
             }
 
             this.azC = d0;
             double d2 = 7.0;
-            double d3 = riseclickgui.oW().getX() + riseclickgui.oX().getX() - 4.0F;
-            double d4 = riseclickgui.oW().getY() + d2;
+            double d3 = riseclickgui.getScale().getX() + riseclickgui.getPosition().getX() - 4.0F;
+            double d4 = riseclickgui.getScale().getY() + d2;
             this.scrollUtil.a(new Vector2d(d3, d4), this.getStandardClickGUI().alh.y - d2 * 2.0);
             this.scrollUtil.V(-d1 + riseclickgui.alh.y - 7.0);
             this.azA.aX();
@@ -52,7 +52,7 @@ public final class abz implements abx, InstanceAccess {
         Iterator iterator = this.qf().iterator();
 
         while (iterator.hasNext()) {
-            ((abd)iterator.next()).b(var1, var2);
+            ((abd)iterator.next()).key(var1, var2);
         }
     }
 
@@ -62,7 +62,7 @@ public final class abz implements abx, InstanceAccess {
             Iterator iterator = this.azB.iterator();
 
             while (iterator.hasNext()) {
-                ((abd)iterator.next()).d(var1, var2, var3);
+                ((abd)iterator.next()).click(var1, var2, var3);
             }
         }
     }
@@ -95,9 +95,9 @@ public final class abz implements abx, InstanceAccess {
         if (this.axt != null) {
             this.azB = Client.a
                 .v()
-                .pg()
+                .getModuleList()
                 .stream()
-                .filter(var1 -> var1.dl().getModuleInfo().category() == this.axt)
+                .filter(var1 -> var1.getModule().getModuleInfo().category() == this.axt)
                 .collect(Collectors.toCollection(ArrayList::new));
         }
     }

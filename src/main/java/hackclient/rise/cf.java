@@ -15,48 +15,48 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class cf extends Component {
-    public static ConcurrentLinkedQueue<cm> hc = new ConcurrentLinkedQueue<>();
-    @EventLink(cH = 4)
-    public final Listener<Render2DEvent> hd = var0 -> {
-        if (!hc.isEmpty()) {
-            hc.forEach(cm::co);
+    public static ConcurrentLinkedQueue<cm> esps = new ConcurrentLinkedQueue<>();
+    @EventLink(value = 4)
+    public final Listener<Render2DEvent> onRender2D = var0 -> {
+        if (!esps.isEmpty()) {
+            esps.forEach(cm::co);
         }
     };
-    @EventLink(cH = 4)
+    @EventLink(value = 4)
     public final Listener<ff> he = var0 -> {
-        if (hc != null && !hc.isEmpty()) {
-            Iterator iterator = hc.iterator();
+        if (esps != null && !esps.isEmpty()) {
+            Iterator iterator = esps.iterator();
 
             while (iterator.hasNext()) {
                 ((cm)iterator.next()).a(var0.do_(), var0.dp());
             }
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<Render3DEvent> hf = var0 -> {
-        if (hc != null && !hc.isEmpty()) {
-            hc.forEach(cm::cp);
+    @EventLink(value = 4)
+    public final Listener<Render3DEvent> onRender3D = var0 -> {
+        if (esps != null && !esps.isEmpty()) {
+            esps.forEach(cm::cp);
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<PreUpdateEvent> hg = var0 -> {
+    @EventLink(value = 4)
+    public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {
         KillAura killaura = Client.a.g().c(KillAura.class);
         List list = killaura.isEnabled() ? killaura.oM : new ArrayList();
-        hc.removeIf(var1 -> var1.hQ + 10 < aEg.thePlayer.ticksExisted || !list.contains(var1.by));
-        Iterator iterator = hc.iterator();
+        esps.removeIf(var1 -> var1.tick + 10 < aEg.thePlayer.ticksExisted || !list.contains(var1.target));
+        Iterator iterator = esps.iterator();
 
         while (iterator.hasNext()) {
             ((cm)iterator.next()).cq();
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> hh = var0 -> hc.clear();
+    public final Listener<WorldChangeEvent> onWorldChange = var0 -> esps.clear();
 
     public cf() {
     }
 
     public static void a(cm var0) {
-        hc.removeIf(var1 -> var0.getClass() == var1.getClass() && var0.by == var1.by);
-        hc.add(var0);
+        esps.removeIf(var1 -> var0.getClass() == var1.getClass() && var0.target == var1.target);
+        esps.add(var0);
     }
 }

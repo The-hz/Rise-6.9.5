@@ -31,7 +31,7 @@ public class VulcanAntiVoid extends Mode<AntiVoid> {
     private boolean ahN = false;
     private int zn;
     @EventLink
-    public final Listener<PreMotionEvent> ahO = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (this.zm == null) {
             this.zm = this.e(Flight.class);
         }
@@ -63,22 +63,22 @@ public class VulcanAntiVoid extends Mode<AntiVoid> {
         }
     };
     @EventLink
-    public final Listener<BlockAABBEvent> ahP = var1x -> {
-        if (var1x.df() instanceof BlockAir && !aEg.thePlayer.isSneaking() && this.ahL) {
-            double d0 = var1x.dg().getX();
-            double d1 = var1x.dg().getY();
-            double d2 = var1x.dg().getZ();
+    public final Listener<BlockAABBEvent> onBlockAABB = var1x -> {
+        if (var1x.getBlock() instanceof BlockAir && !aEg.thePlayer.isSneaking() && this.ahL) {
+            double d0 = var1x.getBlockPos().getX();
+            double d1 = var1x.getBlockPos().getY();
+            double d2 = var1x.getBlockPos().getZ();
             if (d1 < aEg.thePlayer.posY) {
-                var1x.a(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
+                var1x.setBoundingBox(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
             }
         }
 
-        if ((!(var1x.df() instanceof BlockAir) || aEg.thePlayer.isSneaking()) && this.ahL && !aEg.thePlayer.isCollidedHorizontally) {
+        if ((!(var1x.getBlock() instanceof BlockAir) || aEg.thePlayer.isSneaking()) && this.ahL && !aEg.thePlayer.isCollidedHorizontally) {
             this.ahL = false;
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> ahQ = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (this.ahL) {
             MoveUtil.strafe(0.1);
             if (aEg.thePlayer.ticksExisted % 2 != 1 && aEg.thePlayer.moveForward == 0.0F) {
@@ -90,16 +90,16 @@ public class VulcanAntiVoid extends Mode<AntiVoid> {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> ahR = var1x -> {
-        Packet packet = var1x.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        Packet packet = var1x.getPacket();
         if (packet instanceof S08PacketPlayerPosLook) {
             this.ahL = false;
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> ahS = var1x -> this.ahL = false;
+    public final Listener<WorldChangeEvent> onWorldChange = var1x -> this.ahL = false;
     @EventLink
-    public final Listener<JumpEvent> ahT = var1x -> {
+    public final Listener<JumpEvent> onJump = var1x -> {
         if (this.ahL) {
             var1x.setJumpMotion(0.0F);
         }

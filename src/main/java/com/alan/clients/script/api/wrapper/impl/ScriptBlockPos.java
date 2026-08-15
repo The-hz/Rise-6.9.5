@@ -24,14 +24,14 @@ public class ScriptBlockPos extends ScriptWrapper<BlockPos> {
         WorldClient worldclient = MC.theWorld;
         BlockPos blockpos = this.wrapped;
         SlotComponent slotcomponent = Client.a.h().b(SlotComponent.class);
-        return aik.a(entityplayersp, worldclient, blockpos, SlotComponent.bQ());
+        return aik.getPlayerRelativeBlockHardness(entityplayersp, worldclient, blockpos, SlotComponent.bQ());
     }
 
     public float getHardness(int var1) {
-        return aik.a(MC.thePlayer, MC.theWorld, this.wrapped, var1);
+        return aik.getPlayerRelativeBlockHardness(MC.thePlayer, MC.theWorld, this.wrapped, var1);
     }
 
     public ScriptBlock getBlock() {
-        return new ScriptBlock(aih.q(this.wrapped));
+        return new ScriptBlock(aih.block(this.wrapped));
     }
 }

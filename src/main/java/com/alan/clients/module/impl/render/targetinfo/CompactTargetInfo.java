@@ -38,7 +38,7 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
     private final Animation auXX = new Animation(Easing.EASE_OUT_ELASTIC, 500L);
     private final Animation auY = new Animation(Easing.EASE_OUT_SINE, 500L);
     @EventLink
-    public final Listener<Render2DEvent> auZ = var1x -> {
+    public final Listener<Render2DEvent> onRender2D = var1x -> {
         if (this.aui == null) {
             this.aui = this.e(TargetInfo.class);
         }
@@ -49,7 +49,7 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
         if (entity != null) {
             boolean flag = !this.aui.inWorld || this.aui.rG.T(1000L);
             this.auXX.h(flag ? 400L : 850L);
-            this.auXX.a(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
+            this.auXX.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
             this.auXX.Q(flag ? 0.0 : 1.0);
             if (!(this.auXX.sG() <= 0.0)) {
                 String s = entity.getName();
@@ -60,10 +60,10 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
                 HealthBypass healthbypass = this.e(HealthBypass.class);
                 float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractclientplayer) : abstractclientplayer.getHealth();
                 double d2 = this.auT.getStringWidth(s1);
-                double d3 = Math.min(!this.aui.inWorld ? 0.0 : ahg.a(f, 1), abstractclientplayer.getMaxHealth());
+                double d3 = Math.min(!this.aui.inWorld ? 0.0 : ahg.round(f, 1), abstractclientplayer.getMaxHealth());
                 double d4 = Math.max(d2 + 15.0, 70.0);
                 this.auY.Q(d3 / abstractclientplayer.getMaxHealth() * d4);
-                this.auY.a(Easing.EASE_OUT_QUINT);
+                this.auY.setEasing(Easing.EASE_OUT_QUINT);
                 this.auY.h(250L);
                 double d5 = this.auY.sG();
                 double d6 = (abstractclientplayer.hurtTime == 0 ? 0.0F : abstractclientplayer.hurtTime - aEg.timer.bWm) * 0.5;
@@ -112,7 +112,7 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
                     GlStateManager.translate((d0 + d8 / 2.0) * (1.0 - d10), (d1 + d9 / 2.0) * (1.0 - d10), 0.0);
                     GlStateManager.scale(d10, d10, 0.0);
                     RenderUtil.color(aip.a(Color.RED, Color.WHITE, d6 / 9.0));
-                    RenderUtil.dropShadow(3, d0 + 6.0 + d7 - 2.5, d1 + 6.0 + d7 - 2.5, b0 - d6, b0 - d6, 20.0, this.rz().pl() * 2);
+                    RenderUtil.dropShadow(3, d0 + 6.0 + d7 - 2.5, d1 + 6.0 + d7 - 2.5, b0 - d6, b0 - d6, 20.0, this.rz().getRound() * 2);
                     this.a(abstractclientplayer, d0 + 6.0 + d7 - 2.5, d1 + 6.0 + d7 - 2.5, b0 - d6);
                     GlStateManager.popMatrix();
                 });
@@ -141,7 +141,7 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
     private void a(AbstractClientPlayer var1, double var2, double var4, double var6) {
         ais.vK();
         ais.vL();
-        double d0 = this.rz().pl() * 2;
+        double d0 = this.rz().getRound() * 2;
         this.rz();
         RenderUtil.roundedRectangle(var2, var4, var6, var6, d0, adv.rK());
         ais.aD(1);
@@ -157,6 +157,6 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
         GlStateManager.disableBlend();
         ais.vM();
         float f1 = 0.5F;
-        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().pl() * 2, 0.5, aip.d(Color.BLACK, 40));
+        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, aip.d(Color.BLACK, 40));
     }
 }

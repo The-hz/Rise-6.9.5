@@ -27,23 +27,23 @@ public class ci extends Component {
     private static boolean hF = true;
     private static boolean hG = true;
     private static int hH;
-    @EventLink(cH = 4)
-    public final Listener<PreUpdateEvent> hI = var0 -> {
+    @EventLink(value = 4)
+    public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {
         hC = dj;
         dj = false;
         hH = 0;
     };
     @EventLink
-    public final Listener<Render2DEvent> hJ = var1 -> {
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (!fY) {
-            ScaledResolution scaledresolution = var1.dx();
+            ScaledResolution scaledresolution = var1.getScaledResolution();
             float f = 150.0F * hE;
             float f1 = 10.0F * hE;
             float f2 = scaledresolution.getScaledWidth() * 0.5F - f * 0.5F;
             float f3 = scaledresolution.getScaledHeight() * 0.5F + 15.0F;
             hB.Q(!dj && hG ? 1.1 : 1.0);
             hB.h(900L);
-            hB.a(Easing.EASE_OUT_EXPO);
+            hB.setEasing(Easing.EASE_OUT_EXPO);
             double d0 = hB.sG();
             double d1 = 1.0 - 10.0 * Math.abs(1.0 - hB.sG());
             hA.Q(hD);
@@ -54,10 +54,10 @@ public class ci extends Component {
                         GlStateManager.pushMatrix();
                         GlStateManager.translate((f2 + f * 0.5F) * (1.0 - d0), (f3 + f1 * 0.5F) * (1.0 - d0), 0.0);
                         GlStateManager.scale(d0, d0, 0.0);
-                        RenderUtil.roundedRectangle(f2, f3, f, f1, adv.pl(), aip.d(adv.rK(), (int)(adv.rK().getAlpha() * d1)));
-                        RenderUtil.a(f2, f3, f * hA.sG(), f1, adv.pl(), aip.d(adv.rA(), (int)(255.0 * d1)), aip.d(adv.rB(), (int)(255.0 * d1)), false);
+                        RenderUtil.roundedRectangle(f2, f3, f, f1, adv.getRound(), aip.d(adv.rK(), (int)(adv.rK().getAlpha() * d1)));
+                        RenderUtil.a(f2, f3, f * hA.sG(), f1, adv.getRound(), aip.d(adv.rA(), (int)(255.0 * d1)), aip.d(adv.rB(), (int)(255.0 * d1)), false);
                         if (hF) {
-                            String s = ahg.a(hA.sG() * 100.0, 1) + "%";
+                            String s = ahg.round(hA.sG() * 100.0, 1) + "%";
                             int i = Math.max(12, Math.round(16.0F * hE));
                             gb.MAIN
                                 .a(i, gd.REGULAR)
@@ -79,7 +79,7 @@ public class ci extends Component {
                         GlStateManager.translate((f2 + f * 0.5F) * (1.0 - d0), (f3 + f1 * 0.5F) * (1.0 - d0), 0.0);
                         GlStateManager.scale(d0, d0, 0.0);
                         RenderUtil.roundedRectangle(
-                            f2 + 0.5F, f3 + 0.5F, f - 1.0F, f1 - 1.0F, adv.pl() + 1, aip.d(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d1))
+                            f2 + 0.5F, f3 + 0.5F, f - 1.0F, f1 - 1.0F, adv.getRound() + 1, aip.d(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d1))
                         );
                         GlStateManager.popMatrix();
                     }
@@ -88,10 +88,10 @@ public class ci extends Component {
                 GlStateManager.pushMatrix();
                 GlStateManager.translate((f2 + f * 0.5F) * (1.0 - d0), (f3 + f1 * 0.5F) * (1.0 - d0), 0.0);
                 GlStateManager.scale(d0, d0, 0.0);
-                RenderUtil.roundedRectangle(f2, f3, f, f1, adv.pl(), aip.d(Color.BLACK, (int)(255.0 * d1)));
+                RenderUtil.roundedRectangle(f2, f3, f, f1, adv.getRound(), aip.d(Color.BLACK, (int)(255.0 * d1)));
                 GlStateManager.popMatrix();
             });
-            if (!dj && hB.kv()) {
+            if (!dj && hB.isFinished()) {
                 hA.T(0.0);
                 fY = true;
             }

@@ -51,7 +51,7 @@ public class RiseAPI {
         AtomicReference atomicreference = new AtomicReference(null);
         RiseAPI$1 riseapi$1 = new RiseAPI$1(this, new ScriptModuleInfo(var1, var2), atomicreference);
         atomicreference.set(getModule(riseapi$1));
-        Client.a.g().f(riseapi$1);
+        Client.a.g().add(riseapi$1);
         if (Client.a.v() != null) {
             Client.a.v().oS();
         }
@@ -71,7 +71,7 @@ public class RiseAPI {
     }
 
     public ScriptModule getModule(String var1) {
-        return new ScriptModule(Client.a.g().q(var1));
+        return new ScriptModule(Client.a.g().get(var1));
     }
 
     public void rotate(float var1, float var2, double var3) {
@@ -92,12 +92,12 @@ public class RiseAPI {
         AtomicReference atomicreference = new AtomicReference(null);
         RiseAPI$2 riseapi$2 = new RiseAPI$2(this, var2, new String[]{var1}, atomicreference);
         atomicreference.set(getCommand(riseapi$2));
-        Client.a.i().aQ().add(riseapi$2);
+        Client.a.getCommandManager().aQ().add(riseapi$2);
         return (ScriptCommand)atomicreference.get();
     }
 
     public ScriptCommand[] getCommands() {
-        List list = Client.a.i().aQ();
+        List list = Client.a.getCommandManager().aQ();
         ScriptCommand[] ascriptcommand = new ScriptCommand[list.size()];
 
         for (int i = 0; i < list.size(); i++) {
@@ -108,7 +108,7 @@ public class RiseAPI {
     }
 
     public ScriptCommand getCommand(String var1) {
-        return getCommand(Client.a.i().b(var1));
+        return getCommand(Client.a.getCommandManager().get(var1));
     }
 
     public void displayChat(String var1) {
@@ -205,6 +205,6 @@ public class RiseAPI {
     }
 
     public String getLocale() {
-        return Client.a.d().uE();
+        return Client.a.getLocale().getFile();
     }
 }

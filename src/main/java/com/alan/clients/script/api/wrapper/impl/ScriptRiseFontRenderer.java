@@ -15,7 +15,7 @@ public class ScriptRiseFontRenderer extends ScriptFontRenderer<agf> {
 
     @Override
     public double height() {
-        return this.wrapped.tq();
+        return this.wrapped.height();
     }
 
     @Override
@@ -35,6 +35,6 @@ public class ScriptRiseFontRenderer extends ScriptFontRenderer<agf> {
 
     @Override
     public void drawCenteredWithShadow(String var1, float var2, float var3, int[] var4) {
-        this.wrapped.a(var1, var2, var3, RenderAPI.intArrayToColor(var4).getRGB());
+        this.wrapped.drawCenteredStringWithShadow(var1, var2, var3, RenderAPI.intArrayToColor(var4).getRGB());
     }
 }

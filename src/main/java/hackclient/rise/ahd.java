@@ -9,37 +9,37 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 public class ahd {
-    private static boolean aNc = false;
+    private static boolean populated = false;
 
     public ahd() {
     }
 
     public static String ce(String var0) {
-        return a(var0, Client.a.d());
+        return a(var0, Client.a.getLocale());
     }
 
     public static String a(String var0, ahc var1) {
-        if (!aNc) {
-            uH();
+        if (!populated) {
+            populate();
         }
 
-        String s = var1.uF().get(var0);
+        String s = var1.getStrings().get(var0);
         if (s == null) {
-            s = ahc.EN_US.uF().get(var0);
+            s = ahc.EN_US.getStrings().get(var0);
         }
 
         return s == null ? var0 : s;
     }
 
-    public static void uH() {
+    public static void populate() {
         for (ahc ahc : ahc.values()) {
-            ResourceLocation resourcelocation = new ResourceLocation("rise/text/" + ahc.uE() + ".properties");
+            ResourceLocation resourcelocation = new ResourceLocation("rise/text/" + ahc.getFile() + ".properties");
 
             try (
                 InputStream inputstream = Minecraft.getMinecraft().getResourceManager().getResource(resourcelocation).getInputStream();
                 BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(inputstream, StandardCharsets.UTF_8));
             ) {
-                ahc.uF().clear();
+                ahc.getStrings().clear();
 
                 String s;
                 while ((s = bufferedreader.readLine()) != null) {
@@ -54,7 +54,7 @@ public class ahd {
                                     s3 = s3.replace("\\u2022", "•");
                                 }
 
-                                ahc.uF().put(s2, s3);
+                                ahc.getStrings().put(s2, s3);
                             }
                         }
                     }
@@ -65,11 +65,11 @@ public class ahd {
             }
         }
 
-        aNc = true;
+        populated = true;
     }
 
     static {
-        uH();
-        aNc = false;
+        populate();
+        populated = false;
     }
 }

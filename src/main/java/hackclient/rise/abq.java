@@ -8,17 +8,17 @@ import com.alan.clients.value.impl.ModeValue;
 
 public class abq extends abl {
     @Override
-    public void a(Vector2d var1, int var2, int var3, float var4) {
-        ListValue listvalue = (ListValue)this.ayC;
-        this.apP = var1;
-        String s = ahd.ce(this.ayC.getName()) + ":";
-        gb.MAIN.a(16, gd.REGULAR).a(s, this.apP.x, this.apP.y, abw.SECONDARY_TEXT.Z(this.ayD));
+    public void draw(Vector2d var1, int var2, int var3, float var4) {
+        ListValue listvalue = (ListValue)this.value;
+        this.position = var1;
+        String s = ahd.ce(this.value.getName()) + ":";
+        gb.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
         gb.MAIN
             .a(16, gd.REGULAR)
             .a(
                 ahd.ce(listvalue instanceof ModeValue ? ((ModeValue)listvalue).wo().getName() : listvalue.wo().toString()),
-                this.apP.x + gb.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 2.0,
-                this.apP.y,
+                this.position.x + gb.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 2.0,
+                this.position.y,
                 abw.SECONDARY_TEXT.Z(this.ayD)
             );
     }
@@ -29,35 +29,35 @@ public class abq extends abl {
 
     @Override
     public boolean e(int var1, int var2, int var3) {
-        if (this.apP == null) {
+        if (this.position == null) {
             return false;
         }
 
-        ListValue listvalue = (ListValue)this.ayC;
+        ListValue listvalue = (ListValue)this.value;
         boolean flag = var3 == 0;
         boolean flag1 = var3 == 1;
-        if (agj.c(this.apP.x, this.apP.y - 3.5, this.getStandardClickGUI().width - 70, this.jy, var1, var2)) {
-            int i = listvalue.wF().indexOf(listvalue.wo());
+        if (agj.c(this.position.x, this.position.y - 3.5, this.getStandardClickGUI().width - 70, this.height, var1, var2)) {
+            int i = listvalue.getModes().indexOf(listvalue.wo());
             Object object = null;
             if (flag) {
-                if (listvalue.wF().size() <= i + 1) {
-                    object = listvalue.wF().get(0);
+                if (listvalue.getModes().size() <= i + 1) {
+                    object = listvalue.getModes().get(0);
                 } else {
-                    object = listvalue.wF().get(i + 1);
+                    object = listvalue.getModes().get(i + 1);
                 }
             } else if (flag1) {
                 if (0 > i - 1) {
-                    object = listvalue.wF().get(listvalue.wF().size() - 1);
+                    object = listvalue.getModes().get(listvalue.getModes().size() - 1);
                 } else {
-                    object = listvalue.wF().get(i - 1);
+                    object = listvalue.getModes().get(i - 1);
                 }
             }
 
             if (object != null) {
-                if (this.pS() instanceof ModeValue) {
-                    ((ModeValue)listvalue).c((Mode<?>)object);
+                if (this.getValue() instanceof ModeValue) {
+                    ((ModeValue)listvalue).update((Mode<?>)object);
                 } else {
-                    listvalue.m(object);
+                    listvalue.setValueAsObject(object);
                 }
             }
 
@@ -71,10 +71,10 @@ public class abq extends abl {
     }
 
     @Override
-    public void ci() {
+    public void released() {
     }
 
     @Override
-    public void b(char var1, int var2) {
+    public void key(char var1, int var2) {
     }
 }

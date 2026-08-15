@@ -16,26 +16,26 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class mx extends Mode<Flight> {
     @EventLink
-    public Listener<PacketSendEvent> FJ;
+    public Listener<PacketSendEvent> onPacketSend;
     public NumberValue FE;
-    public BooleanValue FF;
+    public BooleanValue sendFlying;
     @EventLink
-    public Listener<MoveInputEvent> FI;
+    public Listener<MoveInputEvent> onMoveInput;
     @EventLink
-    public Listener<StrafeEvent> FG;
+    public Listener<StrafeEvent> onStrafe;
     @EventLink
-    public Listener<PreMotionEvent> FH;
+    public Listener<PreMotionEvent> onPreMotion;
 
     public mx(String var1, Flight var2) {
         super(var1, var2);
         this.FE = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
-        this.FF = new BooleanValue("Send Flying", this, false);
-        this.FG = var1x -> {
+        this.sendFlying = new BooleanValue("Send Flying", this, false);
+        this.onStrafe = var1x -> {
             float f = 0.0F;
             float f1 = this.FE.wo().floatValue();
             var1x.setSpeed(f1);
         };
-        this.FH = var1x -> {
+        this.onPreMotion = var1x -> {
             float f = 0.0F;
             float f1 = this.FE.wo().floatValue();
             aEg.thePlayer.motionY = -1.0E-10 + (aEg.gameSettings.keyBindJump.isKeyDown() ? f1 : 0.0) - (aEg.gameSettings.keyBindSneak.isKeyDown() ? f1 : 0.0);
@@ -43,9 +43,9 @@ public class mx extends Mode<Flight> {
                 var1x.setCancelled();
             }
         };
-        this.FI = var0 -> var0.setSneak(false);
-        this.FJ = var1x -> {
-            if (!this.FF.wo()) {
+        this.onMoveInput = var0 -> var0.setSneak(false);
+        this.onPacketSend = var1x -> {
+            if (!this.sendFlying.wo()) {
                 Packet packet = var1x.dq();
                 if (packet instanceof C03PacketPlayer && !((C03PacketPlayer)packet).isMoving() && !bb.aW()) {
                     var1x.setCancelled();

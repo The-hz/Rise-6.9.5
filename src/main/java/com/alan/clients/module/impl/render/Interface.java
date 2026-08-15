@@ -39,17 +39,17 @@ import rip.vantage.commons.util.time.a;
 public final class Interface extends Module {
     private final ModeValue anX = new xg(this, "Mode", this);
     private final ModeValue anY = new xh(this, "Modules to Show", this);
-    public BooleanValue anZ = new BooleanValue("Suffix", this, true);
-    public BooleanValue aoa = new BooleanValue("Lowercase", this, false);
-    public BooleanValue aob = new BooleanValue("Remove Spaces", this, false);
+    public BooleanValue suffix = new BooleanValue("Suffix", this, true);
+    public BooleanValue lowercase = new BooleanValue("Lowercase", this, false);
+    public BooleanValue removeSpaces = new BooleanValue("Remove Spaces", this, false);
     public BooleanValue aoc = new BooleanValue("Shaders", this, false);
-    public BooleanValue aod = new BooleanValue("Toggle Notifications", this, false);
-    private final NumberValue aoe = new NumberValue("Blur Radius", this, 12, 1, 30, 1);
-    private final NumberValue aof = new NumberValue("Blur Compression", this, 3.0, 1.0, 10.0, 0.1);
-    private final NumberValue aog = new NumberValue("Bloom Radius", this, 14, 1, 30, 1);
-    private final NumberValue aoh = new NumberValue("Bloom Compression", this, 2.0, 1.0, 10.0, 0.1);
-    private final NumberValue aoi = new NumberValue("Background Alpha", this, 110, 0, 255, 1);
-    private final NumberValue aoj = new NumberValue("Rounding Radius", this, 5, 0, 20, 0.5);
+    public BooleanValue toggleNotifications = new BooleanValue("Toggle Notifications", this, false);
+    private final NumberValue blurRadius = new NumberValue("Blur Radius", this, 12, 1, 30, 1);
+    private final NumberValue blurCompression = new NumberValue("Blur Compression", this, 3.0, 1.0, 10.0, 0.1);
+    private final NumberValue bloomRadius = new NumberValue("Bloom Radius", this, 14, 1, 30, 1);
+    private final NumberValue bloomCompression = new NumberValue("Bloom Compression", this, 2.0, 1.0, 10.0, 0.1);
+    private final NumberValue backgroundAlpha = new NumberValue("Background Alpha", this, 110, 0, 255, 1);
+    private final NumberValue roundingRadius = new NumberValue("Rounding Radius", this, 5, 0, 20, 0.5);
     private List<zc> aok = new ArrayList<>();
     private List<zc> aol = new ArrayList<>();
     private ModeValue aom = new xi(this, "Information Type", this);
@@ -59,18 +59,18 @@ public final class Interface extends Module {
     public float aoq = 12.0F;
     public float aor;
     @EventLink
-    public final Listener<WorldChangeEvent> aos = var1 -> this.lv();
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.lv();
     @EventLink
-    public final Listener<ServerJoinEvent> aot = var1 -> this.lv();
+    public final Listener<ServerJoinEvent> onServerJoin = var1 -> this.lv();
     @EventLink
-    public final Listener<ModuleToggleEvent> aou = var1 -> {
-        if (this.aod.wo()) {
-            cg.a("Toggled", "Toggled " + var1.dl().getName() + " " + (var1.dl().isEnabled() ? "on" : "off"), 900);
+    public final Listener<ModuleToggleEvent> onModuleToggle = var1 -> {
+        if (this.toggleNotifications.wo()) {
+            cg.a("Toggled", "Toggled " + var1.getModule().getName() + " " + (var1.getModule().isEnabled() ? "on" : "off"), 900);
         }
     };
     a aov = new a();
     @EventLink
-    public final Listener<PreUpdateEvent> aow = var1 -> aMR.execute(() -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> aMR.execute(() -> {
         adv.c(new Color(0, 0, 0, this.aoc.wo() ? this.lC() : 150));
         if (this.aov.T(15000L)) {
             this.lx();
@@ -97,10 +97,10 @@ public final class Interface extends Module {
             }
         }
 
-        this.lw();
+        this.createArrayList();
     });
     @EventLink
-    public final Listener<Render2DEvent> aox = var1 -> {
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
         for (zc zcx : this.aok) {
             float f = this.anX.wo().getName().equals("Classic") ? 10.0F : 100.0F;
             if (zcx.dl().isEnabled()) {
@@ -110,7 +110,7 @@ public final class Interface extends Module {
             }
         }
 
-        float f1 = var1.dx().getScaledWidth();
+        float f1 = var1.getScaledResolution().getScaledWidth();
         Vector2f vector2f = new Vector2f(0.0F, 0.0F);
 
         for (zc zc : this.aol) {
@@ -153,7 +153,7 @@ public final class Interface extends Module {
         this.lx();
     }
 
-    public void lw() {
+    public void createArrayList() {
         this.aol = this.aok
             .stream()
             .filter(var1 -> var1.a(this))
@@ -168,27 +168,27 @@ public final class Interface extends Module {
     }
 
     public int ly() {
-        return this.aoe.wo().intValue();
+        return this.blurRadius.wo().intValue();
     }
 
     public float lz() {
-        return this.aof.wo().floatValue();
+        return this.blurCompression.wo().floatValue();
     }
 
     public int lA() {
-        return this.aog.wo().intValue();
+        return this.bloomRadius.wo().intValue();
     }
 
     public float lB() {
-        return this.aoh.wo().floatValue();
+        return this.bloomCompression.wo().floatValue();
     }
 
     public int lC() {
-        return this.aoi.wo().intValue();
+        return this.backgroundAlpha.wo().intValue();
     }
 
     public double lD() {
-        return this.aoj.wo().doubleValue();
+        return this.roundingRadius.wo().doubleValue();
     }
 
     @Generated
@@ -203,17 +203,17 @@ public final class Interface extends Module {
 
     @Generated
     public BooleanValue lF() {
-        return this.anZ;
+        return this.suffix;
     }
 
     @Generated
     public BooleanValue lG() {
-        return this.aoa;
+        return this.lowercase;
     }
 
     @Generated
     public BooleanValue lH() {
-        return this.aob;
+        return this.removeSpaces;
     }
 
     @Generated
@@ -223,7 +223,7 @@ public final class Interface extends Module {
 
     @Generated
     public BooleanValue lJ() {
-        return this.aod;
+        return this.toggleNotifications;
     }
 
     @Generated
@@ -268,17 +268,17 @@ public final class Interface extends Module {
 
     @Generated
     public Listener<WorldChangeEvent> getOnWorldChange() {
-        return this.aos;
+        return this.onWorldChange;
     }
 
     @Generated
     public Listener<ServerJoinEvent> lS() {
-        return this.aot;
+        return this.onServerJoin;
     }
 
     @Generated
     public Listener<ModuleToggleEvent> lT() {
-        return this.aou;
+        return this.onModuleToggle;
     }
 
     @Generated
@@ -288,27 +288,27 @@ public final class Interface extends Module {
 
     @Generated
     public Listener<PreUpdateEvent> lV() {
-        return this.aow;
+        return this.onPreUpdate;
     }
 
     @Generated
     public Listener<Render2DEvent> lW() {
-        return this.aox;
+        return this.onRender2D;
     }
 
     @Generated
     public void a(BooleanValue var1) {
-        this.anZ = var1;
+        this.suffix = var1;
     }
 
     @Generated
     public void b(BooleanValue var1) {
-        this.aoa = var1;
+        this.lowercase = var1;
     }
 
     @Generated
     public void c(BooleanValue var1) {
-        this.aob = var1;
+        this.removeSpaces = var1;
     }
 
     @Generated
@@ -318,7 +318,7 @@ public final class Interface extends Module {
 
     @Generated
     public void e(BooleanValue var1) {
-        this.aod = var1;
+        this.toggleNotifications = var1;
     }
 
     @Generated

@@ -35,7 +35,7 @@ public class BooleanValue extends Value<Boolean> {
     public BooleanValue(String var1, Module var2, Boolean var3, Mode<?> var4) {
         super(var1, var2, var3);
         this.mode = var4;
-        this.wu().getValues().forEach(var1x -> var1x.a(() -> !this.wo()));
+        this.wu().getValues().forEach(var1x -> var1x.setHideIf(() -> !this.wo()));
     }
 
     public BooleanValue(String var1, Mode<?> var2, Boolean var3, Mode<?> var4) {
@@ -70,13 +70,13 @@ public class BooleanValue extends Value<Boolean> {
     }
 
     @Override
-    public void m(Object var1) {
+    public void setValueAsObject(Object var1) {
         if (this.mode != null && this.wq() != null) {
             this.mode.onDisable();
             this.mode.unregister();
         }
 
-        super.m(var1);
+        super.setValueAsObject(var1);
         if (this.mode != null && this.wq() != null && ((Module)this.wq()).isEnabled() && this.wo()) {
             if (this.wo()) {
                 this.mode.a();

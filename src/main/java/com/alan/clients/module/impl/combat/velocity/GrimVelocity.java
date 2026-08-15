@@ -45,7 +45,7 @@ import net.minecraft.util.EnumFacing;
 
 public final class GrimVelocity extends Mode<Velocity> {
     private final BooleanValue tL = new BooleanValue("Smart Combat (for High Ping)", this, false);
-    private final BooleanValue tM = new BooleanValue("Rotate", this, true);
+    private final BooleanValue rotations = new BooleanValue("Rotate", this, true);
     private int tN;
     private final Set<BlockPos> tO = new HashSet<>();
     private boolean tP = false;
@@ -73,11 +73,11 @@ public final class GrimVelocity extends Mode<Velocity> {
     private double uf;
     private int ug;
     @EventLink
-    public final Listener<PacketReceiveEvent> uh = var1x -> {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         Speed speed = this.e(Speed.class);
-        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).Px.wo();
+        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).fastFall.wo();
         if (!tt && aEg.thePlayer.Zl >= 7 && !aEg.thePlayer.isInWeb && !flag) {
-            Packet<?> packet = var1x.dq();
+            Packet<?> packet = var1x.getPacket();
             if (packet instanceof S12PacketEntityVelocity s12packetentityvelocity
                 && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                 if (aEg.thePlayer.onGround) {
@@ -90,37 +90,37 @@ public final class GrimVelocity extends Mode<Velocity> {
                 var1x.setCancelled();
             }
 
-            Packet<?> packet1 = var1x.dq();
+            Packet<?> packet1 = var1x.getPacket();
             if (packet1 instanceof S32PacketConfirmTransaction s32packetconfirmtransaction && dj) {
                 this.tT.add(s32packetconfirmtransaction);
                 var1x.setCancelled();
             }
 
-            Packet<?> packet2 = var1x.dq();
+            Packet<?> packet2 = var1x.getPacket();
             if (packet2 instanceof z z1 && dj) {
                 this.tT.add(z1);
                 var1x.setCancelled();
             }
 
-            Packet<?> packet3 = var1x.dq();
+            Packet<?> packet3 = var1x.getPacket();
             if (packet3 instanceof S14PacketEntity s14packetentity && dj) {
                 this.tT.add(s14packetentity);
                 var1x.setCancelled();
             }
 
-            Packet<?> packet4 = var1x.dq();
+            Packet<?> packet4 = var1x.getPacket();
             if (packet4 instanceof ad ad1 && dj) {
                 this.tT.add(ad1);
                 var1x.setCancelled();
             }
 
-            Packet<?> packet5 = var1x.dq();
+            Packet<?> packet5 = var1x.getPacket();
             if (packet5 instanceof S08PacketPlayerPosLook s08packetplayerposlook && dj) {
                 this.tT.add(s08packetplayerposlook);
                 var1x.setCancelled();
             }
 
-            Packet<?> packet6 = var1x.dq();
+            Packet<?> packet6 = var1x.getPacket();
             if (packet6 instanceof S23PacketBlockChange s23packetblockchange) {
                 BlockPos blockpos = s23packetblockchange.getBlockPosition();
                 if (this.tO.remove(blockpos) && this.tO.isEmpty()) {
@@ -131,9 +131,9 @@ public final class GrimVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<MoveEvent> ui = var1x -> {
+    public final Listener<MoveEvent> onMove = var1x -> {
         Speed speed = this.e(Speed.class);
-        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).Px.wo();
+        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).fastFall.wo();
         if (aEg.thePlayer.Zl >= 7 && !aEg.thePlayer.isInWeb && !flag || !aEg.thePlayer.onGround) {
             if (this.tP) {
                 var1x.setCancelled();
@@ -159,9 +159,9 @@ public final class GrimVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> uj = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         Speed speed = this.e(Speed.class);
-        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).Px.wo();
+        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).fastFall.wo();
         if (aEg.thePlayer.Zl >= 7 && !aEg.thePlayer.isInWeb) {
             if (aEg.thePlayer.cqL > 3 && aEg.thePlayer.onGround && dj) {
                 aEg.thePlayer.jump();
@@ -183,9 +183,9 @@ public final class GrimVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<JumpEvent> uk = var1x -> {
+    public final Listener<JumpEvent> onJump = var1x -> {
         Speed speed = this.e(Speed.class);
-        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).Px.wo();
+        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).fastFall.wo();
         if (aEg.thePlayer.Zl >= 7 && !aEg.thePlayer.isInWeb && !flag && aEg.thePlayer.onGround && dj) {
             this.tP = true;
             dj = false;
@@ -202,12 +202,12 @@ public final class GrimVelocity extends Mode<Velocity> {
         }
     };
     @EventLink
-    public final Listener<TickEvent> ul = var1x -> {
+    public final Listener<TickEvent> onTick = var1x -> {
         Speed speed = this.e(Speed.class);
-        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).Px.wo();
+        boolean flag = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && ((GrimSpeed)speed.hl().wo()).fastFall.wo();
         if (this.tP && !flag) {
             BlockPos blockpos = new BlockPos(aEg.thePlayer);
-            if (this.tM.wo()) {
+            if (this.rotations.wo()) {
                 tQ = true;
                 if (!this.tL.wo()) {
                     RotationComponent.d(false);

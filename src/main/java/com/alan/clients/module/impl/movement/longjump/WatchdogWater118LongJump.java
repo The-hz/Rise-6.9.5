@@ -27,27 +27,27 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
 {
     public int hV;
     @EventLink
-    public Listener<JumpEvent> KQ;
+    public Listener<JumpEvent> onJump;
     public int IU;
     @EventLink
-    public Listener<StrafeEvent> KN;
+    public Listener<StrafeEvent> onStrafe;
     @EventLink
-    public Listener<MoveInputEvent> KP;
+    public Listener<MoveInputEvent> onMoveInput;
     public boolean tt;
     public int Kw;
     public boolean Kv;
-    @EventLink(cH = 4)
-    public Listener<PreUpdateEvent> KS;
+    @EventLink(value = 4)
+    public Listener<PreUpdateEvent> onPreUpdate;
     public boolean vq;
-    @EventLink(cH = 2)
-    public Listener<PacketReceiveEvent> KO;
+    @EventLink(value = 2)
+    public Listener<PacketReceiveEvent> onPacketReceive;
     public ArrayList<Packet<?>> KM;
-    @EventLink(cH = 3)
-    public Listener<PreMotionEvent> KL;
+    @EventLink(value = 3)
+    public Listener<PreMotionEvent> onPreMotion;
     public boolean dj;
     public int dE;
     @EventLink
-    public Listener<KeyboardInputEvent> KR;
+    public Listener<KeyboardInputEvent> onKeyboardInput;
     public int Kx;
     public boolean HJ;
     public double jy;
@@ -65,7 +65,7 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
 
     public WatchdogWater118LongJump(final String s, final LongJump longJump) {
         super(s, longJump);
-        this.KL = (preMotionEvent -> {
+        this.onPreMotion = (preMotionEvent -> {
             if (!WatchdogWater118LongJump.aEg.thePlayer.inWater) {
                 ++this.Kw;
             }
@@ -110,7 +110,7 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
         this.KM = new ArrayList<Packet<?>>();
         this.IU = -1;
         this.IW = -1.0;
-        this.KN = (p0 -> {
+        this.onStrafe = (p0 -> {
             if (WatchdogWater118LongJump.aEg.thePlayer.inWater) {
                 MoveUtil.stop();
                 WatchdogWater118LongJump.aEg.timer.dzD = 0.33f;
@@ -120,12 +120,12 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
             final boolean b = MoveUtil.speed() < 0.205;
             return;
         });
-        this.KO = (packetReceiveEvent -> {
+        this.onPacketReceive = (packetReceiveEvent -> {
             if (this.tt) {
                 return;
             }
             else {
-                final Packet packet = packetReceiveEvent.dq();
+                final Packet packet = packetReceiveEvent.getPacket();
                 Objects.requireNonNull(packet);
                 switch (packet) {
                     case S12PacketEntityVelocity s12PacketEntityVelocity: {
@@ -158,21 +158,21 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
                 return;
             }
         });
-        this.KP = (moveInputEvent -> {
+        this.onMoveInput = (moveInputEvent -> {
             if (WatchdogWater118LongJump.aEg.thePlayer.inWater) {
                 moveInputEvent.setJump(true);
             }
             return;
         });
-        this.KQ = (p0 -> {});
-        this.KR = (keyboardInputEvent -> {
-            if (keyboardInputEvent.cO() == this.wj().getKey() && !this.HJ) {
+        this.onJump = (p0 -> {});
+        this.onKeyboardInput = (keyboardInputEvent -> {
+            if (keyboardInputEvent.getKeyCode() == this.getParent().getKey() && !this.HJ) {
                 keyboardInputEvent.setCancelled();
                 this.HJ = true;
             }
             return;
         });
-        this.KS = (p0 -> {
+        this.onPreUpdate = (p0 -> {
             if (this.dj && !WatchdogWater118LongJump.aEg.thePlayer.inWater) {
                 WatchdogWater118LongJump.aEg.thePlayer.ae = 0;
                 this.vq = true;

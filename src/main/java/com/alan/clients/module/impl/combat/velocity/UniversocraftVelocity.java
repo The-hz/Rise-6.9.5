@@ -11,9 +11,9 @@ import net.minecraft.network.play.server.S27PacketExplosion;
 
 public final class UniversocraftVelocity extends Mode<Velocity> {
     @EventLink
-    public final Listener<PacketReceiveEvent> vb = var1x -> {
-        if ((!this.wj().qQ.wo() || aEg.thePlayer.isSwingInProgress) && !var1x.isCancelled()) {
-            Packet packet = var1x.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        if ((!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress) && !var1x.isCancelled()) {
+            Packet packet = var1x.getPacket();
             if (packet instanceof S12PacketEntityVelocity && ((S12PacketEntityVelocity)packet).getEntityID() == aEg.thePlayer.getEntityId()) {
                 var1x.setCancelled();
                 aEg.thePlayer.motionY = aEg.thePlayer.motionY + (0.1 - Math.random() / 100.0);

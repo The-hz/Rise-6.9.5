@@ -29,13 +29,13 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 
 public class MiniBloxFlight extends Mode<Flight> {
-    private final NumberValue Fs = new NumberValue("Speed", this, 5, 5, 9.5, 0.1);
+    private final NumberValue speed = new NumberValue("Speed", this, 5, 5, 9.5, 0.1);
     private aka Ft;
     private Vector2f ka;
     private static final int Fu = 50;
     private boolean zd;
     @EventLink
-    public final Listener<PreMotionEvent> Fv = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         double d0 = Math.toRadians(aEg.thePlayer.pl);
         double d1 = Math.sin(d0);
         double d2 = Math.cos(d0);
@@ -57,32 +57,32 @@ public class MiniBloxFlight extends Mode<Flight> {
             this.zd = false;
         }
 
-        float f = this.Fs.wo().floatValue();
+        float f = this.speed.wo().floatValue();
         aEg.thePlayer.motionY = 0.0 + (aEg.gameSettings.keyBindJump.isKeyDown() ? f : 0.0) - (aEg.gameSettings.keyBindSneak.isKeyDown() ? f : 0.0);
     };
     @EventLink
-    public final Listener<StrafeEvent> Fw = var1x -> {
-        float f = this.Fs.wo().floatValue();
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
+        float f = this.speed.wo().floatValue();
         var1x.setSpeed(f);
     };
     @EventLink
-    public final Listener<TeleportEvent> Fx = var0 -> {};
+    public final Listener<TeleportEvent> onTeleport = var0 -> {};
     @EventLink
-    public final Listener<PacketSendEvent> Fy = var0 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         boolean flag = var0.dq() instanceof C03PacketPlayer;
     };
     @EventLink
-    public final Listener<PushOutOfBlockEvent> Fz = CancellableEvent::setCancelled;
+    public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = CancellableEvent::setCancelled;
     @EventLink
-    public final Listener<PreUpdateEvent> FA = var0 -> {};
+    public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {};
     @EventLink
-    public final Listener<BlockAABBEvent> FB = var0 -> {
-        if (var0.df() instanceof BlockAir) {
-            double d0 = var0.dg().getX();
-            double d1 = var0.dg().getY();
-            double d2 = var0.dg().getZ();
+    public final Listener<BlockAABBEvent> onBlockAABB = var0 -> {
+        if (var0.getBlock() instanceof BlockAir) {
+            double d0 = var0.getBlockPos().getX();
+            double d1 = var0.getBlockPos().getY();
+            double d2 = var0.getBlockPos().getZ();
             if (d1 < aEg.thePlayer.posY) {
-                var0.a(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
+                var0.setBoundingBox(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
             }
         }
     };

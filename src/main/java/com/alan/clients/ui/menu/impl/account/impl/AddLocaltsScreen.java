@@ -58,7 +58,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
     private static final agc LABEL_FONT = gb.MAIN.a(14, gd.BOLD);
     private static final agc TOOLTIP_FONT = gb.MAIN.a(12, gd.REGULAR);
     private static final agc QUANTITY_FONT = gb.MAIN.a(18, gd.REGULAR);
-    private static final float CENTER_REF_HEIGHT = gb.MAIN.a(24, gd.BOLD).tq();
+    private static final float CENTER_REF_HEIGHT = gb.MAIN.a(24, gd.BOLD).height();
     private static final int PRODUCT_INDEX_NONE = -1;
     private static final int PRODUCTS_PER_PAGE = 4;
     private final adh[] menuButtons = new adh[4];
@@ -204,7 +204,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
     };
 
     private static float centeredTextY(double var0, double var2, agc var4) {
-        return (float)(var0 + var2 / 2.0 - 4.0 * var4.tq() / CENTER_REF_HEIGHT);
+        return (float)(var0 + var2 / 2.0 - 4.0 * var4.height() / CENTER_REF_HEIGHT);
     }
 
     private static void purchase(String var0, aew var1, int var2) {
@@ -449,13 +449,13 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         this.b(gg.BLUR).c(BACKGROUND_RUNNABLE);
         this.b(gg.REGULAR).c(() -> {
             this.drawStorefront(var1, var2);
-            apiKeyBox.pJ();
+            apiKeyBox.draw();
         });
         adh[] aadh = this.menuButtons;
         int i = aadh.length;
 
         for (int j = 0; j < i; j++) {
-            aadh[j].c(var1, var2, var3);
+            aadh[j].draw(var1, var2, var3);
         }
 
         if (productModalOpen) {
@@ -470,16 +470,16 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         } else if (productModalOpen) {
             this.handleModalClick(var1, var2, var3);
         } else {
-            apiKeyBox.d(var1, var2, var3);
+            apiKeyBox.click(var1, var2, var3);
             if (!this.isPrimaryClick(var3) || !this.selectProductAt(var1, var2)) {
-                if (this.isPrimaryClick(var3) && aeb.a(this.panelX() + 12, this.cardsY() + 230, 30.0, 18.0, var1, var2)) {
+                if (this.isPrimaryClick(var3) && aeb.isHovered(this.panelX() + 12, this.cardsY() + 230, 30.0, 18.0, var1, var2)) {
                     productPage = Math.max(0, productPage - 1);
-                } else if (this.isPrimaryClick(var3) && aeb.a(this.panelX() + this.panelWidth() - 42, this.cardsY() + 230, 30.0, 18.0, var1, var2)) {
+                } else if (this.isPrimaryClick(var3) && aeb.isHovered(this.panelX() + this.panelWidth() - 42, this.cardsY() + 230, 30.0, 18.0, var1, var2)) {
                     productPage = Math.min(this.maxProductPage(), productPage + 1);
                 } else {
                     for (adh adh : this.menuButtons) {
-                        if (aeb.a(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
-                            adh.rm();
+                        if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+                            adh.runAction();
                             break;
                         }
                     }
@@ -494,9 +494,9 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
             this.closeWithEscape();
         } else {
             if (apiKeyBox.tO()) {
-                apiKeyBox.b(var1, var2);
+                apiKeyBox.key(var1, var2);
             } else if (productModalOpen && quantityBox.tO()) {
-                quantityBox.b(var1, var2);
+                quantityBox.key(var1, var2);
             }
         }
     }
@@ -538,7 +538,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
     }
 
     private boolean isHelpHovered(int var1, int var2) {
-        return aeb.a(this.apiHelpX() - 12.0F, this.apiHelpY() - 12.0F, 24.0, 24.0, var1, var2);
+        return aeb.isHovered(this.apiHelpX() - 12.0F, this.apiHelpY() - 12.0F, 24.0, 24.0, var1, var2);
     }
 
     private float apiHelpX() {
@@ -546,7 +546,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
     }
 
     private float apiHelpY() {
-        return this.panelY() + 70 + LABEL_FONT.tq() / 2.0F;
+        return this.panelY() + 70 + LABEL_FONT.height() / 2.0F;
     }
 
     private boolean isPrimaryClick(int var1) {
@@ -651,7 +651,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         int i = this.cardX(var3);
         int j = this.cardsY();
         boolean flag = var2 == selectedProductIndex;
-        boolean flag1 = aeb.a(i, j, this.cardWidth(), 220.0, var4, var5);
+        boolean flag1 = aeb.isHovered(i, j, this.cardWidth(), 220.0, var4, var5);
         Color color = flag ? new Color(50, 76, 111, 245) : (flag1 ? new Color(44, 52, 77, 245) : new Color(31, 37, 55, 245));
         RenderUtil.roundedRectangle(i, j, this.cardWidth(), 220.0, 9.0, color);
         int k = Math.min(this.cardWidth() - 10, 108);
@@ -699,7 +699,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
                 break;
             }
 
-            if (aeb.a(this.cardX(i), this.cardsY(), this.cardWidth(), 220.0, var1, var2)) {
+            if (aeb.isHovered(this.cardX(i), this.cardsY(), this.cardWidth(), 220.0, var1, var2)) {
                 selectedProductIndex = j;
                 afb.bw(products.get(j).aFC);
                 productModalOpen = true;
@@ -751,7 +751,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
             LABEL_FONT.d("Quantity", i1 - 16, centeredTextY(j1, 25.0, LABEL_FONT), new Color(176, 187, 212).getRGB());
             RenderUtil.roundedRectangle(i1 + 31, j1, 54.0, 25.0, 6.0, new Color(13, 16, 27, 220));
             quantityBox.h(new Vector2d(i1 + 58, centeredTextY(j1, 25.0, QUANTITY_FONT)));
-            quantityBox.pJ();
+            quantityBox.draw();
             RenderUtil.roundedRectangle(i1 + 90, j1, 26.0, 25.0, 6.0, new Color(49, 58, 84, 225));
             INFO_FONT.c("+", i1 + 103, centeredTextY(j1, 25.0, INFO_FONT), Color.WHITE.getRGB());
             RenderUtil.roundedRectangle(i1, j1, 26.0, 25.0, 6.0, new Color(49, 58, 84, 225));
@@ -775,18 +775,18 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         int k = this.width / 2 - i / 2;
         int l = this.height / 2 - j / 2;
         if (this.isPrimaryClick(var3)) {
-            if (aeb.a(k, l, i, j, var1, var2) && !aeb.a(k + i - 36, l + 8, 28.0, 28.0, var1, var2)) {
+            if (aeb.isHovered(k, l, i, j, var1, var2) && !aeb.isHovered(k + i - 36, l + 8, 28.0, 28.0, var1, var2)) {
                 int i1 = k + i / 2 - 54;
-                if (aeb.a(i1, l + 213, 26.0, 25.0, var1, var2)) {
+                if (aeb.isHovered(i1, l + 213, 26.0, 25.0, var1, var2)) {
                     this.setQuantity(Math.max(1, this.quantity() - 1));
                 }
 
-                if (aeb.a(i1 + 90, l + 213, 26.0, 25.0, var1, var2)) {
+                if (aeb.isHovered(i1 + 90, l + 213, 26.0, 25.0, var1, var2)) {
                     this.setQuantity(this.quantity() + 1);
                 }
 
-                quantityBox.d(var1, var2, var3);
-                if (aeb.a(k + 14, l + j - 54, i - 28, 36.0, var1, var2)) {
+                quantityBox.click(var1, var2, var3);
+                if (aeb.isHovered(k + 14, l + j - 54, i - 28, 36.0, var1, var2)) {
                     aew aew = selectedProduct();
                     if (aew != null && aew.aFH > 0) {
                         productModalOpen = false;

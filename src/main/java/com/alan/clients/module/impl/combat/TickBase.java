@@ -30,15 +30,15 @@ import org.lwjgl.opengl.GL11;
 
 @ModuleInfo(aliases = "module.combat.tickbase.name", description = "module.combat.legitreach.description", category = Category.COMBAT)
 public final class TickBase extends Module {
-    private ModeValue lI = new ModeValue("Mode", this).add(new SubMode("Post")).setDefault("Legit");
+    private ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Post")).setDefault("Legit");
     private aka qL = new aka(0.0, 0.0, 0.0);
     private int qM = 0;
     private int qN;
     private int qO;
     @EventLink
-    Listener<TickEvent> cA = var1 -> {
+    Listener<TickEvent> onTick = var1 -> {
         label53: {
-            String s = this.lI.wo().getName();
+            String s = this.mode.wo().getName();
             byte b0 = -1;
             switch (s.hashCode()) {
                 case 2493632:
@@ -99,20 +99,20 @@ public final class TickBase extends Module {
 
         EntityLivingBase entitylivingbase1 = bv.e(8.0);
         if (entitylivingbase1 != null
-            && !bb.a(false, true, false, false, false)
+            && !bb.bad(false, true, false, false, false)
             && this.qL.g(entitylivingbase1.Ty()) >= aEg.thePlayer.Ty().g(entitylivingbase1.Ty())) {
             BlinkComponent.blink();
         }
     };
     @EventLink
-    Listener<PacketSendEvent> bC = var1 -> {
+    Listener<PacketSendEvent> onPacketSend = var1 -> {
         Packet packet = var1.dq();
         if (!var1.isCancelled() && packet instanceof C03PacketPlayer) {
             this.qL = new aka(((C03PacketPlayer)packet).getX(), ((C03PacketPlayer)packet).getY(), ((C03PacketPlayer)packet).getZ());
         }
     };
     @EventLink
-    Listener<Render3DEvent> hf = var1 -> {
+    Listener<Render3DEvent> onRender3D = var1 -> {
         GlStateManager.pushMatrix();
         GlStateManager.pushAttrib();
         GlStateManager.enableBlend();

@@ -18,7 +18,7 @@ import de.florianmichael.vialoadingbase.ViaLoadingBase;
 public class Grim3Flight extends Mode<Flight> {
     private int Gq;
     @EventLink
-    public final Listener<PreUpdateEvent> Gr = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (!aEg.thePlayer.onGround) {
             this.Gq++;
         } else {
@@ -26,7 +26,7 @@ public class Grim3Flight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<PostMotionEvent> Gs = var1x -> {
+    public final Listener<PostMotionEvent> onPostMotion = var1x -> {
         if (!aEg.thePlayer.onGround) {
             this.hp();
         }

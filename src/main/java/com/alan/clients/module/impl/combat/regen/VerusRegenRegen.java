@@ -10,10 +10,10 @@ import hackclient.rise.ahj;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 
 public final class VerusRegenRegen extends Mode<Regen> {
-    private final NumberValue sp = new NumberValue("Minimum Health", this, 15, 1, 20, 1);
+    private final NumberValue health = new NumberValue("Minimum Health", this, 15, 1, 20, 1);
     @EventLink
-    public final Listener<PreMotionEvent> sq = var1x -> {
-        if (aEg.thePlayer.getHealth() < this.sp.wo().floatValue()) {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
+        if (aEg.thePlayer.getHealth() < this.health.wo().floatValue()) {
             for (int i = 0; i < 30; i++) {
                 if (aEg.thePlayer.onGround) {
                     ahj.m(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, true));

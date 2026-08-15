@@ -9,7 +9,7 @@ import com.alan.clients.value.Mode;
 
 public final class NPCDetectionCheckAntiBot extends Mode<AntiBot> {
     @EventLink
-    public final Listener<PreMotionEvent> rA = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         if (var1xx.adr) {
             Client.a.x().c(this, var1xx);
         } else {

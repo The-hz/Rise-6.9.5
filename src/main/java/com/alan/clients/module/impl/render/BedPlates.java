@@ -50,14 +50,14 @@ import org.lwjgl.util.glu.GLU;
 
 @ModuleInfo(aliases = {"module.render.bedplates.name", "Bed Plates"}, description = "module.render.bedplates.description", category = Category.RENDER)
 public class BedPlates extends Module {
-    private final BooleanValue alm = new BooleanValue("Whitelist Own Bed", this, true);
+    private final BooleanValue whiteListOwnBed = new BooleanValue("Whitelist Own Bed", this, true);
     private final BooleanValue aln = new BooleanValue("Overlays (Bloom/Blur)", this, true);
-    private final BooleanValue alo = new BooleanValue("Minimal", this, false);
-    private final BooleanValue alp = new BooleanValue("Show Gradient", this, false);
-    private final BooleanValue alq = new BooleanValue("Show Distance", this, true);
-    private final BooleanValue alr = new BooleanValue("Distance Scale", this, true);
-    private final NumberValue als = new NumberValue("Range", this, 200, 20, 200, 10);
-    private final NumberValue alt = new NumberValue("Refresh Ticks", this, 1, 1, 20, 1);
+    private final BooleanValue minimal = new BooleanValue("Minimal", this, false);
+    private final BooleanValue showGradient = new BooleanValue("Show Gradient", this, false);
+    private final BooleanValue showDistance = new BooleanValue("Show Distance", this, true);
+    private final BooleanValue distanceScale = new BooleanValue("Distance Scale", this, true);
+    private final NumberValue range = new NumberValue("Range", this, 200, 20, 200, 10);
+    private final NumberValue refreshTicks = new NumberValue("Refresh Ticks", this, 1, 1, 20, 1);
     private final agc alu = gb.MAIN.a(15, gd.MEDIUM);
     private final agc alv = gb.MAIN.a(11, gd.BOLD);
     private final agc alw = gb.MAIN.a(11, gd.REGULAR);
@@ -80,7 +80,7 @@ public class BedPlates extends Module {
     private static final long alL = 5000L;
     private static final EnumFacing[] alM = new EnumFacing[]{EnumFacing.UP, EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST};
     @EventLink
-    public final Listener<Render2DEvent> alN = var1 -> {
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (!this.kN()) {
             this.alx.clear();
             this.aly.clear();
@@ -91,7 +91,7 @@ public class BedPlates extends Module {
                 this.alA = i;
                 this.alz++;
                 this.kO();
-                if (this.alz >= this.alt.wo().intValue() || this.alx.isEmpty()) {
+                if (this.alz >= this.refreshTicks.wo().intValue() || this.alx.isEmpty()) {
                     this.alz = 0;
                     this.kQ();
                 }
@@ -159,16 +159,16 @@ public class BedPlates extends Module {
                 this.alJ = false;
             } else {
                 BlockPos blockpos = new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
-                int i = this.als.wo().intValue();
+                int i = this.range.wo().intValue();
                 int j = Math.min(100, Math.max(4, i / 2));
-                double d0 = this.als.wo().doubleValue();
+                double d0 = this.range.wo().doubleValue();
                 double d1 = d0 * d0;
                 double d2 = aEg.thePlayer.posX;
                 double d3 = aEg.thePlayer.posY;
                 double d4 = aEg.thePlayer.posZ;
                 double d5 = blockpos.getX() + 0.5 - d2;
                 double d6 = blockpos.getZ() + 0.5 - d4;
-                boolean flag = this.alm.wo();
+                boolean flag = this.whiteListOwnBed.wo();
                 new Thread(() -> {
                     try {
                         ArrayList arraylist = new ArrayList();
@@ -221,7 +221,7 @@ public class BedPlates extends Module {
     private void kQ() {
         this.alx.clear();
         if (this.kN() && !this.aly.isEmpty()) {
-            double d0 = this.als.wo().doubleValue();
+            double d0 = this.range.wo().doubleValue();
             double d1 = d0 * d0;
             double d2 = aEg.thePlayer.posX;
             double d3 = aEg.thePlayer.posY;
@@ -234,7 +234,7 @@ public class BedPlates extends Module {
                 IBlockState iblockstate = worldclient.getBlockState(blockpos);
                 if (iblockstate.getBlock() instanceof BlockBed && iblockstate.getValue(BlockBed.PART) == EnumPartType.HEAD) {
                     EnumFacing enumfacing = iblockstate.getValue(BlockBed.FACING);
-                    if (!this.alm.wo() || !this.a(blockpos, enumfacing)) {
+                    if (!this.whiteListOwnBed.wo() || !this.a(blockpos, enumfacing)) {
                         BlockPos blockpos1 = blockpos.offset(enumfacing.getOpposite());
                         double d5 = (blockpos.getX() + blockpos1.getX() + 1.0) / 2.0;
                         double d6 = blockpos.getY() + 0.5;
@@ -404,18 +404,18 @@ public class BedPlates extends Module {
     private void a(wk var1, double var2, double var4, int var6) {
         ItemStack itemstack = var1.lb();
         if (itemstack != null && itemstack.getItem() != null) {
-            boolean flag = this.alo.wo();
+            boolean flag = this.minimal.wo();
             if (flag && (var1.lg() || var1.lh())) {
                 itemstack = new ItemStack(Items.bed, 1, 0);
             }
 
             double d0 = var1.ld();
             double d1 = 1.0;
-            if (this.alr.wo() && d0 > 10.0) {
+            if (this.distanceScale.wo() && d0 > 10.0) {
                 d1 = Math.max(0.5, 1.0 - (d0 - 10.0) / 80.0);
             }
 
-            boolean flag1 = this.alq.wo();
+            boolean flag1 = this.showDistance.wo();
             double d2 = 4.0 * d1;
             double d3 = 16.0 * d1;
             double d4 = 1.05 * d1;
@@ -427,7 +427,7 @@ public class BedPlates extends Module {
                 d7 = Math.max(d3 + d2 * 2.0, d6 + d2 * 4.0);
                 d8 = d3 + d2 * 1.0;
             } else {
-                double d20 = this.alu.tq() * d1;
+                double d20 = this.alu.height() * d1;
                 double d21 = Math.max(d3, d20);
                 double d22 = this.alu.getStringWidth(var1.lc()) * d1;
                 double d23 = flag1 ? (this.alv.getStringWidth("distance: ") + this.alw.getStringWidth(var1.li())) * d1 : 0.0;
@@ -497,7 +497,7 @@ public class BedPlates extends Module {
                 int j = Math.max(2, i - 1);
                 RenderUtil.a(d11, d12, d14, d13, j, color8, true, true, false, false);
                 RenderUtil.a(d11, d12 + d13, d14, d15, j, color9, false, false, true, true);
-                if (this.alp.wo()) {
+                if (this.showGradient.wo()) {
                     double d25 = 2.5 * d19;
                     RenderUtil.c(d11, d12, d14, d25, color10, color11);
                 }
@@ -556,7 +556,7 @@ public class BedPlates extends Module {
                     GlStateManager.disableLighting();
                     GlStateManager.popMatrix();
                     double d41 = d11 + d16 * 2.0 + d17;
-                    double d42 = d29 + d15 / 2.0 - (this.alu.tq() / 2.0 - 1.5) * d19;
+                    double d42 = d29 + d15 / 2.0 - (this.alu.height() / 2.0 - 1.5) * d19;
                     GlStateManager.pushMatrix();
                     GlStateManager.translate(d41, d42, 0.0);
                     GlStateManager.scale(d19, d19, d19);
@@ -603,7 +603,7 @@ public class BedPlates extends Module {
     }
 
     private int kS() {
-        return this.rz().pl();
+        return this.rz().getRound();
     }
 
     private Color a(Color var1, MapColor var2) {

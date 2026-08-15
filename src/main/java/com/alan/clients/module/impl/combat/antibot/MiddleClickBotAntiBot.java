@@ -15,7 +15,7 @@ import org.lwjgl.input.Mouse;
 public final class MiddleClickBotAntiBot extends Mode<AntiBot> {
     private boolean ji;
     @EventLink
-    public final Listener<PreMotionEvent> rz = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (Mouse.isButtonDown(2) || Keyboard.isKeyDown(29) && aEg.gameSettings.cgK.isKeyDown()) {
             if (this.ji) {
                 return;

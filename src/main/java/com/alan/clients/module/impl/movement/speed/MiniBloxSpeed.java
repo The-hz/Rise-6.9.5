@@ -25,15 +25,15 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 
 public final class MiniBloxSpeed extends Mode<Speed> {
-    private final NumberValue Pc = new NumberValue("Speed", this, 4, 1, 9.5, 0.1);
+    private final NumberValue speed = new NumberValue("Speed", this, 4, 1, 9.5, 0.1);
     private double xv;
     private boolean xw;
     private static final int Pd = 500;
     private int xy;
     @EventLink
-    public final Listener<PushOutOfBlockEvent> Pe = CancellableEvent::setCancelled;
+    public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = CancellableEvent::setCancelled;
     @EventLink
-    private final Listener<TeleportEvent> Pf = var1x -> {
+    private final Listener<TeleportEvent> onTeleport = var1x -> {
         if (aEg.thePlayer.ticksExisted - this.xy > 7) {
             afi.c("silently accepted");
             var1x.setCancelled();
@@ -42,7 +42,7 @@ public final class MiniBloxSpeed extends Mode<Speed> {
         this.xv = this.getBaseMoveSpeed();
     };
     @EventLink
-    public final Listener<StrafeEvent> Pg = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         MoveUtil.useDiagonalSpeed();
         if (aEg.thePlayer.onGround && MoveUtil.isMoving()) {
             aEg.thePlayer.jump();
@@ -50,15 +50,15 @@ public final class MiniBloxSpeed extends Mode<Speed> {
         }
 
         if (this.xw && aEg.thePlayer.Zl > 0) {
-            MoveUtil.strafe(this.getBaseMoveSpeed() * this.Pc.wo().floatValue());
+            MoveUtil.strafe(this.getBaseMoveSpeed() * this.speed.wo().floatValue());
         } else if (aEg.thePlayer.Zl > 0) {
             MoveUtil.strafe(this.getBaseMoveSpeed() * 1.24);
         }
     };
     @EventLink
-    public final Listener<PreUpdateEvent> Ph = var0 -> BlinkComponent.a(25000, true, false, false, false, false, false);
+    public final Listener<PreUpdateEvent> onPreUpdate = var0 -> BlinkComponent.a(25000, true, false, false, false, false, false);
     @EventLink
-    public final Listener<PreMotionEvent> Pi = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (this.xw && aEg.thePlayer.ticksExisted - this.xy >= 24) {
             this.xw = false;
         }

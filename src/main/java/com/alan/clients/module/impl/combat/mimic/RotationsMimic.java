@@ -20,7 +20,7 @@ public class RotationsMimic extends Mode<Mimic> {
     Animation sh = new Animation(Easing.LINEAR, 150L);
     Animation si = new Animation(Easing.LINEAR, 150L);
     @EventLink
-    public final Listener<PreUpdateEvent> sj = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         EntityLivingBase entitylivingbase = bv.e(6.0);
         if (entitylivingbase != null && aEg.gameSettings.cgK.isKeyDown()) {
             float f = entitylivingbase.pl;
@@ -48,7 +48,7 @@ public class RotationsMimic extends Mode<Mimic> {
     };
     private long sk;
     @EventLink
-    public final Listener<Render2DEvent> sl = var1x -> {
+    public final Listener<Render2DEvent> onRender2D = var1x -> {
         double d0 = 50.0 / (System.currentTimeMillis() - this.sk);
         this.sk = System.currentTimeMillis();
         double d1 = aEg.gameSettings.mouseSensitivity * 0.6F + 0.2F;

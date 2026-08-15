@@ -20,7 +20,7 @@ public class VulcanDamageFlight extends Mode<Flight> {
     private boolean IJ;
     public final BooleanValue IK = new BooleanValue("Self Damage (May Flag More) if not fly will wait for fall damage", this, true);
     @EventLink
-    public final Listener<PreMotionEvent> IL = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (this.IK.wo()) {
             MoveUtil.stop();
         }
@@ -47,13 +47,13 @@ public class VulcanDamageFlight extends Mode<Flight> {
                 this.hV++;
                 if (this.hV >= 3) {
                     MoveUtil.stop();
-                    this.wj().toggle();
+                    this.getParent().toggle();
                 }
             }
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> IM = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (this.hQ >= 10) {
             if (this.IJ) {
                 var1x.setSpeed(1.0);

@@ -19,9 +19,9 @@ public class MatrixSpeed extends Mode<Speed> {
     private final NumberValue PV = new NumberValue("Timer Boost (on sneak)", this, 30, 1, 100, 0.1);
     private int PD = 0;
     @EventLink
-    public final Listener<JumpEvent> PW = var1x -> this.PD++;
+    public final Listener<JumpEvent> onJump = var1x -> this.PD++;
     @EventLink
-    public final Listener<StrafeEvent> PX = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         boolean flag = aEg.thePlayer.posY % 0.015625 == 0.0;
         boolean flag1 = MoveUtil.speed() < 0.2;
         if (flag || flag1) {
@@ -74,12 +74,12 @@ public class MatrixSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> PY = var0 -> {
+    public final Listener<MoveInputEvent> onMoveInput = var0 -> {
         var0.setSneak(false);
         var0.setJump(true);
     };
     @EventLink
-    public final Listener<PreMotionEvent> PZ = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (aEg.thePlayer.onGround && !aEg.thePlayer.isUsingItem()) {
             aEg.thePlayer.jump();
         }

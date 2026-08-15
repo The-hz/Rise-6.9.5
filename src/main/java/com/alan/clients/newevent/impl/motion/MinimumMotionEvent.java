@@ -12,7 +12,7 @@ public class MinimumMotionEvent extends CancellableEvent {
     }
 
     @Generated
-    public void g(double var1) {
+    public void setMinimumMotion(double var1) {
         this.minimumMotion = var1;
     }
 

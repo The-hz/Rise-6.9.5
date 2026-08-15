@@ -8,7 +8,7 @@ public class aeb implements InstanceAccess {
     public aeb() {
     }
 
-    public static boolean a(double var0, double var2, double var4, double var6, int var8, int var9) {
+    public static boolean isHovered(double var0, double var2, double var4, double var6, int var8, int var9) {
         return var8 >= var0 && var8 < var0 + var4 && var9 >= var2 && var9 < var2 + var6;
     }
 

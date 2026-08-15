@@ -12,7 +12,7 @@ public class akc {
     public akc() {
     }
 
-    public static String a(String var0, String var1, boolean var2) {
+    public static String postExternal(String var0, String var1, boolean var2) {
         try {
             HttpsURLConnection httpsurlconnection = (HttpsURLConnection)new URL(var0).openConnection();
             httpsurlconnection.addRequestProperty(
@@ -54,7 +54,7 @@ public class akc {
         }
     }
 
-    public static String I(String var0, String var1) {
+    public static String getBearerResponse(String var0, String var1) {
         try {
             HttpsURLConnection httpsurlconnection = (HttpsURLConnection)new URL(var0).openConnection();
             httpsurlconnection.addRequestProperty(

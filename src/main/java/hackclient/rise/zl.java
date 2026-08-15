@@ -11,14 +11,14 @@ public class zl extends SecurityFeature {
     public volatile int avJ;
     public volatile Object avF;
     @EventLink
-    public Listener<WorldChangeEvent> avM;
+    public Listener<WorldChangeEvent> onWorldChange;
     public volatile boolean avA;
     public volatile Object avI;
     public static String avB;
     public static String avC;
     public static int avE;
     @EventLink
-    public Listener<PacketReceiveEvent> avL;
+    public Listener<PacketReceiveEvent> onPacketReceive;
     public volatile boolean avH;
     public static int avD;
     public volatile int avK = Integer.MIN_VALUE;
@@ -26,9 +26,9 @@ public class zl extends SecurityFeature {
 
 
     public zl() {
-        this.avL = var1 -> {
-            if (var1.dq() instanceof c && aEg != null && aEg.theWorld != null) {
-                c c = (c)var1.dq();
+        this.onPacketReceive = var1 -> {
+            if (var1.getPacket() instanceof c && aEg != null && aEg.theWorld != null) {
+                c c = (c)var1.getPacket();
                 String s = c.getChatComponent() != null ? c.getChatComponent().getUnformattedText() : "";
                 if (s != null && (s.contains("You were spawned in Limbo.") || s.contains("You are AFK, Move around to return from AFK."))) {
                     this.avG = aEg.theWorld;
@@ -37,7 +37,7 @@ public class zl extends SecurityFeature {
                 }
             }
         };
-        this.avM = var1 -> {
+        this.onWorldChange = var1 -> {
             if (this.avH) {
                 this.avG = aEg != null ? aEg.theWorld : null;
                 this.avH = false;
@@ -56,7 +56,7 @@ public class zl extends SecurityFeature {
     }
 
     @Override
-    public boolean nG() {
+    public boolean run() {
         if (aEg == null || aEg.thePlayer == null || aEg.theWorld == null || aEg.isIntegratedServerRunning()) {
             this.avG = null;
             this.avH = false;

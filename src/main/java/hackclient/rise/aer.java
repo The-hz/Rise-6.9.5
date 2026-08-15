@@ -20,8 +20,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
 
 public final class aer {
-    private static final Gson aFh = new Gson();
-    private static final String aFi = "https://sisu.xboxlive.com/connect/XboxLive/?state=login&cobrandId=8058f65d-ce06-4c30-9559-473c9275a65d&tid=896928775&ru=https%3A%2F%2Fwww.minecraft.net%2Fen-us%2Flogin&aid=1142970254";
+    private static final Gson gson = new Gson();
+    private static final String CLIENT_ID = "https://sisu.xboxlive.com/connect/XboxLive/?state=login&cobrandId=8058f65d-ce06-4c30-9559-473c9275a65d&tid=896928775&ru=https%3A%2F%2Fwww.minecraft.net%2Fen-us%2Flogin&aid=1142970254";
 
     private aer() {
     }
@@ -144,8 +144,8 @@ public final class aer {
             String s8 = y(s7, "Token");
             String s9 = y(s7, "uhs");
             if (!s8.isEmpty() && !s9.isEmpty()) {
-                e e = aFh.fromJson(
-                    akc.a(
+                e e = gson.fromJson(
+                    akc.postExternal(
                         "https://api.minecraftservices.com/authentication/login_with_xbox",
                         "{\"identityToken\":\"XBL3.0 x=" + s9 + ";" + s8 + "\",\"ensureLegacyEnabled\":true}",
                         true
@@ -153,7 +153,7 @@ public final class aer {
                     e.class
                 );
                 if (e != null && e.aEU != null) {
-                    f f = aFh.fromJson(akc.I("https://api.minecraftservices.com/minecraft/profile", e.aEU), f.class);
+                    f f = gson.fromJson(akc.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.aEU), f.class);
                     if (f != null && f.aEZ != null && f.gK != null) {
                         String s10 = MicrosoftLogin.extractRefreshTokenFromCookies(s);
                         return new d(e.aEU, s10, f.aEZ, f.gK);

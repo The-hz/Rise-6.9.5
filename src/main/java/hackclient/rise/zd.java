@@ -16,9 +16,9 @@ public class zd implements InstanceAccess {
     private Interface amf;
     private final Vector2f atq;
     private final Vector2f atr;
-    private final String ats;
-    private final KeyBinding att;
-    private final Animation atu = new Animation(Easing.LINEAR, 200L);
+    private final String name;
+    private final KeyBinding binding;
+    private final Animation animation = new Animation(Easing.LINEAR, 200L);
 
     public zd(Vector2f var1, String var2, KeyBinding var3) {
         this(new Vector2f(22.0F, 22.0F), var1, var2, var3);
@@ -40,14 +40,14 @@ public class zd implements InstanceAccess {
         double d3 = this.atq.getX();
         double d4 = this.atq.getY();
         this.rz();
-        RenderUtil.roundedRectangle(d1, d2, d3, d4, d0, aip.d(adv.rK(), (int)this.atu.sG()));
-        this.nB();
-        Vector2d vector2d1 = new Vector2d(gb.MAIN.a(20, gd.REGULAR).getStringWidth(this.ats), gb.MAIN.a(20, gd.REGULAR).tq());
+        RenderUtil.roundedRectangle(d1, d2, d3, d4, d0, aip.d(adv.rK(), (int)this.animation.sG()));
+        this.updateHeld();
+        Vector2d vector2d1 = new Vector2d(gb.MAIN.a(20, gd.REGULAR).getStringWidth(this.name), gb.MAIN.a(20, gd.REGULAR).height());
         Vector2d vector2d2 = new Vector2d(
-            vector2d.getX() + this.atq.getX() * 0.5F - gb.MAIN.a(20, gd.REGULAR).getStringWidth(this.ats) * 0.5F,
+            vector2d.getX() + this.atq.getX() * 0.5F - gb.MAIN.a(20, gd.REGULAR).getStringWidth(this.name) * 0.5F,
             vector2d.getY() + (this.atq.getY() - vector2d1.getY()) / 2.0 + 3.0
         );
-        gb.MAIN.a(20, gd.REGULAR).b(this.ats, vector2d2.getX(), vector2d2.getY(), this.rz().rA().getRGB());
+        gb.MAIN.a(20, gd.REGULAR).b(this.name, vector2d2.getX(), vector2d2.getY(), this.rz().rA().getRGB());
     }
 
     public void e(Vector2d var1) {
@@ -68,17 +68,17 @@ public class zd implements InstanceAccess {
         RenderUtil.roundedRectangle(var1.x + this.atr.x, var1.y + this.atr.y, this.atq.x, this.atq.y, d0, Color.BLACK);
     }
 
-    public void nB() {
+    public void updateHeld() {
         this.rz();
         int i = adv.rK().getAlpha();
-        this.atu.Q(this.att.isKeyDown() ? Math.min(i * 1.4F, 150.0F) : i);
+        this.animation.Q(this.binding.isKeyDown() ? Math.min(i * 1.4F, 150.0F) : i);
     }
 
     @Generated
     public zd(Vector2f var1, Vector2f var2, String var3, KeyBinding var4) {
         this.atq = var1;
         this.atr = var2;
-        this.ats = var3;
-        this.att = var4;
+        this.name = var3;
+        this.binding = var4;
     }
 }

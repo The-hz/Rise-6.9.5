@@ -27,7 +27,7 @@ import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 import rip.vantage.commons.util.time.a;
 
 public class WatchdogFireBallLongJump extends Mode<LongJump> {
-    public final BooleanValue Mr = new BooleanValue("Boost", this, true);
+    public final BooleanValue boost = new BooleanValue("Boost", this, true);
     private int qI = -1;
     private int hV = -1;
     private boolean IN;
@@ -46,19 +46,19 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
     private double vC;
     private boolean gD;
     @EventLink
-    public final Listener<PacketSendEvent> Mu = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (var1x.dq() instanceof C08PacketPlayerBlockPlacement
             && ((C08PacketPlayerBlockPlacement)var1x.dq()).getStack() != null
             && ((C08PacketPlayerBlockPlacement)var1x.dq()).getStack().getItem() instanceof ItemFireball) {
             this.IR = true;
         }
     };
-    @EventLink(cH = 2)
-    public final Listener<PacketReceiveEvent> Mv = var1x -> {
-        Packet packet = var1x.dq();
+    @EventLink(value = 2)
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        Packet packet = var1x.getPacket();
         if (!tt) {
             if (packet instanceof S12PacketEntityVelocity) {
-                if (((S12PacketEntityVelocity)var1x.dq()).getEntityID() != aEg.thePlayer.getEntityId()) {
+                if (((S12PacketEntityVelocity)var1x.getPacket()).getEntityID() != aEg.thePlayer.getEntityId()) {
                     return;
                 }
 
@@ -70,7 +70,7 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
                 }
             }
 
-            switch (var1x.dq()) {
+            switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
                     if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && !var1x.isCancelled()) {
                         this.hV = 0;
@@ -114,7 +114,7 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> Mw = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (this.IQ == 0) {
             RotationComponent.d(false);
             RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 89.0F), 10.0, MovementFix.NORMAL);
@@ -161,8 +161,8 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
             }
         }
     };
-    @EventLink(cH = 2)
-    public final Listener<PreUpdateEvent> Mx = var1x -> {
+    @EventLink(value = 2)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (dj && aEg.thePlayer.tR == 13) {
             tt = true;
             dj = false;
@@ -177,7 +177,7 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> My = var1x -> {
+    public final Listener<MoveInputEvent> onMoveInput = var1x -> {
         if (this.gD) {
             this.gD = false;
         }

@@ -29,7 +29,7 @@ public final class Script extends Command {
             this.error("Valid actions are load, reload, unload, disablesecurity, folder and enablesecurity");
         } else {
             String s = var1[1].toLowerCase(Locale.getDefault());
-            ScriptManager scriptmanager = Client.a.l();
+            ScriptManager scriptmanager = Client.a.getScriptManager();
             com.alan.clients.script.Script script;
             if (var1.length > 3) {
                 script = scriptmanager.getScript(var1[2]);
@@ -143,7 +143,7 @@ public final class Script extends Command {
                                     break label103;
                                 }
 
-                                Client.a.l().reloadScripts();
+                                Client.a.getScriptManager().reloadScripts();
                                 Client.a.v().moduleList = new ConcurrentLinkedQueue<>();
                             }
 

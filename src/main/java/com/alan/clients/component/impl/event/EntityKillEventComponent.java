@@ -12,18 +12,18 @@ import hackclient.rise.aha;
 import net.minecraft.entity.Entity;
 
 public class EntityKillEventComponent extends Component implements aha {
-    Entity by = null;
-    @EventLink(cH = 1)
-    public final Listener<PreMotionEvent> bz = var1 -> {
-        if (this.by != null && !aEg.theWorld.loadedEntityList.contains(this.by)) {
-            Client.a.e().d(new KillEvent(this.by));
-            this.by = null;
+    Entity target = null;
+    @EventLink(value = 1)
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
+        if (this.target != null && !aEg.theWorld.loadedEntityList.contains(this.target)) {
+            Client.a.e().d(new KillEvent(this.target));
+            this.target = null;
         }
     };
-    @EventLink(cH = 1)
-    public final Listener<AttackEvent> bA = var1 -> this.by = var1.dc();
-    @EventLink(cH = 1)
-    public final Listener<WorldChangeEvent> bB = var1 -> this.by = null;
+    @EventLink(value = 1)
+    public final Listener<AttackEvent> onAttackEvent = var1 -> this.target = var1.dc();
+    @EventLink(value = 1)
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.target = null;
 
     public EntityKillEventComponent() {
     }

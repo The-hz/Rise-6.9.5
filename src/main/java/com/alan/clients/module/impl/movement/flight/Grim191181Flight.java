@@ -17,25 +17,25 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public class Grim191181Flight extends Mode<Flight> {
-    public BooleanValue Gb = new BooleanValue("Glide less/Fly more", this, true);
+    public BooleanValue glideLessFlyMore = new BooleanValue("Glide less/Fly more", this, true);
     @EventLink
-    public Listener<PostStrafeEvent> Ge;
-    public NumberValue Gd;
+    public Listener<PostStrafeEvent> onPostStrafe;
+    public NumberValue timer;
     @EventLink
-    public Listener<PreMotionEvent> Gf;
+    public Listener<PreMotionEvent> onPreMotion;
     @EventLink
-    public Listener<TeleportEvent> Gh;
+    public Listener<TeleportEvent> onTeleport;
     @EventLink
-    public Listener<PacketReceiveEvent> Gg;
+    public Listener<PacketReceiveEvent> onPacketReceive;
     public boolean Ga;
-    public NumberValue Gc = new NumberValue("Speed", this, 0.275, 0, 0.32, 0.001);
+    public NumberValue speed = new NumberValue("Speed", this, 0.275, 0, 0.32, 0.001);
     public boolean Eo;
 
     public Grim191181Flight(String var1, Flight var2) {
         super(var1, var2);
-        this.Gd = new NumberValue("Timer", this, 1, 0.1, 10, 0.1);
-        this.Ge = var1x -> {
-            aEg.timer.dzD = this.Gd.wo().floatValue();
+        this.timer = new NumberValue("Timer", this, 1, 0.1, 10, 0.1);
+        this.onPostStrafe = var1x -> {
+            aEg.timer.dzD = this.timer.wo().floatValue();
             if (!this.Eo && aEg.thePlayer.fallDistance > 0.0F) {
                 ahj.l(new C03PacketPlayer(true));
                 aEg.thePlayer.fallDistance = 0.0F;
@@ -50,8 +50,8 @@ public class Grim191181Flight extends Mode<Flight> {
 
             if (this.Ga) {
                 MoveUtil.preventDiagonalSpeed();
-                MoveUtil.moveFlying(this.Gc.wo().doubleValue());
-                if (this.Gb.wo()) {
+                MoveUtil.moveFlying(this.speed.wo().doubleValue());
+                if (this.glideLessFlyMore.wo()) {
                     aEg.thePlayer.motionY = -1.1E-4;
                 } else {
                     aEg.thePlayer.motionY = -2.0E-4;
@@ -63,20 +63,20 @@ public class Grim191181Flight extends Mode<Flight> {
 
             MoveUtil.preventDiagonalSpeed();
         };
-        this.Gf = var1x -> {
+        this.onPreMotion = var1x -> {
             if (this.Eo) {
                 var1x.setCancelled();
             }
         };
-        this.Gg = var1x -> {
-            Packet packet = var1x.dq();
+        this.onPacketReceive = var1x -> {
+            Packet packet = var1x.getPacket();
             if (packet instanceof S12PacketEntityVelocity && ((S12PacketEntityVelocity)packet).getEntityID() == aEg.thePlayer.getEntityId()) {
                 this.Eo = false;
                 var1x.setCancelled();
                 this.Ga = true;
             }
         };
-        this.Gh = var0 -> {};
+        this.onTeleport = var0 -> {};
     }
 
     @Override

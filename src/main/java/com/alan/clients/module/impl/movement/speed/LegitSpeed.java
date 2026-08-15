@@ -25,10 +25,10 @@ public class LegitSpeed extends Mode<Speed> {
         .add(new SubMode("Rotate (Fully Legit)"))
         .add(new SubMode("Speed Equivalent (Almost legit, Very hard to flag)"))
         .setDefault("Speed Equivalent (Almost legit, Very hard to flag)");
-    private final BooleanValue PQ = new BooleanValue("CPU SpeedUp Exploit", this, true);
-    private final BooleanValue PR = new BooleanValue("No Jump Delay", this, true);
-    @EventLink(cH = 1)
-    public final Listener<PreUpdateEvent> PS = var1x -> {
+    private final BooleanValue cpuSpeedUpExploit = new BooleanValue("CPU SpeedUp Exploit", this, true);
+    private final BooleanValue noJumpDelay = new BooleanValue("No Jump Delay", this, true);
+    @EventLink(value = 1)
+    public final Listener<PreUpdateEvent> preUpdate = var1x -> {
         label45: {
             label44: {
                 String s = this.rotationExploit.wo().getName();
@@ -66,23 +66,23 @@ public class LegitSpeed extends Mode<Speed> {
             MoveUtil.useDiagonalSpeed();
         }
 
-        if (this.PR.wo()) {
+        if (this.noJumpDelay.wo()) {
             aEg.thePlayer.jumpTicks = 0;
         }
 
-        if (this.PQ.wo()) {
+        if (this.cpuSpeedUpExploit.wo()) {
             aEg.timer.dzD = 1.004F;
         }
     };
     @EventLink
-    Listener<PacketSendEvent> PT = var0 -> {
+    Listener<PacketSendEvent> onPacketSend = var0 -> {
         boolean flag = aEg.thePlayer.isSprinting();
         if (aEg.thePlayer.isSprinting()) {
             ;
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<StrafeEvent> PU = var1x -> {
+    @EventLink(value = 4)
+    public final Listener<StrafeEvent> strafe = var1x -> {
         if (aEg.thePlayer.isCollidedHorizontally) {
             this.e(Scaffold.class).isEnabled();
         }

@@ -36,10 +36,10 @@ public class NoSlow extends Module {
         .add(new Grim30NoSlow("Grim 3.0", this))
         .add(new MatrixNoSlow("Matrix", this))
         .setDefault("Vanilla");
-    public final BooleanValue DO = new BooleanValue("Food", this, false);
-    public final BooleanValue DP = new BooleanValue("Potion", this, false);
-    public final BooleanValue DQ = new BooleanValue("Sword", this, false);
-    public final BooleanValue DR = new BooleanValue("Bow", this, false);
+    public final BooleanValue food = new BooleanValue("Food", this, false);
+    public final BooleanValue potion = new BooleanValue("Potion", this, false);
+    public final BooleanValue sword = new BooleanValue("Sword", this, false);
+    public final BooleanValue bow = new BooleanValue("Bow", this, false);
 
     public NoSlow() {
     }

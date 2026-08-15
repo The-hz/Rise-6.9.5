@@ -24,11 +24,11 @@ import net.minecraft.network.play.server.S45PacketTitle;
 import net.minecraft.util.StringUtils;
 
 public final class RueSessionStats extends Mode<SessionStats> {
-    private final DragValue atY = this.wj().mg();
+    private final DragValue atY = this.getParent().mg();
     private zv atZ = new zv(0, 0, 0, 0, 0.0, 0.0);
     private String atL = "0 seconds";
     @EventLink
-    public final Listener<PreMotionEvent> aua = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.ticksExisted % 20 == 0) {
             long i = System.currentTimeMillis() - this.atZ.auf;
             long j = TimeUnit.MILLISECONDS.toHours(i);
@@ -51,7 +51,7 @@ public final class RueSessionStats extends Mode<SessionStats> {
         }
     };
     @EventLink
-    public final Listener<Render2DEvent> aub = var1x -> {
+    public final Listener<Render2DEvent> onRender2D = var1x -> {
         double d0 = 8.0;
         this.atY.aHe = new Vector2d(130.0, 55.0);
         if (!aEg.gameSettings.bJf) {
@@ -90,11 +90,11 @@ public final class RueSessionStats extends Mode<SessionStats> {
         }
     };
     @EventLink
-    public final Listener<KillEvent> auc = var1x -> this.atZ.atR++;
+    public final Listener<KillEvent> onKill = var1x -> this.atZ.atR++;
     @EventLink
-    public final Listener<PacketReceiveEvent> aud = var1x -> {
-        if (var1x.dq() instanceof S45PacketTitle) {
-            S45PacketTitle s45packettitle = (S45PacketTitle)var1x.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        if (var1x.getPacket() instanceof S45PacketTitle) {
+            S45PacketTitle s45packettitle = (S45PacketTitle)var1x.getPacket();
             if (s45packettitle.getMessage() == null) {
                 return;
             }
@@ -105,7 +105,7 @@ public final class RueSessionStats extends Mode<SessionStats> {
         }
     };
     @EventLink
-    public final Listener<ServerJoinEvent> aue = var1x -> this.atZ = new zv(0, 0, 0, 0, 0.0, 0.0);
+    public final Listener<ServerJoinEvent> onServerJoin = var1x -> this.atZ = new zv(0, 0, 0, 0, 0.0, 0.0);
 
     public RueSessionStats(String var1, SessionStats var2) {
         super(var1, var2);

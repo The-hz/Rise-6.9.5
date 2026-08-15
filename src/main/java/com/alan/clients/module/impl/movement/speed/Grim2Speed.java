@@ -29,27 +29,27 @@ extends Mode<Speed> {
     public boolean gD;
     public int Pj;
     @EventLink
-    public Listener<PreMotionEvent> Pp;
+    public Listener<PreMotionEvent> onPreMotion;
     public int Ho;
     @EventLink
-    public Listener<TeleportEvent> Pt;
+    public Listener<TeleportEvent> onTeleport;
     public boolean Ga;
-    public BooleanValue Pk = new BooleanValue("High Ping Mode (May be slower)", (Mode<?>)this, (Boolean)false);
-    public NumberValue Pl = new NumberValue("Speed", this, (Number)1, (Number)0, (Number)1, (Number)0.001);
+    public BooleanValue highPingModeMa = new BooleanValue("High Ping Mode (May be slower)", (Mode<?>)this, (Boolean)false);
+    public NumberValue speed = new NumberValue("Speed", this, (Number)1, (Number)0, (Number)1, (Number)0.001);
     @EventLink
-    public Listener<JumpEvent> Pm = jumpEvent -> {
+    public Listener<JumpEvent> onJump = jumpEvent -> {
         if (!Grim2Speed.aEg.thePlayer.isJumping) {
             jumpEvent.setCancelled();
         }
     };
     @EventLink
-    public Listener<MoveInputEvent> Pr;
+    public Listener<MoveInputEvent> onMoveInput;
     @EventLink
-    public Listener<PostMotionEvent> Pq;
+    public Listener<PostMotionEvent> onPostMotion;
     @EventLink
-    public Listener<PacketReceiveEvent> Ps;
+    public Listener<PacketReceiveEvent> onPacketReceive;
     @EventLink
-    public Listener<StrafeEvent> Pn = strafeEvent -> {
+    public Listener<StrafeEvent> onStrafe = strafeEvent -> {
         double d2 = 0.0;
         this.Pj = Grim2Speed.aEg.thePlayer.onGround ? ++this.Pj : 0;
         if (this.Pj >= 1) {
@@ -60,13 +60,13 @@ extends Mode<Speed> {
             if (this.Ho % 2 == 0) {
                 d3 = Grim2Speed.aEg.thePlayer.onGround ? 0.085 : 0.03;
             }
-            MoveUtil.moveFlying(d3 * ((Number)this.Pl.wo()).doubleValue());
+            MoveUtil.moveFlying(d3 * ((Number)this.speed.wo()).doubleValue());
         }
         ++this.Ho;
     };
     public boolean Eo;
     @EventLink
-    public Listener<PostStrafeEvent> Po = postStrafeEvent -> {
+    public Listener<PostStrafeEvent> onPostStrafe = postStrafeEvent -> {
         this.Eo = this.Eo;
     };
 
@@ -76,12 +76,12 @@ extends Mode<Speed> {
 
     public Grim2Speed(String string, Speed speed) {
         super(string, speed);
-        this.Pp = preMotionEvent -> {
+        this.onPreMotion = preMotionEvent -> {
             this.gD = false;
         };
-        this.Pq = postMotionEvent -> {
+        this.onPostMotion = postMotionEvent -> {
             if (this.Ho % 2 == 0) {
-                if (!((Boolean)this.Pk.wo()).booleanValue()) {
+                if (!((Boolean)this.highPingModeMa.wo()).booleanValue()) {
                     ahj.l(new C03PacketPlayer(true));
                     ahj.l(new C03PacketPlayer(false));
                 } else {
@@ -91,13 +91,13 @@ extends Mode<Speed> {
                 this.Eo = true;
             }
         };
-        this.Pr = moveInputEvent -> {
+        this.onMoveInput = moveInputEvent -> {
             if (this.gD) {
                 moveInputEvent.setJump(true);
             }
         };
-        this.Ps = packetReceiveEvent -> {
-            Packet<?> packet = packetReceiveEvent.dq();
+        this.onPacketReceive = packetReceiveEvent -> {
+            Packet<?> packet = packetReceiveEvent.getPacket();
             if (packet instanceof S08PacketPlayerPosLook) {
                 if (this.Ho % 2 == 1) {
                     ++this.Ho;
@@ -112,7 +112,7 @@ extends Mode<Speed> {
                 }
             }
         };
-        this.Pt = teleportEvent -> {
+        this.onTeleport = teleportEvent -> {
             Grim2Speed.aEg.timer.dzD = 1.0f;
         };
     }
@@ -124,7 +124,7 @@ extends Mode<Speed> {
 
     @Override
     public void onEnable() {
-        if (!((Boolean)this.Pk.wo()).booleanValue()) {
+        if (!((Boolean)this.highPingModeMa.wo()).booleanValue()) {
             ahj.l(new C03PacketPlayer(true));
             ahj.l(new C03PacketPlayer(false));
         } else {

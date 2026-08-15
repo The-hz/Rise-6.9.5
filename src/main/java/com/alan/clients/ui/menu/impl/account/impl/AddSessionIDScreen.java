@@ -130,22 +130,22 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
         int i = aadh.length;
 
         for (int j = 0; j < i; j++) {
-            aadh[j].c(var1, var2, var3);
+            aadh[j].draw(var1, var2, var3);
         }
 
         this.b(gg.REGULAR).c(() -> {
             FONT_RENDERER.c(statusMessage, this.width / 2.0F, this.height / 2.0F - 64.0F + this.animation.sG(), Color.WHITE.getRGB());
-            sessionBox.pJ();
+            sessionBox.draw();
         });
     }
 
     @Override
     public void mouseClicked(int var1, int var2, int var3) {
-        sessionBox.d(var1, var2, var3);
+        sessionBox.click(var1, var2, var3);
 
         for (adh adh : this.menuButtons) {
-            if (aeb.a(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
-                adh.rm();
+            if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
+                adh.runAction();
                 break;
             }
         }
@@ -154,7 +154,7 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
     @Override
     protected void keyTyped(char var1, int var2) {
         if (sessionBox.tO()) {
-            sessionBox.b(var1, var2);
+            sessionBox.key(var1, var2);
         }
     }
 

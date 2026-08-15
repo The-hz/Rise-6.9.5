@@ -26,7 +26,7 @@ public class abn extends abl {
         gb.MAIN.a(16, gd.REGULAR),
         abw.SECONDARY_TEXT.pV(),
         agl.LEFT,
-        ((BoundsNumberValue)this.ayC).ws().toString().replace(".0", "") + " " + ((BoundsNumberValue)this.ayC).wB().toString().replace(".0", ""),
+        ((BoundsNumberValue)this.value).ws().toString().replace(".0", "") + " " + ((BoundsNumberValue)this.value).wB().toString().replace(".0", ""),
         100.0F,
         "1234567890. "
     );
@@ -37,7 +37,7 @@ public class abn extends abl {
     }
 
     public void pU() {
-        BoundsNumberValue boundsnumbervalue = (BoundsNumberValue)this.ayC;
+        BoundsNumberValue boundsnumbervalue = (BoundsNumberValue)this.value;
         double d0 = (-boundsnumbervalue.wx().doubleValue() + boundsnumbervalue.wo().doubleValue())
             / (-boundsnumbervalue.wx().doubleValue() + boundsnumbervalue.wy().doubleValue());
         double d1 = (-boundsnumbervalue.wx().doubleValue() + boundsnumbervalue.wA().doubleValue())
@@ -47,9 +47,9 @@ public class abn extends abl {
     }
 
     @Override
-    public void a(Vector2d var1, int var2, int var3, float var4) {
-        this.apP = var1;
-        BoundsNumberValue boundsnumbervalue = (BoundsNumberValue)this.ayC;
+    public void draw(Vector2d var1, int var2, int var3, float var4) {
+        this.position = var1;
+        BoundsNumberValue boundsnumbervalue = (BoundsNumberValue)this.value;
         String s = String.valueOf(boundsnumbervalue.wo().doubleValue());
         String s1 = String.valueOf(boundsnumbervalue.wA().doubleValue());
         if (s.endsWith(".0")) {
@@ -61,27 +61,27 @@ public class abn extends abl {
         }
 
         String s2 = s + " " + s1;
-        String s3 = ahd.ce(this.ayC.getName());
+        String s3 = ahd.ce(this.value.getName());
         float f = gb.MAIN.a(16, gd.REGULAR).getStringWidth(s3) + 7;
-        this.ayQ = agj.c(this.apP.x + f - 5.0, this.apP.y - 3.5, 110.0, this.jy, var2, var3);
+        this.ayQ = agj.c(this.position.x + f - 5.0, this.position.y - 3.5, 110.0, this.height, var2, var3);
         if (this.ayQ) {
             this.ayR = Math.min(1.0F, this.ayR + (float)this.ayG.aKx() / 200.0F);
         } else {
             this.ayR = Math.max(0.0F, this.ayR - (float)this.ayG.aKx() / 200.0F);
         }
 
-        gb.MAIN.a(16, gd.REGULAR).a(s3, this.apP.x, this.apP.y, abw.SECONDARY_TEXT.Z(this.ayD));
-        this.ayS.h(new Vector2d(this.apP.x + f + 105.0, this.apP.y));
+        gb.MAIN.a(16, gd.REGULAR).a(s3, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
+        this.ayS.h(new Vector2d(this.position.x + f + 105.0, this.position.y));
         if (!this.ayS.tO()) {
             this.ayS.bW(s2);
         }
 
         this.ayS.z(20.0F);
-        this.ayS.b(aip.d(this.ayS.nw(), this.ayD));
-        this.ayS.pJ();
-        RenderUtil.roundedRectangle(this.apP.x + f, this.apP.y + 1.5, 100.0, 2.0, 1.0, abw.BACKGROUND.Y(Math.min(this.ayD, abw.BACKGROUND.pV().getAlpha())));
-        this.ayM = this.apP.x + f;
-        this.ayN = this.apP.x + f;
+        this.ayS.setColor(aip.d(this.ayS.getColor(), this.ayD));
+        this.ayS.draw();
+        RenderUtil.roundedRectangle(this.position.x + f, this.position.y + 1.5, 100.0, 2.0, 1.0, abw.BACKGROUND.Y(Math.min(this.ayD, abw.BACKGROUND.pV().getAlpha())));
+        this.ayM = this.position.x + f;
+        this.ayN = this.position.x + f;
         if (this.getStandardClickGUI().axS < 0.8) {
             this.ayI = this.ayJ = false;
         }
@@ -123,12 +123,12 @@ public class abn extends abl {
         double d1 = this.ayN + this.ayP * 100.0;
         double d2 = d1 - d0;
         if (this.ayK != this.ayL) {
-            RenderUtil.roundedRectangle(d0, this.apP.y + 1.5, d2, 2.0, 1.0, aip.d(this.rz().rA(), Math.min(70, this.ayD)));
+            RenderUtil.roundedRectangle(d0, this.position.y + 1.5, d2, 2.0, 1.0, aip.d(this.rz().rA(), Math.min(70, this.ayD)));
         }
 
-        RenderUtil.roundedRectangle(d0 - 2.5, this.apP.y, 5.0, 5.0, 2.5, aip.d(this.rz().rA(), this.ayD));
+        RenderUtil.roundedRectangle(d0 - 2.5, this.position.y, 5.0, 5.0, 2.5, aip.d(this.rz().rA(), this.ayD));
         if (this.ayK != this.ayL) {
-            RenderUtil.roundedRectangle(d1 - 2.5, this.apP.y, 5.0, 5.0, 2.5, aip.d(this.rz().rA(), this.ayD));
+            RenderUtil.roundedRectangle(d1 - 2.5, this.position.y, 5.0, 5.0, 2.5, aip.d(this.rz().rA(), this.ayD));
         }
 
         this.ayG.aX();
@@ -136,7 +136,7 @@ public class abn extends abl {
 
     @Override
     public boolean e(int var1, int var2, int var3) {
-        if (this.apP == null) {
+        if (this.position == null) {
             return false;
         }
 
@@ -152,7 +152,7 @@ public class abn extends abl {
 
             return true;
         }
-        this.ayS.d(var1, var2, var3);
+        this.ayS.click(var1, var2, var3);
         return false;
     }
 
@@ -162,22 +162,22 @@ public class abn extends abl {
     }
 
     @Override
-    public void ci() {
-        if (this.apP != null) {
+    public void released() {
+        if (this.position != null) {
             double d0 = this.ayM + this.ayO * 100.0;
             double d1 = this.ayN + this.ayP * 100.0;
             Color color = aip.d(this.rz().rA(), this.ayD);
-            RenderUtil.roundedRectangle(d0 - 2.5, this.apP.y, 5.0, 5.0, 2.5, color);
-            RenderUtil.roundedRectangle(d1 - 2.5, this.apP.y, 5.0, 5.0, 2.5, color);
+            RenderUtil.roundedRectangle(d0 - 2.5, this.position.y, 5.0, 5.0, 2.5, color);
+            RenderUtil.roundedRectangle(d1 - 2.5, this.position.y, 5.0, 5.0, 2.5, color);
         }
     }
 
     @Override
-    public void b(char var1, int var2) {
+    public void key(char var1, int var2) {
         if (var2 != 28) {
-            this.ayS.b(var1, var2);
+            this.ayS.key(var1, var2);
         } else {
-            BoundsNumberValue boundsnumbervalue = (BoundsNumberValue)this.ayC;
+            BoundsNumberValue boundsnumbervalue = (BoundsNumberValue)this.value;
             String[] astring = this.ayS.getText().split(" ");
             if (!this.ayS.isEmpty() && astring.length == 2 && !astring[0].replace(" ", "").isEmpty() && !astring[1].replace(" ", "").isEmpty()) {
                 boundsnumbervalue.n(Double.parseDouble(astring[0]));

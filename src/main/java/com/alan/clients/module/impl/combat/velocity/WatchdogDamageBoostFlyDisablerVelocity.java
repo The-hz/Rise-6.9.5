@@ -16,17 +16,17 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.network.play.server.S27PacketExplosion;
 
 public final class WatchdogDamageBoostFlyDisablerVelocity extends Mode<Velocity> {
-    private final NumberValue uN = new NumberValue("Horizontal", this, 0, 0, 100, 1);
-    private final NumberValue uO = new NumberValue("Vertical", this, 0, 0, 100, 1);
+    private final NumberValue horizontal = new NumberValue("Horizontal", this, 0, 0, 100, 1);
+    private final NumberValue vertical = new NumberValue("Vertical", this, 0, 0, 100, 1);
     @EventLink
-    public final Listener<PacketReceiveEvent> uP = var1x -> {
-        if ((!this.wj().qQ.wo() || aEg.thePlayer.isSwingInProgress)
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        if ((!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress)
             && !var1x.isCancelled()
             && !this.e(Flight.class).isEnabled()
             && !this.e(LongJump.class).isEnabled()) {
-            Packet packet = var1x.dq();
-            double d0 = this.uN.wo().doubleValue();
-            double d1 = this.uO.wo().doubleValue();
+            Packet packet = var1x.getPacket();
+            double d0 = this.horizontal.wo().doubleValue();
+            double d1 = this.vertical.wo().doubleValue();
             if (packet instanceof S12PacketEntityVelocity s12packetentityvelocity && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                 if (!this.e(Speed.class).isEnabled()
                     || aEg.thePlayer.tR <= 0
@@ -40,7 +40,7 @@ public final class WatchdogDamageBoostFlyDisablerVelocity extends Mode<Velocity>
                     }
                 }
 
-                var1x.e(s12packetentityvelocity);
+                var1x.setPacket(s12packetentityvelocity);
             }
 
             if (packet instanceof S27PacketExplosion s27packetexplosion) {
@@ -52,7 +52,7 @@ public final class WatchdogDamageBoostFlyDisablerVelocity extends Mode<Velocity>
                 s27packetexplosion.posX *= d0 / 100.0;
                 s27packetexplosion.posY *= d1 / 100.0;
                 s27packetexplosion.posZ *= d0 / 100.0;
-                var1x.e(s27packetexplosion);
+                var1x.setPacket(s27packetexplosion);
             }
         }
     };

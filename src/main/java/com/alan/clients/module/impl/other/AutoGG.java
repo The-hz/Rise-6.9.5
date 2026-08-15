@@ -15,7 +15,7 @@ public final class AutoGG extends Module {
     private boolean dj;
     private boolean Tq;
     @EventLink
-    public final Listener<PreMotionEvent> Tr = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.thePlayer.ticksExisted % 18 == 0 && aEg.thePlayer.sendQueue.doneLoadingTerrain && !aEg.isIntegratedServerRunning()) {
             if (aEg.theWorld.playerEntities.stream().filter(var0 -> !var0.isInvisible() || var0 == aEg.thePlayer).count() <= 1L) {
                 if (this.dj) {
@@ -29,7 +29,7 @@ public final class AutoGG extends Module {
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> Ts = var1 -> this.Tq = true;
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.Tq = true;
 
     public AutoGG() {
     }

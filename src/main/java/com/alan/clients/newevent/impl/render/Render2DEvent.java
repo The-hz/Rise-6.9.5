@@ -16,7 +16,7 @@ public final class Render2DEvent implements Event {
     }
 
     @Generated
-    public ScaledResolution dx() {
+    public ScaledResolution getScaledResolution() {
         return this.scaledResolution;
     }
 

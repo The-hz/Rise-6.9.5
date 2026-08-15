@@ -10,7 +10,7 @@ import hackclient.rise.afi;
 
 public final class CubecraftBedrockCheckAntiBot extends Mode<AntiBot> {
     @EventLink
-    public final Listener<PreMotionEvent> rB = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         String s = var1xx.getDisplayName().getUnformattedText();
         s(s);
         if (s.chars().filter(var0 -> var0 == 167).count() >= 8L && s.contains("§\u0000§\u0000§\u0000§\u0000")) {

@@ -26,8 +26,8 @@ public final class bc extends Component {
     public static boolean cS;
     public static ArrayList<Class<?>> cT = new ArrayList<>();
     public static a cU = new a();
-    @EventLink(cH = 0)
-    public final Listener<PacketSendEvent> cV = var0 -> {
+    @EventLink(value = 0)
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         if (aEg.thePlayer == null) {
             cQ.clear();
             cT.clear();
@@ -72,13 +72,13 @@ public final class bc extends Component {
             }
         }
     };
-    @EventLink(cH = 0)
-    public final Listener<WorldChangeEvent> cW = var0 -> {
+    @EventLink(value = 0)
+    public final Listener<WorldChangeEvent> onWorldChange = var0 -> {
         cQ.clear();
         cR = false;
     };
-    @EventLink(cH = 0)
-    public final Listener<ServerJoinEvent> cX = var0 -> {
+    @EventLink(value = 0)
+    public final Listener<ServerJoinEvent> onServerJoin = var0 -> {
         afi.b("s");
         cQ.clear();
         cR = false;

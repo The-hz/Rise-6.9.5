@@ -22,25 +22,25 @@ import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public class ne extends Mode<Flight> {
-    private final ModeValue GC = new ModeValue("Lag Mode", this)
+    private final ModeValue lagMode = new ModeValue("Lag Mode", this)
         .add(new SubMode("Packet"))
         .add(new SubMode("VoidTP"))
         .add(new SubMode("VoidTP2"))
         .add(new SubMode("Packet2"))
         .add(new SubMode("Packet3"))
         .setDefault("Packet");
-    private final ModeValue GD = new ModeValue("Jump Mode", this).add(new SubMode("SlowJump")).add(new SubMode("Jump")).setDefault("SlowJump");
-    private final BooleanValue GE = new BooleanValue("Motion Modify", this, false);
-    private final NumberValue GF = new NumberValue("Motion", this, 0.27, 0.12, 0.4, 0.01, () -> !this.GE.wo());
-    private final NumberValue GG = new NumberValue("Offset Size", this, 10.0, 10.0, 1024.0, 1.0);
-    private final BooleanValue GH = new BooleanValue("Spoof Ground", this, false);
-    private final NumberValue GI = new NumberValue("Timer", this, 0.1, 0.05, 1.0, 0.01);
-    private final NumberValue GJ = new NumberValue("Min Flags", this, 1.0, 1.0, 5.0, 1.0);
-    private final BooleanValue GK = new BooleanValue("C06 To C04", this, false);
-    private final BooleanValue GL = new BooleanValue("Flat Test", this, false);
-    private final NumberValue GM = new NumberValue("Flat Ticks", this, 10.0, 8.0, 12.0, 1.0);
-    private final BooleanValue GN = new BooleanValue("Stuck When Not Flagged", this, false);
-    private final BooleanValue GO = new BooleanValue("Only Send Once", this, false);
+    private final ModeValue jumpMode = new ModeValue("Jump Mode", this).add(new SubMode("SlowJump")).add(new SubMode("Jump")).setDefault("SlowJump");
+    private final BooleanValue motionModify = new BooleanValue("Motion Modify", this, false);
+    private final NumberValue motion = new NumberValue("Motion", this, 0.27, 0.12, 0.4, 0.01, () -> !this.motionModify.wo());
+    private final NumberValue offsetSize = new NumberValue("Offset Size", this, 10.0, 10.0, 1024.0, 1.0);
+    private final BooleanValue spoofGround = new BooleanValue("Spoof Ground", this, false);
+    private final NumberValue timer = new NumberValue("Timer", this, 0.1, 0.05, 1.0, 0.01);
+    private final NumberValue minFlags = new NumberValue("Min Flags", this, 1.0, 1.0, 5.0, 1.0);
+    private final BooleanValue c06ToC04 = new BooleanValue("C06 To C04", this, false);
+    private final BooleanValue flatTest = new BooleanValue("Flat Test", this, false);
+    private final NumberValue flatTicks = new NumberValue("Flat Ticks", this, 10.0, 8.0, 12.0, 1.0);
+    private final BooleanValue stuckWhenNotFlagged = new BooleanValue("Stuck When Not Flagged", this, false);
+    private final BooleanValue onlySendOnce = new BooleanValue("Only Send Once", this, false);
     private boolean GP;
     private boolean GQ;
     private int GR;
@@ -55,7 +55,7 @@ public class ne extends Mode<Flight> {
     private boolean GT;
     private boolean GU;
     @EventLink
-    public final Listener<PreUpdateEvent> GV = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (this.GS == 0 && this.hV >= 0) {
             if (aEg.thePlayer.onGround) {
                 aEg.thePlayer.jump();
@@ -90,13 +90,13 @@ public class ne extends Mode<Flight> {
 
         if (this.GS == 1) {
             if (this.GP) {
-                if (this.GE.wo()) {
-                    MoveUtil.strafe(this.GF.wo().doubleValue());
+                if (this.motionModify.wo()) {
+                    MoveUtil.strafe(this.motion.wo().doubleValue());
                 }
 
                 label70: {
                     label69: {
-                        String s = this.GD.wo().getName();
+                        String s = this.jumpMode.wo().getName();
                         byte b0 = -1;
                         switch (s.hashCode()) {
                             case -1019425297:
@@ -131,7 +131,7 @@ public class ne extends Mode<Flight> {
                 this.GU = false;
             } else if (this.GQ) {
                 if (MoveUtil.isMoving()) {
-                    if (aEg.thePlayer.motionY <= 0.05 && !aEg.gameSettings.keyBindJump.isKeyDown() || aEg.thePlayer.tR >= this.GM.wo().intValue()) {
+                    if (aEg.thePlayer.motionY <= 0.05 && !aEg.gameSettings.keyBindJump.isKeyDown() || aEg.thePlayer.tR >= this.flatTicks.wo().intValue()) {
                         this.GQ = false;
                         aEg.timer.dzD = 0.3F;
                     }
@@ -143,14 +143,14 @@ public class ne extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> GW = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (this.GS == 1 && !this.GQ) {
-            if (this.GN.wo()) {
+            if (this.stuckWhenNotFlagged.wo()) {
                 aEg.thePlayer.setPosition(aEg.thePlayer.lastTickPosX, aEg.thePlayer.lastTickPosY, aEg.thePlayer.lastTickPosZ);
             }
 
             aEg.timer.dzD = 1.0F;
-            if (!this.GO.wo() || !this.GU) {
+            if (!this.onlySendOnce.wo() || !this.GU) {
                 label54: {
                     double d0;
                     double d1;
@@ -158,10 +158,10 @@ public class ne extends Mode<Flight> {
                         label52: {
                             label51: {
                                 label50: {
-                                    aEg.timer.dzD = this.GI.wo().floatValue();
-                                    d0 = var1x.getPosX() + this.GG.wo().doubleValue();
-                                    d1 = var1x.getPosZ() + this.GG.wo().doubleValue();
-                                    String s = this.GC.wo().getName();
+                                    aEg.timer.dzD = this.timer.wo().floatValue();
+                                    d0 = var1x.getPosX() + this.offsetSize.wo().doubleValue();
+                                    d1 = var1x.getPosZ() + this.offsetSize.wo().doubleValue();
+                                    String s = this.lagMode.wo().getName();
                                     byte b0 = -1;
                                     switch (s.hashCode()) {
                                         case -2001194238:
@@ -197,7 +197,7 @@ public class ne extends Mode<Flight> {
                                     switch (b0) {
                                         case 0:
                                             double d2 = var1x.getPosY();
-                                            ahj.m(new C04PacketPlayerPosition(d0, d2, d1, this.GH.wo()));
+                                            ahj.m(new C04PacketPlayerPosition(d0, d2, d1, this.spoofGround.wo()));
                                             break label54;
                                         case 1:
                                             break label53;
@@ -212,25 +212,25 @@ public class ne extends Mode<Flight> {
                                     }
                                 }
 
-                                double d4 = var1x.getPosY() + this.GG.wo().doubleValue();
-                                ahj.m(new C04PacketPlayerPosition(d0, d4, d1, this.GH.wo()));
+                                double d4 = var1x.getPosY() + this.offsetSize.wo().doubleValue();
+                                ahj.m(new C04PacketPlayerPosition(d0, d4, d1, this.spoofGround.wo()));
                                 break label54;
                             }
 
-                            double d3 = var1x.getPosY() - this.GG.wo().doubleValue();
-                            ahj.m(new C04PacketPlayerPosition(d0, d3, d1, this.GH.wo()));
+                            double d3 = var1x.getPosY() - this.offsetSize.wo().doubleValue();
+                            ahj.m(new C04PacketPlayerPosition(d0, d3, d1, this.spoofGround.wo()));
                             break label54;
                         }
 
                         var1x.setPosX(d0);
                         var1x.setPosZ(d1);
-                        var1x.setPosY(var1x.getPosY() + this.GG.wo().doubleValue());
+                        var1x.setPosY(var1x.getPosY() + this.offsetSize.wo().doubleValue());
                         break label54;
                     }
 
                     var1x.setPosX(d0);
                     var1x.setPosZ(d1);
-                    var1x.setPosY(var1x.getPosY() - this.GG.wo().doubleValue());
+                    var1x.setPosY(var1x.getPosY() - this.offsetSize.wo().doubleValue());
                 }
 
                 this.GU = true;
@@ -238,13 +238,13 @@ public class ne extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> GX = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         Packet packet = var1x.dq();
         if (this.GT && this.GS != 1 && packet instanceof C03PacketPlayer) {
             var1x.setCancelled();
         }
 
-        if (this.GK.wo() && this.GS == 1) {
+        if (this.c06ToC04.wo() && this.GS == 1) {
             if (packet instanceof C06PacketPlayerPosLook c06packetplayerposlook) {
                 var1x.setCancelled();
                 ahj.m(
@@ -260,12 +260,12 @@ public class ne extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> GY = var1x -> {
-        Packet packet = var1x.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        Packet packet = var1x.getPacket();
         if (packet instanceof S08PacketPlayerPosLook) {
             if (this.GS == 1) {
                 this.GR++;
-                if (this.GR >= this.GJ.wo().intValue() && !this.GP && !this.GQ) {
+                if (this.GR >= this.minFlags.wo().intValue() && !this.GP && !this.GQ) {
                     this.GP = true;
                     this.GQ = true;
                     this.GR = 0;
@@ -289,7 +289,7 @@ public class ne extends Mode<Flight> {
         this.GP = false;
         this.GQ = false;
         this.GR = 0;
-        this.GS = this.GL.wo() && MoveUtil.isMoving() ? 0 : 1;
+        this.GS = this.flatTest.wo() && MoveUtil.isMoving() ? 0 : 1;
         this.hV = 0;
         this.GT = false;
         this.GU = false;

@@ -24,7 +24,7 @@ public class LatestNCPFlight extends Mode<Flight> {
     private boolean Gv;
     private boolean ys;
     @EventLink
-    public final Listener<TeleportEvent> Gw = var1x -> {
+    public final Listener<TeleportEvent> onTeleport = var1x -> {
         if (this.ys) {
             var1x.setCancelled();
             this.ys = false;
@@ -32,7 +32,7 @@ public class LatestNCPFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> Gx = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (this.mode.wo().getName().equals("Clip")) {
             AxisAlignedBB axisalignedbb = aEg.thePlayer.getEntityBoundingBox().offset(0.0, 1.0, 0.0);
             if (!aEg.theWorld.getCollidingBoundingBoxes(aEg.thePlayer, axisalignedbb).isEmpty() && !this.yr) {
@@ -76,7 +76,7 @@ public class LatestNCPFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    private final Listener<PreMotionEvent> Gy = var1x -> {
+    private final Listener<PreMotionEvent> preMotionEventListener = var1x -> {
         if (this.mode.wo().getName().equals("Normal")) {
             AxisAlignedBB axisalignedbb = aEg.thePlayer.getEntityBoundingBox().offset(0.0, 1.0, 0.0);
             if (this.yr) {

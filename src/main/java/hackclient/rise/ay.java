@@ -7,16 +7,16 @@ import com.alan.clients.newevent.impl.other.ServerJoinEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 
 public class ay extends Component {
-    private int cC;
+    private int worldChanges;
     @EventLink
-    public final Listener<WorldChangeEvent> cD = var1 -> this.cC++;
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.worldChanges++;
     @EventLink
-    public final Listener<ServerJoinEvent> cE = var1 -> this.cC = 0;
+    public final Listener<ServerJoinEvent> onServerJoin = var1 -> this.worldChanges = 0;
 
     public ay() {
     }
 
-    public boolean aV() {
-        return this.cC > 0;
+    public boolean hasChangedWorlds() {
+        return this.worldChanges > 0;
     }
 }

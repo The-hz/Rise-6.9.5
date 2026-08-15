@@ -11,25 +11,25 @@ import com.alan.clients.value.impl.NumberValue;
 
 @ModuleInfo(aliases = "module.ghost.keepsprint.name", description = "module.ghost.keepsprint.description", category = Category.GHOST)
 public class KeepSprint extends Module {
-    private final NumberValue BE = new NumberValue("Hit Slow Down During Velocity", this, 0.6, 0, 1, 0.05);
-    private final NumberValue BF = new NumberValue("Hit Slow Down Normal", this, 0.6, 0, 1, 0.05);
-    private final NumberValue BG = new NumberValue("Buffer Decrease", this, 1, 0.1, 10, 0.1, () -> !this.BK.wo());
-    private final NumberValue BH = new NumberValue("Max Buffer", this, 5, 1, 10, 1, () -> !this.BK.wo());
-    private final BooleanValue BI = new BooleanValue("Velocity Hit Sprint", this, false);
-    private final BooleanValue BJ = new BooleanValue("Normal Hit Sprint", this, false);
-    private final BooleanValue BK = new BooleanValue("Buffer Abuse", this, false);
-    private final BooleanValue BL = new BooleanValue("Only In Air", this, false);
+    private final NumberValue slowDownVelocity = new NumberValue("Hit Slow Down During Velocity", this, 0.6, 0, 1, 0.05);
+    private final NumberValue slowDownNormal = new NumberValue("Hit Slow Down Normal", this, 0.6, 0, 1, 0.05);
+    private final NumberValue bufferDecrease = new NumberValue("Buffer Decrease", this, 1, 0.1, 10, 0.1, () -> !this.bufferAbuse.wo());
+    private final NumberValue maxBuffer = new NumberValue("Max Buffer", this, 5, 1, 10, 1, () -> !this.bufferAbuse.wo());
+    private final BooleanValue sprintSlowDownVelocity = new BooleanValue("Velocity Hit Sprint", this, false);
+    private final BooleanValue sprintSlowDownNormal = new BooleanValue("Normal Hit Sprint", this, false);
+    private final BooleanValue bufferAbuse = new BooleanValue("Buffer Abuse", this, false);
+    private final BooleanValue onlyInAir = new BooleanValue("Only In Air", this, false);
     private boolean resetting;
     private double combo;
     @EventLink
     public final Listener<HitSlowDownEvent> onHitSlowDown = var1 -> {
-        if (!aEg.thePlayer.onGround || !this.BL.wo()) {
-            if (this.BK.wo()) {
-                if (this.combo < this.BH.wo().intValue() && !this.resetting) {
+        if (!aEg.thePlayer.onGround || !this.onlyInAir.wo()) {
+            if (this.bufferAbuse.wo()) {
+                if (this.combo < this.maxBuffer.wo().intValue() && !this.resetting) {
                     this.combo++;
                 } else {
                     if (this.combo > 0.0) {
-                        this.combo = Math.max(0.0, this.combo - this.BG.wo().doubleValue());
+                        this.combo = Math.max(0.0, this.combo - this.bufferDecrease.wo().doubleValue());
                         this.resetting = true;
                         return;
                     }
@@ -41,11 +41,11 @@ public class KeepSprint extends Module {
             }
 
             if (aEg.thePlayer.hurtTime > 0) {
-                var1.setSlowDown(this.BE.wo().doubleValue());
-                var1.setSprint(this.BI.wo());
+                var1.setSlowDown(this.slowDownVelocity.wo().doubleValue());
+                var1.setSprint(this.sprintSlowDownVelocity.wo());
             } else {
-                var1.setSlowDown(this.BF.wo().doubleValue());
-                var1.setSprint(this.BJ.wo());
+                var1.setSlowDown(this.slowDownNormal.wo().doubleValue());
+                var1.setSprint(this.sprintSlowDownNormal.wo());
             }
         }
     };

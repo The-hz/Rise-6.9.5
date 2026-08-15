@@ -17,9 +17,9 @@ public final class aw extends Component {
     private int cx;
     private boolean cy;
     @EventLink
-    public final Listener<PacketReceiveEvent> cz = var1 -> {
-        if (var1.dq() instanceof c) {
-            String s = ((c)var1.dq()).getChatComponent().getUnformattedText();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
+        if (var1.getPacket() instanceof c) {
+            String s = ((c)var1.getPacket()).getChatComponent().getUnformattedText();
             if (s != null && s.contains("An exception occurred in your connection, so you have been routed to limbo!")) {
                 this.cy = true;
                 this.cx = 100;
@@ -27,12 +27,12 @@ public final class aw extends Component {
             }
         }
 
-        if (this.cy && this.cx > 0 && (var1.dq() instanceof S01PacketJoinGame || var1.dq() instanceof S07PacketRespawn)) {
+        if (this.cy && this.cx > 0 && (var1.getPacket() instanceof S01PacketJoinGame || var1.getPacket() instanceof S07PacketRespawn)) {
             ;
         }
     };
     @EventLink
-    public final Listener<TickEvent> cA = var1 -> {
+    public final Listener<TickEvent> onTick = var1 -> {
         if (this.cx > 0) {
             this.cx--;
             if (this.cx == 0) {
@@ -41,12 +41,12 @@ public final class aw extends Component {
         }
     };
     @EventLink
-    public final Listener<ServerKickEvent> cB = var1 -> {
+    public final Listener<ServerKickEvent> onServerKick = var1 -> {
         if (this.cy) {
             if (this.cx > 0) {
-                List list = var1.dm();
+                List list = var1.getMessage();
                 if (list != null && !list.isEmpty()) {
-                    Client.a.k().rz().rH();
+                    Client.a.k().rz().getChatAccentColor();
                     this.cy = false;
                     this.cx = 0;
                 }

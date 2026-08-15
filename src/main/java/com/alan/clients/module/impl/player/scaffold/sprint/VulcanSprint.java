@@ -19,7 +19,7 @@ public class VulcanSprint extends Mode<Scaffold> {
     private int dm;
     private int ajr;
     @EventLink
-    public final Listener<PreMotionEvent> ajs = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         aEg.thePlayer.setSprinting(false);
         double d0 = this.speed.wo().doubleValue();
         if (!aEg.gameSettings.keyBindJump.isKeyDown() && d0 > 0.9 && aEg.thePlayer.cqL >= 2 && this.ajr <= 10) {
@@ -43,7 +43,7 @@ public class VulcanSprint extends Mode<Scaffold> {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> ajt = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         Packet packet = var1x.dq();
         if (packet instanceof C08PacketPlayerBlockPlacement && ((C08PacketPlayerBlockPlacement)packet).getPlacedBlockDirection() != 255) {
             this.ajr = 0;

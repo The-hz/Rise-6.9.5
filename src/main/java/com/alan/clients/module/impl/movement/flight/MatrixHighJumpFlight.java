@@ -16,8 +16,8 @@ import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 
 public class MatrixHighJumpFlight extends Mode<Flight> {
-    private final BooleanValue GZ = new BooleanValue("Self Damage", this, false);
-    private final NumberValue Ha = new NumberValue("Height", this, 1.0, 0.42, 7.0, 0.1);
+    private final BooleanValue selfDamage = new BooleanValue("Self Damage", this, false);
+    private final NumberValue height = new NumberValue("Height", this, 1.0, 0.42, 7.0, 0.1);
     private int Hb;
     private boolean Hc;
     private boolean Hd;
@@ -25,9 +25,9 @@ public class MatrixHighJumpFlight extends Mode<Flight> {
     private double Hf;
     private double Hg;
     @EventLink
-    public final Listener<PreUpdateEvent> Hh = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (this.Hd) {
-            aEg.thePlayer.motionY = this.Ha.wo().doubleValue();
+            aEg.thePlayer.motionY = this.height.wo().doubleValue();
         }
 
         if (aEg.thePlayer.hurtTime >= 1 && aEg.thePlayer.hurtTime <= 8) {
@@ -38,19 +38,19 @@ public class MatrixHighJumpFlight extends Mode<Flight> {
             }
         }
 
-        if (this.Hb < 4 && this.GZ.wo() && aEg.thePlayer.onGround) {
+        if (this.Hb < 4 && this.selfDamage.wo() && aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();
             this.Hb++;
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> Hi = var1x -> {
-        if (this.Hb < 4 && this.GZ.wo()) {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
+        if (this.Hb < 4 && this.selfDamage.wo()) {
             var1x.setOnGround(false);
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> Hj = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (var1x.dq() instanceof C06PacketPlayerPosLook && this.Hc) {
             this.Hc = false;
             aEg.thePlayer.motionX = this.He;
@@ -59,8 +59,8 @@ public class MatrixHighJumpFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> Hk = var1x -> {
-        Packet packet = var1x.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        Packet packet = var1x.getPacket();
         if (this.Hd && packet instanceof S08PacketPlayerPosLook) {
             this.Hc = true;
             this.He = aEg.thePlayer.motionX;

@@ -13,20 +13,20 @@ import org.lwjgl.input.Keyboard;
 
 public class WatchdogDownwards extends Mode<Scaffold> {
     public static int bj;
-    @EventLink(cH = 0)
-    public final Listener<StrafeEvent> ajf = var0 -> {
+    @EventLink(value = 0)
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (Keyboard.isKeyDown(aEg.gameSettings.keyBindSneak.getKeyCode())) {
             ;
         }
     };
-    @EventLink(cH = 3)
-    public final Listener<PreUpdateEvent> ajg = var0 -> {
+    @EventLink(value = 3)
+    public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {
         if (!Keyboard.isKeyDown(aEg.gameSettings.keyBindSneak.getKeyCode()) || aEg.thePlayer.crH > 20) {
             ;
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> ajh = var0 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         Packet packet = var0.dq();
         if (packet instanceof C08PacketPlayerBlockPlacement) {
             ;

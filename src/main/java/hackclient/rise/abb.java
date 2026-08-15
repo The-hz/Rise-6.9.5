@@ -75,12 +75,12 @@ public class abb implements InstanceAccess {
                 double d9 = d8 + 34.0 * var10;
                 d8 = d9 + 1.0 * var10;
                 if (abdx.oJ()) {
-                    for (Value value : abdx.dl().getAllValues()) {
+                    for (Value value : abdx.getModule().getAllValues()) {
                         if (this.d(value)) {
                             d8 += 18.0 * var10;
                             if (value instanceof ModeValue && this.axE.getOrDefault(value, false)) {
                                 ModeValue modevalue = (ModeValue)value;
-                                d8 += modevalue.wF().size() * 18.0 * var10;
+                                d8 += modevalue.getModes().size() * 18.0 * var10;
                             }
                         }
                     }
@@ -127,12 +127,12 @@ public class abb implements InstanceAccess {
             for (abd abd : this.axu) {
                 double d15 = 34.0;
                 if (abd.oJ()) {
-                    for (Value value1 : abd.dl().getAllValues()) {
+                    for (Value value1 : abd.getModule().getAllValues()) {
                         if (this.d(value1)) {
                             d15 += 18.0;
                             if (value1 instanceof ModeValue && this.axE.getOrDefault(value1, false)) {
                                 ModeValue modevalue1 = (ModeValue)value1;
-                                d15 += modevalue1.wF().size() * 18.0;
+                                d15 += modevalue1.getModes().size() * 18.0;
                             }
                         }
                     }
@@ -147,7 +147,7 @@ public class abb implements InstanceAccess {
                         RenderUtil.roundedRectangle(d0 + 6.0 * var10, d14, var5 - 12.0 * var10, d17 - 2.0 * var10, 4.0 * var10, aip.d(Color.WHITE, 15));
                     }
 
-                    if (abd.dl().isEnabled()) {
+                    if (abd.getModule().isEnabled()) {
                         RenderUtil.roundedRectangle(d0 + 6.0 * var10, d14, 2.0 * var10, d17 - 2.0 * var10, 1.0 * var10, this.rz().rD());
                     }
 
@@ -155,21 +155,21 @@ public class abb implements InstanceAccess {
                     double d19 = d14 + 4.0 * var10;
                     gb.MAIN
                         .a((int)(13.0 * var10), gd.REGULAR)
-                        .a(abd.dl().getName(), (float)d18, (float)d19, abd.dl().isEnabled() ? this.rz().rD().getRGB() : abw.TEXT.pW());
+                        .a(abd.getModule().getName(), (float)d18, (float)d19, abd.getModule().isEnabled() ? this.rz().rD().getRGB() : abw.TEXT.pW());
                     if (!abd.oJ()) {
-                        String s3 = "(" + ahd.ce(abd.dl().getModuleInfo().category().getName()) + ")";
+                        String s3 = "(" + ahd.ce(abd.getModule().getModuleInfo().category().getName()) + ")";
                         gb.MAIN
                             .a((int)(10.0 * var10), gd.REGULAR)
                             .a(
                                 s3,
-                                (float)(d18 + gb.MAIN.a((int)(13.0 * var10), gd.REGULAR).getStringWidth(abd.dl().getName()) + 4.0 * var10),
+                                (float)(d18 + gb.MAIN.a((int)(13.0 * var10), gd.REGULAR).getStringWidth(abd.getModule().getName()) + 4.0 * var10),
                                 (float)(d19 + 1.0 * var10),
                                 abw.TRINARY_TEXT.pW()
                             );
                     }
 
                     if (!abd.oJ()) {
-                        String s4 = ahd.ce(abd.dl().getModuleInfo().description());
+                        String s4 = ahd.ce(abd.getModule().getModuleInfo().description());
                         int j = (int)(9.0 * var10);
                         float f = (float)(var5 - 24.0 * var10);
                         String[] astring = s4.split(" ");
@@ -210,7 +210,7 @@ public class abb implements InstanceAccess {
                     double d20 = d14 + d17;
                     d14 = d20 + 1.0 * var10;
                     if (abd.oJ()) {
-                        for (Value value2 : abd.dl().getAllValues()) {
+                        for (Value value2 : abd.getModule().getAllValues()) {
                             if (this.d(value2)) {
                                 double d21 = 18.0 * var10;
                                 boolean flag3 = agj.c(d0 + 10.0 * var10, d14, var5 - 20.0 * var10, d21, var7, var8);
@@ -262,7 +262,7 @@ public class abb implements InstanceAccess {
                                 if (value2 instanceof ModeValue && this.axE.getOrDefault(value2, false)) {
                                     ModeValue modevalue2 = (ModeValue)value2;
 
-                                    for (Mode mode : modevalue2.wF()) {
+                                    for (Mode mode : modevalue2.getModes()) {
                                         boolean flag4 = agj.c(d0 + 16.0 * var10, d14, var5 - 32.0 * var10, d21, var7, var8);
                                         if (flag4) {
                                             RenderUtil.roundedRectangle(
@@ -307,11 +307,11 @@ public class abb implements InstanceAccess {
             double d0 = var3 + 22.0 * var5 + 3.0 * var5;
 
             for (abd abd : this.axu) {
-                if (abd.dl().isEnabled()) {
+                if (abd.getModule().isEnabled()) {
                     RenderUtil.roundedRectangle(var1 + 6.0 * var5, d0, 2.0 * var5, 34.0 * var5 - 2.0 * var5, 1.0 * var5, aip.d(this.rz().rA(), 150));
                     gb.MAIN
                         .a((int)(13.0 * var5), gd.REGULAR)
-                        .a(abd.dl().getName(), (float)(var1 + 12.0 * var5), (float)(d0 + 4.0 * var5), aip.d(this.rz().rA(), 120).getRGB());
+                        .a(abd.getModule().getName(), (float)(var1 + 12.0 * var5), (float)(d0 + 4.0 * var5), aip.d(this.rz().rA(), 120).getRGB());
                     if (abd.oJ()) {
                         abd.ci();
                     }
@@ -319,12 +319,12 @@ public class abb implements InstanceAccess {
 
                 d0 += 34.0 * var5 + 1.0 * var5;
                 if (abd.oJ()) {
-                    for (Value value : abd.dl().getAllValues()) {
+                    for (Value value : abd.getModule().getAllValues()) {
                         if (this.d(value)) {
                             d0 += 18.0 * var5;
                             if (value instanceof ModeValue && this.axE.getOrDefault(value, false)) {
                                 ModeValue modevalue = (ModeValue)value;
-                                d0 += modevalue.wF().size() * 18.0 * var5;
+                                d0 += modevalue.getModes().size() * 18.0 * var5;
                             }
                         }
                     }
@@ -351,7 +351,7 @@ public class abb implements InstanceAccess {
                 for (abd abd : this.axu) {
                     if (agj.c(var1 + 6.0 * d0, d4, this.axy - 12.0 * d0, d2, var5, var6)) {
                         if (var7 == 0) {
-                            abd.dl().toggle();
+                            abd.getModule().toggle();
                         } else if (var7 == 1) {
                             abd.axv = !abd.axv;
                         }
@@ -361,7 +361,7 @@ public class abb implements InstanceAccess {
 
                     d4 += d2 + 1.0 * d0;
                     if (abd.oJ()) {
-                        for (Value value : abd.dl().getAllValues()) {
+                        for (Value value : abd.getModule().getAllValues()) {
                             if (this.d(value)) {
                                 if (agj.c(var1 + 10.0 * d0, d4, this.axy - 20.0 * d0, d3, var5, var6)) {
                                     this.a(value, var7);
@@ -372,7 +372,7 @@ public class abb implements InstanceAccess {
                                 if (value instanceof ModeValue && this.axE.getOrDefault(value, false)) {
                                     ModeValue modevalue = (ModeValue)value;
 
-                                    for (Mode mode : modevalue.wF()) {
+                                    for (Mode mode : modevalue.getModes()) {
                                         if (agj.c(var1 + 16.0 * d0, d4, this.axy - 32.0 * d0, d3, var5, var6)) {
                                             if (var7 == 0) {
                                                 modevalue.n(mode);
@@ -427,10 +427,10 @@ public class abb implements InstanceAccess {
         if (this.axv) {
             for (abd abd : this.axu) {
                 if (abd.oJ()) {
-                    Iterator iterator = abd.pA().iterator();
+                    Iterator iterator = abd.getValueList().iterator();
 
                     while (iterator.hasNext()) {
-                        ((abl)iterator.next()).b(var1, var2);
+                        ((abl)iterator.next()).key(var1, var2);
                     }
                 }
             }

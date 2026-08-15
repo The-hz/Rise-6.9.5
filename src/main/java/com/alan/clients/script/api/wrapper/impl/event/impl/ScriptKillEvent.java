@@ -6,7 +6,7 @@ import com.alan.clients.script.api.wrapper.impl.event.ScriptEvent;
 
 public class ScriptKillEvent extends ScriptEvent<KillEvent> {
     public ScriptEntity getEntity() {
-        return new ScriptEntity(this.wrapped.dk());
+        return new ScriptEntity(this.wrapped.getEntity());
     }
 
     public ScriptKillEvent(KillEvent var1) {

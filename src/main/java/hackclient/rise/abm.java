@@ -15,22 +15,22 @@ public class abm extends abl {
     }
 
     @Override
-    public void a(Vector2d var1, int var2, int var3, float var4) {
-        this.apP = var1;
-        BooleanValue booleanvalue = (BooleanValue)this.ayC;
-        String s = ahd.ce(this.ayC.getName());
-        gb.MAIN.a(16, gd.REGULAR).a(s, this.apP.x, this.apP.y, abw.SECONDARY_TEXT.Z(this.ayD));
-        double d0 = this.apP.x + gb.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 3.0;
+    public void draw(Vector2d var1, int var2, int var3, float var4) {
+        this.position = var1;
+        BooleanValue booleanvalue = (BooleanValue)this.value;
+        String s = ahd.ce(this.value.getName());
+        gb.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
+        double d0 = this.position.x + gb.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 3.0;
         if (booleanvalue.wo()) {
             this.axp = Math.min(5.0, this.axp + (float)this.ayE.aKx() / 20.0F);
         } else {
             this.axp = Math.max(0.0, this.axp - (float)this.ayE.aKx() / 20.0F);
         }
 
-        RenderUtil.roundedRectangle(d0 - 2.5 + 5.0, this.apP.y - 2.5 + 2.5, 5.0, 5.0, 2.5, abw.BACKGROUND.Y(this.ayD));
+        RenderUtil.roundedRectangle(d0 - 2.5 + 5.0, this.position.y - 2.5 + 2.5, 5.0, 5.0, 2.5, abw.BACKGROUND.Y(this.ayD));
         if (this.axp != 0.0) {
             RenderUtil.roundedRectangle(
-                d0 - this.axp / 2.0 + 5.0, this.apP.y - this.axp / 2.0 + 2.5, this.axp, this.axp, this.axp / 2.0, aip.d(this.rz().rA(), this.ayD)
+                d0 - this.axp / 2.0 + 5.0, this.position.y - this.axp / 2.0 + 2.5, this.axp, this.axp, this.axp / 2.0, aip.d(this.rz().rA(), this.ayD)
             );
         }
 
@@ -39,11 +39,11 @@ public class abm extends abl {
 
     @Override
     public boolean e(int var1, int var2, int var3) {
-        if (this.apP == null) {
+        if (this.position == null) {
             return false;
         }
-        BooleanValue booleanvalue = (BooleanValue)this.ayC;
-        if (agj.c(this.apP.x, this.apP.y - 3.5, this.getStandardClickGUI().width - 70, this.jy, var1, var2)) {
+        BooleanValue booleanvalue = (BooleanValue)this.value;
+        if (agj.c(this.position.x, this.position.y - 3.5, this.getStandardClickGUI().width - 70, this.height, var1, var2)) {
             booleanvalue.setValue(!booleanvalue.wo());
             return true;
         }
@@ -55,12 +55,12 @@ public class abm extends abl {
     }
 
     @Override
-    public void ci() {
-        if (this.apP != null) {
-            String s = ahd.ce(this.ayC.getName());
+    public void released() {
+        if (this.position != null) {
+            String s = ahd.ce(this.value.getName());
             RenderUtil.roundedRectangle(
-                this.apP.x + gb.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 2.0 - this.axp / 2.0 + 4.0,
-                this.apP.y - this.axp / 2.0 + 2.5,
+                this.position.x + gb.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 2.0 - this.axp / 2.0 + 4.0,
+                this.position.y - this.axp / 2.0 + 2.5,
                 this.axp,
                 this.axp,
                 this.axp / 2.0,
@@ -70,6 +70,6 @@ public class abm extends abl {
     }
 
     @Override
-    public void b(char var1, int var2) {
+    public void key(char var1, int var2) {
     }
 }

@@ -22,12 +22,12 @@ public final class GlintEvent extends CancellableEvent {
     }
 
     @Generated
-    public ItemStack bO() {
+    public ItemStack getItemStack() {
         return this.itemStack;
     }
 
     @Generated
-    public IBakedModel dv() {
+    public IBakedModel getModel() {
         return this.model;
     }
 
@@ -42,12 +42,12 @@ public final class GlintEvent extends CancellableEvent {
     }
 
     @Generated
-    public void e(ItemStack var1) {
+    public void setItemStack(ItemStack var1) {
         this.itemStack = var1;
     }
 
     @Generated
-    public void a(IBakedModel var1) {
+    public void setModel(IBakedModel var1) {
         this.model = var1;
     }
 

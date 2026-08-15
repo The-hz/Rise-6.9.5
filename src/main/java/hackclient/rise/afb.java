@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 public final class afb {
-    private static final File aFW = new File(afr.aHy, "alts/localts_config.json");
+    private static final File aFW = new File(afr.DIRECTORY, "alts/localts_config.json");
     private static String cs = "";
     private static String aFX = "";
 

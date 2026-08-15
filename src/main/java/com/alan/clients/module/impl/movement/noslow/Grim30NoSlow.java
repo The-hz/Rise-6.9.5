@@ -26,24 +26,24 @@ import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 public class Grim30NoSlow extends Mode<NoSlow> {
     @EventLink
     public Listener<en> MU;
-    public BooleanValue MP = new BooleanValue("Heypixel", this, false);
+    public BooleanValue heypixel = new BooleanValue("Heypixel", this, false);
     @EventLink
     public Listener<ea> MV;
     public int hV;
     @EventLink
-    public Listener<PacketSendEvent> MS;
+    public Listener<PacketSendEvent> onPacketSend;
     @EventLink
-    public Listener<PreUpdateEvent> MR;
+    public Listener<PreUpdateEvent> onPreUpdate;
     @EventLink
-    public Listener<MoveInputEvent> MT;
+    public Listener<MoveInputEvent> onMoveInput;
     @EventLink
-    public Listener<BlockAABBEvent> MQ = var0 -> {};
+    public Listener<BlockAABBEvent> onBlockAABB = var0 -> {};
     @EventLink
-    public Listener<SlowDownEvent> MW;
+    public Listener<SlowDownEvent> onSlowDown;
 
     public Grim30NoSlow(String var1, NoSlow var2) {
         super(var1, var2);
-        this.MR = var1x -> {
+        this.onPreUpdate = var1x -> {
             if (aEg.thePlayer.isUsingItem()
                 && !aEg.thePlayer.onGround
                 && !aEg.gameSettings.keyBindRight.isKeyDown()
@@ -69,8 +69,8 @@ public class Grim30NoSlow extends Mode<NoSlow> {
                 }
             }
         };
-        this.MS = var1x -> {
-            if (this.MP.wo() && var1x.dq() instanceof C0FPacketConfirmTransaction) {
+        this.onPacketSend = var1x -> {
+            if (this.heypixel.wo() && var1x.dq() instanceof C0FPacketConfirmTransaction) {
                 if (aEg.thePlayer.isUsingItem()
                     && (
                         aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood
@@ -81,7 +81,7 @@ public class Grim30NoSlow extends Mode<NoSlow> {
                 }
             }
         };
-        this.MT = var1x -> {
+        this.onMoveInput = var1x -> {
             if (this.hV >= 20) {
                 ;
             }
@@ -96,7 +96,7 @@ public class Grim30NoSlow extends Mode<NoSlow> {
                 var0.setCancelled();
             }
         };
-        this.MW = var1x -> {
+        this.onSlowDown = var1x -> {
             if (aEg.thePlayer.isUsingItem()) {
                 this.hV++;
                 if (!this.e(Speed.class).isEnabled()) {
@@ -107,19 +107,19 @@ public class Grim30NoSlow extends Mode<NoSlow> {
             }
 
             if (aEg.thePlayer.cqL == 1 || aEg.thePlayer.tR % 2 == 0 && !aEg.thePlayer.onGround || aEg.thePlayer.cqL % 2 == 1 && aEg.thePlayer.onGround) {
-                if (this.wj().DO.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
+                if (this.getParent().food.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
                     var1x.setCancelled();
                 }
 
-                if (this.wj().DP.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion) {
+                if (this.getParent().potion.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion) {
                     var1x.setCancelled();
                 }
 
-                if (this.wj().DQ.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
+                if (this.getParent().sword.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
                     var1x.setCancelled();
                 }
 
-                if (this.wj().DR.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
+                if (this.getParent().bow.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
                     var1x.setCancelled();
                 }
             }

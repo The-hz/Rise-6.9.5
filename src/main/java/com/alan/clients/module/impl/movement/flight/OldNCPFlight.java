@@ -11,7 +11,7 @@ import org.apache.commons.lang3.RandomUtils;
 
 public class OldNCPFlight extends Mode<Flight> {
     @EventLink
-    public final Listener<PreMotionEvent> HP = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
         var0.setPosY(
             var0.getPosY()
                 + 1.0E-5
@@ -20,7 +20,7 @@ public class OldNCPFlight extends Mode<Flight> {
         aEg.thePlayer.motionY = 0.0;
     };
     @EventLink
-    public final Listener<StrafeEvent> HQ = var0 -> var0.setSpeed(MoveUtil.getAllowedHorizontalDistance(), Math.random() / 2000.0);
+    public final Listener<StrafeEvent> onStrafe = var0 -> var0.setSpeed(MoveUtil.getAllowedHorizontalDistance(), Math.random() / 2000.0);
 
     public OldNCPFlight(String var1, Flight var2) {
         super(var1, var2);

@@ -11,49 +11,49 @@ public class abr extends abl {
     }
 
     @Override
-    public void a(Vector2d var1, int var2, int var3, float var4) {
-        ModeValue modevalue = (ModeValue)this.ayC;
-        this.apP = var1;
-        String s = ahd.ce(this.ayC.getName()) + ":";
-        gb.MAIN.a(16, gd.REGULAR).a(s, this.apP.x, this.apP.y, abw.SECONDARY_TEXT.Z(Math.min(this.ayD, abw.SECONDARY_TEXT.pV().getAlpha())));
+    public void draw(Vector2d var1, int var2, int var3, float var4) {
+        ModeValue modevalue = (ModeValue)this.value;
+        this.position = var1;
+        String s = ahd.ce(this.value.getName()) + ":";
+        gb.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(Math.min(this.ayD, abw.SECONDARY_TEXT.pV().getAlpha())));
         gb.MAIN
             .a(16, gd.REGULAR)
             .a(
                 ahd.ce(modevalue.wo().getName()),
-                this.apP.x + gb.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 2.0,
-                this.apP.y,
+                this.position.x + gb.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 2.0,
+                this.position.y,
                 abw.SECONDARY_TEXT.Z(Math.min(this.ayD, abw.SECONDARY_TEXT.pV().getAlpha()))
             );
     }
 
     @Override
     public boolean e(int var1, int var2, int var3) {
-        if (this.apP == null) {
+        if (this.position == null) {
             return false;
         }
 
-        ModeValue modevalue = (ModeValue)this.ayC;
+        ModeValue modevalue = (ModeValue)this.value;
         boolean flag = var3 == 0;
         boolean flag1 = var3 == 1;
-        if (agj.c(this.apP.x, this.apP.y - 3.5, this.getStandardClickGUI().width - 70, this.jy, var1, var2)) {
-            int i = modevalue.wF().indexOf(modevalue.wo());
+        if (agj.c(this.position.x, this.position.y - 3.5, this.getStandardClickGUI().width - 70, this.height, var1, var2)) {
+            int i = modevalue.getModes().indexOf(modevalue.wo());
             Mode mode = null;
             if (flag) {
-                if (modevalue.wF().size() <= i + 1) {
-                    mode = modevalue.wF().get(0);
+                if (modevalue.getModes().size() <= i + 1) {
+                    mode = modevalue.getModes().get(0);
                 } else {
-                    mode = modevalue.wF().get(i + 1);
+                    mode = modevalue.getModes().get(i + 1);
                 }
             } else if (flag1) {
                 if (0 > i - 1) {
-                    mode = modevalue.wF().get(modevalue.wF().size() - 1);
+                    mode = modevalue.getModes().get(modevalue.getModes().size() - 1);
                 } else {
-                    mode = modevalue.wF().get(i - 1);
+                    mode = modevalue.getModes().get(i - 1);
                 }
             }
 
             if (mode != null) {
-                modevalue.c(mode);
+                modevalue.update(mode);
             }
 
             return true;
@@ -66,10 +66,10 @@ public class abr extends abl {
     }
 
     @Override
-    public void ci() {
+    public void released() {
     }
 
     @Override
-    public void b(char var1, int var2) {
+    public void key(char var1, int var2) {
     }
 }

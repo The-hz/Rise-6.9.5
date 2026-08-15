@@ -13,7 +13,7 @@ public final class TeleportEvent extends CancellableEvent {
     private float ha;
 
     @Generated
-    public C03PacketPlayer dn() {
+    public C03PacketPlayer getResponse() {
         return this.response;
     }
 
@@ -43,7 +43,7 @@ public final class TeleportEvent extends CancellableEvent {
     }
 
     @Generated
-    public void a(C03PacketPlayer var1) {
+    public void setResponse(C03PacketPlayer var1) {
         this.response = var1;
     }
 

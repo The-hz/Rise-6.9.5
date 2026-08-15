@@ -13,49 +13,49 @@ import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.potion.Potion;
 
 public class BlocksMCSpeed extends Mode<Speed> {
-    private boolean Lw;
-    private double Lx;
+    private boolean reset;
+    private double speed;
     @EventLink
-    public final Listener<StrafeEvent> OY = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         double d0 = MoveUtil.getAllowedHorizontalDistance();
         boolean flag = aEg.thePlayer.isPotionActive(Potion.moveSpeed);
         if (MoveUtil.isMoving()) {
             switch (aEg.thePlayer.tR) {
                 case 0:
                     aEg.thePlayer.motionY = MoveUtil.jumpBoostMotion(0.42F);
-                    this.Lx = d0 * (flag ? 1.4 : 2.15);
+                    this.speed = d0 * (flag ? 1.4 : 2.15);
                     break;
                 case 1:
-                    this.Lx = this.Lx - 0.8 * (this.Lx - d0);
+                    this.speed = this.speed - 0.8 * (this.speed - d0);
                     break;
                 default:
-                    this.Lx = this.Lx - this.Lx / 159.9F;
+                    this.speed = this.speed - this.speed / 159.9F;
             }
 
-            this.Lw = false;
-        } else if (!this.Lw) {
-            this.Lx = 0.0;
-            this.Lw = true;
-            this.Lx = MoveUtil.getAllowedHorizontalDistance();
+            this.reset = false;
+        } else if (!this.reset) {
+            this.speed = 0.0;
+            this.reset = true;
+            this.speed = MoveUtil.getAllowedHorizontalDistance();
         }
 
         if (aEg.thePlayer.isCollidedHorizontally) {
-            this.Lx = MoveUtil.getAllowedHorizontalDistance();
+            this.speed = MoveUtil.getAllowedHorizontalDistance();
         }
 
-        var1x.setSpeed(Math.max(this.Lx, d0), Math.random() / 2000.0);
+        var1x.setSpeed(Math.max(this.speed, d0), Math.random() / 2000.0);
     };
     @EventLink
-    public final Listener<TeleportEvent> OZ = var1x -> this.Lx = 0.0;
+    public final Listener<TeleportEvent> onTeleport = var1x -> this.speed = 0.0;
     @EventLink
-    public final Listener<PreMotionEvent> Pa = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
         if (!MoveUtil.isMoving()) {
             var0.setPosX(var0.getPosX() + (Math.random() - 0.5) / 3.0);
             var0.setPosZ(var0.getPosZ() + (Math.random() - 0.5) / 3.0);
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> Pb = var0 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         boolean flag = var0.dq() instanceof C0BPacketEntityAction;
     };
 
@@ -65,6 +65,6 @@ public class BlocksMCSpeed extends Mode<Speed> {
 
     @Override
     public void onDisable() {
-        this.Lx = 0.0;
+        this.speed = 0.0;
     }
 }

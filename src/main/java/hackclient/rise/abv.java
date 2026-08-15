@@ -16,27 +16,27 @@ public class abv extends abl {
     }
 
     @Override
-    public void a(Vector2d var1, int var2, int var3, float var4) {
-        this.apP = var1;
-        StringValue stringvalue = (StringValue)this.ayC;
-        this.jy = 28.0;
-        String s = ahd.ce(this.ayC.getName());
-        gb.MAIN.a(16, gd.REGULAR).a(s, this.apP.x, this.apP.y, abw.SECONDARY_TEXT.Z(this.ayD));
-        this.azo.b(aip.d(this.azo.nw(), this.ayD));
-        this.apP = new Vector2d(this.apP.x, this.apP.y + 14.0);
-        this.azo.h(this.apP);
+    public void draw(Vector2d var1, int var2, int var3, float var4) {
+        this.position = var1;
+        StringValue stringvalue = (StringValue)this.value;
+        this.height = 28.0;
+        String s = ahd.ce(this.value.getName());
+        gb.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
+        this.azo.setColor(aip.d(this.azo.getColor(), this.ayD));
+        this.position = new Vector2d(this.position.x, this.position.y + 14.0);
+        this.azo.h(this.position);
         this.azo.z(230.5F);
-        this.azo.pJ();
+        this.azo.draw();
         stringvalue.n(this.azo.getText());
     }
 
     @Override
     public boolean e(int var1, int var2, int var3) {
-        if (this.apP == null) {
+        if (this.position == null) {
             return false;
         }
 
-        this.azo.d(var1, var2, var3);
+        this.azo.click(var1, var2, var3);
         return false;
     }
 
@@ -45,13 +45,13 @@ public class abv extends abl {
     }
 
     @Override
-    public void ci() {
+    public void released() {
     }
 
     @Override
-    public void b(char var1, int var2) {
-        if (this.apP != null) {
-            this.azo.b(var1, var2);
+    public void key(char var1, int var2) {
+        if (this.position != null) {
+            this.azo.key(var1, var2);
         }
     }
 }

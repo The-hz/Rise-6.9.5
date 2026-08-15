@@ -8,8 +8,8 @@ import net.minecraft.network.play.server.S2APacketParticles;
 
 public class ba extends Component {
     @EventLink
-    public final Listener<PacketReceiveEvent> cH = var0 -> {
-        if (var0.dq() instanceof S2APacketParticles s2apacketparticles
+    public final Listener<PacketReceiveEvent> onPacketReceive = var0 -> {
+        if (var0.getPacket() instanceof S2APacketParticles s2apacketparticles
             && aEg.thePlayer.getDistanceSq(s2apacketparticles.getXCoordinate(), s2apacketparticles.getYCoordinate(), s2apacketparticles.getZCoordinate())
                 >= 36.0) {
             var0.setCancelled();

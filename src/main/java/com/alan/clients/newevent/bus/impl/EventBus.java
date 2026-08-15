@@ -50,12 +50,12 @@ Bus<Event> {
                 }
                 try {
                     Listener listener = (Listener)LOOKUP.unreflectGetter(field).invokeWithArguments(object);
-                    byte by2 = eventLink.cH();
+                    byte by2 = eventLink.value();
                     CallSite callSite3 = new CallSite(object, listener, by2);
                     if (this.iV.containsKey(type)) {
                         List<CallSite<Event>> list = this.iV.get(type);
                         list.add(callSite3);
-                        list.sort((callSite, callSite2) -> callSite2.jb - callSite.jb);
+                        list.sort((callSite, callSite2) -> callSite2.priority - callSite.priority);
                         continue;
                     }
                     ArrayList arrayList = new ArrayList(1);
@@ -81,7 +81,7 @@ Bus<Event> {
             int n2 = list.size();
             ArrayList arrayList = new ArrayList(n2);
             for (int i2 = 0; i2 < n2; ++i2) {
-                arrayList.add(list.get(i2).ja);
+                arrayList.add(list.get(i2).listener);
             }
             map2.put(type, arrayList);
         }
@@ -92,7 +92,7 @@ Bus<Event> {
         Iterator<List<CallSite<Event>>> iterator = this.iV.values().iterator();
         while (iterator.hasNext()) {
             iterator.next().removeIf(callSite -> {
-                if (callSite.iZ != object) return false;
+                if (callSite.owner != object) return false;
                 return true;
             });
         }
@@ -157,14 +157,14 @@ Bus<Event> {
     }
 
     static class CallSite<Event> {
-        final Object iZ;
-        final Listener<Event> ja;
-        final byte jb;
+        final Object owner;
+        final Listener<Event> listener;
+        final byte priority;
 
         public CallSite(Object object, Listener<Event> listener, byte by2) {
-            this.iZ = object;
-            this.ja = listener;
-            this.jb = by2;
+            this.owner = object;
+            this.listener = listener;
+            this.priority = by2;
         }
     }
 }

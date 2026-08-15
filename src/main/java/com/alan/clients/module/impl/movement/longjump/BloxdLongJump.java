@@ -27,7 +27,7 @@ public class BloxdLongJump extends Mode<LongJump> {
     private int dE;
     private int hV;
     @EventLink
-    public final Listener<StrafeEvent> LB = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.ae > 0 && aEg.thePlayer.ae < 42) {
             ci.a((float)(aEg.thePlayer.ae / 41.0));
         }
@@ -47,7 +47,7 @@ public class BloxdLongJump extends Mode<LongJump> {
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> LC = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (aEg.thePlayer.onGround) {
             bc.cR = false;
         }

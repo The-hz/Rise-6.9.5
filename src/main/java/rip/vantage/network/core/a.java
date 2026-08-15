@@ -12,7 +12,7 @@ import rip.vantage.network.handler.c;
 
 public class a {
     @EventLink
-    public Listener<GameEvent> eRy;
+    public Listener<GameEvent> onGame;
     public static String eRr;
     public String aCj;
     public b eRs;
@@ -95,7 +95,7 @@ public class a {
     }
 
     public a() {
-        this.eRy = var1 -> {};
+        this.onGame = var1 -> {};
         Client.a.e().b(this);
     }
 

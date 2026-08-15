@@ -16,19 +16,19 @@ import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 public class PolarDetector extends Module {
     boolean afF = false;
     @EventLink
-    public final Listener<PreMotionEvent> afG = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         if (aEg.thePlayer.ticksExisted == 30) {
             afi.b(this.afF ? "Polar is enabled" : "Polar is disabled");
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> afH = var1 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         if (var1.dq() instanceof C0FPacketConfirmTransaction) {
             this.afF = true;
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> afI = var1 -> this.afF = false;
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.afF = false;
 
     public PolarDetector() {
     }

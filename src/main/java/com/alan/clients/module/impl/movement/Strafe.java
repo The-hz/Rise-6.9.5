@@ -15,19 +15,19 @@ import net.minecraft.util.MathHelper;
 
 @ModuleInfo(aliases = "module.movement.strafe.name", description = "module.movement.strafe.description", category = Category.MOVEMENT)
 public class Strafe extends Module {
-    private NumberValue Ey = new NumberValue("Strength", this, 100, 1, 100, 1);
-    public final BooleanValue Ez = new BooleanValue("Hypixel Fly Disabler", this, false);
+    private NumberValue strength = new NumberValue("Strength", this, 100, 1, 100, 1);
+    public final BooleanValue hypixelFlyDisabler = new BooleanValue("Hypixel Fly Disabler", this, false);
     @EventLink
-    public final Listener<StrafeEvent> EA = var1 -> {
-        if (!this.Ez.wo()) {
-            MoveUtil.partialStrafePercent(this.Ey.wo().floatValue());
+    public final Listener<StrafeEvent> onStrafe = var1 -> {
+        if (!this.hypixelFlyDisabler.wo()) {
+            MoveUtil.partialStrafePercent(this.strength.wo().floatValue());
         }
     };
     @EventLink
-    public final Listener<PostStrafeEvent> EB = var1 -> {
+    public final Listener<PostStrafeEvent> onPostStrafe = var1 -> {
         double d0 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
         double d1 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
-        if (this.Ez.wo()) {
+        if (this.hypixelFlyDisabler.wo()) {
             if (!aEg.thePlayer.onGround && aEg.thePlayer.tR != 1 && aEg.thePlayer.ae >= 20) {
                 if (aEg.thePlayer.ae <= 1 || !(ahg.n(d0, d1) > 90.0)) {
                     double d2 = aEg.thePlayer.motionX;

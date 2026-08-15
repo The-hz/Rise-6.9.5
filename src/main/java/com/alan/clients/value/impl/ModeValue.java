@@ -28,7 +28,7 @@ public class ModeValue extends ListValue<Mode<?>> {
         super(var1, var2, var3);
     }
 
-    public void c(Mode<?> var1) {
+    public void update(Mode<?> var1) {
         if (this.wq() == null || this.wq() instanceof Module && !((Module)this.wq()).isEnabled()) {
             this.n(var1);
         } else {
@@ -62,7 +62,7 @@ public class ModeValue extends ListValue<Mode<?>> {
     public List<Value<?>> getSubValues() {
         ArrayList arraylist = new ArrayList();
 
-        for (Mode mode : this.wF()) {
+        for (Mode mode : this.getModes()) {
             arraylist.addAll(mode.getValues());
         }
 
@@ -71,7 +71,7 @@ public class ModeValue extends ListValue<Mode<?>> {
 
     @Generated
     @Override
-    public List<Mode<?>> wF() {
+    public List<Mode<?>> getModes() {
         return this.modes;
     }
 }

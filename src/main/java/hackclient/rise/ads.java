@@ -20,9 +20,9 @@ public final class ads
 extends ade {
     private final Pattern aCK = Pattern.compile("((25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9]))");
     private final Pattern aCL = Pattern.compile("([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])");
-    private final List<ServerData> aCM = new ArrayList<ServerData>();
-    private ThreadPoolExecutor aCN = null;
-    private boolean Jq;
+    private final List<ServerData> servers = new ArrayList<ServerData>();
+    private ThreadPoolExecutor executor = null;
+    private boolean done;
     private GuiTextField aCO;
     private GuiTextField aCP;
     private GuiTextField aCQ;
@@ -78,30 +78,30 @@ extends ade {
             return;
         }
         int n4 = Integer.parseInt(string);
-        this.aCN = (ThreadPoolExecutor)Executors.newFixedThreadPool(n4);
+        this.executor = (ThreadPoolExecutor)Executors.newFixedThreadPool(n4);
         System.out.println("Started with " + n4 + " threads");
-        this.aCM.clear();
-        this.Jq = false;
+        this.servers.clear();
+        this.done = false;
         this.a(adt.a(adt3, adt2), adt.b(adt3, adt2), Math.min(n3, n2), Math.max(n3, n2));
     }
 
     private void a(adt adt2, adt adt3, int n2, int n3) {
-        adt adt4 = new adt(adt2.ru(), adt2.rv(), adt2.rw(), adt2.rx());
+        adt adt4 = new adt(adt2.ru(), adt2.rv(), adt2.rw(), adt2.getThird());
         for (int i2 = 0; i2 < 4; ++i2) {
-            for (int i3 = adt2.ai(i2); i3 <= adt3.ai(i2); ++i3) {
-                adt4.l(i2, i3);
-                adt adt5 = new adt(adt4.ai(0), adt4.ai(1), adt4.ai(2), adt4.ai(3));
+            for (int i3 = adt2.getPart(i2); i3 <= adt3.getPart(i2); ++i3) {
+                adt4.setPart(i2, i3);
+                adt adt5 = new adt(adt4.getPart(0), adt4.getPart(1), adt4.getPart(2), adt4.getPart(3));
                 int n4 = n2;
                 while (n4 <= n3) {
                     int n5 = n4++;
-                    this.aCN.execute(() -> {
-                        if (this.Jq) {
+                    this.executor.execute(() -> {
+                        if (this.done) {
                             return;
                         }
                         System.out.println("CHECKING " + String.valueOf(adt5) + ":" + n5);
                         ServerData serverData = ahm.d(adt5.toString(), n5, 500);
                         if (serverData != null) {
-                            this.aCM.add(serverData);
+                            this.servers.add(serverData);
                         }
                         if (adt5.toString().equals(adt3.toString()) && n5 == n3) {
                             this.stop();
@@ -113,19 +113,19 @@ extends ade {
     }
 
     private void stop() {
-        this.aCM.removeIf(serverData -> {
+        this.servers.removeIf(serverData -> {
             if (serverData.populationInfo != null) return false;
             return true;
         });
-        System.out.println(this.aCM.size() + " servers found");
-        for (ServerData serverData2 : this.aCM) {
+        System.out.println(this.servers.size() + " servers found");
+        for (ServerData serverData2 : this.servers) {
             GuiMultiplayer.bph = true;
             GuiMultiplayer.savedServerList.loadServerList();
             GuiMultiplayer.savedServerList.addServerData(serverData2);
             GuiMultiplayer.savedServerList.saveServerList();
         }
         ((GuiButton)this.buttonList.get((int)0)).displayString = "Start";
-        this.Jq = true;
+        this.done = true;
     }
 
     public void updateScreen() {

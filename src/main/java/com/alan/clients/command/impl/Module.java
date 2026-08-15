@@ -23,7 +23,7 @@ public final class Module extends Command {
             this.error(".module <module> <setting> <value>  or  .module <module> <modeName>");
         } else {
             String s = var1[1];
-            com.alan.clients.module.Module module = Client.a.g().q(s);
+            com.alan.clients.module.Module module = Client.a.g().get(s);
             if (module == null) {
                 afi.b(ahd.ce("command.bind.invalidmodule"));
             } else {
@@ -127,7 +127,7 @@ public final class Module extends Command {
             if (var1 instanceof StringValue stringvalue) {
                 stringvalue.n(var2);
             } else {
-                var1.m(var2);
+                var1.setValueAsObject(var2);
             }
         } else {
             String s1 = var2.toLowerCase(Locale.ROOT);
@@ -135,7 +135,7 @@ public final class Module extends Command {
             Mode mode = null;
             Mode mode1 = null;
 
-            for (Mode mode2 : modevalue.wF()) {
+            for (Mode mode2 : modevalue.getModes()) {
                 String s3 = mode2.getName().toLowerCase(Locale.ROOT);
                 String s4 = s3.replace(" ", "");
                 if (s3.equals(s1) || s4.equals(s2)) {
@@ -153,7 +153,7 @@ public final class Module extends Command {
                 throw new IllegalArgumentException("Unknown mode \"" + var2 + "\"");
             }
 
-            modevalue.c(mode3);
+            modevalue.update(mode3);
         }
     }
 

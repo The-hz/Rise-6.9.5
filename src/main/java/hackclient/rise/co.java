@@ -15,12 +15,12 @@ public class co extends cm implements InstanceAccess {
 
     public co(EntityLivingBase var1, cn var2) {
         super(var2);
-        this.by = var1;
+        this.target = var1;
     }
 
     @Override
     public void cp() {
-        EntityLivingBase entitylivingbase = (EntityLivingBase)this.by;
+        EntityLivingBase entitylivingbase = (EntityLivingBase)this.target;
         if (aEg.getRenderManager() != null && entitylivingbase != null) {
             Color color = entitylivingbase.hurtTime > 0 ? Color.red : this.rz().rA();
             GL11.glPushMatrix();
@@ -36,11 +36,11 @@ public class co extends cm implements InstanceAccess {
             GL11.glDisable(2929);
             GL11.glDepthMask(false);
             float f = aEg.timer.bWm;
-            double d0 = this.by.lastTickPosX + (this.by.posX - this.by.lastTickPosX) * f;
-            double d1 = this.by.lastTickPosY + (this.by.posY - this.by.lastTickPosY) * f + entitylivingbase.getEyeHeight() * 1.2;
-            double d2 = this.by.lastTickPosZ + (this.by.posZ - this.by.lastTickPosZ) * f;
-            float f1 = this.by.width;
-            float f2 = this.by.height + (this.by.isSneaking() ? -0.2F : 0.1F);
+            double d0 = this.target.lastTickPosX + (this.target.posX - this.target.lastTickPosX) * f;
+            double d1 = this.target.lastTickPosY + (this.target.posY - this.target.lastTickPosY) * f + entitylivingbase.getEyeHeight() * 1.2;
+            double d2 = this.target.lastTickPosZ + (this.target.posZ - this.target.lastTickPosZ) * f;
+            float f1 = this.target.width;
+            float f2 = this.target.height + (this.target.isSneaking() ? -0.2F : 0.1F);
             RenderUtil.color(aip.d(color, 40));
             RenderUtil.drawBoundingBox(new AxisAlignedBB(d0 - f1 / 1.75, d1, d2 - f1 / 1.75, d0 + f1 / 1.75, d1 + 0.1, d2 + f1 / 1.75));
             GL11.glDisable(2848);

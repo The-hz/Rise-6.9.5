@@ -6,7 +6,7 @@ public class zk extends SecurityFeature
 {
     public volatile boolean avA;
 
-    public boolean nG() {
+    public boolean run() {
         if (this.avA) {
             return true;
         }

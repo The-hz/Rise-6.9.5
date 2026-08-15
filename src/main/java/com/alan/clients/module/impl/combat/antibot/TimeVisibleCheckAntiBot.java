@@ -9,7 +9,7 @@ import com.alan.clients.value.Mode;
 
 public final class TimeVisibleCheckAntiBot extends Mode<AntiBot> {
     @EventLink
-    public final Listener<PreMotionEvent> rD = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         if (var1xx.crF < 20) {
             Client.a.x().b(this, var1xx);
         } else if (var1xx.ticksExisted > 20) {

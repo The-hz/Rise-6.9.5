@@ -12,10 +12,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 public final class be extends Component {
-    private static boolean da;
-    @EventLink(cH = 4)
-    public final Listener<PreMotionEvent> db = var1 -> {
-        da = false;
+    private static boolean userInterface;
+    @EventLink(value = 4)
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
+        userInterface = false;
         if (aEg.currentScreen instanceof GuiChest) {
             Container container = aEg.thePlayer.openContainer;
             int i = 0;
@@ -27,7 +27,7 @@ public final class be extends Component {
                     ItemStack itemstack = slot.getStack();
                     if (itemstack != null) {
                         String s = itemstack.getDisplayName();
-                        String s1 = this.b(itemstack);
+                        String s1 = this.expectedName(itemstack);
                         String s2 = s.toLowerCase().replace(" ", "");
                         String s3 = s1.toLowerCase().replace(" ", "");
                         if (s2.contains(s3)) {
@@ -41,18 +41,18 @@ public final class be extends Component {
                 }
             }
 
-            da = (float)i / j > 0.5F;
+            userInterface = (float)i / j > 0.5F;
         }
     };
 
     public be() {
     }
 
-    public static boolean aY() {
-        return da;
+    public static boolean inGUI() {
+        return userInterface;
     }
 
-    private String b(ItemStack var1) {
+    private String expectedName(ItemStack var1) {
         String s = (StatCollector.translateToLocal(var1.getUnlocalizedName() + ".name") + "").trim();
         String s1 = EntityList.getStringFromID(var1.getMetadata());
         if (s1 != null) {

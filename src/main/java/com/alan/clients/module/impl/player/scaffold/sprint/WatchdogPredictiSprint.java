@@ -31,13 +31,13 @@ public class WatchdogPredictiSprint extends Mode<Scaffold> {
     private BlockPos Em;
     private int En;
     @EventLink
-    public final Listener<PreUpdateEvent> ajL = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         MathHelper.wrapAngleTo180_float(this.gZ);
         RotationComponent.d(false);
         RotationComponent.setRotations(new Vector2f(this.gZ, 94.0F), 10.0, MovementFix.NORMAL);
     };
     @EventLink
-    public final Listener<PacketSendEvent> ajM = var0 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         if (var0.dq() instanceof C03PacketPlayer c03packetplayer
             && (c03packetplayer instanceof C05PacketPlayerLook || c03packetplayer instanceof C06PacketPlayerPosLook)
             && Math.abs(c03packetplayer.getPitch() - 90.0F) < 0.001F) {
@@ -45,8 +45,8 @@ public class WatchdogPredictiSprint extends Mode<Scaffold> {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> ajN = var1x -> {
-        Packet packet = var1x.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        Packet packet = var1x.getPacket();
         if (aEg.thePlayer.ticksExisted >= this.En) {
             this.dk = false;
         }
@@ -65,7 +65,7 @@ public class WatchdogPredictiSprint extends Mode<Scaffold> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> ajO = var1x -> {
+    public final Listener<MoveInputEvent> onMoveInput = var1x -> {
         if (this.dk) {
             var1x.setSneak(true);
         }

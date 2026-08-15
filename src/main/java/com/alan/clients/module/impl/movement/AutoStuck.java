@@ -24,13 +24,13 @@ import net.minecraft.util.Vec3;
 
 @ModuleInfo(aliases = "module.movement.autostuck.name", description = "module.movement.autostuck.description", category = Category.MOVEMENT)
 public final class AutoStuck extends Module {
-    private final NumberValue CO = new NumberValue("Pulse Ticks", this, 1.0, 1.0, 10.0, 1.0);
-    private final BooleanValue CP = new BooleanValue("Use Pearl", this, true);
-    private final BooleanValue CQ = new BooleanValue("Require Void", this, true);
-    private final BooleanValue CR = new BooleanValue("Lock Movement", this, true);
-    private final NumberValue CS = new NumberValue("Min Fall Distance", this, 5.0, 0.0, 50.0, 0.5);
-    private final NumberValue CT = new NumberValue("Min Void Depth", this, 5.0, 1.0, 200.0, 1.0);
-    private final NumberValue CU = new NumberValue("Search Radius", this, 10.0, 2.0, 40.0, 1.0);
+    private final NumberValue pulseTicks = new NumberValue("Pulse Ticks", this, 1.0, 1.0, 10.0, 1.0);
+    private final BooleanValue usePearl = new BooleanValue("Use Pearl", this, true);
+    private final BooleanValue requireVoid = new BooleanValue("Require Void", this, true);
+    private final BooleanValue lockMovement = new BooleanValue("Lock Movement", this, true);
+    private final NumberValue minFallDistance = new NumberValue("Min Fall Distance", this, 5.0, 0.0, 50.0, 0.5);
+    private final NumberValue minVoidDepth = new NumberValue("Min Void Depth", this, 5.0, 1.0, 200.0, 1.0);
+    private final NumberValue searchRadius = new NumberValue("Search Radius", this, 10.0, 2.0, 40.0, 1.0);
     private ExecutorService k;
     private Future<?> CV;
     private boolean CW;
@@ -43,7 +43,7 @@ public final class AutoStuck extends Module {
     private int Dc = -1;
     private int Dd = 0;
     @EventLink
-    public final Listener<WorldChangeEvent> De = var1 -> {
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> {
         this.ha();
         this.hc();
         this.CW = false;
@@ -56,22 +56,22 @@ public final class AutoStuck extends Module {
         this.Dd = 0;
     };
     @EventLink
-    public final Listener<PreUpdateEvent> Df = var1 -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             boolean flag = this.hf() != -1;
-            if (this.CQ.wo() ? this.he() : this.hd()) {
+            if (this.requireVoid.wo() ? this.he() : this.hd()) {
                 if (!this.CW) {
                     this.CW = true;
                     this.CZ = 0;
                 }
 
-                if (aEg.thePlayer.ticksExisted % this.CO.wo().intValue() != 0) {
+                if (aEg.thePlayer.ticksExisted % this.pulseTicks.wo().intValue() != 0) {
                     this.hb();
                 } else {
                     this.hc();
                 }
 
-                if (this.CP.wo() && flag) {
+                if (this.usePearl.wo() && flag) {
                     this.hg();
                 }
             } else if (this.CW) {
@@ -84,7 +84,7 @@ public final class AutoStuck extends Module {
                 this.Dd = 0;
             }
 
-            if (this.CP.wo() && !flag) {
+            if (this.usePearl.wo() && !flag) {
                 this.CY = false;
                 this.Db = 0;
                 this.Dc = -1;
@@ -111,8 +111,8 @@ public final class AutoStuck extends Module {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> Dg = var1 -> {
-        if (this.CR.wo() && this.CW) {
+    public final Listener<MoveInputEvent> onMoveInput = var1 -> {
+        if (this.lockMovement.wo() && this.CW) {
             var1.setForward(0.0F);
             var1.setStrafe(0.0F);
             var1.setJump(false);
@@ -178,7 +178,7 @@ public final class AutoStuck extends Module {
     }
 
     private boolean hd() {
-        return aEg.thePlayer != null && !aEg.thePlayer.onGround && aEg.thePlayer.fallDistance >= this.CS.wo().floatValue();
+        return aEg.thePlayer != null && !aEg.thePlayer.onGround && aEg.thePlayer.fallDistance >= this.minFallDistance.wo().floatValue();
     }
 
     private boolean he() {
@@ -193,7 +193,7 @@ public final class AutoStuck extends Module {
         }
 
         int i = 0;
-        int j = this.CT.wo().intValue();
+        int j = this.minVoidDepth.wo().intValue();
 
         for (int kx = blockpos1.getY(); kx > 0 && i < j + 256; kx--) {
             BlockPos blockpos2 = new BlockPos(blockpos.getX(), kx, blockpos.getZ());
@@ -231,7 +231,7 @@ public final class AutoStuck extends Module {
             Vec3 vec3 = aEg.thePlayer.getPositionVector();
             this.CV = this.k.submit(() -> {
                 try {
-                    Optional optional = this.a(vec3, (int)this.CU.wo().doubleValue());
+                    Optional optional = this.a(vec3, (int)this.searchRadius.wo().doubleValue());
                     if (optional.isPresent()) {
                         this.fm = this.c((Vec3)optional.get());
                         this.CY = this.fm != null;
@@ -276,7 +276,7 @@ public final class AutoStuck extends Module {
 
     private void hh() {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
-            if (this.CP.wo()) {
+            if (this.usePearl.wo()) {
                 int i = this.hf();
                 if (i != -1) {
                     if (i <= 8) {

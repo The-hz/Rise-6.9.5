@@ -20,7 +20,7 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import rip.vantage.commons.util.time.a;
 
 public class WatchdogFireBall2LongJump extends Mode<LongJump> {
-    public final BooleanValue Mz = new BooleanValue("Boost", this, true);
+    public final BooleanValue boost = new BooleanValue("Boost", this, true);
     private int qI = -1;
     private int hV = -1;
     private boolean IN;
@@ -31,7 +31,7 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
     private boolean Ms;
     a bN = new a();
     @EventLink
-    public final Listener<PacketSendEvent> MA = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (var1x.dq() instanceof C08PacketPlayerBlockPlacement
             && ((C08PacketPlayerBlockPlacement)var1x.dq()).getStack() != null
             && ((C08PacketPlayerBlockPlacement)var1x.dq()).getStack().getItem() instanceof ItemFireball) {
@@ -42,10 +42,10 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> MB = var1x -> {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
-            if (var1x.dq() instanceof S12PacketEntityVelocity) {
-                if (((S12PacketEntityVelocity)var1x.dq()).getEntityID() != aEg.thePlayer.getEntityId()) {
+            if (var1x.getPacket() instanceof S12PacketEntityVelocity) {
+                if (((S12PacketEntityVelocity)var1x.getPacket()).getEntityID() != aEg.thePlayer.getEntityId()) {
                     return;
                 }
 
@@ -58,8 +58,8 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
             }
         }
     };
-    @EventLink(cH = 0)
-    public final Listener<PreMotionEvent> MD = var1x -> {
+    @EventLink(value = 0)
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             if (aEg.thePlayer.hurtTime == 10) {
                 aEg.thePlayer.motionY = 1.1F;
@@ -70,7 +70,7 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
             }
 
             if (aEg.thePlayer.ae == 28) {
-                this.Mz.wo();
+                this.boost.wo();
                 aEg.thePlayer.motionY = 0.16F;
             }
 
@@ -136,7 +136,7 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> ME = var0 -> {
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (aEg.thePlayer.ae <= 70 && aEg.thePlayer.ae >= 1 && (aEg.thePlayer.ae % 1 == 0 || aEg.thePlayer.ae <= 15)) {
             aEg.thePlayer.motionX *= 1.0003;
             aEg.thePlayer.motionZ *= 1.0003;

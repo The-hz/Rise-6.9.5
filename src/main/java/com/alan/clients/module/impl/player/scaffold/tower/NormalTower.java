@@ -12,13 +12,13 @@ import net.minecraft.util.BlockPos;
 
 public class NormalTower extends Mode<Scaffold> {
     @EventLink
-    public final Listener<PreMotionEvent> ake = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> {
         if (aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.onGround) {
             aEg.thePlayer.motionY = 0.42F;
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> akf = var0 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         Packet packet = var0.dq();
         if (aEg.thePlayer.motionY > -0.0784000015258789
             && packet instanceof C08PacketPlayerBlockPlacement

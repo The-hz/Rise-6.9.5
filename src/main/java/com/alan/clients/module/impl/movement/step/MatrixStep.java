@@ -11,13 +11,13 @@ import hackclient.rise.ahj;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 
 public class MatrixStep extends Mode<Step> {
-    private final BooleanValue RR = new BooleanValue("2 Block", this, true);
-    private final BooleanValue RS = new BooleanValue("Instant", this, true, this.RR::wo);
+    private final BooleanValue twoBlockValue = new BooleanValue("2 Block", this, true);
+    private final BooleanValue instantValue = new BooleanValue("Instant", this, true, this.twoBlockValue::wo);
     private int ticks;
     private boolean doJump;
     @EventLink
-    public final Listener<PreMotionEvent> RU = var1x -> {
-        aEg.thePlayer.stepHeight = this.RR.wo() ? 2.0F : 1.0F;
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
+        aEg.thePlayer.stepHeight = this.twoBlockValue.wo() ? 2.0F : 1.0F;
         if (this.doJump) {
             if (this.ticks > 0 && aEg.thePlayer.onGround || this.ticks > 5) {
                 this.ticks = 0;
@@ -34,9 +34,9 @@ public class MatrixStep extends Mode<Step> {
         }
     };
     @EventLink
-    public final Listener<StepEvent> RV = var1x -> {
-        if (var1x.da() > 1.0) {
-            if (this.RS.wo()) {
+    public final Listener<StepEvent> onStep = var1x -> {
+        if (var1x.getHeight() > 1.0) {
+            if (this.instantValue.wo()) {
                 ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.41999998688698, aEg.thePlayer.posZ, false));
                 ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.7531999805212, aEg.thePlayer.posZ, false));
                 ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 1.00133597911215, aEg.thePlayer.posZ, true));
@@ -50,7 +50,7 @@ public class MatrixStep extends Mode<Step> {
                 aEg.thePlayer.setPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
             }
         } else {
-            if (var1x.da() > 0.6F) {
+            if (var1x.getHeight() > 0.6F) {
                 aEg.timer.dzD = 0.33333F;
                 ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.42F, aEg.thePlayer.posZ, false));
                 ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.42F, aEg.thePlayer.posZ, true));

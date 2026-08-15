@@ -11,12 +11,12 @@ import net.minecraft.util.AxisAlignedBB;
 public final class AirWalkFlight extends Mode<Flight> {
     @EventLink
     public final Listener<BlockAABBEvent> onBlockAABB = var0 -> {
-        if (var0.df() instanceof BlockAir && !aEg.thePlayer.isSneaking() && aEg.thePlayer.Zl > 2) {
-            double d0 = var0.dg().getX();
-            double d1 = var0.dg().getY();
-            double d2 = var0.dg().getZ();
+        if (var0.getBlock() instanceof BlockAir && !aEg.thePlayer.isSneaking() && aEg.thePlayer.Zl > 2) {
+            double d0 = var0.getBlockPos().getX();
+            double d1 = var0.getBlockPos().getY();
+            double d2 = var0.getBlockPos().getZ();
             if (d1 < aEg.thePlayer.posY) {
-                var0.a(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
+                var0.setBoundingBox(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
             }
         }
     };

@@ -17,8 +17,8 @@ public class ca extends Component {
     private boolean gC = false;
     private boolean gD = false;
     @EventLink
-    public final Listener<PreMotionEvent> gE = var1 -> {
-        if (this.e(Scaffold.class).afM.wo().getName().equals("Watchdog Jump") || this.e(Scaffold.class).afM.wo().getName().equals("Watchdog Fast")) {
+    public final Listener<PreMotionEvent> onPreMotion = var1 -> {
+        if (this.e(Scaffold.class).sprint.wo().getName().equals("Watchdog Jump") || this.e(Scaffold.class).sprint.wo().getName().equals("Watchdog Fast")) {
             if (this.gD
                 && !aEg.gameSettings.keyBindJump.isKeyDown()
                 && this.e(Scaffold.class).isEnabled()
@@ -47,7 +47,7 @@ public class ca extends Component {
                     }
                 }
 
-                if (!this.e(Speed.class).isEnabled() && !bb.a(false, false, false, true, false)) {
+                if (!this.e(Speed.class).isEnabled() && !bb.bad(false, false, false, true, false)) {
                     this.e(Scaffold.class).agy = this.e(Scaffold.class).agy.v(0.0, -1.0, 0.0);
                 }
 
@@ -65,7 +65,7 @@ public class ca extends Component {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> gF = var1 -> {
+    public final Listener<StrafeEvent> onStrafe = var1 -> {
         if (this.gD
             && !aEg.gameSettings.keyBindJump.isKeyDown()
             && this.e(Scaffold.class).isEnabled()

@@ -9,18 +9,18 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 
 public final class SkyCaveFlight extends Mode<Flight> {
-    private final NumberValue HR = new NumberValue("Speed", this, 1.2, 0.8, 10, 0.05);
-    private final NumberValue HS = new NumberValue("Damage Speed", this, 5, 0.8, 10, 0.05);
+    private final NumberValue speed = new NumberValue("Speed", this, 1.2, 0.8, 10, 0.05);
+    private final NumberValue damageSpeed = new NumberValue("Damage Speed", this, 5, 0.8, 10, 0.05);
     private double xv;
     private int FX;
-    @EventLink(cH = 4)
-    private final Listener<MoveEvent> HT = var1x -> {
+    @EventLink(value = 4)
+    private final Listener<MoveEvent> onMove = var1x -> {
         if (!MoveUtil.isMoving() || aEg.thePlayer.isCollidedHorizontally) {
             this.FX = -1;
         }
 
         if (aEg.thePlayer.ae == 1) {
-            this.xv = this.HS.wo().doubleValue();
+            this.xv = this.damageSpeed.wo().doubleValue();
         }
 
         switch (this.FX) {
@@ -38,7 +38,7 @@ public final class SkyCaveFlight extends Mode<Flight> {
                 }
                 break;
             case 2:
-                this.xv = this.HR.wo().doubleValue();
+                this.xv = this.speed.wo().doubleValue();
                 break;
             default:
                 this.xv = this.xv - this.xv / 109.0;

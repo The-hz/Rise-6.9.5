@@ -112,7 +112,7 @@ implements aha {
                 if (module.getModuleInfo().category() != category) continue;
                 arrayList.add(new abd(module));
             }
-            arrayList.sort((abd2, abd3) -> Collator.getInstance().compare(abd2.dl().getName(), abd3.dl().getName()));
+            arrayList.sort((abd2, abd3) -> Collator.getInstance().compare(abd2.getModule().getName(), abd3.getModule().getName()));
             this.axh.put(category, new abb(category, arrayList));
         }
     }

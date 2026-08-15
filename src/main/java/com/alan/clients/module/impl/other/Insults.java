@@ -33,9 +33,9 @@ public final class Insults extends Module {
         .add(new SubMode("NerdyAss"))
         .setDefault("Default");
     public final Map<String, List<String>> map = new HashMap<>();
-    private final StringValue UP = new StringValue("Prefix", this, "");
+    private final StringValue prefix = new StringValue("Prefix", this, "");
     private final NumberValue delay = new NumberValue("Delay", this, 0, 0, 50, 1);
-    private final BooleanValue UR = new BooleanValue("Randomizer", this, false);
+    private final BooleanValue randomizer = new BooleanValue("Randomizer", this, false);
     private final String[] US = new String[]{
         "Wow! My combo is Rise'n!",
         "Why would someone as bad as you not use Rise 6.0?",
@@ -70,7 +70,7 @@ public final class Insults extends Module {
     private EntityPlayer target;
     private int ticks;
     @EventLink
-    public final Listener<PreMotionEvent> UX = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (this.target != null && !aEg.theWorld.playerEntities.contains(this.target)) {
             if (this.ticks >= this.delay.wo().intValue() + Math.random() * 2.0 && !bb.aW()) {
                 String s;
@@ -146,12 +146,12 @@ public final class Insults extends Module {
                 }
 
                 String s2 = String.format(s, aih.g(this.target));
-                if (!this.UP.wo().isEmpty()) {
-                    s2 = this.UP.wo() + " " + s2;
+                if (!this.prefix.wo().isEmpty()) {
+                    s2 = this.prefix.wo() + " " + s2;
                 }
 
                 String s3 = new Random().ints(97, 123).limit(10L).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
-                if (this.UR.wo()) {
+                if (this.randomizer.wo()) {
                     aEg.thePlayer.sendChatMessage(s2 + " " + s3);
                 } else {
                     aEg.thePlayer.sendChatMessage(s2);
@@ -164,7 +164,7 @@ public final class Insults extends Module {
         }
     };
     @EventLink
-    public final Listener<AttackEvent> UY = var1 -> {
+    public final Listener<AttackEvent> onAttack = var1 -> {
         EntityLivingBase entitylivingbase = var1.dc();
         if (entitylivingbase instanceof EntityPlayer) {
             this.target = (EntityPlayer)entitylivingbase;
@@ -172,7 +172,7 @@ public final class Insults extends Module {
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> UZ = var1 -> {
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> {
         this.target = null;
         this.ticks = 0;
     };

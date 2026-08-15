@@ -28,7 +28,7 @@ public abstract class Check implements aha {
 
     public final void J() {
         this.T++;
-        this.O.a(this);
+        this.O.sendAlert(this);
     }
 
     public final double K() {
@@ -60,7 +60,7 @@ public abstract class Check implements aha {
     }
 
     @Generated
-    public PlayerData N() {
+    public PlayerData getData() {
         return this.data;
     }
 
@@ -70,7 +70,7 @@ public abstract class Check implements aha {
     }
 
     @Generated
-    public CheckInfo O() {
+    public CheckInfo getCheckInfo() {
         return this.checkInfo;
     }
 

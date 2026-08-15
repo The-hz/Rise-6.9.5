@@ -26,11 +26,11 @@ import net.minecraft.network.play.server.S45PacketTitle;
 import net.minecraft.util.StringUtils;
 
 public final class ModernSessionStats extends Mode<SessionStats> {
-    private final DragValue atJ = this.wj().mg();
+    private final DragValue atJ = this.getParent().mg();
     private zt atK = new zt(0, 0, 0, 0, 0.0, 0.0);
     private String atL = "0 seconds";
     @EventLink
-    public final Listener<PreMotionEvent> atM = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.ticksExisted % 20 == 0) {
             long i = System.currentTimeMillis() - this.atK.atX;
             long j = TimeUnit.MILLISECONDS.toHours(i);
@@ -44,7 +44,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
         }
     };
     @EventLink
-    public final Listener<Render2DEvent> atN = var1x -> {
+    public final Listener<Render2DEvent> onRender2D = var1x -> {
         double d0 = 10.0;
         this.atJ.aHe = new Vector2d(130.0, 50.0);
         if (!aEg.gameSettings.bJf) {
@@ -88,7 +88,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                             .a(
                                 ahd.ce("You have gotten ") + this.atK.atR + " kills",
                                 this.atJ.apP.x + d0,
-                                this.atJ.apP.y + d0 + gb.MAIN.a(24, gd.BOLD).tq(),
+                                this.atJ.apP.y + d0 + gb.MAIN.a(24, gd.BOLD).height(),
                                 abw.TRINARY_TEXT.pW()
                             );
                         gb.MAIN
@@ -96,7 +96,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                             .a(
                                 ahd.ce("You have won " + this.atK.atS) + " games",
                                 this.atJ.apP.x + d0,
-                                this.atJ.apP.y + d0 + gb.MAIN.a(24, gd.BOLD).tq() + gb.MAIN.a(16, gd.REGULAR).tq() + 2.0,
+                                this.atJ.apP.y + d0 + gb.MAIN.a(24, gd.BOLD).height() + gb.MAIN.a(16, gd.REGULAR).height() + 2.0,
                                 abw.TRINARY_TEXT.pW()
                             );
                     }
@@ -104,11 +104,11 @@ public final class ModernSessionStats extends Mode<SessionStats> {
         }
     };
     @EventLink
-    public final Listener<KillEvent> atO = var1x -> this.atK.atR++;
+    public final Listener<KillEvent> onKill = var1x -> this.atK.atR++;
     @EventLink
-    public final Listener<PacketReceiveEvent> atP = var1x -> {
-        if (var1x.dq() instanceof S45PacketTitle) {
-            S45PacketTitle s45packettitle = (S45PacketTitle)var1x.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        if (var1x.getPacket() instanceof S45PacketTitle) {
+            S45PacketTitle s45packettitle = (S45PacketTitle)var1x.getPacket();
             if (s45packettitle.getMessage() == null) {
                 return;
             }
@@ -119,7 +119,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
         }
     };
     @EventLink
-    public final Listener<ServerJoinEvent> atQ = var1x -> this.atK = new zt(0, 0, 0, 0, 0.0, 0.0);
+    public final Listener<ServerJoinEvent> onServerJoin = var1x -> this.atK = new zt(0, 0, 0, 0, 0.0, 0.0);
 
     public ModernSessionStats(String var1, SessionStats var2) {
         super(var1, var2);

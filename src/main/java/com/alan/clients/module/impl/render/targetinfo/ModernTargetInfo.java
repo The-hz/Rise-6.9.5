@@ -59,7 +59,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
     private final Animation auP = new Animation(Easing.EASE_OUT_ELASTIC, 500L);
     private final Animation auQ = new Animation(Easing.EASE_OUT_SINE, 500L);
     @EventLink
-    public final Listener<Render2DEvent> auR = var1x -> {
+    public final Listener<Render2DEvent> onRender2D = var1x -> {
         if (this.targetInfoModule == null) {
             this.targetInfoModule = this.e(TargetInfo.class);
         }
@@ -70,7 +70,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         if (entity != null) {
             boolean flag = !this.targetInfoModule.inWorld || this.targetInfoModule.rG.T(1000L);
             this.auP.h(flag ? 400L : 850L);
-            this.auP.a(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
+            this.auP.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
             this.auP.Q(flag ? 0.0 : 1.0);
             if (!(this.auP.sG() <= 0.0)) {
                 String s = entity.getName();
@@ -83,11 +83,11 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                 AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;
                 HealthBypass healthbypass = this.e(HealthBypass.class);
                 float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractclientplayer) : abstractclientplayer.getHealth();
-                double d4 = Math.min(!this.targetInfoModule.inWorld ? 0.0 : ahg.a(f, 1), abstractclientplayer.getMaxHealth());
+                double d4 = Math.min(!this.targetInfoModule.inWorld ? 0.0 : ahg.round(f, 1), abstractclientplayer.getMaxHealth());
                 double d5 = this.auF.getStringWidth(String.valueOf(d4));
                 double d6 = Math.max(d3 + d2 + 35.0 - d5, 65.0);
                 this.auQ.Q(d4 / abstractclientplayer.getMaxHealth() * d6);
-                this.auQ.a(Easing.EASE_OUT_QUINT);
+                this.auQ.setEasing(Easing.EASE_OUT_QUINT);
                 this.auQ.h(250L);
                 double d7 = this.auQ.sG();
                 double d8 = (abstractclientplayer.hurtTime == 0 ? 0.0F : abstractclientplayer.hurtTime - aEg.timer.bWm) * 0.5;
@@ -106,8 +106,8 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                     Color color2 = this.rz().rA();
                     Color color3 = this.rz().rB();
                     if (this.backgroundMode.wo().getName().equals("Tint")) {
-                        Color color4 = this.rz().j(new Vector2d(d0, d1));
-                        Color color5 = this.rz().j(new Vector2d(d0, d1 + d11));
+                        Color color4 = this.rz().getAccentColor(new Vector2d(d0, d1));
+                        Color color5 = this.rz().getAccentColor(new Vector2d(d0, d1 + d11));
                         color = new Color(color4.getRed() / 5, color4.getGreen() / 5, color4.getBlue() / 5, 128);
                         color1 = new Color(color5.getRed() / 5, color5.getGreen() / 5, color5.getBlue() / 5, 128);
                     } else if (this.backgroundMode.wo().getName().equals("Solid")) {
@@ -140,7 +140,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                     GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
                     GlStateManager.scale(d12, d12, 0.0);
                     RenderUtil.color(aip.a(Color.RED, Color.WHITE, d8 / 9.0));
-                    RenderUtil.dropShadow(3, d0 + 8.0 + d9, d1 + 8.0 + d9, b0 - d8, b0 - d8, 20.0, this.rz().pl() * 2);
+                    RenderUtil.dropShadow(3, d0 + 8.0 + d9, d1 + 8.0 + d9, b0 - d8, b0 - d8, 20.0, this.rz().getRound() * 2);
                     this.renderTargetHead((AbstractClientPlayer)entity, d0 + 8.0 + d9, d1 + 8.0 + d9, b0 - d8);
                     GlStateManager.popMatrix();
                 });
@@ -162,7 +162,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         }
     };
     @EventLink
-    public final Listener<TickEvent> auS = var1x -> {
+    public final Listener<TickEvent> onTick = var1x -> {
         if (this.targetInfoModule != null) {
             Entity entity = this.targetInfoModule.target;
             if (entity != null && !(this.auP.sG() <= 0.0) && this.particles.wo()) {
@@ -293,7 +293,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
     private void renderTargetHead(AbstractClientPlayer var1, double var2, double var4, double var6) {
         ais.vK();
         ais.vL();
-        RenderUtil.roundedRectangle(var2, var4, var6, var6, this.rz().pl() * 2, adv.rK());
+        RenderUtil.roundedRectangle(var2, var4, var6, var6, this.rz().getRound() * 2, adv.rK());
         ais.aD(1);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);
@@ -307,6 +307,6 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         GlStateManager.disableBlend();
         ais.vM();
         float f1 = 0.5F;
-        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().pl() * 2, 0.5, aip.d(Color.BLACK, 40));
+        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, aip.d(Color.BLACK, 40));
     }
 }

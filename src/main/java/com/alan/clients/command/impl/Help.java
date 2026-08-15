@@ -15,7 +15,7 @@ public final class Help extends Command {
     @Override
     public void execute(String[] var1) {
         Client.a
-            .i()
+            .getCommandManager()
             .aQ()
             .forEach(
                 var0 -> afi.b(

@@ -23,7 +23,7 @@ import net.minecraft.client.Minecraft;
 public final class aas
 extends aaj {
     @EventLink
-    public final Listener<PreUpdateEvent> awY = preUpdateEvent -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = preUpdateEvent -> {
         if (Minecraft.getMinecraft().thePlayer != null && Minecraft.getMinecraft().thePlayer.ticksExisted > 2400) {
             RotationComponent.setRotations(new Vector2f(Minecraft.getMinecraft().thePlayer.getRotationYawHead() - 180.0f, 4.235E-5f), 1.0E-4, MovementFix.TRADITIONAL);
         }
@@ -34,7 +34,7 @@ extends aaj {
     }
 
     @Override
-    public boolean nX() {
+    public boolean check() {
         //add code
         if (OfflineMode.offline()) {
             return false;

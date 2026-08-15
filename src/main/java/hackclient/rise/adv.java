@@ -51,72 +51,72 @@ public enum adv {
     TEST("Rainbow", var0 -> aip.aB((int)((var0.getX() + var0.getY()) * 10.0)), EnumChatFormatting.RED),
     NORD("Nord", new Color(143, 188, 187), new Color(163, 190, 140), new Color(236, 239, 244), EnumChatFormatting.AQUA, adw.AQUA, adw.GRAY);
 
-    private final String aDK;
+    private final String themeName;
     private Color aDL = null;
     private Color aDM = null;
     private Color aDN = null;
     private Function<Vector2d, Color> aDO;
-    private final EnumChatFormatting aDP;
-    private final ArrayList<adw> aDQ;
-    private final boolean aDR;
+    private final EnumChatFormatting chatAccentColor;
+    private final ArrayList<adw> keyColors;
+    private final boolean triColor;
     static Color aDS = new Color(0, 0, 0, 110);
     private static final adv[] $VALUES = rL();
 
     adv(String var3, Color var4, Color var5, EnumChatFormatting var6, adw... var7) {
-        this.aDK = var3;
+        this.themeName = var3;
         this.aDL = this.aDN = var4;
         this.aDM = var5;
-        this.aDP = var6;
-        this.aDQ = new ArrayList<>(Arrays.asList(var7));
-        this.aDR = false;
+        this.chatAccentColor = var6;
+        this.keyColors = new ArrayList<>(Arrays.asList(var7));
+        this.triColor = false;
     }
 
     adv(String var3, Color var4, Color var5, Color var6, EnumChatFormatting var7, adw... var8) {
-        this.aDK = var3;
+        this.themeName = var3;
         this.aDL = var4;
         this.aDM = var5;
         this.aDN = var6;
-        this.aDP = var7;
-        this.aDQ = new ArrayList<>(Arrays.asList(var8));
-        this.aDR = true;
+        this.chatAccentColor = var7;
+        this.keyColors = new ArrayList<>(Arrays.asList(var8));
+        this.triColor = true;
     }
 
     adv(String var3, Function<Vector2d, Color> var4, EnumChatFormatting var5, adw... var6) {
-        this.aDK = var3;
+        this.themeName = var3;
         this.aDO = var4;
-        this.aDP = var5;
-        this.aDQ = new ArrayList<>(Arrays.asList(var6));
-        this.aDR = true;
+        this.chatAccentColor = var5;
+        this.keyColors = new ArrayList<>(Arrays.asList(var6));
+        this.triColor = true;
     }
 
     public Color rA() {
-        return this.aDO == null ? this.aDL : this.j(new Vector2d(0.0, 0.0));
+        return this.aDO == null ? this.aDL : this.getAccentColor(new Vector2d(0.0, 0.0));
     }
 
     public Color rB() {
-        return this.aDO == null ? this.aDM : this.j(new Vector2d(0.0, 50.0));
+        return this.aDO == null ? this.aDM : this.getAccentColor(new Vector2d(0.0, 50.0));
     }
 
     public Color rC() {
-        return this.aDO == null ? this.aDN : this.j(new Vector2d(0.0, 100.0));
+        return this.aDO == null ? this.aDN : this.getAccentColor(new Vector2d(0.0, 100.0));
     }
 
-    public Color j(Vector2d var1) {
+    public Color getAccentColor(Vector2d var1) {
         if (this.aDO != null) {
             return this.aDO.apply(var1);
-        } else if (this.aDR) {
-            double d0 = this.k(var1);
+        } else if (this.triColor) {
+            double d0 = this.getBlendFactor(var1);
             return d0 <= 0.5 ? aip.a(this.rB(), this.rA(), d0 * 2.0) : aip.a(this.rC(), this.rB(), (d0 - 0.5) * 2.0);
         }
-        return aip.a(this.rA(), this.rB(), this.k(var1));
+        return aip.a(this.rA(), this.rB(), this.getBlendFactor(var1));
     }
 
     public Color rD() {
-        return this.j(new Vector2d(0.0, 0.0));
+        return this.getAccentColor(new Vector2d(0.0, 0.0));
     }
 
     @Deprecated
-    public int pl() {
+    public int getRound() {
         try {
             Interface interfaceModule = Client.a.g().c(Interface.class);
             if (interfaceModule != null) {
@@ -136,13 +136,13 @@ public enum adv {
         return new Color(0, 0, 0, 190);
     }
 
-    public double k(Vector2d var1) {
+    public double getBlendFactor(Vector2d var1) {
         return Math.sin(System.currentTimeMillis() / 600.0 + var1.getX() * 0.005 + var1.getY() * 0.06) * 0.5 + 0.5;
     }
 
     @Generated
-    public String rF() {
-        return this.aDK;
+    public String getThemeName() {
+        return this.themeName;
     }
 
     @Generated
@@ -151,18 +151,18 @@ public enum adv {
     }
 
     @Generated
-    public EnumChatFormatting rH() {
-        return this.aDP;
+    public EnumChatFormatting getChatAccentColor() {
+        return this.chatAccentColor;
     }
 
     @Generated
-    public ArrayList<adw> rI() {
-        return this.aDQ;
+    public ArrayList<adw> getKeyColors() {
+        return this.keyColors;
     }
 
     @Generated
-    public boolean rJ() {
-        return this.aDR;
+    public boolean isTriColor() {
+        return this.triColor;
     }
 
     @Generated

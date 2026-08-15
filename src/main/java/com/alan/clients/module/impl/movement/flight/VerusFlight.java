@@ -18,7 +18,7 @@ public class VerusFlight extends Mode<Flight> {
     private final ModeValue mode = new ModeValue("Sub-Mode", this).add(new SubMode("Fast")).setDefault("Fast");
     private int ticks = 0;
     @EventLink
-    public final Listener<PreMotionEvent> IF = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (this.mode.wo().getName().equals("Fast") && aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.ticksExisted % 2 == 0) {
             aEg.thePlayer.motionY = 0.42F;
         }
@@ -26,7 +26,7 @@ public class VerusFlight extends Mode<Flight> {
         this.ticks++;
     };
     @EventLink
-    public final Listener<MoveEvent> IG = var1x -> {
+    public final Listener<MoveEvent> onMove = var1x -> {
         if (this.mode.wo().getName().equals("Fast")) {
             if (aEg.thePlayer.onGround && this.ticks % 14 == 0) {
                 var1x.setPosY(0.42F);
@@ -45,19 +45,19 @@ public class VerusFlight extends Mode<Flight> {
         this.ticks++;
     };
     @EventLink
-    public final Listener<BlockAABBEvent> IH = var1x -> {
+    public final Listener<BlockAABBEvent> onBlockAABB = var1x -> {
         if (this.mode.wo().getName().equals("Fast")
-            && (var1x.df() instanceof BlockAir && !aEg.gameSettings.keyBindSneak.isKeyDown() || aEg.gameSettings.keyBindJump.isKeyDown())) {
-            double d0 = var1x.dg().getX();
-            double d1 = var1x.dg().getY();
-            double d2 = var1x.dg().getZ();
+            && (var1x.getBlock() instanceof BlockAir && !aEg.gameSettings.keyBindSneak.isKeyDown() || aEg.gameSettings.keyBindJump.isKeyDown())) {
+            double d0 = var1x.getBlockPos().getX();
+            double d1 = var1x.getBlockPos().getY();
+            double d2 = var1x.getBlockPos().getZ();
             if (d1 < aEg.thePlayer.posY) {
-                var1x.a(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
+                var1x.setBoundingBox(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
             }
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> II = var0 -> var0.setSneak(false);
+    public final Listener<MoveInputEvent> onMoveInput = var0 -> var0.setSneak(false);
 
     public VerusFlight(String var1, Flight var2) {
         super(var1, var2);

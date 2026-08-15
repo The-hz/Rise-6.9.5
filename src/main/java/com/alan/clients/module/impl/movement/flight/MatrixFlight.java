@@ -25,8 +25,8 @@ public class MatrixFlight extends Mode<Flight> {
     private boolean Ht;
     private boolean Hu;
     @EventLink
-    public final Listener<PacketReceiveEvent> Hv = var1x -> {
-        if (var1x.dq() instanceof S08PacketPlayerPosLook s08packetplayerposlook) {
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1x -> {
+        if (var1x.getPacket() instanceof S08PacketPlayerPosLook s08packetplayerposlook) {
             var1x.setCancelled(true);
             double d0 = s08packetplayerposlook.getX();
             double d1 = s08packetplayerposlook.getY();
@@ -44,20 +44,20 @@ public class MatrixFlight extends Mode<Flight> {
             aEg.thePlayer.setPosition(d0, d1, d2);
             aEg.thePlayer.jump();
             if (this.Hu) {
-                this.wj().setEnabled(false);
+                this.getParent().setEnabled(false);
             }
 
             this.Hu = true;
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> Hw = var0 -> {
+    public final Listener<MoveInputEvent> onMoveInput = var0 -> {
         if (aEg.thePlayer.tR > 15 && aEg.thePlayer.tR < 19) {
             var0.setForward(0.0F);
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> Hx = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.ae > 1) {
             aEg.thePlayer.motionY += 0.00348;
         }

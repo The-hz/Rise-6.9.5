@@ -11,8 +11,8 @@ import net.minecraft.potion.Potion;
 
 public class WatchdogSprint extends Mode<Scaffold> {
     private int blocks;
-    @EventLink(cH = 0)
-    public final Listener<StrafeEvent> ajP = var1x -> {
+    @EventLink(value = 0)
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         this.blocks++;
         aEg.gameSettings.cgG.setPressed(true);
         aEg.thePlayer.setSprinting(true);
@@ -26,7 +26,7 @@ public class WatchdogSprint extends Mode<Scaffold> {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> ajQ = var0 -> {};
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {};
 
     public WatchdogSprint(String var1, Scaffold var2) {
         super(var1, var2);

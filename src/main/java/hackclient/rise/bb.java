@@ -21,8 +21,8 @@ public final class bb extends Component {
     private static boolean cL;
     private static boolean cM;
     private static boolean cN;
-    @EventLink(cH = 4)
-    public final Listener<PacketSendEvent> cO = var0 -> {
+    @EventLink(value = 4)
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         Packet packet = var0.dq();
         if (packet instanceof net.minecraft.network.play.client.l) {
             cI = true;
@@ -40,7 +40,7 @@ public final class bb extends Component {
             || packet instanceof net.minecraft.network.play.client.q) {
             cM = true;
         } else if (packet instanceof C03PacketPlayer) {
-            aX();
+            reset();
         }
     };
 
@@ -51,7 +51,7 @@ public final class bb extends Component {
         return a(true, true, true, true, true, false);
     }
 
-    public static boolean a(boolean var0, boolean var1, boolean var2, boolean var3, boolean var4) {
+    public static boolean bad(boolean var0, boolean var1, boolean var2, boolean var3, boolean var4) {
         return a(var0, var1, var2, var3, var4, false);
     }
 
@@ -59,7 +59,7 @@ public final class bb extends Component {
         return cI && var0 || cJ && var1 || cK && var2 || cL && var3 || cM && var4 || cN && var5;
     }
 
-    public static void aX() {
+    public static void reset() {
         cI = false;
         cK = false;
         cJ = false;

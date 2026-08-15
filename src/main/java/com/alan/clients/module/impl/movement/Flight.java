@@ -88,26 +88,26 @@ public class Flight extends Module {
         .add(new mr("Spartan (Deprecated)", this))
         .add(new mx("Vicnix (Deprecated)", this))
         .setDefault("Vanilla");
-    private final BooleanValue Do = new BooleanValue("Disable on Teleport", this, false);
-    private final BooleanValue Dp = new BooleanValue("View Bobbing", this, false);
-    private final BooleanValue Dq = new BooleanValue("Fake Damage", this, false);
-    private final BooleanValue Dr = new BooleanValue("Smooth Camera", this, false);
-    private final BooleanValue Ds = new BooleanValue("Visual Dragon", this, false);
+    private final BooleanValue disableOnTeleport = new BooleanValue("Disable on Teleport", this, false);
+    private final BooleanValue viewBobbing = new BooleanValue("View Bobbing", this, false);
+    private final BooleanValue fakeDamage = new BooleanValue("Fake Damage", this, false);
+    private final BooleanValue smoothCamera = new BooleanValue("Smooth Camera", this, false);
+    private final BooleanValue dragon = new BooleanValue("Visual Dragon", this, false);
     private EntityDragon entityDragon;
     private boolean teleported;
     @EventLink
-    public final Listener<PreMotionEvent> Du = var1 -> {
-        if (this.Dp.wo()) {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
+        if (this.viewBobbing.wo()) {
             aEg.thePlayer.cameraYaw = 0.1F;
         }
 
-        if (this.Dr.wo()) {
+        if (this.smoothCamera.wo()) {
             cl.cn();
         }
     };
     @EventLink
-    public final Listener<Render3DEvent> Dv = var1 -> {
-        if (this.Ds.wo()) {
+    public final Listener<Render3DEvent> onRender3D = var1 -> {
+        if (this.dragon.wo()) {
             if (this.entityDragon == null) {
                 this.entityDragon = new EntityDragon(aEg.theWorld);
                 aEg.theWorld.addEntityToWorld(-1, this.entityDragon);
@@ -123,14 +123,14 @@ public class Flight extends Module {
         }
     };
     @EventLink
-    public final Listener<AttackEvent> Dw = var1 -> {
+    public final Listener<AttackEvent> onAttack = var1 -> {
         if (var1.dc() == this.entityDragon) {
             var1.setCancelled();
         }
     };
     @EventLink
-    public final Listener<TeleportEvent> Dx = var1 -> {
-        if (this.Do.wo()) {
+    public final Listener<TeleportEvent> onTeleport = var1 -> {
+        if (this.disableOnTeleport.wo()) {
             this.toggle();
         }
     };
@@ -140,7 +140,7 @@ public class Flight extends Module {
 
     @Override
     public void onEnable() {
-        if (this.Dq.wo() && aEg.thePlayer.ticksExisted > 1) {
+        if (this.fakeDamage.wo() && aEg.thePlayer.ticksExisted > 1) {
             aih.fakeDamage();
         }
 

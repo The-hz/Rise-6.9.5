@@ -25,7 +25,7 @@ public final class ahu implements InstanceAccess
         if (block == null) {
             return null;
         }
-        if (!g(block)) {
+        if (!canPassThroughMaterial(block)) {
             n = n.n(0.0, 1.0, 0.0);
         }
         final ahv ahv = new ahv(n, e);
@@ -34,7 +34,7 @@ public final class ahu implements InstanceAccess
         ahy ahy = null;
         ahy ahy2 = null;
         final ArrayList<ahy> list = new ArrayList<ahy>();
-        final ArrayList uq = ahv.uQ();
+        final ArrayList uq = ahv.getPath();
         for (final ahy ahy3 : (Iterable<ahy>)uq) {
             if (n3 == 0 || n3 == uq.size() - 1) {
                 list.add(ahy3.n(0.5, 0.0, 0.5));
@@ -79,7 +79,7 @@ public final class ahu implements InstanceAccess
         return list;
     }
 
-    private static boolean g(final Block block) {
+    private static boolean canPassThroughMaterial(final Block block) {
         final Material material = block.getMaterial();
         return material == Material.air || material == Material.plants || material == Material.vine || block == Blocks.ladder || block == Blocks.water || block == Blocks.flowing_water || block == Blocks.wall_sign || block == Blocks.standing_sign;
     }

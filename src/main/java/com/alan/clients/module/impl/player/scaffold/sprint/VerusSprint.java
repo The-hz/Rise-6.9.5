@@ -11,7 +11,7 @@ import net.minecraft.potion.Potion;
 
 public class VerusSprint extends Mode<Scaffold> {
     @EventLink
-    public final Listener<PreMotionEvent> ajo = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (aEg.thePlayer.onGround) {
             aEg.thePlayer.motionY = 0.0;
             MoveUtil.strafe(0.5);
@@ -21,7 +21,7 @@ public class VerusSprint extends Mode<Scaffold> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> ajp = var0 -> {
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (aEg.thePlayer.onGround) {
             var0.setSpeed(0.61);
             if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {

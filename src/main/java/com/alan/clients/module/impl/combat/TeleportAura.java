@@ -56,19 +56,19 @@ public final class TeleportAura extends Module {
     private final NumberValue range = new NumberValue("Range", this, 32, 3, 100, 0.1);
     private final BoundsNumberValue cps = new BoundsNumberValue("CPS", this, 10, 15, 1, 20, 1);
     private final BooleanValue ql = new BooleanValue("1.9 Cooldown", this, false);
-    private final BooleanValue qm = new BooleanValue("Render", this, true);
+    private final BooleanValue render = new BooleanValue("Render", this, true);
     private final a qn = new a();
     private KillAura gj;
-    private List<ahy> qo;
+    private List<ahy> path;
     public EntityLivingBase jE;
-    private long nT;
+    private long nextSwing;
     @EventLink
-    public final Listener<PreUpdateEvent> qp = var1 -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         if (this.gj == null) {
             this.gj = this.e(KillAura.class);
         }
 
-        List list = bv.a(this.range.wo().doubleValue(), this.gj.nz.wo(), this.gj.nA.wo(), this.gj.nB.wo(), this.gj.nC.wo(), this.gj.nD.wo());
+        List list = bv.a(this.range.wo().doubleValue(), this.gj.player.wo(), this.gj.invisibles.wo(), this.gj.animals.wo(), this.gj.mobs.wo(), this.gj.playerTeammates.wo());
         if (list.isEmpty()) {
             this.jE = null;
         } else {
@@ -80,11 +80,11 @@ public final class TeleportAura extends Module {
         }
     };
     @EventLink
-    public final Listener<Render3DEvent> qq = var1 -> {
-        if (this.qm.wo() && this.qo != null && this.jE != null) {
+    public final Listener<Render3DEvent> onRender3D = var1 -> {
+        if (this.render.wo() && this.path != null && this.jE != null) {
             ahy ahyx = null;
 
-            for (ahy ahyx2 : this.qo) {
+            for (ahy ahyx2 : this.path) {
                 if (ahyx != null) {
                     RenderUtil.drawLine(ahyx.getX(), ahyx.getY() + 0.01, ahyx.getZ(), ahyx2.getX(), ahyx2.getY() + 0.01, ahyx2.getZ(), Color.WHITE, 1.0F);
                 }
@@ -149,13 +149,13 @@ public final class TeleportAura extends Module {
             double d1 = 1.0 / d0 * 20.0 - 1.0;
             flag = this.qn.T((long)(d1 * 50.0));
         } else {
-            flag = this.qn.T(this.nT);
+            flag = this.qn.T(this.nextSwing);
         }
 
         if (flag && this.jE != null && !aEg.gameSettings.cgK.isKeyDown() && !aEg.gameSettings.cgI.isKeyDown()) {
             if (!this.ql.wo()) {
                 long i = Math.round(ahg.l(this.cps.wo().intValue(), this.cps.wA().intValue()));
-                this.nT = 1000L / i;
+                this.nextSwing = 1000L / i;
             }
 
             label66: {
@@ -205,13 +205,13 @@ public final class TeleportAura extends Module {
         Client.a.e().d(attackevent);
         if (!attackevent.isCancelled()) {
             EntityLivingBase entitylivingbase = attackevent.dc();
-            this.qo = ahu.a(
+            this.path = ahu.a(
                 new ahy(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ),
                 new ahy(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ),
                 true
             );
-            if (this.qo != null) {
-                for (ahy ahy : this.qo) {
+            if (this.path != null) {
+                for (ahy ahy : this.path) {
                     ahj.m(new C04PacketPlayerPosition(ahy.getX(), ahy.getY(), ahy.getZ(), true));
                     if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_21_2)
                         && aEg.thePlayer != null
@@ -236,9 +236,9 @@ public final class TeleportAura extends Module {
                     aEg.thePlayer.swingItem();
                 }
 
-                Collections.reverse(this.qo);
+                Collections.reverse(this.path);
 
-                for (ahy ahyx : this.qo) {
+                for (ahy ahyx : this.path) {
                     ahj.m(new C04PacketPlayerPosition(ahyx.getX(), ahyx.getY(), ahyx.getZ(), true));
                     if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_21_2)
                         && aEg.thePlayer != null

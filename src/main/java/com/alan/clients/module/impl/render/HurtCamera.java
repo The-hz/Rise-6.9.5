@@ -16,7 +16,7 @@ public final class HurtCamera extends Module {
     public final NumberValue intensity = new NumberValue("Intensity", this, 1, 0, 1, 0.1);
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var0 -> {
-        if (var0.dq() instanceof S12PacketEntityVelocity s12packetentityvelocity && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
+        if (var0.getPacket() instanceof S12PacketEntityVelocity s12packetentityvelocity && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
             double d0 = s12packetentityvelocity.motionX / 8000.0;
             double d1 = s12packetentityvelocity.motionZ / 8000.0;
             aEg.thePlayer.attackedAtYaw = (float)(MathHelper.atan2(d0, d1) * 180.0 / abs.aHb - aEg.thePlayer.pl);

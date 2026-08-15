@@ -33,8 +33,8 @@ import net.minecraft.util.Vec3i;
 
 @ModuleInfo(aliases = "module.player.clutch.name", description = "module.player.clutch.description", category = Category.PLAYER)
 public class Clutch extends Module {
-    private final BoundsNumberValue acp = new BoundsNumberValue("Rotation Speed", this, 5, 10, 0, 10, 1);
-    private final BoundsNumberValue acq = new BoundsNumberValue("Place Delay", this, 0, 0, 0, 1, 1);
+    private final BoundsNumberValue rotationSpeed = new BoundsNumberValue("Rotation Speed", this, 5, 10, 0, 10, 1);
+    private final BoundsNumberValue placeDelay = new BoundsNumberValue("Place Delay", this, 0, 0, 0, 1, 1);
     private Vec3 Yw;
     private aib acr;
     private BlockPos Yx;
@@ -43,7 +43,7 @@ public class Clutch extends Module {
     private int acu;
     private int acv;
     @EventLink
-    public final Listener<PreUpdateEvent> acw = var1 -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         if (aEg.thePlayer.Zl > 15
             && aEg.thePlayer.ticksExisted > 50
             && !bb.aW()
@@ -63,7 +63,7 @@ public class Clutch extends Module {
                     this.acu = 0;
                 }
 
-                this.Yw = aih.q(vec3i.getX(), vec3i.getY(), vec3i.getZ());
+                this.Yw = aih.getPlacePossibility(vec3i.getX(), vec3i.getY(), vec3i.getZ());
                 if (this.Yw != null) {
                     this.acr = aih.e(this.Yw);
                     if (this.acr != null) {
@@ -75,9 +75,9 @@ public class Clutch extends Module {
                                 int i = aEg.thePlayer.inventory.cIT;
                                 SlotComponent slotcomponent1 = this.d(SlotComponent.class);
                                 if (i == SlotComponent.bQ()) {
-                                    if (!bb.a(false, true, false, false, true)
-                                        && this.acu > ahg.l(this.acq.wo().intValue(), this.acq.wA().intValue())
-                                        && aef.a(this.acr.va(), this.Yx, true)) {
+                                    if (!bb.bad(false, true, false, false, true)
+                                        && this.acu > ahg.l(this.placeDelay.wo().intValue(), this.placeDelay.wA().intValue())
+                                        && aef.overBlock(this.acr.va(), this.Yx, true)) {
                                         Vec3 vec3 = aef.c(RotationComponent.fk, aEg.playerController.getBlockReachDistance()).hitVec;
                                         PlayerControllerMP playercontrollermp = aEg.playerController;
                                         EntityPlayerSP entityplayersp = aEg.thePlayer;
@@ -135,8 +135,8 @@ public class Clutch extends Module {
             this.D(0);
         }
 
-        double d0 = this.acp.wo().doubleValue();
-        double d1 = this.acp.wA().doubleValue();
+        double d0 = this.rotationSpeed.wo().doubleValue();
+        double d1 = this.rotationSpeed.wA().doubleValue();
         float f = (float)ahg.l(d0, d1);
         if (f != 0.0F) {
             RotationComponent.setRotations(new Vector2f(this.acs, this.act), f, MovementFix.NORMAL);

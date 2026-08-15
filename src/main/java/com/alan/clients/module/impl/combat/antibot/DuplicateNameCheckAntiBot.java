@@ -9,7 +9,7 @@ import com.alan.clients.value.Mode;
 
 public final class DuplicateNameCheckAntiBot extends Mode<AntiBot> {
     @EventLink
-    public final Listener<PreMotionEvent> ru = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         String s = var1xx.getDisplayName().getUnformattedText();
         if (aEg.theWorld.playerEntities.stream().anyMatch(var1xxx -> s.equals(var1xxx.getDisplayName().getUnformattedText()))) {
             Client.a.x().b(this, var1xx);

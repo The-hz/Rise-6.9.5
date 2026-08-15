@@ -32,26 +32,26 @@ public final class OreESP extends Module {
     );
     public static List<BlockPos> aqb = new CopyOnWriteArrayList<>();
     private final a aqc = new a();
-    private final NumberValue aqd = new NumberValue("Opacity", this, 160, 0, 255, 1);
-    private final NumberValue aqe = new NumberValue("World Opacity", this, 50, 0, 255, 1);
-    private final BooleanValue aqf = new BooleanValue("ESP", this, true);
-    private final BooleanValue aqg = new BooleanValue("Tracers", this, true);
-    private final BooleanValue aqh = new BooleanValue("Diamond", this, true);
-    private final BooleanValue aqi = new BooleanValue("Redstone", this, false);
-    private final BooleanValue aqj = new BooleanValue("Emerald", this, false);
-    private final BooleanValue aqk = new BooleanValue("Lapis", this, false);
-    private final BooleanValue aql = new BooleanValue("Iron", this, false);
-    private final BooleanValue aqm = new BooleanValue("Coal", this, false);
-    private final BooleanValue aqn = new BooleanValue("Gold", this, false);
-    private final NumberValue aqo = new NumberValue("Distance", this, 42, 16, 64, 1);
-    private final BooleanValue aqp = new BooleanValue("Chunk Update", this, false);
-    private final NumberValue aqq = new NumberValue("Update Delay", this, 10.0, 1.0, 30.0, 0.5);
+    private final NumberValue opacity = new NumberValue("Opacity", this, 160, 0, 255, 1);
+    private final NumberValue worldOpacity = new NumberValue("World Opacity", this, 50, 0, 255, 1);
+    private final BooleanValue eSP = new BooleanValue("ESP", this, true);
+    private final BooleanValue tracers = new BooleanValue("Tracers", this, true);
+    private final BooleanValue diamond = new BooleanValue("Diamond", this, true);
+    private final BooleanValue redstone = new BooleanValue("Redstone", this, false);
+    private final BooleanValue emerald = new BooleanValue("Emerald", this, false);
+    private final BooleanValue lapis = new BooleanValue("Lapis", this, false);
+    private final BooleanValue iron = new BooleanValue("Iron", this, false);
+    private final BooleanValue coal = new BooleanValue("Coal", this, false);
+    private final BooleanValue gold = new BooleanValue("Gold", this, false);
+    private final NumberValue distance = new NumberValue("Distance", this, 42, 16, 64, 1);
+    private final BooleanValue chunkUpdate = new BooleanValue("Chunk Update", this, false);
+    private final NumberValue updateDelay = new NumberValue("Update Delay", this, 10.0, 1.0, 30.0, 0.5);
     @EventLink
-    public final Listener<PreUpdateEvent> aqr = var1 -> {
-        if (apY != this.aqd.wo().intValue()) {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
+        if (apY != this.opacity.wo().intValue()) {
             aEg.renderGlobal.loadRenderers();
-            apY = this.aqd.wo().intValue();
-        } else if (this.aqp.wo() && this.aqc.T(this.aqq.wo().longValue() * 1000L)) {
+            apY = this.opacity.wo().intValue();
+        } else if (this.chunkUpdate.wo() && this.aqc.T(this.updateDelay.wo().longValue() * 1000L)) {
             aEg.renderGlobal.loadRenderers();
             this.aqc.aX();
         }
@@ -59,8 +59,8 @@ public final class OreESP extends Module {
         this.mh();
     };
     @EventLink
-    public final Listener<Render3DEvent> aqs = var1 -> {
-        if (this.aqf.wo() || this.aqg.wo()) {
+    public final Listener<Render3DEvent> onRender3D = var1 -> {
+        if (this.eSP.wo() || this.tracers.wo()) {
             for (BlockPos blockpos : aqb) {
                 Block block = aEg.theWorld.getBlockState(blockpos).getBlock();
                 Color color = this.f(block);
@@ -94,7 +94,7 @@ public final class OreESP extends Module {
     private void mh() {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             aqb.clear();
-            int i = this.aqo.wo().intValue();
+            int i = this.distance.wo().intValue();
             BlockPos blockpos = new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
 
             for (int j = -i; j <= i; j++) {
@@ -112,16 +112,16 @@ public final class OreESP extends Module {
     }
 
     private boolean e(Block var1) {
-        if (this.aqh.wo() && var1 == Blocks.diamond_ore) {
+        if (this.diamond.wo() && var1 == Blocks.diamond_ore) {
             return true;
-        } else if (this.aql.wo() && var1 == Blocks.iron_ore) {
+        } else if (this.iron.wo() && var1 == Blocks.iron_ore) {
             return true;
-        } else if (this.aqn.wo() && var1 == Blocks.gold_ore) {
+        } else if (this.gold.wo() && var1 == Blocks.gold_ore) {
             return true;
-        } else if (this.aqk.wo() && var1 == Blocks.lapis_ore) {
+        } else if (this.lapis.wo() && var1 == Blocks.lapis_ore) {
             return true;
-        } else if (!this.aqi.wo() || var1 != Blocks.redstone_ore && var1 != Blocks.lit_redstone_ore) {
-            return this.aqm.wo() && var1 == Blocks.coal_ore ? true : this.aqj.wo() && var1 == Blocks.emerald_ore;
+        } else if (!this.redstone.wo() || var1 != Blocks.redstone_ore && var1 != Blocks.lit_redstone_ore) {
+            return this.coal.wo() && var1 == Blocks.coal_ore ? true : this.emerald.wo() && var1 == Blocks.emerald_ore;
         }
         return true;
     }
@@ -144,13 +144,13 @@ public final class OreESP extends Module {
     }
 
     private void a(BlockPos var1, int var2, int var3, int var4) {
-        int i = this.aqd.wo().intValue();
+        int i = this.opacity.wo().intValue();
         Color color = new Color(var2, var3, var4, i);
-        if (this.aqf.wo()) {
+        if (this.eSP.wo()) {
             this.a(var1, color);
         }
 
-        if (this.aqg.wo()) {
+        if (this.tracers.wo()) {
             this.b(var1, color);
         }
     }
@@ -220,12 +220,12 @@ public final class OreESP extends Module {
 
     public static boolean mi() {
         OreESP oreesp = Client.a.g().c(OreESP.class);
-        return oreesp != null && oreesp.aqf.wo();
+        return oreesp != null && oreesp.eSP.wo();
     }
 
     public static int mj() {
         OreESP oreesp = Client.a.g().c(OreESP.class);
-        return oreesp != null ? oreesp.aqo.wo().intValue() : 42;
+        return oreesp != null ? oreesp.distance.wo().intValue() : 42;
     }
 
     public static boolean mk() {
@@ -235,6 +235,6 @@ public final class OreESP extends Module {
 
     public static float ml() {
         OreESP oreesp = Client.a.g().c(OreESP.class);
-        return oreesp != null && oreesp.isEnabled() ? oreesp.aqe.wo().floatValue() / 255.0F : 1.0F;
+        return oreesp != null && oreesp.isEnabled() ? oreesp.worldOpacity.wo().floatValue() / 255.0F : 1.0F;
     }
 }

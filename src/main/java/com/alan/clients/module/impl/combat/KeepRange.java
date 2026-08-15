@@ -22,18 +22,18 @@ import net.minecraft.util.MathHelper;
 
 @ModuleInfo(aliases = {"module.combat.keeprange.name", "S Tap"}, description = "module.combat.keeprange.description", category = Category.COMBAT)
 public final class KeepRange extends Module {
-    private final NumberValue lK = new NumberValue("Range", this, 3, 0, 6, 0.1);
-    private final BooleanValue lL = new BooleanValue("Disable Near Edge", this, true);
-    private final NumberValue lM = new NumberValue("Edge Range", this, 5, 0, 6, 1, () -> !this.lL.wo());
-    private final ModeValue lN = new ModeValue("Mode", this).add(new SubMode("BackWards")).add(new SubMode("Stop")).setDefault("Stop");
-    private final NumberValue lO = new NumberValue("Combo To Start", this, 2, 0, 6, 1);
+    private final NumberValue range = new NumberValue("Range", this, 3, 0, 6, 0.1);
+    private final BooleanValue disableNearEdge = new BooleanValue("Disable Near Edge", this, true);
+    private final NumberValue edgeRange = new NumberValue("Edge Range", this, 5, 0, 6, 1, () -> !this.disableNearEdge.wo());
+    private final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("BackWards")).add(new SubMode("Stop")).setDefault("Stop");
+    private final NumberValue comboToStart = new NumberValue("Combo To Start", this, 2, 0, 6, 1);
     private boolean lP;
     private int lQ;
     @EventLink
-    public final Listener<GameEvent> lR = var1 -> {
+    public final Listener<GameEvent> onGame = var1 -> {
         if (aEg.thePlayer.onGround) {
             this.lP = false;
-            int i = this.lM.wo().intValue();
+            int i = this.edgeRange.wo().intValue();
 
             for (int j = -i; j <= i; j++) {
                 for (int k = -i; k <= i; k++) {
@@ -48,14 +48,14 @@ public final class KeepRange extends Module {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> lS = var1 -> {
+    public final Listener<MoveInputEvent> onMoveInput = var1 -> {
         EntityLivingBase entitylivingbase = bv.e(10.0);
-        double d0 = this.lK.wo().doubleValue();
+        double d0 = this.range.wo().doubleValue();
         if (aEg.thePlayer.aY <= 7) {
             d0 -= 0.2;
         }
 
-        if (entitylivingbase != null && (!this.lP || !this.lL.wo())) {
+        if (entitylivingbase != null && (!this.lP || !this.disableNearEdge.wo())) {
             if (entitylivingbase.hurtTime > 0) {
                 this.lQ++;
             }
@@ -64,7 +64,7 @@ public final class KeepRange extends Module {
                 this.lQ = 0;
             }
 
-            if (this.lQ > this.lO.wo().intValue() * 8 || this.lO.wo().intValue() <= 0) {
+            if (this.lQ > this.comboToStart.wo().intValue() * 8 || this.comboToStart.wo().intValue() <= 0) {
                 if (aih.v(entitylivingbase) < d0 - 0.05) {
                     float f = var1.getForward();
                     float f1 = var1.getStrafe();
@@ -92,7 +92,7 @@ public final class KeepRange extends Module {
                     }
 
                     label63: {
-                        String s = this.lN.wo().getName();
+                        String s = this.mode.wo().getName();
                         byte b0 = -1;
                         switch (s.hashCode()) {
                             case -963780432:

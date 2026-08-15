@@ -14,7 +14,7 @@ import net.minecraft.util.BlockPos;
 public class vq extends Mode<Scaffold> {
     private int ajX = 5;
     @EventLink
-    public final Listener<PreMotionEvent> ajY = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (aEg.gameSettings.keyBindJump.isKeyDown() && aih.ay(2) && !MoveUtil.isMoving()) {
             if (aEg.thePlayer.posY % 1.0 <= 0.00153598) {
                 aEg.thePlayer.setPosition(aEg.thePlayer.posX, Math.floor(aEg.thePlayer.posY), aEg.thePlayer.posZ);
@@ -30,7 +30,7 @@ public class vq extends Mode<Scaffold> {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> ajZ = var0 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         Packet packet = var0.dq();
         if (MoveUtil.isMoving()
             && aEg.thePlayer.motionY > -0.09800000190734864

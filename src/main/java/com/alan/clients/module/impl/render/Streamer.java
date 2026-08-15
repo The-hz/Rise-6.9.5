@@ -21,8 +21,8 @@ extends Module {
     public final BooleanValue name = new BooleanValue("Name", (Module)this, (Boolean)true);
     public final StringValue replacement = new StringValue("Replacement", (Module)this, "You");
     @EventLink
-    public final Listener<PacketReceiveEvent> apK = packetReceiveEvent -> {
-        Packet<?> packet = packetReceiveEvent.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = packetReceiveEvent -> {
+        Packet<?> packet = packetReceiveEvent.getPacket();
         if (packet instanceof c && ((Boolean)this.name.wo()).booleanValue()) {
             c c2 = (c)packet;
             IChatComponent iChatComponent = c2.getChatComponent();
@@ -31,11 +31,11 @@ extends Module {
                 s s2 = new s(string);
                 c2.l((IChatComponent)s2);
             }
-            packetReceiveEvent.e((Packet<?>)c2);
+            packetReceiveEvent.setPacket((Packet<?>)c2);
         }
     };
-    @EventLink(cH=4)
-    public final Listener<Render2DEvent> apL = render2DEvent -> {
+    @EventLink(value=4)
+    public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         for (NetworkPlayerInfo networkPlayerInfo : aEg.getNetHandler().getPlayerInfoMap()) {
             if (networkPlayerInfo.getGameProfile().getName().length() < 3 || networkPlayerInfo.getDisplayName() == null) continue;
             networkPlayerInfo.setDisplayName((IChatComponent)new s(networkPlayerInfo.getDisplayName().getFormattedText().replaceFirst(Streamer.aEg.thePlayer.getGameProfile().getName(), (String)this.replacement.wo())));

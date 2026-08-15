@@ -51,7 +51,7 @@ public final class Script {
                 throw new ScriptException("Empty script");
             }
 
-            this.engine = Client.a.l().createEngine();
+            this.engine = Client.a.getScriptManager().createEngine();
             this.apiHandler = new ScriptHandler();
             this.engine.put("script", this.apiHandler);
             this.engine.eval(this.code);

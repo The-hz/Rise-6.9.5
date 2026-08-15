@@ -27,22 +27,22 @@ public class abo extends abl {
     }
 
     @Override
-    public void a(Vector2d var1, int var2, int var3, float var4) {
-        this.apP = var1;
+    public void draw(Vector2d var1, int var2, int var3, float var4) {
+        this.position = var1;
         this.aza = 105.0;
         this.azb = 120.0;
-        ColorValue colorvalue = (ColorValue)this.ayC;
-        String s = ahd.ce(this.ayC.getName());
+        ColorValue colorvalue = (ColorValue)this.value;
+        String s = ahd.ce(this.value.getName());
         float f = gb.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 4;
-        gb.MAIN.a(16, gd.REGULAR).a(s, this.apP.x, this.apP.y, abw.SECONDARY_TEXT.pW());
-        RenderUtil.roundedRectangle(this.apP.x + f, this.apP.y, 15.0, 7.0, 2.5, colorvalue.wo());
-        this.jy = this.ayU ? 110.0 : 15.0;
+        gb.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.pW());
+        RenderUtil.roundedRectangle(this.position.x + f, this.position.y, 15.0, 7.0, 2.5, colorvalue.wo());
+        this.height = this.ayU ? 110.0 : 15.0;
         if (this.ayU) {
-            double d0 = this.apP.x + 0.5 + 10.0 + f + 8.0;
-            double d1 = this.apP.y + 0.5;
-            RenderUtil.dropShadow(10, (float)d0, (float)d1, (float)this.aza, (float)this.azb - 15.0F, 40.0, this.getStandardClickGUI().axV * 2);
-            RenderUtil.roundedRectangle(d0 - 0.5, this.apP.y, this.aza, this.azb - 15.0, this.getStandardClickGUI().axV - 3, abw.SECONDARY.pV());
-            RenderUtil.roundedRectangle(d0, d1, this.aza - 1.0, this.azb - 1.0 - 15.0, this.getStandardClickGUI().axV - 3, abw.BACKGROUND.pV());
+            double d0 = this.position.x + 0.5 + 10.0 + f + 8.0;
+            double d1 = this.position.y + 0.5;
+            RenderUtil.dropShadow(10, (float)d0, (float)d1, (float)this.aza, (float)this.azb - 15.0F, 40.0, this.getStandardClickGUI().round * 2);
+            RenderUtil.roundedRectangle(d0 - 0.5, this.position.y, this.aza, this.azb - 15.0, this.getStandardClickGUI().round - 3, abw.SECONDARY.pV());
+            RenderUtil.roundedRectangle(d0, d1, this.aza - 1.0, this.azb - 1.0 - 15.0, this.getStandardClickGUI().round - 3, abw.BACKGROUND.pV());
             double d2 = this.azb * 0.55;
             RenderUtil.a(d0, d1, this.aza - 1.0, d2, 7.0, Color.WHITE, this.azd, false);
             RenderUtil.a(d0 - 0.5, d1, this.aza - 1.0 + 1.0, d2 + 0.5, 0.5, Color.BLACK, new Color(0, 0, 0, 0), true);
@@ -50,17 +50,17 @@ public class abo extends abl {
             double d4 = d0 + d3;
             double d5 = d1 + d3 + d2 - 5.0;
             double d6 = this.aza - d3 * 2.0;
-            RenderUtil.rainbowRectangle(d4, d5 + 2.5, d6, this.getStandardClickGUI().axV - 5);
+            RenderUtil.rainbowRectangle(d4, d5 + 2.5, d6, this.getStandardClickGUI().round - 5);
             RenderUtil.dropShadow(
                 30,
                 (float)(d0 + d3),
-                (float)(d1 + d2 + d3 + d3 + this.getStandardClickGUI().axV - 11.0),
+                (float)(d1 + d2 + d3 + d3 + this.getStandardClickGUI().round - 11.0),
                 15.0,
                 15.5,
                 40.0,
-                this.getStandardClickGUI().axV / 2.0F
+                this.getStandardClickGUI().round / 2.0F
             );
-            RenderUtil.roundedRectangle(d0 + d3, d1 + d2 + d3 + d3 + this.getStandardClickGUI().axV - 11.0, 15.0, 15.5, 3.5, colorvalue.wo());
+            RenderUtil.roundedRectangle(d0 + d3, d1 + d2 + d3 + d3 + this.getStandardClickGUI().round - 11.0, 15.0, 15.5, 3.5, colorvalue.wo());
             if (this.ayV) {
                 this.azc = new Vector2f((float)(var2 - d0), (float)(var3 - d1));
                 this.azc.x = MathHelper.clamp_float(this.azc.x, 0.0F, (float)this.aza);
@@ -76,19 +76,19 @@ public class abo extends abl {
             }
 
             RenderUtil.roundedRectangle(
-                d4 + this.ayZ - this.getStandardClickGUI().axV / 2.0F + 0.5,
+                d4 + this.ayZ - this.getStandardClickGUI().round / 2.0F + 0.5,
                 d5 + 0.5,
-                this.getStandardClickGUI().axV - 1,
-                this.getStandardClickGUI().axV - 1,
-                this.getStandardClickGUI().axV / 3.0F + 1.0F,
+                this.getStandardClickGUI().round - 1,
+                this.getStandardClickGUI().round - 1,
+                this.getStandardClickGUI().round / 3.0F + 1.0F,
                 this.azd
             );
             RenderUtil.roundedOutlineRectangle(
-                d4 + this.ayZ - this.getStandardClickGUI().axV / 2.0F + 0.5,
+                d4 + this.ayZ - this.getStandardClickGUI().round / 2.0F + 0.5,
                 d5 + 0.5,
-                this.getStandardClickGUI().axV - 1,
-                this.getStandardClickGUI().axV - 1,
-                this.getStandardClickGUI().axV / 5.0F + 1.0F,
+                this.getStandardClickGUI().round - 1,
+                this.getStandardClickGUI().round - 1,
+                this.getStandardClickGUI().round / 5.0F + 1.0F,
                 1.0,
                 Color.BLACK
             );
@@ -100,7 +100,7 @@ public class abo extends abl {
 
             Color color1 = colorvalue.wo();
             double d7 = d0 + d3 * 2.0 + 15.0;
-            double d8 = d1 + d2 + d3 + d3 + this.getStandardClickGUI().axV - 11.0;
+            double d8 = d1 + d2 + d3 + d3 + this.getStandardClickGUI().round - 11.0;
             gb.MAIN.a(17, gd.REGULAR).c(color1.getRed() + "", d7 + d3, d8, abw.SECONDARY_TEXT.pW());
             gb.MAIN.a(17, gd.REGULAR).c(color1.getGreen() + "", d7 + 30.0, d8, abw.SECONDARY_TEXT.pW());
             gb.MAIN.a(17, gd.REGULAR).c(color1.getBlue() + "", d7 + d3 * 6.0, d8, abw.SECONDARY_TEXT.pW());
@@ -113,30 +113,30 @@ public class abo extends abl {
 
     @Override
     public boolean e(int var1, int var2, int var3) {
-        if (this.apP == null) {
+        if (this.position == null) {
             return false;
         }
 
-        float f = gb.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.ayC.getName())) + 4;
-        this.ayV = this.ayU && agj.c(this.apP.x + 10.0 + f, this.apP.y, this.aza, this.azb * 0.55, var1, var2);
-        this.ayW = this.ayU && agj.c(this.apP.x + 10.0 + f, this.apP.y + this.azb * 0.55, this.aza, 20.0, var1, var2);
-        double d0 = this.apP.x + 14.5 + f;
-        double d1 = this.apP.y + 0.5;
+        float f = gb.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.value.getName())) + 4;
+        this.ayV = this.ayU && agj.c(this.position.x + 10.0 + f, this.position.y, this.aza, this.azb * 0.55, var1, var2);
+        this.ayW = this.ayU && agj.c(this.position.x + 10.0 + f, this.position.y + this.azb * 0.55, this.aza, 20.0, var1, var2);
+        double d0 = this.position.x + 14.5 + f;
+        double d1 = this.position.y + 0.5;
         double d2 = d0 + 32.0;
-        double d3 = d1 + this.azb - 40.0 + this.getStandardClickGUI().axV;
+        double d3 = d1 + this.azb - 40.0 + this.getStandardClickGUI().round;
         if (agj.c(d2, d3, 60.0, 10.0, var1, var2)) {
-            Color color = (Color)this.ayC.wo();
+            Color color = (Color)this.value.wo();
             GuiScreen.setClipboardString(color.getRed() + ", " + color.getBlue() + ", " + color.getGreen());
         } else if (agj.c(d2, d3 + 13.0, 60.0, 10.0, var1, var2)) {
-            Color color1 = (Color)this.ayC.wo();
+            Color color1 = (Color)this.value.wo();
             GuiScreen.setClipboardString(String.format("#%02X%02X%02X", color1.getRed(), color1.getGreen(), color1.getBlue()));
         }
 
         this.ayU = (this.getStandardClickGUI().axX == null || this.ayU)
             && (
                 this.ayV
-                    || agj.c(this.apP.x + 10.0 + f, this.apP.y + this.azb * 0.55, this.aza, 52.0, var1, var2)
-                    || !this.ayU && agj.c(this.apP.x, this.apP.y - 3.5, this.getStandardClickGUI().width - 70, this.jy, var1, var2)
+                    || agj.c(this.position.x + 10.0 + f, this.position.y + this.azb * 0.55, this.aza, 52.0, var1, var2)
+                    || !this.ayU && agj.c(this.position.x, this.position.y - 3.5, this.getStandardClickGUI().width - 70, this.height, var1, var2)
             );
         return false;
     }
@@ -147,10 +147,10 @@ public class abo extends abl {
     }
 
     @Override
-    public void ci() {
+    public void released() {
     }
 
     @Override
-    public void b(char var1, int var2) {
+    public void key(char var1, int var2) {
     }
 }

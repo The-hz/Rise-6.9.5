@@ -42,8 +42,8 @@ public final class ahv {
     private final ArrayList<ahx> aNL = new ArrayList();
     private ArrayList<ahy> aNM = new ArrayList();
     private final ArrayList<ahx> aNN = new ArrayList();
-    private final double aNO = 9.5;
-    private final boolean aNP = true;
+    private final double minDistanceSquared = 9.5;
+    private final boolean nearest = true;
     private final ahy aNQ;
     private final ahy aNR;
     private static final ahy[] aNS = new ahy[]{new ahy(1.0, 0.0, 0.0), new ahy(-1.0, 0.0, 0.0), new ahy(0.0, 0.0, 1.0), new ahy(0.0, 0.0, -1.0)};
@@ -53,15 +53,15 @@ public final class ahv {
         this.aNR = ahy3.n(0.0, 0.0, 0.0).uX();
     }
 
-    public ArrayList<ahy> uQ() {
+    public ArrayList<ahy> getPath() {
         return this.aNM;
     }
 
     public void uR() {
-        this.o(1000, 4);
+        this.compute(1000, 4);
     }
 
-    public void o(int n2, int n3) {
+    public void compute(int n2, int n3) {
         this.aNM.clear();
         this.aNL.clear();
         ArrayList<ahy> arrayList = new ArrayList<ahy>();
@@ -85,15 +85,15 @@ public final class ahv {
                 this.aNN.add(ahx2);
                 for (ahy ahy4 : aNS) {
                     ahy ahy5 = ahx2.uS().d(ahy4).uX();
-                    if (ahv.a(ahy5, false) && this.a(ahx2, ahy5, 0.0)) break block0;
+                    if (ahv.checkPositionValidity(ahy5, false) && this.a(ahx2, ahy5, 0.0)) break block0;
                 }
-            } while ((!ahv.a(ahy3 = ahx2.uS().n(0.0, 1.0, 0.0).uX(), false) || !this.a(ahx2, ahy3, 0.0)) && (!ahv.a(ahy2 = ahx2.uS().n(0.0, -1.0, 0.0).uX(), false) || !this.a(ahx2, ahy2, 0.0)));
+            } while ((!ahv.checkPositionValidity(ahy3 = ahx2.uS().n(0.0, 1.0, 0.0).uX(), false) || !this.a(ahx2, ahy3, 0.0)) && (!ahv.checkPositionValidity(ahy2 = ahx2.uS().n(0.0, -1.0, 0.0).uX(), false) || !this.a(ahx2, ahy2, 0.0)));
         }
         this.aNN.sort(new ahw());
         this.aNM = this.aNN.get(0).uQ();
     }
 
-    public static boolean a(ahy ahy2, boolean bl) {
+    public static boolean checkPositionValidity(ahy ahy2, boolean bl) {
         return ahv.a((int)ahy2.getX(), (int)ahy2.getY(), (int)ahy2.getZ(), bl);
     }
 
@@ -109,7 +109,7 @@ public final class ahv {
     }
 
     private static boolean o(BlockPos blockPos) {
-        Block block = aih.q(blockPos);
+        Block block = aih.block(blockPos);
         if (block.isFullBlock()) return true;
         if (block instanceof BlockSlab) return true;
         if (block instanceof BlockStairs) return true;

@@ -10,8 +10,8 @@ import net.minecraft.network.play.client.C13PacketPlayerAbilities;
 
 public class jr extends Mode<Disabler> {
     @EventLink
-    public final Listener<StrafeEvent> xr = var1x -> {
-        if (this.wj().wJ.wo()) {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
+        if (this.getParent().deprecated.wo()) {
             if (aEg.thePlayer.ticksExisted % 5 == 0) {
                 PlayerCapabilities playercapabilities = new PlayerCapabilities();
                 playercapabilities.isFlying = true;

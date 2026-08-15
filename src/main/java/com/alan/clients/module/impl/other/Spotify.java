@@ -81,25 +81,25 @@ import org.json.JSONObject;
 @gk
 @ModuleInfo(aliases = "module.other.spotify.name", description = "module.other.spotify.description", category = Category.RENDER)
 public class Spotify extends Module {
-    private final ModeValue VS = new ModeValue("Music Service", this).add(new SubMode("Cider")).add(new SubMode("Spotify")).setDefault("Cider");
+    private final ModeValue musicService = new ModeValue("Music Service", this).add(new SubMode("Cider")).add(new SubMode("Spotify")).setDefault("Cider");
     public final DragValue positionValue = new DragValue("Position", this, new Vector2d(200.0, 200.0));
-    private final NumberValue VU = new NumberValue("Refresh Ticks", this, 10, 1, 20, 1);
-    private final BooleanValue VV = new BooleanValue("Debug", this, false);
+    private final NumberValue refreshTicks = new NumberValue("Refresh Ticks", this, 10, 1, 20, 1);
+    private final BooleanValue debug = new BooleanValue("Debug", this, false);
     private final BooleanValue VW = new BooleanValue("Show Lyrics (Spotify)", this, true);
-    private final NumberValue VX = new NumberValue("Lyric Lines", this, 1, 1, 12, 1);
-    private final ModeValue VY = new ModeValue("Lyrics Provider", this)
+    private final NumberValue lyricLines = new NumberValue("Lyric Lines", this, 1, 1, 12, 1);
+    private final ModeValue lyricsProvider = new ModeValue("Lyrics Provider", this)
         .add(new SubMode("LRCLIB"))
         .add(new SubMode("TTML (Apple-style)"))
         .add(new SubMode("Enhanced LRC (word-timed)"))
         .add(new SubMode("Custom"))
         .setDefault("LRCLIB");
-    private final StringValue VZ = new StringValue(
-        "Lyrics Endpoint URL", this, "", () -> !"Spotify".equals(this.VS.wo().getName()) || "LRCLIB".equals(this.VY.wo().getName())
+    private final StringValue lyricsEndpointURL = new StringValue(
+        "Lyrics Endpoint URL", this, "", () -> !"Spotify".equals(this.musicService.wo().getName()) || "LRCLIB".equals(this.lyricsProvider.wo().getName())
     );
-    private final StringValue Wa = new StringValue(
-        "Lyrics Endpoint Header", this, "", () -> !"Spotify".equals(this.VS.wo().getName()) || "LRCLIB".equals(this.VY.wo().getName())
+    private final StringValue lyricsEndpointHeader = new StringValue(
+        "Lyrics Endpoint Header", this, "", () -> !"Spotify".equals(this.musicService.wo().getName()) || "LRCLIB".equals(this.lyricsProvider.wo().getName())
     );
-    private final BooleanValue Wb = new BooleanValue("Karaoke Fill", this, true);
+    private final BooleanValue karaokeFill = new BooleanValue("Karaoke Fill", this, true);
     private final NumberValue Wc = new NumberValue("Karaoke Speed (x)", this, 1.25, 0.25, 3.0, 0.05);
     public String Wd = "";
     public String We = "Loading...";
@@ -115,7 +115,7 @@ public class Spotify extends Module {
     public int Wn = -1;
     public gb Wo = gb.MAIN;
     public static boolean Wp = false;
-    public final File Wq = new File(afr.aHy, "data");
+    public final File Wq = new File(afr.DIRECTORY, "data");
     private static final String Wr = "spotify.json";
     private float Ws = 0.0F;
     private final float Wt = 105.0F;
@@ -186,8 +186,8 @@ public class Spotify extends Module {
     private long XG = 0L;
     private float XH = 0.0F;
     @EventLink
-    public final Listener<Render2DEvent> XI = var1 -> {
-        if (this.VV.wo()) {
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
+        if (this.debug.wo()) {
             afi.b("Song: " + this.We);
         }
 
@@ -216,7 +216,7 @@ public class Spotify extends Module {
         }
 
         float f2 = flag1 ? 56.0F : 65.0F;
-        int l = Math.max(2, this.VX.wo().intValue());
+        int l = Math.max(2, this.lyricLines.wo().intValue());
         float f3 = this.hO();
         int i1 = 0;
         if (flag) {
@@ -331,8 +331,8 @@ public class Spotify extends Module {
                         i * (this.positionValue.aHe.getX() - 75.0) / Math.max(1, this.Wl),
                         6.0,
                         3.0,
-                        this.rz().j(new Vector2d(d1, 0.0)),
-                        this.rz().j(new Vector2d(d1 + this.positionValue.aHe.getX() - 150.0, 0.0)),
+                        this.rz().getAccentColor(new Vector2d(d1, 0.0)),
+                        this.rz().getAccentColor(new Vector2d(d1 + this.positionValue.aHe.getX() - 150.0, 0.0)),
                         false
                     );
                     double d2 = d1 + this.positionValue.aHe.getX() - 75.0;
@@ -356,7 +356,7 @@ public class Spotify extends Module {
                         int i2 = (int)(128.0F * f13);
                         this.a("Lyrics", (float)d4, (float)d8, 12, new Color(255, 255, 255, i2).getRGB());
                         int j2 = this.hW();
-                        int k2 = Math.max(2, this.VX.wo().intValue());
+                        int k2 = Math.max(2, this.lyricLines.wo().intValue());
                         int l2 = Math.max(0, j2 - k2);
                         int i3 = Math.max(0, (k2 - 1) / 2);
                         int j3 = this.WA >= 0 ? this.a(this.WA - i3, 0, l2) : 0;
@@ -415,7 +415,7 @@ public class Spotify extends Module {
 
                                 sl sl = this.Wx && j4 < this.Wy.size() ? this.w(j4) : null;
                                 float f25;
-                                if (this.Wb.wo() && sl != null) {
+                                if (this.karaokeFill.wo() && sl != null) {
                                     f25 = this.a(sl, j4, i, j5, f23, f24);
                                 } else {
                                     f25 = 0.0F;
@@ -434,7 +434,7 @@ public class Spotify extends Module {
                                         RenderUtil.g(d4, f19 + f22 - 2.0F, f29, f28 + 4.0F);
                                         this.a(s2, (float)d4, f19 + f22, j5, f23, l5);
                                         RenderUtil.g(d9, d10, d11, d12);
-                                    } else if (!this.Wb.wo()) {
+                                    } else if (!this.karaokeFill.wo()) {
                                         int i6 = new Color(255, 255, 255, 255).getRGB();
                                         this.a(s2, (float)d4, f19 + f22, j5, f23, i6);
                                     }
@@ -462,14 +462,14 @@ public class Spotify extends Module {
                         air.disable();
                     }
 
-                    if (this.VS.wo().getName().equals("Spotify") && (this.Wd == null || this.Wd.isEmpty())) {
+                    if (this.musicService.wo().getName().equals("Spotify") && (this.Wd == null || this.Wd.isEmpty())) {
                         ;
                     }
                 }
             );
     };
     @EventLink
-    public final Listener<TickEvent> XJ = var1 -> this.hV++;
+    public final Listener<TickEvent> onTick = var1 -> this.hV++;
 
     public Spotify() {
     }
@@ -521,7 +521,7 @@ public class Spotify extends Module {
     }
 
     private void hR() {
-        if ("Spotify".equals(this.VS.wo().getName())) {
+        if ("Spotify".equals(this.musicService.wo().getName())) {
             if (!this.Xb) {
                 boolean flag = this.Wd == null || this.Wd.isEmpty() || this.Xf > 0L;
                 if (flag && this.hQ()) {
@@ -569,7 +569,7 @@ public class Spotify extends Module {
     }
 
     private float e(String var1, int var2) {
-        return this.C(var1) ? 9 * this.v(var2) : gb.MAIN.a(var2, gd.BOLD).tq();
+        return this.C(var1) ? 9 * this.v(var2) : gb.MAIN.a(var2, gd.BOLD).height();
     }
 
     private void a(String var1, float var2, double var3, int var5, int var6) {
@@ -832,7 +832,7 @@ public class Spotify extends Module {
                 }
             }
         } catch (SocketException socketexception) {
-            if (this.VV.wo()) {
+            if (this.debug.wo()) {
                 afi.c("Cider connection issue: " + socketexception.getMessage());
             }
         } catch (Exception exception) {
@@ -924,11 +924,11 @@ public class Spotify extends Module {
                 this.Wd = "";
             }
         } catch (SocketException socketexception) {
-            if (this.VV.wo()) {
+            if (this.debug.wo()) {
                 afi.c("Spotify connection issue: " + socketexception.getMessage());
             }
         } catch (Exception exception) {
-            if (this.VV.wo()) {
+            if (this.debug.wo()) {
                 exception.printStackTrace();
             }
         }
@@ -951,7 +951,7 @@ public class Spotify extends Module {
             }
 
             String s = var2.contains(",") ? var2.split(",")[0].trim() : var2.trim();
-            if (!"LRCLIB".equals(this.VY.wo().getName())) {
+            if (!"LRCLIB".equals(this.lyricsProvider.wo().getName())) {
                 boolean flag = this.a(var1, var2, s, var3, var4);
                 if (flag) {
                     return;
@@ -998,11 +998,11 @@ public class Spotify extends Module {
                     this.Ww = !this.Wz.isEmpty();
                     this.WA = this.hV();
                 }
-            } else if (this.VV.wo()) {
+            } else if (this.debug.wo()) {
                 afi.c("LRCLIB: no lyrics for " + var1 + " - " + s);
             }
         } catch (Throwable throwable) {
-            if (this.VV.wo()) {
+            if (this.debug.wo()) {
                 afi.c("Lyrics fetch error: " + throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
             }
         }
@@ -1010,11 +1010,11 @@ public class Spotify extends Module {
 
     private boolean a(String var1, String var2, String var3, String var4, long var5) {
         try {
-            String s = this.VY.wo().getName();
-            String s1 = this.VZ.wo();
+            String s = this.lyricsProvider.wo().getName();
+            String s1 = this.lyricsEndpointURL.wo();
             if (s1 != null && !s1.trim().isEmpty()) {
                 String s2 = this.a(s1, var1, var3, var2, var4);
-                String s3 = this.Wa.wo();
+                String s3 = this.lyricsEndpointHeader.wo();
                 String s4 = this.h(s2, s3);
                 if (s4 == null) {
                     return false;
@@ -1090,7 +1090,7 @@ public class Spotify extends Module {
             }
             return false;
         } catch (Throwable throwable) {
-            if (this.VV.wo()) {
+            if (this.debug.wo()) {
                 afi.c("Lyrics endpoint provider error: " + throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
             }
 
@@ -1177,7 +1177,7 @@ public class Spotify extends Module {
 
                         flag = false;
                     } catch (SocketException socketexception) {
-                        if (this.VV.wo()) {
+                        if (this.debug.wo()) {
                             afi.c("Custom lyrics connection issue: " + socketexception.getMessage());
                         }
 
@@ -1185,7 +1185,7 @@ public class Spotify extends Module {
                         flag = false;
                         break label223;
                     } catch (Throwable throwable6) {
-                        if (this.VV.wo()) {
+                        if (this.debug.wo()) {
                             afi.c("Custom lyrics HTTP error: " + throwable6.getClass().getSimpleName() + ": " + throwable6.getMessage());
                         }
 
@@ -1407,7 +1407,7 @@ public class Spotify extends Module {
                     return jsonobject;
                 }
             } catch (Exception exception) {
-                if (this.VV.wo()) {
+                if (this.debug.wo()) {
                     afi.c("LRCLIB exact lookup failed: " + exception.getClass().getSimpleName());
                 }
             }
@@ -1436,13 +1436,13 @@ public class Spotify extends Module {
                     }
                 }
             } catch (Exception exception) {
-                if (this.VV.wo()) {
+                if (this.debug.wo()) {
                     afi.c("LRCLIB search failed: " + exception.getClass().getSimpleName());
                 }
             }
         }
 
-        if (this.VV.wo() && jsonobject != null) {
+        if (this.debug.wo() && jsonobject != null) {
             afi.c(
                 "LRCLIB matched: "
                     + jsonobject.optString("trackName", "?")
@@ -1466,7 +1466,7 @@ public class Spotify extends Module {
 
             arraylist.add("https://lrclib.net/api/search?q=" + URLEncoder.encode((var1 == null ? "" : var1) + " " + (var2 == null ? "" : var2), "UTF-8"));
         } catch (UnsupportedEncodingException unsupportedencodingexception) {
-            if (this.VV.wo()) {
+            if (this.debug.wo()) {
                 afi.c("LRCLIB URL encoding failed: " + unsupportedencodingexception.getMessage());
             }
         }
@@ -1561,7 +1561,7 @@ public class Spotify extends Module {
         httpurlconnection.setReadTimeout(6000);
         int i = httpurlconnection.getResponseCode();
         if (i != 200) {
-            if (this.VV.wo()) {
+            if (this.debug.wo()) {
                 afi.c("LRCLIB object HTTP " + i);
             }
 
@@ -1583,7 +1583,7 @@ public class Spotify extends Module {
         httpurlconnection.setReadTimeout(6000);
         int i = httpurlconnection.getResponseCode();
         if (i != 200) {
-            if (this.VV.wo()) {
+            if (this.debug.wo()) {
                 afi.c("LRCLIB search HTTP " + i);
             }
 
@@ -2094,13 +2094,13 @@ public class Spotify extends Module {
                 return this.Wd;
             }
         } catch (SocketException socketexception) {
-            if (this.VV.wo()) {
+            if (this.debug.wo()) {
                 afi.c("Spotify token connection issue: " + socketexception.getMessage());
             }
 
             return null;
         } catch (Exception exception) {
-            if (this.VV.wo()) {
+            if (this.debug.wo()) {
                 exception.printStackTrace();
             }
 
@@ -2145,7 +2145,7 @@ public class Spotify extends Module {
                         String s2 = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: 107\r\n\r\n<html><body><h2>Authorization successful!</h2><p>You can now re-enable the Music Player module.</p></body></html>";
                         outputstream.write(s2.getBytes());
                     } catch (SocketException socketexception) {
-                        if (this.VV.wo()) {
+                        if (this.debug.wo()) {
                             afi.c("Auth callback connection issue: " + socketexception.getMessage());
                         }
                     }
@@ -2155,11 +2155,11 @@ public class Spotify extends Module {
                         break;
                     }
                 } catch (SocketException socketexception1) {
-                    if (this.VV.wo()) {
+                    if (this.debug.wo()) {
                         afi.c("Auth callback connection issue: " + socketexception1.getMessage());
                     }
                 } catch (Throwable throwable) {
-                    if (this.VV.wo()) {
+                    if (this.debug.wo()) {
                         throwable.printStackTrace();
                     }
                 }
@@ -2187,7 +2187,7 @@ public class Spotify extends Module {
                 return ImageIO.read(inputstream);
             }
         } catch (Throwable throwable1) {
-            if (this.VV.wo()) {
+            if (this.debug.wo()) {
                 afi.c("Artwork fetch issue: " + throwable1.getClass().getSimpleName() + ": " + throwable1.getMessage());
             }
 
@@ -2227,7 +2227,7 @@ public class Spotify extends Module {
                 try {
                     this.Wn = TextureUtil.uploadTextureImageAllocate(TextureUtil.glGenTextures(), bufferedimage, true, false);
                 } catch (Throwable throwable) {
-                    if (this.VV.wo()) {
+                    if (this.debug.wo()) {
                         afi.c("Artwork upload issue: " + throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
                     }
                 } finally {
@@ -2261,7 +2261,7 @@ public class Spotify extends Module {
                     try {
                         this.hP();
                         this.hR();
-                        String s = this.VS.wo().getName();
+                        String s = this.musicService.wo().getName();
                         if ("Cider".equals(s)) {
                             this.hT();
                         } else if (this.Wd != null && !this.Wd.isEmpty()) {
@@ -2271,7 +2271,7 @@ public class Spotify extends Module {
                         throwable.printStackTrace();
                     }
 
-                    long i = Math.max(25L, this.VU.wo().intValue() * 50L);
+                    long i = Math.max(25L, this.refreshTicks.wo().intValue() * 50L);
 
                     try {
                         Thread.sleep(i);
@@ -2344,12 +2344,12 @@ public class Spotify extends Module {
         ChatStyle chatstyle = new ChatStyle()
             .setChatClickEvent(new ClickEvent(Action.OPEN_URL, "https://youtu.be/-wbsOmDxBqk"))
             .setUnderlined(true)
-            .setColor(this.rz().rH());
+            .setColor(this.rz().getChatAccentColor());
         sxxOnEnable.setChatStyle(chatstyle);
         sx.appendSibling(sxxOnEnable);
         this.Xg.thePlayer.addChatMessage(sx);
         this.hP();
-        String s1 = this.VS.wo().getName();
+        String s1 = this.musicService.wo().getName();
         if ("Spotify".equals(s1)) {
             if (!this.hQ()) {
                 afi.b("Spotify: Missing client credentials. Set them before connecting.");

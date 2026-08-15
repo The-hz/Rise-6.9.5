@@ -11,7 +11,7 @@ public class zj extends SecurityFeature
 {
 
 
-    public boolean nG() {
+    public boolean run() {
         while (true) {
             Label_0335: {
                 if (LastConnectionComponent.ip == null || !System.getProperty("os.name").toLowerCase().contains("win")) {

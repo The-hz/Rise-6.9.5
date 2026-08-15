@@ -21,9 +21,9 @@ import net.minecraft.util.BlockPos;
 public final class WatchdogBlinkNoFall extends Mode<NoFall> {
     public int aiX = 0;
     public boolean IJ;
-    public final BooleanValue aiY = new BooleanValue("Packet", this, true);
+    public final BooleanValue packet = new BooleanValue("Packet", this, true);
     @EventLink
-    public final Listener<PreMotionEvent> aiZ = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aih.vh() && !this.e(Scaffold.class).isEnabled()) {
             if (aEg.thePlayer.tR == 1 && aEg.thePlayer.motionY < 0.0 && aih.vh() && !aih.ad(3.0)) {
                 this.IJ = true;
@@ -51,7 +51,7 @@ public final class WatchdogBlinkNoFall extends Mode<NoFall> {
         }
     };
     @EventLink
-    public final Listener<Render2DEvent> aja = var1x -> {
+    public final Listener<Render2DEvent> onRender2D = var1x -> {
         if (this.aiX > 0) {
             aEg.fontRendererObj.c("Blinking: " + this.aiX, aEg.jY.getScaledWidth() / 2.0, aEg.jY.getScaledHeight() / 2.0 + 20.0, -1);
         }

@@ -29,32 +29,32 @@ import net.minecraft.client.gui.ScaledResolution;
 import rip.vantage.commons.util.time.a;
 
 public class DragComponent extends Component {
-    private static DragValue bR = null;
-    private static Vector2d bS;
+    private static DragValue selectedValue = null;
+    private static Vector2d offset;
     private static final ArrayList<Module> bT = new ArrayList<>();
     private static final Animation animationAlpha = new Animation(Easing.LINEAR, 600L);
     public static final a bV = new a();
     public static final a bW = new a();
     public static ArrayList<av> bX = new ArrayList<>();
     public static av bY;
-    @EventLink(cH = -2)
-    public final Listener<Render2DEvent> bZ = var0 -> {
+    @EventLink(value = -2)
+    public final Listener<Render2DEvent> onRender2D = var0 -> {
         try {
             ScaledResolution scaledresolution = aEg.jY;
             int i = scaledresolution.getScaledWidth();
             int j = scaledresolution.getScaledHeight();
             boolean flag = aEg.currentScreen instanceof GuiChat;
             if (!flag) {
-                bR = null;
+                selectedValue = null;
             } else {
                 bV.aX();
             }
 
-            animationAlpha.a(Easing.LINEAR);
+            animationAlpha.setEasing(Easing.LINEAR);
             animationAlpha.h(300L);
             animationAlpha.Q(flag ? 100.0 : 0.0);
             if (animationAlpha.sG() <= 0.0 && bV.T(0L)) {
-                bR = null;
+                selectedValue = null;
             }
 
             bT.clear();
@@ -64,11 +64,11 @@ public class DragComponent extends Component {
                 .stream()
                 .filter(var0x -> var0x.isEnabled() && var0x.getValues().stream().anyMatch(var0xx -> var0xx instanceof DragValue))
                 .forEach(bT::add);
-            if (bR != null) {
+            if (selectedValue != null) {
                 Vector2d vector2d = aeb.rU();
-                double d0 = vector2d.x + bS.x;
-                double d1 = vector2d.y + bS.y;
-                bR.atg = new Vector2d(d0, d1);
+                double d0 = vector2d.x + offset.x;
+                double d1 = vector2d.y + offset.y;
+                selectedValue.atg = new Vector2d(d0, d1);
                 bX.clear();
                 double d2 = Client.a.k().rz().qd();
                 bX.add(new av(i / 2.0F, 5.0, at.HORIZONTAL, true, true, true));
@@ -82,7 +82,7 @@ public class DragComponent extends Component {
                 while (iterator.hasNext()) {
                     Optional optional = ((Module)iterator.next()).getValues().stream().filter(var0x -> var0x instanceof DragValue).findFirst();
                     DragValue dragvalue = (DragValue)optional.get();
-                    if (dragvalue != bR) {
+                    if (dragvalue != selectedValue) {
                         bX.add(new av(dragvalue.apP.x + dragvalue.aHe.x + d2, 5.0, at.HORIZONTAL, false, true, false));
                         bX.add(new av(dragvalue.apP.x - d2, 5.0, at.HORIZONTAL, false, false, true));
                         bX.add(new av(dragvalue.apP.y, 5.0, at.VERTICAL, false, false, true));
@@ -97,14 +97,14 @@ public class DragComponent extends Component {
                     switch (as.cc[av.cm.ordinal()]) {
                         case 1:
                             double d3 = Double.MAX_VALUE;
-                            double d4 = -bR.aHe.y;
+                            double d4 = -selectedValue.aHe.y;
 
-                            for (; d4 <= 0.0; d4 += bR.aHe.y / 2.0) {
-                                if ((d4 != -bR.aHe.y / 2.0 || av.cn) && (d4 != -bR.aHe.y || av.cp) && (d4 != 0.0 || av.co)) {
-                                    double d5 = Math.abs(bR.atg.y - (av.ck + d4));
+                            for (; d4 <= 0.0; d4 += selectedValue.aHe.y / 2.0) {
+                                if ((d4 != -selectedValue.aHe.y / 2.0 || av.cn) && (d4 != -selectedValue.aHe.y || av.cp) && (d4 != 0.0 || av.co)) {
+                                    double d5 = Math.abs(selectedValue.atg.y - (av.ck + d4));
                                     if (d5 < av.cl && d5 < d3) {
                                         d3 = d5;
-                                        bR.atg.y = av.ck + d4;
+                                        selectedValue.atg.y = av.ck + d4;
                                         bY = av;
                                         RenderUtil.d(0.0, bY.ck, scaledresolution.getScaledWidth(), 0.5, color);
                                     }
@@ -114,12 +114,12 @@ public class DragComponent extends Component {
                         case 2:
                             double d6 = Double.MAX_VALUE;
 
-                            for (double d7 = -bR.aHe.x; d7 <= 0.0; d7 += bR.aHe.x / 2.0) {
-                                if ((d7 != -bR.aHe.x / 2.0 || av.cn) && (d7 != -bR.aHe.x || av.cp) && (d7 != 0.0 || av.co)) {
-                                    double d8 = Math.abs(bR.atg.x - (av.ck + d7));
+                            for (double d7 = -selectedValue.aHe.x; d7 <= 0.0; d7 += selectedValue.aHe.x / 2.0) {
+                                if ((d7 != -selectedValue.aHe.x / 2.0 || av.cn) && (d7 != -selectedValue.aHe.x || av.cp) && (d7 != 0.0 || av.co)) {
+                                    double d8 = Math.abs(selectedValue.atg.x - (av.ck + d7));
                                     if (d8 < av.cl && d8 < d6) {
                                         d6 = d8;
-                                        bR.atg.x = av.ck + d7;
+                                        selectedValue.atg.x = av.ck + d7;
                                         bY = av;
                                         RenderUtil.d(bY.ck, 0.0, 0.5, scaledresolution.getScaledHeight(), color);
                                     }
@@ -150,7 +150,7 @@ public class DragComponent extends Component {
         }
     };
     @EventLink
-    public final Listener<GuiClickEvent> ca = var0 -> {
+    public final Listener<GuiClickEvent> onGuiClick = var0 -> {
         if (var0.cN() == 0) {
             if (aEg.currentScreen instanceof GuiChat) {
                 Iterator iterator = bT.iterator();
@@ -162,9 +162,9 @@ public class DragComponent extends Component {
                             Vector2d vector2d1 = dragvalue.aHe;
                             float f = var0.cL();
                             float f1 = var0.cM();
-                            if (!dragvalue.aRb && agj.a(vector2d, vector2d1, f, f1)) {
-                                bR = dragvalue;
-                                bS = new Vector2d(vector2d.x - f, vector2d.y - f1);
+                            if (!dragvalue.aRb && agj.mouseOver(vector2d, vector2d1, f, f1)) {
+                                selectedValue = dragvalue;
+                                offset = new Vector2d(vector2d.x - f, vector2d.y - f1);
                             }
                         }
                     }
@@ -173,7 +173,7 @@ public class DragComponent extends Component {
         }
     };
     @EventLink
-    public final Listener<GuiMouseReleaseEvent> cb = var0 -> bR = null;
+    public final Listener<GuiMouseReleaseEvent> onGuiMouseRelease = var0 -> selectedValue = null;
 
     public DragComponent() {
     }

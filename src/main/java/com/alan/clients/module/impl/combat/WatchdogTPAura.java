@@ -36,11 +36,11 @@ import rip.vantage.commons.util.time.a;
 @ModuleInfo(aliases={"Watchdog TP Aura", "WatchdogTPAura"}, description="Teleport-based aura for Hypixel Watchdog", category=Category.COMBAT)
 public final class WatchdogTPAura
 extends Module {
-    private final NumberValue qR = new NumberValue("Range", this, (Number)20, (Number)6, (Number)20, (Number)1);
-    private final BooleanValue qS = new BooleanValue("Players", (Module)this, (Boolean)true);
-    private final BooleanValue qT = new BooleanValue("Hostile", (Module)this, (Boolean)false);
-    private final BooleanValue qU = new BooleanValue("Teammates", (Module)this, (Boolean)false);
-    private final BooleanValue qV = new BooleanValue("Invisibles", (Module)this, (Boolean)true);
+    private final NumberValue range = new NumberValue("Range", this, (Number)20, (Number)6, (Number)20, (Number)1);
+    private final BooleanValue players = new BooleanValue("Players", (Module)this, (Boolean)true);
+    private final BooleanValue hostile = new BooleanValue("Hostile", (Module)this, (Boolean)false);
+    private final BooleanValue teammates = new BooleanValue("Teammates", (Module)this, (Boolean)false);
+    private final BooleanValue invisibles = new BooleanValue("Invisibles", (Module)this, (Boolean)true);
     private boolean qW = true;
     private boolean cR = false;
     private EntityLivingBase jE;
@@ -49,7 +49,7 @@ extends Module {
     private final a qZ = new a();
     private final ConcurrentLinkedQueue<Packet<?>> ra = new ConcurrentLinkedQueue();
     @EventLink
-    public final Listener<PreMotionEvent> rb = preMotionEvent -> {
+    public final Listener<PreMotionEvent> onPreMotion = preMotionEvent -> {
         if (this.qW) {
             this.qW = false;
             return;
@@ -74,13 +74,13 @@ extends Module {
         WatchdogTPAura.aEg.thePlayer.positionUpdateTicks = 20;
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> rc = packetReceiveEvent -> {
-        if (packetReceiveEvent.dq() instanceof S08PacketPlayerPosLook && !this.cR) {
+    public final Listener<PacketReceiveEvent> onPacketReceive = packetReceiveEvent -> {
+        if (packetReceiveEvent.getPacket() instanceof S08PacketPlayerPosLook && !this.cR) {
             this.gw();
         }
     };
-    @EventLink(cH=0)
-    public final Listener<PacketSendEvent> rd = packetSendEvent -> {
+    @EventLink(value=0)
+    public final Listener<PacketSendEvent> onPacketSend = packetSendEvent -> {
         if (this.cR && !packetSendEvent.isCancelled()) {
             Packet<?> packet = packetSendEvent.dq();
             this.ra.add(packet);
@@ -88,14 +88,14 @@ extends Module {
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> re = worldChangeEvent -> {
+    public final Listener<WorldChangeEvent> onWorldChange = worldChangeEvent -> {
         if (this.cR) {
             this.gx();
         }
         this.ra.clear();
     };
     @EventLink
-    public final Listener<PreUpdateEvent> rf = preUpdateEvent -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = preUpdateEvent -> {
         if (this.qX != null && this.cR) {
             WatchdogTPAura.aEg.playerController.syncCurrentPlayItem();
             AttackEvent attackEvent = new AttackEvent(this.qX);
@@ -112,7 +112,7 @@ extends Module {
         }
     };
     @EventLink
-    public final Listener<Render2DEvent> rg = render2DEvent -> {
+    public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         if (this.jE != null && this.cR) {
             ScaledResolution scaledResolution = new ScaledResolution(aEg);
             String string = this.jE.getName();
@@ -126,7 +126,7 @@ extends Module {
     };
 
     private void gv() {
-        List<EntityLivingBase> list = bv.a(((Number)this.qR.wo()).doubleValue(), (boolean)((Boolean)this.qS.wo()), (boolean)((Boolean)this.qV.wo()), false, (boolean)((Boolean)this.qT.wo()), (Boolean)this.qU.wo());
+        List<EntityLivingBase> list = bv.a(((Number)this.range.wo()).doubleValue(), (boolean)((Boolean)this.players.wo()), (boolean)((Boolean)this.invisibles.wo()), false, (boolean)((Boolean)this.hostile.wo()), (Boolean)this.teammates.wo());
         if (list.isEmpty()) {
             this.jE = null;
             return;

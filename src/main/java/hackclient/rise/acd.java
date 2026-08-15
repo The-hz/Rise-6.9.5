@@ -12,8 +12,8 @@ public class acd implements abx, InstanceAccess {
 
     @Override
     public void b(int var1, int var2, float var3) {
-        Vector2f vector2f = this.getStandardClickGUI().oW();
-        Vector2f vector2f1 = this.getStandardClickGUI().oX();
+        Vector2f vector2f = this.getStandardClickGUI().getScale();
+        Vector2f vector2f1 = this.getStandardClickGUI().getPosition();
         double d0 = this.getStandardClickGUI().oY().aym;
         gb.MAIN.a(32, gd.REGULAR).a(Client.b, vector2f.getX() + d0 + 20.0, vector2f.getY() + 20.0F, Color.WHITE.getRGB());
         gb.MAIN

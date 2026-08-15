@@ -19,7 +19,7 @@ public final class PingSpoofComponent extends Component {
     private static final long dM = 10000L;
     private static final long dN = 250L;
     @EventLink
-    public final Listener<PreMotionEvent> dO = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (dJ.T(10000L) && !dK.T(120000L)) {
             a(false);
             dJ.aX();

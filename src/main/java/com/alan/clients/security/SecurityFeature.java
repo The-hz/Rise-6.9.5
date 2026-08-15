@@ -10,5 +10,5 @@ public abstract class SecurityFeature implements InstanceAccess {
         return "";
     }
 
-    public abstract boolean nG();
+    public abstract boolean run();
 }

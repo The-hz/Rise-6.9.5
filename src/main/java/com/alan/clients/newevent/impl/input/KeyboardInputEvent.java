@@ -18,7 +18,7 @@ public final class KeyboardInputEvent extends CancellableEvent {
     }
 
     @Generated
-    public int cO() {
+    public int getKeyCode() {
         return this.keyCode;
     }
 
@@ -28,7 +28,7 @@ public final class KeyboardInputEvent extends CancellableEvent {
     }
 
     @Generated
-    public GuiScreen cQ() {
+    public GuiScreen getGuiScreen() {
         return this.guiScreen;
     }
 

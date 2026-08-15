@@ -10,8 +10,8 @@ public final class aio {
     private float aPq;
 
     public void ju() {
-        this.aIa = ahg.e(this.aIa, this.aPo, this.aPq);
-        this.aIb = ahg.e(this.aIb, this.aPp, this.aPq);
+        this.aIa = ahg.lerp(this.aIa, this.aPo, this.aPq);
+        this.aIb = ahg.lerp(this.aIb, this.aPp, this.aPq);
         if (Math.abs(this.aIa - this.aPo) < 0.05F) {
             this.aIa = this.aPo;
         }

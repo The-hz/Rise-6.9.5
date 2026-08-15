@@ -19,10 +19,10 @@ import net.minecraft.util.EnumFacing;
 
 public class BloxdFlight extends Mode<Flight> {
     @EventLink
-    private final Listener<TeleportEvent> Fq = var0 -> {};
+    private final Listener<TeleportEvent> onTeleport = var0 -> {};
     @EventLink
-    private final Listener<PreMotionEvent> Fr = var1x -> {
-        if (!bb.a(true, true, true, true, true) && !this.e(Scaffold.class).isEnabled()) {
+    private final Listener<PreMotionEvent> onPreMotion = var1x -> {
+        if (!bb.bad(true, true, true, true, true) && !this.e(Scaffold.class).isEnabled()) {
             Random random = new Random();
             float f = random.nextFloat();
             float f1 = random.nextFloat();

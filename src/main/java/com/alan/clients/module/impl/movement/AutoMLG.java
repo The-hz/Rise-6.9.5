@@ -36,16 +36,16 @@ import net.minecraft.util.Vec3;
 
 @ModuleInfo(aliases = "module.movement.automlg.name", description = "module.movement.automlg.description", category = Category.MOVEMENT)
 public class AutoMLG extends Module {
-    private final NumberValue CA = new NumberValue("Fall Distance", this, 4.0, 3.0, 20.0, 0.5);
-    private final NumberValue CB = new NumberValue("Pickup Delay", this, 4, 1, 20, 1);
-    private final BooleanValue CC = new BooleanValue("Auto Pickup", this, true);
-    private final BooleanValue CD = new BooleanValue("Auto Disable", this, false);
+    private final NumberValue fallDistance = new NumberValue("Fall Distance", this, 4.0, 3.0, 20.0, 0.5);
+    private final NumberValue pickupDelay = new NumberValue("Pickup Delay", this, 4, 1, 20, 1);
+    private final BooleanValue autoPickup = new BooleanValue("Auto Pickup", this, true);
+    private final BooleanValue autoDisable = new BooleanValue("Auto Disable", this, false);
     private lt CE = lt.IDLE;
     private int CF = -1;
     private int qH;
     private BlockPos CG;
-    @EventLink(cH = 3)
-    public final Listener<PreUpdateEvent> CH = var1 -> {
+    @EventLink(value = 3)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         if (aEg.thePlayer != null && aEg.theWorld != null && !aEg.thePlayer.isDead) {
             if (this.CE != lt.IDLE && this.CF != -1) {
                 SlotComponent.b(this.CF, true);
@@ -199,13 +199,13 @@ public class AutoMLG extends Module {
     }
 
     private void gV() {
-        if (!(aEg.thePlayer.fallDistance < this.CA.wo().floatValue())
+        if (!(aEg.thePlayer.fallDistance < this.fallDistance.wo().floatValue())
             && !(aEg.thePlayer.motionY >= 0.0)
             && !aEg.thePlayer.isInWater()
             && !aEg.thePlayer.isInLava()
             && !aEg.thePlayer.onGround
             && !aEg.thePlayer.capabilities.isFlying) {
-            int i = aik.e(Items.water_bucket);
+            int i = aik.findItem(Items.water_bucket);
             if (i != -1) {
                 this.CF = i;
                 SlotComponent.b(this.CF, true);
@@ -268,13 +268,13 @@ public class AutoMLG extends Module {
                 this.gS();
             }
         } else {
-            if (this.CC.wo()) {
+            if (this.autoPickup.wo()) {
                 this.CE = lt.PICKUP;
                 this.qH = 0;
             } else {
                 cg.e("Auto MLG", "Water placed successfully!");
                 this.gS();
-                if (this.CD.wo()) {
+                if (this.autoDisable.wo()) {
                     this.toggle();
                 }
             }
@@ -287,7 +287,7 @@ public class AutoMLG extends Module {
         if (itemstack != null && itemstack.getItem() == Items.water_bucket) {
             cg.e("Auto MLG", "MLG successful!");
             this.gS();
-            if (this.CD.wo()) {
+            if (this.autoDisable.wo()) {
                 this.toggle();
             }
         } else {
@@ -298,19 +298,19 @@ public class AutoMLG extends Module {
                 RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 90.0F), 10.0, MovementFix.NORMAL);
             }
 
-            if (this.qH >= this.CB.wo().intValue()) {
+            if (this.qH >= this.pickupDelay.wo().intValue()) {
                 ItemStack itemstack1 = SlotComponent.getItemStack();
                 if (itemstack1 != null && itemstack1.getItem() == Items.bucket && blockpos != null && this.a(itemstack1, blockpos)) {
                     ahj.l(new m());
                     cg.e("Auto MLG", "MLG successful!");
                     this.gS();
-                    if (this.CD.wo()) {
+                    if (this.autoDisable.wo()) {
                         this.toggle();
                     }
                 }
             }
 
-            if (this.qH > this.CB.wo().intValue() + 40) {
+            if (this.qH > this.pickupDelay.wo().intValue() + 40) {
                 cg.e("Auto MLG", "Pickup timed out, resetting");
                 this.gS();
             }

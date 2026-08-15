@@ -13,7 +13,7 @@ import net.minecraft.block.BlockLiquid;
 public class BlocksMCPhase extends Mode<Phase> {
     private int NP = 1;
     @EventLink
-    public final Listener<TickEvent> NQ = var1x -> {
+    public final Listener<TickEvent> onTick = var1x -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             switch (this.NP) {
                 case 1:
@@ -41,7 +41,7 @@ public class BlocksMCPhase extends Mode<Phase> {
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> NR = var0 -> {
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (aEg.thePlayer != null) {
             if (aEg.thePlayer.isSneaking()) {
                 var0.setSpeed(0.179);
@@ -49,17 +49,17 @@ public class BlocksMCPhase extends Mode<Phase> {
         }
     };
     @EventLink
-    public final Listener<BlockAABBEvent> NS = var0 -> {
+    public final Listener<BlockAABBEvent> onBlockAABB = var0 -> {
         if (aEg.thePlayer != null) {
-            if (!(var0.df() instanceof BlockLiquid)) {
-                if (var0.dg().getY() >= aEg.thePlayer.posY) {
-                    var0.a(null);
+            if (!(var0.getBlock() instanceof BlockLiquid)) {
+                if (var0.getBlockPos().getY() >= aEg.thePlayer.posY) {
+                    var0.setBoundingBox(null);
                 }
             }
         }
     };
     @EventLink
-    public final Listener<PushOutOfBlockEvent> NT = var0 -> var0.setCancelled();
+    public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = var0 -> var0.setCancelled();
 
     public BlocksMCPhase(String var1, Phase var2) {
         super(var1, var2);

@@ -24,16 +24,16 @@ public class cg extends Component {
     private static final double hp = (hm.y - hn.y) / 2.0;
     private static final agc hq = gb.MAIN.a(15, gd.BOLD);
     private static final agc hr = gb.MAIN.a(15, gd.LIGHT);
-    @EventLink(cH = 4)
-    public final Listener<Render2DEvent> hs = var1 -> {
+    @EventLink(value = 4)
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (hk != null) {
             boolean flag = hj.T(hk.vV().intValue());
             hl.Q(flag ? 1.1 : 1.0);
             hl.h(500L);
-            hl.a(Easing.EASE_OUT_EXPO);
+            hl.setEasing(Easing.EASE_OUT_EXPO);
             double d0 = hl.sG();
             double d1 = 1.0 - 10.0 * Math.abs(1.0 - hl.sG());
-            if (!hl.kv() || !flag) {
+            if (!hl.isFinished() || !flag) {
                 this.b(gg.REGULAR, 1).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((ho.x + hm.x / 2.0) * (1.0 - d0), (ho.y + hm.y / 2.0) * (1.0 - d0), 0.0);
@@ -48,7 +48,7 @@ public class cg extends Component {
                     RenderUtil.roundedRectangle(d2, d3, d4, d5, 10.0, aip.d(color, (int)(adv.rK().getAlpha() * d1)));
                     RenderUtil.roundedRectangle(ho.x + hp, ho.y + hp, hn.x, hn.y, 6.0, aip.d(Color.WHITE, (int)(255.0 * d1)));
                     hq.b(hk.vT(), ho.x + hp + hn.x + hp, ho.y + hp + 3.0, aip.d(this.rz().rA(), (int)(255.0 * d1)).getRGB());
-                    hr.b(hk.vU(), ho.x + hp + hn.x + hp, ho.y + hp + 0.5 + hp * 0.7 + hq.tq(), aip.d(Color.WHITE, (int)(255.0 * d1)).getRGB());
+                    hr.b(hk.vU(), ho.x + hp + hn.x + hp, ho.y + hp + 0.5 + hp * 0.7 + hq.height(), aip.d(Color.WHITE, (int)(255.0 * d1)).getRGB());
                     GlStateManager.popMatrix();
                 });
                 this.b(gg.BLOOM)
@@ -75,8 +75,8 @@ public class cg extends Component {
             }
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<PreMotionEvent> ht = var0 -> {
+    @EventLink(value = 4)
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (aEg.thePlayer.ticksExisted % 5 == 0) {
             if (!hi.isEmpty() && (hk == null || hj.T(hk.vV() + 200))) {
                 if (hk != null) {

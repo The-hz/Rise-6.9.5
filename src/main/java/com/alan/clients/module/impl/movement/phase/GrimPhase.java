@@ -22,17 +22,17 @@ import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 
 public class GrimPhase extends Mode<Phase> {
     private final List<Packet<?>> NU = new ArrayList<>();
-    private final ModeValue NV = new ModeValue("Release Mode", this)
+    private final ModeValue releaseMode = new ModeValue("Release Mode", this)
         .add(new SubMode("Simple"))
         .add(new SubMode("Double"))
         .add(new SubMode("Desync"))
         .add(new SubMode("None"))
         .setDefault("Simple");
-    private final NumberValue NW = new NumberValue("Semi Packets", this, 2, 1, 15, 1);
+    private final NumberValue semiPackets = new NumberValue("Semi Packets", this, 2, 1, 15, 1);
     private boolean NX;
     private boolean NY;
     @EventLink
-    public final Listener<PacketSendEvent> NZ = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (aEg.thePlayer != null) {
             Packet packet = var1x.dq();
             if (packet instanceof C03PacketPlayer) {
@@ -42,7 +42,7 @@ public class GrimPhase extends Mode<Phase> {
         }
     };
     @EventLink
-    public final Listener<TickEvent> Oa = var1x -> {
+    public final Listener<TickEvent> onTick = var1x -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             boolean flag = aih.vk();
             if (!this.NX && flag) {
@@ -53,7 +53,7 @@ public class GrimPhase extends Mode<Phase> {
                 float f1 = aEg.thePlayer.rotationPitch;
                 boolean flag1 = aEg.thePlayer.onGround;
 
-                for (int i = 0; i < this.NW.wo().intValue(); i++) {
+                for (int i = 0; i < this.semiPackets.wo().intValue(); i++) {
                     ahj.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, flag1));
                 }
 
@@ -67,10 +67,10 @@ public class GrimPhase extends Mode<Phase> {
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> Ob = var0 -> {};
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {};
     @EventLink
-    public final Listener<PacketReceiveEvent> Oc = var0 -> {
-        boolean flag = var0.dq() instanceof S08PacketPlayerPosLook;
+    public final Listener<PacketReceiveEvent> onPacketReceive = var0 -> {
+        boolean flag = var0.getPacket() instanceof S08PacketPlayerPosLook;
     };
 
     public GrimPhase(String var1, Phase var2) {
@@ -87,8 +87,8 @@ public class GrimPhase extends Mode<Phase> {
     @Override
     public void onDisable() {
         if (!this.NY && this.NX) {
-            if (!this.NV.wo().getName().equals("None")) {
-                this.A(this.NV.wo().getName());
+            if (!this.releaseMode.wo().getName().equals("None")) {
+                this.A(this.releaseMode.wo().getName());
             } else {
                 ahj.m(
                     new C06PacketPlayerPosLook(

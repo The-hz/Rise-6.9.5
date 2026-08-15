@@ -28,7 +28,7 @@ public final class PacketSendEvent extends CancellableEvent {
     }
 
     @Generated
-    public void e(Packet<?> var1) {
+    public void setPacket(Packet<?> var1) {
         this.packet = var1;
     }
 

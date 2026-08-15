@@ -20,45 +20,45 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 public class IntaveNoSlow extends Mode<NoSlow> {
-    boolean bi;
+    boolean usingItem;
     @EventLink
-    public final Listener<PreMotionEvent> MZ = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (aEg.thePlayer.getCurrentEquippedItem() != null) {
             Item item = aEg.thePlayer.getCurrentEquippedItem().getItem();
             if (aEg.thePlayer.isUsingItem()) {
-                if (item instanceof ItemSword && this.wj().DQ.wo()) {
+                if (item instanceof ItemSword && this.getParent().sword.wo()) {
                     bc.cR = true;
                     if (aEg.thePlayer.ticksExisted % 5 == 0) {
                         ahj.l(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
                         bc.dispatch();
                         aEg.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getCurrentEquippedItem()));
                     }
-                } else if (item instanceof ItemFood && this.wj().DO.wo() || item instanceof ItemBow && this.wj().DR.wo()) {
+                } else if (item instanceof ItemFood && this.getParent().food.wo() || item instanceof ItemBow && this.getParent().bow.wo()) {
                     bc.cR = true;
                 }
 
-                this.bi = true;
-            } else if (this.bi) {
-                this.bi = false;
+                this.usingItem = true;
+            } else if (this.usingItem) {
+                this.usingItem = false;
                 bc.cR = false;
             }
         }
     };
     @EventLink
-    public final Listener<SlowDownEvent> Na = var1x -> {
-        if (this.wj().DO.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
+    public final Listener<SlowDownEvent> onSlowDown = var1x -> {
+        if (this.getParent().food.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
             var1x.setCancelled();
         }
 
-        if (this.wj().DP.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion) {
+        if (this.getParent().potion.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion) {
             var1x.setCancelled();
         }
 
-        if (this.wj().DQ.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
+        if (this.getParent().sword.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
             var1x.setCancelled();
         }
 
-        if (this.wj().DR.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
+        if (this.getParent().bow.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
             var1x.setCancelled();
         }
     };

@@ -19,12 +19,12 @@ public final class CheatDetector extends Module {
     private final AlertManager TW = new AlertManager();
     public ModeValue alertType = new ModeValue("Alert Type", this).add(new SubMode("ClientSide")).add(new SubMode("ServerSide")).setDefault("ClientSide");
     @EventLink
-    public final Listener<PreMotionEvent> TY = var0 -> Client.a.n().F();
+    public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> Client.a.n().F();
     @EventLink
-    public final Listener<PacketReceiveEvent> TZ = var0 -> Client.a.n().M.values().forEach(var1 -> {
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var0 -> Client.a.n().M.values().forEach(var1 -> {
         if (var1 != null) {
             try {
-                var1.handle(var0.dq());
+                var1.handle(var0.getPacket());
             } catch (NullPointerException nullpointerexception) {
             }
         }

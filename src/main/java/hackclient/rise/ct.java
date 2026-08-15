@@ -15,13 +15,13 @@ public class ct extends cm {
 
     public ct(Entity var1, cn var2) {
         super(var2);
-        this.by = var1;
+        this.target = var1;
     }
 
     @Override
     public void cp() {
         float f = aEg.timer.bWm;
-        EntityLivingBase entitylivingbase = (EntityLivingBase)this.by;
+        EntityLivingBase entitylivingbase = (EntityLivingBase)this.target;
         if (aEg.getRenderManager() != null && entitylivingbase != null) {
             double d12 = entitylivingbase.prevPosX + (entitylivingbase.posX - entitylivingbase.prevPosX) * f;
             aEg.getRenderManager();

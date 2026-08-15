@@ -66,7 +66,7 @@ public final class CommandManager {
         this.bp.add(var1);
     }
 
-    public <T extends Command> T b(String var1) {
+    public <T extends Command> T get(String var1) {
         return (T)this.bp
             .stream()
             .filter(var1x -> Arrays.stream(var1x.getExpressions()).anyMatch(var1xx -> var1xx.equalsIgnoreCase(var1)))

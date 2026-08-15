@@ -45,14 +45,14 @@ public class WatchdogSpeed extends Mode<Speed> {
         .add(new SubMode("Low Strafe"))
         .add(new SubMode("NCP Strafe"))
         .setDefault("Low Strafe");
-    public final BooleanValue Ro = new BooleanValue("Air Strafe", this, true);
-    public final BooleanValue Rp = new BooleanValue("Always Glide Strafe", this, true);
-    public final BooleanValue Rq = new BooleanValue("Friction Override", this, true);
-    public final BooleanValue Rr = new BooleanValue("Friction Full Disabler", this, true);
-    public final BooleanValue Rs = new BooleanValue("Damage Boost", this, false);
+    public final BooleanValue airStrafe = new BooleanValue("Air Strafe", this, true);
+    public final BooleanValue alwaysGlideStrafe = new BooleanValue("Always Glide Strafe", this, true);
+    public final BooleanValue frictionOverride = new BooleanValue("Friction Override", this, true);
+    public final BooleanValue frictionFullDisabler = new BooleanValue("Friction Full Disabler", this, true);
+    public final BooleanValue damageBoost = new BooleanValue("Damage Boost", this, false);
     public final BooleanValue Rt = new BooleanValue("Damage Strafe (Hypixel Fly Disabler)", this, false);
-    public final BooleanValue Ru = new BooleanValue("UHC Mode", this, false);
-    public final BooleanValue Rv = new BooleanValue("Alternate Motion", this, false);
+    public final BooleanValue uHCMode = new BooleanValue("UHC Mode", this, false);
+    public final BooleanValue alternateMotion = new BooleanValue("Alternate Motion", this, false);
     public static boolean Rw = false;
     boolean Rx = false;
     public static boolean Ry = false;
@@ -72,11 +72,11 @@ public class WatchdogSpeed extends Mode<Speed> {
     private static float Qa = 0.0F;
     private static final float RG = 8.0F;
     @EventLink
-    public final Listener<MoveInputEvent> RH = var0 -> var0.setJump(false);
+    public final Listener<MoveInputEvent> onMoveInput = var0 -> var0.setJump(false);
     @EventLink
-    public final Listener<PacketReceiveEvent> RI = var1x -> {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         if (!this.e(Velocity.class).isEnabled() && this.mode.wo().getName() == "Low Strafe") {
-            Packet packet = var1x.dq();
+            Packet packet = var1x.getPacket();
             if (packet instanceof S12PacketEntityVelocity
                 && ((S12PacketEntityVelocity)packet).getEntityID() == aEg.thePlayer.getEntityId()
                 && (aEg.thePlayer.tR == 1 || aEg.thePlayer.tR == 2 || aEg.thePlayer.tR == 3)) {
@@ -84,9 +84,9 @@ public class WatchdogSpeed extends Mode<Speed> {
             }
         }
     };
-    @EventLink(cH = 3)
-    public final Listener<PreMotionEvent> RJ = var1x -> {
-        Rw = this.Rs.wo();
+    @EventLink(value = 3)
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
+        Rw = this.damageBoost.wo();
         Ry = this.Rt.wo();
         if (MoveUtil.isMoving()) {
             if (aEg.thePlayer.ae < 10 && this.Rt.wo()) {
@@ -177,12 +177,12 @@ public class WatchdogSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<MoveEvent> RK = var0 -> {
+    public final Listener<MoveEvent> onMove = var0 -> {
         double d0;
         int i = (d0 = aEg.thePlayer.motionY - 0.0) == 0.0 ? 0 : (d0 < 0.0 ? -1 : 1);
     };
-    @EventLink(cH = 3)
-    public final Listener<StrafeEvent> RL = var1x -> {
+    @EventLink(value = 3)
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.cqL > 1 && this.e(Scaffold.class).isEnabled() && aEg.thePlayer.ticksExisted % 3 == 1) {
             MoveUtil.stop();
         } else {
@@ -269,7 +269,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                                         MoveUtil.strafe();
                                     }
 
-                                    if (aEg.thePlayer.tR == 2 && this.Ro.wo() && !this.vh) {
+                                    if (aEg.thePlayer.tR == 2 && this.airStrafe.wo() && !this.vh) {
                                         double d2 = aEg.thePlayer.motionX;
                                         double d3 = aEg.thePlayer.motionZ;
                                         aEg.thePlayer.motionZ = (aEg.thePlayer.motionZ * 1.0 + d3 * 2.0) / 3.0;
@@ -296,7 +296,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                                                 || aEg.thePlayer.tR == 7
                                                 || aEg.thePlayer.tR == 8
                                         )
-                                        && this.Ro.wo()) {
+                                        && this.airStrafe.wo()) {
                                         ;
                                     }
 
@@ -336,13 +336,13 @@ public class WatchdogSpeed extends Mode<Speed> {
                                                 aEg.thePlayer.motionX *= 1.003;
                                             }
 
-                                            if (this.Rp.wo() || flag1) {
+                                            if (this.alwaysGlideStrafe.wo() || flag1) {
                                                 aEg.thePlayer.motionY += 0.075;
                                                 MoveUtil.strafe();
                                             }
                                         }
 
-                                        if (this.Rp.wo()
+                                        if (this.alwaysGlideStrafe.wo()
                                             && !this.RF
                                             && (
                                                 Math.sqrt(aEg.thePlayer.motionX * aEg.thePlayer.motionX + aEg.thePlayer.motionZ * aEg.thePlayer.motionZ)
@@ -366,7 +366,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                                             }
                                         }
 
-                                        if (this.Rp.wo() && !this.RF) {
+                                        if (this.alwaysGlideStrafe.wo() && !this.RF) {
                                             if ((
                                                     Math.sqrt(aEg.thePlayer.motionX * aEg.thePlayer.motionX + aEg.thePlayer.motionZ * aEg.thePlayer.motionZ)
                                                             < MoveUtil.getAllowedHorizontalDistance()
@@ -402,12 +402,12 @@ public class WatchdogSpeed extends Mode<Speed> {
                                         aEg.thePlayer.motionX - (aEg.thePlayer.lastTickPosX - aEg.thePlayer.cry),
                                         aEg.thePlayer.motionZ - (aEg.thePlayer.lastTickPosZ - aEg.thePlayer.crA)
                                     );
-                                    if (this.Lx < 0.0125 && this.Rq.wo()) {
+                                    if (this.Lx < 0.0125 && this.frictionOverride.wo()) {
                                         MoveUtil.strafe();
                                     }
 
                                     if (this.Lx > 0.0125 && this.Lx < MoveUtil.vd()) {
-                                        this.Rq.wo();
+                                        this.frictionOverride.wo();
                                     }
 
                                     MoveUtil.useDiagonalSpeed();
@@ -463,7 +463,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                             aEg.thePlayer.motionY -= 0.04F;
                         }
 
-                        if (aEg.thePlayer.tR == 4 && (aEg.thePlayer.ae > 1 || this.Rs.wo()) && !this.vh) {
+                        if (aEg.thePlayer.tR == 4 && (aEg.thePlayer.ae > 1 || this.damageBoost.wo()) && !this.vh) {
                             MoveUtil.useDiagonalSpeed();
                             aEg.thePlayer.motionY -= 0.05F;
                         }
@@ -491,7 +491,7 @@ public class WatchdogSpeed extends Mode<Speed> {
 
                         if (aEg.thePlayer.tR == 8 && aih.p(0.0, aEg.thePlayer.motionY * 3.0, 0.0) != Blocks.air) {
                             MoveUtil.useDiagonalSpeed();
-                            if (this.Rp.wo()) {
+                            if (this.alwaysGlideStrafe.wo()) {
                                 aEg.thePlayer.motionY += 0.075F;
                                 MoveUtil.strafe();
                             }
@@ -499,7 +499,7 @@ public class WatchdogSpeed extends Mode<Speed> {
 
                         if (aEg.thePlayer.tR == 9 && aih.p(0.0, aEg.thePlayer.motionY * 3.0, 0.0) != Blocks.air) {
                             MoveUtil.useDiagonalSpeed();
-                            if (this.Rp.wo()) {
+                            if (this.alwaysGlideStrafe.wo()) {
                                 MoveUtil.strafe();
                             }
                         }
@@ -517,11 +517,11 @@ public class WatchdogSpeed extends Mode<Speed> {
 
                         if (this.e(Scaffold.class).isEnabled() && aEg.gameSettings.keyBindJump.isKeyDown()) {
                             if (aEg.thePlayer.onGround && HJ) {
-                                this.wj().toggle();
+                                this.getParent().toggle();
                                 HJ = false;
                             }
                         } else if ((this.vh || aEg.thePlayer.tR > 4 || aEg.thePlayer.onGround) && HJ) {
-                            this.wj().toggle();
+                            this.getParent().toggle();
                             HJ = false;
                         }
 
@@ -548,9 +548,9 @@ public class WatchdogSpeed extends Mode<Speed> {
                     if (aEg.thePlayer.isPotionActive(Potion.moveSpeed) && aEg.thePlayer.onGround) {
                         if (this.e(Scaffold.class).isEnabled() && aEg.gameSettings.keyBindJump.isKeyDown()
                             || this.RF
-                            || !(MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance()) && aEg.thePlayer.ae <= 5 && this.Rs.wo()) {
-                            if (!this.e(Scaffold.class).isEnabled() || this.RF || !(MoveUtil.speed() < 0.29) && aEg.thePlayer.ae <= 5 && this.Rs.wo()) {
-                                if (MoveUtil.speed() < 0.29 && aEg.thePlayer.ae < 5 && this.Rs.wo() && !this.RF) {
+                            || !(MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance()) && aEg.thePlayer.ae <= 5 && this.damageBoost.wo()) {
+                            if (!this.e(Scaffold.class).isEnabled() || this.RF || !(MoveUtil.speed() < 0.29) && aEg.thePlayer.ae <= 5 && this.damageBoost.wo()) {
+                                if (MoveUtil.speed() < 0.29 && aEg.thePlayer.ae < 5 && this.damageBoost.wo() && !this.RF) {
                                     aEg.thePlayer.jump();
                                     if (aEg.thePlayer.ae > 1) {
                                         MoveUtil.strafe();
@@ -564,15 +564,15 @@ public class WatchdogSpeed extends Mode<Speed> {
                                 aEg.thePlayer.jump();
                             }
                         } else {
-                            MoveUtil.strafe(this.Rp.wo() ? MoveUtil.getAllowedHorizontalDistance() : MoveUtil.getAllowedHorizontalDistance());
+                            MoveUtil.strafe(this.alwaysGlideStrafe.wo() ? MoveUtil.getAllowedHorizontalDistance() : MoveUtil.getAllowedHorizontalDistance());
                             aEg.thePlayer.jump();
                         }
                     } else if (aEg.thePlayer.onGround) {
-                        if (this.RF || !(MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance()) && aEg.thePlayer.ae <= 5 && this.Rs.wo()) {
+                        if (this.RF || !(MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance()) && aEg.thePlayer.ae <= 5 && this.damageBoost.wo()) {
                             if (this.e(Scaffold.class).isEnabled()) {
                                 MoveUtil.strafe(0.23);
                                 aEg.thePlayer.jump();
-                            } else if (!(MoveUtil.speed() < MoveUtil.vd()) && aEg.thePlayer.ae <= 5 && this.Rs.wo()) {
+                            } else if (!(MoveUtil.speed() < MoveUtil.vd()) && aEg.thePlayer.ae <= 5 && this.damageBoost.wo()) {
                                 aEg.thePlayer.jump();
                                 if (aEg.thePlayer.ae > 1) {
                                     MoveUtil.strafe();
@@ -595,19 +595,19 @@ public class WatchdogSpeed extends Mode<Speed> {
                             || aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 < 2
                             || this.vh
                             || this.RF
-                            || !(MoveUtil.speed() < 0.48) && aEg.thePlayer.ae <= 5 && this.Rs.wo()) {
+                            || !(MoveUtil.speed() < 0.48) && aEg.thePlayer.ae <= 5 && this.damageBoost.wo()) {
                             if (!aEg.thePlayer.isPotionActive(Potion.moveSpeed)
                                 || aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 < 2
-                                || !(MoveUtil.speed() < 0.4) && aEg.thePlayer.ae <= 5 && this.Rs.wo()) {
+                                || !(MoveUtil.speed() < 0.4) && aEg.thePlayer.ae <= 5 && this.damageBoost.wo()) {
                                 if (this.RF
                                     || !aEg.thePlayer.isPotionActive(Potion.moveSpeed)
                                     || aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 != 1
-                                    || !(MoveUtil.speed() < 0.41) && aEg.thePlayer.ae <= 5 && this.Rs.wo()) {
+                                    || !(MoveUtil.speed() < 0.41) && aEg.thePlayer.ae <= 5 && this.damageBoost.wo()) {
                                     if (!this.RF
                                         || !aEg.thePlayer.isPotionActive(Potion.moveSpeed)
                                         || aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 != 1
-                                        || !(MoveUtil.speed() < 0.41) && aEg.thePlayer.ae <= 5 && this.Rs.wo()) {
-                                        if (!(MoveUtil.speed() < 0.33) && aEg.thePlayer.ae <= 3 && this.Rs.wo()) {
+                                        || !(MoveUtil.speed() < 0.41) && aEg.thePlayer.ae <= 5 && this.damageBoost.wo()) {
+                                        if (!(MoveUtil.speed() < 0.33) && aEg.thePlayer.ae <= 3 && this.damageBoost.wo()) {
                                             MoveUtil.strafe();
                                         } else {
                                             MoveUtil.strafe(0.3325);
@@ -626,7 +626,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                         }
                     }
 
-                    if (aEg.thePlayer.tR == 2 && this.Ro.wo()) {
+                    if (aEg.thePlayer.tR == 2 && this.airStrafe.wo()) {
                         double d9 = aEg.thePlayer.motionX;
                         double d10 = aEg.thePlayer.motionZ;
                         aEg.thePlayer.motionZ = (aEg.thePlayer.motionZ * 1.0 + d10 * 2.0) / 3.0;
@@ -644,10 +644,10 @@ public class WatchdogSpeed extends Mode<Speed> {
                         aEg.thePlayer.motionY -= 0.2;
                     }
 
-                    if ((aEg.thePlayer.tR <= 1 || aEg.thePlayer.tR >= 6 || !aEg.thePlayer.isPotionActive(Potion.moveSpeed) || !this.Ro.wo())
+                    if ((aEg.thePlayer.tR <= 1 || aEg.thePlayer.tR >= 6 || !aEg.thePlayer.isPotionActive(Potion.moveSpeed) || !this.airStrafe.wo())
                         && aEg.thePlayer.tR > 1
                         && aEg.thePlayer.tR < 6
-                        && this.Ro.wo()) {
+                        && this.airStrafe.wo()) {
                     }
 
                     double d11 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
@@ -665,14 +665,14 @@ public class WatchdogSpeed extends Mode<Speed> {
                     }
 
                     if (d13 < 7.0) {
-                        this.Rp.wo();
+                        this.alwaysGlideStrafe.wo();
                     }
 
                     if (aEg.thePlayer.tR == 6
                         && !this.vh
                         && aih.ae(aEg.thePlayer.motionY * 3.0)
-                        && (this.Rp.wo() || flag2)
-                        && (MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance() * 0.994 || !this.Rs.wo() || aEg.thePlayer.ae > 5)
+                        && (this.alwaysGlideStrafe.wo() || flag2)
+                        && (MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance() * 0.994 || !this.damageBoost.wo() || aEg.thePlayer.ae > 5)
                         && (!this.vh || !this.Rt.wo())
                         && aEg.thePlayer.ae > 1) {
                         aEg.thePlayer.motionY += 0.075;
@@ -704,31 +704,31 @@ public class WatchdogSpeed extends Mode<Speed> {
                         && !this.vh
                         && aih.ae(aEg.thePlayer.motionY * 2.0)
                         && !this.e(Scaffold.class).isEnabled()
-                        && (MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance() * 1.1 || !this.Rs.wo() || aEg.thePlayer.ae > 5)
+                        && (MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance() * 1.1 || !this.damageBoost.wo() || aEg.thePlayer.ae > 5)
                         && aEg.thePlayer.ae > 1) {
-                        MoveUtil.strafe(this.Rp.wo() ? MoveUtil.speed() : MoveUtil.getAllowedHorizontalDistance() * 1.1);
+                        MoveUtil.strafe(this.alwaysGlideStrafe.wo() ? MoveUtil.speed() : MoveUtil.getAllowedHorizontalDistance() * 1.1);
                     }
 
                     if (!aih.ae(aEg.thePlayer.motionY)
                         || aEg.thePlayer.ae <= 1
                         || this.vh
-                        || this.Ru.wo()
-                        || (aEg.thePlayer.tR <= 6 || !this.Rp.wo()) && (aEg.thePlayer.tR <= 6 || this.Rp.wo())
+                        || this.uHCMode.wo()
+                        || (aEg.thePlayer.tR <= 6 || !this.alwaysGlideStrafe.wo()) && (aEg.thePlayer.tR <= 6 || this.alwaysGlideStrafe.wo())
                         || this.RB
-                        || !(MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance() * 1.095) && this.Rs.wo() && aEg.thePlayer.ae <= 5) {
-                        if ((!aih.ae(aEg.thePlayer.motionY) || this.vh || aEg.thePlayer.ae <= 1 || this.Ru.wo() || aEg.thePlayer.tR <= 6 || !this.Rp.wo())
+                        || !(MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance() * 1.095) && this.damageBoost.wo() && aEg.thePlayer.ae <= 5) {
+                        if ((!aih.ae(aEg.thePlayer.motionY) || this.vh || aEg.thePlayer.ae <= 1 || this.uHCMode.wo() || aEg.thePlayer.tR <= 6 || !this.alwaysGlideStrafe.wo())
                             && (
                                 aEg.thePlayer.tR <= 6
-                                    || this.Rp.wo()
+                                    || this.alwaysGlideStrafe.wo()
                                     || this.RB
-                                    || !(MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance()) && this.Rs.wo() && aEg.thePlayer.ae <= 5
+                                    || !(MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance()) && this.damageBoost.wo() && aEg.thePlayer.ae <= 5
                             )) {
                             if (!aih.ae(aEg.thePlayer.motionY)
                                 || aEg.thePlayer.tR <= 5
                                 || this.RB
                                 || aEg.thePlayer.ae <= 1
-                                || !(MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance()) && this.Rs.wo() && aEg.thePlayer.ae <= 5) {
-                                if (aih.ae(aEg.thePlayer.motionY) && aEg.thePlayer.tR > 5 && !this.RB && aEg.thePlayer.ae > 1 && this.Rs.wo()) {
+                                || !(MoveUtil.speed() < MoveUtil.getAllowedHorizontalDistance()) && this.damageBoost.wo() && aEg.thePlayer.ae <= 5) {
+                                if (aih.ae(aEg.thePlayer.motionY) && aEg.thePlayer.tR > 5 && !this.RB && aEg.thePlayer.ae > 1 && this.damageBoost.wo()) {
                                     MoveUtil.strafe();
                                 }
                             } else {
@@ -740,7 +740,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                             this.RB = true;
                         }
                     } else {
-                        if (this.Rp.wo()) {
+                        if (this.alwaysGlideStrafe.wo()) {
                             if (aEg.thePlayer.isPotionActive(Potion.moveSpeed) && aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 >= 2) {
                                 MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() * 1.093);
                             } else {
@@ -757,11 +757,11 @@ public class WatchdogSpeed extends Mode<Speed> {
 
                     if (this.e(Scaffold.class).isEnabled() && aEg.gameSettings.keyBindJump.isKeyDown()) {
                         if (aEg.thePlayer.onGround && HJ) {
-                            this.wj().toggle();
+                            this.getParent().toggle();
                             HJ = false;
                         }
                     } else if ((this.vh || aEg.thePlayer.tR > 3 || aEg.thePlayer.onGround) && HJ) {
-                        this.wj().toggle();
+                        this.getParent().toggle();
                         HJ = false;
                     }
 
@@ -777,7 +777,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                         ;
                     }
 
-                    if (MoveUtil.speed() < 0.1245 && this.Rq.wo()) {
+                    if (MoveUtil.speed() < 0.1245 && this.frictionOverride.wo()) {
                         MoveUtil.strafe(0.1245);
                     }
 
@@ -819,7 +819,7 @@ public class WatchdogSpeed extends Mode<Speed> {
 
                 if (ahg.n(d0, d1) < 5.0
                     && Objects.equals(this.mode.wo().getName(), "Low Strafe")
-                    && this.Rr.wo()
+                    && this.frictionFullDisabler.wo()
                     && (!this.RE || aEg.thePlayer.tR > 2 && aEg.thePlayer.tR < 6)
                     && (!aEg.gameSettings.keyBindJump.isKeyDown() || !this.e(Scaffold.class).isEnabled())
                     && aEg.thePlayer.Zl > 10
@@ -838,23 +838,23 @@ public class WatchdogSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<JumpEvent> RM = var1x -> {
+    public final Listener<JumpEvent> onJump = var1x -> {
         if (aEg.thePlayer.isInLava() || aEg.thePlayer.isInWeb) {
             var1x.setCancelled();
         }
 
-        if (!this.vh && this.mode.wo().getName() == "Low Strafe" && this.Rv.wo()) {
+        if (!this.vh && this.mode.wo().getName() == "Low Strafe" && this.alternateMotion.wo()) {
             var1x.setJumpMotion(0.42001F);
-        } else if (this.mode.wo().getName() == "Low Strafe" && this.Rv.wo()) {
+        } else if (this.mode.wo().getName() == "Low Strafe" && this.alternateMotion.wo()) {
             var1x.setJumpMotion(0.42001F);
         }
     };
     @EventLink
-    public final Listener<PostStrafeEvent> RN = var1x -> {
-        if (aEg.thePlayer.ae > 1 || !this.Rs.wo() && aEg.thePlayer.tR < 12) {
+    public final Listener<PostStrafeEvent> onPostStrafe = var1x -> {
+        if (aEg.thePlayer.ae > 1 || !this.damageBoost.wo() && aEg.thePlayer.tR < 12) {
             double d0 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
             double d1 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
-            if (this.Ro.wo() && this.mode.wo().getName() == "Strafe") {
+            if (this.airStrafe.wo() && this.mode.wo().getName() == "Strafe") {
                 if (ahg.n(d0, d1) > 90.0) {
                     if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                         MoveUtil.a(MoveUtil.speed(), (float)d1 - 180.0F);
@@ -868,7 +868,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                     aEg.thePlayer.motionZ = (aEg.thePlayer.motionZ * 3.0 + d3 * 1.0) / 4.0;
                     aEg.thePlayer.motionX = (aEg.thePlayer.motionX * 3.0 + d2 * 1.0) / 4.0;
                 }
-            } else if (this.Ro.wo()) {
+            } else if (this.airStrafe.wo()) {
                 if (ahg.n(d0, d1) > 90.0) {
                     MoveUtil.a(MoveUtil.speed(), (float)d1 - 180.0F);
                 } else {
@@ -887,13 +887,13 @@ public class WatchdogSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<BlockAABBEvent> RO = var0 -> {
-        if (!(var0.df() instanceof BlockIce) && !(var0.df() instanceof BlockPackedIce) && aEg.thePlayer.cqL > 1) {
+    public final Listener<BlockAABBEvent> onBlockAABB = var0 -> {
+        if (!(var0.getBlock() instanceof BlockIce) && !(var0.getBlock() instanceof BlockPackedIce) && aEg.thePlayer.cqL > 1) {
         }
     };
     @EventLink
-    public final Listener<KeyboardInputEvent> RP = var1x -> {
-        if (this.mode.wo().getName() != "Strafe" && var1x.cO() == this.wj().getKey() && !HJ) {
+    public final Listener<KeyboardInputEvent> onKeyboardInput = var1x -> {
+        if (this.mode.wo().getName() != "Strafe" && var1x.getKeyCode() == this.getParent().getKey() && !HJ) {
             var1x.setCancelled();
             HJ = true;
         }
@@ -906,7 +906,7 @@ public class WatchdogSpeed extends Mode<Speed> {
     @Override
     public void onEnable() {
         HJ = false;
-        if (!bb.a(true, true, false, true, true) && !this.e(Scaffold.class).isEnabled()) {
+        if (!bb.bad(true, true, false, true, true) && !this.e(Scaffold.class).isEnabled()) {
             Random random = new Random();
             random.nextFloat();
             random.nextFloat();
@@ -916,7 +916,7 @@ public class WatchdogSpeed extends Mode<Speed> {
         this.RC = false;
         Client.a.g().c(Scaffold.class).isEnabled();
         this.RB = false;
-        if (this.e(Scaffold.class).afO.wo().getName().equals("On") && Client.a.g().c(Scaffold.class).isEnabled()) {
+        if (this.e(Scaffold.class).sameY.wo().getName().equals("On") && Client.a.g().c(Scaffold.class).isEnabled()) {
             MoveUtil.stop();
         }
 

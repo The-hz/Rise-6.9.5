@@ -9,7 +9,7 @@ public final class agj {
         return var8 > var0 && var8 < var0 + var4 && var10 > var2 && var10 < var2 + var6;
     }
 
-    public static boolean a(Vector2d var0, Vector2d var1, double var2, double var4) {
+    public static boolean mouseOver(Vector2d var0, Vector2d var1, double var2, double var4) {
         return var2 > var0.x && var2 < var0.x + var1.x && var4 > var0.y && var4 < var0.y + var1.y;
     }
 

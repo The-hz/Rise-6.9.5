@@ -12,7 +12,7 @@ public final class Name extends Command {
 
     @Override
     public void execute(String[] var1) {
-        String s = aih.R();
+        String s = aih.name();
         GuiScreen.setClipboardString(s);
         afi.b("command.name.copied", s);
     }

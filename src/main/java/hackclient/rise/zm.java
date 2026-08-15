@@ -6,7 +6,7 @@ import rip.vantage.runtime.j;
 public class zm extends SecurityFeature {
 
     @Override
-    public boolean nG() {
+    public boolean run() {
         return j.aLl();
     }
 

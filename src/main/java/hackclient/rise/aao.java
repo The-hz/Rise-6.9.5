@@ -8,7 +8,7 @@ public class aao extends aaj {
     }
 
     @Override
-    public boolean nX() {
+    public boolean check() {
         Thread thread = Client.a.f().oh();
         if (thread.isAlive() && !thread.isInterrupted()) {
             return false;

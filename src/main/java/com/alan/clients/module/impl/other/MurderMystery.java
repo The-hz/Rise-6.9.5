@@ -20,13 +20,13 @@ import net.minecraft.network.play.server.e;
 
 @ModuleInfo(aliases = "module.other.murdermystery.name", description = "module.other.murdermystery.description", category = Category.PLAYER)
 public final class MurderMystery extends Module {
-    private final BooleanValue Va = new BooleanValue("Newest Method", this, true);
-    private final BooleanValue Vb = new BooleanValue("Call Out", this, false);
+    private final BooleanValue newestMethod = new BooleanValue("Newest Method", this, true);
+    private final BooleanValue callOut = new BooleanValue("Call Out", this, false);
     private EntityPlayer murderer;
     private final Set<Integer> Vd = new HashSet<>();
     @EventLink
-    public final Listener<PacketReceiveEvent> Ve = var1 -> {
-        if (var1.dq() instanceof e e && e.getEquipmentSlot() == 0 && e.getItemStack() != null && this.i(e.getItemStack()) && !this.Vd.contains(e.getEntityID())
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
+        if (var1.getPacket() instanceof e e && e.getEquipmentSlot() == 0 && e.getItemStack() != null && this.i(e.getItemStack()) && !this.Vd.contains(e.getEntityID())
             )
          {
             Entity entity = aEg.theWorld.getEntityByID(e.getEntityID());
@@ -34,15 +34,15 @@ public final class MurderMystery extends Module {
                 afi.b(entity.getName() + " is The Murderer.");
                 this.Vd.add(e.getEntityID());
                 this.murderer = (EntityPlayer)entity;
-                if (this.Vb.wo()) {
+                if (this.callOut.wo()) {
                     aEg.thePlayer.sendChatMessage(entity.getName() + " is The Murderer.");
                 }
             }
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> Vf = var1 -> {
-        if (aEg.thePlayer.ticksExisted % 2 != 0 && this.murderer == null && !this.Va.wo()) {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
+        if (aEg.thePlayer.ticksExisted % 2 != 0 && this.murderer == null && !this.newestMethod.wo()) {
             for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
                 if (entityplayer.getHeldItem() != null && entityplayer.getHeldItem().getDisplayName().contains("Knife")) {
                     afi.b(aih.g(entityplayer) + " is The Murderer.");
@@ -52,7 +52,7 @@ public final class MurderMystery extends Module {
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> Vg = var1 -> this.murderer = null;
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.murderer = null;
 
     public MurderMystery() {
     }

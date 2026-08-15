@@ -11,8 +11,8 @@ public class LegitWTap extends Mode<WTap> {
     private boolean Cu;
     private boolean Cv;
     @EventLink
-    public final Listener<AttackEvent> Cw = var1x -> {
-        this.Cv = Math.random() * 100.0 < this.wj().chance.wo().doubleValue() && var1x.dc().hurtTime >= 6;
+    public final Listener<AttackEvent> onAttack = var1x -> {
+        this.Cv = Math.random() * 100.0 < this.getParent().chance.wo().doubleValue() && var1x.dc().hurtTime >= 6;
         if (this.Cv && !this.Cu) {
             if (aEg.thePlayer.isSprinting() || aEg.gameSettings.cgG.isKeyDown()) {
                 aEg.gameSettings.cgG.setPressed(true);
@@ -21,9 +21,9 @@ public class LegitWTap extends Mode<WTap> {
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> Cx = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (this.Cv) {
-            if (this.Cu && Math.random() * 100.0 < this.wj().chance.wo().doubleValue()) {
+            if (this.Cu && Math.random() * 100.0 < this.getParent().chance.wo().doubleValue()) {
                 aEg.gameSettings.cgG.setPressed(false);
                 this.Cu = false;
             }

@@ -27,7 +27,7 @@ implements zh {
     public static Object Oo0o00000O00;
 
     @Override
-    public boolean nG() {
+    public boolean run() {
         return this.avA;
     }
 

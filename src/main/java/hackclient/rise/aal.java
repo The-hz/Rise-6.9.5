@@ -54,7 +54,7 @@ public final class aal {
     public void a(aak var1) {
         try {
             for (aaj aaj : this.awT) {
-                if (aaj.nY() == var1 && aaj.nX()) {
+                if (aaj.nY() == var1 && aaj.check()) {
                     this.ob();
                 }
             }

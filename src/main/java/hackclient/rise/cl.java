@@ -10,7 +10,7 @@ public class cl extends Component {
     public static double y;
     public static a bN = new a();
     @EventLink
-    public final Listener<PreMotionEvent> hO = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (!bN.T(80L)) {
             aEg.thePlayer.cameraYaw = 0.0F;
             aEg.thePlayer.cameraPitch = 0.0F;

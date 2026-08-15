@@ -11,7 +11,7 @@ import org.lwjgl.input.Mouse;
 
 @ModuleInfo(aliases = "module.ghost.guiclicker.name", description = "module.ghost.guiclicker.description", category = Category.GHOST)
 public class GuiClicker extends Module {
-    public int Bh;
+    public int mouseDownTicks;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.currentScreen instanceof GuiContainer guicontainer) {
@@ -20,17 +20,17 @@ public class GuiClicker extends Module {
 
             try {
                 if (Mouse.isButtonDown(0)) {
-                    this.Bh++;
-                    if (this.Bh > 2 && Math.random() > 0.1) {
+                    this.mouseDownTicks++;
+                    if (this.mouseDownTicks > 2 && Math.random() > 0.1) {
                         guicontainer.mouseClicked(i, j, 0);
                     }
                 } else if (Mouse.isButtonDown(1)) {
-                    this.Bh++;
-                    if (this.Bh > 2 && Math.random() > 0.1) {
+                    this.mouseDownTicks++;
+                    if (this.mouseDownTicks > 2 && Math.random() > 0.1) {
                         guicontainer.mouseClicked(i, j, 1);
                     }
                 } else {
-                    this.Bh = 0;
+                    this.mouseDownTicks = 0;
                 }
             } catch (Exception exception) {
                 exception.printStackTrace();

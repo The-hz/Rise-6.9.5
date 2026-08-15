@@ -11,7 +11,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 
 public class FlagNoFall extends Mode<NoFall> {
     @EventLink
-    public final Listener<PreMotionEvent> aiv = var0 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         float f = bd.cY;
         if (f > 3.0F) {
             f = -999.0F;
@@ -21,9 +21,9 @@ public class FlagNoFall extends Mode<NoFall> {
         bd.cY = f;
     };
     @EventLink
-    public final Listener<TeleportEvent> aiw = var0 -> {
+    public final Listener<TeleportEvent> onTeleport = var0 -> {
         bd.cY = 0.0F;
-        var0.a(new C06PacketPlayerPosLook(var0.getPosX(), var0.getPosY(), var0.getPosZ(), var0.getYaw(), var0.getPitch(), true));
+        var0.setResponse(new C06PacketPlayerPosLook(var0.getPosX(), var0.getPosY(), var0.getPosZ(), var0.getYaw(), var0.getPitch(), true));
     };
 
     public FlagNoFall(String var1, NoFall var2) {

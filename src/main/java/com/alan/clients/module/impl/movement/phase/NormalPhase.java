@@ -15,7 +15,7 @@ import net.minecraft.util.AxisAlignedBB;
 public class NormalPhase extends Mode<Phase> {
     private boolean phasing;
     @EventLink
-    public final Listener<PreMotionEvent> Oe = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         this.phasing = false;
         double d0 = Math.toRadians(aEg.thePlayer.pl);
         double d1 = Math.sin(d0);
@@ -31,13 +31,13 @@ public class NormalPhase extends Mode<Phase> {
         }
     };
     @EventLink
-    public final Listener<BlockAABBEvent> Of = var1x -> {
-        if (var1x.df() instanceof BlockAir && this.phasing) {
-            double d0 = var1x.dg().getX();
-            double d1 = var1x.dg().getY();
-            double d2 = var1x.dg().getZ();
+    public final Listener<BlockAABBEvent> onBlockAABB = var1x -> {
+        if (var1x.getBlock() instanceof BlockAir && this.phasing) {
+            double d0 = var1x.getBlockPos().getX();
+            double d1 = var1x.getBlockPos().getY();
+            double d2 = var1x.getBlockPos().getZ();
             if (d1 < aEg.thePlayer.posY) {
-                var1x.a(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
+                var1x.setBoundingBox(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d0, d1, d2));
             }
         }
     };

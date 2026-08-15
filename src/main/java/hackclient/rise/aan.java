@@ -6,7 +6,7 @@ public final class aan extends aaj {
     }
 
     @Override
-    public boolean nX() {
+    public boolean check() {
         System.setProperty("http.ProxyHost", "");
         System.setProperty("https.ProxyHost", "");
         System.setProperty("http.ProxyPort", "");

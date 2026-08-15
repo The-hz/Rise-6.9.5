@@ -489,7 +489,7 @@ public class ahm implements InstanceAccess
     }
 
     public static boolean cg(final String s) {
-        if (Client.a.s().nN()) {
+        if (Client.a.getSecurityManager().nN()) {
             return false;
         }
         if (ahm.aPg.containsKey(s)) {
@@ -671,7 +671,7 @@ public class ahm implements InstanceAccess
     }
 
     public static boolean vo() {
-        if (Client.a.s().nN()) {
+        if (Client.a.getSecurityManager().nN()) {
             return false;
         }
         if (ahm.aEg == null || ahm.aEg.thePlayer == null || ahm.aEg.theWorld == null || ahm.aEg.isIntegratedServerRunning()) {

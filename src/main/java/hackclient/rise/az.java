@@ -10,7 +10,7 @@ import net.minecraft.client.settings.KeyBinding;
 public class az extends Component {
     private boolean cF;
     @EventLink
-    public final Listener<PreMotionEvent> cG = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         if (aEg.currentScreen == null && this.cF) {
             for (KeyBinding keybinding : aEg.gameSettings.keyBindings) {
                 keybinding.setPressed(GameSettings.isKeyDown(keybinding));

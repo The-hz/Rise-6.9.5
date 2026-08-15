@@ -30,12 +30,12 @@ public class GrimServer19NoFall extends Mode<NoFall> {
     private float ub;
     private double vB;
     private double vC;
-    private final BooleanValue aiG = new BooleanValue("Newest Grim, may flag the anticheat", this, false);
+    private final BooleanValue newestGrimMayFlagTheAnticheat = new BooleanValue("Newest Grim, may flag the anticheat", this, false);
     private boolean gD;
-    @EventLink(cH = 2)
-    public final Listener<PacketReceiveEvent> aiH = var1x -> {
+    @EventLink(value = 2)
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         if (!tt && aEg.thePlayer.ticksExisted >= 10 && !aEg.thePlayer.isCollidedHorizontally) {
-            switch (var1x.dq()) {
+            switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
                     if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && !var1x.isCancelled()) {
                         if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && s12packetentityvelocity.motionY > 0
@@ -64,7 +64,7 @@ public class GrimServer19NoFall extends Mode<NoFall> {
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> aiI = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (!aEg.thePlayer.isCollidedHorizontally) {
             float f = bd.cY;
             if (aEg.thePlayer.motionY > 0.1) {
@@ -76,7 +76,7 @@ public class GrimServer19NoFall extends Mode<NoFall> {
             }
 
             if (this.aiE && aEg.thePlayer.onGround) {
-                if (!this.aiG.wo()) {
+                if (!this.newestGrimMayFlagTheAnticheat.wo()) {
                     var1x.setCancelled(true);
                 } else {
                     ahj.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + 0.01, aEg.thePlayer.posZ, true));
@@ -92,15 +92,15 @@ public class GrimServer19NoFall extends Mode<NoFall> {
                 aEg.gameSettings.keyBindJump.setPressed(false);
             }
 
-            if (aih.vi() > 5.0 && aEg.thePlayer.tR == 9 && aEg.thePlayer.Zl > 200 && this.aiG.wo()) {
+            if (aih.vi() > 5.0 && aEg.thePlayer.tR == 9 && aEg.thePlayer.Zl > 200 && this.newestGrimMayFlagTheAnticheat.wo()) {
                 aEg.thePlayer.motionY = MoveUtil.predictedMotion(aEg.thePlayer.motionY, 10);
             }
 
             bd.cY = f;
         }
     };
-    @EventLink(cH = 2)
-    public final Listener<PreUpdateEvent> aiJ = var1x -> {
+    @EventLink(value = 2)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (dj && aEg.thePlayer.onGround) {
             tt = true;
             dj = false;
@@ -110,7 +110,7 @@ public class GrimServer19NoFall extends Mode<NoFall> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> aiK = var1x -> {
+    public final Listener<MoveInputEvent> onMoveInput = var1x -> {
         if (!aEg.thePlayer.isCollidedHorizontally) {
             if (this.gD && this.aiE) {
                 var1x.setJump(true);

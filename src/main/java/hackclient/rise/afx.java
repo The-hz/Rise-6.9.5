@@ -8,7 +8,7 @@ import lombok.Generated;
 import rip.vantage.commons.util.time.a;
 
 public class afx extends ArrayList<ConfigFile> {
-    public static final File aHL = new File(afr.aHy, "configs");
+    public static final File CONFIG_DIRECTORY = new File(afr.DIRECTORY, "configs");
     private ConfigFile aHM;
     private final a aHN = new a();
 
@@ -16,8 +16,8 @@ public class afx extends ArrayList<ConfigFile> {
     }
 
     public void init() {
-        if (!aHL.exists()) {
-            aHL.mkdir();
+        if (!CONFIG_DIRECTORY.exists()) {
+            CONFIG_DIRECTORY.mkdir();
         }
 
         this.aHN.i(5000L);
@@ -25,21 +25,21 @@ public class afx extends ArrayList<ConfigFile> {
     }
 
     public void tn() {
-        File file1 = new File(aHL, "latest.json");
+        File file1 = new File(CONFIG_DIRECTORY, "latest.json");
         ConfigFile configfile = new ConfigFile(file1, FileType.CONFIG);
         configfile.tm();
         configfile.te();
         this.aHM = configfile;
     }
 
-    public ConfigFile bK(String var1) {
-        File file1 = new File(aHL, var1 + ".json");
+    public ConfigFile get(String var1) {
+        File file1 = new File(CONFIG_DIRECTORY, var1 + ".json");
         return new ConfigFile(file1, FileType.CONFIG);
     }
 
     public void d(String var1, boolean var2) {
-        File file1 = new File(aHL, var1 + ".json");
-        ConfigFile configfile = this.bK(var1);
+        File file1 = new File(CONFIG_DIRECTORY, var1 + ".json");
+        ConfigFile configfile = this.get(var1);
         if (var2) {
             configfile.tm();
         }
@@ -52,13 +52,13 @@ public class afx extends ArrayList<ConfigFile> {
             System.out.println("Overwriting existing config...");
         }
 
-        configfile.tf();
+        configfile.write();
         System.out.println("Config saved to files.");
     }
 
     public boolean update() {
         this.clear();
-        File[] afile = aHL.listFiles();
+        File[] afile = CONFIG_DIRECTORY.listFiles();
         if (afile == null) {
             return false;
         }
@@ -72,14 +72,14 @@ public class afx extends ArrayList<ConfigFile> {
         return true;
     }
 
-    public boolean bL(String var1) {
-        ConfigFile configfile = this.bK(var1);
+    public boolean delete(String var1) {
+        ConfigFile configfile = this.get(var1);
         if (configfile == null) {
             return false;
         }
 
         this.remove(configfile);
-        return configfile.sK().delete();
+        return configfile.getFile().delete();
     }
 
     public a mQ() {

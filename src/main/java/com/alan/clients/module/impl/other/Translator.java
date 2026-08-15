@@ -23,12 +23,12 @@ import org.json.JSONArray;
 
 @ModuleInfo(aliases = "module.other.translator.name", description = "Translates your chat, might not work with some VPNs", category = Category.RENDER)
 public class Translator extends Module {
-    Executor ZC = Executors.newFixedThreadPool(1);
+    Executor translatorThread = Executors.newFixedThreadPool(1);
     private final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Delay")).add(new SubMode("Resend")).setDefault("Delay");
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
         if (aEg.theWorld != null && aEg.thePlayer != null) {
-            Packet packet = var1.dq();
+            Packet packet = var1.getPacket();
             if (packet instanceof c) {
                 String s = ((c)packet).getChatComponent().getFormattedText();
                 if (s.contains("\n")) {
@@ -72,7 +72,7 @@ public class Translator extends Module {
     }
 
     public void U(String var1) {
-        this.ZC
+        this.translatorThread
             .execute(
                 () -> {
                     JSONArray jsonarray = new JSONArray(
@@ -83,7 +83,7 @@ public class Translator extends Module {
                     String s1 = new Locale(jsonarray.getString(2)).getDisplayLanguage(Locale.ENGLISH);
                     if (!sxx.equals(var1)) {
                         sx.appendText(" ");
-                        s sxx2 = new s(this.rz().rH() + "[T]");
+                        s sxx2 = new s(this.rz().getChatAccentColor() + "[T]");
                         ChatStyle chatstyle = new ChatStyle();
                         chatstyle.setChatHoverEvent(new HoverEvent(Action.SHOW_TEXT, new s("Translated from " + s1 + "\n" + var1)));
                         sxx2.setChatStyle(chatstyle);

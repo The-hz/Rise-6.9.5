@@ -41,7 +41,7 @@ public abstract class Mode<T> implements InstanceAccess, aha, Toggleable {
     }
 
     @Generated
-    public T wj() {
+    public T getParent() {
         return this.parent;
     }
 

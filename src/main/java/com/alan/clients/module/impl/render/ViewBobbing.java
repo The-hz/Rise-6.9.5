@@ -18,13 +18,13 @@ public final class ViewBobbing extends Module {
         .add(new SubMode("None"))
         .setDefault("None");
     @EventLink
-    public final Listener<ViewBobbingEvent> apW = var1 -> {
-        if (this.viewBobbingMode.wo().getName().equals("Smooth") && (var1.dL() == 0 || var1.dL() == 2)) {
+    public final Listener<ViewBobbingEvent> onViewBobbing = var1 -> {
+        if (this.viewBobbingMode.wo().getName().equals("Smooth") && (var1.getTime() == 0 || var1.getTime() == 2)) {
             var1.setCancelled();
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> apX = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         label22: {
             aEg.gameSettings.cfG = true;
             String s = this.viewBobbingMode.wo().getName();

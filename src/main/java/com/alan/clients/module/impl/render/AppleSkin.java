@@ -30,8 +30,8 @@ public class AppleSkin extends Module {
     private float akZ;
     private byte alphaDir = 1;
     @EventLink
-    public final Listener<RenderHungerEvent> alb = var1 -> {
-        ScaledResolution scaledresolution = var1.dx();
+    public final Listener<RenderHungerEvent> onHunger = var1 -> {
+        ScaledResolution scaledresolution = var1.getScaledResolution();
         FoodStats foodstats = aEg.thePlayer.getFoodStats();
         int i = scaledresolution.getScaledWidth() / 2 + 91;
         int j = scaledresolution.getScaledHeight() - 39;
@@ -45,15 +45,15 @@ public class AppleSkin extends Module {
         }
 
         yc yc = yb.s(itemstack);
-        int k = yc.aqt;
-        float f = yc.mm();
+        int k = yc.hunger;
+        float f = yc.getSaturationIncrement();
         int l = foodstats.getFoodLevel() + k;
         float f1 = foodstats.getSaturationLevel() + f > l ? l - foodstats.getSaturationLevel() : f;
         this.drawHungerOverlay(k, foodstats.getFoodLevel(), i, j, this.akZ, yb.t(itemstack));
         this.drawSaturationOverlay(f1, foodstats.getSaturationLevel(), k, foodstats.getFoodLevel(), i, j, this.akZ);
     };
     @EventLink
-    public final Listener<TickEvent> alc = var1 -> {
+    public final Listener<TickEvent> onTick = var1 -> {
         this.akY = this.akY + this.alphaDir * 0.125F;
         if (this.akY >= 1.5F) {
             this.alphaDir = -1;

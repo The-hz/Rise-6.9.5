@@ -14,9 +14,9 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 
 public class LabyModClientSpoofer extends Mode<ClientSpoofer> {
-    public final StringValue ZF = new StringValue("Spoofed Version, Latest would be preferred", this, "4.2.31");
+    public final StringValue spoofedVersionLatestWouldBePreferred = new StringValue("Spoofed Version, Latest would be preferred", this, "4.2.31");
     @EventLink
-    public final Listener<PacketSendEvent> ZG = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (var1x.dq() instanceof C17PacketCustomPayload) {
             ss ss = new ss(this);
             var1x.setCancelled();

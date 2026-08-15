@@ -5,20 +5,20 @@ import java.io.File;
 import java.util.ArrayList;
 
 public final class agb extends ArrayList<aga> {
-    public static final File aHR = new File(afr.aHy, "insults");
+    public static final File INSULT_DIRECTORY = new File(afr.DIRECTORY, "insults");
 
     public agb() {
     }
 
     public void init() {
-        if (!aHR.exists()) {
-            aHR.mkdir();
+        if (!INSULT_DIRECTORY.exists()) {
+            INSULT_DIRECTORY.mkdir();
         }
     }
 
     public aga bO(String var1) {
         for (aga aga : this) {
-            if (aga.sK().getName().equalsIgnoreCase(var1 + ".txt")) {
+            if (aga.getFile().getName().equalsIgnoreCase(var1 + ".txt")) {
                 return aga;
             }
         }
@@ -26,8 +26,8 @@ public final class agb extends ArrayList<aga> {
         return null;
     }
 
-    public void bN(String var1) {
-        File file1 = new File(aHR, var1 + ".txt");
+    public void set(String var1) {
+        File file1 = new File(INSULT_DIRECTORY, var1 + ".txt");
         aga aga = this.bO(var1);
         if (aga == null) {
             aga = new aga(file1, FileType.INSULT);
@@ -37,13 +37,13 @@ public final class agb extends ArrayList<aga> {
             System.out.println("Overwriting existing ..");
         }
 
-        aga.tf();
+        aga.write();
         System.out.println("Insults saved to files.");
     }
 
     public boolean update() {
         this.clear();
-        File[] afile = aHR.listFiles();
+        File[] afile = INSULT_DIRECTORY.listFiles();
         if (afile == null) {
             return false;
         }
@@ -57,13 +57,13 @@ public final class agb extends ArrayList<aga> {
         return true;
     }
 
-    public boolean bL(String var1) {
+    public boolean delete(String var1) {
         aga aga = this.bO(var1);
         if (aga == null) {
             return false;
         }
 
         this.remove(aga);
-        return aga.sK().delete();
+        return aga.getFile().delete();
     }
 }

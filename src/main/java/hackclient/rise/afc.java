@@ -16,7 +16,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public final class afc {
-    public static final File aFY = new File(afr.aHy, "alts/localts_orders");
+    public static final File aFY = new File(afr.DIRECTORY, "alts/localts_orders");
     private static final SimpleDateFormat aFZ = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
     private afc() {

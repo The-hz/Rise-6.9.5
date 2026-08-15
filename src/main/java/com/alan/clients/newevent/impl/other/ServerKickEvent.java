@@ -8,7 +8,7 @@ public final class ServerKickEvent implements Event {
     public List<String> message;
 
     @Generated
-    public List<String> dm() {
+    public List<String> getMessage() {
         return this.message;
     }
 

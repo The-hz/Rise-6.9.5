@@ -30,7 +30,7 @@ import org.apache.commons.lang3.StringUtils;
 public class SecurityFeatureManager implements InstanceAccess, aha {
     public rip.vantage.commons.util.time.a avt;
     @EventLink
-    public Listener<ChatInputEvent> avy;
+    public Listener<ChatInputEvent> onChatInput;
     public static long avp;
     public String avu;
     public List<SecurityFeature> avr;
@@ -38,10 +38,10 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
     public List<SecurityFeature> avq = new ArrayList<>();
     public static boolean avo;
     @EventLink
-    public Listener<PreMotionEvent> avx;
+    public Listener<PreMotionEvent> onPreMotion;
     public boolean avw;
     @EventLink
-    public Listener<PacketSendEvent> avz;
+    public Listener<PacketSendEvent> onPacketSend;
     public Set<String> avs;
 
     public void a(SecurityFeature var1) {
@@ -86,7 +86,7 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
         this.avs = ConcurrentHashMap.newKeySet();
         this.avt = new rip.vantage.commons.util.time.a();
         this.avu = "";
-        this.avx = var1 -> {
+        this.onPreMotion = var1 -> {
             if (!this.nH()) {
                 this.avw = false;
             } else {
@@ -98,7 +98,7 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
 
                         while (iterator.hasNext()) {
                             SecurityFeature securityfeature = (SecurityFeature)iterator.next();
-                            if (securityfeature.nG()) {
+                            if (securityfeature.run()) {
                                 k_hi = 1;
                                 this.c(securityfeature.getReason(), false);
                                 break;
@@ -109,7 +109,7 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
 
                         while (iterator1.hasNext()) {
                             SecurityFeature securityfeature1 = (SecurityFeature)iterator1.next();
-                            if (securityfeature1.nG()) {
+                            if (securityfeature1.run()) {
                                 this.c(securityfeature1.getReason(), true);
                             }
                         }
@@ -120,12 +120,12 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
                 }
             }
         };
-        this.avy = var1 -> {
+        this.onChatInput = var1 -> {
             if (this.nH()) {
                 this.au(var1.getMessage());
             }
         };
-        this.avz = var1 -> {
+        this.onPacketSend = var1 -> {
             Object object = null;
             if (this.nH()) {
                 if (var1.dq() instanceof C01PacketChatMessage) {
@@ -138,7 +138,7 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
 
     @Generated
     public Listener<ChatInputEvent> nP() {
-        return this.avy;
+        return this.onChatInput;
     }
 
     @Generated
@@ -198,12 +198,12 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
 
     @Generated
     public Listener<PreMotionEvent> nO() {
-        return this.avx;
+        return this.onPreMotion;
     }
 
     @Generated
     public Listener<PacketSendEvent> nQ() {
-        return this.avz;
+        return this.onPacketSend;
     }
 
     public void as(String var1) {

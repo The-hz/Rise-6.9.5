@@ -18,8 +18,8 @@ import net.minecraft.util.Vec3;
 
 public class WatchdogPredictionNoFall extends Mode<NoFall> {
     private boolean Ti;
-    @EventLink(cH = 0)
-    public final Listener<PreUpdateEvent> aht = var1x -> {
+    @EventLink(value = 0)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         boolean flag = false;
         if (!this.e(Flight.class).isEnabled()) {
             for (int i = 0; i <= 200; i++) {

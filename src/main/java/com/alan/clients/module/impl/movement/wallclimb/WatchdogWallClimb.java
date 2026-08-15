@@ -22,7 +22,7 @@ public class WatchdogWallClimb extends Mode<WallClimb> {
     private double Th = 0.42;
     private boolean active;
     @EventLink
-    public final Listener<PreMotionEvent> Tj = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer != null) {
             if (aEg.thePlayer.motionY < 0.0) {
                 this.active = true;
@@ -57,13 +57,13 @@ public class WatchdogWallClimb extends Mode<WallClimb> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> Tk = var0 -> {
+    public final Listener<MoveInputEvent> onMoveInput = var0 -> {
         if (aEg.thePlayer.isCollidedHorizontally) {
             var0.setStrafe(0.0F);
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> Tl = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer != null) {
             if (aEg.thePlayer.tR == 5) {
                 double d0;
@@ -81,11 +81,11 @@ public class WatchdogWallClimb extends Mode<WallClimb> {
         }
     };
     @EventLink
-    public final Listener<BlockAABBEvent> Tm = var0 -> {
+    public final Listener<BlockAABBEvent> onBlockAABB = var0 -> {
         if (aEg.thePlayer != null) {
-            BlockPos blockpos = var0.dg();
+            BlockPos blockpos = var0.getBlockPos();
             if (blockpos != null) {
-                if (var0.df() instanceof BlockAir) {
+                if (var0.getBlock() instanceof BlockAir) {
                     if (!(blockpos.getY() >= aEg.thePlayer.posY)) {
                         if (aEg.thePlayer.isCollidedHorizontally) {
                             if (!aEg.thePlayer.isOnLadder()) {
@@ -93,7 +93,7 @@ public class WatchdogWallClimb extends Mode<WallClimb> {
                                 AxisAlignedBB axisalignedbb = AxisAlignedBB.fromBounds(0.0, 0.0, 0.0, 1.0, 1.0, 1.0)
                                     .offset(aEg.thePlayer.posX, d0, aEg.thePlayer.posZ);
                                 AxisAlignedBB axisalignedbb1 = axisalignedbb.expand(-1.0E-7, 0.0, -1.0E-7);
-                                var0.a(axisalignedbb1);
+                                var0.setBoundingBox(axisalignedbb1);
                             }
                         }
                     }

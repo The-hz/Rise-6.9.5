@@ -13,7 +13,7 @@ import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.aka;
 
 public class WatchdogPredictionSpeed extends Mode<Speed> {
-    private final NumberValue PH = new NumberValue("Speed", this, 1, 1, 10, 1);
+    private final NumberValue speed = new NumberValue("Speed", this, 1, 1, 10, 1);
     private double tU;
     private final double PI = 0.03;
     private final double PJ = 0.053299998353843775;
@@ -22,11 +22,11 @@ public class WatchdogPredictionSpeed extends Mode<Speed> {
     private boolean tZ;
     private aka ua;
     @EventLink
-    public final Listener<PreMotionEvent> PL = var0 -> {};
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {};
     @EventLink
-    public final Listener<StrafeEvent> PM = var0 -> {};
+    public final Listener<StrafeEvent> onStrafe = var0 -> {};
     @EventLink
-    public final Listener<PostStrafeEvent> PN = var1x -> {
+    public final Listener<PostStrafeEvent> onPostStrafe = var1x -> {
         if (aEg.thePlayer.onGround && MoveUtil.isMoving() && !aEg.thePlayer.inWater) {
             aEg.thePlayer.jump();
         }

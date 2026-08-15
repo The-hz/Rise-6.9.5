@@ -11,14 +11,14 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class cm implements InstanceAccess {
     public cn hP;
-    public Entity by;
-    public int hQ;
+    public Entity target;
+    public int tick;
     public static KillAura gj;
     public static TeleportAura hR;
 
     public cm(cn var1) {
         this.hP = var1;
-        this.hQ = aEg.thePlayer.ticksExisted;
+        this.tick = aEg.thePlayer.ticksExisted;
     }
 
     public void co() {
@@ -40,15 +40,15 @@ public class cm implements InstanceAccess {
         }
 
         if (gj.jE != null) {
-            this.by = gj.jE;
+            this.target = gj.jE;
         } else if (hR.jE != null) {
-            this.by = hR.jE;
+            this.target = hR.jE;
         } else {
-            this.by = null;
+            this.target = null;
         }
     }
 
-    public Color a(EntityLivingBase var1) {
+    public Color getColor(EntityLivingBase var1) {
         Color color = this.hP.cr();
         if (var1 == null) {
             return color;
@@ -56,7 +56,7 @@ public class cm implements InstanceAccess {
 
         if (var1.hurtTime > 0) {
             color = this.hP.cs();
-        } else if (this.by == var1) {
+        } else if (this.target == var1) {
             color = this.hP.ct();
         }
 

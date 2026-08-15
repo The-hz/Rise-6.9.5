@@ -20,7 +20,7 @@ public class MineLandFlight extends Mode<Flight> {
     private double HA;
     private boolean teleported;
     @EventLink
-    public final Listener<PreMotionEvent> HB = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (!this.teleported) {
             double d0 = MoveUtil.direction();
             if (aEg.thePlayer.ticksExisted % 3 == 0) {
@@ -36,8 +36,8 @@ public class MineLandFlight extends Mode<Flight> {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> HC = var1x -> {
-        Packet packet = var1x.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1x -> {
+        Packet packet = var1x.getPacket();
         if (packet instanceof S08PacketPlayerPosLook && !this.teleported) {
             var1x.setCancelled();
         } else if (packet instanceof S12PacketEntityVelocity s12packetentityvelocity

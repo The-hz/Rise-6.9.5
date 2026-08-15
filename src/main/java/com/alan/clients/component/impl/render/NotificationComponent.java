@@ -12,8 +12,8 @@ public class NotificationComponent extends Component implements aha {
     public static ConcurrentLinkedQueue<ait> hu = new ConcurrentLinkedQueue<>();
     public static int hv;
     public static int hw;
-    @EventLink(cH = 4)
-    public final Listener<Render2DEvent> hx = var1 -> hu.isEmpty();
+    @EventLink(value = 4)
+    public final Listener<Render2DEvent> onRender2DEvent = var1 -> hu.isEmpty();
 
     public NotificationComponent() {
     }

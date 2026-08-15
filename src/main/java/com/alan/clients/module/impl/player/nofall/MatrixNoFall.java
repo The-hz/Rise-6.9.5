@@ -14,7 +14,7 @@ public class MatrixNoFall extends Mode<NoFall> {
     private boolean aiM = false;
     private boolean aiN = false;
     @EventLink
-    public final Listener<PreUpdateEvent> aiO = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (Math.round(aEg.thePlayer.fallDistance) - aEg.thePlayer.motionY > 3.0) {
             aEg.thePlayer.motionY = 0.0;
             aEg.thePlayer.fallDistance = 0.0F;
@@ -33,7 +33,7 @@ public class MatrixNoFall extends Mode<NoFall> {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> aiP = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (var1x.dq() instanceof C03PacketPlayer c03packetplayer && this.aiN) {
             aEg.timer.dzD = 0.5F;
             c03packetplayer.aO = false;

@@ -8,10 +8,10 @@ import com.alan.clients.value.Mode;
 import org.lwjgl.input.Keyboard;
 
 public class NormalDownwards extends Mode<Scaffold> {
-    @EventLink(cH = 1)
-    public final Listener<PreUpdateEvent> ajb = var1x -> {
+    @EventLink(value = 1)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (Keyboard.isKeyDown(aEg.gameSettings.keyBindSneak.getKeyCode())) {
-            this.wj().agy = this.wj().agy.v(0.0, -1.0, 0.0);
+            this.getParent().agy = this.getParent().agy.v(0.0, -1.0, 0.0);
         }
     };
 

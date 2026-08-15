@@ -34,7 +34,7 @@ import rip.vantage.network.core.a;
 
 public class ConfigFile extends File implements p {
     private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd.MM.yyyy");
-    private boolean aHK;
+    private boolean loadKeyCodes;
     private String gK;
     private int keyCode;
 
@@ -49,12 +49,12 @@ public class ConfigFile extends File implements p {
 
     @Override
     public boolean te() {
-        if (!this.sK().exists()) {
+        if (!this.getFile().exists()) {
             return false;
         }
 
         try {
-            FileReader filereader = new FileReader(this.sK());
+            FileReader filereader = new FileReader(this.getFile());
             BufferedReader bufferedreader = new BufferedReader(filereader);
             JsonObject jsonobject = this.A().fromJson(bufferedreader, JsonObject.class);
             bufferedreader.close();
@@ -107,11 +107,11 @@ public class ConfigFile extends File implements p {
     }
 
     @Override
-    public boolean tf() {
+    public boolean write() {
         try {
-            this.sK().createNewFile();
-            JsonObject jsonobject = b(this.aHK, true);
-            FileWriter filewriter = new FileWriter(this.sK());
+            this.getFile().createNewFile();
+            JsonObject jsonobject = b(this.loadKeyCodes, true);
+            FileWriter filewriter = new FileWriter(this.getFile());
             BufferedWriter bufferedwriter = new BufferedWriter(filewriter);
             this.A().toJson(jsonobject, bufferedwriter);
             bufferedwriter.flush();
@@ -208,7 +208,7 @@ public class ConfigFile extends File implements p {
     }
 
     public void tm() {
-        this.aHK = true;
+        this.loadKeyCodes = true;
     }
 
     @Override

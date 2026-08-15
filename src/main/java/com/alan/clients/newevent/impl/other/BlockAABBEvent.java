@@ -15,17 +15,17 @@ public class BlockAABBEvent extends CancellableEvent {
     private final AxisAlignedBB jK;
 
     @Generated
-    public World de() {
+    public World getWorld() {
         return this.world;
     }
 
     @Generated
-    public Block df() {
+    public Block getBlock() {
         return this.block;
     }
 
     @Generated
-    public BlockPos dg() {
+    public BlockPos getBlockPos() {
         return this.blockPos;
     }
 
@@ -40,7 +40,7 @@ public class BlockAABBEvent extends CancellableEvent {
     }
 
     @Generated
-    public void a(AxisAlignedBB var1) {
+    public void setBoundingBox(AxisAlignedBB var1) {
         this.jJ = var1;
     }
 

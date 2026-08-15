@@ -21,17 +21,17 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 @ModuleInfo(aliases = "module.render.ambience.name", description = "module.render.ambience.description", category = Category.RENDER)
 public final class Ambience extends Module {
-    private final NumberValue akD = new NumberValue("Time", this, 0, 0, 22999, 1);
-    private final NumberValue akE = new NumberValue("Time Speed", this, 0, 0, 20, 1);
+    private final NumberValue time = new NumberValue("Time", this, 0, 0, 22999, 1);
+    private final NumberValue speed = new NumberValue("Time Speed", this, 0, 0, 20, 1);
     private final ModeValue weather = new wc(this, "Weather", this);
     public final ColorValue snowColor = new ColorValue(
         "Snow Color", this, Color.WHITE, () -> !this.weather.wo().getName().equals("Heavy Snow") && !this.weather.wo().getName().equals("Light Snow")
     );
     @EventLink
-    public final Listener<Render3DEvent> akH = var1 -> aEg.theWorld
-        .setWorldTime(this.akD.wo().intValue() + System.currentTimeMillis() * this.akE.wo().intValue());
+    public final Listener<Render3DEvent> onRender3D = var1 -> aEg.theWorld
+        .setWorldTime(this.time.wo().intValue() + System.currentTimeMillis() * this.speed.wo().intValue());
     @EventLink
-    public final Listener<PreMotionEvent> akI = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.thePlayer.ticksExisted % 20 == 0) {
             label32: {
                 String s = this.weather.wo().getName();
@@ -95,11 +95,11 @@ public final class Ambience extends Module {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> akJ = var1 -> {
-        if (var1.dq() instanceof S03PacketTimeUpdate) {
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1 -> {
+        if (var1.getPacket() instanceof S03PacketTimeUpdate) {
             var1.setCancelled();
-        } else if (var1.dq() instanceof S2BPacketChangeGameState && !this.weather.wo().getName().equals("Unchanged")) {
-            S2BPacketChangeGameState s2bpacketchangegamestate = (S2BPacketChangeGameState)var1.dq();
+        } else if (var1.getPacket() instanceof S2BPacketChangeGameState && !this.weather.wo().getName().equals("Unchanged")) {
+            S2BPacketChangeGameState s2bpacketchangegamestate = (S2BPacketChangeGameState)var1.getPacket();
             if (s2bpacketchangegamestate.getGameState() == 1 || s2bpacketchangegamestate.getGameState() == 2) {
                 var1.setCancelled();
             }
@@ -165,12 +165,12 @@ public final class Ambience extends Module {
 
     @Generated
     public NumberValue kG() {
-        return this.akD;
+        return this.time;
     }
 
     @Generated
     public NumberValue jG() {
-        return this.akE;
+        return this.speed;
     }
 
     @Generated
@@ -179,22 +179,22 @@ public final class Ambience extends Module {
     }
 
     @Generated
-    public ColorValue kI() {
+    public ColorValue getSnowColor() {
         return this.snowColor;
     }
 
     @Generated
     public Listener<Render3DEvent> kJ() {
-        return this.akH;
+        return this.onRender3D;
     }
 
     @Generated
     public Listener<PreMotionEvent> kK() {
-        return this.akI;
+        return this.onPreMotionEvent;
     }
 
     @Generated
     public Listener<PacketReceiveEvent> kL() {
-        return this.akJ;
+        return this.onPacketReceiveEvent;
     }
 }

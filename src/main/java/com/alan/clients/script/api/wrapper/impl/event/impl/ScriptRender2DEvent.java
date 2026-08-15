@@ -13,15 +13,15 @@ public class ScriptRender2DEvent extends ScriptEvent<Render2DEvent> {
     }
 
     public int getScaledWidth() {
-        return this.wrapped.dx().getScaledWidth();
+        return this.wrapped.getScaledResolution().getScaledWidth();
     }
 
     public int getScaledHeight() {
-        return this.wrapped.dx().getScaledHeight();
+        return this.wrapped.getScaledResolution().getScaledHeight();
     }
 
     public int getScaleFactor() {
-        return this.wrapped.dx().getScaleFactor();
+        return this.wrapped.getScaledResolution().getScaleFactor();
     }
 
     @Override

@@ -36,18 +36,18 @@ import net.minecraft.util.MathHelper;
     category = Category.GHOST
 )
 public final class ManualKBDisplacement extends Module {
-    private final NumberValue Bn = new NumberValue("Rotation Speed", this, 8, 1, 20, 1);
-    private final NumberValue Bo = new NumberValue("Tracking Range", this, 6.0, 3.0, 8.0, 0.1);
-    private final BooleanValue Bp = new BooleanValue("Debug", this, false);
+    private final NumberValue rotationSpeed = new NumberValue("Rotation Speed", this, 8, 1, 20, 1);
+    private final NumberValue trackingRange = new NumberValue("Tracking Range", this, 6.0, 3.0, 8.0, 0.1);
+    private final BooleanValue debug = new BooleanValue("Debug", this, false);
     private EntityLivingBase Bq;
     private le Br;
     private int Bs;
     private String Bt = "";
     private int Bu = -1;
     @EventLink
-    public final Listener<WorldChangeEvent> Bv = var1 -> this.gQ();
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.gQ();
     @EventLink
-    public final Listener<AttackEvent> Bw = var1 -> {
+    public final Listener<AttackEvent> onAttack = var1 -> {
         KillAura killaura = this.e(KillAura.class);
         if (killaura == null || !killaura.isEnabled()) {
             if (!var1.isCancelled() && var1.dc() != null) {
@@ -58,7 +58,7 @@ public final class ManualKBDisplacement extends Module {
         }
     };
     @EventLink
-    public final Listener<PreUpdateEvent> Bx = var1 -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         if (this.Bq != null) {
             if (this.Bs > 0) {
                 this.Bs--;
@@ -79,9 +79,9 @@ public final class ManualKBDisplacement extends Module {
                 if (this.Br == null) {
                     this.a("rejected:no-plan", null, this.Bq);
                 } else {
-                    Vector2f vector2f = aiu.a(this.Bq, true, this.Bo.wo().doubleValue());
+                    Vector2f vector2f = aiu.calculate(this.Bq, true, this.trackingRange.wo().doubleValue());
                     Vector2f vector2f1 = new Vector2f(this.Br.Bz, vector2f.getY());
-                    RotationComponent.a(vector2f1, this.Bn.wo().doubleValue(), MovementFix.NORMAL, null, true);
+                    RotationComponent.a(vector2f1, this.rotationSpeed.wo().doubleValue(), MovementFix.NORMAL, null, true);
                     this.f(vector2f1);
                     this.a("applied", this.Br, this.Bq);
                 }
@@ -115,7 +115,7 @@ public final class ManualKBDisplacement extends Module {
             && !var1.isDead
             && aEg.thePlayer != null
             && aEg.theWorld != null
-            && aEg.thePlayer.getDistanceToEntity(var1) <= this.Bo.wo().doubleValue() + 1.0;
+            && aEg.thePlayer.getDistanceToEntity(var1) <= this.trackingRange.wo().doubleValue() + 1.0;
     }
 
     private boolean eT() {
@@ -197,7 +197,7 @@ public final class ManualKBDisplacement extends Module {
         }
 
         float f = (float)Math.toDegrees(Math.atan2(var5, var3)) - 90.0F;
-        float f1 = aiu.a(var1, true, this.Bo.wo().doubleValue()).getY();
+        float f1 = aiu.calculate(var1, true, this.trackingRange.wo().doubleValue()).getY();
         return new le(var1.getEntityId(), f, f1, var7, d0, s);
     }
 
@@ -280,7 +280,7 @@ public final class ManualKBDisplacement extends Module {
     }
 
     private void a(String var1, le var2, EntityLivingBase var3) {
-        if (this.Bp.wo() && aEg.thePlayer != null) {
+        if (this.debug.wo() && aEg.thePlayer != null) {
             String s = var2 == null
                 ? String.format("%s hurt=%d", var1, var3 == null ? -1 : var3.hurtTime)
                 : String.format(

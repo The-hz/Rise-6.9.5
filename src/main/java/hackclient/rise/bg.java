@@ -28,15 +28,15 @@ public final class bg extends Component {
     private static int dl;
     private static int dm;
     public static bh dn;
-    @EventLink(cH = 0)
-    public final Listener<PreMotionEvent> fld_do_10 = var1 -> {
+    @EventLink(value = 0)
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (dj) {
-            int i = aik.e(Items.bow);
-            int j = aik.e(Items.fishing_rod);
-            int k = aik.e(Items.clay_ball);
-            int l = aik.e(Items.snowball);
-            int i1 = aik.e(Items.egg);
-            if (i != -1 && this.ba()) {
+            int i = aik.findItem(Items.bow);
+            int j = aik.findItem(Items.fishing_rod);
+            int k = aik.findItem(Items.clay_ball);
+            int l = aik.findItem(Items.snowball);
+            int i1 = aik.findItem(Items.egg);
+            if (i != -1 && this.arrow()) {
                 SlotComponent slotcomponent3 = this.d(SlotComponent.class);
                 SlotComponent.setSlot(i);
                 dn = bh.BOW;
@@ -58,11 +58,11 @@ public final class bg extends Component {
                 dn = bh.PROJECTILES;
             }
 
-            if (bb.a(true, false, false, false, true)) {
+            if (bb.bad(true, false, false, false, true)) {
                 dm = 0;
             }
 
-            if (!bb.a(true, false, false, false, true)) {
+            if (!bb.bad(true, false, false, false, true)) {
                 dm++;
                 if (dn != null) {
                     label53:
@@ -132,21 +132,21 @@ public final class bg extends Component {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> dp = var0 -> {
+    public final Listener<MoveInputEvent> onMove = var0 -> {
         if (dk && dj) {
             var0.setForward(0.0F);
             var0.setStrafe(0.0F);
         }
     };
     @EventLink
-    public final Listener<PreUpdateEvent> dq = var0 -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {
         if (dj) {
             RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, -90.0F), ahg.l(8.0, 10.0), MovementFix.NORMAL);
         }
     };
-    @EventLink(cH = 0)
-    public final Listener<PacketReceiveEvent> dr = var0 -> {
-        Packet packet = var0.dq();
+    @EventLink(value = 0)
+    public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var0 -> {
+        Packet packet = var0.getPacket();
         if (packet instanceof S12PacketEntityVelocity) {
             if (((S12PacketEntityVelocity)packet).getEntityID() == aEg.thePlayer.getEntityId()) {
                 dj = false;
@@ -167,7 +167,7 @@ public final class bg extends Component {
         dn = null;
     }
 
-    public boolean ba() {
+    public boolean arrow() {
         for (int i = 0; i < aEg.thePlayer.inventory.mainInventory.length; i++) {
             ItemStack itemstack = aEg.thePlayer.inventory.mainInventory[i];
             if (itemstack != null && itemstack.getItem().getUnlocalizedName().contains("arrow")) {

@@ -10,7 +10,7 @@ public final class ScriptCommand extends ScriptHandlerWrapper<Command> {
     }
 
     public void unregister() {
-        Client.a.i().aQ().remove(this.wrapped);
+        Client.a.getCommandManager().aQ().remove(this.wrapped);
     }
 
     public String getName() {

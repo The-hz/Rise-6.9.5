@@ -9,7 +9,7 @@ import com.alan.clients.value.Mode;
 
 public final class hl extends Mode<AntiBot> {
     @EventLink
-    public final Listener<PreMotionEvent> rt = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         if (aEg.theWorld.playerEntities.stream().anyMatch(var1xxx -> var1xxx.getEntityId() == var1xx.getEntityId() && var1xxx != var1xx)) {
             Client.a.x().b(this, var1xx);
         }

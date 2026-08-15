@@ -22,11 +22,11 @@ import net.minecraft.util.EnumFacing;
 
 @ModuleInfo(aliases = "module.movement.clipper.name", description = "module.movement.clipper.description", category = Category.MOVEMENT)
 public class Clipper extends Module {
-    private final NumberValue Dh = new NumberValue("Clip Height", this, 5, 1, 50, 1);
+    private final NumberValue clipHeight = new NumberValue("Clip Height", this, 5, 1, 50, 1);
     private final Set<EnumFacing> Di = new HashSet<>();
     private int Dj = 0;
     @EventLink
-    public final Listener<Render2DEvent> Dk = var1 -> {
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
         boolean flag = this.Di.contains(EnumFacing.UP);
         boolean flag1 = this.Di.contains(EnumFacing.DOWN);
         if (flag || flag1) {
@@ -56,19 +56,19 @@ public class Clipper extends Module {
         }
     };
     @EventLink
-    public final Listener<JumpEvent> Dl = var1 -> {
+    public final Listener<JumpEvent> onJump = var1 -> {
         if (this.Di.contains(EnumFacing.UP) && aEg.thePlayer.tR > 2 && aEg.gameSettings.keyBindJump.isPressed()) {
             var1.setCancelled();
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> Dm = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         if (this.Dj > 0) {
             this.Dj--;
         } else {
             this.Di.clear();
             if (!this.e(Flight.class).isEnabled()) {
-                int i = this.Dh.wo().intValue();
+                int i = this.clipHeight.wo().intValue();
 
                 for (EnumFacing enumfacing : new EnumFacing[]{EnumFacing.UP, EnumFacing.DOWN}) {
                     this.a(enumfacing, i, var2 -> this.Di.add(enumfacing));

@@ -19,7 +19,7 @@ public class aq extends Component {
     private float bM;
     public final a bN = new a();
     @EventLink
-    public final Listener<PreMotionEvent> bO = var1 -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         if (aEg.thePlayer.ticksExisted % 100 == 0
             || this.bK
             || aEg.gameSettings.keyBindPlayerList.isKeyDown() != this.bI
@@ -40,15 +40,15 @@ public class aq extends Component {
         this.bL--;
     };
     @EventLink
-    public final Listener<Render2DEvent> bP = var1 -> {
+    public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (aEg.currentScreen != null) {
             this.bK = true;
             add.aBL = true;
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> bQ = var1 -> {
-        Packet packet = var1.dq();
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
+        Packet packet = var1.getPacket();
         if (packet instanceof c || packet instanceof S30PacketWindowItems || packet instanceof net.minecraft.network.play.server.az) {
             this.bN.aX();
             this.bK = true;

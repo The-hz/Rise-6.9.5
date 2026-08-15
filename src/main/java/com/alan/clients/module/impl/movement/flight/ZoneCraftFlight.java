@@ -13,14 +13,14 @@ import net.minecraft.util.Vec3;
 public class ZoneCraftFlight extends Mode<Flight> {
     public Vec3 position = new Vec3(0.0, 0.0, 0.0);
     @EventLink
-    public final Listener<PreMotionEvent> Je = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         var1x.setPosX(this.position.xCoord);
         var1x.setPosY(this.position.yCoord);
         var1x.setPosZ(this.position.zCoord);
         var1x.setOnGround(true);
     };
     @EventLink
-    public final Listener<StrafeEvent> Jf = var0 -> {
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         var0.setSpeed(3.0);
         aEg.thePlayer.motionY = 0.0;
     };

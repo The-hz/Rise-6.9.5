@@ -29,14 +29,14 @@ public final class BedwarsUtils extends Module {
     private final Collection<EntityPlayer> TI = new HashSet<>();
     private final Collection<EntityPlayer> TJ = new HashSet<>();
     private final Collection<EntityPlayer> TK = new HashSet<>();
-    private final BooleanValue TL = new BooleanValue("Sword Reveal", this, true);
-    private final BooleanValue TM = new BooleanValue("Include Stone", this, false, () -> !this.TL.wo());
-    private final BooleanValue TN = new BooleanValue("Armor Reveal", this, true);
-    private final BooleanValue TO = new BooleanValue("Invisible Check", this, true);
-    private final BooleanValue TP = new BooleanValue("Invisibility Status", this, false);
+    private final BooleanValue swordReveal = new BooleanValue("Sword Reveal", this, true);
+    private final BooleanValue includeStone = new BooleanValue("Include Stone", this, false, () -> !this.swordReveal.wo());
+    private final BooleanValue armorReveal = new BooleanValue("Armor Reveal", this, true);
+    private final BooleanValue invisibleCheck = new BooleanValue("Invisible Check", this, true);
+    private final BooleanValue invisibilityStatus = new BooleanValue("Invisibility Status", this, false);
     private boolean TQ = false;
     @EventLink
-    private final Listener<PreUpdateEvent> TR = var1 -> {
+    private final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
             if (aEg.thePlayer == null && aEg.theWorld == null) {
                 this.TF.clear();
@@ -49,7 +49,7 @@ public final class BedwarsUtils extends Module {
             } else {
                 if (entityplayer.getHeldItem() != null) {
                     Item item = entityplayer.getHeldItem().getItem();
-                    if (this.TL.wo() && item instanceof ItemSword) {
+                    if (this.swordReveal.wo() && item instanceof ItemSword) {
                         String s = ((ItemSword)item).getToolMaterialName().toLowerCase();
                         if (s.contains("iron") && !this.TE.contains(entityplayer)) {
                             this.TE.add(entityplayer);
@@ -79,7 +79,7 @@ public final class BedwarsUtils extends Module {
 
                         if (s.contains("stone") && !this.TG.contains(entityplayer)) {
                             this.TG.add(entityplayer);
-                            if (this.TM.wo()) {
+                            if (this.includeStone.wo()) {
                                 afi.b(
                                     "Player "
                                         + EnumChatFormatting.RED
@@ -100,7 +100,7 @@ public final class BedwarsUtils extends Module {
                     }
                 }
 
-                if (this.TN.wo()) {
+                if (this.armorReveal.wo()) {
                     ItemStack itemstack = entityplayer.getCurrentArmor(1);
                     if (itemstack != null && itemstack.getItem() instanceof ItemArmor) {
                         if (((ItemArmor)itemstack.getItem()).getArmorMaterial().equals(ArmorMaterial.CHAIN) && !this.TI.contains(entityplayer)) {
@@ -150,7 +150,7 @@ public final class BedwarsUtils extends Module {
                     }
                 }
 
-                if (this.TO.wo()) {
+                if (this.invisibleCheck.wo()) {
                     if (entityplayer.getActivePotionEffect(Potion.invisibility) != null) {
                         if (!this.TK.contains(entityplayer)) {
                             this.TK.add(entityplayer);
@@ -178,7 +178,7 @@ public final class BedwarsUtils extends Module {
                     }
                 }
 
-                if (this.TP.wo()) {
+                if (this.invisibilityStatus.wo()) {
                     if (aEg.thePlayer.getActivePotionEffect(Potion.invisibility) != null) {
                         this.TQ = true;
                         if (aEg.thePlayer.ticksExisted % 200 == 0) {
@@ -203,7 +203,7 @@ public final class BedwarsUtils extends Module {
         }
     };
     @EventLink
-    private final Listener<WorldChangeEvent> TS = var1 -> {
+    private final Listener<WorldChangeEvent> onWorldChange = var1 -> {
         this.TF.clear();
         this.TE.clear();
         this.TG.clear();

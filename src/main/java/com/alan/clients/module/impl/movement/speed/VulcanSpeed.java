@@ -29,8 +29,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 public final class VulcanSpeed extends Mode<Speed> {
-    private final NumberValue QV = new NumberValue("Speed", this, 2, 1, 10, 1);
-    ModeValue lI = new ModeValue("Mode", this)
+    private final NumberValue speed = new NumberValue("Speed", this, 2, 1, 10, 1);
+    ModeValue mode = new ModeValue("Mode", this)
         .add(new SubMode("BHop"))
         .add(new SubMode("Lowhop"))
         .add(new SubMode("Funny"))
@@ -46,16 +46,16 @@ public final class VulcanSpeed extends Mode<Speed> {
     private double aB = 0.0;
     private boolean zL = false;
     @EventLink
-    public final Listener<JumpEvent> QW = var1x -> this.PD++;
+    public final Listener<JumpEvent> onJump = var1x -> this.PD++;
     @EventLink
-    public final Listener<StepEvent> QX = var1x -> {
-        switch (this.lI.wo().getName()) {
+    public final Listener<StepEvent> onStep = var1x -> {
+        switch (this.mode.wo().getName()) {
             case "BHop":
                 MoveUtil.strafe(0.22);
         }
     };
     @EventLink
-    public final Listener<PreMotionEvent> QY = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.ae < 2) {
             aEg.thePlayer.motionX *= 1.4;
             aEg.thePlayer.motionZ *= 1.4;
@@ -72,7 +72,7 @@ public final class VulcanSpeed extends Mode<Speed> {
             }
         }
 
-        if (this.lI.wo().getName().equals("BHop")) {
+        if (this.mode.wo().getName().equals("BHop")) {
             if (aEg.thePlayer.tR == 0) {
                 MoveUtil.strafe();
             }
@@ -96,7 +96,7 @@ public final class VulcanSpeed extends Mode<Speed> {
             }
         }
 
-        if (this.lI.wo().getName().equals("Ground")) {
+        if (this.mode.wo().getName().equals("Ground")) {
             if (aEg.thePlayer.isJumping) {
                 aEg.thePlayer.motionX *= 0.75;
                 aEg.thePlayer.motionZ *= 0.75;
@@ -137,8 +137,8 @@ public final class VulcanSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<PostStrafeEvent> QZ = var1x -> {
-        if (this.lI.wo().getName().equals("Use Disabler")) {
+    public final Listener<PostStrafeEvent> onPostStrafe = var1x -> {
+        if (this.mode.wo().getName().equals("Use Disabler")) {
             if (aEg.thePlayer.onGround) {
                 aEg.thePlayer.motionY = 0.42F;
             }
@@ -159,19 +159,19 @@ public final class VulcanSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> Ra = var1x -> {
-        if (this.lI.wo().getName().equals("BHop")) {
+    public final Listener<MoveInputEvent> onMove = var1x -> {
+        if (this.mode.wo().getName().equals("BHop")) {
             var1x.setJump(false);
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> Rb = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         Math.sqrt(aEg.thePlayer.motionX * aEg.thePlayer.motionX + aEg.thePlayer.motionZ * aEg.thePlayer.motionZ);
         if (MoveUtil.isMoving()) {
             label343: {
                 label344: {
                     label295: {
-                        String s = this.lI.wo().getName();
+                        String s = this.mode.wo().getName();
                         byte b0 = -1;
                         switch (s.hashCode()) {
                             case -2012992363:
@@ -439,13 +439,13 @@ public final class VulcanSpeed extends Mode<Speed> {
             if (i == -1) {
                 afi.b("This speed requires a block to be in your HotBar.");
             } else {
-                if (!bb.a(false, true, false, false, false)) {
+                if (!bb.bad(false, true, false, false, false)) {
                     SlotComponent slotcomponent = this.d(SlotComponent.class);
                     SlotComponent.setSlot(i);
                 }
 
                 int j = aEg.thePlayer.isPotionActive(Potion.moveSpeed) ? aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 : 0;
-                if (!bb.a(false, true, false, false, false) && this.QN < aEg.thePlayer.ticksExisted) {
+                if (!bb.bad(false, true, false, false, false) && this.QN < aEg.thePlayer.ticksExisted) {
                     this.QN = aEg.thePlayer.ticksExisted + 2;
                     BlockPos blockpos = new BlockPos(aEg.thePlayer).down();
                     int l = EnumFacing.UP.getIndex();
@@ -497,8 +497,8 @@ public final class VulcanSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<TickEvent> Rc = var1x -> {
-        switch (this.lI.wo().getName()) {
+    public final Listener<TickEvent> onTick = var1x -> {
+        switch (this.mode.wo().getName()) {
             case "Yport":
                 if (aEg.thePlayer.tR == 0) {
                     MoveUtil.strafe();
@@ -522,7 +522,7 @@ public final class VulcanSpeed extends Mode<Speed> {
 
     @Override
     public void onDisable() {
-        if (this.lI.wo().getName().equals("Ground")) {
+        if (this.mode.wo().getName().equals("Ground")) {
             MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() * 0.6 - 0.02);
         }
     }

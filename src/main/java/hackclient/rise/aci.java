@@ -41,9 +41,9 @@ public class aci implements InstanceAccess {
             this.aAc.Q(this.qz() ? 5.0 : 0.0);
             RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, 8.0, abw.OVERLAY.pV());
             RenderUtil.roundedRectangle(var1.x, var1.y, this.alh.x, this.alh.y, 8.0, abw.OVERLAY.Y((int)this.aAb.sG()));
-            this.axI.y = this.axI.y + (this.alh.y / 2.0F - this.aAd.tq() / 2.0F + 1.0F - 10 / 4.0F);
+            this.axI.y = this.axI.y + (this.alh.y / 2.0F - this.aAd.height() / 2.0F + 1.0F - 10 / 4.0F);
             this.aAd.c(this.azY, this.axI.x + this.alh.x / 2.0F, this.axI.y, abw.SECONDARY_TEXT.pW());
-            this.axI.y = this.axI.y + (this.aAd.tq() + 10 / 2.0F);
+            this.axI.y = this.axI.y + (this.aAd.height() + 10 / 2.0F);
             this.k(this.axI);
             this.axI = new Vector2f(var1.x, var1.y);
         }

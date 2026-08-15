@@ -21,7 +21,7 @@ public final class ahg {
         return ThreadLocalRandom.current().nextDouble(var0, var2);
     }
 
-    public static double a(double var0, int var2) {
+    public static double round(double var0, int var2) {
         try {
             return BigDecimal.valueOf(var0).setScale(var2, RoundingMode.HALF_UP).doubleValue();
         } catch (Exception exception) {
@@ -50,11 +50,11 @@ public final class ahg {
         return var0 + var4 * (var2 - var0);
     }
 
-    public static float e(float var0, float var1, float var2) {
+    public static float lerp(float var0, float var1, float var2) {
         return var0 + var2 * (var1 - var0);
     }
 
-    public static double d(double var0, double var2, double var4, double var6, double var8, double var10) {
+    public static double getDistance(double var0, double var2, double var4, double var6, double var8, double var10) {
         double d0 = var6 - var0;
         double d1 = var8 - var2;
         double d2 = var10 - var4;

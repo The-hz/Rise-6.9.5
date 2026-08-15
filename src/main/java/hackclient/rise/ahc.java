@@ -12,23 +12,23 @@ public enum ahc {
     RU_RU("ru_RU"),
     ZH_ZH("zh_ZH");
 
-    private final String aMZ;
-    private final HashMap<String, String> aNa = new HashMap<>();
+    private final String file;
+    private final HashMap<String, String> strings = new HashMap<>();
     private static final ahc[] $VALUES = uG();
 
     @Generated
-    public String uE() {
-        return this.aMZ;
+    public String getFile() {
+        return this.file;
     }
 
     @Generated
-    public HashMap<String, String> uF() {
-        return this.aNa;
+    public HashMap<String, String> getStrings() {
+        return this.strings;
     }
 
     @Generated
     ahc(String var3) {
-        this.aMZ = var3;
+        this.file = var3;
     }
 
     private static ahc[] uG() {

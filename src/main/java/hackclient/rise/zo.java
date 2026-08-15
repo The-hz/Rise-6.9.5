@@ -27,7 +27,7 @@ public class zo extends SecurityFeature implements InstanceAccess {
     }
 
     @Override
-    public boolean nG() {
+    public boolean run() {
         return false;
     }
 

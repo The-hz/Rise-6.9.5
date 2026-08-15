@@ -36,26 +36,26 @@ public class Sprint extends Module {
     private int En;
     public static boolean Eo;
     public static boolean Ep;
-    private final BooleanValue Eq = new BooleanValue("Legit", this, true);
-    private final BooleanValue Er = new BooleanValue("Watchdog Prediction", this, false);
-    @EventLink(cH = 2)
-    public final Listener<StrafeEvent> Es = var1 -> {
-        if (!this.Er.wo() || aEg.gameSettings.keyBindJump.isKeyDown() || Ek < 12 && KillAura.nQ || aik.vy() == -1 || this.e(Manager.class).kb() && Ek < 12) {
+    private final BooleanValue legit = new BooleanValue("Legit", this, true);
+    private final BooleanValue watchdogPrediction = new BooleanValue("Watchdog Prediction", this, false);
+    @EventLink(value = 2)
+    public final Listener<StrafeEvent> onStrafe = var1 -> {
+        if (!this.watchdogPrediction.wo() || aEg.gameSettings.keyBindJump.isKeyDown() || Ek < 12 && KillAura.nQ || aik.vy() == -1 || this.e(Manager.class).kb() && Ek < 12) {
             aEg.gameSettings.cgG.setPressed(true);
             Ek = 0;
             Eo = false;
         }
 
-        if (aEg.thePlayer.cqL == 2 && !KillAura.nQ && this.Er.wo()) {
+        if (aEg.thePlayer.cqL == 2 && !KillAura.nQ && this.watchdogPrediction.wo()) {
             aEg.gameSettings.cgG.setPressed(false);
         }
 
-        if (!this.Eq.wo() && !this.Er.wo()) {
+        if (!this.legit.wo() && !this.watchdogPrediction.wo()) {
             aEg.thePlayer.bjQ = MoveUtil.isMoving();
             MoveUtil.preventDiagonalSpeed();
             aEg.thePlayer
                 .setSprinting(
-                    !this.Eq.wo()
+                    !this.legit.wo()
                         && MoveUtil.isMoving()
                         && !aEg.thePlayer.isCollidedHorizontally
                         && !aEg.thePlayer.isSneaking()
@@ -63,7 +63,7 @@ public class Sprint extends Module {
                 );
         }
 
-        if (this.Er.wo()) {
+        if (this.watchdogPrediction.wo()) {
             if (Ek < 12 && aEg.thePlayer.cqL > 3 && aEg.thePlayer.moveForward > 0.0F && !KillAura.nQ && aik.vy() != -1 && !this.e(Manager.class).kb()) {
                 aEg.thePlayer.inventory.currentItem = aik.vy();
                 Ek++;
@@ -76,14 +76,14 @@ public class Sprint extends Module {
         }
     };
     @EventLink
-    Listener<JumpEvent> Et = var0 -> {};
+    Listener<JumpEvent> onJump = var0 -> {};
     @EventLink
     Listener<en> Eu = var0 -> {};
     @EventLink
-    Listener<PreMotionEvent> Ev = var0 -> {};
+    Listener<PreMotionEvent> onPreMotion = var0 -> {};
     @EventLink
-    public final Listener<PacketReceiveEvent> Ew = var0 -> {
-        if (var0.dq() instanceof S20PacketEntityProperties s20packetentityproperties && s20packetentityproperties.getEntityId() == aEg.thePlayer.getEntityId()) {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var0 -> {
+        if (var0.getPacket() instanceof S20PacketEntityProperties s20packetentityproperties && s20packetentityproperties.getEntityId() == aEg.thePlayer.getEntityId()) {
             Iterator iterator = s20packetentityproperties.func_149441_d().iterator();
 
             while (iterator.hasNext()) {
@@ -99,12 +99,12 @@ public class Sprint extends Module {
         }
     };
     @EventLink
-    Listener<MoveInputEvent> yv = var1 -> {
+    Listener<MoveInputEvent> onMoveInput = var1 -> {
         this.jp = var1.getForward();
         this.jq = var1.getStrafe();
     };
     @EventLink
-    Listener<PreUpdateEvent> dq = var0 -> {
+    Listener<PreUpdateEvent> onPreUpdate = var0 -> {
         if (aEg.thePlayer == null || aEg.theWorld == null) {
             ;
         }

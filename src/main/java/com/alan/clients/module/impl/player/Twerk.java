@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 @ModuleInfo(aliases = "module.player.twerk.name", description = "module.player.twerk.description", category = Category.PLAYER)
 public class Twerk extends Module {
     @EventLink
-    public final Listener<PreMotionEvent> ahs = var0 -> aEg.gameSettings.keyBindSneak.setPressed(Math.random() < 0.5);
+    public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> aEg.gameSettings.keyBindSneak.setPressed(Math.random() < 0.5);
 
     public Twerk() {
     }

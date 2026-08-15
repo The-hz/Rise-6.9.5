@@ -17,7 +17,7 @@ public class HeypixelNoFall extends Mode<NoFall> {
     private boolean ahZ;
     private boolean aiz;
     @EventLink
-    public final Listener<PreMotionEvent> aiA = var1x -> {
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (this.aiz) {
             aEg.gameSettings.keyBindJump.setPressed(true);
         }
@@ -28,7 +28,7 @@ public class HeypixelNoFall extends Mode<NoFall> {
             var1x.setPosY(var1x.getPosY() - 0.098F);
             aEg.thePlayer.setPositionAndUpdate(aEg.thePlayer.posX, var1x.getPosY(), aEg.thePlayer.posZ);
         } else if (!(aEg.thePlayer.motionY > 0.0) && !(bd.cY <= 3.0F)) {
-            if (aih.q(new BlockPos(var1x.getPosX(), var1x.getPosY() + aEg.thePlayer.motionY, var1x.getPosZ())).getMaterial().isSolid()) {
+            if (aih.block(new BlockPos(var1x.getPosX(), var1x.getPosY() + aEg.thePlayer.motionY, var1x.getPosZ())).getMaterial().isSolid()) {
                 bd.cY = 0.0F;
                 this.ahZ = true;
                 this.aiz = true;
@@ -36,20 +36,20 @@ public class HeypixelNoFall extends Mode<NoFall> {
             }
         }
     };
-    @EventLink(cH = -1)
-    public final Listener<MoveInputEvent> aiB = var1x -> {
+    @EventLink(value = -1)
+    public final Listener<MoveInputEvent> onMoveInput = var1x -> {
         if (this.aiz) {
             var1x.setJump(true);
         }
     };
-    @EventLink(cH = -1)
-    public final Listener<JumpEvent> aiC = var1x -> {
+    @EventLink(value = -1)
+    public final Listener<JumpEvent> onJump = var1x -> {
         if (this.aiz && !this.ahZ && !var1x.isCancelled()) {
             this.kA();
         }
     };
     @EventLink
-    public final Listener<TeleportEvent> aiD = var1x -> this.ahZ = false;
+    public final Listener<TeleportEvent> onTeleport = var1x -> this.ahZ = false;
 
     public HeypixelNoFall(String var1, NoFall var2) {
         super(var1, var2);

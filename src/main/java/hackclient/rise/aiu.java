@@ -18,7 +18,7 @@ import net.minecraft.util.Vec3;
 
 public final class aiu implements InstanceAccess {
     public static Vector2f c(aka var0, aka var1) {
-        aka aka = var1.f(var0);
+        aka aka = var1.subtract(var0);
         double d0 = Math.hypot(aka.getX(), aka.getZ());
         if (af(aka.getX()) && af(aka.getY()) && af(aka.getZ()) && af(d0)) {
             float f = (float)(MathHelper.atan2(aka.getZ(), aka.getX()) * 180.0F / (float)Math.PI) - 90.0F;
@@ -58,7 +58,7 @@ public final class aiu implements InstanceAccess {
         return new Vec3(d3, d4, d5);
     }
 
-    public static Vector2f a(Entity var0, boolean var1, double var2) {
+    public static Vector2f calculate(Entity var0, boolean var1, double var2) {
         Vector2f vector2f = y(var0);
         if (var1 && z(var0) && af(var2) && !(var2 <= 0.0)) {
             MovingObjectPosition movingobjectposition = aef.c(vector2f, var2);
@@ -233,7 +233,7 @@ public final class aiu implements InstanceAccess {
         return new Vector2f(f1, MathHelper.clamp_float(f2, -90.0F, 90.0F));
     }
 
-    public static Vector2f b(Vector2f var0, Vector2f var1) {
+    public static Vector2f applySensitivityPatch(Vector2f var0, Vector2f var1) {
         float f = (float)(aEg.gameSettings.mouseSensitivity * (1.0 + Math.random() / 1000000.0) * 0.6F + 0.2F);
         double d0 = f * f * f * 8.0F * 0.15;
         float f1 = var1.x + (float)(Math.round((var0.x - var1.x) / d0) * d0);

@@ -9,7 +9,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import rip.vantage.commons.util.time.a;
 
 public class adq extends GuiScreen {
-    private final Animation aCs = new Animation(Easing.EASE_IN_OUT_CUBIC, 1000L);
+    private final Animation fadeAnimation = new Animation(Easing.EASE_IN_OUT_CUBIC, 1000L);
     private final a aCt = new a();
 
     public adq() {
@@ -17,14 +17,14 @@ public class adq extends GuiScreen {
 
     @Override
     public void initGui() {
-        this.aCs.reset();
+        this.fadeAnimation.reset();
         this.aCt.aX();
     }
 
     @Override
     public void drawScreen(int var1, int var2, float var3) {
         RenderUtil.d(0.0, 0.0, aEg.displayWidth, aEg.displayHeight, Color.BLACK);
-        this.aCs.Q(this.aCt.aKx() > 4000L ? 0.0 : 255.0);
+        this.fadeAnimation.Q(this.aCt.aKx() > 4000L ? 0.0 : 255.0);
         ScaledResolution scaledresolution = new ScaledResolution(aEg);
         gb.MAIN
             .a(24, gd.REGULAR)
@@ -32,7 +32,7 @@ public class adq extends GuiScreen {
                 "Note: This is private prerelease software",
                 scaledresolution.getScaledWidth() / 2.0,
                 scaledresolution.getScaledHeight() / 2.0 - 70.0,
-                aip.d(Color.WHITE, (int)this.aCs.sG()).getRGB()
+                aip.d(Color.WHITE, (int)this.fadeAnimation.sG()).getRGB()
             );
         gb.MAIN
             .a(24, gd.REGULAR)
@@ -40,7 +40,7 @@ public class adq extends GuiScreen {
                 "Features, interfaces and sequences are not final and can be expected to change at any time",
                 scaledresolution.getScaledWidth() / 2.0,
                 scaledresolution.getScaledHeight() / 2.0 - 50.0,
-                aip.d(Color.WHITE, (int)this.aCs.sG()).getRGB()
+                aip.d(Color.WHITE, (int)this.fadeAnimation.sG()).getRGB()
             );
         gb.MAIN
             .a(16, gd.REGULAR)
@@ -48,7 +48,7 @@ public class adq extends GuiScreen {
                 "© Rise Client 2022. All Rights Reserved",
                 scaledresolution.getScaledWidth() / 2.0,
                 scaledresolution.getScaledHeight() / 2.0 + 70.0,
-                aip.d(Color.WHITE, (int)this.aCs.sG() / 2).getRGB()
+                aip.d(Color.WHITE, (int)this.fadeAnimation.sG() / 2).getRGB()
             );
         if (this.aCt.T(5000L)) {
             aEg.displayGuiScreen(new aap());

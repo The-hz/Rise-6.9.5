@@ -11,7 +11,7 @@ public class zi extends SecurityFeature implements zh {
     }
 
     @Override
-    public boolean nG() {
+    public boolean run() {
         return this.avA;
     }
 

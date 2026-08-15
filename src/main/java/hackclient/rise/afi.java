@@ -25,7 +25,7 @@ public final class afi implements InstanceAccess {
         }
     }
 
-    public static void i(Object var0) {
+    public static void send(Object var0) {
         if (aEg.thePlayer != null) {
             ahj.l(new C01PacketChatMessage(var0.toString()));
         }

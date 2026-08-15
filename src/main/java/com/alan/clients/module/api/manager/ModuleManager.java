@@ -159,7 +159,7 @@ public class ModuleManager {
         this.eg();
     }
 
-    public boolean f(Module var1) {
+    public boolean add(Module var1) {
         this.lt.g(var1);
         this.eg();
         return true;
@@ -172,7 +172,7 @@ public class ModuleManager {
         return this.lt.rP();
     }
 
-    public <T extends Module> T q(String var1) {
+    public <T extends Module> T get(String var1) {
         return (T)this.ef()
             .stream()
             .filter(

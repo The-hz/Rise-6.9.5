@@ -14,7 +14,7 @@ public class InventorySync extends Module {
     public short action;
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1 -> {
-        if (var1.dq() instanceof S32PacketConfirmTransaction s32packetconfirmtransaction) {
+        if (var1.getPacket() instanceof S32PacketConfirmTransaction s32packetconfirmtransaction) {
             Container container = aEg.thePlayer.inventoryContainer;
             if (s32packetconfirmtransaction.getWindowId() == container.windowId) {
                 this.action = s32packetconfirmtransaction.getActionNumber();

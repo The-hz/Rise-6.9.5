@@ -18,13 +18,13 @@ public class TatakoSpeed extends Mode<Speed> {
     int dE = 0;
     float jp = 0.0F;
     float jq = 0.0F;
-    @EventLink(cH = 3)
-    Listener<MoveInputEvent> yv = var1x -> {
+    @EventLink(value = 3)
+    Listener<MoveInputEvent> onMoveInput = var1x -> {
         this.jp = var1x.getForward();
         this.jq = var1x.getStrafe();
     };
     @EventLink
-    public final Listener<StrafeEvent> Qv = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (MoveUtil.isMoving() && aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();
             this.dE++;
@@ -60,8 +60,8 @@ public class TatakoSpeed extends Mode<Speed> {
         MoveUtil.moveFlying(8.0E-4);
         MoveUtil.preventDiagonalSpeed();
     };
-    @EventLink(cH = 1)
-    Listener<PreUpdateEvent> dq = var1x -> RotationComponent.setRotations(
+    @EventLink(value = 1)
+    Listener<PreUpdateEvent> onPreUpdate = var1x -> RotationComponent.setRotations(
         new Vector2f((float)Math.toDegrees(MoveUtil.g(this.jp, this.jq)), aEg.thePlayer.rotationPitch), 10.0, MovementFix.OFF
     );
 

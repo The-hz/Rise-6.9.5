@@ -52,28 +52,28 @@ import rip.vantage.commons.util.time.a;
 
 @ModuleInfo(aliases = {"module.player.oldmanager.name", "old manager"}, description = "module.player.manager.description", category = Category.PLAYER)
 public class OldManager extends Module {
-    private final BoundsNumberValue aeZ = new BoundsNumberValue("Delay", this, 100, 150, 0, 500, 50);
-    private final BooleanValue afa = new BooleanValue("Legit", this, false);
-    private final BooleanValue afb = new BooleanValue("Drop Custom Items", this, false);
-    private final BooleanValue afc = new BooleanValue("Use Custom Items", this, false);
-    private final BooleanValue afd = new BooleanValue("Prioritize Splash Potions", this, false);
-    private final NumberValue afe = new NumberValue("Block Limit", this, 512, 0, 512, 4);
-    private final NumberValue aff = new NumberValue("Arrow Limit", this, 128, 0, 512, 4);
-    private final NumberValue afg = new NumberValue("Bucket Limit", this, 1, 0, 4, 1);
-    private final NumberValue afh = new NumberValue("Snowball/Egg Limit", this, 16, 0, 64, 1);
-    private final NumberValue afi = new NumberValue("Ender Pearl Limit", this, 16, 0, 64, 1);
-    private final NumberValue afj = new NumberValue("Fire Charge Limit", this, 16, 0, 64, 1);
-    private final NumberValue afk = new NumberValue("TNT Limit", this, 16, 0, 64, 1);
-    private final NumberValue afl = new NumberValue("Sword Slot", this, 1, 0, 9, 1);
-    private final NumberValue afm = new NumberValue("Second Sword Slot", this, 2, 0, 9, 1);
-    private final NumberValue afn = new NumberValue("Pickaxe Slot", this, 2, 0, 9, 1);
-    private final NumberValue afo = new NumberValue("Axe Slot", this, 3, 0, 9, 1);
-    private final NumberValue afp = new NumberValue("Shovel Slot", this, 4, 0, 9, 1);
-    private final BoundsNumberValue afq = new BoundsNumberValue("Block Slot", this, 5, 5, 0, 9, 1);
-    private final BoundsNumberValue afr = new BoundsNumberValue("Potion Slot", this, 6, 6, 0, 9, 1);
-    private final NumberValue afs = new NumberValue("Bow Slot", this, 7, 0, 9, 1);
-    private final NumberValue aft = new NumberValue("Rod Slot", this, 8, 0, 9, 1);
-    private final BoundsNumberValue afu = new BoundsNumberValue("Food Slot", this, 9, 9, 0, 9, 1);
+    private final BoundsNumberValue delay = new BoundsNumberValue("Delay", this, 100, 150, 0, 500, 50);
+    private final BooleanValue legit = new BooleanValue("Legit", this, false);
+    private final BooleanValue dropCustomItems = new BooleanValue("Drop Custom Items", this, false);
+    private final BooleanValue useCustomItems = new BooleanValue("Use Custom Items", this, false);
+    private final BooleanValue prioritizeSplashPotions = new BooleanValue("Prioritize Splash Potions", this, false);
+    private final NumberValue blockLimit = new NumberValue("Block Limit", this, 512, 0, 512, 4);
+    private final NumberValue arrowLimit = new NumberValue("Arrow Limit", this, 128, 0, 512, 4);
+    private final NumberValue bucketLimit = new NumberValue("Bucket Limit", this, 1, 0, 4, 1);
+    private final NumberValue snowballEggLimit = new NumberValue("Snowball/Egg Limit", this, 16, 0, 64, 1);
+    private final NumberValue enderPearlLimit = new NumberValue("Ender Pearl Limit", this, 16, 0, 64, 1);
+    private final NumberValue fireChargeLimit = new NumberValue("Fire Charge Limit", this, 16, 0, 64, 1);
+    private final NumberValue tNTLimit = new NumberValue("TNT Limit", this, 16, 0, 64, 1);
+    private final NumberValue swordSlot = new NumberValue("Sword Slot", this, 1, 0, 9, 1);
+    private final NumberValue secondSwordSlot = new NumberValue("Second Sword Slot", this, 2, 0, 9, 1);
+    private final NumberValue pickaxeSlot = new NumberValue("Pickaxe Slot", this, 2, 0, 9, 1);
+    private final NumberValue axeSlot = new NumberValue("Axe Slot", this, 3, 0, 9, 1);
+    private final NumberValue shovelSlot = new NumberValue("Shovel Slot", this, 4, 0, 9, 1);
+    private final BoundsNumberValue blockSlot = new BoundsNumberValue("Block Slot", this, 5, 5, 0, 9, 1);
+    private final BoundsNumberValue potionSlot = new BoundsNumberValue("Potion Slot", this, 6, 6, 0, 9, 1);
+    private final NumberValue bowSlot = new NumberValue("Bow Slot", this, 7, 0, 9, 1);
+    private final NumberValue rodSlot = new NumberValue("Rod Slot", this, 8, 0, 9, 1);
+    private final BoundsNumberValue foodSlot = new BoundsNumberValue("Food Slot", this, 9, 9, 0, 9, 1);
     private final int afv = 4;
     private final int afw = 9;
     private final int afx = 4;
@@ -87,8 +87,8 @@ public class OldManager extends Module {
     private long adt;
     private int adv;
     private int adw;
-    @EventLink(cH = 1)
-    public final Listener<PreMotionEvent> afA = var1 -> {
+    @EventLink(value = 1)
+    public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         if (aEg.thePlayer.ticksExisted > 40) {
             if (aEg.currentScreen instanceof GuiChest) {
                 this.adp = 0;
@@ -98,7 +98,7 @@ public class OldManager extends Module {
 
             this.BV++;
             this.adq++;
-            if (this.afa.wo() && !(aEg.currentScreen instanceof GuiInventory)) {
+            if (this.legit.wo() && !(aEg.currentScreen instanceof GuiInventory)) {
                 this.afz.aX();
             } else if (this.afz.T(this.adt) && this.adp >= 10 && this.BV >= 10 && this.adq >= 10 && !this.e(Scaffold.class).isEnabled()) {
                 if (this.e(InventoryMove.class).isEnabled() || aEg.currentScreen instanceof GuiInventory) {
@@ -131,7 +131,7 @@ public class OldManager extends Module {
                     ArrayList arraylist7 = new ArrayList();
                     ArrayList arraylist8 = new ArrayList();
                     ArrayList arraylist9 = new ArrayList();
-                    boolean flag = this.afl.wo().intValue() != 0 && this.afm.wo().intValue() != 0 && this.afm.wo().intValue() != this.afl.wo().intValue();
+                    boolean flag = this.swordSlot.wo().intValue() != 0 && this.secondSwordSlot.wo().intValue() != 0 && this.secondSwordSlot.wo().intValue() != this.swordSlot.wo().intValue();
 
                     for (int k4 = 0; k4 < 40; k4++) {
                         ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(k4);
@@ -191,7 +191,7 @@ public class OldManager extends Module {
                                 }
                             }
 
-                            if (item instanceof ItemSword && this.afl.wo().intValue() != 0) {
+                            if (item instanceof ItemSword && this.swordSlot.wo().intValue() != 0) {
                                 if (i1 == -1) {
                                     i1 = k4;
                                 } else if (this.n(itemstack) > this.n(aEg.thePlayer.inventory.getStackInSlot(i1))) {
@@ -263,7 +263,7 @@ public class OldManager extends Module {
                                 }
                             }
 
-                            if (item instanceof ItemFood && this.afu.wo().intValue() != 0) {
+                            if (item instanceof ItemFood && this.foodSlot.wo().intValue() != 0) {
                                 arraylist2.add(new tm(itemstack, k4));
                             }
 
@@ -307,7 +307,7 @@ public class OldManager extends Module {
                                 }
                             }
 
-                            if (this.afl.wo().intValue() != 0 && item1 instanceof ItemSword && i5 != i1 && (!flag || i5 != j1)) {
+                            if (this.swordSlot.wo().intValue() != 0 && item1 instanceof ItemSword && i5 != i1 && (!flag || i5 != j1)) {
                                 this.J(i5);
                             }
                         }
@@ -329,9 +329,9 @@ public class OldManager extends Module {
                         this.H(l);
                     }
 
-                    if (this.afq.wo().intValue() != 0 && this.afq.wA().intValue() != 0) {
-                        int j5 = Math.min(this.afq.wo().intValue(), this.afq.wA().intValue());
-                        int k5 = Math.max(this.afq.wo().intValue(), this.afq.wA().intValue());
+                    if (this.blockSlot.wo().intValue() != 0 && this.blockSlot.wA().intValue() != 0) {
+                        int j5 = Math.min(this.blockSlot.wo().intValue(), this.blockSlot.wA().intValue());
+                        int k5 = Math.max(this.blockSlot.wo().intValue(), this.blockSlot.wA().intValue());
                         int l5 = k5 - j5 + 1;
                         arraylist.sort(Comparator.comparingInt(tm::jI).reversed());
 
@@ -344,8 +344,8 @@ public class OldManager extends Module {
                         }
                     }
 
-                    if (l2 > this.afe.wo().intValue()) {
-                        int j6 = l2 - this.afe.wo().intValue();
+                    if (l2 > this.blockLimit.wo().intValue()) {
+                        int j6 = l2 - this.blockLimit.wo().intValue();
 
                         for (int k6 : (Iterable<Integer>)arraylist3.reversed()) {
                             if (j6 <= 0) {
@@ -364,8 +364,8 @@ public class OldManager extends Module {
                         }
                     }
 
-                    if (i3 > this.aff.wo().intValue()) {
-                        int l6 = i3 - this.aff.wo().intValue();
+                    if (i3 > this.arrowLimit.wo().intValue()) {
+                        int l6 = i3 - this.arrowLimit.wo().intValue();
 
                         for (int i7 : (Iterable<Integer>)arraylist4) {
                             if (l6 <= 0) {
@@ -384,8 +384,8 @@ public class OldManager extends Module {
                         }
                     }
 
-                    if (j3 > this.afg.wo().intValue()) {
-                        int j7 = j3 - this.afg.wo().intValue();
+                    if (j3 > this.bucketLimit.wo().intValue()) {
+                        int j7 = j3 - this.bucketLimit.wo().intValue();
 
                         for (int k7 : (Iterable<Integer>)arraylist5) {
                             if (j7 <= 0) {
@@ -404,8 +404,8 @@ public class OldManager extends Module {
                         }
                     }
 
-                    if (k3 > this.afh.wo().intValue()) {
-                        int l7 = k3 - this.afh.wo().intValue();
+                    if (k3 > this.snowballEggLimit.wo().intValue()) {
+                        int l7 = k3 - this.snowballEggLimit.wo().intValue();
 
                         for (int i8 : (Iterable<Integer>)arraylist6) {
                             if (l7 <= 0) {
@@ -424,8 +424,8 @@ public class OldManager extends Module {
                         }
                     }
 
-                    if (l3 > this.afi.wo().intValue()) {
-                        int j8 = l3 - this.afi.wo().intValue();
+                    if (l3 > this.enderPearlLimit.wo().intValue()) {
+                        int j8 = l3 - this.enderPearlLimit.wo().intValue();
 
                         for (int k8 : (Iterable<Integer>)arraylist7) {
                             if (j8 <= 0) {
@@ -444,8 +444,8 @@ public class OldManager extends Module {
                         }
                     }
 
-                    if (i4 > this.afj.wo().intValue()) {
-                        int l8 = i4 - this.afj.wo().intValue();
+                    if (i4 > this.fireChargeLimit.wo().intValue()) {
+                        int l8 = i4 - this.fireChargeLimit.wo().intValue();
 
                         for (int i9 : (Iterable<Integer>)arraylist8) {
                             if (l8 <= 0) {
@@ -464,8 +464,8 @@ public class OldManager extends Module {
                         }
                     }
 
-                    if (j4 > this.afk.wo().intValue()) {
-                        int j9 = j4 - this.afk.wo().intValue();
+                    if (j4 > this.tNTLimit.wo().intValue()) {
+                        int j9 = j4 - this.tNTLimit.wo().intValue();
 
                         for (int k9 : (Iterable<Integer>)arraylist9) {
                             if (j9 <= 0) {
@@ -484,50 +484,50 @@ public class OldManager extends Module {
                         }
                     }
 
-                    int l9 = this.afl.wo().intValue() - 1;
-                    if (this.afl.wo().intValue() != 0 && i1 != -1 && !this.f(i1, l9)) {
+                    int l9 = this.swordSlot.wo().intValue() - 1;
+                    if (this.swordSlot.wo().intValue() != 0 && i1 != -1 && !this.f(i1, l9)) {
                         this.h(i1, l9);
                     }
 
-                    int i10 = this.afm.wo().intValue() - 1;
+                    int i10 = this.secondSwordSlot.wo().intValue() - 1;
                     if (flag && j1 != -1 && !this.f(j1, i10)) {
                         this.h(j1, i10);
                     }
 
-                    int j10 = this.afn.wo().intValue() - 1;
-                    if (!this.a(this.afn, i1, j1) && this.afn.wo().intValue() != 0 && k1 != -1 && !this.f(k1, j10)) {
+                    int j10 = this.pickaxeSlot.wo().intValue() - 1;
+                    if (!this.a(this.pickaxeSlot, i1, j1) && this.pickaxeSlot.wo().intValue() != 0 && k1 != -1 && !this.f(k1, j10)) {
                         this.h(k1, j10);
                     }
 
-                    int k10 = this.afo.wo().intValue() - 1;
-                    if (!this.a(this.afo, i1, j1) && this.afo.wo().intValue() != 0 && l1 != -1 && !this.f(l1, k10)) {
+                    int k10 = this.axeSlot.wo().intValue() - 1;
+                    if (!this.a(this.axeSlot, i1, j1) && this.axeSlot.wo().intValue() != 0 && l1 != -1 && !this.f(l1, k10)) {
                         this.h(l1, k10);
                     }
 
-                    int l10 = this.afp.wo().intValue() - 1;
-                    if (!this.a(this.afp, i1, j1) && this.afp.wo().intValue() != 0 && i2 != -1 && !this.f(i2, l10)) {
+                    int l10 = this.shovelSlot.wo().intValue() - 1;
+                    if (!this.a(this.shovelSlot, i1, j1) && this.shovelSlot.wo().intValue() != 0 && i2 != -1 && !this.f(i2, l10)) {
                         this.h(i2, l10);
                     }
 
-                    int i11 = this.afs.wo().intValue() - 1;
-                    if (!this.a(this.afs, i1, j1) && this.afs.wo().intValue() != 0 && j2 != -1 && !this.f(j2, i11)) {
+                    int i11 = this.bowSlot.wo().intValue() - 1;
+                    if (!this.a(this.bowSlot, i1, j1) && this.bowSlot.wo().intValue() != 0 && j2 != -1 && !this.f(j2, i11)) {
                         this.h(j2, i11);
                     }
 
-                    int j11 = this.aft.wo().intValue() - 1;
-                    boolean flag1 = j2 != -1 && this.aft.wo().intValue() == this.afs.wo().intValue();
-                    if (!this.a(this.aft, i1, j1) && this.aft.wo().intValue() != 0 && k2 != -1 && !this.f(k2, j11) && !flag1) {
+                    int j11 = this.rodSlot.wo().intValue() - 1;
+                    boolean flag1 = j2 != -1 && this.rodSlot.wo().intValue() == this.bowSlot.wo().intValue();
+                    if (!this.a(this.rodSlot, i1, j1) && this.rodSlot.wo().intValue() != 0 && k2 != -1 && !this.f(k2, j11) && !flag1) {
                         this.h(k2, j11);
                     }
 
-                    if (this.afr.wo().intValue() != 0 && this.afr.wA().intValue() != 0) {
-                        int k11 = Math.min(this.afr.wo().intValue(), this.afr.wA().intValue());
-                        int l11 = Math.max(this.afr.wo().intValue(), this.afr.wA().intValue()) - k11 + 1;
+                    if (this.potionSlot.wo().intValue() != 0 && this.potionSlot.wA().intValue() != 0) {
+                        int k11 = Math.min(this.potionSlot.wo().intValue(), this.potionSlot.wA().intValue());
+                        int l11 = Math.max(this.potionSlot.wo().intValue(), this.potionSlot.wA().intValue()) - k11 + 1;
                         arraylist1.sort(
                             (var1x, var2) -> {
                                 ItemPotion itempotion = (ItemPotion)((tm)var1x).bO().getItem();
                                 ItemPotion itempotion1 = (ItemPotion)((tm)var2).bO().getItem();
-                                if (this.afd.wo()) {
+                                if (this.prioritizeSplashPotions.wo()) {
                                     boolean flag3 = ItemPotion.isSplash(((tm)var1x).bO().getMetadata());
                                     boolean flag4 = ItemPotion.isSplash(((tm)var2).bO().getMetadata());
                                     if (flag3 && !flag4) {
@@ -549,8 +549,8 @@ public class OldManager extends Module {
                                 return list1.isEmpty()
                                     ? -1
                                     : Integer.compare(
-                                        aih.ax(itempotion1.getEffects(((tm)var2).bO()).get(0).getPotionID()),
-                                        aih.ax(itempotion.getEffects(((tm)var1x).bO()).get(0).getPotionID())
+                                        aih.potionRanking(itempotion1.getEffects(((tm)var2).bO()).get(0).getPotionID()),
+                                        aih.potionRanking(itempotion.getEffects(((tm)var1x).bO()).get(0).getPotionID())
                                     );
                             }
                         );
@@ -564,9 +564,9 @@ public class OldManager extends Module {
                         }
                     }
 
-                    if (this.afu.wo().intValue() != 0 && this.afu.wA().intValue() != 0) {
-                        int j12 = Math.min(this.afu.wo().intValue(), this.afu.wA().intValue());
-                        int k12 = Math.max(this.afu.wo().intValue(), this.afu.wA().intValue()) - j12 + 1;
+                    if (this.foodSlot.wo().intValue() != 0 && this.foodSlot.wA().intValue() != 0) {
+                        int j12 = Math.min(this.foodSlot.wo().intValue(), this.foodSlot.wA().intValue());
+                        int k12 = Math.max(this.foodSlot.wo().intValue(), this.foodSlot.wA().intValue()) - j12 + 1;
                         arraylist2.sort((var0, var1x) -> {
                             ItemFood itemfood = (ItemFood)((tm)var0).bO().getItem();
                             return Float.compare(((ItemFood)((tm)var1x).bO().getItem()).getSaturationModifier(((tm)var1x).bO()), itemfood.getSaturationModifier(((tm)var0).bO()));
@@ -591,7 +591,7 @@ public class OldManager extends Module {
         }
     };
     @EventLink
-    public final Listener<AttackEvent> afB = var1 -> this.BV = 0;
+    public final Listener<AttackEvent> onAttack = var1 -> this.BV = 0;
     @EventLink
     public final Listener<en> afC = var1 -> {
         if (this.jY() && this.adv > 0) {
@@ -607,7 +607,7 @@ public class OldManager extends Module {
         }
     };
     @EventLink
-    public final Listener<PacketSendEvent> afD = var1 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         if (var1.dq() instanceof C08PacketPlayerBlockPlacement) {
             C08PacketPlayerBlockPlacement c08packetplayerblockplacement = (C08PacketPlayerBlockPlacement)var1.dq();
             if (c08packetplayerblockplacement.getStack() == null || c08packetplayerblockplacement.getStack().getItem() != Items.water_bucket) {
@@ -653,21 +653,21 @@ public class OldManager extends Module {
     }
 
     private void J(int var1) {
-        if ((!this.adr || this.adt <= 0L) && !bt.a(var1, !this.afb.wo())) {
+        if ((!this.adr || this.adt <= 0L) && !bt.a(var1, !this.dropCustomItems.wo())) {
             if (this.kg()) {
                 this.ke();
             }
 
             aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.I(var1), 1, 4, aEg.thePlayer);
             this.jX();
-            this.adt = Math.round(ahg.l(this.aeZ.wo().intValue(), this.aeZ.wA().intValue()));
+            this.adt = Math.round(ahg.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
             this.afz.aX();
             this.adr = true;
         }
     }
 
     private void g(int var1, int var2) {
-        if ((!this.adr || this.adt <= 0L) && !bt.a(var1, !this.afb.wo())) {
+        if ((!this.adr || this.adt <= 0L) && !bt.a(var1, !this.dropCustomItems.wo())) {
             if (this.kg()) {
                 this.ke();
             }
@@ -680,14 +680,14 @@ public class OldManager extends Module {
             }
 
             this.jX();
-            this.adt = Math.round(ahg.l(this.aeZ.wo().intValue(), this.aeZ.wA().intValue()));
+            this.adt = Math.round(ahg.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
             this.afz.aX();
             this.adr = true;
         }
     }
 
     private void h(int var1, int var2) {
-        if ((!this.adr || this.adt <= 0L) && !bt.a(var1, !this.afc.wo())) {
+        if ((!this.adr || this.adt <= 0L) && !bt.a(var1, !this.useCustomItems.wo())) {
             if (this.kg()) {
                 this.ke();
             }
@@ -698,21 +698,21 @@ public class OldManager extends Module {
 
             aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.I(var1), var2, 2, aEg.thePlayer);
             this.jX();
-            this.adt = Math.round(ahg.l(this.aeZ.wo().intValue(), this.aeZ.wA().intValue()));
+            this.adt = Math.round(ahg.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
             this.afz.aX();
             this.adr = true;
         }
     }
 
     private void H(int var1) {
-        if ((!this.adr || this.adt <= 0L) && !bt.a(var1, !this.afc.wo())) {
+        if ((!this.adr || this.adt <= 0L) && !bt.a(var1, !this.useCustomItems.wo())) {
             if (this.kg()) {
                 this.ke();
             }
 
             aEg.playerController.windowClick(aEg.thePlayer.inventoryContainer.windowId, this.I(var1), 0, 1, aEg.thePlayer);
             this.jX();
-            this.adt = Math.round(ahg.l(this.aeZ.wo().intValue(), this.aeZ.wA().intValue()));
+            this.adt = Math.round(ahg.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
             this.afz.aX();
             this.adr = true;
         }
@@ -740,7 +740,7 @@ public class OldManager extends Module {
 
     private boolean a(NumberValue var1, int var2, int var3) {
         int i = var1.wo().intValue();
-        return i != 0 && (var2 != -1 && this.afl.wo().intValue() == i || var3 != -1 && this.afm.wo().intValue() == i);
+        return i != 0 && (var2 != -1 && this.swordSlot.wo().intValue() == i || var3 != -1 && this.secondSwordSlot.wo().intValue() == i);
     }
 
     private float n(ItemStack var1) {

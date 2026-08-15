@@ -26,26 +26,26 @@ import rip.vantage.commons.util.time.a;
 
 @ModuleInfo(aliases = "module.player.antifireball.name", description = "module.player.antifireball.description", category = Category.PLAYER)
 public class AntiFireBall extends Module {
-    private final BooleanValue aaS = new BooleanValue("Rotate", this, true);
-    private final BooleanValue aaT = new BooleanValue("Movement Correction", this, true, () -> !this.aaS.wo());
-    private final BooleanValue aaU = new BooleanValue("Bad Packets Check", this, false);
+    private final BooleanValue rotations = new BooleanValue("Rotate", this, true);
+    private final BooleanValue movementCorrection = new BooleanValue("Movement Correction", this, true, () -> !this.rotations.wo());
+    private final BooleanValue badPacketsCheck = new BooleanValue("Bad Packets Check", this, false);
     public final a aaV = new a();
     public int aaW = 0;
     private final HashSet<UUID> aaX = new HashSet<>();
-    @EventLink(cH = -100)
-    public final Listener<PreUpdateEvent> aaY = var1 -> this.js();
-    @EventLink(cH = -100)
-    public final Listener<TickEvent> aaZ = var1 -> this.js();
+    @EventLink(value = -100)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> this.js();
+    @EventLink(value = -100)
+    public final Listener<TickEvent> onTick = var1 -> this.js();
 
     public AntiFireBall() {
     }
 
     public final void js() {
-        if ((!bb.aW() || !this.aaU.wo()) && this.aaV.T(this.aaW)) {
+        if ((!bb.aW() || !this.badPacketsCheck.wo()) && this.aaV.T(this.aaW)) {
             for (Entity entity : aEg.theWorld.loadedEntityList) {
                 if (entity instanceof EntityFireball && entity.getDistanceToEntity(aEg.thePlayer) < 6.0F) {
-                    if (this.aaS.wo()) {
-                        RotationComponent.setRotations(aiu.y(entity), 10.0, this.aaT.wo() ? MovementFix.NORMAL : MovementFix.OFF);
+                    if (this.rotations.wo()) {
+                        RotationComponent.setRotations(aiu.y(entity), 10.0, this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF);
                     }
 
                     MoveUtil.strafe(0.0);

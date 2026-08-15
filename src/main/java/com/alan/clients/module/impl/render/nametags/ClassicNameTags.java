@@ -22,16 +22,16 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
 
 public class ClassicNameTags extends Mode<NameTags> {
-    private final BooleanValue atv = new BooleanValue("Show Team Tag", this, false);
-    private final BooleanValue atw = new BooleanValue("Show Target Tag", this, false);
-    private final BooleanValue atx = new BooleanValue("Show Friend Tag", this, false);
-    private final BooleanValue aty = new BooleanValue("Shortened Tags", this, false);
+    private final BooleanValue showTeamTag = new BooleanValue("Show Team Tag", this, false);
+    private final BooleanValue showTargetTag = new BooleanValue("Show Target Tag", this, false);
+    private final BooleanValue showFriendTag = new BooleanValue("Show Friend Tag", this, false);
+    private final BooleanValue shortenedTags = new BooleanValue("Shortened Tags", this, false);
     @EventLink
-    public final Listener<Render2DEvent> atz = var1x -> {
+    public final Listener<Render2DEvent> onRender2D = var1x -> {
         agd agd = aEg.fontRendererObj;
         GlStateManager.pushMatrix();
-        List list = bv.b(this.wj().aoZ.wo(), this.wj().apa.wo(), this.wj().apb.wo(), this.wj().apc.wo(), this.wj().apd.wo(), true);
-        if (aEg.gameSettings.thirdPersonView != 0 && this.wj().aoZ.wo()) {
+        List list = bv.b(this.getParent().player.wo(), this.getParent().invisibles.wo(), this.getParent().animals.wo(), this.getParent().mobs.wo(), this.getParent().playerTeammates.wo(), true);
+        if (aEg.gameSettings.thirdPersonView != 0 && this.getParent().player.wo()) {
             list.add(aEg.thePlayer);
         }
 
@@ -39,16 +39,16 @@ public class ClassicNameTags extends Mode<NameTags> {
             HealthBypass healthbypass = this.e(HealthBypass.class);
             float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(entitylivingbase) : entitylivingbase.getHealth();
             String s = entitylivingbase.getDisplayName().getFormattedText() + " §7[§4❤" + Math.round(f) + "§7]";
-            if (this.atv.wo() && aih.D(entitylivingbase)) {
-                s = "§a§l" + (this.aty.wo() ? "[TM]" : "[TEAM]") + "§r " + s;
+            if (this.showTeamTag.wo() && aih.sameTeam(entitylivingbase)) {
+                s = "§a§l" + (this.shortenedTags.wo() ? "[TM]" : "[TEAM]") + "§r " + s;
             }
 
-            if (this.atw.wo() && bx.n(entitylivingbase.getName())) {
-                s = "§4§l" + (this.aty.wo() ? "[T]" : "[TARGET]") + "§r " + s;
+            if (this.showTargetTag.wo() && bx.n(entitylivingbase.getName())) {
+                s = "§4§l" + (this.shortenedTags.wo() ? "[T]" : "[TARGET]") + "§r " + s;
             }
 
-            if (this.atx.wo() && bx.isFriend(entitylivingbase.getName())) {
-                s = "§b§l" + (this.aty.wo() ? "[F]" : "[FRIEND]") + "§r " + s;
+            if (this.showFriendTag.wo() && bx.isFriend(entitylivingbase.getName())) {
+                s = "§b§l" + (this.shortenedTags.wo() ? "[F]" : "[FRIEND]") + "§r " + s;
             }
 
             entitylivingbase.Tc();

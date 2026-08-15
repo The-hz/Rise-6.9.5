@@ -14,7 +14,7 @@ public final class StrafeSpeed extends Mode<Speed> {
     private final BooleanValue hurtBoost = new BooleanValue("Hurt Boost", this, false);
     private final NumberValue boostSpeed = new NumberValue("Boost Speed", this, 1, 0.1, 9.5, 0.1);
     @EventLink
-    public final Listener<StrafeEvent> Qy = var1x -> {
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (!MoveUtil.isMoving()) {
             MoveUtil.stop();
         } else {
@@ -30,7 +30,7 @@ public final class StrafeSpeed extends Mode<Speed> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> Qz = var0 -> var0.setJump(false);
+    public final Listener<MoveInputEvent> onMove = var0 -> var0.setJump(false);
 
     public StrafeSpeed(String var1, Speed var2) {
         super(var1, var2);

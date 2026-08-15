@@ -20,11 +20,11 @@ extends Mode<LongJump> {
     public int Ll;
     public int hV;
     @EventLink
-    public Listener<PacketReceiveEvent> Lp;
+    public Listener<PacketReceiveEvent> onPacketReceive;
     public int Lm;
     public int Li;
     @EventLink
-    public Listener<PreMotionEvent> Ln = preMotionEvent -> {
+    public Listener<PreMotionEvent> onPreMotion = preMotionEvent -> {
         GrimLongJump.aEg.timer.dzD = 2.0f;
         preMotionEvent.setPitch((float)((double)preMotionEvent.getPitch() + (double)((float)Math.random()) * 0.1));
         if (this.Li == 0) {
@@ -61,9 +61,9 @@ extends Mode<LongJump> {
     public double Lg;
     public int Lk;
     @EventLink
-    public Listener<PacketSendEvent> Lq;
+    public Listener<PacketSendEvent> onPacketSend;
     @EventLink
-    public Listener<PostStrafeEvent> Lo = postStrafeEvent -> {
+    public Listener<PostStrafeEvent> onPostStrafe = postStrafeEvent -> {
         if (this.Lh == 0) {
             GrimLongJump.aEg.thePlayer.jump();
         }
@@ -98,17 +98,17 @@ extends Mode<LongJump> {
 
     public GrimLongJump(String string, LongJump longJump) {
         super(string, longJump);
-        this.Lp = packetReceiveEvent -> {
+        this.onPacketReceive = packetReceiveEvent -> {
             S12PacketEntityVelocity s12PacketEntityVelocity;
-            Packet<?> packet = packetReceiveEvent.dq();
+            Packet<?> packet = packetReceiveEvent.getPacket();
             if (packet instanceof S12PacketEntityVelocity && (s12PacketEntityVelocity = (S12PacketEntityVelocity)packet).getEntityID() == GrimLongJump.aEg.thePlayer.getEntityId() && (double)s12PacketEntityVelocity.getMotionY() / 8000.0 < 0.0) {
                 this.toggle();
             }
-            if (packetReceiveEvent.dq() instanceof S08PacketPlayerPosLook) {
+            if (packetReceiveEvent.getPacket() instanceof S08PacketPlayerPosLook) {
                 this.Lj = 1;
             }
         };
-        this.Lq = packetSendEvent -> {
+        this.onPacketSend = packetSendEvent -> {
             if (packetSendEvent.dq() instanceof C03PacketPlayer && this.Ll == 1) {
                 this.Ll = 0;
                 packetSendEvent.setCancelled();

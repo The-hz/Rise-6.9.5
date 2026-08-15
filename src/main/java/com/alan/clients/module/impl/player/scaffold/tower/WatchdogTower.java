@@ -51,8 +51,8 @@ public class WatchdogTower extends Mode<Scaffold> {
     private boolean gD = false;
     @EventLink
     public final Listener<JumpEvent> akv = var0 -> {};
-    @EventLink(cH = 1)
-    public Listener<PreMotionEvent> Fr = var1x -> {
+    @EventLink(value = 1)
+    public Listener<PreMotionEvent> onPreMotion = var1x -> {
         double d0 = Math.toRadians(aEg.thePlayer.pl);
         double d27 = -Math.sin(d0);
         if (Math.cos(d0) * 1.0 < 0.0) {
@@ -100,7 +100,7 @@ public class WatchdogTower extends Mode<Scaffold> {
                 double d2 = Math.toRadians(d1);
                 d27 = -Math.sin(d2);
                 boolean flag2 = Math.cos(d2) * 1.0 < 0.0;
-                this.wj().agF = 1;
+                this.getParent().agF = 1;
                 if (!this.akq) {
                     if (flag2) {
                         this.akt = Math.floor(aEg.thePlayer.posX) + 0.999999999999;
@@ -211,7 +211,7 @@ public class WatchdogTower extends Mode<Scaffold> {
 
             qH = 0;
             if (aEg.thePlayer.motionY < 0.3 && this.HJ && aEg.thePlayer.motionY > 0.17) {
-                this.wj().toggle();
+                this.getParent().toggle();
                 if (aEg.thePlayer.onGround) {
                     aEg.thePlayer.jump();
                 }
@@ -256,7 +256,7 @@ public class WatchdogTower extends Mode<Scaffold> {
                                 aEg.thePlayer.motionX *= 1.035;
                             }
 
-                            Client.a.g().c(Scaffold.class).afO.wo().getName().equals("Off");
+                            Client.a.g().c(Scaffold.class).sameY.wo().getName().equals("Off");
                             double d26;
                             int l = (d26 = MoveUtil.speed() - 0.24) == 0.0 ? 0 : (d26 < 0.0 ? -1 : 1);
                             aEg.thePlayer.motionY = 0.42;
@@ -278,12 +278,12 @@ public class WatchdogTower extends Mode<Scaffold> {
                                 aEg.thePlayer.motionX *= 1.005;
                             }
 
-                            if (Client.a.g().c(Scaffold.class).afO.wo().getName().equals("Off")) {
+                            if (Client.a.g().c(Scaffold.class).sameY.wo().getName().equals("Off")) {
                             }
                             break;
                         case 2:
                             aEg.thePlayer.isPotionActive(Potion.moveSpeed);
-                            if (this.e(Disabler.class).wu.wo() && this.e(Disabler.class).isEnabled()) {
+                            if (this.e(Disabler.class).watchdogFly.wo() && this.e(Disabler.class).isEnabled()) {
                                 MoveUtil.strafe();
                             }
 
@@ -322,19 +322,19 @@ public class WatchdogTower extends Mode<Scaffold> {
                 hV = -1;
             }
 
-            this.wj().agF = 1;
+            this.getParent().agF = 1;
         }
     };
     @EventLink
-    public final Listener<PostStrafeEvent> akw = var0 -> {};
+    public final Listener<PostStrafeEvent> onPostStrafe = var0 -> {};
     @EventLink
-    public final Listener<MoveInputEvent> akx = var1x -> {
+    public final Listener<MoveInputEvent> onMoveInput = var1x -> {
         if (MoveUtil.isMoving() && aEg.gameSettings.keyBindJump.isKeyDown() && !this.e(Speed.class).isEnabled()) {
             var1x.setForward(var1x.getForward() * 5.0F);
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> aky = var0 -> {
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (aEg.gameSettings.keyBindJump.isKeyDown() && (aEg.gameSettings.keyBindRight.isKeyDown() || aEg.gameSettings.keyBindLeft.isKeyDown())) {
             MoveUtil.strafe(0.25);
         }
@@ -348,16 +348,16 @@ public class WatchdogTower extends Mode<Scaffold> {
         }
     };
     @EventLink
-    public final Listener<KeyboardInputEvent> akz = var1x -> {
-        if (var1x.cO() == this.wj().getKey() && !this.HJ && aEg.gameSettings.keyBindJump.isKeyDown() && !Client.a.g().c(Speed.class).isEnabled()) {
+    public final Listener<KeyboardInputEvent> onKeyboardInput = var1x -> {
+        if (var1x.getKeyCode() == this.getParent().getKey() && !this.HJ && aEg.gameSettings.keyBindJump.isKeyDown() && !Client.a.g().c(Speed.class).isEnabled()) {
             var1x.setCancelled();
             this.HJ = true;
         }
     };
     @EventLink
-    public final Listener<TickEvent> akA = var0 -> {};
+    public final Listener<TickEvent> onTick = var0 -> {};
     @EventLink
-    public final Listener<PacketSendEvent> akB = var1x -> {
+    public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         double d0 = Math.toRadians(aEg.thePlayer.pl);
         double d1 = -Math.sin(d0);
         if (Math.cos(d0) * 1.0 < 0.0) {
@@ -414,7 +414,7 @@ public class WatchdogTower extends Mode<Scaffold> {
             hV = 100;
         }
 
-        if (Client.a.g().c(Scaffold.class).afO.wo().getName().equals("Off") && !aEg.thePlayer.onGround) {
+        if (Client.a.g().c(Scaffold.class).sameY.wo().getName().equals("Off") && !aEg.thePlayer.onGround) {
             this.akp = true;
         }
 
@@ -449,7 +449,7 @@ public class WatchdogTower extends Mode<Scaffold> {
             aka = new aka(0.0, 0.0, 1.0);
         }
 
-        this.wj().agy = aka;
+        this.getParent().agy = aka;
         aiu.d(aka);
         if (!MoveUtil.isMoving() && !flag) {
             RotationComponent.d(false);

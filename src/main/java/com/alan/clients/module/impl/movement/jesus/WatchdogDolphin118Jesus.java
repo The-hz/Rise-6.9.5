@@ -30,8 +30,8 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
     private boolean HJ;
     private int Kw;
     private int Kx;
-    @EventLink(cH = 3)
-    public final Listener<PreMotionEvent> Ky = var1x -> {
+    @EventLink(value = 3)
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (!this.e(LongJump.class).isEnabled() && !this.e(Flight.class).isEnabled() && Km <= 30) {
             if (!aEg.thePlayer.inWater) {
                 this.Kw++;
@@ -94,7 +94,7 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
     private int dE;
     private int hV;
     @EventLink
-    public final Listener<StrafeEvent> KA = var0 -> {
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (aEg.thePlayer.inWater) {
             aEg.timer.dzD = 0.5F;
             ahj.l(new C03PacketPlayer(true));
@@ -108,10 +108,10 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
         double d0;
         int i = (d0 = MoveUtil.speed() - 0.205) == 0.0 ? 0 : (d0 < 0.0 ? -1 : 1);
     };
-    @EventLink(cH = 2)
-    public final Listener<PacketReceiveEvent> KB = var1x -> {
+    @EventLink(value = 2)
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         if (!this.tt) {
-            switch (var1x.dq()) {
+            switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
                     if (!var1x.isCancelled()
                         && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()
@@ -145,22 +145,22 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
         }
     };
     @EventLink
-    public final Listener<MoveInputEvent> KC = var0 -> {
+    public final Listener<MoveInputEvent> onMoveInput = var0 -> {
         if (aEg.thePlayer.inWater) {
             var0.setJump(true);
         }
     };
     @EventLink
-    public final Listener<JumpEvent> KD = var0 -> {};
+    public final Listener<JumpEvent> onJump = var0 -> {};
     @EventLink
-    public final Listener<KeyboardInputEvent> KE = var1x -> {
-        if (var1x.cO() == this.wj().getKey() && !this.HJ) {
+    public final Listener<KeyboardInputEvent> onKeyboardInput = var1x -> {
+        if (var1x.getKeyCode() == this.getParent().getKey() && !this.HJ) {
             var1x.setCancelled();
             this.HJ = true;
         }
     };
-    @EventLink(cH = 4)
-    public final Listener<PreUpdateEvent> KF = var1x -> {
+    @EventLink(value = 4)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (this.dj && (!aEg.thePlayer.inWater || this.Kv) && Km < 30) {
             aEg.thePlayer.ae = 1;
             this.vq = true;

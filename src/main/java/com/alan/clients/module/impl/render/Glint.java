@@ -31,19 +31,19 @@ public final class Glint extends Module {
     private final BoundsNumberValue hue = new BoundsNumberValue("Hue", this, 0, 360, 0, 360, 1);
     private final NumberValue layers = new NumberValue("Layers", this, 4, 1, 8, 1);
     @EventLink
-    public final Listener<GlintEvent> anJ = var1 -> {
-        Item item = var1.bO().getItem();
+    public final Listener<GlintEvent> onGlint = var1 -> {
+        Item item = var1.getItemStack().getItem();
         if (this.glintWeapons.wo() && (item instanceof ItemSword || item instanceof ItemAxe)) {
             var1.l(true);
         }
 
         var1.setCancelled();
         if (var1.dt() && var1.du()) {
-            this.renderEffect(var1.dv());
+            this.renderEffect(var1.getModel());
         }
     };
     @EventLink
-    public final Listener<Render3DEvent> anK = var0 -> {};
+    public final Listener<Render3DEvent> onRender3D = var0 -> {};
 
     public Glint() {
     }

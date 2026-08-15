@@ -62,7 +62,7 @@ implements ada {
                                         break block21;
                                     }
                                     String string6 = stringArray2[0];
-                                    t2 = Client.a.g().q(string6);
+                                    t2 = Client.a.g().get(string6);
                                     if (t2 == null) {
                                         return Collections.emptyList();
                                     }
@@ -84,7 +84,7 @@ implements ada {
                                 arrayList = new ArrayList<acy>();
                                 if (!(value instanceof ModeValue)) break block24;
                                 ModeValue modeValue = (ModeValue)value;
-                                iterator = modeValue.wF().iterator();
+                                iterator = modeValue.getModes().iterator();
                                 break block25;
                             }
                             if (!(value instanceof BooleanValue)) break block26;
@@ -152,7 +152,7 @@ implements ada {
                     ModeValue modeValue = acv.a((Module)t2);
                     if (modeValue != null) {
                         String string15 = string3;
-                        for (Mode<?> mode : modeValue.wF()) {
+                        for (Mode<?> mode : modeValue.getModes()) {
                             String string16 = mode.getName();
                             String string17 = string16.toLowerCase(Locale.ROOT);
                             if (!string15.isEmpty() && !string17.startsWith(string15)) continue;

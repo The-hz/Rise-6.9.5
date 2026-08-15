@@ -13,10 +13,10 @@ public final class aa extends Command {
             String s = var1[1].toLowerCase();
             String s1 = var1[2];
             if (s.equals("create")) {
-                this.rN().r().bN(s1);
+                this.rN().r().set(s1);
                 afi.b("command.insults.created", s1);
             } else if (s.equals("delete")) {
-                this.rN().r().bL(s1);
+                this.rN().r().delete(s1);
                 afi.b("command.insults.removed", s1);
             }
         } else {

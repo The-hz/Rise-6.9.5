@@ -25,7 +25,7 @@ extends Component
 implements aha {
     private static final HashMap<Entity, ck> hK = new HashMap();
     private static HashMap<Entity, ck> hL = new HashMap();
-    @EventLink(cH=0)
+    @EventLink(value=0)
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> aMR.execute(() -> {
         HashMap<Entity, ck> hashMap = new HashMap<Entity, ck>();
         HashMap<Entity, ck> hashMap2 = hK;

@@ -11,8 +11,8 @@ import hackclient.rise.bb;
 
 @ModuleInfo(aliases = "module.ghost.clickassist.name", description = "module.ghost.clickassist.description", category = Category.GHOST)
 public class ClickAssist extends Module {
-    public final NumberValue AN = new NumberValue("Extra Left Clicks", this, 1, 0, 3, 1);
-    public final NumberValue AO = new NumberValue("Extra Right Clicks", this, 1, 0, 3, 1);
+    public final NumberValue extraLeftClicks = new NumberValue("Extra Left Clicks", this, 1, 0, 3, 1);
+    public final NumberValue extraRightClicks = new NumberValue("Extra Right Clicks", this, 1, 0, 3, 1);
     public int AP;
     public int AQ;
     private boolean AR;
@@ -21,7 +21,7 @@ public class ClickAssist extends Module {
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.gameSettings.cgK.isKeyDown()) {
             if (!this.AR) {
-                this.AP = this.AN.wo().intValue();
+                this.AP = this.extraLeftClicks.wo().intValue();
             }
 
             this.AR = true;
@@ -31,7 +31,7 @@ public class ClickAssist extends Module {
 
         if (aEg.gameSettings.cgI.isKeyDown()) {
             if (!this.AS) {
-                this.AQ = this.AO.wo().intValue();
+                this.AQ = this.extraRightClicks.wo().intValue();
             }
 
             this.AS = true;

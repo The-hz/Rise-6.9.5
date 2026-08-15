@@ -19,7 +19,7 @@ import net.minecraft.network.play.client.q;
 
 public class CancelBypass extends Mode<InventoryMove> {
     @EventLink
-    public final Listener<PacketSendEvent> Jz = var0 -> {
+    public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         Packet packet = var0.dq();
         if (packet instanceof C16PacketClientStatus && ((C16PacketClientStatus)packet).getStatus() == EnumState.OPEN_INVENTORY_ACHIEVEMENT) {
             var0.setCancelled();
@@ -43,7 +43,7 @@ public class CancelBypass extends Mode<InventoryMove> {
     @EventLink
     public final Listener<en> JB = var0 -> {};
     @EventLink
-    public final Listener<PreUpdateEvent> JC = var1x -> {
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (!(aEg.currentScreen instanceof GuiChat) && aEg.currentScreen != this.getStandardClickGUI()) {
             for (KeyBinding keybinding : this.JA) {
                 keybinding.setPressed(GameSettings.isKeyDown(keybinding));

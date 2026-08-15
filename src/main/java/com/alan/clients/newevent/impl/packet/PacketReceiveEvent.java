@@ -18,7 +18,7 @@ public final class PacketReceiveEvent extends CancellableEvent {
     }
 
     @Generated
-    public Packet<?> dq() {
+    public Packet<?> getPacket() {
         return this.packet;
     }
 
@@ -28,7 +28,7 @@ public final class PacketReceiveEvent extends CancellableEvent {
     }
 
     @Generated
-    public void e(Packet<?> var1) {
+    public void setPacket(Packet<?> var1) {
         this.packet = var1;
     }
 

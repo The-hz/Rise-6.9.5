@@ -6,10 +6,10 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
 public class aiy implements InstanceAccess {
-    private final int aPQ;
+    private final int programId;
 
     public aiy(String var1, String var2) {
-        this.aPQ = aiw.H(var1, var2);
+        this.programId = aiw.createShader(var1, var2);
     }
 
     public static void h(double var0, double var2, double var4, double var6) {
@@ -31,14 +31,14 @@ public class aiy implements InstanceAccess {
     }
 
     public void rt() {
-        GL20.glUseProgram(this.aPQ);
+        GL20.glUseProgram(this.programId);
     }
 
     public static void stop() {
         GL20.glUseProgram(0);
     }
 
-    public int vO() {
-        return this.aPQ;
+    public int getProgramId() {
+        return this.programId;
     }
 }

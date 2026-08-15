@@ -18,7 +18,7 @@ import net.minecraft.util.BlockPos;
 public class uq extends Mode<NoFall> {
     private boolean aix = false;
     @EventLink
-    public final Listener<PostMotionEvent> aiy = var1x -> {
+    public final Listener<PostMotionEvent> onPostMotion = var1x -> {
         this.aix = aEg.gameSettings.keyBindJump.isKeyDown();
         if (aEg.thePlayer.fallDistance > 2.5) {
             aEg.gameSettings.keyBindJump.setPressed(true);

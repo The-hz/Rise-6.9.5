@@ -432,7 +432,7 @@ public class ChatBypass extends Module {
     };
     private String TU = null;
     @EventLink
-    private final Listener<PacketSendEvent> TV = var1 -> {
+    private final Listener<PacketSendEvent> onPacketSend = var1 -> {
         if (var1.dq() instanceof C01PacketChatMessage) {
             String s = ((C01PacketChatMessage)var1.dq()).getMessage();
             if (s.startsWith("/") || s.equals(this.TU)) {

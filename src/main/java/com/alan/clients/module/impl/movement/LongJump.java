@@ -43,12 +43,12 @@ public class LongJump extends Module {
         .add(new BloxdLongJump("Bloxd", this))
         .add(new Vulcan2LongJump("Vulcan 2", this))
         .setDefault("Vanilla");
-    public final BooleanValue DE = new BooleanValue("Auto Disable", this, true);
-    private final BooleanValue DF = new BooleanValue("Fake Damage", this, false);
+    public final BooleanValue autoDisable = new BooleanValue("Auto Disable", this, true);
+    private final BooleanValue fakeDamage = new BooleanValue("Fake Damage", this, false);
     private boolean inAir;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
-        if (this.DE.wo()
+        if (this.autoDisable.wo()
             && this.inAir
             && aEg.thePlayer.onGround
             && !this.mode.wo().getName().equals("Watchdog")
@@ -64,7 +64,7 @@ public class LongJump extends Module {
 
     @Override
     public void onEnable() {
-        if (this.DF.wo() && aEg.thePlayer.ticksExisted > 1) {
+        if (this.fakeDamage.wo() && aEg.thePlayer.ticksExisted > 1) {
             aih.fakeDamage();
         }
     }

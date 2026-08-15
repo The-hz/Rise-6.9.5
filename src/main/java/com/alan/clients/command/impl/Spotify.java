@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Spotify extends Command {
-    public final File bv = new File(afr.aHy, "data");
+    public final File bv = new File(afr.DIRECTORY, "data");
     private static final String bw = "spotify.json";
 
     public Spotify() {

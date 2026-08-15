@@ -20,13 +20,13 @@ public class nn extends Mode<Flight> {
     private boolean tZ;
     private aka ua;
     @EventLink
-    public final Listener<PreMotionEvent> HX = var0 -> {};
+    public final Listener<PreMotionEvent> onPreMotion = var0 -> {};
     @EventLink
-    public final Listener<StrafeEvent> HY = var0 -> {
+    public final Listener<StrafeEvent> onStrafe = var0 -> {
         int i = (aEg.thePlayer.tR - 1) % 3;
     };
     @EventLink
-    public final Listener<PostStrafeEvent> HZ = var1x -> {
+    public final Listener<PostStrafeEvent> onPostStrafe = var1x -> {
         if (aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();
         } else if ((aEg.thePlayer.tR - 1) % 3 == 0) {

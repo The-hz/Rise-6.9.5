@@ -12,7 +12,7 @@ public final class TickVelocity extends Mode<Velocity> {
     private final NumberValue tickVelocity = new NumberValue("Tick Velocity", this, 1, 1, 6, 1);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
-        if (!this.wj().qQ.wo() || aEg.thePlayer.isSwingInProgress) {
+        if (!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress) {
             if (aEg.thePlayer.hurtTime == 10 - this.tickVelocity.wo().intValue()) {
                 MoveUtil.stop();
             }

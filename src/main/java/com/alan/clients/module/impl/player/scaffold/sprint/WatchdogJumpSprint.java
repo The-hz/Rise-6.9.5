@@ -46,11 +46,11 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
     public static boolean ajz = false;
     private int ajA = 0;
     private int ajr;
-    public final BooleanValue ajB = new BooleanValue("Place Extra blocks", this, false);
+    public final BooleanValue placeExtraBlocks = new BooleanValue("Place Extra blocks", this, false);
     private final vo ajC;
-    @EventLink(cH = 3)
-    public final Listener<PreMotionEvent> ajD = var1x -> {
-        this.wj().agF = 1;
+    @EventLink(value = 3)
+    public final Listener<PreMotionEvent> onPreMotion = var1x -> {
+        this.getParent().agF = 1;
         if (Math.abs(aEg.thePlayer.motionY) < 0.1) {
             ;
         }
@@ -98,7 +98,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
             int i = aEg.thePlayer.ticksExisted;
             if (!this.e(Flight.class).isEnabled()
                 && !this.e(LongJump.class).isEnabled()
-                && !bb.a(true, true, false, true, false)
+                && !bb.bad(true, true, false, true, false)
                 && Math.random() > 0.5
                 && ajy
                 && MoveUtil.isMoving()
@@ -125,7 +125,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
                 this.gD = false;
                 RotationComponent.setRotations(new Vector2f((float)(aEg.thePlayer.pl + (Math.random() - 0.5) * 3.0), 90.0F), 10.0, MovementFix.NORMAL);
                 if (!(aih.o(aEg.thePlayer.posX, aEg.thePlayer.aI - 2.0, aEg.thePlayer.posY) instanceof BlockAir)) {
-                    this.wj().Me = aEg.thePlayer.aI - 1.0;
+                    this.getParent().startY = aEg.thePlayer.aI - 1.0;
                 }
             }
 
@@ -134,26 +134,26 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
             }
         }
     };
-    @EventLink(cH = 2)
-    public final Listener<PreUpdateEvent> ajE = var1x -> {
-        boolean flag = aEg.thePlayer.aI == this.wj().Me;
-        if (!this.ajB.wo()) {
+    @EventLink(value = 2)
+    public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
+        boolean flag = aEg.thePlayer.aI == this.getParent().startY;
+        if (!this.placeExtraBlocks.wo()) {
             flag = true;
         }
 
         label159: {
             SlotComponent slotcomponent = this.d(SlotComponent.class);
             if (SlotComponent.getItemStack() == null
-                || !(aEg.thePlayer.posY > this.wj().Me)
-                || !(aEg.thePlayer.posY + MoveUtil.predictedMotion(aEg.thePlayer.motionY, 2) < this.wj().Me + 1.0)
+                || !(aEg.thePlayer.posY > this.getParent().startY)
+                || !(aEg.thePlayer.posY + MoveUtil.predictedMotion(aEg.thePlayer.motionY, 2) < this.getParent().startY + 1.0)
                 || this.aju && !ajw
                 || !Client.a.g().c(Speed.class).isEnabled()
-                || this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump")) {
+                || this.e(Scaffold.class).sameY.wo().getName().equals("Auto Jump")) {
                 slotcomponent = this.d(SlotComponent.class);
                 if (SlotComponent.getItemStack() == null
-                    || !(aEg.thePlayer.posY > this.wj().Me)
-                    || !(aEg.thePlayer.posY + MoveUtil.predictedMotion(aEg.thePlayer.motionY, 2) < this.wj().Me + 1.0)
-                    || !this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump")) {
+                    || !(aEg.thePlayer.posY > this.getParent().startY)
+                    || !(aEg.thePlayer.posY + MoveUtil.predictedMotion(aEg.thePlayer.motionY, 2) < this.getParent().startY + 1.0)
+                    || !this.e(Scaffold.class).sameY.wo().getName().equals("Auto Jump")) {
                     break label159;
                 }
             }
@@ -190,11 +190,11 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
         if (aEg.gameSettings.keyBindJump.isPressed()
             && aEg.thePlayer.onGround
             && !this.gD
-            && (ajx || this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump"))
+            && (ajx || this.e(Scaffold.class).sameY.wo().getName().equals("Auto Jump"))
             && !Client.a.g().c(Speed.class).isEnabled()) {
             ajx = false;
             MoveUtil.strafe(MoveUtil.vd() * 0.9);
-            if (this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump")) {
+            if (this.e(Scaffold.class).sameY.wo().getName().equals("Auto Jump")) {
                 MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() - 0.001);
             }
         }
@@ -203,7 +203,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
             && !aEg.gameSettings.keyBindJump.isKeyDown()
             && !Client.a.g().c(Speed.class).isEnabled()
             && !flag
-            && this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump")) {
+            && this.e(Scaffold.class).sameY.wo().getName().equals("Auto Jump")) {
             aEg.thePlayer.motionY -= 0.19;
         }
 
@@ -215,11 +215,11 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
             MoveUtil.strafe();
         }
 
-        if ((!flag || aEg.gameSettings.keyBindJump.isKeyDown() || aEg.thePlayer.onGround || this.e(Speed.class).isEnabled() || !this.ajB.wo())
+        if ((!flag || aEg.gameSettings.keyBindJump.isKeyDown() || aEg.thePlayer.onGround || this.e(Speed.class).isEnabled() || !this.placeExtraBlocks.wo())
             && flag
             && !aEg.gameSettings.keyBindJump.isKeyDown()
             && !aEg.thePlayer.onGround
-            && this.ajB.wo()) {
+            && this.placeExtraBlocks.wo()) {
         }
 
         if (flag && aEg.thePlayer.onGround && !aEg.gameSettings.keyBindJump.isKeyDown()) {
@@ -231,15 +231,15 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
         }
     };
     @EventLink
-    public final Listener<PacketReceiveEvent> ajF = var1x -> {
-        if (var1x.dq() instanceof S23PacketBlockChange) {
+    public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
+        if (var1x.getPacket() instanceof S23PacketBlockChange) {
             ajy = true;
             this.ajr++;
         }
     };
     @EventLink
-    public final Listener<StrafeEvent> ajG = var1x -> {
-        if (!this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump")
+    public final Listener<StrafeEvent> onStrafe = var1x -> {
+        if (!this.e(Scaffold.class).sameY.wo().getName().equals("Auto Jump")
             && aEg.thePlayer.onGround
             && this.aju
             && ajw
@@ -258,7 +258,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
     public void onEnable() {
         ajy = false;
         ajz = false;
-        if (!this.e(Scaffold.class).afO.wo().getName().equals("Auto Jump")) {
+        if (!this.e(Scaffold.class).sameY.wo().getName().equals("Auto Jump")) {
             if (aEg.thePlayer.cqL > 9) {
                 ajw = true;
                 this.aju = true;

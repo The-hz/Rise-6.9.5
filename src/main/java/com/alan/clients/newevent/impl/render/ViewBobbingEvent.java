@@ -7,12 +7,12 @@ public final class ViewBobbingEvent extends CancellableEvent {
     private int time;
 
     @Generated
-    public int dL() {
+    public int getTime() {
         return this.time;
     }
 
     @Generated
-    public void n(int var1) {
+    public void setTime(int var1) {
         this.time = var1;
     }
 

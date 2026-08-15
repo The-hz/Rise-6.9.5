@@ -57,7 +57,7 @@ public class AccountViewModel<T extends ael> implements adf, InstanceAccess {
 
         for (adl adl : this.labelButtons) {
             adl.setY(adl.getY() + this.scroll);
-            adl.c(0, 0, 0.0F);
+            adl.draw(0, 0, 0.0F);
             adl.setY(adl.getY() - this.scroll);
         }
     };
@@ -112,14 +112,14 @@ public class AccountViewModel<T extends ael> implements adf, InstanceAccess {
             return false;
         }
 
-        if (!aeb.a(this.x, this.y + this.scroll, this.width, this.height, var1, var2)) {
+        if (!aeb.isHovered(this.x, this.y + this.scroll, this.width, this.height, var1, var2)) {
             return false;
         }
 
         if (this.account.kW()) {
             for (adl adl : this.labelButtons) {
-                if (aeb.a(adl.getX(), adl.getY() + this.scroll, adl.oM(), adl.da(), var1, var2)) {
-                    adl.rm();
+                if (aeb.isHovered(adl.getX(), adl.getY() + this.scroll, adl.oM(), adl.da(), var1, var2)) {
+                    adl.runAction();
                     return true;
                 }
             }

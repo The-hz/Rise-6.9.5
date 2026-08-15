@@ -120,7 +120,7 @@ public final class aik implements InstanceAccess {
         return j;
     }
 
-    public static int e(Item var0) {
+    public static int findItem(Item var0) {
         for (int i = 0; i < 9; i++) {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
             if (itemstack == null) {
@@ -150,7 +150,7 @@ public final class aik implements InstanceAccess {
         return -1;
     }
 
-    public static int r(BlockPos var0) {
+    public static int findTool(BlockPos var0) {
         float f = 1.0F;
         int i = -1;
         IBlockState iblockstate = aEg.theWorld.getBlockState(var0);
@@ -169,7 +169,7 @@ public final class aik implements InstanceAccess {
         return i;
     }
 
-    public static ItemStack az(int var0) {
+    public static ItemStack getCurrentItemInSlot(int var0) {
         return var0 < 9 && var0 >= 0 ? aEg.thePlayer.inventory.mainInventory[var0] : null;
     }
 
@@ -182,13 +182,13 @@ public final class aik implements InstanceAccess {
         return f;
     }
 
-    public static float a(EntityPlayer var0, World var1, BlockPos var2, int var3) {
+    public static float getPlayerRelativeBlockHardness(EntityPlayer var0, World var1, BlockPos var2, int var3) {
         Block block = aEg.theWorld.getBlockState(var2).getBlock();
         float f = block.getBlockHardness(var1, var2);
-        return f < 0.0F ? 0.0F : (!b(block, var3) ? c(block, var3) / f / 100.0F : c(block, var3) / f / 30.0F);
+        return f < 0.0F ? 0.0F : (!canHeldItemHarvest(block, var3) ? c(block, var3) / f / 100.0F : c(block, var3) / f / 30.0F);
     }
 
-    public static boolean b(Block var0, int var1) {
+    public static boolean canHeldItemHarvest(Block var0, int var1) {
         if (var0.getMaterial().isToolNotRequired()) {
             return true;
         }
@@ -241,7 +241,7 @@ public final class aik implements InstanceAccess {
                 i = 15;
             }
 
-            if (!b(var1, var3)) {
+            if (!canHeldItemHarvest(var1, var3)) {
                 i = 1;
             } else if (EnchantmentHelper.getEfficiencyModifier(Minecraft.getMinecraft().thePlayer) != 0) {
                 i += EnchantmentHelper.getEfficiencyModifier(Minecraft.getMinecraft().thePlayer) ^ 3;
@@ -272,7 +272,7 @@ public final class aik implements InstanceAccess {
 
         float f = i / var1.getBlockHardness(var0, var2);
         float f1;
-        if (b(var1, var3)) {
+        if (canHeldItemHarvest(var1, var3)) {
             f1 = f / 30.0F;
         } else {
             f1 = f / 100.0F;
@@ -285,7 +285,7 @@ public final class aik implements InstanceAccess {
         float f = a(var0, var1);
         if (f > 1.0F) {
             int i = EnchantmentHelper.getEfficiencyModifier(aEg.thePlayer);
-            ItemStack itemstack = az(var1);
+            ItemStack itemstack = getCurrentItemInSlot(var1);
             if (i > 0 && itemstack != null) {
                 f += i * i + 1;
             }

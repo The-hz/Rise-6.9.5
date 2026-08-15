@@ -9,7 +9,7 @@ public final class LastConnectionComponent extends Component {
     public static String ip;
     public static int port;
     @EventLink
-    public final Listener<ServerJoinEvent> dz = var0 -> {
+    public final Listener<ServerJoinEvent> onServerJoin = var0 -> {
         ip = var0.getIp();
         port = var0.getPort();
     };
