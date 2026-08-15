@@ -22,6 +22,7 @@ idea { module { excludeDirs += file('run') } }
 
 apply from: "$rootDir/gradle/reserved-names.gradle"
 apply from: "$rootDir/gradle/stale-literals.gradle"
+apply from: "$rootDir/gradle/mixed-box-merge.gradle"
 
 repositories {
     mavenCentral()
