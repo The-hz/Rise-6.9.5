@@ -6,7 +6,7 @@ import com.alan.clients.compat.NetworkToggles;
 import com.alan.clients.script.ScriptManager;
 import com.alan.clients.util.file.FileType;
 import com.alan.clients.util.file.config.ConfigFile;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,7 +34,7 @@ public final class Script extends Command {
             if (var1.length > 3) {
                 script = scriptmanager.getScript(var1[2]);
                 if (script == null) {
-                    afi.b("command.script.notfound", var1[2]);
+                    ChatUtil.b("command.script.notfound", var1[2]);
                     return;
                 }
             } else {
@@ -69,14 +69,14 @@ public final class Script extends Command {
                                                         Desktop desktop = Desktop.getDesktop();
                                                         File file1 = new File(String.valueOf(ScriptManager.SCRIPT_DIRECTORY));
                                                         desktop.open(file1);
-                                                        afi.b("command.script.folder");
+                                                        ChatUtil.b("command.script.folder");
                                                     } catch (IllegalArgumentException | IOException illegalargumentexception) {
-                                                        afi.b("command.script.notfoundfolder");
+                                                        ChatUtil.b("command.script.notfoundfolder");
                                                     }
 
                                                     return;
                                                 default:
-                                                    afi.b(
+                                                    ChatUtil.b(
                                                         "command.script.unknownaction",
                                                         "Valid actions are load, reload, unload, disablesecurity and enablesecurity"
                                                     );
@@ -104,14 +104,14 @@ public final class Script extends Command {
                                 Client.a.getStandardClickGUI().moduleList = new ConcurrentLinkedQueue<>();
                             }
 
-                            afi.b("Successfully " + s + "ed " + (script == null ? "all scripts" : "\"" + script.getName() + "\"") + ".");
+                            ChatUtil.b("Successfully " + s + "ed " + (script == null ? "all scripts" : "\"" + script.getName() + "\"") + ".");
                             return;
                         }
 
                         //add code
                         if (!NetworkToggles.remoteScripts()) {
-                            afi.b("Remote script download is off (plain HTTP to a bare IP).");
-                            afi.b("Start the client with -Drise.net.remotescripts=true to allow it.");
+                            ChatUtil.b("Remote script download is off (plain HTTP to a bare IP).");
+                            ChatUtil.b("Start the client with -Drise.net.remotescripts=true to allow it.");
                             return;
                         }
 
@@ -134,8 +134,8 @@ public final class Script extends Command {
 
                                         new ConfigFile(new File(ScriptManager.SCRIPT_DIRECTORY + File.separator + var1[2] + ".js"), FileType.CONFIG, var1[2])
                                             .a(ScriptManager.SCRIPT_DIRECTORY + File.separator + var1[2] + ".js", arraylist);
-                                        afi.b("Installed the Script!");
-                                        afi.b("Use .script reload, to reload scripts");
+                                        ChatUtil.b("Installed the Script!");
+                                        ChatUtil.b("Use .script reload, to reload scripts");
                                     } catch (Throwable throwable) {
                                         throwable.printStackTrace();
                                     }
@@ -146,15 +146,15 @@ public final class Script extends Command {
                     }
 
                     scriptmanager.setSecurityMeasures(true);
-                    afi.b("command.script.enablesecurity");
+                    ChatUtil.b("command.script.enablesecurity");
                     return;
                 }
 
                 scriptmanager.setSecurityMeasures(false);
-                afi.b("command.script.disablesecurity");
+                ChatUtil.b("command.script.disablesecurity");
             } catch (Exception exception) {
                 exception.printStackTrace();
-                afi.b("Failed to " + s + " a script. Stacktrace printed.");
+                ChatUtil.b("Failed to " + s + " a script. Stacktrace printed.");
             }
         }
     }

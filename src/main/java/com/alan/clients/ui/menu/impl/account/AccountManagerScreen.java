@@ -13,10 +13,10 @@ import com.alan.clients.ui.menu.impl.main.MainMenu;
 import com.alan.clients.util.MouseUtil;
 import hackclient.rise.AltAccount;
 import com.alan.clients.util.file.alt.AltManager;
-import hackclient.rise.agk;
+import com.alan.clients.util.gui.ScrollUtil;
 import com.alan.clients.util.render.ScissorUtil;
-import hackclient.rise.aiv;
-import hackclient.rise.aiz;
+import com.alan.clients.util.shader.RiseShaders;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
     private boolean updateMarker;
     private static int screenWidth;
     private static int screenHeight;
-    agk scrollUtil = new agk();
+    ScrollUtil scrollUtil = new ScrollUtil();
     private static int accountsInRow;
 
     public AccountManagerScreen(GuiScreen screen) {
@@ -52,7 +52,7 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
 
     @Override
     public void drawScreen(int var1, int var2, float var3) {
-        aiv.aPL.a(aiz.OVERLAY, var3, null);
+        RiseShaders.aPL.a(ShaderRenderType.OVERLAY, var3, null);
         this.b(ShaderQueueType.BLUR).c(BACKGROUND_RUNNABLE);
         GL11.glPushMatrix();
         ScissorUtil.hK();

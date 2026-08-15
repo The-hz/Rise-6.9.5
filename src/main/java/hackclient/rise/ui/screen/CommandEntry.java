@@ -1,7 +1,7 @@
 package hackclient.rise.ui.screen;
 
 import com.alan.clients.command.Command;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import java.util.Locale;
 
 final class CommandEntry {
@@ -16,7 +16,7 @@ final class CommandEntry {
     CommandEntry(Command command) {
         this.aBl = command.getExpressions();
         this.aBk = this.aBl.length == 0 ? "" : this.aBl[0];
-        this.aBm = ahd.ce(command.getDescription());
+        this.aBm = Localization.ce(command.getDescription());
         this.aBn = this.aBm.toLowerCase(Locale.ROOT);
         this.aBo = aV(command.getDescription());
         this.aBp = c(this.aBl);
@@ -57,7 +57,7 @@ final class CommandEntry {
         }
 
         String s = var0.endsWith(".description") ? var0.replace(".description", ".usage") : var0 + ".usage";
-        String s1 = ahd.ce(s);
+        String s1 = Localization.ce(s);
         return s.equals(s1) ? null : s1;
     }
 

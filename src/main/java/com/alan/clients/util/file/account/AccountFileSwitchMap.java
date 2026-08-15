@@ -2,7 +2,7 @@ package com.alan.clients.util.file.account;
 
 import hackclient.rise.AltType;
 
-class afu {
+class AccountFileSwitchMap {
     static final int[] aHG = new int[AltType.values().length];
 
     static {

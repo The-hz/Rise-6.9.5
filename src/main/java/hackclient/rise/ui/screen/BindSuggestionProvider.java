@@ -4,7 +4,7 @@ import com.alan.clients.Client;
 import com.alan.clients.command.impl.Bind;
 import com.alan.clients.module.Module;
 import com.alan.clients.util.file.config.ConfigFile;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.interfaces.Bindable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -194,13 +194,13 @@ final class BindSuggestionProvider implements SuggestionProvider {
 
     private String c(Bindable var1) {
         if (var1 instanceof Module) {
-            return ahd.ce(((Module)var1).getModuleInfo().category().getName()) + " • Module";
+            return Localization.ce(((Module)var1).getModuleInfo().category().getName()) + " • Module";
         }
         return var1 instanceof ConfigFile ? "Config" : "Bindable";
     }
 
     private String d(Bindable var1) {
         int i = var1.getKey();
-        return i == 0 ? ahd.ce("ui.command.palette.bind.meta.unbound") : String.format(ahd.ce("ui.command.palette.bind.meta.bound"), Bind.b(i));
+        return i == 0 ? Localization.ce("ui.command.palette.bind.meta.unbound") : String.format(Localization.ce("ui.command.palette.bind.meta.bound"), Bind.b(i));
     }
 }

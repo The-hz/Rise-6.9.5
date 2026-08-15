@@ -12,7 +12,7 @@ import hackclient.rise.ui.screen.CommandPalette;
 import hackclient.rise.ui.screen.Suggestion;
 import hackclient.rise.ui.screen.SuggestionContext;
 import hackclient.rise.ui.screen.SuggestionProvider;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -119,7 +119,7 @@ implements SuggestionProvider {
                             Module module4 = (Module)iterator4.next();
                             String string9 = module4.getName();
                             String string10 = string9.replace(" ", "");
-                            arrayList4.add(new Suggestion(string9, ahd.ce(module4.getModuleInfo().description()), module4.getModuleInfo().category().getName(), string10, 0, true));
+                            arrayList4.add(new Suggestion(string9, Localization.ce(module4.getModuleInfo().description()), module4.getModuleInfo().category().getName(), string10, 0, true));
                         }
                     }
                     while (iterator2.hasNext()) {

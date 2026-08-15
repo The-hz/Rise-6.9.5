@@ -3,8 +3,8 @@ package com.alan.clients.util.shader.impl;
 import com.alan.clients.module.impl.render.Interface;
 import com.alan.clients.util.shader.base.RiseShaderProgram;
 import com.alan.clients.util.shader.base.ShaderUniforms;
-import hackclient.rise.aix;
-import hackclient.rise.aiz;
+import com.alan.clients.util.shader.base.RiseShader;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 import com.alan.clients.util.shader.kernel.GaussianKernel;
 import java.nio.FloatBuffer;
 import java.util.List;
@@ -16,7 +16,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL13;
 
-public class BloomShader extends aix {
+public class BloomShader extends RiseShader {
     private final RiseShaderProgram bloomProgram = new RiseShaderProgram("bloom.frag", "vertex.vsh");
     private Framebuffer inputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
     private Framebuffer outputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
@@ -27,7 +27,7 @@ public class BloomShader extends aix {
     }
 
     @Override
-    public void a(aiz var1, float var2, List<Runnable> runnables) {
+    public void a(ShaderRenderType var1, float var2, List<Runnable> runnables) {
         if (Display.isVisible()) {
             boolean flag = System.getProperty("os.name").toLowerCase().contains("mac");
             switch (var1) {

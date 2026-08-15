@@ -7,7 +7,7 @@ import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
@@ -15,7 +15,7 @@ import lombok.Generated;
 
 public class ThemeComponent implements InstanceAccess {
     private final Themes activeTheme;
-    private aka ayu = new aka(0.0, 0.0, 0.0);
+    private Vector3d ayu = new Vector3d(0.0, 0.0, 0.0);
     private final Animation xAnimation = new Animation(Easing.EASE_OUT_QUINT, 500L);
     private final Animation yAnimation = new Animation(Easing.EASE_OUT_QUINT, 500L);
     private final Animation opacityAnimation = new Animation(Easing.EASE_OUT_QUINT, 500L);
@@ -69,7 +69,7 @@ public class ThemeComponent implements InstanceAccess {
                 );
         }
 
-        this.ayu = new aka(d0, d1, var3);
+        this.ayu = new Vector3d(d0, d1, var3);
     }
 
     @Generated
@@ -78,7 +78,7 @@ public class ThemeComponent implements InstanceAccess {
     }
 
     @Generated
-    public aka pL() {
+    public Vector3d pL() {
         return this.ayu;
     }
 

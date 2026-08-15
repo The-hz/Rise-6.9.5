@@ -11,7 +11,7 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook;
@@ -21,7 +21,7 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 
 @ModuleInfo(aliases = {"module.movement.stuck.name", "stasis"}, description = "module.movement.stuck.description", category = Category.MOVEMENT)
 public class Stuck extends Module {
-    private aka savedMotion;
+    private Vector3d savedMotion;
     private final BooleanValue rotations = new BooleanValue("Rotate", this, false);
     private final BooleanValue test = new BooleanValue("Test", this, false);
     private final NumberValue pulseTicks = new NumberValue("Pulse Ticks", this, 0, 0, 30, 1);
@@ -98,7 +98,7 @@ public class Stuck extends Module {
 
     private void freeze() {
         if (!this.stuck) {
-            this.savedMotion = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
+            this.savedMotion = new Vector3d(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
             this.stuck = true;
         }
     }

@@ -3,7 +3,7 @@ package com.alan.clients.util.gui.textbox;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.vector.Vector2d;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
@@ -24,7 +24,7 @@ public class TextBox {
     public int aJk;
     public Vector2d position;
     public float width;
-    public agc lq;
+    public Font lq;
     public Color color;
     public TextAlign textAlign;
     public String aJm;
@@ -39,7 +39,7 @@ public class TextBox {
     private float aJu;
     public StopWatch aJv = new StopWatch();
 
-    public TextBox(Vector2d position, agc var2, Color color, TextAlign var4, String var5, float width, boolean var7) {
+    public TextBox(Vector2d position, Font var2, Color color, TextAlign var4, String var5, float width, boolean var7) {
         this.position = position;
         this.lq = var2;
         this.color = color;
@@ -49,11 +49,11 @@ public class TextBox {
         this.hideCharacters = var7;
     }
 
-    public TextBox(Vector2d vector2d, agc var2, Color var3, TextAlign var4, String var5, float var6) {
+    public TextBox(Vector2d vector2d, Font var2, Color var3, TextAlign var4, String var5, float var6) {
         this(vector2d, var2, var3, var4, var5, var6, false);
     }
 
-    public TextBox(Vector2d vector2d, agc var2, Color var3, TextAlign var4, String var5, float var6, String var7) {
+    public TextBox(Vector2d vector2d, Font var2, Color var3, TextAlign var4, String var5, float var6, String var7) {
         this(vector2d, var2, var3, var4, var5, var6, false);
         this.aJq = var7;
     }
@@ -314,7 +314,7 @@ public class TextBox {
     }
 
     @Generated
-    public agc eb() {
+    public Font eb() {
         return this.lq;
     }
 
@@ -399,7 +399,7 @@ public class TextBox {
     }
 
     @Generated
-    public void c(agc var1) {
+    public void c(Font var1) {
         this.lq = var1;
     }
 

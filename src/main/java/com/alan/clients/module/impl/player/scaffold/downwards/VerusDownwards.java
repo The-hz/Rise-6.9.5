@@ -7,7 +7,7 @@ import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.util.EnumFacing;
 import org.lwjgl.input.Keyboard;
@@ -39,7 +39,7 @@ public class VerusDownwards extends Mode<Scaffold> {
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (var1x.dq() instanceof C08PacketPlayerBlockPlacement c08packetplayerblockplacement
-            && !c08packetplayerblockplacement.getPosition().h(new aka(-1.0, -1.0, -1.0))) {
+            && !c08packetplayerblockplacement.getPosition().h(new Vector3d(-1.0, -1.0, -1.0))) {
             c08packetplayerblockplacement.getPlacedBlockDirection();
             EnumFacing.DOWN.getIndex();
         }

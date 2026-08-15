@@ -9,7 +9,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import java.util.ArrayList;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,9 +31,9 @@ public final class PlayerNotifier extends Module {
                         int i = (int)entitylivingbase.getDistance(this.bedPosition.getX(), this.bedPosition.getY(), this.bedPosition.getZ());
                         if (i < this.distance.wo().intValue()) {
                             if (this.notifiedPlayers.contains(entitylivingbase) && this.notifyOnce.wo()) {
-                                afi.b("Didn't display: " + entitylivingbase.getName());
+                                ChatUtil.b("Didn't display: " + entitylivingbase.getName());
                             } else {
-                                afi.b(this.getColor(i) + entitylivingbase.getName() + " is " + i + " blocks away from your bed.");
+                                ChatUtil.b(this.getColor(i) + entitylivingbase.getName() + " is " + i + " blocks away from your bed.");
                             }
 
                             this.notifiedPlayers.add(entitylivingbase);

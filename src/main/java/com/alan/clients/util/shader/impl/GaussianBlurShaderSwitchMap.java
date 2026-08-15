@@ -1,18 +1,18 @@
 package com.alan.clients.util.shader.impl;
 
-import hackclient.rise.aiz;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 
 class GaussianBlurShaderSwitchMap {
-    static final int[] aQh = new int[aiz.values().length];
+    static final int[] aQh = new int[ShaderRenderType.values().length];
 
     static {
         try {
-            aQh[aiz.CAMERA.ordinal()] = 1;
+            aQh[ShaderRenderType.CAMERA.ordinal()] = 1;
         } catch (NoSuchFieldError nosuchfielderror1) {
         }
 
         try {
-            aQh[aiz.OVERLAY.ordinal()] = 2;
+            aQh[ShaderRenderType.OVERLAY.ordinal()] = 2;
         } catch (NoSuchFieldError nosuchfielderror) {
         }
     }

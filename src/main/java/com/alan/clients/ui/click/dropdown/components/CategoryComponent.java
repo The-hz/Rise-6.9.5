@@ -17,7 +17,7 @@ import com.alan.clients.value.Value;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -118,7 +118,7 @@ public class CategoryComponent implements InstanceAccess {
             RenderUtil.a(d0, d1, var5, d13, 6.0 * var10, ColorUtil.withBlue(Color.WHITE, (int)this.axx.getValue()), true, true, !this.axv, !this.axv);
         }
 
-        String s = ahd.ce(this.category.getName());
+        String s = Localization.ce(this.category.getName());
         FontManager.MAIN.a((int)(16.0 * var10), FontWeight.BOLD).a(s, (float)(d0 + 8.0 * var10), (float)(d1 + 7.0 * var10), this.rz().rD().getRGB());
         String s1 = this.axv ? "▲" : "▼";
         FontManager.MAIN.a((int)(12.0 * var10), FontWeight.REGULAR).a(s1, (float)(d0 + var5 - 16.0 * var10), (float)(d1 + 7.0 * var10), UIColors.TRINARY_TEXT.pW());
@@ -165,7 +165,7 @@ public class CategoryComponent implements InstanceAccess {
                         .a((int)(13.0 * var10), FontWeight.REGULAR)
                         .a(moduleComponent.getModule().getName(), (float)d18, (float)d19, moduleComponent.getModule().isEnabled() ? this.rz().rD().getRGB() : UIColors.TEXT.pW());
                     if (!moduleComponent.isExpanded()) {
-                        String s3 = "(" + ahd.ce(moduleComponent.getModule().getModuleInfo().category().getName()) + ")";
+                        String s3 = "(" + Localization.ce(moduleComponent.getModule().getModuleInfo().category().getName()) + ")";
                         FontManager.MAIN
                             .a((int)(10.0 * var10), FontWeight.REGULAR)
                             .a(
@@ -177,7 +177,7 @@ public class CategoryComponent implements InstanceAccess {
                     }
 
                     if (!moduleComponent.isExpanded()) {
-                        String description = ahd.ce(moduleComponent.getModule().getModuleInfo().description());
+                        String description = Localization.ce(moduleComponent.getModule().getModuleInfo().description());
                         int j = (int)(9.0 * var10);
                         float f = (float)(var5 - 24.0 * var10);
                         String[] astring = description.split(" ");
@@ -231,7 +231,7 @@ public class CategoryComponent implements InstanceAccess {
                                 double d22 = d0 + 14.0 * var10;
                                 double d23 = d14 + 4.0 * var10;
                                 if (value2 instanceof BooleanValue booleanvalue) {
-                                    String s6 = ahd.ce(value2.getName());
+                                    String s6 = Localization.ce(value2.getName());
                                     FontManager.MAIN.a((int)(12.0 * var10), FontWeight.REGULAR).a(s6, (float)d22, (float)d23, UIColors.TEXT.pW());
                                     double d24 = d0 + var5 - 28.0 * var10;
                                     double d25 = d14 + 4.0 * var10;
@@ -240,14 +240,14 @@ public class CategoryComponent implements InstanceAccess {
                                         RenderUtil.roundedRectangle(d24 + 2.0 * var10, d25 + 2.0 * var10, 8.0 * var10, 8.0 * var10, 2.0 * var10, this.rz().rD());
                                     }
                                 } else if (value2 instanceof ModeValue modevalue3) {
-                                    String s7 = ahd.ce(value2.getName());
+                                    String s7 = Localization.ce(value2.getName());
                                     FontManager.MAIN.a((int)(12.0 * var10), FontWeight.REGULAR).a(s7, (float)d22, (float)d23, UIColors.TEXT.pW());
                                     String s8 = modevalue3.wo().getName();
                                     FontManager.MAIN.a((int)(11.0 * var10), FontWeight.REGULAR).drawCenteredString(s8, (float)(d0 + var5 - 18.0 * var10), (float)d23, this.rz().rD().getRGB());
                                     String s9 = this.axE.getOrDefault(value2, false) ? "▲" : "▼";
                                     FontManager.MAIN.a((int)(10.0 * var10), FontWeight.REGULAR).a(s9, (float)(d0 + var5 - 16.0 * var10), (float)d23, UIColors.TRINARY_TEXT.pW());
                                 } else if (value2 instanceof NumberValue numbervalue) {
-                                    String s10 = ahd.ce(value2.getName());
+                                    String s10 = Localization.ce(value2.getName());
                                     FontManager.MAIN.a((int)(12.0 * var10), FontWeight.REGULAR).a(s10, (float)d22, (float)d23, UIColors.TEXT.pW());
                                     double d26 = d0 + 12.0 * var10;
                                     double d27 = d14 + 18.0 * var10 - 6.0 * var10;
@@ -309,7 +309,7 @@ public class CategoryComponent implements InstanceAccess {
     }
 
     public void i(double var1, double var3, double var5) {
-        String s = ahd.ce(this.category.getName());
+        String s = Localization.ce(this.category.getName());
         FontManager.MAIN.a((int)(16.0 * var5), FontWeight.BOLD).a(s, (float)(var1 + 8.0 * var5), (float)(var3 + 7.0 * var5), ColorUtil.withBlue(this.rz().rA(), 200).getRGB());
         if (this.axv && this.axw.getValue() > 1.0) {
             double d0 = var3 + 22.0 * var5 + 3.0 * var5;

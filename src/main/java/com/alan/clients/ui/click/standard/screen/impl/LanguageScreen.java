@@ -6,9 +6,9 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.ui.click.standard.screen.Screen;
-import hackclient.rise.agk;
+import com.alan.clients.util.gui.ScrollUtil;
 import com.alan.clients.util.localization.Locale;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.render.ScissorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -20,11 +20,11 @@ import org.lwjgl.opengl.GL11;
 
 public class LanguageScreen implements Screen, InstanceAccess {
     private final ArrayList<LanguageComponent> languages = new ArrayList<>();
-    private final agk azQ = new agk();
+    private final ScrollUtil azQ = new ScrollUtil();
 
     public LanguageScreen() {
         for (Locale locale : Locale.values()) {
-            this.languages.add(new LanguageComponent(locale, ahd.a("language_local", locale), ahd.a("language_english", locale)));
+            this.languages.add(new LanguageComponent(locale, Localization.a("language_local", locale), Localization.a("language_english", locale)));
         }
     }
 
@@ -53,7 +53,7 @@ public class LanguageScreen implements Screen, InstanceAccess {
         );
         FontManager.MAIN
             .a(16, FontWeight.REGULAR)
-            .drawCenteredString(ahd.ce("ui.language.text"), vector2f.getX() + vector2f1.getX() - 20.0F, vector2f.getY() + 20.0F, new Color(255, 255, 255, 128).getRGB());
+            .drawCenteredString(Localization.ce("ui.language.text"), vector2f.getX() + vector2f1.getX() - 20.0F, vector2f.getY() + 20.0F, new Color(255, 255, 255, 128).getRGB());
         this.azQ.V(-2000.0);
     }
 

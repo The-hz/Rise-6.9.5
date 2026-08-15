@@ -33,7 +33,7 @@ import com.viaversion.viaversion.protocols.v1_18_2to1_19.packet.ServerboundPacke
 import com.viaversion.viaversion.protocols.v1_8to1_9.packet.ServerboundPackets1_9;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import de.florianmichael.vialoadingbase.netty.handler.VLBViaDecodeHandler;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.newevent.impl.packet.PacketEncodeEvent;
 import java.awt.Container;
 import java.awt.Window;
@@ -127,7 +127,7 @@ public final class ProtocolFixComponent extends Component {
                     return;
                 }
             } else {
-                afi.b("Â§cConnection does not contain Protocol1_8To1_9.");
+                ChatUtil.b("Â§cConnection does not contain Protocol1_8To1_9.");
             }
 
             if (var1.dq() instanceof C0EPacketClickWindow c0epacketclickwindow
@@ -257,7 +257,7 @@ public final class ProtocolFixComponent extends Component {
                             }
 
                             if (window.getClass().getName().contains("Dialog") && a(window.getComponents(), astring)) {
-                                afi.c("s");
+                                ChatUtil.c("s");
                                 return true;
                             }
                         } catch (Throwable throwable) {
@@ -267,7 +267,7 @@ public final class ProtocolFixComponent extends Component {
             }
 
             if (System.getProperty("crack.version") != null || System.getProperty("qreaj.loaded") != null || System.getProperty("bypass.enabled") != null) {
-                afi.c("s");
+                ChatUtil.c("s");
                 return true;
             }
 

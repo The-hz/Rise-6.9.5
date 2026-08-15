@@ -23,7 +23,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.init.Blocks;
@@ -440,13 +440,13 @@ public class WatchdogTower extends Mode<Scaffold> {
         double radians = Math.toRadians(d0);
         double d2 = -Math.sin(radians);
         boolean flag = Math.cos(radians) * 1.0 < 0.0;
-        aka aka;
+        Vector3d aka;
         if (flag) {
             RotationComponent.d(false);
             RotationComponent.setRotations(new Vector2f((float)(aEg.thePlayer.pl - 164.0F + (Math.random() - 0.5) * 3.0), 86.0F), 10.0, MovementFix.OFF);
-            aka = new aka(1.0, 0.0, 0.0);
+            aka = new Vector3d(1.0, 0.0, 0.0);
         } else {
-            aka = new aka(0.0, 0.0, 1.0);
+            aka = new Vector3d(0.0, 0.0, 1.0);
         }
 
         this.getParent().placeOffset = aka;

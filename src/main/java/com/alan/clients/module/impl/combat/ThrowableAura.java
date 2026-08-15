@@ -12,7 +12,7 @@ import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aef;
+import com.alan.clients.util.RayCastUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import java.util.Comparator;
@@ -214,7 +214,7 @@ public class ThrowableAura extends Module {
             return true;
         }
 
-        MovingObjectPosition movingobjectposition = aef.rayCast(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), this.range.wo().doubleValue(), 0.1F);
+        MovingObjectPosition movingobjectposition = RayCastUtil.rayCast(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), this.range.wo().doubleValue(), 0.1F);
         return movingobjectposition != null && movingobjectposition.entityHit == living;
     }
 
@@ -247,7 +247,7 @@ public class ThrowableAura extends Module {
         }
 
         double d1 = killAura.range.wo().doubleValue();
-        MovingObjectPosition movingobjectposition = aef.c(RotationComponent.fk, d1);
+        MovingObjectPosition movingobjectposition = RayCastUtil.c(RotationComponent.fk, d1);
         return movingobjectposition != null && movingobjectposition.entityHit == entitylivingbase
             ? true ^ true
             : aEg.thePlayer.getDistanceToEntity(entitylivingbase) <= d1;

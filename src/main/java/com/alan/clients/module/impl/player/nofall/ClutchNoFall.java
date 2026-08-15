@@ -11,7 +11,7 @@ import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.module.impl.player.nofall.ClutchState;
@@ -84,7 +84,7 @@ public class ClutchNoFall extends Mode<NoFall> {
                 if (aEg.thePlayer.onGround || this.stateTimer.T(3000L)) {
                     if (this.waterPos != null) {
                         this.bucketSlot = com.alan.clients.util.player.SlotUtil.findItem(Items.bucket);
-                        afi.b("S");
+                        ChatUtil.b("S");
                         if (this.bucketSlot != -1) {
                             this.state = ClutchState.PICKUP;
                             this.stateTimer.aX();
@@ -128,7 +128,7 @@ public class ClutchNoFall extends Mode<NoFall> {
             this.waterPos = new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY - 1.0, aEg.thePlayer.posZ);
             this.placed = true;
             this.placeTimer.aX();
-            afi.b("MLG water placed at distance: " + (aEg.thePlayer.posY - this.landingPos.getY()));
+            ChatUtil.b("MLG water placed at distance: " + (aEg.thePlayer.posY - this.landingPos.getY()));
             this.state = ClutchState.WAIT_LAND;
             this.stateTimer.aX();
             this.pendingPlace = false;
@@ -136,7 +136,7 @@ public class ClutchNoFall extends Mode<NoFall> {
             float f1 = aEg.thePlayer.rotationPitch;
             aEg.entityRenderer.getMouseOver(1.0F);
             aEg.rightClickDelayTimer = 0;
-            afi.b("Picked up water MLG");
+            ChatUtil.b("Picked up water MLG");
             this.reset();
             this.pendingPickup = false;
         }

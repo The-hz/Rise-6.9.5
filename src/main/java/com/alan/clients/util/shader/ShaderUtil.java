@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.shader;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
 import java.io.BufferedReader;
@@ -12,10 +12,10 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
-public class aiw implements InstanceAccess {
+public class ShaderUtil implements InstanceAccess {
     private static final IResourceManager RESOURCE_MANAGER = aEg.getResourceManager();
 
-    public aiw() {
+    public ShaderUtil() {
     }
 
     public static int createShader(String var0, String var1) {

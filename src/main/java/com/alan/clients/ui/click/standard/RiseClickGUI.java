@@ -25,10 +25,10 @@ import com.alan.clients.ui.click.standard.screen.impl.ThemeScreen;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.gui.textbox.TextBox;
 import com.alan.clients.util.ime.PinyinInputHandler;
-import hackclient.rise.agx;
-import hackclient.rise.aha;
+import com.alan.clients.util.ime.PinyinImeState;
+import com.alan.clients.util.interfaces.ExecutorAccess;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.aiz;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 import com.alan.clients.util.shader.impl.AlphaShader;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -50,7 +50,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import rip.vantage.commons.util.time.StopWatch;
 
-public class RiseClickGUI extends GuiScreen implements aha {
+public class RiseClickGUI extends GuiScreen implements ExecutorAccess {
     public Vector2f axI = new Vector2f(-1.0F, -1.0F);
     public Vector2f position = new Vector2f(416.0F, 338.0F);
     public SidebarCategory sidebar = new SidebarCategory();
@@ -87,7 +87,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     public boolean a(TextBox textBox) {
-        if (!agx.isEnabled()) {
+        if (!PinyinImeState.isEnabled()) {
             return false;
         }
 
@@ -176,7 +176,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
         } else {
             ((AlphaShader)this.ayc.dU()).setAlpha((float)this.axT);
             this.ayc.c(this::oT);
-            this.ayc.a(aiz.OVERLAY);
+            this.ayc.a(ShaderRenderType.OVERLAY);
             this.ayc.clear();
         }
     }
@@ -244,7 +244,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
                 this.b(ShaderQueueType.BLOOM, 2).c(runnable2);
                 short short1 = 200;
                 (this.axL = this.axP.T(short1) ? this.axK : this.axM).onRender(i, j, f);
-                if (agx.isEnabled()) {
+                if (PinyinImeState.isEnabled()) {
                     double d0 = this.axI.x * this.axS + this.translate.x + 1.0;
                     double d1 = this.axI.y * this.axS + this.translate.y + 1.0;
                     double d2 = this.position.x * this.axS - 2.0;
@@ -394,7 +394,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
 
     @Override
     protected void keyTyped(char var1, int var2) {
-        if (agx.isEnabled()) {
+        if (PinyinImeState.isEnabled()) {
             TextBox textBox = this.oU();
             if (textBox != this.ayb) {
                 this.aya.aX();

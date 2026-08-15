@@ -3,12 +3,12 @@ package com.alan.clients.value;
 import com.alan.clients.Client;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.interfaces.Toggleable;
-import hackclient.rise.aha;
+import com.alan.clients.util.interfaces.ExecutorAccess;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Generated;
 
-public abstract class Mode<T> implements InstanceAccess, aha, Toggleable {
+public abstract class Mode<T> implements InstanceAccess, ExecutorAccess, Toggleable {
     private final String name;
     private final T parent;
     private final List<Value<?>> values = new ArrayList<>();

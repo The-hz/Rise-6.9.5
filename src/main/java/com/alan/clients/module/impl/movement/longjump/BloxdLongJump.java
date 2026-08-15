@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.component.impl.player.PacketQueueComponent;
 import com.alan.clients.component.impl.player.FallDistanceComponent;
 import com.alan.clients.component.impl.player.ItemDamageComponent;
@@ -69,14 +69,14 @@ public class BloxdLongJump extends Mode<LongJump> {
         MoveUtil.stop();
         this.previousSlot = aEg.thePlayer.inventory.currentItem;
         if (this.getProjectileSlot() == -1) {
-            afi.b("you need a projectile in your hotbar for this");
+            ChatUtil.b("you need a projectile in your hotbar for this");
         } else {
             int i = this.getProjectileSlot();
             if (i != -1) {
                 SlotComponent slotcomponent = this.d(SlotComponent.class);
                 SlotComponent.setSlot(i);
             } else {
-                afi.b("you need a projectile in your hotbar for this");
+                ChatUtil.b("you need a projectile in your hotbar for this");
             }
 
             ItemDamageComponent.damage(false);

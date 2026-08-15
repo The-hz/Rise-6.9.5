@@ -17,9 +17,9 @@ import com.alan.clients.value.impl.StringValue;
 import com.alan.clients.value.impl.SubMode;
 import com.google.gson.Gson;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.file.FileManager;
-import hackclient.rise.agd;
+import com.alan.clients.util.font.impl.minecraft.FontRenderer;
 import com.alan.clients.util.render.ScissorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -188,7 +188,7 @@ public class Spotify extends Module {
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (this.debug.wo()) {
-            afi.b("Song: " + this.song);
+            ChatUtil.b("Song: " + this.song);
         }
 
         int i = this.getEstimatedProgressMs();
@@ -510,7 +510,7 @@ public class Spotify extends Module {
             this.clientSecret = String.valueOf(map.getOrDefault("client_secret", ""));
             boolean flag = !Objects.equals(s, this.clientId) || !Objects.equals(s1, this.clientSecret);
             if (flag) {
-                afi.b("Spotify credentials updated. Re-auth will be requested.");
+                ChatUtil.b("Spotify credentials updated. Re-auth will be requested.");
                 this.Wd = "";
             }
         }
@@ -574,7 +574,7 @@ public class Spotify extends Module {
 
     private void drawString(String var1, float var2, double var3, int var5, int var6) {
         if (this.needsFallbackFont(var1)) {
-            agd fontRendererObj = this.minecraft.fontRendererObj;
+            FontRenderer fontRendererObj = this.minecraft.fontRendererObj;
             GlStateManager.pushMatrix();
             GlStateManager.translate(var2, (float)var3, 0.0F);
             float f = this.v(var5 - 2);
@@ -646,7 +646,7 @@ public class Spotify extends Module {
 
     private void drawScaledString(String var1, float var2, float var3, int var4, float var5, int var6) {
         if (this.needsFallbackFont(var1)) {
-            agd fontRendererObj = this.minecraft.fontRendererObj;
+            FontRenderer fontRendererObj = this.minecraft.fontRendererObj;
             GlStateManager.pushMatrix();
             GlStateManager.translate(var2, var3, 0.0F);
             float f = this.v(var4) * var5 / 1.5F;
@@ -833,7 +833,7 @@ public class Spotify extends Module {
             }
         } catch (SocketException socketexception) {
             if (this.debug.wo()) {
-                afi.c("Cider connection issue: " + socketexception.getMessage());
+                ChatUtil.c("Cider connection issue: " + socketexception.getMessage());
             }
         } catch (Exception exception) {
         }
@@ -925,7 +925,7 @@ public class Spotify extends Module {
             }
         } catch (SocketException socketexception) {
             if (this.debug.wo()) {
-                afi.c("Spotify connection issue: " + socketexception.getMessage());
+                ChatUtil.c("Spotify connection issue: " + socketexception.getMessage());
             }
         } catch (Exception exception) {
             if (this.debug.wo()) {
@@ -999,11 +999,11 @@ public class Spotify extends Module {
                     this.currentLineIndex = this.getCurrentLineIndex();
                 }
             } else if (this.debug.wo()) {
-                afi.c("LRCLIB: no lyrics for " + var1 + " - " + s);
+                ChatUtil.c("LRCLIB: no lyrics for " + var1 + " - " + s);
             }
         } catch (Throwable throwable) {
             if (this.debug.wo()) {
-                afi.c("Lyrics fetch error: " + throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
+                ChatUtil.c("Lyrics fetch error: " + throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
             }
         }
     }
@@ -1091,7 +1091,7 @@ public class Spotify extends Module {
             return false;
         } catch (Throwable throwable) {
             if (this.debug.wo()) {
-                afi.c("Lyrics endpoint provider error: " + throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
+                ChatUtil.c("Lyrics endpoint provider error: " + throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
             }
 
             return false;
@@ -1178,7 +1178,7 @@ public class Spotify extends Module {
                         flag = false;
                     } catch (SocketException socketexception) {
                         if (this.debug.wo()) {
-                            afi.c("Custom lyrics connection issue: " + socketexception.getMessage());
+                            ChatUtil.c("Custom lyrics connection issue: " + socketexception.getMessage());
                         }
 
                         object1 = null;
@@ -1186,7 +1186,7 @@ public class Spotify extends Module {
                         break label223;
                     } catch (Throwable throwable6) {
                         if (this.debug.wo()) {
-                            afi.c("Custom lyrics HTTP error: " + throwable6.getClass().getSimpleName() + ": " + throwable6.getMessage());
+                            ChatUtil.c("Custom lyrics HTTP error: " + throwable6.getClass().getSimpleName() + ": " + throwable6.getMessage());
                         }
 
                         object2 = null;
@@ -1408,7 +1408,7 @@ public class Spotify extends Module {
                 }
             } catch (Exception exception) {
                 if (this.debug.wo()) {
-                    afi.c("LRCLIB exact lookup failed: " + exception.getClass().getSimpleName());
+                    ChatUtil.c("LRCLIB exact lookup failed: " + exception.getClass().getSimpleName());
                 }
             }
         }
@@ -1437,13 +1437,13 @@ public class Spotify extends Module {
                 }
             } catch (Exception exception) {
                 if (this.debug.wo()) {
-                    afi.c("LRCLIB search failed: " + exception.getClass().getSimpleName());
+                    ChatUtil.c("LRCLIB search failed: " + exception.getClass().getSimpleName());
                 }
             }
         }
 
         if (this.debug.wo() && jsonobject != null) {
-            afi.c(
+            ChatUtil.c(
                 "LRCLIB matched: "
                     + jsonobject.optString("trackName", "?")
                     + " - "
@@ -1467,7 +1467,7 @@ public class Spotify extends Module {
             arraylist.add("https://lrclib.net/api/search?q=" + URLEncoder.encode((var1 == null ? "" : var1) + " " + (var2 == null ? "" : var2), "UTF-8"));
         } catch (UnsupportedEncodingException unsupportedencodingexception) {
             if (this.debug.wo()) {
-                afi.c("LRCLIB URL encoding failed: " + unsupportedencodingexception.getMessage());
+                ChatUtil.c("LRCLIB URL encoding failed: " + unsupportedencodingexception.getMessage());
             }
         }
 
@@ -1562,7 +1562,7 @@ public class Spotify extends Module {
         int i = httpurlconnection.getResponseCode();
         if (i != 200) {
             if (this.debug.wo()) {
-                afi.c("LRCLIB object HTTP " + i);
+                ChatUtil.c("LRCLIB object HTTP " + i);
             }
 
             return null;
@@ -1584,7 +1584,7 @@ public class Spotify extends Module {
         int i = httpurlconnection.getResponseCode();
         if (i != 200) {
             if (this.debug.wo()) {
-                afi.c("LRCLIB search HTTP " + i);
+                ChatUtil.c("LRCLIB search HTTP " + i);
             }
 
             return null;
@@ -1630,7 +1630,7 @@ public class Spotify extends Module {
                         for (int l : (Iterable<Integer>)arraylist1) {
                             LyricLine slx = new LyricLine(l, sm.text, this.copyWords(sm.words), true);
                             arraylist.add(slx);
-                            afi.c("Enhanced line parsed: [" + l + "ms] \"" + slx.text + "\" | words=" + slx.words.size());
+                            ChatUtil.c("Enhanced line parsed: [" + l + "ms] \"" + slx.text + "\" | words=" + slx.words.size());
                         }
                     } else {
                         String s3 = s1.trim();
@@ -2095,7 +2095,7 @@ public class Spotify extends Module {
             }
         } catch (SocketException socketexception) {
             if (this.debug.wo()) {
-                afi.c("Spotify token connection issue: " + socketexception.getMessage());
+                ChatUtil.c("Spotify token connection issue: " + socketexception.getMessage());
             }
 
             return null;
@@ -2146,7 +2146,7 @@ public class Spotify extends Module {
                         outputstream.write(s2.getBytes());
                     } catch (SocketException socketexception) {
                         if (this.debug.wo()) {
-                            afi.c("Auth callback connection issue: " + socketexception.getMessage());
+                            ChatUtil.c("Auth callback connection issue: " + socketexception.getMessage());
                         }
                     }
 
@@ -2156,7 +2156,7 @@ public class Spotify extends Module {
                     }
                 } catch (SocketException socketexception1) {
                     if (this.debug.wo()) {
-                        afi.c("Auth callback connection issue: " + socketexception1.getMessage());
+                        ChatUtil.c("Auth callback connection issue: " + socketexception1.getMessage());
                     }
                 } catch (Throwable throwable) {
                     if (this.debug.wo()) {
@@ -2188,7 +2188,7 @@ public class Spotify extends Module {
             }
         } catch (Throwable throwable1) {
             if (this.debug.wo()) {
-                afi.c("Artwork fetch issue: " + throwable1.getClass().getSimpleName() + ": " + throwable1.getMessage());
+                ChatUtil.c("Artwork fetch issue: " + throwable1.getClass().getSimpleName() + ": " + throwable1.getMessage());
             }
 
             return null;
@@ -2228,7 +2228,7 @@ public class Spotify extends Module {
                     this.artworkTexture = TextureUtil.uploadTextureImageAllocate(TextureUtil.glGenTextures(), bufferedimage, true, false);
                 } catch (Throwable throwable) {
                     if (this.debug.wo()) {
-                        afi.c("Artwork upload issue: " + throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
+                        ChatUtil.c("Artwork upload issue: " + throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
                     }
                 } finally {
                     this.pendingArtwork = null;
@@ -2312,7 +2312,7 @@ public class Spotify extends Module {
             try {
                 this.reloadCredentials();
                 if (!this.hasCredentials()) {
-                    afi.b("Spotify client ID/secret missing. Use .spotify (clientid) / .spotify (clientsecret). Redirect URI: http://127.0.0.1:8888/callback");
+                    ChatUtil.b("Spotify client ID/secret missing. Use .spotify (clientid) / .spotify (clientsecret). Redirect URI: http://127.0.0.1:8888/callback");
                 }
 
                 Desktop.getDesktop()
@@ -2335,7 +2335,7 @@ public class Spotify extends Module {
 
     @Override
     public void onEnable() {
-        afi.b(
+        ChatUtil.b(
             "do .spotify (clientid) for the client ID and .spotify (clientsecret) for the client secret and use http://127.0.0.1:8888/callback instead of localhost"
         );
         String sxx = "Tutorial:";
@@ -2352,7 +2352,7 @@ public class Spotify extends Module {
         String s1 = this.musicService.wo().getName();
         if ("Spotify".equals(s1)) {
             if (!this.hasCredentials()) {
-                afi.b("Spotify: Missing client credentials. Set them before connecting.");
+                ChatUtil.b("Spotify: Missing client credentials. Set them before connecting.");
             } else if (this.Wd.isEmpty()) {
                 this.startAuthFlow();
             }

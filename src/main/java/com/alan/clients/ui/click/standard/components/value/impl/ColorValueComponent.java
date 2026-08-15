@@ -8,7 +8,7 @@ import com.alan.clients.value.impl.ColorValue;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.util.gui.GUIUtil;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -39,7 +39,7 @@ public class ColorValueComponent extends ValueComponent {
         this.aza = 105.0;
         this.azb = 120.0;
         ColorValue colorvalue = (ColorValue)this.value;
-        String s = ahd.ce(this.value.getName());
+        String s = Localization.ce(this.value.getName());
         float f = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s) + 4;
         FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, this.position.x, this.position.y, UIColors.SECONDARY_TEXT.pW());
         RenderUtil.roundedRectangle(this.position.x + f, this.position.y, 15.0, 7.0, 2.5, colorvalue.wo());
@@ -124,7 +124,7 @@ public class ColorValueComponent extends ValueComponent {
             return false;
         }
 
-        float f = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(ahd.ce(this.value.getName())) + 4;
+        float f = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(Localization.ce(this.value.getName())) + 4;
         this.ayV = this.ayU && GUIUtil.c(this.position.x + 10.0 + f, this.position.y, this.aza, this.azb * 0.55, var1, var2);
         this.ayW = this.ayU && GUIUtil.c(this.position.x + 10.0 + f, this.position.y + this.azb * 0.55, this.aza, 20.0, var1, var2);
         double d0 = this.position.x + 14.5 + f;

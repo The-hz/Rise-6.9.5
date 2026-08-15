@@ -8,7 +8,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import java.util.Collection;
 import java.util.HashSet;
 import net.minecraft.entity.player.EntityPlayer;
@@ -53,7 +53,7 @@ public final class BedwarsUtils extends Module {
                         String s = ((ItemSword)item).getToolMaterialName().toLowerCase();
                         if (s.contains("iron") && !this.ironSwordPlayers.contains(entityplayer)) {
                             this.ironSwordPlayers.add(entityplayer);
-                            afi.b(
+                            ChatUtil.b(
                                 "Player "
                                     + EnumChatFormatting.RED
                                     + entityplayer.getName()
@@ -66,7 +66,7 @@ public final class BedwarsUtils extends Module {
 
                         if (s.contains("emerald") && !this.diamondSwordPlayers.contains(entityplayer)) {
                             this.diamondSwordPlayers.add(entityplayer);
-                            afi.b(
+                            ChatUtil.b(
                                 "Player "
                                     + EnumChatFormatting.RED
                                     + entityplayer.getName()
@@ -80,7 +80,7 @@ public final class BedwarsUtils extends Module {
                         if (s.contains("stone") && !this.stoneSwordPlayers.contains(entityplayer)) {
                             this.stoneSwordPlayers.add(entityplayer);
                             if (this.includeStone.wo()) {
-                                afi.b(
+                                ChatUtil.b(
                                     "Player "
                                         + EnumChatFormatting.RED
                                         + entityplayer.getName()
@@ -105,7 +105,7 @@ public final class BedwarsUtils extends Module {
                     if (itemstack != null && itemstack.getItem() instanceof ItemArmor) {
                         if (((ItemArmor)itemstack.getItem()).getArmorMaterial().equals(ArmorMaterial.CHAIN) && !this.chainArmorPlayers.contains(entityplayer)) {
                             this.chainArmorPlayers.add(entityplayer);
-                            afi.b(
+                            ChatUtil.b(
                                 "Player "
                                     + EnumChatFormatting.RED
                                     + entityplayer.getName()
@@ -118,7 +118,7 @@ public final class BedwarsUtils extends Module {
 
                         if (((ItemArmor)itemstack.getItem()).getArmorMaterial().equals(ArmorMaterial.IRON) && !this.ironArmorPlayers.contains(entityplayer)) {
                             this.ironArmorPlayers.add(entityplayer);
-                            afi.b(
+                            ChatUtil.b(
                                 "Player "
                                     + EnumChatFormatting.RED
                                     + entityplayer.getName()
@@ -131,7 +131,7 @@ public final class BedwarsUtils extends Module {
 
                         if (((ItemArmor)itemstack.getItem()).getArmorMaterial().equals(ArmorMaterial.DIAMOND) && !this.diamondArmorPlayers.contains(entityplayer)) {
                             this.diamondArmorPlayers.add(entityplayer);
-                            afi.b(
+                            ChatUtil.b(
                                 "Player "
                                     + EnumChatFormatting.RED
                                     + entityplayer.getName()
@@ -154,7 +154,7 @@ public final class BedwarsUtils extends Module {
                     if (entityplayer.getActivePotionEffect(Potion.invisibility) != null) {
                         if (!this.invisiblePlayers.contains(entityplayer)) {
                             this.invisiblePlayers.add(entityplayer);
-                            afi.b(
+                            ChatUtil.b(
                                 "Player "
                                     + EnumChatFormatting.RED
                                     + entityplayer.getName()
@@ -166,7 +166,7 @@ public final class BedwarsUtils extends Module {
                         }
                     } else if (this.invisiblePlayers.contains(entityplayer)) {
                         this.invisiblePlayers.remove(entityplayer);
-                        afi.b(
+                        ChatUtil.b(
                             "Player "
                                 + EnumChatFormatting.RED
                                 + entityplayer.getName()
@@ -182,7 +182,7 @@ public final class BedwarsUtils extends Module {
                     if (aEg.thePlayer.getActivePotionEffect(Potion.invisibility) != null) {
                         this.selfInvisible = true;
                         if (aEg.thePlayer.ticksExisted % 200 == 0) {
-                            afi.b(
+                            ChatUtil.b(
                                 "Your Invisibility"
                                     + EnumChatFormatting.RED
                                     + " expires "
@@ -196,7 +196,7 @@ public final class BedwarsUtils extends Module {
                         }
                     }
                 } else if (this.selfInvisible) {
-                    afi.b("Invisibility" + EnumChatFormatting.RED + " Expired");
+                    ChatUtil.b("Invisibility" + EnumChatFormatting.RED + " Expired");
                     this.selfInvisible = false;
                 }
             }

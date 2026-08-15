@@ -13,7 +13,7 @@ import com.alan.clients.newevent.impl.other.TeleportEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.Block;
@@ -35,7 +35,7 @@ public final class MiniBloxSpeed extends Mode<Speed> {
     @EventLink
     private final Listener<TeleportEvent> onTeleport = var1x -> {
         if (aEg.thePlayer.ticksExisted - this.payloadTick > 7) {
-            afi.c("silently accepted");
+            ChatUtil.c("silently accepted");
             var1x.setCancelled();
         }
 
@@ -73,7 +73,7 @@ public final class MiniBloxSpeed extends Mode<Speed> {
         }
 
         if (aEg.thePlayer.ticksExisted % 24 == 0) {
-            afi.c("payload sent");
+            ChatUtil.c("payload sent");
             BlockPos blockpos = this.findNearestSolidBlock(500);
             if (blockpos != null) {
                 this.payloadSent = true;

@@ -12,7 +12,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.util.gui.GUIUtil;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -67,7 +67,7 @@ public class ModuleComponent implements InstanceAccess {
                 FontManager.MAIN
                     .a(15, FontWeight.REGULAR)
                     .a(
-                        "(" + ahd.ce(this.module.getModuleInfo().category().getName()) + ")",
+                        "(" + Localization.ce(this.module.getModuleInfo().category().getName()) + ")",
                         (float)(position.getX() + FontManager.MAIN.a(20, FontWeight.REGULAR).getStringWidth(this.module.getName()) + 10.0),
                         (float)position.getY() + 10.0F,
                         ColorUtil.withBlue(color, 64).hashCode()
@@ -82,7 +82,7 @@ public class ModuleComponent implements InstanceAccess {
                     (float)position.y + 8.0F,
                     this.module.isEnabled() ? this.rz().getAccentColor(new Vector2d(0.0, position.y / 5.0)).getRGB() : color.getRGB()
                 );
-            FontManager.MAIN.a(15, FontWeight.REGULAR).a(ahd.ce(this.module.getModuleInfo().description()), (float)position.x + 6.0F, (float)position.y + 25.0F, ColorUtil.withBlue(color, 70).hashCode());
+            FontManager.MAIN.a(15, FontWeight.REGULAR).a(Localization.ce(this.module.getModuleInfo().description()), (float)position.x + 6.0F, (float)position.y + 25.0F, ColorUtil.withBlue(color, 70).hashCode());
             this.scale = new Vector2f(this.getStandardClickGUI().moduleDefaultScale.x, f1);
         }
 

@@ -13,7 +13,7 @@ import com.alan.clients.newevent.impl.other.MoveEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.BlockStairs;
@@ -269,7 +269,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
         if (aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();
         } else {
-            afi.b("start on the ground");
+            ChatUtil.b("start on the ground");
             this.getParent().setEnabled(false);
         }
 
@@ -289,8 +289,8 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
         double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
         LW = false;
         this.LY = false;
-        afi.b(aEg.thePlayer.ae);
-        afi.c("Distance traveled: " + d3);
+        ChatUtil.b(aEg.thePlayer.ae);
+        ChatUtil.c("Distance traveled: " + d3);
         if (aEg.thePlayer.onGround) {
             MoveUtil.stop();
         }

@@ -1,16 +1,16 @@
-package hackclient.rise;
+package com.alan.clients.util.shader.base;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
 import java.util.List;
 import lombok.Generated;
 
-public abstract class aix implements InstanceAccess {
+public abstract class RiseShader implements InstanceAccess {
     private boolean active;
 
-    public aix() {
+    public RiseShader() {
     }
 
-    public abstract void a(aiz var1, float var2, List<Runnable> runnables);
+    public abstract void a(ShaderRenderType var1, float var2, List<Runnable> runnables);
 
     public abstract void update();
 

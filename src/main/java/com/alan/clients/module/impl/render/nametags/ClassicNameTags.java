@@ -10,7 +10,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.agd;
+import com.alan.clients.util.font.impl.minecraft.FontRenderer;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.combat.TargetComponent;
 import com.alan.clients.util.social.FriendManager;
@@ -28,7 +28,7 @@ public class ClassicNameTags extends Mode<NameTags> {
     private final BooleanValue shortenedTags = new BooleanValue("Shortened Tags", this, false);
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1x -> {
-        agd agd = aEg.fontRendererObj;
+        FontRenderer agd = aEg.fontRendererObj;
         GlStateManager.pushMatrix();
         List list = TargetComponent.b(this.getParent().player.wo(), this.getParent().invisibles.wo(), this.getParent().animals.wo(), this.getParent().mobs.wo(), this.getParent().playerTeammates.wo(), true);
         if (aEg.gameSettings.thirdPersonView != 0 && this.getParent().player.wo()) {

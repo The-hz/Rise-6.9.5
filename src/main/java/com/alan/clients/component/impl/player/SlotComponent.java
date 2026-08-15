@@ -10,7 +10,7 @@ import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -33,8 +33,8 @@ public final class SlotComponent extends Component {
     private static boolean gb = false;
     private static String stackSize = "0";
     private static double gd = 38.0;
-    private final agc ge = com.alan.clients.util.font.FontManager.MAIN.a(18, com.alan.clients.util.font.FontWeight.LIGHT);
-    private final agc gf = com.alan.clients.util.font.FontManager.MAIN.a(18, com.alan.clients.util.font.FontWeight.MEDIUM);
+    private final Font ge = com.alan.clients.util.font.FontManager.MAIN.a(18, com.alan.clients.util.font.FontWeight.LIGHT);
+    private final Font gf = com.alan.clients.util.font.FontManager.MAIN.a(18, com.alan.clients.util.font.FontWeight.MEDIUM);
     @EventLink(value = 4)
     public final Listener<SyncCurrentItemEvent> onSyncItem = var0 -> {
         InventoryPlayer inventoryplayer = aEg.thePlayer.inventory;

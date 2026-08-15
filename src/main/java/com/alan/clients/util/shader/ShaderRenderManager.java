@@ -8,8 +8,8 @@ import com.alan.clients.newevent.impl.other.GameEvent;
 import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.ui.ingame.GuiIngameCache;
-import hackclient.rise.aix;
-import hackclient.rise.aiz;
+import com.alan.clients.util.shader.base.RiseShader;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 import com.alan.clients.newevent.impl.render.RenderGuiEvent;
 import java.util.LinkedHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,16 +21,16 @@ public class ShaderRenderManager {
     private final int kN = 3;
     private boolean kO;
     @EventLink(value = -1)
-    public final Listener<RenderGuiEvent> kP = var1 -> this.b(aiz.OVERLAY);
+    public final Listener<RenderGuiEvent> kP = var1 -> this.b(ShaderRenderType.OVERLAY);
     @EventLink(value = -1)
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         GuiIngameCache.renderGameOverlay(0.0F);
-        this.b(aiz.OVERLAY);
+        this.b(ShaderRenderType.OVERLAY);
     };
     @EventLink
     public final Listener<GameEvent> onGame = var1 -> this.kO = Client.a.g().c(Interface.class).aoc.wo();
     @EventLink(value = -1)
-    public final Listener<Render3DEvent> onRender3D = var1 -> this.b(aiz.CAMERA);
+    public final Listener<Render3DEvent> onRender3D = var1 -> this.b(ShaderRenderType.CAMERA);
 
     public ShaderRenderManager() {
         try {
@@ -38,7 +38,7 @@ public class ShaderRenderManager {
                 this.kM.put(i, new LinkedHashMap<>());
 
                 for (ShaderQueueType gg : ShaderQueueType.values()) {
-                    this.kM.get(i).put(gg, new ShaderRenderQueue(gg.dW().getType() == null ? null : (aix)gg.dW().getType().newInstance()));
+                    this.kM.get(i).put(gg, new ShaderRenderQueue(gg.dW().getType() == null ? null : (RiseShader)gg.dW().getType().newInstance()));
                 }
             }
 
@@ -58,7 +58,7 @@ public class ShaderRenderManager {
         return this.kM.get(var2).get(var1);
     }
 
-    private void b(aiz var1) {
+    private void b(ShaderRenderType var1) {
         try {
             this.kM.forEach((var2, var3) -> var3.values().forEach(var2x -> {
                 if (var2x.dU() == null || this.kO) {

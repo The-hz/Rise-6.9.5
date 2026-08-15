@@ -1,6 +1,6 @@
 package com.alan.clients.util.vector;
 
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import lombok.Generated;
 
 public class Vector3i {
@@ -46,8 +46,8 @@ public class Vector3i {
         return this.aQE;
     }
 
-    public aka ag(double var1) {
-        return new aka(this.ald * var1, this.ale * var1, this.aQE * var1);
+    public Vector3d ag(double var1) {
+        return new Vector3d(this.ald * var1, this.ale * var1, this.aQE * var1);
     }
 
     public double e(Vector3i var1) {
@@ -56,7 +56,7 @@ public class Vector3i {
 
     @Override
     public boolean equals(Object var1) {
-        return !(var1 instanceof aka aka) ? false : this.ald == Math.floor(aka.x) && this.ale == Math.floor(aka.y) && this.aQE == Math.floor(aka.z);
+        return !(var1 instanceof Vector3d aka) ? false : this.ald == Math.floor(aka.x) && this.ale == Math.floor(aka.y) && this.aQE == Math.floor(aka.z);
     }
 
     @Generated

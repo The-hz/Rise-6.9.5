@@ -10,7 +10,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.component.impl.combat.TargetComponent;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -27,7 +27,7 @@ public class ModernNameTags
 extends Mode<NameTags> {
     private final BooleanValue health = new BooleanValue("Show Health", (Mode<?>)this, (Boolean)true);
     private final BooleanValue overlaysBloomBlur = new BooleanValue("Overlays (Bloom/Blur)", (Mode<?>)this, (Boolean)true);
-    private final agc healthFont = FontManager.MAIN.a(14, FontWeight.LIGHT);
+    private final Font healthFont = FontManager.MAIN.a(14, FontWeight.LIGHT);
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         List<EntityLivingBase> list = TargetComponent.b((Boolean)((NameTags)this.getParent()).player.wo(), (Boolean)((NameTags)this.getParent()).invisibles.wo(), (Boolean)((NameTags)this.getParent()).animals.wo(), (Boolean)((NameTags)this.getParent()).mobs.wo(), (Boolean)((NameTags)this.getParent()).playerTeammates.wo(), true);

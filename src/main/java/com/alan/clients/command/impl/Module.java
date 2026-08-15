@@ -8,8 +8,8 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
-import hackclient.rise.afi;
-import hackclient.rise.ahd;
+import com.alan.clients.util.chat.ChatUtil;
+import com.alan.clients.util.localization.Localization;
 import java.util.Locale;
 
 public final class Module extends Command {
@@ -25,7 +25,7 @@ public final class Module extends Command {
             String s = var1[1];
             com.alan.clients.module.Module module = Client.a.g().get(s);
             if (module == null) {
-                afi.b(ahd.ce("command.bind.invalidmodule"));
+                ChatUtil.b(Localization.ce("command.bind.invalidmodule"));
             } else {
                 String s1 = var1[2];
                 Value value = this.a(module, s1);
@@ -37,9 +37,9 @@ public final class Module extends Command {
 
                         try {
                             this.a(value, s2);
-                            afi.b("Set " + module.getName() + "." + value.getName() + " to " + s2);
+                            ChatUtil.b("Set " + module.getName() + "." + value.getName() + " to " + s2);
                         } catch (IllegalArgumentException illegalargumentexception) {
-                            afi.b(illegalargumentexception.getMessage());
+                            ChatUtil.b(illegalargumentexception.getMessage());
                         }
                     }
                 } else {
@@ -51,9 +51,9 @@ public final class Module extends Command {
 
                         try {
                             this.a(modevalue, s3);
-                            afi.b("Set " + module.getName() + " mode to " + s3);
+                            ChatUtil.b("Set " + module.getName() + " mode to " + s3);
                         } catch (IllegalArgumentException illegalargumentexception1) {
-                            afi.b(illegalargumentexception1.getMessage());
+                            ChatUtil.b(illegalargumentexception1.getMessage());
                         }
                     }
                 }

@@ -8,10 +8,10 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.newevent.impl.other.KillEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
-import hackclient.rise.aha;
+import com.alan.clients.util.interfaces.ExecutorAccess;
 import net.minecraft.entity.Entity;
 
-public class EntityKillEventComponent extends Component implements aha {
+public class EntityKillEventComponent extends Component implements ExecutorAccess {
     Entity target = null;
     @EventLink(value = 1)
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {

@@ -13,7 +13,7 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -45,7 +45,7 @@ public class HotBar extends Module {
     private Interface interfaceModule;
     private KillAura killAura;
     public final BooleanValue showXPBar = new BooleanValue("Show XP Bar", this, true);
-    private final agc levelFont = FontManager.MAIN.a(18, FontWeight.MEDIUM);
+    private final Font levelFont = FontManager.MAIN.a(18, FontWeight.MEDIUM);
     @EventLink
     public final Listener<Render2DEvent> onPreMotionEvent = var1 -> {
         if (aEg.getRenderViewEntity() instanceof EntityPlayer) {

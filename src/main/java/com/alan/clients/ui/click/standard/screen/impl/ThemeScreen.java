@@ -10,8 +10,8 @@ import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.ui.theme.KeyColors;
 import com.alan.clients.util.gui.GUIUtil;
-import hackclient.rise.agk;
-import hackclient.rise.ahd;
+import com.alan.clients.util.gui.ScrollUtil;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
@@ -22,7 +22,7 @@ public class ThemeScreen implements Screen, InstanceAccess {
     private final ArrayList<ThemeComponent> allThemes = new ArrayList<>();
     private ArrayList<ThemeComponent> visibleThemes = new ArrayList<>();
     private final ArrayList<ThemeKeyColorComponent> colors = new ArrayList<>();
-    private final agk azW = new agk();
+    private final ScrollUtil azW = new ScrollUtil();
     private ThemeKeyColorComponent selectedColor = null;
 
     public ThemeScreen() {
@@ -53,7 +53,7 @@ public class ThemeScreen implements Screen, InstanceAccess {
         FontManager.MAIN
             .a(16, FontWeight.REGULAR)
             .drawCenteredString(
-                ahd.ce("ui.themes.text"),
+                Localization.ce("ui.themes.text"),
                 vector2f.getX() + vector2f1.getX() - 20.0F,
                 vector2f.getY() + 20.0F + this.azW.tE(),
                 new Color(255, 255, 255, 128).getRGB()

@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.network.play.server.S27PacketExplosion;
@@ -32,7 +32,7 @@ public final class WatchdogDamageBoostFlyDisablerVelocity extends Mode<Velocity>
                     || aEg.thePlayer.tR <= 0
                     || !(MoveUtil.speed() < Math.hypot(s12packetentityvelocity.getMotionX() / 8000.0, s12packetentityvelocity.getMotionZ() / 8000.0))) {
                     if (!aEg.thePlayer.onGround || this.e(Speed.class).isEnabled()) {
-                        afi.b("no boost");
+                        ChatUtil.b("no boost");
                         var1x.setCancelled();
                     } else if (!this.e(Speed.class).isEnabled()) {
                         aEg.thePlayer.motionY = s12packetentityvelocity.getMotionY() / 8000.0;

@@ -7,7 +7,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.util.gui.GUIUtil;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -25,7 +25,7 @@ public class BooleanValueComponent extends ValueComponent {
     public void draw(Vector2d position, int var2, int var3, float var4) {
         this.position = position;
         BooleanValue booleanvalue = (BooleanValue)this.value;
-        String s = ahd.ce(this.value.getName());
+        String s = Localization.ce(this.value.getName());
         FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, this.position.x, this.position.y, UIColors.SECONDARY_TEXT.Z(this.ayD));
         double d0 = this.position.x + FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s) + 3.0;
         if (booleanvalue.wo()) {
@@ -64,7 +64,7 @@ public class BooleanValueComponent extends ValueComponent {
     @Override
     public void released() {
         if (this.position != null) {
-            String s = ahd.ce(this.value.getName());
+            String s = Localization.ce(this.value.getName());
             RenderUtil.roundedRectangle(
                 this.position.x + FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s) + 2.0 - this.axp / 2.0 + 4.0,
                 this.position.y - this.axp / 2.0 + 2.5,

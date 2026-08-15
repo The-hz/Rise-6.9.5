@@ -16,7 +16,7 @@ import com.alan.clients.ui.click.standard.RiseClickGUI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.florianmichael.viamcp.ViaMCP;
-import hackclient.rise.aal;
+import com.alan.clients.protection.ProtectionManager;
 import com.alan.clients.ui.click.dropdown.DropdownClickGUI;
 import com.alan.clients.util.value.ConstantManager;
 import com.alan.clients.ui.theme.ThemeManager;
@@ -54,7 +54,7 @@ public enum Client
     public DropdownClickGUI I;
     public ComponentManager componentManager;
     public static String g;
-    public aal n;
+    public ProtectionManager n;
     public KeybindManager F;
     public ScriptManager scriptManager;
     public static String d;
@@ -136,7 +136,7 @@ public enum Client
             for (Module module : this.moduleManager.getAll()) {
                 if (module == null || module.getModuleInfo() == null) continue;
                 try {
-                    module.setAliases((String[])Arrays.stream(module.getModuleInfo().aliases()).map(hackclient.rise.ahd::ce).toArray(String[]::new));
+                    module.setAliases((String[])Arrays.stream(module.getModuleInfo().aliases()).map(com.alan.clients.util.localization.Localization::ce).toArray(String[]::new));
                 } catch (Throwable throwable) {
                 }
             }
@@ -155,7 +155,7 @@ public enum Client
                     this.standardClickGUI.oS();
                 } catch (Throwable throwable2) {
                 }
-                hackclient.rise.aha.aMR.execute(() -> {
+                com.alan.clients.util.interfaces.ExecutorAccess.aMR.execute(() -> {
                     try {
                         this.standardClickGUI.oS();
                         return;
@@ -172,7 +172,7 @@ public enum Client
                     this.I.om();
                 } catch (Throwable throwable2) {
                 }
-                hackclient.rise.aha.aMR.execute(() -> {
+                com.alan.clients.util.interfaces.ExecutorAccess.aMR.execute(() -> {
                     try {
                         this.I.om();
                         return;
@@ -221,7 +221,7 @@ public enum Client
     }
 
     @Generated
-    public aal f() {
+    public ProtectionManager f() {
         return this.n;
     }
 
@@ -370,7 +370,7 @@ public enum Client
         minecraft.gameSettings.chy = true;
         minecraft.gameSettings.chu = false;
         NativeDecryptor.ok();
-        this.n = new aal();
+        this.n = new ProtectionManager();
         this.moduleManager = new ModuleManager();
         this.componentManager = new ComponentManager();
         this.commandManager = new CommandManager();

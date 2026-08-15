@@ -16,7 +16,7 @@ import com.viaversion.viaversion.api.type.Types;
 import com.viaversion.viaversion.protocols.v1_18_2to1_19.packet.ServerboundPackets1_19;
 import com.viaversion.viaversion.protocols.v1_8to1_9.packet.ServerboundPackets1_9;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemPotion;
@@ -41,7 +41,7 @@ public class Grim19NoSlow extends Mode<NoSlow> {
 
             this.useTicks++;
         } else if (aEg.thePlayer.isUsingItem() && aEg.thePlayer.ticksExisted % 5 == 0) {
-            afi.b("use 1.9+ for this bypass");
+            ChatUtil.b("use 1.9+ for this bypass");
         } else {
             this.useTicks = 0;
         }

@@ -13,9 +13,9 @@ import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.shader.ShaderQueueType;
-import hackclient.rise.agc;
-import hackclient.rise.aiv;
-import hackclient.rise.aiz;
+import com.alan.clients.util.font.Font;
+import com.alan.clients.util.shader.RiseShaders;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 import java.awt.Color;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
@@ -39,14 +39,14 @@ public final class MainMenu extends Menu {
     public void drawScreen(int var1, int var2, float var3) {
         if (this.aCF != null && this.aCG != null && this.aCH != null) {
             ScaledResolution scaledresolution = aEg.jY;
-            aiv.aPL.a(aiz.OVERLAY, var3, null);
+            RiseShaders.aPL.a(ShaderRenderType.OVERLAY, var3, null);
             this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK));
 
             for (MenuButton menuButton : this.menuButtons) {
                 menuButton.draw(var1, var2, var3);
             }
 
-            agc agc = FontManager.MAIN.a(64, FontWeight.REGULAR);
+            Font agc = FontManager.MAIN.a(64, FontWeight.REGULAR);
             double d0 = this.aCF.getY() - agc.height();
             this.animation.Q(d0);
             String s = this.rice ? "Rice" : Client.b;

@@ -9,10 +9,10 @@ import com.alan.clients.ui.menu.MenuColors;
 import com.alan.clients.ui.menu.component.button.impl.MenuIconTextButton;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.web.CommunityChat;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.aiv;
-import hackclient.rise.aiz;
+import com.alan.clients.util.shader.RiseShaders;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -24,9 +24,9 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 
 public class AddAccountScreen extends GuiScreen implements InstanceAccess {
-    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, FontWeight.BOLD);
-    private static final agc AD_FONT_RENDERER = FontManager.MAIN.a(16, FontWeight.REGULAR);
-    private static final agc DISCOUNT_FONT_RENDERER = FontManager.MAIN.a(14, FontWeight.BOLD);
+    private static final Font FONT_RENDERER = FontManager.MAIN.a(36, FontWeight.BOLD);
+    private static final Font AD_FONT_RENDERER = FontManager.MAIN.a(16, FontWeight.REGULAR);
+    private static final Font DISCOUNT_FONT_RENDERER = FontManager.MAIN.a(14, FontWeight.BOLD);
     private static final ResourceLocation XBOX_RESOURCE = new ResourceLocation("rise/images/xbox.png");
     private static final ResourceLocation MICROSOFT_RESOURCE = new ResourceLocation("rise/images/microsoft.png");
     private static final ResourceLocation CRACKED_RESOURCE = new ResourceLocation("rise/images/minecraft.png");
@@ -57,7 +57,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
     private static final Runnable LOCALTS_RUNNABLE = () -> aEg.displayGuiScreen(new AddLocaltsScreen());
     private final MenuIconTextButton[] menuButtons = new MenuIconTextButton[5];
 
-    private static float centeredTextY(double var0, double var2, agc var4) {
+    private static float centeredTextY(double var0, double var2, Font var4) {
         return (float)(var0 + var2 / 2.0 - 4.0 * var4.height() / CENTER_REF_HEIGHT);
     }
 
@@ -68,7 +68,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
     @Override
     public void drawScreen(int var1, int var2, float var3) {
         this.animation.Q(0.0);
-        aiv.aPL.a(aiz.OVERLAY, var3, null);
+        RiseShaders.aPL.a(ShaderRenderType.OVERLAY, var3, null);
         this.b(ShaderQueueType.BLUR).c(BACKGROUND_RUNNABLE);
         this.adHoverAnimation.Q(MouseUtil.isHovered(this.adX, this.adY, this.adWidth, this.adHeight, var1, var2) ? 100.0 : 45.0);
         this.b(ShaderQueueType.REGULAR)

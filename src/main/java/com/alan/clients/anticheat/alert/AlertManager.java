@@ -1,7 +1,7 @@
 package com.alan.clients.anticheat.alert;
 
 import com.alan.clients.anticheat.check.Check;
-import hackclient.rise.aha;
+import com.alan.clients.util.interfaces.ExecutorAccess;
 import java.util.HashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -12,7 +12,7 @@ import net.minecraft.init.Items;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.s;
 
-public final class AlertManager implements aha {
+public final class AlertManager implements ExecutorAccess {
     private final Minecraft mc = Minecraft.getMinecraft();
     private final HashMap<String, s> Q = new HashMap<>();
 

@@ -19,16 +19,16 @@ import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.ui.screen.CommandPalette;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.adz;
+import hackclient.rise.EvictingList;
 import com.alan.clients.util.MouseUtil;
-import hackclient.rise.afi;
-import hackclient.rise.agc;
-import hackclient.rise.agk;
+import com.alan.clients.util.chat.ChatUtil;
+import com.alan.clients.util.font.Font;
+import com.alan.clients.util.gui.ScrollUtil;
 import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
 import com.alan.clients.util.ime.PinyinInputHandler;
-import hackclient.rise.agx;
-import hackclient.rise.ahd;
+import com.alan.clients.util.ime.PinyinImeState;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.newevent.impl.input.GuiKeyEvent;
 import com.alan.clients.util.font.FontManager;
@@ -78,10 +78,10 @@ extends Module {
     private final Animation openAnimation = new Animation(Easing.EASE_OUT_ELASTIC, 400L);
     private final Animation alphaAnimation = new Animation(Easing.LINEAR, 400L);
     private final Animation heightAnimation = new Animation(Easing.EASE_OUT_EXPO, 500L);
-    private final agk scrollHelper = new agk();
-    private final agc chatFont;
-    private final agc inputFont;
-    private static final String clientPrefix = afi.getPrefix();
+    private final ScrollUtil scrollHelper = new ScrollUtil();
+    private final Font chatFont;
+    private final Font inputFont;
+    private static final String clientPrefix = ChatUtil.getPrefix();
     private static final String RISE_PREFIX = "[Rise] ";
     private static final PinyinInputHandler pinyinHandler = new PinyinInputHandler();
     private final BooleanValue pinyinChineseIME;
@@ -96,7 +96,7 @@ extends Module {
     public boolean lastMouseDown;
     public boolean chatOpen;
     private rip.vantage.commons.util.time.StopWatch messageTimer;
-    private adz<String> sentMessages;
+    private EvictingList<String> sentMessages;
     private ArrayList<String> tabCompletions;
     private Interface interfaceModule;
     @EventLink
@@ -116,7 +116,7 @@ extends Module {
         this.savedText = "";
         this.textBox = new TextBox(new Vector2d(0.0, 0.0), this.inputFont, Color.WHITE, TextAlign.LEFT, "", 1000.0f, ALLOWED_CHARACTERS);
         this.messageTimer = new rip.vantage.commons.util.time.StopWatch();
-        this.sentMessages = new adz(20);
+        this.sentMessages = new EvictingList(20);
         this.onKeyboardInput = keyboardInputEvent -> {
             char c2 = keyboardInputEvent.cP();
             if (c2 == '.' || c2 == '\u3002') {
@@ -142,7 +142,7 @@ extends Module {
             if (packet instanceof S3APacketTabComplete) {
                 this.tabCompletions = new ArrayList<String>(Arrays.asList(((S3APacketTabComplete)packet).func_149630_c()));
                 for (String string : this.tabCompletions) {
-                    afi.b(string, new Object[0]);
+                    ChatUtil.b(string, new Object[0]);
                 }
             }
         };
@@ -153,7 +153,7 @@ extends Module {
             if (Character.getType(c2) == 18 || c2 >= '\uf700' && c2 <= '\uf8ff') {
                 c2 = '\u0000';
             }
-            if (bl && ((Boolean)this.pinyinChineseIME.wo()).booleanValue() && agx.isEnabled()) {
+            if (bl && ((Boolean)this.pinyinChineseIME.wo()).booleanValue() && PinyinImeState.isEnabled()) {
                 this.textBox.selected = true;
                 if (pinyinHandler.a(this.textBox, c2, n2)) {
                     return;
@@ -166,7 +166,7 @@ extends Module {
                     }
                     String string = this.textBox.getText();
                     if (!string.startsWith("#") && string.length() > 100 && this.imageManager.hasUrl(string)) {
-                        afi.d(afi.getPrefix() + String.valueOf((Object)EnumChatFormatting.RED) + "Vanilla chat only sends 100 characters. Long image URLs will be truncated.", new Object[0]);
+                        ChatUtil.d(ChatUtil.getPrefix() + String.valueOf((Object)EnumChatFormatting.RED) + "Vanilla chat only sends 100 characters. Long image URLs will be truncated.", new Object[0]);
                     }
                     if (!string.startsWith("#") && string.length() > 100) {
                         string = string.substring(0, 100);
@@ -503,10 +503,10 @@ extends Module {
         boolean bl = ((Mode)this.interfaceModule.getInformationType().wo()).getName().equals("Rise");
         if (!((Boolean)this.pinyinChineseIME.wo()).booleanValue()) {
             pinyinHandler.aX();
-            agx.K(false);
-            agx.setEnabled(false);
+            PinyinImeState.K(false);
+            PinyinImeState.setEnabled(false);
         } else {
-            agx.K(true);
+            PinyinImeState.K(true);
         }
         if (!this.chatOpen) {
             pinyinHandler.aX();
@@ -564,13 +564,13 @@ extends Module {
             this.textBox.draw();
             if (this.chatOpen && ((Boolean)this.pinyinChineseIME.wo()).booleanValue()) {
                 int n = Math.min(255, Math.max(0, (int)this.alphaAnimation.getValue()));
-                String string2 = ahd.ce(agx.isEnabled() ? "ui.chat.pinyin_ime.hint.on" : "ui.chat.pinyin_ime.hint.off");
+                String string2 = Localization.ce(PinyinImeState.isEnabled() ? "ui.chat.pinyin_ime.hint.on" : "ui.chat.pinyin_ime.hint.off");
                 float f2 = (float)vector2d.x + 6.0f;
                 float f3 = (float)vector2d.y - this.inputFont.height() - 2.0f;
                 ArrayList<String> arrayList = new ArrayList<String>(3);
                 arrayList.add(string2);
-                if (agx.isEnabled()) {
-                    arrayList.add(ahd.ce("ui.chat.pinyin_ime.hint.help"));
+                if (PinyinImeState.isEnabled()) {
+                    arrayList.add(Localization.ce("ui.chat.pinyin_ime.hint.help"));
                     try {
                         boolean blx;
                         File file2 = Minecraft.getMinecraft().mcDataDir;
@@ -591,7 +591,7 @@ extends Module {
                         }
                         blx = !bl4;
                         if (blx) {
-                            arrayList.add(ahd.ce("ui.chat.pinyin_ime.dict.help"));
+                            arrayList.add(Localization.ce("ui.chat.pinyin_ime.dict.help"));
                         }
                     } catch (Throwable throwable) {
                     }
@@ -628,7 +628,7 @@ extends Module {
                     this.inputFont.b(string4, f2, f4, ColorUtil.withBlue(Color.WHITE, Math.min(n, n3)).hashCode());
                 }
             }
-            if (this.chatOpen && ((Boolean)this.pinyinChineseIME.wo()).booleanValue() && agx.isEnabled() && pinyinHandler.uc()) {
+            if (this.chatOpen && ((Boolean)this.pinyinChineseIME.wo()).booleanValue() && PinyinImeState.isEnabled() && pinyinHandler.uc()) {
                 String string5 = pinyinHandler.uo();
                 List<String> list = pinyinHandler.up();
                 if (string5 != null && !string5.isEmpty()) {
@@ -675,7 +675,7 @@ extends Module {
         }
     }
 
-    private void a(agc agc2, String string, float f2, float f3) {
+    private void a(Font agc2, String string, float f2, float f3) {
         String string2 = EnumChatFormatting.getTextWithoutFormattingCodes(string);
         Color color = this.rz().rA();
         Color color2 = this.rz().rB();
@@ -771,17 +771,17 @@ extends Module {
     }
 
     @Generated
-    public agk getScrollHelper() {
+    public ScrollUtil getScrollHelper() {
         return this.scrollHelper;
     }
 
     @Generated
-    public agc getChatFont() {
+    public Font getChatFont() {
         return this.chatFont;
     }
 
     @Generated
-    public agc getInputFont() {
+    public Font getInputFont() {
         return this.inputFont;
     }
 
@@ -836,7 +836,7 @@ extends Module {
     }
 
     @Generated
-    public adz<String> getSentMessages() {
+    public EvictingList<String> getSentMessages() {
         return this.sentMessages;
     }
 

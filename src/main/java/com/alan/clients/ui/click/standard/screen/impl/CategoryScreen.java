@@ -7,7 +7,7 @@ import com.alan.clients.ui.click.standard.components.ModuleComponent;
 import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2d;
-import hackclient.rise.agk;
+import com.alan.clients.util.gui.ScrollUtil;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Collectors;
@@ -16,7 +16,7 @@ import rip.vantage.commons.util.time.StopWatch;
 
 public final class CategoryScreen implements Screen, InstanceAccess {
     private final StopWatch azA = new StopWatch();
-    public agk scrollUtil = new agk();
+    public ScrollUtil scrollUtil = new ScrollUtil();
     public ArrayList<ModuleComponent> relevantModules;
     public Category category;
     private double azC;
@@ -121,7 +121,7 @@ public final class CategoryScreen implements Screen, InstanceAccess {
     }
 
     @Generated
-    public agk getScrollUtil() {
+    public ScrollUtil getScrollUtil() {
         return this.scrollUtil;
     }
 
@@ -141,7 +141,7 @@ public final class CategoryScreen implements Screen, InstanceAccess {
     }
 
     @Generated
-    public void setScrollUtil(agk scrollUtil) {
+    public void setScrollUtil(ScrollUtil scrollUtil) {
         this.scrollUtil = scrollUtil;
     }
 

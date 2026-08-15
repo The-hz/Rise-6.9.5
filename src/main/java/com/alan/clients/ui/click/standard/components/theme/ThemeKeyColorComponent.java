@@ -6,14 +6,14 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import lombok.Generated;
 
 public class ThemeKeyColorComponent implements InstanceAccess {
     private final KeyColors color;
-    private aka ayu = new aka(0.0, 0.0, 0.0);
+    private Vector3d ayu = new Vector3d(0.0, 0.0, 0.0);
     private final Animation dimAnimation = new Animation(Easing.EASE_OUT_QUINT, 500L);
     private final Animation bloomAnimation = new Animation(Easing.EASE_OUT_QUINT, 500L);
 
@@ -26,7 +26,7 @@ public class ThemeKeyColorComponent implements InstanceAccess {
             RenderUtil.roundedRectangle(var1, var3, var5, 17.0, 5.0, new Color(18, 21, 30, (int)(this.bloomAnimation.getValue() * 255.0)));
             RenderUtil.roundedRectangle(var1 + 0.5, var3 + 0.5, var5 - 1.0, 16.0, 4.0, ColorUtil.withBlue(this.color.getColor(), (int)(this.bloomAnimation.getValue() * 255.0)));
         });
-        this.ayu = new aka(var1, var3, var5);
+        this.ayu = new Vector3d(var1, var3, var5);
     }
 
     @Generated
@@ -35,7 +35,7 @@ public class ThemeKeyColorComponent implements InstanceAccess {
     }
 
     @Generated
-    public aka pL() {
+    public Vector3d pL() {
         return this.ayu;
     }
 

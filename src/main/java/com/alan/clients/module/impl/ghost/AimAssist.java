@@ -15,7 +15,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.aef;
+import com.alan.clients.util.RayCastUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.component.impl.combat.TargetComponent;
 import java.util.List;
@@ -100,7 +100,7 @@ public final class AimAssist extends Module {
             return false;
         }
 
-        MovingObjectPosition movingobjectposition = aef.rayCast(vec2, aEg.playerController.getBlockReachDistance(), 0.0F, aEg.thePlayer, false);
+        MovingObjectPosition movingobjectposition = RayCastUtil.rayCast(vec2, aEg.playerController.getBlockReachDistance(), 0.0F, aEg.thePlayer, false);
         return movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.BLOCK;
     }
 
@@ -123,7 +123,7 @@ public final class AimAssist extends Module {
             return true;
         }
 
-        MovingObjectPosition movingobjectposition = aef.rayCast(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), 3.0, 0.0F, aEg.thePlayer, false);
+        MovingObjectPosition movingobjectposition = RayCastUtil.rayCast(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), 3.0, 0.0F, aEg.thePlayer, false);
         return movingobjectposition == null || movingobjectposition.typeOfHit != MovingObjectType.ENTITY;
     }
 

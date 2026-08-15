@@ -11,12 +11,12 @@ import com.google.gson.JsonParser;
 import com.alan.clients.ui.menu.component.button.MenuButton;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.util.MouseUtil;
-import hackclient.rise.aen;
-import hackclient.rise.agc;
+import com.alan.clients.util.account.auth.SessionIdLogin;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
-import hackclient.rise.aiv;
-import hackclient.rise.aiz;
+import com.alan.clients.util.shader.RiseShaders;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -41,7 +41,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
-    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, FontWeight.BOLD);
+    private static final Font FONT_RENDERER = FontManager.MAIN.a(36, FontWeight.BOLD);
     private final MenuButton[] menuButtons = new MenuButton[4];
     private static TextBox sessionBox;
     private static GuiScreen reference;
@@ -55,7 +55,7 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
             statusMessage = "Nothing to log in with";
         } else {
             try {
-                Session session = aen.bj(s);
+                Session session = SessionIdLogin.bj(s);
                 statusMessage = "Logged in as " + session.getUsername();
             } catch (IOException ioexception1) {
                 try {
@@ -121,7 +121,7 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
     @Override
     public void drawScreen(int var1, int var2, float var3) {
         this.animation.Q(0.0);
-        aiv.aPL.a(aiz.OVERLAY, var3, null);
+        RiseShaders.aPL.a(ShaderRenderType.OVERLAY, var3, null);
         this.b(ShaderQueueType.BLUR).c(() -> {
             ScaledResolution scaledresolution = new ScaledResolution(aEg);
             RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK);

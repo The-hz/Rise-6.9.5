@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 
 public class SlimeNCPFlight extends Mode<Flight> {
     private double tU;
@@ -19,7 +19,7 @@ public class SlimeNCPFlight extends Mode<Flight> {
     private final double HW = 1.0;
     private int tY;
     private boolean started;
-    private aka savedMotion;
+    private Vector3d savedMotion;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {};
     @EventLink
@@ -31,7 +31,7 @@ public class SlimeNCPFlight extends Mode<Flight> {
         if (aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();
         } else if ((aEg.thePlayer.tR - 1) % 3 == 0) {
-            this.savedMotion = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
+            this.savedMotion = new Vector3d(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
             aEg.thePlayer.motionY = 0.0;
             MoveUtil.stop();
         } else if (this.savedMotion != null) {

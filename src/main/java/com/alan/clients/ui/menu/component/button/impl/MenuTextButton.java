@@ -2,7 +2,7 @@ package com.alan.clients.ui.menu.component.button.impl;
 
 import com.alan.clients.ui.menu.component.button.MenuButton;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -11,7 +11,7 @@ import java.awt.Color;
 import lombok.Generated;
 
 public class MenuTextButton extends MenuButton {
-    private agc lq = FontManager.MAIN.a(24, FontWeight.BOLD);
+    private Font lq = FontManager.MAIN.a(24, FontWeight.BOLD);
     public String name;
     private float aCh = 5.0F;
     private int aCi = 32;
@@ -37,7 +37,7 @@ public class MenuTextButton extends MenuButton {
     }
 
     @Generated
-    public void c(agc var1) {
+    public void c(Font var1) {
         this.lq = var1;
     }
 

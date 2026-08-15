@@ -14,11 +14,11 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.agc;
-import hackclient.rise.ahd;
+import com.alan.clients.util.font.Font;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.ais;
+import com.alan.clients.util.render.StencilUtil;
 import com.alan.clients.util.render.particle.Particle;
 import hackclient.rise.bf;
 import com.alan.clients.util.font.FontManager;
@@ -33,8 +33,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 public class BMSTargetInfo extends Mode<TargetInfo> {
-    private final agc healthFont = FontManager.MAIN.a(22, FontWeight.LIGHT);
-    private final agc nameFont = FontManager.MAIN.a(22, FontWeight.LIGHT);
+    private final Font healthFont = FontManager.MAIN.a(22, FontWeight.LIGHT);
+    private final Font nameFont = FontManager.MAIN.a(22, FontWeight.LIGHT);
     private TargetInfo targetInfo;
     private int padding = 4;
     private int barOffsetX = 4;
@@ -88,7 +88,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                             this.nameFont
                                 .b(
                                     s1,
-                                    d0 - 28.0 + b0 + this.barOffsetX + this.healthFont.getStringWidth(ahd.ce("ui.targethud.name")) + 3.0,
+                                    d0 - 28.0 + b0 + this.barOffsetX + this.healthFont.getStringWidth(Localization.ce("ui.targethud.name")) + 3.0,
                                     d1 + this.padding + this.barOffsetY,
                                     Color.white.getRGB()
                                 );
@@ -161,11 +161,11 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
     }
 
     private void drawHead(AbstractClientPlayer abstractClientPlayer, double var2, double var4, double var6) {
-        ais.initStencil();
-        ais.bindWriteStencilBuffer();
+        StencilUtil.initStencil();
+        StencilUtil.bindWriteStencilBuffer();
         this.rz();
         RenderUtil.roundedRectangle(var2, var4, var6, var6, 3.0, Themes.rK());
-        ais.bindReadStencilBuffer(1);
+        StencilUtil.bindReadStencilBuffer(1);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);
         GlStateManager.alphaFunc(516, 0.0F);
@@ -176,6 +176,6 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
         aEg.getTextureManager().bindTexture(resourcelocation);
         Gui.drawScaledCustomSizeModalRect(var2, var4, 4.0F, 4.0F, 4.0F, 4.0F, var6, var6, 32.0F, 32.0F);
         GlStateManager.disableBlend();
-        ais.uninitStencilBuffer();
+        StencilUtil.uninitStencilBuffer();
     }
 }

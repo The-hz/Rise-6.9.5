@@ -9,13 +9,13 @@ import com.alan.clients.newevent.impl.other.BlockAABBEvent;
 import com.alan.clients.newevent.impl.other.TeleportEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import net.minecraft.block.BlockAir;
 import net.minecraft.util.AxisAlignedBB;
 
 public class VulcanDeprecatedFlight extends Mode<Flight> {
     private final NumberValue speed = new NumberValue("Speed", this, 1, 1, 10, 0.1);
-    private aka lastTeleportPos;
+    private Vector3d lastTeleportPos;
     private boolean jumped;
     private int timerTicks;
     @EventLink
@@ -38,7 +38,7 @@ public class VulcanDeprecatedFlight extends Mode<Flight> {
     };
     @EventLink
     public final Listener<TeleportEvent> onTeleport = var1x -> {
-        aka aka = new aka(var1x.getPosX(), var1x.getPosY(), var1x.getPosZ());
+        Vector3d aka = new Vector3d(var1x.getPosX(), var1x.getPosY(), var1x.getPosZ());
         if (this.lastTeleportPos == null) {
             this.lastTeleportPos = aka;
             var1x.setCancelled();

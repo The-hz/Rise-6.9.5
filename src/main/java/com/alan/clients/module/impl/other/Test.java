@@ -33,13 +33,13 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.value.impl.StringValue;
-import hackclient.rise.adz;
-import hackclient.rise.aef;
-import hackclient.rise.afi;
+import hackclient.rise.EvictingList;
+import com.alan.clients.util.RayCastUtil;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.TimedPacket;
 import com.alan.clients.util.pathfinding.alan.Pathfinder;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.value.impl.SupplierValue;
 import hackclient.rise.MathOperation;
 import java.awt.Color;
@@ -116,7 +116,7 @@ extends Module {
     private final StringValue runIf = new StringValue("Run If () ->", (Module)this, "onGround");
     private final SupplierValue testCurve = new SupplierValue("Test Curve", this);
     private final ArrayList<Entity> entities = new ArrayList();
-    private final ArrayList<aka> positions = new ArrayList();
+    private final ArrayList<Vector3d> positions = new ArrayList();
     private World world;
     private boolean reset;
     private double speed;
@@ -124,7 +124,7 @@ extends Module {
     Executor threadPool = Executors.newFixedThreadPool(1);
     Pathfinder pathfinder;
     EntityPlayerSP playerSP;
-    adz<BlockPos> blockHistory = new adz(2);
+    EvictingList<BlockPos> blockHistory = new EvictingList(2);
     private final HashMap<Double, HashMap<Integer, Tuple<Double, Boolean>>> dataMap = new HashMap();
     private Runnable aRunnable;
     private Runnable aRunnable2;
@@ -144,7 +144,7 @@ extends Module {
                 Iterator iterator2 = ((S20PacketEntityProperties.Snapshot)iterator.next()).func_151408_c().iterator();
                 while (iterator2.hasNext()) {
                     if (!((AttributeModifier)iterator2.next()).getID().equals(Test.aEg.thePlayer.getUniqueID())) continue;
-                    afi.c("s", new Object[0]);
+                    ChatUtil.c("s", new Object[0]);
                 }
             }
         }
@@ -301,7 +301,7 @@ extends Module {
         if (Test.aEg.gameSettings.keyBindSneak.isKeyDown()) {
             this.rotationDeltaCounts.clear();
         }
-        if (aef.c((Vector2f)RotationComponent.fk, (double)15.0).typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
+        if (RayCastUtil.c((Vector2f)RotationComponent.fk, (double)15.0).typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
             this.lastYaw = Test.aEg.thePlayer.pl;
             this.lastPitch = Test.aEg.thePlayer.rotationPitch;
             return;
@@ -309,7 +309,7 @@ extends Module {
         int n4 = (int)Math.round(Math.hypot(Test.aEg.thePlayer.pl - this.lastYaw, Test.aEg.thePlayer.rotationPitch - this.lastPitch));
         this.rotationDeltaCounts.putIfAbsent(n4, 1);
         this.rotationDeltaCounts.put(n4, this.rotationDeltaCounts.get(n4) + 1);
-        afi.b("Outputted", new Object[0]);
+        ChatUtil.b("Outputted", new Object[0]);
         this.rotationDeltaCounts.forEach((n2, n3) -> System.out.println(n3 + "\t" + n2));
         this.lastYaw = Test.aEg.thePlayer.pl;
         this.lastPitch = Test.aEg.thePlayer.rotationPitch;

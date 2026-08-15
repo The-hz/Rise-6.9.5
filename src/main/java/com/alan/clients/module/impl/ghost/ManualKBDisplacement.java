@@ -14,7 +14,7 @@ import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.module.impl.ghost.DisplacementSample;
 import java.util.function.Predicate;
@@ -296,7 +296,7 @@ public final class ManualKBDisplacement extends Module {
             if (!s.equals(this.lastDebugMessage) || aEg.thePlayer.ticksExisted - this.lastDebugTick >= 8) {
                 this.lastDebugMessage = s;
                 this.lastDebugTick = aEg.thePlayer.ticksExisted;
-                afi.c(afi.getPrefix() + "[KB Module] " + s);
+                ChatUtil.c(ChatUtil.getPrefix() + "[KB Module] " + s);
             }
         }
     }

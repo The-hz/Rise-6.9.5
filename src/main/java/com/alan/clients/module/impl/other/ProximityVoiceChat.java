@@ -10,7 +10,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine.Info;
@@ -42,13 +42,13 @@ public class ProximityVoiceChat extends Module {
                 this.talking = true;
                 this.talkTicks = 0;
                 this.startAudio();
-                afi.b("Start Talking");
+                ChatUtil.b("Start Talking");
             } else {
-                afi.b("Talking");
+                ChatUtil.b("Talking");
                 this.talkTicks++;
             }
         } else if (this.talking) {
-            afi.b("Stop talking");
+            ChatUtil.b("Stop talking");
             this.talking = false;
             this.disable();
         }

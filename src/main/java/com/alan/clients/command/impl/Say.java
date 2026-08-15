@@ -1,7 +1,7 @@
 package com.alan.clients.command.impl;
 
 import com.alan.clients.command.Command;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 
 public final class Say extends Command {
     public Say() {
@@ -13,8 +13,8 @@ public final class Say extends Command {
         if (var1.length <= 1) {
             this.error(String.format(".%s <message>", var1[0]));
         } else {
-            afi.send(String.join(" ", var1).substring(3).trim());
-            afi.b("command.say.sent");
+            ChatUtil.send(String.join(" ", var1).substring(3).trim());
+            ChatUtil.b("command.say.sent");
         }
     }
 }

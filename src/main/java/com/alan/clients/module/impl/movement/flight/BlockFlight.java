@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
@@ -31,7 +31,7 @@ public class BlockFlight extends Mode<Flight> {
             if (Math.abs(MoveUtil.predictedMotion(0.42F) - aEg.thePlayer.motionY) < 1.0E-4) {
                 var1x.setOnGround(true);
             } else {
-                afi.b("Not Set");
+                ChatUtil.b("Not Set");
                 aEg.thePlayer.motionY = 0.42F;
             }
 

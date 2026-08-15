@@ -7,7 +7,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.TeleportEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import java.util.Random;
@@ -45,6 +45,6 @@ public class BloxdFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        afi.b("Collide with a block to fly and remember to collide into a wall in Bedwars to avoid fall damage when landing, press shift to fall faster");
+        ChatUtil.b("Collide with a block to fly and remember to collide into a wall in Bedwars to avoid fall damage when landing, press shift to fall faster");
     }
 }

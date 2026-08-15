@@ -8,7 +8,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import hackclient.rise.cg;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 
@@ -18,7 +18,7 @@ public class PolarDetector extends Module {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         if (aEg.thePlayer.ticksExisted == 30) {
-            afi.b(this.polarEnabled ? "Polar is enabled" : "Polar is disabled");
+            ChatUtil.b(this.polarEnabled ? "Polar is enabled" : "Polar is disabled");
         }
     };
     @EventLink

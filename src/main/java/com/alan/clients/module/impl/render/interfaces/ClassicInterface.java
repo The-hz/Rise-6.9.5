@@ -15,7 +15,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.StringValue;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.module.impl.render.interfaces.ArrayListEntry;
@@ -37,7 +37,7 @@ public class ClassicInterface extends Mode<Interface> {
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1x -> {
         if (aEg != null && !aEg.gameSettings.bJf && aEg.theWorld != null && aEg.thePlayer != null) {
-            agc agc = Client.a.getLocale() == Locale.ZH_ZH ? FontManager.MAIN.a(18, FontWeight.REGULAR) : aEg.fontRendererObj;
+            Font agc = Client.a.getLocale() == Locale.ZH_ZH ? FontManager.MAIN.a(18, FontWeight.REGULAR) : aEg.fontRendererObj;
             int i = 0;
             Color[] acolor = new Color[]{new Color(91, 206, 250), new Color(245, 169, 184), Color.WHITE, new Color(245, 169, 184)};
             int j = 0;
@@ -127,7 +127,7 @@ public class ClassicInterface extends Mode<Interface> {
     public final Listener<TickEvent> onTick = var1x -> aMR.execute(() -> {
         for (ArrayListEntry zc : this.getParent().getActiveEntries()) {
             if (zc.animationTime != 0.0F) {
-                agc agc = Client.a.getLocale() == Locale.ZH_ZH ? FontManager.MAIN.a(18, FontWeight.REGULAR) : aEg.fontRendererObj;
+                Font agc = Client.a.getLocale() == Locale.ZH_ZH ? FontManager.MAIN.a(18, FontWeight.REGULAR) : aEg.fontRendererObj;
                 zc.y(!zc.getTag().isEmpty() && this.getParent().suffix.wo());
                 String s = (this.getParent().lowercase.wo() ? zc.getTranslatedName().toLowerCase() : zc.getTranslatedName()).replace(this.getParent().getRemoveSpaces().wo() ? " " : "", "");
                 String s1 = (this.getParent().lowercase.wo() ? zc.getTag().toLowerCase() : zc.getTag()).replace(this.getParent().getRemoveSpaces().wo() ? " " : "", "");

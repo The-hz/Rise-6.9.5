@@ -21,7 +21,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.component.impl.player.PacketlessDamageComponent;
 import java.util.ArrayList;
@@ -301,7 +301,7 @@ public class WatchdogFlight extends Mode<Flight> {
         this.antiFireBall = Client.a.g().c(AntiFireBall.class);
         this.hurtTicks = 0;
         if (this.getFireballSlot() == -1) {
-            afi.b("Could not find Fireball");
+            ChatUtil.b("Could not find Fireball");
             this.toggle();
         } else {
             aEg.thePlayer.motionX *= -1.0;

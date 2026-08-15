@@ -8,15 +8,15 @@ import com.alan.clients.util.interfaces.Toggleable;
 import com.alan.clients.value.Value;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
-import hackclient.rise.aha;
-import hackclient.rise.ahd;
+import com.alan.clients.util.interfaces.ExecutorAccess;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.interfaces.Bindable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import lombok.Generated;
 
-public abstract class Module implements InstanceAccess, aha, Toggleable, Bindable {
+public abstract class Module implements InstanceAccess, ExecutorAccess, Toggleable, Bindable {
     private String[] aliases;
     private final List<Value<?>> values = new ArrayList<>();
     private ModuleInfo moduleInfo;
@@ -26,7 +26,7 @@ public abstract class Module implements InstanceAccess, aha, Toggleable, Bindabl
     public Module() {
         if (this.getClass().isAnnotationPresent(ModuleInfo.class)) {
             this.moduleInfo = this.getClass().getAnnotation(ModuleInfo.class);
-            this.aliases = Arrays.stream(this.moduleInfo.aliases()).map(ahd::ce).toArray(String[]::new);
+            this.aliases = Arrays.stream(this.moduleInfo.aliases()).map(Localization::ce).toArray(String[]::new);
             this.keyCode = this.getModuleInfo().keyBind();
         } else {
             throw new RuntimeException("ModuleInfo annotation not found on " + this.getClass().getSimpleName());

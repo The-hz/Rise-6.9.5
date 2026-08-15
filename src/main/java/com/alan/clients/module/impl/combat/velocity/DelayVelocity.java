@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.packet.QueuedPacket;
 import java.util.ArrayDeque;
@@ -66,7 +66,7 @@ public class DelayVelocity extends Mode<Velocity> {
                 }
             }
 
-            afi.c(this.velocityPackets.peekFirst().ts - i);
+            ChatUtil.c(this.velocityPackets.peekFirst().ts - i);
         }
     };
 

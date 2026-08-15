@@ -14,7 +14,7 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.ui.click.standard.UIColors;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -37,9 +37,9 @@ public final class ModernSessionStats extends Mode<SessionStats> {
             long k = TimeUnit.MILLISECONDS.toMinutes(i) % 60L;
             long l = TimeUnit.MILLISECONDS.toSeconds(i) % 60L;
             String s = "";
-            String s1 = s + j + ahd.ce("h ");
-            String s2 = s1 + k + ahd.ce("m ");
-            String s3 = s2 + l + ahd.ce("s ");
+            String s1 = s + j + Localization.ce("h ");
+            String s2 = s1 + k + Localization.ce("m ");
+            String s3 = s2 + l + Localization.ce("s ");
             this.sessionTime = s3;
         }
     };
@@ -56,7 +56,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                 this.b(ShaderQueueType.BLOOM).c(() -> {
                     RenderUtil.roundedRectangle(this.position.apP.x, this.position.apP.y - 14.0, this.position.aHe.x, this.position.aHe.y + 14.0, 7.0, this.rz().rE());
                     double d1 = this.position.apP.x + this.position.aHe.x / 2.0 - (FontManager.MAIN.a(18, FontWeight.REGULAR).getStringWidth("Information") / 2.0 + 1.0);
-                    FontManager.MAIN.a(18, FontWeight.BOLD).drawString(ahd.ce("session"), d1, this.position.apP.y - 9.0, ColorUtil.withBlue(this.rz().rA(), 200).getRGB());
+                    FontManager.MAIN.a(18, FontWeight.BOLD).drawString(Localization.ce("session"), d1, this.position.apP.y - 9.0, ColorUtil.withBlue(this.rz().rA(), 200).getRGB());
                 });
             }
 
@@ -73,11 +73,11 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                         RenderUtil.a(this.position.apP.x, this.position.apP.y - 14.0, this.position.aHe.x, 14.0, 6.0, ColorUtil.withBlue(UIColors.SECONDARY.pV(), 170), true, true, false, false);
                         RenderUtil.a(this.position.apP.x, this.position.apP.y, this.position.aHe.x, this.position.aHe.y, 6.0, color1, false, false, true, true);
                         double d1 = this.position.apP.x + this.position.aHe.x / 2.0 - (FontManager.MAIN.a(18, FontWeight.REGULAR).getStringWidth("Information") / 2.0 + 1.0);
-                        FontManager.MAIN.a(18, FontWeight.BOLD).drawString(ahd.ce("session"), d1, this.position.apP.y - 9.0, this.rz().rD().getRGB());
+                        FontManager.MAIN.a(18, FontWeight.BOLD).drawString(Localization.ce("session"), d1, this.position.apP.y - 9.0, this.rz().rD().getRGB());
                         FontManager.MAIN
                             .a(18, FontWeight.REGULAR)
                             .drawString(
-                                ahd.ce("Information"),
+                                Localization.ce("Information"),
                                 this.position.apP.x + this.position.aHe.x / 2.0 + (FontManager.MAIN.a(18, FontWeight.BOLD).getStringWidth("session") / 2.0 + 1.0),
                                 this.position.apP.y - 9.0,
                                 UIColors.TEXT.pW()
@@ -86,7 +86,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                         FontManager.MAIN
                             .a(16, FontWeight.REGULAR)
                             .a(
-                                ahd.ce("You have gotten ") + this.data.kills + " kills",
+                                Localization.ce("You have gotten ") + this.data.kills + " kills",
                                 this.position.apP.x + d0,
                                 this.position.apP.y + d0 + FontManager.MAIN.a(24, FontWeight.BOLD).height(),
                                 UIColors.TRINARY_TEXT.pW()
@@ -94,7 +94,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                         FontManager.MAIN
                             .a(16, FontWeight.REGULAR)
                             .a(
-                                ahd.ce("You have won " + this.data.wins) + " games",
+                                Localization.ce("You have won " + this.data.wins) + " games",
                                 this.position.apP.x + d0,
                                 this.position.apP.y + d0 + FontManager.MAIN.a(24, FontWeight.BOLD).height() + FontManager.MAIN.a(16, FontWeight.REGULAR).height() + 2.0,
                                 UIColors.TRINARY_TEXT.pW()

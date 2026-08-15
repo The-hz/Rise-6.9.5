@@ -12,9 +12,9 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -58,9 +58,9 @@ public class BedPlates extends Module {
     private final BooleanValue distanceScale = new BooleanValue("Distance Scale", this, true);
     private final NumberValue range = new NumberValue("Range", this, 200, 20, 200, 10);
     private final NumberValue refreshTicks = new NumberValue("Refresh Ticks", this, 1, 1, 20, 1);
-    private final agc nameFont = FontManager.MAIN.a(15, FontWeight.MEDIUM);
-    private final agc distanceLabelFont = FontManager.MAIN.a(11, FontWeight.BOLD);
-    private final agc distanceFont = FontManager.MAIN.a(11, FontWeight.REGULAR);
+    private final Font nameFont = FontManager.MAIN.a(15, FontWeight.MEDIUM);
+    private final Font distanceLabelFont = FontManager.MAIN.a(11, FontWeight.BOLD);
+    private final Font distanceFont = FontManager.MAIN.a(11, FontWeight.REGULAR);
     private final List<BedPlateEntry> entries = new ArrayList<>();
     private final List<BedPosition> bedPositions = new CopyOnWriteArrayList<>();
     private int refreshCounter = 0;
@@ -246,7 +246,7 @@ public class BedPlates extends Module {
                         if (d11 <= d1) {
                             BedPlateInfo wk = this.a(blockpos, enumfacing, d5, d6, d7);
                             if (wk != null) {
-                                aka aka = new aka(d5, d6, d7);
+                                Vector3d aka = new Vector3d(d5, d6, d7);
                                 this.entries.add(new BedPlateEntry(aka, d11, wk));
                             }
                         }
@@ -259,14 +259,14 @@ public class BedPlates extends Module {
     }
 
     private boolean a(BlockPos pos, EnumFacing facing) {
-        aka akaxx = Breaker.home;
+        Vector3d akaxx = Breaker.home;
         if (akaxx == null) {
             return false;
         }
 
-        aka akax = new aka(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+        Vector3d akax = new Vector3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
         BlockPos blockpos = pos.offset(facing.getOpposite());
-        aka akaxx2 = new aka(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5);
+        Vector3d akaxx2 = new Vector3d(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5);
         double d0 = 4.5;
         return akax.g(akaxx2) <= d0 || akaxx2.g(akaxx2) <= d0;
     }
@@ -276,7 +276,7 @@ public class BedPlates extends Module {
         double d0 = Double.MAX_VALUE;
         double d1 = 0.0;
         MapColor mapcolor = null;
-        aka aka = null;
+        Vector3d aka = null;
         int i = 0;
         BlockPos blockpos = pos.offset(facing.getOpposite());
         BlockPos[] ablockpos = new BlockPos[]{pos, blockpos};
@@ -308,7 +308,7 @@ public class BedPlates extends Module {
                                     itemstack = itemstack1;
                                     d1 = d9 * d9 + d10 * d10 + d11 * d11;
                                     mapcolor = block.getMapColor(iblockstate);
-                                    aka = new aka(d6, d7, d8);
+                                    aka = new Vector3d(d6, d7, d8);
                                     d0 = d5;
                                 }
                             }
@@ -324,7 +324,7 @@ public class BedPlates extends Module {
             double d13 = var5 - d3;
             double d14 = var7 - d4;
             double d15 = d12 * d12 + d13 * d13 + d14 * d14;
-            return new BedPlateInfo(itemstack2, d15, MapColor.airColor, new aka(var3, var5, var7), false, true);
+            return new BedPlateInfo(itemstack2, d15, MapColor.airColor, new Vector3d(var3, var5, var7), false, true);
         } else if (itemstack != null) {
             boolean flag = i < 8;
             return new BedPlateInfo(itemstack, d1, mapcolor, aka, flag, false);
@@ -370,7 +370,7 @@ public class BedPlates extends Module {
 
                 for (BedPlateEntry wi : this.entries) {
                     if (flag) {
-                        aka aka = wi.getPosition();
+                        Vector3d aka = wi.getPosition();
                         BlockPos blockpos = new BlockPos(aka.getX(), aka.getY(), aka.getZ());
                         if (!(aEg.theWorld.getBlockState(blockpos).getBlock() instanceof BlockBed)) {
                             wi.v(false);
@@ -567,7 +567,7 @@ public class BedPlates extends Module {
         }
     }
 
-    private double[] project(aka var1) {
+    private double[] project(Vector3d var1) {
         return this.projectPosition(var1.getX(), var1.getY(), var1.getZ());
     }
 
@@ -580,7 +580,7 @@ public class BedPlates extends Module {
         return this.a(var1, var3, var5, d0, d1, d2, i, j);
     }
 
-    private double[] a(aka var1, double var2, double var4, double var6, int var8, int var9) {
+    private double[] a(Vector3d var1, double var2, double var4, double var6, int var8, int var9) {
         return this.a(var1.getX(), var1.getY(), var1.getZ(), var2, var4, var6, var8, var9);
     }
 

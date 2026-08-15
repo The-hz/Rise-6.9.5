@@ -14,7 +14,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import java.util.Queue;
 import java.util.Random;
@@ -338,7 +338,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
 
     private void t(String var1) {
         if (this.logging.wo() && this.delayLogging.wo()) {
-            afi.d("%s", "[Delay] " + var1);
+            ChatUtil.d("%s", "[Delay] " + var1);
         }
     }
 

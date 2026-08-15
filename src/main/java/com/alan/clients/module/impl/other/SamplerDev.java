@@ -7,8 +7,8 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.util.vector.Vector2f;
-import hackclient.rise.afi;
-import hackclient.rise.aka;
+import com.alan.clients.util.chat.ChatUtil;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.component.impl.combat.TargetComponent;
 import com.alan.clients.module.impl.other.sampler.SampleKey;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public final class SamplerDev extends Module {
         Vector2f vector2f = new Vector2f(entityplayersp.pl % 360.0F, entityplayersp.rotationPitch);
         if (entitylivingbase != null && this.lastRotation != null) {
             SampleKey sg = new SampleKey(
-                new aka(entitylivingbase.posX - entityplayersp.posX, entitylivingbase.posY - entityplayersp.posY, entitylivingbase.posZ - entityplayersp.posZ),
+                new Vector3d(entitylivingbase.posX - entityplayersp.posX, entitylivingbase.posY - entityplayersp.posY, entitylivingbase.posZ - entityplayersp.posZ),
                 new Vector2f(vector2f.getX(), vector2f.getY())
             );
             String s = sg.toKey();
@@ -34,10 +34,10 @@ public final class SamplerDev extends Module {
                 Vector2f vector2f1 = this.samples.get(sg.toKey());
                 aEg.thePlayer.pl = aEg.thePlayer.pl + vector2f1.getX();
                 aEg.thePlayer.rotationPitch = aEg.thePlayer.rotationPitch + vector2f1.getY();
-                afi.b("Contained: " + s);
-                afi.b("Yaw: " + vector2f1.getX() + " Pitch: " + vector2f1.getY());
+                ChatUtil.b("Contained: " + s);
+                ChatUtil.b("Yaw: " + vector2f1.getX() + " Pitch: " + vector2f1.getY());
             } else {
-                afi.b("None " + s);
+                ChatUtil.b("None " + s);
             }
         }
 

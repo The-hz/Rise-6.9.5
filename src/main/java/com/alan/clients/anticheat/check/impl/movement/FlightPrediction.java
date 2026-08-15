@@ -5,7 +5,7 @@ import com.alan.clients.anticheat.check.api.CheckInfo;
 import com.alan.clients.anticheat.check.impl.combat.VelocityCancel;
 import com.alan.clients.anticheat.data.PlayerData;
 import com.alan.clients.util.player.MoveUtil;
-import hackclient.rise.adz;
+import hackclient.rise.EvictingList;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.anticheat.util.PacketUtil;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import rip.vantage.commons.util.time.StopWatch;
 
 @CheckInfo(R = "Flight", S = "Prediction", description = "Detects flight")
 public final class FlightPrediction extends Check {
-    private adz<Vec3> V = new adz<>(144);
+    private EvictingList<Vec3> V = new EvictingList<>(144);
     private ArrayList<Double> possibleJumpMotions = new ArrayList<>();
     private double MINIMUM_OFFSET_TO_FLAG = 1.0E-5;
     private int Y = 60;

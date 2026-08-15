@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2f;
@@ -15,20 +15,20 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 
-public final class aef
+public final class RayCastUtil
 implements InstanceAccess {
     public static MovingObjectPosition c(Vector2f vector2f, double d2) {
-        return aef.rayCast(vector2f, d2, 0.0f);
+        return RayCastUtil.rayCast(vector2f, d2, 0.0f);
     }
 
     public static boolean t(Entity entity) {
-        int n2 = 16 * aef.aEg.gameSettings.renderDistanceChunks;
+        int n2 = 16 * RayCastUtil.aEg.gameSettings.renderDistanceChunks;
         Vector2f vector2f = RotationUtil.y(entity);
-        if (MathUtil.n(aef.aEg.thePlayer.pl, vector2f.x) > (double)aef.aEg.gameSettings.fovSetting) {
+        if (MathUtil.n(RayCastUtil.aEg.thePlayer.pl, vector2f.x) > (double)RayCastUtil.aEg.gameSettings.fovSetting) {
             return false;
         }
         if (entity.crB > 100.0 || !(entity instanceof EntityPlayer)) {
-            MovingObjectPosition movingObjectPosition = aef.rayCast(vector2f, n2, 0.2f);
+            MovingObjectPosition movingObjectPosition = RayCastUtil.rayCast(vector2f, n2, 0.2f);
             if (movingObjectPosition == null) return false;
             if (movingObjectPosition.typeOfHit != MovingObjectPosition.MovingObjectType.ENTITY) return false;
             return true;
@@ -37,7 +37,7 @@ implements InstanceAccess {
         while (d2 >= -1.0) {
             for (double d3 = 1.0; d3 >= -1.0; d3 -= 1.0) {
                 for (double d4 = 1.0; d4 >= -1.0; d4 -= 1.0) {
-                    MovingObjectPosition movingObjectPosition = aef.rayCast(RotationUtil.d(entity.Ty().v((entity.getEntityBoundingBox().maxX - entity.getEntityBoundingBox().minX) * d3, (entity.getEntityBoundingBox().maxY - entity.getEntityBoundingBox().minY) * d2, (entity.getEntityBoundingBox().maxZ - entity.getEntityBoundingBox().minZ) * d4)), n2, 0.2f);
+                    MovingObjectPosition movingObjectPosition = RayCastUtil.rayCast(RotationUtil.d(entity.Ty().v((entity.getEntityBoundingBox().maxX - entity.getEntityBoundingBox().minX) * d3, (entity.getEntityBoundingBox().maxY - entity.getEntityBoundingBox().minY) * d2, (entity.getEntityBoundingBox().maxZ - entity.getEntityBoundingBox().minZ) * d4)), n2, 0.2f);
                     if (movingObjectPosition == null || movingObjectPosition.typeOfHit != MovingObjectPosition.MovingObjectType.ENTITY) continue;
                     return true;
                 }
@@ -48,18 +48,18 @@ implements InstanceAccess {
     }
 
     public static MovingObjectPosition rayCast(Vector2f vector2f, double d2, float f2) {
-        return aef.rayCast(vector2f, d2, f2, aef.aEg.thePlayer);
+        return RayCastUtil.rayCast(vector2f, d2, f2, RayCastUtil.aEg.thePlayer);
     }
 
     public static MovingObjectPosition rayCast(Vector2f vector2f, double d2, float f2, Entity entity) {
-        return aef.rayCast(vector2f, d2, f2, entity, false);
+        return RayCastUtil.rayCast(vector2f, d2, f2, entity, false);
     }
 
     public static MovingObjectPosition rayCast(Vector2f vector2f, double d2, float f2, Entity entity, boolean bl) {
-        float f3 = aef.aEg.timer.bWm;
+        float f3 = RayCastUtil.aEg.timer.bWm;
         MovingObjectPosition movingObjectPosition = null;
         if (entity == null) return null;
-        if (aef.aEg.theWorld == null) {
+        if (RayCastUtil.aEg.theWorld == null) {
             return null;
         }
         if (!bl) {
@@ -70,11 +70,11 @@ implements InstanceAccess {
         if (movingObjectPosition != null) {
             d3 = movingObjectPosition.hitVec.distanceTo(vec3);
         }
-        Vec3 vec = aef.aEg.thePlayer.getVectorForRotation(vector2f.y, vector2f.x);
+        Vec3 vec = RayCastUtil.aEg.thePlayer.getVectorForRotation(vector2f.y, vector2f.x);
         Vec3 vec33 = vec3.addVector(vec.xCoord * d2, vec.yCoord * d2, vec.zCoord * d2);
         Entity entity2 = null;
         Vec3 vec34 = null;
-        List<Entity> list = aef.aEg.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec.xCoord * d2, vec.yCoord * d2, vec.zCoord * d2).expand(1.0, 1.0, 1.0), Predicates.and(EntitySelectors.NOT_SPECTATING, Entity::canBeCollidedWith));
+        List<Entity> list = RayCastUtil.aEg.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec.xCoord * d2, vec.yCoord * d2, vec.zCoord * d2).expand(1.0, 1.0, 1.0), Predicates.and(EntitySelectors.NOT_SPECTATING, Entity::canBeCollidedWith));
         double d4 = d3;
         for (Entity entity3 : list) {
             double d5;
@@ -100,7 +100,7 @@ implements InstanceAccess {
     }
 
     public static boolean a(Vector2f vector2f, EnumFacing enumFacing, BlockPos blockPos, boolean bl) {
-        MovingObjectPosition movingObjectPosition = aef.aEg.thePlayer.rayTraceCustom(4.5, vector2f.x, vector2f.y);
+        MovingObjectPosition movingObjectPosition = RayCastUtil.aEg.thePlayer.rayTraceCustom(4.5, vector2f.x, vector2f.y);
         if (movingObjectPosition == null) {
             return false;
         }
@@ -114,7 +114,7 @@ implements InstanceAccess {
     }
 
     public static boolean overBlock(EnumFacing enumFacing, BlockPos blockPos, boolean bl) {
-        MovingObjectPosition movingObjectPosition = aef.aEg.objectMouseOver;
+        MovingObjectPosition movingObjectPosition = RayCastUtil.aEg.objectMouseOver;
         if (movingObjectPosition == null) {
             return false;
         }
@@ -129,10 +129,10 @@ implements InstanceAccess {
     }
 
     public static Boolean overBlock(Vector2f vector2f, BlockPos blockPos) {
-        return aef.a(vector2f, EnumFacing.UP, blockPos, false);
+        return RayCastUtil.a(vector2f, EnumFacing.UP, blockPos, false);
     }
 
     public static Boolean a(Vector2f vector2f, BlockPos blockPos, EnumFacing enumFacing) {
-        return aef.a(vector2f, enumFacing, blockPos, true);
+        return RayCastUtil.a(vector2f, enumFacing, blockPos, true);
     }
 }

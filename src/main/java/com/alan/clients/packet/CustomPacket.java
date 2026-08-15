@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.packet;
 
 import lombok.Generated;
 import net.minecraft.network.EnumConnectionState;
@@ -6,7 +6,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.g;
 
-public abstract class ahl implements Packet {
+public abstract class CustomPacket implements Packet {
     private final int aNq;
     private final EnumConnectionState aNr;
 
@@ -25,7 +25,7 @@ public abstract class ahl implements Packet {
     }
 
     @Generated
-    public ahl(int var1, EnumConnectionState enumConnectionState) {
+    public CustomPacket(int var1, EnumConnectionState enumConnectionState) {
         this.aNq = var1;
         this.aNr = enumConnectionState;
     }

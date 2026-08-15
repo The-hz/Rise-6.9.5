@@ -13,7 +13,7 @@ import com.alan.clients.newevent.impl.other.BlockAABBEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import lombok.Generated;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C02PacketUseEntity;
@@ -26,8 +26,8 @@ import net.minecraft.network.play.client.m;
 @ModuleInfo(aliases = "module.render.freecam.name", description = "module.render.freecam.description", category = Category.RENDER)
 public final class FreeCam extends Module {
     private final NumberValue speed = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
-    private aka position;
-    private aka delta;
+    private Vector3d position;
+    private Vector3d delta;
     private Vector2f rotation;
     private boolean sprinting;
     @EventLink
@@ -63,8 +63,8 @@ public final class FreeCam extends Module {
 
     @Override
     public void onEnable() {
-        this.position = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
-        this.delta = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
+        this.position = new Vector3d(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
+        this.delta = new Vector3d(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
         this.rotation = new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
         this.sprinting = aEg.gameSettings.cgG.isKeyDown();
     }
@@ -86,12 +86,12 @@ public final class FreeCam extends Module {
     }
 
     @Generated
-    public aka getPosition() {
+    public Vector3d getPosition() {
         return this.position;
     }
 
     @Generated
-    public aka getDelta() {
+    public Vector3d getDelta() {
         return this.delta;
     }
 

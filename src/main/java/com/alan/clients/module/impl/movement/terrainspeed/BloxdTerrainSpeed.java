@@ -16,7 +16,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.component.impl.viamcp.FlyingPacketFixComponent;
 import com.alan.clients.module.impl.movement.terrainspeed.PhysicsIntegrator;
 import com.alan.clients.module.impl.movement.terrainspeed.PhysicsVector3;
@@ -94,7 +94,7 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
 
         entityplayersp.motionY = this.integrator.integrate().y * 0.03333333333333333;
         if (aEg.thePlayer.Zl == 1) {
-            afi.c(aEg.thePlayer.ae);
+            ChatUtil.c(aEg.thePlayer.ae);
         }
 
         if (aEg.thePlayer.ae < 41 && this.e(LongJump.class).isEnabled()) {
@@ -141,7 +141,7 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
             if (aEg.gameSettings.keyBindSneak.isKeyDown()
                 && aEg.thePlayer.ticksExisted % 5 == 0
                 && (!this.e(Flight.class).isEnabled() || aEg.thePlayer.tR <= 30)) {
-                afi.b("Your Balance has ran out");
+                ChatUtil.b("Your Balance has ran out");
             }
         } else {
             aEg.timer.dzD = this.sneakTimer.wo().floatValue();

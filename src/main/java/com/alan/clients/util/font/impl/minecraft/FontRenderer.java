@@ -1,5 +1,6 @@
-package hackclient.rise;
+package com.alan.clients.util.font.impl.minecraft;
 
+import com.alan.clients.util.font.Font;
 import com.ibm.icu.text.ArabicShaping;
 import com.ibm.icu.text.ArabicShapingException;
 import com.ibm.icu.text.Bidi;
@@ -29,7 +30,7 @@ import net.optifine.s;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.GL11;
 
-public class agd extends agc implements IResourceManagerReloadListener {
+public class FontRenderer extends Font implements IResourceManagerReloadListener {
     private static final ResourceLocation[] unicodePageLocations = new ResourceLocation[256];
     private final int[] charWidth = new int[256];
     public static int aHU = 9;
@@ -59,7 +60,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
     private boolean blend = false;
     private final f blendState = new f();
 
-    public agd(GameSettings gameSettings, ResourceLocation location, TextureManager renderEngine, boolean var4) {
+    public FontRenderer(GameSettings gameSettings, ResourceLocation location, TextureManager renderEngine, boolean var4) {
         this.gameSettings = gameSettings;
         this.locationFontTextureBase = location;
         this.locationFontTexture = location;

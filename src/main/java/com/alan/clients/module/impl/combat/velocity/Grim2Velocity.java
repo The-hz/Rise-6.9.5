@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import java.util.Random;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook;
@@ -82,7 +82,7 @@ public final class Grim2Velocity extends Mode<Velocity> {
 
     private void debug(String var1) {
         if (this.debugLog.wo()) {
-            afi.b("§8[§cGrimVelocity2§8] §7" + var1);
+            ChatUtil.b("§8[§cGrimVelocity2§8] §7" + var1);
         }
     }
 }

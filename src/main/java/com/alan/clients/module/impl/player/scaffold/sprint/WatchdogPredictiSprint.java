@@ -13,7 +13,7 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook;
@@ -97,7 +97,7 @@ public class WatchdogPredictiSprint extends Mode<Scaffold> {
         boolean flag = Math.abs(d0 % 90.0) <= 10.0 || Math.abs(d0 % 90.0) >= 80.0;
         double d1 = Math.round(d0 / 45.0) * 45.0;
         aEg.thePlayer.pl = (float)d1;
-        afi.c(d0);
+        ChatUtil.c(d0);
         if (flag && d0 >= -10.0 && d0 <= 100.0 && aEg.thePlayer.onGround) {
             this.targetYaw = aEg.thePlayer.pl + 43.0F;
         } else if (flag && aEg.thePlayer.onGround) {

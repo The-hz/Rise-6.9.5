@@ -14,7 +14,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -23,7 +23,7 @@ import java.awt.Color;
 @ModuleInfo(aliases={"module.render.bpscounter.name"}, description="module.render.bpscounter.description", category=Category.RENDER)
 public class BPSCounter
 extends Module {
-    public aka lastPosition;
+    public Vector3d lastPosition;
     public Vector2f scale;
     @EventLink
     public Listener<Render2DEvent> onRender2D;
@@ -40,10 +40,10 @@ extends Module {
     public BPSCounter() {
         this.position = new DragValue("Position", (Module)this, new Vector2d(200.0, 200.0));
         this.scale = new Vector2f(22.0f, 22.0f);
-        this.lastPosition = new aka(0.0, 0.0, 0.0);
+        this.lastPosition = new Vector3d(0.0, 0.0, 0.0);
         this.onPostStrafe = postStrafeEvent -> {
-            this.speed = String.valueOf(MathUtil.round(new aka(BPSCounter.aEg.thePlayer.posX, 0.0, BPSCounter.aEg.thePlayer.posZ).g(this.lastPosition) * 20.0 * (double)BPSCounter.aEg.timer.dzD, 2));
-            this.lastPosition = new aka(BPSCounter.aEg.thePlayer.posX, 0.0, BPSCounter.aEg.thePlayer.posZ);
+            this.speed = String.valueOf(MathUtil.round(new Vector3d(BPSCounter.aEg.thePlayer.posX, 0.0, BPSCounter.aEg.thePlayer.posZ).g(this.lastPosition) * 20.0 * (double)BPSCounter.aEg.timer.dzD, 2));
+            this.lastPosition = new Vector3d(BPSCounter.aEg.thePlayer.posX, 0.0, BPSCounter.aEg.thePlayer.posZ);
         };
         this.onRender2D = render2DEvent -> {
             Vector2d vector2d = this.position.apP;

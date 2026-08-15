@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 
 public final class VulcanLongJump extends Mode<LongJump> {
@@ -44,11 +44,11 @@ public final class VulcanLongJump extends Mode<LongJump> {
                 aEg.thePlayer.motionY += 0.04;
                 break;
             case 40:
-                afi.b(aEg.thePlayer.motionY);
+                ChatUtil.b(aEg.thePlayer.motionY);
                 aEg.thePlayer.motionY = -0.09800000190735147;
                 break;
             case 62:
-                afi.b(aEg.thePlayer.motionY);
+                ChatUtil.b(aEg.thePlayer.motionY);
                 var1x.setOnGround(true);
                 aEg.thePlayer.onGround = true;
                 aEg.thePlayer.jump();
@@ -61,7 +61,7 @@ public final class VulcanLongJump extends Mode<LongJump> {
         }
 
         if (aEg.thePlayer.motionY < -0.51 && aEg.thePlayer.motionY > -0.52) {
-            afi.b("if near void and the ghost block handler is on this may flag");
+            ChatUtil.b("if near void and the ghost block handler is on this may flag");
             aEg.thePlayer.motionY = 2.0;
         }
     };

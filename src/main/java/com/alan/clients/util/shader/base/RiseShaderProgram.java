@@ -1,7 +1,7 @@
 package com.alan.clients.util.shader.base;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
-import hackclient.rise.aiw;
+import com.alan.clients.util.shader.ShaderUtil;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
@@ -10,7 +10,7 @@ public class RiseShaderProgram implements InstanceAccess {
     private final int programId;
 
     public RiseShaderProgram(String var1, String var2) {
-        this.programId = aiw.createShader(var1, var2);
+        this.programId = ShaderUtil.createShader(var1, var2);
     }
 
     public static void drawQuad(double var0, double var2, double var4, double var6) {

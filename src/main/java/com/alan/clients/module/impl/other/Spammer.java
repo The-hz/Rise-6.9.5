@@ -8,7 +8,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.player.ServerUtil;
 import rip.vantage.commons.util.time.StopWatch;
 
@@ -20,12 +20,12 @@ public final class Spammer extends Module {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (ServerUtil.cg("loyisa.cn") && this.message.wo().startsWith("/")) {
-            afi.b("Upon a request from Loyisa we have blacklisted Loyisa's Test Server from Spammer.");
+            ChatUtil.b("Upon a request from Loyisa we have blacklisted Loyisa's Test Server from Spammer.");
             this.toggle();
         } else {
             if (this.stopWatch.T(this.delay.wo().longValue())) {
                 if (this.message.wo().startsWith("#")) {
-                    afi.b("Spammer message cannot contain #. You're not spamming IRC Skid.");
+                    ChatUtil.b("Spammer message cannot contain #. You're not spamming IRC Skid.");
                     return;
                 }
 

@@ -4,8 +4,8 @@ import com.alan.clients.Client;
 import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.aiv;
-import hackclient.rise.aka;
+import com.alan.clients.util.shader.RiseShaders;
+import com.alan.clients.util.vector.Vector3d;
 import java.awt.Color;
 import lombok.Generated;
 import net.minecraft.client.Minecraft;
@@ -30,8 +30,8 @@ public final class RenderUtil implements InstanceAccess {
     private static final RenderManager RENDER_MANAGER = aEg.getRenderManager();
     public static final int GENERIC_SCALE = 22;
 
-    public static aka vH() {
-        return new aka(-RenderManager.bUO, -RenderManager.bUP, -RenderManager.bUQ);
+    public static Vector3d vH() {
+        return new Vector3d(-RenderManager.bUO, -RenderManager.bUP, -RenderManager.bUQ);
     }
 
     public static void a(ResourceLocation location, float var1, float var2, int var3, int var4, int var5, int var6, int var7, int var8, float var9, float var10) {
@@ -375,11 +375,11 @@ public final class RenderUtil implements InstanceAccess {
     }
 
     public static void a(double var0, double var2, double var4, double var6, double var8, Color var10, Color var11, boolean var12) {
-        aiv.RGQ_SHADER.draw(var0, var2, var4, var6, var8, var10, var11, var12);
+        RiseShaders.RGQ_SHADER.draw(var0, var2, var4, var6, var8, var10, var11, var12);
     }
 
     public static void b(double var0, double var2, double var4, double var6, double var8, Color var10, Color var11, boolean var12) {
-        aiv.RGQ_TEST_SHADER.draw(var0, var2, var4, var6, var8, var10, var11, var12);
+        RiseShaders.RGQ_TEST_SHADER.draw(var0, var2, var4, var6, var8, var10, var11, var12);
     }
 
     public static void a(
@@ -396,7 +396,7 @@ public final class RenderUtil implements InstanceAccess {
         boolean var15,
         boolean var16
     ) {
-        aiv.RGQ_TEST_SHADER.a((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10, var11, var12, var13, var14, var15, var16);
+        RiseShaders.RGQ_TEST_SHADER.a((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10, var11, var12, var13, var14, var15, var16);
     }
 
     public static void a(
@@ -414,7 +414,7 @@ public final class RenderUtil implements InstanceAccess {
         boolean var16,
         boolean var17
     ) {
-        aiv.TRI_RGQ_SHADER.a((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10, var11, var12, var13, var14, var15, var16, var17);
+        RiseShaders.TRI_RGQ_SHADER.a((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10, var11, var12, var13, var14, var15, var16, var17);
     }
 
     public static void b(
@@ -431,25 +431,25 @@ public final class RenderUtil implements InstanceAccess {
         boolean var15,
         boolean var16
     ) {
-        aiv.RGQ_SHADER.c(var0, var2, var4, var6, var8, var10, var11, var12, var13, var14, var15, var16);
+        RiseShaders.RGQ_SHADER.c(var0, var2, var4, var6, var8, var10, var11, var12, var13, var14, var15, var16);
     }
 
     public static void roundedRectangle(double var0, double var2, double var4, double var6, double var8, Color var10) {
-        aiv.RQ_SHADER.draw((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10);
+        RiseShaders.RQ_SHADER.draw((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10);
     }
 
     public static void a(
         double var0, double var2, double var4, double var6, double var8, Color var10, boolean var11, boolean var12, boolean var13, boolean var14
     ) {
-        aiv.RQ_SHADER.a((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10, var11, var12, var13, var14);
+        RiseShaders.RQ_SHADER.a((float)var0, (float)var2, (float)var4, (float)var6, (float)var8, var10, var11, var12, var13, var14);
     }
 
     public static void roundedOutlineRectangle(double var0, double var2, double var4, double var6, double var8, double var10, Color var12) {
-        aiv.ROQ_SHADER.b(var0, var2, var4, var6, var8, var10, var12);
+        RiseShaders.ROQ_SHADER.b(var0, var2, var4, var6, var8, var10, var12);
     }
 
     public static void roundedOutlineGradientRectangle(double var0, double var2, double var4, double var6, double var8, double var10, Color var12, Color var13) {
-        aiv.ROGQ_SHADER.b(var0, var2, var4, var6, var8, var10, var12, var13);
+        RiseShaders.ROGQ_SHADER.b(var0, var2, var4, var6, var8, var10, var12, var13);
     }
 
     public static void vI() {

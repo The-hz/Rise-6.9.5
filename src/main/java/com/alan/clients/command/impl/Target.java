@@ -1,7 +1,7 @@
 package com.alan.clients.command.impl;
 
 import com.alan.clients.command.Command;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.social.FriendManager;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -27,7 +27,7 @@ public final class Target extends Command {
                         switch (s2) {
                             case "add":
                                 FriendManager.l(entityplayer.getName());
-                                afi.b(String.format("Added %s to target list", s1));
+                                ChatUtil.b(String.format("Added %s to target list", s1));
                                 flag = true;
                                 break label36;
                             case "remove":
@@ -38,14 +38,14 @@ public final class Target extends Command {
                     }
 
                     FriendManager.m(entityplayer.getName());
-                    afi.b(String.format("Removed %s from target list", s1));
+                    ChatUtil.b(String.format("Removed %s from target list", s1));
                     flag = true;
                     break;
                 }
             }
 
             if (!flag) {
-                afi.b("That user could not be found.");
+                ChatUtil.b("That user could not be found.");
             }
         }
     }

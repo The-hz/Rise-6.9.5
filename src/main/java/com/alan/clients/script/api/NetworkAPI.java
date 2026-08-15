@@ -1,6 +1,6 @@
 package com.alan.clients.script.api;
 
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import java.util.Arrays;
 import javax.script.ScriptException;
 import net.minecraft.network.EnumPacketDirection;
@@ -226,7 +226,7 @@ public class NetworkAPI extends API {
                         .newInstance(var2);
                 }
             } catch (Exception exception) {
-                afi.b("Failed to instantiate packet!");
+                ChatUtil.b("Failed to instantiate packet!");
                 throw new ScriptException(exception);
             }
 

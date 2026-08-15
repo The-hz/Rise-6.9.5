@@ -18,7 +18,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.cg;
 import com.alan.clients.util.font.FontManager;
@@ -55,7 +55,7 @@ public final class Interface extends Module {
     private ModeValue informationType = new InformationTypeModeValue(this, "Information Type", this);
     private final StopWatch animationStopWatch = new StopWatch();
     private final StopWatch preUpdateStopWatch = new StopWatch();
-    public agc widthComparator = FontManager.MAIN.a(20, FontWeight.MEDIUM);
+    public Font widthComparator = FontManager.MAIN.a(20, FontWeight.MEDIUM);
     public float moduleSpacing = 12.0F;
     public float edgeOffset;
     @EventLink
@@ -252,7 +252,7 @@ public final class Interface extends Module {
     }
 
     @Generated
-    public agc getWidthComparator() {
+    public Font getWidthComparator() {
         return this.widthComparator;
     }
 
@@ -337,7 +337,7 @@ public final class Interface extends Module {
     }
 
     @Generated
-    public void setWidthComparator(agc var1) {
+    public void setWidthComparator(Font var1) {
         this.widthComparator = var1;
     }
 

@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.account;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.net.ssl.HttpsURLConnection;
 
-public class aff {
+public class UsernameGenerator {
     private static final String aGe = "https://raw.githubusercontent.com/jeanphorn/wordlist/master/usernames.txt";
 
-    public aff() {
+    public UsernameGenerator() {
     }
 
     public static String[] sx() {

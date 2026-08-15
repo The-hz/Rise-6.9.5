@@ -16,10 +16,10 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.aha;
+import com.alan.clients.util.interfaces.ExecutorAccess;
 import com.alan.clients.util.localization.Locale;
-import hackclient.rise.ahd;
-import hackclient.rise.aju;
+import com.alan.clients.util.localization.Localization;
+import hackclient.rise.MachineFingerprint;
 import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import java.awt.Color;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public final class BackendPacketHandler implements rip.vantage.commons.handler.a
     public void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication packet) {
         String s = packet.getExpectedHwid();
         if (s != null && !s.isEmpty()) {
-            String s1 = aju.vW();
+            String s1 = MachineFingerprint.vW();
             if (!IntegrityGuard.aL(s1, s)) {
                 System.out.println("EC57");
                 rip.vantage.util.NativeBridge.a(packet, boolean.class, false);
@@ -74,7 +74,7 @@ public final class BackendPacketHandler implements rip.vantage.commons.handler.a
 
     @Override
     public void handle(S2CPacketConfig packet) {
-        aha.aMR
+        ExecutorAccess.aMR
             .execute(
                 () -> {
                     HashMap hashmap = new HashMap();
@@ -85,7 +85,7 @@ public final class BackendPacketHandler implements rip.vantage.commons.handler.a
                         hashmap.put(s, module);
 
                         for (Locale locale : Locale.values()) {
-                            String s1 = ahd.a(s, locale);
+                            String s1 = Localization.a(s, locale);
                             if (s1 != null && !s1.isEmpty() && !s1.equals(s)) {
                                 hashmap.putIfAbsent(s1, module);
                             }

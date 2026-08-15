@@ -3,11 +3,11 @@ package com.alan.clients.anticheat.check;
 import com.alan.clients.anticheat.alert.AlertManager;
 import com.alan.clients.anticheat.check.api.CheckInfo;
 import com.alan.clients.anticheat.data.PlayerData;
-import hackclient.rise.aha;
+import com.alan.clients.util.interfaces.ExecutorAccess;
 import lombok.Generated;
 import net.minecraft.network.Packet;
 
-public abstract class Check implements aha {
+public abstract class Check implements ExecutorAccess {
     public final PlayerData data;
     AlertManager O = new AlertManager();
     private final CheckInfo checkInfo;

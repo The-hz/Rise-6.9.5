@@ -11,9 +11,9 @@ import com.alan.clients.ui.menu.component.button.MenuButton;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.account.impl.MicrosoftAccount;
-import hackclient.rise.agc;
-import hackclient.rise.aiv;
-import hackclient.rise.aiz;
+import com.alan.clients.util.font.Font;
+import com.alan.clients.util.shader.RiseShaders;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -25,8 +25,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
 public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
-    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, FontWeight.BOLD);
-    private static final agc INFO_FONT_RENDERER = FontManager.MAIN.a(18, FontWeight.REGULAR);
+    private static final Font FONT_RENDERER = FontManager.MAIN.a(36, FontWeight.BOLD);
+    private static final Font INFO_FONT_RENDERER = FontManager.MAIN.a(18, FontWeight.REGULAR);
     private static AccountViewModel<MicrosoftAccount> accountViewModel;
     private static GuiScreen reference;
     private final MenuButton[] menuButtons = new MenuButton[2];
@@ -55,7 +55,7 @@ public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
             this.animation.Q(0.0);
         }
 
-        aiv.aPL.a(aiz.OVERLAY, var3, null);
+        RiseShaders.aPL.a(ShaderRenderType.OVERLAY, var3, null);
         this.b(ShaderQueueType.BLUR).c(BACKGROUND_RUNNABLE);
         this.b(ShaderQueueType.REGULAR)
             .c(

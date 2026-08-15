@@ -3,7 +3,7 @@ package com.alan.clients.ui.menu.component.button.impl;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.util.MouseUtil;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -12,7 +12,7 @@ import java.awt.Color;
 import net.minecraft.util.ResourceLocation;
 
 public class MenuIconTextButton extends MenuTextButton {
-    private static final agc aBZ = FontManager.MAIN.a(24, FontWeight.BOLD);
+    private static final Font aBZ = FontManager.MAIN.a(24, FontWeight.BOLD);
     private final ResourceLocation aCa;
 
     public MenuIconTextButton(double var1, double var3, double var5, double var7, Runnable var9, String var10, ResourceLocation location) {
@@ -33,7 +33,7 @@ public class MenuIconTextButton extends MenuTextButton {
             RenderUtil.roundedOutlineGradientRectangle(this.getX(), d0, this.oM(), this.da(), 5.0, 1.0, ColorUtil.withBlue(aBP, 32), ColorUtil.withBlue(aBO, 32));
             byte b0 = 64;
             RenderUtil.image(this.aCa, this.getX() + this.oM() / 2.0 - 32, d0 + this.da() / 2.0 - 32, b0, b0, color1);
-            agc agc = aBZ;
+            Font agc = aBZ;
             float f = (float)(this.oM() - 8.0);
 
             for (int i = 24; i > 11 && agc.getStringWidth(this.name) > f; i--) {

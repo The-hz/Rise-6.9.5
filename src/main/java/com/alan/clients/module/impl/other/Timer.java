@@ -20,7 +20,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.BoundsNumberValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.packet.TimedPacket;
@@ -176,7 +176,7 @@ public final class Timer extends Module {
         if (this.watchdog.wo() && var1.getKeyCode() == this.e(Timer.class).getKey() && !this.releasing) {
             this.releaseTime = System.currentTimeMillis() + 200L;
             this.releasing = true;
-            afi.b("sent");
+            ChatUtil.b("sent");
             var1.setCancelled();
         }
 

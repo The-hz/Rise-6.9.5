@@ -5,7 +5,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import net.minecraft.util.Vec3;
 
 public final class WatchdogBedWarsTeleport extends Mode<Teleport> {
@@ -24,6 +24,6 @@ public final class WatchdogBedWarsTeleport extends Mode<Teleport> {
     @Override
     public void onEnable() {
         this.startPosition = new Vec3(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
-        afi.b("Die -> Fly to where you want to teleport -> Toggle");
+        ChatUtil.b("Die -> Fly to where you want to teleport -> Toggle");
     }
 }

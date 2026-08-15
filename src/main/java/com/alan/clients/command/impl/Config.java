@@ -2,10 +2,10 @@ package com.alan.clients.command.impl;
 
 import com.alan.clients.command.Command;
 import com.alan.clients.util.file.config.ConfigFile;
-import hackclient.rise.afi;
-import hackclient.rise.afj;
+import com.alan.clients.util.chat.ChatUtil;
+import com.alan.clients.command.CommandUsageTracker;
 import com.alan.clients.util.file.config.ConfigManager;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public final class Config extends Command {
                     String s3 = s;
                     switch (s3) {
                         case "list":
-                            afi.b("command.config.selectload");
+                            ChatUtil.b("command.config.selectload");
                             configManager.update();
                             configManager.forEach(
                                 var1x -> {
@@ -40,7 +40,7 @@ public final class Config extends Command {
                                     String s5 = ".config load " + s4;
                                     String s6 = this.rz().getChatAccentColor().toString();
                                     s sx = new s(s6 + "> " + s4);
-                                    s sxx = new s(String.format(ahd.ce("command.config.loadhover"), s4));
+                                    s sxx = new s(String.format(Localization.ce("command.config.loadhover"), s4));
                                     sx.getChatStyle()
                                         .setChatClickEvent(new ClickEvent(Action.RUN_COMMAND, s5))
                                         .setChatHoverEvent(new HoverEvent(net.minecraft.event.HoverEvent.Action.SHOW_TEXT, sxx));
@@ -51,7 +51,7 @@ public final class Config extends Command {
                         case "folder":
                             break;
                         default:
-                            afi.b("command.config.actions");
+                            ChatUtil.b("command.config.actions");
                             return;
                     }
                 }
@@ -60,9 +60,9 @@ public final class Config extends Command {
                     Desktop desktop = Desktop.getDesktop();
                     File file1 = new File(String.valueOf(configManager.CONFIG_DIRECTORY));
                     desktop.open(file1);
-                    afi.b("command.config.folder");
+                    ChatUtil.b("command.config.folder");
                 } catch (IllegalArgumentException | IOException illegalargumentexception) {
-                    afi.b("command.config.notfound");
+                    ChatUtil.b("command.config.notfound");
                 }
                 break;
             case 3:
@@ -77,13 +77,13 @@ public final class Config extends Command {
                             if (configfile != null) {
                                 CompletableFuture.runAsync(() -> {
                                     if (configfile.te()) {
-                                        afi.b("command.config.loaded", s1);
+                                        ChatUtil.b("command.config.loaded", s1);
                                         if (!s1.equalsIgnoreCase("latest")) {
-                                            afi.b("command.config.accident");
+                                            ChatUtil.b("command.config.accident");
                                         }
 
                                         try {
-                                            afj.sJ().bC(s1);
+                                            CommandUsageTracker.sJ().bC(s1);
                                         } catch (Throwable throwable) {
                                         }
                                     } else {
@@ -99,24 +99,24 @@ public final class Config extends Command {
                         case "save":
                             break;
                         default:
-                            afi.b("command.config.usage");
+                            ChatUtil.b("command.config.usage");
                             return;
                     }
                 }
 
                 if (s1.equalsIgnoreCase("latest")) {
-                    afi.b("command.config.reserved");
+                    ChatUtil.b("command.config.reserved");
                     return;
                 }
 
                 CompletableFuture.runAsync(() -> {
                     configManager.d(s1, false);
-                    afi.b("command.config.saved");
-                    afi.b("command.config.reminder");
+                    ChatUtil.b("command.config.saved");
+                    ChatUtil.b("command.config.reminder");
                 });
                 break;
             default:
-                afi.b("command.config.actions");
+                ChatUtil.b("command.config.actions");
         }
     }
 }

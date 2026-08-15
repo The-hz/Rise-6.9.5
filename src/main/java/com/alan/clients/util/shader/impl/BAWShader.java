@@ -1,15 +1,15 @@
 package com.alan.clients.util.shader.impl;
 
-import hackclient.rise.aix;
+import com.alan.clients.util.shader.base.RiseShader;
 import com.alan.clients.util.shader.base.RiseShaderProgram;
-import hackclient.rise.aiz;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 import java.util.List;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.opengl.Display;
 
-public class BAWShader extends aix {
+public class BAWShader extends RiseShader {
     private final RiseShaderProgram aPW = new RiseShaderProgram("baw.frag", "vertex.vsh");
     private Framebuffer aPX = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
 
@@ -17,9 +17,9 @@ public class BAWShader extends aix {
     }
 
     @Override
-    public void a(aiz var1, float var2, List<Runnable> runnables) {
+    public void a(ShaderRenderType var1, float var2, List<Runnable> runnables) {
         if (Display.isVisible()) {
-            if (var1 == aiz.OVERLAY) {
+            if (var1 == ShaderRenderType.OVERLAY) {
                 this.update();
                 this.aPW.getProgramId();
                 new ScaledResolution(aEg);

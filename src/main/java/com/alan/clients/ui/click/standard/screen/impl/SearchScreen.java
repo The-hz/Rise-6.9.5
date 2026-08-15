@@ -7,10 +7,10 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.ui.click.standard.components.ModuleComponent;
 import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.ui.click.standard.screen.Screen;
-import hackclient.rise.agk;
+import com.alan.clients.util.gui.ScrollUtil;
 import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -24,9 +24,9 @@ import rip.vantage.commons.util.time.StopWatch;
 public final class SearchScreen
 implements Screen,
 InstanceAccess {
-    public final TextBox azR = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(20, FontWeight.REGULAR), Color.WHITE, TextAlign.CENTER, ahd.ce("ui.search.text"), 150.0f);
+    public final TextBox azR = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(20, FontWeight.REGULAR), Color.WHITE, TextAlign.CENTER, Localization.ce("ui.search.text"), 150.0f);
     private final StopWatch azS = new StopWatch();
-    public agk scrollUtil = new agk();
+    public ScrollUtil scrollUtil = new ScrollUtil();
     public ArrayList<ModuleComponent> relevantModules = new ArrayList();
     private double axT = 255.0;
     private double azC;
@@ -155,7 +155,7 @@ InstanceAccess {
     }
 
     @Generated
-    public agk getScrollUtil() {
+    public ScrollUtil getScrollUtil() {
         return this.scrollUtil;
     }
 
@@ -185,7 +185,7 @@ InstanceAccess {
     }
 
     @Generated
-    public void setScrollUtil(agk scrollUtil) {
+    public void setScrollUtil(ScrollUtil scrollUtil) {
         this.scrollUtil = scrollUtil;
     }
 

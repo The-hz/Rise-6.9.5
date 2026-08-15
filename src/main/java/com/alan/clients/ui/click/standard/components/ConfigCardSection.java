@@ -7,8 +7,8 @@ import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2f;
-import hackclient.rise.afl;
-import hackclient.rise.agk;
+import com.alan.clients.util.dragging.Mouse;
+import com.alan.clients.util.gui.ScrollUtil;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +21,7 @@ public class ConfigCardSection extends ArrayList<ConfigCard> implements Instance
     private String name;
     private static float aAe = 10.0F;
     private Vector2f axI;
-    private agk scrollUtil = new agk();
+    private ScrollUtil scrollUtil = new ScrollUtil();
 
     public ConfigCardSection(int var1, String var2) {
         super(var1);
@@ -92,11 +92,11 @@ public class ConfigCardSection extends ArrayList<ConfigCard> implements Instance
     public boolean qz() {
         return this.isEmpty()
             ? false
-            : GUIUtil.a(this.getStandardClickGUI().axI, this.getStandardClickGUI().position, afl.getMouse())
+            : GUIUtil.a(this.getStandardClickGUI().axI, this.getStandardClickGUI().position, Mouse.getMouse())
                 && GUIUtil.a(
                     new Vector2f((float)(this.getStandardClickGUI().axI.x + this.getStandardClickGUI().sidebar.aym), this.axI.y),
                     new Vector2f((float)(this.getStandardClickGUI().position.x - this.getStandardClickGUI().sidebar.aym), this.get(0).oX().y + 20 + 10.0F),
-                    afl.getMouse()
+                    Mouse.getMouse()
                 );
     }
 
@@ -116,7 +116,7 @@ public class ConfigCardSection extends ArrayList<ConfigCard> implements Instance
     }
 
     @Generated
-    public agk getScrollUtil() {
+    public ScrollUtil getScrollUtil() {
         return this.scrollUtil;
     }
 
@@ -131,7 +131,7 @@ public class ConfigCardSection extends ArrayList<ConfigCard> implements Instance
     }
 
     @Generated
-    public void setScrollUtil(agk scrollUtil) {
+    public void setScrollUtil(ScrollUtil scrollUtil) {
         this.scrollUtil = scrollUtil;
     }
 }

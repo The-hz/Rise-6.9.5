@@ -1,13 +1,13 @@
-package hackclient.rise;
+package com.alan.clients.util.profiling;
 
 import lombok.Generated;
 
-public class ain {
+public class Profiler {
     private long aPl;
     private long aPm;
     private final String aPn;
 
-    public ain(String var1) {
+    public Profiler(String var1) {
         this.rt();
         this.aPn = var1;
     }

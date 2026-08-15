@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.localization;
 
 import com.alan.clients.Client;
 import com.alan.clients.util.localization.Locale;
@@ -9,10 +9,10 @@ import java.nio.charset.StandardCharsets;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
-public class ahd {
+public class Localization {
     private static boolean populated = false;
 
-    public ahd() {
+    public Localization() {
     }
 
     public static String ce(String var0) {

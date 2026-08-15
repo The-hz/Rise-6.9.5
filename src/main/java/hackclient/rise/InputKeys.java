@@ -5,7 +5,7 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
-public class agz {
+public class InputKeys {
     public static final int aKg = 18;
     public static final int aKh = 0;
     public static final int aKi = 0;
@@ -148,7 +148,7 @@ public class agz {
     private static final String[] keyName = new String[256];
     private static final Map<String, Integer> keyMap = new HashMap<>(253);
 
-    public agz() {
+    public InputKeys() {
     }
 
     public static synchronized String getKeyName(int var0) {
@@ -161,7 +161,7 @@ public class agz {
     }
 
     static {
-        Field[] afield = agz.class.getFields();
+        Field[] afield = InputKeys.class.getFields();
 
         try {
             Field[] afield1 = afield;

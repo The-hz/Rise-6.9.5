@@ -53,14 +53,14 @@ import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.api.type.Types;
 import com.viaversion.viaversion.protocols.v1_18_2to1_19.packet.ServerboundPackets1_19;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.adz;
-import hackclient.rise.aef;
-import hackclient.rise.afi;
+import hackclient.rise.EvictingList;
+import com.alan.clients.util.RayCastUtil;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.ServerUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import com.alan.clients.component.impl.player.PacketQueueComponent;
 import com.alan.clients.component.impl.player.GUIDetectionComponent;
@@ -204,7 +204,7 @@ public class KillAura extends Module {
    public BooleanValue velocityBoost;
    @EventLink
    public Listener<RightClickEvent> onAutoBlock;
-   public aka playerMotionAverage;
+   public Vector3d playerMotionAverage;
    public int lastDebugTick;
    public boolean pendingDisable;
    public NumberValue advancedPrediction;
@@ -223,7 +223,7 @@ public class KillAura extends Module {
    public NumberValue advancedAnchor;
    public BooleanValue preventServersideBlocking;
    public BooleanValue newYouNeedThisToggledOnCurreFake;
-   public aka aimPoint;
+   public Vector3d aimPoint;
    public long attackInterval;
    public BooleanValue sharpness;
    @EventLink
@@ -240,7 +240,7 @@ public class KillAura extends Module {
    public int cachedRotationsTick;
    public NumberValue advancedOvershootScale;
    public Random random;
-   public adz<EntityLivingBase> switchHistory;
+   public EvictingList<EntityLivingBase> switchHistory;
    public int overshootTicks;
    public Animation fovCircleYaw;
    public BooleanValue swords;
@@ -280,7 +280,7 @@ public class KillAura extends Module {
    public BoundsNumberValue rotationSpeed;
    public NumberValue advancedOvershootChance;
    public ListValue<MovementFix> movementCorrection;
-   public aka targetMotionAverage;
+   public Vector3d targetMotionAverage;
    public NumberValue rotationRange;
    public ModeValue rotationMode;
    public BooleanValue autoDisable;
@@ -573,7 +573,7 @@ public class KillAura extends Module {
       var160 = (float)Math.hypot(var180, var203);
       var213 = Math.max(0.001F, var160);
       var155 = this.advancedDeadzone.wo().floatValue();
-      var197 = aef.rayCast((Vector2f)var147, this.range.wo().doubleValue() + 0.15, this.getHitBoxExpand(), aEg.thePlayer, this.canHitThroughWalls());
+      var197 = RayCastUtil.rayCast((Vector2f)var147, this.range.wo().doubleValue() + 0.15, this.getHitBoxExpand(), aEg.thePlayer, this.canHitThroughWalls());
       int flag = (MovingObjectPosition)var197 != null && ((MovingObjectPosition)var197).typeOfHit == MovingObjectType.ENTITY && ((MovingObjectPosition)var197).entityHit == this.jE ? 1 : 0;
       if (var184_hi == 0 && flag != 0 && var160 <= var155) {
          this.holdTicks = Math.max(this.holdTicks, this.advancedHoldTicks.wo().intValue());
@@ -732,8 +732,8 @@ public class KillAura extends Module {
       this.on = null;
       this.overshootTicks = 0;
       this.aimPoint = null;
-      this.targetMotionAverage = new aka(0.0, 0.0, 0.0);
-      this.playerMotionAverage = new aka(0.0, 0.0, 0.0);
+      this.targetMotionAverage = new Vector3d(0.0, 0.0, 0.0);
+      this.playerMotionAverage = new Vector3d(0.0, 0.0, 0.0);
       this.holdTicks = 0;
       this.nextAimUpdate = 0L;
       this.triggerEntityId = Integer.MIN_VALUE;
@@ -1005,14 +1005,14 @@ public class KillAura extends Module {
       this.oe = 100;
       this.of = 0;
       this.lastTargetId = Integer.MIN_VALUE;
-      this.targetMotionAverage = new aka(0.0, 0.0, 0.0);
-      this.playerMotionAverage = new aka(0.0, 0.0, 0.0);
+      this.targetMotionAverage = new Vector3d(0.0, 0.0, 0.0);
+      this.playerMotionAverage = new Vector3d(0.0, 0.0, 0.0);
       this.triggerEntityId = Integer.MIN_VALUE;
       this.lastSlotFlickTick = -1;
       this.blockSlot = -1;
       this.lastBlockAttackTick = -1;
       this.rightClickTick = -1;
-      this.switchHistory = new adz<>(9);
+      this.switchHistory = new EvictingList<>(9);
       this.lastHitTicks = new HashMap<>();
       this.espTargets = new ArrayList<>();
       this.fovCircleRadius = new Animation(Easing.EASE_OUT_CUBIC, 300L);
@@ -1177,7 +1177,7 @@ public class KillAura extends Module {
                      && LastConnectionComponent.ip != null
                      && LastConnectionComponent.ip.contains("hypixel")
                      && aEg.thePlayer.ticksExisted % 5 == 0) {
-                     afi.b("USE THIS AUTOBLOCK CONFIG ON 1.20 NOT 1.8 instead use Watchdog 1.8 Autoblock on 1.8");
+                     ChatUtil.b("USE THIS AUTOBLOCK CONFIG ON 1.20 NOT 1.8 instead use Watchdog 1.8 Autoblock on 1.8");
                   }
 
                   if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13)
@@ -1185,7 +1185,7 @@ public class KillAura extends Module {
                      && LastConnectionComponent.ip.contains("hypixel")
                      && aEg.thePlayer.ticksExisted % 5 == 0
                      && this.lV.wo().getName().equals("Watchdog 1.8")) {
-                     afi.b("USE THIS AUTOBLOCK CONFIG ON 1.8 NOT 1.20 instead use Watchdog 1.12 Autoblock on 1.20");
+                     ChatUtil.b("USE THIS AUTOBLOCK CONFIG ON 1.8 NOT 1.20 instead use Watchdog 1.12 Autoblock on 1.20");
                   }
 
                   if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13)
@@ -1193,13 +1193,13 @@ public class KillAura extends Module {
                      && LastConnectionComponent.ip.contains("hypixel")
                      && aEg.thePlayer.ticksExisted % 5 == 0
                      && this.lV.wo().getName().equals("Watchdog")) {
-                     afi.b("USE THIS AUTOBLOCK CONFIG ON 1.8 NOT 1.20 instead use Watchdog 1.12 Autoblock on 1.20");
+                     ChatUtil.b("USE THIS AUTOBLOCK CONFIG ON 1.8 NOT 1.20 instead use Watchdog 1.12 Autoblock on 1.20");
                   }
 
                   if (this.rotationMode.wo().getName().equals("Grim") && aEg.thePlayer.ticksExisted % 20 == 0) {
                      int newerThan2 = ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_17) && !ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_20_5) ? 1 : 0;
                      if (newerThan2 == 0) {
-                        afi.b("OnTick rotation only works correctly on versions 1.17-1.20.6. Please switch to a version in that range.");
+                        ChatUtil.b("OnTick rotation only works correctly on versions 1.17-1.20.6. Please switch to a version in that range.");
                      }
                   }
 
@@ -2230,7 +2230,7 @@ public class KillAura extends Module {
       this.lastDebugTick = -1;
       this.resetAdvancedState();
       if (this.lV.wo().getName().equals("Watchdog 1.8") && blocking) {
-         afi.c("for Autoblock to work best keep Killaura enabled unless it's necessary to turn off");
+         ChatUtil.c("for Autoblock to work best keep Killaura enabled unless it's necessary to turn off");
       }
 
       if (this.isDualSword()) {
@@ -2448,12 +2448,12 @@ public class KillAura extends Module {
          var86 = System.currentTimeMillis();
          var74 = aEg.thePlayer.getDistanceToEntity(this.jE);
          if (this.aimPoint == null) {
-            this.aimPoint = (aka)var73;
+            this.aimPoint = (Vector3d)var73;
             this.nextAimUpdate = var86 + this.getAimReactionDelay(false);
          } else {
-            var103 = ((aka)var73).subtract(this.aimPoint);
+            var103 = ((Vector3d)var73).subtract(this.aimPoint);
             var84 = 0.028 + Math.min(0.2, var74 * 0.006);
-            var101 = ((aka)var103).wg();
+            var101 = ((Vector3d)var103).wg();
             var76 = 0.36 + Math.min(0.85, var74 * 0.07);
             int flag = var101 > var76 ? 1 : 0;
             int flag2 = var86 >= this.nextAimUpdate ? 1 : 0;
@@ -2461,7 +2461,7 @@ public class KillAura extends Module {
                var89 = this.advancedAnchor.wo().doubleValue();
                var98 = Math.min(0.7, Math.max(0.08, var89 + var101 * 0.32));
                var96 = ((AxisAlignedBB)var95).expand(0.12, 0.12, 0.12);
-               this.aimPoint = this.clampToBox(this.aimPoint.e(((aka)var103).ag(var98)), (AxisAlignedBB)var96);
+               this.aimPoint = this.clampToBox(this.aimPoint.e(((Vector3d)var103).ag(var98)), (AxisAlignedBB)var96);
                this.nextAimUpdate = var86 + this.getAimReactionDelay((flag) != 0);
             }
          }
@@ -2476,7 +2476,7 @@ public class KillAura extends Module {
    public void b(Vector2f vec2, double var2) {
       Object var10 = null;
       if (vec2 != null) {
-         var10 = aef.rayCast(vec2, var2, this.getHitBoxExpand(), aEg.thePlayer, this.canHitThroughWalls());
+         var10 = RayCastUtil.rayCast(vec2, var2, this.getHitBoxExpand(), aEg.thePlayer, this.canHitThroughWalls());
          if ((MovingObjectPosition)var10 != null && ((MovingObjectPosition)var10).typeOfHit == MovingObjectType.ENTITY) {
             this.movingObjectPosition = (MovingObjectPosition)var10;
          }
@@ -2493,7 +2493,7 @@ public class KillAura extends Module {
       } else {
          if (!this.hasTwoSwords()) {
             if (!this.warnedNoSecondSword) {
-               afi.b("Dual Sword Auto Block requires two swords in your hotbar. Get a second sword.");
+               ChatUtil.b("Dual Sword Auto Block requires two swords in your hotbar. Get a second sword.");
                this.warnedNoSecondSword = true;
             }
          } else {
@@ -2565,21 +2565,21 @@ public class KillAura extends Module {
       }
    }
 
-   public aka getPredictedAimPoint() {
+   public Vector3d getPredictedAimPoint() {
       Object var15 = null;
       double var16 = 0.0;
       double var18 = 0.0;
       double var20 = 0.0;
       Object var23 = null;
       Object var25 = null;
-      var16 = aEg.thePlayer.Ty().v(0.0, aEg.thePlayer.getEyeHeight(), 0.0).g(new aka(this.jE.posX, this.jE.posY + this.jE.height * 0.75, this.jE.posZ));
+      var16 = aEg.thePlayer.Ty().v(0.0, aEg.thePlayer.getEyeHeight(), 0.0).g(new Vector3d(this.jE.posX, this.jE.posY + this.jE.height * 0.75, this.jE.posZ));
       var20 = Math.min(3.5, Math.max(0.0, this.advancedPrediction.wo().doubleValue() + var16 * 0.017));
       var23 = this.targetMotionAverage.subtract(this.playerMotionAverage);
       var18 = Math.max(0.35, Math.min(this.jE.height * 0.82, this.jE.height - 0.12));
-      var25 = (new aka(this.jE.posX, this.jE.posY + var18, this.jE.posZ)).e(((aka)var23).ag(var20));
+      var25 = (new Vector3d(this.jE.posX, this.jE.posY + var18, this.jE.posZ)).e(((Vector3d)var23).ag(var20));
       var15 = this.jE.getEntityBoundingBox().expand(0.18, 0.1, 0.18);
-      var25 = this.clampToBox((aka)var25, (AxisAlignedBB)var15);
-      return (aka)var25;
+      var25 = this.clampToBox((Vector3d)var25, (AxisAlignedBB)var15);
+      return (Vector3d)var25;
    }
 
    public void switchToOtherSword() {
@@ -2595,14 +2595,14 @@ public class KillAura extends Module {
       }
    }
 
-   public aka clampToBox(aka var1, AxisAlignedBB box) {
+   public Vector3d clampToBox(Vector3d var1, AxisAlignedBB box) {
       double var13 = 0.0;
       double var15 = 0.0;
       double var17 = 0.0;
       var15 = Math.max(box.minX, Math.min(var1.x, box.maxX));
       var13 = Math.max(box.minY, Math.min(var1.y, box.maxY));
       var17 = Math.max(box.minZ, Math.min(var1.z, box.maxZ));
-      return new aka(var15, var13, var17);
+      return new Vector3d(var15, var13, var17);
    }
 
    public boolean canDisplaceKnockback(EntityLivingBase living) {
@@ -2640,7 +2640,7 @@ public class KillAura extends Module {
       this.lastDebugTick = -1;
       this.resetAdvancedState();
       if (this.rightClickOnly.wo() && Math.random() > 0.7) {
-         afi.b("hold right click to autoblock or turn off right click to autoblock");
+         ChatUtil.b("hold right click to autoblock or turn off right click to autoblock");
       }
    }
 
@@ -3010,7 +3010,7 @@ public class KillAura extends Module {
       Object var16 = null;
       Object var17 = null;
       if (!blocking || !var1) {
-         var14 = aef.c(RotationComponent.fl, 3.0);
+         var14 = RayCastUtil.c(RotationComponent.fl, 3.0);
          if (var2 && (MovingObjectPosition)var14 != null && ((MovingObjectPosition)var14).typeOfHit == MovingObjectType.ENTITY) {
             this.c((MovingObjectPosition)var14);
          }
@@ -3121,12 +3121,12 @@ public class KillAura extends Module {
    public void updateMotionAverages() {
       Object var5 = null;
       Object var6 = null;
-      var5 = new aka(this.jE.posX - this.jE.lastTickPosX, this.jE.posY - this.jE.lastTickPosY, this.jE.posZ - this.jE.lastTickPosZ);
-      var6 = new aka(
+      var5 = new Vector3d(this.jE.posX - this.jE.lastTickPosX, this.jE.posY - this.jE.lastTickPosY, this.jE.posZ - this.jE.lastTickPosZ);
+      var6 = new Vector3d(
          aEg.thePlayer.posX - aEg.thePlayer.lastTickPosX, aEg.thePlayer.posY - aEg.thePlayer.lastTickPosY, aEg.thePlayer.posZ - aEg.thePlayer.lastTickPosZ
       );
-      this.targetMotionAverage = this.targetMotionAverage.ag(0.72).e(((aka)var5).ag(0.28));
-      this.playerMotionAverage = this.playerMotionAverage.ag(0.76).e(((aka)var6).ag(0.24));
+      this.targetMotionAverage = this.targetMotionAverage.ag(0.72).e(((Vector3d)var5).ag(0.28));
+      this.playerMotionAverage = this.playerMotionAverage.ag(0.76).e(((Vector3d)var6).ag(0.24));
    }
 
    public boolean containsMaterial(AxisAlignedBB box, Material material) {
@@ -3278,10 +3278,10 @@ public class KillAura extends Module {
          if (!((String)var51).equals(this.lastDebugLine) || aEg.thePlayer.ticksExisted - this.lastDebugTick >= 8) {
             this.lastDebugLine = (String)var51;
             this.lastDebugTick = aEg.thePlayer.ticksExisted;
-            String prefix = afi.getPrefix();
+            String prefix = ChatUtil.getPrefix();
             var69 = (String)var51;
             var52 = prefix;
-            afi.c((String)var52 + "[KD] " + (String)var69);
+            ChatUtil.c((String)var52 + "[KD] " + (String)var69);
          }
       }
    }
@@ -3641,10 +3641,10 @@ public class KillAura extends Module {
             break;
          case 1:
             int random2 = (int)(Math.random() * 1.0);
-            var143 = new aka(this.jE.posX, this.jE.posY, this.jE.posZ);
-            var144 = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
+            var143 = new Vector3d(this.jE.posX, this.jE.posY, this.jE.posZ);
+            var144 = new Vector3d(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
             var162 = MoveUtil.a(this.jE, new Vector2f(0.0F, 1.0F), random2, aEg.thePlayer.isSprinting());
-            this.jE.setPosition(((aka)var162).x, ((aka)var162).y, ((aka)var162).z);
+            this.jE.setPosition(((Vector3d)var162).x, ((Vector3d)var162).y, ((Vector3d)var162).z);
             aEg.thePlayer
                .setPosition(
                   aEg.thePlayer.posX + aEg.thePlayer.motionX * random2,
@@ -3652,8 +3652,8 @@ public class KillAura extends Module {
                   aEg.thePlayer.posZ + aEg.thePlayer.motionZ * random2
                );
             var181 = RotationUtil.m(this.c(this.jE));
-            this.jE.setPosition(((aka)var143).x, ((aka)var143).y, ((aka)var143).z);
-            aEg.thePlayer.setPosition(((aka)var144).x, ((aka)var144).y, ((aka)var144).z);
+            this.jE.setPosition(((Vector3d)var143).x, ((Vector3d)var143).y, ((Vector3d)var143).z);
+            aEg.thePlayer.setPosition(((Vector3d)var144).x, ((Vector3d)var144).y, ((Vector3d)var144).z);
             var181 = this.applyKnockbackDisplacement(this.jE, (Vector2f)var181);
             if (var179 != 0.0F) {
                if (Math.random() > 0.1) {
@@ -3692,11 +3692,11 @@ public class KillAura extends Module {
             break;
          case 3:
             var170 = this.applyKnockbackDisplacement(this.jE, this.c(this.jE));
-            var134 = aef.rayCast((Vector2f)var170, this.range.wo().floatValue(), this.getHitBoxExpand(), aEg.thePlayer, this.canHitThroughWalls());
+            var134 = RayCastUtil.rayCast((Vector2f)var170, this.range.wo().floatValue(), this.getHitBoxExpand(), aEg.thePlayer, this.canHitThroughWalls());
             int flag = (MovingObjectPosition)var134 != null && ((MovingObjectPosition)var134).entityHit == this.jE ? 1 : 0;
             int var155_hi = 1;
             if (this.rayCast.wo()) {
-               var186 = aef.rayCast((Vector2f)var170, this.range.wo().floatValue(), this.getHitBoxExpand(), aEg.thePlayer, this.canHitThroughWalls());
+               var186 = RayCastUtil.rayCast((Vector2f)var170, this.range.wo().floatValue(), this.getHitBoxExpand(), aEg.thePlayer, this.canHitThroughWalls());
                var155_hi = (MovingObjectPosition)var186 != null && ((MovingObjectPosition)var186).entityHit == this.jE ? 1 : 0;
             }
 

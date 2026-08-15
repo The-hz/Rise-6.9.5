@@ -15,9 +15,9 @@ import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.pathfinding.unlegit.MainPathFinder;
-import com.alan.clients.util.pathfinding.unlegit.ahy;
+import com.alan.clients.util.pathfinding.unlegit.Vec3;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.component.impl.player.GUIDetectionComponent;
 import java.util.Collections;
 import java.util.List;
@@ -79,17 +79,17 @@ public final class Nuker extends Module {
                 new Thread(
                         () -> {
                             List list = MainPathFinder.a(
-                                new ahy(var1.getPosX(), var1.getPosY(), var1.getPosZ()), new ahy(blockpos.getX(), blockpos.getY(), blockpos.getZ()), false
+                                new Vec3(var1.getPosX(), var1.getPosY(), var1.getPosZ()), new Vec3(blockpos.getX(), blockpos.getY(), blockpos.getZ()), false
                             );
                             if (list != null) {
-                                for (ahy ahyx : (Iterable<ahy>)list) {
+                                for (Vec3 ahyx : (Iterable<Vec3>)list) {
                                     PacketUtil.sendNoEvent(new C04PacketPlayerPosition(ahyx.getX(), ahyx.getY(), ahyx.getZ(), false));
                                 }
 
                                 this.nuke(d0, blockpos.getX(), blockpos.getY(), blockpos.getZ());
                                 Collections.reverse(list);
 
-                                for (ahy ahy : (Iterable<ahy>)list) {
+                                for (Vec3 ahy : (Iterable<Vec3>)list) {
                                     PacketUtil.sendNoEvent(new C04PacketPlayerPosition(ahy.getX(), ahy.getY(), ahy.getZ(), false));
                                 }
                             }
@@ -120,7 +120,7 @@ public final class Nuker extends Module {
                         BlockPos blockpos = new BlockPos(var3 + d0, var5 + d1, var7 + d2);
                         if (!(aEg.theWorld.getBlockState(blockpos).getBlock() instanceof BlockAir)) {
                             if (this.rotations.wo()) {
-                                Vector2f vector2f = RotationUtil.d(new aka(blockpos.getX(), blockpos.getY(), blockpos.getZ()));
+                                Vector2f vector2f = RotationUtil.d(new Vector3d(blockpos.getX(), blockpos.getY(), blockpos.getZ()));
                                 PacketUtil.sendNoEvent(new C05PacketPlayerLook(vector2f.x, vector2f.y, false));
                             }
 

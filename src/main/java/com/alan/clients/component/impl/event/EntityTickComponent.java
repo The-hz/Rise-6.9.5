@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
@@ -18,7 +18,7 @@ public class EntityTickComponent extends Component {
     public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         if (aEg != null && aEg.theWorld != null && !var0.isCancelled()) {
             Packet packet = var0.dq();
-            if (packet instanceof C08PacketPlayerBlockPlacement && !((C08PacketPlayerBlockPlacement)packet).getPosition().h(new aka(-1.0, -1.0, -1.0))) {
+            if (packet instanceof C08PacketPlayerBlockPlacement && !((C08PacketPlayerBlockPlacement)packet).getPosition().h(new Vector3d(-1.0, -1.0, -1.0))) {
                 aEg.thePlayer.crH = 0;
             }
         }

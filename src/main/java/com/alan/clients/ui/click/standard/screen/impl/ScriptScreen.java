@@ -21,7 +21,7 @@ import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.ui.click.standard.components.ConfigCard;
 import com.alan.clients.ui.click.standard.components.ConfigCardSection;
 import com.alan.clients.util.NetworkUtil;
-import hackclient.rise.agk;
+import com.alan.clients.util.gui.ScrollUtil;
 import com.alan.clients.util.tuples.Triple;
 import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import com.alan.clients.util.font.FontManager;
@@ -43,7 +43,7 @@ import rip.vantage.network.core.VantageNetwork;
 public final class ScriptScreen
 implements Screen,
 InstanceAccess {
-    public agk scrollUtil = new agk();
+    public ScrollUtil scrollUtil = new ScrollUtil();
     public static int auk = 10;
     public static boolean azE;
     private ConfigCardSection azF = new ConfigCardSection(Arrays.asList(new ConfigCard("", "Loading"), new ConfigCard("", "Loading"), new ConfigCard("", "Loading")), "Featured Configs");
@@ -202,7 +202,7 @@ InstanceAccess {
     }
 
     @Generated
-    public agk getScrollUtil() {
+    public ScrollUtil getScrollUtil() {
         return this.scrollUtil;
     }
 
@@ -247,7 +247,7 @@ InstanceAccess {
     }
 
     @Generated
-    public void a(agk scrollUtil) {
+    public void a(ScrollUtil scrollUtil) {
         this.scrollUtil = scrollUtil;
     }
 

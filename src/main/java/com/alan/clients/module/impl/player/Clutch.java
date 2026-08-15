@@ -11,14 +11,14 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BoundsNumberValue;
-import hackclient.rise.aef;
+import com.alan.clients.util.RayCastUtil;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.EnumFacingOffset;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
@@ -77,8 +77,8 @@ public class Clutch extends Module {
                                 if (i == SlotComponent.bQ()) {
                                     if (!BadPacketsComponent.bad(false, true, false, false, true)
                                         && this.placeTicks > MathUtil.l(this.placeDelay.wo().intValue(), this.placeDelay.wA().intValue())
-                                        && aef.overBlock(this.facing.getEnumFacing(), this.placeBlock, true)) {
-                                        Vec3 vec3 = aef.c(RotationComponent.fk, aEg.playerController.getBlockReachDistance()).hitVec;
+                                        && RayCastUtil.overBlock(this.facing.getEnumFacing(), this.placeBlock, true)) {
+                                        Vec3 vec3 = RayCastUtil.c(RotationComponent.fk, aEg.playerController.getBlockReachDistance()).hitVec;
                                         PlayerControllerMP playercontrollermp = aEg.playerController;
                                         EntityPlayerSP entityplayersp = aEg.thePlayer;
                                         WorldClient worldclient = aEg.theWorld;
@@ -131,7 +131,7 @@ public class Clutch extends Module {
     }
 
     public void updateRotations() {
-        if (this.placeTicks > 0 && !aef.a(RotationComponent.fk, this.facing.getEnumFacing(), this.placeBlock, true)) {
+        if (this.placeTicks > 0 && !RayCastUtil.a(RotationComponent.fk, this.facing.getEnumFacing(), this.placeBlock, true)) {
             this.findRotations(0);
         }
 
@@ -149,7 +149,7 @@ public class Clutch extends Module {
 
         for (int i = -180 + var1; i <= 180; i += 45) {
             entityplayersp.setPosition(entityplayersp.posX, entityplayersp.posY - d0, entityplayersp.posZ);
-            MovingObjectPosition movingobjectposition = aef.c(new Vector2f(entityplayersp.pl + i, 0.0F), 4.5);
+            MovingObjectPosition movingobjectposition = RayCastUtil.c(new Vector2f(entityplayersp.pl + i, 0.0F), 4.5);
             entityplayersp.setPosition(entityplayersp.posX, entityplayersp.posY + d0, entityplayersp.posZ);
             if (movingobjectposition != null
                 && new BlockPos(this.placeBlock).equals(movingobjectposition.getBlockPos())
@@ -161,7 +161,7 @@ public class Clutch extends Module {
             }
         }
 
-        Vector2f vector2f1 = RotationUtil.a(new aka(this.placeBlock.getX(), this.placeBlock.getY(), this.placeBlock.getZ()), this.facing.getEnumFacing());
+        Vector2f vector2f1 = RotationUtil.a(new Vector3d(this.placeBlock.getX(), this.placeBlock.getY(), this.placeBlock.getZ()), this.facing.getEnumFacing());
         this.yaw = vector2f1.x;
         this.pitch = vector2f1.y;
     }

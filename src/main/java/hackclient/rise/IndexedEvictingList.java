@@ -2,7 +2,7 @@ package hackclient.rise;
 
 import java.util.Collection;
 
-public class IndexedEvictingList<T> extends adz<T> implements Cloneable {
+public class IndexedEvictingList<T> extends EvictingList<T> implements Cloneable {
     public IndexedEvictingList(int var1) {
         super(var1);
     }

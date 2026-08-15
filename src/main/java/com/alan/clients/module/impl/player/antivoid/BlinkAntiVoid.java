@@ -9,19 +9,19 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.component.impl.player.FallDistanceComponent;
 
 public class BlinkAntiVoid extends Mode<AntiVoid> {
-    private aka position;
-    private aka motion;
+    private Vector3d position;
+    private Vector3d motion;
     private Vector2f rotation;
     @EventLink
     public final Listener<PostMotionEvent> onPreUpdate = var1x -> {
         if (aEg.thePlayer.ticksExisted > 60) {
             if (this.position == null || this.motion == null || this.rotation == null || PlayerUtil.a(50.0, true)) {
-                this.position = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
-                this.motion = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
+                this.position = new Vector3d(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
+                this.motion = new Vector3d(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
                 this.rotation = new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
             } else if (FallDistanceComponent.cY > 4.0F) {
                 aEg.thePlayer.setPosition(this.position.x, this.position.y, this.position.z);

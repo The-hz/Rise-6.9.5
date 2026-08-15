@@ -7,7 +7,7 @@ import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -28,7 +28,7 @@ public class StringValueComponent extends ValueComponent {
         this.position = position;
         StringValue stringvalue = (StringValue)this.value;
         this.height = 28.0;
-        String s = ahd.ce(this.value.getName());
+        String s = Localization.ce(this.value.getName());
         FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, this.position.x, this.position.y, UIColors.SECONDARY_TEXT.Z(this.ayD));
         this.azo.setColor(ColorUtil.withBlue(this.azo.getColor(), this.ayD));
         this.position = new Vector2d(this.position.x, this.position.y + 14.0);

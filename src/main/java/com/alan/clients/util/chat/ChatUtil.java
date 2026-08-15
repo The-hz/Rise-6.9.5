@@ -1,16 +1,17 @@
-package hackclient.rise;
+package com.alan.clients.util.chat;
 
 import com.alan.clients.Client;
 import com.alan.clients.util.interfaces.InstanceAccess;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.packet.PacketUtil;
 import lombok.Generated;
 import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.util.s;
 
-public final class afi implements InstanceAccess {
+public final class ChatUtil implements InstanceAccess {
     public static void b(Object var0, Object... var1) {
         if (aEg.thePlayer != null) {
-            String s = String.format(ahd.ce(var0.toString()), var1);
+            String s = String.format(Localization.ce(var0.toString()), var1);
             aEg.thePlayer.addChatMessage(new s(getPrefix() + s));
             System.out.println(var0);
         }
@@ -37,7 +38,7 @@ public final class afi implements InstanceAccess {
     }
 
     @Generated
-    private afi() {
+    private ChatUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 }

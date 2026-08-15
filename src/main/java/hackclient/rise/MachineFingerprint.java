@@ -8,10 +8,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-public class aju {
+public class MachineFingerprint {
     static String hwid = bytesToHex(generateHWID()) + "dleotn6oc94kb" + vX();
 
-    public aju() {
+    public MachineFingerprint() {
     }
 
     public static String vW() {

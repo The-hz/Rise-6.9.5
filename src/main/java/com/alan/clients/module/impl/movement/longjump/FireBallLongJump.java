@@ -13,7 +13,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.SlotUtil;
 import net.minecraft.init.Items;
@@ -87,7 +87,7 @@ public class FireBallLongJump extends Mode<LongJump> {
     public void onEnable() {
         this.tick = 0;
         if (this.mode.wo().getName().equals("Hypixel")) {
-            afi.b("Don't enable on bridges, the ac falses, also make sure you take the velocity when on the ground.");
+            ChatUtil.b("Don't enable on bridges, the ac falses, also make sure you take the velocity when on the ground.");
         }
     }
 }

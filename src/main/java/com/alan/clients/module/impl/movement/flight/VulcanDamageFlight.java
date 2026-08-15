@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.DamageUtil;
 import com.alan.clients.util.player.DamageType;
@@ -73,7 +73,7 @@ public class VulcanDamageFlight extends Mode<Flight> {
         if (this.selfDamageMayFlagMoreIfNotFlyWillWaitForFallDamage.wo()) {
             DamageUtil.damagePlayer(DamageType.POSITION, 3.42F, 1, false, false);
         } else {
-            afi.b("take fall damage or turn on self damage");
+            ChatUtil.b("take fall damage or turn on self damage");
         }
     }
 

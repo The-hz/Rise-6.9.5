@@ -15,13 +15,13 @@ import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.ui.menu.impl.main.MainMenu;
 import com.alan.clients.util.NetworkUtil;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.aiv;
-import hackclient.rise.aiz;
-import hackclient.rise.aju;
+import com.alan.clients.util.shader.RiseShaders;
+import com.alan.clients.util.shader.base.ShaderRenderType;
+import hackclient.rise.MachineFingerprint;
 import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -46,7 +46,7 @@ extends Menu {
     public Animation fadeAnimation;
     public String aCB = null;
     public TextBox emailBox;
-    public agc aCu = FontManager.MAIN.a(64, FontWeight.LIGHT);
+    public Font aCu = FontManager.MAIN.a(64, FontWeight.LIGHT);
     public boolean aCC;
     public boolean aCD;
     public Animation animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
@@ -91,7 +91,7 @@ extends Menu {
             return;
         }
         try {
-            String string2 = aju.vW();
+            String string2 = MachineFingerprint.vW();
             if (this.aCB != null) {
                 this.aCB.equals(string2);
             }
@@ -144,7 +144,7 @@ extends Menu {
             rip.vantage.network.handler.BackendWebSocket.eRC.aX();
             int aKi2 = (int)(b2.isSuccess() ? 1L : 0L);
             this.aCC = false;
-            if (aKi2 != 0 && (string2 = b2.getExpectedHwid()) != null && !string2.isEmpty() && !rip.vantage.security.IntegrityGuard.aL(string = aju.vW(), string2)) {
+            if (aKi2 != 0 && (string2 = b2.getExpectedHwid()) != null && !string2.isEmpty() && !rip.vantage.security.IntegrityGuard.aL(string = MachineFingerprint.vW(), string2)) {
                 System.out.println("EC61");
                 aKi2 = 0;
                 this.aCC = true;
@@ -166,7 +166,7 @@ extends Menu {
             }
             this.aX(b2.getE());
             String string3 = null;
-            string3 = aju.vW();
+            string3 = MachineFingerprint.vW();
             StringSelection stringSelection = new StringSelection(string3);
             java.awt.datatransfer.Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(stringSelection, new StringSelection("Rise"));
@@ -218,7 +218,7 @@ extends Menu {
     @Override
     public void drawScreen(int n, int n2, float f) {
         if (this.fadeAnimation.getValue() < 255.0) {
-            aiv.aPL.a(aiz.OVERLAY, f, null);
+            RiseShaders.aPL.a(ShaderRenderType.OVERLAY, f, null);
         }
         ScaledResolution scaledResolution = LoginMenu.aEg.jY;
         this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.d(0.0, 0.0, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight(), Color.BLACK));
@@ -235,7 +235,7 @@ extends Menu {
             if (this.bN.T(3000L)) {
                 if (this.aCz) {
                     try {
-                        String string = aju.vW();
+                        String string = MachineFingerprint.vW();
                         StringSelection stringSelection = new StringSelection(string);
                         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, new StringSelection("Rise"));
                     } catch (Exception ex) {

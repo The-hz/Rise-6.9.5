@@ -1,11 +1,11 @@
 package com.alan.clients.packet;
 
-import hackclient.rise.ahl;
+import com.alan.clients.packet.CustomPacket;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 
-public class BlockPlacementPacket extends ahl {
+public class BlockPlacementPacket extends CustomPacket {
     private final C08PacketPlayerBlockPlacement packet;
 
     public BlockPlacementPacket(C08PacketPlayerBlockPlacement packet) {

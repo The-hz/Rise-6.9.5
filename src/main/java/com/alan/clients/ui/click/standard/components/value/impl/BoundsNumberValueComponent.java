@@ -9,7 +9,7 @@ import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
@@ -71,7 +71,7 @@ public class BoundsNumberValueComponent extends ValueComponent {
         }
 
         String s2 = s + " " + s1;
-        String s3 = ahd.ce(this.value.getName());
+        String s3 = Localization.ce(this.value.getName());
         float f = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s3) + 7;
         this.ayQ = GUIUtil.c(this.position.x + f - 5.0, this.position.y - 3.5, 110.0, this.height, var2, var3);
         if (this.ayQ) {

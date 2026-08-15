@@ -2,7 +2,7 @@ package com.alan.clients.util.dragging;
 
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.vector.Vector2d;
-import hackclient.rise.afl;
+import com.alan.clients.util.dragging.Mouse;
 import rip.vantage.commons.util.time.StopWatch;
 
 public class Drag {
@@ -19,7 +19,7 @@ public class Drag {
     }
 
     public void al(int var1) {
-        Vector2d vector2d = afl.getMouse();
+        Vector2d vector2d = Mouse.getMouse();
         if (GUIUtil.mouseOver(this.apP, this.aHe, vector2d.x, vector2d.y) && var1 == 0) {
             this.dragging = true;
             this.bS.x = this.atg.x - vector2d.x;
@@ -28,7 +28,7 @@ public class Drag {
     }
 
     public void cj() {
-        Vector2d vector2d = afl.getMouse();
+        Vector2d vector2d = Mouse.getMouse();
         if (this.dragging) {
             if (this.atg == null) {
                 this.atg = new Vector2d(0.0, 0.0);

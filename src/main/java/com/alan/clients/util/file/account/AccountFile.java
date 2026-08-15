@@ -7,10 +7,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import hackclient.rise.AltAccount;
 import hackclient.rise.AltType;
-import hackclient.rise.aeo;
+import com.alan.clients.util.account.impl.CrackedAccount;
 import com.alan.clients.util.account.impl.MicrosoftAccount;
 import com.alan.clients.util.account.impl.RaveAccount;
-import com.alan.clients.util.file.account.afu;
+import com.alan.clients.util.file.account.AccountFileSwitchMap;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -69,7 +69,7 @@ extends com.alan.clients.util.file.File {
                     ael2.b(jsonObject2);
                     switch (ael2.sg()) {
                         case CRACKED: {
-                            ael2 = new aeo("");
+                            ael2 = new CrackedAccount("");
                             ael2.b(jsonObject2);
                             break;
                         }

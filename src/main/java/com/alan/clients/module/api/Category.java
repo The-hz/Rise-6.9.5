@@ -6,7 +6,7 @@ import com.alan.clients.ui.click.standard.screen.impl.ScriptScreen;
 import com.alan.clients.ui.click.standard.screen.impl.LanguageScreen;
 import com.alan.clients.ui.click.standard.screen.impl.SearchScreen;
 import com.alan.clients.ui.click.standard.screen.impl.ThemeScreen;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.font.FontManager;
 import lombok.Generated;
 
@@ -25,11 +25,11 @@ public enum Category {
     private final String name;
     private final String icon;
     private final int color;
-    private final agc fontRenderer;
+    private final Font fontRenderer;
     public final Screen clickGUIScreen;
     private static final Category[] $VALUES = createValues();
 
-    Category(String var3, agc var4, String var5, int color, Screen screen) {
+    Category(String var3, Font var4, String var5, int color, Screen screen) {
         this.name = var3;
         this.icon = var5;
         this.color = color;
@@ -43,7 +43,7 @@ public enum Category {
     }
 
     @Generated
-    public agc getFontRenderer() {
+    public Font getFontRenderer() {
         return this.fontRenderer;
     }
 

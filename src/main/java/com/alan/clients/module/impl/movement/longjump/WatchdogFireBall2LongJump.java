@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFireball;
@@ -162,17 +162,17 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
 
         if (aEg.thePlayer.ae == 24) {
             aEg.thePlayer.motionY += 0.01;
-            afi.c(aEg.thePlayer.motionY);
+            ChatUtil.c(aEg.thePlayer.motionY);
         }
 
         if (aEg.thePlayer.ae == 25) {
             aEg.thePlayer.motionY += 0.015;
-            afi.c(aEg.thePlayer.motionY);
+            ChatUtil.c(aEg.thePlayer.motionY);
         }
 
         if (aEg.thePlayer.ae == 26) {
             aEg.thePlayer.motionY += 0.015;
-            afi.c(aEg.thePlayer.motionY);
+            ChatUtil.c(aEg.thePlayer.motionY);
         }
 
         if (aEg.thePlayer.ae == 33) {
@@ -181,12 +181,12 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
 
         if (aEg.thePlayer.ae == 35) {
             aEg.thePlayer.motionY += 0.015;
-            afi.c(aEg.thePlayer.motionY);
+            ChatUtil.c(aEg.thePlayer.motionY);
         }
 
         if (aEg.thePlayer.ae == 38) {
             aEg.thePlayer.motionY += 0.03;
-            afi.c(aEg.thePlayer.motionY);
+            ChatUtil.c(aEg.thePlayer.motionY);
         }
 
         if (aEg.thePlayer.hurtTime == 8) {
@@ -237,7 +237,7 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
     @Override
     public void onEnable() {
         if (this.findFireballSlot() == -1) {
-            afi.b("Could not find Fireball");
+            ChatUtil.b("Could not find Fireball");
             this.toggle();
         } else {
             boosting = true;

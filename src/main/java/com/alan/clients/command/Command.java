@@ -1,7 +1,7 @@
 package com.alan.clients.command;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import lombok.Generated;
 
 public abstract class Command implements InstanceAccess {
@@ -16,12 +16,12 @@ public abstract class Command implements InstanceAccess {
     public abstract void execute(String[] var1);
 
     protected final void error() {
-        afi.b("§cInvalid command arguments.");
+        ChatUtil.b("§cInvalid command arguments.");
     }
 
     protected final void error(String var1) {
         this.error();
-        afi.b("Correct Usage: " + var1);
+        ChatUtil.b("Correct Usage: " + var1);
     }
 
     @Generated

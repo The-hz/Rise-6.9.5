@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util.gui;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.math.MathUtil;
@@ -10,7 +10,7 @@ import lombok.Generated;
 import org.lwjgl.input.Mouse;
 import rip.vantage.commons.util.time.StopWatch;
 
-public class agk implements InstanceAccess {
+public class ScrollUtil implements InstanceAccess {
     public double aJc;
     public double scroll;
     public double aJd = 25.0;
@@ -21,7 +21,7 @@ public class agk implements InstanceAccess {
     public boolean aJg;
     private boolean RE;
 
-    public agk() {
+    public ScrollUtil() {
     }
 
     public void qx() {

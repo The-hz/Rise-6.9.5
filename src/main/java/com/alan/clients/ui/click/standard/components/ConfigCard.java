@@ -9,8 +9,8 @@ import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2f;
-import hackclient.rise.afl;
-import hackclient.rise.agc;
+import com.alan.clients.util.dragging.Mouse;
+import com.alan.clients.util.font.Font;
 import lombok.Generated;
 import net.minecraft.util.StringUtils;
 import rip.vantage.commons.util.time.StopWatch;
@@ -24,7 +24,7 @@ public class ConfigCard implements InstanceAccess {
     private Animation aAc = new Animation(Easing.EASE_OUT_EXPO, 500L);
     private Vector2f axI;
     private StopWatch asY;
-    private agc aAd = FontManager.MAIN.a(20, FontWeight.REGULAR);
+    private Font aAd = FontManager.MAIN.a(20, FontWeight.REGULAR);
 
     public ConfigCard(String var1, String var2) {
         this.title = StringUtils.b(this.aAd, var2, 86.450005F - 20);
@@ -64,7 +64,7 @@ public class ConfigCard implements InstanceAccess {
     }
 
     public boolean qz() {
-        return GUIUtil.a(this.axI, this.alh, afl.getMouse().getX(), afl.getMouse().getY());
+        return GUIUtil.a(this.axI, this.alh, Mouse.getMouse().getX(), Mouse.getMouse().getY());
     }
 
     public void k(Vector2f vec2) {
@@ -112,7 +112,7 @@ public class ConfigCard implements InstanceAccess {
     }
 
     @Generated
-    public agc qE() {
+    public Font qE() {
         return this.aAd;
     }
 
@@ -157,7 +157,7 @@ public class ConfigCard implements InstanceAccess {
     }
 
     @Generated
-    public void b(agc var1) {
+    public void b(Font var1) {
         this.aAd = var1;
     }
 }

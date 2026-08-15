@@ -11,9 +11,9 @@ import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.adz;
-import hackclient.rise.aef;
-import hackclient.rise.afi;
+import hackclient.rise.EvictingList;
+import com.alan.clients.util.RayCastUtil;
+import com.alan.clients.util.chat.ChatUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.play.client.m;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
@@ -22,13 +22,13 @@ import net.minecraft.util.MovingObjectPosition;
 @ModuleInfo(aliases = "module.ghost.aimbacktrack.name", description = "module.ghost.aimbacktract.description", category = Category.GHOST)
 public class AimBacktrack extends Module {
     private final NumberValue backtrack = new NumberValue("Rotation Backtrack Amount", this, 1, 1, 20, 1);
-    private adz<Vector2f> previousRotations = new adz<>(1);
+    private EvictingList<Vector2f> previousRotations = new EvictingList<>(1);
     private boolean attacked;
     private int lastSize;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (this.lastSize != this.backtrack.wo().intValue()) {
-            this.previousRotations = new adz<>(this.backtrack.wo().intValue());
+            this.previousRotations = new EvictingList<>(this.backtrack.wo().intValue());
             this.lastSize = this.backtrack.wo().intValue();
         }
 
@@ -40,7 +40,7 @@ public class AimBacktrack extends Module {
         if (var1.dq() instanceof m && aEg.objectMouseOver.typeOfHit == MovingObjectType.MISS) {
             for (Vector2f vector2f : this.previousRotations) {
                 Reach reach = this.e(Reach.class);
-                MovingObjectPosition movingobjectposition = aef.c(vector2f, reach.isEnabled() ? 3.0 + reach.range.wo().doubleValue() : 3.0);
+                MovingObjectPosition movingobjectposition = RayCastUtil.c(vector2f, reach.isEnabled() ? 3.0 + reach.range.wo().doubleValue() : 3.0);
                 if (movingobjectposition.entityHit != null && !this.attacked && movingobjectposition.entityHit instanceof EntityLivingBase) {
                     AttackEvent attackevent = new AttackEvent((EntityLivingBase)movingobjectposition.entityHit);
                     Client.a.e().d(attackevent);
@@ -67,6 +67,6 @@ public class AimBacktrack extends Module {
 
     @Override
     public void onEnable() {
-        afi.b("this is a blatant module");
+        ChatUtil.b("this is a blatant module");
     }
 }

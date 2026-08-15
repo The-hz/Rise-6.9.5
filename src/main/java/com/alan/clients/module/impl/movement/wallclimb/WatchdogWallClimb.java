@@ -12,7 +12,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import java.util.Objects;
 import net.minecraft.block.BlockAir;
 import net.minecraft.util.AxisAlignedBB;
@@ -111,9 +111,9 @@ public class WatchdogWallClimb extends Mode<WallClimb> {
         if (ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)
             && LastConnectionComponent.ip != null
             && LastConnectionComponent.ip.contains("hypixel")) {
-            afi.b("this will only work 1.8 on hypixel");
+            ChatUtil.b("this will only work 1.8 on hypixel");
         } else {
-            afi.b("don't move horizontally while you spider and only spider on full blocks");
+            ChatUtil.b("don't move horizontally while you spider and only spider on full blocks");
         }
 
         this.active = false;

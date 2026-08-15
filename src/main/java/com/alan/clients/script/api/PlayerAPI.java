@@ -16,11 +16,11 @@ import com.alan.clients.script.api.wrapper.impl.vector.ScriptVector3d;
 import com.alan.clients.ui.click.standard.RiseClickGUI;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
-import hackclient.rise.aef;
+import com.alan.clients.util.RayCastUtil;
 import com.alan.clients.util.player.DamageUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.component.impl.player.ItemDamageComponent;
 import com.alan.clients.component.impl.player.PacketlessDamageComponent;
 import net.minecraft.client.Minecraft;
@@ -249,7 +249,7 @@ public class PlayerAPI extends ScriptEntityLiving {
     }
 
     public ScriptVector2f calculateRotations(ScriptVector3d scriptVector3d) {
-        Vector2f vector2f = RotationUtil.d(new aka(scriptVector3d.getX(), scriptVector3d.getY(), scriptVector3d.getZ()));
+        Vector2f vector2f = RotationUtil.d(new Vector3d(scriptVector3d.getX(), scriptVector3d.getY(), scriptVector3d.getZ()));
         return new ScriptVector2f(vector2f.x, vector2f.y);
     }
 
@@ -260,7 +260,7 @@ public class PlayerAPI extends ScriptEntityLiving {
     }
 
     public boolean mouseOverEntity(ScriptEntity scriptEntity, int var2) {
-        MovingObjectPosition movingobjectposition = aef.c(RotationComponent.fk, var2);
+        MovingObjectPosition movingobjectposition = RayCastUtil.c(RotationComponent.fk, var2);
         return movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.ENTITY
             ? movingobjectposition.entityHit != null && movingobjectposition.entityHit.getEntityId() == scriptEntity.getEntityId()
             : false;

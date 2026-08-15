@@ -1,7 +1,7 @@
 package com.alan.clients.command.impl;
 
 import com.alan.clients.command.Command;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 
 public final class Clip extends Command {
     public Clip() {
@@ -18,7 +18,7 @@ public final class Clip extends Command {
                         case "vclip":
                             double d0 = Double.parseDouble(var1[1]);
                             aEg.thePlayer.setPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d0, aEg.thePlayer.posZ);
-                            afi.b("Clipped you " + (d0 > 0.0 ? "up" : "down") + " " + Math.abs(d0) + " blocks.");
+                            ChatUtil.b("Clipped you " + (d0 > 0.0 ? "up" : "down") + " " + Math.abs(d0) + " blocks.");
                             return;
                         case "hclip":
                             break;
@@ -35,7 +35,7 @@ public final class Clip extends Command {
                 double d3 = Math.sin(radians) * d1;
                 double d4 = Math.cos(radians) * d1;
                 aEg.thePlayer.setPosition(aEg.thePlayer.posX - d3, aEg.thePlayer.posY, aEg.thePlayer.posZ + d4);
-                afi.b("Clipped you " + (d1 > 0.0 ? "forward" : "back") + " " + Math.abs(d1) + " blocks.");
+                ChatUtil.b("Clipped you " + (d1 > 0.0 ? "forward" : "back") + " " + Math.abs(d1) + " blocks.");
                 return;
             }
 
@@ -80,7 +80,7 @@ public final class Clip extends Command {
                                     double d21 = Math.sin(d20) * d19;
                                     double d22 = Math.cos(d20) * d19;
                                     aEg.thePlayer.setPosition(aEg.thePlayer.posX - d21, aEg.thePlayer.posY, aEg.thePlayer.posZ + d22);
-                                    afi.b("Clipped you right " + d19 + " blocks.");
+                                    ChatUtil.b("Clipped you right " + d19 + " blocks.");
                                     return;
                                 }
 
@@ -89,7 +89,7 @@ public final class Clip extends Command {
                                 double d17 = Math.sin(d16) * d15;
                                 double d18 = Math.cos(d16) * d15;
                                 aEg.thePlayer.setPosition(aEg.thePlayer.posX - d17, aEg.thePlayer.posY, aEg.thePlayer.posZ + d18);
-                                afi.b("Clipped you left " + d15 + " blocks.");
+                                ChatUtil.b("Clipped you left " + d15 + " blocks.");
                                 return;
                             }
 
@@ -98,7 +98,7 @@ public final class Clip extends Command {
                             double d13 = Math.sin(d12) * d11;
                             double d14 = Math.cos(d12) * d11;
                             aEg.thePlayer.setPosition(aEg.thePlayer.posX + d13, aEg.thePlayer.posY, aEg.thePlayer.posZ - d14);
-                            afi.b("Clipped you back " + d11 + " blocks.");
+                            ChatUtil.b("Clipped you back " + d11 + " blocks.");
                             return;
                         }
 
@@ -107,19 +107,19 @@ public final class Clip extends Command {
                         double d9 = Math.sin(d8) * d7;
                         double d10 = Math.cos(d8) * d7;
                         aEg.thePlayer.setPosition(aEg.thePlayer.posX - d9, aEg.thePlayer.posY, aEg.thePlayer.posZ + d10);
-                        afi.b("Clipped you forward " + d7 + " blocks.");
+                        ChatUtil.b("Clipped you forward " + d7 + " blocks.");
                         return;
                     }
 
                     double d6 = Double.parseDouble(var1[2]);
                     aEg.thePlayer.setPosition(aEg.thePlayer.posX, aEg.thePlayer.posY - d6, aEg.thePlayer.posZ);
-                    afi.b("Clipped you down " + d6 + " blocks.");
+                    ChatUtil.b("Clipped you down " + d6 + " blocks.");
                     return;
                 }
 
                 double d5 = Double.parseDouble(var1[2]);
                 aEg.thePlayer.setPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d5, aEg.thePlayer.posZ);
-                afi.b("Clipped you up " + d5 + " blocks.");
+                ChatUtil.b("Clipped you up " + d5 + " blocks.");
             }
         } else {
             this.error(".clip <up/down/forward/back/left/right> <amount>");

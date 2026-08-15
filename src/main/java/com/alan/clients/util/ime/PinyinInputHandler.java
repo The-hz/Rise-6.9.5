@@ -1,7 +1,7 @@
 package com.alan.clients.util.ime;
 
 import com.alan.clients.util.gui.textbox.TextBox;
-import hackclient.rise.agx;
+import com.alan.clients.util.ime.PinyinImeState;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +17,7 @@ public final class PinyinInputHandler {
     private List<String> aJX = Collections.emptyList();
     private int aJY = 0;
     private int aAP = 0;
-    private int aJZ = agx.uA();
+    private int aJZ = PinyinImeState.uA();
 
     public PinyinInputHandler() {
     }
@@ -82,7 +82,7 @@ public final class PinyinInputHandler {
     }
 
     private void uu() {
-        int i = agx.uA();
+        int i = PinyinImeState.uA();
         if (i != this.aJZ) {
             this.aX();
             this.aJZ = i;

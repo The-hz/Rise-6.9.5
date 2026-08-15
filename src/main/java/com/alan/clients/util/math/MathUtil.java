@@ -1,6 +1,6 @@
 package com.alan.clients.util.math;
 
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.concurrent.ThreadLocalRandom;
@@ -70,7 +70,7 @@ public final class MathUtil {
         return Math.min(Math.abs(var0 - var2), Math.min(Math.abs(var0 - 360.0) - Math.abs(var2 - 0.0), Math.abs(var2 - 360.0) - Math.abs(var0 - 0.0)));
     }
 
-    public static double b(aka var0, aka var1) {
+    public static double b(Vector3d var0, Vector3d var1) {
         double d0 = var1.x - var0.x;
         return MathHelper.wrapAngleTo180_float((float)(Math.toDegrees(Math.atan2(var1.z - var0.z, d0)) - 90.0));
     }

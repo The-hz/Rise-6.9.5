@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.script.util.ScriptClassFilter;
 import com.alan.clients.util.interfaces.InstanceAccess;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.file.FileManager;
 import hackclient.rise.cg;
 import java.io.File;
@@ -65,11 +65,11 @@ public final class ScriptManager implements InstanceAccess {
                 return false;
             } catch (ScriptException scriptexception) {
                 scriptexception.printStackTrace();
-                afi.d("");
-                afi.b("Syntax error!");
-                afi.d("");
-                afi.b(scriptexception.getMessage());
-                afi.d("");
+                ChatUtil.d("");
+                ChatUtil.b("Syntax error!");
+                ChatUtil.d("");
+                ChatUtil.b(scriptexception.getMessage());
+                ChatUtil.d("");
                 return true;
             }
         });
@@ -95,11 +95,11 @@ public final class ScriptManager implements InstanceAccess {
                 return false;
             } catch (ScriptException scriptexception) {
                 scriptexception.printStackTrace();
-                afi.d("");
-                afi.b("Syntax error!");
-                afi.d("");
-                afi.b(scriptexception.getMessage());
-                afi.d("");
+                ChatUtil.d("");
+                ChatUtil.b("Syntax error!");
+                ChatUtil.d("");
+                ChatUtil.b(scriptexception.getMessage());
+                ChatUtil.d("");
                 return true;
             }
         });

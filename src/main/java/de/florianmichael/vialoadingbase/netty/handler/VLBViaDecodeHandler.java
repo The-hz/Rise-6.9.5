@@ -9,7 +9,7 @@ import com.viaversion.viaversion.exception.CancelCodecException;
 import com.viaversion.viaversion.exception.CancelDecoderException;
 import com.viaversion.viaversion.exception.InformativeException;
 import com.viaversion.viaversion.util.PipelineUtil;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -78,7 +78,7 @@ public class VLBViaDecodeHandler extends MessageToMessageDecoder<ByteBuf> {
 
                 if (this.user.getProtocolInfo().getServerState() != State.HANDSHAKE || Via.getManager().debugHandler().enabled()) {
                     t.printStackTrace();
-                    afi.c("exception");
+                    ChatUtil.c("exception");
                     if (LastConnectionComponent.ip != null && LastConnectionComponent.ip.contains("hypixel")) {
                         ctx.close();
                     }

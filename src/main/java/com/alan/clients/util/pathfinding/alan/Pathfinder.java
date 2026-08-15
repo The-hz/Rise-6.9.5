@@ -3,9 +3,9 @@ package com.alan.clients.util.pathfinding.alan;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.pathfinding.alan.PathGrid;
-import hackclient.rise.ahr;
+import com.alan.clients.util.pathfinding.alan.api.Path;
 import com.alan.clients.util.pathfinding.alan.api.Point;
 import com.alan.clients.util.pathfinding.alan.PathValidation;
 import com.alan.clients.util.ThreadUtil;
@@ -19,13 +19,13 @@ import net.minecraft.util.Vec3i;
 import org.lwjgl.opengl.GL11;
 import rip.vantage.commons.util.time.StopWatch;
 
-public class Pathfinder extends ArrayList<ahr> implements InstanceAccess {
+public class Pathfinder extends ArrayList<Path> implements InstanceAccess {
     public static int aNu = 100;
     public Point aNv = new Point((int)aEg.thePlayer.posX, (int)aEg.thePlayer.posY, (int)aEg.thePlayer.posZ);
     public Point aNw;
     private final PathGrid aNx = new PathGrid(100, this.aNv);
     private final PathGrid aNy = new PathGrid(100, this.aNv);
-    public ahr aNz;
+    public Path aNz;
     public Vec3i aNA;
     public int aNB = Integer.MAX_VALUE;
     private final boolean aNC;
@@ -58,9 +58,9 @@ public class Pathfinder extends ArrayList<ahr> implements InstanceAccess {
             }
 
             if (this.aNz == null) {
-                afi.b("Failed to find path.");
+                ChatUtil.b("Failed to find path.");
             } else {
-                afi.b("Took " + a.getElapsedTime() + " ms.");
+                ChatUtil.b("Took " + a.getElapsedTime() + " ms.");
             }
         });
     }
@@ -68,7 +68,7 @@ public class Pathfinder extends ArrayList<ahr> implements InstanceAccess {
     private void uN() {
         try {
             if (this.isEmpty()) {
-                ahr ahrxxxx = new ahr();
+                Path ahrxxxx = new Path();
                 ahrxxxx.add(this.aNv);
                 this.add(ahrxxxx);
             } else {
@@ -76,25 +76,25 @@ public class Pathfinder extends ArrayList<ahr> implements InstanceAccess {
                 ArrayList arraylist1 = new ArrayList();
                 PathValidation[] aaht = new PathValidation[]{PathValidation.COLLISIONS, PathValidation.LEGIT};
 
-                for (ahr ahrxxx : this) {
+                for (Path ahrxxx : this) {
                     byte b0 = 1;
 
                     for (int i = -1; i <= b0; i += b0 * 2) {
-                        ahr ahrx = this.a(ahrxxx, i, 0, 0);
+                        Path ahrx = this.a(ahrxxx, i, 0, 0);
                         if (ahrx != null && PathValidation.a(ahrx, this, aaht)) {
                             arraylist.add(ahrx);
                         }
                     }
 
                     for (int j = -b0; j <= b0; j += b0 * 2) {
-                        ahr ahrx = this.a(ahrxxx, 0, j, 0);
+                        Path ahrx = this.a(ahrxxx, 0, j, 0);
                         if (ahrx != null && PathValidation.a(ahrx, this, aaht)) {
                             arraylist.add(ahrx);
                         }
                     }
 
                     for (int k = -b0; k <= b0; k += b0 * 2) {
-                        ahr ahrx = this.a(ahrxxx, 0, 0, k);
+                        Path ahrx = this.a(ahrxxx, 0, 0, k);
                         if (ahrx != null && PathValidation.a(ahrx, this, aaht)) {
                             arraylist.add(ahrx);
                         }
@@ -106,8 +106,8 @@ public class Pathfinder extends ArrayList<ahr> implements InstanceAccess {
                 this.removeAll(arraylist1);
                 this.addAll(arraylist);
                 arraylist.forEach(var1 -> {
-                    if (((ahr)var1).get(((ahr)var1).size() - 1).equals(this.aNw)) {
-                        this.aNz = (ahr)var1;
+                    if (((Path)var1).get(((Path)var1).size() - 1).equals(this.aNw)) {
+                        this.aNz = (Path)var1;
                     }
                 });
                 this.sort(Comparator.comparingDouble(var1 -> (int)var1.get(var1.size() - 1).j(this.aNw)));
@@ -118,14 +118,14 @@ public class Pathfinder extends ArrayList<ahr> implements InstanceAccess {
                 }
             }
         } catch (Exception exception) {
-            afi.c("Exception in Console");
+            ChatUtil.c("Exception in Console");
             exception.printStackTrace();
             this.clear();
         }
     }
 
-    private ahr a(ahr var1, int var2, int var3, int var4) {
-        ahr ahr = new ahr(var1);
+    private Path a(Path var1, int var2, int var3, int var4) {
+        Path ahr = new Path(var1);
         Point ahsx = ahr.get(ahr.size() - 1);
         Point ahsx22 = new Point(ahsx.add(var2, var3, var4));
         if (this.aNx.b(ahsx22)) {
@@ -147,7 +147,7 @@ public class Pathfinder extends ArrayList<ahr> implements InstanceAccess {
         RenderUtil.color(ColorUtil.withBlue(this.rz().rA(), 100));
         double d0 = 0.6;
 
-        for (ahr ahr : new ArrayList<>(this)) {
+        for (Path ahr : new ArrayList<>(this)) {
             if (ahr != null) {
                 for (Point ahsxx : ahr) {
                     RenderUtil.drawBoundingBox(

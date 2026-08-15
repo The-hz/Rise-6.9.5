@@ -17,7 +17,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.cg;
 import com.alan.clients.component.impl.render.ProgressBarComponent;
@@ -90,8 +90,8 @@ public class Watchdog2LongJump extends Mode<LongJump>
         final double sqrt = Math.sqrt(n * n + n2 * n2 + n3 * n3);
         Watchdog2LongJump.launched = false;
         this.onHalfBlock = false;
-        afi.b(Watchdog2LongJump.aEg.thePlayer.ae, new Object[0]);
-        afi.c("Distance traveled: " + sqrt, new Object[0]);
+        ChatUtil.b(Watchdog2LongJump.aEg.thePlayer.ae, new Object[0]);
+        ChatUtil.c("Distance traveled: " + sqrt, new Object[0]);
         if (Watchdog2LongJump.aEg.thePlayer.onGround) {
             MoveUtil.stop();
         }
@@ -142,12 +142,12 @@ public class Watchdog2LongJump extends Mode<LongJump>
                     if (!packetReceiveEvent.isCancelled() && s12PacketEntityVelocity.getEntityID() == Watchdog2LongJump.aEg.thePlayer.getEntityId()) {
                         Watchdog2LongJump.knockbackSpeed = Math.hypot(s12PacketEntityVelocity.getMotionX() / 8000.0, s12PacketEntityVelocity.getMotionZ() / 8000.0);
                         if (Watchdog2LongJump.ticks > Watchdog2LongJump.boostTick && Watchdog2LongJump.knockbackSpeed > 0.0 && s12PacketEntityVelocity.getMotionY() / 8000.0 > 0.4) {
-                            afi.c(MoveUtil.speed(), new Object[0]);
+                            ChatUtil.c(MoveUtil.speed(), new Object[0]);
                             MoveUtil.strafe(0.459999);
                             Watchdog2LongJump.aEg.thePlayer.motionY = s12PacketEntityVelocity.getMotionY() / 8000.0;
                             Watchdog2LongJump.aEg.thePlayer.ae = 0;
                             Watchdog2LongJump.launched = true;
-                            afi.c(MoveUtil.speed(), new Object[0]);
+                            ChatUtil.c(MoveUtil.speed(), new Object[0]);
                         }
                         else {
                             Watchdog2LongJump.launched = false;
@@ -444,7 +444,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
             Watchdog2LongJump.aEg.thePlayer.jump();
         }
         else {
-            afi.b("start on the ground", new Object[0]);
+            ChatUtil.b("start on the ground", new Object[0]);
             this.getParent().setEnabled(false);
         }
         this.startX = Watchdog2LongJump.aEg.thePlayer.posX;

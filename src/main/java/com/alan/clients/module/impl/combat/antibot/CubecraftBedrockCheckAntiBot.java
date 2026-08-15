@@ -6,7 +6,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 
 public final class CubecraftBedrockCheckAntiBot extends Mode<AntiBot> {
     @EventLink
@@ -15,7 +15,7 @@ public final class CubecraftBedrockCheckAntiBot extends Mode<AntiBot> {
         stripFormatting(s);
         if (s.chars().filter(var0 -> var0 == 167).count() >= 8L && s.contains("§\u0000§\u0000§\u0000§\u0000")) {
             if (aEg.thePlayer.Zl == 10) {
-                afi.c("Detected bot by formatting pattern: " + s);
+                ChatUtil.c("Detected bot by formatting pattern: " + s);
             }
 
             Client.a.getBotManager().b(this, var1xx);

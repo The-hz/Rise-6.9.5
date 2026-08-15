@@ -11,7 +11,7 @@ import com.alan.clients.util.gui.textbox.TextBox;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.ui.click.standard.UIColors;
-import hackclient.rise.agk;
+import com.alan.clients.util.gui.ScrollUtil;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.ui.click.standard.components.value.impl.StringValueComponent;
 import java.awt.Color;
@@ -23,7 +23,7 @@ import rip.vantage.commons.util.time.StopWatch;
 public final class ConfigScreen implements Screen, InstanceAccess {
     public final TextBox azM = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(20, FontWeight.REGULAR), Color.WHITE, TextAlign.CENTER, "Start typing to search...", 150.0F);
     private final StopWatch azN = new StopWatch();
-    public agk scrollUtil = new agk();
+    public ScrollUtil scrollUtil = new ScrollUtil();
     public ArrayList<ModuleComponent> relevantModules = new ArrayList<>();
     private double axT = 255.0;
     private double azC;
@@ -170,7 +170,7 @@ public final class ConfigScreen implements Screen, InstanceAccess {
     }
 
     @Generated
-    public agk getScrollUtil() {
+    public ScrollUtil getScrollUtil() {
         return this.scrollUtil;
     }
 
@@ -200,7 +200,7 @@ public final class ConfigScreen implements Screen, InstanceAccess {
     }
 
     @Generated
-    public void setScrollUtil(agk scrollUtil) {
+    public void setScrollUtil(ScrollUtil scrollUtil) {
         this.scrollUtil = scrollUtil;
     }
 

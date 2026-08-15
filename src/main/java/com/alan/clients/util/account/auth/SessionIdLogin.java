@@ -1,17 +1,18 @@
-package hackclient.rise;
+package com.alan.clients.util.account.auth;
 
 import com.alan.clients.util.account.auth.MicrosoftLogin;
 import com.alan.clients.util.web.Browser;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import hackclient.rise.MicrosoftAuth;
 import java.io.IOException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
 
-public final class aen {
+public final class SessionIdLogin {
     private static final String CLIENT_ID = "https://api.minecraftservices.com/minecraft/profile";
 
-    private aen() {
+    private SessionIdLogin() {
     }
 
     public static Session bj(String var0) throws IOException {

@@ -15,7 +15,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import hackclient.rise.agd;
+import com.alan.clients.util.font.impl.minecraft.FontRenderer;
 import com.alan.clients.util.player.ServerUtil;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.vector.Vector2i;
@@ -118,7 +118,7 @@ extends Module {
     }
 
     private void renderScoreboard(int n2, int n3, Color color, boolean bl, int n4, boolean bl2) {
-        agd fontRendererObj = ScoreBoard.aEg.fontRendererObj;
+        FontRenderer fontRendererObj = ScoreBoard.aEg.fontRendererObj;
         int size = this.collection.size();
         int n6 = this.fontHeight * size + 3;
         Vector2d vector2d = new Vector2d(this.maxWidth + 12, n6 + this.fontHeight + 3);
@@ -153,7 +153,7 @@ extends Module {
         return String.valueOf((Object)this.rz().getChatAccentColor()) + "riseclient.com";
     }
 
-    private void drawGradientString(agd agd2, String string, int n2, int n3) {
+    private void drawGradientString(FontRenderer agd2, String string, int n2, int n3) {
         String string2 = EnumChatFormatting.getTextWithoutFormattingCodes(string);
         Color color = this.rz().rA();
         Color color2 = this.rz().rB();

@@ -8,6 +8,7 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.render.ColorUtil;
@@ -20,7 +21,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import rip.vantage.commons.util.time.StopWatch;
 
 public class cg extends Component {
-    private static final adz<Triple<String, String, Integer>> queue = new adz<>(5);
+    private static final EvictingList<Triple<String, String, Integer>> queue = new EvictingList<>(5);
     private static final StopWatch time = new StopWatch();
     private static Triple<String, String, Integer> current;
     private static final Animation animation = new Animation(Easing.EASE_OUT_EXPO, 900L);
@@ -28,8 +29,8 @@ public class cg extends Component {
     private static final Vector2d ICON_SCALE = new Vector2d(20.0, 20.0);
     private static final Vector2d POSITION = new Vector2d(5.0, 126.0);
     private static final double SPACER = (SCALE.y - ICON_SCALE.y) / 2.0;
-    private static final agc bold = FontManager.MAIN.a(15, FontWeight.BOLD);
-    private static final agc light = FontManager.MAIN.a(15, FontWeight.LIGHT);
+    private static final Font bold = FontManager.MAIN.a(15, FontWeight.BOLD);
+    private static final Font light = FontManager.MAIN.a(15, FontWeight.LIGHT);
     @EventLink(value = 4)
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (current != null) {

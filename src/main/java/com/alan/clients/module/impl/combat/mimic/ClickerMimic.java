@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
@@ -33,7 +33,7 @@ public class ClickerMimic extends Mode<Mimic> {
             }
 
             Tuple tuple = this.recordedDelays.get(s);
-            afi.b("Recorded " + (j - (Integer)tuple.getSecond()) + " von " + s);
+            ChatUtil.b("Recorded " + (j - (Integer)tuple.getSecond()) + " von " + s);
             ((ArrayList)tuple.getFirst()).add(j - (Integer)tuple.getSecond());
             tuple.k(j);
         }
@@ -50,12 +50,12 @@ public class ClickerMimic extends Mode<Mimic> {
 
                 while (i == 0L || i >= 450L) {
                     if (i != 0L) {
-                        afi.b("Running again prev " + i);
+                        ChatUtil.b("Running again prev " + i);
                     }
 
                     Optional optional = this.recordedDelays.keySet().stream().findFirst();
                     if (!optional.isPresent()) {
-                        afi.b("Empty");
+                        ChatUtil.b("Empty");
                         return;
                     }
 
@@ -67,7 +67,7 @@ public class ClickerMimic extends Mode<Mimic> {
 
                     i = (Integer)((ArrayList)tuple.getFirst()).get(0) * 50;
                     ((ArrayList)tuple.getFirst()).remove(0);
-                    afi.b("Running " + (String)optional.get() + " " + i);
+                    ChatUtil.b("Running " + (String)optional.get() + " " + i);
                 }
 
                 this.nextClickTime = System.currentTimeMillis() + i / 2L;

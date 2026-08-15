@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import lombok.Generated;
 
 class Node {
-    private ahy aNT;
+    private Vec3 aNT;
     private Node aNU;
-    private ArrayList<ahy> aNM;
+    private ArrayList<Vec3> aNM;
     private double aNV;
     private double aco;
     private double aNW;
 
-    public Node(ahy var1, Node var2, ArrayList<ahy> var3, double var4, double var6, double var8) {
+    public Node(Vec3 var1, Node var2, ArrayList<Vec3> var3, double var4, double var6, double var8) {
         this.aNT = var1;
         this.aNU = var2;
         this.aNM = var3;
@@ -21,7 +21,7 @@ class Node {
     }
 
     @Generated
-    public ahy uS() {
+    public Vec3 uS() {
         return this.aNT;
     }
 
@@ -31,7 +31,7 @@ class Node {
     }
 
     @Generated
-    public ArrayList<ahy> uQ() {
+    public ArrayList<Vec3> uQ() {
         return this.aNM;
     }
 
@@ -51,7 +51,7 @@ class Node {
     }
 
     @Generated
-    public void b(ahy var1) {
+    public void b(Vec3 var1) {
         this.aNT = var1;
     }
 
@@ -61,7 +61,7 @@ class Node {
     }
 
     @Generated
-    public void e(ArrayList<ahy> var1) {
+    public void e(ArrayList<Vec3> var1) {
         this.aNM = var1;
     }
 

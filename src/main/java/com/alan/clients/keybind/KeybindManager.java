@@ -6,8 +6,8 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.input.KeyboardInputEvent;
 import com.alan.clients.newevent.impl.input.MouseButtonEvent;
 import com.alan.clients.util.interfaces.Bindable;
-import hackclient.rise.agx;
-import hackclient.rise.ahd;
+import com.alan.clients.util.ime.PinyinImeState;
+import com.alan.clients.util.localization.Localization;
 import hackclient.rise.cg;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,9 +24,9 @@ public class KeybindManager {
                 if (Keyboard.isRepeatEvent()) {
                     var1.setCancelled();
                 } else {
-                    boolean flag = agx.uB();
+                    boolean flag = PinyinImeState.uB();
                     if (Minecraft.getMinecraft() != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer != null) {
-                        cg.a(ahd.ce("module.render.chat.pinyin_ime"), ahd.ce(flag ? "ui.chat.pinyin_ime.hint.on" : "ui.chat.pinyin_ime.hint.off"), 1500);
+                        cg.a(Localization.ce("module.render.chat.pinyin_ime"), Localization.ce(flag ? "ui.chat.pinyin_ime.hint.on" : "ui.chat.pinyin_ime.hint.off"), 1500);
                     }
 
                     var1.setCancelled();

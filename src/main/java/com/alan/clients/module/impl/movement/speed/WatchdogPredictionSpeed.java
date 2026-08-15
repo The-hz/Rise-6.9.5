@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 
 public class WatchdogPredictionSpeed extends Mode<Speed> {
     private final NumberValue speed = new NumberValue("Speed", this, 1, 1, 10, 1);
@@ -20,7 +20,7 @@ public class WatchdogPredictionSpeed extends Mode<Speed> {
     private final double PK = 1.0;
     private int tY;
     private boolean boostPending;
-    private aka savedMotion;
+    private Vector3d savedMotion;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {};
     @EventLink
@@ -32,7 +32,7 @@ public class WatchdogPredictionSpeed extends Mode<Speed> {
         }
 
         if (aEg.thePlayer.tR == 5 && aEg.thePlayer.ae > 7) {
-            this.savedMotion = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
+            this.savedMotion = new Vector3d(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
             aEg.thePlayer.motionY = 0.0;
             MoveUtil.stop();
         } else if (this.savedMotion != null && aEg.thePlayer.ae > 7 && aEg.thePlayer.tR == 6) {
@@ -69,7 +69,7 @@ public class WatchdogPredictionSpeed extends Mode<Speed> {
         if (aEg.thePlayer.inWater) {
             aEg.gameSettings.keyBindJump.setPressed(true);
             if ((aEg.thePlayer.tR - 1) % 3 == 0 && aEg.thePlayer.ae > 1) {
-                this.savedMotion = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
+                this.savedMotion = new Vector3d(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
                 aEg.thePlayer.motionY = 0.0;
                 MoveUtil.stop();
             } else if (this.savedMotion != null && aEg.thePlayer.ae > 2) {

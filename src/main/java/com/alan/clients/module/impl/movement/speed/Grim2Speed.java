@@ -17,7 +17,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
@@ -132,9 +132,9 @@ extends Mode<Speed> {
             PacketUtil.send(new C03PacketPlayer(false));
         }
         if (ViaLoadingBase.getInstance().getTargetVersion().equalTo(ProtocolVersion.v1_8) || ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_18_2)) {
-            afi.b("this will only work 1.9-1.18.1", new Object[0]);
+            ChatUtil.b("this will only work 1.9-1.18.1", new Object[0]);
         } else {
-            afi.b("ping needs to be below 150ms for this to work consistantly", new Object[0]);
+            ChatUtil.b("ping needs to be below 150ms for this to work consistantly", new Object[0]);
         }
         this.strafeTicks = 0;
         this.groundTicks = 0;

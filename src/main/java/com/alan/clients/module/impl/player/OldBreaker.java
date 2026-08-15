@@ -22,12 +22,12 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ListValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.aef;
-import hackclient.rise.afi;
+import com.alan.clients.util.RayCastUtil;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.util.vector.Vector3i;
 import com.alan.clients.util.shader.ShaderQueueType;
 import java.util.ArrayList;
@@ -61,9 +61,9 @@ public class OldBreaker extends Module {
     public final BooleanValue whiteListOwnBed = new BooleanValue("Whitelist Own Bed", this, true);
     public final BooleanValue slowDownInAir = new BooleanValue("Slow Down In Air", this, true);
     private final ListValue<MovementFix> movementCorrection = new ListValue<>("Movement Correction", this);
-    private aka targetBlock;
-    private aka lastBlock;
-    private aka home;
+    private Vector3d targetBlock;
+    private Vector3d lastBlock;
+    private Vector3d home;
     private int breakCooldownTicks;
     private boolean holdingAttackKey;
     private float breakProgress;
@@ -106,9 +106,9 @@ public class OldBreaker extends Module {
     @EventLink(value = 4)
     public final Listener<BlockDamageEvent> onBlockDamage = var1 -> {
         this.breakProgress = aEg.playerController.curBlockDamageMP;
-        afi.b("Updated Damage");
-        afi.b(var1.getBlockPos());
-        afi.b(this.targetBlock.getX() + ", " + this.targetBlock.getY() + ", " + this.targetBlock.getZ());
+        ChatUtil.b("Updated Damage");
+        ChatUtil.b(var1.getBlockPos());
+        ChatUtil.b(this.targetBlock.getX() + ", " + this.targetBlock.getY() + ", " + this.targetBlock.getZ());
     };
     @EventLink(value = 4)
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
@@ -140,7 +140,7 @@ public class OldBreaker extends Module {
         if (this.targetBlock != null) {
             MovingObjectPosition movingobjectposition = this.getTargetMouseOver();
             if (!this.isHitOnTarget(movingobjectposition)) {
-                afi.b("Not Target");
+                ChatUtil.b("Not Target");
             } else {
                 var1.a(movingobjectposition);
             }
@@ -149,7 +149,7 @@ public class OldBreaker extends Module {
     @EventLink
     public final Listener<TeleportEvent> onTeleport = var1 -> {
         if (aEg.thePlayer.getDistance(var1.getPosX(), var1.getPosY(), var1.getPosZ()) > 40.0) {
-            this.home = new aka(var1.getPosX(), var1.getPosY(), var1.getPosZ());
+            this.home = new Vector3d(var1.getPosX(), var1.getPosY(), var1.getPosZ());
         }
     };
 
@@ -204,7 +204,7 @@ public class OldBreaker extends Module {
 
     public Vector2f getRotations() {
         return RotationUtil.d(
-            new aka(
+            new Vector3d(
                 Math.floor(this.targetBlock.getX()) + 0.5 + (Math.random() - 0.5) / 4.0,
                 Math.floor(this.targetBlock.getY()) + 0.1,
                 Math.floor(this.targetBlock.getZ()) + 0.5 + (Math.random() - 0.5) / 4.0
@@ -212,7 +212,7 @@ public class OldBreaker extends Module {
         );
     }
 
-    public aka block() {
+    public Vector3d block() {
         if (this.home != null && aEg.thePlayer.getDistanceSq(this.home.getX(), this.home.getY(), this.home.getZ()) < 1225.0 && this.whiteListOwnBed.wo()) {
             return null;
         }
@@ -223,10 +223,10 @@ public class OldBreaker extends Module {
             for (int k = -5; k <= 5; k++) {
                 for (int l = -5; l <= 5; l++) {
                     Block block = PlayerUtil.p(j, k, l);
-                    aka akax = new aka(aEg.thePlayer.posX + j, aEg.thePlayer.posY + k, aEg.thePlayer.posZ + l);
+                    Vector3d akax = new Vector3d(aEg.thePlayer.posX + j, aEg.thePlayer.posY + k, aEg.thePlayer.posZ + l);
                     if (block instanceof BlockBed) {
                         if (++i > 1) {
-                            MovingObjectPosition movingobjectposition = aef.c(RotationUtil.d(akax), 4.5);
+                            MovingObjectPosition movingobjectposition = RayCastUtil.c(RotationUtil.d(akax), 4.5);
                             if (movingobjectposition != null
                                 && !(
                                     movingobjectposition.hitVec
@@ -235,7 +235,7 @@ public class OldBreaker extends Module {
                                 )) {
                                 if (this.throughWalls.wo()) {
                                     if (this.emptySurrounding.wo()) {
-                                        aka akax2 = akax;
+                                        Vector3d akax2 = akax;
                                         double d0 = Double.MAX_VALUE;
                                         boolean flag = false;
 
@@ -295,12 +295,12 @@ public class OldBreaker extends Module {
         return null;
     }
 
-    public List<Block> getNeighbourBlocks(aka var1) {
+    public List<Block> getNeighbourBlocks(Vector3d var1) {
         ArrayList arraylist = new ArrayList();
 
         for (EnumFacing enumfacing : EnumFacing.values()) {
             if (enumfacing != EnumFacing.UP) {
-                aka aka = var1.e(new aka(enumfacing.getDirectionVec().getX(), enumfacing.getDirectionVec().getY(), enumfacing.getDirectionVec().getZ()));
+                Vector3d aka = var1.e(new Vector3d(enumfacing.getDirectionVec().getX(), enumfacing.getDirectionVec().getY(), enumfacing.getDirectionVec().getZ()));
                 arraylist.add(PlayerUtil.c(aka));
             }
         }
@@ -373,7 +373,7 @@ public class OldBreaker extends Module {
     }
 
     private boolean isHitOnTarget(MovingObjectPosition hit) {
-        return hit != null && hit.typeOfHit == MovingObjectType.BLOCK && hit.getBlockPos().h(new aka(this.targetBlock.getX(), this.targetBlock.getY(), this.targetBlock.getZ()));
+        return hit != null && hit.typeOfHit == MovingObjectType.BLOCK && hit.getBlockPos().h(new Vector3d(this.targetBlock.getX(), this.targetBlock.getY(), this.targetBlock.getZ()));
     }
 
     private MovingObjectPosition rayTraceTarget(Vector2f vec2) {

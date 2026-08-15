@@ -1,30 +1,30 @@
 package com.alan.clients.util.shader;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
-import hackclient.rise.aix;
-import hackclient.rise.aiz;
+import com.alan.clients.util.shader.base.RiseShader;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 import java.util.ArrayList;
 import lombok.Generated;
 
 public class ShaderRenderQueue implements InstanceAccess {
     private final ArrayList<Runnable> kK = new ArrayList<>();
-    aix kL = null;
+    RiseShader kL = null;
 
-    public ShaderRenderQueue(aix var1) {
+    public ShaderRenderQueue(RiseShader var1) {
         this.kL = var1;
     }
 
     public ShaderRenderQueue() {
     }
 
-    public void a(aiz var1) {
+    public void a(ShaderRenderType var1) {
         if (!this.kK.isEmpty()) {
             if (this.kL == null) {
                 aEg.getFramebuffer().bindFramebuffer(false);
                 this.kK.forEach(Runnable::run);
             } else {
                 this.kL.a(var1, 0.0F, this.kK);
-                if (var1 == aiz.OVERLAY) {
+                if (var1 == ShaderRenderType.OVERLAY) {
                     this.kL.update();
                 }
             }
@@ -45,7 +45,7 @@ public class ShaderRenderQueue implements InstanceAccess {
     }
 
     @Generated
-    public aix dU() {
+    public RiseShader dU() {
         return this.kL;
     }
 }

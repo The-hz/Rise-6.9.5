@@ -1,17 +1,18 @@
 package hackclient.rise;
 
 import com.alan.clients.util.vector.Vector2f;
+import com.alan.clients.util.vector.Vector3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Tuple;
 
 public class RotationQueue {
-    public final adz<Tuple<Vector2f, aka>> rh = new adz<>(10);
+    public final EvictingList<Tuple<Vector2f, Vector3d>> rh = new EvictingList<>(10);
 
     public RotationQueue() {
     }
 
-    public void a(Vector2f vec2, aka var2, int var3) {
+    public void a(Vector2f vec2, Vector3d var2, int var3) {
         if (var3 >= this.rh.size()) {
             for (int i = 0; i < var3 - this.rh.size(); i++) {
                 this.rh.add(null);
@@ -26,7 +27,7 @@ public class RotationQueue {
         Tuple tuple = this.rh.getFirst();
         this.rh.removeFirst();
         Vector2f vector2f = (Vector2f)tuple.getFirst();
-        aka aka = (aka)tuple.getSecond();
+        Vector3d aka = (Vector3d)tuple.getSecond();
         double d0 = Math.hypot(aka.getX(), aka.getZ());
         float f = (float)(MathHelper.atan2(aka.getZ(), aka.getX()) * 180.0F / (float)Math.PI) - 90.0F;
         float f1 = (float)(-(MathHelper.atan2(aka.getY(), d0) * 180.0F / (float)Math.PI));

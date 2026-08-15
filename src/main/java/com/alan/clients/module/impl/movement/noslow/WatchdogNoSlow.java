@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.motion.SlowDownEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.newevent.impl.input.RightClickEvent;
@@ -68,7 +68,7 @@ public class WatchdogNoSlow extends Mode<NoSlow> {
                 || aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood
                 || aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
                 if (aEg.thePlayer.tR < 2 && aEg.thePlayer.tR != 0 && !this.onSlab) {
-                    afi.b("You must start eating while in the air even with potions");
+                    ChatUtil.b("You must start eating while in the air even with potions");
                     var1x.setCancelled();
                 } else if (aEg.thePlayer.onGround) {
                     aEg.thePlayer.jump();

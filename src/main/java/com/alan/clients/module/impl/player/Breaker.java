@@ -27,12 +27,12 @@ import com.alan.clients.value.impl.ListValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.aef;
-import hackclient.rise.afi;
+import com.alan.clients.util.RayCastUtil;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.util.vector.Vector3i;
 import com.alan.clients.component.impl.render.ProgressBarComponent;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -84,9 +84,9 @@ public class Breaker extends Module {
     public final BooleanValue whiteListOwnBed = new BooleanValue("Whitelist Own Bed", this, true);
     public final BooleanValue slowDownInAir = new BooleanValue("Slow Down In Air", this, true);
     private final ListValue<MovementFix> movementCorrection = new ListValue<>("Movement Correction", this);
-    public static aka targetBlock;
-    public static aka lastBlock;
-    public static aka home;
+    public static Vector3d targetBlock;
+    public static Vector3d lastBlock;
+    public static Vector3d home;
     private int breakCooldownTicks;
     public static boolean spoofingGround;
     public static boolean bedBroken;
@@ -153,7 +153,7 @@ public class Breaker extends Module {
                         var1.setCancelled();
                     }
                 } else if (packet instanceof S32PacketConfirmTransaction && this.hasDelayedVelocity) {
-                    afi.b(aEg.thePlayer.ticksExisted);
+                    ChatUtil.b(aEg.thePlayer.ticksExisted);
                     this.delayedPackets.add(packet);
                     var1.setCancelled();
                 }
@@ -225,7 +225,7 @@ public class Breaker extends Module {
             this.delayedPackets.clear();
             this.hasDelayedVelocity = false;
             flushingPackets = false;
-            afi.b(aEg.thePlayer.ticksExisted);
+            ChatUtil.b(aEg.thePlayer.ticksExisted);
         }
 
         this.breakCooldownTicks--;
@@ -264,7 +264,7 @@ public class Breaker extends Module {
     @EventLink
     public final Listener<TeleportEvent> onTeleport = var0 -> {
         if (aEg.thePlayer.getDistance(var0.getPosX(), var0.getPosY(), var0.getPosZ()) > 40.0) {
-            home = new aka(var0.getPosX(), var0.getPosY(), var0.getPosZ());
+            home = new Vector3d(var0.getPosX(), var0.getPosY(), var0.getPosZ());
         }
     };
 
@@ -341,7 +341,7 @@ public class Breaker extends Module {
             }
 
             lastBlock = targetBlock;
-            aka aka = this.block();
+            Vector3d aka = this.block();
             if (aka != null) {
                 breakingBed = true;
             } else {
@@ -362,7 +362,7 @@ public class Breaker extends Module {
         }
     }
 
-    public aka block() {
+    public Vector3d block() {
         if (home != null && aEg.thePlayer.getDistanceSq(home.getX(), home.getY(), home.getZ()) < 1225.0 && this.whiteListOwnBed.wo()) {
             return null;
         }
@@ -377,10 +377,10 @@ public class Breaker extends Module {
             for (int k = -5; k <= 5; k++) {
                 for (int l = -5; l <= 5; l++) {
                     Block block = PlayerUtil.p(j, k, l);
-                    aka akax = new aka(aEg.thePlayer.posX + j, aEg.thePlayer.posY + k, aEg.thePlayer.posZ + l);
+                    Vector3d akax = new Vector3d(aEg.thePlayer.posX + j, aEg.thePlayer.posY + k, aEg.thePlayer.posZ + l);
                     if (block instanceof BlockBed) {
                         if (++i > 1) {
-                            MovingObjectPosition movingobjectposition = aef.c(RotationUtil.d(akax), this.range.wo().floatValue() + 1.0F);
+                            MovingObjectPosition movingobjectposition = RayCastUtil.c(RotationUtil.d(akax), this.range.wo().floatValue() + 1.0F);
                             if (movingobjectposition != null
                                 && !(
                                     movingobjectposition.hitVec
@@ -389,7 +389,7 @@ public class Breaker extends Module {
                                 )) {
                                 if (this.throughWalls.wo()) {
                                     if (this.emptySurrounding.wo()) {
-                                        aka akax2 = akax;
+                                        Vector3d akax2 = akax;
                                         double d0 = Double.MAX_VALUE;
                                         boolean flag = false;
                                         int i1 = this.heypixel.wo() ? 0 : 4;
@@ -451,14 +451,14 @@ public class Breaker extends Module {
         return null;
     }
 
-    private aka getBestCandidateBlock() {
+    private Vector3d getBestCandidateBlock() {
         BreakCandidate tg = this.getBestCandidate(aEg.thePlayer.getPositionEyes(1.0F), this.getBedPositions());
         if (tg == null) {
             return null;
         }
 
         BlockPos blockpos = tg.blocksToBreak.get(0);
-        return new aka(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5);
+        return new Vector3d(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5);
     }
 
     private BreakCandidate getBestCandidate(Vec3 vec, List<BlockPos> poses) {
@@ -701,12 +701,12 @@ public class Breaker extends Module {
         };
     }
 
-    public List<Block> getNeighbourBlocks(aka var1) {
+    public List<Block> getNeighbourBlocks(Vector3d var1) {
         ArrayList arraylist = new ArrayList();
 
         for (EnumFacing enumfacing : EnumFacing.values()) {
             if (enumfacing != EnumFacing.UP) {
-                aka aka = var1.e(new aka(enumfacing.getDirectionVec().getX(), enumfacing.getDirectionVec().getY(), enumfacing.getDirectionVec().getZ()));
+                Vector3d aka = var1.e(new Vector3d(enumfacing.getDirectionVec().getX(), enumfacing.getDirectionVec().getY(), enumfacing.getDirectionVec().getZ()));
                 arraylist.add(PlayerUtil.c(aka));
             }
         }
@@ -761,7 +761,7 @@ public class Breaker extends Module {
 
     public Vector2f getRotations() {
         return RotationUtil.d(
-            new aka(
+            new Vector3d(
                 Math.floor(targetBlock.getX()) + 0.5 + (Math.random() - 0.5) / 4.0,
                 Math.floor(targetBlock.getY()) + 0.1,
                 Math.floor(targetBlock.getZ()) + 0.5 + (Math.random() - 0.5) / 4.0

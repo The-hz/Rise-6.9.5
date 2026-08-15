@@ -16,8 +16,8 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.StringValue;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.agc;
-import hackclient.rise.agd;
+import com.alan.clients.util.font.Font;
+import com.alan.clients.util.font.impl.minecraft.FontRenderer;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.particle.Particle;
 import com.alan.clients.util.font.FontManager;
@@ -43,11 +43,11 @@ import rip.vantage.commons.util.time.StopWatch;
 
 public class ModernInterface
 extends Mode<Interface> {
-    private final agc medium36Font = FontManager.MAIN.a(36, FontWeight.MEDIUM);
-    private final agc regular20Font = FontManager.MAIN.a(20, FontWeight.REGULAR);
-    private final agc medium18Font = FontManager.MAIN.a(18, FontWeight.MEDIUM);
-    private final agc regular18Font = FontManager.MAIN.a(18, FontWeight.REGULAR);
-    agc arrayListFont = FontManager.MAIN.a(18, FontWeight.REGULAR);
+    private final Font medium36Font = FontManager.MAIN.a(36, FontWeight.MEDIUM);
+    private final Font regular20Font = FontManager.MAIN.a(20, FontWeight.REGULAR);
+    private final Font medium18Font = FontManager.MAIN.a(18, FontWeight.MEDIUM);
+    private final Font regular18Font = FontManager.MAIN.a(18, FontWeight.REGULAR);
+    Font arrayListFont = FontManager.MAIN.a(18, FontWeight.REGULAR);
     private final StopWatch particleStopWatch = new StopWatch();
     private final ModeValue arrayListColorMode = new ModernArrayListColorModeValue(this, "ArrayList Color Mode", this);
     private final ModeValue arrayListFontMode = new ArrayListFontModeValue(this, "ArrayList Font", this);
@@ -107,7 +107,7 @@ extends Mode<Interface> {
                     RenderUtil.roundedRectangle(d32 + (double)zc2.getNameWidth() + (double)zc2.getTagWidth() + 2.0, d4 - 1.5, 2.0, 9.0, 1.0, color);
                 }
                 if (((Mode)this.arrayListFontMode.wo()).getName().equals("Minecraft")) {
-                    agd unused0 = ModernInterface.aEg.fontRendererObj;
+                    FontRenderer unused0 = ModernInterface.aEg.fontRendererObj;
                     float f4 = 16.0f / (float)9;
                     GlStateManager.pushMatrix();
                     GlStateManager.scale(f4, f4, f4);
@@ -120,8 +120,8 @@ extends Mode<Interface> {
                 if (!((String)this.customClientName.wo()).isEmpty()) {
                     this.medium18Font.a((String)this.customClientName.wo(), (double)(6 + this.medium36Font.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
                 }
-                agc agc2 = FontManager.MAIN.a(18, FontWeight.MEDIUM);
-                agc agc3 = FontManager.MAIN.a(18, FontWeight.BOLD);
+                Font agc2 = FontManager.MAIN.a(18, FontWeight.MEDIUM);
+                Font agc3 = FontManager.MAIN.a(18, FontWeight.BOLD);
                 String string = "6.9.5";
                 String string2 = rip.vantage.network.core.VantageNetwork.aKB().bX();
                 String string3 = "User:";
@@ -138,11 +138,11 @@ extends Mode<Interface> {
                 this.regular18Font.b("XYZ:", 5.0, f3, -3355444);
                 this.medium18Font.b(this.coordinates, 5.0f + this.xyzWidth, f3, -3355444);
                 FontManager.MAIN.a(16, FontWeight.MEDIUM);
-                agc agc4 = FontManager.MAIN.a(16, FontWeight.BOLD);
+                Font agc4 = FontManager.MAIN.a(16, FontWeight.BOLD);
                 Collection<PotionEffect> collection = ModernInterface.aEg.thePlayer.getActivePotionEffects();
                 if (!collection.isEmpty()) {
                     String string4;
-                    agc agc5 = this.regular18Font;
+                    Font agc5 = this.regular18Font;
                     ArrayList<String[]> arrayList = new ArrayList<String[]>();
                     for (PotionEffect potionEffect : collection) {
                         if (potionEffect.getDuration() > 24000) continue;
@@ -196,8 +196,8 @@ extends Mode<Interface> {
         String string = rip.vantage.network.core.VantageNetwork.aKB().bX();
         String string2 = "User:";
         String string3 = "6.9.5";
-        agc agc2 = FontManager.MAIN.a(18, FontWeight.MEDIUM);
-        agc agc3 = FontManager.MAIN.a(18, FontWeight.BOLD);
+        Font agc2 = FontManager.MAIN.a(18, FontWeight.MEDIUM);
+        Font agc3 = FontManager.MAIN.a(18, FontWeight.BOLD);
         float f4 = agc2.getStringWidth("Version:\u2009\u2009\u2009\u2009\u2009\u2009");
         float f5 = agc3.getStringWidth(string3);
         float f6 = this.regular20Font.getStringWidth(string2);
@@ -212,10 +212,10 @@ extends Mode<Interface> {
         this.regular18Font.b("XYZ:", 5.0, f3, -3355444);
         this.medium18Font.b(this.coordinates, 5.0f + this.xyzWidth, f3, -3355444);
         FontManager.MAIN.a(16, FontWeight.MEDIUM);
-        agc agc4 = FontManager.MAIN.a(16, FontWeight.BOLD);
+        Font agc4 = FontManager.MAIN.a(16, FontWeight.BOLD);
         Collection<PotionEffect> collection = ModernInterface.aEg.thePlayer.getActivePotionEffects();
         if (!collection.isEmpty()) {
-            agc agc5 = this.regular18Font;
+            Font agc5 = this.regular18Font;
             ArrayList<String[]> arrayList = new ArrayList<String[]>();
             for (PotionEffect potionEffect2 : collection) {
                 if (potionEffect2.getDuration() > 24000) continue;
@@ -244,7 +244,7 @@ extends Mode<Interface> {
             }
         }
         if (((Mode)this.arrayListFontMode.wo()).getName().equals("Minecraft")) {
-            agd unused0 = ModernInterface.aEg.fontRendererObj;
+            FontRenderer unused0 = ModernInterface.aEg.fontRendererObj;
             float f15 = 16.0f / (float)9;
             GlStateManager.pushMatrix();
             GlStateManager.scale(f15, f15, f15);
@@ -296,7 +296,7 @@ extends Mode<Interface> {
                         String string = ((Mode)this.arrayListFontMode.wo()).getName();
                         switch (string) {
                             case "Apple UI": {
-                                agc agc2 = FontManager.MAIN.a(18, FontWeight.REGULAR);
+                                Font agc2 = FontManager.MAIN.a(18, FontWeight.REGULAR);
                                 if (!this.arrayListFont.equals(agc2)) {
                                     this.arrayListFont = agc2;
                                 }
@@ -313,7 +313,7 @@ extends Mode<Interface> {
                             }
                         }
                     }
-                    agc agc3 = FontManager.MINECRAFT.dM();
+                    Font agc3 = FontManager.MINECRAFT.dM();
                     if (!this.arrayListFont.equals(agc3)) {
                         this.arrayListFont = agc3;
                     }

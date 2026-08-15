@@ -4,7 +4,7 @@ import com.alan.clients.Client;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.ui.theme.ThemeManager;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import java.awt.Color;
 import org.lwjgl.opengl.GL11;
 
@@ -87,7 +87,7 @@ public final class ColorUtil {
         return Color.getHSBColor((float)(Math.ceil((System.currentTimeMillis() + var0) / 10.0) % 360.0 / 360.0), 0.6F, 1.0F);
     }
 
-    public static void a(agc var0, String var1, double var2, double var4, boolean var6) {
+    public static void a(Font var0, String var1, double var2, double var4, boolean var6) {
         float f = 0.0F;
         ThemeManager adu = Client.a.getThemeManager();
 
@@ -104,7 +104,7 @@ public final class ColorUtil {
         }
     }
 
-    public static void a(agc var0, String var1, double var2, double var4) {
+    public static void a(Font var0, String var1, double var2, double var4) {
         a(var0, var1, var2, var4, true);
     }
 }

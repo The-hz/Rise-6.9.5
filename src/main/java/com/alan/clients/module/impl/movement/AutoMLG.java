@@ -12,7 +12,7 @@ import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aef;
+import com.alan.clients.util.RayCastUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
@@ -228,7 +228,7 @@ public class AutoMLG extends Module {
                 RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 90.0F), 10.0, MovementFix.NORMAL);
                 double d0 = Math.max(aEg.thePlayer.motionY * 2.0, -4.5);
                 if (this.collidesAtOffset(d0)) {
-                    MovingObjectPosition movingobjectposition = aef.c(RotationComponent.fk, aEg.playerController.getBlockReachDistance());
+                    MovingObjectPosition movingobjectposition = RayCastUtil.c(RotationComponent.fk, aEg.playerController.getBlockReachDistance());
                     if (movingobjectposition != null
                         && movingobjectposition.typeOfHit == MovingObjectType.BLOCK
                         && movingobjectposition.sideHit != null

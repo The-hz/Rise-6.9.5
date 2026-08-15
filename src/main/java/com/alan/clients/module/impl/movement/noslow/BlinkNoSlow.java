@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.newevent.impl.motion.SlowDownEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.item.ItemFood;
 import net.minecraft.network.Packet;
@@ -36,7 +36,7 @@ public class BlinkNoSlow extends Mode<NoSlow> {
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         Packet packet = var1x.dq();
         if (packet instanceof C07PacketPlayerDigging) {
-            afi.b("digging " + ((C07PacketPlayerDigging)packet).getStatus() + " " + var1x.isCancelled());
+            ChatUtil.b("digging " + ((C07PacketPlayerDigging)packet).getStatus() + " " + var1x.isCancelled());
             this.enabled = false;
         } else if (!this.enabled && packet instanceof C08PacketPlayerBlockPlacement) {
             SlotComponent slotcomponent = this.d(SlotComponent.class);
@@ -48,7 +48,7 @@ public class BlinkNoSlow extends Mode<NoSlow> {
                     BlinkComponent.enabled = true;
                     var1x.setCancelled();
                     PacketUtil.sendNoEvent(packet);
-                    afi.b("Started");
+                    ChatUtil.b("Started");
                 }
             }
         }

@@ -13,7 +13,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.ItemDamageComponent;
@@ -110,7 +110,7 @@ public class WatchdogLongJump extends Mode<LongJump> {
                 } else if (aEg.thePlayer.isPotionActive(Potion.moveSpeed) && aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 == 1) {
                     MoveUtil.strafe(0.395);
                 } else {
-                    afi.b(MoveUtil.speed());
+                    ChatUtil.b(MoveUtil.speed());
                     MoveUtil.strafe();
                 }
             }
@@ -210,14 +210,14 @@ public class WatchdogLongJump extends Mode<LongJump> {
         this.previousSlot = aEg.thePlayer.inventory.currentItem;
         this.launched = false;
         if (this.findProjectileSlot() == -1) {
-            afi.b("you need a projectile in your hotbar for this");
+            ChatUtil.b("you need a projectile in your hotbar for this");
         } else {
             int i = this.findProjectileSlot();
             if (i != -1) {
                 SlotComponent slotcomponent = this.d(SlotComponent.class);
                 SlotComponent.setSlot(i);
             } else {
-                afi.b("you need a projectile in your hotbar for this");
+                ChatUtil.b("you need a projectile in your hotbar for this");
             }
 
             ItemDamageComponent.damage(false);

@@ -6,14 +6,14 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 
 public final class ColourCheckAntiBot extends Mode<AntiBot> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         String s = var1xx.getDisplayName().getUnformattedText();
         if (!startsWithColorCode(s)) {
-            afi.c("Detected bot (invalid colour start): " + s);
+            ChatUtil.c("Detected bot (invalid colour start): " + s);
             Client.a.getBotManager().b(this, var1xx);
         }
     });

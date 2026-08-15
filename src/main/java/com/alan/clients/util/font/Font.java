@@ -1,9 +1,9 @@
-package hackclient.rise;
+package com.alan.clients.util.font;
 
 import java.awt.Color;
 
-public abstract class agc {
-    public agc() {
+public abstract class Font {
+    public Font() {
     }
 
     public abstract int b(String var1, double var2, double var4, int var6, boolean var7);

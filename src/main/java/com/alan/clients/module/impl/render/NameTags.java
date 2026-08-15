@@ -10,7 +10,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Generated;
@@ -34,7 +34,7 @@ public final class NameTags extends Module {
     public NameTags() {
     }
 
-    public float a(String var1, agc var2) {
+    public float a(String var1, Font var2) {
         String s = var1 + var2.hashCode();
         if (!this.widthCache.containsKey(s)) {
             this.widthCache.put(s, var2.getStringWidth(var1));

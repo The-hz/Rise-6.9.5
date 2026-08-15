@@ -4,8 +4,8 @@ import com.alan.clients.component.Component;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.render.Render2DEvent;
-import hackclient.rise.aha;
-import hackclient.rise.aka;
+import com.alan.clients.util.interfaces.ExecutorAccess;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.component.impl.render.Projection;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ import org.lwjgl.util.glu.GLU;
 
 public class ProjectionComponent
 extends Component
-implements aha {
+implements ExecutorAccess {
     private static final HashMap<Entity, Projection> hK = new HashMap();
     private static HashMap<Entity, Projection> hL = new HashMap();
     @EventLink(value=0)
@@ -56,9 +56,9 @@ implements aha {
         return ck2.cm();
     }
 
-    private aka a(int n2, double d2, double d3, double d4) {
+    private Vector3d a(int n2, double d2, double d3, double d4) {
         if (GLU.gluProject((float)d2, (float)d3, (float)d4, ActiveRenderInfo.MODELVIEW, ActiveRenderInfo.PROJECTION, ActiveRenderInfo.VIEWPORT, ActiveRenderInfo.OBJECTCOORDS)) {
-            return new aka(ActiveRenderInfo.OBJECTCOORDS.get(0) / (float)n2, ((float)Display.getHeight() - ActiveRenderInfo.OBJECTCOORDS.get(1)) / (float)n2, ActiveRenderInfo.OBJECTCOORDS.get(2));
+            return new Vector3d(ActiveRenderInfo.OBJECTCOORDS.get(0) / (float)n2, ((float)Display.getHeight() - ActiveRenderInfo.OBJECTCOORDS.get(1)) / (float)n2, ActiveRenderInfo.OBJECTCOORDS.get(2));
         }
         return null;
     }
@@ -76,12 +76,12 @@ implements aha {
         double d8 = ((double)entity.width + 0.14) / 2.0;
         double d9 = (double)entity.height + (entity.isSneaking() ? -0.1 : 0.2) + 0.01;
         AxisAlignedBB axisAlignedBB = new AxisAlignedBB(d5 - d8, d6, d7 - d8, d5 + d8, d6 + d9, d7 + d8);
-        List<aka> list = Arrays.asList(new aka(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ), new aka(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.minZ), new aka(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.minZ), new aka(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.minZ), new aka(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.maxZ), new aka(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.maxZ), new aka(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.maxZ), new aka(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.maxZ));
+        List<Vector3d> list = Arrays.asList(new Vector3d(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ), new Vector3d(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.minZ), new Vector3d(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.minZ), new Vector3d(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.minZ), new Vector3d(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.maxZ), new Vector3d(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.maxZ), new Vector3d(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.maxZ), new Vector3d(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.maxZ));
         Vector4d vector4d = null;
-        Iterator<aka> iterator = list.iterator();
+        Iterator<Vector3d> iterator = list.iterator();
         while (iterator.hasNext()) {
-            aka aka2 = iterator.next();
-            aka aka3 = this.a(ProjectionComponent.aEg.jY.getScaleFactor(), aka2.getX(), aka2.getY(), aka2.getZ());
+            Vector3d aka2 = iterator.next();
+            Vector3d aka3 = this.a(ProjectionComponent.aEg.jY.getScaleFactor(), aka2.getX(), aka2.getY(), aka2.getZ());
             if (aka3 == null || !(aka3.getZ() >= 0.0) || !(aka3.getZ() < 1.0)) continue;
             if (vector4d == null) {
                 vector4d = new Vector4d(aka3.getX(), aka3.getY(), aka3.getZ(), 0.0);

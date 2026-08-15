@@ -15,8 +15,8 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.afi;
-import hackclient.rise.aha;
+import com.alan.clients.util.chat.ChatUtil;
+import com.alan.clients.util.interfaces.ExecutorAccess;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.component.impl.render.ESPComponent;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -36,7 +36,7 @@ import net.minecraft.util.EnumChatFormatting;
 import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = "module.other.debugger.name", category = Category.PLAYER, description = "module.other.debugger.description")
-public final class Debugger extends Module implements aha {
+public final class Debugger extends Module implements ExecutorAccess {
     private final BooleanValue transaction = new BooleanValue("Transactions", this, true);
     private final BooleanValue keepAlive = new BooleanValue("Keep Alive", this, true);
     private final BooleanValue teleport = new BooleanValue("Teleport", this, true);
@@ -60,21 +60,21 @@ public final class Debugger extends Module implements aha {
     public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1 -> {
         Packet packet = var1.getPacket();
         if (this.transaction.wo() && packet instanceof S32PacketConfirmTransaction s32packetconfirmtransaction) {
-            afi.b(
+            ChatUtil.b(
                 EnumChatFormatting.RED + " Transaction " + EnumChatFormatting.RESET + " (ID: %s)   (WindowID: %s)",
                 s32packetconfirmtransaction.actionNumber,
                 s32packetconfirmtransaction.windowId
             );
         } else if (this.keepAlive.wo() && packet instanceof net.minecraft.network.play.server.a a) {
-            afi.b(EnumChatFormatting.GREEN + " Keep Alive " + EnumChatFormatting.RESET + " (ID: %s)", a.func_149134_c());
+            ChatUtil.b(EnumChatFormatting.GREEN + " Keep Alive " + EnumChatFormatting.RESET + " (ID: %s)", a.func_149134_c());
         } else if (this.teleport.wo() && packet instanceof S08PacketPlayerPosLook s08packetplayerposlook) {
-            afi.b(
+            ChatUtil.b(
                 EnumChatFormatting.BLUE + " Server Teleport " + EnumChatFormatting.RESET + " (Position: %s)",
                 MathUtil.round(s08packetplayerposlook.x, 3) + " " + MathUtil.round(s08packetplayerposlook.y, 3) + " " + MathUtil.round(s08packetplayerposlook.z, 3)
             );
         } else if (this.velocity.wo() && packet instanceof S12PacketEntityVelocity s12packetentityvelocity) {
             if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
-                afi.b(
+                ChatUtil.b(
                     EnumChatFormatting.LIGHT_PURPLE + " Velocity " + EnumChatFormatting.RESET + " (DeltaX: %s) (DeltaY: %s)  (DeltaZ: %s) ",
                     s12packetentityvelocity.motionX / 8000.0,
                     s12packetentityvelocity.motionY / 8000.0,
@@ -82,14 +82,14 @@ public final class Debugger extends Module implements aha {
                 );
             }
         } else if (this.velocity.wo() && packet instanceof S27PacketExplosion s27packetexplosion) {
-            afi.b(
+            ChatUtil.b(
                 EnumChatFormatting.LIGHT_PURPLE + " Explosion (Velocity) " + EnumChatFormatting.RESET + " (DeltaX: %s) (DeltaY: %s)  (DeltaZ: %s) ",
                 s27packetexplosion.func_149149_c(),
                 s27packetexplosion.func_149144_d(),
                 s27packetexplosion.func_149147_e()
             );
         } else if (this.abilities.wo() && packet instanceof S39PacketPlayerAbilities s39packetplayerabilities) {
-            afi.b(
+            ChatUtil.b(
                 EnumChatFormatting.YELLOW
                     + " Abilities "
                     + s39packetplayerabilities.getFlySpeed()
@@ -168,10 +168,10 @@ public final class Debugger extends Module implements aha {
                 this.threadLag = System.currentTimeMillis() - i;
                 this.measuring = false;
                 if (flag) {
-                    afi.b("Displaying Calls: ");
+                    ChatUtil.b("Displaying Calls: ");
 
                     for (String s : calls.keySet()) {
-                        afi.b(s + ": " + calls.get(s));
+                        ChatUtil.b(s + ": " + calls.get(s));
                     }
 
                     calls.clear();

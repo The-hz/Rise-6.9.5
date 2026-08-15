@@ -16,7 +16,7 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.component.impl.combat.TargetComponent;
@@ -102,7 +102,7 @@ extends Module {
             Client.a.e().d(attackEvent);
             if (!attackEvent.isCancelled()) {
                 PacketUtil.send(new m());
-                afi.c("attacked", new Object[0]);
+                ChatUtil.c("attacked", new Object[0]);
                 PacketUtil.send(new C02PacketUseEntity((Entity)this.pendingAttackTarget, C02PacketUseEntity.Action.ATTACK));
             }
             this.pendingAttackTarget = null;
@@ -146,25 +146,25 @@ extends Module {
             this.blinkTicks = 0;
             this.heldPackets.clear();
             this.blinkTimer.aX();
-            afi.c("Started blinking", new Object[0]);
+            ChatUtil.c("Started blinking", new Object[0]);
         }
     }
 
     private void stopBlink() {
         if (this.blinking) {
             this.blinking = false;
-            afi.c("Dispatching " + this.heldPackets.size() + " packets", new Object[0]);
+            ChatUtil.c("Dispatching " + this.heldPackets.size() + " packets", new Object[0]);
             while (!this.heldPackets.isEmpty()) {
                 PacketUtil.sendNoEvent(this.heldPackets.poll());
             }
             this.skipNextTick = false;
-            afi.c("Stopped blinking", new Object[0]);
+            ChatUtil.c("Stopped blinking", new Object[0]);
         }
     }
 
     @Override
     public void onEnable() {
-        afi.b("CREDIT TO https://youtube.com/@authh FOR THIS GOD BYPASS", new Object[0]);
+        ChatUtil.b("CREDIT TO https://youtube.com/@authh FOR THIS GOD BYPASS", new Object[0]);
         this.skipNextTick = true;
         this.blinking = false;
         this.target = null;

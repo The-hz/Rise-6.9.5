@@ -5,14 +5,14 @@ import java.util.Collection;
 import java.util.LinkedList;
 import lombok.Generated;
 
-public class adz<T> extends LinkedList<T> implements Serializable {
+public class EvictingList<T> extends LinkedList<T> implements Serializable {
     private int aEi;
 
-    public adz(int var1) {
+    public EvictingList(int var1) {
         this.aEi = var1;
     }
 
-    public adz(Collection<? extends T> var1, int var2) {
+    public EvictingList(Collection<? extends T> var1, int var2) {
         super(var1);
         this.aEi = var2;
     }
@@ -30,8 +30,8 @@ public class adz<T> extends LinkedList<T> implements Serializable {
         return this.size() >= this.rS();
     }
 
-    public adz<T> rR() {
-        adz adz = new adz(this.aEi);
+    public EvictingList<T> rR() {
+        EvictingList adz = new EvictingList(this.aEi);
 
         for (int i = this.size() - 1; i >= 0; i--) {
             adz.add(this.get(i));

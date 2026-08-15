@@ -1,10 +1,10 @@
 package com.alan.clients.script.api.wrapper.impl;
 
 import com.alan.clients.script.api.RenderAPI;
-import hackclient.rise.agd;
+import com.alan.clients.util.font.impl.minecraft.FontRenderer;
 
-public class ScriptMCFontRenderer extends ScriptFontRenderer<agd> {
-    public ScriptMCFontRenderer(agd var1) {
+public class ScriptMCFontRenderer extends ScriptFontRenderer<FontRenderer> {
+    public ScriptMCFontRenderer(FontRenderer var1) {
         super(var1);
     }
 

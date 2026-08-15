@@ -17,10 +17,10 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import hackclient.rise.value.TargetInfoBackgroundModeValue;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.ais;
+import com.alan.clients.util.render.StencilUtil;
 import com.alan.clients.util.render.particle.Particle;
 import hackclient.rise.bf;
 import com.alan.clients.util.font.FontManager;
@@ -44,8 +44,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class ModernTargetInfo extends Mode<TargetInfo> {
     private final BooleanValue particles = new BooleanValue("Particles", this, true);
-    private final agc lightFont = FontManager.MAIN.a(22, FontWeight.LIGHT);
-    private final agc mediumFont = FontManager.MAIN.a(22, FontWeight.MEDIUM);
+    private final Font lightFont = FontManager.MAIN.a(22, FontWeight.LIGHT);
+    private final Font mediumFont = FontManager.MAIN.a(22, FontWeight.MEDIUM);
     private final ModeValue backgroundMode = new TargetInfoBackgroundModeValue(this, "Background Mode", this);
     private static final float MIN_DAMAGE = 0.01F;
     private static final float MAX_REDUCTION = 0.8F;
@@ -291,10 +291,10 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
     }
 
     private void renderTargetHead(AbstractClientPlayer abstractClientPlayer, double var2, double var4, double var6) {
-        ais.initStencil();
-        ais.bindWriteStencilBuffer();
+        StencilUtil.initStencil();
+        StencilUtil.bindWriteStencilBuffer();
         RenderUtil.roundedRectangle(var2, var4, var6, var6, this.rz().getRound() * 2, Themes.rK());
-        ais.bindReadStencilBuffer(1);
+        StencilUtil.bindReadStencilBuffer(1);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);
         GlStateManager.alphaFunc(516, 0.0F);
@@ -305,7 +305,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         aEg.getTextureManager().bindTexture(resourcelocation);
         Gui.drawScaledCustomSizeModalRect(var2, var4, 4.0F, 4.0F, 4.0F, 4.0F, var6, var6, 32.0F, 32.0F);
         GlStateManager.disableBlend();
-        ais.uninitStencilBuffer();
+        StencilUtil.uninitStencilBuffer();
         float f1 = 0.5F;
         RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.withBlue(Color.BLACK, 40));
     }

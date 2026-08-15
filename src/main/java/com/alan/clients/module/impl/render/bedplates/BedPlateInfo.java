@@ -1,6 +1,6 @@
 package com.alan.clients.module.impl.render.bedplates;
 
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.item.ItemStack;
 
@@ -11,11 +11,11 @@ public class BedPlateInfo {
     private final double distanceSquared;
     private final double distance;
     private final MapColor mapColor;
-    private final aka position;
+    private final Vector3d position;
     private final boolean incomplete;
     private final boolean notProtected;
 
-    public BedPlateInfo(ItemStack stack, double var2, MapColor mapColor, aka var5, boolean var6, boolean var7) {
+    public BedPlateInfo(ItemStack stack, double var2, MapColor mapColor, Vector3d var5, boolean var6, boolean var7) {
         this.stack = stack;
         this.incomplete = var6;
         this.notProtected = var7;
@@ -58,7 +58,7 @@ public class BedPlateInfo {
         return this.mapColor;
     }
 
-    public aka getPosition() {
+    public Vector3d getPosition() {
         return this.position;
     }
 

@@ -15,10 +15,10 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLeaves;
@@ -30,7 +30,7 @@ import net.minecraft.util.MathHelper;
 
 public class MiniBloxFlight extends Mode<Flight> {
     private final NumberValue speed = new NumberValue("Speed", this, 5, 5, 9.5, 0.1);
-    private aka Ft;
+    private Vector3d Ft;
     private Vector2f ka;
     private static final int SEARCH_RADIUS = 50;
     private boolean clipped;
@@ -107,7 +107,7 @@ public class MiniBloxFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        afi.b("try to clip through a block on disable");
+        ChatUtil.b("try to clip through a block on disable");
         BlockPos blockpos = this.findNearestSolidBlock(50);
         if (blockpos != null) {
             aEg.thePlayer.setPosition(blockpos.getX() + 0.51, blockpos.getY(), blockpos.getZ() + 0.51);

@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.network.Packet;
@@ -107,7 +107,7 @@ extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        afi.c(WatchdogPredictionFlight.aEg.thePlayer.tR, new Object[0]);
+        ChatUtil.c(WatchdogPredictionFlight.aEg.thePlayer.tR, new Object[0]);
         if (WatchdogPredictionFlight.aEg.thePlayer.onGround) {
             WatchdogPredictionFlight.aEg.thePlayer.jump();
         }

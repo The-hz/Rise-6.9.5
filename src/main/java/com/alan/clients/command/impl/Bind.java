@@ -2,7 +2,7 @@ package com.alan.clients.command.impl;
 
 import com.alan.clients.Client;
 import com.alan.clients.command.Command;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.interfaces.Bindable;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.event.ClickEvent;
@@ -22,16 +22,16 @@ public final class Bind extends Command
         if (array.length == 3) {
             final Bindable a = Client.a.t().a(array[1]);
             if (a == null) {
-                afi.b("command.bind.invalidmodule", new Object[0]);
+                ChatUtil.b("command.bind.invalidmodule", new Object[0]);
                 return;
             }
             final int d = d(array[2]);
             a.setKey(d);
-            afi.b("Bound " + a.getName() + " to " + b(d), new Object[0]);
-            afi.b("Remember you can bind configs by doing .bind configname key", new Object[0]);
+            ChatUtil.b("Bound " + a.getName() + " to " + b(d), new Object[0]);
+            ChatUtil.b("Remember you can bind configs by doing .bind configname key", new Object[0]);
         }
         else if (array.length == 2 && array[1].equalsIgnoreCase("list")) {
-            afi.b("Displaying all active binds", new Object[0]);
+            ChatUtil.b("Displaying all active binds", new Object[0]);
             Client.a.t().aP().forEach(p -> {
                 if (p.getKey() != 0) {
                     final s s = new s(this.rz().getChatAccentColor().toString() + "> " + p.getAliases()[0] + "§f " + b(p.getKey()));

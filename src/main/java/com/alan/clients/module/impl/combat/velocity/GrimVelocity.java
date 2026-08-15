@@ -27,7 +27,7 @@ import com.viaversion.viaversion.api.type.Types;
 import com.viaversion.viaversion.protocols.v1_18_2to1_19.packet.ServerboundPackets1_19;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -64,7 +64,7 @@ public final class GrimVelocity extends Mode<Velocity> {
     private final double tX = 1.0;
     private int tY;
     private boolean tZ;
-    private aka ua;
+    private Vector3d ua;
     private boolean gD;
     private float ub;
     private boolean motionSaved;

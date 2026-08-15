@@ -16,7 +16,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.component.impl.player.PacketQueueComponent;
 import com.alan.clients.component.impl.player.FallDistanceComponent;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -29,8 +29,8 @@ import net.minecraft.network.play.client.a;
 import net.minecraft.util.BlockPos;
 
 public class WatchdogAntiVoid extends Mode<AntiVoid> {
-    private aka lastSafePosition;
-    private aka lastSafeMotion;
+    private Vector3d lastSafePosition;
+    private Vector3d lastSafeMotion;
     private boolean blinking;
     private boolean positionSent;
     private int voidTicks;
@@ -49,7 +49,7 @@ public class WatchdogAntiVoid extends Mode<AntiVoid> {
 
                 for (int i = 0; i <= this.distance.wo().doubleValue() * 40.0; i++) {
                     WorldClient worldclient = PlayerUtil.aEg.theWorld;
-                    aka aka = MoveUtil.a(aEg.thePlayer, new Vector2f(aEg.thePlayer.moveStrafing, aEg.thePlayer.moveForward), i, true);
+                    Vector3d aka = MoveUtil.a(aEg.thePlayer, new Vector2f(aEg.thePlayer.moveStrafing, aEg.thePlayer.moveForward), i, true);
                     BlockPos blockpos = new BlockPos(aka.x, aka.y - i, aka.z);
                     if (worldclient.getBlockState(blockpos).getBlock() != Blocks.air || aEg.thePlayer.onGround) {
                         flag = false;
@@ -84,8 +84,8 @@ public class WatchdogAntiVoid extends Mode<AntiVoid> {
                         this.blinking = false;
                     }
 
-                    this.lastSafeMotion = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
-                    this.lastSafePosition = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
+                    this.lastSafeMotion = new Vector3d(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
+                    this.lastSafePosition = new Vector3d(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
                 } else if (!this.positionSent) {
                     this.blinking = true;
                     BlinkComponent.blink();

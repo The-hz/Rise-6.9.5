@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.protection;
 
 import com.alan.clients.Client;
 import com.alan.clients.compat.ProtectionToggles;
@@ -16,13 +16,13 @@ import java.util.List;
 import lombok.Generated;
 import sun.misc.Unsafe;
 
-public final class aal {
+public final class ProtectionManager {
     private List<String> inputArguments;
     private ProtectionCheck[] checks;
     private Thread checkThread;
     private boolean initialized;
 
-    public aal() {
+    public ProtectionManager() {
     }
 
     public void init() {

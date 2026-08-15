@@ -1,6 +1,5 @@
 package com.alan.clients.util.font.impl.rise;
 
-import hackclient.rise.agc;
 import com.alan.clients.util.font.impl.rise.FontCharacter;
 import com.alan.clients.util.font.impl.rise.GlyphCache;
 import com.alan.clients.util.render.ColorUtil;
@@ -21,7 +20,7 @@ import net.minecraft.util.MathHelper;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-public class FontRenderer extends agc {
+public class FontRenderer extends com.alan.clients.util.font.Font {
     private static final String ALPHABET = "ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String COLOR_CODE_CHARACTERS = "0123456789abcdefklmnor";
     private static final Color TRANSPARENT_COLOR = new Color(255, 255, 255, 0);

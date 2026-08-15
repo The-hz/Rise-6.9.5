@@ -23,7 +23,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
@@ -807,7 +807,7 @@ public class WatchdogSpeed extends Mode<Speed> {
                     && aEg.thePlayer.ae > 1
                     && MoveUtil.speed() < MoveUtil.vd() - 0.0323
                     && aEg.thePlayer.tR < 18) {
-                    afi.c(aEg.thePlayer.tR);
+                    ChatUtil.c(aEg.thePlayer.tR);
                     if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                         var1x.setSpeed(MoveUtil.vd() - 0.003);
                     } else {
@@ -913,7 +913,7 @@ public class WatchdogSpeed extends Mode<Speed> {
         WatchdogTower.jumpStage = 0;
         WatchdogTower.moveTicks = 0;
         this.onIce = false;
-        afi.c(aEg.thePlayer.tR + ": " + aEg.thePlayer.ae);
+        ChatUtil.c(aEg.thePlayer.tR + ": " + aEg.thePlayer.ae);
         this.liftBoosted = false;
         if (Client.a.g().c(Scaffold.class).isEnabled()) {
             aEg.thePlayer.motionX *= 0.85;

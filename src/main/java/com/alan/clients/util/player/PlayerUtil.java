@@ -8,7 +8,6 @@ import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.util.player.EnumFacingOffset;
 import com.alan.clients.util.vector.Vector2i;
-import hackclient.rise.aka;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -52,7 +51,7 @@ public final class PlayerUtil implements InstanceAccess {
         return block(new BlockPos(vec));
     }
 
-    public static Block c(aka var0) {
+    public static Block c(com.alan.clients.util.vector.Vector3d var0) {
         return o(var0.getX(), var0.getY(), var0.getZ());
     }
 

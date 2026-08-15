@@ -7,7 +7,7 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.util.gui.GUIUtil;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 
@@ -20,12 +20,12 @@ public class ModeValueComponent extends ValueComponent {
     public void draw(Vector2d position, int var2, int var3, float var4) {
         ModeValue modevalue = (ModeValue)this.value;
         this.position = position;
-        String s = ahd.ce(this.value.getName()) + ":";
+        String s = Localization.ce(this.value.getName()) + ":";
         FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, this.position.x, this.position.y, UIColors.SECONDARY_TEXT.Z(Math.min(this.ayD, UIColors.SECONDARY_TEXT.pV().getAlpha())));
         FontManager.MAIN
             .a(16, FontWeight.REGULAR)
             .a(
-                ahd.ce(modevalue.wo().getName()),
+                Localization.ce(modevalue.wo().getName()),
                 this.position.x + FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s) + 2.0,
                 this.position.y,
                 UIColors.SECONDARY_TEXT.Z(Math.min(this.ayD, UIColors.SECONDARY_TEXT.pV().getAlpha()))

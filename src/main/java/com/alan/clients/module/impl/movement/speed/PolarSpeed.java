@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 
 public class PolarSpeed extends Mode<Speed> {
     private int jumps = 0;
@@ -31,7 +31,7 @@ public class PolarSpeed extends Mode<Speed> {
         }
 
         if (this.jumps % 2 != 0) {
-            afi.c(aEg.thePlayer.tR);
+            ChatUtil.c(aEg.thePlayer.tR);
         }
 
         MoveUtil.moveFlying(0.002);

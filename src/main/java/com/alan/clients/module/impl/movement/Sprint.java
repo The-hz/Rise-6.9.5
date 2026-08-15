@@ -15,7 +15,7 @@ import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.newevent.impl.motion.SprintEvent;
 import java.util.Iterator;
@@ -115,7 +115,7 @@ public class Sprint extends Module {
 
     @Override
     public void onEnable() {
-        afi.b("don't start on an edge when enabling");
+        ChatUtil.b("don't start on an edge when enabling");
         predictionDone = false;
         Ep = false;
         this.El = true;

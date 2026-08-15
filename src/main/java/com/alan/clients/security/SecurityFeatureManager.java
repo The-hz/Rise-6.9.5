@@ -7,7 +7,7 @@ import com.alan.clients.newevent.impl.input.ChatInputEvent;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.interfaces.InstanceAccess;
-import hackclient.rise.aha;
+import com.alan.clients.util.interfaces.ExecutorAccess;
 import com.alan.clients.security.ChatMessageObserver;
 import com.alan.clients.security.impl.DebugOrPacketCommandCheck;
 import com.alan.clients.packetlog.impl.HostsFileCheck;
@@ -27,7 +27,7 @@ import lombok.Generated;
 import net.minecraft.network.play.client.C01PacketChatMessage;
 import org.apache.commons.lang3.StringUtils;
 
-public class SecurityFeatureManager implements InstanceAccess, aha {
+public class SecurityFeatureManager implements InstanceAccess, ExecutorAccess {
     public rip.vantage.commons.util.time.StopWatch avt;
     @EventLink
     public Listener<ChatInputEvent> onChatInput;

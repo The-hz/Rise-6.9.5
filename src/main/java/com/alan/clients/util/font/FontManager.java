@@ -1,11 +1,10 @@
 package com.alan.clients.util.font;
 
 import com.alan.clients.util.font.impl.rise.FontRenderer;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.font.impl.rise.FontUtil;
 import com.alan.clients.util.font.impl.rise.GlyphCache;
 import com.alan.clients.util.font.FontWeight;
-import java.awt.Font;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,8 +19,8 @@ public enum FontManager {
     ICONS_2("Icon-3", "ttf"),
     CUSTOM("", "ttf");
 
-    Supplier<agc> kx;
-    agc ky;
+    Supplier<Font> kx;
+    Font ky;
     String name;
     final String kz;
     private final HashMap<Integer, FontRenderer> kA = new HashMap<>();
@@ -32,14 +31,14 @@ public enum FontManager {
         this.kz = var4;
     }
 
-    FontManager(String var3, Supplier<agc> supplier) {
+    FontManager(String var3, Supplier<Font> supplier) {
         this.name = var3;
         this.kz = "";
-        this.ky = (agc)supplier.get();
+        this.ky = (Font)supplier.get();
         this.kx = supplier;
     }
 
-    public agc o(int var1) {
+    public Font o(int var1) {
         try {
             return this.a(var1, FontWeight.NONE);
         } catch (RuntimeException | Error throwable) {
@@ -49,7 +48,7 @@ public enum FontManager {
         }
     }
 
-    public agc dM() {
+    public Font dM() {
         try {
             if (this.kx == null) {
                 throw new Exception("Please specify a size, this doesn't have a predefined font");
@@ -62,7 +61,7 @@ public enum FontManager {
         }
     }
 
-    public agc a(int var1, FontWeight var2) {
+    public Font a(int var1, FontWeight var2) {
         try {
             if (this.kx != null) {
                 if (this.ky == null) {
@@ -73,7 +72,7 @@ public enum FontManager {
             }
             int i = Integer.parseInt("" + var1 + var2.dR());
             if (!this.kA.containsKey(i)) {
-                Font font = null;
+                java.awt.Font font = null;
                 String s = "unknown";
                 if (this.name.contains(":")) {
                     s = this.name;
@@ -94,22 +93,22 @@ public enum FontManager {
 
                 FontRenderer agf = new FontRenderer(font, true, true, false);
                 if (this == MAIN) {
-                    Font font1 = b(var1, var2);
+                    java.awt.Font font1 = b(var1, var2);
                     if (font1 != null) {
                         agf.a(new GlyphCache(font1, true, true));
                     }
 
-                    Font font2 = FontUtil.p("rise/font/product_sans_medium.ttf", var1);
+                    java.awt.Font font2 = FontUtil.p("rise/font/product_sans_medium.ttf", var1);
                     if (font2 != null) {
                         agf.b(new GlyphCache(font2, true, true));
                     }
 
-                    Font font3 = c(var1, var2);
+                    java.awt.Font font3 = c(var1, var2);
                     if (font3 != null) {
                         agf.c(new GlyphCache(font3, true, true));
                     }
 
-                    Font font4 = d(var1, var2);
+                    java.awt.Font font4 = d(var1, var2);
                     if (font4 != null) {
                         agf.d(new GlyphCache(font4, true, true));
                     }
@@ -126,14 +125,14 @@ public enum FontManager {
         }
     }
 
-    private static Font b(int var0, FontWeight var1) {
+    private static java.awt.Font b(int var0, FontWeight var1) {
         String s = switch (var1) {
             case LIGHT -> "Light";
             case MEDIUM -> "Medium";
             case BOLD -> "Bold";
             default -> "Regular";
         };
-        Font font = FontUtil.p("rise/font/HarmonyOS_Sans_SC_" + s + ".ttf", var0);
+        java.awt.Font font = FontUtil.p("rise/font/HarmonyOS_Sans_SC_" + s + ".ttf", var0);
         if (font != null) {
             return font;
         }
@@ -142,7 +141,7 @@ public enum FontManager {
         return s1 != null && !s1.trim().isEmpty() ? FontUtil.q(s1 + File.separator + "HarmonyOS_Sans_SC_" + s + ".ttf", var0) : null;
     }
 
-    private static Font c(int var0, FontWeight var1) {
+    private static java.awt.Font c(int var0, FontWeight var1) {
         return FontUtil.p("rise/font/" + switch (var1) {
             case LIGHT -> "LINESeedJP_TTF_Th.ttf";
             default -> "LINESeedJP_TTF_Rg.ttf";
@@ -150,7 +149,7 @@ public enum FontManager {
         }, var0);
     }
 
-    private static Font d(int var0, FontWeight var1) {
+    private static java.awt.Font d(int var0, FontWeight var1) {
         return FontUtil.p("rise/font/" + switch (var1) {
             case LIGHT -> "LINESeedKR-Th.ttf";
             default -> "LINESeedKR-Rg.ttf";

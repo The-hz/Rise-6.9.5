@@ -9,8 +9,8 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.agc;
-import hackclient.rise.agd;
+import com.alan.clients.util.font.Font;
+import com.alan.clients.util.font.impl.minecraft.FontRenderer;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.combat.TargetComponent;
 import com.alan.clients.util.social.FriendManager;
@@ -31,7 +31,7 @@ extends Mode<NameTags> {
     private final BooleanValue shortenedTags = new BooleanValue("Shortened Tags", (Mode<?>)this, (Boolean)false);
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
-        agd agd2 = VanillaNameTags.aEg.fontRendererObj;
+        FontRenderer agd2 = VanillaNameTags.aEg.fontRendererObj;
         GlStateManager.pushMatrix();
         List<EntityLivingBase> list = TargetComponent.b((Boolean)((NameTags)this.getParent()).player.wo(), (Boolean)((NameTags)this.getParent()).invisibles.wo(), (Boolean)((NameTags)this.getParent()).animals.wo(), (Boolean)((NameTags)this.getParent()).mobs.wo(), (Boolean)((NameTags)this.getParent()).playerTeammates.wo(), true);
         if (VanillaNameTags.aEg.gameSettings.thirdPersonView != 0) {
@@ -73,7 +73,7 @@ extends Mode<NameTags> {
         super(string, nameTags);
     }
 
-    private  void drawNameTag(float f2, float f3, float f4, float f5, int n2, agc agc2, String string) {
+    private  void drawNameTag(float f2, float f3, float f4, float f5, int n2, Font agc2, String string) {
         double d2 = f2 - f3 / 2.0f - f4;
         double d3 = f5 - f4 - 3.0f;
         double d4 = f3 + f4 * 2.0f;

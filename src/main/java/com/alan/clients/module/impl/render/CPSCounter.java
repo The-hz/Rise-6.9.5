@@ -14,7 +14,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.adz;
+import hackclient.rise.EvictingList;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -25,7 +25,7 @@ public final class CPSCounter extends Module {
     private final BooleanValue showTitle = new BooleanValue("Title", this, false);
     private final DragValue position = new DragValue("Position", this, new Vector2d(200.0, 200.0));
     private final Vector2f scale = new Vector2f(22.0F, 22.0F);
-    private final adz<Boolean> clicks = new adz<>(20);
+    private final EvictingList<Boolean> clicks = new EvictingList<>(20);
     private boolean clicked;
     private int cps;
     @EventLink

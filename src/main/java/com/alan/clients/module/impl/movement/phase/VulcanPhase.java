@@ -11,7 +11,7 @@ import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import hackclient.rise.cl;
@@ -65,7 +65,7 @@ public class VulcanPhase extends Mode<Phase> {
             aEg.thePlayer.setPosition(aEg.thePlayer.posX, aEg.thePlayer.posY - 1.0, aEg.thePlayer.posZ);
             MoveUtil.stop();
         } else {
-            afi.b("You must me on the ground to do this");
+            ChatUtil.b("You must me on the ground to do this");
             this.e(Phase.class).toggle();
         }
     }
@@ -97,7 +97,7 @@ public class VulcanPhase extends Mode<Phase> {
 
             if (PlayerUtil.vk() && !this.pendingJump && this.shouldAnnouncePhase) {
                 this.shouldAnnouncePhase = false;
-                afi.b("Phased");
+                ChatUtil.b("Phased");
             }
 
             if (PlayerUtil.vk()) {
@@ -126,7 +126,7 @@ public class VulcanPhase extends Mode<Phase> {
                     }
                 }
             } else if (this.setBack && !PlayerUtil.vk()) {
-                afi.b("Disabled due to not being in a block");
+                ChatUtil.b("Disabled due to not being in a block");
                 this.e(Phase.class).toggle();
             }
         };

@@ -1,9 +1,11 @@
-package hackclient.rise;
+package com.alan.clients.util.account.impl;
 
+import hackclient.rise.AltAccount;
+import hackclient.rise.AltType;
 import java.util.UUID;
 
-public class aeo extends AltAccount {
-    public aeo(String var1) {
+public class CrackedAccount extends AltAccount {
+    public CrackedAccount(String var1) {
         super(AltType.CRACKED, var1, bl(var1), "accessToken");
     }
 

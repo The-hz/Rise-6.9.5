@@ -14,7 +14,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import java.util.ArrayList;
 import net.minecraft.init.Items;
@@ -219,7 +219,7 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
         replaying = false;
         active = false;
         if (this.findFireballSlot() == -1) {
-            afi.b("Could not find Fireball");
+            ChatUtil.b("Could not find Fireball");
             this.toggle();
         } else {
             boosting = true;

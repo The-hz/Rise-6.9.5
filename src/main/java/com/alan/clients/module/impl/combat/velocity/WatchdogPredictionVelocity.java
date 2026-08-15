@@ -17,7 +17,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.component.impl.combat.TargetComponent;
 import java.util.ArrayList;
@@ -131,7 +131,7 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
             && LastConnectionComponent.ip != null
             && LastConnectionComponent.ip.contains("hypixel")
             && aEg.thePlayer.ticksExisted % 5 == 0) {
-            afi.b("don't use this velocity with this autoblock instead use legit or any other mode");
+            ChatUtil.b("don't use this velocity with this autoblock instead use legit or any other mode");
         }
 
         if (dj || aEg.thePlayer.Zl == 1) {

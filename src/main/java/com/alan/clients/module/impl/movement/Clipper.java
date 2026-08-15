@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.motion.JumpEvent;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
@@ -89,7 +89,7 @@ public class Clipper extends Module {
                 if (this.clippableFacings.contains(enumfacing1)) {
                     this.findClip(enumfacing1, i, var2 -> {
                         aEg.thePlayer.setPositionAndUpdate(aEg.thePlayer.posX, var2.getY(), aEg.thePlayer.posZ);
-                        afi.b("Clipped " + (enumfacing1 == EnumFacing.UP ? "up" : "down"));
+                        ChatUtil.b("Clipped " + (enumfacing1 == EnumFacing.UP ? "up" : "down"));
                         this.cooldown = 5;
                     });
                 }

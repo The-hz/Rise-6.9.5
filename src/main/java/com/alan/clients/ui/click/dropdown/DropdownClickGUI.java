@@ -11,7 +11,7 @@ import com.alan.clients.ui.click.dropdown.components.CategoryComponent;
 import com.alan.clients.ui.click.standard.components.ModuleComponent;
 import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.util.gui.GUIUtil;
-import hackclient.rise.aha;
+import com.alan.clients.util.interfaces.ExecutorAccess;
 import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.text.Collator;
@@ -26,7 +26,7 @@ import org.lwjgl.input.Mouse;
 
 public class DropdownClickGUI
 extends GuiScreen
-implements aha {
+implements ExecutorAccess {
     private final Map<Category, CategoryComponent> axh = new HashMap<Category, CategoryComponent>();
     private final List<Category> axi = new ArrayList<Category>();
     private double axj = 0.0;

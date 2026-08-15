@@ -7,7 +7,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.other.ServerJoinEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,7 +81,7 @@ public final class PacketQueueComponent extends Component {
     };
     @EventLink(value = 0)
     public final Listener<ServerJoinEvent> onServerJoin = var0 -> {
-        afi.b("s");
+        ChatUtil.b("s");
         cQ.clear();
         cR = false;
     };

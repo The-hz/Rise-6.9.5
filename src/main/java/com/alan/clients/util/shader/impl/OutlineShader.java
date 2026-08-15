@@ -2,8 +2,8 @@ package com.alan.clients.util.shader.impl;
 
 import com.alan.clients.util.shader.base.RiseShaderProgram;
 import com.alan.clients.util.shader.base.ShaderUniforms;
-import hackclient.rise.aix;
-import hackclient.rise.aiz;
+import com.alan.clients.util.shader.base.RiseShader;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 import java.util.List;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.opengl.Display;
 
-public class OutlineShader extends aix {
+public class OutlineShader extends RiseShader {
     private final RiseShaderProgram shaderProgram = new RiseShaderProgram("outline.frag", "vertex.vsh");
     private Framebuffer inputFramebuffer = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
 
@@ -19,7 +19,7 @@ public class OutlineShader extends aix {
     }
 
     @Override
-    public void a(aiz var1, float var2, List<Runnable> runnables) {
+    public void a(ShaderRenderType var1, float var2, List<Runnable> runnables) {
         if (Display.isVisible()) {
             switch (var1) {
                 case CAMERA:

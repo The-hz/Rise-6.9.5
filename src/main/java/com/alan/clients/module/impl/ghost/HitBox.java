@@ -9,7 +9,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.render.MouseOverEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aef;
+import com.alan.clients.util.RayCastUtil;
 import com.alan.clients.newevent.impl.input.RightClickEvent;
 
 @ModuleInfo(aliases = "module.ghost.hitbox.name", description = "module.ghost.hitbox.description", category = Category.GHOST)
@@ -24,7 +24,7 @@ public class HitBox extends Module {
         }
     };
     @EventLink
-    public final Listener<RightClickEvent> onGetMouseOver = var0 -> aEg.objectMouseOver = aef.c(RotationComponent.fk, 4.5);
+    public final Listener<RightClickEvent> onGetMouseOver = var0 -> aEg.objectMouseOver = RayCastUtil.c(RotationComponent.fk, 4.5);
 
     public HitBox() {
     }

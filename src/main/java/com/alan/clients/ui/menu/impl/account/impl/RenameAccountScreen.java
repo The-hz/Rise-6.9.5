@@ -11,11 +11,11 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.ui.menu.component.button.MenuButton;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.util.MouseUtil;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
-import hackclient.rise.aiv;
-import hackclient.rise.aiz;
+import com.alan.clients.util.shader.RiseShaders;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -24,7 +24,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 
 public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
-    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, FontWeight.BOLD);
+    private static final Font FONT_RENDERER = FontManager.MAIN.a(36, FontWeight.BOLD);
     private final MenuButton[] menuButtons = new MenuButton[3];
     private static TextBox usernameBox;
     private static GuiScreen reference;
@@ -56,7 +56,7 @@ public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
     @Override
     public void drawScreen(int var1, int var2, float var3) {
         this.animation.Q(0.0);
-        aiv.aPL.a(aiz.OVERLAY, var3, null);
+        RiseShaders.aPL.a(ShaderRenderType.OVERLAY, var3, null);
         this.b(ShaderQueueType.BLUR).c(BACKGROUND_RUNNABLE);
         FONT_RENDERER.drawString("Update your username", this.width / 2, this.height / 2 - 64 + this.animation.getValue(), Color.WHITE.getRGB());
         this.accountViewModel.draw();

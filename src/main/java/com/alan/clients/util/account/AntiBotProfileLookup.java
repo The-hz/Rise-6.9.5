@@ -2,7 +2,7 @@ package com.alan.clients.util.account;
 
 import com.google.gson.JsonParser;
 import com.alan.clients.util.account.AntiBotProfileEntry;
-import hackclient.rise.aha;
+import com.alan.clients.util.interfaces.ExecutorAccess;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 import javax.net.ssl.HttpsURLConnection;
 
 public class AntiBotProfileLookup
-implements aha {
+implements ExecutorAccess {
     private static final String aED = "https://sessionserver.mojang.com/session/minecraft/profile/";
     private static final Map<UUID, AntiBotProfileEntry> aEE = new ConcurrentHashMap<UUID, AntiBotProfileEntry>();
     static final long aEF = TimeUnit.MINUTES.toMillis(5L);

@@ -14,9 +14,9 @@ import com.alan.clients.util.SkinType;
 import hackclient.rise.AltAccount;
 import com.alan.clients.util.account.impl.MicrosoftAccount;
 import com.alan.clients.util.account.impl.RaveAccount;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.ais;
+import com.alan.clients.util.render.StencilUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -26,8 +26,8 @@ import java.util.Date;
 import lombok.Generated;
 
 public class AccountViewModel<T extends AltAccount> implements MenuColors, InstanceAccess {
-    private static final agc FONT_RENDERER = FontManager.MAIN.a(24, FontWeight.BOLD);
-    private static final agc INFO_FONT_RENDERER = FontManager.MAIN.a(18, FontWeight.MEDIUM);
+    private static final Font FONT_RENDERER = FontManager.MAIN.a(24, FontWeight.BOLD);
+    private static final Font INFO_FONT_RENDERER = FontManager.MAIN.a(18, FontWeight.MEDIUM);
     private static final DateFormat DATE_FORMAT = DateFormat.getDateInstance(3);
     private static final Color BLOOM_COLOR = ColorUtil.withBlue(Color.BLACK, 150);
     private static final Color FONT_COLOR = ColorUtil.withBlue(Color.WHITE, 150);
@@ -129,15 +129,15 @@ public class AccountViewModel<T extends AltAccount> implements MenuColors, Insta
     }
 
     private void renderHead(double var1, double var3, int var5) {
-        ais.initStencil();
-        ais.bindWriteStencilBuffer();
+        StencilUtil.initStencil();
+        StencilUtil.bindWriteStencilBuffer();
         double d0 = var5;
         double d1 = var5;
         this.rz();
         RenderUtil.roundedRectangle(var1, var3, d0, d1, 5.0, Themes.rK());
-        ais.bindReadStencilBuffer(1);
+        StencilUtil.bindReadStencilBuffer(1);
         RenderUtil.image(SkinUtil.getResourceLocation(SkinType.SKIN, this.account.sh(), 24), var1, var3, var5, var5, ColorUtil.withBlue(Color.WHITE, (int)(200.0 + this.hoverAnimation.getValue())));
-        ais.uninitStencilBuffer();
+        StencilUtil.uninitStencilBuffer();
     }
 
     private void renderInvalidHead(double var1, double var3, int var5) {

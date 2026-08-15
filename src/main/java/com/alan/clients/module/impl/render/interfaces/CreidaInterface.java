@@ -10,7 +10,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -22,7 +22,7 @@ import net.minecraft.client.renderer.GlStateManager;
 
 public final class CreidaInterface extends Mode<Interface> {
     private final BooleanValue font = new BooleanValue("Font", this, true);
-    private static final agc minecraftFont = FontManager.MINECRAFT.dM();
+    private static final Font minecraftFont = FontManager.MINECRAFT.dM();
     private static final double rowHeight = minecraftFont.height() + 2.0F;
     private static final int LINE_WIDTH = 1;
     @EventLink
@@ -91,7 +91,7 @@ public final class CreidaInterface extends Mode<Interface> {
         super(var1, var2);
     }
 
-    private agc getFont() {
+    private Font getFont() {
         return this.font.wo() ? FontManager.MAIN.a(24, FontWeight.REGULAR) : FontManager.MINECRAFT.dM();
     }
 

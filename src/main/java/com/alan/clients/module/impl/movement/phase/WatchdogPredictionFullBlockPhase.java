@@ -15,7 +15,7 @@ import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.protocol.packet.PacketWrapper;
 import com.viaversion.viaversion.api.type.Types;
 import com.viaversion.viaversion.protocols.v1_8to1_9.packet.ServerboundPackets1_9;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
@@ -98,7 +98,7 @@ public class WatchdogPredictionFullBlockPhase extends Mode<Phase> {
 
     @Override
     public void onEnable() {
-        afi.c("collide with a block and wait until the server clips you down");
+        ChatUtil.c("collide with a block and wait until the server clips you down");
         this.waitingForSetback = false;
     }
 

@@ -1,22 +1,22 @@
 package com.alan.clients.module.impl.render.bedplates;
 
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 
 public class BedPlateEntry {
-    private final aka position;
+    private final Vector3d position;
     private final double distanceSquared;
     private final BedPlateInfo info;
     private boolean visible = true;
     private double[] projectedPosition = null;
     private int cacheAge = 999;
 
-    public BedPlateEntry(aka var1, double var2, BedPlateInfo var4) {
+    public BedPlateEntry(Vector3d var1, double var2, BedPlateInfo var4) {
         this.position = var1;
         this.distanceSquared = var2;
         this.info = var4;
     }
 
-    public aka getPosition() {
+    public Vector3d getPosition() {
         return this.position;
     }
 

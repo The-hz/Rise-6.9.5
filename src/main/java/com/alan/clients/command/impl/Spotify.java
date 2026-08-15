@@ -3,7 +3,7 @@ package com.alan.clients.command.impl;
 import com.alan.clients.command.Command;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.file.FileManager;
 import java.io.File;
 import java.io.FileReader;
@@ -35,7 +35,7 @@ public class Spotify extends Command {
                         case "clientsecret":
                             map.remove("client_secret");
                             map.put("client_secret", s1);
-                            afi.b("Successfully Set clientsecret");
+                            ChatUtil.b("Successfully Set clientsecret");
                             break label26;
                         case "clientid":
                             break;
@@ -46,12 +46,12 @@ public class Spotify extends Command {
 
                 map.remove("client_id");
                 map.put("client_id", s1);
-                afi.b("Successfully Set clientid");
+                ChatUtil.b("Successfully Set clientid");
             }
 
             this.a(map);
         } else {
-            afi.b("command.spotify.usage");
+            ChatUtil.b("command.spotify.usage");
         }
     }
 

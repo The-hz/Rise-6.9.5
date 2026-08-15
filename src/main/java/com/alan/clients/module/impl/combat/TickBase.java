@@ -17,7 +17,7 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import com.alan.clients.component.impl.combat.TargetComponent;
 import java.util.List;
@@ -31,7 +31,7 @@ import org.lwjgl.opengl.GL11;
 @ModuleInfo(aliases = "module.combat.tickbase.name", description = "module.combat.legitreach.description", category = Category.COMBAT)
 public final class TickBase extends Module {
     private ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Post")).setDefault("Legit");
-    private aka trackedPosition = new aka(0.0, 0.0, 0.0);
+    private Vector3d trackedPosition = new Vector3d(0.0, 0.0, 0.0);
     private int cooldownTicks = 0;
     private int ticksToSkip;
     private int skipDelayTicks;
@@ -94,7 +94,7 @@ public final class TickBase extends Module {
     Listener<PacketSendEvent> onPacketSend = var1 -> {
         Packet packet = var1.dq();
         if (!var1.isCancelled() && packet instanceof C03PacketPlayer) {
-            this.trackedPosition = new aka(((C03PacketPlayer)packet).getX(), ((C03PacketPlayer)packet).getY(), ((C03PacketPlayer)packet).getZ());
+            this.trackedPosition = new Vector3d(((C03PacketPlayer)packet).getX(), ((C03PacketPlayer)packet).getY(), ((C03PacketPlayer)packet).getZ());
         }
     };
     @EventLink
@@ -120,13 +120,13 @@ public final class TickBase extends Module {
 
     int getTicksToReach(Entity entity) {
         byte b0 = 10;
-        aka aka = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
+        Vector3d aka = new Vector3d(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
 
         int i;
         for (i = 0; i < b0 && entity.getDistance(aka.x, aka.y, aka.z) > 4.4; i++) {
             aka = MoveUtil.a(
                 aka,
-                new aka(aEg.thePlayer.motionX, 0.0, aEg.thePlayer.motionZ),
+                new Vector3d(aEg.thePlayer.motionX, 0.0, aEg.thePlayer.motionZ),
                 (float)Math.toDegrees(MoveUtil.direction()),
                 new Vector2f(aEg.thePlayer.moveStrafing, aEg.thePlayer.moveForward)
             );
@@ -135,14 +135,14 @@ public final class TickBase extends Module {
         return i == b0 ? -1 : i;
     }
 
-    aka predictPosition(Entity entity) {
-        aka aka = new aka(entity.posX, entity.posY, entity.posZ);
+    Vector3d predictPosition(Entity entity) {
+        Vector3d aka = new Vector3d(entity.posX, entity.posY, entity.posZ);
 
         for (int i = 0; i <= PingSpoofComponent.getPing() / 50L; i++) {
             double dx = entity.posX - entity.lastTickPosX;
             double dz = entity.posZ - entity.lastTickPosZ;
             int j = dz == 0.0 && dx == 0.0 ? 0 : 1;
-            aka = MoveUtil.a(aka, new aka(dx, 0.0, dz), entity.pl, new Vector2f(0.0F, j));
+            aka = MoveUtil.a(aka, new Vector3d(dx, 0.0, dz), entity.pl, new Vector2f(0.0F, j));
         }
 
         return aka;

@@ -14,7 +14,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.block.BlockAir;
@@ -102,7 +102,7 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
 
     @Override
     public void onEnable() {
-        afi.b("try to jump around a bit before phasing if its the start of a game");
+        ChatUtil.b("try to jump around a bit before phasing if its the start of a game");
     }
 
     @Override

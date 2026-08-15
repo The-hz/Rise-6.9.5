@@ -10,7 +10,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
@@ -28,7 +28,7 @@ public class LatestNCPFlight extends Mode<Flight> {
         if (this.teleport) {
             var1x.setCancelled();
             this.teleport = false;
-            afi.b("Teleported");
+            ChatUtil.b("Teleported");
         }
     };
     @EventLink
@@ -106,7 +106,7 @@ public class LatestNCPFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        afi.b("Start the fly under the block and walk forward");
+        ChatUtil.b("Start the fly under the block and walk forward");
         this.moveSpeed = 0.0;
         this.notUnder = false;
         this.started = false;

@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.other.TeleportEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.player.DamageUtil;
 import com.alan.clients.util.player.DamageType;
 import net.minecraft.block.BlockAir;
@@ -39,7 +39,7 @@ public class VerusDamageNewFlight extends Mode<Flight> {
                 this.ticks++;
                 if (this.ticks >= 20) {
                     this.flying = false;
-                    afi.b("s");
+                    ChatUtil.b("s");
                     MoveUtil.stop();
                 }
             }

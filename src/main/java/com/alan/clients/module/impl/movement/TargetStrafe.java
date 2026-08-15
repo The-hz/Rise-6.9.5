@@ -18,7 +18,7 @@ import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.math.MathInterpolation;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.component.impl.combat.TargetComponent;
 import com.alan.clients.util.shader.ShaderQueueType;
 import java.util.List;
@@ -114,7 +114,7 @@ public class TargetStrafe extends Module {
                             double d0 = this.range.wo().doubleValue() + Math.random() / 100.0;
                             double d1 = -MathHelper.sin((float)Math.toRadians(this.yaw)) * d0 + this.target.posX;
                             double d2 = MathHelper.cos((float)Math.toRadians(this.yaw)) * d0 + this.target.posZ;
-                            this.yaw = RotationUtil.d(new aka(d1, this.target.posY, d2)).getX();
+                            this.yaw = RotationUtil.d(new Vector3d(d1, this.target.posY, d2)).getX();
                             aEg.thePlayer.pp = this.yaw;
                         }
                     }

@@ -9,7 +9,7 @@ import com.alan.clients.module.impl.ghost.Reach;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.input.ClickEvent;
-import hackclient.rise.aef;
+import com.alan.clients.util.RayCastUtil;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 
@@ -19,7 +19,7 @@ public final class Piercing extends Module {
     public final Listener<ClickEvent> onClick = var1 -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             if (aEg.objectMouseOver == null || aEg.objectMouseOver.typeOfHit != MovingObjectType.ENTITY) {
-                MovingObjectPosition movingobjectposition = aef.rayCast(RotationComponent.bH(), this.getReachRange(), this.getHitBoxExpand(), aEg.thePlayer, true);
+                MovingObjectPosition movingobjectposition = RayCastUtil.rayCast(RotationComponent.bH(), this.getReachRange(), this.getHitBoxExpand(), aEg.thePlayer, true);
                 if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.ENTITY) {
                     aEg.objectMouseOver = movingobjectposition;
                     aEg.pointedEntity = movingobjectposition.entityHit;

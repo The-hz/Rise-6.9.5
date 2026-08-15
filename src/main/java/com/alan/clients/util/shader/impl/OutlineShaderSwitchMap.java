@@ -1,18 +1,18 @@
 package com.alan.clients.util.shader.impl;
 
-import hackclient.rise.aiz;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 
 class OutlineShaderSwitchMap {
-    static final int[] aQk = new int[aiz.values().length];
+    static final int[] aQk = new int[ShaderRenderType.values().length];
 
     static {
         try {
-            aQk[aiz.CAMERA.ordinal()] = 1;
+            aQk[ShaderRenderType.CAMERA.ordinal()] = 1;
         } catch (NoSuchFieldError nosuchfielderror1) {
         }
 
         try {
-            aQk[aiz.OVERLAY.ordinal()] = 2;
+            aQk[ShaderRenderType.OVERLAY.ordinal()] = 2;
         } catch (NoSuchFieldError nosuchfielderror) {
         }
     }

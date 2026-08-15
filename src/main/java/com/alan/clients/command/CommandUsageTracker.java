@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.command;
 
 import com.alan.clients.Client;
 import com.alan.clients.command.Command;
@@ -24,8 +24,8 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Map;
 
-public final class afj {
-    private static final afj aGM = new afj();
+public final class CommandUsageTracker {
+    private static final CommandUsageTracker aGM = new CommandUsageTracker();
     private final Map<String, Long> aGN = new HashMap<>();
     private final Map<String, Long> aGO = new HashMap<>();
     private final Map<String, Long> aGP = new HashMap<>();
@@ -42,11 +42,11 @@ public final class afj {
     private String aHa;
     private boolean loaded;
 
-    public static afj sJ() {
+    public static CommandUsageTracker sJ() {
         return aGM;
     }
 
-    private afj() {
+    private CommandUsageTracker() {
     }
 
     private File sK() {

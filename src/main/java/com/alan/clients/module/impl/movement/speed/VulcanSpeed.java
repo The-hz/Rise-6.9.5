@@ -17,7 +17,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
@@ -411,7 +411,7 @@ public final class VulcanSpeed extends Mode<Speed> {
 
             int i = SlotUtil.vx();
             if (i == -1) {
-                afi.b("This speed requires a block to be in your HotBar.");
+                ChatUtil.b("This speed requires a block to be in your HotBar.");
             } else {
                 if (!BadPacketsComponent.bad(false, true, false, false, false)) {
                     SlotComponent slotcomponent = this.d(SlotComponent.class);

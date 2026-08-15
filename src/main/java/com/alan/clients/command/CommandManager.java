@@ -16,8 +16,8 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.input.ChatInputEvent;
 import com.alan.clients.command.impl.Insults;
 import com.alan.clients.command.impl.Say;
-import hackclient.rise.afi;
-import hackclient.rise.afj;
+import com.alan.clients.util.chat.ChatUtil;
+import com.alan.clients.command.CommandUsageTracker;
 import com.alan.clients.command.impl.Target;
 import com.alan.clients.command.impl.Title;
 import com.alan.clients.command.impl.Toggle;
@@ -99,7 +99,7 @@ public final class CommandManager {
         }
 
         if (s.isEmpty()) {
-            afi.b("command.unknown");
+            ChatUtil.b("command.unknown");
             return CommandResult.UNKNOWN;
         }
 
@@ -118,12 +118,12 @@ public final class CommandManager {
         }
 
         if (!atomicboolean.get()) {
-            afi.b("command.unknown");
+            ChatUtil.b("command.unknown");
             return CommandResult.UNKNOWN;
         }
 
         try {
-            afj.sJ().a((Command)atomicreference.get(), astring);
+            CommandUsageTracker.sJ().a((Command)atomicreference.get(), astring);
         } catch (Throwable throwable) {
         }
 

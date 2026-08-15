@@ -11,10 +11,10 @@ import com.alan.clients.util.vector.Vector2f;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.component.impl.combat.TargetComponent;
 import java.io.File;
 import java.io.FileWriter;
@@ -30,8 +30,8 @@ public final class Data extends Module {
     private FileWriter writer;
     private StopWatch writeStopWatch = new StopWatch();
     private Entity target;
-    private aka lastTargetPosition = new aka(0.0, 0.0, 0.0);
-    private aka lastPlayerPosition = new aka(0.0, 0.0, 0.0);
+    private Vector3d lastTargetPosition = new Vector3d(0.0, 0.0, 0.0);
+    private Vector3d lastPlayerPosition = new Vector3d(0.0, 0.0, 0.0);
     private Vector2f lastTargetAngle = new Vector2f(0.0F, 0.0F);
     private Vector2f lastPlayerRotation = new Vector2f(0.0F, 0.0F);
     private Vector2f lastTargetRotation = new Vector2f(0.0F, 0.0F);
@@ -109,26 +109,26 @@ public final class Data extends Module {
             jsonobject.add("forwardVelocityTarget", JsonParser.parseString(Double.toString(d28)));
             jsonobject.add("lateralVelocityTarget", JsonParser.parseString(Double.toString(d29)));
             double d30 = MathHelper.wrapAngleTo180_double(
-                RotationUtil.c(new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new aka(this.target.posX, entityplayersp.posY, this.target.posZ)).getX()
+                RotationUtil.c(new Vector3d(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new Vector3d(this.target.posX, entityplayersp.posY, this.target.posZ)).getX()
                     - RotationUtil.c(
-                            new aka(entityplayersp.prevPosX, entityplayersp.posY, entityplayersp.prevPosZ),
-                            new aka(this.target.posX, entityplayersp.posY, this.target.posZ)
+                            new Vector3d(entityplayersp.prevPosX, entityplayersp.posY, entityplayersp.prevPosZ),
+                            new Vector3d(this.target.posX, entityplayersp.posY, this.target.posZ)
                         )
                         .getX()
             );
             jsonobject.add("playerDeltaHorizontalMovementAngle", JsonParser.parseString(Double.toString(d30)));
-            double d31 = RotationUtil.c(new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new aka(this.target.posX, this.target.posY, this.target.posZ))
+            double d31 = RotationUtil.c(new Vector3d(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new Vector3d(this.target.posX, this.target.posY, this.target.posZ))
                     .getY()
-                - RotationUtil.c(new aka(entityplayersp.posX, entityplayersp.prevPosY, entityplayersp.posZ), new aka(this.target.posX, this.target.posY, this.target.posZ)).getY();
+                - RotationUtil.c(new Vector3d(entityplayersp.posX, entityplayersp.prevPosY, entityplayersp.posZ), new Vector3d(this.target.posX, this.target.posY, this.target.posZ)).getY();
             jsonobject.add("playerDeltaVerticalMovementAngle", JsonParser.parseString(Double.toString(d31)));
             double d32 = MathHelper.wrapAngleTo180_double(
-                RotationUtil.c(new aka(this.target.posX, this.target.posY, this.target.posZ), new aka(entityplayersp.posX, this.target.posY, entityplayersp.posZ)).getX()
-                    - RotationUtil.c(new aka(this.lastTargetPosition.getX(), this.target.posY, this.lastTargetPosition.getZ()), new aka(entityplayersp.posX, this.target.posY, entityplayersp.posZ)).getX()
+                RotationUtil.c(new Vector3d(this.target.posX, this.target.posY, this.target.posZ), new Vector3d(entityplayersp.posX, this.target.posY, entityplayersp.posZ)).getX()
+                    - RotationUtil.c(new Vector3d(this.lastTargetPosition.getX(), this.target.posY, this.lastTargetPosition.getZ()), new Vector3d(entityplayersp.posX, this.target.posY, entityplayersp.posZ)).getX()
             );
             jsonobject.add("targetDeltaHorizontalMovementAngle", JsonParser.parseString(Double.toString(d32)));
-            double d33 = RotationUtil.c(new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new aka(this.target.posX, this.target.posY, this.target.posZ))
+            double d33 = RotationUtil.c(new Vector3d(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new Vector3d(this.target.posX, this.target.posY, this.target.posZ))
                     .getY()
-                - RotationUtil.c(new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new aka(this.target.posX, this.lastTargetPosition.getY(), this.target.posZ)).getY();
+                - RotationUtil.c(new Vector3d(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ), new Vector3d(this.target.posX, this.lastTargetPosition.getY(), this.target.posZ)).getY();
             jsonobject.add("targetDeltaVerticalMovementAngle", JsonParser.parseString(Double.toString(d33)));
             double d34 = this.playerOffsetDistance - Math.sqrt(Math.pow(vector2f1.getX(), 2.0) + Math.pow(vector2f1.getY(), 2.0));
             jsonobject.add("deltaPlayerOffsetDistance", JsonParser.parseString(Double.toString(d34)));
@@ -147,8 +147,8 @@ public final class Data extends Module {
             double d40 = this.lastTargetRotation.getY() - this.target.rotationPitch;
             jsonobject.add("targetDeltaPitch", JsonParser.parseString(Double.toString(d40)));
             this.lastTargetAngle = this.getRotationsToEntity(this.target);
-            this.lastPlayerPosition = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
-            this.lastTargetPosition = new aka(this.target.posX, this.target.posY, this.target.posZ);
+            this.lastPlayerPosition = new Vector3d(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
+            this.lastTargetPosition = new Vector3d(this.target.posX, this.target.posY, this.target.posZ);
             Vector2f vector2f4 = new Vector2f(MathHelper.wrapAngleTo180_float(vector2f.getX() - vector2f1.getX()), vector2f.getY() - vector2f1.getY());
             new Vector2f(MathHelper.wrapAngleTo180_float(vector2f4.getX() - this.lastPlayerRotation.getX()), vector2f4.getY() - this.lastPlayerRotation.getY());
             new Vector2f(MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl - this.lastPlayerRotation.getX()), aEg.thePlayer.rotationPitch - this.lastPlayerRotation.getY());
@@ -178,10 +178,10 @@ public final class Data extends Module {
             this.dataFile.delete();
             this.dataFile.createNewFile();
             this.writer = new FileWriter("C:\\Users\\alanw\\OneDrive\\Desktop\\data.txt");
-            afi.b("Started writing to file");
+            ChatUtil.b("Started writing to file");
         } catch (Exception exception) {
             exception.printStackTrace();
-            afi.b("Failed To Write File");
+            ChatUtil.b("Failed To Write File");
         }
 
         this.writeStopWatch.aX();
@@ -191,10 +191,10 @@ public final class Data extends Module {
     public void onDisable() {
         try {
             this.writer.close();
-            afi.b("Finished writing to file");
+            ChatUtil.b("Finished writing to file");
         } catch (Exception exception) {
             exception.printStackTrace();
-            afi.b("Failed to write file");
+            ChatUtil.b("Failed to write file");
         }
     }
 

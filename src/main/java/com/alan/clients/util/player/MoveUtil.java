@@ -9,7 +9,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.util.value.ConstantManager;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import java.util.Arrays;
 import javax.vecmath.Vector2d;
 import lombok.Generated;
@@ -667,17 +667,17 @@ public final class MoveUtil implements InstanceAccess {
         aEg.thePlayer.motionZ = aEg.thePlayer.motionZ + MathHelper.cos((float)Math.toRadians(var2)) * var0;
     }
 
-    public static aka a(Entity entity, Vector2f vec2, int var2, boolean var3) {
+    public static Vector3d a(Entity entity, Vector2f vec2, int var2, boolean var3) {
         double dx = entity.posX - entity.lastTickPosX;
         double dz = entity.posZ - entity.lastTickPosZ;
-        return a(new aka(entity.posX, entity.posY, entity.posZ), new aka(dx, 0.0, dz), entity.pl, vec2, var2, var3);
+        return a(new Vector3d(entity.posX, entity.posY, entity.posZ), new Vector3d(dx, 0.0, dz), entity.pl, vec2, var2, var3);
     }
 
-    public static aka a(aka var0, aka var1, float var2, Vector2f vec2) {
+    public static Vector3d a(Vector3d var0, Vector3d var1, float var2, Vector2f vec2) {
         return a(var0, var1, var2, vec2, 1, vec2.x != 0.0F || vec2.y != 0.0F);
     }
 
-    public static aka a(aka var0, aka var1, float var2, Vector2f vec2, int var4, boolean var5) {
+    public static Vector3d a(Vector3d var0, Vector3d var1, float var2, Vector2f vec2, int var4, boolean var5) {
         for (int i = 0; i <= var4; i++) {
             var1.z *= 0.54600006F;
             var1.x *= 0.54600006F;
@@ -695,7 +695,7 @@ public final class MoveUtil implements InstanceAccess {
         return var0;
     }
 
-    public static aka ve() {
+    public static Vector3d ve() {
         EntityPlayerSP entityplayersp = new EntityPlayerSP(
             aEg,
             aEg.theWorld,
@@ -723,7 +723,7 @@ public final class MoveUtil implements InstanceAccess {
             entityplayersp.setPosition(entityplayersp.posX, entityplayersp.posY + jumpMotion(), entityplayersp.posZ);
         }
 
-        return new aka(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ);
+        return new Vector3d(entityplayersp.posX, entityplayersp.posY, entityplayersp.posZ);
     }
 
     @Generated

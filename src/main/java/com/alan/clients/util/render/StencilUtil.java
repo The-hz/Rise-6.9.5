@@ -1,12 +1,12 @@
-package hackclient.rise;
+package com.alan.clients.util.render;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
 import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
-public class ais implements InstanceAccess {
-    public ais() {
+public class StencilUtil implements InstanceAccess {
+    public StencilUtil() {
     }
 
     private static void recreate(Framebuffer framebuffer) {

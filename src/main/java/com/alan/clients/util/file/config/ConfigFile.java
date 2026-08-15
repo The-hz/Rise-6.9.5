@@ -17,7 +17,7 @@ import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
 import com.google.gson.JsonObject;
 import com.alan.clients.util.localization.Locale;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import hackclient.rise.cg;
 import com.alan.clients.newevent.impl.other.ConfigLoadEvent;
 import com.alan.clients.util.interfaces.Bindable;
@@ -89,7 +89,7 @@ public class ConfigFile extends File implements Bindable {
                         String s1 = null;
 
                         for (Locale locale : Locale.values()) {
-                            String s2 = ahd.a(s, locale);
+                            String s2 = Localization.a(s, locale);
                             if (s2 != null && !s2.equals(s) && json.has(s2)) {
                                 s1 = s2;
                                 break;

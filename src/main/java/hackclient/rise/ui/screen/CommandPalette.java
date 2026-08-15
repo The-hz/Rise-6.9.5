@@ -32,14 +32,14 @@ import hackclient.rise.ui.screen.TargetSuggestionProvider;
 import hackclient.rise.ui.screen.ToggleSuggestionProvider;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.MouseUtil;
-import hackclient.rise.afj;
-import hackclient.rise.agc;
-import hackclient.rise.agk;
+import com.alan.clients.command.CommandUsageTracker;
+import com.alan.clients.util.font.Font;
+import com.alan.clients.util.gui.ScrollUtil;
 import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
 import com.alan.clients.util.ime.PinyinInputHandler;
-import hackclient.rise.agx;
-import hackclient.rise.ahd;
+import com.alan.clients.util.ime.PinyinImeState;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -68,13 +68,13 @@ extends GuiScreen {
     private static final double aAm = 28.0;
     private static final double aAn = 2.0;
     private static final long aAo = 3000L;
-    private static final agc aAp = FontManager.MAIN.a(17, FontWeight.MEDIUM);
-    private static final agc aAq = FontManager.MAIN.a(13, FontWeight.REGULAR);
-    private static final agc aAr = FontManager.MAIN.a(12, FontWeight.REGULAR);
+    private static final Font aAp = FontManager.MAIN.a(17, FontWeight.MEDIUM);
+    private static final Font aAq = FontManager.MAIN.a(13, FontWeight.REGULAR);
+    private static final Font aAr = FontManager.MAIN.a(12, FontWeight.REGULAR);
     private final GuiScreen aAs;
     private final TextBox aAt;
     private final PinyinInputHandler aAu = new PinyinInputHandler();
-    private final agk aAv = new agk();
+    private final ScrollUtil aAv = new ScrollUtil();
     private final Animation aAw = new Animation(Easing.EASE_OUT_QUAD, 1L);
     private final StopWatch aAx = new StopWatch();
     private final List<CommandEntry> aAy = new ArrayList<CommandEntry>();
@@ -129,7 +129,7 @@ extends GuiScreen {
 
     public CommandPalette(GuiScreen guiScreen) {
         this.aAs = guiScreen;
-        this.aAt = new TextBox(new Vector2d(0.0, 0.0), FontManager.MAIN.a(20, FontWeight.REGULAR), Color.WHITE, TextAlign.LEFT, ahd.ce("ui.command.palette.placeholder"), 400.0f);
+        this.aAt = new TextBox(new Vector2d(0.0, 0.0), FontManager.MAIN.a(20, FontWeight.REGULAR), Color.WHITE, TextAlign.LEFT, Localization.ce("ui.command.palette.placeholder"), 400.0f);
         this.aAt.setSelected(true);
         this.aAt.bW(".");
         this.aAt.ar(1);
@@ -148,7 +148,7 @@ extends GuiScreen {
         this.statusMessage = "";
         this.aAx.aX();
         try {
-            afj.sJ().sS();
+            CommandUsageTracker.sJ().sS();
             return;
         }
         catch (Throwable throwable) {
@@ -179,7 +179,7 @@ extends GuiScreen {
         if (this.ab(n2)) {
             return;
         }
-        if (agx.isEnabled() && this.aAu.a(this.aAt, c2, n2)) {
+        if (PinyinImeState.isEnabled() && this.aAu.a(this.aAt, c2, n2)) {
             this.qL();
             return;
         }
@@ -391,13 +391,13 @@ extends GuiScreen {
         this.aAt.setColor(ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d2)));
         this.aAt.setSelected(true);
         String string2 = this.aAt.aJm;
-        if (agx.isEnabled() && this.aAu.uc() && (string = this.aAu.uo()) != null && !string.isEmpty()) {
+        if (PinyinImeState.isEnabled() && this.aAu.uc() && (string = this.aAu.uo()) != null && !string.isEmpty()) {
             this.aAt.aJm = "";
         }
         this.aAt.draw();
         this.aAt.aJm = string2;
         this.k(d3 + 12.0, d4 + (this.aAJ - (double)this.aAt.eb().height()) / 2.0 + 1.5, d2);
-        if (agx.isEnabled() && this.aAu.uc()) {
+        if (PinyinImeState.isEnabled() && this.aAu.uc()) {
             String string3 = this.aAu.uo();
             List<String> list = this.aAu.up();
             if (string3 != null && !string3.isEmpty()) {
@@ -445,7 +445,7 @@ extends GuiScreen {
                 int n2;
                 boolean bl;
                 String string2;
-                if (agx.isEnabled() && this.aAu.uc() && (string2 = this.aAu.uo()) != null && !string2.isEmpty()) {
+                if (PinyinImeState.isEnabled() && this.aAu.uc() && (string2 = this.aAu.uo()) != null && !string2.isEmpty()) {
                     return;
                 }
                 string = this.aAt.getText();
@@ -509,7 +509,7 @@ extends GuiScreen {
             }
         }
         if (object != null && !((String)object).isEmpty()) {
-            agc agc2 = this.aAt.eb();
+            Font agc2 = this.aAt.eb();
             double d5 = d2 + (double)agc2.getStringWidth(string);
             int n7 = ColorUtil.withBlue(Color.WHITE, (int)(120.0 * d4)).getRGB();
             agc2.a((String)object, d5, d3, n7);
@@ -519,7 +519,7 @@ extends GuiScreen {
     private void N(double d2) {
         int n2 = ColorUtil.withBlue(Color.WHITE, (int)(155.0 * d2)).getRGB();
         String string = this.aS(this.aAt.getText());
-        String string2 = (string.isEmpty() ? new String[]{} : string.split("\\s+")).length >= 2 ? (this.aAC ? ahd.ce("ui.command.palette.hint.arguments") : ahd.ce("ui.command.palette.hint.commands")) : (this.aAC ? ahd.ce("ui.command.palette.hint.arguments") : ahd.ce("ui.command.palette.hint.commands"));
+        String string2 = (string.isEmpty() ? new String[]{} : string.split("\\s+")).length >= 2 ? (this.aAC ? Localization.ce("ui.command.palette.hint.arguments") : Localization.ce("ui.command.palette.hint.commands")) : (this.aAC ? Localization.ce("ui.command.palette.hint.arguments") : Localization.ce("ui.command.palette.hint.commands"));
         double d3 = this.aAF + -0.5 + 8.0;
         double d4 = this.aAG + -0.5 + this.aAJ + 3.0;
         aAr.a(string2, d3, d4, n2);
@@ -575,7 +575,7 @@ extends GuiScreen {
             this.a(commandEntry, d3 + 8.0, d9 + 5.0, d4 - 16.0, d2);
         }
         if (n4 == 0) {
-            agc agc2 = FontManager.MAIN.a(15, FontWeight.REGULAR);
+            Font agc2 = FontManager.MAIN.a(15, FontWeight.REGULAR);
             String string = this.rd();
             agc2.drawString(string, this.aAK + this.aAM / 2.0, this.aAL + this.aAN / 2.0 - (double)agc2.height() / 2.0, ColorUtil.withBlue(Color.WHITE, (int)(180.0 * d2)).getRGB());
         }
@@ -640,7 +640,7 @@ extends GuiScreen {
             double d3 = 1.0 - (double)this.aAx.getElapsedTime() / 3000.0;
             double d4 = Math.max(0.0, Math.min(1.0, d3));
             int n2 = (int)((double)this.statusColor.getAlpha() * d4);
-            agc agc2 = FontManager.MAIN.a(13, FontWeight.MEDIUM);
+            Font agc2 = FontManager.MAIN.a(13, FontWeight.MEDIUM);
             agc2.a(this.statusMessage, this.aAF + -0.5, this.aAG + this.aAI - -0.5 - (double)agc2.height() + 4.0, ColorUtil.withBlue(this.statusColor, n2).getRGB());
         }
     }
@@ -760,7 +760,7 @@ extends GuiScreen {
             return;
         }
         if (u2 != CommandResult.UNKNOWN) return;
-        this.a(ahd.ce("command.unknown"), new Color(255, 90, 90));
+        this.a(Localization.ce("command.unknown"), new Color(255, 90, 90));
     }
 
     private boolean ab(int n2) {
@@ -788,7 +788,7 @@ extends GuiScreen {
     private void a(Bindable p2, int n2) {
         String[] stringArray = p2.getAliases();
         if (stringArray == null || stringArray.length == 0) {
-            this.a(ahd.ce("command.bind.invalidmodule"), new Color(255, 90, 90));
+            this.a(Localization.ce("command.bind.invalidmodule"), new Color(255, 90, 90));
             return;
         }
         String string = ".bind " + stringArray[0].replace(" ", "") + " " + Bind.c(n2);
@@ -798,7 +798,7 @@ extends GuiScreen {
             return;
         }
         if (u2 != CommandResult.UNKNOWN) return;
-        this.a(ahd.ce("command.unknown"), new Color(255, 90, 90));
+        this.a(Localization.ce("command.unknown"), new Color(255, 90, 90));
     }
 
     private Bindable qP() {
@@ -828,7 +828,7 @@ extends GuiScreen {
             aEg.displayGuiScreen(this.aAs);
             return;
         }
-        this.a(ahd.ce("command.unknown"), new Color(255, 90, 90));
+        this.a(Localization.ce("command.unknown"), new Color(255, 90, 90));
     }
 
     private void aK(String string) {
@@ -922,7 +922,7 @@ extends GuiScreen {
         if (!bl) {
             if (this.aAX && this.aAW && !this.aAV && this.aAU != null) {
                 try {
-                    afj.sJ().bI(this.aAU);
+                    CommandUsageTracker.sJ().bI(this.aAU);
                 }
                 catch (Throwable throwable) {}
             }
@@ -937,7 +937,7 @@ extends GuiScreen {
         }
         this.aAX = true;
         try {
-            afj afj2 = afj.sJ();
+            CommandUsageTracker afj2 = CommandUsageTracker.sJ();
             long now = System.currentTimeMillis();
             long l3 = afj2.sQ();
             boolean bl2 = l3 > 0L && now - l3 <= 60000L;
@@ -1129,7 +1129,7 @@ extends GuiScreen {
                 return "." + string;
             }
             String[] stringArray = ((Command)command).getExpressions();
-            String string2 = afj.sJ().a(string, stringArray);
+            String string2 = CommandUsageTracker.sJ().a(string, stringArray);
             if (string2 != null && !string2.trim().isEmpty()) return "." + string2.trim();
             string2 = string;
             return "." + string2.trim();
@@ -1172,7 +1172,7 @@ extends GuiScreen {
                 String string5;
                 String[] stringArray2;
                 String string6;
-                if (configFile == null || configFile.getName() == null || (string6 = configFile.getName().trim()).isEmpty() || "latest".equalsIgnoreCase(string6) || (stringArray2 = this.aN(string5 = string6.toLowerCase(Locale.ROOT))).length == 0 || (n4 = this.a(stringArray, stringArray2, string5)) < 2 || (l3 = afj.sJ().bz("config.load:" + string5)) <= l2 && (l3 != l2 || n4 <= n3)) continue;
+                if (configFile == null || configFile.getName() == null || (string6 = configFile.getName().trim()).isEmpty() || "latest".equalsIgnoreCase(string6) || (stringArray2 = this.aN(string5 = string6.toLowerCase(Locale.ROOT))).length == 0 || (n4 = this.a(stringArray, stringArray2, string5)) < 2 || (l3 = CommandUsageTracker.sJ().bz("config.load:" + string5)) <= l2 && (l3 != l2 || n4 <= n3)) continue;
                 l2 = l3;
                 n3 = n4;
                 string4 = string6;
@@ -1250,7 +1250,7 @@ extends GuiScreen {
             if (n2 <= 0) {
                 return Collections.emptyList();
             }
-            afj afj2 = afj.sJ();
+            CommandUsageTracker afj2 = CommandUsageTracker.sJ();
             ArrayList<PaletteHistoryEntry> arrayList = new ArrayList<PaletteHistoryEntry>();
             for (Module module : Client.a.g().getAll()) {
                 String string;
@@ -1321,7 +1321,7 @@ extends GuiScreen {
             if (n2 <= 0) {
                 return Collections.emptyList();
             }
-            afj afj2 = afj.sJ();
+            CommandUsageTracker afj2 = CommandUsageTracker.sJ();
             ArrayList<PaletteSuggestionRecord> arrayList = new ArrayList<PaletteSuggestionRecord>();
             Iterator<Module> iterator = Client.a.g().getAll().iterator();
             while (true) {
@@ -1405,7 +1405,7 @@ extends GuiScreen {
 
     private String qT() {
         try {
-            List<String> list = afj.sJ().j("config.load:", 8);
+            List<String> list = CommandUsageTracker.sJ().j("config.load:", 8);
             if (list == null || list.isEmpty()) {
                 return null;
             }
@@ -1479,7 +1479,7 @@ extends GuiScreen {
         }
         try {
             String[] stringArray;
-            String string2 = afj.sJ().sM();
+            String string2 = CommandUsageTracker.sJ().sM();
             if (string2 == null) {
                 this.aAT = false;
                 return;
@@ -1569,7 +1569,7 @@ extends GuiScreen {
         }
         if (this.aAU != null) {
             try {
-                afj.sJ().bH(this.aAU);
+                CommandUsageTracker.sJ().bH(this.aAU);
             }
             catch (Throwable throwable) {}
         }
@@ -1589,7 +1589,7 @@ extends GuiScreen {
         }
         if (this.aAU != null) {
             try {
-                afj.sJ().bH(this.aAU);
+                CommandUsageTracker.sJ().bH(this.aAU);
             }
             catch (Throwable throwable) {}
         }
@@ -1598,7 +1598,7 @@ extends GuiScreen {
             aEg.displayGuiScreen(this.aAs);
             return;
         }
-        this.a(ahd.ce("command.unknown"), new Color(255, 90, 90));
+        this.a(Localization.ce("command.unknown"), new Color(255, 90, 90));
     }
 
     private void a(String string, String string2, double d2, double d3, double d4, double d5) {
@@ -1608,13 +1608,13 @@ extends GuiScreen {
         }
         double d6 = d3 + (28.0 - (double)aAp.height()) / 2.0;
         int n2 = ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d5)).getRGB();
-        String string4 = ahd.ce("ui.command.palette.suggested.meta");
+        String string4 = Localization.ce("ui.command.palette.suggested.meta");
         int n3 = ColorUtil.withBlue(Color.WHITE, (int)(175.0 * d5)).getRGB();
         double d7 = aAq.getStringWidth(string4);
         double d8 = d2 + Math.max(0.0, d4 - d7);
         double d9 = d6 + (double)aAp.height() - (double)aAq.height() - 1.0;
         aAq.a(string4, d8, d9, n3);
-        string3 = string2 == null ? "" : ahd.ce(string2);
+        string3 = string2 == null ? "" : Localization.ce(string2);
         if (string2 != null && string2.equals(string3)) {
             string3 = "";
         }
@@ -1668,7 +1668,7 @@ extends GuiScreen {
             aEg.displayGuiScreen(this.aAs);
             return;
         }
-        this.a(ahd.ce("command.unknown"), new Color(255, 90, 90));
+        this.a(Localization.ce("command.unknown"), new Color(255, 90, 90));
     }
 
     private void a(String string, double d2, double d3, double d4, double d5) {
@@ -1677,7 +1677,7 @@ extends GuiScreen {
         }
         double d6 = d3 + (28.0 - (double)aAp.height()) / 2.0;
         int n2 = ColorUtil.withBlue(Color.WHITE, (int)(255.0 * d5)).getRGB();
-        String string2 = ahd.ce("ui.command.palette.previous.meta");
+        String string2 = Localization.ce("ui.command.palette.previous.meta");
         int n3 = ColorUtil.withBlue(Color.WHITE, (int)(165.0 * d5)).getRGB();
         double d7 = aAq.getStringWidth(string2);
         double d8 = d2 + Math.max(0.0, d4 - d7);
@@ -1688,7 +1688,7 @@ extends GuiScreen {
         aAp.a(string3, d2, d6, n2);
     }
 
-    private String a(agc agc2, String string, double d2) {
+    private String a(Font agc2, String string, double d2) {
         if (string == null) {
             return "";
         }
@@ -1808,7 +1808,7 @@ extends GuiScreen {
         if (string == null || string.trim().isEmpty()) {
             return 0L;
         }
-        return afj.sJ().bz("cmd:" + string.trim().toLowerCase(Locale.ROOT));
+        return CommandUsageTracker.sJ().bz("cmd:" + string.trim().toLowerCase(Locale.ROOT));
     }
 
     static long b(String string, int n2, String string2) {
@@ -1827,7 +1827,7 @@ extends GuiScreen {
         }
         String string4 = string.toLowerCase(Locale.ROOT);
         String string5 = string3.toLowerCase(Locale.ROOT);
-        return afj.sJ().bz("arg:" + string4 + ":" + n2 + ":" + string5);
+        return CommandUsageTracker.sJ().bz("arg:" + string4 + ":" + n2 + ":" + string5);
     }
 
     private int j(int n2, int n3) {
@@ -1860,7 +1860,7 @@ extends GuiScreen {
 
     private String rd() {
         if (!this.aAD || this.aAE == null) {
-            return ahd.ce("ui.command.palette.empty");
+            return Localization.ce("ui.command.palette.empty");
         }
         String string = this.aAE.rj().toLowerCase(Locale.ROOT);
         String[] stringArray = this.aAE.rk();
@@ -1873,7 +1873,7 @@ extends GuiScreen {
         if ((string.equals("clip") || string.equals("vclip") || string.equals("hclip")) && stringArray.length >= 1 && !stringArray[0].isEmpty()) {
             return "Type a number distance and press, Enter to clip";
         }
-        return ahd.ce("ui.command.palette.empty");
+        return Localization.ce("ui.command.palette.empty");
     }
 
     private void re() {

@@ -1,10 +1,10 @@
 package com.alan.clients.packet;
 
-import hackclient.rise.ahl;
+import com.alan.clients.packet.CustomPacket;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.PacketBuffer;
 
-public final class IntPayloadPacket extends ahl {
+public final class IntPayloadPacket extends CustomPacket {
     private int aNt;
 
     public IntPayloadPacket(int var1) {

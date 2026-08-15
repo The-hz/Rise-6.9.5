@@ -3,8 +3,8 @@ package com.alan.clients.util.rotation;
 import com.alan.clients.component.impl.player.RotationComponent;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2f;
-import hackclient.rise.aef;
-import hackclient.rise.aka;
+import com.alan.clients.util.RayCastUtil;
+import com.alan.clients.util.vector.Vector3d;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Generated;
@@ -19,8 +19,8 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 
 public final class RotationUtil implements InstanceAccess {
-    public static Vector2f c(aka var0, aka var1) {
-        aka aka = var1.subtract(var0);
+    public static Vector2f c(Vector3d var0, Vector3d var1) {
+        Vector3d aka = var1.subtract(var0);
         double d0 = Math.hypot(aka.getX(), aka.getZ());
         if (af(aka.getX()) && af(aka.getY()) && af(aka.getZ()) && af(d0)) {
             float f = (float)(MathHelper.atan2(aka.getZ(), aka.getX()) * 180.0F / (float)Math.PI) - 90.0F;
@@ -63,7 +63,7 @@ public final class RotationUtil implements InstanceAccess {
     public static Vector2f calculate(Entity entity, boolean var1, double var2) {
         Vector2f vector2f = y(entity);
         if (var1 && z(entity) && af(var2) && !(var2 <= 0.0)) {
-            MovingObjectPosition movingobjectposition = aef.c(vector2f, var2);
+            MovingObjectPosition movingobjectposition = RayCastUtil.c(vector2f, var2);
             if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.ENTITY) {
                 return vector2f;
             }
@@ -79,7 +79,7 @@ public final class RotationUtil implements InstanceAccess {
                                     (entity.getEntityBoundingBox().maxZ - entity.getEntityBoundingBox().minZ) * d2
                                 )
                         );
-                        MovingObjectPosition movingobjectposition1 = aef.c(vector2f1, var2);
+                        MovingObjectPosition movingobjectposition1 = RayCastUtil.c(vector2f1, var2);
                         if (movingobjectposition1 != null && movingobjectposition1.typeOfHit == MovingObjectType.ENTITY) {
                             return vector2f1;
                         }
@@ -139,7 +139,7 @@ public final class RotationUtil implements InstanceAccess {
     }
 
     public static boolean a(Vector2f vec2, Entity entity, double var2, boolean var4, float var5) {
-        MovingObjectPosition movingobjectposition = aef.rayCast(vec2, var2, var5, aEg.thePlayer, var4);
+        MovingObjectPosition movingobjectposition = RayCastUtil.rayCast(vec2, var2, var5, aEg.thePlayer, var4);
         return movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.ENTITY && movingobjectposition.entityHit == entity;
     }
 
@@ -201,29 +201,29 @@ public final class RotationUtil implements InstanceAccess {
     }
 
     public static Vector2f a(Vec3 vec, EnumFacing facing) {
-        return a(new aka(vec.xCoord, vec.yCoord, vec.zCoord), facing);
+        return a(new Vector3d(vec.xCoord, vec.yCoord, vec.zCoord), facing);
     }
 
     public static Vector2f h(Vec3 vec) {
-        return c(aEg.thePlayer.Ty().v(0.0, aEg.thePlayer.getEyeHeight(), 0.0), new aka(vec.xCoord, vec.yCoord, vec.zCoord));
+        return c(aEg.thePlayer.Ty().v(0.0, aEg.thePlayer.getEyeHeight(), 0.0), new Vector3d(vec.xCoord, vec.yCoord, vec.zCoord));
     }
 
     public static Vector2f s(BlockPos pos) {
-        return c(aEg.thePlayer.Ty().v(0.0, aEg.thePlayer.getEyeHeight(), 0.0), new aka(pos.getX(), pos.getY(), pos.getZ()).v(0.5, 0.5, 0.5));
+        return c(aEg.thePlayer.Ty().v(0.0, aEg.thePlayer.getEyeHeight(), 0.0), new Vector3d(pos.getX(), pos.getY(), pos.getZ()).v(0.5, 0.5, 0.5));
     }
 
-    public static Vector2f d(aka var0) {
+    public static Vector2f d(Vector3d var0) {
         return c(aEg.thePlayer.Ty().v(0.0, aEg.thePlayer.getEyeHeight(), 0.0), var0);
     }
 
-    public static Vector2f a(aka var0, EnumFacing facing) {
+    public static Vector2f a(Vector3d var0, EnumFacing facing) {
         double d0 = var0.getX() + 0.5;
         double d1 = var0.getY() + 0.5;
         double d2 = var0.getZ() + 0.5;
         double d3 = d0 + facing.getDirectionVec().getX() * 0.5;
         double d4 = d1 + facing.getDirectionVec().getY() * 0.5;
         double d5 = d2 + facing.getDirectionVec().getZ() * 0.5;
-        return d(new aka(d3, d4, d5));
+        return d(new Vector3d(d3, d4, d5));
     }
 
     public static Vector2f m(Vector2f vec2) {

@@ -14,11 +14,11 @@ import com.alan.clients.script.api.wrapper.impl.vector.ScriptVector2f;
 import com.alan.clients.script.api.wrapper.impl.vector.ScriptVector3d;
 import com.alan.clients.script.util.ScriptModuleInfo;
 import com.alan.clients.util.vector.Vector2f;
-import hackclient.rise.afi;
-import hackclient.rise.aha;
-import hackclient.rise.ahd;
+import com.alan.clients.util.chat.ChatUtil;
+import com.alan.clients.util.interfaces.ExecutorAccess;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.util.social.FriendManager;
 import hackclient.rise.cg;
 import java.util.ArrayList;
@@ -84,7 +84,7 @@ public class RiseAPI {
     }
 
     public float[] getRotations(ScriptVector3d scriptVector3d) {
-        Vector2f vector2f = RotationUtil.d(new aka(scriptVector3d.getX(), scriptVector3d.getY(), scriptVector3d.getZ()));
+        Vector2f vector2f = RotationUtil.d(new Vector3d(scriptVector3d.getX(), scriptVector3d.getY(), scriptVector3d.getZ()));
         return new float[]{vector2f.x, vector2f.y};
     }
 
@@ -112,7 +112,7 @@ public class RiseAPI {
     }
 
     public void displayChat(String var1) {
-        afi.b(var1);
+        ChatUtil.b(var1);
     }
 
     public void displayInfoNotification(String var1, String var2) {
@@ -176,7 +176,7 @@ public class RiseAPI {
     }
 
     public ScriptBlockPos newBlockPos(int var1, int var2, int var3) {
-        afi.b("Please use world.newBlockPos(), instead of rise.newBlockPos().");
+        ChatUtil.b("Please use world.newBlockPos(), instead of rise.newBlockPos().");
         return null;
     }
 
@@ -189,7 +189,7 @@ public class RiseAPI {
             throw new ScriptException("Not a function!");
         }
 
-        aha.aMR.execute(() -> jsObject.call(null));
+        ExecutorAccess.aMR.execute(() -> jsObject.call(null));
     }
 
     public void thread(JSObject jsObject) throws ScriptException {
@@ -201,7 +201,7 @@ public class RiseAPI {
     }
 
     public String translate(String var1) {
-        return ahd.ce(var1);
+        return Localization.ce(var1);
     }
 
     public String getLocale() {

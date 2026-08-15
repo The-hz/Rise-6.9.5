@@ -9,7 +9,7 @@ import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
@@ -56,7 +56,7 @@ public class NumberValueComponent extends ValueComponent {
         this.position = position;
         NumberValue numbervalue = (NumberValue)this.value;
         String s = String.valueOf(numbervalue.wo().doubleValue());
-        String s1 = ahd.ce(this.value.getName());
+        String s1 = Localization.ce(this.value.getName());
         float f = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s1) + 7;
         if (s.endsWith(".0")) {
             s = s.replace(".0", "");

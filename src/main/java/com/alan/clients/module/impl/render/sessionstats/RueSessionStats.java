@@ -12,7 +12,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.DragValue;
-import hackclient.rise.ahd;
+import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
@@ -36,15 +36,15 @@ public final class RueSessionStats extends Mode<SessionStats> {
             long l = TimeUnit.MILLISECONDS.toSeconds(i) % 60L;
             String s = "";
             if (j > 0L) {
-                s = s + j + " " + (j == 1L ? ahd.ce("ui.sessionstats.hour") : ahd.ce("ui.sessionstats.hours")) + (k == 0L ? "" : " ");
+                s = s + j + " " + (j == 1L ? Localization.ce("ui.sessionstats.hour") : Localization.ce("ui.sessionstats.hours")) + (k == 0L ? "" : " ");
             }
 
             if (k > 0L) {
-                s = s + k + " " + (k == 1L ? ahd.ce("ui.sessionstats.minute") : ahd.ce("ui.sessionstats.minutes")) + (l != 0L && j <= 0L ? " " : "");
+                s = s + k + " " + (k == 1L ? Localization.ce("ui.sessionstats.minute") : Localization.ce("ui.sessionstats.minutes")) + (l != 0L && j <= 0L ? " " : "");
             }
 
             if (l > 0L && j == 0L) {
-                s = s + l + " " + (l == 1L ? ahd.ce("ui.sessionstats.second") : ahd.ce("ui.sessionstats.seconds"));
+                s = s + l + " " + (l == 1L ? Localization.ce("ui.sessionstats.second") : Localization.ce("ui.sessionstats.seconds"));
             }
 
             this.time = s;
@@ -65,14 +65,14 @@ public final class RueSessionStats extends Mode<SessionStats> {
                         );
                         FontManager.MAIN
                             .a(24, FontWeight.REGULAR)
-                            .drawString(ahd.ce("ui.sessionstats.name"), this.position.apP.x + this.position.aHe.x / 2.0, this.position.apP.y + d0, this.rz().rD().getRGB());
+                            .drawString(Localization.ce("ui.sessionstats.name"), this.position.apP.x + this.position.aHe.x / 2.0, this.position.apP.y + d0, this.rz().rD().getRGB());
                         FontManager.MAIN
                             .a(18, FontWeight.REGULAR)
                             .drawString(this.time, this.position.apP.x + this.position.aHe.x / 2.0, this.position.apP.y + d0 + 19.0, new Color(255, 255, 255, 200).getRGB());
                         FontManager.MAIN
                             .a(18, FontWeight.REGULAR)
                             .drawString(
-                                ahd.ce("ui.sessionstats.kills").toLowerCase() + " " + this.session.kills,
+                                Localization.ce("ui.sessionstats.kills").toLowerCase() + " " + this.session.kills,
                                 this.position.apP.x + 35.0,
                                 this.position.apP.y + d0 + 32.0,
                                 new Color(255, 255, 255, 200).getRGB()
@@ -80,7 +80,7 @@ public final class RueSessionStats extends Mode<SessionStats> {
                         FontManager.MAIN
                             .a(18, FontWeight.REGULAR)
                             .drawString(
-                                ahd.ce("ui.sessionstats.wins").toLowerCase() + " " + this.session.wins,
+                                Localization.ce("ui.sessionstats.wins").toLowerCase() + " " + this.session.wins,
                                 this.position.apP.x + 95.0,
                                 this.position.apP.y + d0 + 32.0,
                                 new Color(255, 255, 255, 200).getRGB()

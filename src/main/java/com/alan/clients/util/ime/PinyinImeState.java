@@ -1,11 +1,11 @@
-package hackclient.rise;
+package com.alan.clients.util.ime;
 
-public final class agx {
+public final class PinyinImeState {
     private static volatile boolean aKa = false;
     private static volatile boolean enabled = false;
     private static volatile int aKb = 0;
 
-    private agx() {
+    private PinyinImeState() {
     }
 
     public static boolean isEnabled() {

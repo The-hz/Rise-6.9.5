@@ -1,6 +1,6 @@
 package com.alan.clients.script.util;
 
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import java.util.HashMap;
 import java.util.Map;
 import org.openjdk.nashorn.api.scripting.JSObject;
@@ -26,10 +26,10 @@ public class ScriptHandler {
             try {
                 jsobject.call(this, var2);
             } catch (ECMAException ecmaexception) {
-                afi.b(ecmaexception.toString());
+                ChatUtil.b(ecmaexception.toString());
             } catch (Exception exception) {
                 exception.printStackTrace();
-                afi.b("A script threw an exception, stacktrace printed.");
+                ChatUtil.b("A script threw an exception, stacktrace printed.");
             }
         }
     }

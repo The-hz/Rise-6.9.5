@@ -6,7 +6,7 @@ import com.alan.clients.module.api.ModuleInfo;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.input.ChatInputEvent;
-import hackclient.rise.afi;
+import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import net.minecraft.util.EnumChatFormatting;
 import org.apache.commons.lang3.StringUtils;
@@ -38,10 +38,10 @@ extends Module {
         String string2 = "\u00a7" + b2.getAuthor();
         String string3 = String.valueOf(EnumChatFormatting.GRAY) + string;
         if (this.isTruncatedAttachment(string)) {
-            afi.d(afi.getPrefix() + String.valueOf(EnumChatFormatting.RED) + "Discord attachment URL arrived truncated before the client. The bridge/backend must send the full link.", new Object[0]);
+            ChatUtil.d(ChatUtil.getPrefix() + String.valueOf(EnumChatFormatting.RED) + "Discord attachment URL arrived truncated before the client. The bridge/backend must send the full link.", new Object[0]);
         }
         Object object = Math.random() > 0.9 ? String.valueOf(EnumChatFormatting.GRAY) + " Start your msg with # to chat" : "";
-        afi.d(CHAT_PREFIX + string2 + String.valueOf(EnumChatFormatting.GRAY) + ": " + string3 + (String)object, new Object[0]);
+        ChatUtil.d(CHAT_PREFIX + string2 + String.valueOf(EnumChatFormatting.GRAY) + ": " + string3 + (String)object, new Object[0]);
     };
 
     private boolean isTruncatedAttachment(String string) {

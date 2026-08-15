@@ -2,14 +2,14 @@ package com.alan.clients.ui.menu.component.button.impl;
 
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
 
 public class MenuLabelButton extends MenuTextButton {
-    private static final agc aCe = FontManager.MAIN.a(14, FontWeight.LIGHT);
+    private static final Font aCe = FontManager.MAIN.a(14, FontWeight.LIGHT);
     private static final Color aCf = ColorUtil.withBlue(Color.WHITE, 150);
     private final Color aCg;
 

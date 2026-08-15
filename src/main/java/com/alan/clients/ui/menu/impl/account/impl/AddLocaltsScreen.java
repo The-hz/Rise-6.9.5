@@ -25,12 +25,12 @@ import com.alan.clients.util.account.localts.LocaltsConfig;
 import com.alan.clients.util.account.localts.LocaltsOrderStore;
 import com.alan.clients.util.account.localts.LocaltsDelivery;
 import com.alan.clients.util.web.CommunityChat;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.aiv;
-import hackclient.rise.aiz;
+import com.alan.clients.util.shader.RiseShaders;
+import com.alan.clients.util.shader.base.ShaderRenderType;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -53,11 +53,11 @@ import rip.vantage.network.core.VantageNetwork;
 
 public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceAccess {
     private static final String API_KEY_SETTINGS_URL = "https://localts.store/user/settings";
-    private static final agc TITLE_FONT = FontManager.MAIN.a(36, FontWeight.BOLD);
-    private static final agc INFO_FONT = FontManager.MAIN.a(16, FontWeight.REGULAR);
-    private static final agc LABEL_FONT = FontManager.MAIN.a(14, FontWeight.BOLD);
-    private static final agc TOOLTIP_FONT = FontManager.MAIN.a(12, FontWeight.REGULAR);
-    private static final agc QUANTITY_FONT = FontManager.MAIN.a(18, FontWeight.REGULAR);
+    private static final Font TITLE_FONT = FontManager.MAIN.a(36, FontWeight.BOLD);
+    private static final Font INFO_FONT = FontManager.MAIN.a(16, FontWeight.REGULAR);
+    private static final Font LABEL_FONT = FontManager.MAIN.a(14, FontWeight.BOLD);
+    private static final Font TOOLTIP_FONT = FontManager.MAIN.a(12, FontWeight.REGULAR);
+    private static final Font QUANTITY_FONT = FontManager.MAIN.a(18, FontWeight.REGULAR);
     private static final float CENTER_REF_HEIGHT = FontManager.MAIN.a(24, FontWeight.BOLD).height();
     private static final int PRODUCT_INDEX_NONE = -1;
     private static final int PRODUCTS_PER_PAGE = 4;
@@ -203,7 +203,7 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
         RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK);
     };
 
-    private static float centeredTextY(double var0, double var2, agc var4) {
+    private static float centeredTextY(double var0, double var2, Font var4) {
         return (float)(var0 + var2 / 2.0 - 4.0 * var4.height() / CENTER_REF_HEIGHT);
     }
 
@@ -445,7 +445,7 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
 
     @Override
     public void drawScreen(int var1, int var2, float var3) {
-        aiv.aPL.a(aiz.OVERLAY, var3, null);
+        RiseShaders.aPL.a(ShaderRenderType.OVERLAY, var3, null);
         this.b(ShaderQueueType.BLUR).c(BACKGROUND_RUNNABLE);
         this.b(ShaderQueueType.REGULAR).c(() -> {
             this.drawStorefront(var1, var2);

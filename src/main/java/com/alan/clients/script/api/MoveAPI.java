@@ -4,7 +4,7 @@ import com.alan.clients.script.api.wrapper.impl.vector.ScriptVector2d;
 import com.alan.clients.script.api.wrapper.impl.vector.ScriptVector3d;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.player.MoveUtil;
-import hackclient.rise.aka;
+import com.alan.clients.util.vector.Vector3d;
 import javax.vecmath.Vector2d;
 
 public class MoveAPI implements InstanceAccess {
@@ -190,7 +190,7 @@ public class MoveAPI implements InstanceAccess {
     }
 
     public ScriptVector3d predictedPosition() {
-        aka aka = MoveUtil.ve();
+        Vector3d aka = MoveUtil.ve();
         return new ScriptVector3d(aka.x, aka.y, aka.z);
     }
 

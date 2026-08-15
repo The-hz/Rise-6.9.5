@@ -13,7 +13,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.BoundsNumberValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aef;
+import com.alan.clients.util.RayCastUtil;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.newevent.impl.input.RightClickEvent;
 import net.minecraft.entity.EntityLivingBase;
@@ -36,19 +36,19 @@ public class Reach extends Module {
         double d0 = MathUtil.l(this.range.wo().doubleValue(), this.range.wA().doubleValue());
         var1.setRange(d0);
         if (!this.isTargetingBlock()) {
-            MovingObjectPosition movingobjectposition = aef.rayCast(RotationComponent.bH(), d0, var1.dB(), aEg.thePlayer, false);
+            MovingObjectPosition movingobjectposition = RayCastUtil.rayCast(RotationComponent.bH(), d0, var1.dB(), aEg.thePlayer, false);
             if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.ENTITY) {
                 var1.a(movingobjectposition);
             }
         }
     };
     @EventLink
-    public final Listener<RightClickEvent> onGetMouseOver = var0 -> aEg.objectMouseOver = aef.c(RotationComponent.fk, 4.5);
+    public final Listener<RightClickEvent> onGetMouseOver = var0 -> aEg.objectMouseOver = RayCastUtil.c(RotationComponent.fk, 4.5);
     @EventLink
     public final Listener<AttackEvent> onAttackEvent = var1 -> {
         EntityLivingBase entitylivingbase = var1.getLiving();
         if (this.bufferAbuse.wo()) {
-            if (aef.c(RotationComponent.fk, 3.0).typeOfHit != MovingObjectType.ENTITY) {
+            if (RayCastUtil.c(RotationComponent.fk, 3.0).typeOfHit != MovingObjectType.ENTITY) {
                 if ((this.attackTicks > 9 || entitylivingbase.getEntityId() != this.lastId) && this.combo < this.maxBuffer.wo().intValue()) {
                     this.combo++;
                 } else {
@@ -77,7 +77,7 @@ public class Reach extends Module {
             return false;
         }
 
-        MovingObjectPosition movingobjectposition = aef.rayCast(
+        MovingObjectPosition movingobjectposition = RayCastUtil.rayCast(
             new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), aEg.playerController.getBlockReachDistance(), 0.0F, aEg.thePlayer, false
         );
         return movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.BLOCK;

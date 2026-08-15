@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.agc;
+import com.alan.clients.util.font.Font;
 import com.alan.clients.util.localization.Locale;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
@@ -18,7 +18,7 @@ import java.awt.Color;
 import net.minecraft.util.ResourceLocation;
 
 public class WurstInterface extends Mode<Interface> {
-    private agc arrayListFont;
+    private Font arrayListFont;
     private final ResourceLocation resourceLocation = new ResourceLocation("rise/logo/wurst.png");
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1x -> {
