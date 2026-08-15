@@ -1612,13 +1612,13 @@ public class Spotify extends Module {
                 while (matcher.find()) {
                     int i = this.parseInt(matcher.group(1), 0);
                     int j = this.parseInt(matcher.group(2), 0);
-                    byte b0 = 0;
+                    int l = 0;
                     if (matcher.group(3) != null) {
                         String s2 = matcher.group(3);
-                        b0 = (byte)(s2.length() == 2 ? this.parseInt(s2, 0) * 10 : this.parseInt(s2, 0));
+                        l = s2.length() == 2 ? this.parseInt(s2, 0) * 10 : this.parseInt(s2, 0);
                     }
 
-                    int k = i * 60000 + j * 1000 + b0;
+                    int k = i * 60000 + j * 1000 + l;
                     arraylist1.add(k);
                 }
 
@@ -1735,13 +1735,13 @@ public class Spotify extends Module {
             int i = Integer.parseInt(astring[0]);
             String[] astring1 = astring[1].split("\\.");
             int j = Integer.parseInt(astring1[0]);
-            byte b0 = 0;
+            int k = 0;
             if (astring1.length > 1) {
                 String s = astring1[1];
-                b0 = (byte)(s.length() == 2 ? Integer.parseInt(s) * 10 : Integer.parseInt(s));
+                k = s.length() == 2 ? Integer.parseInt(s) * 10 : Integer.parseInt(s);
             }
 
-            return i * 60000 + j * 1000 + b0;
+            return i * 60000 + j * 1000 + k;
         } catch (Exception exception) {
             return null;
         }

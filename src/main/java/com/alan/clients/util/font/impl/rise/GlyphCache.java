@@ -39,7 +39,7 @@ public final class GlyphCache {
 
     public void a(char c2, float f2, float f3) {
         char c3 = c2;
-        FontCharacter age2 = this.aJb.get(c3);
+        FontCharacter age2 = this.aJb.get(Integer.valueOf(c3));
         if (age2 == null) {
             age2 = this.l(c2);
             if (age2 == null) {
