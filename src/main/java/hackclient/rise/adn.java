@@ -1,5 +1,6 @@
 package hackclient.rise;
 
+import com.alan.clients.ui.menu.impl.main.LoginMenu;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
@@ -48,7 +49,7 @@ public class adn extends GuiScreen {
             new Color(255, 255, 255, (int)this.aCo.sG())
         );
         if (this.aCm.T(4000L)) {
-            aEg.displayGuiScreen(new aap());
+            aEg.displayGuiScreen(new LoginMenu());
         }
     }
 }

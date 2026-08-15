@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.ui.menu.impl.main;
 
 import com.alan.clients.Client;
 import com.alan.clients.compat.NetworkToggles;
@@ -9,10 +9,11 @@ import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
-import hackclient.rise.ade;
-import hackclient.rise.adh;
-import hackclient.rise.adm;
-import hackclient.rise.aeb;
+import com.alan.clients.ui.menu.Menu;
+import com.alan.clients.ui.menu.component.button.MenuButton;
+import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
+import com.alan.clients.util.MouseUtil;
+import hackclient.rise.adr;
 import hackclient.rise.aec;
 import hackclient.rise.agc;
 import hackclient.rise.agl;
@@ -21,7 +22,7 @@ import hackclient.rise.aip;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
 import hackclient.rise.aju;
-import hackclient.rise.er;
+import hackclient.rise.event.er;
 import hackclient.rise.gb;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
@@ -31,15 +32,15 @@ import java.awt.datatransfer.StringSelection;
 import net.minecraft.client.gui.ScaledResolution;
 import rip.vantage.commons.util.time.a;
 
-public class aap
-extends ade {
+public class LoginMenu
+extends Menu {
     public String aCA;
     public a bN;
-    public adm aCx;
+    public MenuTextButton aCx;
     @EventLink
     public Listener<er> aCE;
-    public adh[] menuButtons;
-    public adm aCw;
+    public MenuButton[] menuButtons;
+    public MenuTextButton aCw;
     public boolean aCz;
     public String jc;
     public Animation aCv;
@@ -60,11 +61,11 @@ extends ade {
             return;
         }
         if (n3 == 0) {
-            final adh[] menuButtons = this.menuButtons;
+            final MenuButton[] menuButtons = this.menuButtons;
             int count = menuButtons.length;
             for (int i = 0; i < count; i++) {
-                final adh adh = menuButtons[i];
-                if (aeb.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), n, n2)) {
+                final MenuButton adh = menuButtons[i];
+                if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), n, n2)) {
                     adh.runAction();
                     break;
                 }
@@ -138,7 +139,7 @@ extends ade {
         this.aCz = false;
     }
 
-    public aap() {
+    public LoginMenu() {
         this.aCv = new Animation(Easing.EASE_IN_OUT_CUBIC, 3000L);
         this.bN = new a();
         this.aCE = er2 -> {
@@ -212,11 +213,11 @@ extends ade {
         int l21_hi = 6;
         int dL19 = width2 - l17_lo / 2;
         int l25_hi = height2 - l19_hi / 2 - l21_hi / 2 - l19_hi / 2;
-        this.aCw = new adm(dL19, l25_hi, l17_lo, l19_hi, () -> {}, "");
-        this.aCx = new adm(dL19, l25_hi + l19_hi + l21_hi, l17_lo, l19_hi, () -> this.aW(this.aCy.getText()), "Login");
+        this.aCw = new MenuTextButton(dL19, l25_hi, l17_lo, l19_hi, () -> {}, "");
+        this.aCx = new MenuTextButton(dL19, l25_hi + l19_hi + l21_hi, l17_lo, l19_hi, () -> this.aW(this.aCy.getText()), "Login");
         this.aCy = new agm(new Vector2d(width2, l25_hi + 9), gb.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Username", l17_lo * 5);
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
-        this.menuButtons = new adh[]{this.aCw, this.aCx};
+        this.menuButtons = new MenuButton[]{this.aCw, this.aCx};
         this.aCv.T(255.0);
         this.aCv.reset();
         this.aCz = false;
@@ -227,7 +228,7 @@ extends ade {
         if (this.aCv.sG() < 255.0) {
             aiv.aPL.a(aiz.OVERLAY, f, null);
         }
-        ScaledResolution scaledResolution = aap.aEg.jY;
+        ScaledResolution scaledResolution = LoginMenu.aEg.jY;
         this.b(gg.BLUR).c(() -> RenderUtil.d(0.0, 0.0, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight(), Color.BLACK));
         this.aCw.draw(n, n2, f);
         this.aCx.draw(n, n2, f);
@@ -257,7 +258,7 @@ extends ade {
             gb.MAIN.a(18, gd.REGULAR).d("Made with <3 by Alan and The_Bi11iona1re", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 20, aip.d(aBS, 100).getRGB());
             gb.MAIN.a(12, gd.REGULAR).d("\u00a9 Rise Client 2026. All Rights Reserved", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 10, aip.d(aBS, 100).getRGB());
             this.aCv.Q(0.0);
-            RenderUtil.d(0.0, 0.0, aap.aEg.displayWidth, aap.aEg.displayHeight, new Color(0, 0, 0, (int)this.aCv.sG()));
+            RenderUtil.d(0.0, 0.0, LoginMenu.aEg.displayWidth, LoginMenu.aEg.displayHeight, new Color(0, 0, 0, (int)this.aCv.sG()));
         });
     }
 }
