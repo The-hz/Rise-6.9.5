@@ -24,7 +24,7 @@ public abstract class Check implements aha {
         }
     }
 
-    public abstract void handle(Packet<?> var1);
+    public abstract void handle(Packet<?> packet);
 
     public final void J() {
         this.T++;

@@ -15,7 +15,7 @@ public abstract class ValueComponent implements InstanceAccess {
         this.value = var1;
     }
 
-    public abstract void draw(Vector2d var1, int var2, int var3, float var4);
+    public abstract void draw(Vector2d position, int var2, int var3, float var4);
 
     public abstract boolean e(int var1, int var2, int var3);
 

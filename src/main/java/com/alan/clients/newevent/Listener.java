@@ -2,5 +2,5 @@ package com.alan.clients.newevent;
 
 @FunctionalInterface
 public interface Listener<Event> {
-    void call(Event var1);
+    void call(Event event);
 }

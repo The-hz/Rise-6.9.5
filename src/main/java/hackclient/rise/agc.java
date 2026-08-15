@@ -20,5 +20,5 @@ public abstract class agc {
 
     public abstract float height();
 
-    public abstract void a(char var1, int var2, int var3, Color var4);
+    public abstract void a(char var1, int var2, int var3, Color color);
 }

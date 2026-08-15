@@ -6,5 +6,5 @@ interface SuggestionProvider {
     default void a(SuggestionContext suggestionContext) {
     }
 
-    List<Suggestion> b(SuggestionContext var1);
+    List<Suggestion> b(SuggestionContext suggestionContext);
 }

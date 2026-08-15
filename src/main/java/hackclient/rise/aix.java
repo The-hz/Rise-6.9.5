@@ -10,7 +10,7 @@ public abstract class aix implements InstanceAccess {
     public aix() {
     }
 
-    public abstract void a(aiz var1, float var2, List<Runnable> var3);
+    public abstract void a(aiz var1, float var2, List<Runnable> runnables);
 
     public abstract void update();
 

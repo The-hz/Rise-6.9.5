@@ -5,5 +5,5 @@ public interface Bus<Event> {
 
     void c(Object var1);
 
-    void d(Event var1);
+    void d(Event event);
 }
