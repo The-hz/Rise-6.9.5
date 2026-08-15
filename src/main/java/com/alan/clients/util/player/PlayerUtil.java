@@ -6,8 +6,8 @@ import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.util.vector.Vector2f;
-import hackclient.rise.aib;
-import hackclient.rise.ajz;
+import com.alan.clients.util.player.EnumFacingOffset;
+import com.alan.clients.util.vector.Vector2i;
 import hackclient.rise.aka;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -38,7 +38,7 @@ import net.minecraft.util.Vec3i;
 import net.minecraft.util.Vector3d;
 
 public final class PlayerUtil implements InstanceAccess {
-    private static final HashMap<Integer, Integer> GOOD_POTIONS = new aii();
+    private static final HashMap<Integer, Integer> GOOD_POTIONS = new GoodPotions();
 
     public static Block o(double var0, double var2, double var4) {
         return aEg.theWorld.getBlockState(new BlockPos(var0, var2, var4)).getBlock();
@@ -73,7 +73,7 @@ public final class PlayerUtil implements InstanceAccess {
 
     public static boolean av(int var0) {
         if (aEg.thePlayer.onGround && aEg.thePlayer.isCollidedHorizontally) {
-            for (ajz ajz : new ajz[]{new ajz(0, 1), new ajz(1, 0), new ajz(0, -1), new ajz(-1, 0)}) {
+            for (Vector2i ajz : new Vector2i[]{new Vector2i(0, 1), new Vector2i(1, 0), new Vector2i(0, -1), new Vector2i(-1, 0)}) {
                 if (!(p(ajz.ald, var0, ajz.ale) instanceof BlockAir) && p(ajz.ald, 1 + var0, ajz.ale) instanceof BlockAir) {
                     return true;
                 }
@@ -285,19 +285,19 @@ public final class PlayerUtil implements InstanceAccess {
         return flag;
     }
 
-    public static aib e(Vec3 vec) {
+    public static EnumFacingOffset e(Vec3 vec) {
         return a(vec, false);
     }
 
-    public static aib a(Vec3 vec, boolean var1) {
+    public static EnumFacingOffset a(Vec3 vec, boolean var1) {
         ArrayList arraylist = new ArrayList();
 
         for (byte b0 = -1; b0 <= 1; b0 += 2) {
             if (!o(vec.xCoord, vec.yCoord, vec.zCoord + b0).isReplaceable(aEg.theWorld, new BlockPos(vec.xCoord, vec.yCoord, vec.zCoord + b0))) {
                 if (b0 < 0) {
-                    arraylist.add(new aib(EnumFacing.SOUTH, new Vec3(0.0, 0.0, b0)));
+                    arraylist.add(new EnumFacingOffset(EnumFacing.SOUTH, new Vec3(0.0, 0.0, b0)));
                 } else {
-                    arraylist.add(new aib(EnumFacing.NORTH, new Vec3(0.0, 0.0, b0)));
+                    arraylist.add(new EnumFacingOffset(EnumFacing.NORTH, new Vec3(0.0, 0.0, b0)));
                 }
             }
         }
@@ -305,30 +305,30 @@ public final class PlayerUtil implements InstanceAccess {
         for (byte b1 = -1; b1 <= 1; b1 += 2) {
             if (!o(vec.xCoord + b1, vec.yCoord, vec.zCoord).isReplaceable(aEg.theWorld, new BlockPos(vec.xCoord + b1, vec.yCoord, vec.zCoord))) {
                 if (b1 > 0) {
-                    arraylist.add(new aib(EnumFacing.WEST, new Vec3(b1, 0.0, 0.0)));
+                    arraylist.add(new EnumFacingOffset(EnumFacing.WEST, new Vec3(b1, 0.0, 0.0)));
                 } else {
-                    arraylist.add(new aib(EnumFacing.EAST, new Vec3(b1, 0.0, 0.0)));
+                    arraylist.add(new EnumFacingOffset(EnumFacing.EAST, new Vec3(b1, 0.0, 0.0)));
                 }
             }
         }
 
         arraylist.sort(Comparator.comparingDouble(var0x -> {
-            double degrees = Math.toDegrees(Math.atan2(((aib)var0x).vb().zCoord, ((aib)var0x).vb().xCoord)) % 360.0;
+            double degrees = Math.toDegrees(Math.atan2(((EnumFacingOffset)var0x).vb().zCoord, ((EnumFacingOffset)var0x).vb().xCoord)) % 360.0;
             double d1 = RotationComponent.fk.x % 360.0F + 90.0F;
             return Math.abs(MathUtil.n(degrees, d1));
         }));
         if (!arraylist.isEmpty()) {
-            return (aib)arraylist.get(0);
+            return (EnumFacingOffset)arraylist.get(0);
         }
 
         for (byte b2 = -1; b2 <= 1; b2 += 2) {
             if (!o(vec.xCoord, vec.yCoord + b2, vec.zCoord).isReplaceable(aEg.theWorld, new BlockPos(vec.xCoord, vec.yCoord + b2, vec.zCoord))) {
                 if (b2 < 0) {
-                    return new aib(EnumFacing.UP, new Vec3(0.0, b2, 0.0));
+                    return new EnumFacingOffset(EnumFacing.UP, new Vec3(0.0, b2, 0.0));
                 }
 
                 if (var1) {
-                    return new aib(EnumFacing.DOWN, new Vec3(0.0, b2, 0.0));
+                    return new EnumFacingOffset(EnumFacing.DOWN, new Vec3(0.0, b2, 0.0));
                 }
             }
         }

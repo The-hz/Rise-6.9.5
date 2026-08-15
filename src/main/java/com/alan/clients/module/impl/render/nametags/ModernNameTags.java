@@ -11,10 +11,10 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.util.Iterator;
 import java.util.List;
@@ -27,10 +27,10 @@ public class ModernNameTags
 extends Mode<NameTags> {
     private final BooleanValue health = new BooleanValue("Show Health", (Mode<?>)this, (Boolean)true);
     private final BooleanValue atB = new BooleanValue("Overlays (Bloom/Blur)", (Mode<?>)this, (Boolean)true);
-    private final agc atC = FontManager.MAIN.a(14, gd.LIGHT);
+    private final agc atC = FontManager.MAIN.a(14, FontWeight.LIGHT);
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
-        List<EntityLivingBase> list = bv.b((Boolean)((NameTags)this.getParent()).player.wo(), (Boolean)((NameTags)this.getParent()).invisibles.wo(), (Boolean)((NameTags)this.getParent()).animals.wo(), (Boolean)((NameTags)this.getParent()).mobs.wo(), (Boolean)((NameTags)this.getParent()).playerTeammates.wo(), true);
+        List<EntityLivingBase> list = TargetComponent.b((Boolean)((NameTags)this.getParent()).player.wo(), (Boolean)((NameTags)this.getParent()).invisibles.wo(), (Boolean)((NameTags)this.getParent()).animals.wo(), (Boolean)((NameTags)this.getParent()).mobs.wo(), (Boolean)((NameTags)this.getParent()).playerTeammates.wo(), true);
         if (ModernNameTags.aEg.gameSettings.thirdPersonView != 0) {
             list.add((EntityLivingBase)ModernNameTags.aEg.thePlayer);
         }
@@ -43,12 +43,12 @@ extends Mode<NameTags> {
             Vector4d vector4d = ProjectionComponent.e((Entity)entityLivingBase);
             if (vector4d == null) continue;
             String string = entityLivingBase.getName();
-            double d2 = ((NameTags)this.getParent()).a(string, FontManager.MAIN.a(17, gd.LIGHT));
+            double d2 = ((NameTags)this.getParent()).a(string, FontManager.MAIN.a(17, FontWeight.LIGHT));
             HealthBypass healthBypass = this.e(HealthBypass.class);
             float f2 = healthBypass != null && healthBypass.isEnabled() ? HealthBypass.B(entityLivingBase) : entityLivingBase.getHealth();
             double d3 = vector4d.x + (vector4d.z - vector4d.x) / 2.0;
             double d4 = vector4d.y - 2.0;
-            double d5 = (double)(FontManager.MAIN.a(17, gd.LIGHT).height() - 2.0f + ((Boolean)this.health.wo() != false ? this.atC.height() : 0.0f)) + 4.0;
+            double d5 = (double)(FontManager.MAIN.a(17, FontWeight.LIGHT).height() - 2.0f + ((Boolean)this.health.wo() != false ? this.atC.height() : 0.0f)) + 4.0;
             double d6 = d4 - d5 + 1.0;
             boolean bl = entityLivingBase.isPotionActive(Potion.damageBoost);
             Color color2 = new Color(255, 30, 30, 235);
@@ -58,17 +58,17 @@ extends Mode<NameTags> {
             Color color5 = new Color(255, 40, 40, color4.getAlpha());
             Color color6 = color = bl ? ModernNameTags.a(color4, color5, 0.35f) : color4;
             if (((Boolean)this.atB.wo()).booleanValue()) {
-                this.b(gg.BLOOM).c(() -> RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0 + 0.5, d6 + 0.5, d2 + 4.0 - 1.0, d5 - 1.0, this.rz().getRound(), color3));
+                this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0 + 0.5, d6 + 0.5, d2 + 4.0 - 1.0, d5 - 1.0, this.rz().getRound(), color3));
             }
-            this.b(gg.REGULAR).c(() -> {
+            this.b(ShaderQueueType.REGULAR).c(() -> {
                 RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0, d6, d2 + 4.0, d5, this.rz().getRound() - 1, color);
-                FontManager.MAIN.a(17, gd.LIGHT).c(string, d3 - 0.5, d6 - 0.5 + 4.0, this.rz().rA().getRGB());
+                FontManager.MAIN.a(17, FontWeight.LIGHT).c(string, d3 - 0.5, d6 - 0.5 + 4.0, this.rz().rA().getRGB());
                 if (((Boolean)this.health.wo()).booleanValue()) {
                     this.atC.c(String.valueOf((int)f2), d3, d4 + 5.0 - 2.0 - (double)9, Color.WHITE.getRGB());
                 }
             });
             if (!((Boolean)this.atB.wo()).booleanValue()) continue;
-            this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0, d6, d2 + 4.0, d5, this.rz().getRound(), color3));
+            this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0, d6, d2 + 4.0, d5, this.rz().getRound(), color3));
         }
         return;
     };

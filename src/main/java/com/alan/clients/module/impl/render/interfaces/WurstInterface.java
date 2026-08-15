@@ -12,8 +12,8 @@ import hackclient.rise.agc;
 import com.alan.clients.util.localization.Locale;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.zc;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.module.impl.render.interfaces.ArrayListEntry;
 import java.awt.Color;
 import net.minecraft.util.ResourceLocation;
 
@@ -27,7 +27,7 @@ public class WurstInterface extends Mode<Interface> {
             this.getParent().a(this.ky);
             this.getParent().o(4.0F);
 
-            for (zc zc : this.getParent().lL()) {
+            for (ArrayListEntry zc : this.getParent().lL()) {
                 if (zc.ath != 0.0F) {
                     double d0 = zc.nr().getX();
                     double d1 = zc.nr().getY();
@@ -43,7 +43,7 @@ public class WurstInterface extends Mode<Interface> {
     };
     @EventLink
     public final Listener<TickEvent> onTick = var1x -> aMR.execute(() -> {
-        for (zc zc : this.getParent().lL()) {
+        for (ArrayListEntry zc : this.getParent().lL()) {
             if (zc.ath != 0.0F) {
                 String s = zc.nx();
                 zc.t(this.ky.getStringWidth(s));
@@ -55,6 +55,6 @@ public class WurstInterface extends Mode<Interface> {
 
     public WurstInterface(String var1, Interface var2) {
         super(var1, var2);
-        this.ky = Client.a.getLocale() == Locale.ZH_ZH ? FontManager.MAIN.a(18, gd.REGULAR) : aEg.fontRendererObj;
+        this.ky = Client.a.getLocale() == Locale.ZH_ZH ? FontManager.MAIN.a(18, FontWeight.REGULAR) : aEg.fontRendererObj;
     }
 }

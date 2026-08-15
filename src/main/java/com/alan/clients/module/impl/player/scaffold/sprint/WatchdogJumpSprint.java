@@ -24,7 +24,7 @@ import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
-import hackclient.rise.vo;
+import com.alan.clients.module.impl.player.scaffold.sprint.WatchdogJumpSprintHelper;
 import java.util.Random;
 import lombok.Generated;
 import net.minecraft.block.BlockAir;
@@ -47,7 +47,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
     private int ajA = 0;
     private int ajr;
     public final BooleanValue placeExtraBlocks = new BooleanValue("Place Extra blocks", this, false);
-    private final vo ajC;
+    private final WatchdogJumpSprintHelper ajC;
     @EventLink(value = 3)
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         this.getParent().agF = 1;
@@ -251,7 +251,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
 
     public WatchdogJumpSprint(String var1, Scaffold scaffold) {
         super(var1, scaffold);
-        this.ajC = new vo(scaffold);
+        this.ajC = new WatchdogJumpSprintHelper(scaffold);
     }
 
     @Override
@@ -311,7 +311,7 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
     }
 
     @Generated
-    public vo kB() {
+    public WatchdogJumpSprintHelper kB() {
         return this.ajC;
     }
 }

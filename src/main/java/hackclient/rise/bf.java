@@ -19,8 +19,8 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.s;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import rip.vantage.commons.packet.impl.client.community.g;
-import rip.vantage.commons.packet.impl.server.community.c;
+import rip.vantage.commons.packet.impl.client.community.C2SPacketUserLookup;
+import rip.vantage.commons.packet.impl.server.community.S2CPacketUserData;
 import rip.vantage.network.core.a;
 
 public class bf extends Component implements InstanceAccess {
@@ -48,8 +48,8 @@ public class bf extends Component implements InstanceAccess {
     };
     @EventLink
     public final Listener<er> dh = var0 -> {
-        if (var0.dd() instanceof c) {
-            String s = ((c)var0.dd()).getMessage();
+        if (var0.dd() instanceof S2CPacketUserData) {
+            String s = ((S2CPacketUserData)var0.dd()).getMessage();
             JSONObject jsonobject = new JSONObject(s);
 
             for (String s1 : jsonobject.keySet()) {
@@ -145,7 +145,7 @@ public class bf extends Component implements InstanceAccess {
 
             stringbuilder.append("]");
             String s1 = "[\"" + String.join("\", \"", de) + "\"]";
-            a.aKB().aKK().sendMessage(new g(s1).aJk());
+            a.aKB().aKK().sendMessage(new C2SPacketUserLookup(s1).aJk());
             de = new ArrayList<>();
         }
     }

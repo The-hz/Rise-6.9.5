@@ -10,13 +10,13 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.ui.menu.component.button.MenuButton;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.util.MouseUtil;
-import hackclient.rise.aep;
+import com.alan.clients.util.account.impl.MicrosoftAccount;
 import hackclient.rise.agc;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -25,9 +25,9 @@ import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
 public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
-    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, gd.BOLD);
-    private static final agc INFO_FONT_RENDERER = FontManager.MAIN.a(18, gd.REGULAR);
-    private static AccountViewModel<aep> accountViewModel;
+    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, FontWeight.BOLD);
+    private static final agc INFO_FONT_RENDERER = FontManager.MAIN.a(18, FontWeight.REGULAR);
+    private static AccountViewModel<MicrosoftAccount> accountViewModel;
     private static GuiScreen reference;
     private final MenuButton[] menuButtons = new MenuButton[2];
     private Animation animation;
@@ -56,8 +56,8 @@ public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
         }
 
         aiv.aPL.a(aiz.OVERLAY, var3, null);
-        this.b(gg.BLUR).c(BACKGROUND_RUNNABLE);
-        this.b(gg.REGULAR)
+        this.b(ShaderQueueType.BLUR).c(BACKGROUND_RUNNABLE);
+        this.b(ShaderQueueType.REGULAR)
             .c(
                 () -> {
                     FONT_RENDERER.c("Log in to your microsoft account", this.width / 2, this.height / 2 - 96 + this.animation.sG(), Color.WHITE.getRGB());
@@ -145,7 +145,7 @@ public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
         Vector2d vector2d = new Vector2d(this.width / 2 - 100, this.height / 2 + 76);
         this.menuButtons[0] = new MenuTextButton(vector2d.x, vector2d.y, f, b0, ADD_RUNNABLE, "Add");
         this.menuButtons[1] = new MenuTextButton(vector2d.x + f + b1, vector2d.y, f, b0, CANCEL_RUNNABLE, "Back");
-        accountViewModel = new AccountViewModel<>(aep.sn(), this.width / 2 - 100, this.height / 2 + 32, 200.0F, 40.0F);
+        accountViewModel = new AccountViewModel<>(MicrosoftAccount.sn(), this.width / 2 - 100, this.height / 2 + 32, 200.0F, 40.0F);
         accountViewModel.setScreenHeight(this.height);
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
         this.animation.R(-200.0);

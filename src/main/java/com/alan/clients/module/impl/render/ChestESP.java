@@ -6,7 +6,7 @@ import com.alan.clients.module.api.ModuleInfo;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.render.Render3DEvent;
-import hackclient.rise.gg;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.util.ConcurrentModificationException;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -29,7 +29,7 @@ public final class ChestESP extends Module {
             } catch (ConcurrentModificationException concurrentmodificationexception) {
             }
         };
-        this.b(gg.BLOOM).c(runnable);
+        this.b(ShaderQueueType.BLOOM).c(runnable);
     };
 
     public ChestESP() {

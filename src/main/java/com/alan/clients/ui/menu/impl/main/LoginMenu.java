@@ -14,9 +14,9 @@ import com.alan.clients.ui.menu.component.button.MenuButton;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.util.MouseUtil;
 import hackclient.rise.adr;
-import hackclient.rise.aec;
+import com.alan.clients.util.NetworkUtil;
 import hackclient.rise.agc;
-import hackclient.rise.agl;
+import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
 import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.aiv;
@@ -24,8 +24,8 @@ import hackclient.rise.aiz;
 import hackclient.rise.aju;
 import hackclient.rise.event.er;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -46,7 +46,7 @@ extends Menu {
     public Animation aCv;
     public String aCB = null;
     public TextBox aCy;
-    public agc aCu = FontManager.MAIN.a(64, gd.LIGHT);
+    public agc aCu = FontManager.MAIN.a(64, FontWeight.LIGHT);
     public boolean aCC;
     public boolean aCD;
     public Animation animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
@@ -137,21 +137,21 @@ extends Menu {
         this.aCE = er2 -> {
             String string;
             String string2;
-            rip.vantage.commons.packet.impl.server.protection.b b2 = null;
-            if (!(er2.dd() instanceof rip.vantage.commons.packet.impl.server.protection.b)) return;
-            b2 = (rip.vantage.commons.packet.impl.server.protection.b)er2.dd();
+            rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication b2 = null;
+            if (!(er2.dd() instanceof rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication)) return;
+            b2 = (rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication)er2.dd();
             System.out.println("Auth");
             rip.vantage.network.handler.c.eRC.aX();
             int aKi2 = (int)(b2.aKi() ? 1L : 0L);
             this.aCC = false;
-            if (aKi2 != 0 && (string2 = b2.aKh()) != null && !string2.isEmpty() && !rip.vantage.security.l.aL(string = aju.vW(), string2)) {
+            if (aKi2 != 0 && (string2 = b2.aKh()) != null && !string2.isEmpty() && !rip.vantage.security.IntegrityGuard.aL(string = aju.vW(), string2)) {
                 System.out.println("EC61");
                 aKi2 = 0;
                 this.aCC = true;
                 StringSelection stringSelection = new StringSelection(string);
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, new StringSelection("Rise"));
             }
-            if (aKi2 != 0 && !rip.vantage.security.l.cV(aKi2 != 0)) {
+            if (aKi2 != 0 && !rip.vantage.security.IntegrityGuard.cV(aKi2 != 0)) {
                 System.out.println("EC92");
                 System.exit(1);
                 Runtime.getRuntime().halt(1);
@@ -193,7 +193,7 @@ extends Menu {
     public void rp() {
         this.aCA = OfflineMode.offline()
             ? null
-            : aec.aY("https://raw.githubusercontent.com/risellc/LatestRiseVersion/main/Version");
+            : NetworkUtil.aY("https://raw.githubusercontent.com/risellc/LatestRiseVersion/main/Version");
     }
 
     @Override
@@ -207,7 +207,7 @@ extends Menu {
         int l25_hi = height2 - l19_hi / 2 - l21_hi / 2 - l19_hi / 2;
         this.aCw = new MenuTextButton(dL19, l25_hi, l17_lo, l19_hi, () -> {}, "");
         this.aCx = new MenuTextButton(dL19, l25_hi + l19_hi + l21_hi, l17_lo, l19_hi, () -> this.aW(this.aCy.getText()), "Login");
-        this.aCy = new TextBox(new Vector2d(width2, l25_hi + 9), FontManager.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Username", l17_lo * 5);
+        this.aCy = new TextBox(new Vector2d(width2, l25_hi + 9), FontManager.MAIN.a(24, FontWeight.BOLD), Color.WHITE, TextAlign.CENTER, "Username", l17_lo * 5);
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
         this.menuButtons = new MenuButton[]{this.aCw, this.aCx};
         this.aCv.T(255.0);
@@ -221,10 +221,10 @@ extends Menu {
             aiv.aPL.a(aiz.OVERLAY, f, null);
         }
         ScaledResolution scaledResolution = LoginMenu.aEg.jY;
-        this.b(gg.BLUR).c(() -> RenderUtil.d(0.0, 0.0, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight(), Color.BLACK));
+        this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.d(0.0, 0.0, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight(), Color.BLACK));
         this.aCw.draw(n, n2, f);
         this.aCx.draw(n, n2, f);
-        this.b(gg.REGULAR).c(() -> {
+        this.b(ShaderQueueType.REGULAR).c(() -> {
             double d = 0.0;
             this.aCy.draw();
             double d3 = this.aCw.getY() - (double)this.aCu.height();
@@ -245,10 +245,10 @@ extends Menu {
                 }
                 this.aCz = false;
             } else if (this.jc != null) {
-                FontManager.MAIN.a(18, gd.LIGHT).c(this.jc, (float)this.width / 2.0f, d4 + 26.0, Color.RED.getRGB());
+                FontManager.MAIN.a(18, FontWeight.LIGHT).c(this.jc, (float)this.width / 2.0f, d4 + 26.0, Color.RED.getRGB());
             }
-            FontManager.MAIN.a(18, gd.REGULAR).d("Made with <3 by Alan and The_Bi11iona1re", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 20, ColorUtil.d(aBS, 100).getRGB());
-            FontManager.MAIN.a(12, gd.REGULAR).d("\u00a9 Rise Client 2026. All Rights Reserved", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 10, ColorUtil.d(aBS, 100).getRGB());
+            FontManager.MAIN.a(18, FontWeight.REGULAR).d("Made with <3 by Alan and The_Bi11iona1re", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 20, ColorUtil.d(aBS, 100).getRGB());
+            FontManager.MAIN.a(12, FontWeight.REGULAR).d("\u00a9 Rise Client 2026. All Rights Reserved", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 10, ColorUtil.d(aBS, 100).getRGB());
             this.aCv.Q(0.0);
             RenderUtil.d(0.0, 0.0, LoginMenu.aEg.displayWidth, LoginMenu.aEg.displayHeight, new Color(0, 0, 0, (int)this.aCv.sG()));
         });

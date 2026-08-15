@@ -6,7 +6,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.r;
+import com.alan.clients.bots.BotManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import org.lwjgl.input.Keyboard;
@@ -23,7 +23,7 @@ public final class MiddleClickBotAntiBot extends Mode<AntiBot> {
 
             this.ji = true;
             if (aEg.objectMouseOver.typeOfHit == MovingObjectType.ENTITY) {
-                r r = Client.a.x();
+                BotManager r = Client.a.x();
                 Entity entity = aEg.objectMouseOver.entityHit;
                 if (r.a(this, entity)) {
                     Client.a.x().c(this, entity);

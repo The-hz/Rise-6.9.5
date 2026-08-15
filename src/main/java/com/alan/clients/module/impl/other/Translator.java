@@ -8,7 +8,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.aec;
+import com.alan.clients.util.NetworkUtil;
 import java.net.URLEncoder;
 import java.util.Locale;
 import java.util.concurrent.Executor;
@@ -76,7 +76,7 @@ public class Translator extends Module {
             .execute(
                 () -> {
                     JSONArray jsonarray = new JSONArray(
-                        aec.t("https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=" + URLEncoder.encode(var1), "GET")
+                        NetworkUtil.t("https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=" + URLEncoder.encode(var1), "GET")
                     );
                     String sxx = jsonarray.getJSONArray(0).getJSONArray(0).getString(0);
                     s sx = new s(sxx);

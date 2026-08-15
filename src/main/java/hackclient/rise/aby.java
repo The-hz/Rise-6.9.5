@@ -1,6 +1,8 @@
 package hackclient.rise;
 
 import com.alan.clients.ui.click.standard.RiseClickGUI;
+import com.alan.clients.ui.click.standard.UIColors;
+import com.alan.clients.ui.click.standard.components.CurveRenderer;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.util.gui.textbox.TextBox;
@@ -15,8 +17,8 @@ import lombok.Generated;
 
 public final class aby implements Screen, InstanceAccess {
     private RiseClickGUI H;
-    private ach azx = new ach(new ArrayList<>(), new Vector2f(0.0F, 0.0F), this.rz().rA());
-    private ach azy = new ach(new ArrayList<>(), new Vector2f(0.0F, 0.0F), this.rz().rA());
+    private CurveRenderer azx = new CurveRenderer(new ArrayList<>(), new Vector2f(0.0F, 0.0F), this.rz().rA());
+    private CurveRenderer azy = new CurveRenderer(new ArrayList<>(), new Vector2f(0.0F, 0.0F), this.rz().rA());
     private float azz = 10.0F;
     public ArrayList<ValueComponent> cj = new ArrayList<>();
 
@@ -30,7 +32,7 @@ public final class aby implements Screen, InstanceAccess {
     @Override
     public void b(int var1, int var2, float var3) {
         Vector2f vector2f = new Vector2f(this.H.getScale()).h(this.azz, 0.0F);
-        RenderUtil.roundedRectangle(vector2f.getX(), vector2f.getY() + this.azz, this.H.alh.x - this.azz * 2.0F, 100.0, this.H.getRound(), abw.SECONDARY.pV());
+        RenderUtil.roundedRectangle(vector2f.getX(), vector2f.getY() + this.azz, this.H.alh.x - this.azz * 2.0F, 100.0, this.H.getRound(), UIColors.SECONDARY.pV());
         this.azx.b(this.rz().rA());
         this.azx.i(new Vector2f(vector2f.h(this.azz, 0.0F)));
         this.azx.qx();
@@ -45,7 +47,7 @@ public final class aby implements Screen, InstanceAccess {
             this.H.alh.x - this.azz * 2.0F,
             this.H.getPosition().getY() - (vector2f2.getY() - this.H.getScale().getY()) - this.azz,
             this.H.getRound(),
-            abw.SECONDARY.pV()
+            UIColors.SECONDARY.pV()
         );
         Vector2f vector2f3 = vector2f2.h(0.0F, this.azz);
 
@@ -120,12 +122,12 @@ public final class aby implements Screen, InstanceAccess {
     }
 
     @Generated
-    public ach qb() {
+    public CurveRenderer qb() {
         return this.azx;
     }
 
     @Generated
-    public ach qc() {
+    public CurveRenderer qc() {
         return this.azy;
     }
 
@@ -145,12 +147,12 @@ public final class aby implements Screen, InstanceAccess {
     }
 
     @Generated
-    public void a(ach var1) {
+    public void a(CurveRenderer var1) {
         this.azx = var1;
     }
 
     @Generated
-    public void b(ach var1) {
+    public void b(CurveRenderer var1) {
         this.azy = var1;
     }
 

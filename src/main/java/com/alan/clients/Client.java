@@ -18,21 +18,21 @@ import com.google.gson.GsonBuilder;
 import de.florianmichael.viamcp.ViaMCP;
 import hackclient.rise.aal;
 import hackclient.rise.ui.screen.aba;
-import hackclient.rise.abs;
-import hackclient.rise.adu;
+import com.alan.clients.util.value.ConstantManager;
+import com.alan.clients.ui.theme.ThemeManager;
 import com.alan.clients.util.ReflectionUtil;
 import com.alan.clients.util.file.FileManager;
-import hackclient.rise.afv;
+import com.alan.clients.util.file.alt.AltManager;
 import com.alan.clients.util.file.config.ConfigManager;
-import hackclient.rise.afz;
+import com.alan.clients.util.file.data.DataManager;
 import com.alan.clients.util.file.insult.InsultFile;
 import com.alan.clients.util.file.insult.InsultManager;
 import com.alan.clients.util.localization.Locale;
 import hackclient.rise.b;
 import com.alan.clients.creative.RiseTab;
-import hackclient.rise.gf;
-import hackclient.rise.q;
-import hackclient.rise.r;
+import com.alan.clients.util.shader.ShaderRenderManager;
+import com.alan.clients.keybind.KeybindManager;
+import com.alan.clients.bots.BotManager;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -55,24 +55,24 @@ public enum Client
     public ComponentManager componentManager;
     public static String g;
     public aal n;
-    public q F;
+    public KeybindManager F;
     public ScriptManager scriptManager;
     public static String d;
-    public afv C;
+    public AltManager C;
     public static String c;
     public static boolean j;
     public ModuleManager moduleManager;
     public SecurityFeatureManager securityManager;
     public InsultManager D;
     public RiseClickGUI standardClickGUI;
-    public adu t;
+    public ThemeManager t;
     public CommandManager commandManager;
     public FileManager A;
-    public r s;
+    public BotManager s;
     public ExecutorService executor;
-    public afz v;
+    public DataManager v;
     public RiseTab J;
-    public gf G;
+    public ShaderRenderManager G;
     public ConfigManager B;
     public static Client[] $VALUES;
 
@@ -98,7 +98,7 @@ public enum Client
     }
 
     @Generated
-    public r x() {
+    public BotManager x() {
         return this.s;
     }
 
@@ -186,7 +186,7 @@ public enum Client
     }
 
     @Generated
-    public q t() {
+    public KeybindManager t() {
         return this.F;
     }
 
@@ -327,17 +327,17 @@ public enum Client
     }
 
     @Generated
-    public adu k() {
+    public ThemeManager k() {
         return this.t;
     }
 
     @Generated
-    public afv q() {
+    public AltManager q() {
         return this.C;
     }
 
     @Generated
-    public gf u() {
+    public ShaderRenderManager u() {
         return this.G;
     }
 
@@ -376,19 +376,19 @@ public enum Client
         this.commandManager = new CommandManager();
         this.A = new FileManager();
         this.B = new ConfigManager();
-        this.C = new afv();
+        this.C = new AltManager();
         this.D = new InsultManager();
-        this.v = new afz();
+        this.v = new DataManager();
         this.r = new com.alan.clients.security.b();
-        this.s = new r();
-        this.t = new adu();
+        this.s = new BotManager();
+        this.t = new ThemeManager();
         this.scriptManager = new ScriptManager();
         this.w = new b();
         this.eventBus = new EventBus<Event>();
         this.securityManager = new SecurityFeatureManager();
-        this.F = new q();
-        this.G = new gf();
-        new abs();
+        this.F = new KeybindManager();
+        this.G = new ShaderRenderManager();
+        new ConstantManager();
         this.A.init();
         this.v.init();
         this.n.init();
@@ -418,7 +418,7 @@ public enum Client
     }
 
     @Generated
-    public afz m() {
+    public DataManager m() {
         return this.v;
     }
 

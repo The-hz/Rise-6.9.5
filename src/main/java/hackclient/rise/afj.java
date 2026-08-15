@@ -4,6 +4,8 @@ import com.alan.clients.Client;
 import com.alan.clients.command.Command;
 import com.alan.clients.module.Module;
 import com.alan.clients.util.file.config.ConfigFile;
+import com.alan.clients.util.file.data.DataManager;
+import com.alan.clients.util.interfaces.Bindable;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.io.BufferedReader;
@@ -48,7 +50,7 @@ public final class afj {
     }
 
     private File sK() {
-        return new File(afz.aHQ, "command_usage.json");
+        return new File(DataManager.aHQ, "command_usage.json");
     }
 
     private synchronized void sL() {
@@ -530,7 +532,7 @@ public final class afj {
             }
 
             try {
-                p p = Client.a.t().a(s);
+                Bindable p = Client.a.t().a(s);
                 if (p != null) {
                     return this.b(p.getAliases(), p.getName());
                 }

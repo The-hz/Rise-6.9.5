@@ -21,13 +21,13 @@ import hackclient.rise.agd;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.particle.Particle;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
-import com.alan.clients.module.impl.render.interfaces.yw;
-import com.alan.clients.module.impl.render.interfaces.yx;
-import com.alan.clients.module.impl.render.interfaces.yy;
-import com.alan.clients.module.impl.render.interfaces.yz;
-import hackclient.rise.zc;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
+import com.alan.clients.module.impl.render.interfaces.ModernArrayListColorModeValue;
+import com.alan.clients.module.impl.render.interfaces.ArrayListFontModeValue;
+import com.alan.clients.module.impl.render.interfaces.ShaderEffectModeValue;
+import com.alan.clients.module.impl.render.interfaces.BackGroundModeValue;
+import com.alan.clients.module.impl.render.interfaces.ArrayListEntry;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,23 +43,23 @@ import rip.vantage.commons.util.time.a;
 
 public class ModernInterface
 extends Mode<Interface> {
-    private final agc asD = FontManager.MAIN.a(36, gd.MEDIUM);
-    private final agc asE = FontManager.MAIN.a(20, gd.REGULAR);
-    private final agc asF = FontManager.MAIN.a(18, gd.MEDIUM);
-    private final agc asG = FontManager.MAIN.a(18, gd.REGULAR);
-    agc ky = FontManager.MAIN.a(18, gd.REGULAR);
+    private final agc asD = FontManager.MAIN.a(36, FontWeight.MEDIUM);
+    private final agc asE = FontManager.MAIN.a(20, FontWeight.REGULAR);
+    private final agc asF = FontManager.MAIN.a(18, FontWeight.MEDIUM);
+    private final agc asG = FontManager.MAIN.a(18, FontWeight.REGULAR);
+    agc ky = FontManager.MAIN.a(18, FontWeight.REGULAR);
     private final a asH = new a();
-    private final ModeValue asI = new yw(this, "ArrayList Color Mode", this);
-    private final ModeValue asJ = new yx(this, "ArrayList Font", this);
+    private final ModeValue asI = new ModernArrayListColorModeValue(this, "ArrayList Color Mode", this);
+    private final ModeValue asJ = new ArrayListFontModeValue(this, "ArrayList Font", this);
     private final StringValue customInstalledFont = new StringValue("Custom Installed Font", (Mode<?>)this, "Arial", () -> {
         if (((Mode)this.asJ.wo()).getName().equals("Custom")) return false;
         return true;
     });
-    private final ModeValue asL = new yy(this, "Shader Effect", this);
+    private final ModeValue asL = new ShaderEffectModeValue(this, "Shader Effect", this);
     private final BooleanValue dropShadow = new BooleanValue("Drop Shadow", (Mode<?>)this, (Boolean)true);
     private final BooleanValue sidebar = new BooleanValue("Sidebar", (Mode<?>)this, (Boolean)true);
     private final BooleanValue particles = new BooleanValue("Particles on Kill", (Mode<?>)this, (Boolean)true);
-    private final ModeValue asP = new yz(this, "BackGround", this);
+    private final ModeValue asP = new BackGroundModeValue(this, "BackGround", this);
     private final StringValue customClientName = new StringValue("Custom Client Name", (Mode<?>)this, "");
     private boolean asR;
     private boolean asS;
@@ -83,8 +83,8 @@ extends Mode<Interface> {
         float f3 = (float)render2DEvent.getScaledResolution().getScaledHeight() - this.ky.height() - 1.0f;
         double d3 = d2 = bl ? 3.5 : 2.0;
         if (this.asR || this.asS) {
-            this.b(gg.BLOOM).c(() -> {
-                for (zc zc2 : ((Interface)this.getParent()).lL()) {
+            this.b(ShaderQueueType.BLOOM).c(() -> {
+                for (ArrayListEntry zc2 : ((Interface)this.getParent()).lL()) {
                     if (zc2.ath == 0.0f) continue;
                     double d32 = zc2.nr().getX();
                     double d4 = zc2.nr().getY();
@@ -120,8 +120,8 @@ extends Mode<Interface> {
                 if (!((String)this.customClientName.wo()).isEmpty()) {
                     this.asF.a((String)this.customClientName.wo(), (double)(6 + this.asD.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
                 }
-                agc agc2 = FontManager.MAIN.a(18, gd.MEDIUM);
-                agc agc3 = FontManager.MAIN.a(18, gd.BOLD);
+                agc agc2 = FontManager.MAIN.a(18, FontWeight.MEDIUM);
+                agc agc3 = FontManager.MAIN.a(18, FontWeight.BOLD);
                 String string = "6.9.5";
                 String string2 = rip.vantage.network.core.a.aKB().bX();
                 String string3 = "User:";
@@ -137,8 +137,8 @@ extends Mode<Interface> {
                 this.asF.b(string2, f10 + f7, f3, -3355444);
                 this.asG.b("XYZ:", 5.0, f3, -3355444);
                 this.asF.b(this.asU, 5.0f + this.asW, f3, -3355444);
-                FontManager.MAIN.a(16, gd.MEDIUM);
-                agc agc4 = FontManager.MAIN.a(16, gd.BOLD);
+                FontManager.MAIN.a(16, FontWeight.MEDIUM);
+                agc agc4 = FontManager.MAIN.a(16, FontWeight.BOLD);
                 Collection<PotionEffect> collection = ModernInterface.aEg.thePlayer.getActivePotionEffects();
                 if (!collection.isEmpty()) {
                     String string4;
@@ -164,7 +164,7 @@ extends Mode<Interface> {
                 }
             });
         }
-        for (zc zc2 : ((Interface)this.getParent()).lL()) {
+        for (ArrayListEntry zc2 : ((Interface)this.getParent()).lL()) {
             if (zc2.ath == 0.0f) continue;
             double d4 = zc2.nr().getX();
             double d5 = zc2.nr().getY();
@@ -177,13 +177,13 @@ extends Mode<Interface> {
                     }
                     RenderUtil.d(d4 - d2 + 0.5, d5 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.getParent()).aoq, color);
                 };
-                this.b(gg.BLUR).c(() -> consumer.accept(Color.BLACK));
-                this.b(gg.REGULAR, 1).c(() -> {
+                this.b(ShaderQueueType.BLUR).c(() -> consumer.accept(Color.BLACK));
+                this.b(ShaderQueueType.REGULAR, 1).c(() -> {
                     this.rz();
                     consumer.accept(Themes.rK());
                 });
             }
-            this.b(gg.REGULAR, 1).c(() -> this.a(zc2, d4, d5 - 0.5, color2.getRGB()));
+            this.b(ShaderQueueType.REGULAR, 1).c(() -> this.a(zc2, d4, d5 - 0.5, color2.getRGB()));
             if (!((Boolean)this.sidebar.wo()).booleanValue()) continue;
             RenderUtil.roundedRectangle(d4 + (double)zc2.nu() + (double)zc2.nv() + 2.0, d5 - 1.5, 2.0, 9.0, 1.0, color2);
         }
@@ -191,13 +191,13 @@ extends Mode<Interface> {
             return;
         }
         if (!this.asH.T(2000L)) {
-            this.b(gg.BLOOM).c(NotificationComponent::cj);
+            this.b(ShaderQueueType.BLOOM).c(NotificationComponent::cj);
         }
         String string = rip.vantage.network.core.a.aKB().bX();
         String string2 = "User:";
         String string3 = "6.9.5";
-        agc agc2 = FontManager.MAIN.a(18, gd.MEDIUM);
-        agc agc3 = FontManager.MAIN.a(18, gd.BOLD);
+        agc agc2 = FontManager.MAIN.a(18, FontWeight.MEDIUM);
+        agc agc3 = FontManager.MAIN.a(18, FontWeight.BOLD);
         float f4 = agc2.getStringWidth("Version:\u2009\u2009\u2009\u2009\u2009\u2009");
         float f5 = agc3.getStringWidth(string3);
         float f6 = this.asE.getStringWidth(string2);
@@ -211,8 +211,8 @@ extends Mode<Interface> {
         this.asV = f6 + f7;
         this.asG.b("XYZ:", 5.0, f3, -3355444);
         this.asF.b(this.asU, 5.0f + this.asW, f3, -3355444);
-        FontManager.MAIN.a(16, gd.MEDIUM);
-        agc agc4 = FontManager.MAIN.a(16, gd.BOLD);
+        FontManager.MAIN.a(16, FontWeight.MEDIUM);
+        agc agc4 = FontManager.MAIN.a(16, FontWeight.BOLD);
         Collection<PotionEffect> collection = ModernInterface.aEg.thePlayer.getActivePotionEffects();
         if (!collection.isEmpty()) {
             agc agc5 = this.asG;
@@ -314,7 +314,7 @@ extends Mode<Interface> {
                         }
                         switch (n2) {
                             case 0: {
-                                agc agc2 = FontManager.MAIN.a(18, gd.REGULAR);
+                                agc agc2 = FontManager.MAIN.a(18, FontWeight.REGULAR);
                                 if (!this.ky.equals(agc2)) {
                                     this.ky = agc2;
                                 }
@@ -346,7 +346,7 @@ extends Mode<Interface> {
                     }
                 }
             }
-            for (zc zc2 : ((Interface)this.getParent()).lL()) {
+            for (ArrayListEntry zc2 : ((Interface)this.getParent()).lL()) {
                 if (zc2.ath == 0.0f) continue;
                 String string4;
                 String string5;
@@ -438,7 +438,7 @@ extends Mode<Interface> {
         return string.replaceAll("[^a-zA-Z]", "");
     }
 
-    private void a(zc zc2, double d2, double d3, int n2) {
+    private void a(ArrayListEntry zc2, double d2, double d3, int n2) {
         if (((Boolean)this.dropShadow.wo()).booleanValue()) {
             this.ky.b(zc2.getDisplayName(), d2, d3, n2);
             if (!zc2.nA()) return;

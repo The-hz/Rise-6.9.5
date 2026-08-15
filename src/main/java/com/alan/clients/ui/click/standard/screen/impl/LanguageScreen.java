@@ -4,14 +4,14 @@ import com.alan.clients.ui.click.standard.components.language.LanguageComponent;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2f;
-import hackclient.rise.abw;
+import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.ui.click.standard.screen.Screen;
 import hackclient.rise.agk;
 import com.alan.clients.util.localization.Locale;
 import hackclient.rise.ahd;
-import hackclient.rise.air;
+import com.alan.clients.util.render.ScissorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
+import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -39,20 +39,20 @@ public class LanguageScreen implements Screen, InstanceAccess {
         double d3 = vector2f1.x - d0;
         double d4 = Math.max(0.0, vector2f1.y - 40.0);
         GL11.glPushAttrib(524288);
-        air.hK();
-        air.a(new ScaledResolution(aEg), d1, d2, d3, d4);
+        ScissorUtil.hK();
+        ScissorUtil.a(new ScaledResolution(aEg), d1, d2, d3, d4);
 
         for (int i = 0; i < this.languages.size(); i++) {
             this.languages.get(i).draw((i + 1) * 46 + this.azQ.tE());
         }
 
-        air.disable();
+        ScissorUtil.disable();
         GL11.glPopAttrib();
         RenderUtil.a(
-            vector2f.getX() + d0, vector2f.getY(), vector2f1.x - d0, 40.0, this.getStandardClickGUI().round, abw.BACKGROUND.pV(), true, true, false, false
+            vector2f.getX() + d0, vector2f.getY(), vector2f1.x - d0, 40.0, this.getStandardClickGUI().round, UIColors.BACKGROUND.pV(), true, true, false, false
         );
         FontManager.MAIN
-            .a(16, gd.REGULAR)
+            .a(16, FontWeight.REGULAR)
             .d(ahd.ce("ui.language.text"), vector2f.getX() + vector2f1.getX() - 20.0F, vector2f.getY() + 20.0F, new Color(255, 255, 255, 128).getRGB());
         this.azQ.V(-2000.0);
     }

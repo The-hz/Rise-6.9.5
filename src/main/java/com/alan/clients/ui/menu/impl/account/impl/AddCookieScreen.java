@@ -13,17 +13,17 @@ import com.google.gson.Gson;
 import com.alan.clients.ui.menu.component.button.MenuButton;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.util.MouseUtil;
-import hackclient.rise.aep;
-import hackclient.rise.afc;
+import com.alan.clients.util.account.impl.MicrosoftAccount;
+import com.alan.clients.util.account.localts.LocaltsOrderStore;
 import hackclient.rise.agc;
-import hackclient.rise.agl;
+import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
 import com.alan.clients.util.web.Browser;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.awt.FileDialog;
 import java.awt.Frame;
@@ -43,7 +43,7 @@ import net.minecraft.client.gui.ScaledResolution;
 
 public class AddCookieScreen extends GuiScreen implements InstanceAccess {
     private static final long RECENT_LOCALTS_ORDER_WINDOW = 600000L;
-    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, gd.BOLD);
+    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, FontWeight.BOLD);
     private final MenuButton[] menuButtons = new MenuButton[4];
     private static TextBox usernameBox;
     private static GuiScreen reference;
@@ -56,7 +56,7 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
     private static final Runnable SELECT_FILE_RUNNABLE = () -> new Thread(() -> {
         FileDialog filedialog = new FileDialog((Frame)null, "Select Cookie File");
         filedialog.setMode(0);
-        File file1 = afc.g(600000L);
+        File file1 = LocaltsOrderStore.g(600000L);
         if (file1 != null) {
             filedialog.setDirectory(file1.getAbsolutePath());
         }
@@ -178,7 +178,7 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
                         }
 
                         String s9 = MicrosoftLogin.extractRefreshTokenFromCookies(stringbuilder1.toString());
-                        aep aep = new aep(f.gK, f.aEZ, e.aEU, s9);
+                        MicrosoftAccount aep = new MicrosoftAccount(f.gK, f.aEZ, e.aEU, s9);
                         System.out.println("Name: " + f.gK + ", UUID: " + f.aEZ + ", AccessToken: " + e.aEU);
                         aep.se();
                         System.out.println("[DEBUG] Proceeding to CANCEL_RUNNABLE");
@@ -206,8 +206,8 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
     public void drawScreen(int var1, int var2, float var3) {
         this.animation.Q(0.0);
         aiv.aPL.a(aiz.OVERLAY, var3, null);
-        this.b(gg.BLUR).c(BACKGROUND_RUNNABLE);
-        this.b(gg.REGULAR).c(() -> {
+        this.b(ShaderQueueType.BLUR).c(BACKGROUND_RUNNABLE);
+        this.b(ShaderQueueType.REGULAR).c(() -> {
             FONT_RENDERER.c(text_to_render, this.width / 2, this.height / 2 - 64 + this.animation.sG(), Color.WHITE.getRGB());
             usernameBox.draw();
         });
@@ -254,7 +254,7 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
         byte b0 = 24;
         byte b1 = 4;
         Vector2d vector2d = new Vector2d(this.width / 2 - 100, this.height / 2 - 24);
-        usernameBox = new TextBox(vector2d.offset(100, 8.0), FontManager.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Username", short1);
+        usernameBox = new TextBox(vector2d.offset(100, 8.0), FontManager.MAIN.a(24, FontWeight.BOLD), Color.WHITE, TextAlign.CENTER, "Username", short1);
         this.menuButtons[0] = new MenuTextButton(vector2d.x, vector2d.y, short1, b0, TEXT_BOX_RUNNABLE, "");
         this.menuButtons[1] = new MenuTextButton(vector2d.x, vector2d.y + b0 + b1, short1, b0, SELECT_FILE_RUNNABLE, "Select File");
         this.menuButtons[2] = new MenuTextButton(vector2d.x, vector2d.y + (b0 + b1) * 2, short1 / 2 * 1.5, b0, LOGIN_RUNNABLE, "Login & Add");

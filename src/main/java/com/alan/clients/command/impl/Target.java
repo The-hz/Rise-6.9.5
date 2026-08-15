@@ -2,7 +2,7 @@ package com.alan.clients.command.impl;
 
 import com.alan.clients.command.Command;
 import hackclient.rise.afi;
-import hackclient.rise.bx;
+import com.alan.clients.util.social.FriendManager;
 import net.minecraft.entity.player.EntityPlayer;
 
 public final class Target extends Command {
@@ -39,7 +39,7 @@ public final class Target extends Command {
 
                         switch (b0) {
                             case 0:
-                                bx.l(entityplayer.getName());
+                                FriendManager.l(entityplayer.getName());
                                 afi.b(String.format("Added %s to target list", s1));
                                 flag = true;
                                 break label36;
@@ -50,7 +50,7 @@ public final class Target extends Command {
                         }
                     }
 
-                    bx.m(entityplayer.getName());
+                    FriendManager.m(entityplayer.getName());
                     afi.b(String.format("Removed %s from target list", s1));
                     flag = true;
                     break;

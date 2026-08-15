@@ -7,7 +7,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.abs;
+import com.alan.clients.util.value.ConstantManager;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.util.MathHelper;
 
@@ -19,7 +19,7 @@ public final class HurtCamera extends Module {
         if (var0.getPacket() instanceof S12PacketEntityVelocity s12packetentityvelocity && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
             double d0 = s12packetentityvelocity.motionX / 8000.0;
             double d1 = s12packetentityvelocity.motionZ / 8000.0;
-            aEg.thePlayer.attackedAtYaw = (float)(MathHelper.atan2(d0, d1) * 180.0 / abs.aHb - aEg.thePlayer.pl);
+            aEg.thePlayer.attackedAtYaw = (float)(MathHelper.atan2(d0, d1) * 180.0 / ConstantManager.aHb - aEg.thePlayer.pl);
         }
     };
 

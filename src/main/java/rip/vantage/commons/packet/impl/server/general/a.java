@@ -1,10 +1,10 @@
 package rip.vantage.commons.packet.impl.server.general;
 
 import org.json.JSONObject;
-import rip.vantage.commons.handler.api.c;
-import rip.vantage.commons.packet.api.abstracts.b;
+import rip.vantage.commons.handler.api.S2CPacketHandler;
+import rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket;
 
-public class a extends b {
+public class a extends AbstractS2CPacket {
     long ePO;
 
     public a() {
@@ -18,7 +18,7 @@ public class a extends b {
     }
 
     @Override
-    public void a(c var1) {
+    public void a(S2CPacketHandler handler) {
     }
 
     @Override

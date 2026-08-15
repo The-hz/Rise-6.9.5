@@ -3,7 +3,7 @@ package com.alan.clients.util.render;
 import com.alan.clients.Client;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.vector.Vector2d;
-import hackclient.rise.adu;
+import com.alan.clients.ui.theme.ThemeManager;
 import hackclient.rise.agc;
 import java.awt.Color;
 import org.lwjgl.opengl.GL11;
@@ -89,7 +89,7 @@ public final class ColorUtil {
 
     public static void a(agc var0, String var1, double var2, double var4, boolean var6) {
         float f = 0.0F;
-        adu adu = Client.a.k();
+        ThemeManager adu = Client.a.k();
 
         for (int i = 0; i < var1.length(); i++) {
             String s = String.valueOf(var1.charAt(i));

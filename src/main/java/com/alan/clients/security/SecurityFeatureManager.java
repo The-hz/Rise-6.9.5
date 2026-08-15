@@ -8,16 +8,16 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import hackclient.rise.aha;
-import hackclient.rise.zh;
-import hackclient.rise.security.zi;
+import com.alan.clients.security.ChatMessageObserver;
+import com.alan.clients.security.impl.DebugOrPacketCommandCheck;
 import com.alan.clients.packetlog.impl.HostsFileCheck;
-import hackclient.rise.security.zk;
-import hackclient.rise.security.zl;
-import hackclient.rise.security.zm;
-import hackclient.rise.security.zn;
+import com.alan.clients.security.impl.HypixelBrandAddressMismatchCheck;
+import com.alan.clients.security.impl.HypixelIpNoScoreboardCheck;
+import com.alan.clients.security.impl.StackProbeCheck;
+import com.alan.clients.security.impl.AcCommandCheck;
 import hackclient.rise.security.zo;
-import hackclient.rise.security.zp;
-import hackclient.rise.security.zq;
+import com.alan.clients.security.impl.SusChatCheck;
+import com.alan.clients.security.impl.LowActivityWorldCheck;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -170,8 +170,8 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
 
                 while (iterator.hasNext()) {
                     SecurityFeature securityfeature = (SecurityFeature)iterator.next();
-                    if (securityfeature instanceof zh) {
-                        ((zh)securityfeature).ar(s);
+                    if (securityfeature instanceof ChatMessageObserver) {
+                        ((ChatMessageObserver)securityfeature).ar(s);
                     }
                 }
             }
@@ -186,13 +186,13 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
         } else {
             this.a(new HostsFileCheck());
             this.a(new zo());
-            this.b(new zl());
-            this.b(new zk());
-            this.b(new zn());
-            this.b(new zi());
-            this.b(new zp());
-            this.b(new zq());
-            this.b(new zm());
+            this.b(new HypixelIpNoScoreboardCheck());
+            this.b(new HypixelBrandAddressMismatchCheck());
+            this.b(new AcCommandCheck());
+            this.b(new DebugOrPacketCommandCheck());
+            this.b(new SusChatCheck());
+            this.b(new LowActivityWorldCheck());
+            this.b(new StackProbeCheck());
         }
     }
 
@@ -208,9 +208,9 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
 
     public void as(String var1) {
         if (this.nH()) {
-            String s = rip.vantage.util.a.kU(var1);
+            String s = rip.vantage.util.NativeBridge.kU(var1);
             if (s != null) {
-                rip.vantage.util.a.aN(s, var1);
+                rip.vantage.util.NativeBridge.aN(s, var1);
             }
         }
     }

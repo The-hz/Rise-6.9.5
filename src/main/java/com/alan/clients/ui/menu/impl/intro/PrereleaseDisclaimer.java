@@ -6,7 +6,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.menu.impl.main.LoginMenu;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
+import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -31,7 +31,7 @@ public class PrereleaseDisclaimer extends GuiScreen {
         this.fadeAnimation.Q(this.aCt.aKx() > 4000L ? 0.0 : 255.0);
         ScaledResolution scaledresolution = new ScaledResolution(aEg);
         FontManager.MAIN
-            .a(24, gd.REGULAR)
+            .a(24, FontWeight.REGULAR)
             .c(
                 "Note: This is private prerelease software",
                 scaledresolution.getScaledWidth() / 2.0,
@@ -39,7 +39,7 @@ public class PrereleaseDisclaimer extends GuiScreen {
                 ColorUtil.d(Color.WHITE, (int)this.fadeAnimation.sG()).getRGB()
             );
         FontManager.MAIN
-            .a(24, gd.REGULAR)
+            .a(24, FontWeight.REGULAR)
             .c(
                 "Features, interfaces and sequences are not final and can be expected to change at any time",
                 scaledresolution.getScaledWidth() / 2.0,
@@ -47,7 +47,7 @@ public class PrereleaseDisclaimer extends GuiScreen {
                 ColorUtil.d(Color.WHITE, (int)this.fadeAnimation.sG()).getRGB()
             );
         FontManager.MAIN
-            .a(16, gd.REGULAR)
+            .a(16, FontWeight.REGULAR)
             .c(
                 "© Rise Client 2022. All Rights Reserved",
                 scaledresolution.getScaledWidth() / 2.0,

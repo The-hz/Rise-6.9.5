@@ -1,10 +1,10 @@
 package com.alan.clients.security.impl;
 
-import com.alan.clients.security.a;
+import com.alan.clients.security.CrashCheck;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S2APacketParticles;
 
-public final class ParticleCheck extends a {
+public final class ParticleCheck extends CrashCheck {
     private int particles;
 
     public ParticleCheck() {

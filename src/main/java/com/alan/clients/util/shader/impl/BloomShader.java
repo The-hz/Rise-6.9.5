@@ -5,7 +5,7 @@ import com.alan.clients.util.shader.base.RiseShaderProgram;
 import com.alan.clients.util.shader.base.ShaderUniforms;
 import hackclient.rise.aix;
 import hackclient.rise.aiz;
-import hackclient.rise.ajq;
+import com.alan.clients.util.shader.kernel.GaussianKernel;
 import java.nio.FloatBuffer;
 import java.util.List;
 import net.minecraft.client.renderer.GlStateManager;
@@ -20,7 +20,7 @@ public class BloomShader extends aix {
     private final RiseShaderProgram aPY = new RiseShaderProgram("bloom.frag", "vertex.vsh");
     private Framebuffer aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
     private Framebuffer aPZ = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
-    private ajq aQa = new ajq(0);
+    private GaussianKernel aQa = new GaussianKernel(0);
     private Interface amf;
 
     public BloomShader() {
@@ -63,7 +63,7 @@ public class BloomShader extends aix {
                     this.aPZ.bindFramebuffer(true);
                     this.aPY.rt();
                     if (this.aQa.getSize() != i) {
-                        this.aQa = new ajq(i);
+                        this.aQa = new GaussianKernel(i);
                         this.aQa.uR();
                         FloatBuffer floatbuffer = BufferUtils.createFloatBuffer(i);
                         floatbuffer.put(this.aQa.vS());

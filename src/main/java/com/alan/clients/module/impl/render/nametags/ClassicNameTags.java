@@ -12,9 +12,9 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agd;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.component.bv;
-import hackclient.rise.bx;
-import hackclient.rise.gg;
+import com.alan.clients.component.impl.combat.TargetComponent;
+import com.alan.clients.util.social.FriendManager;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.util.List;
 import javax.vecmath.Vector4d;
@@ -30,7 +30,7 @@ public class ClassicNameTags extends Mode<NameTags> {
     public final Listener<Render2DEvent> onRender2D = var1x -> {
         agd agd = aEg.fontRendererObj;
         GlStateManager.pushMatrix();
-        List list = bv.b(this.getParent().player.wo(), this.getParent().invisibles.wo(), this.getParent().animals.wo(), this.getParent().mobs.wo(), this.getParent().playerTeammates.wo(), true);
+        List list = TargetComponent.b(this.getParent().player.wo(), this.getParent().invisibles.wo(), this.getParent().animals.wo(), this.getParent().mobs.wo(), this.getParent().playerTeammates.wo(), true);
         if (aEg.gameSettings.thirdPersonView != 0 && this.getParent().player.wo()) {
             list.add(aEg.thePlayer);
         }
@@ -43,11 +43,11 @@ public class ClassicNameTags extends Mode<NameTags> {
                 s = "§a§l" + (this.shortenedTags.wo() ? "[TM]" : "[TEAM]") + "§r " + s;
             }
 
-            if (this.showTargetTag.wo() && bx.n(entitylivingbase.getName())) {
+            if (this.showTargetTag.wo() && FriendManager.n(entitylivingbase.getName())) {
                 s = "§4§l" + (this.shortenedTags.wo() ? "[T]" : "[TARGET]") + "§r " + s;
             }
 
-            if (this.showFriendTag.wo() && bx.isFriend(entitylivingbase.getName())) {
+            if (this.showFriendTag.wo() && FriendManager.isFriend(entitylivingbase.getName())) {
                 s = "§b§l" + (this.shortenedTags.wo() ? "[F]" : "[FRIEND]") + "§r " + s;
             }
 
@@ -60,7 +60,7 @@ public class ClassicNameTags extends Mode<NameTags> {
                 float f3 = (float)(vector4d.x + (vector4d.z - vector4d.x) / 2.0);
                 float f4 = (float)vector4d.y - b0;
                 String s1 = s;
-                this.b(gg.REGULAR).c(() -> {
+                this.b(ShaderQueueType.REGULAR).c(() -> {
                     double d0 = f3 - f2 / 2.0F - f1;
                     double d1 = f4 - f1 - 3.0F;
                     double d2 = f2 + f1 * 2.0F;

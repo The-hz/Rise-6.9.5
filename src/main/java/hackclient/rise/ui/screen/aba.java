@@ -7,12 +7,12 @@ import com.alan.clients.module.impl.render.Interface;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.abb;
+import com.alan.clients.ui.click.dropdown.components.CategoryComponent;
 import com.alan.clients.ui.click.standard.components.ModuleComponent;
-import hackclient.rise.abw;
+import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.aha;
-import hackclient.rise.gg;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.text.Collator;
 import java.util.ArrayList;
@@ -27,12 +27,12 @@ import org.lwjgl.input.Mouse;
 public class aba
 extends GuiScreen
 implements aha {
-    private final Map<Category, abb> axh = new HashMap<Category, abb>();
+    private final Map<Category, CategoryComponent> axh = new HashMap<Category, CategoryComponent>();
     private final List<Category> axi = new ArrayList<Category>();
     private double axj = 0.0;
     private double axk = 0.0;
     private final Animation axl = new Animation(Easing.EASE_OUT_EXPO, 300L);
-    private abb axm = null;
+    private CategoryComponent axm = null;
     private double axn;
     private double axo;
     private double axp = 0.8;
@@ -76,7 +76,7 @@ implements aha {
         int n2 = 0;
         int n3 = 0;
         for (Category category : this.axi) {
-            abb abb2 = this.axh.get((Object)category);
+            CategoryComponent abb2 = this.axh.get((Object)category);
             if (abb2 == null) continue;
             double d4 = d2 + (double)n2 * (this.on() + this.oo());
             double d5 = d3 + (double)(n3 * 28);
@@ -113,13 +113,13 @@ implements aha {
                 arrayList.add(new ModuleComponent(module));
             }
             arrayList.sort((abd2, abd3) -> Collator.getInstance().compare(abd2.getModule().getName(), abd3.getModule().getName()));
-            this.axh.put(category, new abb(category, arrayList));
+            this.axh.put(category, new CategoryComponent(category, arrayList));
         }
     }
 
     public void drawScreen(int n2, int n3, float f2) {
         aba.drawRect((int)0, (int)0, (int)this.width, (int)this.height, (int)new Color(0, 0, 0, 100).getRGB());
-        boolean bl = this.axh.values().stream().anyMatch(abb::oJ);
+        boolean bl = this.axh.values().stream().anyMatch(CategoryComponent::oJ);
         if (bl) {
             int dWheel = Mouse.getDWheel();
             if (dWheel != 0) {
@@ -140,21 +140,21 @@ implements aha {
             this.axm.i((double)n2 + this.axn, d4);
         }
         if (((Boolean)Client.a.g().c(Interface.class).aoc.wo()).booleanValue()) {
-            this.b(gg.BLUR).c(() -> {
+            this.b(ShaderQueueType.BLUR).c(() -> {
                 for (Category category : this.axi) {
-                    abb abb2 = this.axh.get((Object)category);
+                    CategoryComponent abb2 = this.axh.get((Object)category);
                     if (abb2 == null) continue;
                     double d2 = abb2.getX();
                     double d3 = abb2.getY() - this.axj;
                     if (d3 + abb2.da() < 0.0 || d3 > (double)this.height) continue;
-                    RenderUtil.a(d2, d3, this.on(), 24.0 * this.axp, 6.0 * this.axp, abw.SECONDARY.pV(), true, true, false, false);
+                    RenderUtil.a(d2, d3, this.on(), 24.0 * this.axp, 6.0 * this.axp, UIColors.SECONDARY.pV(), true, true, false, false);
                     if (!abb2.oJ() || !(abb2.oK().sG() > 1.0)) continue;
-                    RenderUtil.a(d2, d3 + 24.0 * this.axp, this.on(), abb2.oK().sG(), 6.0 * this.axp, abw.BACKGROUND.pV(), false, false, true, true);
+                    RenderUtil.a(d2, d3 + 24.0 * this.axp, this.on(), abb2.oK().sG(), 6.0 * this.axp, UIColors.BACKGROUND.pV(), false, false, true, true);
                 }
             });
-            this.b(gg.BLOOM).c(() -> {
+            this.b(ShaderQueueType.BLOOM).c(() -> {
                 for (Category category : this.axi) {
-                    abb abb2 = this.axh.get((Object)category);
+                    CategoryComponent abb2 = this.axh.get((Object)category);
                     if (abb2 == null) continue;
                     double d2 = abb2.getX();
                     double d3 = abb2.getY() - this.axj;
@@ -163,9 +163,9 @@ implements aha {
                 }
             });
         }
-        this.b(gg.REGULAR, 1).c(() -> {
+        this.b(ShaderQueueType.REGULAR, 1).c(() -> {
             for (Category category : this.axi) {
-                abb abb2 = this.axh.get((Object)category);
+                CategoryComponent abb2 = this.axh.get((Object)category);
                 if (abb2 == null) continue;
                 double d2 = abb2.getX();
                 double d3 = abb2.getY() - this.axj;
@@ -179,7 +179,7 @@ implements aha {
     public void mouseClicked(int n2, int n3, int n4) {
         for (Category category : this.axi) {
             double d2;
-            abb abb2 = this.axh.get((Object)category);
+            CategoryComponent abb2 = this.axh.get((Object)category);
             if (abb2 == null) continue;
             double d3 = abb2.getX();
             if (GUIUtil.c(d3, d2 = abb2.getY() - this.axj, this.on(), 24.0 * this.axp, n2, n3) && aba.isShiftKeyDown() && n4 == 0) {
@@ -197,7 +197,7 @@ implements aha {
 
     protected void mouseReleased(int n2, int n3, int n4) {
         this.axm = null;
-        for (abb abb2 : this.axh.values()) {
+        for (CategoryComponent abb2 : this.axh.values()) {
             abb2.oG();
         }
         super.mouseReleased(n2, n3, n4);
@@ -223,7 +223,7 @@ implements aha {
                 return;
             }
         }
-        for (abb abb2 : this.axh.values()) {
+        for (CategoryComponent abb2 : this.axh.values()) {
             abb2.a(c2, n2);
         }
         super.keyTyped(c2, n2);
@@ -248,7 +248,7 @@ implements aha {
     private double or() {
         double d2 = 0.0;
         double d3 = Double.MAX_VALUE;
-        for (abb abb2 : this.axh.values()) {
+        for (CategoryComponent abb2 : this.axh.values()) {
             double d4 = abb2.getY();
             double d5 = abb2.getY() + abb2.da();
             if (d4 < d3) {
@@ -262,7 +262,7 @@ implements aha {
     }
 
     @Generated
-    public Map<Category, abb> os() {
+    public Map<Category, CategoryComponent> os() {
         return this.axh;
     }
 
@@ -287,7 +287,7 @@ implements aha {
     }
 
     @Generated
-    public abb ox() {
+    public CategoryComponent ox() {
         return this.axm;
     }
 

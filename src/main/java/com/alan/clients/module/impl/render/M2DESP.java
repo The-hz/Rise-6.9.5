@@ -15,8 +15,8 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.component.bv;
-import hackclient.rise.gg;
+import com.alan.clients.component.impl.combat.TargetComponent;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.util.List;
 import javax.vecmath.Vector4d;
@@ -54,7 +54,7 @@ extends Module {
     private final BooleanValue glow = new BooleanValue("Glow", (Module)this, (Boolean)false);
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
-        List<EntityLivingBase> list = bv.b(((Boolean)this.player.wo()).booleanValue(), ((Boolean)this.invisibles.wo()).booleanValue(), ((Boolean)this.animals.wo()).booleanValue(), ((Boolean)this.mobs.wo()).booleanValue(), ((Boolean)this.playerTeammates.wo()).booleanValue(), true);
+        List<EntityLivingBase> list = TargetComponent.b(((Boolean)this.player.wo()).booleanValue(), ((Boolean)this.invisibles.wo()).booleanValue(), ((Boolean)this.animals.wo()).booleanValue(), ((Boolean)this.mobs.wo()).booleanValue(), ((Boolean)this.playerTeammates.wo()).booleanValue(), true);
         if (M2DESP.aEg.gameSettings.thirdPersonView != 0) {
             list.add(M2DESP.aEg.thePlayer);
         }
@@ -104,7 +104,7 @@ extends Module {
                             RenderUtil.c(d2, d3, d6, 0.5, color, color2);
                             RenderUtil.c(d4, d3, 0.5, d7, color, color2);
                             RenderUtil.c(d2, d5, d6 + 0.5, 0.5, color, color2);
-                            this.b(gg.BLOOM).c(() -> this.a(d2, d3, d7, color, color2, d6, d4, d5));
+                            this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, d7, color, color2, d6, d4, d5));
                             break block90;
                         }
                         case 1: {
@@ -134,7 +134,7 @@ extends Module {
                 RenderUtil.d(d4, d5 - (double)f6, 0.5, f6 + 0.5f, color2);
                 RenderUtil.d(d2, d5, f5, 0.5, color2);
                 RenderUtil.d(d4 - (double)f5, d5, f5, 0.5, color2);
-                this.b(gg.BLOOM).c(() -> this.a(d2, d3, f6, color2, d5, f5, d4));
+                this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, f6, color2, d5, f5, d4));
             }
             if (!(entityLivingBase instanceof EntityLivingBase)) continue;
             HealthBypass healthBypass = (HealthBypass)this.e(HealthBypass.class);
@@ -172,7 +172,7 @@ extends Module {
                             case 0: {
                                 int n6 = Color.HSBtoRGB(f2 / entityLivingBase.getMaxHealth() / 3.0f, 1.0f, 1.0f);
                                 RenderUtil.d(d2 - 2.0, d3 + d8, 0.5, d5 - d3 - d8 + 0.5, new Color(n6));
-                                this.b(gg.BLOOM).c(() -> this.a(d2, d3, d8, d5, n6));
+                                this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, d8, d5, n6));
                                 break block72;
                             }
                             case 1: {
@@ -188,18 +188,18 @@ extends Module {
                     }
                     Color color5 = new Color(ColorUtil.a(this.rz().rA(), this.rz().rB(), f3).getRGB());
                     RenderUtil.a(d2 - 2.0, d3 + d8, 0.5, d5 - d3 - d8 + 0.5, color5, this.rz().rB());
-                    this.b(gg.BLOOM).c(() -> this.a(d2, d3, d8, d5, color5));
+                    this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, d8, d5, color5));
                     break block72;
                 }
                 RenderUtil.d(d2 - 2.0, d3 + d8, 0.5, d5 - d3 - d8 + 0.5, this.rz().getAccentColor(vector2d));
-                this.b(gg.BLOOM).c(() -> this.a(d2, d3, d8, d5, vector2d));
+                this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, d8, d5, vector2d));
             }
             if (!((Boolean)this.armorBar.wo()).booleanValue()) continue;
             float f4 = (float)entityLivingBase.getTotalArmorValue() / 20.0f;
             if (!(f4 > 0.0f)) continue;
             RenderUtil.d(d2 - 0.5, d5 + 1.5, d4 - d2 + 1.5, 1.5, new Color(0, 0, 0, 180));
             RenderUtil.c(d2, d5 + 2.0, (d6 + 0.5) * (double)f4, 0.5, this.rz().rA(), ColorUtil.a(this.rz().rA(), this.rz().rB(), f4));
-            this.b(gg.BLOOM).c(() -> this.a(d2, d5, d4, d6, f4));
+            this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d5, d4, d6, f4));
         }
     };
 

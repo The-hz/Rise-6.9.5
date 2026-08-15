@@ -10,10 +10,10 @@ import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import hackclient.rise.afi;
-import hackclient.rise.component.bc;
+import com.alan.clients.component.impl.player.PacketQueueComponent;
 import com.alan.clients.component.impl.player.FallDistanceComponent;
 import com.alan.clients.component.impl.player.ItemDamageComponent;
-import hackclient.rise.component.ci;
+import com.alan.clients.component.impl.render.ProgressBarComponent;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Vec3;
@@ -29,7 +29,7 @@ public class BloxdLongJump extends Mode<LongJump> {
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.ae > 0 && aEg.thePlayer.ae < 42) {
-            ci.a((float)(aEg.thePlayer.ae / 41.0));
+            ProgressBarComponent.a((float)(aEg.thePlayer.ae / 41.0));
         }
 
         if (aEg.thePlayer.ae < 37 && aEg.thePlayer.ae > 1) {
@@ -49,7 +49,7 @@ public class BloxdLongJump extends Mode<LongJump> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (aEg.thePlayer.onGround) {
-            bc.cR = false;
+            PacketQueueComponent.cR = false;
         }
 
         aEg.thePlayer.cameraYaw = 0.1F;

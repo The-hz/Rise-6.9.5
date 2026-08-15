@@ -24,7 +24,7 @@ import hackclient.rise.afi;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.packet.TimedPacket;
-import hackclient.rise.component.bc;
+import com.alan.clients.component.impl.player.PacketQueueComponent;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
@@ -112,7 +112,7 @@ public final class Timer extends Module {
     public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         if (this.compensateLowTimer.wo()) {
             Packet packet = var1.dq();
-            if (packet instanceof C03PacketPlayer && (!var1.isCancelled() || bc.cR)) {
+            if (packet instanceof C03PacketPlayer && (!var1.isCancelled() || PacketQueueComponent.cR)) {
                 if (this.Zr) {
                     if (this.yC > 0.0) {
                         this.yC--;

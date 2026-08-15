@@ -5,15 +5,15 @@ import com.alan.clients.ui.click.standard.RiseClickGUI;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.ui.click.standard.components.ModuleComponent;
-import hackclient.rise.abw;
+import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.ui.click.standard.screen.Screen;
 import hackclient.rise.agk;
-import hackclient.rise.agl;
+import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.ahd;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
+import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ import rip.vantage.commons.util.time.a;
 public final class SearchScreen
 implements Screen,
 InstanceAccess {
-    public final TextBox azR = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(20, gd.REGULAR), Color.WHITE, agl.CENTER, ahd.ce("ui.search.text"), 150.0f);
+    public final TextBox azR = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(20, FontWeight.REGULAR), Color.WHITE, TextAlign.CENTER, ahd.ce("ui.search.text"), 150.0f);
     private final a azS = new a();
     public agk scrollUtil = new agk();
     public ArrayList<ModuleComponent> relevantModules = new ArrayList();
@@ -39,7 +39,7 @@ InstanceAccess {
         RiseClickGUI riseClickGUI = this.getStandardClickGUI();
         this.axT = this.scrollUtil.tD() < 0.0 ? (this.axT -= (double)(this.azS.aKx() * 4L)) : (this.axT += (double)(this.azS.aKx() * 4L));
         this.axT = Math.min(Math.max(0.0, this.axT), 255.0);
-        this.azR.setColor(ColorUtil.d(abw.TEXT.pV(), (int)this.axT));
+        this.azR.setColor(ColorUtil.d(UIColors.TEXT.pV(), (int)this.axT));
         Vector2d vector2d = new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.axJ.aym + ((double)riseClickGUI.alh.x - riseClickGUI.axJ.aym) / 2.0, (float)((double)(riseClickGUI.axI.y + 17.0f) + this.scrollUtil.tE()));
         this.azR.h(vector2d);
         String string = this.azR.aJm;

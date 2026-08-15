@@ -12,7 +12,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.abs;
+import com.alan.clients.util.value.ConstantManager;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.item.EnumAction;
@@ -78,7 +78,7 @@ public final class Animations extends Module {
             ItemRenderer itemrenderer = aEg.getItemRenderer();
             float f = this.alwaysShow.wo() && var1.db() ? 0.0F : var1.dE();
             float f1 = var1.dF();
-            float f2 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float)abs.aHb);
+            float f2 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float)ConstantManager.aHb);
             if (var1.db() && enumaction == EnumAction.BLOCK) {
                 if (this.updatePositionOnlyWhenBlocking.wo()) {
                     GlStateManager.translate(this.x.wo().floatValue(), this.y.wo().floatValue(), this.z.wo().floatValue());
@@ -425,7 +425,7 @@ public final class Animations extends Module {
                                                                                                         GlStateManager.translate(0.0F, 0.0F, 0.0F);
                                                                                                         GlStateManager.rotate(35.0F, 0.0F, 1.5F, 0.0F);
                                                                                                         float f11 = MathHelper.sin(
-                                                                                                            f1 * f1 / 64.0F * (float)abs.aHb
+                                                                                                            f1 * f1 / 64.0F * (float)ConstantManager.aHb
                                                                                                         );
                                                                                                         GlStateManager.rotate(f11 * -5.0F, 0.0F, 0.0F, 0.0F);
                                                                                                         GlStateManager.rotate(f2 * -12.0F, 0.0F, 0.0F, 1.0F);
@@ -449,7 +449,7 @@ public final class Animations extends Module {
                                                                                                 itemrenderer.doBlockTransformations();
                                                                                                 GlStateManager.translate(-0.05F, 0.3F, 0.3F);
                                                                                                 GlStateManager.rotate(-f2 * 140.0F, 8.0F, 0.0F, 8.0F);
-                                                                                                GlStateManager.rotate(f2 * abs.aHc, 8.0F, 0.0F, 8.0F);
+                                                                                                GlStateManager.rotate(f2 * ConstantManager.aHc, 8.0F, 0.0F, 8.0F);
                                                                                                 break label274;
                                                                                             }
 
@@ -537,7 +537,7 @@ public final class Animations extends Module {
                                                             break label274;
                                                         }
 
-                                                        float f10 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float)abs.aHb);
+                                                        float f10 = MathHelper.sin(MathHelper.sqrt_float(f1) * (float)ConstantManager.aHb);
                                                         GlStateManager.translate(0.6F, 0.3F, -0.6F + -f10 * 0.7);
                                                         GlStateManager.rotate(6090.0F, 0.0F, 0.0F, 0.1F);
                                                         GlStateManager.rotate(6085.0F, 0.0F, 0.1F, 0.0F);

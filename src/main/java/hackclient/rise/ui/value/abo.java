@@ -6,12 +6,12 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Value;
 import com.alan.clients.value.impl.ColorValue;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
-import hackclient.rise.abw;
+import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.ahd;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
+import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.MathHelper;
@@ -40,16 +40,16 @@ public class abo extends ValueComponent {
         this.azb = 120.0;
         ColorValue colorvalue = (ColorValue)this.value;
         String s = ahd.ce(this.value.getName());
-        float f = FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 4;
-        FontManager.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.pW());
+        float f = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s) + 4;
+        FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, this.position.x, this.position.y, UIColors.SECONDARY_TEXT.pW());
         RenderUtil.roundedRectangle(this.position.x + f, this.position.y, 15.0, 7.0, 2.5, colorvalue.wo());
         this.height = this.ayU ? 110.0 : 15.0;
         if (this.ayU) {
             double d0 = this.position.x + 0.5 + 10.0 + f + 8.0;
             double d1 = this.position.y + 0.5;
             RenderUtil.dropShadow(10, (float)d0, (float)d1, (float)this.aza, (float)this.azb - 15.0F, 40.0, this.getStandardClickGUI().round * 2);
-            RenderUtil.roundedRectangle(d0 - 0.5, this.position.y, this.aza, this.azb - 15.0, this.getStandardClickGUI().round - 3, abw.SECONDARY.pV());
-            RenderUtil.roundedRectangle(d0, d1, this.aza - 1.0, this.azb - 1.0 - 15.0, this.getStandardClickGUI().round - 3, abw.BACKGROUND.pV());
+            RenderUtil.roundedRectangle(d0 - 0.5, this.position.y, this.aza, this.azb - 15.0, this.getStandardClickGUI().round - 3, UIColors.SECONDARY.pV());
+            RenderUtil.roundedRectangle(d0, d1, this.aza - 1.0, this.azb - 1.0 - 15.0, this.getStandardClickGUI().round - 3, UIColors.BACKGROUND.pV());
             double d2 = this.azb * 0.55;
             RenderUtil.a(d0, d1, this.aza - 1.0, d2, 7.0, Color.WHITE, this.azd, false);
             RenderUtil.a(d0 - 0.5, d1, this.aza - 1.0 + 1.0, d2 + 0.5, 0.5, Color.BLACK, new Color(0, 0, 0, 0), true);
@@ -108,12 +108,12 @@ public class abo extends ValueComponent {
             Color color1 = colorvalue.wo();
             double d7 = d0 + d3 * 2.0 + 15.0;
             double d8 = d1 + d2 + d3 + d3 + this.getStandardClickGUI().round - 11.0;
-            FontManager.MAIN.a(17, gd.REGULAR).c(color1.getRed() + "", d7 + d3, d8, abw.SECONDARY_TEXT.pW());
-            FontManager.MAIN.a(17, gd.REGULAR).c(color1.getGreen() + "", d7 + 30.0, d8, abw.SECONDARY_TEXT.pW());
-            FontManager.MAIN.a(17, gd.REGULAR).c(color1.getBlue() + "", d7 + d3 * 6.0, d8, abw.SECONDARY_TEXT.pW());
+            FontManager.MAIN.a(17, FontWeight.REGULAR).c(color1.getRed() + "", d7 + d3, d8, UIColors.SECONDARY_TEXT.pW());
+            FontManager.MAIN.a(17, FontWeight.REGULAR).c(color1.getGreen() + "", d7 + 30.0, d8, UIColors.SECONDARY_TEXT.pW());
+            FontManager.MAIN.a(17, FontWeight.REGULAR).c(color1.getBlue() + "", d7 + d3 * 6.0, d8, UIColors.SECONDARY_TEXT.pW());
             double d9 = d8 + 13.0;
             FontManager.MAIN
-                .a(13, gd.REGULAR)
+                .a(13, FontWeight.REGULAR)
                 .a(String.format("#%02X%02X%02X", color1.getRed(), color1.getGreen(), color1.getBlue()), d7, d9, new Color(55, 59, 61).hashCode());
         }
     }
@@ -124,7 +124,7 @@ public class abo extends ValueComponent {
             return false;
         }
 
-        float f = FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.value.getName())) + 4;
+        float f = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(ahd.ce(this.value.getName())) + 4;
         this.ayV = this.ayU && GUIUtil.c(this.position.x + 10.0 + f, this.position.y, this.aza, this.azb * 0.55, var1, var2);
         this.ayW = this.ayU && GUIUtil.c(this.position.x + 10.0 + f, this.position.y + this.azb * 0.55, this.aza, 20.0, var1, var2);
         double d0 = this.position.x + 14.5 + f;

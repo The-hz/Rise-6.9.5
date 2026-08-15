@@ -6,11 +6,11 @@ import com.alan.clients.value.Value;
 import com.alan.clients.value.impl.ListValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
-import hackclient.rise.abw;
+import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.ahd;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
+import com.alan.clients.util.font.FontWeight;
 
 public class abq extends ValueComponent {
     @Override
@@ -18,14 +18,14 @@ public class abq extends ValueComponent {
         ListValue listvalue = (ListValue)this.value;
         this.position = position;
         String s = ahd.ce(this.value.getName()) + ":";
-        FontManager.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
+        FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, this.position.x, this.position.y, UIColors.SECONDARY_TEXT.Z(this.ayD));
         FontManager.MAIN
-            .a(16, gd.REGULAR)
+            .a(16, FontWeight.REGULAR)
             .a(
                 ahd.ce(listvalue instanceof ModeValue ? ((ModeValue)listvalue).wo().getName() : listvalue.wo().toString()),
-                this.position.x + FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 2.0,
+                this.position.x + FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s) + 2.0,
                 this.position.y,
-                abw.SECONDARY_TEXT.Z(this.ayD)
+                UIColors.SECONDARY_TEXT.Z(this.ayD)
             );
     }
 

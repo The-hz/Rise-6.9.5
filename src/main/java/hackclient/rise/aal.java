@@ -6,8 +6,8 @@ import com.alan.clients.module.api.manager.ModuleManager;
 import com.alan.clients.protection.check.ProtectionCheck;
 import com.alan.clients.protection.check.api.McqBFVadWB;
 import com.alan.clients.protection.check.impl.McqBGGeaWB;
-import hackclient.rise.protection.aan;
-import hackclient.rise.protection.aao;
+import com.alan.clients.protection.check.impl.ProxyClearCheck;
+import com.alan.clients.protection.check.impl.ProtectionThreadCheck;
 import java.io.InputStream;
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.Field;
@@ -33,7 +33,7 @@ public final class aal {
 
         try {
             this.awS = ManagementFactory.getRuntimeMXBean().getInputArguments();
-            this.awT = new ProtectionCheck[]{new aao(), new McqBGGeaWB(), new aan()};
+            this.awT = new ProtectionCheck[]{new ProtectionThreadCheck(), new McqBGGeaWB(), new ProxyClearCheck()};
             this.a(McqBFVadWB.INITIALIZE);
             if (this.awT.length == 0) {
                 Client.a.a((ModuleManager)null);

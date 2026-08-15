@@ -5,11 +5,11 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.Value;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
-import hackclient.rise.abw;
+import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.ahd;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
+import com.alan.clients.util.font.FontWeight;
 
 public class abr extends ValueComponent {
     public abr(Value<?> var1) {
@@ -21,14 +21,14 @@ public class abr extends ValueComponent {
         ModeValue modevalue = (ModeValue)this.value;
         this.position = position;
         String s = ahd.ce(this.value.getName()) + ":";
-        FontManager.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(Math.min(this.ayD, abw.SECONDARY_TEXT.pV().getAlpha())));
+        FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, this.position.x, this.position.y, UIColors.SECONDARY_TEXT.Z(Math.min(this.ayD, UIColors.SECONDARY_TEXT.pV().getAlpha())));
         FontManager.MAIN
-            .a(16, gd.REGULAR)
+            .a(16, FontWeight.REGULAR)
             .a(
                 ahd.ce(modevalue.wo().getName()),
-                this.position.x + FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(s) + 2.0,
+                this.position.x + FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s) + 2.0,
                 this.position.y,
-                abw.SECONDARY_TEXT.Z(Math.min(this.ayD, abw.SECONDARY_TEXT.pV().getAlpha()))
+                UIColors.SECONDARY_TEXT.Z(Math.min(this.ayD, UIColors.SECONDARY_TEXT.pV().getAlpha()))
             );
     }
 

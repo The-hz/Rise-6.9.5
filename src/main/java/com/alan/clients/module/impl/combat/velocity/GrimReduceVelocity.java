@@ -24,7 +24,7 @@ import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -148,8 +148,8 @@ extends Mode<Velocity> {
             EntityLivingBase entityLivingBase;
             this.tv = false;
             KillAura killAura = this.e(KillAura.class);
-            List<EntityLivingBase> list2 = bv.f(((Number)this.range.wo()).intValue());
-            List<EntityLivingBase> list3 = bv.bR();
+            List<EntityLivingBase> list2 = TargetComponent.f(((Number)this.range.wo()).intValue());
+            List<EntityLivingBase> list3 = TargetComponent.bR();
             EntityLivingBase entityLivingBase2 = killAura.isEnabled() && killAura.jE != null ? killAura.jE : this.e(list3);
             if (entityLivingBase2 == null) {
                 return;
@@ -173,7 +173,7 @@ extends Mode<Velocity> {
             if (GrimReduceVelocity.aEg.thePlayer.ae <= ((Number)this.reduceTicks.wo()).intValue() && !BadPacketsComponent.bad(false, false, false, true, false) && !this.e(Scaffold.class).isEnabled() && GrimReduceVelocity.aEg.thePlayer.Zl > ((Number)this.teleportDisableTicks.wo()).intValue()) {
                 this.tv = true;
             }
-            if ((list = bv.f(((Number)this.range.wo()).intValue())) == null || list.isEmpty()) {
+            if ((list = TargetComponent.f(((Number)this.range.wo()).intValue())) == null || list.isEmpty()) {
                 if (killAura == null) return;
                 if (killAura.jE == null) {
                     return;

@@ -26,7 +26,7 @@ import com.alan.clients.module.impl.combat.velocity.WatchdogReduceVelocity;
 import com.alan.clients.module.impl.combat.velocity.WatchdogVelocity;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
-import hackclient.rise.mode.is;
+import com.alan.clients.module.impl.combat.velocity.LegitVelocity;
 
 @ModuleInfo(aliases = "module.combat.velocity.name", description = "module.combat.velocity.description", category = Category.COMBAT)
 public final class Velocity extends Module {
@@ -34,8 +34,8 @@ public final class Velocity extends Module {
         .add(new StandardVelocity("Standard", this))
         .add(new BufferAbuseVelocity("Buffer Abuse", this))
         .add(new DelayVelocity("Delay", this))
-        .add(new is("Legit/Jump Reset", this))
-        .add(new is("Polar", this))
+        .add(new LegitVelocity("Legit/Jump Reset", this))
+        .add(new LegitVelocity("Polar", this))
         .add(new GroundVelocity("Ground", this))
         .add(new IntaveVelocity("Intave", this))
         .add(new MatrixVelocity("Matrix", this))

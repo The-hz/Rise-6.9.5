@@ -24,7 +24,7 @@ import com.viaversion.viaversion.api.type.Types;
 import com.viaversion.viaversion.protocols.v1_18_2to1_19.packet.ServerboundPackets1_19;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.component.bc;
+import com.alan.clients.component.impl.player.PacketQueueComponent;
 import hackclient.rise.en;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
@@ -109,7 +109,7 @@ public class WatchdogPredictionNoSlow extends Mode<NoSlow> {
 
         if (this.getParent().sword.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
             PacketUtil.l(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
-            bc.dispatch();
+            PacketQueueComponent.dispatch();
             if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_19)) {
                 UserConnection userconnection = Via.getManager().getConnectionManager().getConnections().iterator().next();
                 PacketWrapper packetwrapper = PacketWrapper.create(ServerboundPackets1_19.USE_ITEM, userconnection);

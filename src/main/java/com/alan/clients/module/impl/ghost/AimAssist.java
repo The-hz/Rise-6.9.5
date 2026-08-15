@@ -17,7 +17,7 @@ import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.aef;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import java.util.List;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemSword;
@@ -51,7 +51,7 @@ public final class AimAssist extends Module {
         if (this.d(vector2f)) {
             this.e(vector2f);
         } else {
-            List list = bv.a(d0, this.player.wo(), this.invisibles.wo(), this.animals.wo(), this.mobs.wo(), this.playerTeammates.wo());
+            List list = TargetComponent.a(d0, this.player.wo(), this.invisibles.wo(), this.animals.wo(), this.mobs.wo(), this.playerTeammates.wo());
             if (list.isEmpty()) {
                 this.target = null;
             } else {

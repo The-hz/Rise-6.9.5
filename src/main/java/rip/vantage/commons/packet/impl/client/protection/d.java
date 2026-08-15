@@ -2,7 +2,7 @@ package rip.vantage.commons.packet.impl.client.protection;
 
 import org.json.JSONObject;
 
-public class d extends rip.vantage.commons.packet.api.abstracts.a {
+public class d extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacket {
     private final String eOV;
     private final int eOW;
     private final String eOX;
@@ -22,8 +22,8 @@ public class d extends rip.vantage.commons.packet.api.abstracts.a {
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.a var1) {
-        var1.a(this);
+    public void a(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
+        handler.a(this);
     }
 
     @Override

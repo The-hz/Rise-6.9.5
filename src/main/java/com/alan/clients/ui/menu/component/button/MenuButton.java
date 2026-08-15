@@ -2,10 +2,10 @@ package com.alan.clients.ui.menu.component.button;
 
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
-import hackclient.rise.adg;
+import com.alan.clients.ui.menu.component.MenuComponent;
 import com.alan.clients.util.MouseUtil;
 
-public class MenuButton extends adg {
+public class MenuButton extends MenuComponent {
     private final Runnable runnable;
     private final Animation aBX = new Animation(Easing.EASE_OUT_QUINT, 500L);
     private final Animation aBY = new Animation(Easing.EASE_OUT_SINE, 250L);

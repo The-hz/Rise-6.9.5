@@ -33,10 +33,10 @@ import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
-import hackclient.rise.akb;
-import hackclient.rise.component.ci;
-import hackclient.rise.gg;
-import hackclient.rise.tg;
+import com.alan.clients.util.vector.Vector3i;
+import com.alan.clients.component.impl.render.ProgressBarComponent;
+import com.alan.clients.util.shader.ShaderQueueType;
+import com.alan.clients.module.impl.player.breaker.BreakCandidate;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,14 +106,14 @@ public class Breaker extends Module {
     public final Listener<Render3DEvent> acc = var1 -> {
         if (abQ != null) {
             if (Client.a.g().c(FastBreak.class).isEnabled() && this.showBreakerPercentage.wo()) {
-                ci.a((float)(1.21 * this.abU + (Double)Client.a.g().c(FastBreak.class).speed.wo() / 100.0));
+                ProgressBarComponent.a((float)(1.21 * this.abU + (Double)Client.a.g().c(FastBreak.class).speed.wo() / 100.0));
             } else if (this.showBreakerPercentage.wo()) {
-                ci.a((float)(1.21 * this.abU));
+                ProgressBarComponent.a((float)(1.21 * this.abU));
             }
 
-            akb akb = new akb((int)Math.floor(abQ.getX()), (int)Math.floor(abQ.getY()), (int)Math.floor(abQ.getZ()));
+            Vector3i akb = new Vector3i((int)Math.floor(abQ.getX()), (int)Math.floor(abQ.getY()), (int)Math.floor(abQ.getZ()));
             this.abV.Q(this.abU);
-            this.b(gg.BLOOM).c(() -> {
+            this.b(ShaderQueueType.BLOOM).c(() -> {
                 GlStateManager.pushMatrix();
                 GlStateManager.pushAttrib();
                 GlStateManager.enableBlend();
@@ -138,7 +138,7 @@ public class Breaker extends Module {
         if (blockpos != null) {
             AxisAlignedBB axisalignedbb = new AxisAlignedBB(blockpos, blockpos.add(1, 1, 1));
             this.a(axisalignedbb, this.rz().rA());
-            this.b(gg.BLOOM).c(() -> this.a(axisalignedbb, this.rz().rA()));
+            this.b(ShaderQueueType.BLOOM).c(() -> this.a(axisalignedbb, this.rz().rA()));
         }
     };
     @EventLink(value = 2)
@@ -452,7 +452,7 @@ public class Breaker extends Module {
     }
 
     private aka jy() {
-        tg tg = this.a(aEg.thePlayer.getPositionEyes(1.0F), this.jC());
+        BreakCandidate tg = this.a(aEg.thePlayer.getPositionEyes(1.0F), this.jC());
         if (tg == null) {
             return null;
         }
@@ -461,10 +461,10 @@ public class Breaker extends Module {
         return new aka(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5);
     }
 
-    private tg a(Vec3 vec, List<BlockPos> poses) {
-        tg tgx = null;
+    private BreakCandidate a(Vec3 vec, List<BlockPos> poses) {
+        BreakCandidate tgx = null;
 
-        for (tg tgx2 : this.b(vec, poses)) {
+        for (BreakCandidate tgx2 : this.b(vec, poses)) {
             if (tgx == null || tgx2.aco < tgx.aco) {
                 tgx = tgx2;
             }
@@ -473,12 +473,12 @@ public class Breaker extends Module {
         return tgx;
     }
 
-    private List<tg> b(Vec3 vec, List<BlockPos> poses) {
+    private List<BreakCandidate> b(Vec3 vec, List<BlockPos> poses) {
         ArrayList arraylist = new ArrayList();
 
         for (BlockPos blockpos : poses) {
             for (Vec3 vec3 : this.k(blockpos)) {
-                tg tg = this.a(vec, blockpos, vec3);
+                BreakCandidate tg = this.a(vec, blockpos, vec3);
                 if (tg != null) {
                     arraylist.add(tg);
                 }
@@ -488,7 +488,7 @@ public class Breaker extends Module {
         return arraylist;
     }
 
-    private tg a(Vec3 vec, BlockPos pos, Vec3 var3) {
+    private BreakCandidate a(Vec3 vec, BlockPos pos, Vec3 var3) {
         double range = this.range.wo().doubleValue();
         int i = this.surroundingLayers.wo().intValue();
         ArrayList arraylist = new ArrayList();
@@ -501,7 +501,7 @@ public class Breaker extends Module {
 
             if (blockpos.equals(pos)) {
                 arraylist.add(pos);
-                return new tg(pos, arraylist, d1);
+                return new BreakCandidate(pos, arraylist, d1);
             }
 
             if (!this.j(blockpos)) {
@@ -563,10 +563,10 @@ public class Breaker extends Module {
                 this.abX = vec3;
                 this.abZ = aEg.thePlayer.ticksExisted;
                 BlockPos blockpos = new BlockPos(abQ.getX(), abQ.getY(), abQ.getZ());
-                tg tgxx = null;
-                tg tgx = null;
+                BreakCandidate tgxx = null;
+                BreakCandidate tgx = null;
 
-                for (tg tgxx2 : this.b(aEg.thePlayer.getPositionEyes(1.0F), this.jC())) {
+                for (BreakCandidate tgxx2 : this.b(aEg.thePlayer.getPositionEyes(1.0F), this.jC())) {
                     if (tgx == null || tgxx2.aco < tgx.aco) {
                         tgx = tgxx2;
                     }
@@ -641,7 +641,7 @@ public class Breaker extends Module {
                     }
 
                     if (flag && this.i(blockpos2)) {
-                        tg tg = this.a(vec3, list);
+                        BreakCandidate tg = this.a(vec3, list);
                         if (tg != null) {
                             double d3 = aEg.thePlayer.getDistanceSq(blockpos2.getX() + 0.5, blockpos2.getY(), blockpos2.getZ() + 0.5);
                             if (blockpos1 == null || tg.aco < d1 - 0.001 || Math.abs(tg.aco - d1) <= 0.001 && d3 < d2) {

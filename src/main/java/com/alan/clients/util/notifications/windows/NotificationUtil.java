@@ -1,6 +1,6 @@
 package com.alan.clients.util.notifications.windows;
 
-import hackclient.rise.ahi;
+import com.alan.clients.util.notifications.windows.NotificationType;
 import java.awt.AWTException;
 import java.awt.Image;
 import java.awt.SystemTray;
@@ -11,7 +11,7 @@ public class NotificationUtil {
     public NotificationUtil() {
     }
 
-    public static void a(ahi var0, String var1, String var2) {
+    public static void a(NotificationType var0, String var1, String var2) {
         try {
             SystemTray systemtray = SystemTray.getSystemTray();
             Image image = Toolkit.getDefaultToolkit().createImage("icon.png");

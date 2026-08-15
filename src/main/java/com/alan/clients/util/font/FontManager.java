@@ -2,9 +2,9 @@ package com.alan.clients.util.font;
 
 import com.alan.clients.util.font.impl.rise.FontRenderer;
 import hackclient.rise.agc;
-import hackclient.rise.agg;
-import hackclient.rise.agh;
-import hackclient.rise.gd;
+import com.alan.clients.util.font.impl.rise.FontUtil;
+import com.alan.clients.util.font.impl.rise.GlyphCache;
+import com.alan.clients.util.font.FontWeight;
 import java.awt.Font;
 import java.io.File;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public enum FontManager {
 
     public agc o(int var1) {
         try {
-            return this.a(var1, gd.NONE);
+            return this.a(var1, FontWeight.NONE);
         } catch (RuntimeException | Error throwable) {
             throw throwable;
         } catch (Throwable throwable) {
@@ -54,7 +54,7 @@ public enum FontManager {
             if (this.kx == null) {
                 throw new Exception("Please specify a size, this doesn't have a predefined font");
             }
-            return this.a(0, gd.NONE);
+            return this.a(0, FontWeight.NONE);
         } catch (RuntimeException | Error throwable) {
             throw throwable;
         } catch (Throwable throwable) {
@@ -62,7 +62,7 @@ public enum FontManager {
         }
     }
 
-    public agc a(int var1, gd var2) {
+    public agc a(int var1, FontWeight var2) {
         try {
             if (this.kx != null) {
                 if (this.ky == null) {
@@ -77,11 +77,11 @@ public enum FontManager {
                 String s = "unknown";
                 if (this.gK.contains(":")) {
                     s = this.gK;
-                    font = agg.q(s, var1);
+                    font = FontUtil.q(s, var1);
                 } else {
                     for (String s1 : var2.getAliases()) {
                         s = "rise/font/" + String.format(this.gK, s1) + "." + this.kz;
-                        font = agg.p(s, var1);
+                        font = FontUtil.p(s, var1);
                         if (font != null) {
                             break;
                         }
@@ -96,22 +96,22 @@ public enum FontManager {
                 if (this == MAIN) {
                     Font font1 = b(var1, var2);
                     if (font1 != null) {
-                        agf.a(new agh(font1, true, true));
+                        agf.a(new GlyphCache(font1, true, true));
                     }
 
-                    Font font2 = agg.p("rise/font/product_sans_medium.ttf", var1);
+                    Font font2 = FontUtil.p("rise/font/product_sans_medium.ttf", var1);
                     if (font2 != null) {
-                        agf.b(new agh(font2, true, true));
+                        agf.b(new GlyphCache(font2, true, true));
                     }
 
                     Font font3 = c(var1, var2);
                     if (font3 != null) {
-                        agf.c(new agh(font3, true, true));
+                        agf.c(new GlyphCache(font3, true, true));
                     }
 
                     Font font4 = d(var1, var2);
                     if (font4 != null) {
-                        agf.d(new agh(font4, true, true));
+                        agf.d(new GlyphCache(font4, true, true));
                     }
                 }
 
@@ -126,32 +126,32 @@ public enum FontManager {
         }
     }
 
-    private static Font b(int var0, gd var1) {
+    private static Font b(int var0, FontWeight var1) {
         String s = switch (var1) {
             case LIGHT -> "Light";
             case MEDIUM -> "Medium";
             case BOLD -> "Bold";
             default -> "Regular";
         };
-        Font font = agg.p("rise/font/HarmonyOS_Sans_SC_" + s + ".ttf", var0);
+        Font font = FontUtil.p("rise/font/HarmonyOS_Sans_SC_" + s + ".ttf", var0);
         if (font != null) {
             return font;
         }
 
         String s1 = System.getProperty("rise.harmonyos_sans_sc_dir");
-        return s1 != null && !s1.trim().isEmpty() ? agg.q(s1 + File.separator + "HarmonyOS_Sans_SC_" + s + ".ttf", var0) : null;
+        return s1 != null && !s1.trim().isEmpty() ? FontUtil.q(s1 + File.separator + "HarmonyOS_Sans_SC_" + s + ".ttf", var0) : null;
     }
 
-    private static Font c(int var0, gd var1) {
-        return agg.p("rise/font/" + switch (var1) {
+    private static Font c(int var0, FontWeight var1) {
+        return FontUtil.p("rise/font/" + switch (var1) {
             case LIGHT -> "LINESeedJP_TTF_Th.ttf";
             default -> "LINESeedJP_TTF_Rg.ttf";
             case BOLD -> "LINESeedJP_TTF_Bd.ttf";
         }, var0);
     }
 
-    private static Font d(int var0, gd var1) {
-        return agg.p("rise/font/" + switch (var1) {
+    private static Font d(int var0, FontWeight var1) {
+        return FontUtil.p("rise/font/" + switch (var1) {
             case LIGHT -> "LINESeedKR-Th.ttf";
             default -> "LINESeedKR-Rg.ttf";
             case BOLD -> "LINESeedKR-Bd.ttf";

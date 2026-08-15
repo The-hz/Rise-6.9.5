@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.render.Render2DEvent;
 import hackclient.rise.aha;
 import hackclient.rise.aka;
-import hackclient.rise.ck;
+import com.alan.clients.component.impl.render.Projection;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,15 +23,15 @@ import org.lwjgl.util.glu.GLU;
 public class ProjectionComponent
 extends Component
 implements aha {
-    private static final HashMap<Entity, ck> hK = new HashMap();
-    private static HashMap<Entity, ck> hL = new HashMap();
+    private static final HashMap<Entity, Projection> hK = new HashMap();
+    private static HashMap<Entity, Projection> hL = new HashMap();
     @EventLink(value=0)
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> aMR.execute(() -> {
-        HashMap<Entity, ck> hashMap = new HashMap<Entity, ck>();
-        HashMap<Entity, ck> hashMap2 = hK;
+        HashMap<Entity, Projection> hashMap = new HashMap<Entity, Projection>();
+        HashMap<Entity, Projection> hashMap2 = hK;
         synchronized (hashMap2) {
-            for (Map.Entry<Entity, ck> entry : hK.entrySet()) {
-                ck ck2 = entry.getValue();
+            for (Map.Entry<Entity, Projection> entry : hK.entrySet()) {
+                Projection ck2 = entry.getValue();
                 ck2.hN = this.f(entry.getKey());
                 hashMap.put(entry.getKey(), ck2);
             }
@@ -43,12 +43,12 @@ implements aha {
     });
 
     public static Vector4d e(Entity entity) {
-        ck ck2;
+        Projection ck2;
         if (entity == null) {
             return null;
         }
         if (!hK.containsKey(entity)) {
-            hK.put(entity, new ck());
+            hK.put(entity, new Projection());
         }
         if ((ck2 = hL.get(entity)) == null) {
             return null;

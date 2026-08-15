@@ -3,7 +3,7 @@ package com.alan.clients.command.impl;
 import com.alan.clients.Client;
 import com.alan.clients.command.Command;
 import hackclient.rise.afi;
-import hackclient.rise.p;
+import com.alan.clients.util.interfaces.Bindable;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
@@ -20,7 +20,7 @@ public final class Bind extends Command
     @Override
     public void execute(final String[] array) {
         if (array.length == 3) {
-            final p a = Client.a.t().a(array[1]);
+            final Bindable a = Client.a.t().a(array[1]);
             if (a == null) {
                 afi.b("command.bind.invalidmodule", new Object[0]);
                 return;

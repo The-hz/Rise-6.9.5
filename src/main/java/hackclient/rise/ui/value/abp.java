@@ -6,7 +6,7 @@ import com.alan.clients.value.Value;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.sv;
+import hackclient.rise.MathOperation;
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -81,7 +81,7 @@ extends ValueComponent {
             return false;
         }
         ArrayList<Vector2d> arrayList = new ArrayList<Vector2d>(this.aze);
-        arrayList.sort((vector2d, vector2d2) -> (int)(sv.EUCLIDEAN_DISTANCE.a(vector2d.getX() + this.position.getX() - (double)n2, vector2d.getY() + this.position.getY() - (double)n3) - sv.EUCLIDEAN_DISTANCE.a(vector2d2.getX() + this.position.getX() - (double)n2, vector2d2.getY() + this.position.getY() - (double)n3)));
+        arrayList.sort((vector2d, vector2d2) -> (int)(MathOperation.EUCLIDEAN_DISTANCE.a(vector2d.getX() + this.position.getX() - (double)n2, vector2d.getY() + this.position.getY() - (double)n3) - MathOperation.EUCLIDEAN_DISTANCE.a(vector2d2.getX() + this.position.getX() - (double)n2, vector2d2.getY() + this.position.getY() - (double)n3)));
         this.YM = (Vector2d)arrayList.stream().findFirst().get();
         return true;
     }

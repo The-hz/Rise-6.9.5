@@ -17,7 +17,7 @@ import com.alan.clients.util.pathfinding.unlegit.MainPathFinder;
 import com.alan.clients.util.pathfinding.unlegit.ahy;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
+import com.alan.clients.util.font.FontWeight;
 import hackclient.rise.gk;
 import java.awt.Color;
 import java.util.List;
@@ -37,7 +37,7 @@ extends Mode<Teleport> {
     @EventLink
     public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = CancellableEvent::setCancelled;
     @EventLink
-    public final Listener<Render2DEvent> onRender2D = render2DEvent -> FontManager.MAIN.a(17, gd.LIGHT).c("hold sneak to teleport", (float)MiniBloxTeleport.aEg.jY.getScaledWidth() / 2.0f, (float)MiniBloxTeleport.aEg.jY.getScaledHeight() / 2.0f + 30.0f, this.rz().rA().getRGB());
+    public final Listener<Render2DEvent> onRender2D = render2DEvent -> FontManager.MAIN.a(17, FontWeight.LIGHT).c("hold sneak to teleport", (float)MiniBloxTeleport.aEg.jY.getScaledWidth() / 2.0f, (float)MiniBloxTeleport.aEg.jY.getScaledHeight() / 2.0f + 30.0f, this.rz().rA().getRGB());
     @EventLink
     public final Listener<Render3DEvent> onRender3D = render3DEvent -> {
         float f2 = MiniBloxTeleport.aEg.timer.bWm;

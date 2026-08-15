@@ -3,7 +3,7 @@ package rip.vantage.commons.packet.impl.client.protection;
 import java.util.Base64;
 import org.json.JSONObject;
 
-public class k extends rip.vantage.commons.packet.api.abstracts.a {
+public class k extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacket {
     private final byte[] ePz;
 
     public k(byte[] var1) {
@@ -12,7 +12,7 @@ public class k extends rip.vantage.commons.packet.api.abstracts.a {
     }
 
     @Override
-    public void a(rip.vantage.commons.handler.api.a var1) {
+    public void a(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
     }
 
     @Override

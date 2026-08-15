@@ -6,13 +6,13 @@ import com.alan.clients.util.MouseUtil;
 import hackclient.rise.agc;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import net.minecraft.util.ResourceLocation;
 
 public class adi extends MenuTextButton {
-    private static final agc aBZ = FontManager.MAIN.a(24, gd.BOLD);
+    private static final agc aBZ = FontManager.MAIN.a(24, FontWeight.BOLD);
     private final ResourceLocation aCa;
 
     public adi(double var1, double var3, double var5, double var7, Runnable var9, String var10, ResourceLocation location) {
@@ -26,9 +26,9 @@ public class adi extends MenuTextButton {
         double d0 = this.getY();
         Color color = ColorUtil.d(Color.BLACK, 150);
         Color color1 = ColorUtil.d(Color.WHITE, (int)(150.0 + this.oL().sG()));
-        this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(this.getX(), this.getY(), this.oM(), this.da(), 5.0, Color.WHITE));
-        this.b(gg.BLOOM).c(() -> RenderUtil.roundedRectangle(this.getX() + 0.5, d0 + 0.5, this.oM() - 1.0, this.da() - 1.0, 6.0, color));
-        this.b(gg.REGULAR).c(() -> {
+        this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(this.getX(), this.getY(), this.oM(), this.da(), 5.0, Color.WHITE));
+        this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.roundedRectangle(this.getX() + 0.5, d0 + 0.5, this.oM() - 1.0, this.da() - 1.0, 6.0, color));
+        this.b(ShaderQueueType.REGULAR).c(() -> {
             RenderUtil.roundedRectangle(this.getX(), d0, this.oM(), this.da(), 5.0, ColorUtil.d(aBV, (int)this.oL().sG() - 15));
             RenderUtil.roundedOutlineGradientRectangle(this.getX(), d0, this.oM(), this.da(), 5.0, 1.0, ColorUtil.d(aBP, 32), ColorUtil.d(aBO, 32));
             byte b0 = 64;
@@ -37,7 +37,7 @@ public class adi extends MenuTextButton {
             float f = (float)(this.oM() - 8.0);
 
             for (int i = 24; i > 11 && agc.getStringWidth(this.name) > f; i--) {
-                agc = FontManager.MAIN.a(i, gd.BOLD);
+                agc = FontManager.MAIN.a(i, FontWeight.BOLD);
             }
 
             agc.c(this.name, (float)(this.getX() + this.oM() / 2.0), (float)(d0 + this.da() / 2.0 - b0 / 2 - 24.0), color1.getRGB());

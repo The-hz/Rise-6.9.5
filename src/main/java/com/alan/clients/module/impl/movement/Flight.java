@@ -43,7 +43,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.cl;
-import hackclient.rise.mode.mr;
+import com.alan.clients.module.impl.movement.flight.AirJumpFlight;
 import com.alan.clients.module.impl.movement.flight.BufferAbuseFlight;
 import com.alan.clients.module.impl.movement.flight.SlimeNCPFlight;
 import javax.vecmath.Vector3d;
@@ -75,7 +75,7 @@ public class Flight extends Module {
         .add(new BufferAbuseFlight("Buffer Abuse", this))
         .add(new ZoneCraftFlight("Zone Craft", this))
         .add(new SlimeNCPFlight("Slime NCP", this))
-        .add(new mr("Air Jump", this))
+        .add(new AirJumpFlight("Air Jump", this))
         .add(new CubeCraftFlight("CubeCraft", this))
         .add(new MineLandFlight("MineLand", this))
         .add(new VulcanDeprecatedFlight("Vulcan (Deprecated)", this))
@@ -85,7 +85,7 @@ public class Flight extends Module {
         .add(new DamageDeprecatedFlight("Damage (Deprecated)", this))
         .add(new MMCFireballFlight("MMC Fireball", this))
         .add(new VulcanDamageFlight("Vulcan Damage", this))
-        .add(new mr("Spartan (Deprecated)", this))
+        .add(new AirJumpFlight("Spartan (Deprecated)", this))
         .add(new BufferAbuseFlight("Vicnix (Deprecated)", this))
         .setDefault("Vanilla");
     private final BooleanValue disableOnTeleport = new BooleanValue("Disable on Teleport", this, false);

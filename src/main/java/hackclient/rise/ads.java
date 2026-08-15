@@ -2,7 +2,7 @@ package hackclient.rise;
 
 import com.alan.clients.ui.menu.Menu;
 import com.alan.clients.ui.menu.impl.serverfinder.ServerIP;
-import hackclient.rise.ahm;
+import com.alan.clients.util.player.ServerUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -99,7 +99,7 @@ extends Menu {
                             return;
                         }
                         System.out.println("CHECKING " + String.valueOf(adt5) + ":" + n5);
-                        ServerData serverData = ahm.d(adt5.toString(), n5, 500);
+                        ServerData serverData = ServerUtil.d(adt5.toString(), n5, 500);
                         if (serverData != null) {
                             this.servers.add(serverData);
                         }

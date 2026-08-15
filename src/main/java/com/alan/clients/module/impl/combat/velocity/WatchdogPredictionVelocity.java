@@ -19,7 +19,7 @@ import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import java.util.ArrayList;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
@@ -116,7 +116,7 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
             dj = true;
         }
 
-        if (!bv.f(7.0).isEmpty()) {
+        if (!TargetComponent.f(7.0).isEmpty()) {
             ;
         }
     };

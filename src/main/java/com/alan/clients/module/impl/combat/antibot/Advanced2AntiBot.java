@@ -7,7 +7,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.aej;
+import com.alan.clients.util.account.AntiBotProfileLookup;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -43,7 +43,7 @@ public final class Advanced2AntiBot extends Mode<AntiBot> {
                                 Client.a.x().b(this, entityplayer);
                             } else if (!this.ri.contains(uuid)) {
                                 this.ri.add(uuid);
-                                aej.a(
+                                AntiBotProfileLookup.a(
                                     uuid,
                                     var2x -> {
                                         this.ri.remove(uuid);
@@ -83,7 +83,7 @@ public final class Advanced2AntiBot extends Mode<AntiBot> {
         this.rj.clear();
         this.rk.clear();
         this.rl.clear();
-        aej.sb();
+        AntiBotProfileLookup.sb();
     };
 
     public Advanced2AntiBot(String var1, AntiBot antiBot) {

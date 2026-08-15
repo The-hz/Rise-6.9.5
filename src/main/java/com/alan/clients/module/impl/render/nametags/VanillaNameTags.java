@@ -12,9 +12,9 @@ import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import hackclient.rise.agd;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.component.bv;
-import hackclient.rise.bx;
-import hackclient.rise.gg;
+import com.alan.clients.component.impl.combat.TargetComponent;
+import com.alan.clients.util.social.FriendManager;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +33,7 @@ extends Mode<NameTags> {
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         agd agd2 = VanillaNameTags.aEg.fontRendererObj;
         GlStateManager.pushMatrix();
-        List<EntityLivingBase> list = bv.b((Boolean)((NameTags)this.getParent()).player.wo(), (Boolean)((NameTags)this.getParent()).invisibles.wo(), (Boolean)((NameTags)this.getParent()).animals.wo(), (Boolean)((NameTags)this.getParent()).mobs.wo(), (Boolean)((NameTags)this.getParent()).playerTeammates.wo(), true);
+        List<EntityLivingBase> list = TargetComponent.b((Boolean)((NameTags)this.getParent()).player.wo(), (Boolean)((NameTags)this.getParent()).invisibles.wo(), (Boolean)((NameTags)this.getParent()).animals.wo(), (Boolean)((NameTags)this.getParent()).mobs.wo(), (Boolean)((NameTags)this.getParent()).playerTeammates.wo(), true);
         if (VanillaNameTags.aEg.gameSettings.thirdPersonView != 0) {
             list.add((EntityLivingBase)VanillaNameTags.aEg.thePlayer);
         }
@@ -48,10 +48,10 @@ extends Mode<NameTags> {
             if (((Boolean)this.showTeamTag.wo()).booleanValue() && PlayerUtil.sameTeam(entityLivingBase)) {
                 object = "\u00a7a\u00a7l" + ((Boolean)this.shortenedTags.wo() != false ? "[TM]" : "[TEAM]") + "\u00a7r " + (String)object;
             }
-            if (((Boolean)this.showTargetTag.wo()).booleanValue() && bx.n(entityLivingBase.getName())) {
+            if (((Boolean)this.showTargetTag.wo()).booleanValue() && FriendManager.n(entityLivingBase.getName())) {
                 object = "\u00a74\u00a7l" + ((Boolean)this.shortenedTags.wo() != false ? "[T]" : "[TARGET]") + "\u00a7r " + (String)object;
             }
-            if (((Boolean)this.showFriendTag.wo()).booleanValue() && bx.isFriend(entityLivingBase.getName())) {
+            if (((Boolean)this.showFriendTag.wo()).booleanValue() && FriendManager.isFriend(entityLivingBase.getName())) {
                 object = "\u00a7b\u00a7l" + ((Boolean)this.shortenedTags.wo() != false ? "[F]" : "[FRIEND]") + "\u00a7r " + (String)object;
             }
             entityLivingBase.Tc();
@@ -62,10 +62,10 @@ extends Mode<NameTags> {
             float f3 = ((NameTags)this.getParent()).a((String)object, agd2);
             float f4 = (float)(vector4d.x + (vector4d.z - vector4d.x) / 2.0);
             float f5 = (float)vector4d.y - (float)n2;
-            this.b(gg.BLOOM).c(() -> RenderUtil.d(f4 - f3 / 2.0f - f2, f5 - f2 - 3.0f, f3 + f2 * 2.0f, (float)n2 + f2 * 2.0f, this.rz().rE()));
-            this.b(gg.BLUR).c(() -> RenderUtil.d(f4 - f3 / 2.0f - f2, f5 - f2 - 3.0f, f3 + f2 * 2.0f, (float)n2 + f2 * 2.0f, Color.BLACK));
+            this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.d(f4 - f3 / 2.0f - f2, f5 - f2 - 3.0f, f3 + f2 * 2.0f, (float)n2 + f2 * 2.0f, this.rz().rE()));
+            this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.d(f4 - f3 / 2.0f - f2, f5 - f2 - 3.0f, f3 + f2 * 2.0f, (float)n2 + f2 * 2.0f, Color.BLACK));
             Object object2 = object;
-            this.b(gg.REGULAR).c(() -> this.b(f4, f3, f2, f5, n2, agd2, (String)object2));
+            this.b(ShaderQueueType.REGULAR).c(() -> this.b(f4, f3, f2, f5, n2, agd2, (String)object2));
         }
     };
 

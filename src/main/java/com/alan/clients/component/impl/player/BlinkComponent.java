@@ -10,9 +10,9 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.packet.TimedPacket;
-import hackclient.rise.bn;
-import hackclient.rise.bp;
-import hackclient.rise.br;
+import com.alan.clients.component.impl.player.BlinkTicket;
+import com.alan.clients.component.impl.player.BlinkChannel;
+import com.alan.clients.component.impl.player.BlinkPacket;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -68,7 +68,7 @@ public final class BlinkComponent extends Component {
     public static boolean enabled;
     static long dQ;
     private static final Object dR = new Object();
-    private static final Map<String, bp> dS = new LinkedHashMap<>();
+    private static final Map<String, BlinkChannel> dS = new LinkedHashMap<>();
     private static final long dT = 100L;
     public static final AtomicLong dU = new AtomicLong();
     public static Tuple<Class[], Boolean> dV = new Tuple<>(
@@ -157,7 +157,7 @@ public final class BlinkComponent extends Component {
             bk();
             a(i);
             synchronized (dR) {
-                dS.values().forEach(bp::br);
+                dS.values().forEach(BlinkChannel::br);
                 bm();
             }
         }
@@ -170,16 +170,16 @@ public final class BlinkComponent extends Component {
         if (!cancellableEvent.isCancelled() && enabled) {
             boolean flag;
             synchronized (dR) {
-                Set<bp> set = dS.values()
+                Set<BlinkChannel> set = dS.values()
                     .stream()
-                    .filter(bp::bd)
+                    .filter(BlinkChannel::bd)
                     .filter(var1x -> var1x.d(packet))
                     .collect(Collectors.toCollection(HashSet::new));
-                Set<bn> set1 = set.stream().map(var0 -> var0.ek).collect(Collectors.toCollection(HashSet::new));
+                Set<BlinkTicket> set1 = set.stream().map(var0 -> var0.ek).collect(Collectors.toCollection(HashSet::new));
                 flag = !set1.isEmpty();
                 if (flag) {
-                    set.forEach(bp::bq);
-                    packets.add(new br(packet, set1));
+                    set.forEach(BlinkChannel::bq);
+                    packets.add(new BlinkPacket(packet, set1));
                 }
             }
 
@@ -229,9 +229,9 @@ public final class BlinkComponent extends Component {
     }
 
     private static void e(String var0) {
-        bn bn;
+        BlinkTicket bn;
         synchronized (dR) {
-            bp bp = dS.get(var0);
+            BlinkChannel bp = dS.get(var0);
             bn = bp == null ? null : bp.bp();
         }
 
@@ -241,9 +241,9 @@ public final class BlinkComponent extends Component {
     }
 
     public static void disable() {
-        bn bn;
+        BlinkTicket bn;
         synchronized (dR) {
-            bp bp = dS.get(bn());
+            BlinkChannel bp = dS.get(bn());
             bn = bp == null ? null : bp.bp();
             bm();
         }
@@ -274,7 +274,7 @@ public final class BlinkComponent extends Component {
     public static void a(int var0, boolean var1, boolean var2, boolean var3, boolean var4, boolean var5, boolean var6, boolean var7) {
         dP.aX();
         synchronized (dR) {
-            dS.computeIfAbsent(bn(), bp::new).a(var0, var1, var2, var3, var4, var5, var6, var7);
+            dS.computeIfAbsent(bn(), BlinkChannel::new).a(var0, var1, var2, var3, var4, var5, var6, var7);
             bm();
         }
 
@@ -293,9 +293,9 @@ public final class BlinkComponent extends Component {
     }
 
     private static void f(String var0) {
-        bn bn;
+        BlinkTicket bn;
         synchronized (dR) {
-            bp bp = dS.get(var0);
+            BlinkChannel bp = dS.get(var0);
             bn = bp == null ? null : bp.bp();
             if (bp != null) {
                 bp.bo();
@@ -311,12 +311,12 @@ public final class BlinkComponent extends Component {
 
     private static int g(String var0) {
         synchronized (dR) {
-            bp bp = dS.get(var0);
+            BlinkChannel bp = dS.get(var0);
             if (bp != null && bp.ek != null) {
                 int i = 0;
 
                 for (TimedPacket timedPacket : packets) {
-                    if (timedPacket instanceof br && ((br)timedPacket).b(bp.ek)) {
+                    if (timedPacket instanceof BlinkPacket && ((BlinkPacket)timedPacket).b(bp.ek)) {
                         i++;
                     }
                 }
@@ -328,9 +328,9 @@ public final class BlinkComponent extends Component {
     }
 
     private static void a(String var0, int var1) {
-        bn bn;
+        BlinkTicket bn;
         synchronized (dR) {
-            bp bp = dS.get(var0);
+            BlinkChannel bp = dS.get(var0);
             bn = bp == null ? null : bp.ek;
         }
 
@@ -341,10 +341,10 @@ public final class BlinkComponent extends Component {
 
     private static void b(String var0, int var1) {
         if (var1 > 0) {
-            bn bn;
+            BlinkTicket bn;
             int i;
             synchronized (dR) {
-                bp bp = dS.get(var0);
+                BlinkChannel bp = dS.get(var0);
                 if (bp == null || bp.ek == null) {
                     return;
                 }
@@ -360,7 +360,7 @@ public final class BlinkComponent extends Component {
         }
     }
 
-    private static void a(bn var0, int var1) {
+    private static void a(BlinkTicket var0, int var1) {
         ArrayList arraylist = new ArrayList();
         synchronized (dR) {
             var0.dj = false;
@@ -369,7 +369,7 @@ public final class BlinkComponent extends Component {
 
             while (iterator.hasNext() && i < var1) {
                 TimedPacket timedPacket = (TimedPacket)iterator.next();
-                if (timedPacket instanceof br br) {
+                if (timedPacket instanceof BlinkPacket br) {
                     if (br.bt()) {
                         break;
                     }
@@ -386,7 +386,7 @@ public final class BlinkComponent extends Component {
         a(arraylist);
     }
 
-    private static void b(bn var0, int var1) {
+    private static void b(BlinkTicket var0, int var1) {
         ArrayList arraylist = new ArrayList();
         synchronized (dR) {
             int i = 0;
@@ -394,7 +394,7 @@ public final class BlinkComponent extends Component {
 
             while (iterator.hasNext() && i < var1) {
                 TimedPacket timedPacket = (TimedPacket)iterator.next();
-                if (timedPacket instanceof br br) {
+                if (timedPacket instanceof BlinkPacket br) {
                     if (!br.b(var0)) {
                         break;
                     }
@@ -434,7 +434,7 @@ public final class BlinkComponent extends Component {
             }
 
             packets.clear();
-            dS.values().forEach(bp::bp);
+            dS.values().forEach(BlinkChannel::bp);
             bm();
         }
 
@@ -448,7 +448,7 @@ public final class BlinkComponent extends Component {
 
             while (iterator.hasNext()) {
                 TimedPacket timedPacket = (TimedPacket)iterator.next();
-                if (!(timedPacket instanceof br br)) {
+                if (!(timedPacket instanceof BlinkPacket br)) {
                     if (timedPacket.getTime() + dQ >= var0) {
                         break;
                     }
@@ -475,7 +475,7 @@ public final class BlinkComponent extends Component {
 
         for (Iterator iterator = packets.iterator(); iterator.hasNext() && i < var1; i++) {
             TimedPacket timedPacket = (TimedPacket)iterator.next();
-            if (timedPacket instanceof br && ((br)timedPacket).bt()) {
+            if (timedPacket instanceof BlinkPacket && ((BlinkPacket)timedPacket).bt()) {
                 break;
             }
 
@@ -495,16 +495,16 @@ public final class BlinkComponent extends Component {
 
     private static void b(long var0) {
         if (aEg.currentScreen instanceof GuiDownloadTerrain) {
-            dS.values().forEach(bp::bp);
+            dS.values().forEach(BlinkChannel::bp);
             bm();
         } else {
-            dS.values().stream().filter(var2 -> var2.bd() && var0 - var2.el > 100L).forEach(bp::bp);
+            dS.values().stream().filter(var2 -> var2.bd() && var0 - var2.el > 100L).forEach(BlinkChannel::bp);
             bm();
         }
     }
 
     private static void bm() {
-        enabled = dS.values().stream().anyMatch(bp::bd);
+        enabled = dS.values().stream().anyMatch(BlinkChannel::bd);
     }
 
     private static String bn() {

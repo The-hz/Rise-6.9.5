@@ -8,8 +8,8 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.newevent.impl.render.RenderHungerEvent;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.wf;
-import hackclient.rise.yb;
+import com.alan.clients.module.impl.render.appleskin.FoodBarOffset;
+import com.alan.clients.module.impl.render.appleskin.FoodHelper;
 import com.alan.clients.module.impl.render.appleskin.FoodValues;
 import java.util.Random;
 import java.util.Vector;
@@ -24,7 +24,7 @@ import net.minecraft.util.FoodStats;
 @ModuleInfo(aliases = "module.render.appleskin.name", description = "module.render.appleskin.description", category = Category.RENDER)
 public class AppleSkin extends Module {
     private final NumberValue maxFlashAlpha = new NumberValue("Max Flash Alpha", this, 0.65, 0, 1, 0.05);
-    public final Vector<wf> foodBarOffsets = new Vector<>();
+    public final Vector<FoodBarOffset> foodBarOffsets = new Vector<>();
     private final Random random = new Random();
     private float akY;
     private float akZ;
@@ -44,12 +44,12 @@ public class AppleSkin extends Module {
             return;
         }
 
-        FoodValues yc = yb.s(itemstack);
+        FoodValues yc = FoodHelper.s(itemstack);
         int k = yc.hunger;
         float f = yc.getSaturationIncrement();
         int l = foodstats.getFoodLevel() + k;
         float f1 = foodstats.getSaturationLevel() + f > l ? l - foodstats.getSaturationLevel() : f;
-        this.drawHungerOverlay(k, foodstats.getFoodLevel(), i, j, this.akZ, yb.t(itemstack));
+        this.drawHungerOverlay(k, foodstats.getFoodLevel(), i, j, this.akZ, FoodHelper.t(itemstack));
         this.drawSaturationOverlay(f1, foodstats.getSaturationLevel(), k, foodstats.getFoodLevel(), i, j, this.akZ);
     };
     @EventLink
@@ -84,9 +84,9 @@ public class AppleSkin extends Module {
                 l += this.random.nextInt(3) - 1;
             }
 
-            wf wf = this.foodBarOffsets.get(j);
+            FoodBarOffset wf = this.foodBarOffsets.get(j);
             if (wf == null) {
-                wf = new wf();
+                wf = new FoodBarOffset();
                 this.foodBarOffsets.set(j, wf);
             }
 
@@ -109,7 +109,7 @@ public class AppleSkin extends Module {
             }
 
             for (int l = j; l < k; l++) {
-                wf wf = this.foodBarOffsets.get(l);
+                FoodBarOffset wf = this.foodBarOffsets.get(l);
                 if (wf != null) {
                     int i1 = var5 + wf.ald;
                     int j1 = var6 + wf.ale;
@@ -159,7 +159,7 @@ public class AppleSkin extends Module {
             int k = (int)Math.ceil(i / 2.0F);
 
             for (int l = j; l < k; l++) {
-                wf wf = this.foodBarOffsets.get(l);
+                FoodBarOffset wf = this.foodBarOffsets.get(l);
                 if (wf != null) {
                     int i1 = var3 + wf.ald;
                     int j1 = var4 + wf.ale;

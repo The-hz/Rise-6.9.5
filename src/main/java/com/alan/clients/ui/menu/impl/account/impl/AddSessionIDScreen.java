@@ -13,13 +13,13 @@ import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.util.MouseUtil;
 import hackclient.rise.aen;
 import hackclient.rise.agc;
-import hackclient.rise.agl;
+import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -41,7 +41,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
-    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, gd.BOLD);
+    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, FontWeight.BOLD);
     private final MenuButton[] menuButtons = new MenuButton[4];
     private static TextBox sessionBox;
     private static GuiScreen reference;
@@ -109,7 +109,7 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
         byte b1 = 4;
         float f = 296 / 2.0F;
         Vector2d vector2d = new Vector2d(this.width / 2.0F - short1 / 2.0F, this.height / 2.0F - 24.0F);
-        sessionBox = new TextBox(vector2d.offset(short1 / 2, 8.0), FontManager.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Session- / Refresh-Token", short1);
+        sessionBox = new TextBox(vector2d.offset(short1 / 2, 8.0), FontManager.MAIN.a(24, FontWeight.BOLD), Color.WHITE, TextAlign.CENTER, "Session- / Refresh-Token", short1);
         this.menuButtons[0] = new MenuTextButton(vector2d.x, vector2d.y, short1, b0, FOCUS_BOX, "");
         this.menuButtons[1] = new MenuTextButton(vector2d.x, vector2d.y + b0 + b1, f, b0, LOGIN, "Login");
         this.menuButtons[2] = new MenuTextButton(vector2d.x + f + b1, vector2d.y + b0 + b1, f, b0, CANCEL, "Cancel");
@@ -122,7 +122,7 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
     public void drawScreen(int var1, int var2, float var3) {
         this.animation.Q(0.0);
         aiv.aPL.a(aiz.OVERLAY, var3, null);
-        this.b(gg.BLUR).c(() -> {
+        this.b(ShaderQueueType.BLUR).c(() -> {
             ScaledResolution scaledresolution = new ScaledResolution(aEg);
             RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK);
         });
@@ -133,7 +133,7 @@ public class AddSessionIDScreen extends GuiScreen implements InstanceAccess {
             aadh[j].draw(var1, var2, var3);
         }
 
-        this.b(gg.REGULAR).c(() -> {
+        this.b(ShaderQueueType.REGULAR).c(() -> {
             FONT_RENDERER.c(statusMessage, this.width / 2.0F, this.height / 2.0F - 64.0F + this.animation.sG(), Color.WHITE.getRGB());
             sessionBox.draw();
         });

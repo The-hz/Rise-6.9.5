@@ -1,0 +1,34 @@
+package rip.vantage.commons.packet.impl.client.protection;
+
+import org.json.JSONObject;
+
+public class C2SPacketConfig extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacket {
+    private final String eOY;
+
+    public C2SPacketConfig(String var1) {
+        super((byte)2);
+        this.eOY = var1;
+    }
+
+    public C2SPacketConfig(JSONObject json) {
+        super((byte)2);
+        this.eOY = json.getString("a");
+    }
+
+    @Override
+    public void a(rip.vantage.commons.handler.api.C2SPacketHandler handler) {
+        handler.a(this);
+    }
+
+    @Override
+    public String aJk() {
+        JSONObject jsonobject = new JSONObject();
+        jsonobject.put("a", this.eOY);
+        jsonobject.put("id", this.aeq());
+        return jsonobject.toString();
+    }
+
+    public String aJw() {
+        return this.eOY;
+    }
+}

@@ -19,8 +19,8 @@ import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.ais;
 import hackclient.rise.bf;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.Gui;
@@ -30,7 +30,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 public class GodlyTargetInfo extends Mode<TargetInfo> {
-    private final agc avg = FontManager.MAIN.a(18, gd.REGULAR);
+    private final agc avg = FontManager.MAIN.a(18, FontWeight.REGULAR);
     private TargetInfo aui;
     private final int avh = 6;
     private final int avi = 7;
@@ -43,8 +43,8 @@ public class GodlyTargetInfo extends Mode<TargetInfo> {
             this.aui = this.e(TargetInfo.class);
         }
 
-        this.b(gg.BLOOM).c(NotificationComponent::ci);
-        this.b(gg.REGULAR, 1).c(NotificationComponent::cj);
+        this.b(ShaderQueueType.BLOOM).c(NotificationComponent::ci);
+        this.b(ShaderQueueType.REGULAR, 1).c(NotificationComponent::cj);
         Entity entity = this.aui.target;
         if (entity != null) {
             boolean flag = !this.aui.inWorld || this.aui.rG.T(1000L);
@@ -73,7 +73,7 @@ public class GodlyTargetInfo extends Mode<TargetInfo> {
                 double d9 = 44;
                 this.aui.positionValue.n(new Vector2d(d8, d9));
                 double d10 = this.avk.sG();
-                this.b(gg.REGULAR).c(() -> {
+                this.b(ShaderQueueType.REGULAR).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d8 / 2.0) * (1.0 - d10), (d1 + d9 / 2.0) * (1.0 - d10), 0.0);
                     GlStateManager.scale(d10, d10, 0.0);
@@ -111,7 +111,7 @@ public class GodlyTargetInfo extends Mode<TargetInfo> {
                     RenderUtil.a(d0 + 6.0 + b0 + 7.0 - 2.5, d1 + 6.0 + b0 - 4.0 - 6.0, d5, 6.0, 3.0, color1, color, false);
                     GlStateManager.popMatrix();
                 });
-                this.b(gg.REGULAR, 1).c(() -> {
+                this.b(ShaderQueueType.REGULAR, 1).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d8 / 2.0) * (1.0 - d10), (d1 + d9 / 2.0) * (1.0 - d10), 0.0);
                     GlStateManager.scale(d10, d10, 0.0);
@@ -120,14 +120,14 @@ public class GodlyTargetInfo extends Mode<TargetInfo> {
                     this.a(abstractclientplayer, d0 + 6.0 + d7 - 2.0, d1 + 6.0 + d7 - 2.0, b0 - d6);
                     GlStateManager.popMatrix();
                 });
-                this.b(gg.BLUR).c(() -> {
+                this.b(ShaderQueueType.BLUR).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d8 / 2.0) * (1.0 - d10), (d1 + d9 / 2.0) * (1.0 - d10), 0.0);
                     GlStateManager.scale(d10, d10, 0.0);
                     RenderUtil.roundedRectangle(d0, d1, d8 - 3.5, d9 - 4.0, 8.0, Color.BLACK);
                     GlStateManager.popMatrix();
                 });
-                this.b(gg.BLOOM).c(() -> {
+                this.b(ShaderQueueType.BLOOM).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d8 / 2.0) * (1.0 - d10), (d1 + d9 / 2.0) * (1.0 - d10), 0.0);
                     GlStateManager.scale(d10, d10, 0.0);

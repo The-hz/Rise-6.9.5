@@ -22,7 +22,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import java.util.List;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -47,7 +47,7 @@ public final class LegitReach extends Module {
     public boolean pZ;
     @EventLink
     public final Listener<PostMotionEvent> onPostMotion = var1 -> {
-        List list = bv.f(9.0);
+        List list = TargetComponent.f(9.0);
         if (list.isEmpty()) {
             this.pZ = true;
             this.targetEntity = null;

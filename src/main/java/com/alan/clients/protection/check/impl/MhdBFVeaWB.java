@@ -3,15 +3,15 @@ package com.alan.clients.protection.check.impl;
 import com.alan.clients.Client;
 import com.alan.clients.protection.check.ProtectionCheck;
 import com.alan.clients.protection.check.api.McqBFVadWB;
-import hackclient.rise.aed;
-import hackclient.rise.aee;
+import com.alan.clients.util.OSUtil;
+import com.alan.clients.util.OS;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.Iterator;
 import java.util.Locale;
 
 public final class MhdBFVeaWB extends ProtectionCheck {
-    private final File hostsFile = new File(aed.rV() == aee.WINDOWS ? System.getenv("WinDir") + "\\System32\\drivers\\etc\\hosts" : "/etc/hosts");
+    private final File hostsFile = new File(OSUtil.rV() == OS.WINDOWS ? System.getenv("WinDir") + "\\System32\\drivers\\etc\\hosts" : "/etc/hosts");
 
     public MhdBFVeaWB() {
         super(McqBFVadWB.INITIALIZE, false);

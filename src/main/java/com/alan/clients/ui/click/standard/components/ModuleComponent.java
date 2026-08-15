@@ -10,12 +10,12 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
-import hackclient.rise.abw;
+import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.ahd;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
+import com.alan.clients.util.font.FontWeight;
 import hackclient.rise.ui.value.abn;
 import hackclient.rise.ui.value.abt;
 import java.awt.Color;
@@ -58,31 +58,31 @@ public class ModuleComponent implements InstanceAccess {
             && !(position.y > this.getStandardClickGUI().axI.y + this.getStandardClickGUI().alh.y);
         if (flag) {
             RiseClickGUI riseclickgui = this.getStandardClickGUI();
-            RenderUtil.roundedRectangle(position.x, position.y, this.scale.x, this.scale.y, 6.0, abw.OVERLAY.pV());
-            Color color = abw.TEXT.Y(this.module.isEnabled() ? 255 : 200);
+            RenderUtil.roundedRectangle(position.x, position.y, this.scale.x, this.scale.y, 6.0, UIColors.OVERLAY.pV());
+            Color color = UIColors.TEXT.Y(this.module.isEnabled() ? 255 : 200);
             boolean flag1 = GUIUtil.c(position.x, position.y, this.scale.x, this.scale.y, var2, var3);
             this.axx.Q(flag1 ? (this.ayg ? 35.0 : 20.0) : 0.0);
             RenderUtil.roundedRectangle(position.x, position.y, this.scale.x, this.scale.y, 6.0, ColorUtil.d(Color.BLACK, (int)this.axx.sG()));
             if (riseclickgui.pa() instanceof SearchScreen) {
                 FontManager.MAIN
-                    .a(15, gd.REGULAR)
+                    .a(15, FontWeight.REGULAR)
                     .a(
                         "(" + ahd.ce(this.module.getModuleInfo().category().getName()) + ")",
-                        (float)(position.getX() + FontManager.MAIN.a(20, gd.REGULAR).getStringWidth(this.module.getName()) + 10.0),
+                        (float)(position.getX() + FontManager.MAIN.a(20, FontWeight.REGULAR).getStringWidth(this.module.getName()) + 10.0),
                         (float)position.getY() + 10.0F,
                         ColorUtil.d(color, 64).hashCode()
                     );
             }
 
             FontManager.MAIN
-                .a(20, gd.REGULAR)
+                .a(20, FontWeight.REGULAR)
                 .a(
                     this.module.getName(),
                     (float)position.x + 6.0F,
                     (float)position.y + 8.0F,
                     this.module.isEnabled() ? this.rz().getAccentColor(new Vector2d(0.0, position.y / 5.0)).getRGB() : color.getRGB()
                 );
-            FontManager.MAIN.a(15, gd.REGULAR).a(ahd.ce(this.module.getModuleInfo().description()), (float)position.x + 6.0F, (float)position.y + 25.0F, ColorUtil.d(color, 70).hashCode());
+            FontManager.MAIN.a(15, FontWeight.REGULAR).a(ahd.ce(this.module.getModuleInfo().description()), (float)position.x + 6.0F, (float)position.y + 25.0F, ColorUtil.d(color, 70).hashCode());
             this.scale = new Vector2f(this.getStandardClickGUI().axY.x, f1);
         }
 

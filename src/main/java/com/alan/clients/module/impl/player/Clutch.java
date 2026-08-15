@@ -14,7 +14,7 @@ import com.alan.clients.value.impl.BoundsNumberValue;
 import hackclient.rise.aef;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aib;
+import com.alan.clients.util.player.EnumFacingOffset;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
@@ -36,7 +36,7 @@ public class Clutch extends Module {
     private final BoundsNumberValue rotationSpeed = new BoundsNumberValue("Rotation Speed", this, 5, 10, 0, 10, 1);
     private final BoundsNumberValue placeDelay = new BoundsNumberValue("Place Delay", this, 0, 0, 0, 1, 1);
     private Vec3 Yw;
-    private aib acr;
+    private EnumFacingOffset acr;
     private BlockPos Yx;
     private float acs;
     private float act;

@@ -14,7 +14,7 @@ import com.alan.clients.value.Mode;
 import hackclient.rise.afi;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.uo;
+import com.alan.clients.module.impl.player.nofall.ClutchState;
 import java.util.Iterator;
 import net.minecraft.init.Items;
 import net.minecraft.util.AxisAlignedBB;
@@ -24,7 +24,7 @@ import net.minecraft.util.Vec3;
 import rip.vantage.commons.util.time.a;
 
 public class ClutchNoFall extends Mode<NoFall> {
-    private uo aic = uo.IDLE;
+    private ClutchState aic = ClutchState.IDLE;
     private BlockPos aid = null;
     private BlockPos CG = null;
     private a aie = new a();
@@ -48,7 +48,7 @@ public class ClutchNoFall extends Mode<NoFall> {
                     return;
                 }
 
-                this.aic = uo.PREDICT;
+                this.aic = ClutchState.PREDICT;
                 this.aie.aX();
                 break;
             case PREDICT:
@@ -60,10 +60,10 @@ public class ClutchNoFall extends Mode<NoFall> {
                 double d0 = aEg.thePlayer.posY - this.aid.getY();
                 double d1 = 8.0;
                 if (d0 < d1 && d0 > 3.0) {
-                    this.aic = uo.ROTATE;
+                    this.aic = ClutchState.ROTATE;
                     this.aie.aX();
                 } else if (this.aie.T(50L)) {
-                    this.aic = uo.IDLE;
+                    this.aic = ClutchState.IDLE;
                 }
                 break;
             case ROTATE:
@@ -73,7 +73,7 @@ public class ClutchNoFall extends Mode<NoFall> {
                 if (Math.abs(aEg.thePlayer.rotationPitch - 90.0F) < 15.0F || this.aie.T(200L)) {
                     this.aii = true;
                     this.aik = new Vector2f(aEg.thePlayer.pl, 90.0F);
-                    this.aic = uo.PLACE;
+                    this.aic = ClutchState.PLACE;
                     this.aie.aX();
                 }
                 break;
@@ -86,7 +86,7 @@ public class ClutchNoFall extends Mode<NoFall> {
                         this.aig = com.alan.clients.util.player.SlotUtil.findItem(Items.bucket);
                         afi.b("S");
                         if (this.aig != -1) {
-                            this.aic = uo.PICKUP;
+                            this.aic = ClutchState.PICKUP;
                             this.aie.aX();
                         } else {
                             this.ky();
@@ -114,7 +114,7 @@ public class ClutchNoFall extends Mode<NoFall> {
     };
     @EventLink(value = 4)
     public final Listener<PreMotionEvent> aim = var1x -> {
-        if (this.aic == uo.PLACE && this.aii) {
+        if (this.aic == ClutchState.PLACE && this.aii) {
             RotationComponent.setRotations(this.aik, 10.0, MovementFix.NORMAL);
             float f = aEg.thePlayer.rotationPitch;
             aEg.thePlayer.pl = this.aik.x;
@@ -129,10 +129,10 @@ public class ClutchNoFall extends Mode<NoFall> {
             this.aih = true;
             this.aif.aX();
             afi.b("MLG water placed at distance: " + (aEg.thePlayer.posY - this.aid.getY()));
-            this.aic = uo.WAIT_LAND;
+            this.aic = ClutchState.WAIT_LAND;
             this.aie.aX();
             this.aii = false;
-        } else if (this.aic == uo.PICKUP && this.aij) {
+        } else if (this.aic == ClutchState.PICKUP && this.aij) {
             float f1 = aEg.thePlayer.rotationPitch;
             aEg.entityRenderer.getMouseOver(1.0F);
             aEg.rightClickDelayTimer = 0;
@@ -143,10 +143,10 @@ public class ClutchNoFall extends Mode<NoFall> {
     };
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
-        if (this.aic == uo.PLACE && this.aii) {
+        if (this.aic == ClutchState.PLACE && this.aii) {
             var1x.setCancelled(true);
             this.aii = false;
-        } else if (this.aic == uo.PICKUP && this.aij) {
+        } else if (this.aic == ClutchState.PICKUP && this.aij) {
             var1x.setCancelled(true);
             this.aij = false;
         }
@@ -243,7 +243,7 @@ public class ClutchNoFall extends Mode<NoFall> {
     }
 
     private void ky() {
-        this.aic = uo.IDLE;
+        this.aic = ClutchState.IDLE;
         this.aid = null;
         this.CG = null;
         this.CF = -1;

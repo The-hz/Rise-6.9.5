@@ -19,7 +19,7 @@ import hackclient.rise.aha;
 import hackclient.rise.ahd;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
-import hackclient.rise.bx;
+import com.alan.clients.util.social.FriendManager;
 import hackclient.rise.cg;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -172,7 +172,7 @@ public class RiseAPI {
     }
 
     public boolean isFriend(String var1) {
-        return bx.isFriend(var1);
+        return FriendManager.isFriend(var1);
     }
 
     public ScriptBlockPos newBlockPos(int var1, int var2, int var3) {

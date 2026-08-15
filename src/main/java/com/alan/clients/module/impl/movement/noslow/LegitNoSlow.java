@@ -7,7 +7,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.motion.SlowDownEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.component.bc;
+import com.alan.clients.component.impl.player.PacketQueueComponent;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
@@ -29,13 +29,13 @@ public class LegitNoSlow extends Mode<NoSlow> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer != null && aEg.thePlayer.getHeldItem() != null) {
-            if (bc.cR) {
+            if (PacketQueueComponent.cR) {
                 this.Nj++;
             }
 
             if (this.hF()) {
-                if (!bc.cR) {
-                    bc.cR = true;
+                if (!PacketQueueComponent.cR) {
+                    PacketQueueComponent.cR = true;
                     this.Nj = aEg.thePlayer.getItemInUseDuration();
                 }
 
@@ -43,7 +43,7 @@ public class LegitNoSlow extends Mode<NoSlow> {
                 aEg.gameSettings.cgI.setPressed(false);
             }
 
-            if (bc.cR && (this.Nj >= 32 || this.Nk)) {
+            if (PacketQueueComponent.cR && (this.Nj >= 32 || this.Nk)) {
                 this.gx();
             }
         }
@@ -126,9 +126,9 @@ public class LegitNoSlow extends Mode<NoSlow> {
     }
 
     private void gx() {
-        if (bc.cR) {
-            bc.dispatch();
-            bc.cR = false;
+        if (PacketQueueComponent.cR) {
+            PacketQueueComponent.dispatch();
+            PacketQueueComponent.cR = false;
         }
 
         this.Nk = false;

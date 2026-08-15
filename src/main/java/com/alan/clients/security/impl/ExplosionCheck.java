@@ -1,10 +1,10 @@
 package com.alan.clients.security.impl;
 
-import com.alan.clients.security.a;
+import com.alan.clients.security.CrashCheck;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S27PacketExplosion;
 
-public final class ExplosionCheck extends a {
+public final class ExplosionCheck extends CrashCheck {
     public ExplosionCheck() {
         super("Explosion Checker", "Server attempted to crash the client with a large explosion");
     }

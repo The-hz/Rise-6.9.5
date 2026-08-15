@@ -9,8 +9,8 @@ import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahz;
-import hackclient.rise.aia;
+import com.alan.clients.util.player.DamageUtil;
+import com.alan.clients.util.player.DamageType;
 
 public class DamageDeprecatedFlight extends Mode<Flight> {
     private final NumberValue speed = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
@@ -33,7 +33,7 @@ public class DamageDeprecatedFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        ahz.a(aia.POSITION, 3.42F, 1, false, false);
+        DamageUtil.a(DamageType.POSITION, 3.42F, 1, false, false);
     }
 
     @Override

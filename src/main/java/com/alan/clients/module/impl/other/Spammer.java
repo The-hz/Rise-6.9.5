@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
 import hackclient.rise.afi;
-import hackclient.rise.ahm;
+import com.alan.clients.util.player.ServerUtil;
 import rip.vantage.commons.util.time.a;
 
 @ModuleInfo(aliases = "module.other.spammer.name", description = "module.other.spammer.description", category = Category.PLAYER)
@@ -19,7 +19,7 @@ public final class Spammer extends Module {
     private final a VQ = new a();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
-        if (ahm.cg("loyisa.cn") && this.message.wo().startsWith("/")) {
+        if (ServerUtil.cg("loyisa.cn") && this.message.wo().startsWith("/")) {
             afi.b("Upon a request from Loyisa we have blacklisted Loyisa's Test Server from Spammer.");
             this.toggle();
         } else {

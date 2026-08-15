@@ -10,7 +10,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
+import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
 import lombok.Generated;
 import net.minecraft.client.settings.KeyBinding;
@@ -46,12 +46,12 @@ public class KeyStroke implements InstanceAccess {
         this.rz();
         RenderUtil.roundedRectangle(d1, d2, d3, d4, d0, ColorUtil.d(Themes.rK(), (int)this.animation.sG()));
         this.updateHeld();
-        Vector2d vector2d1 = new Vector2d(FontManager.MAIN.a(20, gd.REGULAR).getStringWidth(this.name), FontManager.MAIN.a(20, gd.REGULAR).height());
+        Vector2d vector2d1 = new Vector2d(FontManager.MAIN.a(20, FontWeight.REGULAR).getStringWidth(this.name), FontManager.MAIN.a(20, FontWeight.REGULAR).height());
         Vector2d vector2d2 = new Vector2d(
-            vector2d.getX() + this.atq.getX() * 0.5F - FontManager.MAIN.a(20, gd.REGULAR).getStringWidth(this.name) * 0.5F,
+            vector2d.getX() + this.atq.getX() * 0.5F - FontManager.MAIN.a(20, FontWeight.REGULAR).getStringWidth(this.name) * 0.5F,
             vector2d.getY() + (this.atq.getY() - vector2d1.getY()) / 2.0 + 3.0
         );
-        FontManager.MAIN.a(20, gd.REGULAR).b(this.name, vector2d2.getX(), vector2d2.getY(), this.rz().rA().getRGB());
+        FontManager.MAIN.a(20, FontWeight.REGULAR).b(this.name, vector2d2.getX(), vector2d2.getY(), this.rz().rA().getRGB());
     }
 
     public void e(Vector2d vector2d) {

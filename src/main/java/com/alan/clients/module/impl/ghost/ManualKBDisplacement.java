@@ -16,7 +16,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.le;
+import com.alan.clients.module.impl.ghost.DisplacementSample;
 import java.util.function.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWeb;
@@ -40,7 +40,7 @@ public final class ManualKBDisplacement extends Module {
     private final NumberValue trackingRange = new NumberValue("Tracking Range", this, 6.0, 3.0, 8.0, 0.1);
     private final BooleanValue debug = new BooleanValue("Debug", this, false);
     private EntityLivingBase Bq;
-    private le Br;
+    private DisplacementSample Br;
     private int Bs;
     private String Bt = "";
     private int Bu = -1;
@@ -136,9 +136,9 @@ public final class ManualKBDisplacement extends Module {
         return this.g(living) && aEg.thePlayer.motionY < 0.0;
     }
 
-    private le y(EntityLivingBase living) {
+    private DisplacementSample y(EntityLivingBase living) {
         AxisAlignedBB axisalignedbb = living.getEntityBoundingBox();
-        le le = null;
+        DisplacementSample le = null;
 
         for (int i = 0; i < 32; i++) {
             double d0 = (Math.PI * 2) * i / 32.0;
@@ -147,7 +147,7 @@ public final class ManualKBDisplacement extends Module {
 
             for (double d3 = 0.8; d3 <= 5.0; d3 += 0.35) {
                 AxisAlignedBB axisalignedbb1 = axisalignedbb.offset(d1 * d3, 0.0, cos * d3);
-                le lex = this.b(living, axisalignedbb1, d1, cos, d3);
+                DisplacementSample lex = this.b(living, axisalignedbb1, d1, cos, d3);
                 if (lex != null && (le == null || lex.BC > le.BC)) {
                     le = lex;
                 }
@@ -161,7 +161,7 @@ public final class ManualKBDisplacement extends Module {
         return le != null && le.BC >= 45.0 ? le : null;
     }
 
-    private le b(EntityLivingBase living, AxisAlignedBB box, double var3, double var5, double var7) {
+    private DisplacementSample b(EntityLivingBase living, AxisAlignedBB box, double var3, double var5, double var7) {
         AxisAlignedBB axisalignedbb = box.contract(0.05, 0.0, 0.05);
         AxisAlignedBB axisalignedbb1 = axisalignedbb.offset(0.0, -0.35, 0.0);
         String s = null;
@@ -198,7 +198,7 @@ public final class ManualKBDisplacement extends Module {
 
         float f = (float)Math.toDegrees(Math.atan2(var5, var3)) - 90.0F;
         float f1 = RotationUtil.calculate(living, true, this.trackingRange.wo().doubleValue()).getY();
-        return new le(living.getEntityId(), f, f1, var7, d0, s);
+        return new DisplacementSample(living.getEntityId(), f, f1, var7, d0, s);
     }
 
     private double a(AxisAlignedBB box, int var2) {
@@ -279,7 +279,7 @@ public final class ManualKBDisplacement extends Module {
         }
     }
 
-    private void a(String var1, le var2, EntityLivingBase living) {
+    private void a(String var1, DisplacementSample var2, EntityLivingBase living) {
         if (this.debug.wo() && aEg.thePlayer != null) {
             String s = var2 == null
                 ? String.format("%s hurt=%d", var1, living == null ? -1 : living.hurtTime)

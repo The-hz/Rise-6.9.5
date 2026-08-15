@@ -29,39 +29,39 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.util.Session;
 import rip.vantage.commons.packet.impl.client.protection.d;
-import rip.vantage.commons.packet.impl.server.monitoring.h;
-import rip.vantage.commons.packet.impl.server.protection.e;
-import rip.vantage.commons.packet.impl.server.protection.f;
-import rip.vantage.commons.packet.impl.server.protection.g;
-import rip.vantage.security.l;
+import rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStopRecording;
+import rip.vantage.commons.packet.impl.server.protection.S2CPacketServerJoin;
+import rip.vantage.commons.packet.impl.server.protection.S2CPacketConfig;
+import rip.vantage.commons.packet.impl.server.protection.S2CPacketProofOfWorkChallenge;
+import rip.vantage.security.IntegrityGuard;
 
-public final class b implements rip.vantage.commons.handler.api.c {
+public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler {
     private final rip.vantage.commons.util.time.a eRz = new rip.vantage.commons.util.time.a();
 
     public b() {
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.protection.b var1) {
-        String s = var1.aKh();
+    public void a(rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication packet) {
+        String s = packet.aKh();
         if (s != null && !s.isEmpty()) {
             String s1 = aju.vW();
-            if (!l.aL(s1, s)) {
+            if (!IntegrityGuard.aL(s1, s)) {
                 System.out.println("EC57");
-                rip.vantage.util.a.a(var1, boolean.class, false);
-                rip.vantage.util.a.kQ(s1);
+                rip.vantage.util.NativeBridge.a(packet, boolean.class, false);
+                rip.vantage.util.NativeBridge.kQ(s1);
             }
         }
 
-        long i = l.a(var1, var1.aKi(), var1.aKk(), var1.aKl(), var1.aKm());
-        if (!l.V(i)) {
+        long i = IntegrityGuard.a(packet, packet.aKi(), packet.aKk(), packet.aKl(), packet.aKm());
+        if (!IntegrityGuard.V(i)) {
             System.out.println("EC74");
-            rip.vantage.util.a.kF(1);
-            rip.vantage.util.a.kG(1);
+            rip.vantage.util.NativeBridge.kF(1);
+            rip.vantage.util.NativeBridge.kG(1);
             throw new SecurityException("EC74");
         }
 
-        Client.a.e().d(new er(var1));
+        Client.a.e().d(new er(packet));
         this.eRz.aX();
         NetHandlerPlayClient nethandlerplayclient = InstanceAccess.aEg.getNetHandler();
         if (nethandlerplayclient != null) {
@@ -73,7 +73,7 @@ public final class b implements rip.vantage.commons.handler.api.c {
     }
 
     @Override
-    public void a(f var1) {
+    public void a(S2CPacketConfig packet) {
         aha.aMR
             .execute(
                 () -> {
@@ -91,7 +91,7 @@ public final class b implements rip.vantage.commons.handler.api.c {
                             }
                         }
 
-                        String[] astring = rip.vantage.util.a.n(module);
+                        String[] astring = rip.vantage.util.NativeBridge.n(module);
                         if (astring != null) {
                             for (String s2 : astring) {
                                 if (s2 != null && !s2.isEmpty()) {
@@ -107,11 +107,11 @@ public final class b implements rip.vantage.commons.handler.api.c {
 
                     boolean flag = false;
 
-                    for (String s3 : var1.aJw().split("\n")) {
+                    for (String s3 : packet.aJw().split("\n")) {
                         if (!flag) {
                             String[] astring1 = s3.split("th_");
                             if (astring1.length > 1) {
-                                rip.vantage.util.a.a(() -> Client.a.k().a(Themes.valueOf(astring1[1])));
+                                rip.vantage.util.NativeBridge.a(() -> Client.a.k().a(Themes.valueOf(astring1[1])));
                             }
 
                             flag = true;
@@ -330,7 +330,7 @@ public final class b implements rip.vantage.commons.handler.api.c {
                         }
                     }
 
-                    for (String s12 : var1.aJw().split("\n")) {
+                    for (String s12 : packet.aJw().split("\n")) {
                         String s13 = s12.split("_")[0];
                         if (hashmap.containsKey(s13)) {
                             Module module2;
@@ -372,43 +372,43 @@ public final class b implements rip.vantage.commons.handler.api.c {
     }
 
     @Override
-    public void a(e var1) {
+    public void a(S2CPacketServerJoin packet) {
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.protection.a var1) {
-        Minecraft.getMinecraft().session = new Session(var1.bX(), var1.sh(), var1.si(), "microsoft");
-        Client.a.e().d(new er(var1));
+    public void a(rip.vantage.commons.packet.impl.server.protection.S2CPacketAccount packet) {
+        Minecraft.getMinecraft().session = new Session(packet.bX(), packet.sh(), packet.si(), "microsoft");
+        Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.management.a var1) {
+    public void a(rip.vantage.commons.packet.impl.server.management.S2CPacketHudRefresh packet) {
         Minecraft.getMinecraft().ingameGUI.lastSystemTime = -50L;
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.community.b var1) {
-        Client.a.e().d(new er(var1));
+    public void a(rip.vantage.commons.packet.impl.server.community.S2CPacketChatMessage packet) {
+        Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.community.c var1) {
-        Client.a.e().d(new er(var1));
+    public void a(rip.vantage.commons.packet.impl.server.community.S2CPacketUserData packet) {
+        Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.protection.c var1) {
-        Client.a.e().d(new er(var1));
+    public void a(rip.vantage.commons.packet.impl.server.protection.S2CPacketEntityListRequest packet) {
+        Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.community.d var1) {
-        Client.a.e().d(new er(var1));
+    public void a(rip.vantage.commons.packet.impl.server.community.S2CPacketTitle packet) {
+        Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.community.a var1) {
-        Client.a.e().d(new er(var1));
+    public void a(rip.vantage.commons.packet.impl.server.community.S2CPacketConfigList packet) {
+        Client.a.e().d(new er(packet));
     }
 
     @Override
@@ -422,68 +422,68 @@ public final class b implements rip.vantage.commons.handler.api.c {
     }
 
     @Override
-    public void a(g var1) {
-        byte[] abyte = var1.aJF();
+    public void a(S2CPacketProofOfWorkChallenge packet) {
+        byte[] abyte = packet.aJF();
         if (abyte != null && abyte.length == 32) {
-            long i = var1.nb();
+            long i = packet.nb();
             if (i > 0L && Math.abs(System.currentTimeMillis() - i) > 60000L) {
                 System.out.println("EC152");
             }
 
-            if (!l.aMs()) {
+            if (!IntegrityGuard.aMs()) {
                 System.out.println("EC40 - ProofOfWork integrity failed");
-                rip.vantage.util.a.kF(1);
-                rip.vantage.util.a.kG(1);
+                rip.vantage.util.NativeBridge.kF(1);
+                rip.vantage.util.NativeBridge.kG(1);
                 throw new SecurityException("EC40");
             }
 
             rip.vantage.network.core.a.aKB().n(abyte);
         } else {
             System.out.println("EC151");
-            rip.vantage.util.a.kF(1);
-            rip.vantage.util.a.kG(1);
+            rip.vantage.util.NativeBridge.kF(1);
+            rip.vantage.util.NativeBridge.kG(1);
             throw new SecurityException("EC151");
         }
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.monitoring.a var1) {
-        Client.a.e().d(new er(var1));
+    public void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStartRecording packet) {
+        Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(h var1) {
-        Client.a.e().d(new er(var1));
+    public void a(S2CPacketStopRecording packet) {
+        Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.monitoring.b var1) {
-        Client.a.e().d(new er(var1));
+    public void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureRequest packet) {
+        Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.monitoring.d var1) {
-        Client.a.e().d(new er(var1));
+    public void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureCancel packet) {
+        Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void b(rip.vantage.commons.packet.impl.server.monitoring.e var1) {
-        Client.a.e().d(new er(var1));
+    public void b(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorConsent packet) {
+        Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void b(rip.vantage.commons.packet.impl.server.monitoring.f var1) {
-        Client.a.e().d(new er(var1));
+    public void b(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorRequest packet) {
+        Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void b(rip.vantage.commons.packet.impl.server.monitoring.c var1) {
-        Client.a.e().d(new er(var1));
+    public void b(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorCommand packet) {
+        Client.a.e().d(new er(packet));
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.monitoring.g var1) {
-        Client.a.e().d(new er(var1));
+    public void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorPing packet) {
+        Client.a.e().d(new er(packet));
     }
 
     @Override
@@ -491,7 +491,7 @@ public final class b implements rip.vantage.commons.handler.api.c {
     }
 
     @Override
-    public void a(rip.vantage.commons.packet.impl.server.protection.d var1) {
-        Client.a.e().d(new er(var1));
+    public void a(rip.vantage.commons.packet.impl.server.protection.S2CPacketJdkUnlockGrant packet) {
+        Client.a.e().d(new er(packet));
     }
 }

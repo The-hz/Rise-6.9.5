@@ -17,9 +17,9 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
-import hackclient.rise.component.cy;
-import hackclient.rise.rb;
-import hackclient.rise.rc;
+import com.alan.clients.component.impl.viamcp.FlyingPacketFixComponent;
+import com.alan.clients.module.impl.movement.terrainspeed.PhysicsIntegrator;
+import com.alan.clients.module.impl.movement.terrainspeed.PhysicsVector3;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.network.PacketBuffer;
@@ -41,7 +41,7 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
     private double xv;
     private boolean im;
     private static final double SK = 0.03333333333333333;
-    private final rb SL = new rb();
+    private final PhysicsIntegrator SL = new PhysicsIntegrator();
     private int aR = 0;
     private int SM = 0;
     private long SN = 0L;
@@ -59,7 +59,7 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
 
         if (entityplayersp.onGround && entityplayersp.motionY == MoveUtil.jumpMotion()) {
             this.SM = Math.min(this.SM + 1, 3);
-            this.SL.SU.a(new rc(0.0, 8.0, 0.0));
+            this.SL.SU.a(new PhysicsVector3(0.0, 8.0, 0.0));
         }
 
         this.aR = entityplayersp.onGround ? this.aR + 1 : 0;
@@ -137,7 +137,7 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
             this.e(LongJump.class).isEnabled();
         }
 
-        if (!aEg.gameSettings.keyBindSneak.isKeyDown() || !(cy.il > -390.0) || this.e(Flight.class).isEnabled() && aEg.thePlayer.tR > 30) {
+        if (!aEg.gameSettings.keyBindSneak.isKeyDown() || !(FlyingPacketFixComponent.il > -390.0) || this.e(Flight.class).isEnabled() && aEg.thePlayer.tR > 30) {
             if (aEg.gameSettings.keyBindSneak.isKeyDown()
                 && aEg.thePlayer.ticksExisted % 5 == 0
                 && (!this.e(Flight.class).isEnabled() || aEg.thePlayer.tR <= 30)) {

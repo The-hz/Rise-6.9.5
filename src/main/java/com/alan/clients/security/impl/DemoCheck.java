@@ -1,10 +1,10 @@
 package com.alan.clients.security.impl;
 
-import com.alan.clients.security.a;
+import com.alan.clients.security.CrashCheck;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S2BPacketChangeGameState;
 
-public final class DemoCheck extends a {
+public final class DemoCheck extends CrashCheck {
     public DemoCheck() {
         super("Demo Check", "Server attempted to prevent gameplay with a demo screen");
     }

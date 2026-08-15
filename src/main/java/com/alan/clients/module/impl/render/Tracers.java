@@ -9,7 +9,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -24,7 +24,7 @@ public final class Tracers extends Module {
             GlStateManager.loadIdentity();
             aEg.entityRenderer.orientCamera(aEg.timer.bWm);
 
-            for (Entity entity : bv.b(true, true, false, false, false)) {
+            for (Entity entity : TargetComponent.b(true, true, false, false, false)) {
                 if (entity != aEg.thePlayer && !entity.isDead && !Client.a.x().a(entity)) {
                     double d0 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * var1.getPartialTicks();
                     double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * var1.getPartialTicks() + 1.62F;

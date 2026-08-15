@@ -10,8 +10,8 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.ahz;
-import hackclient.rise.aia;
+import com.alan.clients.util.player.DamageUtil;
+import com.alan.clients.util.player.DamageType;
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 
 public class VulcanDamageFlight extends Mode<Flight> {
@@ -71,7 +71,7 @@ public class VulcanDamageFlight extends Mode<Flight> {
         this.hV = 0;
         this.IJ = false;
         if (this.IK.wo()) {
-            ahz.a(aia.POSITION, 3.42F, 1, false, false);
+            DamageUtil.a(DamageType.POSITION, 3.42F, 1, false, false);
         } else {
             afi.b("take fall damage or turn on self damage");
         }

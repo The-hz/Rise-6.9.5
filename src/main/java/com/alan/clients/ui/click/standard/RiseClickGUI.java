@@ -18,22 +18,22 @@ import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import hackclient.rise.ui.value.abn;
 import hackclient.rise.ui.value.abt;
 import hackclient.rise.ui.value.abv;
-import hackclient.rise.abw;
+import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.ui.click.standard.screen.impl.SearchScreen;
 import com.alan.clients.ui.click.standard.screen.impl.ThemeScreen;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.gui.textbox.TextBox;
-import hackclient.rise.agw;
+import com.alan.clients.util.ime.PinyinInputHandler;
 import hackclient.rise.agx;
 import hackclient.rise.aha;
 import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.aiz;
 import com.alan.clients.util.shader.impl.AlphaShader;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.ge;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderRenderQueue;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.lang.reflect.Field;
 import java.text.Collator;
@@ -73,9 +73,9 @@ public class RiseClickGUI extends GuiScreen implements aha {
     public Vector2f axY = new Vector2f(283.0F, 38.0F);
     public Animation hB = new Animation(Easing.EASE_IN_EXPO, 300L);
     public Animation axZ = new Animation(Easing.EASE_IN_EXPO, 300L);
-    private final agw aya = new agw();
+    private final PinyinInputHandler aya = new PinyinInputHandler();
     private TextBox ayb;
-    ge ayc = new ge(new AlphaShader());
+    ShaderRenderQueue ayc = new ShaderRenderQueue(new AlphaShader());
     @EventLink(value = 0)
     public final Listener<AlphaEvent> onAlpha = var1 -> {
         if (this.axS <= 0.99) {
@@ -219,12 +219,12 @@ public class RiseClickGUI extends GuiScreen implements aha {
                     }
                 };
                 runnable.run();
-                this.b(gg.BLOOM, 2).c(runnable);
+                this.b(ShaderQueueType.BLOOM, 2).c(runnable);
                 if (this.axS > 0.993) {
                     RenderUtil.dropShadow(18, this.axI.x, this.axI.y, this.alh.x, this.alh.y, 30.0, this.round * 1.3);
                 }
 
-                RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, this.round, abw.BACKGROUND.pV());
+                RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, this.round, UIColors.BACKGROUND.pV());
                 Runnable runnable1 = () -> {
                     GL11.glEnable(3089);
                     byte b0 = 1;
@@ -236,12 +236,12 @@ public class RiseClickGUI extends GuiScreen implements aha {
                     );
                 };
                 runnable1.run();
-                this.b(gg.BLOOM, 2).c(runnable1);
+                this.b(ShaderQueueType.BLOOM, 2).c(runnable1);
                 Runnable runnable2 = () -> {
                     GL11.glPushMatrix();
                     GL11.glTranslated(0.0, 0.0, 0.0);
                 };
-                this.b(gg.BLOOM, 2).c(runnable2);
+                this.b(ShaderQueueType.BLOOM, 2).c(runnable2);
                 short short1 = 200;
                 (this.axL = this.axP.T(short1) ? this.axK : this.axM).b(i, j, f);
                 if (agx.isEnabled()) {
@@ -261,9 +261,9 @@ public class RiseClickGUI extends GuiScreen implements aha {
                         if (s != null && !s.isEmpty()) {
                             float f1 = textBox.tL();
                             float f2 = textBox.tM();
-                            FontManager.MAIN.a(16, gd.REGULAR).a(s, f1, f2, ColorUtil.d(Color.WHITE, 210).getRGB());
+                            FontManager.MAIN.a(16, FontWeight.REGULAR).a(s, f1, f2, ColorUtil.d(Color.WHITE, 210).getRGB());
                             RenderUtil.d(
-                                f1, f2 + FontManager.MAIN.a(16, gd.REGULAR).height() + 1.0F, FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(s), 1.0, ColorUtil.d(Color.WHITE, 140)
+                                f1, f2 + FontManager.MAIN.a(16, FontWeight.REGULAR).height() + 1.0F, FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s), 1.0, ColorUtil.d(Color.WHITE, 140)
                             );
                             if (list != null && !list.isEmpty()) {
                                 StringBuilder stringbuilder = new StringBuilder();
@@ -286,14 +286,14 @@ public class RiseClickGUI extends GuiScreen implements aha {
                                 stringbuilder.append(this.aya.ut());
                                 String s2 = stringbuilder.toString();
                                 double d5 = 6.0;
-                                double d6 = FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(s2) + d5 * 2.0;
-                                double d7 = FontManager.MAIN.a(16, gd.REGULAR).height() + d5 * 2.0 - 5.0;
+                                double d6 = FontManager.MAIN.a(16, FontWeight.REGULAR).getStringWidth(s2) + d5 * 2.0;
+                                double d7 = FontManager.MAIN.a(16, FontWeight.REGULAR).height() + d5 * 2.0 - 5.0;
                                 double d8 = f1 - 2.0F;
-                                double d9 = f2 + FontManager.MAIN.a(16, gd.REGULAR).height() + 6.0F;
+                                double d9 = f2 + FontManager.MAIN.a(16, FontWeight.REGULAR).height() + 6.0F;
                                 double d10 = 8.0;
                                 Color color = ColorUtil.d(Color.WHITE, 255);
-                                this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(d8, d9, d6, d7, d10, color));
-                                this.b(gg.BLOOM, 2).c(() -> {
+                                this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(d8, d9, d6, d7, d10, color));
+                                this.b(ShaderQueueType.BLOOM, 2).c(() -> {
                                     GL11.glDisable(3089);
                                     RenderUtil.roundedRectangle(d8, d9, d6, d7, d10 + 2.0, this.rz().rE());
                                     GL11.glEnable(3089);
@@ -304,8 +304,8 @@ public class RiseClickGUI extends GuiScreen implements aha {
                                     GL11.glDisable(3089);
                                 }
 
-                                RenderUtil.roundedRectangle(d8, d9, d6, d7, d10, ColorUtil.d(abw.BACKGROUND.pV(), (int)Math.min(220.0, this.axT * 255.0)));
-                                FontManager.MAIN.a(16, gd.REGULAR).a(s2, d8 + d5, d9 + d5, ColorUtil.d(Color.WHITE, 240).getRGB());
+                                RenderUtil.roundedRectangle(d8, d9, d6, d7, d10, ColorUtil.d(UIColors.BACKGROUND.pV(), (int)Math.min(220.0, this.axT * 255.0)));
+                                FontManager.MAIN.a(16, FontWeight.REGULAR).a(s2, d8 + d5, d9 + d5, ColorUtil.d(Color.WHITE, 240).getRGB());
                                 if (flag1) {
                                     GL11.glEnable(3089);
                                     RenderUtil.g(d0, d1, d2, d3);
@@ -324,7 +324,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
                         )
                     );
                 if (this.axP.aKx() <= short1 * 2) {
-                    RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, this.round, abw.BACKGROUND.Y(k));
+                    RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, this.round, UIColors.BACKGROUND.Y(k));
                 }
 
                 this.axJ.pF();
@@ -340,9 +340,9 @@ public class RiseClickGUI extends GuiScreen implements aha {
                     GlStateManager.popMatrix();
                 };
                 runnable3.run();
-                this.b(gg.BLOOM, 2).c(runnable3);
+                this.b(ShaderQueueType.BLOOM, 2).c(runnable3);
                 Runnable runnable4 = GL11::glPopMatrix;
-                this.b(gg.BLOOM, 2).c(runnable4);
+                this.b(ShaderQueueType.BLOOM, 2).c(runnable4);
                 this.rG.aX();
             }
         }
@@ -600,7 +600,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public agw pq() {
+    public PinyinInputHandler pq() {
         return this.aya;
     }
 
@@ -610,7 +610,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public ge ps() {
+    public ShaderRenderQueue ps() {
         return this.ayc;
     }
 

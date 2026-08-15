@@ -13,8 +13,8 @@ import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -33,8 +33,8 @@ public final class SlotComponent extends Component {
     private static boolean gb = false;
     private static String stackSize = "0";
     private static double gd = 38.0;
-    private final agc ge = com.alan.clients.util.font.FontManager.MAIN.a(18, hackclient.rise.gd.LIGHT);
-    private final agc gf = com.alan.clients.util.font.FontManager.MAIN.a(18, hackclient.rise.gd.MEDIUM);
+    private final agc ge = com.alan.clients.util.font.FontManager.MAIN.a(18, com.alan.clients.util.font.FontWeight.LIGHT);
+    private final agc gf = com.alan.clients.util.font.FontManager.MAIN.a(18, com.alan.clients.util.font.FontWeight.MEDIUM);
     @EventLink(value = 4)
     public final Listener<SyncCurrentItemEvent> onSyncItem = var0 -> {
         InventoryPlayer inventoryplayer = aEg.thePlayer.inventory;
@@ -87,7 +87,7 @@ public final class SlotComponent extends Component {
             double d6 = d5 + 11.0 - this.ge.height() / 2.0 + 3.0;
             if (d2 > 0.01 && itemstack2 != null) {
                 if (d2 > 0.15) {
-                    this.b(hackclient.rise.gg.BLUR).c(() -> {
+                    this.b(com.alan.clients.util.shader.ShaderQueueType.BLUR).c(() -> {
                         GlStateManager.pushMatrix();
                         GlStateManager.translate((d4 + d3 * 0.5) * (1.0 - d0), (d5 + 11.0) * (1.0 - d0), 0.0);
                         GlStateManager.scale(d0, d0, d0);
@@ -97,7 +97,7 @@ public final class SlotComponent extends Component {
                 }
 
                 double d7 = d2;
-                this.b(hackclient.rise.gg.REGULAR, 1).c(() -> {
+                this.b(com.alan.clients.util.shader.ShaderQueueType.REGULAR, 1).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d4 + d3 * 0.5) * (1.0 - d0), (d5 + 11.0) * (1.0 - d0), 0.0);
                     GlStateManager.scale(d0, d0, d0);
@@ -116,7 +116,7 @@ public final class SlotComponent extends Component {
                     GlStateManager.popMatrix();
                 });
                 double d8 = d2;
-                this.b(hackclient.rise.gg.BLOOM)
+                this.b(com.alan.clients.util.shader.ShaderQueueType.BLOOM)
                     .c(
                         () -> {
                             GlStateManager.pushMatrix();

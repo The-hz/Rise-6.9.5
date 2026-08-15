@@ -1,7 +1,7 @@
 package com.alan.clients.util.pathfinding.unlegit;
 
-import com.alan.clients.util.pathfinding.unlegit.ahw;
-import com.alan.clients.util.pathfinding.unlegit.ahx;
+import com.alan.clients.util.pathfinding.unlegit.NodeComparator;
+import com.alan.clients.util.pathfinding.unlegit.Node;
 import com.alan.clients.util.pathfinding.unlegit.ahy;
 import com.alan.clients.util.player.PlayerUtil;
 import java.util.ArrayList;
@@ -39,9 +39,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockPos;
 
 public final class PathFinder {
-    private final ArrayList<ahx> aNL = new ArrayList();
+    private final ArrayList<Node> aNL = new ArrayList();
     private ArrayList<ahy> aNM = new ArrayList();
-    private final ArrayList<ahx> aNN = new ArrayList();
+    private final ArrayList<Node> aNN = new ArrayList();
     private final double minDistanceSquared = 9.5;
     private final boolean nearest = true;
     private final ahy aNQ;
@@ -66,15 +66,15 @@ public final class PathFinder {
         this.aNL.clear();
         ArrayList<ahy> arrayList = new ArrayList<ahy>();
         arrayList.add(this.aNQ);
-        this.aNL.add(new ahx(this.aNQ, null, arrayList, this.aNQ.c(this.aNR), 0.0, 0.0));
+        this.aNL.add(new Node(this.aNQ, null, arrayList, this.aNQ.c(this.aNR), 0.0, 0.0));
         block0: for (int i2 = 0; i2 < n2; ++i2) {
             ahy ahy2;
-            ahx ahx2;
+            Node ahx2;
             ahy ahy3;
-            this.aNL.sort(new ahw());
+            this.aNL.sort(new NodeComparator());
             int n4 = 0;
             if (this.aNL.size() == 0) break;
-            Iterator<ahx> iterator = new ArrayList<ahx>(this.aNL).iterator();
+            Iterator<Node> iterator = new ArrayList<Node>(this.aNL).iterator();
             do {
                 if (!iterator.hasNext()) continue block0;
                 ahx2 = iterator.next();
@@ -89,7 +89,7 @@ public final class PathFinder {
                 }
             } while ((!PathFinder.checkPositionValidity(ahy3 = ahx2.uS().n(0.0, 1.0, 0.0).uX(), false) || !this.a(ahx2, ahy3, 0.0)) && (!PathFinder.checkPositionValidity(ahy2 = ahx2.uS().n(0.0, -1.0, 0.0).uX(), false) || !this.a(ahx2, ahy2, 0.0)));
         }
-        this.aNN.sort(new ahw());
+        this.aNN.sort(new NodeComparator());
         this.aNM = this.aNN.get(0).uQ();
     }
 
@@ -149,20 +149,20 @@ public final class PathFinder {
         return true;
     }
 
-    public ahx a(ahy ahy2) {
-        for (ahx ahx2 : this.aNN) {
+    public Node a(ahy ahy2) {
+        for (Node ahx2 : this.aNN) {
             if (ahx2.uS().getX() != ahy2.getX() || ahx2.uS().getY() != ahy2.getY() || ahx2.uS().getZ() != ahy2.getZ()) continue;
             return ahx2;
         }
-        for (ahx ahx3 : this.aNL) {
+        for (Node ahx3 : this.aNL) {
             if (ahx3.uS().getX() != ahy2.getX() || ahx3.uS().getY() != ahy2.getY() || ahx3.uS().getZ() != ahy2.getZ()) continue;
             return ahx3;
         }
         return null;
     }
 
-    public boolean a(ahx ahx2, ahy ahy2, double d2) {
-        ahx ahx3 = this.a(ahy2);
+    public boolean a(Node ahx2, ahy ahy2, double d2) {
+        Node ahx3 = this.a(ahy2);
         double d3 = d2;
         if (ahx2 != null) {
             d3 += ahx2.uW();
@@ -182,7 +182,7 @@ public final class PathFinder {
         if (!(ahy2.getX() == this.aNR.getX() && ahy2.getY() == this.aNR.getY() && ahy2.getZ() == this.aNR.getZ() || ahy2.c(this.aNR) <= 9.5)) {
             ArrayList<ahy> arrayList = new ArrayList<ahy>(ahx2.uQ());
             arrayList.add(ahy2);
-            this.aNL.add(new ahx(ahy2, ahx2, arrayList, ahy2.c(this.aNR), d2, d3));
+            this.aNL.add(new Node(ahy2, ahx2, arrayList, ahy2.c(this.aNR), d2, d3));
             return false;
         }
         if (ahx2 == null) return false;

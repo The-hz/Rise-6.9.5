@@ -14,14 +14,14 @@ import com.alan.clients.util.file.config.ConfigFile;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.google.gson.JsonObject;
-import hackclient.rise.ui.screen.acm;
+import hackclient.rise.ui.screen.PaletteHistoryEntry;
 import hackclient.rise.ui.screen.BindSuggestionProvider;
 import hackclient.rise.ui.screen.ClipSuggestionProvider;
 import hackclient.rise.ui.screen.ConfigSuggestionProvider;
 import hackclient.rise.ui.screen.CommandEntry;
 import hackclient.rise.ui.screen.FriendSuggestionProvider;
 import hackclient.rise.ui.screen.InsultSuggestionProvider;
-import hackclient.rise.ui.screen.acu;
+import hackclient.rise.ui.screen.PaletteSuggestionRecord;
 import hackclient.rise.ui.screen.ModuleSuggestionProvider;
 import hackclient.rise.ui.screen.ScriptSuggestionProvider;
 import hackclient.rise.ui.screen.SpotifySuggestionProvider;
@@ -35,17 +35,17 @@ import com.alan.clients.util.MouseUtil;
 import hackclient.rise.afj;
 import hackclient.rise.agc;
 import hackclient.rise.agk;
-import hackclient.rise.agl;
+import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
-import hackclient.rise.agw;
+import com.alan.clients.util.ime.PinyinInputHandler;
 import hackclient.rise.agx;
 import hackclient.rise.ahd;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
-import hackclient.rise.p;
-import hackclient.rise.u;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
+import com.alan.clients.util.interfaces.Bindable;
+import com.alan.clients.command.CommandResult;
 import java.awt.Color;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -68,12 +68,12 @@ extends GuiScreen {
     private static final double aAm = 28.0;
     private static final double aAn = 2.0;
     private static final long aAo = 3000L;
-    private static final agc aAp = FontManager.MAIN.a(17, gd.MEDIUM);
-    private static final agc aAq = FontManager.MAIN.a(13, gd.REGULAR);
-    private static final agc aAr = FontManager.MAIN.a(12, gd.REGULAR);
+    private static final agc aAp = FontManager.MAIN.a(17, FontWeight.MEDIUM);
+    private static final agc aAq = FontManager.MAIN.a(13, FontWeight.REGULAR);
+    private static final agc aAr = FontManager.MAIN.a(12, FontWeight.REGULAR);
     private final GuiScreen aAs;
     private final TextBox aAt;
-    private final agw aAu = new agw();
+    private final PinyinInputHandler aAu = new PinyinInputHandler();
     private final agk aAv = new agk();
     private final Animation aAw = new Animation(Easing.EASE_OUT_QUAD, 1L);
     private final a aAx = new a();
@@ -117,8 +117,8 @@ extends GuiScreen {
             Interface interface_ = (Interface)this.e(Interface.class);
             if (interface_ != null && ((Boolean)interface_.aoc.wo()).booleanValue()) {
                 Color color = ColorUtil.d(Themes.rK(), 255);
-                this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(this.aAF, this.aAG, this.aAH, this.aAI, d2, color));
-                this.b(gg.BLOOM).c(() -> RenderUtil.roundedRectangle(this.aAF, this.aAG, this.aAH, this.aAI, d2 + 2.0, this.rz().rE()));
+                this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(this.aAF, this.aAG, this.aAH, this.aAI, d2, color));
+                this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.roundedRectangle(this.aAF, this.aAG, this.aAH, this.aAI, d2 + 2.0, this.rz().rE()));
             }
             return;
         }
@@ -129,7 +129,7 @@ extends GuiScreen {
 
     public CommandPalette(GuiScreen guiScreen) {
         this.aAs = guiScreen;
-        this.aAt = new TextBox(new Vector2d(0.0, 0.0), FontManager.MAIN.a(20, gd.REGULAR), Color.WHITE, agl.LEFT, ahd.ce("ui.command.palette.placeholder"), 400.0f);
+        this.aAt = new TextBox(new Vector2d(0.0, 0.0), FontManager.MAIN.a(20, FontWeight.REGULAR), Color.WHITE, TextAlign.LEFT, ahd.ce("ui.command.palette.placeholder"), 400.0f);
         this.aAt.I(true);
         this.aAt.bW(".");
         this.aAt.ar(1);
@@ -429,7 +429,7 @@ extends GuiScreen {
                     double d9 = f2 - 2.0f;
                     double d10 = f3 + aAp.height() + 6.0f;
                     double d11 = 8.0;
-                    this.b(gg.BLOOM).c(() -> RenderUtil.roundedRectangle(d9, d10, d7, d8, d11 + 2.0, this.rz().rE()));
+                    this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.roundedRectangle(d9, d10, d7, d8, d11 + 2.0, this.rz().rE()));
                     RenderUtil.roundedRectangle(d9, d10, d7, d8, d11, ColorUtil.d(Themes.rK(), 190));
                     aAp.a(string5, d9 + d6, d10 + d6, ColorUtil.d(Color.WHITE, 230).getRGB());
                 }
@@ -575,7 +575,7 @@ extends GuiScreen {
             this.a(commandEntry, d3 + 8.0, d9 + 5.0, d4 - 16.0, d2);
         }
         if (n4 == 0) {
-            agc agc2 = FontManager.MAIN.a(15, gd.REGULAR);
+            agc agc2 = FontManager.MAIN.a(15, FontWeight.REGULAR);
             String string = this.rd();
             agc2.c(string, this.aAK + this.aAM / 2.0, this.aAL + this.aAN / 2.0 - (double)agc2.height() / 2.0, ColorUtil.d(Color.WHITE, (int)(180.0 * d2)).getRGB());
         }
@@ -640,7 +640,7 @@ extends GuiScreen {
             double d3 = 1.0 - (double)this.aAx.aKx() / 3000.0;
             double d4 = Math.max(0.0, Math.min(1.0, d3));
             int n2 = (int)((double)this.statusColor.getAlpha() * d4);
-            agc agc2 = FontManager.MAIN.a(13, gd.MEDIUM);
+            agc agc2 = FontManager.MAIN.a(13, FontWeight.MEDIUM);
             agc2.a(this.statusMessage, this.aAF + -0.5, this.aAG + this.aAI - -0.5 - (double)agc2.height() + 4.0, ColorUtil.d(this.statusColor, n2).getRGB());
         }
     }
@@ -754,17 +754,17 @@ extends GuiScreen {
         if (string.isEmpty()) {
             return;
         }
-        u u2 = Client.a.getCommandManager().a(string, false);
-        if (u2 == u.EXECUTED) {
+        CommandResult u2 = Client.a.getCommandManager().a(string, false);
+        if (u2 == CommandResult.EXECUTED) {
             aEg.displayGuiScreen(this.aAs);
             return;
         }
-        if (u2 != u.UNKNOWN) return;
+        if (u2 != CommandResult.UNKNOWN) return;
         this.a(ahd.ce("command.unknown"), new Color(255, 90, 90));
     }
 
     private boolean ab(int n2) {
-        p p2 = this.qP();
+        Bindable p2 = this.qP();
         if (p2 == null) {
             return false;
         }
@@ -777,7 +777,7 @@ extends GuiScreen {
     }
 
     private boolean ac(int n2) {
-        p p2 = this.qP();
+        Bindable p2 = this.qP();
         if (p2 == null) {
             return false;
         }
@@ -785,23 +785,23 @@ extends GuiScreen {
         return true;
     }
 
-    private void a(p p2, int n2) {
+    private void a(Bindable p2, int n2) {
         String[] stringArray = p2.getAliases();
         if (stringArray == null || stringArray.length == 0) {
             this.a(ahd.ce("command.bind.invalidmodule"), new Color(255, 90, 90));
             return;
         }
         String string = ".bind " + stringArray[0].replace(" ", "") + " " + Bind.c(n2);
-        u u2 = Client.a.getCommandManager().a(string, false);
-        if (u2 == u.EXECUTED) {
+        CommandResult u2 = Client.a.getCommandManager().a(string, false);
+        if (u2 == CommandResult.EXECUTED) {
             aEg.displayGuiScreen(this.aAs);
             return;
         }
-        if (u2 != u.UNKNOWN) return;
+        if (u2 != CommandResult.UNKNOWN) return;
         this.a(ahd.ce("command.unknown"), new Color(255, 90, 90));
     }
 
-    private p qP() {
+    private Bindable qP() {
         if (!this.aAD || this.aAE == null) {
             return null;
         }
@@ -824,7 +824,7 @@ extends GuiScreen {
 
     private void a(CommandEntry commandEntry) {
         String string = "." + commandEntry.aBk;
-        if (Client.a.getCommandManager().a(string, false) == u.EXECUTED) {
+        if (Client.a.getCommandManager().a(string, false) == CommandResult.EXECUTED) {
             aEg.displayGuiScreen(this.aAs);
             return;
         }
@@ -1015,8 +1015,8 @@ extends GuiScreen {
                 catch (Throwable throwable) {}
             }
             if (bl4) {
-                List<acm> list = this.ad(6);
-                for (acm acm2 : list) {
+                List<PaletteHistoryEntry> list = this.ad(6);
+                for (PaletteHistoryEntry acm2 : list) {
                     String string12 = "bind.unbound:" + acm2.aBc;
                     if (!afj2.bF(string12)) continue;
                     this.aAU = string12;
@@ -1029,8 +1029,8 @@ extends GuiScreen {
                 }
             }
             if (bl5) {
-                List<acu> list2 = this.ae(6);
-                for (acu acu2 : list2) {
+                List<PaletteSuggestionRecord> list2 = this.ae(6);
+                for (PaletteSuggestionRecord acu2 : list2) {
                     String string13 = "toggle.recent:" + acu2.aBu;
                     if (!afj2.bF(string13)) continue;
                     this.aAU = string13;
@@ -1043,8 +1043,8 @@ extends GuiScreen {
                 }
             }
             if (bl6) {
-                List<acu> list3 = this.af(6);
-                for (acu acu3 : list3) {
+                List<PaletteSuggestionRecord> list3 = this.af(6);
+                for (PaletteSuggestionRecord acu3 : list3) {
                     String string14 = "module.recent:" + acu3.aBu;
                     if (!afj2.bF(string14)) continue;
                     this.aAU = string14;
@@ -1245,13 +1245,13 @@ extends GuiScreen {
         return n2;
     }
 
-    private List<acm> ad(int n2) {
+    private List<PaletteHistoryEntry> ad(int n2) {
         try {
             if (n2 <= 0) {
                 return Collections.emptyList();
             }
             afj afj2 = afj.sJ();
-            ArrayList<acm> arrayList = new ArrayList<acm>();
+            ArrayList<PaletteHistoryEntry> arrayList = new ArrayList<PaletteHistoryEntry>();
             for (Module module : Client.a.g().ef()) {
                 String string;
                 String string2;
@@ -1295,11 +1295,11 @@ extends GuiScreen {
                     string4 = string10;
                 }
                 if (string3 == null || string4 == null || l2 <= 0L) continue;
-                arrayList.add(new acm(string3, string4, l2));
+                arrayList.add(new PaletteHistoryEntry(string3, string4, l2));
             }
             arrayList.sort((acm2, acm3) -> Long.compare(acm3.aBd, acm2.aBd));
             if (arrayList.size() > n2) {
-                return new ArrayList<acm>(arrayList.subList(0, n2));
+                return new ArrayList<PaletteHistoryEntry>(arrayList.subList(0, n2));
             }
             return arrayList;
         }
@@ -1308,21 +1308,21 @@ extends GuiScreen {
         }
     }
 
-    private List<acu> ae(int n2) {
+    private List<PaletteSuggestionRecord> ae(int n2) {
         return this.a("arg:toggle:0:", 2L, 1L, n2, true);
     }
 
-    private List<acu> af(int n2) {
+    private List<PaletteSuggestionRecord> af(int n2) {
         return this.a("arg:module:0:", 1L, 0L, n2, false);
     }
 
-    private List<acu> a(String string, long l2, long l3, int n2, boolean bl) {
+    private List<PaletteSuggestionRecord> a(String string, long l2, long l3, int n2, boolean bl) {
         try {
             if (n2 <= 0) {
                 return Collections.emptyList();
             }
             afj afj2 = afj.sJ();
-            ArrayList<acu> arrayList = new ArrayList<acu>();
+            ArrayList<PaletteSuggestionRecord> arrayList = new ArrayList<PaletteSuggestionRecord>();
             Iterator<Module> iterator = Client.a.g().ef().iterator();
             while (true) {
                 Iterator<String> iterator2;
@@ -1348,7 +1348,7 @@ extends GuiScreen {
                         return 1;
                     });
                     if (arrayList.size() > n2) {
-                        return new ArrayList<acu>(arrayList.subList(0, n2));
+                        return new ArrayList<PaletteSuggestionRecord>(arrayList.subList(0, n2));
                     }
                     return arrayList;
                 }
@@ -1365,7 +1365,7 @@ extends GuiScreen {
                     string2 = string5;
                 }
                 if (string3 == null || string2 == null || l4 <= 0L) continue;
-                arrayList.add(new acu(string3, string2, l4, module.isEnabled()));
+                arrayList.add(new PaletteSuggestionRecord(string3, string2, l4, module.isEnabled()));
             }
         }
         catch (Throwable throwable) {
@@ -1594,7 +1594,7 @@ extends GuiScreen {
             catch (Throwable throwable) {}
         }
         this.aAV = true;
-        if (Client.a.getCommandManager().a(this.aAR, false) == u.EXECUTED) {
+        if (Client.a.getCommandManager().a(this.aAR, false) == CommandResult.EXECUTED) {
             aEg.displayGuiScreen(this.aAs);
             return;
         }
@@ -1664,7 +1664,7 @@ extends GuiScreen {
         if (this.aAQ == null) {
             return;
         }
-        if (Client.a.getCommandManager().a(this.aAQ, false) == u.EXECUTED) {
+        if (Client.a.getCommandManager().a(this.aAQ, false) == CommandResult.EXECUTED) {
             aEg.displayGuiScreen(this.aAs);
             return;
         }

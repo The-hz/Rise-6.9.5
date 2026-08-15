@@ -12,11 +12,11 @@ import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
-import hackclient.rise.wn;
-import hackclient.rise.wo;
-import hackclient.rise.wp;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
+import com.alan.clients.module.impl.render.blackholeorbit.OrbitBody;
+import com.alan.clients.module.impl.render.blackholeorbit.OrbitParticle;
+import com.alan.clients.module.impl.render.blackholeorbit.TrailBuffer;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,19 +40,19 @@ public final class BlackHoleOrbit extends Module {
     private static final double amp = 2.35;
     private static final double amq = 4000.0;
     private static final int amr = 8;
-    private final wn ams = new wn();
-    private final wn amt = new wn();
-    private final wp amu = new wp(72);
-    private final wp amv = new wp(72);
-    private final ArrayList<wo> amw = new ArrayList<>();
+    private final OrbitBody ams = new OrbitBody();
+    private final OrbitBody amt = new OrbitBody();
+    private final TrailBuffer amu = new TrailBuffer(72);
+    private final TrailBuffer amv = new TrailBuffer(72);
+    private final ArrayList<OrbitParticle> amw = new ArrayList<>();
     private long amx = -1L;
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         this.position.n(new Vector2d(190.0, 135.0));
         Vector2d vector2d = this.position.apP;
-        this.b(gg.BLUR).c(() -> this.d(vector2d));
-        this.b(gg.BLOOM).c(() -> this.e(vector2d));
-        this.b(gg.REGULAR).c(() -> this.c(vector2d));
+        this.b(ShaderQueueType.BLUR).c(() -> this.d(vector2d));
+        this.b(ShaderQueueType.BLOOM).c(() -> this.e(vector2d));
+        this.b(ShaderQueueType.REGULAR).c(() -> this.c(vector2d));
     };
 
     public BlackHoleOrbit() {
@@ -68,7 +68,7 @@ public final class BlackHoleOrbit extends Module {
         double d0 = this.ll();
         RenderUtil.roundedRectangle(var1.x, var1.y, 190.0, 135.0, d0, ColorUtil.d(Themes.rK(), 140));
         String s = this.getName();
-        FontManager.MAIN.a(18, gd.BOLD).b(s, var1.x + 10.0, var1.y + 11.0, this.rz().rA().getRGB());
+        FontManager.MAIN.a(18, FontWeight.BOLD).b(s, var1.x + 10.0, var1.y + 11.0, this.rz().rA().getRGB());
         double d1 = var1.x + 10.0;
         double d2 = var1.y + 28.0;
         RenderUtil.roundedRectangle(d1, d2, 170.0, 97.0, Math.max(3.0, d0 - 1.0), ColorUtil.d(Color.BLACK, 55));
@@ -131,7 +131,7 @@ public final class BlackHoleOrbit extends Module {
             Iterator iterator = this.amw.iterator();
 
             while (iterator.hasNext()) {
-                wo wo = (wo)iterator.next();
+                OrbitParticle wo = (OrbitParticle)iterator.next();
                 wo.amF += d1;
                 double d2 = Math.sqrt(wo.x * wo.x + wo.y * wo.y + 9.0);
                 if (!(wo.amF >= wo.amG) && !(d2 <= 14.0)) {
@@ -144,7 +144,7 @@ public final class BlackHoleOrbit extends Module {
         }
     }
 
-    private void a(wn var1, double var2) {
+    private void a(OrbitBody var1, double var2) {
         if (!var1.dj) {
             var1.amD -= var2;
             if (var1.amD <= 0.0) {
@@ -182,7 +182,7 @@ public final class BlackHoleOrbit extends Module {
         }
     }
 
-    private void a(wo var1, double var2) {
+    private void a(OrbitParticle var1, double var2) {
         double d0 = var1.x * var1.x + var1.y * var1.y + 9.0;
         double d1 = Math.sqrt(d0);
         double d2 = 1.0 / (d0 * d1);
@@ -199,14 +199,14 @@ public final class BlackHoleOrbit extends Module {
         this.a(var1, var3, this.ams, this.amu, this.rz().rA());
         this.a(var1, var3, this.amt, this.amv, this.rz().rB());
 
-        for (wo wo : this.amw) {
+        for (OrbitParticle wo : this.amw) {
             this.a(var1, var3, wo);
         }
 
         RenderUtil.c(var1, var3, 13.2, ColorUtil.d(Color.WHITE, 10));
     }
 
-    private void a(double var1, double var3, wn var5, wp var6, Color var7) {
+    private void a(double var1, double var3, OrbitBody var5, TrailBuffer var6, Color var7) {
         if (var5.dj) {
             int i = var6.lm();
             if (i > 1) {
@@ -241,7 +241,7 @@ public final class BlackHoleOrbit extends Module {
         }
     }
 
-    private void a(double var1, double var3, wo var5) {
+    private void a(double var1, double var3, OrbitParticle var5) {
         int i = var5.amI.lm();
         if (i > 1) {
             for (int j = 0; j < i; j++) {
@@ -293,7 +293,7 @@ public final class BlackHoleOrbit extends Module {
                     d7 += 4000.0 / (v(d2 - (var9 + this.amt.x)) + v(d3 - (var11 + this.amt.y)) + 25.0);
                 }
 
-                for (wo wo : this.amw) {
+                for (OrbitParticle wo : this.amw) {
                     d7 += 1400.0 / (v(d2 - (var9 + wo.x)) + v(d3 - (var11 + wo.y)) + 20.0);
                 }
 
@@ -310,7 +310,7 @@ public final class BlackHoleOrbit extends Module {
         }
     }
 
-    private void b(wn var1, double var2) {
+    private void b(OrbitBody var1, double var2) {
         double d0 = Math.atan2(var1.y, var1.x);
         double cos = Math.cos(d0);
         double sin = Math.sin(d0);
@@ -321,7 +321,7 @@ public final class BlackHoleOrbit extends Module {
         for (int i = 0; i < 9; i++) {
             double d6 = (i / 8.0 * 2.0 - 1.0) * (2.6 * d5);
             double d7 = ThreadLocalRandom.current().nextDouble(-0.8, 0.8);
-            wo wo = new wo();
+            OrbitParticle wo = new OrbitParticle();
             wo.x = var1.x + cos * d6 + d3 * d7;
             wo.y = var1.y + sin * d6 + d4 * d7;
             double d8 = ThreadLocalRandom.current().nextDouble(6.0, 18.0);
@@ -332,7 +332,7 @@ public final class BlackHoleOrbit extends Module {
             wo.amG = 1.6 + ThreadLocalRandom.current().nextDouble(0.0, 1.0);
             wo.amF = 0.0;
             wo.amH = ColorUtil.d(ColorUtil.a(this.rz().rA(), this.rz().rB(), ThreadLocalRandom.current().nextDouble()), 255);
-            wo.amI = new wp(54);
+            wo.amI = new TrailBuffer(54);
             this.amw.add(wo);
         }
     }
@@ -366,7 +366,7 @@ public final class BlackHoleOrbit extends Module {
         this.amw.clear();
     }
 
-    private void a(wn var1, int var2) {
+    private void a(OrbitBody var1, int var2) {
         double d0 = var2 == 1 ? 52.0 : 44.0;
         double d1 = ThreadLocalRandom.current().nextDouble(0.0, Math.PI * 2);
         var1.x = Math.cos(d1) * d0;

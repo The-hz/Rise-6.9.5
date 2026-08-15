@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.dt;
-import hackclient.rise.gg;
+import com.alan.clients.util.shader.ShaderQueueType;
 import org.lwjgl.input.Keyboard;
 import rip.vantage.commons.util.time.a;
 
@@ -21,11 +21,11 @@ public final class ClickGUI extends Module {
     @EventLink(value = 3)
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (this.mode.wo().getName().equals("Modern")) {
-            this.b(gg.REGULAR, 2).c(() -> Client.a.v().cj());
-            this.b(gg.BLOOM, 3).c(() -> Client.a.v().ci());
+            this.b(ShaderQueueType.REGULAR, 2).c(() -> Client.a.v().cj());
+            this.b(ShaderQueueType.BLOOM, 3).c(() -> Client.a.v().ci());
         } else {
-            this.b(gg.REGULAR, 2).c(() -> Client.a.z().cj());
-            this.b(gg.BLOOM, 3).c(() -> Client.a.z().ci());
+            this.b(ShaderQueueType.REGULAR, 2).c(() -> Client.a.z().cj());
+            this.b(ShaderQueueType.BLOOM, 3).c(() -> Client.a.z().ci());
         }
     };
     @EventLink

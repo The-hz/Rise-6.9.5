@@ -1,6 +1,6 @@
 package hackclient.rise.ui.screen;
 
-import hackclient.rise.bx;
+import com.alan.clients.util.social.FriendManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -63,7 +63,7 @@ final class FriendSuggestionProvider implements SuggestionProvider {
         for (EntityPlayer entityplayer : minecraft.theWorld.playerEntities) {
             String s6 = entityplayer.getName();
             String s7 = s6.toLowerCase(Locale.ROOT);
-            if ((s5.isEmpty() || s7.startsWith(s5)) && (!s4.equals("remove") || bx.isFriend(s6))) {
+            if ((s5.isEmpty() || s7.startsWith(s5)) && (!s4.equals("remove") || FriendManager.isFriend(s6))) {
                 arraylist1.add(new Suggestion(s6, "Player", ".f <add/remove> <player>", s6, 1, false));
             }
         }

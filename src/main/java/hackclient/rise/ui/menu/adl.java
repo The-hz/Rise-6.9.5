@@ -5,11 +5,11 @@ import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import hackclient.rise.agc;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
+import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
 
 public class adl extends MenuTextButton {
-    private static final agc aCe = FontManager.MAIN.a(14, gd.LIGHT);
+    private static final agc aCe = FontManager.MAIN.a(14, FontWeight.LIGHT);
     private static final Color aCf = ColorUtil.d(Color.WHITE, 150);
     private final Color aCg;
 

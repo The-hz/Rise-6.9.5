@@ -24,19 +24,19 @@ import com.alan.clients.util.MouseUtil;
 import hackclient.rise.afi;
 import hackclient.rise.agc;
 import hackclient.rise.agk;
-import hackclient.rise.agl;
+import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
-import hackclient.rise.agw;
+import com.alan.clients.util.ime.PinyinInputHandler;
 import hackclient.rise.agx;
 import hackclient.rise.ahd;
 import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.dt;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
-import hackclient.rise.ye;
-import hackclient.rise.yf;
-import hackclient.rise.yl;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
+import com.alan.clients.module.impl.render.chat.ChatImage;
+import com.alan.clients.module.impl.render.chat.ChatImageManager;
+import com.alan.clients.module.impl.render.chat.RiseGuiNewChat;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ extends Module {
     private final BooleanValue background = new BooleanValue("Background", (Module)this, (Boolean)true);
     private final BooleanValue hidePlayerSourceMessages = new BooleanValue("Hide Player Source Messages", (Module)this, (Boolean)false);
     private final BooleanValue imageChat = new BooleanValue("Image Chat", (Module)this, (Boolean)true);
-    private final yf aqD = new yf();
+    private final ChatImageManager aqD = new ChatImageManager();
     private final DragValue aqE = new DragValue("", this, new Vector2d(200.0, 200.0), false, true);
     private final Animation aqF = new Animation(Easing.EASE_OUT_EXPO, 500L);
     private final Animation aqG = new Animation(Easing.EASE_OUT_ELASTIC, 400L);
@@ -83,7 +83,7 @@ extends Module {
     private final agc aqL;
     private static final String aqM = afi.getPrefix();
     private static final String aqN = "[Rise] ";
-    private static final agw aqO = new agw();
+    private static final PinyinInputHandler aqO = new PinyinInputHandler();
     private final BooleanValue pinyinChineseIME;
     private static final String aqQ = Chat.mr();
     private static final int aqR = 100;
@@ -114,7 +114,7 @@ extends Module {
         this.pinyinChineseIME = new BooleanValue("Pinyin Chinese IME", (Module)this, (Boolean)false);
         this.aqS = -1;
         this.aqT = "";
-        this.aqU = new TextBox(new Vector2d(0.0, 0.0), this.aqL, Color.WHITE, agl.LEFT, "", 1000.0f, aqQ);
+        this.aqU = new TextBox(new Vector2d(0.0, 0.0), this.aqL, Color.WHITE, TextAlign.LEFT, "", 1000.0f, aqQ);
         this.bN = new rip.vantage.commons.util.time.a();
         this.aqY = new adz(20);
         this.onKeyboardInput = keyboardInputEvent -> {
@@ -267,14 +267,14 @@ extends Module {
         if (((Boolean)this.background.wo()).booleanValue()) {
             if (bl) {
                 double d3 = this.amf != null ? this.amf.lD() : d2;
-                this.b(gg.REGULAR, 1).c(() -> RenderUtil.roundedRectangle(this.aqE.apP.x, this.aqE.apP.y, this.aqE.aHe.x, this.aqE.aHe.y, d3, Themes.rK()));
-                this.b(gg.BLOOM).c(() -> RenderUtil.roundedRectangle(this.aqE.apP.x + 1.0, this.aqE.apP.y + 1.0, this.aqE.aHe.x - 2.0, this.aqE.aHe.y - 2.0, d3, this.rz().rE()));
-                this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(this.aqE.apP.x, this.aqE.apP.y, this.aqE.aHe.x, this.aqE.aHe.y, d3, Color.BLACK));
+                this.b(ShaderQueueType.REGULAR, 1).c(() -> RenderUtil.roundedRectangle(this.aqE.apP.x, this.aqE.apP.y, this.aqE.aHe.x, this.aqE.aHe.y, d3, Themes.rK()));
+                this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.roundedRectangle(this.aqE.apP.x + 1.0, this.aqE.apP.y + 1.0, this.aqE.aHe.x - 2.0, this.aqE.aHe.y - 2.0, d3, this.rz().rE()));
+                this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(this.aqE.apP.x, this.aqE.apP.y, this.aqE.aHe.x, this.aqE.aHe.y, d3, Color.BLACK));
             } else {
-                this.b(gg.REGULAR, 1).c(() -> RenderUtil.d(this.aqE.apP.x, this.aqE.apP.y, this.aqE.aHe.x, this.aqE.aHe.y, new Color(0, 0, 0, 130)));
+                this.b(ShaderQueueType.REGULAR, 1).c(() -> RenderUtil.d(this.aqE.apP.x, this.aqE.apP.y, this.aqE.aHe.x, this.aqE.aHe.y, new Color(0, 0, 0, 130)));
             }
         }
-        this.b(gg.REGULAR, 1).c(() -> {
+        this.b(ShaderQueueType.REGULAR, 1).c(() -> {
             block29: {
                 block30: {
                     GL11.glEnable(3089);
@@ -314,7 +314,7 @@ extends Module {
                 float f2x;
                 float f3;
                 float f4;
-                ye ye2;
+                ChatImage ye2;
                 net.minecraft.client.gui.a a3;
                 if (iterator.hasNext()) {
                     a3 = (net.minecraft.client.gui.a)iterator.next();
@@ -446,7 +446,7 @@ extends Module {
         return n2;
     }
 
-    private float a(ye ye2) {
+    private float a(ChatImage ye2) {
         if (!((Boolean)this.imageChat.wo()).booleanValue() || ye2 == null || ye2.nc() || !ye2.isLoaded()) {
             return 0.0f;
         }
@@ -458,7 +458,7 @@ extends Module {
         return Math.max(1.0f, (float)((Number)this.width.wo()).doubleValue() - 10.0f);
     }
 
-    private ye a(net.minecraft.client.gui.a a2) {
+    private ChatImage a(net.minecraft.client.gui.a a2) {
         if ((Boolean)this.imageChat.wo() == false) return null;
         if (a2 == null) return null;
         if (!a2.DB()) {
@@ -469,9 +469,9 @@ extends Module {
         if (string == null) {
             return null;
         }
-        ye ye2 = this.aqD.ad(string);
+        ChatImage ye2 = this.aqD.ad(string);
         if (ye2 != null) return ye2;
-        this.aqD.b(new ye(string, a2.Dy(), a2.getChatLineID()));
+        this.aqD.b(new ChatImage(string, a2.Dy(), a2.getChatLineID()));
         return this.aqD.ad(string);
     }
 
@@ -479,11 +479,11 @@ extends Module {
         if (aEg == null || Chat.aEg.ingameGUI == null) {
             return;
         }
-        if (Chat.aEg.ingameGUI.getChatGUI() instanceof yl) {
+        if (Chat.aEg.ingameGUI.getChatGUI() instanceof RiseGuiNewChat) {
             return;
         }
         GuiNewChat guiNewChat = Chat.aEg.ingameGUI.getChatGUI();
-        yl yl2 = new yl(aEg);
+        RiseGuiNewChat yl2 = new RiseGuiNewChat(aEg);
         if (guiNewChat != null) {
             yl2.getSentMessages().addAll(guiNewChat.getSentMessages());
             yl2.EK().addAll(guiNewChat.EK());
@@ -525,7 +525,7 @@ extends Module {
         if (this.aqG.sG() <= 0.0) {
             return;
         }
-        Vector2d vector2d = new Vector2d(this.rz().qd(), (float)Chat.aEg.jY.getScaledHeight() - this.rz().qd() - FontManager.MAIN.a(20, gd.REGULAR).height() - 3.0f);
+        Vector2d vector2d = new Vector2d(this.rz().qd(), (float)Chat.aEg.jY.getScaledHeight() - this.rz().qd() - FontManager.MAIN.a(20, FontWeight.REGULAR).height() - 3.0f);
         Vector2d vector2d2 = new Vector2d(this.aqE.aHe.x, (double)this.aqL.height() + 7.5);
         Runnable runnable = () -> {
             GlStateManager.pushMatrix();
@@ -534,23 +534,23 @@ extends Module {
         };
         if (bl) {
             double d3 = this.amf != null ? this.amf.lD() : 6.0;
-            this.b(gg.REGULAR, 1).c(() -> {
+            this.b(ShaderQueueType.REGULAR, 1).c(() -> {
                 runnable.run();
                 RenderUtil.roundedRectangle(vector2d.x, vector2d.y, vector2d2.x, vector2d2.y, d3, ColorUtil.d(Themes.rK(), Math.min((int)this.aqH.sG(), Themes.rK().getAlpha())));
                 GlStateManager.popMatrix();
             });
-            this.b(gg.BLOOM).c(() -> {
+            this.b(ShaderQueueType.BLOOM).c(() -> {
                 runnable.run();
                 RenderUtil.roundedRectangle(vector2d.x, vector2d.y, vector2d2.x, vector2d2.y, d3, this.rz().rE());
                 GlStateManager.popMatrix();
             });
-            this.b(gg.BLUR).c(() -> {
+            this.b(ShaderQueueType.BLUR).c(() -> {
                 runnable.run();
                 RenderUtil.roundedRectangle(vector2d.x, vector2d.y, vector2d2.x, vector2d2.y, d3, Color.BLACK);
                 GlStateManager.popMatrix();
             });
         } else {
-            this.b(gg.REGULAR, 1).c(() -> {
+            this.b(ShaderQueueType.REGULAR, 1).c(() -> {
                 runnable.run();
                 RenderUtil.d(vector2d.x, vector2d.y, vector2d2.x, vector2d2.y, new Color(0, 0, 0, Math.min((int)this.aqH.sG(), 130)));
                 GlStateManager.popMatrix();
@@ -559,7 +559,7 @@ extends Module {
         this.aqU.setColor(ColorUtil.d(Color.WHITE, (int)this.aqH.sG()));
         this.aqU.c(this.aqL);
         this.aqU.h(new Vector2d(this.rz().qd() + 5.0f, (float)Chat.aEg.jY.getScaledHeight() - this.aqL.height() - this.rz().qd()));
-        this.b(gg.REGULAR, 1).c(() -> {
+        this.b(ShaderQueueType.REGULAR, 1).c(() -> {
             runnable.run();
             this.aqU.draw();
             if (this.ads && ((Boolean)this.pinyinChineseIME.wo()).booleanValue()) {
@@ -609,12 +609,12 @@ extends Module {
                 double d7 = (double)f2 - 4.0;
                 double d8 = (double)f3 - (double)(n2 - 1) * (d3 + 1.0);
                 double d9 = d8 - 2.0;
-                this.b(gg.BLUR).c(() -> {
+                this.b(ShaderQueueType.BLUR).c(() -> {
                     runnable.run();
                     RenderUtil.roundedRectangle(d7, d9, d5, d6, 6.0, Color.BLACK);
                     GlStateManager.popMatrix();
                 });
-                this.b(gg.BLOOM).c(() -> {
+                this.b(ShaderQueueType.BLOOM).c(() -> {
                     runnable.run();
                     RenderUtil.roundedRectangle(d7, d9, d5, d6, 6.0, this.rz().rE());
                     GlStateManager.popMatrix();
@@ -741,7 +741,7 @@ extends Module {
     }
 
     @Generated
-    public yf mz() {
+    public ChatImageManager mz() {
         return this.aqD;
     }
 

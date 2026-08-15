@@ -22,11 +22,11 @@ import hackclient.rise.agc;
 import com.alan.clients.util.math.MathUtil;
 import hackclient.rise.cg;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.value.xg;
-import hackclient.rise.value.xh;
-import hackclient.rise.value.xi;
-import hackclient.rise.zc;
+import com.alan.clients.util.font.FontWeight;
+import hackclient.rise.value.InterfaceModeValue;
+import hackclient.rise.value.ModulesToShowModeValue;
+import hackclient.rise.value.InformationTypeModeValue;
+import com.alan.clients.module.impl.render.interfaces.ArrayListEntry;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,8 +37,8 @@ import rip.vantage.commons.util.time.a;
 
 @ModuleInfo(aliases = "module.render.interface.name", description = "module.render.interface.description", category = Category.RENDER, autoEnabled = true)
 public final class Interface extends Module {
-    private final ModeValue anX = new xg(this, "Mode", this);
-    private final ModeValue anY = new xh(this, "Modules to Show", this);
+    private final ModeValue anX = new InterfaceModeValue(this, "Mode", this);
+    private final ModeValue anY = new ModulesToShowModeValue(this, "Modules to Show", this);
     public BooleanValue suffix = new BooleanValue("Suffix", this, true);
     public BooleanValue lowercase = new BooleanValue("Lowercase", this, false);
     public BooleanValue removeSpaces = new BooleanValue("Remove Spaces", this, false);
@@ -50,12 +50,12 @@ public final class Interface extends Module {
     private final NumberValue bloomCompression = new NumberValue("Bloom Compression", this, 2.0, 1.0, 10.0, 0.1);
     private final NumberValue backgroundAlpha = new NumberValue("Background Alpha", this, 110, 0, 255, 1);
     private final NumberValue roundingRadius = new NumberValue("Rounding Radius", this, 5, 0, 20, 0.5);
-    private List<zc> aok = new ArrayList<>();
-    private List<zc> aol = new ArrayList<>();
-    private ModeValue aom = new xi(this, "Information Type", this);
+    private List<ArrayListEntry> aok = new ArrayList<>();
+    private List<ArrayListEntry> aol = new ArrayList<>();
+    private ModeValue aom = new InformationTypeModeValue(this, "Information Type", this);
     private final a aon = new a();
     private final a aoo = new a();
-    public agc aop = FontManager.MAIN.a(20, gd.MEDIUM);
+    public agc aop = FontManager.MAIN.a(20, FontWeight.MEDIUM);
     public float aoq = 12.0F;
     public float aor;
     @EventLink
@@ -79,7 +79,7 @@ public final class Interface extends Module {
 
         this.aoo.aX();
 
-        for (zc zc : this.aol) {
+        for (ArrayListEntry zc : this.aol) {
             if (zc.ath != 0.0F) {
                 for (Value value : zc.dl().getValues()) {
                     if (value instanceof ModeValue) {
@@ -101,7 +101,7 @@ public final class Interface extends Module {
     });
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1 -> {
-        for (zc zcx : this.aok) {
+        for (ArrayListEntry zcx : this.aok) {
             float f = this.anX.wo().getName().equals("Classic") ? 10.0F : 100.0F;
             if (zcx.dl().isEnabled()) {
                 zcx.ath = Math.min(zcx.ath + (float)this.aon.aKx() / f, 10.0F);
@@ -113,7 +113,7 @@ public final class Interface extends Module {
         float f1 = var1.getScaledResolution().getScaledWidth();
         Vector2f vector2f = new Vector2f(0.0F, 0.0F);
 
-        for (zc zc : this.aol) {
+        for (ArrayListEntry zc : this.aol) {
             if (zc.ath != 0.0F) {
                 zc.atg = new Vector2d(f1 - zc.nu() - zc.nv(), vector2f.getY());
                 if (!zc.dl().isEnabled() && zc.ath < 10.0F) {
@@ -149,7 +149,7 @@ public final class Interface extends Module {
             .ef()
             .stream()
             .sorted(Comparator.comparingDouble(var1 -> -this.aop.getStringWidth(var1.getName())))
-            .forEach(var1 -> this.aok.add(new zc(var1)));
+            .forEach(var1 -> this.aok.add(new ArrayListEntry(var1)));
         this.lx();
     }
 
@@ -162,7 +162,7 @@ public final class Interface extends Module {
     }
 
     public void lx() {
-        for (zc zc : this.aok) {
+        for (ArrayListEntry zc : this.aok) {
             zc.ao(zc.dl().getName());
         }
     }
@@ -227,12 +227,12 @@ public final class Interface extends Module {
     }
 
     @Generated
-    public List<zc> lK() {
+    public List<ArrayListEntry> lK() {
         return this.aok;
     }
 
     @Generated
-    public List<zc> lL() {
+    public List<ArrayListEntry> lL() {
         return this.aol;
     }
 
@@ -322,12 +322,12 @@ public final class Interface extends Module {
     }
 
     @Generated
-    public void n(List<zc> var1) {
+    public void n(List<ArrayListEntry> var1) {
         this.aok = var1;
     }
 
     @Generated
-    public void o(List<zc> var1) {
+    public void o(List<ArrayListEntry> var1) {
         this.aol = var1;
     }
 
@@ -356,7 +356,7 @@ public final class Interface extends Module {
         this.aor = var1;
     }
 
-    private static void a(zc var0) {
+    private static void a(ArrayListEntry var0) {
         var0.apP = var0.atg;
     }
 }

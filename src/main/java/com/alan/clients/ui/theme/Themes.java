@@ -3,7 +3,7 @@ package com.alan.clients.ui.theme;
 import com.alan.clients.Client;
 import com.alan.clients.module.impl.render.Interface;
 import com.alan.clients.util.vector.Vector2d;
-import hackclient.rise.adw;
+import com.alan.clients.ui.theme.KeyColors;
 import com.alan.clients.util.render.ColorUtil;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -13,45 +13,45 @@ import lombok.Generated;
 import net.minecraft.util.EnumChatFormatting;
 
 public enum Themes {
-    AUBERGINE("Aubergine", new Color(170, 7, 107), new Color(97, 4, 95), EnumChatFormatting.DARK_PURPLE, adw.PURPLE, adw.RED),
-    AQUA("Aqua", new Color(185, 250, 255), new Color(79, 199, 200), EnumChatFormatting.AQUA, adw.AQUA),
-    BANANA("Banana", new Color(253, 236, 177), new Color(255, 255, 255), EnumChatFormatting.YELLOW, adw.YELLOW),
-    BLEND("Blend", new Color(71, 148, 253), new Color(71, 253, 160), EnumChatFormatting.AQUA, adw.AQUA, adw.LIME),
-    BLOSSOM("Blossom", new Color(226, 208, 249), new Color(49, 119, 115), EnumChatFormatting.DARK_AQUA, adw.PINK, adw.GRAY),
-    BUBBLEGUM("Bubblegum", new Color(243, 145, 216), new Color(152, 165, 243), EnumChatFormatting.LIGHT_PURPLE, adw.PINK, adw.PURPLE),
-    CANDY_CANE("Candy Cane", new Color(255, 0, 0), new Color(255, 255, 255), EnumChatFormatting.RED, adw.RED),
-    CHERRY("Cherry", new Color(187, 55, 125), new Color(251, 211, 233), EnumChatFormatting.RED, adw.RED, adw.PURPLE, adw.PINK),
-    CHRISTMAS("Christmas", new Color(255, 64, 64), new Color(255, 255, 255), new Color(64, 255, 64), EnumChatFormatting.RED, adw.RED, adw.LIME),
-    CORAL("Coral", new Color(244, 168, 150), new Color(52, 133, 151), EnumChatFormatting.DARK_AQUA, adw.PINK, adw.ORANGE, adw.DARK_BLUE),
-    DIGITAL_HORIZON("Digital Horizon", new Color(95, 195, 228), new Color(229, 93, 135), EnumChatFormatting.AQUA, adw.AQUA, adw.RED, adw.PINK),
-    EXPRESS("Express", new Color(173, 83, 137), new Color(60, 16, 83), EnumChatFormatting.DARK_PURPLE, adw.PURPLE, adw.PINK),
-    LIME_WATER("Lime Water", new Color(18, 255, 247), new Color(179, 255, 171), EnumChatFormatting.AQUA, adw.AQUA, adw.LIME),
-    LUSH("Lush", new Color(168, 224, 99), new Color(86, 171, 47), EnumChatFormatting.GREEN, adw.LIME, adw.DARK_GREEN),
-    HALOGEN("Halogen", new Color(255, 65, 108), new Color(255, 75, 43), EnumChatFormatting.RED, adw.RED, adw.ORANGE),
-    HYPER("Hyper", new Color(236, 110, 173), new Color(52, 148, 230), EnumChatFormatting.LIGHT_PURPLE, adw.PINK, adw.DARK_BLUE, adw.AQUA),
-    MAGIC("Magic", new Color(74, 0, 224), new Color(142, 45, 226), EnumChatFormatting.BLUE, adw.DARK_BLUE, adw.PURPLE),
-    MAY("May", new Color(238, 79, 238), new Color(253, 219, 245), EnumChatFormatting.LIGHT_PURPLE, adw.PINK, adw.PURPLE),
-    ORANGE_JUICE("Orange Juice", new Color(252, 74, 26), new Color(247, 183, 51), EnumChatFormatting.GOLD, adw.ORANGE, adw.YELLOW),
-    PASTEL("Pastel", new Color(243, 155, 178), new Color(207, 196, 243), EnumChatFormatting.LIGHT_PURPLE, adw.PINK),
-    PUMPKIN("Pumpkin", new Color(241, 166, 98), new Color(255, 216, 169), new Color(227, 139, 42), EnumChatFormatting.GOLD, adw.ORANGE),
-    SATIN("Satin", new Color(215, 60, 67), new Color(140, 23, 39), EnumChatFormatting.RED, adw.RED),
-    SNOWY_SKY("Snowy Sky", new Color(1, 171, 179), new Color(234, 234, 234), new Color(18, 232, 232), EnumChatFormatting.AQUA, adw.AQUA, adw.GRAY),
-    STEEL_FADE("Steel Fade", new Color(66, 134, 244), new Color(55, 59, 68), EnumChatFormatting.BLUE, adw.DARK_BLUE, adw.GRAY),
-    SUNDAE("Sundae", new Color(206, 74, 126), new Color(122, 44, 77), EnumChatFormatting.RED, adw.PINK, adw.PURPLE, adw.RED),
-    SUNKIST("Sunkist", new Color(242, 201, 76), new Color(242, 153, 74), EnumChatFormatting.YELLOW, adw.YELLOW, adw.ORANGE),
-    WATER("Water", new Color(12, 232, 199), new Color(12, 163, 232), EnumChatFormatting.AQUA, adw.AQUA, adw.DARK_BLUE),
-    LEGACY("Legacy", new Color(7393023), new Color(7393023), EnumChatFormatting.AQUA, adw.AQUA, adw.DARK_BLUE),
-    WINTER("Winter", Color.WHITE, Color.WHITE, EnumChatFormatting.GRAY, adw.GRAY, adw.GRAY),
-    PEONY("Peony", new Color(226, 208, 249), new Color(207, 171, 255), EnumChatFormatting.DARK_AQUA, adw.PINK, adw.GRAY),
-    SHADOW("Shadow", new Color(97, 131, 255), new Color(206, 212, 255), EnumChatFormatting.AQUA, adw.AQUA),
-    WOOD("Wood", new Color(79, 109, 81), new Color(170, 139, 87), new Color(240, 235, 206), EnumChatFormatting.DARK_GREEN, adw.DARK_GREEN),
-    CREIDA("Creida", new Color(-11644304).brighter().brighter(), new Color(-11644304).darker(), EnumChatFormatting.NONE, adw.GRAY),
-    CREIDA_TWO("Creida Two", new Color(-6632725), new Color(-8406042).darker(), EnumChatFormatting.NONE, adw.GRAY),
-    GOTHIC("Gothic", new Color(31, 30, 30), new Color(196, 190, 190), EnumChatFormatting.NONE, adw.GRAY),
-    SEN("Rue", new Color(234, 118, 176), new Color(31, 30, 30), EnumChatFormatting.DARK_PURPLE, adw.PINK),
+    AUBERGINE("Aubergine", new Color(170, 7, 107), new Color(97, 4, 95), EnumChatFormatting.DARK_PURPLE, KeyColors.PURPLE, KeyColors.RED),
+    AQUA("Aqua", new Color(185, 250, 255), new Color(79, 199, 200), EnumChatFormatting.AQUA, KeyColors.AQUA),
+    BANANA("Banana", new Color(253, 236, 177), new Color(255, 255, 255), EnumChatFormatting.YELLOW, KeyColors.YELLOW),
+    BLEND("Blend", new Color(71, 148, 253), new Color(71, 253, 160), EnumChatFormatting.AQUA, KeyColors.AQUA, KeyColors.LIME),
+    BLOSSOM("Blossom", new Color(226, 208, 249), new Color(49, 119, 115), EnumChatFormatting.DARK_AQUA, KeyColors.PINK, KeyColors.GRAY),
+    BUBBLEGUM("Bubblegum", new Color(243, 145, 216), new Color(152, 165, 243), EnumChatFormatting.LIGHT_PURPLE, KeyColors.PINK, KeyColors.PURPLE),
+    CANDY_CANE("Candy Cane", new Color(255, 0, 0), new Color(255, 255, 255), EnumChatFormatting.RED, KeyColors.RED),
+    CHERRY("Cherry", new Color(187, 55, 125), new Color(251, 211, 233), EnumChatFormatting.RED, KeyColors.RED, KeyColors.PURPLE, KeyColors.PINK),
+    CHRISTMAS("Christmas", new Color(255, 64, 64), new Color(255, 255, 255), new Color(64, 255, 64), EnumChatFormatting.RED, KeyColors.RED, KeyColors.LIME),
+    CORAL("Coral", new Color(244, 168, 150), new Color(52, 133, 151), EnumChatFormatting.DARK_AQUA, KeyColors.PINK, KeyColors.ORANGE, KeyColors.DARK_BLUE),
+    DIGITAL_HORIZON("Digital Horizon", new Color(95, 195, 228), new Color(229, 93, 135), EnumChatFormatting.AQUA, KeyColors.AQUA, KeyColors.RED, KeyColors.PINK),
+    EXPRESS("Express", new Color(173, 83, 137), new Color(60, 16, 83), EnumChatFormatting.DARK_PURPLE, KeyColors.PURPLE, KeyColors.PINK),
+    LIME_WATER("Lime Water", new Color(18, 255, 247), new Color(179, 255, 171), EnumChatFormatting.AQUA, KeyColors.AQUA, KeyColors.LIME),
+    LUSH("Lush", new Color(168, 224, 99), new Color(86, 171, 47), EnumChatFormatting.GREEN, KeyColors.LIME, KeyColors.DARK_GREEN),
+    HALOGEN("Halogen", new Color(255, 65, 108), new Color(255, 75, 43), EnumChatFormatting.RED, KeyColors.RED, KeyColors.ORANGE),
+    HYPER("Hyper", new Color(236, 110, 173), new Color(52, 148, 230), EnumChatFormatting.LIGHT_PURPLE, KeyColors.PINK, KeyColors.DARK_BLUE, KeyColors.AQUA),
+    MAGIC("Magic", new Color(74, 0, 224), new Color(142, 45, 226), EnumChatFormatting.BLUE, KeyColors.DARK_BLUE, KeyColors.PURPLE),
+    MAY("May", new Color(238, 79, 238), new Color(253, 219, 245), EnumChatFormatting.LIGHT_PURPLE, KeyColors.PINK, KeyColors.PURPLE),
+    ORANGE_JUICE("Orange Juice", new Color(252, 74, 26), new Color(247, 183, 51), EnumChatFormatting.GOLD, KeyColors.ORANGE, KeyColors.YELLOW),
+    PASTEL("Pastel", new Color(243, 155, 178), new Color(207, 196, 243), EnumChatFormatting.LIGHT_PURPLE, KeyColors.PINK),
+    PUMPKIN("Pumpkin", new Color(241, 166, 98), new Color(255, 216, 169), new Color(227, 139, 42), EnumChatFormatting.GOLD, KeyColors.ORANGE),
+    SATIN("Satin", new Color(215, 60, 67), new Color(140, 23, 39), EnumChatFormatting.RED, KeyColors.RED),
+    SNOWY_SKY("Snowy Sky", new Color(1, 171, 179), new Color(234, 234, 234), new Color(18, 232, 232), EnumChatFormatting.AQUA, KeyColors.AQUA, KeyColors.GRAY),
+    STEEL_FADE("Steel Fade", new Color(66, 134, 244), new Color(55, 59, 68), EnumChatFormatting.BLUE, KeyColors.DARK_BLUE, KeyColors.GRAY),
+    SUNDAE("Sundae", new Color(206, 74, 126), new Color(122, 44, 77), EnumChatFormatting.RED, KeyColors.PINK, KeyColors.PURPLE, KeyColors.RED),
+    SUNKIST("Sunkist", new Color(242, 201, 76), new Color(242, 153, 74), EnumChatFormatting.YELLOW, KeyColors.YELLOW, KeyColors.ORANGE),
+    WATER("Water", new Color(12, 232, 199), new Color(12, 163, 232), EnumChatFormatting.AQUA, KeyColors.AQUA, KeyColors.DARK_BLUE),
+    LEGACY("Legacy", new Color(7393023), new Color(7393023), EnumChatFormatting.AQUA, KeyColors.AQUA, KeyColors.DARK_BLUE),
+    WINTER("Winter", Color.WHITE, Color.WHITE, EnumChatFormatting.GRAY, KeyColors.GRAY, KeyColors.GRAY),
+    PEONY("Peony", new Color(226, 208, 249), new Color(207, 171, 255), EnumChatFormatting.DARK_AQUA, KeyColors.PINK, KeyColors.GRAY),
+    SHADOW("Shadow", new Color(97, 131, 255), new Color(206, 212, 255), EnumChatFormatting.AQUA, KeyColors.AQUA),
+    WOOD("Wood", new Color(79, 109, 81), new Color(170, 139, 87), new Color(240, 235, 206), EnumChatFormatting.DARK_GREEN, KeyColors.DARK_GREEN),
+    CREIDA("Creida", new Color(-11644304).brighter().brighter(), new Color(-11644304).darker(), EnumChatFormatting.NONE, KeyColors.GRAY),
+    CREIDA_TWO("Creida Two", new Color(-6632725), new Color(-8406042).darker(), EnumChatFormatting.NONE, KeyColors.GRAY),
+    GOTHIC("Gothic", new Color(31, 30, 30), new Color(196, 190, 190), EnumChatFormatting.NONE, KeyColors.GRAY),
+    SEN("Rue", new Color(234, 118, 176), new Color(31, 30, 30), EnumChatFormatting.DARK_PURPLE, KeyColors.PINK),
     PURPLE("Purple", new Color(5391249), new Color(5391249).brighter(), EnumChatFormatting.NONE),
     TEST("Rainbow", var0 -> ColorUtil.aB((int)((var0.getX() + var0.getY()) * 10.0)), EnumChatFormatting.RED),
-    NORD("Nord", new Color(143, 188, 187), new Color(163, 190, 140), new Color(236, 239, 244), EnumChatFormatting.AQUA, adw.AQUA, adw.GRAY);
+    NORD("Nord", new Color(143, 188, 187), new Color(163, 190, 140), new Color(236, 239, 244), EnumChatFormatting.AQUA, KeyColors.AQUA, KeyColors.GRAY);
 
     private final String themeName;
     private Color aDL = null;
@@ -59,12 +59,12 @@ public enum Themes {
     private Color aDN = null;
     private Function<Vector2d, Color> aDO;
     private final EnumChatFormatting chatAccentColor;
-    private final ArrayList<adw> keyColors;
+    private final ArrayList<KeyColors> keyColors;
     private final boolean triColor;
     static Color aDS = new Color(0, 0, 0, 110);
     private static final Themes[] $VALUES = rL();
 
-    Themes(String themeName, Color color, Color var5, EnumChatFormatting chatAccentColor, adw... var7) {
+    Themes(String themeName, Color color, Color var5, EnumChatFormatting chatAccentColor, KeyColors... var7) {
         this.themeName = themeName;
         this.aDL = this.aDN = color;
         this.aDM = var5;
@@ -73,7 +73,7 @@ public enum Themes {
         this.triColor = false;
     }
 
-    Themes(String themeName, Color color, Color var5, Color var6, EnumChatFormatting chatAccentColor, adw... var8) {
+    Themes(String themeName, Color color, Color var5, Color var6, EnumChatFormatting chatAccentColor, KeyColors... var8) {
         this.themeName = themeName;
         this.aDL = color;
         this.aDM = var5;
@@ -83,7 +83,7 @@ public enum Themes {
         this.triColor = true;
     }
 
-    Themes(String themeName, Function<Vector2d, Color> function, EnumChatFormatting chatAccentColor, adw... var6) {
+    Themes(String themeName, Function<Vector2d, Color> function, EnumChatFormatting chatAccentColor, KeyColors... var6) {
         this.themeName = themeName;
         this.aDO = function;
         this.chatAccentColor = chatAccentColor;
@@ -158,7 +158,7 @@ public enum Themes {
     }
 
     @Generated
-    public ArrayList<adw> getKeyColors() {
+    public ArrayList<KeyColors> getKeyColors() {
         return this.keyColors;
     }
 

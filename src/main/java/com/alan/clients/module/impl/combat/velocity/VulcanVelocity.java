@@ -27,7 +27,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -196,7 +196,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                 default:
             }
 
-            List list = bv.f(12.0);
+            List list = TargetComponent.f(12.0);
             list.sort(Comparator.comparingDouble(var0 -> ((EntityLivingBase)var0).hurtTime));
             if (list.isEmpty()) {
                 this.pY = null;

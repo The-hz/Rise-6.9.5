@@ -1,0 +1,19 @@
+package com.alan.clients.util.shader.impl;
+
+import hackclient.rise.aiz;
+
+class BloomShaderSwitchMap {
+    static final int[] aQb = new int[aiz.values().length];
+
+    static {
+        try {
+            aQb[aiz.CAMERA.ordinal()] = 1;
+        } catch (NoSuchFieldError nosuchfielderror1) {
+        }
+
+        try {
+            aQb[aiz.OVERLAY.ordinal()] = 2;
+        } catch (NoSuchFieldError nosuchfielderror) {
+        }
+    }
+}

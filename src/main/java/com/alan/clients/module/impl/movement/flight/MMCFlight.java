@@ -10,7 +10,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.component.bc;
+import com.alan.clients.component.impl.player.PacketQueueComponent;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 
 public class MMCFlight extends Mode<Flight> {
@@ -23,7 +23,7 @@ public class MMCFlight extends Mode<Flight> {
             MoveUtil.stop();
             if (this.ticks == 1 && PlayerUtil.p(0.0, -2.5, 0.0).isFullBlock()) {
                 aEg.timer.dzD = 0.1F;
-                bc.cR = true;
+                PacketQueueComponent.cR = true;
                 PacketUtil.l(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, true));
                 PacketUtil.l(
                     new C04PacketPlayerPosition(
@@ -59,7 +59,7 @@ public class MMCFlight extends Mode<Flight> {
 
     @Override
     public void onDisable() {
-        bc.cR = false;
+        PacketQueueComponent.cR = false;
         MoveUtil.stop();
     }
 }

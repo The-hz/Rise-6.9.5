@@ -15,7 +15,7 @@ import hackclient.rise.afi;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Map.Entry;
@@ -38,7 +38,7 @@ public final class Data extends Module {
     private double Un;
     @EventLink
     public final Listener<PostMotionEvent> onPostMotion = var1 -> {
-        this.by = bv.e(16.0);
+        this.by = TargetComponent.e(16.0);
         if (this.by == null) {
             this.Uh.aX();
         } else {

@@ -11,7 +11,7 @@ import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 import org.json.JSONObject;
 
-@ClientEndpoint(configurator = a.class)
+@ClientEndpoint(configurator = WebSocketConfigurator.class)
 public class c {
     private rip.vantage.network.core.a eRA;
     private Session eRB;

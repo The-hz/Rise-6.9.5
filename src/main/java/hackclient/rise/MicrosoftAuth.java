@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.compat.NetworkToggles;
+import com.alan.clients.util.account.dynamic.DynamicAccountResult;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -20,7 +21,7 @@ public class MicrosoftAuth {
     public MicrosoftAuth() {
     }
 
-    public static afo[] sX() {
+    public static DynamicAccountResult[] sX() {
         //add code
         if (!NetworkToggles.altService()) {
             return null;
@@ -47,14 +48,14 @@ public class MicrosoftAuth {
 
             JsonObject jsonobject1 = JsonParser.parseString(stringbuilder.toString()).getAsJsonObject();
             JsonArray jsonarray = jsonobject1.get("accounts").getAsJsonArray();
-            afo[] aafo = new afo[jsonarray.size()];
+            DynamicAccountResult[] aafo = new DynamicAccountResult[jsonarray.size()];
             if (aafo.length == 0) {
                 return null;
             }
 
             for (int i = 0; i < jsonarray.size(); i++) {
                 JsonObject jsonobject2 = jsonarray.get(i).getAsJsonObject();
-                afo afo = aHf.fromJson(jsonobject2, afo.class);
+                DynamicAccountResult afo = aHf.fromJson(jsonobject2, DynamicAccountResult.class);
                 aafo[i] = afo;
             }
 

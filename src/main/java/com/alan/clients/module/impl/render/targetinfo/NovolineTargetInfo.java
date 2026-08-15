@@ -12,7 +12,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.bf;
-import hackclient.rise.gg;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.Gui;
@@ -82,7 +82,7 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
         double d14 = aEg.fontRendererObj.getStringWidth(s2);
         aEg.fontRendererObj.b(s2, d0 + 44.0 + d10 / 2.0 - d14 / 2.0, d1 + 24.5, Color.WHITE.getRGB());
         if (this.nF()) {
-            this.b(gg.BLOOM).c(() -> {
+            this.b(ShaderQueueType.BLOOM).c(() -> {
                 RenderUtil.d(d0 + 44.0, d1 + 22.0, d13, 11.0, this.rz().rA());
                 RenderUtil.d(d0 + 44.0, d1 + 22.0, d12, 11.0, ColorUtil.a(this.rz().rB(), 0.5F));
             });

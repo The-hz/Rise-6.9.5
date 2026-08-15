@@ -16,8 +16,8 @@ import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.adz;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 
 @ModuleInfo(aliases = "module.render.cpscounter.name", description = "module.render.cpscounter.description", category = Category.RENDER)
@@ -33,9 +33,9 @@ public final class CPSCounter extends Module {
         Vector2d vector2d = this.position.apP;
         String s = this.showTitle.wo() ? "CPS " : "";
         String s1 = this.cps + "";
-        float f = FontManager.MAIN.a(20, gd.BOLD).getStringWidth(s);
-        this.scale.x = f + FontManager.MAIN.a(20, gd.REGULAR).getStringWidth(s1);
-        this.b(gg.REGULAR, 1).c(() -> {
+        float f = FontManager.MAIN.a(20, FontWeight.BOLD).getStringWidth(s);
+        this.scale.x = f + FontManager.MAIN.a(20, FontWeight.REGULAR).getStringWidth(s1);
+        this.b(ShaderQueueType.REGULAR, 1).c(() -> {
             double d2 = vector2d.x;
             double d3 = vector2d.y;
             double d4 = this.scale.x + 6.0F;
@@ -45,12 +45,12 @@ public final class CPSCounter extends Module {
             RenderUtil.roundedRectangle(d2, d3, d4, d5, d6, Themes.rK());
             this.position.n(new Vector2d(this.scale.x + 6.0F, this.scale.y - 1.0F));
             double d0 = vector2d.x + 3.0;
-            double d1 = vector2d.y + this.scale.y / 2.0F - FontManager.MAIN.a(20, gd.REGULAR).height() / 4.0F;
-            FontManager.MAIN.a(20, gd.BOLD).b(s, d0, d1, this.rz().rA().getRGB());
-            FontManager.MAIN.a(20, gd.REGULAR).b(s1, d0 + f, d1, Color.WHITE.getRGB());
+            double d1 = vector2d.y + this.scale.y / 2.0F - FontManager.MAIN.a(20, FontWeight.REGULAR).height() / 4.0F;
+            FontManager.MAIN.a(20, FontWeight.BOLD).b(s, d0, d1, this.rz().rA().getRGB());
+            FontManager.MAIN.a(20, FontWeight.REGULAR).b(s1, d0 + f, d1, Color.WHITE.getRGB());
         });
-        this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(vector2d.x, vector2d.y, this.scale.x + 6.0F, this.scale.y - 1.0F, this.rz().getRound(), Color.BLACK));
-        this.b(gg.BLOOM)
+        this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(vector2d.x, vector2d.y, this.scale.x + 6.0F, this.scale.y - 1.0F, this.rz().getRound(), Color.BLACK));
+        this.b(ShaderQueueType.BLOOM)
             .c(
                 () -> RenderUtil.roundedRectangle(
                     vector2d.x + 0.5, vector2d.y + 0.5, this.scale.x + 6.0F - 1.0F, this.scale.y - 2.0F, this.rz().getRound() + 1, this.rz().rE()

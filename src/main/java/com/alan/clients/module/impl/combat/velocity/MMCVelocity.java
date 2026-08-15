@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
@@ -26,7 +26,7 @@ public final class MMCVelocity extends Mode<Velocity> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress) {
-            bv.f(7.0);
+            TargetComponent.f(7.0);
             if (aEg.thePlayer.onGround && aEg.thePlayer.hurtTime > 0) {
                 BadPacketsComponent.bad(false, true, false, false, false);
             }

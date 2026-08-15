@@ -24,9 +24,9 @@ import hackclient.rise.ais;
 import com.alan.clients.util.render.particle.Particle;
 import hackclient.rise.bf;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
-import hackclient.rise.value.zy;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
+import hackclient.rise.value.CreidaBackgroundModeValue;
 import java.awt.Color;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.Gui;
@@ -37,9 +37,9 @@ import net.minecraft.util.ResourceLocation;
 
 public class CreidaModernTargetInfo extends Mode<TargetInfo> {
     private final BooleanValue particles = new BooleanValue("Particles", this, true);
-    private final agc aur = FontManager.MAIN.a(22, gd.LIGHT);
-    private final agc aus = FontManager.MAIN.a(22, gd.MEDIUM);
-    private final ModeValue aut = new zy(this, "Background Mode", this);
+    private final agc aur = FontManager.MAIN.a(22, FontWeight.LIGHT);
+    private final agc aus = FontManager.MAIN.a(22, FontWeight.MEDIUM);
+    private final ModeValue aut = new CreidaBackgroundModeValue(this, "Background Mode", this);
     private TargetInfo aui;
     private final int auu = 10;
     private final int auv = 6;
@@ -53,8 +53,8 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
             this.aui = this.e(TargetInfo.class);
         }
 
-        this.b(gg.BLOOM).c(NotificationComponent::ci);
-        this.b(gg.REGULAR, 1).c(NotificationComponent::cj);
+        this.b(ShaderQueueType.BLOOM).c(NotificationComponent::ci);
+        this.b(ShaderQueueType.REGULAR, 1).c(NotificationComponent::cj);
         Entity entity = this.aui.target;
         if (entity != null) {
             boolean flag = !this.aui.inWorld || this.aui.rG.T(1000L);
@@ -85,7 +85,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                 double d10 = 42;
                 this.aui.positionValue.n(new Vector2d(d9, d10));
                 double d11 = this.auxx.sG();
-                this.b(gg.REGULAR).c(() -> {
+                this.b(ShaderQueueType.REGULAR).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d9 / 2.0) * (1.0 - d11), (d1 + d10 / 2.0) * (1.0 - d11), 0.0);
                     GlStateManager.scale(d11, d11, 0.0);
@@ -128,7 +128,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                     this.aus.b(String.valueOf(d3), d0 + 10.0 + b0 + 6.0 + d5 + 4.0, d1 + 10.0 + b0 - 4.0 - 8.0, color2.hashCode());
                     GlStateManager.popMatrix();
                 });
-                this.b(gg.REGULAR, 1).c(() -> {
+                this.b(ShaderQueueType.REGULAR, 1).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d9 / 2.0) * (1.0 - d11), (d1 + d10 / 2.0) * (1.0 - d11), 0.0);
                     GlStateManager.scale(d11, d11, 0.0);
@@ -140,14 +140,14 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                     this.a(abstractclientplayer, d0 + 10.0 + d12 / 2.0, d1 + 10.0 + d12 / 2.0, b0 - d7 / 2.0);
                     GlStateManager.popMatrix();
                 });
-                this.b(gg.BLUR).c(() -> {
+                this.b(ShaderQueueType.BLUR).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d9 / 2.0) * (1.0 - d11), (d1 + d10 / 2.0) * (1.0 - d11), 0.0);
                     GlStateManager.scale(d11, d11, 0.0);
                     RenderUtil.roundedRectangle(d0 + 3.0, d1 + 5.0, d9 - 1.0, d10, 11.0, Color.BLACK);
                     GlStateManager.popMatrix();
                 });
-                this.b(gg.BLOOM).c(() -> {
+                this.b(ShaderQueueType.BLOOM).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d9 / 2.0) * (1.0 - d11), (d1 + d10 / 2.0) * (1.0 - d11), 0.0);
                     GlStateManager.scale(d11, d11, 0.0);

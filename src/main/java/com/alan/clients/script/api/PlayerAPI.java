@@ -17,7 +17,7 @@ import com.alan.clients.ui.click.standard.RiseClickGUI;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
 import hackclient.rise.aef;
-import hackclient.rise.ahz;
+import com.alan.clients.util.player.DamageUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
@@ -207,7 +207,7 @@ public class PlayerAPI extends ScriptEntityLiving {
         if (!var1) {
             PacketlessDamageComponent.setActive(var2);
         } else {
-            ahz.ab(0.5);
+            DamageUtil.ab(0.5);
         }
     }
 

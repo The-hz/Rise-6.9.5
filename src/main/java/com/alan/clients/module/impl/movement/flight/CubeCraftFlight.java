@@ -10,8 +10,8 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahz;
-import hackclient.rise.aia;
+import com.alan.clients.util.player.DamageUtil;
+import com.alan.clients.util.player.DamageType;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
@@ -50,6 +50,6 @@ public class CubeCraftFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        ahz.a(aia.POSITION, 3.42F, 1, false, false);
+        DamageUtil.a(DamageType.POSITION, 3.42F, 1, false, false);
     }
 }

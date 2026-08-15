@@ -147,12 +147,12 @@ import com.alan.clients.module.impl.render.TargetInfo;
 import com.alan.clients.module.impl.render.Tracers;
 import com.alan.clients.module.impl.render.UnlimitedChat;
 import com.alan.clients.module.impl.render.ViewBobbing;
-import hackclient.rise.ady;
+import com.alan.clients.util.RegistryMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ModuleManager {
-    public ady<Class<Module>, Module> lt = new ady<>();
+    public RegistryMap<Class<Module>, Module> lt = new RegistryMap<>();
 
     public void e(Module module) {
         this.lt.h(module);
@@ -199,7 +199,7 @@ public class ModuleManager {
     }
 
     public void init() {
-        this.lt = new ady<>();
+        this.lt = new RegistryMap<>();
         this.a(AntiBot.class, new AntiBot());
         this.a(ComboOneHit.class, new ComboOneHit());
         this.a(Criticals.class, new Criticals());

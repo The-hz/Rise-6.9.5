@@ -2,10 +2,10 @@ package hackclient.rise.component.esp;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import com.alan.clients.component.impl.render.espcomponent.api.ESP;
 import com.alan.clients.component.impl.render.espcomponent.api.ESPColor;
-import hackclient.rise.gg;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.util.Iterator;
 import net.minecraft.client.renderer.RenderHelper;
@@ -21,9 +21,9 @@ public class cr extends ESP implements InstanceAccess
 
 
     public void cp() {
-        this.b(gg.BLOOM).c(() -> {
+        this.b(ShaderQueueType.BLOOM).c(() -> {
             final float bWm = cr.aEg.timer.bWm;
-            final Iterator iterator = bv.bR().iterator();
+            final Iterator iterator = TargetComponent.bR().iterator();
             while (iterator.hasNext()) {
                 final Entity entity = (Entity)iterator.next();
                 final Render render = cr.aEg.getRenderManager().getEntityRenderObject(entity);

@@ -15,7 +15,7 @@ import com.alan.clients.value.impl.SubMode;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import net.minecraft.block.BlockAir;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
@@ -49,7 +49,7 @@ public final class KeepRange extends Module {
     };
     @EventLink
     public final Listener<MoveInputEvent> onMoveInput = var1 -> {
-        EntityLivingBase entitylivingbase = bv.e(10.0);
+        EntityLivingBase entitylivingbase = TargetComponent.e(10.0);
         double d0 = this.range.wo().doubleValue();
         if (aEg.thePlayer.aY <= 7) {
             d0 -= 0.2;

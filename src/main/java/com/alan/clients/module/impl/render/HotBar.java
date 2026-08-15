@@ -16,8 +16,8 @@ import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -45,7 +45,7 @@ public class HotBar extends Module {
     private Interface interfaceModule;
     private KillAura gj;
     public final BooleanValue showXPBar = new BooleanValue("Show XP Bar", this, true);
-    private final agc anR = FontManager.MAIN.a(18, gd.MEDIUM);
+    private final agc anR = FontManager.MAIN.a(18, FontWeight.MEDIUM);
     @EventLink
     public final Listener<Render2DEvent> onPreMotionEvent = var1 -> {
         if (aEg.getRenderViewEntity() instanceof EntityPlayer) {
@@ -65,7 +65,7 @@ public class HotBar extends Module {
             this.anN.aX();
             if ("Rise".equals(s)) {
                 double d0 = this.interfaceModule != null ? this.interfaceModule.lD() : 9.0;
-                this.b(gg.BLUR)
+                this.b(ShaderQueueType.BLUR)
                     .c(
                         () -> RenderUtil.roundedRectangle(
                             this.structure.apP.x + 1.0, this.structure.apP.y + 18.0, this.structure.aHe.x - 0.0, this.structure.aHe.y - 18.0, d0, Color.BLACK
@@ -75,7 +75,7 @@ public class HotBar extends Module {
 
             if (this.showXPBar.wo() && entityplayer.experience > 0.0F && "Rise".equals(s)) {
                 double d1 = this.interfaceModule != null ? Math.min(this.interfaceModule.lD(), 2.0) : 2.0;
-                this.b(gg.BLUR)
+                this.b(ShaderQueueType.BLUR)
                     .c(
                         () -> RenderUtil.roundedRectangle(
                             this.structure.apP.x + 1.0, this.structure.apP.y + 14.0, this.structure.aHe.x - 0.0, 3.0, d1, Color.BLACK
@@ -83,7 +83,7 @@ public class HotBar extends Module {
                     );
             }
 
-            this.b(gg.REGULAR, 1).c(() -> {
+            this.b(ShaderQueueType.REGULAR, 1).c(() -> {
                 GlStateManager.enableRescaleNormal();
                 GlStateManager.enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
@@ -117,7 +117,7 @@ public class HotBar extends Module {
                 GlStateManager.disableBlend();
             });
             if ("Rise".equals(s)) {
-                this.b(gg.BLOOM)
+                this.b(ShaderQueueType.BLOOM)
                     .c(
                         () -> {
                             double d0x = this.interfaceModule != null ? this.interfaceModule.lD() + 1.0 : 10.0;
@@ -134,7 +134,7 @@ public class HotBar extends Module {
             }
 
             if ("Rise".equals(s) && this.showXPBar.wo() && entityplayer.experienceLevel > 0) {
-                this.b(gg.REGULAR, 1).c(() -> {
+                this.b(ShaderQueueType.REGULAR, 1).c(() -> {
                     String s1 = String.valueOf(entityplayer.experienceLevel);
                     float f = this.anR.getStringWidth(s1);
                     float f1 = (scaledresolution.getScaledWidth() - f) / 2.0F;
@@ -143,7 +143,7 @@ public class HotBar extends Module {
                     this.anR.b(s1, f1, f2, Color.WHITE.getRGB());
                     GlStateManager.disableBlend();
                 });
-                this.b(gg.BLOOM).c(() -> {
+                this.b(ShaderQueueType.BLOOM).c(() -> {
                     String s1 = String.valueOf(entityplayer.experienceLevel);
                     float f = this.anR.getStringWidth(s1);
                     float f1 = (scaledresolution.getScaledWidth() - f) / 2.0F;

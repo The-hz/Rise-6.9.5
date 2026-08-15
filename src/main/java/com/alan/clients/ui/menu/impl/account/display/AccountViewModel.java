@@ -5,29 +5,29 @@ import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.adf;
+import com.alan.clients.ui.menu.MenuColors;
 import hackclient.rise.ui.menu.adl;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.SkinUtil;
-import hackclient.rise.aei;
+import com.alan.clients.util.SkinType;
 import hackclient.rise.AltAccount;
-import hackclient.rise.aep;
-import hackclient.rise.aeq;
+import com.alan.clients.util.account.impl.MicrosoftAccount;
+import com.alan.clients.util.account.impl.RaveAccount;
 import hackclient.rise.agc;
 import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.ais;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.text.DateFormat;
 import java.util.Date;
 import lombok.Generated;
 
-public class AccountViewModel<T extends AltAccount> implements adf, InstanceAccess {
-    private static final agc FONT_RENDERER = FontManager.MAIN.a(24, gd.BOLD);
-    private static final agc INFO_FONT_RENDERER = FontManager.MAIN.a(18, gd.MEDIUM);
+public class AccountViewModel<T extends AltAccount> implements MenuColors, InstanceAccess {
+    private static final agc FONT_RENDERER = FontManager.MAIN.a(24, FontWeight.BOLD);
+    private static final agc INFO_FONT_RENDERER = FontManager.MAIN.a(18, FontWeight.MEDIUM);
     private static final DateFormat DATE_FORMAT = DateFormat.getDateInstance(3);
     private static final Color BLOOM_COLOR = ColorUtil.d(Color.BLACK, 150);
     private static final Color FONT_COLOR = ColorUtil.d(Color.WHITE, 150);
@@ -81,7 +81,7 @@ public class AccountViewModel<T extends AltAccount> implements adf, InstanceAcce
         this.height = height;
         this.hoverAnimation = new Animation(Easing.EASE_OUT_CUBIC, 200L);
         this.positionAnimation = new Animation(Easing.EASE_OUT_CUBIC, 200L);
-        if (!(account instanceof aep) && !(account instanceof aeq)) {
+        if (!(account instanceof MicrosoftAccount) && !(account instanceof RaveAccount)) {
             byte b0 = 2;
             this.labelButtons = new adl[]{
                 new adl(var2 + 76.0F, var3 + height - 12.0F, 28.0, 8.0, () -> aEg.displayGuiScreen(new RenameAccountScreen(this)), "Rename", Color.YELLOW),
@@ -97,11 +97,11 @@ public class AccountViewModel<T extends AltAccount> implements adf, InstanceAcce
             return false;
         }
 
-        this.b(gg.BLOOM).c(this.bloomRunnable);
+        this.b(ShaderQueueType.BLOOM).c(this.bloomRunnable);
         if (this.account.kW()) {
-            this.b(gg.REGULAR).c(this.defaultRenderRunnable);
+            this.b(ShaderQueueType.REGULAR).c(this.defaultRenderRunnable);
         } else {
-            this.b(gg.REGULAR).c(this.invalidRenderRunnable);
+            this.b(ShaderQueueType.REGULAR).c(this.invalidRenderRunnable);
         }
 
         return true;
@@ -136,7 +136,7 @@ public class AccountViewModel<T extends AltAccount> implements adf, InstanceAcce
         this.rz();
         RenderUtil.roundedRectangle(var1, var3, d0, d1, 5.0, Themes.rK());
         ais.aD(1);
-        RenderUtil.image(SkinUtil.a(aei.SKIN, this.account.sh(), 24), var1, var3, var5, var5, ColorUtil.d(Color.WHITE, (int)(200.0 + this.hoverAnimation.sG())));
+        RenderUtil.image(SkinUtil.a(SkinType.SKIN, this.account.sh(), 24), var1, var3, var5, var5, ColorUtil.d(Color.WHITE, (int)(200.0 + this.hoverAnimation.sG())));
         ais.vM();
     }
 

@@ -11,8 +11,8 @@ import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.font.impl.rise.FontRenderer;
 import hackclient.rise.cl;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Arrays;
@@ -95,19 +95,19 @@ public class RenderAPI extends API implements InstanceAccess {
     }
 
     public ScriptRiseFontRenderer getMainFontRenderer(int var1) {
-        return new ScriptRiseFontRenderer((FontRenderer)FontManager.MAIN.a(var1, gd.REGULAR));
+        return new ScriptRiseFontRenderer((FontRenderer)FontManager.MAIN.a(var1, FontWeight.REGULAR));
     }
 
     public ScriptRiseFontRenderer getMainFontRendererBold(int var1) {
-        return new ScriptRiseFontRenderer((FontRenderer)FontManager.MAIN.a(var1, gd.BOLD));
+        return new ScriptRiseFontRenderer((FontRenderer)FontManager.MAIN.a(var1, FontWeight.BOLD));
     }
 
     public ScriptRiseFontRenderer getMainFontRendererMedium(int var1) {
-        return new ScriptRiseFontRenderer((FontRenderer)FontManager.MAIN.a(var1, gd.MEDIUM));
+        return new ScriptRiseFontRenderer((FontRenderer)FontManager.MAIN.a(var1, FontWeight.MEDIUM));
     }
 
     public ScriptRiseFontRenderer getMainFontRendererLight(int var1) {
-        return new ScriptRiseFontRenderer((FontRenderer)FontManager.MAIN.a(var1, gd.LIGHT));
+        return new ScriptRiseFontRenderer((FontRenderer)FontManager.MAIN.a(var1, FontWeight.LIGHT));
     }
 
     public ScriptRiseFontRenderer getCustomFontRenderer(String var1, int var2, boolean var3) {
@@ -155,7 +155,7 @@ public class RenderAPI extends API implements InstanceAccess {
             throw new ScriptException("Not a function!");
         }
 
-        this.b(gg.BLUR).c(() -> jsObject.call(null));
+        this.b(ShaderQueueType.BLUR).c(() -> jsObject.call(null));
     }
 
     public void postBloom(JSObject jsObject) throws ScriptException {
@@ -167,7 +167,7 @@ public class RenderAPI extends API implements InstanceAccess {
             throw new ScriptException("Not a function!");
         }
 
-        this.b(gg.BLOOM).c(() -> jsObject.call(null));
+        this.b(ShaderQueueType.BLOOM).c(() -> jsObject.call(null));
     }
 
     public int[] getBackgroundShade() {

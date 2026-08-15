@@ -84,7 +84,7 @@ import net.minecraft.util.s;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings.GameType;
 import net.minecraft.world.chunk.Chunk;
-import rip.vantage.commons.packet.impl.server.monitoring.h;
+import rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStopRecording;
 import rip.vantage.network.core.a;
 
 public class bo extends Component {
@@ -1119,11 +1119,11 @@ public class bo extends Component {
         this.eU = new ItemStack[5];
         this.fd = -1;
         this.fg = var1 -> {
-            if (var1.dd() instanceof rip.vantage.commons.packet.impl.server.monitoring.a) {
-                rip.vantage.commons.packet.impl.server.monitoring.a a = (rip.vantage.commons.packet.impl.server.monitoring.a)var1.dd();
+            if (var1.dd() instanceof rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStartRecording) {
+                rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStartRecording a = (rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStartRecording)var1.dd();
                 this.c(a.ajm(), a.aJV());
-            } else if (var1.dd() instanceof h) {
-                h h = (h)var1.dd();
+            } else if (var1.dd() instanceof S2CPacketStopRecording) {
+                S2CPacketStopRecording h = (S2CPacketStopRecording)var1.dd();
                 if (this.eF && h.ajm().equals(this.eZ)) {
                     this.bv();
                 }

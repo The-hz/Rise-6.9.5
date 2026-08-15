@@ -5,17 +5,17 @@ import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.adf;
+import com.alan.clients.ui.menu.MenuColors;
 import hackclient.rise.ui.menu.adi;
 import com.alan.clients.util.MouseUtil;
-import hackclient.rise.afe;
+import com.alan.clients.util.web.CommunityChat;
 import hackclient.rise.agc;
 import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.net.URI;
@@ -24,9 +24,9 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 
 public class AddAccountScreen extends GuiScreen implements InstanceAccess {
-    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, gd.BOLD);
-    private static final agc AD_FONT_RENDERER = FontManager.MAIN.a(16, gd.REGULAR);
-    private static final agc DISCOUNT_FONT_RENDERER = FontManager.MAIN.a(14, gd.BOLD);
+    private static final agc FONT_RENDERER = FontManager.MAIN.a(36, FontWeight.BOLD);
+    private static final agc AD_FONT_RENDERER = FontManager.MAIN.a(16, FontWeight.REGULAR);
+    private static final agc DISCOUNT_FONT_RENDERER = FontManager.MAIN.a(14, FontWeight.BOLD);
     private static final ResourceLocation XBOX_RESOURCE = new ResourceLocation("rise/images/xbox.png");
     private static final ResourceLocation MICROSOFT_RESOURCE = new ResourceLocation("rise/images/microsoft.png");
     private static final ResourceLocation CRACKED_RESOURCE = new ResourceLocation("rise/images/minecraft.png");
@@ -37,7 +37,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
     private static final int AD_LOGO_SIZE = 24;
     private static final int AD_GAP = 8;
     private static final int AD_SIDE_PADDING = 14;
-    private static final float CENTER_REF_HEIGHT = FontManager.MAIN.a(24, gd.BOLD).height();
+    private static final float CENTER_REF_HEIGHT = FontManager.MAIN.a(24, FontWeight.BOLD).height();
     private static GuiScreen reference;
     private Animation animation;
     private Animation adHoverAnimation;
@@ -69,17 +69,17 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
     public void drawScreen(int var1, int var2, float var3) {
         this.animation.Q(0.0);
         aiv.aPL.a(aiz.OVERLAY, var3, null);
-        this.b(gg.BLUR).c(BACKGROUND_RUNNABLE);
+        this.b(ShaderQueueType.BLUR).c(BACKGROUND_RUNNABLE);
         this.adHoverAnimation.Q(MouseUtil.isHovered(this.adX, this.adY, this.adWidth, this.adHeight, var1, var2) ? 100.0 : 45.0);
-        this.b(gg.REGULAR)
+        this.b(ShaderQueueType.REGULAR)
             .c(() -> FONT_RENDERER.c("Select your login method", this.width / 2, this.height / 2 - 76 + this.animation.sG(), Color.WHITE.getRGB()));
         Color color = ColorUtil.d(Color.BLACK, 150);
         Color color1 = ColorUtil.d(Color.WHITE, (int)(150.0 + this.adHoverAnimation.sG()));
-        this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, Color.WHITE));
-        this.b(gg.BLOOM).c(() -> RenderUtil.roundedRectangle(this.adX + 0.5F, this.adY + 0.5F, this.adWidth - 1, this.adHeight - 1, 6.0, color));
-        this.b(gg.REGULAR).c(() -> {
-            RenderUtil.roundedRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, ColorUtil.d(adf.aBV, (int)this.adHoverAnimation.sG() - 15));
-            RenderUtil.roundedOutlineGradientRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, 1.0, ColorUtil.d(adf.aBP, 32), ColorUtil.d(adf.aBO, 32));
+        this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, Color.WHITE));
+        this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.roundedRectangle(this.adX + 0.5F, this.adY + 0.5F, this.adWidth - 1, this.adHeight - 1, 6.0, color));
+        this.b(ShaderQueueType.REGULAR).c(() -> {
+            RenderUtil.roundedRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, ColorUtil.d(MenuColors.aBV, (int)this.adHoverAnimation.sG() - 15));
+            RenderUtil.roundedOutlineGradientRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, 1.0, ColorUtil.d(MenuColors.aBP, 32), ColorUtil.d(MenuColors.aBO, 32));
             int k = this.adX + 14;
             int l = this.adY + (this.adHeight - 24) / 2;
             RenderUtil.image(LOCALTS_RESOURCE, k, l, 24.0F, 24.0F, color1);
@@ -94,7 +94,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
             aadi[j].draw(var1, var2, var3);
         }
 
-        this.b(gg.REGULAR).c(() -> {
+        this.b(ShaderQueueType.REGULAR).c(() -> {
             adi adi = this.menuButtons[4];
             if (adi != null) {
                 String s = "5% OFF";
@@ -111,7 +111,7 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
     @Override
     public void mouseClicked(int var1, int var2, int var3) {
         if (MouseUtil.isHovered(this.adX, this.adY, this.adWidth, this.adHeight, var1, var2)) {
-            afe.A("login_ad", "https://localts.store/?campaign=rise");
+            CommunityChat.A("login_ad", "https://localts.store/?campaign=rise");
 
             try {
                 Desktop.getDesktop().browse(new URI("https://localts.store/?campaign=rise"));

@@ -7,7 +7,7 @@ import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.script.api.wrapper.impl.ScriptBlockPos;
 import com.alan.clients.script.api.wrapper.impl.ScriptEntityLiving;
 import com.alan.clients.script.api.wrapper.impl.ScriptWorld;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.BlockPos;
 
@@ -36,7 +36,7 @@ public class WorldAPI extends ScriptWorld {
     }
 
     public ScriptEntityLiving getTargetEntity(int var1) {
-        EntityLivingBase entitylivingbase = bv.e(var1);
+        EntityLivingBase entitylivingbase = TargetComponent.e(var1);
         return entitylivingbase != null ? new ScriptEntityLiving(entitylivingbase) : null;
     }
 

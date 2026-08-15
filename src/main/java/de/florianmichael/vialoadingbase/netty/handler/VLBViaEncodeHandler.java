@@ -6,7 +6,7 @@ import com.viaversion.viaversion.api.type.types.VarIntType;
 import com.viaversion.viaversion.exception.CancelCodecException;
 import com.viaversion.viaversion.exception.CancelEncoderException;
 import com.viaversion.viaversion.util.PipelineUtil;
-import hackclient.rise.event.fj;
+import com.alan.clients.newevent.impl.packet.PacketEncodeEvent;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -33,7 +33,7 @@ public class VLBViaEncodeHandler extends MessageToMessageEncoder<ByteBuf> {
         } else {
             int i = new VarIntType().readPrimitive(byteBuf);
             ByteBuf bytebuf = byteBuf.readerIndex(0);
-            fj fj = new fj(bytebuf, i);
+            PacketEncodeEvent fj = new PacketEncodeEvent(bytebuf, i);
             Client.a.e().d(fj);
             if (!fj.isCancelled()) {
                 ByteBuf bytebuf1 = ctx.alloc().buffer().writeBytes(bytebuf);

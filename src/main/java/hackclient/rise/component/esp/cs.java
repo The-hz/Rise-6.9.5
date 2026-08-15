@@ -2,9 +2,9 @@ package hackclient.rise.component.esp;
 
 import com.alan.clients.Client;
 import com.alan.clients.util.interfaces.InstanceAccess;
-import hackclient.rise.ahf;
+import com.alan.clients.util.math.MathInterpolation;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import com.alan.clients.component.impl.render.espcomponent.api.ESP;
 import com.alan.clients.component.impl.render.espcomponent.api.ESPColor;
 import java.awt.Color;
@@ -30,7 +30,7 @@ public class cs extends ESP implements InstanceAccess {
         GL11.glPushMatrix();
         this.cv();
 
-        for (Entity entity : bv.bR()) {
+        for (Entity entity : TargetComponent.bR()) {
             if (entity instanceof EntityPlayer) {
                 this.a((EntityPlayer)entity, a.bWm);
             }
@@ -78,15 +78,15 @@ public class cs extends ESP implements InstanceAccess {
         float[][] afloat = this.hW.get(player);
         if (afloat != null) {
             GL11.glPushMatrix();
-            float f = (float)(ahf.l(player.posX, player.prevPosX, var2) - RenderManager.bUO);
-            float f1 = (float)(ahf.l(player.posY, player.prevPosY, var2) - RenderManager.bUP);
-            float f2 = (float)(ahf.l(player.posZ, player.prevPosZ, var2) - RenderManager.bUQ);
+            float f = (float)(MathInterpolation.l(player.posX, player.prevPosX, var2) - RenderManager.bUO);
+            float f1 = (float)(MathInterpolation.l(player.posY, player.prevPosY, var2) - RenderManager.bUP);
+            float f2 = (float)(MathInterpolation.l(player.posZ, player.prevPosZ, var2) - RenderManager.bUQ);
             GL11.glTranslated(f, f1, f2);
             boolean flag = player.isSneaking();
             float rotationYawHead = player.rotationYawHead;
             float renderYawOffset = player.renderYawOffset;
             float prevRenderYawOffset = player.prevRenderYawOffset;
-            float f6 = ahf.d(renderYawOffset, prevRenderYawOffset, var2);
+            float f6 = MathInterpolation.d(renderYawOffset, prevRenderYawOffset, var2);
             float f7 = flag ? 0.6F : 0.75F;
             GL11.glRotatef(-f6, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(0.0F, 0.0F, flag ? -0.235F : 0.0F);

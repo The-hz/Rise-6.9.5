@@ -14,7 +14,7 @@ import net.minecraft.event.ClickEvent.Action;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.util.s;
-import rip.vantage.commons.packet.impl.client.community.c;
+import rip.vantage.commons.packet.impl.client.community.C2SPacketConfigRequest;
 import rip.vantage.network.core.a;
 
 public final class Config extends Command {
@@ -118,11 +118,11 @@ public final class Config extends Command {
                                         } catch (Throwable throwable) {
                                         }
                                     } else {
-                                        a.aKB().aKK().sendMessage(new c(s1).aJk());
+                                        a.aKB().aKK().sendMessage(new C2SPacketConfigRequest(s1).aJk());
                                     }
                                 });
                             } else {
-                                a.aKB().aKK().sendMessage(new c(s1).aJk());
+                                a.aKB().aKK().sendMessage(new C2SPacketConfigRequest(s1).aJk());
                             }
 
                             return;

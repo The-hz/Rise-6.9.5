@@ -6,9 +6,9 @@ import com.alan.clients.module.Module;
 import com.alan.clients.ui.click.standard.RiseClickGUI;
 import com.google.gson.Gson;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.ge;
-import hackclient.rise.gf;
-import hackclient.rise.gg;
+import com.alan.clients.util.shader.ShaderRenderQueue;
+import com.alan.clients.util.shader.ShaderRenderManager;
+import com.alan.clients.util.shader.ShaderQueueType;
 import net.minecraft.client.Minecraft;
 
 public interface InstanceAccess {
@@ -18,7 +18,7 @@ public interface InstanceAccess {
         return Client.a;
     }
 
-    default gf u() {
+    default ShaderRenderManager u() {
         return this.rN().u();
     }
 
@@ -26,11 +26,11 @@ public interface InstanceAccess {
         return this.rN().v();
     }
 
-    default ge b(gg var1) {
+    default ShaderRenderQueue b(ShaderQueueType var1) {
         return this.u().a(var1);
     }
 
-    default ge b(gg var1, int var2) {
+    default ShaderRenderQueue b(ShaderQueueType var1, int var2) {
         return this.u().a(var1, var2);
     }
 

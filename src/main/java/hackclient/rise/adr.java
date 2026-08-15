@@ -9,8 +9,10 @@ import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.font.FontManager;
+import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
@@ -35,24 +37,24 @@ public final class adr extends Menu {
         if (this.aCF != null && this.aCG != null && this.aCH != null) {
             ScaledResolution scaledresolution = aEg.jY;
             aiv.aPL.a(aiz.OVERLAY, var3, null);
-            this.b(gg.BLUR).c(() -> RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK));
+            this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK));
 
             for (MenuButton menuButton : this.menuButtons) {
                 menuButton.draw(var1, var2, var3);
             }
 
-            agc agc = FontManager.MAIN.a(64, gd.REGULAR);
+            agc agc = FontManager.MAIN.a(64, FontWeight.REGULAR);
             double d0 = this.aCF.getY() - agc.height();
             this.animation.Q(d0);
             String s = this.rice ? "Rice" : Client.b;
             double d1 = this.animation.sG();
             Color color = ColorUtil.d(Color.WHITE, (int)(d1 / d0 * 200.0));
-            this.b(gg.REGULAR)
+            this.b(ShaderQueueType.REGULAR)
                 .c(
                     () -> {
                         agc.c(s, this.width / 2.0F, d1, color.getRGB());
                         FontManager.MAIN
-                            .a(16, gd.REGULAR)
+                            .a(16, FontWeight.REGULAR)
                             .d(
                                 "Made with <3 by Alan and The_Bi11iona1re",
                                 scaledresolution.getScaledWidth() - 5,
@@ -60,7 +62,7 @@ public final class adr extends Menu {
                                 ColorUtil.d(aBS, 100).getRGB()
                             );
                         FontManager.MAIN
-                            .a(12, gd.REGULAR)
+                            .a(12, FontWeight.REGULAR)
                             .d(
                                 "© Rise Client 2026. All Rights Reserved",
                                 scaledresolution.getScaledWidth() - 5,
@@ -68,7 +70,7 @@ public final class adr extends Menu {
                                 ColorUtil.d(aBS, 100).getRGB()
                             );
                         if (!System.getProperty("java.vm.vendor").toLowerCase().contains("oracle corporation")) {
-                            FontManager.MAIN.a(32, gd.BOLD);
+                            FontManager.MAIN.a(32, FontWeight.BOLD);
                         }
                     }
                 );

@@ -16,10 +16,10 @@ import com.alan.clients.value.impl.DragValue;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import hackclient.rise.agd;
-import hackclient.rise.ahm;
+import com.alan.clients.util.player.ServerUtil;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.ajz;
-import hackclient.rise.gg;
+import com.alan.clients.util.vector.Vector2i;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.util.Collection;
 import java.util.Iterator;
@@ -51,19 +51,19 @@ extends Module {
         if (this.amf == null) {
             this.amf = this.e(Interface.class);
         }
-        ajz ajz2 = new ajz((int)this.position.apP.x, (int)this.position.apP.y);
+        Vector2i ajz2 = new Vector2i((int)this.position.apP.x, (int)this.position.apP.y);
         boolean bl = ((Mode)this.amf.lM().wo()).getName().equals("Rise");
         int n2 = this.amf != null ? (int)this.amf.lD() : (bl ? 5 : 1);
-        this.b(gg.REGULAR).c(() -> {
+        this.b(ShaderQueueType.REGULAR).c(() -> {
             int n3 = this.collection.size();
             int n4 = this.apD * n3 + 3;
             if (((Boolean)this.outline.wo()).booleanValue()) {
                 RenderUtil.roundedOutlineGradientRectangle(ajz2.ald - 1, ajz2.ale - 1, this.apB + 12 + 2, n4 + this.apD + 3 + 2, n2, 1.0, ColorUtil.d(this.rz().rA(), 100), ColorUtil.d(this.rz().rB(), 100));
             }
         });
-        this.b(gg.BLUR).c(() -> this.a(ajz2.ald, ajz2.ale, Color.WHITE, false, n2, false));
-        this.b(gg.BLOOM).c(() -> this.a(ajz2.ald, ajz2.ale, bl ? this.rz().rE() : Color.BLACK, false, n2 + 1, true));
-        this.b(gg.REGULAR, 1).c(() -> this.a(ajz2.ald, ajz2.ale, (Boolean)this.blurColor.wo() != false ? new Color(this.rz().rB().getRed(), this.rz().rB().getGreen(), this.rz().rB().getBlue(), 60) : new Color(0, 0, 0, 100), true, n2, false));
+        this.b(ShaderQueueType.BLUR).c(() -> this.a(ajz2.ald, ajz2.ale, Color.WHITE, false, n2, false));
+        this.b(ShaderQueueType.BLOOM).c(() -> this.a(ajz2.ald, ajz2.ale, bl ? this.rz().rE() : Color.BLACK, false, n2 + 1, true));
+        this.b(ShaderQueueType.REGULAR, 1).c(() -> this.a(ajz2.ald, ajz2.ale, (Boolean)this.blurColor.wo() != false ? new Color(this.rz().rB().getRed(), this.rz().rB().getGreen(), this.rz().rB().getBlue(), 60) : new Color(0, 0, 0, 100), true, n2, false));
     };
     @EventLink
     public final Listener<TickEvent> onTick = tickEvent -> {
@@ -114,7 +114,7 @@ extends Module {
     }
 
     private ScoreObjective getScoreObjective() {
-        return ahm.vw();
+        return ServerUtil.vw();
     }
 
     private void a(int n2, int n3, Color color, boolean bl, int n4, boolean bl2) {

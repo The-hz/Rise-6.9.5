@@ -7,7 +7,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.motion.SlowDownEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.component.bc;
+import com.alan.clients.component.impl.player.PacketQueueComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemFood;
@@ -27,20 +27,20 @@ public class IntaveNoSlow extends Mode<NoSlow> {
             Item item = aEg.thePlayer.getCurrentEquippedItem().getItem();
             if (aEg.thePlayer.isUsingItem()) {
                 if (item instanceof ItemSword && this.getParent().sword.wo()) {
-                    bc.cR = true;
+                    PacketQueueComponent.cR = true;
                     if (aEg.thePlayer.ticksExisted % 5 == 0) {
                         PacketUtil.l(new C07PacketPlayerDigging(Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
-                        bc.dispatch();
+                        PacketQueueComponent.dispatch();
                         aEg.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getCurrentEquippedItem()));
                     }
                 } else if (item instanceof ItemFood && this.getParent().food.wo() || item instanceof ItemBow && this.getParent().bow.wo()) {
-                    bc.cR = true;
+                    PacketQueueComponent.cR = true;
                 }
 
                 this.usingItem = true;
             } else if (this.usingItem) {
                 this.usingItem = false;
-                bc.cR = false;
+                PacketQueueComponent.cR = false;
             }
         }
     };

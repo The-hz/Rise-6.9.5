@@ -1,6 +1,6 @@
 package com.alan.clients.security.impl;
 
-import com.alan.clients.security.a;
+import com.alan.clients.security.CrashCheck;
 import com.alan.clients.util.packet.PacketUtil;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -11,7 +11,7 @@ import net.minecraft.network.play.client.C19PacketResourcePackStatus.Action;
 import net.minecraft.network.play.client.C19PacketResourcePackStatus;
 import net.minecraft.network.play.server.S48PacketResourcePackSend;
 
-public final class ResourcePackCheck extends a {
+public final class ResourcePackCheck extends CrashCheck {
     public ResourcePackCheck() {
         super("Resource Pack Check", "Server attempted to view files on the computer");
     }

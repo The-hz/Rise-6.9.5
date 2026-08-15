@@ -15,12 +15,12 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ahf;
+import com.alan.clients.util.math.MathInterpolation;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
-import hackclient.rise.component.bv;
-import hackclient.rise.gg;
+import com.alan.clients.component.impl.combat.TargetComponent;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.util.List;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
@@ -86,7 +86,7 @@ public class TargetStrafe extends Module {
             if ((!this.holdJump.wo() || aEg.gameSettings.keyBindJump.isKeyDown())
                 && (!this.holdJumpSpeedOrFlightOnly.wo() || module1 != null && module1.isEnabled() || module2 != null && module2.isEnabled())) {
                 if (this.holdJump.wo() || module1 != null && module1.isEnabled() || module2 != null && module2.isEnabled()) {
-                    List list = bv.f(this.range.wo().doubleValue() + 6.0);
+                    List list = TargetComponent.f(this.range.wo().doubleValue() + 6.0);
                     if (list.isEmpty()) {
                         this.target = null;
                     } else {
@@ -145,9 +145,9 @@ public class TargetStrafe extends Module {
     }
 
     private void j(float var1) {
-        double d0 = ahf.l(this.target.posX, this.target.lastTickPosX, var1) - aEg.getRenderManager().viewerPosX;
-        double d1 = ahf.l(this.target.posY, this.target.lastTickPosY, var1) - aEg.getRenderManager().viewerPosY;
-        double d2 = ahf.l(this.target.posZ, this.target.lastTickPosZ, var1) - aEg.getRenderManager().viewerPosZ;
+        double d0 = MathInterpolation.l(this.target.posX, this.target.lastTickPosX, var1) - aEg.getRenderManager().viewerPosX;
+        double d1 = MathInterpolation.l(this.target.posY, this.target.lastTickPosY, var1) - aEg.getRenderManager().viewerPosY;
+        double d2 = MathInterpolation.l(this.target.posZ, this.target.lastTickPosZ, var1) - aEg.getRenderManager().viewerPosZ;
         GlStateManager.pushMatrix();
         GlStateManager.disableTexture2D();
         GlStateManager.enableBlend();
@@ -176,7 +176,7 @@ public class TargetStrafe extends Module {
         GlStateManager.enableAlpha();
         GlStateManager.enableTexture2D();
         GlStateManager.popMatrix();
-        this.b(gg.BLOOM).c(() -> {
+        this.b(ShaderQueueType.BLOOM).c(() -> {
             if (this.glow.wo()) {
                 GlStateManager.pushMatrix();
                 GlStateManager.disableTexture2D();

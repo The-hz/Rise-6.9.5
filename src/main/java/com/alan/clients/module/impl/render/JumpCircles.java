@@ -11,7 +11,7 @@ import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.xl;
+import com.alan.clients.module.impl.render.jumpcircles.JumpCircle;
 import java.awt.Color;
 import java.util.Iterator;
 import java.util.Queue;
@@ -24,7 +24,7 @@ import org.lwjgl.opengl.GL11;
 
 @ModuleInfo(aliases = "Jump Circles", description = "Draws circles around the player when they jump", category = Category.RENDER)
 public final class JumpCircles extends Module {
-    private final Queue<xl> aoy = new ConcurrentLinkedQueue<>();
+    private final Queue<JumpCircle> aoy = new ConcurrentLinkedQueue<>();
     private final Animation aoz = new Animation(Easing.EASE_IN_OUT_CUBIC, 300L);
     private boolean aoA = false;
     private static final float aoB = 0.004F;
@@ -37,7 +37,7 @@ public final class JumpCircles extends Module {
             double d0 = MathUtil.m(aEg.thePlayer.prevPosX, aEg.thePlayer.posX, aEg.timer.bWm);
             double d1 = MathUtil.m(aEg.thePlayer.prevPosY, aEg.thePlayer.posY, aEg.timer.bWm);
             double d2 = MathUtil.m(aEg.thePlayer.prevPosZ, aEg.thePlayer.posZ, aEg.timer.bWm);
-            this.aoy.add(new xl(new Vec3(d0, d1, d2), 0.0, 255.0F));
+            this.aoy.add(new JumpCircle(new Vec3(d0, d1, d2), 0.0, 255.0F));
             this.aoA = false;
         } else if (!aEg.thePlayer.onGround) {
             this.aoA = true;
@@ -46,7 +46,7 @@ public final class JumpCircles extends Module {
         Iterator iterator = this.aoy.iterator();
 
         while (iterator.hasNext()) {
-            if (((xl)iterator.next()).aoJ > 0.0F) {
+            if (((JumpCircle)iterator.next()).aoJ > 0.0F) {
                 return;
             }
 
@@ -55,7 +55,7 @@ public final class JumpCircles extends Module {
     };
     @EventLink
     private final Listener<Render3DEvent> onRender3D = var1 -> {
-        for (xl xl : this.aoy) {
+        for (JumpCircle xl : this.aoy) {
             Vec3 vec3 = xl.ma();
             double d1 = vec3.yCoord;
             aEg.getRenderManager();
@@ -96,7 +96,7 @@ public final class JumpCircles extends Module {
         GlStateManager.blendFunc(770, 771);
     }
 
-    private void a(xl var1, Vec3 vec, double var3) {
+    private void a(JumpCircle var1, Vec3 vec, double var3) {
         GL11.glLineWidth(2.0F);
         GL11.glBegin(2);
 

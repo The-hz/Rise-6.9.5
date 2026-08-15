@@ -6,7 +6,7 @@ import com.alan.clients.newevent.impl.input.MoveInputEvent;
 import com.alan.clients.newevent.impl.other.MoveEvent;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2f;
-import hackclient.rise.abs;
+import com.alan.clients.util.value.ConstantManager;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.aka;
@@ -112,8 +112,8 @@ public final class MoveUtil implements InstanceAccess {
             }
         }
 
-        double cos = Math.cos(Math.toRadians(d2 + abs.aHc));
-        double sin = Math.sin(Math.toRadians(d2 + abs.aHc));
+        double cos = Math.cos(Math.toRadians(d2 + ConstantManager.aHc));
+        double sin = Math.sin(Math.toRadians(d2 + ConstantManager.aHc));
         return new Vector2d(d0 * var0 * cos + d1 * var0 * sin, d0 * var0 * sin - d1 * var0 * cos);
     }
 
@@ -407,8 +407,8 @@ public final class MoveUtil implements InstanceAccess {
             }
         }
 
-        double cos = Math.cos(Math.toRadians(f + abs.aHc));
-        double sin = Math.sin(Math.toRadians(f + abs.aHc));
+        double cos = Math.cos(Math.toRadians(f + ConstantManager.aHc));
+        double sin = Math.sin(Math.toRadians(f + ConstantManager.aHc));
         moveEvent.setPosX(d0 * var1 * cos + d1 * var1 * sin);
         moveEvent.setPosZ(d0 * var1 * sin - d1 * var1 * cos);
     }
@@ -487,8 +487,8 @@ public final class MoveUtil implements InstanceAccess {
             f5 = f / f5;
             var0 *= f5;
             var1 *= f5;
-            float sin = MathHelper.sin(var3 * (float)abs.aHb / 180.0F);
-            float cos = MathHelper.cos(var3 * (float)abs.aHb / 180.0F);
+            float sin = MathHelper.sin(var3 * (float)ConstantManager.aHb / 180.0F);
+            float cos = MathHelper.cos(var3 * (float)ConstantManager.aHb / 180.0F);
             double d0 = var0 * cos - var1 * sin;
             double d1 = var1 * cos + var0 * sin;
             return new double[]{d0, d1};
@@ -554,8 +554,8 @@ public final class MoveUtil implements InstanceAccess {
             f8 = f / f8;
             f2 *= f8;
             f3 *= f8;
-            float sin = MathHelper.sin(f4 * (float)abs.aHb / 180.0F);
-            float cos = MathHelper.cos(f4 * (float)abs.aHb / 180.0F);
+            float sin = MathHelper.sin(f4 * (float)ConstantManager.aHb / 180.0F);
+            float cos = MathHelper.cos(f4 * (float)ConstantManager.aHb / 180.0F);
             double d0 = f2 * cos - f3 * sin;
             double d1 = f3 * cos + f2 * sin;
             return Math.hypot(d0, d1);

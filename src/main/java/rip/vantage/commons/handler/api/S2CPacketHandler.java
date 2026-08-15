@@ -1,0 +1,53 @@
+package rip.vantage.commons.handler.api;
+
+import rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorPing;
+import rip.vantage.commons.packet.impl.server.protection.S2CPacketJdkUnlockGrant;
+import rip.vantage.commons.packet.impl.server.protection.S2CPacketServerJoin;
+import rip.vantage.commons.packet.impl.server.protection.S2CPacketConfig;
+import rip.vantage.commons.packet.impl.server.protection.h;
+
+public interface S2CPacketHandler extends PacketHandler {
+    void a(h var1);
+
+    void a(rip.vantage.commons.packet.impl.server.management.S2CPacketHudRefresh packet);
+
+    void a(S2CPacketServerJoin packet);
+
+    void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStopRecording packet);
+
+    void a(rip.vantage.commons.packet.impl.server.protection.S2CPacketEntityListRequest packet);
+
+    void a(S2CPacketJdkUnlockGrant packet);
+
+    void a(rip.vantage.commons.packet.impl.server.community.S2CPacketUserData packet);
+
+    void a(S2CPacketMonitorPing packet);
+
+    void a(rip.vantage.commons.packet.impl.server.protection.S2CPacketProofOfWorkChallenge packet);
+
+    void b(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorCommand packet);
+
+    void a(rip.vantage.commons.packet.impl.server.community.e var1);
+
+    void a(rip.vantage.commons.packet.impl.server.protection.S2CPacketAccount packet);
+
+    void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureRequest packet);
+
+    void b(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorConsent packet);
+
+    void a(rip.vantage.commons.packet.impl.server.community.S2CPacketConfigList packet);
+
+    void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStartRecording packet);
+
+    void a(S2CPacketConfig packet);
+
+    void a(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureCancel packet);
+
+    void b(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorRequest packet);
+
+    void a(rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication packet);
+
+    void a(rip.vantage.commons.packet.impl.server.community.S2CPacketChatMessage packet);
+
+    void a(rip.vantage.commons.packet.impl.server.community.S2CPacketTitle packet);
+}

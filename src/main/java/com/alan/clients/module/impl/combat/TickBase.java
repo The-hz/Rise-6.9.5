@@ -19,7 +19,7 @@ import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.aka;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import java.util.List;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -70,7 +70,7 @@ public final class TickBase extends Module {
                         }
                     }
 
-                    List list = bv.f(6.0);
+                    List list = TargetComponent.f(6.0);
                     if (list.isEmpty()) {
                         return;
                     }
@@ -97,7 +97,7 @@ public final class TickBase extends Module {
             }
         }
 
-        EntityLivingBase entitylivingbase1 = bv.e(8.0);
+        EntityLivingBase entitylivingbase1 = TargetComponent.e(8.0);
         if (entitylivingbase1 != null
             && !BadPacketsComponent.bad(false, true, false, false, false)
             && this.qL.g(entitylivingbase1.Ty()) >= aEg.thePlayer.Ty().g(entitylivingbase1.Ty())) {

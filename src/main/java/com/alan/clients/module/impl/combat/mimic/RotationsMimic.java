@@ -10,7 +10,7 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
@@ -21,7 +21,7 @@ public class RotationsMimic extends Mode<Mimic> {
     Animation si = new Animation(Easing.LINEAR, 150L);
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        EntityLivingBase entitylivingbase = bv.e(6.0);
+        EntityLivingBase entitylivingbase = TargetComponent.e(6.0);
         if (entitylivingbase != null && aEg.gameSettings.cgK.isKeyDown()) {
             float f = entitylivingbase.pl;
             float f1 = entitylivingbase.rotationPitch;

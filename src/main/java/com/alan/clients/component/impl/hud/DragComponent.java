@@ -17,9 +17,9 @@ import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.as;
-import hackclient.rise.at;
-import hackclient.rise.av;
+import com.alan.clients.component.impl.hud.DragComponentSwitchMap;
+import com.alan.clients.component.impl.hud.SnapAxis;
+import com.alan.clients.component.impl.hud.SnapLine;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -35,8 +35,8 @@ public class DragComponent extends Component {
     private static final Animation animationAlpha = new Animation(Easing.LINEAR, 600L);
     public static final a bV = new a();
     public static final a bW = new a();
-    public static ArrayList<av> bX = new ArrayList<>();
-    public static av bY;
+    public static ArrayList<SnapLine> bX = new ArrayList<>();
+    public static SnapLine bY;
     @EventLink(value = -2)
     public final Listener<Render2DEvent> onRender2D = var0 -> {
         try {
@@ -71,29 +71,29 @@ public class DragComponent extends Component {
                 selectedValue.atg = new Vector2d(d0, d1);
                 bX.clear();
                 double d2 = Client.a.k().rz().qd();
-                bX.add(new av(i / 2.0F, 5.0, at.HORIZONTAL, true, true, true));
-                bX.add(new av(j / 2.0F, 5.0, at.VERTICAL, true, true, true));
-                bX.add(new av(j - d2, 5.0, at.VERTICAL, false, false, true));
-                bX.add(new av(d2, 5.0, at.VERTICAL, false, true, false));
-                bX.add(new av(i - d2, 5.0, at.HORIZONTAL, false, false, true));
-                bX.add(new av(d2, 5.0, at.HORIZONTAL, false, true, false));
+                bX.add(new SnapLine(i / 2.0F, 5.0, SnapAxis.HORIZONTAL, true, true, true));
+                bX.add(new SnapLine(j / 2.0F, 5.0, SnapAxis.VERTICAL, true, true, true));
+                bX.add(new SnapLine(j - d2, 5.0, SnapAxis.VERTICAL, false, false, true));
+                bX.add(new SnapLine(d2, 5.0, SnapAxis.VERTICAL, false, true, false));
+                bX.add(new SnapLine(i - d2, 5.0, SnapAxis.HORIZONTAL, false, false, true));
+                bX.add(new SnapLine(d2, 5.0, SnapAxis.HORIZONTAL, false, true, false));
                 Iterator iterator = bT.iterator();
 
                 while (iterator.hasNext()) {
                     Optional optional = ((Module)iterator.next()).getValues().stream().filter(var0x -> var0x instanceof DragValue).findFirst();
                     DragValue dragvalue = (DragValue)optional.get();
                     if (dragvalue != selectedValue) {
-                        bX.add(new av(dragvalue.apP.x + dragvalue.aHe.x + d2, 5.0, at.HORIZONTAL, false, true, false));
-                        bX.add(new av(dragvalue.apP.x - d2, 5.0, at.HORIZONTAL, false, false, true));
-                        bX.add(new av(dragvalue.apP.y, 5.0, at.VERTICAL, false, false, true));
-                        bX.add(new av(dragvalue.apP.y + dragvalue.aHe.y, 5.0, at.VERTICAL, false, true, false));
+                        bX.add(new SnapLine(dragvalue.apP.x + dragvalue.aHe.x + d2, 5.0, SnapAxis.HORIZONTAL, false, true, false));
+                        bX.add(new SnapLine(dragvalue.apP.x - d2, 5.0, SnapAxis.HORIZONTAL, false, false, true));
+                        bX.add(new SnapLine(dragvalue.apP.y, 5.0, SnapAxis.VERTICAL, false, false, true));
+                        bX.add(new SnapLine(dragvalue.apP.y + dragvalue.aHe.y, 5.0, SnapAxis.VERTICAL, false, true, false));
                     }
                 }
 
                 bY = null;
                 Color color = ColorUtil.d(Color.WHITE, 60);
 
-                for (av av : bX) {
+                for (SnapLine av : bX) {
                     switch (av.cm) {
                         case VERTICAL:
                             double d3 = Double.MAX_VALUE;

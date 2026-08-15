@@ -20,9 +20,9 @@ import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
 import hackclient.rise.cg;
-import hackclient.rise.component.ci;
+import com.alan.clients.component.impl.render.ProgressBarComponent;
 import hackclient.rise.cl;
-import hackclient.rise.gg;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -277,7 +277,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
                     else {
                         n2 = 66.0;
                     }
-                    ci.a((float)(Watchdog2LongJump.hQ / n2));
+                    ProgressBarComponent.a((float)(Watchdog2LongJump.hQ / n2));
                 }
                 if (Watchdog2LongJump.aEg.thePlayer.onGround && Watchdog2LongJump.hQ > 3) {
                     if (!this.LY) {
@@ -404,7 +404,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
             if (!this.Mc) {
                 this.hy();
             }
-            this.b(gg.BLOOM).c(() -> {
+            this.b(ShaderQueueType.BLOOM).c(() -> {
                 final Iterator iterator = this.Mb.iterator();
                 while (iterator.hasNext()) {
                     final BlockPos blockPos = (BlockPos)iterator.next();

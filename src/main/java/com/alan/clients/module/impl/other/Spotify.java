@@ -20,16 +20,16 @@ import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.afi;
 import com.alan.clients.util.file.FileManager;
 import hackclient.rise.agd;
-import hackclient.rise.air;
+import com.alan.clients.util.render.ScissorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import hackclient.rise.gk;
-import hackclient.rise.sj;
-import hackclient.rise.sk;
-import hackclient.rise.sl;
-import hackclient.rise.sm;
-import hackclient.rise.sn;
+import com.alan.clients.module.impl.other.spotify.SurplusWidthComparator;
+import com.alan.clients.module.impl.other.spotify.RemainderWidthComparator;
+import com.alan.clients.module.impl.other.spotify.LyricLine;
+import com.alan.clients.module.impl.other.spotify.ParsedLyricLine;
+import com.alan.clients.module.impl.other.spotify.LyricWord;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.image.BufferedImage;
@@ -123,7 +123,7 @@ public class Spotify extends Module {
     private boolean Wv = false;
     private volatile boolean Ww = false;
     private volatile boolean Wx = false;
-    private volatile List<sl> Wy = new ArrayList<>();
+    private volatile List<LyricLine> Wy = new ArrayList<>();
     private volatile List<String> Wz = new ArrayList<>();
     private int WA = -1;
     private long WB = System.currentTimeMillis();
@@ -247,7 +247,7 @@ public class Spotify extends Module {
         this.positionValue.n(new Vector2d(180.0, this.WR));
         double d1 = this.positionValue.apP.getX() + 65.0;
         Color color = this.rz().rE();
-        this.b(gg.BLUR)
+        this.b(ShaderQueueType.BLUR)
             .c(
                 () -> RenderUtil.roundedRectangle(
                     this.positionValue.apP.getX(),
@@ -258,7 +258,7 @@ public class Spotify extends Module {
                     Color.BLACK
                 )
             );
-        this.b(gg.BLOOM)
+        this.b(ShaderQueueType.BLOOM)
             .c(
                 () -> {
                     RenderUtil.a(
@@ -274,7 +274,7 @@ public class Spotify extends Module {
                     RenderUtil.a(d1, this.positionValue.apP.getY() + 45.0, i * 100.0 / Math.max(1, this.Wl), 6.0, 3.0, this.rz().rA(), this.rz().rB(), true);
                 }
             );
-        this.b(gg.REGULAR)
+        this.b(ShaderQueueType.REGULAR)
             .c(
                 () -> {
                     float f8 = 10.0F;
@@ -372,7 +372,7 @@ public class Spotify extends Module {
                         double d10 = f17 - 2.0F;
                         double d11 = d5;
                         double d12 = f18 * l3 + 2.0F + 4.0F + (flag1 ? 3.0F : 5.0F);
-                        air.hK();
+                        ScissorUtil.hK();
                         RenderUtil.g(d9, d10, d11, d12);
                         float f19 = f17 - f16 * f18;
                         int i4 = k2 + 2;
@@ -413,7 +413,7 @@ public class Spotify extends Module {
                                     f24 += this.a(s1, j5, f23);
                                 }
 
-                                sl sl = this.Wx && j4 < this.Wy.size() ? this.w(j4) : null;
+                                LyricLine sl = this.Wx && j4 < this.Wy.size() ? this.w(j4) : null;
                                 float f25;
                                 if (this.karaokeFill.wo() && sl != null) {
                                     f25 = this.a(sl, j4, i, j5, f23, f24);
@@ -459,7 +459,7 @@ public class Spotify extends Module {
                             }
                         }
 
-                        air.disable();
+                        ScissorUtil.disable();
                     }
 
                     if (this.musicService.wo().getName().equals("Spotify") && (this.Wd == null || this.Wd.isEmpty())) {
@@ -565,11 +565,11 @@ public class Spotify extends Module {
     }
 
     private float d(String var1, int var2) {
-        return this.C(var1) ? this.Xg.fontRendererObj.getStringWidth(var1) * this.v(var2) : FontManager.MAIN.a(var2, gd.BOLD).getStringWidth(var1);
+        return this.C(var1) ? this.Xg.fontRendererObj.getStringWidth(var1) * this.v(var2) : FontManager.MAIN.a(var2, FontWeight.BOLD).getStringWidth(var1);
     }
 
     private float e(String var1, int var2) {
-        return this.C(var1) ? 9 * this.v(var2) : FontManager.MAIN.a(var2, gd.BOLD).height();
+        return this.C(var1) ? 9 * this.v(var2) : FontManager.MAIN.a(var2, FontWeight.BOLD).height();
     }
 
     private void a(String var1, float var2, double var3, int var5, int var6) {
@@ -582,7 +582,7 @@ public class Spotify extends Module {
             fontRendererObj.b(var1, 0.0, 0.0, var6, true);
             GlStateManager.popMatrix();
         } else {
-            FontManager.MAIN.a(var5, gd.BOLD).a(var1, var2, (float)var3, var6);
+            FontManager.MAIN.a(var5, FontWeight.BOLD).a(var1, var2, (float)var3, var6);
         }
     }
 
@@ -594,10 +594,10 @@ public class Spotify extends Module {
     private void a(String var1, double var2, double var4, int var6, boolean var7) {
         float f = this.e(var1, var6);
         if (var7) {
-            air.hK();
+            ScissorUtil.hK();
             RenderUtil.g(this.positionValue.apP.getX() + 65.0, var4 - 2.0, 105.0, f + 2.0F);
             this.a(var1, (float)(var2 - this.Ws), var4, var6, new Color(255, 255, 255, var6 == 20 ? 255 : 128).getRGB());
-            air.disable();
+            ScissorUtil.disable();
         } else {
             this.a(var1, (float)var2, var4, var6, new Color(255, 255, 255, var6 == 20 ? 255 : 128).getRGB());
         }
@@ -657,7 +657,7 @@ public class Spotify extends Module {
             GlStateManager.pushMatrix();
             GlStateManager.translate(var2, var3, 0.0F);
             GlStateManager.scale(var5, var5, 1.0F);
-            FontManager.MAIN.a(var4, gd.BOLD).a(var1, 0.0, 0.0, var6);
+            FontManager.MAIN.a(var4, FontWeight.BOLD).a(var1, 0.0, 0.0, var6);
             GlStateManager.popMatrix();
         }
     }
@@ -678,9 +678,9 @@ public class Spotify extends Module {
         return -1.0F;
     }
 
-    private sl w(int var1) {
+    private LyricLine w(int var1) {
         if (this.Wx && var1 >= 0 && var1 < this.Wy.size()) {
-            sl sl = this.Wy.get(var1);
+            LyricLine sl = this.Wy.get(var1);
             if (sl.XT == null || sl.XT.isEmpty()) {
                 int i = var1 + 1 < this.Wy.size() ? this.Wy.get(var1 + 1).XR : this.Wl;
                 sl.XT = this.a(sl.XS, sl.XR, i);
@@ -691,7 +691,7 @@ public class Spotify extends Module {
         return null;
     }
 
-    private float a(sl var1, int var2, int var3, int var4, float var5, float var6) {
+    private float a(LyricLine var1, int var2, int var3, int var4, float var5, float var6) {
         if (var1 == null) {
             return 0.0F;
         }
@@ -700,7 +700,7 @@ public class Spotify extends Module {
             float f = 0.0F;
 
             for (int i = 0; i < var1.XT.size(); i++) {
-                sn sn = var1.XT.get(i);
+                LyricWord sn = var1.XT.get(i);
                 float f1 = this.a(sn.XX, var4, var5);
                 if (var3 < sn.XZ) {
                     if (var3 > sn.XY) {
@@ -1098,7 +1098,7 @@ public class Spotify extends Module {
         }
     }
 
-    private List<sl> g(String var1, String var2) {
+    private List<LyricLine> g(String var1, String var2) {
         if (var2 == null) {
             return new ArrayList<>();
         }
@@ -1243,7 +1243,7 @@ public class Spotify extends Module {
         return (String)object2;
     }
 
-    private List<sl> D(String var1) {
+    private List<LyricLine> D(String var1) {
         if (var1 == null) {
             return new ArrayList<>();
         }
@@ -1259,7 +1259,7 @@ public class Spotify extends Module {
         return s.startsWith("<") && (s.contains("<tt") || s.contains("http://www.w3.org/ns/ttml"));
     }
 
-    private List<sl> F(String var1) {
+    private List<LyricLine> F(String var1) {
         ArrayList arraylist = new ArrayList();
         if (var1 == null) {
             return arraylist;
@@ -1298,7 +1298,7 @@ public class Spotify extends Module {
                     stringbuilder.append(s4);
                     if (integer2 != null) {
                         flag = true;
-                        sn sn = new sn(s4.isEmpty() ? "" : s4, integer2);
+                        LyricWord sn = new LyricWord(s4.isEmpty() ? "" : s4, integer2);
                         sn.XZ = integer3 != null ? integer3 : integer2;
                         arraylist1.add(sn);
                     }
@@ -1313,11 +1313,11 @@ public class Spotify extends Module {
 
                 if (flag && !arraylist1.isEmpty()) {
                     for (int i = 0; i < arraylist1.size(); i++) {
-                        sn snx = (sn)arraylist1.get(i);
+                        LyricWord snx = (LyricWord)arraylist1.get(i);
                         if (i + 1 < arraylist1.size()) {
-                            snx.XZ = Math.max(snx.XY, Math.min(snx.XZ, ((sn)arraylist1.get(i + 1)).XY));
+                            snx.XZ = Math.max(snx.XY, Math.min(snx.XZ, ((LyricWord)arraylist1.get(i + 1)).XY));
                             if (snx.XZ == snx.XY) {
-                                snx.XZ = ((sn)arraylist1.get(i + 1)).XY;
+                                snx.XZ = ((LyricWord)arraylist1.get(i + 1)).XY;
                             }
                         } else if (integer1 != null) {
                             snx.XZ = Math.max(snx.XY, integer1);
@@ -1325,15 +1325,15 @@ public class Spotify extends Module {
                     }
                 }
 
-                arraylist.add(new sl(integer, s5, arraylist1, flag));
+                arraylist.add(new LyricLine(integer, s5, arraylist1, flag));
             }
         }
 
-        arraylist.sort(Comparator.comparingInt(var0 -> ((sl)var0).XR));
+        arraylist.sort(Comparator.comparingInt(var0 -> ((LyricLine)var0).XR));
 
         for (int j = 0; j < arraylist.size(); j++) {
-            sl sl = (sl)arraylist.get(j);
-            int k = j + 1 < arraylist.size() ? ((sl)arraylist.get(j + 1)).XR : this.Wl;
+            LyricLine sl = (LyricLine)arraylist.get(j);
+            int k = j + 1 < arraylist.size() ? ((LyricLine)arraylist.get(j + 1)).XR : this.Wl;
             if (sl.XT == null || sl.XT.isEmpty()) {
                 sl.XT = this.a(sl.XS, sl.XR, k);
             }
@@ -1597,7 +1597,7 @@ public class Spotify extends Module {
         }
     }
 
-    private List<sl> N(String var1) {
+    private List<LyricLine> N(String var1) {
         ArrayList arraylist = new ArrayList();
         BufferedReader bufferedreader = new BufferedReader(new StringReader(var1));
         Pattern pattern = Pattern.compile("\\[(\\d{1,2}):(\\d{1,2})(?:\\.(\\d{1,3}))?]");
@@ -1625,10 +1625,10 @@ public class Spotify extends Module {
                 if (!arraylist1.isEmpty()) {
                     boolean flag = s1.contains("<") && s1.contains(">");
                     if (flag) {
-                        sm sm = this.h(s1.trim(), (Integer)arraylist1.get(0));
+                        ParsedLyricLine sm = this.h(s1.trim(), (Integer)arraylist1.get(0));
 
                         for (int l : (Iterable<Integer>)arraylist1) {
-                            sl slx = new sl(l, sm.XV, this.f(sm.XW), true);
+                            LyricLine slx = new LyricLine(l, sm.XV, this.f(sm.XW), true);
                             arraylist.add(slx);
                             afi.c("Enhanced line parsed: [" + l + "ms] \"" + slx.XS + "\" | words=" + slx.XT.size());
                         }
@@ -1636,7 +1636,7 @@ public class Spotify extends Module {
                         String s3 = s1.trim();
 
                         for (int l1 : (Iterable<Integer>)arraylist1) {
-                            sl sl1 = new sl(l1, s3, new ArrayList(), false);
+                            LyricLine sl1 = new LyricLine(l1, s3, new ArrayList(), false);
                             arraylist.add(sl1);
                         }
                     }
@@ -1646,8 +1646,8 @@ public class Spotify extends Module {
         }
 
         for (int i1 = 0; i1 < arraylist.size(); i1++) {
-            sl sl = (sl)arraylist.get(i1);
-            int j1 = i1 + 1 < arraylist.size() ? ((sl)arraylist.get(i1 + 1)).XR : this.Wl;
+            LyricLine sl = (LyricLine)arraylist.get(i1);
+            int j1 = i1 + 1 < arraylist.size() ? ((LyricLine)arraylist.get(i1 + 1)).XR : this.Wl;
             if (!sl.XT.isEmpty()) {
                 for (int k1 = 0; k1 < sl.XT.size(); k1++) {
                     if (k1 + 1 < sl.XT.size()) {
@@ -1661,11 +1661,11 @@ public class Spotify extends Module {
             }
         }
 
-        arraylist.sort(Comparator.comparingInt(var0 -> ((sl)var0).XR));
+        arraylist.sort(Comparator.comparingInt(var0 -> ((LyricLine)var0).XR));
         return arraylist;
     }
 
-    private sm h(String var1, int var2) {
+    private ParsedLyricLine h(String var1, int var2) {
         ArrayList arraylist = new ArrayList();
         StringBuilder stringbuilder = new StringBuilder();
         int i = 0;
@@ -1680,7 +1680,7 @@ public class Spotify extends Module {
                 if (k > i) {
                     if (stringbuilder1.length() > 0) {
                         String s = stringbuilder1.toString();
-                        arraylist.add(new sn(s, j));
+                        arraylist.add(new LyricWord(s, j));
                         stringbuilder.append(s);
                         stringbuilder1.setLength(0);
                     }
@@ -1703,23 +1703,23 @@ public class Spotify extends Module {
 
         if (stringbuilder1.length() > 0) {
             String s2 = stringbuilder1.toString();
-            arraylist.add(new sn(s2, j));
+            arraylist.add(new LyricWord(s2, j));
             stringbuilder.append(s2);
         }
 
-        arraylist.removeIf(var0 -> ((sn)var0).XX == null || ((sn)var0).XX.isEmpty());
+        arraylist.removeIf(var0 -> ((LyricWord)var0).XX == null || ((LyricWord)var0).XX.isEmpty());
         if (!flag) {
             arraylist.clear();
         }
 
-        return new sm(stringbuilder.toString(), arraylist);
+        return new ParsedLyricLine(stringbuilder.toString(), arraylist);
     }
 
-    private List<sn> f(List<sn> var1) {
+    private List<LyricWord> f(List<LyricWord> var1) {
         ArrayList arraylist = new ArrayList();
 
-        for (sn sn : var1) {
-            arraylist.add(new sn(sn.XX, sn.XY));
+        for (LyricWord sn : var1) {
+            arraylist.add(new LyricWord(sn.XX, sn.XY));
         }
 
         return arraylist;
@@ -1747,7 +1747,7 @@ public class Spotify extends Module {
         }
     }
 
-    private List<sn> a(String var1, int var2, int var3) {
+    private List<LyricWord> a(String var1, int var2, int var3) {
         ArrayList arraylist = new ArrayList();
         if (var1 == null) {
             return arraylist;
@@ -1755,7 +1755,7 @@ public class Spotify extends Module {
 
         int i = Math.max(0, var3 - var2);
         if (i == 0) {
-            sn snx = new sn(var1, var2);
+            LyricWord snx = new LyricWord(var1, var2);
             snx.XZ = var2;
             arraylist.add(snx);
             return arraylist;
@@ -1787,7 +1787,7 @@ public class Spotify extends Module {
         }
 
         if (arraylist1.isEmpty()) {
-            sn snxxx = new sn(var1, var2);
+            LyricWord snxxx = new LyricWord(var1, var2);
             snxxx.XZ = var3;
             arraylist.add(snxxx);
             return arraylist;
@@ -1803,7 +1803,7 @@ public class Spotify extends Module {
         }
 
         if (i1 < 0) {
-            sn snxx = new sn(var1, var2);
+            LyricWord snxx = new LyricWord(var1, var2);
             snxx.XZ = var3;
             arraylist.add(snxx);
             return arraylist;
@@ -1919,7 +1919,7 @@ public class Spotify extends Module {
                 ainteger[j5] = j5;
             }
 
-            Arrays.sort(ainteger, new sj(this, size, aint1, aint, arraylist4));
+            Arrays.sort(ainteger, new SurplusWidthComparator(this, size, aint1, aint, arraylist4));
             Integer[] ainteger1 = ainteger;
             int length = ainteger1.length;
 
@@ -1940,7 +1940,7 @@ public class Spotify extends Module {
                 ainteger2[i7] = i7;
             }
 
-            Arrays.sort(ainteger2, new sk(this, size, adouble2, arraylist4));
+            Arrays.sort(ainteger2, new RemainderWidthComparator(this, size, adouble2, arraylist4));
 
             for (int j7 = 0; l6-- > 0; j7++) {
                 aint1[ainteger2[j7 % size]]++;
@@ -1962,7 +1962,7 @@ public class Spotify extends Module {
         for (int l7 = 0; l7 < size; l7++) {
             int i8 = k7;
             int j8 = l7 == size - 1 ? var3 : Math.min(var3, i8 + Math.max(1, aint1[l7]));
-            sn sn = new sn((String)arraylist3.get(l7), i8);
+            LyricWord sn = new LyricWord((String)arraylist3.get(l7), i8);
             sn.XZ = j8;
             arraylist.add(sn);
             k7 = j8;

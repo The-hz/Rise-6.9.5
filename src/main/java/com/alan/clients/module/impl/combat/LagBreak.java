@@ -25,10 +25,10 @@ import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.component.bv;
-import hackclient.rise.component.ci;
+import com.alan.clients.component.impl.combat.TargetComponent;
+import com.alan.clients.component.impl.render.ProgressBarComponent;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
+import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
 import java.util.Comparator;
 import java.util.List;
@@ -83,7 +83,7 @@ extends Module {
         }
         float f2 = this.go();
         if (((Mode)this.visualMode.wo()).getName().equals("Percentage")) {
-            ci.a(f2, 0.75f, false, true, 10);
+            ProgressBarComponent.a(f2, 0.75f, false, true, 10);
             return;
         }
         if (!this.gm()) return;
@@ -104,7 +104,7 @@ extends Module {
             this.py = 0;
             this.pA = 0.0f;
             this.pz = 0;
-            ci.cl();
+            ProgressBarComponent.cl();
         }
         boolean bl = (entityLivingBase = this.k(((Number)this.range.wo()).doubleValue())) != null && PlayerUtil.v((Entity)entityLivingBase) <= 3.0 + MoveUtil.speed() / 2.0;
         boolean bl2 = entityLivingBase != null && PlayerUtil.v((Entity)entityLivingBase) <= 5.0 && this.a(entityLivingBase, 12.0f, 20.0f);
@@ -190,7 +190,7 @@ extends Module {
                     }
                     switch (n2) {
                         case 0: {
-                            ci.a(f2, 0.75f, false, true, 10);
+                            ProgressBarComponent.a(f2, 0.75f, false, true, 10);
                             break block4;
                         }
                         case 1: {
@@ -283,7 +283,7 @@ extends Module {
         if (LagBreak.aEg.thePlayer != null) {
             this.px = LagBreak.aEg.thePlayer.ticksExisted;
         }
-        ci.stop();
+        ProgressBarComponent.stop();
     }
 
     private boolean gm() {
@@ -311,8 +311,8 @@ extends Module {
         float f3 = (float)LagBreak.aEg.jY.getScaledHeight() / 2.0f;
         int n2 = this.rz().rA().getRGB();
         int n3 = new Color(0, 0, 0, 200).getRGB();
-        FontManager.MAIN.a(17, gd.LIGHT).c("Blinking: " + this.pt, f2 + 1.0f, f3 + 10.0f + 1.0f, n3);
-        FontManager.MAIN.a(17, gd.LIGHT).c("Blinking: " + this.pt, f2, f3 + 10.0f, n2);
+        FontManager.MAIN.a(17, FontWeight.LIGHT).c("Blinking: " + this.pt, f2 + 1.0f, f3 + 10.0f + 1.0f, n3);
+        FontManager.MAIN.a(17, FontWeight.LIGHT).c("Blinking: " + this.pt, f2, f3 + 10.0f, n2);
     }
 
     private void a(Render2DEvent render2DEvent, float f2) {
@@ -362,7 +362,7 @@ extends Module {
 
     private EntityLivingBase k(double d2) {
         try {
-            List<EntityLivingBase> list = bv.f(d2);
+            List<EntityLivingBase> list = TargetComponent.f(d2);
             if (list == null || list.isEmpty()) {
                 return null;
             }

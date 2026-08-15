@@ -7,8 +7,8 @@ import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.StringValue;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.ajt;
-import hackclient.rise.ss;
+import com.alan.clients.util.tuples.Triple;
+import com.alan.clients.module.impl.other.clientspoofer.LabyModPayloadList;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
@@ -18,10 +18,10 @@ public class LabyModClientSpoofer extends Mode<ClientSpoofer> {
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (var1x.dq() instanceof C17PacketCustomPayload) {
-            ss ss = new ss(this);
+            LabyModPayloadList ss = new LabyModPayloadList(this);
             var1x.setCancelled();
 
-            for (ajt ajt : ss) {
+            for (Triple ajt : ss) {
                 PacketBuffer packetbuffer = new PacketBuffer(Unpooled.buffer());
                 if ((Boolean)ajt.vV()) {
                     packetbuffer.writeString((String)ajt.vU());

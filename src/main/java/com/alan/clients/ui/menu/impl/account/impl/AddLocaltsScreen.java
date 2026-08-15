@@ -8,32 +8,32 @@ import com.alan.clients.util.vector.Vector2d;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import hackclient.rise.adf;
+import com.alan.clients.ui.menu.MenuColors;
 import com.alan.clients.ui.menu.component.button.MenuButton;
 import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import com.alan.clients.util.MouseUtil;
-import hackclient.rise.aer;
-import hackclient.rise.aes;
-import hackclient.rise.aet;
-import hackclient.rise.aeu;
-import hackclient.rise.aev;
-import hackclient.rise.aew;
-import hackclient.rise.aex;
-import hackclient.rise.aey;
-import hackclient.rise.afa;
-import hackclient.rise.afb;
-import hackclient.rise.afc;
-import hackclient.rise.afd;
-import hackclient.rise.afe;
+import com.alan.clients.util.account.auth.MicrosoftCookieAuth;
+import com.alan.clients.util.account.auth.MSAAuthResult;
+import com.alan.clients.util.account.localts.LocaltsApi;
+import com.alan.clients.util.account.localts.LocaltsOrder;
+import com.alan.clients.util.account.localts.LocaltsOrderPage;
+import com.alan.clients.util.account.localts.LocaltsProduct;
+import com.alan.clients.util.account.localts.LocaltsProducts;
+import com.alan.clients.util.account.localts.LocaltsResult;
+import com.alan.clients.util.account.localts.LocaltsPurchase;
+import com.alan.clients.util.account.localts.LocaltsConfig;
+import com.alan.clients.util.account.localts.LocaltsOrderStore;
+import com.alan.clients.util.account.localts.LocaltsDelivery;
+import com.alan.clients.util.web.CommunityChat;
 import hackclient.rise.agc;
-import hackclient.rise.agl;
+import com.alan.clients.util.gui.textbox.TextAlign;
 import com.alan.clients.util.gui.textbox.TextBox;
 import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.awt.Desktop.Action;
 import java.awt.Desktop;
@@ -48,21 +48,21 @@ import java.util.Set;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
-import rip.vantage.commons.packet.impl.client.community.e;
+import rip.vantage.commons.packet.impl.client.community.C2SPacketStoreDelivery;
 import rip.vantage.network.core.a;
 
-public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
+public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceAccess {
     private static final String API_KEY_SETTINGS_URL = "https://localts.store/user/settings";
-    private static final agc TITLE_FONT = FontManager.MAIN.a(36, gd.BOLD);
-    private static final agc INFO_FONT = FontManager.MAIN.a(16, gd.REGULAR);
-    private static final agc LABEL_FONT = FontManager.MAIN.a(14, gd.BOLD);
-    private static final agc TOOLTIP_FONT = FontManager.MAIN.a(12, gd.REGULAR);
-    private static final agc QUANTITY_FONT = FontManager.MAIN.a(18, gd.REGULAR);
-    private static final float CENTER_REF_HEIGHT = FontManager.MAIN.a(24, gd.BOLD).height();
+    private static final agc TITLE_FONT = FontManager.MAIN.a(36, FontWeight.BOLD);
+    private static final agc INFO_FONT = FontManager.MAIN.a(16, FontWeight.REGULAR);
+    private static final agc LABEL_FONT = FontManager.MAIN.a(14, FontWeight.BOLD);
+    private static final agc TOOLTIP_FONT = FontManager.MAIN.a(12, FontWeight.REGULAR);
+    private static final agc QUANTITY_FONT = FontManager.MAIN.a(18, FontWeight.REGULAR);
+    private static final float CENTER_REF_HEIGHT = FontManager.MAIN.a(24, FontWeight.BOLD).height();
     private static final int PRODUCT_INDEX_NONE = -1;
     private static final int PRODUCTS_PER_PAGE = 4;
     private final MenuButton[] menuButtons = new MenuButton[4];
-    private static volatile List<aew> products = Collections.emptyList();
+    private static volatile List<LocaltsProduct> products = Collections.emptyList();
     private static volatile int selectedProductIndex = -1;
     private static final Set<String> BUNDLED_PRODUCT_IMAGES = new HashSet<>(
         Arrays.asList(
@@ -117,7 +117,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         } else {
             statusMessage = "Looking for your latest packaged Localts order...";
             statusColor = Color.YELLOW;
-            aev aev = aet.b(s, 0, 25);
+            LocaltsOrderPage aev = LocaltsApi.b(s, 0, 25);
             if (!aev.aFv) {
                 statusMessage = aev.aFB;
                 statusColor = Color.RED;
@@ -126,7 +126,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
                     if (jsonelement.isJsonObject()) {
                         JsonObject jsonobject = jsonelement.getAsJsonObject();
                         if (jsonobject.has("id") && !jsonobject.get("id").isJsonNull()) {
-                            aeu aeu = aet.z(s, jsonobject.get("id").getAsString());
+                            LocaltsOrder aeu = LocaltsApi.z(s, jsonobject.get("id").getAsString());
                             if (aeu.aFp && "PACKAGED".equalsIgnoreCase(aeu.aFr)) {
                                 saveAndOpenOrder(aeu);
                                 return;
@@ -145,7 +145,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
             refreshProducts(true);
         } else {
             selectedProductIndex = (selectedProductIndex + 1) % products.size();
-            afb.bw(selectedProduct().aFC);
+            LocaltsConfig.bw(selectedProduct().aFC);
         }
     };
     private static final Runnable CHECK_STATUS_RUNNABLE = () -> new Thread(() -> {
@@ -161,7 +161,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         statusMessage = "Refreshing Localts products...";
         statusColor = Color.YELLOW;
         refreshProducts(false);
-        aew aew = selectedProduct();
+        LocaltsProduct aew = selectedProduct();
         if (aew != null) {
             statusMessage = aew.aFD + " | Stock: " + aew.aFH + " | " + aew.aFG + " credits each";
             statusColor = aew.aFH > 0 ? Color.GREEN : Color.RED;
@@ -185,7 +185,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
                 return;
             }
 
-            aew aew = selectedProduct();
+            LocaltsProduct aew = selectedProduct();
             if (aew == null) {
                 statusMessage = "Products are still loading; try again shortly";
                 statusColor = Color.YELLOW;
@@ -193,7 +193,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
                 statusMessage = "A Localts purchase is already in progress";
                 statusColor = Color.YELLOW;
             } else {
-                afb.bv(s);
+                LocaltsConfig.bv(s);
                 new Thread(() -> purchase(s, aew, i), "Localts purchase thread").start();
             }
         }
@@ -207,7 +207,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         return (float)(var0 + var2 / 2.0 - 4.0 * var4.height() / CENTER_REF_HEIGHT);
     }
 
-    private static void purchase(String var0, aew var1, int var2) {
+    private static void purchase(String var0, LocaltsProduct var1, int var2) {
         isPurchasing = true;
 
         try {
@@ -218,16 +218,16 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         }
     }
 
-    private static void purchaseAndDeliver(String var0, aew var1, int var2) {
+    private static void purchaseAndDeliver(String var0, LocaltsProduct var1, int var2) {
         int i = var2;
-        afd afd = null;
+        LocaltsDelivery afd = null;
         JsonArray jsonarray = new JsonArray();
 
         for (int j = 0; j < 2 && i > 0; j++) {
             int k = i;
             statusMessage = (j == 0 ? "Purchasing " : "Reordering ") + k + "x " + var1.aFD + "...";
             statusColor = Color.YELLOW;
-            aey aey = aet.c(var0, var1.aFC, k);
+            LocaltsResult aey = LocaltsApi.c(var0, var1.aFC, k);
             if (!aey.aFM) {
                 statusMessage = "Purchase failed: " + aey.aFO;
                 statusColor = Color.RED;
@@ -235,7 +235,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
             }
 
             statusMessage = "Order " + aey.aFN + " is being packaged...";
-            aeu aeu = waitForPackage(var0, aey.aFN);
+            LocaltsOrder aeu = waitForPackage(var0, aey.aFN);
             if (!aeu.aFp) {
                 statusMessage = "Order created, but could not be retrieved: " + aeu.aFu;
                 statusColor = Color.YELLOW;
@@ -248,7 +248,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
                 return;
             }
 
-            afd afdx = afd == null ? afc.a(aeu) : afc.a(aeu, afd.aGa);
+            LocaltsDelivery afdx = afd == null ? LocaltsOrderStore.a(aeu) : LocaltsOrderStore.a(aeu, afd.aGa);
             if (afdx == null) {
                 statusMessage = "Order packaged, but saving it locally failed";
                 statusColor = Color.YELLOW;
@@ -292,7 +292,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         }
     }
 
-    private static void sendLocaltsDeliveryPacket(aew var0, String var1, int var2, boolean var3) {
+    private static void sendLocaltsDeliveryPacket(LocaltsProduct var0, String var1, int var2, boolean var3) {
         try {
             a aInstance = a.aKB();
             if (aInstance.aKK() == null || aInstance.bX() == null || aInstance.bX().trim().isEmpty()) {
@@ -301,13 +301,13 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
 
             long i = (long)var0.aFG * var2;
             int j = i > 2147483647L ? Integer.MAX_VALUE : (int)Math.max(0L, i);
-            aInstance.aKK().sendMessage(new e(aInstance.bX(), var0.aFD, j, var2, var1, var3).aJk());
+            aInstance.aKK().sendMessage(new C2SPacketStoreDelivery(aInstance.bX(), var0.aFD, j, var2, var1, var3).aJk());
         } catch (Exception exception) {
         }
     }
 
-    private static aeu waitForPackage(String var0, String var1) {
-        aeu aeu = aet.z(var0, var1);
+    private static LocaltsOrder waitForPackage(String var0, String var1) {
+        LocaltsOrder aeu = LocaltsApi.z(var0, var1);
 
         for (int i = 0; i < 60 && aeu.aFp && !"PACKAGED".equalsIgnoreCase(aeu.aFr); i++) {
             try {
@@ -317,14 +317,14 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
                 break;
             }
 
-            aeu = aet.z(var0, var1);
+            aeu = LocaltsApi.z(var0, var1);
         }
 
         return aeu;
     }
 
-    private static void saveAndOpenOrder(aeu var0) {
-        afd afd = afc.a(var0);
+    private static void saveAndOpenOrder(LocaltsOrder var0) {
+        LocaltsDelivery afd = LocaltsOrderStore.a(var0);
         if (afd == null) {
             statusMessage = "Order packaged, but saving it locally failed";
             statusColor = Color.YELLOW;
@@ -335,9 +335,9 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         }
     }
 
-    private static void openDelivery(afd var0, JsonArray var1) {
+    private static void openDelivery(LocaltsDelivery var0, JsonArray var1) {
         if (var0 != null) {
-            aes aes = aer.a(var1);
+            MSAAuthResult aes = MicrosoftCookieAuth.a(var1);
             String s = aes.aFj;
 
             try {
@@ -362,7 +362,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
     }
 
     private static void refreshProducts(boolean var0) {
-        aex aex = aet.ss();
+        LocaltsProducts aex = LocaltsApi.ss();
         if (!aex.aFJ) {
             if (var0) {
                 statusMessage = aex.aFL;
@@ -371,7 +371,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         } else {
             ArrayList arraylist = new ArrayList();
 
-            for (aew aew : aex.aFK) {
+            for (LocaltsProduct aew : aex.aFK) {
                 if (aew.aFH > 0 && (isNfa(aew) || isCookie(aew))) {
                     arraylist.add(aew);
                 }
@@ -379,7 +379,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
 
             Collections.sort(arraylist, new AddLocaltsScreen$1());
             products = arraylist;
-            String s = afb.sw();
+            String s = LocaltsConfig.sw();
             selectedProductIndex = -1;
 
             for (int i = 0; i < products.size(); i++) {
@@ -403,12 +403,12 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         }
     }
 
-    private static aew selectedProduct() {
+    private static LocaltsProduct selectedProduct() {
         return selectedProductIndex >= 0 && selectedProductIndex < products.size() ? products.get(selectedProductIndex) : null;
     }
 
     private static void refreshAccountSummary(String var0, boolean var1) {
-        afa afa = aet.bu(var0);
+        LocaltsPurchase afa = LocaltsApi.bu(var0);
         if (afa.aFS) {
             localtsUsername = afa.aFT;
             localtsCredits = afa.aFU;
@@ -422,32 +422,32 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         }
     }
 
-    static int productPriority(aew var0) {
+    static int productPriority(LocaltsProduct var0) {
         if (isCookie(var0)) {
             return 0;
         }
         return isNfa(var0) ? 1 : 2;
     }
 
-    private static boolean isNfa(aew var0) {
+    private static boolean isNfa(LocaltsProduct var0) {
         String s = (var0.aFD + " " + var0.aFE + " " + var0.aFF).toLowerCase();
         return s.contains("nfa") || s.contains("non-full") || s.contains("refresh token");
     }
 
-    private static boolean isCookie(aew var0) {
+    private static boolean isCookie(LocaltsProduct var0) {
         return (var0.aFD + " " + var0.aFE + " " + var0.aFF).toLowerCase().contains("cookie");
     }
 
     public AddLocaltsScreen() {
         reference = this;
-        afb.init();
+        LocaltsConfig.init();
     }
 
     @Override
     public void drawScreen(int var1, int var2, float var3) {
         aiv.aPL.a(aiz.OVERLAY, var3, null);
-        this.b(gg.BLUR).c(BACKGROUND_RUNNABLE);
-        this.b(gg.REGULAR).c(() -> {
+        this.b(ShaderQueueType.BLUR).c(BACKGROUND_RUNNABLE);
+        this.b(ShaderQueueType.REGULAR).c(() -> {
             this.drawStorefront(var1, var2);
             apiKeyBox.draw();
         });
@@ -459,7 +459,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         }
 
         if (productModalOpen) {
-            this.b(gg.REGULAR).c(() -> this.drawProductModal(var1, var2));
+            this.b(ShaderQueueType.REGULAR).c(() -> this.drawProductModal(var1, var2));
         }
     }
 
@@ -510,15 +510,15 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
 
     @Override
     public void initGui() {
-        String s = afb.sv();
+        String s = LocaltsConfig.sv();
         apiKeyBox = new TextBox(
-            new Vector2d(this.width / 2, this.panelY() + 91), FontManager.MAIN.a(16, gd.REGULAR), Color.WHITE, agl.CENTER, s.isEmpty() ? "API Key" : s, 330.0F
+            new Vector2d(this.width / 2, this.panelY() + 91), FontManager.MAIN.a(16, FontWeight.REGULAR), Color.WHITE, TextAlign.CENTER, s.isEmpty() ? "API Key" : s, 330.0F
         );
         if (!s.isEmpty()) {
             apiKeyBox.bW(s);
         }
 
-        quantityBox = new TextBox(new Vector2d(this.width / 2, this.height / 2), QUANTITY_FONT, Color.WHITE, agl.CENTER, "1", 42.0F);
+        quantityBox = new TextBox(new Vector2d(this.width / 2, this.height / 2), QUANTITY_FONT, Color.WHITE, TextAlign.CENTER, "1", 42.0F);
         quantityBox.bW("1");
         float f = (this.panelWidth() - 42) / 4.0F;
         float f1 = this.cardsY() + 278;
@@ -647,7 +647,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         }
     }
 
-    private void drawProductCard(aew var1, int var2, int var3, int var4, int var5) {
+    private void drawProductCard(LocaltsProduct var1, int var2, int var3, int var4, int var5) {
         int i = this.cardX(var3);
         int j = this.cardsY();
         boolean flag = var2 == selectedProductIndex;
@@ -680,15 +680,15 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         TOOLTIP_FONT.a(var3, var1 + 10.0F, centeredTextY(var2, 15.0, TOOLTIP_FONT), color.getRGB());
     }
 
-    private String productTag(aew var1) {
+    private String productTag(LocaltsProduct var1) {
         return isCookie(var1) ? "COOKIE" : (isNfa(var1) ? "NFA" : "MINECRAFT");
     }
 
-    private Color productTagColor(aew var1) {
+    private Color productTagColor(LocaltsProduct var1) {
         return isCookie(var1) ? new Color(244, 184, 94) : (isNfa(var1) ? new Color(132, 166, 255) : new Color(154, 225, 175));
     }
 
-    private ResourceLocation productImage(aew var1) {
+    private ResourceLocation productImage(LocaltsProduct var1) {
         return BUNDLED_PRODUCT_IMAGES.contains(var1.aFC) ? new ResourceLocation("rise/images/localts_products/" + var1.aFC + ".png") : null;
     }
 
@@ -701,7 +701,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
 
             if (MouseUtil.isHovered(this.cardX(i), this.cardsY(), this.cardWidth(), 220.0, var1, var2)) {
                 selectedProductIndex = j;
-                afb.bw(products.get(j).aFC);
+                LocaltsConfig.bw(products.get(j).aFC);
                 productModalOpen = true;
                 apiKeyBox.I(false);
                 quantityBox.I(false);
@@ -713,7 +713,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
     }
 
     private void drawProductModal(int var1, int var2) {
-        aew aew = selectedProduct();
+        LocaltsProduct aew = selectedProduct();
         if (aew != null) {
             RenderUtil.d(0.0, 0.0, this.width, this.height, new Color(0, 0, 0, 150));
             int i = Math.min(570, this.width - 30);
@@ -787,7 +787,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
 
                 quantityBox.click(var1, var2, var3);
                 if (MouseUtil.isHovered(k + 14, l + j - 54, i - 28, 36.0, var1, var2)) {
-                    aew aew = selectedProduct();
+                    LocaltsProduct aew = selectedProduct();
                     if (aew != null && aew.aFH > 0) {
                         productModalOpen = false;
                         quantityBox.I(false);
@@ -814,7 +814,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         quantityBox.ar(quantityBox.XS.length());
     }
 
-    private int purchaseTotal(aew var1) {
+    private int purchaseTotal(LocaltsProduct var1) {
         long i = (long)var1.aFG * this.quantity();
         return i > 2147483647L ? Integer.MAX_VALUE : (int)i;
     }
@@ -843,7 +843,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
     }
 
     private static void openApiDocs() {
-        afe.A("api_settings", "https://localts.store/user/settings");
+        CommunityChat.A("api_settings", "https://localts.store/user/settings");
 
         try {
             if (!Desktop.isDesktopSupported() || !Desktop.getDesktop().isSupported(Action.BROWSE)) {

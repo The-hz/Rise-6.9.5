@@ -14,7 +14,7 @@ import rip.vantage.commons.util.time.a;
 public class adn extends GuiScreen {
     private final String aCj = "";
     private final String aCk = "";
-    private final ArrayList<adp> aCl = new ado(this);
+    private final ArrayList<IntroLine> aCl = new IntroSequenceLines(this);
     private final a aCm = new a();
     private final int aCn = 0;
     private boolean yr = false;

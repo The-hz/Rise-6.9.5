@@ -19,7 +19,7 @@ import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.component.bv;
+import com.alan.clients.component.impl.combat.TargetComponent;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -126,7 +126,7 @@ extends Module {
     };
 
     private void gv() {
-        List<EntityLivingBase> list = bv.a(((Number)this.range.wo()).doubleValue(), (boolean)((Boolean)this.players.wo()), (boolean)((Boolean)this.invisibles.wo()), false, (boolean)((Boolean)this.hostile.wo()), (Boolean)this.teammates.wo());
+        List<EntityLivingBase> list = TargetComponent.a(((Number)this.range.wo()).doubleValue(), (boolean)((Boolean)this.players.wo()), (boolean)((Boolean)this.invisibles.wo()), false, (boolean)((Boolean)this.hostile.wo()), (Boolean)this.teammates.wo());
         if (list.isEmpty()) {
             this.jE = null;
             return;

@@ -11,8 +11,8 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
-import hackclient.rise.ahz;
-import hackclient.rise.aia;
+import com.alan.clients.util.player.DamageUtil;
+import com.alan.clients.util.player.DamageType;
 import net.minecraft.block.BlockAir;
 import net.minecraft.util.AxisAlignedBB;
 
@@ -72,7 +72,7 @@ public class VerusDamageNewFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        ahz.a(aia.POSITION, 3.42F, 1, false, false);
+        DamageUtil.a(DamageType.POSITION, 3.42F, 1, false, false);
         this.hV = 0;
         this.It = 2;
         this.El = true;

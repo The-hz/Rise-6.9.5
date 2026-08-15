@@ -1,8 +1,8 @@
 package com.alan.clients.util.font.impl.rise;
 
 import hackclient.rise.agc;
-import hackclient.rise.age;
-import hackclient.rise.agh;
+import com.alan.clients.util.font.impl.rise.FontCharacter;
+import com.alan.clients.util.font.impl.rise.GlyphCache;
 import com.alan.clients.util.render.ColorUtil;
 import java.awt.Color;
 import java.awt.Font;
@@ -36,29 +36,29 @@ public class FontRenderer extends agc {
     private final Font font;
     private final boolean aII;
     private final float aIJ;
-    private final age[] aIK = new age[256];
-    private final age[] aIL = new age[65535];
-    private final age[] aIM = new age[256];
+    private final FontCharacter[] aIK = new FontCharacter[256];
+    private final FontCharacter[] aIL = new FontCharacter[65535];
+    private final FontCharacter[] aIM = new FontCharacter[256];
     private boolean aIN = true;
     private boolean aIO = false;
-    private agh aIP;
-    private agh aIQ;
-    private agh aIR;
-    private agh aIS;
+    private GlyphCache aIP;
+    private GlyphCache aIQ;
+    private GlyphCache aIR;
+    private GlyphCache aIS;
 
-    public void a(agh var1) {
+    public void a(GlyphCache var1) {
         this.aIP = var1;
     }
 
-    public void b(agh var1) {
+    public void b(GlyphCache var1) {
         this.aIQ = var1;
     }
 
-    public void c(agh var1) {
+    public void c(GlyphCache var1) {
         this.aIR = var1;
     }
 
-    public void d(agh var1) {
+    public void d(GlyphCache var1) {
         this.aIS = var1;
     }
 
@@ -124,7 +124,7 @@ public class FontRenderer extends agc {
         }
     }
 
-    public void a(age[] var1, int var2) {
+    public void a(FontCharacter[] var1, int var2) {
         Font font = this.font.deriveFont(var2);
         Graphics2D graphics2d = (Graphics2D)new BufferedImage(1, 1, 2).getGraphics();
         FontMetrics fontmetrics = graphics2d.getFontMetrics(font);
@@ -145,7 +145,7 @@ public class FontRenderer extends agc {
             graphics2d1.drawString(c0 + "", 4, font.getSize());
             int l = GL11.glGenTextures();
             this.uploadTexture(l, bufferedimage, j, k);
-            var1[i] = new age(l, j, k);
+            var1[i] = new FontCharacter(l, j, k);
         }
     }
 
@@ -217,7 +217,7 @@ public class FontRenderer extends agc {
             return Minecraft.getMinecraft().fontRendererObj.b(var1, var2, var4, var6, var7);
         }
 
-        age[] aage = this.aIO ? this.aIL : this.aIK;
+        FontCharacter[] aage = this.aIO ? this.aIL : this.aIK;
         double d0 = var2;
         GL11.glPushMatrix();
         GL11.glPushAttrib(1048575);
@@ -251,7 +251,7 @@ public class FontRenderer extends agc {
                 } else {
                     char c1 = c0;
                     if (c1 >= 0 && c1 < aage.length) {
-                        age age = aage[c1];
+                        FontCharacter age = aage[c1];
                         if (age == null) {
                             if (this.aIP != null && g(c0)) {
                                 this.aIP.a(c0, (float)d3, (float)d5);
@@ -300,9 +300,9 @@ public class FontRenderer extends agc {
 
     @Override
     public void a(char var1, int var2, int var3, Color color) {
-        age[] aage = this.aIO ? this.aIL : this.aIK;
+        FontCharacter[] aage = this.aIO ? this.aIL : this.aIK;
         if (var1 < aage.length && aage[var1] != null) {
-            age age = aage[var1];
+            FontCharacter age = aage[var1];
             GlStateManager.color(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, color.getAlpha() / 255.0F);
             age.e(var2, var3);
         }
@@ -315,7 +315,7 @@ public class FontRenderer extends agc {
             return Minecraft.getMinecraft().fontRendererObj.getStringWidth(s);
         }
 
-        age[] aage = this.aIO ? this.aIL : this.aIK;
+        FontCharacter[] aage = this.aIO ? this.aIL : this.aIK;
         int i = s.length();
         int j = 0;
 
@@ -326,7 +326,7 @@ public class FontRenderer extends agc {
             } else {
                 char c1 = c0;
                 if (c1 >= 0 && c1 < aage.length) {
-                    age age = aage[c1];
+                    FontCharacter age = aage[c1];
                     if (age == null) {
                         if (this.aIP != null && g(c0)) {
                             j = (int)(j + this.aIP.j(c0));

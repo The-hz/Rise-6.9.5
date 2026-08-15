@@ -4,8 +4,8 @@ import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.vector.Vector2d;
 import hackclient.rise.agc;
-import hackclient.rise.agl;
-import hackclient.rise.gd;
+import com.alan.clients.util.gui.textbox.TextAlign;
+import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
@@ -26,7 +26,7 @@ public class TextBox {
     public float width;
     public agc lq;
     public Color color;
-    public agl aJl;
+    public TextAlign aJl;
     public String aJm;
     public boolean aJn;
     private int aJo;
@@ -39,7 +39,7 @@ public class TextBox {
     private float aJu;
     public a aJv = new a();
 
-    public TextBox(Vector2d position, agc var2, Color color, agl var4, String var5, float width, boolean var7) {
+    public TextBox(Vector2d position, agc var2, Color color, TextAlign var4, String var5, float width, boolean var7) {
         this.position = position;
         this.lq = var2;
         this.color = color;
@@ -49,11 +49,11 @@ public class TextBox {
         this.aJn = var7;
     }
 
-    public TextBox(Vector2d vector2d, agc var2, Color var3, agl var4, String var5, float var6) {
+    public TextBox(Vector2d vector2d, agc var2, Color var3, TextAlign var4, String var5, float var6) {
         this(vector2d, var2, var3, var4, var5, var6, false);
     }
 
-    public TextBox(Vector2d vector2d, agc var2, Color var3, agl var4, String var5, float var6, String var7) {
+    public TextBox(Vector2d vector2d, agc var2, Color var3, TextAlign var4, String var5, float var6, String var7) {
         this(vector2d, var2, var3, var4, var5, var6, false);
         this.aJq = var7;
     }
@@ -115,7 +115,7 @@ public class TextBox {
                 this.aJr = (this.aJr * 19.0 + (f1 - 2.0F)) / 20.0;
             }
 
-            (this.lq == Minecraft.getMinecraft().fontRendererObj ? FontManager.MAIN.a(18, gd.REGULAR) : this.lq)
+            (this.lq == Minecraft.getMinecraft().fontRendererObj ? FontManager.MAIN.a(18, FontWeight.REGULAR) : this.lq)
                 .a(
                     "|",
                     (float)(this.gW + this.aJr + 1.0),
@@ -161,7 +161,7 @@ public class TextBox {
 
     public void click(int var1, int var2, int var3) {
         Vector2d vector2d = this.getPosition();
-        boolean flag = GUIUtil.c(vector2d.x + (this.aJl == agl.CENTER ? -this.width / 2.0F : 0.0F), vector2d.y, this.width, this.lq.height(), var1, var2);
+        boolean flag = GUIUtil.c(vector2d.x + (this.aJl == TextAlign.CENTER ? -this.width / 2.0F : 0.0F), vector2d.y, this.width, this.lq.height(), var1, var2);
         this.ayU = var3 == 0 && flag;
         if (this.ayU) {
             this.aJk = this.XS.length();
@@ -324,7 +324,7 @@ public class TextBox {
     }
 
     @Generated
-    public agl tQ() {
+    public TextAlign tQ() {
         return this.aJl;
     }
 
@@ -409,7 +409,7 @@ public class TextBox {
     }
 
     @Generated
-    public void a(agl var1) {
+    public void a(TextAlign var1) {
         this.aJl = var1;
     }
 

@@ -10,13 +10,13 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import hackclient.rise.aha;
 import hackclient.rise.ahd;
-import hackclient.rise.p;
+import com.alan.clients.util.interfaces.Bindable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import lombok.Generated;
 
-public abstract class Module implements InstanceAccess, aha, Toggleable, p {
+public abstract class Module implements InstanceAccess, aha, Toggleable, Bindable {
     private String[] aliases;
     private final List<Value<?>> values = new ArrayList<>();
     private ModuleInfo moduleInfo;

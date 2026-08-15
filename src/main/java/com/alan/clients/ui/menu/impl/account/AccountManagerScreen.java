@@ -12,12 +12,12 @@ import com.alan.clients.ui.menu.component.button.impl.MenuTextButton;
 import hackclient.rise.adr;
 import com.alan.clients.util.MouseUtil;
 import hackclient.rise.AltAccount;
-import hackclient.rise.afv;
+import com.alan.clients.util.file.alt.AltManager;
 import hackclient.rise.agk;
-import hackclient.rise.air;
+import com.alan.clients.util.render.ScissorUtil;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
-import hackclient.rise.gg;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +29,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.opengl.GL11;
 
 public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
-    private static final afv ALT_MANAGER = Client.a.q();
+    private static final AltManager ALT_MANAGER = Client.a.q();
     private static final Runnable ADD_ACCOUNT_RUNNABLE = () -> aEg.displayGuiScreen(new AddAccountScreen());
     private static final Runnable CANCEL_RUNNABLE = () -> aEg.displayGuiScreen(new adr());
     private static final Runnable BACKGROUND_RUNNABLE = () -> {
@@ -53,10 +53,10 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
     @Override
     public void drawScreen(int var1, int var2, float var3) {
         aiv.aPL.a(aiz.OVERLAY, var3, null);
-        this.b(gg.BLUR).c(BACKGROUND_RUNNABLE);
+        this.b(ShaderQueueType.BLUR).c(BACKGROUND_RUNNABLE);
         GL11.glPushMatrix();
-        air.hK();
-        this.b(gg.BLOOM).c(() -> GuiScreen.drawRect(0, 0, 0, 0, 0));
+        ScissorUtil.hK();
+        this.b(ShaderQueueType.BLOOM).c(() -> GuiScreen.drawRect(0, 0, 0, 0, 0));
         this.scrollUtil.qx();
         if (!ACCOUNT_DISPLAY_LIST.isEmpty()) {
             int i = (int)ACCOUNT_DISPLAY_LIST.get(0).getHeight();
@@ -76,8 +76,8 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
             accountviewmodel.draw();
         }
 
-        air.a(new ScaledResolution(aEg), 0.0, 0.0, this.width, this.height - 48);
-        air.disable();
+        ScissorUtil.a(new ScaledResolution(aEg), 0.0, 0.0, this.width, this.height - 48);
+        ScissorUtil.disable();
         GL11.glPopMatrix();
 
         for (MenuButton menuButton : MENU_BUTTONS) {
@@ -159,7 +159,7 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
                 addDisplay(altAccount);
             }
 
-            this.b(gg.REGULAR).c(BACKGROUND_RUNNABLE);
+            this.b(ShaderQueueType.REGULAR).c(BACKGROUND_RUNNABLE);
         }
     }
 

@@ -15,7 +15,7 @@ import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
-import hackclient.rise.bh;
+import com.alan.clients.component.impl.player.ItemDamageType;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
@@ -32,7 +32,7 @@ public final class ItemDamageComponent extends Component {
     private static boolean dk;
     private static int dl;
     private static int dm;
-    public static bh dn;
+    public static ItemDamageType dn;
     @EventLink(value = 0)
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (dj) {
@@ -44,23 +44,23 @@ public final class ItemDamageComponent extends Component {
             if (i != -1 && this.arrow()) {
                 SlotComponent slotcomponent3 = this.d(SlotComponent.class);
                 SlotComponent.setSlot(i);
-                dn = bh.BOW;
+                dn = ItemDamageType.BOW;
             } else if (j != -1) {
                 SlotComponent slotcomponent8 = this.d(SlotComponent.class);
                 SlotComponent.setSlot(j);
-                dn = bh.ROD;
+                dn = ItemDamageType.ROD;
             } else if (k != -1) {
                 SlotComponent slotcomponent = this.d(SlotComponent.class);
                 SlotComponent.setSlot(k);
-                dn = bh.CLAY;
+                dn = ItemDamageType.CLAY;
             } else if (l != -1) {
                 SlotComponent slotcomponent1 = this.d(SlotComponent.class);
                 SlotComponent.setSlot(l);
-                dn = bh.PROJECTILES;
+                dn = ItemDamageType.PROJECTILES;
             } else if (i1 != -1) {
                 SlotComponent slotcomponent2 = this.d(SlotComponent.class);
                 SlotComponent.setSlot(i1);
-                dn = bh.PROJECTILES;
+                dn = ItemDamageType.PROJECTILES;
             }
 
             if (BadPacketsComponent.bad(true, false, false, false, true)) {

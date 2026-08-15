@@ -4,7 +4,7 @@ import com.alan.clients.component.Component;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
-import hackclient.rise.aig;
+import com.alan.clients.util.player.ServerPingCallable;
 import hackclient.rise.cg;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -49,7 +49,7 @@ public final class PingSpoofComponent extends Component {
                     cg.a("Ping", "Please wait whilst Rise analyses your ping.", 7000);
                 }
 
-                dH = new aig(LastConnectionComponent.ip).vf();
+                dH = new ServerPingCallable(LastConnectionComponent.ip).vf();
                 if (var0) {
                     cg.a("Success", "Successfully analysed ping, your features are ready to use.", 7000);
                 }

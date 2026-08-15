@@ -21,7 +21,7 @@ import hackclient.rise.afj;
 import com.alan.clients.command.impl.Target;
 import com.alan.clients.command.impl.Title;
 import com.alan.clients.command.impl.Toggle;
-import hackclient.rise.u;
+import com.alan.clients.command.CommandResult;
 import com.alan.clients.command.impl.Friend;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +34,7 @@ public final class CommandManager {
     private final List<Command> bp = new ArrayList<>();
     @EventLink
     public final Listener<ChatInputEvent> onChatInput = var1 -> {
-        if (this.a(var1.getMessage(), true) != u.NOT_A_COMMAND) {
+        if (this.a(var1.getMessage(), true) != CommandResult.NOT_A_COMMAND) {
             var1.setCancelled();
         }
     };
@@ -74,18 +74,18 @@ public final class CommandManager {
             .orElse(null);
     }
 
-    public u c(String var1) {
+    public CommandResult c(String var1) {
         return this.a(var1, true);
     }
 
-    public u a(String var1, boolean var2) {
+    public CommandResult a(String var1, boolean var2) {
         if (var1 == null) {
-            return u.NOT_A_COMMAND;
+            return CommandResult.NOT_A_COMMAND;
         }
 
         String s = var1.trim();
         if (s.isEmpty()) {
-            return u.NOT_A_COMMAND;
+            return CommandResult.NOT_A_COMMAND;
         }
 
         boolean flag = s.startsWith(".");
@@ -95,12 +95,12 @@ public final class CommandManager {
         } else if (flag1) {
             s = s.substring(1);
         } else if (var2) {
-            return u.NOT_A_COMMAND;
+            return CommandResult.NOT_A_COMMAND;
         }
 
         if (s.isEmpty()) {
             afi.b("command.unknown");
-            return u.UNKNOWN;
+            return CommandResult.UNKNOWN;
         }
 
         String[] astring = s.trim().split("\\s+");
@@ -119,7 +119,7 @@ public final class CommandManager {
 
         if (!atomicboolean.get()) {
             afi.b("command.unknown");
-            return u.UNKNOWN;
+            return CommandResult.UNKNOWN;
         }
 
         try {
@@ -127,7 +127,7 @@ public final class CommandManager {
         } catch (Throwable throwable) {
         }
 
-        return u.EXECUTED;
+        return CommandResult.EXECUTED;
     }
 
     @Generated

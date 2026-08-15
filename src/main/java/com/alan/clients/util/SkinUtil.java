@@ -3,7 +3,7 @@ package com.alan.clients.util;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import hackclient.rise.aei;
+import com.alan.clients.util.SkinType;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,7 +26,7 @@ public class SkinUtil implements InstanceAccess {
     public SkinUtil() {
     }
 
-    public static ResourceLocation a(aei var0, String var1, int var2) {
+    public static ResourceLocation a(SkinType var0, String var1, int var2) {
         String s = var1 + "_" + var0.name() + "_" + var2;
         if (SKIN_CACHE.containsKey(s)) {
             return SKIN_CACHE.get(s);
@@ -41,7 +41,7 @@ public class SkinUtil implements InstanceAccess {
         return resourcelocation;
     }
 
-    private static String b(aei var0, String var1, int var2) {
+    private static String b(SkinType var0, String var1, int var2) {
         String s = aEs[aEt];
         switch (var0) {
             case AVATAR:

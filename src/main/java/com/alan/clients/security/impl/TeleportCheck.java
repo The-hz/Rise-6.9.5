@@ -1,10 +1,10 @@
 package com.alan.clients.security.impl;
 
-import com.alan.clients.security.a;
+import com.alan.clients.security.CrashCheck;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 
-public final class TeleportCheck extends a {
+public final class TeleportCheck extends CrashCheck {
     public TeleportCheck() {
         super("Large Teleport", "Detects ridiculous teleports");
     }

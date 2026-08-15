@@ -18,7 +18,7 @@ import com.alan.clients.value.impl.StringValue;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.gg;
+import com.alan.clients.util.shader.ShaderQueueType;
 import hackclient.rise.ui.value.abm;
 import hackclient.rise.ui.value.abn;
 import hackclient.rise.ui.value.abo;
@@ -70,7 +70,7 @@ public class SettingsRenderer implements InstanceAccess {
         this.animation.Q(this.close ? 0.0 : 1.0);
         double d2 = this.animation.sG();
         if (!(d2 <= 1.0E-4)) {
-            this.b(gg.REGULAR).c(() -> {
+            this.b(ShaderQueueType.REGULAR).c(() -> {
                 GlStateManager.pushMatrix();
                 GlStateManager.translate(this.positionValue.apP.x * (1.0 - d2), (this.positionValue.apP.y + this.positionValue.aHe.y / 2.0) * (1.0 - d2), 0.0);
                 GlStateManager.scale(d2, d2, 1.0);
@@ -90,7 +90,7 @@ public class SettingsRenderer implements InstanceAccess {
 
                 GlStateManager.popMatrix();
             });
-            this.b(gg.BLUR).c(() -> {
+            this.b(ShaderQueueType.BLUR).c(() -> {
                 GlStateManager.pushMatrix();
                 GlStateManager.translate(this.positionValue.apP.x * (1.0 - d2), (this.positionValue.apP.y + this.positionValue.aHe.y / 2.0) * (1.0 - d2), 0.0);
                 GlStateManager.scale(d2, d2, 1.0);

@@ -10,8 +10,8 @@ import hackclient.rise.afi;
 import hackclient.rise.event.er;
 import net.minecraft.util.EnumChatFormatting;
 import org.apache.commons.lang3.StringUtils;
-import rip.vantage.commons.packet.impl.client.community.b;
-import rip.vantage.commons.util.vantage.a;
+import rip.vantage.commons.packet.impl.client.community.C2SPacketChatMessage;
+import rip.vantage.commons.util.vantage.VantageClient;
 
 @ModuleInfo(aliases={"module.other.irc.name"}, description="module.other.irc.description", category=Category.RENDER, autoEnabled=true)
 public final class IRC
@@ -24,16 +24,16 @@ extends Module {
         if (string.startsWith("#") && string.length() > 1) {
             chatInputEvent.setCancelled();
             String string2 = StringUtils.normalizeSpace(string.substring(1));
-            rip.vantage.network.core.a.aKB().aKK().sendMessage(new b(string2).aJk());
+            rip.vantage.network.core.a.aKB().aKK().sendMessage(new C2SPacketChatMessage(string2).aJk());
         }
     };
     @EventLink
     public final Listener<er> UM = er2 -> {
-        if (!(er2.dd() instanceof rip.vantage.commons.packet.impl.server.community.b)) {
+        if (!(er2.dd() instanceof rip.vantage.commons.packet.impl.server.community.S2CPacketChatMessage)) {
             return;
         }
-        rip.vantage.commons.packet.impl.server.community.b b2 = (rip.vantage.commons.packet.impl.server.community.b)er2.dd();
-        a unused0 = a.values()[b2.aJv()];
+        rip.vantage.commons.packet.impl.server.community.S2CPacketChatMessage b2 = (rip.vantage.commons.packet.impl.server.community.S2CPacketChatMessage)er2.dd();
+        VantageClient unused0 = VantageClient.values()[b2.aJv()];
         String string = b2.getMessage();
         String string2 = "\u00a7" + b2.getAuthor();
         String string3 = String.valueOf(EnumChatFormatting.GRAY) + string;

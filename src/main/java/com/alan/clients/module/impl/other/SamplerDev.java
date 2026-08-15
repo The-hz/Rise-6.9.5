@@ -9,8 +9,8 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.util.vector.Vector2f;
 import hackclient.rise.afi;
 import hackclient.rise.aka;
-import hackclient.rise.component.bv;
-import hackclient.rise.sg;
+import com.alan.clients.component.impl.combat.TargetComponent;
+import com.alan.clients.module.impl.other.sampler.SampleKey;
 import java.util.HashMap;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,11 +21,11 @@ public final class SamplerDev extends Module {
     private Vector2f Ul;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1 -> {
-        EntityLivingBase entitylivingbase = bv.e(6.0);
+        EntityLivingBase entitylivingbase = TargetComponent.e(6.0);
         EntityPlayerSP entityplayersp = aEg.thePlayer;
         Vector2f vector2f = new Vector2f(entityplayersp.pl % 360.0F, entityplayersp.rotationPitch);
         if (entitylivingbase != null && this.Ul != null) {
-            sg sg = new sg(
+            SampleKey sg = new SampleKey(
                 new aka(entitylivingbase.posX - entityplayersp.posX, entitylivingbase.posY - entityplayersp.posY, entitylivingbase.posZ - entityplayersp.posZ),
                 new Vector2f(vector2f.getX(), vector2f.getY())
             );

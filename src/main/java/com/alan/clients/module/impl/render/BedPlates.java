@@ -10,17 +10,17 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.abw;
+import com.alan.clients.ui.click.standard.UIColors;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.aka;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
-import hackclient.rise.wi;
-import hackclient.rise.wj;
-import hackclient.rise.wk;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
+import com.alan.clients.module.impl.render.bedplates.BedPlateEntry;
+import com.alan.clients.module.impl.render.bedplates.BedPosition;
+import com.alan.clients.module.impl.render.bedplates.BedPlateInfo;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -58,11 +58,11 @@ public class BedPlates extends Module {
     private final BooleanValue distanceScale = new BooleanValue("Distance Scale", this, true);
     private final NumberValue range = new NumberValue("Range", this, 200, 20, 200, 10);
     private final NumberValue refreshTicks = new NumberValue("Refresh Ticks", this, 1, 1, 20, 1);
-    private final agc alu = FontManager.MAIN.a(15, gd.MEDIUM);
-    private final agc alv = FontManager.MAIN.a(11, gd.BOLD);
-    private final agc alw = FontManager.MAIN.a(11, gd.REGULAR);
-    private final List<wi> alx = new ArrayList<>();
-    private final List<wj> aly = new CopyOnWriteArrayList<>();
+    private final agc alu = FontManager.MAIN.a(15, FontWeight.MEDIUM);
+    private final agc alv = FontManager.MAIN.a(11, FontWeight.BOLD);
+    private final agc alw = FontManager.MAIN.a(11, FontWeight.REGULAR);
+    private final List<BedPlateEntry> alx = new ArrayList<>();
+    private final List<BedPosition> aly = new CopyOnWriteArrayList<>();
     private int alz = 0;
     private int alA = -1;
     private int alB = 0;
@@ -196,7 +196,7 @@ public class BedPlates extends Module {
                                                     BlockPos blockpos1 = new BlockPos(l, l1, j1);
                                                     EnumFacing enumfacing = iblockstate.getValue(BlockBed.FACING);
                                                     if ((!flag || !this.a(blockpos1, enumfacing)) && !a(arraylist, blockpos1)) {
-                                                        arraylist.add(new wj(blockpos1));
+                                                        arraylist.add(new BedPosition(blockpos1));
                                                     }
                                                 }
                                             }
@@ -230,7 +230,7 @@ public class BedPlates extends Module {
             Iterator iterator = this.aly.iterator();
 
             while (iterator.hasNext()) {
-                BlockPos blockpos = ((wj)iterator.next()).la();
+                BlockPos blockpos = ((BedPosition)iterator.next()).la();
                 IBlockState iblockstate = worldclient.getBlockState(blockpos);
                 if (iblockstate.getBlock() instanceof BlockBed && iblockstate.getValue(BlockBed.PART) == EnumPartType.HEAD) {
                     EnumFacing enumfacing = iblockstate.getValue(BlockBed.FACING);
@@ -244,17 +244,17 @@ public class BedPlates extends Module {
                         double d10 = d7 - d4;
                         double d11 = d8 * d8 + d9 * d9 + d10 * d10;
                         if (d11 <= d1) {
-                            wk wk = this.a(blockpos, enumfacing, d5, d6, d7);
+                            BedPlateInfo wk = this.a(blockpos, enumfacing, d5, d6, d7);
                             if (wk != null) {
                                 aka aka = new aka(d5, d6, d7);
-                                this.alx.add(new wi(aka, d11, wk));
+                                this.alx.add(new BedPlateEntry(aka, d11, wk));
                             }
                         }
                     }
                 }
             }
 
-            this.alx.sort(Comparator.comparingDouble(wi::kU));
+            this.alx.sort(Comparator.comparingDouble(BedPlateEntry::kU));
         }
     }
 
@@ -271,7 +271,7 @@ public class BedPlates extends Module {
         return akax.g(akaxx2) <= d0 || akaxx2.g(akaxx2) <= d0;
     }
 
-    private wk a(BlockPos pos, EnumFacing facing, double var3, double var5, double var7) {
+    private BedPlateInfo a(BlockPos pos, EnumFacing facing, double var3, double var5, double var7) {
         ItemStack itemstack = null;
         double d0 = Double.MAX_VALUE;
         double d1 = 0.0;
@@ -324,10 +324,10 @@ public class BedPlates extends Module {
             double d13 = var5 - d3;
             double d14 = var7 - d4;
             double d15 = d12 * d12 + d13 * d13 + d14 * d14;
-            return new wk(itemstack2, d15, MapColor.airColor, new aka(var3, var5, var7), false, true);
+            return new BedPlateInfo(itemstack2, d15, MapColor.airColor, new aka(var3, var5, var7), false, true);
         } else if (itemstack != null) {
             boolean flag = i < 8;
-            return new wk(itemstack, d1, mapcolor, aka, flag, false);
+            return new BedPlateInfo(itemstack, d1, mapcolor, aka, flag, false);
         }
         return null;
     }
@@ -368,7 +368,7 @@ public class BedPlates extends Module {
                     this.Im = rotationPitch;
                 }
 
-                for (wi wi : this.alx) {
+                for (BedPlateEntry wi : this.alx) {
                     if (flag) {
                         aka aka = wi.kT();
                         BlockPos blockpos = new BlockPos(aka.getX(), aka.getY(), aka.getZ());
@@ -401,7 +401,7 @@ public class BedPlates extends Module {
         }
     }
 
-    private void a(wk var1, double var2, double var4, int var6) {
+    private void a(BedPlateInfo var1, double var2, double var4, int var6) {
         ItemStack itemstack = var1.lb();
         if (itemstack != null && itemstack.getItem() != null) {
             boolean flag = this.minimal.wo();
@@ -462,7 +462,7 @@ public class BedPlates extends Module {
             double d17 = d3;
             double d18 = d4;
             double d19 = d1;
-            Color color8 = ColorUtil.d(abw.SECONDARY.pV(), 105);
+            Color color8 = ColorUtil.d(UIColors.SECONDARY.pV(), 105);
             Color color9 = color3;
             Color color10 = color6;
             Color color11 = color7;
@@ -471,11 +471,11 @@ public class BedPlates extends Module {
             boolean flag2 = showDistance;
             boolean flag3 = flag;
             if (this.aln.wo()) {
-                this.b(gg.BLUR).c(() -> {
-                    RenderUtil.a(d11, d12, d14, d13, i, abw.SECONDARY.pV(), true, true, false, false);
-                    RenderUtil.a(d11, d12 + d13, d14, d15, i, abw.BACKGROUND.pV(), false, false, true, true);
+                this.b(ShaderQueueType.BLUR).c(() -> {
+                    RenderUtil.a(d11, d12, d14, d13, i, UIColors.SECONDARY.pV(), true, true, false, false);
+                    RenderUtil.a(d11, d12 + d13, d14, d15, i, UIColors.BACKGROUND.pV(), false, false, true, true);
                 });
-                this.b(gg.BLOOM).c(() -> {
+                this.b(ShaderQueueType.BLOOM).c(() -> {
                     RenderUtil.roundedRectangle(d11, d12, d14, d15 + d13, i + 1, this.rz().rE());
                     if (flag2 && !flag3) {
                         String s2 = "distance: ";
@@ -493,7 +493,7 @@ public class BedPlates extends Module {
                 });
             }
 
-            this.b(gg.REGULAR).c(() -> {
+            this.b(ShaderQueueType.REGULAR).c(() -> {
                 int j = Math.max(2, i - 1);
                 RenderUtil.a(d11, d12, d14, d13, j, color8, true, true, false, false);
                 RenderUtil.a(d11, d12 + d13, d14, d15, j, color9, false, false, true, true);
@@ -510,7 +510,7 @@ public class BedPlates extends Module {
                         GlStateManager.pushMatrix();
                         GlStateManager.translate(d27, d28, 0.0);
                         GlStateManager.scale(d19, d19, d19);
-                        this.alw.a(s1, 0.0, 0.0, abw.TEXT.pW());
+                        this.alw.a(s1, 0.0, 0.0, UIColors.TEXT.pW());
                         GlStateManager.popMatrix();
                     } else {
                         String s2 = "distance: ";
@@ -523,7 +523,7 @@ public class BedPlates extends Module {
                         GlStateManager.translate(d36, d37, 0.0);
                         GlStateManager.scale(d19, d19, d19);
                         this.alv.a(s2, 0.0, 0.0, this.rz().rD().getRGB());
-                        this.alw.a(s1, (float)(d33 / d19), 0.0, abw.TEXT.pW());
+                        this.alw.a(s1, (float)(d33 / d19), 0.0, UIColors.TEXT.pW());
                         GlStateManager.popMatrix();
                     }
                 }
@@ -625,11 +625,11 @@ public class BedPlates extends Module {
         return new Color(i, j, k, l);
     }
 
-    private static boolean a(List<wj> var0, BlockPos pos) {
+    private static boolean a(List<BedPosition> var0, BlockPos pos) {
         Iterator iterator = var0.iterator();
 
         while (iterator.hasNext()) {
-            if (((wj)iterator.next()).la().equals(pos)) {
+            if (((BedPosition)iterator.next()).la().equals(pos)) {
                 return true;
             }
         }

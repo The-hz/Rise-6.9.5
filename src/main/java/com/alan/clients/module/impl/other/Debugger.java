@@ -19,7 +19,7 @@ import hackclient.rise.afi;
 import hackclient.rise.aha;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.component.impl.render.ESPComponent;
-import hackclient.rise.gg;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -105,7 +105,7 @@ public final class Debugger extends Module implements aha {
         if (this.devPanel.wo()) {
             double d0 = 10.0;
             this.position.aHe = new Vector2d(180.0, 207.0);
-            this.b(gg.REGULAR, 1).c(() -> {
+            this.b(ShaderQueueType.REGULAR, 1).c(() -> {
                 double d1 = this.position.apP.x;
                 double d2 = this.position.apP.y;
                 double d3 = this.position.aHe.x;
@@ -114,19 +114,19 @@ public final class Debugger extends Module implements aha {
                 this.rz();
                 RenderUtil.roundedRectangle(d1, d2, d3, d4, d5, Themes.rK());
             });
-            this.b(gg.BLUR)
+            this.b(ShaderQueueType.BLUR)
                 .c(
                     () -> RenderUtil.roundedRectangle(
                         this.position.apP.x, this.position.apP.y, this.position.aHe.x, this.position.aHe.y, this.rz().getRound(), Color.BLACK
                     )
                 );
-            this.b(gg.BLOOM)
+            this.b(ShaderQueueType.BLOOM)
                 .c(
                     () -> RenderUtil.roundedRectangle(
                         this.position.apP.x, this.position.apP.y, this.position.aHe.x, this.position.aHe.y, this.rz().getRound(), this.rz().rE()
                     )
                 );
-            this.b(gg.REGULAR, 1)
+            this.b(ShaderQueueType.REGULAR, 1)
                 .c(
                     () -> {
                         aEg.fontRendererObj

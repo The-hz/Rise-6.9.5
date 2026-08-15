@@ -19,8 +19,8 @@ import com.google.gson.JsonObject;
 import com.alan.clients.util.localization.Locale;
 import hackclient.rise.ahd;
 import hackclient.rise.cg;
-import hackclient.rise.event.ev;
-import hackclient.rise.p;
+import com.alan.clients.newevent.impl.other.ConfigLoadEvent;
+import com.alan.clients.util.interfaces.Bindable;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -29,10 +29,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import lombok.Generated;
-import rip.vantage.commons.packet.impl.client.protection.e;
+import rip.vantage.commons.packet.impl.client.protection.C2SPacketConfig;
 import rip.vantage.network.core.a;
 
-public class ConfigFile extends File implements p {
+public class ConfigFile extends File implements Bindable {
     private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd.MM.yyyy");
     private boolean loadKeyCodes;
     private String gK;
@@ -65,14 +65,14 @@ public class ConfigFile extends File implements p {
 
             e(jsonobject);
             if (Client.a.p().mQ().T(1000L)) {
-                a.aKB().aKK().sendMessage(new e(jsonobject.toString()).aJk());
+                a.aKB().aKK().sendMessage(new C2SPacketConfig(jsonobject.toString()).aJk());
                 Client.a.p().mQ().aX();
             }
         } catch (IOException ioexception) {
             return false;
         }
 
-        Client.a.e().d(new ev());
+        Client.a.e().d(new ConfigLoadEvent());
         if (this.gK != null) {
             cg.e("Config", "Loaded " + this.gK + " config");
         }

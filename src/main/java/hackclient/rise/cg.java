@@ -9,24 +9,27 @@ import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.font.FontManager;
+import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
+import com.alan.clients.util.shader.ShaderQueueType;
+import com.alan.clients.util.tuples.Triple;
 import com.alan.clients.util.vector.Vector2d;
 import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
 import rip.vantage.commons.util.time.a;
 
 public class cg extends Component {
-    private static final adz<ajt<String, String, Integer>> hi = new adz<>(5);
+    private static final adz<Triple<String, String, Integer>> hi = new adz<>(5);
     private static final a hj = new a();
-    private static ajt<String, String, Integer> hk;
+    private static Triple<String, String, Integer> hk;
     private static final Animation hl = new Animation(Easing.EASE_OUT_EXPO, 900L);
     private static final Vector2d hm = new Vector2d(140.0, 30.0);
     private static final Vector2d hn = new Vector2d(20.0, 20.0);
     private static final Vector2d ho = new Vector2d(5.0, 126.0);
     private static final double hp = (hm.y - hn.y) / 2.0;
-    private static final agc hq = FontManager.MAIN.a(15, gd.BOLD);
-    private static final agc hr = FontManager.MAIN.a(15, gd.LIGHT);
+    private static final agc hq = FontManager.MAIN.a(15, FontWeight.BOLD);
+    private static final agc hr = FontManager.MAIN.a(15, FontWeight.LIGHT);
     @EventLink(value = 4)
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (hk != null) {
@@ -37,7 +40,7 @@ public class cg extends Component {
             double d0 = hl.sG();
             double d1 = 1.0 - 10.0 * Math.abs(1.0 - hl.sG());
             if (!hl.isFinished() || !flag) {
-                this.b(gg.REGULAR, 1).c(() -> {
+                this.b(ShaderQueueType.REGULAR, 1).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((ho.x + hm.x / 2.0) * (1.0 - d0), (ho.y + hm.y / 2.0) * (1.0 - d0), 0.0);
                     GlStateManager.scale(d0, d0, 0.0);
@@ -54,7 +57,7 @@ public class cg extends Component {
                     hr.b(hk.vU(), ho.x + hp + hn.x + hp, ho.y + hp + 0.5 + hp * 0.7 + hq.height(), ColorUtil.d(Color.WHITE, (int)(255.0 * d1)).getRGB());
                     GlStateManager.popMatrix();
                 });
-                this.b(gg.BLOOM)
+                this.b(ShaderQueueType.BLOOM)
                     .c(
                         () -> {
                             GlStateManager.pushMatrix();
@@ -66,7 +69,7 @@ public class cg extends Component {
                             GlStateManager.popMatrix();
                         }
                     );
-                this.b(gg.BLUR).c(() -> {
+                this.b(ShaderQueueType.BLUR).c(() -> {
                     if (!(Math.abs(hl.sG() - 1.0) > 0.045)) {
                         GlStateManager.pushMatrix();
                         GlStateManager.translate((ho.x + hm.x / 2.0) * (1.0 - d0), (ho.y + hm.y / 2.0) * (1.0 - d0), 0.0);
@@ -104,6 +107,6 @@ public class cg extends Component {
     }
 
     public static void a(String var0, String var1, Integer var2) {
-        hi.add(new ajt<>(var0, var1, var2));
+        hi.add(new Triple<>(var0, var1, var2));
     }
 }

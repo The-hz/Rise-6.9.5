@@ -15,7 +15,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
-import hackclient.rise.value.aab;
+import hackclient.rise.value.TargetInfoBackgroundModeValue;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import com.alan.clients.util.math.MathUtil;
@@ -24,8 +24,8 @@ import hackclient.rise.ais;
 import com.alan.clients.util.render.particle.Particle;
 import hackclient.rise.bf;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.Gui;
@@ -44,9 +44,9 @@ import net.minecraft.util.ResourceLocation;
 
 public class ModernTargetInfo extends Mode<TargetInfo> {
     private final BooleanValue particles = new BooleanValue("Particles", this, true);
-    private final agc auE = FontManager.MAIN.a(22, gd.LIGHT);
-    private final agc auF = FontManager.MAIN.a(22, gd.MEDIUM);
-    private final ModeValue backgroundMode = new aab(this, "Background Mode", this);
+    private final agc auE = FontManager.MAIN.a(22, FontWeight.LIGHT);
+    private final agc auF = FontManager.MAIN.a(22, FontWeight.MEDIUM);
+    private final ModeValue backgroundMode = new TargetInfoBackgroundModeValue(this, "Background Mode", this);
     private static final float auH = 0.01F;
     private static final float auI = 0.8F;
     private static final int auJ = 256;
@@ -64,8 +64,8 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
             this.targetInfoModule = this.e(TargetInfo.class);
         }
 
-        this.b(gg.BLOOM).c(NotificationComponent::ci);
-        this.b(gg.REGULAR, 1).c(NotificationComponent::cj);
+        this.b(ShaderQueueType.BLOOM).c(NotificationComponent::ci);
+        this.b(ShaderQueueType.REGULAR, 1).c(NotificationComponent::cj);
         Entity entity = this.targetInfoModule.target;
         if (entity != null) {
             boolean flag = !this.targetInfoModule.inWorld || this.targetInfoModule.rG.T(1000L);
@@ -97,7 +97,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                 double d11 = 48;
                 this.targetInfoModule.positionValue.n(new Vector2d(d10, d11));
                 double d12 = this.auP.sG();
-                this.b(gg.REGULAR).c(() -> {
+                this.b(ShaderQueueType.REGULAR).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
                     GlStateManager.scale(d12, d12, 0.0);
@@ -135,7 +135,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                     this.auF.b(String.valueOf(d4), d0 + 8.0 + b0 + 7.0 + d6 + 4.0, d1 + 8.0 + b0 - 4.0 - 8.0, color2.hashCode());
                     GlStateManager.popMatrix();
                 });
-                this.b(gg.REGULAR, 1).c(() -> {
+                this.b(ShaderQueueType.REGULAR, 1).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
                     GlStateManager.scale(d12, d12, 0.0);
@@ -144,14 +144,14 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                     this.renderTargetHead((AbstractClientPlayer)entity, d0 + 8.0 + d9, d1 + 8.0 + d9, b0 - d8);
                     GlStateManager.popMatrix();
                 });
-                this.b(gg.BLUR).c(() -> {
+                this.b(ShaderQueueType.BLUR).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
                     GlStateManager.scale(d12, d12, 0.0);
                     RenderUtil.roundedRectangle(d0, d1, d10 - 1.0, d11, 16.0, Color.BLACK);
                     GlStateManager.popMatrix();
                 });
-                this.b(gg.BLOOM).c(() -> {
+                this.b(ShaderQueueType.BLOOM).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
                     GlStateManager.scale(d12, d12, 0.0);

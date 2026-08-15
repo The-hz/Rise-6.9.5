@@ -11,7 +11,7 @@ import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.value.impl.ColorValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.value.wc;
+import hackclient.rise.value.WeatherModeValue;
 import java.awt.Color;
 import lombok.Generated;
 import net.minecraft.network.play.server.S03PacketTimeUpdate;
@@ -23,7 +23,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 public final class Ambience extends Module {
     private final NumberValue time = new NumberValue("Time", this, 0, 0, 22999, 1);
     private final NumberValue speed = new NumberValue("Time Speed", this, 0, 0, 20, 1);
-    private final ModeValue weather = new wc(this, "Weather", this);
+    private final ModeValue weather = new WeatherModeValue(this, "Weather", this);
     public final ColorValue snowColor = new ColorValue(
         "Snow Color", this, Color.WHITE, () -> !this.weather.wo().getName().equals("Heavy Snow") && !this.weather.wo().getName().equals("Light Snow")
     );

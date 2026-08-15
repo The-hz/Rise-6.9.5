@@ -15,9 +15,9 @@ import com.alan.clients.value.impl.DragValue;
 import hackclient.rise.ahd;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
-import hackclient.rise.gd;
-import hackclient.rise.gg;
-import hackclient.rise.zv;
+import com.alan.clients.util.font.FontWeight;
+import com.alan.clients.util.shader.ShaderQueueType;
+import com.alan.clients.module.impl.render.sessionstats.RueSessionStatsData;
 import java.awt.Color;
 import java.util.concurrent.TimeUnit;
 import net.minecraft.network.play.server.S45PacketTitle;
@@ -25,7 +25,7 @@ import net.minecraft.util.StringUtils;
 
 public final class RueSessionStats extends Mode<SessionStats> {
     private final DragValue atY = this.getParent().mg();
-    private zv atZ = new zv(0, 0, 0, 0, 0.0, 0.0);
+    private RueSessionStatsData atZ = new RueSessionStatsData(0, 0, 0, 0, 0.0, 0.0);
     private String atL = "0 seconds";
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
@@ -55,8 +55,8 @@ public final class RueSessionStats extends Mode<SessionStats> {
         double d0 = 8.0;
         this.atY.aHe = new Vector2d(130.0, 55.0);
         if (!aEg.gameSettings.bJf) {
-            this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(this.atY.apP.x, this.atY.apP.y, this.atY.aHe.x, this.atY.aHe.y, 11.0, Color.BLACK));
-            this.b(gg.REGULAR, 1)
+            this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.roundedRectangle(this.atY.apP.x, this.atY.apP.y, this.atY.aHe.x, this.atY.aHe.y, 11.0, Color.BLACK));
+            this.b(ShaderQueueType.REGULAR, 1)
                 .c(
                     () -> {
                         RenderUtil.roundedRectangle(this.atY.apP.x, this.atY.apP.y, this.atY.aHe.x, this.atY.aHe.y, 11.0, ColorUtil.d(Color.black, 100));
@@ -64,13 +64,13 @@ public final class RueSessionStats extends Mode<SessionStats> {
                             this.atY.apP.x, this.atY.apP.y, this.atY.aHe.x, this.atY.aHe.y, 11.0, 0.5, ColorUtil.d(this.rz().rA(), 200), ColorUtil.d(this.rz().rB(), 200)
                         );
                         FontManager.MAIN
-                            .a(24, gd.REGULAR)
+                            .a(24, FontWeight.REGULAR)
                             .c(ahd.ce("ui.sessionstats.name"), this.atY.apP.x + this.atY.aHe.x / 2.0, this.atY.apP.y + d0, this.rz().rD().getRGB());
                         FontManager.MAIN
-                            .a(18, gd.REGULAR)
+                            .a(18, FontWeight.REGULAR)
                             .c(this.atL, this.atY.apP.x + this.atY.aHe.x / 2.0, this.atY.apP.y + d0 + 19.0, new Color(255, 255, 255, 200).getRGB());
                         FontManager.MAIN
-                            .a(18, gd.REGULAR)
+                            .a(18, FontWeight.REGULAR)
                             .c(
                                 ahd.ce("ui.sessionstats.kills").toLowerCase() + " " + this.atZ.atR,
                                 this.atY.apP.x + 35.0,
@@ -78,7 +78,7 @@ public final class RueSessionStats extends Mode<SessionStats> {
                                 new Color(255, 255, 255, 200).getRGB()
                             );
                         FontManager.MAIN
-                            .a(18, gd.REGULAR)
+                            .a(18, FontWeight.REGULAR)
                             .c(
                                 ahd.ce("ui.sessionstats.wins").toLowerCase() + " " + this.atZ.atS,
                                 this.atY.apP.x + 95.0,
@@ -105,7 +105,7 @@ public final class RueSessionStats extends Mode<SessionStats> {
         }
     };
     @EventLink
-    public final Listener<ServerJoinEvent> onServerJoin = var1x -> this.atZ = new zv(0, 0, 0, 0, 0.0, 0.0);
+    public final Listener<ServerJoinEvent> onServerJoin = var1x -> this.atZ = new RueSessionStatsData(0, 0, 0, 0, 0.0, 0.0);
 
     public RueSessionStats(String var1, SessionStats sessionStats) {
         super(var1, sessionStats);

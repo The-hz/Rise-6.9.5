@@ -37,11 +37,11 @@ import hackclient.rise.adz;
 import hackclient.rise.aef;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.TimedPacket;
-import hackclient.rise.ahp;
+import com.alan.clients.util.pathfinding.alan.Pathfinder;
 import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.aka;
-import hackclient.rise.akj;
-import hackclient.rise.sv;
+import com.alan.clients.value.impl.SupplierValue;
+import hackclient.rise.MathOperation;
 import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -114,7 +114,7 @@ extends Module {
     private final DragValue positionValue = new DragValue("Position", (Module)this, new Vector2d(255.0, 255.0));
     public Vec3 Jd = new Vec3(0.0, 0.0, 0.0);
     private final StringValue runIf = new StringValue("Run If () ->", (Module)this, "onGround");
-    private final akj YA = new akj("Test Curve", this);
+    private final SupplierValue YA = new SupplierValue("Test Curve", this);
     private final ArrayList<Entity> YB = new ArrayList();
     private final ArrayList<aka> YC = new ArrayList();
     private World world;
@@ -122,7 +122,7 @@ extends Module {
     private double Lx;
     private boolean YD;
     Executor threadPool = Executors.newFixedThreadPool(1);
-    ahp YF;
+    Pathfinder YF;
     EntityPlayerSP YG;
     adz<BlockPos> YH = new adz(2);
     private final HashMap<Double, HashMap<Integer, Tuple<Double, Boolean>>> YI = new HashMap();
@@ -206,7 +206,7 @@ extends Module {
         int n2 = guiClickEvent.cL();
         int n3 = guiClickEvent.cM();
         ArrayList<Vector2d> arrayList = new ArrayList<Vector2d>(this.YL);
-        arrayList.sort((vector2d, vector2d2) -> (int)(sv.EUCLIDEAN_DISTANCE.a(vector2d.getX() - (double)n2, vector2d.getY() - (double)n3) - sv.EUCLIDEAN_DISTANCE.a(vector2d2.getX() - (double)n2, vector2d2.getY() - (double)n3)));
+        arrayList.sort((vector2d, vector2d2) -> (int)(MathOperation.EUCLIDEAN_DISTANCE.a(vector2d.getX() - (double)n2, vector2d.getY() - (double)n3) - MathOperation.EUCLIDEAN_DISTANCE.a(vector2d2.getX() - (double)n2, vector2d2.getY() - (double)n3)));
         this.YM = (Vector2d)arrayList.stream().findFirst().get();
     };
     @EventLink

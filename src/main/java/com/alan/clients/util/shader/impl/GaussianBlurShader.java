@@ -5,7 +5,7 @@ import com.alan.clients.util.shader.base.RiseShaderProgram;
 import com.alan.clients.util.shader.base.ShaderUniforms;
 import hackclient.rise.aix;
 import hackclient.rise.aiz;
-import hackclient.rise.ajq;
+import com.alan.clients.util.shader.kernel.GaussianKernel;
 import java.nio.FloatBuffer;
 import java.util.List;
 import lombok.Generated;
@@ -19,7 +19,7 @@ public class GaussianBlurShader extends aix {
     private final RiseShaderProgram aQc = new RiseShaderProgram("blur.frag", "vertex.vsh");
     private Framebuffer aPV = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
     private Framebuffer aPZ = new Framebuffer(aEg.displayWidth, aEg.displayHeight, true);
-    private ajq aQa = new ajq(0);
+    private GaussianKernel aQa = new GaussianKernel(0);
     public static final int aQd = 12;
     public static final float aQe = 3.0F;
     int aQf = 12;
@@ -52,7 +52,7 @@ public class GaussianBlurShader extends aix {
                     this.aPZ.bindFramebuffer(true);
                     this.aQc.rt();
                     if (this.aQa.getSize() != i) {
-                        this.aQa = new ajq(i);
+                        this.aQa = new GaussianKernel(i);
                         this.aQa.uR();
                         FloatBuffer floatbuffer = BufferUtils.createFloatBuffer(i);
                         floatbuffer.put(this.aQa.vS());
