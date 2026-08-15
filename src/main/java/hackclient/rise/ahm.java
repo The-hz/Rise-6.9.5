@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.Client;
+import com.alan.clients.compat.ProtectionToggles;
 import com.alan.clients.component.impl.player.LastConnectionComponent;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.google.common.collect.Iterables;
@@ -501,6 +502,11 @@ public class ahm implements InstanceAccess
     }
 
     public static String ch(final String s) {
+        //add code
+        if (!ProtectionToggles.proxyLookup()) {
+            return null;
+        }
+
         final Matcher matcher = ahm.aOM.matcher(s);
         if (((Matcher)matcher).matches()) {
             return c(s, "https://redacted.invalid/lookup-route/" + (Object)(String)((Matcher)matcher).group(1), "target");

@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.Client;
+import com.alan.clients.compat.ProtectionToggles;
 import com.alan.clients.component.impl.player.LastConnectionComponent;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
@@ -1226,6 +1227,7 @@ public class zq extends SecurityFeature {
         if (s.isEmpty()) {
             return false;
         }
-        return awb.matcher(s).find() ? true : this.aA(s);
+        //add code
+        return awb.matcher(s).find() ? true : ProtectionToggles.proxyLookup() && this.aA(s);
     }
 }

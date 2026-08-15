@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.Client;
+import com.alan.clients.compat.ProtectionToggles;
 import com.alan.clients.module.api.manager.ModuleManager;
 import com.alan.clients.protection.check.ProtectionCheck;
 import com.alan.clients.protection.check.api.McqBFVadWB;
@@ -25,6 +26,11 @@ public final class aal {
     }
 
     public void init() {
+        //add code
+        if (!ProtectionToggles.checks()) {
+            return;
+        }
+
         try {
             this.awS = ManagementFactory.getRuntimeMXBean().getInputArguments();
             this.awT = new ProtectionCheck[]{new aao(), new McqBGGeaWB(), new aan()};
