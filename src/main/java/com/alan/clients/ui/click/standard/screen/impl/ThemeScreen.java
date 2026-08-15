@@ -26,8 +26,8 @@ public class ThemeScreen implements Screen, InstanceAccess {
     private abk azX = null;
 
     public ThemeScreen() {
-        for (Themes adv : Themes.values()) {
-            this.azT.add(new abj(adv));
+        for (Themes themes : Themes.values()) {
+            this.azT.add(new abj(themes));
         }
 
         for (adw adw : adw.values()) {

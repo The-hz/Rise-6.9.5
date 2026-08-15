@@ -115,9 +115,9 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
         GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
         float f = living.renderYawOffset;
         float f1 = living.pl;
-        float f2 = living.rotationPitch;
-        float f3 = living.prevRotationYawHead;
-        float f4 = living.rotationYawHead;
+        float rotationPitch = living.rotationPitch;
+        float prevRotationYawHead = living.prevRotationYawHead;
+        float rotationYawHead = living.rotationYawHead;
         GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
         RenderHelper.enableStandardItemLighting();
         GlStateManager.rotate(-135.0F, 0.0F, 1.0F, 0.0F);
@@ -135,9 +135,9 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
         rendermanager.setRenderShadow(true);
         living.renderYawOffset = f;
         living.pl = f1;
-        living.rotationPitch = f2;
-        living.prevRotationYawHead = f3;
-        living.rotationYawHead = f4;
+        living.rotationPitch = rotationPitch;
+        living.prevRotationYawHead = prevRotationYawHead;
+        living.rotationYawHead = rotationYawHead;
         GlStateManager.popMatrix();
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableRescaleNormal();

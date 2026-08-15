@@ -56,9 +56,9 @@ extends Module {
                 double d5 = vector2d.y;
                 double d6 = this.scale.x + 6.0f;
                 double d7 = this.scale.y - 1.0f;
-                double d8 = this.rz().getRound();
+                double round = this.rz().getRound();
                 this.rz();
-                RenderUtil.roundedRectangle(d4, d5, d6, d7, d8, Themes.rK());
+                RenderUtil.roundedRectangle(d4, d5, d6, d7, round, Themes.rK());
                 this.position.n(new Vector2d(this.scale.x + 6.0f, this.scale.y - 1.0f));
                 double d9 = vector2d.x + 3.0;
                 double d10 = vector2d.y + (double)(this.scale.y / 2.05f) - (double)(FontManager.MAIN.a(20, gd.REGULAR).height() / 4.0f);

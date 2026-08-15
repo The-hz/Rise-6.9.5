@@ -159,13 +159,13 @@ public class TargetStrafe extends Module {
         GL11.glHint(3153, 4354);
         GL11.glBegin(0);
         ColorUtil.d(this.rz().rD());
-        double d3 = this.range.wo().doubleValue();
+        double range = this.range.wo().doubleValue();
         double d4 = Math.PI * 2;
 
         for (int i = 0; i < 360; i += this.dots.wo().intValue()) {
             double d5 = i * d4 / 360.0;
-            double d6 = d0 + Math.sin(d5) * d3;
-            double d7 = d2 + Math.cos(d5) * d3;
+            double d6 = d0 + Math.sin(d5) * range;
+            double d7 = d2 + Math.cos(d5) * range;
             GL11.glVertex3d(d6, d1, d7);
         }
 
@@ -192,8 +192,8 @@ public class TargetStrafe extends Module {
 
                 for (int j = 0; j < 360; j += this.dots.wo().intValue()) {
                     double d8 = j * d4 / 360.0;
-                    double d9 = d0 + Math.sin(d8) * d3;
-                    double d10 = d2 + Math.cos(d8) * d3;
+                    double d9 = d0 + Math.sin(d8) * range;
+                    double d10 = d2 + Math.cos(d8) * range;
                     GL11.glVertex3d(d9, d1, d10);
                 }
 

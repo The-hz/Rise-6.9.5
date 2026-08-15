@@ -118,13 +118,13 @@ public class Watchdog1171FullBlockPhase extends Mode<Phase> {
     private boolean e(double var1, double var3) {
         double d0 = aEg.thePlayer.posX;
         double d1 = aEg.thePlayer.posZ;
-        double d2 = Math.toRadians(aEg.thePlayer.pl);
-        double d3 = -Math.sin(d2);
-        double d4 = Math.cos(d2);
+        double radians = Math.toRadians(aEg.thePlayer.pl);
+        double d3 = -Math.sin(radians);
+        double cos = Math.cos(radians);
         double d5 = var1 - d0;
         double d6 = var3 - d1;
-        double d7 = d3 * d5 + d4 * d6;
-        double d8 = Math.sqrt(d3 * d3 + d4 * d4);
+        double d7 = d3 * d5 + cos * d6;
+        double d8 = Math.sqrt(d3 * d3 + cos * cos);
         double d9 = Math.sqrt(d5 * d5 + d6 * d6);
         return d9 < 1.0E-8 ? false : d7 / (d8 * d9) <= OA;
     }

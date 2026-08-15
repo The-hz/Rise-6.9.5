@@ -129,10 +129,10 @@ public class abb implements InstanceAccess {
             RenderUtil.a(d0, d1 + d13, var5, d11, 6.0 * var10, color1, false, false, true, true);
             double d14 = d1 + d13 + 3.0 * var10;
 
-            for (ModuleComponent abd : this.axu) {
+            for (ModuleComponent moduleComponent : this.axu) {
                 double d15 = 34.0;
-                if (abd.oJ()) {
-                    for (Value value1 : abd.getModule().getAllValues()) {
+                if (moduleComponent.oJ()) {
+                    for (Value value1 : moduleComponent.getModule().getAllValues()) {
                         if (this.d(value1)) {
                             d15 += 18.0;
                             if (value1 instanceof ModeValue && this.axE.getOrDefault(value1, false)) {
@@ -152,7 +152,7 @@ public class abb implements InstanceAccess {
                         RenderUtil.roundedRectangle(d0 + 6.0 * var10, d14, var5 - 12.0 * var10, d17 - 2.0 * var10, 4.0 * var10, ColorUtil.d(Color.WHITE, 15));
                     }
 
-                    if (abd.getModule().isEnabled()) {
+                    if (moduleComponent.getModule().isEnabled()) {
                         RenderUtil.roundedRectangle(d0 + 6.0 * var10, d14, 2.0 * var10, d17 - 2.0 * var10, 1.0 * var10, this.rz().rD());
                     }
 
@@ -160,24 +160,24 @@ public class abb implements InstanceAccess {
                     double d19 = d14 + 4.0 * var10;
                     FontManager.MAIN
                         .a((int)(13.0 * var10), gd.REGULAR)
-                        .a(abd.getModule().getName(), (float)d18, (float)d19, abd.getModule().isEnabled() ? this.rz().rD().getRGB() : abw.TEXT.pW());
-                    if (!abd.oJ()) {
-                        String s3 = "(" + ahd.ce(abd.getModule().getModuleInfo().category().getName()) + ")";
+                        .a(moduleComponent.getModule().getName(), (float)d18, (float)d19, moduleComponent.getModule().isEnabled() ? this.rz().rD().getRGB() : abw.TEXT.pW());
+                    if (!moduleComponent.oJ()) {
+                        String s3 = "(" + ahd.ce(moduleComponent.getModule().getModuleInfo().category().getName()) + ")";
                         FontManager.MAIN
                             .a((int)(10.0 * var10), gd.REGULAR)
                             .a(
                                 s3,
-                                (float)(d18 + FontManager.MAIN.a((int)(13.0 * var10), gd.REGULAR).getStringWidth(abd.getModule().getName()) + 4.0 * var10),
+                                (float)(d18 + FontManager.MAIN.a((int)(13.0 * var10), gd.REGULAR).getStringWidth(moduleComponent.getModule().getName()) + 4.0 * var10),
                                 (float)(d19 + 1.0 * var10),
                                 abw.TRINARY_TEXT.pW()
                             );
                     }
 
-                    if (!abd.oJ()) {
-                        String s4 = ahd.ce(abd.getModule().getModuleInfo().description());
+                    if (!moduleComponent.oJ()) {
+                        String description = ahd.ce(moduleComponent.getModule().getModuleInfo().description());
                         int j = (int)(9.0 * var10);
                         float f = (float)(var5 - 24.0 * var10);
-                        String[] astring = s4.split(" ");
+                        String[] astring = description.split(" ");
                         StringBuilder stringbuilder = new StringBuilder();
                         StringBuilder stringbuilder1 = new StringBuilder();
                         float f1 = 0.0F;
@@ -214,8 +214,8 @@ public class abb implements InstanceAccess {
 
                     double d20 = d14 + d17;
                     d14 = d20 + 1.0 * var10;
-                    if (abd.oJ()) {
-                        for (Value value2 : abd.getModule().getAllValues()) {
+                    if (moduleComponent.oJ()) {
+                        for (Value value2 : moduleComponent.getModule().getAllValues()) {
                             if (this.d(value2)) {
                                 double d21 = 18.0 * var10;
                                 boolean flag3 = GUIUtil.c(d0 + 10.0 * var10, d14, var5 - 20.0 * var10, d21, var7, var8);
@@ -311,20 +311,20 @@ public class abb implements InstanceAccess {
         if (this.axv && this.axw.sG() > 1.0) {
             double d0 = var3 + 22.0 * var5 + 3.0 * var5;
 
-            for (ModuleComponent abd : this.axu) {
-                if (abd.getModule().isEnabled()) {
+            for (ModuleComponent moduleComponent : this.axu) {
+                if (moduleComponent.getModule().isEnabled()) {
                     RenderUtil.roundedRectangle(var1 + 6.0 * var5, d0, 2.0 * var5, 34.0 * var5 - 2.0 * var5, 1.0 * var5, ColorUtil.d(this.rz().rA(), 150));
                     FontManager.MAIN
                         .a((int)(13.0 * var5), gd.REGULAR)
-                        .a(abd.getModule().getName(), (float)(var1 + 12.0 * var5), (float)(d0 + 4.0 * var5), ColorUtil.d(this.rz().rA(), 120).getRGB());
-                    if (abd.oJ()) {
-                        abd.ci();
+                        .a(moduleComponent.getModule().getName(), (float)(var1 + 12.0 * var5), (float)(d0 + 4.0 * var5), ColorUtil.d(this.rz().rA(), 120).getRGB());
+                    if (moduleComponent.oJ()) {
+                        moduleComponent.ci();
                     }
                 }
 
                 d0 += 34.0 * var5 + 1.0 * var5;
-                if (abd.oJ()) {
-                    for (Value value : abd.getModule().getAllValues()) {
+                if (moduleComponent.oJ()) {
+                    for (Value value : moduleComponent.getModule().getAllValues()) {
                         if (this.d(value)) {
                             d0 += 18.0 * var5;
                             if (value instanceof ModeValue && this.axE.getOrDefault(value, false)) {
@@ -353,20 +353,20 @@ public class abb implements InstanceAccess {
             if (this.axv && this.axw.sG() > 1.0) {
                 double d4 = var3 + d1 + 3.0 * d0;
 
-                for (ModuleComponent abd : this.axu) {
+                for (ModuleComponent moduleComponent : this.axu) {
                     if (GUIUtil.c(var1 + 6.0 * d0, d4, this.axy - 12.0 * d0, d2, var5, var6)) {
                         if (var7 == 0) {
-                            abd.getModule().toggle();
+                            moduleComponent.getModule().toggle();
                         } else if (var7 == 1) {
-                            abd.axv = !abd.axv;
+                            moduleComponent.axv = !moduleComponent.axv;
                         }
 
                         return;
                     }
 
                     d4 += d2 + 1.0 * d0;
-                    if (abd.oJ()) {
-                        for (Value value : abd.getModule().getAllValues()) {
+                    if (moduleComponent.oJ()) {
+                        for (Value value : moduleComponent.getModule().getAllValues()) {
                             if (this.d(value)) {
                                 if (GUIUtil.c(var1 + 10.0 * d0, d4, this.axy - 20.0 * d0, d3, var5, var6)) {
                                     this.a(value, var7);
@@ -430,9 +430,9 @@ public class abb implements InstanceAccess {
 
     public void a(char var1, int var2) {
         if (this.axv) {
-            for (ModuleComponent abd : this.axu) {
-                if (abd.oJ()) {
-                    Iterator iterator = abd.getValueList().iterator();
+            for (ModuleComponent moduleComponent : this.axu) {
+                if (moduleComponent.oJ()) {
+                    Iterator iterator = moduleComponent.getValueList().iterator();
 
                     while (iterator.hasNext()) {
                         ((ValueComponent)iterator.next()).key(var1, var2);

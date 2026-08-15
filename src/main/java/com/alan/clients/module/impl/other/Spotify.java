@@ -574,12 +574,12 @@ public class Spotify extends Module {
 
     private void a(String var1, float var2, double var3, int var5, int var6) {
         if (this.C(var1)) {
-            agd agd = this.Xg.fontRendererObj;
+            agd fontRendererObj = this.Xg.fontRendererObj;
             GlStateManager.pushMatrix();
             GlStateManager.translate(var2, (float)var3, 0.0F);
             float f = this.v(var5 - 2);
             GlStateManager.scale(f, f, 1.0F);
-            agd.b(var1, 0.0, 0.0, var6, true);
+            fontRendererObj.b(var1, 0.0, 0.0, var6, true);
             GlStateManager.popMatrix();
         } else {
             FontManager.MAIN.a(var5, gd.BOLD).a(var1, var2, (float)var3, var6);
@@ -646,12 +646,12 @@ public class Spotify extends Module {
 
     private void a(String var1, float var2, float var3, int var4, float var5, int var6) {
         if (this.C(var1)) {
-            agd agd = this.Xg.fontRendererObj;
+            agd fontRendererObj = this.Xg.fontRendererObj;
             GlStateManager.pushMatrix();
             GlStateManager.translate(var2, var3, 0.0F);
             float f = this.v(var4) * var5 / 1.5F;
             GlStateManager.scale(f, f, 1.0F);
-            agd.b(var1, 0.0, 0.0, var6, true);
+            fontRendererObj.b(var1, 0.0, 0.0, var6, true);
             GlStateManager.popMatrix();
         } else {
             GlStateManager.pushMatrix();
@@ -728,35 +728,35 @@ public class Spotify extends Module {
     }
 
     private float a(int var1, float var2, float var3, int var4) {
-        long i = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
         if (var1 != this.Xy) {
             this.Xy = var1;
             this.Xx = 0.0F;
-            this.Xz = i;
+            this.Xz = now;
             this.XA = var4;
-            this.XG = i + 260L;
+            this.XG = now + 260L;
             this.XH = var2;
             return this.a(var2, 0.0F, var3);
         }
 
         if (var4 + 600 < this.XA) {
             this.Xx = this.a(var2, 0.0F, var3);
-            this.Xz = i;
+            this.Xz = now;
             this.XA = var4;
-            this.XG = i + 260L;
+            this.XG = now + 260L;
             this.XH = var2;
             return this.Xx;
         }
 
-        float f = Math.max(0.0F, (float)(i - this.Xz) / 1000.0F);
-        this.Xz = i;
+        float f = Math.max(0.0F, (float)(now - this.Xz) / 1000.0F);
+        this.Xz = now;
         if (var2 - this.XH > 6.0F) {
-            this.XG = i + 260L;
+            this.XG = now + 260L;
         }
 
         this.XH = var2;
         float f1 = this.a(var1, var3) * this.Wc.wo().floatValue();
-        if (i < this.XG) {
+        if (now < this.XG) {
             f1 *= 8.0F;
         }
 
@@ -809,7 +809,7 @@ public class Spotify extends Module {
 
     public void hT() {
         try {
-            long i = System.nanoTime();
+            long now = System.nanoTime();
             HttpURLConnection httpurlconnection = (HttpURLConnection)new URL("http://localhost:10767/api/v1/playback/now-playing").openConnection();
             httpurlconnection.setRequestMethod("GET");
             httpurlconnection.setRequestProperty("Content-Type", "application/json");
@@ -826,7 +826,7 @@ public class Spotify extends Module {
                     this.Wl = jsonobject1.getInt("durationInMillis");
                     this.Wg = jsonobject1.getJSONObject("artwork").getString("url").replace("{w}x{h}", "600x600");
                     this.Wm = (int)(this.Wl - jsonobject1.getDouble("remainingTime") * 1000.0);
-                    long j = (System.nanoTime() - i) / 1000000L;
+                    long j = (System.nanoTime() - now) / 1000000L;
                     long k = Math.min(150L, Math.max(0L, j / 2L));
                     this.WB = System.currentTimeMillis() - k;
                 }
@@ -841,7 +841,7 @@ public class Spotify extends Module {
 
     public void hU() {
         try {
-            long i = System.nanoTime();
+            long now = System.nanoTime();
             HttpURLConnection httpurlconnection = (HttpURLConnection)new URL("https://api.spotify.com/v1/me/player?market=US").openConnection();
             httpurlconnection.setRequestMethod("GET");
             httpurlconnection.addRequestProperty("Authorization", "Bearer " + this.Wd);
@@ -850,7 +850,7 @@ public class Spotify extends Module {
             httpurlconnection.setReadTimeout(6000);
             int j = httpurlconnection.getResponseCode();
             long k = System.currentTimeMillis();
-            long l = (System.nanoTime() - i) / 1000000L;
+            long l = (System.nanoTime() - now) / 1000000L;
             if (j == 200) {
                 this.Xr = 0;
                 this.Xq = k;
@@ -1014,8 +1014,8 @@ public class Spotify extends Module {
             String s1 = this.lyricsEndpointURL.wo();
             if (s1 != null && !s1.trim().isEmpty()) {
                 String s2 = this.a(s1, var1, var3, var2, var4);
-                String s3 = this.lyricsEndpointHeader.wo();
-                String s4 = this.h(s2, s3);
+                String lyricsEndpointHeader = this.lyricsEndpointHeader.wo();
+                String s4 = this.h(s2, lyricsEndpointHeader);
                 if (s4 == null) {
                     return false;
                 }
@@ -1825,11 +1825,11 @@ public class Spotify extends Module {
 
         arraylist3.add(stringbuilder1.toString());
         arraylist4.add(1);
-        int i2 = arraylist3.size();
-        double[] adouble = new double[i2];
+        int size = arraylist3.size();
+        double[] adouble = new double[size];
         double d0 = 0.0;
 
-        for (int j2 = 0; j2 < i2; j2++) {
+        for (int j2 = 0; j2 < size; j2++) {
             String s = (String)arraylist3.get(j2);
             int k2 = (Integer)arraylist4.get(j2);
             double d2;
@@ -1862,7 +1862,7 @@ public class Spotify extends Module {
                 }
             }
 
-            if (j2 == i2 - 1) {
+            if (j2 == size - 1) {
                 d2 *= 1.45;
             }
 
@@ -1872,12 +1872,12 @@ public class Spotify extends Module {
 
         if (d0 <= 0.0) {
             Arrays.fill(adouble, 1.0);
-            d0 = i2;
+            d0 = size;
         }
 
-        int[] aint = new int[i2];
+        int[] aint = new int[size];
 
-        for (int j3 = 0; j3 < i2; j3++) {
+        for (int j3 = 0; j3 < size; j3++) {
             int k3 = (Integer)arraylist4.get(j3);
             if (k3 == 1) {
                 aint[j3] = 45;
@@ -1889,18 +1889,18 @@ public class Spotify extends Module {
         }
 
         int l3 = Math.min(Math.max(100, (int)Math.round(0.22 * i)), i);
-        aint[i2 - 1] = Math.max(aint[i2 - 1], l3);
-        double[] adouble1 = new double[i2];
+        aint[size - 1] = Math.max(aint[size - 1], l3);
+        double[] adouble1 = new double[size];
 
-        for (int i4 = 0; i4 < i2; i4++) {
+        for (int i4 = 0; i4 < size; i4++) {
             adouble1[i4] = i * (adouble[i4] / d0);
         }
 
-        int[] aint1 = new int[i2];
+        int[] aint1 = new int[size];
         int j4 = 0;
-        double[] adouble2 = new double[i2];
+        double[] adouble2 = new double[size];
 
-        for (int k4 = 0; k4 < i2; k4++) {
+        for (int k4 = 0; k4 < size; k4++) {
             int l4 = (int)Math.floor(adouble1[k4]);
             if (l4 < aint[k4]) {
                 l4 = aint[k4];
@@ -1913,17 +1913,17 @@ public class Spotify extends Module {
 
         if (j4 > i) {
             int i5 = j4 - i;
-            Integer[] ainteger = new Integer[i2];
+            Integer[] ainteger = new Integer[size];
 
-            for (int j5 = 0; j5 < i2; j5++) {
+            for (int j5 = 0; j5 < size; j5++) {
                 ainteger[j5] = j5;
             }
 
-            Arrays.sort(ainteger, new sj(this, i2, aint1, aint, arraylist4));
+            Arrays.sort(ainteger, new sj(this, size, aint1, aint, arraylist4));
             Integer[] ainteger1 = ainteger;
-            int k5 = ainteger1.length;
+            int length = ainteger1.length;
 
-            for (int l5 = 0; l5 < k5; l5++) {
+            for (int l5 = 0; l5 < length; l5++) {
                 for (int i6 = ainteger1[l5]; i5 > 0 && aint1[i6] > aint[i6]; i5--) {
                     aint1[i6]--;
                 }
@@ -1934,16 +1934,16 @@ public class Spotify extends Module {
             }
         } else if (j4 < i) {
             int l6 = i - j4;
-            Integer[] ainteger2 = new Integer[i2];
+            Integer[] ainteger2 = new Integer[size];
 
-            for (int i7 = 0; i7 < i2; i7++) {
+            for (int i7 = 0; i7 < size; i7++) {
                 ainteger2[i7] = i7;
             }
 
-            Arrays.sort(ainteger2, new sk(this, i2, adouble2, arraylist4));
+            Arrays.sort(ainteger2, new sk(this, size, adouble2, arraylist4));
 
             for (int j7 = 0; l6-- > 0; j7++) {
-                aint1[ainteger2[j7 % i2]]++;
+                aint1[ainteger2[j7 % size]]++;
             }
         }
 
@@ -1954,14 +1954,14 @@ public class Spotify extends Module {
         }
 
         if (j6 != i) {
-            aint1[i2 - 1] = aint1[i2 - 1] + (i - j6);
+            aint1[size - 1] = aint1[size - 1] + (i - j6);
         }
 
         int k7 = var2;
 
-        for (int l7 = 0; l7 < i2; l7++) {
+        for (int l7 = 0; l7 < size; l7++) {
             int i8 = k7;
-            int j8 = l7 == i2 - 1 ? var3 : Math.min(var3, i8 + Math.max(1, aint1[l7]));
+            int j8 = l7 == size - 1 ? var3 : Math.min(var3, i8 + Math.max(1, aint1[l7]));
             sn sn = new sn((String)arraylist3.get(l7), i8);
             sn.XZ = j8;
             arraylist.add(sn);
@@ -2380,8 +2380,8 @@ public class Spotify extends Module {
     }
 
     private int ib() {
-        long i = System.currentTimeMillis() - this.WB;
-        int j = this.Wm + (int)i;
+        long now = System.currentTimeMillis() - this.WB;
+        int j = this.Wm + (int)now;
         if (j < 0) {
             j = 0;
         }
@@ -2423,15 +2423,15 @@ public class Spotify extends Module {
 
             if (this.WA < 0 || i < 0 || i >= this.WA || System.currentTimeMillis() - this.WE >= 120L) {
                 if (i != this.WA) {
-                    long k = System.currentTimeMillis();
+                    long now = System.currentTimeMillis();
                     boolean flag = this.WA < 0 || i > this.WA;
                     this.WC = this.WA;
                     this.WA = i;
-                    this.WD = flag ? k + 0L : k;
-                    this.WE = k;
+                    this.WD = flag ? now + 0L : now;
+                    this.WE = now;
                     this.Xy = -1;
                     this.Xx = 0.0F;
-                    this.XG = k + 260L;
+                    this.XG = now + 260L;
                 }
             }
         }

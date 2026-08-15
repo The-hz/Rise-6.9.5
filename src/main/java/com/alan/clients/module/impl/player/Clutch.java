@@ -135,9 +135,9 @@ public class Clutch extends Module {
             this.D(0);
         }
 
-        double d0 = this.rotationSpeed.wo().doubleValue();
+        double rotationSpeed = this.rotationSpeed.wo().doubleValue();
         double d1 = this.rotationSpeed.wA().doubleValue();
-        float f = (float)MathUtil.l(d0, d1);
+        float f = (float)MathUtil.l(rotationSpeed, d1);
         if (f != 0.0F) {
             RotationComponent.setRotations(new Vector2f(this.acs, this.act), f, MovementFix.NORMAL);
         }

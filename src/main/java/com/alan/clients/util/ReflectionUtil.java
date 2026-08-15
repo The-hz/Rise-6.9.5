@@ -70,9 +70,9 @@ public class ReflectionUtil {
     private static Class<?>[] b(String string, File file) {
         ArrayList arrayList = new ArrayList();
         String[] stringArray = Objects.requireNonNull(file.list());
-        int n2 = stringArray.length;
+        int length = stringArray.length;
         int n3 = 0;
-        while (n3 < n2) {
+        while (n3 < length) {
             String string2 = stringArray[n3];
             if (string2.endsWith(".class")) {
                 String string3 = ReflectionUtil.u(string, string2);

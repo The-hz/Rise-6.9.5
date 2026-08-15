@@ -30,15 +30,15 @@ public final class MainPathFinder implements InstanceAccess
         if (!canPassThroughMaterial(block)) {
             n = n.n(0.0, 1.0, 0.0);
         }
-        final PathFinder ahv = new PathFinder(n, e);
-        ahv.uR();
+        final PathFinder pathFinder = new PathFinder(n, e);
+        pathFinder.uR();
         int n3 = 0;
         ahy ahy = null;
         ahy ahy2 = null;
         final ArrayList<ahy> list = new ArrayList<ahy>();
-        final ArrayList uq = ahv.getPath();
-        for (final ahy ahy3 : (Iterable<ahy>)uq) {
-            if (n3 == 0 || n3 == uq.size() - 1) {
+        final ArrayList path = pathFinder.getPath();
+        for (final ahy ahy3 : (Iterable<ahy>)path) {
+            if (n3 == 0 || n3 == path.size() - 1) {
                 list.add(ahy3.n(0.5, 0.0, 0.5));
                 ahy2 = ahy3;
             }

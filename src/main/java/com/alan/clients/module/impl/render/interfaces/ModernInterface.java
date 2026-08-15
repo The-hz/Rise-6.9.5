@@ -428,9 +428,9 @@ extends Mode<Interface> {
             return;
         }
         ResourceLocation resourceLocation = GuiContainer.inventoryBackground;
-        int n3 = potion.getStatusIconIndex();
-        int n4 = n3 % 8 * 18;
-        int n5 = 198 + n3 / 8 * 19;
+        int statusIconIndex = potion.getStatusIconIndex();
+        int n4 = statusIconIndex % 8 * 18;
+        int n5 = 198 + statusIconIndex / 8 * 19;
         RenderUtil.a(resourceLocation, f2, f3, n4, n5, 18, 18, 256, 256, f4, f4);
     }
 

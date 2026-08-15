@@ -183,12 +183,12 @@ public class AutoMLG extends Module {
         if (stack != null && stack.getItem() == Items.bucket && pos != null) {
             Vector2f vector2f = RotationUtil.h(new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5));
             float f = aEg.thePlayer.pl;
-            float f1 = aEg.thePlayer.rotationPitch;
+            float rotationPitch = aEg.thePlayer.rotationPitch;
             aEg.thePlayer.pl = vector2f.x;
             aEg.thePlayer.rotationPitch = vector2f.y;
             boolean flag = aEg.playerController.sendUseItem(aEg.thePlayer, aEg.theWorld, stack);
             aEg.thePlayer.pl = f;
-            aEg.thePlayer.rotationPitch = f1;
+            aEg.thePlayer.rotationPitch = rotationPitch;
             if (flag) {
                 aEg.rightClickDelayTimer = 0;
             }

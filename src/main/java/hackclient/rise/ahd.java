@@ -33,14 +33,14 @@ public class ahd {
     }
 
     public static void populate() {
-        for (Locale ahc : Locale.values()) {
-            ResourceLocation resourcelocation = new ResourceLocation("rise/text/" + ahc.getFile() + ".properties");
+        for (Locale locale : Locale.values()) {
+            ResourceLocation resourcelocation = new ResourceLocation("rise/text/" + locale.getFile() + ".properties");
 
             try (
                 InputStream inputstream = Minecraft.getMinecraft().getResourceManager().getResource(resourcelocation).getInputStream();
                 BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(inputstream, StandardCharsets.UTF_8));
             ) {
-                ahc.getStrings().clear();
+                locale.getStrings().clear();
 
                 String s;
                 while ((s = bufferedreader.readLine()) != null) {
@@ -55,7 +55,7 @@ public class ahd {
                                     s3 = s3.replace("\\u2022", "•");
                                 }
 
-                                ahc.getStrings().put(s2, s3);
+                                locale.getStrings().put(s2, s3);
                             }
                         }
                     }

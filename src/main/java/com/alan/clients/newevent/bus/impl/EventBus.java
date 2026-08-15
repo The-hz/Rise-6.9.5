@@ -78,9 +78,9 @@ Bus<Event> {
         Map<Type, List<Listener<Event>>> map2 = this.iW;
         for (Type type : map.keySet()) {
             List<CallSite<Event>> list = map.get(type);
-            int n2 = list.size();
-            ArrayList arrayList = new ArrayList(n2);
-            for (int i2 = 0; i2 < n2; ++i2) {
+            int size = list.size();
+            ArrayList arrayList = new ArrayList(size);
+            for (int i2 = 0; i2 < size; ++i2) {
                 arrayList.add(list.get(i2).listener);
             }
             map2.put(type, arrayList);
@@ -107,8 +107,8 @@ Bus<Event> {
             }
             List list = this.iW.getOrDefault(Event2.getClass(), Collections.emptyList());
             int n2 = 0;
-            int n3 = list.size();
-            while (n2 < n3) {
+            int size = list.size();
+            while (n2 < size) {
                 ((Listener)list.get(n2++)).call(Event2);
             }
             if (!this.iX.isEmpty()) {

@@ -112,9 +112,9 @@ public final class MoveUtil implements InstanceAccess {
             }
         }
 
-        double d3 = Math.cos(Math.toRadians(d2 + abs.aHc));
-        double d4 = Math.sin(Math.toRadians(d2 + abs.aHc));
-        return new Vector2d(d0 * var0 * d3 + d1 * var0 * d4, d0 * var0 * d4 - d1 * var0 * d3);
+        double cos = Math.cos(Math.toRadians(d2 + abs.aHc));
+        double sin = Math.sin(Math.toRadians(d2 + abs.aHc));
+        return new Vector2d(d0 * var0 * cos + d1 * var0 * sin, d0 * var0 * sin - d1 * var0 * cos);
     }
 
     public static int depthStriderLevel() {
@@ -407,17 +407,17 @@ public final class MoveUtil implements InstanceAccess {
             }
         }
 
-        double d2 = Math.cos(Math.toRadians(f + abs.aHc));
-        double d3 = Math.sin(Math.toRadians(f + abs.aHc));
-        moveEvent.setPosX(d0 * var1 * d2 + d1 * var1 * d3);
-        moveEvent.setPosZ(d0 * var1 * d3 - d1 * var1 * d2);
+        double cos = Math.cos(Math.toRadians(f + abs.aHc));
+        double sin = Math.sin(Math.toRadians(f + abs.aHc));
+        moveEvent.setPosX(d0 * var1 * cos + d1 * var1 * sin);
+        moveEvent.setPosZ(d0 * var1 * sin - d1 * var1 * cos);
     }
 
     public static void fixMovement(MoveInputEvent moveInputEvent, float var1) {
         float f = moveInputEvent.getForward();
-        float f1 = moveInputEvent.getStrafe();
-        double d0 = MathHelper.wrapAngleTo180_double(Math.toDegrees(direction(aEg.thePlayer.pl, f, f1)));
-        if (f != 0.0F || f1 != 0.0F) {
+        float strafe = moveInputEvent.getStrafe();
+        double d0 = MathHelper.wrapAngleTo180_double(Math.toDegrees(direction(aEg.thePlayer.pl, f, strafe)));
+        if (f != 0.0F || strafe != 0.0F) {
             float f2 = 0.0F;
             float f3 = 0.0F;
             float f4 = Float.MAX_VALUE;
@@ -487,10 +487,10 @@ public final class MoveUtil implements InstanceAccess {
             f5 = f / f5;
             var0 *= f5;
             var1 *= f5;
-            float f6 = MathHelper.sin(var3 * (float)abs.aHb / 180.0F);
-            float f4 = MathHelper.cos(var3 * (float)abs.aHb / 180.0F);
-            double d0 = var0 * f4 - var1 * f6;
-            double d1 = var1 * f4 + var0 * f6;
+            float sin = MathHelper.sin(var3 * (float)abs.aHb / 180.0F);
+            float cos = MathHelper.cos(var3 * (float)abs.aHb / 180.0F);
+            double d0 = var0 * cos - var1 * sin;
+            double d1 = var1 * cos + var0 * sin;
             return new double[]{d0, d1};
         }
         return null;
@@ -554,20 +554,20 @@ public final class MoveUtil implements InstanceAccess {
             f8 = f / f8;
             f2 *= f8;
             f3 *= f8;
-            float f9 = MathHelper.sin(f4 * (float)abs.aHb / 180.0F);
-            float f7 = MathHelper.cos(f4 * (float)abs.aHb / 180.0F);
-            double d0 = f2 * f7 - f3 * f9;
-            double d1 = f3 * f7 + f2 * f9;
+            float sin = MathHelper.sin(f4 * (float)abs.aHb / 180.0F);
+            float cos = MathHelper.cos(f4 * (float)abs.aHb / 180.0F);
+            double d0 = f2 * cos - f3 * sin;
+            double d1 = f3 * cos + f2 * sin;
             return Math.hypot(d0, d1);
         }
         return 0.0;
     }
 
     public static float simulationStrafeAngle(float var0, float var1) {
-        float f1 = (float)Math.toDegrees(direction());
-        if (Math.abs(var0 - f1) <= var1) {
-            var0 = f1;
-        } else if (var0 > f1) {
+        float degrees = (float)Math.toDegrees(direction());
+        if (Math.abs(var0 - degrees) <= var1) {
+            var0 = degrees;
+        } else if (var0 > degrees) {
             var0 -= var1;
         } else {
             var0 += var1;
@@ -584,7 +584,7 @@ public final class MoveUtil implements InstanceAccess {
         double d2 = aEg.thePlayer.He * d1;
         double d3 = aEg.thePlayer.Hg * d1;
         float f = var0;
-        float f1 = (float)Math.toDegrees(direction());
+        float degrees = (float)Math.toDegrees(direction());
 
         for (int i = 0; i <= 360; i++) {
             a(speed(), var0);
@@ -592,14 +592,14 @@ public final class MoveUtil implements InstanceAccess {
             double d5 = Math.abs(aEg.thePlayer.motionZ);
             double d6 = d2 - d0;
             double d7 = d3 - d0;
-            if (var0 == f1 || d4 < d6 || d5 < d7) {
+            if (var0 == degrees || d4 < d6 || d5 < d7) {
                 break;
             }
 
             f = var0;
-            if (Math.abs(var0 - f1) <= 1.0F) {
-                var0 = f1;
-            } else if (var0 > f1) {
+            if (Math.abs(var0 - degrees) <= 1.0F) {
+                var0 = degrees;
+            } else if (var0 > degrees) {
                 var0--;
             } else {
                 var0++;
@@ -668,9 +668,9 @@ public final class MoveUtil implements InstanceAccess {
     }
 
     public static aka a(Entity entity, Vector2f vec2, int var2, boolean var3) {
-        double d0 = entity.posX - entity.lastTickPosX;
-        double d1 = entity.posZ - entity.lastTickPosZ;
-        return a(new aka(entity.posX, entity.posY, entity.posZ), new aka(d0, 0.0, d1), entity.pl, vec2, var2, var3);
+        double dx = entity.posX - entity.lastTickPosX;
+        double dz = entity.posZ - entity.lastTickPosZ;
+        return a(new aka(entity.posX, entity.posY, entity.posZ), new aka(dx, 0.0, dz), entity.pl, vec2, var2, var3);
     }
 
     public static aka a(aka var0, aka var1, float var2, Vector2f vec2) {

@@ -27,15 +27,15 @@ public class acd implements Screen, InstanceAccess {
                 new Color(255, 255, 255, 100).getRGB()
             );
         FontManager.MAIN.a(17, gd.REGULAR).a("6.9.5", vector2f.getX() + d0 + 20.0, vector2f.getY() + 50.0F, new Color(255, 255, 255, 164).getRGB());
-        double d1 = System.currentTimeMillis() / 1000.0 % 45.0 * 11.0;
+        double now = System.currentTimeMillis() / 1000.0 % 45.0 * 11.0;
         air.hK();
         air.a(new ScaledResolution(aEg), vector2f.getX() + d0, vector2f.getY() + 90.0F, vector2f1.getX(), vector2f1.getY() - 175.0F);
         FontManager.MAIN
             .a(17, gd.REGULAR)
-            .a(qt(), vector2f.getX() + d0 + 20.0, vector2f.getY() + 100.0F - d1 + (vector2f1.getY() - 175.0F), new Color(164, 164, 164, 64).getRGB());
+            .a(qt(), vector2f.getX() + d0 + 20.0, vector2f.getY() + 100.0F - now + (vector2f1.getY() - 175.0F), new Color(164, 164, 164, 64).getRGB());
         FontManager.MAIN
             .a(17, gd.REGULAR)
-            .a(qu(), vector2f.getX() + d0 + 155.0, vector2f.getY() + 100.0F - d1 + (vector2f1.getY() - 175.0F), new Color(164, 164, 164, 64).getRGB());
+            .a(qu(), vector2f.getX() + d0 + 155.0, vector2f.getY() + 100.0F - now + (vector2f1.getY() - 175.0F), new Color(164, 164, 164, 64).getRGB());
         air.disable();
     }
 

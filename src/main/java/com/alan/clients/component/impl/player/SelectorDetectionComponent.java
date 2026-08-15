@@ -56,9 +56,9 @@ public final class SelectorDetectionComponent extends Component {
 
     public static String trueName(ItemStack stack) {
         String s = (StatCollector.translateToLocal(stack.getUnlocalizedName() + ".name") + "").trim();
-        String s1 = EntityList.getStringFromID(stack.getMetadata());
-        if (s1 != null) {
-            s = s + " " + StatCollector.translateToLocal("entity." + s1 + ".name");
+        String metadata = EntityList.getStringFromID(stack.getMetadata());
+        if (metadata != null) {
+            s = s + " " + StatCollector.translateToLocal("entity." + metadata + ".name");
         }
 
         return s;

@@ -153,10 +153,10 @@ public final class TickBase extends Module {
         aka aka = new aka(entity.posX, entity.posY, entity.posZ);
 
         for (int i = 0; i <= PingSpoofComponent.getPing() / 50L; i++) {
-            double d0 = entity.posX - entity.lastTickPosX;
-            double d1 = entity.posZ - entity.lastTickPosZ;
-            int j = d1 == 0.0 && d0 == 0.0 ? 0 : 1;
-            aka = MoveUtil.a(aka, new aka(d0, 0.0, d1), entity.pl, new Vector2f(0.0F, j));
+            double dx = entity.posX - entity.lastTickPosX;
+            double dz = entity.posZ - entity.lastTickPosZ;
+            int j = dz == 0.0 && dx == 0.0 ? 0 : 1;
+            aka = MoveUtil.a(aka, new aka(dx, 0.0, dz), entity.pl, new Vector2f(0.0F, j));
         }
 
         return aka;

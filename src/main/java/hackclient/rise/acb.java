@@ -51,10 +51,10 @@ public final class acb implements Screen, InstanceAccess {
         this.azD = d0;
         double d1 = 0.0;
 
-        for (ModuleComponent abd : this.azB) {
-            abd.draw(new Vector2d(riseclickgui.axI.x + riseclickgui.axJ.aym + 4.0, d0), var1, var2, var3);
-            d0 += abd.scale.y + 5.0F;
-            d1 += abd.scale.y + 5.0F;
+        for (ModuleComponent moduleComponent : this.azB) {
+            moduleComponent.draw(new Vector2d(riseclickgui.axI.x + riseclickgui.axJ.aym + 4.0, d0), var1, var2, var3);
+            d0 += moduleComponent.scale.y + 5.0F;
+            d1 += moduleComponent.scale.y + 5.0F;
         }
 
         this.azC = d0;
@@ -121,13 +121,13 @@ public final class acb implements Screen, InstanceAccess {
     public ArrayList<ModuleComponent> aG(String var1) {
         ArrayList arraylist = new ArrayList();
 
-        for (ModuleComponent abd : Client.a.v().getModuleList()) {
-            String[] astring = abd.getModule().getAliases();
+        for (ModuleComponent moduleComponent : Client.a.v().getModuleList()) {
+            String[] astring = moduleComponent.getModule().getAliases();
             int i = astring.length;
 
             for (int j = 0; j < i; j++) {
                 if (astring[j].toLowerCase().replaceAll(" ", "").contains(var1.toLowerCase().replaceAll(" ", ""))) {
-                    arraylist.add(abd);
+                    arraylist.add(moduleComponent);
                     break;
                 }
             }
@@ -145,8 +145,8 @@ public final class acb implements Screen, InstanceAccess {
         Iterator iterator = this.azB.iterator();
 
         while (iterator.hasNext()) {
-            for (ValueComponent abl : ((ModuleComponent)iterator.next()).getValueList()) {
-                if (abl instanceof abv && ((abv)abl).azo.ayU) {
+            for (ValueComponent valueComponent : ((ModuleComponent)iterator.next()).getValueList()) {
+                if (valueComponent instanceof abv && ((abv)valueComponent).azo.ayU) {
                     return true;
                 }
             }

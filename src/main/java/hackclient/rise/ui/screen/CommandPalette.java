@@ -231,8 +231,8 @@ extends GuiScreen {
                                 string3 = stringArray[0];
                             }
                         } else if (!this.aAz.isEmpty() && (n3 = this.ag(this.aAP)) >= 0 && n3 < this.aAz.size()) {
-                            CommandEntry acr2 = this.aAz.get(n3);
-                            string3 = acr2.aBk;
+                            CommandEntry commandEntry = this.aAz.get(n3);
+                            string3 = commandEntry.aBk;
                         }
                         if (string3 != null && !string3.isEmpty()) {
                             String string8 = string2.trim();
@@ -284,13 +284,13 @@ extends GuiScreen {
             return false;
         }
         int n2 = Math.max(0, Math.min(this.aAP, this.aAB.size() - 1));
-        Suggestion acy2 = this.aAB.get(n2);
-        int n3 = acy2.aBD;
+        Suggestion suggestion = this.aAB.get(n2);
+        int n3 = suggestion.aBD;
         if (n3 + 1 >= stringArray.length) {
             return true;
         }
         String string3 = stringArray[n3 + 1];
-        String string4 = acy2.aBC;
+        String string4 = suggestion.aBC;
         if (string3.equals(string4)) return false;
         return true;
     }
@@ -455,13 +455,13 @@ extends GuiScreen {
                 object = null;
                 if (!this.aAC || this.aAB.isEmpty()) break block16;
                 this.aAP = Math.max(0, Math.min(this.aAP, this.aAB.size() - 1));
-                Suggestion acy2 = this.aAB.get(this.aAP);
+                Suggestion suggestion = this.aAB.get(this.aAP);
                 String string3 = this.aS(string);
                 String[] stringArray = string3.trim().isEmpty() ? new String[]{} : string3.split("\\s+");
-                bl = stringArray.length > (n2 = acy2.aBD + 1);
+                bl = stringArray.length > (n2 = suggestion.aBD + 1);
                 String string4 = bl ? stringArray[n2] : null;
                 if (string4 != null && !string4.isEmpty()) {
-                    String string5 = acy2.aBC;
+                    String string5 = suggestion.aBC;
                     if (string5.toLowerCase(Locale.ROOT).startsWith(string4.toLowerCase(Locale.ROOT)) && !string4.equalsIgnoreCase(string5)) {
                         object = string5.substring(string4.length());
                     }
@@ -469,7 +469,7 @@ extends GuiScreen {
                 }
                 boolean bl3 = stringArray.length <= n2;
                 boolean bl4 = string.endsWith(" ");
-                String string6 = acy2.aBC;
+                String string6 = suggestion.aBC;
                 object = (bl3 && !bl4 ? " " : "") + string6;
                 break block17;
             }
@@ -499,9 +499,9 @@ extends GuiScreen {
                 } else {
                     int n5 = this.ag(this.aAP);
                     int n6 = Math.max(0, Math.min(n5, this.aAz.size() - 1));
-                    CommandEntry acr2 = this.aAz.get(n6);
+                    CommandEntry commandEntry = this.aAz.get(n6);
                     String string13 = this.aS(string);
-                    String string14 = acr2.aBk;
+                    String string14 = commandEntry.aBk;
                     if ((string.startsWith(".") || string.startsWith("/")) && string14.toLowerCase(Locale.ROOT).startsWith(string13.toLowerCase(Locale.ROOT)) && !string13.equalsIgnoreCase(string14)) {
                         object = string14.substring(string13.length());
                     }
@@ -552,8 +552,8 @@ extends GuiScreen {
             int n7 = (int)((double)n6 * d10);
             RenderUtil.roundedRectangle(d3, d9, d4, 28.0, 6.0, ColorUtil.d(Color.WHITE, (int)((double)n7 * d2)));
             if (this.aAC) {
-                Suggestion acy2 = this.aAB.get(i2);
-                this.a(acy2, d3 + 8.0, d9 + 5.0, d4 - 16.0, d2);
+                Suggestion suggestion = this.aAB.get(i2);
+                this.a(suggestion, d3 + 8.0, d9 + 5.0, d4 - 16.0, d2);
                 continue;
             }
             int n8 = this.qV();
@@ -571,8 +571,8 @@ extends GuiScreen {
             }
             int n10 = this.ag(i2);
             if (n10 < 0 || n10 >= this.aAz.size()) continue;
-            CommandEntry acr2 = this.aAz.get(n10);
-            this.a(acr2, d3 + 8.0, d9 + 5.0, d4 - 16.0, d2);
+            CommandEntry commandEntry = this.aAz.get(n10);
+            this.a(commandEntry, d3 + 8.0, d9 + 5.0, d4 - 16.0, d2);
         }
         if (n4 == 0) {
             agc agc2 = FontManager.MAIN.a(15, gd.REGULAR);
@@ -668,11 +668,11 @@ extends GuiScreen {
                 return acr2.aBk.compareToIgnoreCase(acr3.aBk);
             });
         } else {
-            for (CommandEntry acr4 : this.aAy) {
-                double d2 = acr4.aU(string3);
+            for (CommandEntry commandEntry : this.aAy) {
+                double d2 = commandEntry.aU(string3);
                 if (!(d2 > 0.0)) continue;
-                acr4.aBq = d2;
-                arrayList.add(acr4);
+                commandEntry.aBq = d2;
+                arrayList.add(commandEntry);
             }
             arrayList.sort((acr2, acr3) -> {
                 long l2;
@@ -862,8 +862,8 @@ extends GuiScreen {
             return;
         }
         String string5 = stringArray[0];
-        SuggestionProvider ada2 = this.aAA.get(string5.toLowerCase(Locale.ROOT));
-        if (ada2 == null) {
+        SuggestionProvider suggestionProvider = this.aAA.get(string5.toLowerCase(Locale.ROOT));
+        if (suggestionProvider == null) {
             this.qQ();
             return;
         }
@@ -877,14 +877,14 @@ extends GuiScreen {
             }
         }
         String[] stringArray2 = arrayList.toArray(new String[0]);
-        SuggestionContext acz2 = new SuggestionContext(string5, stringArray2, string4);
+        SuggestionContext suggestionContext = new SuggestionContext(string5, stringArray2, string4);
         this.aAD = true;
-        this.aAE = acz2;
+        this.aAE = suggestionContext;
         try {
-            ada2.a(acz2);
+            suggestionProvider.a(suggestionContext);
         }
         catch (Throwable throwable) {}
-        this.aAB = (list = ada2.b(acz2)) == null ? Collections.emptyList() : list;
+        this.aAB = (list = suggestionProvider.b(suggestionContext)) == null ? Collections.emptyList() : list;
         this.aAC = !this.aAB.isEmpty();
         this.qQ();
     }
@@ -938,10 +938,10 @@ extends GuiScreen {
         this.aAX = true;
         try {
             afj afj2 = afj.sJ();
-            long l2 = System.currentTimeMillis();
+            long now = System.currentTimeMillis();
             long l3 = afj2.sQ();
-            boolean bl2 = l3 > 0L && l2 - l3 <= 60000L;
-            if (this.aAW && this.aAR != null && this.aAU != null && !this.aAV && !bl2 && l2 - this.aAZ < 1000L) {
+            boolean bl2 = l3 > 0L && now - l3 <= 60000L;
+            if (this.aAW && this.aAR != null && this.aAU != null && !this.aAV && !bl2 && now - this.aAZ < 1000L) {
                 return;
             }
             this.aAR = null;
@@ -960,7 +960,7 @@ extends GuiScreen {
                     this.aAS = "ui.command.palette.suggested.reason.serverJoin";
                     afj2.bG(string3);
                     this.aAW = true;
-                    this.aAZ = l2;
+                    this.aAZ = now;
                     return;
                 }
             }
@@ -991,7 +991,7 @@ extends GuiScreen {
                 this.aAS = "ui.command.palette.suggested.reason.dirtyConfig";
                 afj2.bG(string9);
                 this.aAW = true;
-                this.aAZ = l2;
+                this.aAZ = now;
                 return;
             }
             block37: {
@@ -1009,7 +1009,7 @@ extends GuiScreen {
                     this.aAS = "ui.command.palette.suggested.reason.dirtyConfig";
                     afj2.bG(string11);
                     this.aAW = true;
-                    this.aAZ = l2;
+                    this.aAZ = now;
                     return;
                 }
                 catch (Throwable throwable) {}
@@ -1024,7 +1024,7 @@ extends GuiScreen {
                     this.aAS = "ui.command.palette.suggested.reason.bindUnboundFrequent";
                     afj2.bG(string12);
                     this.aAW = true;
-                    this.aAZ = l2;
+                    this.aAZ = now;
                     return;
                 }
             }
@@ -1038,7 +1038,7 @@ extends GuiScreen {
                     this.aAS = "ui.command.palette.suggested.reason.toggleRecent";
                     afj2.bG(string13);
                     this.aAW = true;
-                    this.aAZ = l2;
+                    this.aAZ = now;
                     return;
                 }
             }
@@ -1052,7 +1052,7 @@ extends GuiScreen {
                     this.aAS = "ui.command.palette.suggested.reason.moduleRecent";
                     afj2.bG(string14);
                     this.aAW = true;
-                    this.aAZ = l2;
+                    this.aAZ = now;
                     return;
                 }
             }
@@ -1064,7 +1064,7 @@ extends GuiScreen {
                     this.aAS = "ui.command.palette.suggested.reason.friendRecent";
                     afj2.bG(string15);
                     this.aAW = true;
-                    this.aAZ = l2;
+                    this.aAZ = now;
                     return;
                 }
             }
@@ -1079,7 +1079,7 @@ extends GuiScreen {
                         this.aAS = "ui.command.palette.suggested.reason.mostUsedConfig";
                         afj2.bG(string17);
                         this.aAW = true;
-                        this.aAZ = l2;
+                        this.aAZ = now;
                         return;
                     }
                 }
@@ -1093,7 +1093,7 @@ extends GuiScreen {
                     this.aAS = "ui.command.palette.suggested.reason.mostUsed";
                     afj2.bG(string20);
                     this.aAW = true;
-                    this.aAZ = l2;
+                    this.aAZ = now;
                 }
             }
             if (this.aAR == null) {
@@ -1102,13 +1102,13 @@ extends GuiScreen {
                     this.aAR = "." + string19;
                     this.aAS = "ui.command.palette.suggested.reason.mostUsed";
                     this.aAW = true;
-                    this.aAZ = l2;
+                    this.aAZ = now;
                 } else if (!this.aAz.isEmpty()) {
                     this.aAU = "cmd.topResult";
                     this.aAR = "." + this.aAz.get(0).aBk;
                     this.aAS = "ui.command.palette.suggested.reason.mostUsed";
                     this.aAW = true;
-                    this.aAZ = l2;
+                    this.aAZ = now;
                 }
             }
         }
@@ -1124,11 +1124,11 @@ extends GuiScreen {
             if (string == null || string.isEmpty()) {
                 return ".";
             }
-            Object t2 = Client.a.getCommandManager().get(string);
-            if (t2 == null) {
+            Object command = Client.a.getCommandManager().get(string);
+            if (command == null) {
                 return "." + string;
             }
-            String[] stringArray = ((Command)t2).getExpressions();
+            String[] stringArray = ((Command)command).getExpressions();
             String string2 = afj.sJ().a(string, stringArray);
             if (string2 != null && !string2.trim().isEmpty()) return "." + string2.trim();
             string2 = string;
@@ -1197,9 +1197,9 @@ extends GuiScreen {
         String[] stringArray = string4.split("\\s+");
         ArrayList<String> arrayList = new ArrayList<String>();
         String[] stringArray2 = stringArray;
-        int n2 = stringArray2.length;
+        int length = stringArray2.length;
         int n3 = 0;
-        while (n3 < n2) {
+        while (n3 < length) {
             String string5 = stringArray2[n3];
             if (!(string5 == null || string5.length() < 3 || string5.equals("play") || string5.equals("mc") || string5.equals("server") || string5.equals("net") || string5.equals("com") || string5.equals("org"))) {
                 arrayList.add(string5);
@@ -1212,9 +1212,9 @@ extends GuiScreen {
     private int a(String[] stringArray, String[] stringArray2, String string) {
         int n2 = 0;
         String[] stringArray3 = stringArray;
-        int n3 = stringArray3.length;
+        int length = stringArray3.length;
         int n4 = 0;
-        block0: while (n4 < n3) {
+        block0: while (n4 < length) {
             String string2 = stringArray3[n4];
             String[] stringArray4 = stringArray2;
             int n5 = stringArray4.length;
@@ -1493,10 +1493,10 @@ extends GuiScreen {
             stringArray = string3.isEmpty() ? new String[]{} : string3.split("\\s+");
             if (stringArray.length >= 3 && "load".equalsIgnoreCase(stringArray[1]) && "latest".equalsIgnoreCase(stringArray[2])) {
                 try {
-                    Object t2 = Client.a.getCommandManager().get("config");
-                    if (t2 != null) {
+                    Object command = Client.a.getCommandManager().get("config");
+                    if (command != null) {
                         String string4 = stringArray[0];
-                        for (String string5 : ((Command)t2).getExpressions()) {
+                        for (String string5 : ((Command)command).getExpressions()) {
                             if (string5 == null || !string5.trim().equalsIgnoreCase(string4)) continue;
                             this.aAT = false;
                             return;
@@ -1634,11 +1634,11 @@ extends GuiScreen {
         try {
             String string = null;
             long l2 = 0L;
-            for (CommandEntry acr2 : this.aAy) {
+            for (CommandEntry commandEntry : this.aAy) {
                 long l3;
-                if (acr2 == null || acr2.aBk == null || (l3 = CommandPalette.aR(acr2.aBk)) <= l2) continue;
+                if (commandEntry == null || commandEntry.aBk == null || (l3 = CommandPalette.aR(commandEntry.aBk)) <= l2) continue;
                 l2 = l3;
-                string = acr2.aBk;
+                string = commandEntry.aBk;
             }
             return string;
         }
@@ -1793,8 +1793,8 @@ extends GuiScreen {
         }
         try {
             String[] stringArray;
-            Object t2 = Client.a.getCommandManager().get(string2);
-            if (t2 != null && (stringArray = ((Command)t2).getExpressions()) != null && stringArray.length > 0 && stringArray[0] != null && !stringArray[0].trim().isEmpty()) {
+            Object command = Client.a.getCommandManager().get(string2);
+            if (command != null && (stringArray = ((Command)command).getExpressions()) != null && stringArray.length > 0 && stringArray[0] != null && !stringArray[0].trim().isEmpty()) {
                 return stringArray[0].trim().toLowerCase(Locale.ROOT);
             }
             return string2.toLowerCase(Locale.ROOT);
@@ -1877,26 +1877,26 @@ extends GuiScreen {
     }
 
     private void re() {
-        BindSuggestionProvider acn2 = new BindSuggestionProvider();
-        this.a(acn2, "bind", "binds", "keybind", "b");
-        ConfigSuggestionProvider acq2 = new ConfigSuggestionProvider();
-        this.a(acq2, "config", "configs", "cfg", "settings", "c");
-        FriendSuggestionProvider acs2 = new FriendSuggestionProvider();
-        this.a(acs2, "friend", "setfriend", "f");
-        TargetSuggestionProvider adb2 = new TargetSuggestionProvider();
-        this.a(adb2, "target", "settarget");
-        ToggleSuggestionProvider adc2 = new ToggleSuggestionProvider();
-        this.a(adc2, "toggle", "t");
-        ScriptSuggestionProvider acw2 = new ScriptSuggestionProvider();
-        this.a(acw2, "script", "scripts", "js");
-        SpotifySuggestionProvider acx2 = new SpotifySuggestionProvider();
-        this.a(acx2, "spotify", "music");
-        InsultSuggestionProvider act2 = new InsultSuggestionProvider();
-        this.a(act2, "insults", "killinsults", "insult");
-        ClipSuggestionProvider acp2 = new ClipSuggestionProvider();
-        this.a(acp2, "clip", "vclip", "hclip");
-        ModuleSuggestionProvider acv2 = new ModuleSuggestionProvider();
-        this.a(acv2, "module", "modules");
+        BindSuggestionProvider bindSuggestionProvider = new BindSuggestionProvider();
+        this.a(bindSuggestionProvider, "bind", "binds", "keybind", "b");
+        ConfigSuggestionProvider configSuggestionProvider = new ConfigSuggestionProvider();
+        this.a(configSuggestionProvider, "config", "configs", "cfg", "settings", "c");
+        FriendSuggestionProvider friendSuggestionProvider = new FriendSuggestionProvider();
+        this.a(friendSuggestionProvider, "friend", "setfriend", "f");
+        TargetSuggestionProvider targetSuggestionProvider = new TargetSuggestionProvider();
+        this.a(targetSuggestionProvider, "target", "settarget");
+        ToggleSuggestionProvider toggleSuggestionProvider = new ToggleSuggestionProvider();
+        this.a(toggleSuggestionProvider, "toggle", "t");
+        ScriptSuggestionProvider scriptSuggestionProvider = new ScriptSuggestionProvider();
+        this.a(scriptSuggestionProvider, "script", "scripts", "js");
+        SpotifySuggestionProvider spotifySuggestionProvider = new SpotifySuggestionProvider();
+        this.a(spotifySuggestionProvider, "spotify", "music");
+        InsultSuggestionProvider insultSuggestionProvider = new InsultSuggestionProvider();
+        this.a(insultSuggestionProvider, "insults", "killinsults", "insult");
+        ClipSuggestionProvider clipSuggestionProvider = new ClipSuggestionProvider();
+        this.a(clipSuggestionProvider, "clip", "vclip", "hclip");
+        ModuleSuggestionProvider moduleSuggestionProvider = new ModuleSuggestionProvider();
+        this.a(moduleSuggestionProvider, "module", "modules");
     }
 
     private void a(SuggestionProvider suggestionProvider, String ... stringArray) {

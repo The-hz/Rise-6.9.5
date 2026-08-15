@@ -13,9 +13,9 @@ public enum AltType {
     }
 
     public static AltType bi(String var0) {
-        for (AltType aem : values()) {
-            if (aem.getName().equalsIgnoreCase(var0)) {
-                return aem;
+        for (AltType altType : values()) {
+            if (altType.getName().equalsIgnoreCase(var0)) {
+                return altType;
             }
         }
 

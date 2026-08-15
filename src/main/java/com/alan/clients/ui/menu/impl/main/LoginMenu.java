@@ -64,9 +64,9 @@ extends Menu {
             final MenuButton[] menuButtons = this.menuButtons;
             int count = menuButtons.length;
             for (int i = 0; i < count; i++) {
-                final MenuButton adh = menuButtons[i];
-                if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), n, n2)) {
-                    adh.runAction();
+                final MenuButton menuButton = menuButtons[i];
+                if (MouseUtil.isHovered(menuButton.getX(), menuButton.getY(), menuButton.oM(), menuButton.da(), n, n2)) {
+                    menuButton.runAction();
                     break;
                 }
             }

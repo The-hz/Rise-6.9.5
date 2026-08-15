@@ -24,7 +24,7 @@ public final class Config extends Command {
 
     @Override
     public void execute(String[] var1) {
-        ConfigManager afx = this.rN().p();
+        ConfigManager configManager = this.rN().p();
         String s = var1[1].toLowerCase();
         switch (var1.length) {
             case 2:
@@ -46,8 +46,8 @@ public final class Config extends Command {
                     switch (b2) {
                         case 0:
                             afi.b("command.config.selectload");
-                            afx.update();
-                            afx.forEach(
+                            configManager.update();
+                            configManager.forEach(
                                 var1x -> {
                                     String s4 = var1x.getFile().getName().replace(".json", "");
                                     String s5 = ".config load " + s4;
@@ -71,7 +71,7 @@ public final class Config extends Command {
 
                 try {
                     Desktop desktop = Desktop.getDesktop();
-                    File file1 = new File(String.valueOf(afx.CONFIG_DIRECTORY));
+                    File file1 = new File(String.valueOf(configManager.CONFIG_DIRECTORY));
                     desktop.open(file1);
                     afi.b("command.config.folder");
                 } catch (IllegalArgumentException | IOException illegalargumentexception) {
@@ -103,8 +103,8 @@ public final class Config extends Command {
 
                     switch (b0) {
                         case 0:
-                            afx.update();
-                            ConfigFile configfile = afx.get(s1);
+                            configManager.update();
+                            ConfigFile configfile = configManager.get(s1);
                             if (configfile != null) {
                                 CompletableFuture.runAsync(() -> {
                                     if (configfile.te()) {
@@ -141,7 +141,7 @@ public final class Config extends Command {
                 }
 
                 CompletableFuture.runAsync(() -> {
-                    afx.d(s1, false);
+                    configManager.d(s1, false);
                     afi.b("command.config.saved");
                     afi.b("command.config.reminder");
                 });

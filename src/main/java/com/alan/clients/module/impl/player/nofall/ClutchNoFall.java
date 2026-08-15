@@ -168,9 +168,9 @@ public class ClutchNoFall extends Mode<NoFall> {
 
         while (d1 > 0.0 && i++ < 200) {
             float f = aEg.thePlayer.movementInput.moveStrafe;
-            float f1 = aEg.thePlayer.movementInput.moveForward;
+            float moveForward = aEg.thePlayer.movementInput.moveForward;
             float f2 = aEg.thePlayer.pl;
-            float f3 = f * f + f1 * f1;
+            float f3 = f * f + moveForward * moveForward;
             if (f3 >= 1.0E-4F) {
                 float f4 = MathHelper.sqrt_float(f3);
                 if (f4 < 1.0F) {
@@ -179,11 +179,11 @@ public class ClutchNoFall extends Mode<NoFall> {
 
                 float f5 = 0.02F / f4;
                 float f6 = f * f5;
-                float f7 = f1 * f5;
-                float f8 = MathHelper.sin(f2 * (float) Math.PI / 180.0F);
-                float f9 = MathHelper.cos(f2 * (float) Math.PI / 180.0F);
-                d3 += f6 * f9 - f7 * f8;
-                d5 += f7 * f9 + f6 * f8;
+                float f7 = moveForward * f5;
+                float sin = MathHelper.sin(f2 * (float) Math.PI / 180.0F);
+                float cos = MathHelper.cos(f2 * (float) Math.PI / 180.0F);
+                d3 += f6 * cos - f7 * sin;
+                d5 += f7 * cos + f6 * sin;
             }
 
             double d6 = d4 - 0.08;

@@ -103,9 +103,9 @@ public final class FlightPrediction extends Check {
             double d5 = Double.MAX_VALUE;
             int l = Integer.MAX_VALUE;
 
-            for (Vec3 vec31 : this.V) {
+            for (Vec3 vec : this.V) {
                 for (double d7 : this.possibleJumpMotions) {
-                    double d8 = vec31.yCoord;
+                    double d8 = vec.yCoord;
 
                     for (int i1 = 0; i1 < this.Y; i1++) {
                         d8 += MoveUtil.predictedMotion(d7, i1);
@@ -113,7 +113,7 @@ public final class FlightPrediction extends Check {
                         if (d9 < d4) {
                             d4 = d9;
                             l = i1;
-                            double d10 = vec31.yCoord;
+                            double d10 = vec.yCoord;
                         }
 
                         if (d8 < d5) {

@@ -84,9 +84,9 @@ public class AddCrackedScreen extends GuiScreen implements InstanceAccess {
     public void mouseClicked(int var1, int var2, int var3) {
         usernameBox.click(var1, var2, var3);
 
-        for (MenuButton adh : this.menuButtons) {
-            if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
-                adh.runAction();
+        for (MenuButton menuButton : this.menuButtons) {
+            if (MouseUtil.isHovered(menuButton.getX(), menuButton.getY(), menuButton.oM(), menuButton.da(), var1, var2)) {
+                menuButton.runAction();
                 break;
             }
         }

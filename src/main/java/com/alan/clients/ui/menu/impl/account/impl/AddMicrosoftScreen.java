@@ -96,11 +96,11 @@ public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
 
                         for (int b1 = 0; b1 < 360; b1 += 30) {
                             double d0 = (Math.PI * 2) * b1 / 360.0;
-                            double d1 = Math.cos(d0);
-                            double d2 = Math.sin(d0);
+                            double cos = Math.cos(d0);
+                            double sin = Math.sin(d0);
                             float f = 1.0F - (float)(b1 + k1) % 360.0F / 360.0F;
                             GL11.glColor4f(1.0F, 1.0F, 1.0F, f);
-                            GL11.glVertex2d(d1 * b0, d2 * b0);
+                            GL11.glVertex2d(cos * b0, sin * b0);
                         }
 
                         GL11.glEnd();
@@ -125,9 +125,9 @@ public class AddMicrosoftScreen extends GuiScreen implements InstanceAccess {
 
     @Override
     public void mouseClicked(int var1, int var2, int var3) {
-        for (MenuButton adh : this.menuButtons) {
-            if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
-                adh.runAction();
+        for (MenuButton menuButton : this.menuButtons) {
+            if (MouseUtil.isHovered(menuButton.getX(), menuButton.getY(), menuButton.oM(), menuButton.da(), var1, var2)) {
+                menuButton.runAction();
                 break;
             }
         }

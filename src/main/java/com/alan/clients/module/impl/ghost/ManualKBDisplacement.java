@@ -143,11 +143,11 @@ public final class ManualKBDisplacement extends Module {
         for (int i = 0; i < 32; i++) {
             double d0 = (Math.PI * 2) * i / 32.0;
             double d1 = -Math.sin(d0);
-            double d2 = Math.cos(d0);
+            double cos = Math.cos(d0);
 
             for (double d3 = 0.8; d3 <= 5.0; d3 += 0.35) {
-                AxisAlignedBB axisalignedbb1 = axisalignedbb.offset(d1 * d3, 0.0, d2 * d3);
-                le lex = this.b(living, axisalignedbb1, d1, d2, d3);
+                AxisAlignedBB axisalignedbb1 = axisalignedbb.offset(d1 * d3, 0.0, cos * d3);
+                le lex = this.b(living, axisalignedbb1, d1, cos, d3);
                 if (lex != null && (le == null || lex.BC > le.BC)) {
                     le = lex;
                 }

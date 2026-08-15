@@ -103,15 +103,15 @@ public final class SlotUtil implements InstanceAccess {
                 ItemSword itemsword = (ItemSword)itemstack.getItem();
                 int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, itemstack);
                 float f1 = itemsword.getDamageVsEntity() + l * 1.25F;
-                int i1 = itemsword.getMaxDamage();
+                int maxDamage = itemsword.getMaxDamage();
                 if (f < f1) {
                     f = f1;
-                    i = i1;
+                    i = maxDamage;
                     j = k;
                 }
 
-                if (f1 == f && i1 > i) {
-                    i = i1;
+                if (f1 == f && maxDamage > i) {
+                    i = maxDamage;
                     j = k;
                 }
             }
@@ -158,9 +158,9 @@ public final class SlotUtil implements InstanceAccess {
         for (int j = 0; j < 9; j++) {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(j);
             if (itemstack != null) {
-                float f1 = itemstack.getStrVsBlock(iblockstate.getBlock());
-                if (f1 > f) {
-                    f = f1;
+                float block = itemstack.getStrVsBlock(iblockstate.getBlock());
+                if (block > f) {
+                    f = block;
                     i = j;
                 }
             }

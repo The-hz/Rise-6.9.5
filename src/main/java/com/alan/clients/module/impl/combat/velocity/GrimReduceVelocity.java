@@ -190,8 +190,8 @@ extends Mode<Velocity> {
                 EntityLivingBase entityLivingBase5 = list.get(0);
                 Vec3 vec3 = GrimReduceVelocity.aEg.thePlayer.getPositionEyes(1.0f);
                 AxisAlignedBB axisAlignedBB = entityLivingBase5.getEntityBoundingBox().expand(0.1, 0.1, 0.1);
-                Vec3 vec32 = new Vec3((axisAlignedBB.minX + axisAlignedBB.maxX) * 0.5, (axisAlignedBB.minY + axisAlignedBB.maxY) * 0.5, (axisAlignedBB.minZ + axisAlignedBB.maxZ) * 0.5).subtract(vec3).normalize();
-                Vec3 vec33 = vec3.addVector(vec32.xCoord * 3.0, vec32.yCoord * 3.0, vec32.zCoord * 3.0);
+                Vec3 vec = new Vec3((axisAlignedBB.minX + axisAlignedBB.maxX) * 0.5, (axisAlignedBB.minY + axisAlignedBB.maxY) * 0.5, (axisAlignedBB.minZ + axisAlignedBB.maxZ) * 0.5).subtract(vec3).normalize();
+                Vec3 vec33 = vec3.addVector(vec.xCoord * 3.0, vec.yCoord * 3.0, vec.zCoord * 3.0);
                 MovingObjectPosition movingObjectPosition = axisAlignedBB.calculateIntercept(vec3, vec33);
                 if (!((movingObjectPosition != null ? vec3.distanceTo(movingObjectPosition.hitVec) : vec3.distanceTo(GrimReduceVelocity.a(vec3, axisAlignedBB))) <= 3.0) && GrimReduceVelocity.aEg.thePlayer.ae <= ((Number)this.reduceTicks.wo()).intValue() && !BadPacketsComponent.bad(false, false, false, true, false)) {
                     RotationComponent.d(false);

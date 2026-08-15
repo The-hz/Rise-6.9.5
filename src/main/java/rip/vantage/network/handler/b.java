@@ -84,8 +84,8 @@ public final class b implements rip.vantage.commons.handler.api.c {
                         String s = module.getModuleInfo().aliases()[0];
                         hashmap.put(s, module);
 
-                        for (Locale ahc : Locale.values()) {
-                            String s1 = ahd.a(s, ahc);
+                        for (Locale locale : Locale.values()) {
+                            String s1 = ahd.a(s, locale);
                             if (s1 != null && !s1.isEmpty() && !s1.equals(s)) {
                                 hashmap.putIfAbsent(s1, module);
                             }

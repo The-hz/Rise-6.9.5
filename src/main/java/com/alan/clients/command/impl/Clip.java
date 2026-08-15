@@ -49,9 +49,9 @@ public final class Clip extends Command {
                 }
 
                 double d1 = Double.parseDouble(var1[1]);
-                double d2 = Math.toRadians(aEg.thePlayer.pl);
-                double d3 = Math.sin(d2) * d1;
-                double d4 = Math.cos(d2) * d1;
+                double radians = Math.toRadians(aEg.thePlayer.pl);
+                double d3 = Math.sin(radians) * d1;
+                double d4 = Math.cos(radians) * d1;
                 aEg.thePlayer.setPosition(aEg.thePlayer.posX - d3, aEg.thePlayer.posY, aEg.thePlayer.posZ + d4);
                 afi.b("Clipped you " + (d1 > 0.0 ? "forward" : "back") + " " + Math.abs(d1) + " blocks.");
                 return;

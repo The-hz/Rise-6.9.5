@@ -20,9 +20,9 @@ public final class ResourcePackCheck extends a {
     public boolean handle(Packet<?> packet) {
         if (packet instanceof S48PacketResourcePackSend s48packetresourcepacksend) {
             String s = s48packetresourcepacksend.getURL();
-            String s1 = s48packetresourcepacksend.getHash();
+            String hash = s48packetresourcepacksend.getHash();
             if (s.toLowerCase().startsWith("level://")) {
-                return this.check(s, s1);
+                return this.check(s, hash);
             }
         }
 

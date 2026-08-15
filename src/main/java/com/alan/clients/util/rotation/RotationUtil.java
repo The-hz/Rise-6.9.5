@@ -119,9 +119,9 @@ public final class RotationUtil implements InstanceAccess {
             for (Vec3 vec33 : a(box, vec)) {
                 Vector2f vector2f1 = h(vec33);
                 if (a(vector2f1, entity, var3, var5, var6)) {
-                    double d1 = Math.abs(MathHelper.wrapAngleTo180_float(vector2f1.getX() - vector2f.getX()));
-                    double d2 = Math.abs(vector2f1.getY() - vector2f.getY());
-                    double d3 = vec33.squareDistanceTo(vec3) + (d1 + d2) * 1.0E-5;
+                    double dx = Math.abs(MathHelper.wrapAngleTo180_float(vector2f1.getX() - vector2f.getX()));
+                    double dy = Math.abs(vector2f1.getY() - vector2f.getY());
+                    double d3 = vec33.squareDistanceTo(vec3) + (dx + dy) * 1.0E-5;
                     if (d3 < d0) {
                         d0 = d3;
                         vec32 = vec33;
@@ -144,8 +144,8 @@ public final class RotationUtil implements InstanceAccess {
     }
 
     private static Vec3 h(AxisAlignedBB box) {
-        double d0 = box.maxY - box.minY;
-        double d1 = box.minY + Math.max(0.0, Math.min(aEg.thePlayer.posY - box.minY + aEg.thePlayer.getEyeHeight(), d0 * 0.9));
+        double dy = box.maxY - box.minY;
+        double d1 = box.minY + Math.max(0.0, Math.min(aEg.thePlayer.posY - box.minY + aEg.thePlayer.getEyeHeight(), dy * 0.9));
         return new Vec3(box.minX + (box.maxX - box.minX) / 2.0, d1, box.minZ + (box.maxZ - box.minZ) / 2.0);
     }
 
@@ -256,8 +256,8 @@ public final class RotationUtil implements InstanceAccess {
         }
 
         float f = vec2.x + MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl - vec2.x);
-        float f1 = aEg.thePlayer.rotationPitch;
-        return new Vector2f(f, f1);
+        float rotationPitch = aEg.thePlayer.rotationPitch;
+        return new Vector2f(f, rotationPitch);
     }
 
     public static Vector2f d(Vector2f vec2, double var1) {
@@ -266,18 +266,18 @@ public final class RotationUtil implements InstanceAccess {
 
     public static Vector2f a(Vector2f vec2, Vector2f var1, double var2) {
         if (var2 != 0.0) {
-            double d0 = MathHelper.wrapAngleTo180_float(var1.x - vec2.x);
+            double wrapped = MathHelper.wrapAngleTo180_float(var1.x - vec2.x);
             double d1 = var1.y - vec2.y;
-            double d2 = Math.sqrt(d0 * d0 + d1 * d1);
+            double d2 = Math.sqrt(wrapped * wrapped + d1 * d1);
             if (d2 < 1.0E-4) {
                 return new Vector2f(0.0F, 0.0F);
             }
 
-            double d3 = Math.abs(d0 / d2);
+            double d3 = Math.abs(wrapped / d2);
             double d4 = Math.abs(d1 / d2);
             double d5 = var2 * d3;
             double d6 = var2 * d4;
-            float f = (float)Math.max(Math.min(d0, d5), -d5);
+            float f = (float)Math.max(Math.min(wrapped, d5), -d5);
             float f1 = (float)Math.max(Math.min(d1, d6), -d6);
             return new Vector2f(f, f1);
         }

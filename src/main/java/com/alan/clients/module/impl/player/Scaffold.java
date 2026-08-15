@@ -246,11 +246,11 @@ public class Scaffold extends Module {
                 EntityPlayerSP entityplayersp = aEg.thePlayer;
                 Double d1 = entityplayersp.posY + entityplayersp.getEyeHeight() - this.targetBlock.yCoord - 0.5 - (Math.random() - 0.5) * 0.1;
                 Float f14 = aEg.thePlayer.pl;
-                Float f15 = MathHelper.wrapAngleTo180_float(f14);
+                Float wrapped = MathHelper.wrapAngleTo180_float(f14);
                 Double d2 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
                 float f24;
-                int j3 = (f24 = Math.abs(f15 - this.acs) - 100.0F) == 0.0F ? 0 : (f24 < 0.0F ? -1 : 1);
-                int notAbs = !(Math.abs(f15 % 90.0F) <= 10.0F) && !(Math.abs(f15 % 90.0F) >= 80.0F) ? 0 : 1;
+                int j3 = (f24 = Math.abs(wrapped - this.acs) - 100.0F) == 0.0F ? 0 : (f24 < 0.0F ? -1 : 1);
+                int notAbs = !(Math.abs(wrapped % 90.0F) <= 10.0F) && !(Math.abs(wrapped % 90.0F) >= 80.0F) ? 0 : 1;
                 int j2_hi = notAbs != 0 ? -135 + var1 : -180 + var1;
                 int limit = notAbs != 0 ? 135 : 180;
                 ArrayList arraylist1 = new ArrayList();
@@ -352,7 +352,7 @@ public class Scaffold extends Module {
             afi.c("Pause is greater than 3");
         } else if (this.acr != null) {
             int equals2 = (int)(this.rotationMode.wo().getName().equals("Grim") ? 1L : 0L);
-            Vec3 vec3 = this.getHitVec();
+            Vec3 hitVec = this.getHitVec();
             if (equals2 != 0) {
                 float f1 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.acs - aEg.thePlayer.pl);
                 PacketUtil.l(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, f1, this.act, aEg.thePlayer.onGround));
@@ -360,7 +360,7 @@ public class Scaffold extends Module {
                 EntityPlayerSP entityplayersp1 = aEg.thePlayer;
                 WorldClient worldclient1 = aEg.theWorld;
                 SlotComponent slotcomponent1 = this.d(SlotComponent.class);
-                if (playercontrollermp1.onPlayerRightClick(entityplayersp1, worldclient1, SlotComponent.getItemStack(), this.blockFace, this.acr.va(), vec3)) {
+                if (playercontrollermp1.onPlayerRightClick(entityplayersp1, worldclient1, SlotComponent.getItemStack(), this.blockFace, this.acr.va(), hitVec)) {
                     PacketUtil.l(new m());
                 }
 
@@ -381,7 +381,7 @@ public class Scaffold extends Module {
                 EntityPlayerSP entityplayersp = aEg.thePlayer;
                 WorldClient worldclient = aEg.theWorld;
                 SlotComponent slotcomponent = this.d(SlotComponent.class);
-                if (playercontrollermp.onPlayerRightClick(entityplayersp, worldclient, SlotComponent.getItemStack(), this.blockFace, this.acr.va(), vec3)) {
+                if (playercontrollermp.onPlayerRightClick(entityplayersp, worldclient, SlotComponent.getItemStack(), this.blockFace, this.acr.va(), hitVec)) {
                     PacketUtil.l(new m());
                 }
             }
@@ -406,16 +406,16 @@ public class Scaffold extends Module {
             return false;
         }
 
-        Vec3 vec31 = vec3.normalize();
+        Vec3 vec = vec3.normalize();
         Vec3i vec3i = facing.getDirectionVec();
         Vec3 vec32 = new Vec3(vec3i.getX(), 0.0, vec3i.getZ()).normalize();
-        return vec31.dotProduct(vec32) < 0.0;
+        return vec.dotProduct(vec32) < 0.0;
     }
 
     public void kp() {
         if (this.getDisplayName().equals("Telly")) {
-            float f1 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
-            int notAbs = !(Math.abs(f1 % 90.0F) <= 10.0F) && !(Math.abs(f1 % 90.0F) >= 80.0F) ? 0 : 1;
+            float wrapped = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+            int notAbs = !(Math.abs(wrapped % 90.0F) <= 10.0F) && !(Math.abs(wrapped % 90.0F) >= 80.0F) ? 0 : 1;
             if (aEg.thePlayer.onGround) {
                 MoveUtil.enoughMovementForSprinting();
             }
@@ -444,12 +444,12 @@ public class Scaffold extends Module {
     }
 
     public float c(float var1, float var2, float var3) {
-        float f2 = MathHelper.wrapAngleTo180_float(var2 - var1);
+        float wrapped = MathHelper.wrapAngleTo180_float(var2 - var1);
         MathHelper.wrapAngleTo180_double(var2);
         MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
         float f3 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
         int notAbs = !(Math.abs(f3 % 90.0F) <= 15.0F) && !(Math.abs(f3 % 90.0F) >= 75.0F) ? 0 : 1;
-        float f4 = MathHelper.clamp_float(f2, -var3, var3);
+        float f4 = MathHelper.clamp_float(wrapped, -var3, var3);
         return var1 + f4;
     }
 
@@ -457,8 +457,8 @@ public class Scaffold extends Module {
         this.a(aEg.thePlayer, aEg.timer.bWm);
         aka akax2 = new aka(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
         float f6 = aEg.thePlayer.pl;
-        double d4 = Math.toRadians(f6);
-        aka akaxx = new aka(-Math.sin(d4), 0.0, Math.cos(d4));
+        double radians = Math.toRadians(f6);
+        aka akaxx = new aka(-Math.sin(radians), 0.0, Math.cos(radians));
         double d5 = akaxx.wg();
         if (d5 != 0.0) {
             akaxx = new aka(akaxx.x / d5, 0.0, akaxx.z / d5);
@@ -482,8 +482,8 @@ public class Scaffold extends Module {
         this.acs = f9;
         this.act = f10;
         RotationComponent.d(false);
-        float f11 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
-        int notAbs = !(Math.abs(f11 % 90.0F) <= 10.0F) && !(Math.abs(f11 % 90.0F) >= 80.0F) ? 0 : 1;
+        float wrapped = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+        int notAbs = !(Math.abs(wrapped % 90.0F) <= 10.0F) && !(Math.abs(wrapped % 90.0F) >= 80.0F) ? 0 : 1;
         if (!aEg.gameSettings.keyBindLeft.isKeyDown()
             && !aEg.gameSettings.keyBindRight.isKeyDown()
             && (!MoveUtil.enoughMovementForSprinting() || MoveUtil.speed() < 0.09 || notAbs != 0)) {
@@ -551,11 +551,11 @@ public class Scaffold extends Module {
         double d5 = var2.y - var1.y;
         double d6 = var2.z - var1.z;
         double d7 = Math.sqrt(d4 * d4 + d6 * d6);
-        float f2 = (float)Math.toDegrees(Math.atan2(d6, d4)) - 90.0F;
+        float degrees = (float)Math.toDegrees(Math.atan2(d6, d4)) - 90.0F;
         float f3 = (float)(-Math.toDegrees(Math.atan2(d5, d7)));
-        float f4 = MathHelper.wrapAngleTo180_float(f2);
+        float wrapped = MathHelper.wrapAngleTo180_float(degrees);
         float f5 = MathHelper.clamp_float(f3, -90.0F, 90.0F);
-        return new float[]{f4, f5};
+        return new float[]{wrapped, f5};
     }
 
     @Generated
@@ -575,9 +575,9 @@ public class Scaffold extends Module {
     }
 
     public Vector2f a(BlockPos pos, aib var2, float var3, float var4, float var5, int var6) {
-        float f2 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+        float wrapped = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
         float f3 = MathHelper.clamp_float((float)(85.0 + Math.random() * 0.1), var4, var5);
-        return RotationUtil.m(new Vector2f(f2, f3));
+        return RotationUtil.m(new Vector2f(wrapped, f3));
     }
 
     public Vector2f a(BlockPos pos, EnumFacing facing, float var3, boolean var4, float var5) {
@@ -892,8 +892,8 @@ public class Scaffold extends Module {
 
                 MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
                 if (this.sprint.wo().getName().equals("Watchdog Jump") && (Math.abs(d2 - this.acs) > 85.0 || aEg.thePlayer.cqL < 2)) {
-                    float f2 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
-                    if (!(Math.abs(f2 % 90.0F) <= 10.0F) && !(Math.abs(f2 % 90.0F) >= 80.0F)) {
+                    float wrapped = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
+                    if (!(Math.abs(wrapped % 90.0F) <= 10.0F) && !(Math.abs(wrapped % 90.0F) >= 80.0F)) {
                     } else {
                     }
 
@@ -1389,12 +1389,12 @@ public class Scaffold extends Module {
 
         EnumFacing enumfacing = var2.va();
         float f13 = aEg.thePlayer.pl;
-        float f17 = (float)Math.toDegrees(MoveUtil.direction());
+        float degrees = (float)Math.toDegrees(MoveUtil.direction());
         ArrayList arraylist = new ArrayList();
         arraylist.add(this.l(f13 + var6));
         arraylist.add(this.l(f13 + 45.0F + var6));
         arraylist.add(this.l(f13 - 45.0F + var6));
-        arraylist.add(this.l(f17 + var6));
+        arraylist.add(this.l(degrees + var6));
         ArrayList arraylist1 = new ArrayList();
 
         for (float f18 : (Iterable<Float>)arraylist) {
@@ -1451,9 +1451,9 @@ public class Scaffold extends Module {
         double d = 0.0;
         int i5_hi = 0;
         int name = Integer.parseInt(String.valueOf(this.yawOffset.wo().getName()));
-        double d3 = this.rotationSpeed.wo().doubleValue();
+        double rotationSpeed = this.rotationSpeed.wo().doubleValue();
         double d4 = this.rotationSpeed.wA().doubleValue();
-        float f6 = (float)MathUtil.l(d3, d4);
+        float f6 = (float)MathUtil.l(rotationSpeed, d4);
         MovementFix movementfix = this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF;
         aib aib = this.acr != null ? this.acr : this.agw;
         if (aib != null) {
@@ -1504,8 +1504,8 @@ public class Scaffold extends Module {
                                 d8 = aEg.thePlayer.motionX;
                                 break;
                             default:
-                                double d9 = Math.random();
-                                afi.b("Unknown " + d9);
+                                double random = Math.random();
+                                afi.b("Unknown " + random);
                         }
 
                         Double d10 = Math.abs(d8);
@@ -1571,18 +1571,18 @@ public class Scaffold extends Module {
                     if (this.agG == 0 && this.watchdogTelly.wo()) {
                         this.agK++;
                         Float f10 = aEg.thePlayer.pl;
-                        float f11 = MathHelper.wrapAngleTo180_float(f10);
+                        float wrapped = MathHelper.wrapAngleTo180_float(f10);
                         RotationComponent.d(false);
-                        int notAbs = !(Math.abs(f11 % 90.0F) <= 10.0F) && !(Math.abs(f11 % 90.0F) >= 80.0F) ? 0 : 1;
+                        int notAbs = !(Math.abs(wrapped % 90.0F) <= 10.0F) && !(Math.abs(wrapped % 90.0F) >= 80.0F) ? 0 : 1;
                         if (aEg.thePlayer.onGround && aEg.thePlayer.cqL == 1) {
                             this.agO = this.age.wv().intValue();
                         }
 
                         int enoughMovementForSprinting2 = aEg.thePlayer.onGround && MoveUtil.enoughMovementForSprinting() && aEg.thePlayer.cqL == this.agO - 0 && this.agO > 0 ? 1 : 0;
                         if (enoughMovementForSprinting2 != 0) {
-                            float f12 = (float)Math.toDegrees(MoveUtil.direction());
+                            float degrees = (float)Math.toDegrees(MoveUtil.direction());
                             Float f13 = (float)(85.0 + Math.random() * 0.5);
-                            this.acs = f12;
+                            this.acs = degrees;
                             this.act = f13;
                             RotationComponent.setRotations(RotationUtil.m(new Vector2f(this.acs, this.act)), 180.0, MovementFix.NORMAL);
                             int k6_hi = 1;

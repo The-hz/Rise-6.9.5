@@ -83,14 +83,14 @@ public class cs extends ESP implements InstanceAccess {
             float f2 = (float)(ahf.l(player.posZ, player.prevPosZ, var2) - RenderManager.bUQ);
             GL11.glTranslated(f, f1, f2);
             boolean flag = player.isSneaking();
-            float f3 = player.rotationYawHead;
-            float f4 = player.renderYawOffset;
-            float f5 = player.prevRenderYawOffset;
-            float f6 = ahf.d(f4, f5, var2);
+            float rotationYawHead = player.rotationYawHead;
+            float renderYawOffset = player.renderYawOffset;
+            float prevRenderYawOffset = player.prevRenderYawOffset;
+            float f6 = ahf.d(renderYawOffset, prevRenderYawOffset, var2);
             float f7 = flag ? 0.6F : 0.75F;
             GL11.glRotatef(-f6, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(0.0F, 0.0F, flag ? -0.235F : 0.0F);
-            this.a(afloat, f7, flag, f6, f3);
+            this.a(afloat, f7, flag, f6, rotationYawHead);
             GL11.glPopMatrix();
         }
     }

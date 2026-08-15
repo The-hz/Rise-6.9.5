@@ -134,8 +134,8 @@ public class abt extends ValueComponent {
             if (this.azm.getText().isEmpty()) {
                 numbervalue.n(numbervalue.ws());
             } else {
-                double d0 = Double.parseDouble(this.azm.getText());
-                numbervalue.n(d0);
+                double text = Double.parseDouble(this.azm.getText());
+                numbervalue.n(text);
             }
 
             this.azm.I(false);

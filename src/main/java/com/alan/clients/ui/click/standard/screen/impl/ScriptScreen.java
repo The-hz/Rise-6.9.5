@@ -109,9 +109,9 @@ InstanceAccess {
                 double d6 = riseClickGUI.axS - 0.99;
                 return;
             }
-            ModuleComponent abd2 = iterator.next();
-            abd2.draw(new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.axJ.aym + 8.0, vector2f.y), n2, n3, f2);
-            vector2f.y += abd2.scale.y + 7.0f;
+            ModuleComponent moduleComponent = iterator.next();
+            moduleComponent.draw(new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.axJ.aym + 8.0, vector2f.y), n2, n3, f2);
+            vector2f.y += moduleComponent.scale.y + 7.0f;
         }
     }
 
@@ -135,8 +135,8 @@ InstanceAccess {
         }
         Iterator<ModuleComponent> iterator = this.azI.iterator();
         while (iterator.hasNext()) {
-            ModuleComponent abd2 = iterator.next();
-            abd2.click(n2, n3, n4);
+            ModuleComponent moduleComponent = iterator.next();
+            moduleComponent.click(n2, n3, n4);
         }
         return;
     }
@@ -164,8 +164,8 @@ InstanceAccess {
             this.azK = true;
         }
         acj[] acjArray = this.azJ;
-        int n2 = acjArray.length;
-        for (int i2 = 0; i2 < n2; ++i2) {
+        int length = acjArray.length;
+        for (int i2 = 0; i2 < length; ++i2) {
             acjArray[i2].init();
         }
         Client.a.p().update();

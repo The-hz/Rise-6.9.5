@@ -77,9 +77,9 @@ extends Mode<Flight> {
         super(string, flight);
         this.onPreMotion = preMotionEvent -> {
             if (WatchdogPredictionFlight.aEg.thePlayer.ticksExisted % 2 == 0 && this.ys) {
-                Double d2 = MoveUtil.direction();
-                double unused0 = -MathHelper.sin((float)((float)d2.doubleValue())) * 100.0f;
-                double unused1 = MathHelper.cos((float)((float)d2.doubleValue())) * 100.0f;
+                Double direction = MoveUtil.direction();
+                double unused0 = -MathHelper.sin((float)((float)direction.doubleValue())) * 100.0f;
+                double unused1 = MathHelper.cos((float)((float)direction.doubleValue())) * 100.0f;
                 preMotionEvent.setPosY(preMotionEvent.getPosY() + 100.0);
                 WorldClient unused2 = Minecraft.getMinecraft().theWorld;
                 int gZ = Minecraft.getMinecraft().theWorld.GZ();

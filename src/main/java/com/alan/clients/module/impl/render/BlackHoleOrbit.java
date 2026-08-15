@@ -111,12 +111,12 @@ public final class BlackHoleOrbit extends Module {
     }
 
     private void lj() {
-        long i = System.nanoTime();
+        long now = System.nanoTime();
         if (this.amx < 0L) {
-            this.amx = i;
+            this.amx = now;
         } else {
-            double d0 = (i - this.amx) / 1.0E9;
-            this.amx = i;
+            double d0 = (now - this.amx) / 1.0E9;
+            this.amx = now;
             double d1 = c(d0, 0.004166666666666667, 0.05);
             this.a(this.ams, d1);
             this.a(this.amt, d1);
@@ -312,22 +312,22 @@ public final class BlackHoleOrbit extends Module {
 
     private void b(wn var1, double var2) {
         double d0 = Math.atan2(var1.y, var1.x);
-        double d1 = Math.cos(d0);
-        double d2 = Math.sin(d0);
-        double d3 = -d2;
-        double d4 = d1;
+        double cos = Math.cos(d0);
+        double sin = Math.sin(d0);
+        double d3 = -sin;
+        double d4 = cos;
         double d5 = c(var2, 1.0, 4.5);
 
         for (int i = 0; i < 9; i++) {
             double d6 = (i / 8.0 * 2.0 - 1.0) * (2.6 * d5);
             double d7 = ThreadLocalRandom.current().nextDouble(-0.8, 0.8);
             wo wo = new wo();
-            wo.x = var1.x + d1 * d6 + d3 * d7;
-            wo.y = var1.y + d2 * d6 + d4 * d7;
+            wo.x = var1.x + cos * d6 + d3 * d7;
+            wo.y = var1.y + sin * d6 + d4 * d7;
             double d8 = ThreadLocalRandom.current().nextDouble(6.0, 18.0);
             double d9 = ThreadLocalRandom.current().nextDouble(-14.0, 14.0);
-            wo.amz = var1.amz + -d1 * d8 + d3 * d9 * 0.25;
-            wo.amA = var1.amA + -d2 * d8 + d4 * d9 * 0.25;
+            wo.amz = var1.amz + -cos * d8 + d3 * d9 * 0.25;
+            wo.amA = var1.amA + -sin * d8 + d4 * d9 * 0.25;
             wo.amE = ThreadLocalRandom.current().nextDouble(1.0, 1.8);
             wo.amG = 1.6 + ThreadLocalRandom.current().nextDouble(0.0, 1.0);
             wo.amF = 0.0;
@@ -376,10 +376,10 @@ public final class BlackHoleOrbit extends Module {
         var1.amD = 0.0;
         double d2 = Math.sqrt(120000.0 / d0);
         double d3 = -Math.sin(d1);
-        double d4 = Math.cos(d1);
+        double cos = Math.cos(d1);
         double d5 = (var2 == 1 ? 1.0 : -1.0) * 0.06;
         var1.amz = d3 * d2 * (1.0 + d5);
-        var1.amA = d4 * d2 * (1.0 + d5);
+        var1.amA = cos * d2 * (1.0 + d5);
     }
 
     private double ll() {

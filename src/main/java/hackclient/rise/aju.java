@@ -60,10 +60,10 @@ public class aju {
 
     private static byte[] generateHWID() {
         try {
-            OperatingSystem ajw = OSUtil.wb();
+            OperatingSystem operatingSystem = OSUtil.wb();
             MessageDigest messagedigest = MessageDigest.getInstance("SHA-256");
             String s;
-            if (ajw.equals(ajw.WINDOWS)) {
+            if (operatingSystem.equals(operatingSystem.WINDOWS)) {
                 s = "VANTAGE_"
                     + System.getProperty("os.name")
                     + System.getProperty("os.arch")
@@ -73,7 +73,7 @@ public class aju {
                     + System.getenv("NUMBER_OF_PROCESSORS");
             } else {
                 s = "VANTAGE_"
-                    + ajw.wc()
+                    + operatingSystem.wc()
                     + System.getProperty("os.arch")
                     + Runtime.getRuntime().availableProcessors()
                     + System.getenv("PROCESSOR_IDENTIFIER")

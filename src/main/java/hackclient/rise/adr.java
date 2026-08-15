@@ -37,8 +37,8 @@ public final class adr extends Menu {
             aiv.aPL.a(aiz.OVERLAY, var3, null);
             this.b(gg.BLUR).c(() -> RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK));
 
-            for (MenuButton adh : this.menuButtons) {
-                adh.draw(var1, var2, var3);
+            for (MenuButton menuButton : this.menuButtons) {
+                menuButton.draw(var1, var2, var3);
             }
 
             agc agc = FontManager.MAIN.a(64, gd.REGULAR);
@@ -88,9 +88,9 @@ public final class adr extends Menu {
     public void mouseClicked(int var1, int var2, int var3) {
         if (this.menuButtons != null) {
             if (var3 == 0) {
-                for (MenuButton adh : this.menuButtons) {
-                    if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
-                        adh.runAction();
+                for (MenuButton menuButton : this.menuButtons) {
+                    if (MouseUtil.isHovered(menuButton.getX(), menuButton.getY(), menuButton.oM(), menuButton.da(), var1, var2)) {
+                        menuButton.runAction();
                         break;
                     }
                 }

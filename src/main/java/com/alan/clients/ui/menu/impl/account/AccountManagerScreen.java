@@ -80,9 +80,9 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
         air.disable();
         GL11.glPopMatrix();
 
-        for (MenuButton adh : MENU_BUTTONS) {
-            if (adh != null) {
-                adh.draw(var1, var2, var3);
+        for (MenuButton menuButton : MENU_BUTTONS) {
+            if (menuButton != null) {
+                menuButton.draw(var1, var2, var3);
             }
         }
     }
@@ -108,9 +108,9 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
 
     @Override
     public void mouseClicked(int var1, int var2, int var3) {
-        for (MenuButton adh : MENU_BUTTONS) {
-            if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
-                adh.runAction();
+        for (MenuButton menuButton : MENU_BUTTONS) {
+            if (MouseUtil.isHovered(menuButton.getX(), menuButton.getY(), menuButton.oM(), menuButton.da(), var1, var2)) {
+                menuButton.runAction();
                 return;
             }
         }
@@ -141,11 +141,11 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
         MENU_BUTTONS[0] = new MenuTextButton(0.0, 0.0, 0.0, 0.0, ADD_ACCOUNT_RUNNABLE, "Add Account");
         MENU_BUTTONS[1] = new MenuTextButton(0.0, 0.0, 0.0, 0.0, CANCEL_RUNNABLE, "Cancel");
 
-        for (MenuButton adh : MENU_BUTTONS) {
-            adh.setX(j);
-            adh.setY(this.height - b1 - b2 * 2);
-            adh.P(b0);
-            adh.h(b1);
+        for (MenuButton menuButton : MENU_BUTTONS) {
+            menuButton.setX(j);
+            menuButton.setY(this.height - b1 - b2 * 2);
+            menuButton.P(b0);
+            menuButton.h(b1);
             j += b0 + b2;
         }
 
@@ -155,8 +155,8 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
             ACCOUNT_DISPLAY_LIST.clear();
             ALT_MANAGER.tk();
 
-            for (AltAccount ael : ALT_MANAGER.tl()) {
-                addDisplay(ael);
+            for (AltAccount altAccount : ALT_MANAGER.tl()) {
+                addDisplay(altAccount);
             }
 
             this.b(gg.REGULAR).c(BACKGROUND_RUNNABLE);

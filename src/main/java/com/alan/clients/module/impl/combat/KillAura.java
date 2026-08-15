@@ -1635,12 +1635,12 @@ public class KillAura extends Module {
             GlStateManager.resetColor();
          }
       };
-      MovementFix[] var1 = MovementFix.values();
-      var822 = var1.length;
+      MovementFix[] movementFixes = MovementFix.values();
+      var822 = movementFixes.length;
 
       for (int i2 = 0; i2 < var822; i2++) {
-         MovementFix var4 = var1[i2];
-         this.movementCorrection.add(var4);
+         MovementFix movementFix = movementFixes[i2];
+         this.movementCorrection.add(movementFix);
       }
 
       this.movementCorrection.setDefault(MovementFix.OFF);
@@ -3278,9 +3278,9 @@ public class KillAura extends Module {
          if (!((String)var51).equals(this.mE) || aEg.thePlayer.ticksExisted - this.mF >= 8) {
             this.mE = (String)var51;
             this.mF = aEg.thePlayer.ticksExisted;
-            String var10000 = afi.getPrefix();
+            String prefix = afi.getPrefix();
             var69 = (String)var51;
-            var52 = var10000;
+            var52 = prefix;
             afi.c((String)var52 + "[KD] " + (String)var69);
          }
       }

@@ -79,9 +79,9 @@ public class TextBox {
         }
 
         float f = this.lq.getStringWidth(s1);
-        double d0 = System.currentTimeMillis();
-        double d1 = Math.min(Math.abs(d0 - this.aJs), 500.0);
-        this.aJs = d0;
+        double now = System.currentTimeMillis();
+        double d1 = Math.min(Math.abs(now - this.aJs), 500.0);
+        this.aJs = now;
         switch (this.aJl) {
             case CENTER:
 

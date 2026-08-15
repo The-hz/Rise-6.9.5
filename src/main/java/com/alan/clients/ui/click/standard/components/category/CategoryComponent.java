@@ -36,7 +36,7 @@ public final class CategoryComponent implements InstanceAccess {
             this.lastTime = System.currentTimeMillis();
         }
 
-        long i = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
         this.x = (float)(riseclickgui.axI.x - (69.0 - var3) - 21.0);
         this.y = (float)(riseclickgui.axI.y + var1) + 16.0F;
         this.animation.h(200L);
@@ -52,7 +52,7 @@ public final class CategoryComponent implements InstanceAccess {
             .a(16, gd.REGULAR)
             .a(ahd.ce(this.category.getName()), (float)(this.x + this.animation.sG() / 80.0 + 3.0 + 4.0) + FontManager.ICONS_1.o(17).getStringWidth(this.category.ea()), this.y, j);
         GlStateManager.popMatrix();
-        this.lastTime = i;
+        this.lastTime = now;
     }
 
     public void click(float var1, float var2, int var3) {

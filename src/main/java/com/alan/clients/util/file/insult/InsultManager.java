@@ -18,9 +18,9 @@ public final class InsultManager extends ArrayList<InsultFile> {
     }
 
     public InsultFile bO(String var1) {
-        for (InsultFile aga : this) {
-            if (aga.getFile().getName().equalsIgnoreCase(var1 + ".txt")) {
-                return aga;
+        for (InsultFile insultFile : this) {
+            if (insultFile.getFile().getName().equalsIgnoreCase(var1 + ".txt")) {
+                return insultFile;
             }
         }
 
@@ -59,12 +59,12 @@ public final class InsultManager extends ArrayList<InsultFile> {
     }
 
     public boolean delete(String var1) {
-        InsultFile aga = this.bO(var1);
-        if (aga == null) {
+        InsultFile insultFile = this.bO(var1);
+        if (insultFile == null) {
             return false;
         }
 
-        this.remove(aga);
-        return aga.getFile().delete();
+        this.remove(insultFile);
+        return insultFile.getFile().delete();
     }
 }

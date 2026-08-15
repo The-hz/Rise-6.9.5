@@ -63,10 +63,10 @@ InstanceAccess {
                 this.azS.aX();
                 return;
             }
-            ModuleComponent abd2 = iterator.next();
-            abd2.draw(new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.axJ.aym + 8.0, d2), n2, n3, f2);
-            d2 += (double)(abd2.scale.y + 7.0f);
-            d3 += (double)(abd2.scale.y + 7.0f);
+            ModuleComponent moduleComponent = iterator.next();
+            moduleComponent.draw(new Vector2d((double)riseClickGUI.axI.x + riseClickGUI.axJ.aym + 8.0, d2), n2, n3, f2);
+            d2 += (double)(moduleComponent.scale.y + 7.0f);
+            d3 += (double)(moduleComponent.scale.y + 7.0f);
         }
     }
 
@@ -127,12 +127,12 @@ InstanceAccess {
         ArrayList<String> arrayList2 = new ArrayList<String>(Arrays.asList(string.toLowerCase().split(" ")));
         arrayList2.add(string.toLowerCase().replaceAll(" ", ""));
         for (String string2 : arrayList2) {
-            for (ModuleComponent abd2 : Client.a.v().getModuleList()) {
-                String[] stringArray = abd2.getModule().getAliases();
-                int n2 = stringArray.length;
-                for (int i2 = 0; i2 < n2; ++i2) {
-                    if (!stringArray[i2].toLowerCase().replaceAll(" ", "").contains(string2) || arrayList.contains(abd2)) continue;
-                    arrayList.add(abd2);
+            for (ModuleComponent moduleComponent : Client.a.v().getModuleList()) {
+                String[] stringArray = moduleComponent.getModule().getAliases();
+                int length = stringArray.length;
+                for (int i2 = 0; i2 < length; ++i2) {
+                    if (!stringArray[i2].toLowerCase().replaceAll(" ", "").contains(string2) || arrayList.contains(moduleComponent)) continue;
+                    arrayList.add(moduleComponent);
                 }
             }
         }

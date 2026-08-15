@@ -309,8 +309,8 @@ public final class agu {
                 String[] stringArray = string4.split(",");
                 ArrayList<String> arrayList = new ArrayList<String>(Math.min(stringArray.length, 64));
                 String[] stringArray2 = stringArray;
-                int n2 = stringArray2.length;
-                for (int i = 0; i < n2; ++i) {
+                int length = stringArray2.length;
+                for (int i = 0; i < length; ++i) {
                     String string5 = stringArray2[i].trim();
                     if (string5.isEmpty()) continue;
                     arrayList.add(string5);

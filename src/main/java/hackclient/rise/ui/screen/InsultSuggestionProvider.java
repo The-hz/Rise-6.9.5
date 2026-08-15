@@ -28,10 +28,10 @@ final class InsultSuggestionProvider implements SuggestionProvider {
             }
 
             String s5 = astring[1] == null ? "" : astring[1].toLowerCase(Locale.ROOT);
-            InsultManager agb = Client.a.r();
-            agb.update();
+            InsultManager insultManager = Client.a.r();
+            insultManager.update();
             ArrayList arraylist1 = new ArrayList();
-            agb.forEach(var2 -> {
+            insultManager.forEach(var2 -> {
                 String s6 = var2.getFile().getName().replace(".txt", "");
                 String s7 = s6.toLowerCase(Locale.ROOT);
                 if (s5.isEmpty() || s7.startsWith(s5)) {

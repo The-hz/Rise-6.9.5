@@ -477,9 +477,9 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
                 } else if (this.isPrimaryClick(var3) && MouseUtil.isHovered(this.panelX() + this.panelWidth() - 42, this.cardsY() + 230, 30.0, 18.0, var1, var2)) {
                     productPage = Math.min(this.maxProductPage(), productPage + 1);
                 } else {
-                    for (MenuButton adh : this.menuButtons) {
-                        if (MouseUtil.isHovered(adh.getX(), adh.getY(), adh.oM(), adh.da(), var1, var2)) {
-                            adh.runAction();
+                    for (MenuButton menuButton : this.menuButtons) {
+                        if (MouseUtil.isHovered(menuButton.getX(), menuButton.getY(), menuButton.oM(), menuButton.da(), var1, var2)) {
+                            menuButton.runAction();
                             break;
                         }
                     }

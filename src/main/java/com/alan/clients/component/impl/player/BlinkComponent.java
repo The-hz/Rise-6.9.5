@@ -315,8 +315,8 @@ public final class BlinkComponent extends Component {
             if (bp != null && bp.ek != null) {
                 int i = 0;
 
-                for (TimedPacket ahk : packets) {
-                    if (ahk instanceof br && ((br)ahk).b(bp.ek)) {
+                for (TimedPacket timedPacket : packets) {
+                    if (timedPacket instanceof br && ((br)timedPacket).b(bp.ek)) {
                         i++;
                     }
                 }
@@ -368,8 +368,8 @@ public final class BlinkComponent extends Component {
             Iterator iterator = packets.iterator();
 
             while (iterator.hasNext() && i < var1) {
-                TimedPacket ahk = (TimedPacket)iterator.next();
-                if (ahk instanceof br br) {
+                TimedPacket timedPacket = (TimedPacket)iterator.next();
+                if (timedPacket instanceof br br) {
                     if (br.bt()) {
                         break;
                     }
@@ -393,8 +393,8 @@ public final class BlinkComponent extends Component {
             Iterator iterator = packets.iterator();
 
             while (iterator.hasNext() && i < var1) {
-                TimedPacket ahk = (TimedPacket)iterator.next();
-                if (ahk instanceof br br) {
+                TimedPacket timedPacket = (TimedPacket)iterator.next();
+                if (timedPacket instanceof br br) {
                     if (!br.b(var0)) {
                         break;
                     }
@@ -429,8 +429,8 @@ public final class BlinkComponent extends Component {
     private static void bl() {
         ArrayList arraylist = new ArrayList();
         synchronized (dR) {
-            for (TimedPacket ahk : packets) {
-                arraylist.add(ahk.getPacket());
+            for (TimedPacket timedPacket : packets) {
+                arraylist.add(timedPacket.getPacket());
             }
 
             packets.clear();
@@ -447,14 +447,14 @@ public final class BlinkComponent extends Component {
             Iterator iterator = packets.iterator();
 
             while (iterator.hasNext()) {
-                TimedPacket ahk = (TimedPacket)iterator.next();
-                if (!(ahk instanceof br br)) {
-                    if (ahk.getTime() + dQ >= var0) {
+                TimedPacket timedPacket = (TimedPacket)iterator.next();
+                if (!(timedPacket instanceof br br)) {
+                    if (timedPacket.getTime() + dQ >= var0) {
                         break;
                     }
 
                     iterator.remove();
-                    arraylist.add(ahk.getPacket());
+                    arraylist.add(timedPacket.getPacket());
                 } else {
                     br.c(var0);
                     if (br.bt()) {
@@ -474,13 +474,13 @@ public final class BlinkComponent extends Component {
         int i = 0;
 
         for (Iterator iterator = packets.iterator(); iterator.hasNext() && i < var1; i++) {
-            TimedPacket ahk = (TimedPacket)iterator.next();
-            if (ahk instanceof br && ((br)ahk).bt()) {
+            TimedPacket timedPacket = (TimedPacket)iterator.next();
+            if (timedPacket instanceof br && ((br)timedPacket).bt()) {
                 break;
             }
 
             iterator.remove();
-            var0.add(ahk.getPacket());
+            var0.add(timedPacket.getPacket());
         }
     }
 
@@ -513,9 +513,9 @@ public final class BlinkComponent extends Component {
         int i = astacktraceelement.length;
 
         for (int j = 0; j < i; j++) {
-            String s1 = astacktraceelement[j].getClassName();
-            if (!s1.equals(s) && !s1.equals(Thread.class.getName())) {
-                return s1;
+            String className = astacktraceelement[j].getClassName();
+            if (!className.equals(s) && !className.equals(Thread.class.getName())) {
+                return className;
             }
         }
 

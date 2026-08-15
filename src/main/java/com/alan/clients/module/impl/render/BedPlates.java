@@ -134,10 +134,10 @@ public class BedPlates extends Module {
 
     private void kO() {
         if (this.kN()) {
-            long i = System.currentTimeMillis();
+            long now = System.currentTimeMillis();
             if (!this.alJ) {
-                if (i - this.alK >= 5000L) {
-                    this.alK = i;
+                if (now - this.alK >= 5000L) {
+                    this.alK = now;
                     this.kP();
                 }
             }
@@ -161,8 +161,8 @@ public class BedPlates extends Module {
                 BlockPos blockpos = new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
                 int i = this.range.wo().intValue();
                 int j = Math.min(100, Math.max(4, i / 2));
-                double d0 = this.range.wo().doubleValue();
-                double d1 = d0 * d0;
+                double range = this.range.wo().doubleValue();
+                double d1 = range * range;
                 double d2 = aEg.thePlayer.posX;
                 double d3 = aEg.thePlayer.posY;
                 double d4 = aEg.thePlayer.posZ;
@@ -221,8 +221,8 @@ public class BedPlates extends Module {
     private void kQ() {
         this.alx.clear();
         if (this.kN() && !this.aly.isEmpty()) {
-            double d0 = this.range.wo().doubleValue();
-            double d1 = d0 * d0;
+            double range = this.range.wo().doubleValue();
+            double d1 = range * range;
             double d2 = aEg.thePlayer.posX;
             double d3 = aEg.thePlayer.posY;
             double d4 = aEg.thePlayer.posZ;
@@ -348,7 +348,7 @@ public class BedPlates extends Module {
                 double d1 = RenderManager.bUP;
                 double d2 = RenderManager.bUQ;
                 float f = aEg.thePlayer.pl;
-                float f1 = aEg.thePlayer.rotationPitch;
+                float rotationPitch = aEg.thePlayer.rotationPitch;
                 boolean flag1 = !this.alD
                     || d0 != this.alE
                     || d1 != this.alF
@@ -356,7 +356,7 @@ public class BedPlates extends Module {
                     || i != this.alH
                     || j != this.alI
                     || f != this.Il
-                    || f1 != this.Im;
+                    || rotationPitch != this.Im;
                 if (flag1) {
                     this.alD = true;
                     this.alE = d0;
@@ -365,7 +365,7 @@ public class BedPlates extends Module {
                     this.alH = i;
                     this.alI = j;
                     this.Il = f;
-                    this.Im = f1;
+                    this.Im = rotationPitch;
                 }
 
                 for (wi wi : this.alx) {
@@ -415,7 +415,7 @@ public class BedPlates extends Module {
                 d1 = Math.max(0.5, 1.0 - (d0 - 10.0) / 80.0);
             }
 
-            boolean flag1 = this.showDistance.wo();
+            boolean showDistance = this.showDistance.wo();
             double d2 = 4.0 * d1;
             double d3 = 16.0 * d1;
             double d4 = 1.05 * d1;
@@ -423,14 +423,14 @@ public class BedPlates extends Module {
             double d7;
             double d8;
             if (flag) {
-                double d6 = flag1 ? this.alw.getStringWidth(var1.li()) * d1 : 0.0;
+                double d6 = showDistance ? this.alw.getStringWidth(var1.li()) * d1 : 0.0;
                 d7 = Math.max(d3 + d2 * 2.0, d6 + d2 * 4.0);
                 d8 = d3 + d2 * 1.0;
             } else {
                 double d20 = this.alu.height() * d1;
                 double d21 = Math.max(d3, d20);
                 double d22 = this.alu.getStringWidth(var1.lc()) * d1;
-                double d23 = flag1 ? (this.alv.getStringWidth("distance: ") + this.alw.getStringWidth(var1.li())) * d1 : 0.0;
+                double d23 = showDistance ? (this.alv.getStringWidth("distance: ") + this.alw.getStringWidth(var1.li())) * d1 : 0.0;
                 double d24 = d3 + d2 * 3.0 + d22;
                 d7 = Math.max(d24, d23 + d2 * 4.0);
                 d8 = d21 + d2 * 1.0;
@@ -468,7 +468,7 @@ public class BedPlates extends Module {
             Color color11 = color7;
             String s = var1.lc();
             String s1 = var1.li();
-            boolean flag2 = flag1;
+            boolean flag2 = showDistance;
             boolean flag3 = flag;
             if (this.aln.wo()) {
                 this.b(gg.BLUR).c(() -> {

@@ -847,10 +847,10 @@ public class yf {
         try {
             URI uri = URI.create(var1);
             String s = uri.getHost() == null ? "" : uri.getHost().toLowerCase();
-            String s1 = uri.getPath();
-            if ((s.endsWith("discordapp.com") || s.endsWith("discord.com")) && s1 != null && s1.contains("/attachments/")) {
-                linkedhashset.add("https://media.discordapp.net" + s1);
-                linkedhashset.add("https://cdn.discordapp.com" + s1);
+            String path = uri.getPath();
+            if ((s.endsWith("discordapp.com") || s.endsWith("discord.com")) && path != null && path.contains("/attachments/")) {
+                linkedhashset.add("https://media.discordapp.net" + path);
+                linkedhashset.add("https://cdn.discordapp.com" + path);
             }
         } catch (IllegalArgumentException illegalargumentexception) {
         }
@@ -864,13 +864,13 @@ public class yf {
         try {
             URI uri = URI.create(var1);
             String s = uri.getHost() == null ? "" : uri.getHost().toLowerCase();
-            String s1 = uri.getPath();
-            String s2 = this.ah(uri.getRawQuery());
+            String path = uri.getPath();
+            String rawQuery = this.ah(uri.getRawQuery());
             boolean flag = var2 != null && var2.toLowerCase().contains("image/webp");
-            boolean flag1 = s.endsWith("discordapp.net") && s1 != null && s1.contains("/attachments/");
+            boolean flag1 = s.endsWith("discordapp.net") && path != null && path.contains("/attachments/");
             if (flag && flag1) {
-                linkedhashset.add(this.a("https://cdn.discordapp.com", s1, s2));
-                linkedhashset.add(this.a("https://media.discordapp.net", s1, s2));
+                linkedhashset.add(this.a("https://cdn.discordapp.com", path, rawQuery));
+                linkedhashset.add(this.a("https://media.discordapp.net", path, rawQuery));
             }
         } catch (IllegalArgumentException illegalargumentexception) {
         }
@@ -956,14 +956,14 @@ public class yf {
         Matcher matcher = arz.matcher(s);
 
         while (matcher.find()) {
-            String s1 = matcher.group();
-            String s2 = s1.toLowerCase();
+            String group = matcher.group();
+            String s2 = group.toLowerCase();
             if (s2.contains("og:image")
                 || s2.contains("twitter:image")
                 || s2.contains("og:video")
                 || s2.contains("twitter:player:stream")
                 || s2.contains("twitter:image:src")) {
-                Matcher matcher1 = arA.matcher(s1);
+                Matcher matcher1 = arA.matcher(group);
                 if (matcher1.find()) {
                     this.a(linkedhashset, uri, matcher1.group(1));
                     if (linkedhashset.size() >= 8) {

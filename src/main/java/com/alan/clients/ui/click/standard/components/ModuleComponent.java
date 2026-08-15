@@ -42,9 +42,9 @@ public class ModuleComponent implements InstanceAccess {
         this.aye.T(this.scale.y);
         this.ayf.T(0.0);
         module.getAllValues().forEach(var1x -> {
-            ValueComponent abl = var1x.wl();
-            if (abl != null) {
-                this.valueList.add(abl);
+            ValueComponent valueComponent = var1x.wl();
+            if (valueComponent != null) {
+                this.valueList.add(valueComponent);
             }
         });
     }
@@ -87,20 +87,20 @@ public class ModuleComponent implements InstanceAccess {
         }
 
         if (!this.aye.isFinished() || this.axv) {
-            for (ValueComponent abl : this.getValueList()) {
-                if ((abl.getValue() == null || abl.getValue().wm() == null || !abl.getValue().wm().getAsBoolean()) && (abl.getValue().wn() == null || !abl.getValue().wn().getAsBoolean())) {
-                    abl.U(abl.position == null ? 0 : (abl.position.y < position.y + this.aye.sG() + 15.0 ? (int)this.ayf.sG() : 0));
-                    abl.U(abl.getValue().wm() == null ? abl.pT() : Math.max(abl.pT() - 40, 0));
+            for (ValueComponent valueComponent : this.getValueList()) {
+                if ((valueComponent.getValue() == null || valueComponent.getValue().wm() == null || !valueComponent.getValue().wm().getAsBoolean()) && (valueComponent.getValue().wn() == null || !valueComponent.getValue().wn().getAsBoolean())) {
+                    valueComponent.U(valueComponent.position == null ? 0 : (valueComponent.position.y < position.y + this.aye.sG() + 15.0 ? (int)this.ayf.sG() : 0));
+                    valueComponent.U(valueComponent.getValue().wm() == null ? valueComponent.pT() : Math.max(valueComponent.pT() - 40, 0));
                     if (flag) {
-                        abl.draw(
-                            new Vector2d(position.x + 6.0 + (abl.getValue().wm() == null ? 0 : 10) + (abl.getValue().wn() == null ? 0 : 10), (float)(position.y + f1 + 1.0)),
+                        valueComponent.draw(
+                            new Vector2d(position.x + 6.0 + (valueComponent.getValue().wm() == null ? 0 : 10) + (valueComponent.getValue().wn() == null ? 0 : 10), (float)(position.y + f1 + 1.0)),
                             var2,
                             var3,
                             var4
                         );
                     }
 
-                    f1 = (float)(f1 + abl.getHeight());
+                    f1 = (float)(f1 + valueComponent.getHeight());
                 }
             }
 
@@ -153,11 +153,11 @@ public class ModuleComponent implements InstanceAccess {
                 } else if (flag1 && this.module.getValues().size() != 0 && d0 != 0.0) {
                     this.axv = !this.axv;
 
-                    for (ValueComponent abl : this.getValueList()) {
-                        if (abl instanceof abn abn) {
+                    for (ValueComponent valueComponent : this.getValueList()) {
+                        if (valueComponent instanceof abn abn) {
                             abn.ayI = abn.ayJ = false;
-                        } else if (abl instanceof abt) {
-                            ((abt)abl).azi = false;
+                        } else if (valueComponent instanceof abt) {
+                            ((abt)valueComponent).azi = false;
                         }
                     }
                 }
@@ -180,11 +180,11 @@ public class ModuleComponent implements InstanceAccess {
             if (!(this.position.y + this.scale.y < this.getStandardClickGUI().axI.y)
                 && !(this.position.y > this.getStandardClickGUI().axI.y + this.getStandardClickGUI().alh.y)) {
                 if (!this.aye.isFinished() || this.axv) {
-                    for (ValueComponent abl : this.getValueList()) {
-                        if (abl.getValue() != null
-                            && (abl.getValue().wm() == null || !abl.getValue().wm().getAsBoolean())
-                            && (abl.getValue().wn() == null || !abl.getValue().wn().getAsBoolean())) {
-                            abl.released();
+                    for (ValueComponent valueComponent : this.getValueList()) {
+                        if (valueComponent.getValue() != null
+                            && (valueComponent.getValue().wm() == null || !valueComponent.getValue().wm().getAsBoolean())
+                            && (valueComponent.getValue().wn() == null || !valueComponent.getValue().wn().getAsBoolean())) {
+                            valueComponent.released();
                         }
                     }
                 }

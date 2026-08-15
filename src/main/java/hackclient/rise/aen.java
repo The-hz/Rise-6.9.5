@@ -54,11 +54,11 @@ public final class aen {
             Minecraft.getMinecraft().setSession(session);
             return session;
         } catch (IOException ioexception) {
-            com.alan.clients.util.account.auth.LoginData akd1 = MicrosoftLogin.login(s);
-            if (akd1 == null || !akd1.sm() || akd1.aCj == null || akd1.aEL == null) {
+            com.alan.clients.util.account.auth.LoginData loginData = MicrosoftLogin.login(s);
+            if (loginData == null || !loginData.sm() || loginData.aCj == null || loginData.aEL == null) {
                 throw ioexception;
             }
-            Session session1 = new Session(akd1.aCj, akd1.aEL, akd1.aEX, "mojang");
+            Session session1 = new Session(loginData.aCj, loginData.aEL, loginData.aEX, "mojang");
             Minecraft.getMinecraft().setSession(session1);
             return session1;
         }

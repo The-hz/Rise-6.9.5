@@ -201,9 +201,9 @@ public class HotBar extends Module {
         }
 
         if (this.showXPBar.wo()) {
-            float f1 = player.experience;
-            if (!(f1 <= 0.0F)) {
-                int i = (int)(f1 * 182.0F);
+            float experience = player.experience;
+            if (!(experience <= 0.0F)) {
+                int i = (int)(experience * 182.0F);
                 int j = resolution.getScaledWidth() / 2 - 91;
                 float f2 = resolution.getScaledHeight() - 28.5F;
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

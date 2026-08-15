@@ -118,9 +118,9 @@ extends Module {
     }
 
     private void a(int n2, int n3, Color color, boolean bl, int n4, boolean bl2) {
-        agd agd2 = ScoreBoard.aEg.fontRendererObj;
-        int n5 = this.collection.size();
-        int n6 = this.apD * n5 + 3;
+        agd fontRendererObj = ScoreBoard.aEg.fontRendererObj;
+        int size = this.collection.size();
+        int n6 = this.apD * size + 3;
         Vector2d vector2d = new Vector2d(this.apB + 12, n6 + this.apD + 3);
         this.position.n(vector2d);
         if (bl2) {
@@ -134,7 +134,7 @@ extends Module {
         int n7 = 0x20FFFFFF;
         int n8 = (int)((double)n3 + 4.5);
         String string = this.scoreObjective.getDisplayName();
-        agd2.b(string, (float)(n2 += 6) + (float)this.apB / 2.0f - (float)agd2.getStringWidth(string) / 2.0f, n8, n7);
+        fontRendererObj.b(string, (float)(n2 += 6) + (float)this.apB / 2.0f - (float)fontRendererObj.getStringWidth(string) / 2.0f, n8, n7);
         Iterator<Score> iterator = this.collection.iterator();
         while (iterator.hasNext()) {
             Score score = iterator.next();
@@ -142,10 +142,10 @@ extends Module {
             String string2 = ScorePlayerTeam.formatPlayerName(this.scoreObjective.getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName());
             String string3 = this.X(string2);
             if (((Boolean)this.replaceIPWithRiseWebsite.wo()).booleanValue() && string3.equals(this.mf())) {
-                this.a(agd2, string3, n2, n8);
+                this.a(fontRendererObj, string3, n2, n8);
                 continue;
             }
-            agd2.b(string3, n2, n8, n7);
+            fontRendererObj.b(string3, n2, n8, n7);
         }
     }
 
@@ -157,14 +157,14 @@ extends Module {
         String string2 = EnumChatFormatting.getTextWithoutFormattingCodes(string);
         Color color = this.rz().rA();
         Color color2 = this.rz().rB();
-        long l2 = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
         double d2 = 0.005;
         int n4 = n2;
         int n5 = string2.length();
         for (int i = 0; i < n5; ++i) {
             char c2 = string2.charAt(i);
             double d3 = (double)i / (double)n5 * Math.PI * 2.0;
-            float f2 = (float)((Math.sin((double)l2 * d2 + d3) + 1.0) * 0.5);
+            float f2 = (float)((Math.sin((double)now * d2 + d3) + 1.0) * 0.5);
             int n6 = (int)((float)color.getRed() + (float)(color2.getRed() - color.getRed()) * f2);
             int n7 = (int)((float)color.getGreen() + (float)(color2.getGreen() - color.getGreen()) * f2);
             int n8 = (int)((float)color.getBlue() + (float)(color2.getBlue() - color.getBlue()) * f2);

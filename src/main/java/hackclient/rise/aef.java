@@ -70,11 +70,11 @@ implements InstanceAccess {
         if (movingObjectPosition != null) {
             d3 = movingObjectPosition.hitVec.distanceTo(vec3);
         }
-        Vec3 vec32 = aef.aEg.thePlayer.getVectorForRotation(vector2f.y, vector2f.x);
-        Vec3 vec33 = vec3.addVector(vec32.xCoord * d2, vec32.yCoord * d2, vec32.zCoord * d2);
+        Vec3 vec = aef.aEg.thePlayer.getVectorForRotation(vector2f.y, vector2f.x);
+        Vec3 vec33 = vec3.addVector(vec.xCoord * d2, vec.yCoord * d2, vec.zCoord * d2);
         Entity entity2 = null;
         Vec3 vec34 = null;
-        List<Entity> list = aef.aEg.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec32.xCoord * d2, vec32.yCoord * d2, vec32.zCoord * d2).expand(1.0, 1.0, 1.0), Predicates.and(EntitySelectors.NOT_SPECTATING, Entity::canBeCollidedWith));
+        List<Entity> list = aef.aEg.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec.xCoord * d2, vec.yCoord * d2, vec.zCoord * d2).expand(1.0, 1.0, 1.0), Predicates.and(EntitySelectors.NOT_SPECTATING, Entity::canBeCollidedWith));
         double d4 = d3;
         for (Entity entity3 : list) {
             double d5;

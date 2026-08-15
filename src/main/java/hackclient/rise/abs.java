@@ -28,7 +28,7 @@ public class abs
                     try {
                         Runtime.getRuntime().halt(1);
                     }
-                    catch (Throwable t2) {}
+                    catch (Throwable e) {}
 
                     throw new SecurityException("EC91");
                 }

@@ -61,10 +61,10 @@ public final class PlayerUtil implements InstanceAccess {
     }
 
     public static double distance(BlockPos pos, BlockPos var1) {
-        double d0 = pos.getX() - var1.getX();
-        double d1 = pos.getY() - var1.getY();
-        double d2 = pos.getZ() - var1.getZ();
-        return d0 * d0 + d1 * d1 + d2 * d2;
+        double dx = pos.getX() - var1.getX();
+        double dy = pos.getY() - var1.getY();
+        double dz = pos.getZ() - var1.getZ();
+        return dx * dx + dy * dy + dz * dz;
     }
 
     public static boolean vg() {
@@ -313,9 +313,9 @@ public final class PlayerUtil implements InstanceAccess {
         }
 
         arraylist.sort(Comparator.comparingDouble(var0x -> {
-            double d0 = Math.toDegrees(Math.atan2(((aib)var0x).vb().zCoord, ((aib)var0x).vb().xCoord)) % 360.0;
+            double degrees = Math.toDegrees(Math.atan2(((aib)var0x).vb().zCoord, ((aib)var0x).vb().xCoord)) % 360.0;
             double d1 = RotationComponent.fk.x % 360.0F + 90.0F;
-            return Math.abs(MathUtil.n(d0, d1));
+            return Math.abs(MathUtil.n(degrees, d1));
         }));
         if (!arraylist.isEmpty()) {
             return (aib)arraylist.get(0);
@@ -429,10 +429,10 @@ public final class PlayerUtil implements InstanceAccess {
                 if (af(vec3.xCoord) && af(vec3.yCoord) && af(vec3.zCoord)) {
                     Vector2f vector2f = RotationUtil.y(entity);
                     if (vector2f != null && af(vector2f.getX()) && af(vector2f.getY())) {
-                        Vec3 vec31 = aEg.thePlayer.getVectorForRotation(vector2f.getY(), vector2f.getX());
-                        if (af(vec31.xCoord) && af(vec31.yCoord) && af(vec31.zCoord)) {
+                        Vec3 vec = aEg.thePlayer.getVectorForRotation(vector2f.getY(), vector2f.getX());
+                        if (af(vec.xCoord) && af(vec.yCoord) && af(vec.zCoord)) {
                             MovingObjectPosition movingobjectposition = axisalignedbb.expand(0.1, 0.1, 0.1)
-                                .calculateIntercept(vec3, vec3.addVector(vec31.xCoord * 1000.0, vec31.yCoord * 1000.0, vec31.zCoord * 1000.0));
+                                .calculateIntercept(vec3, vec3.addVector(vec.xCoord * 1000.0, vec.yCoord * 1000.0, vec.zCoord * 1000.0));
                             if (movingobjectposition != null && movingobjectposition.hitVec != null) {
                                 double d0 = movingobjectposition.hitVec.distanceTo(vec3);
                                 return af(d0) ? d0 : aEg.thePlayer.getDistanceToEntity(entity);

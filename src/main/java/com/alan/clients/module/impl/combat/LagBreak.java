@@ -316,10 +316,10 @@ extends Module {
     }
 
     private void a(Render2DEvent render2DEvent, float f2) {
-        int n2 = render2DEvent.getScaledResolution().getScaledWidth();
-        int n3 = render2DEvent.getScaledResolution().getScaledHeight();
-        float f3 = (float)n2 / 2.0f;
-        float f4 = (float)n3 / 2.0f;
+        int scaledWidth = render2DEvent.getScaledResolution().getScaledWidth();
+        int scaledHeight = render2DEvent.getScaledResolution().getScaledHeight();
+        float f3 = (float)scaledWidth / 2.0f;
+        float f4 = (float)scaledHeight / 2.0f;
         float f5 = MathUtil.lerp(this.pC, this.pB, LagBreak.aEg.timer.bWm);
         double d2 = 360.0 * (double)f2;
         double d3 = 270.0 + d2;
@@ -349,9 +349,9 @@ extends Module {
         double d4 = d2 <= d3 ? 0.75 : -0.75;
         double d5 = d2;
         while (d4 > 0.0 ? d5 <= d3 : d5 >= d3) {
-            double d6 = Math.toRadians(d5);
-            float f6 = f2 + (float)(Math.cos(d6) * (double)f4);
-            float f7 = f3 + (float)(Math.sin(d6) * (double)f4);
+            double radians = Math.toRadians(d5);
+            float f6 = f2 + (float)(Math.cos(radians) * (double)f4);
+            float f7 = f3 + (float)(Math.sin(radians) * (double)f4);
             GL11.glVertex2f(f6, f7);
             d5 += d4;
         }
@@ -375,11 +375,11 @@ extends Module {
     }
 
     private boolean a(EntityLivingBase entityLivingBase, float f2, float f3) {
-        double d2 = LagBreak.aEg.thePlayer.posX - entityLivingBase.posX;
-        double d3 = LagBreak.aEg.thePlayer.posZ - entityLivingBase.posZ;
+        double dx = LagBreak.aEg.thePlayer.posX - entityLivingBase.posX;
+        double dz = LagBreak.aEg.thePlayer.posZ - entityLivingBase.posZ;
         double d4 = LagBreak.aEg.thePlayer.posY + (double)LagBreak.aEg.thePlayer.getEyeHeight() - (entityLivingBase.posY + (double)entityLivingBase.getEyeHeight());
-        double d5 = Math.sqrt(d2 * d2 + d3 * d3);
-        float f4 = (float)(Math.toDegrees(Math.atan2(d3, d2)) - 90.0);
+        double d5 = Math.sqrt(dx * dx + dz * dz);
+        float f4 = (float)(Math.toDegrees(Math.atan2(dz, dx)) - 90.0);
         float f5 = (float)(-Math.toDegrees(Math.atan2(d4, d5)));
         float f6 = Math.abs(MathHelper.wrapAngleTo180_float((float)(entityLivingBase.pl - f4)));
         float f7 = Math.abs(MathHelper.wrapAngleTo180_float((float)(entityLivingBase.rotationPitch - f5)));

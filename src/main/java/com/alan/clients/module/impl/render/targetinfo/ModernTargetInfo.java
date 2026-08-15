@@ -211,8 +211,8 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         }
 
         if (var3 instanceof EntityLivingBase entitylivingbase1) {
-            float f1 = entitylivingbase1.getTotalArmorValue();
-            float f2 = Math.min(f1 * 0.04F, 0.8F);
+            float totalArmorValue = entitylivingbase1.getTotalArmorValue();
+            float f2 = Math.min(totalArmorValue * 0.04F, 0.8F);
             f *= 1.0F - f2;
             int k = this.C(entitylivingbase1);
             int l = Math.min(20, (int)Math.ceil(Math.min(25, k) * 0.75F));
@@ -255,10 +255,10 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
     }
 
     private float nC() {
-        long i = System.currentTimeMillis();
-        if (i - this.auK > 200L) {
+        long now = System.currentTimeMillis();
+        if (now - this.auK > 200L) {
             this.auL = this.nD();
-            this.auK = i;
+            this.auK = now;
         }
 
         return this.auL;

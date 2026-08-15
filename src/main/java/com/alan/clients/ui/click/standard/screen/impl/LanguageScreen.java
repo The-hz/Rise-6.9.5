@@ -23,8 +23,8 @@ public class LanguageScreen implements Screen, InstanceAccess {
     private final agk azQ = new agk();
 
     public LanguageScreen() {
-        for (Locale ahc : Locale.values()) {
-            this.languages.add(new LanguageComponent(ahc, ahd.a("language_local", ahc), ahd.a("language_english", ahc)));
+        for (Locale locale : Locale.values()) {
+            this.languages.add(new LanguageComponent(locale, ahd.a("language_local", locale), ahd.a("language_english", locale)));
         }
     }
 

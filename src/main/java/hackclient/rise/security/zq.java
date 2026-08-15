@@ -219,9 +219,9 @@ public class zq extends SecurityFeature {
 
     public void nW() {
         if (!this.awx && this.awq != null && this.awq != this.avG && aEg != null && aEg.theWorld != null && aEg.thePlayer != null) {
-            long j = aEg.theWorld.getTotalWorldTime();
-            if (j >= this.awt) {
-                this.awt = j + 5L;
+            long totalWorldTime = aEg.theWorld.getTotalWorldTime();
+            if (totalWorldTime >= this.awt) {
+                this.awt = totalWorldTime + 5L;
                 String s = ahm.b(avZ);
                 if (s != null && this.awp.add("scoreboard_mode_marker")) {
                     String s1 = s;
@@ -248,8 +248,8 @@ public class zq extends SecurityFeature {
                 if (!s.isEmpty()) {
                     Matcher matcher = awa.matcher(s);
                     if (matcher.find() && this.awp.add("global_exempt_survival_smp_minehut")) {
-                        String s1 = matcher.group();
-                        this.aE("chat:" + s1);
+                        String group = matcher.group();
+                        this.aE("chat:" + group);
                     } else {
                         this.aD(s);
                         if (!this.awx) {
@@ -450,9 +450,9 @@ public class zq extends SecurityFeature {
     public void nV() {
         if (!this.awx && this.awq != null && this.awq != this.avG && aEg != null && aEg.theWorld != null && aEg.thePlayer != null) {
             if (this.awo.size() < 5) {
-                long j1 = aEg.theWorld.getTotalWorldTime();
-                if (j1 >= this.aws) {
-                    this.aws = j1 + 5L;
+                long totalWorldTime = aEg.theWorld.getTotalWorldTime();
+                if (totalWorldTime >= this.aws) {
+                    this.aws = totalWorldTime + 5L;
                     Iterator iterator = aEg.theWorld.playerEntities.iterator();
 
                     while (iterator.hasNext()) {

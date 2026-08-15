@@ -88,8 +88,8 @@ public class ConfigFile extends File implements p {
                     if (!json.has(s)) {
                         String s1 = null;
 
-                        for (Locale ahc : Locale.values()) {
-                            String s2 = ahd.a(s, ahc);
+                        for (Locale locale : Locale.values()) {
+                            String s2 = ahd.a(s, locale);
                             if (s2 != null && !s2.equals(s) && json.has(s2)) {
                                 s1 = s2;
                                 break;

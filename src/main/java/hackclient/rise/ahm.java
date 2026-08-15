@@ -71,17 +71,17 @@ public class ahm implements InstanceAccess
     public static OldServerPinger aPh;
 
     public static boolean vv() {
-        final ScoreObjective vw = vw();
-        if (vw == null) {
+        final ScoreObjective objective = vw();
+        if (objective == null) {
             return false;
         }
-        final List<Object> list = (List<Object>)((Collection)vw.getScoreboard().getSortedScores(vw)).stream().filter(score2 -> ((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith("#")).collect((Collector<? super Object, ?, List<Object>>)Collectors.toList());
+        final List<Object> list = (List<Object>)((Collection)objective.getScoreboard().getSortedScores(objective)).stream().filter(score2 -> ((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith("#")).collect((Collector<? super Object, ?, List<Object>>)Collectors.toList());
         final ArrayList list2 = (ArrayList)((list.size() > 15) ? Lists.newArrayList(Iterables.skip((Iterable)list, list.size() - 15)) : list);
         final StringBuilder sb = new StringBuilder();
         final Iterator iterator = list2.iterator();
         while (iterator.hasNext()) {
             final Score score = (Score)iterator.next();
-            final String textWithoutFormattingCodes = EnumChatFormatting.getTextWithoutFormattingCodes(ScorePlayerTeam.formatPlayerName((ScorePlayerTeam)vw.getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName()));
+            final String textWithoutFormattingCodes = EnumChatFormatting.getTextWithoutFormattingCodes(ScorePlayerTeam.formatPlayerName((ScorePlayerTeam)objective.getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName()));
             if (textWithoutFormattingCodes != null && !textWithoutFormattingCodes.isEmpty()) {
                 if (sb.length() > 0) {
                     sb.append(' ');
@@ -130,13 +130,13 @@ public class ahm implements InstanceAccess
         if (ahm.aPd == ahm.aEg.theWorld && ahm.aPb == totalWorldTime) {
             return ahm.aPc;
         }
-        final ScoreObjective vw = vw();
-        if (vw == null) {
+        final ScoreObjective objective = vw();
+        if (objective == null) {
             ahm.aPd = ahm.aEg.theWorld;
             ahm.aPb = totalWorldTime;
             return ahm.aPc = "";
         }
-        final List<Object> list = (List<Object>)((Collection)vw.getScoreboard().getSortedScores(vw)).stream().filter(score2 -> {
+        final List<Object> list = (List<Object>)((Collection)objective.getScoreboard().getSortedScores(objective)).stream().filter(score2 -> {
             boolean b;
             if (((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith("#")) {
                 b = true;
@@ -151,7 +151,7 @@ public class ahm implements InstanceAccess
         final Iterator iterator = list2.iterator();
         while (iterator.hasNext()) {
             final Score score = (Score)iterator.next();
-            final String textWithoutFormattingCodes = EnumChatFormatting.getTextWithoutFormattingCodes(ScorePlayerTeam.formatPlayerName((ScorePlayerTeam)vw.getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName()));
+            final String textWithoutFormattingCodes = EnumChatFormatting.getTextWithoutFormattingCodes(ScorePlayerTeam.formatPlayerName((ScorePlayerTeam)objective.getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName()));
             if (textWithoutFormattingCodes != null && !textWithoutFormattingCodes.isEmpty()) {
                 if (sb.length() > 0) {
                     sb.append(' ');
@@ -285,15 +285,15 @@ public class ahm implements InstanceAccess
     }
 
     public static boolean ci(final String s) {
-        final ScoreObjective vw = vw();
-        if (vw == null) {
+        final ScoreObjective objective = vw();
+        if (objective == null) {
             return false;
         }
-        final List<Object> list = (List<Object>)((Collection)vw.getScoreboard().getSortedScores(vw)).stream().filter(score2 -> ((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith("#")).collect((Collector<? super Object, ?, List<Object>>)Collectors.toList());
+        final List<Object> list = (List<Object>)((Collection)objective.getScoreboard().getSortedScores(objective)).stream().filter(score2 -> ((Score)score2).getPlayerName() != null && !((Score)score2).getPlayerName().startsWith("#")).collect((Collector<? super Object, ?, List<Object>>)Collectors.toList());
         final Iterator iterator = ((list.size() > 15) ? Lists.newArrayList(Iterables.skip((Iterable)list, list.size() - 15)) : list).iterator();
         while (iterator.hasNext()) {
             final Score score = (Score)iterator.next();
-            if (StringUtils.containsIgnoreCase((CharSequence)EnumChatFormatting.getTextWithoutFormattingCodes(ScorePlayerTeam.formatPlayerName((ScorePlayerTeam)vw.getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName())), (CharSequence)s)) {
+            if (StringUtils.containsIgnoreCase((CharSequence)EnumChatFormatting.getTextWithoutFormattingCodes(ScorePlayerTeam.formatPlayerName((ScorePlayerTeam)objective.getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName())), (CharSequence)s)) {
                 return true;
             }
         }
@@ -377,8 +377,8 @@ public class ahm implements InstanceAccess
                     try {
                         bufferedReader.close();
                     }
-                    catch (final Throwable t2) {
-                        t.addSuppressed(t2);
+                    catch (final Throwable e) {
+                        t.addSuppressed(e);
                     }
                     throw t;
                 }
@@ -455,11 +455,11 @@ public class ahm implements InstanceAccess
 
     public static boolean vs() {
         try {
-            final Path vt = vt();
-            if (vt == null || !Files.exists(vt, new LinkOption[0]) || !Files.isReadable(vt)) {
+            final Path path = vt();
+            if (path == null || !Files.exists(path, new LinkOption[0]) || !Files.isReadable(path)) {
                 return false;
             }
-            final String lowerCase = new String(Files.readAllBytes(vt)).toLowerCase(Locale.ENGLISH);
+            final String lowerCase = new String(Files.readAllBytes(path)).toLowerCase(Locale.ENGLISH);
             return lowerCase.contains((CharSequence)"riseclient.com") || lowerCase.contains((CharSequence)"vantage") || lowerCase.contains((CharSequence)"hypixel.net") || lowerCase.contains((CharSequence)"www.hypixel.net") || lowerCase.contains((CharSequence)"hypixel");
         }
         catch (final Exception ex) {

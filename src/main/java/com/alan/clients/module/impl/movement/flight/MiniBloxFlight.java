@@ -99,9 +99,9 @@ public class MiniBloxFlight extends Mode<Flight> {
             aEg.thePlayer.setPosition(blockpos.getX() + 0.51, blockpos.getY(), blockpos.getZ() + 0.51);
         }
 
-        double d0 = Math.toRadians(aEg.thePlayer.pl);
-        Math.sin(d0);
-        Math.cos(d0);
+        double radians = Math.toRadians(aEg.thePlayer.pl);
+        Math.sin(radians);
+        Math.cos(radians);
         aEg.timer.dzD = 0.2F;
     }
 

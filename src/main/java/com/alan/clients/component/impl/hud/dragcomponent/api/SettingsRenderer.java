@@ -76,15 +76,15 @@ public class SettingsRenderer implements InstanceAccess {
                 GlStateManager.scale(d2, d2, 1.0);
                 double d3 = this.positionValue.apP.x - d0 - 10.0;
                 double d4 = this.positionValue.apP.y + this.positionValue.aHe.y / 2.0 - d1 / 2.0;
-                double d5 = this.rz().getRound();
+                double round = this.rz().getRound();
                 this.rz();
                 Color color = Themes.rK();
                 double d6 = this.animation.sG();
                 this.rz();
-                RenderUtil.roundedRectangle(d3, d4, d0, d1, d5, ColorUtil.d(color, (int)(d6 * Themes.rK().getAlpha())));
+                RenderUtil.roundedRectangle(d3, d4, d0, d1, round, ColorUtil.d(color, (int)(d6 * Themes.rK().getAlpha())));
 
-                for (ValueComponent abl : this.valueList) {
-                    if (abl.getValue() != null && abl.getValue().wm() != null && abl.getValue().wm().getAsBoolean()) {
+                for (ValueComponent valueComponent : this.valueList) {
+                    if (valueComponent.getValue() != null && valueComponent.getValue().wm() != null && valueComponent.getValue().wm().getAsBoolean()) {
                     }
                 }
 

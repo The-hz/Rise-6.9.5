@@ -114,9 +114,9 @@ extends com.alan.clients.util.file.File {
             jsonObject2.addProperty("creationDate", aHE.format(new Date()));
             jsonObject.add("Metadata", jsonObject2);
             JsonArray jsonArray = new JsonArray();
-            for (AltAccount ael2 : list) {
-                jsonArray.add(ael2.sf());
-                System.out.println("writing account: " + ael2.getName());
+            for (AltAccount altAccount : list) {
+                jsonArray.add(altAccount.sf());
+                System.out.println("writing account: " + altAccount.getName());
             }
             jsonObject.add("data", jsonArray);
             FileWriter fileWriter = new FileWriter(this.getFile());

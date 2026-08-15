@@ -315,7 +315,7 @@ public class tu extends Module {
 
     public void jD() {
         boolean flag = this.slowDownInAir.wo();
-        boolean flag1 = aEg.thePlayer.onGround;
+        boolean onGround = aEg.thePlayer.onGround;
         if (!flag) {
             aEg.thePlayer.onGround = true;
         }
@@ -365,7 +365,7 @@ public class tu extends Module {
             this.ji = true;
         }
 
-        aEg.thePlayer.onGround = flag1;
+        aEg.thePlayer.onGround = onGround;
     }
 
     private MovingObjectPosition kc() {
@@ -395,8 +395,8 @@ public class tu extends Module {
             aEg.theWorld, new BlockPos(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()), block.getDefaultState()
         );
         Vec3 vec3 = aEg.thePlayer.getPositionEyes(1.0F);
-        Vec3 vec31 = aEg.thePlayer.getVectorForRotation(vec2.getY(), vec2.getX());
-        Vec3 vec32 = vec3.addVector(vec31.xCoord * 4.5, vec31.yCoord * 4.5, vec31.zCoord * 4.5);
+        Vec3 vec = aEg.thePlayer.getVectorForRotation(vec2.getY(), vec2.getX());
+        Vec3 vec32 = vec3.addVector(vec.xCoord * 4.5, vec.yCoord * 4.5, vec.zCoord * 4.5);
         MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
         if (movingobjectposition != null) {
             movingobjectposition.a(new BlockPos(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()));

@@ -79,15 +79,15 @@ public final class agh {
         Graphics2D graphics2D2 = (Graphics2D)bufferedImage.getGraphics();
         graphics2D2.setFont(this.aIX);
         this.a(graphics2D2);
-        int n2 = bufferedImage.getWidth();
-        int n3 = bufferedImage.getHeight();
+        int width = bufferedImage.getWidth();
+        int height = bufferedImage.getHeight();
         graphics2D2.setColor(aIU);
-        graphics2D2.fillRect(0, 0, n2, n3);
+        graphics2D2.fillRect(0, 0, width, height);
         graphics2D2.setColor(Color.WHITE);
         graphics2D2.drawString(String.valueOf(c2), 4, this.aIX.getSize());
-        int n4 = GL11.glGenTextures();
-        this.a(n4, bufferedImage, n2, n3);
-        return new age(n4, n2, n3);
+        int glGenTextures = GL11.glGenTextures();
+        this.a(glGenTextures, bufferedImage, width, height);
+        return new age(glGenTextures, width, height);
     }
 
     private static boolean tA() {

@@ -489,13 +489,13 @@ public class Breaker extends Module {
     }
 
     private tg a(Vec3 vec, BlockPos pos, Vec3 var3) {
-        double d0 = this.range.wo().doubleValue();
+        double range = this.range.wo().doubleValue();
         int i = this.surroundingLayers.wo().intValue();
         ArrayList arraylist = new ArrayList();
         double d1 = 0.0;
 
         for (BlockPos blockpos : this.b(vec, var3)) {
-            if (this.a(vec, blockpos) > d0) {
+            if (this.a(vec, blockpos) > range) {
                 return null;
             }
 
@@ -524,8 +524,8 @@ public class Breaker extends Module {
         int j = MathHelper.floor_double(vec.yCoord);
         int k = MathHelper.floor_double(vec.zCoord);
         int l = MathHelper.floor_double(var2.xCoord);
-        int i1 = MathHelper.floor_double(var2.yCoord);
-        int j1 = MathHelper.floor_double(var2.zCoord);
+        int floorYCoord = MathHelper.floor_double(var2.yCoord);
+        int floorZCoord = MathHelper.floor_double(var2.zCoord);
         double d0 = var2.xCoord - vec.xCoord;
         double d1 = var2.yCoord - vec.yCoord;
         double d2 = var2.zCoord - vec.zCoord;
@@ -540,7 +540,7 @@ public class Breaker extends Module {
         double d8 = i2 == 0 ? Double.MAX_VALUE : (i2 > 0 ? k + 1 - vec.zCoord : vec.zCoord - k) / Math.abs(d2);
         arraylist.add(new BlockPos(i, j, k));
 
-        for (; (i != l || j != i1 || k != j1) && arraylist.size() < 64; arraylist.add(new BlockPos(i, j, k))) {
+        for (; (i != l || j != floorYCoord || k != floorZCoord) && arraylist.size() < 64; arraylist.add(new BlockPos(i, j, k))) {
             if (d6 <= d7 && d6 <= d8) {
                 i += k1;
                 d6 += d3;
@@ -614,8 +614,8 @@ public class Breaker extends Module {
     }
 
     private BlockPos jB() {
-        double d0 = this.range.wo().doubleValue();
-        int i = (int)Math.ceil(d0) + 1;
+        double range = this.range.wo().doubleValue();
+        int i = (int)Math.ceil(range) + 1;
         List list = this.jC();
         if (list.isEmpty()) {
             return null;
@@ -634,7 +634,7 @@ public class Breaker extends Module {
                     boolean flag = false;
 
                     for (BlockPos blockpos3 : (Iterable<BlockPos>)list) {
-                        if (this.a(vec3, blockpos3) <= d0) {
+                        if (this.a(vec3, blockpos3) <= range) {
                             flag = true;
                             break;
                         }
@@ -721,7 +721,7 @@ public class Breaker extends Module {
 
     public void jD() {
         boolean flag = this.slowDownInAir.wo();
-        boolean flag1 = aEg.thePlayer.onGround;
+        boolean onGround = aEg.thePlayer.onGround;
         if (!flag) {
             aEg.thePlayer.onGround = true;
         }
@@ -769,7 +769,7 @@ public class Breaker extends Module {
             this.ji = true;
         }
 
-        aEg.thePlayer.onGround = flag1;
+        aEg.thePlayer.onGround = onGround;
     }
 
     public Vector2f jE() {

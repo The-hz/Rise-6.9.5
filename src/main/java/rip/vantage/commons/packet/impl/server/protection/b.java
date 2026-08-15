@@ -251,7 +251,7 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
                 method3.invoke(null, Boolean.valueOf((boolean)(boolean2 != 0)));
             }
         }
-        catch (final Exception ex2) {}
+        catch (final Exception e) {}
         final String string = jsonObject.getString("e");
         final String optString = jsonObject.optString("f", "");
         this.eQj = optString;
@@ -381,7 +381,7 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
             }
             return true;
         }
-        catch (final Exception ex2) {}
+        catch (final Exception e) {}
         return true;
     }
 

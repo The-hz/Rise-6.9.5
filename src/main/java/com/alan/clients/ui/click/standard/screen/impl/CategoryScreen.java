@@ -34,10 +34,10 @@ public final class CategoryScreen implements Screen, InstanceAccess {
             this.azD = d0;
             double d1 = 0.0;
 
-            for (ModuleComponent abd : this.azB) {
-                abd.draw(new Vector2d(riseclickgui.axI.x + riseclickgui.axJ.aym + 8.0, d0), var1, var2, var3);
-                d0 += abd.scale.y + 7.0F;
-                d1 += abd.scale.y + 7.0F;
+            for (ModuleComponent moduleComponent : this.azB) {
+                moduleComponent.draw(new Vector2d(riseclickgui.axI.x + riseclickgui.axJ.aym + 8.0, d0), var1, var2, var3);
+                d0 += moduleComponent.scale.y + 7.0F;
+                d1 += moduleComponent.scale.y + 7.0F;
             }
 
             this.azC = d0;

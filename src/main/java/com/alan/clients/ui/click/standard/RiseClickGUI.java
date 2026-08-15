@@ -249,18 +249,18 @@ public class RiseClickGUI extends GuiScreen implements aha {
                     double d1 = this.axI.y * this.axS + this.translate.y + 1.0;
                     double d2 = this.alh.x * this.axS - 2.0;
                     double d3 = this.alh.y * this.axS - 2.0;
-                    TextBox agm = this.oU();
-                    if (agm != this.ayb) {
+                    TextBox textBox = this.oU();
+                    if (textBox != this.ayb) {
                         this.aya.aX();
-                        this.ayb = agm;
+                        this.ayb = textBox;
                     }
 
-                    if (agm != null && this.aya.uc()) {
+                    if (textBox != null && this.aya.uc()) {
                         String s = this.aya.uo();
                         List list = this.aya.up();
                         if (s != null && !s.isEmpty()) {
-                            float f1 = agm.tL();
-                            float f2 = agm.tM();
+                            float f1 = textBox.tL();
+                            float f2 = textBox.tM();
                             FontManager.MAIN.a(16, gd.REGULAR).a(s, f1, f2, ColorUtil.d(Color.WHITE, 210).getRGB());
                             RenderUtil.d(
                                 f1, f2 + FontManager.MAIN.a(16, gd.REGULAR).height() + 1.0F, FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(s), 1.0, ColorUtil.d(Color.WHITE, 140)
@@ -395,13 +395,13 @@ public class RiseClickGUI extends GuiScreen implements aha {
     @Override
     protected void keyTyped(char var1, int var2) {
         if (agx.isEnabled()) {
-            TextBox agm = this.oU();
-            if (agm != this.ayb) {
+            TextBox textBox = this.oU();
+            if (textBox != this.ayb) {
                 this.aya.aX();
-                this.ayb = agm;
+                this.ayb = textBox;
             }
 
-            if (agm != null && this.aya.a(agm, var1, var2)) {
+            if (textBox != null && this.aya.a(textBox, var1, var2)) {
                 return;
             }
         }
@@ -432,9 +432,9 @@ public class RiseClickGUI extends GuiScreen implements aha {
             } catch (Throwable throwable) {
             }
 
-            for (ModuleComponent abd : this.moduleList) {
-                for (ValueComponent abl : abd.getValueList()) {
-                    if (abl instanceof abv abv && abv.azo != null && abv.azo.ayU) {
+            for (ModuleComponent moduleComponent : this.moduleList) {
+                for (ValueComponent valueComponent : moduleComponent.getValueList()) {
+                    if (valueComponent instanceof abv abv && abv.azo != null && abv.azo.ayU) {
                         return abv.azo;
                     }
                 }
@@ -451,8 +451,8 @@ public class RiseClickGUI extends GuiScreen implements aha {
             this.axK = category.ec();
             this.axP.aX();
             this.axK.aT();
-            SearchScreen acf = (SearchScreen)Category.SEARCH.ec();
-            acf.relevantModules = acf.getRelevantModules(acf.azR.getText());
+            SearchScreen searchScreen = (SearchScreen)Category.SEARCH.ec();
+            searchScreen.relevantModules = searchScreen.getRelevantModules(searchScreen.azR.getText());
         }
     }
 
@@ -462,8 +462,8 @@ public class RiseClickGUI extends GuiScreen implements aha {
             this.axK = screen;
             this.axP.aX();
             this.axK.aT();
-            SearchScreen acf = (SearchScreen)Category.SEARCH.ec();
-            acf.relevantModules = acf.getRelevantModules(acf.azR.getText());
+            SearchScreen searchScreen = (SearchScreen)Category.SEARCH.ec();
+            searchScreen.relevantModules = searchScreen.getRelevantModules(searchScreen.azR.getText());
         }
     }
 
@@ -471,16 +471,16 @@ public class RiseClickGUI extends GuiScreen implements aha {
         Iterator iterator = this.moduleList.iterator();
 
         while (iterator.hasNext()) {
-            for (ValueComponent abl : ((ModuleComponent)iterator.next()).getValueList()) {
-                if (abl instanceof abv && abl.position != null && ((abv)abl).azo.ayU && !((abv)abl).azo.aJv.T(50L)) {
+            for (ValueComponent valueComponent : ((ModuleComponent)iterator.next()).getValueList()) {
+                if (valueComponent instanceof abv && valueComponent.position != null && ((abv)valueComponent).azo.ayU && !((abv)valueComponent).azo.aJv.T(50L)) {
                     return true;
                 }
 
-                if (abl instanceof abt && ((abt)abl).azm.tO() && !((abt)abl).azm.aJv.T(50L)) {
+                if (valueComponent instanceof abt && ((abt)valueComponent).azm.tO() && !((abt)valueComponent).azm.aJv.T(50L)) {
                     return true;
                 }
 
-                if (abl instanceof abn && ((abn)abl).ayS.tO() && !((abn)abl).ayS.aJv.T(50L)) {
+                if (valueComponent instanceof abn && ((abn)valueComponent).ayS.tO() && !((abn)valueComponent).ayS.aJv.T(50L)) {
                     return true;
                 }
             }

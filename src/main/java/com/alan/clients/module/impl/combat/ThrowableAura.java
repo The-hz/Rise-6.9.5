@@ -79,16 +79,16 @@ public class ThrowableAura extends Module {
 
     public boolean s(EntityLivingBase living) {
         Vec3 vec3 = this.prediction.wo() ? this.i(living) : living.getPositionVector().addVector(0.0, living.getEyeHeight() * 0.5, 0.0);
-        Vec3 vec31 = aEg.thePlayer.getPositionEyes(1.0F);
+        Vec3 vec = aEg.thePlayer.getPositionEyes(1.0F);
         Vec3 vec32 = aEg.thePlayer.getLookVec().normalize();
-        Vec3 vec33 = vec3.subtract(vec31).normalize();
+        Vec3 vec33 = vec3.subtract(vec).normalize();
         return vec32.dotProduct(vec33) > 0.9;
     }
 
     public void g(Entity entity) {
         if (aEg.playerController != null && entity != null) {
             float f2 = aEg.thePlayer.pl;
-            float f3 = aEg.thePlayer.rotationPitch;
+            float rotationPitch = aEg.thePlayer.rotationPitch;
             this.h(entity);
             ItemStack itemstack = aEg.thePlayer.getHeldItem();
             if (itemstack != null) {
@@ -98,7 +98,7 @@ public class ThrowableAura extends Module {
             }
 
             aEg.thePlayer.pl = f2;
-            aEg.thePlayer.rotationPitch = f3;
+            aEg.thePlayer.rotationPitch = rotationPitch;
         }
     }
 
@@ -116,10 +116,10 @@ public class ThrowableAura extends Module {
 
     public void h(Entity entity) {
         Vec3 vec3 = this.prediction.wo() ? this.i(entity) : entity.getPositionVector().addVector(0.0, entity.getEyeHeight() * 0.5, 0.0);
-        Vec3 vec31 = aEg.thePlayer.getPositionEyes(1.0F);
-        double d6 = vec3.xCoord - vec31.xCoord;
-        double d7 = vec3.yCoord - vec31.yCoord;
-        double d8 = vec3.zCoord - vec31.zCoord;
+        Vec3 vec = aEg.thePlayer.getPositionEyes(1.0F);
+        double d6 = vec3.xCoord - vec.xCoord;
+        double d7 = vec3.yCoord - vec.yCoord;
+        double d8 = vec3.zCoord - vec.zCoord;
         double d9 = Math.atan2(d8, d6) * 180.0 / Math.PI - 90.0;
         double d10 = Math.sqrt(d6 * d6 + d8 * d8);
         double d11 = -(Math.atan2(d7, d10) * 180.0 / Math.PI);
@@ -280,7 +280,7 @@ public class ThrowableAura extends Module {
         }
 
         Vec3 vec3 = aEg.thePlayer.getLookVec().normalize();
-        Vec3 vec31 = living.getPositionVector().addVector(0.0, living.getEyeHeight() * 0.5, 0.0).subtract(aEg.thePlayer.getPositionEyes(1.0F)).normalize();
-        return Math.toDegrees(Math.acos(MathHelper.clamp_double(vec3.dotProduct(vec31), -1.0, 1.0))) <= this.fOV.wo().doubleValue() / 2.0;
+        Vec3 vec = living.getPositionVector().addVector(0.0, living.getEyeHeight() * 0.5, 0.0).subtract(aEg.thePlayer.getPositionEyes(1.0F)).normalize();
+        return Math.toDegrees(Math.acos(MathHelper.clamp_double(vec3.dotProduct(vec), -1.0, 1.0))) <= this.fOV.wo().doubleValue() / 2.0;
     }
 }

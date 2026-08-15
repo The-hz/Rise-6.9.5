@@ -383,12 +383,12 @@ extends Module {
                     int n6 = -1;
                     String string4 = null;
                     String[] stringArray2 = stringArray;
-                    int n7 = stringArray2.length;
+                    int length = stringArray2.length;
                     int n8 = 0;
                     while (true) {
                         block32: {
                             block31: {
-                                if (n8 >= n7) break block31;
+                                if (n8 >= length) break block31;
                                 String string5 = stringArray2[n8];
                                 int n9 = string3.indexOf(string5);
                                 if (n9 == -1) break block32;
@@ -679,14 +679,14 @@ extends Module {
         String string2 = EnumChatFormatting.getTextWithoutFormattingCodes(string);
         Color color = this.rz().rA();
         Color color2 = this.rz().rB();
-        long l2 = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
         double d2 = 0.005;
         float f4 = f2;
         int n2 = string2.length();
         for (int i = 0; i < n2; ++i) {
             char c2 = string2.charAt(i);
             double d3 = (double)i / (double)n2 * Math.PI * 2.0;
-            float f5 = (float)((Math.sin((double)l2 * d2 + d3) + 1.0) * 0.5);
+            float f5 = (float)((Math.sin((double)now * d2 + d3) + 1.0) * 0.5);
             int n3 = (int)((float)color.getRed() + (float)(color2.getRed() - color.getRed()) * f5);
             int n4 = (int)((float)color.getGreen() + (float)(color2.getGreen() - color.getGreen()) * f5);
             int n5 = (int)((float)color.getBlue() + (float)(color2.getBlue() - color.getBlue()) * f5);

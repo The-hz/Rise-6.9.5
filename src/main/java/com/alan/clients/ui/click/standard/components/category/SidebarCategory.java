@@ -66,31 +66,31 @@ public final class SidebarCategory implements InstanceAccess {
 
     public void renderSidebar(float var1, float var2) {
         RiseClickGUI riseclickgui = Client.a.v();
-        long i = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
         if (this.lastTime == 0L) {
-            this.lastTime = i;
+            this.lastTime = now;
         }
 
         boolean flag = riseclickgui.axK.qa();
         if (this.ayo = (!Mouse.isButtonDown(0) || this.ayo)
                 && GUIUtil.c(riseclickgui.axI.x - 200.0F, riseclickgui.axI.y, this.ayo ? 310.0 : 210.0, riseclickgui.alh.y, var1, var2)
             || !flag) {
-            this.axT = Math.min(this.axT + (i - this.lastTime) * 2L, 255.0);
+            this.axT = Math.min(this.axT + (now - this.lastTime) * 2L, 255.0);
         } else {
-            this.axT = Math.max(this.axT - (float)(i - this.lastTime) * 1.5F, 0.0);
+            this.axT = Math.max(this.axT - (float)(now - this.lastTime) * 1.5F, 0.0);
         }
 
         if (GUIUtil.c(riseclickgui.axI.x, riseclickgui.axI.y, this.ayn > 0.0 ? 70.0 : 10.0, riseclickgui.alh.y, var1, var2) && flag) {
-            this.ayn = Math.min(this.ayn + (i - this.lastTime) * 2L, 255.0);
+            this.ayn = Math.min(this.ayn + (now - this.lastTime) * 2L, 255.0);
         } else {
-            this.ayn = Math.max(this.ayn - (i - this.lastTime), 0.0);
+            this.ayn = Math.max(this.ayn - (now - this.lastTime), 0.0);
         }
 
-        this.lastTime = i;
+        this.lastTime = now;
         double d0 = 10.0;
 
-        for (CategoryComponent abe : this.categories) {
-            abe.a(d0 += 19.5, this.aym + this.animation.sG(), (int)this.axT, riseclickgui.axK);
+        for (CategoryComponent categoryComponent : this.categories) {
+            categoryComponent.a(d0 += 19.5, this.aym + this.animation.sG(), (int)this.axT, riseclickgui.axK);
         }
 
         float f = (float)(riseclickgui.axI.getX() + 9.0F + this.animation.sG());

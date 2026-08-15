@@ -437,9 +437,9 @@ public class WatchdogTower extends Mode<Scaffold> {
     public void kD() {
         this.aku = (int)Math.floor(aEg.thePlayer.posY);
         double d0 = aEg.thePlayer.pl;
-        double d1 = Math.toRadians(d0);
-        double d2 = -Math.sin(d1);
-        boolean flag = Math.cos(d1) * 1.0 < 0.0;
+        double radians = Math.toRadians(d0);
+        double d2 = -Math.sin(radians);
+        boolean flag = Math.cos(radians) * 1.0 < 0.0;
         aka aka;
         if (flag) {
             RotationComponent.d(false);

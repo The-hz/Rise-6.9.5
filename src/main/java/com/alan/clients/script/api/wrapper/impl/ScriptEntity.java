@@ -124,9 +124,9 @@ public class ScriptEntity extends ScriptWrapper<Entity> {
 
     public float getDistanceToEntity(ScriptEntity scriptEntity) {
         float f = (float)(this.wrapped.posX - scriptEntity.getPosition().getX());
-        float f1 = (float)(this.wrapped.posY - scriptEntity.getPosition().getY());
-        float f2 = (float)(this.wrapped.posZ - scriptEntity.getPosition().getZ());
-        return MathHelper.sqrt_float(f * f + f1 * f1 + f2 * f2);
+        float dy = (float)(this.wrapped.posY - scriptEntity.getPosition().getY());
+        float dz = (float)(this.wrapped.posZ - scriptEntity.getPosition().getZ());
+        return MathHelper.sqrt_float(f * f + dy * dy + dz * dz);
     }
 
     public double getDistance(double var1, double var3, double var5) {

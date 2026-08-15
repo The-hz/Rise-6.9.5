@@ -156,9 +156,9 @@ public final class OreESP extends Module {
     }
 
     private void a(BlockPos pos, Color color) {
-        double d0 = pos.getX() - aEg.getRenderManager().viewerPosX;
-        double d1 = pos.getY() - aEg.getRenderManager().viewerPosY;
-        double d2 = pos.getZ() - aEg.getRenderManager().viewerPosZ;
+        double dx = pos.getX() - aEg.getRenderManager().viewerPosX;
+        double dy = pos.getY() - aEg.getRenderManager().viewerPosY;
+        double dz = pos.getZ() - aEg.getRenderManager().viewerPosZ;
         GL11.glPushMatrix();
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
@@ -167,7 +167,7 @@ public final class OreESP extends Module {
         GL11.glDepthMask(false);
         GL11.glDisable(2884);
         ColorUtil.d(color);
-        this.e(new AxisAlignedBB(d0, d1, d2, d0 + 1.0, d1 + 1.0, d2 + 1.0));
+        this.e(new AxisAlignedBB(dx, dy, dz, dx + 1.0, dy + 1.0, dz + 1.0));
         GL11.glEnable(2884);
         GL11.glDepthMask(true);
         GL11.glEnable(2929);

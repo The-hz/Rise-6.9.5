@@ -733,13 +733,13 @@ public class Manager extends Module {
 
             arraylist.sort((var1x, var2) -> {
                 boolean flag = ItemPotion.isSplash(((ts)var1x).aeh.getMetadata());
-                boolean flag1 = ItemPotion.isSplash(((ts)var2).aeh.getMetadata());
+                boolean metadata = ItemPotion.isSplash(((ts)var2).aeh.getMetadata());
                 if (this.prioritizeSplashPotions.wo()) {
-                    if (flag && !flag1) {
+                    if (flag && !metadata) {
                         return -1;
                     }
 
-                    if (!flag && flag1) {
+                    if (!flag && metadata) {
                         return 1;
                     }
                 }
@@ -930,13 +930,13 @@ public class Manager extends Module {
 
             arraylist.sort((var1x, var2) -> {
                 boolean flag = ItemPotion.isSplash(((ts)var1x).aeh.getMetadata());
-                boolean flag1 = ItemPotion.isSplash(((ts)var2).aeh.getMetadata());
+                boolean metadata = ItemPotion.isSplash(((ts)var2).aeh.getMetadata());
                 if (this.prioritizeSplashPotions.wo()) {
-                    if (flag && !flag1) {
+                    if (flag && !metadata) {
                         return -1;
                     }
 
-                    if (!flag && flag1) {
+                    if (!flag && metadata) {
                         return 1;
                     }
                 }
@@ -999,14 +999,14 @@ public class Manager extends Module {
             int l = (Integer)arraylist.get(k);
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(l);
             if (itemstack != null) {
-                int i1 = itemstack.stackSize;
+                int stackSize = itemstack.stackSize;
                 if (this.f(l, true)) {
-                    if (j >= i1) {
+                    if (j >= stackSize) {
                         this.G(l);
                         return true;
                     }
 
-                    int j1 = i1 - j;
+                    int j1 = stackSize - j;
                     this.d(l, j1);
                     return true;
                 }

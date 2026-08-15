@@ -32,9 +32,9 @@ public class ct extends ESP {
             aEg.getRenderManager();
             double d1 = d12 - RenderManager.bUQ;
             float f1 = entitylivingbase.width;
-            float f2 = entitylivingbase.height;
+            float height = entitylivingbase.height;
             double d2 = f1 * 1.1;
-            double d3 = f2 * 0.5445 + Math.sin(System.currentTimeMillis() / 200.0);
+            double d3 = height * 0.5445 + Math.sin(System.currentTimeMillis() / 200.0);
             double d4 = Math.cos(System.currentTimeMillis() / 200.0) * 0.5;
             d12 = entitylivingbase.prevPosY + (entitylivingbase.posY - entitylivingbase.prevPosY) * f + d3;
             aEg.getRenderManager();
@@ -42,7 +42,7 @@ public class ct extends ESP {
             double d6 = d5 - d4;
             Color color = this.hP.cr();
             Color color1 = this.hP.cs();
-            long i = System.currentTimeMillis();
+            long now = System.currentTimeMillis();
             double d7 = 0.002;
             byte b0 = 64;
             String s = GL11.glGetString(7936);
@@ -65,7 +65,7 @@ public class ct extends ESP {
             for (int j = 0; j <= b0; j++) {
                 double d8 = j * ((Math.PI * 2) / b0);
                 double d9 = (double)j / b0 * Math.PI * 2.0;
-                float f3 = (float)((Math.sin(i * d7 + d9) + 1.0) * 0.5);
+                float f3 = (float)((Math.sin(now * d7 + d9) + 1.0) * 0.5);
                 int k = (int)(color.getRed() + (color1.getRed() - color.getRed()) * f3);
                 int l = (int)(color.getGreen() + (color1.getGreen() - color.getGreen()) * f3);
                 int i1 = (int)(color.getBlue() + (color1.getBlue() - color.getBlue()) * f3);
@@ -84,7 +84,7 @@ public class ct extends ESP {
             for (int j1 = 0; j1 < b0; j1++) {
                 double d10 = j1 * ((Math.PI * 2) / b0);
                 double d11 = (double)j1 / b0 * Math.PI * 2.0;
-                float f4 = (float)((Math.sin(i * d7 + d11) + 1.0) * 0.5);
+                float f4 = (float)((Math.sin(now * d7 + d11) + 1.0) * 0.5);
                 int k1 = (int)(color.getRed() + (color1.getRed() - color.getRed()) * f4);
                 int l1 = (int)(color.getGreen() + (color1.getGreen() - color.getGreen()) * f4);
                 int i2 = (int)(color.getBlue() + (color1.getBlue() - color.getBlue()) * f4);

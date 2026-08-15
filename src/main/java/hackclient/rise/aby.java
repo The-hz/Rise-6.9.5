@@ -49,11 +49,11 @@ public final class aby implements Screen, InstanceAccess {
         );
         Vector2f vector2f3 = vector2f2.h(0.0F, this.azz);
 
-        for (ValueComponent abl : this.pA()) {
-            if (abl.getValue() == null || abl.getValue().wm() == null || !abl.getValue().wm().getAsBoolean()) {
-                abl.U(200);
-                abl.draw(new Vector2d(vector2f3.x + 1.0F + this.azz + (abl.getValue().wm() == null ? 0 : 10), vector2f3.y), var1, var2, var3);
-                vector2f3 = vector2f3.h(0.0F, (float)abl.getHeight());
+        for (ValueComponent valueComponent : this.pA()) {
+            if (valueComponent.getValue() == null || valueComponent.getValue().wm() == null || !valueComponent.getValue().wm().getAsBoolean()) {
+                valueComponent.U(200);
+                valueComponent.draw(new Vector2d(vector2f3.x + 1.0F + this.azz + (valueComponent.getValue().wm() == null ? 0 : 10), vector2f3.y), var1, var2, var3);
+                vector2f3 = vector2f3.h(0.0F, (float)valueComponent.getHeight());
             }
         }
     }
@@ -69,8 +69,8 @@ public final class aby implements Screen, InstanceAccess {
 
     @Override
     public void f(int var1, int var2, int var3) {
-        for (ValueComponent abl : this.pA()) {
-            if ((abl.getValue() == null || abl.getValue().wm() == null || !abl.getValue().wm().getAsBoolean()) && abl.e(var1, var2, var3)) {
+        for (ValueComponent valueComponent : this.pA()) {
+            if ((valueComponent.getValue() == null || valueComponent.getValue().wm() == null || !valueComponent.getValue().wm().getAsBoolean()) && valueComponent.e(var1, var2, var3)) {
                 break;
             }
         }

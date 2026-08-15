@@ -51,7 +51,7 @@ public class BreadCrumbs extends Module {
         GlStateManager.blendFunc(770, 771);
         GL11.glEnable(2848);
         GL11.glLineWidth(2.0F);
-        long i = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
         GL11.glBegin(3);
 
         for (int j = 0; j < var1.size(); j++) {
@@ -60,7 +60,7 @@ public class BreadCrumbs extends Module {
             double d0 = vec3.xCoord - RenderManager.bUO;
             double d1 = vec3.yCoord - RenderManager.bUP;
             double d2 = vec3.zCoord - RenderManager.bUQ;
-            float f = 1.0F - (float)(i - ws.sk) / (this.time.wo().intValue() * 100);
+            float f = 1.0F - (float)(now - ws.sk) / (this.time.wo().intValue() * 100);
             float f1 = Math.max(0.0F, Math.min(1.0F, f));
             Color color = this.rz().rD();
             GL11.glColor4f(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, f1);

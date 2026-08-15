@@ -162,10 +162,10 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
     public void au(String var1) {
         String s = StringUtils.trimToEmpty(var1);
         if (!s.isEmpty()) {
-            long j = System.currentTimeMillis();
-            if (!s.equals(this.avu) || j - this.avv > 750L) {
+            long now = System.currentTimeMillis();
+            if (!s.equals(this.avu) || now - this.avv > 750L) {
                 this.avu = s;
-                this.avv = j;
+                this.avv = now;
                 Iterator iterator = this.avr.iterator();
 
                 while (iterator.hasNext()) {

@@ -472,12 +472,12 @@ public final class RenderUtil implements InstanceAccess {
 
     public static void g(double var0, double var2, double var4, double var6) {
         ScaledResolution scaledresolution = aEg.jY;
-        double d0 = scaledresolution.getScaleFactor();
+        double scaleFactor = scaledresolution.getScaleFactor();
         var2 = scaledresolution.getScaledHeight() - var2;
-        var0 *= d0;
-        var2 *= d0;
-        var4 *= d0;
-        var6 *= d0;
+        var0 *= scaleFactor;
+        var2 *= scaleFactor;
+        var4 *= scaleFactor;
+        var6 *= scaleFactor;
         GL11.glEnable(3089);
         GL11.glScissor((int)var0, (int)(var2 - var6), (int)var4, (int)var6);
     }

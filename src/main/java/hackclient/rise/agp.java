@@ -161,13 +161,13 @@ public final class agp {
     public void a(int var1, char var2) {
         if (this.Mc && this.dj) {
             if (this.aJz != null && this.aJy != null) {
-                long i = System.currentTimeMillis();
+                long now = System.currentTimeMillis();
                 int j = uf();
                 int k = b(var1, var2);
-                KeyEvent keyevent = new KeyEvent(this.aJy, 401, i, j, k, '\uffff');
+                KeyEvent keyevent = new KeyEvent(this.aJy, 401, now, j, k, '\uffff');
                 this.aJz.dispatchEvent(keyevent);
                 if (var2 != 0 && !Character.isISOControl(var2)) {
-                    KeyEvent keyevent1 = new KeyEvent(this.aJy, 400, i, j, 0, var2);
+                    KeyEvent keyevent1 = new KeyEvent(this.aJy, 400, now, j, 0, var2);
                     this.aJz.dispatchEvent(keyevent1);
                 }
             }

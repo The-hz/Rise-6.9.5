@@ -81,12 +81,12 @@ public class MicrosoftLogin {
                 System.out.println("[DEBUG] Cookie->refresh got no code (HTTP " + httpsURLConnection.getResponseCode() + ", location=" + (string4 == null ? "null" : string4.substring(0, Math.min(80, string4.length()))) + ")");
                 return "";
             }
-            AuthTokenResponse a2 = gson.fromJson(Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=ba89e6e0-8490-4a26-8746-f389a0d3ccc7&code=" + string2 + "&client_secret=hlQ8Q~33jTRilP4yE-UtuOt9wG.ZFLqq6pErIa2B&grant_type=authorization_code&redirect_uri=http://localhost:8247", false), AuthTokenResponse.class);
-            if (a2 == null || a2.aEV == null || a2.aEV.isEmpty()) {
+            AuthTokenResponse authTokenResponse = gson.fromJson(Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=ba89e6e0-8490-4a26-8746-f389a0d3ccc7&code=" + string2 + "&client_secret=hlQ8Q~33jTRilP4yE-UtuOt9wG.ZFLqq6pErIa2B&grant_type=authorization_code&redirect_uri=http://localhost:8247", false), AuthTokenResponse.class);
+            if (authTokenResponse == null || authTokenResponse.aEV == null || authTokenResponse.aEV.isEmpty()) {
                 System.out.println("[DEBUG] Cookie->refresh code exchange returned no refresh_token");
                 return "";
             }
-            return a2.aEV;
+            return authTokenResponse.aEV;
         }
         catch (Exception exception) {
             System.out.println("[DEBUG] Cookie->refresh threw: " + String.valueOf(exception));
@@ -141,15 +141,15 @@ public class MicrosoftLogin {
         if (g3 == null) {
             return new LoginData();
         }
-        McResponse e2 = gson.fromJson(Browser.postExternal("https://api.minecraftservices.com/authentication/login_with_xbox", "{\"identityToken\":\"XBL3.0 x=" + g2.aFb.aFc[0].aFd + ";" + g3.aFa + "\"}", true), McResponse.class);
-        if (e2 == null) {
+        McResponse mcResponse = gson.fromJson(Browser.postExternal("https://api.minecraftservices.com/authentication/login_with_xbox", "{\"identityToken\":\"XBL3.0 x=" + g2.aFb.aFc[0].aFd + ";" + g3.aFa + "\"}", true), McResponse.class);
+        if (mcResponse == null) {
             return new LoginData();
         }
-        ProfileResponse f2 = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e2.aEU), ProfileResponse.class);
-        if (f2 == null) {
+        ProfileResponse profileResponse = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", mcResponse.aEU), ProfileResponse.class);
+        if (profileResponse == null) {
             return new LoginData();
         }
-        return new LoginData(e2.aEU, string2, f2.aEZ, f2.gK);
+        return new LoginData(mcResponse.aEU, string2, profileResponse.aEZ, profileResponse.gK);
     }
 
     private static String formValue(String string) {
@@ -233,12 +233,12 @@ public class MicrosoftLogin {
 
         private void bk(String string) {
             String string2 = Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=ba89e6e0-8490-4a26-8746-f389a0d3ccc7&code=" + string + "&client_secret=hlQ8Q~33jTRilP4yE-UtuOt9wG.ZFLqq6pErIa2B&grant_type=authorization_code&redirect_uri=http://localhost:8247", false);
-            AuthTokenResponse a2 = gson.fromJson(string2, AuthTokenResponse.class);
-            if (a2 == null) {
+            AuthTokenResponse authTokenResponse = gson.fromJson(string2, AuthTokenResponse.class);
+            if (authTokenResponse == null) {
                 callback.accept(null);
                 return;
             }
-            callback.accept(a2.aEV);
+            callback.accept(authTokenResponse.aEV);
         }
 
         private void a(HttpExchange httpExchange, String string) throws java.io.IOException {

@@ -17,10 +17,10 @@ public class aig implements Callable<Long> {
     public Long vf() {
         try {
             Socket socket = new Socket();
-            long i = System.currentTimeMillis();
+            long now = System.currentTimeMillis();
             socket.connect(this.aOJ);
             socket.close();
-            return System.currentTimeMillis() - i;
+            return System.currentTimeMillis() - now;
         } catch (Exception exception) {
             return 0L;
         }

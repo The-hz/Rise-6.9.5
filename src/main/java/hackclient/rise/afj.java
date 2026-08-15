@@ -315,8 +315,8 @@ public final class afj {
         if (var1 != null && !var1.isEmpty()) {
             this.sL();
             synchronized (this) {
-                long i = System.currentTimeMillis();
-                this.aGP.put(var1, i);
+                long now = System.currentTimeMillis();
+                this.aGP.put(var1, now);
                 this.aGN.put(var1, this.aGN.getOrDefault(var1, 0L) + 1L);
                 this.su();
             }
@@ -359,9 +359,9 @@ public final class afj {
         if (var1 != null && !var1.isEmpty()) {
             this.sL();
             synchronized (this) {
-                long i = System.currentTimeMillis();
+                long now = System.currentTimeMillis();
                 long j = this.aGO.getOrDefault(var1, 0L);
-                return i >= j;
+                return now >= j;
             }
         } else {
             return true;
@@ -382,8 +382,8 @@ public final class afj {
         if (var1 != null && !var1.isEmpty()) {
             this.sL();
             synchronized (this) {
-                long i = System.currentTimeMillis();
-                this.aGO.put(var1, Math.max(this.aGO.getOrDefault(var1, 0L), i + 60000L));
+                long now = System.currentTimeMillis();
+                this.aGO.put(var1, Math.max(this.aGO.getOrDefault(var1, 0L), now + 60000L));
                 this.aGN.put("suggest.accepted:" + var1, this.aGN.getOrDefault("suggest.accepted:" + var1, 0L) + 1L);
                 this.su();
             }
@@ -394,7 +394,7 @@ public final class afj {
         if (var1 != null && !var1.isEmpty()) {
             this.sL();
             synchronized (this) {
-                long i = System.currentTimeMillis();
+                long now = System.currentTimeMillis();
                 String s = "suggest.ignored:" + var1;
                 long j = this.aGN.getOrDefault(s, 0L) + 1L;
                 this.aGN.put(s, j);
@@ -406,7 +406,7 @@ public final class afj {
                     l = Math.min(600000L, 30000L * (1L << (int)k));
                 }
 
-                this.aGO.put(var1, Math.max(this.aGO.getOrDefault(var1, 0L), i + l));
+                this.aGO.put(var1, Math.max(this.aGO.getOrDefault(var1, 0L), now + l));
                 this.su();
             }
         }
@@ -670,9 +670,9 @@ public final class afj {
                                     && jsonelement != null
                                     && jsonelement.isJsonPrimitive()
                                     && jsonelement.getAsJsonPrimitive().isNumber()) {
-                                    long i = jsonelement.getAsLong();
-                                    if (i > 0L) {
-                                        this.aGO.put(s5, i);
+                                    long asLong = jsonelement.getAsLong();
+                                    if (asLong > 0L) {
+                                        this.aGO.put(s5, asLong);
                                     }
                                 }
                             }

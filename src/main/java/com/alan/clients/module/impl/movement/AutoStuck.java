@@ -228,10 +228,10 @@ public final class AutoStuck extends Module {
         if (!this.CX && this.CZ < 3) {
             this.CX = true;
             this.CZ++;
-            Vec3 vec3 = aEg.thePlayer.getPositionVector();
+            Vec3 positionVector = aEg.thePlayer.getPositionVector();
             this.CV = this.k.submit(() -> {
                 try {
-                    Optional optional = this.a(vec3, (int)this.searchRadius.wo().doubleValue());
+                    Optional optional = this.a(positionVector, (int)this.searchRadius.wo().doubleValue());
                     if (optional.isPresent()) {
                         this.fm = this.c((Vec3)optional.get());
                         this.CY = this.fm != null;
@@ -251,14 +251,14 @@ public final class AutoStuck extends Module {
 
         int i = (int)Math.floor(vec.xCoord);
         int j = (int)Math.floor(vec.yCoord);
-        int kx = (int)Math.floor(vec.zCoord);
+        int floorZCoord = (int)Math.floor(vec.zCoord);
         Vec3 vec3 = null;
         double d0 = Double.MAX_VALUE;
 
         for (int l = -var2; l <= var2; l++) {
             for (int i1 = -var2; i1 <= var2; i1++) {
                 for (int j1 = -5; j1 <= 5; j1++) {
-                    BlockPos blockpos = new BlockPos(i + l, j + j1, kx + i1);
+                    BlockPos blockpos = new BlockPos(i + l, j + j1, floorZCoord + i1);
                     if (!aEg.theWorld.isAirBlock(blockpos) && aEg.theWorld.isAirBlock(blockpos.up()) && aEg.theWorld.isAirBlock(blockpos.up(2))) {
                         Vec3 vec31 = new Vec3(blockpos.getX() + 0.5, blockpos.getY() + 1.0, blockpos.getZ() + 0.5);
                         double d1 = vec31.squareDistanceTo(vec);

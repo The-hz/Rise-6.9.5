@@ -121,9 +121,9 @@ implements aha {
         aba.drawRect((int)0, (int)0, (int)this.width, (int)this.height, (int)new Color(0, 0, 0, 100).getRGB());
         boolean bl = this.axh.values().stream().anyMatch(abb::oJ);
         if (bl) {
-            int n4 = Mouse.getDWheel();
-            if (n4 != 0) {
-                double d2 = (n4 > 0 ? -1 : 1) * 15;
+            int dWheel = Mouse.getDWheel();
+            if (dWheel != 0) {
+                double d2 = (dWheel > 0 ? -1 : 1) * 15;
                 this.axk += d2;
                 double d3 = this.or();
                 this.axk = d3 <= 0.0 ? 0.0 : Math.max(0.0, Math.min(d3, this.axk));
@@ -208,8 +208,8 @@ implements aha {
             aEg.displayGuiScreen(null);
             return;
         }
-        boolean bl = aba.isCtrlKeyDown();
-        if (bl) {
+        boolean ctrlKeyDown = aba.isCtrlKeyDown();
+        if (ctrlKeyDown) {
             if (n2 == 13 || n2 == 78) {
                 this.E(this.axp + 0.1);
                 return;
