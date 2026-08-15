@@ -28,7 +28,7 @@ import hackclient.rise.afe;
 import hackclient.rise.agc;
 import hackclient.rise.agl;
 import com.alan.clients.util.gui.textbox.TextBox;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
 import com.alan.clients.util.font.FontManager;
@@ -676,7 +676,7 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
 
     private void drawTag(float var1, float var2, String var3, Color var4) {
         float f = TOOLTIP_FONT.getStringWidth(var3) + 20;
-        RenderUtil.roundedRectangle(var1, var2, f, 15.0, 7.0, aip.d(var4, 55));
+        RenderUtil.roundedRectangle(var1, var2, f, 15.0, 7.0, ColorUtil.d(var4, 55));
         TOOLTIP_FONT.a(var3, var1 + 10.0F, centeredTextY(var2, 15.0, TOOLTIP_FONT), var4.getRGB());
     }
 

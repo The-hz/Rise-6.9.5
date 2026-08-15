@@ -2,6 +2,7 @@ package hackclient.rise;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.math.MathUtil;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import java.awt.Color;
@@ -51,7 +52,7 @@ public class agk implements InstanceAccess {
         if (this.aJf) {
             double d2 = var1.x;
             double d3 = var1.y + var2 * d0 - d1 * d0;
-            Color color = aip.d(Color.WHITE, 60);
+            Color color = ColorUtil.d(Color.WHITE, 60);
             RenderUtil.roundedRectangle(d2, d3, 1.0, d1, 0.5, color);
         }
     }

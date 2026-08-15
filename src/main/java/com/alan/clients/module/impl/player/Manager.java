@@ -22,7 +22,7 @@ import com.alan.clients.component.impl.player.BadPacketsComponent;
 import com.alan.clients.component.impl.player.SelectorDetectionComponent;
 import hackclient.rise.en;
 import hackclient.rise.tp;
-import com.alan.clients.util.render.ColorUtil;
+import com.alan.clients.util.render.IntGatherer;
 import hackclient.rise.tr;
 import hackclient.rise.ts;
 import hackclient.rise.tt;
@@ -792,7 +792,7 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean a(ColorUtil var1, int var2) {
+    private boolean a(IntGatherer var1, int var2) {
         ArrayList arraylist = new ArrayList();
         return var1.gather(arraylist) > var2;
     }
@@ -986,7 +986,7 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean b(ColorUtil var1, int var2) {
+    private boolean b(IntGatherer var1, int var2) {
         ArrayList arraylist = new ArrayList();
         int i = var1.gather(arraylist);
         if (i <= var2) {

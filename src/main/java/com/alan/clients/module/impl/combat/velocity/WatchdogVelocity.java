@@ -27,7 +27,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.component.bv;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -475,7 +475,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
             GlStateManager.disableLighting();
             GL11.glDepthMask(false);
             double d0 = -0.14;
-            RenderUtil.color(aip.d(this.rz().rB(), 100));
+            RenderUtil.color(ColorUtil.d(this.rz().rB(), 100));
             RenderUtil.drawBoundingBox(
                 aEg.thePlayer
                     .getEntityBoundingBox()

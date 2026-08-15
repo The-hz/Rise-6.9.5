@@ -3,7 +3,7 @@ package com.alan.clients.util.render.particle;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2f;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import java.awt.Color;
 import rip.vantage.commons.util.time.a;
 
@@ -29,7 +29,7 @@ public class Particle implements InstanceAccess {
 
     public Particle(Vector2f var1, Vector2f var2) {
         this.aPu = var1;
-        this.aPx = aip.d(aip.a(this.rz().rA(), this.rz().rB(), Math.random()), (int)(Math.random() * 255.0));
+        this.aPx = ColorUtil.d(ColorUtil.a(this.rz().rA(), this.rz().rB(), Math.random()), (int)(Math.random() * 255.0));
         this.aPv = var2;
         this.aPw = (float)(2.0 + Math.random() * 3.0);
         this.bN.aX();
@@ -56,8 +56,8 @@ public class Particle implements InstanceAccess {
             this.aPv.setY(this.aPv.getY() * 0.999F);
         }
 
-        this.aPz = aip.d(this.aPx, (int)this.aoJ * 3);
-        this.aPy = aip.d(this.aPx, (int)this.aoJ);
+        this.aPz = ColorUtil.d(this.aPx, (int)this.aoJ * 3);
+        this.aPy = ColorUtil.d(this.aPx, (int)this.aoJ);
         this.aoJ = Math.max(this.aoJ - (float)this.bN.aKx() / 18.0F, 0.0F);
         this.bN.aX();
     }

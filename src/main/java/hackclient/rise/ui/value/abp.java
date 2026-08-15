@@ -5,7 +5,7 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Value;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.util.MouseUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.sv;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -37,8 +37,8 @@ extends ValueComponent {
     }
 
     private void cj() {
-        Color color = aip.d(this.rz().rA(), this.pT());
-        Color color2 = aip.d(this.rz().rB(), this.pT());
+        Color color = ColorUtil.d(this.rz().rA(), this.pT());
+        Color color2 = ColorUtil.d(this.rz().rB(), this.pT());
         this.aze.forEach(vector2d -> RenderUtil.c(this.position.getX() + vector2d.getX(), this.position.getY() + vector2d.getY(), 2.5, color));
         for (float f2 = 0.0f; f2 <= 1.0f; f2 += 0.1f) {
             ArrayList<Vector2d> arrayList = new ArrayList<Vector2d>(this.aze);
@@ -60,7 +60,7 @@ extends ValueComponent {
                 arrayList.removeAll(arrayList2);
                 arrayList2.clear();
             }
-            RenderUtil.c(arrayList.get(0).getX() + this.position.getX(), arrayList.get(0).getY() + this.position.getY(), 1.5, aip.d(color2, Math.min(200, color2.getAlpha())));
+            RenderUtil.c(arrayList.get(0).getX() + this.position.getX(), arrayList.get(0).getY() + this.position.getY(), 1.5, ColorUtil.d(color2, Math.min(200, color2.getAlpha())));
         }
     }
 

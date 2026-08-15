@@ -17,7 +17,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import hackclient.rise.agd;
 import hackclient.rise.ahm;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.ajz;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -58,7 +58,7 @@ extends Module {
             int n3 = this.collection.size();
             int n4 = this.apD * n3 + 3;
             if (((Boolean)this.outline.wo()).booleanValue()) {
-                RenderUtil.roundedOutlineGradientRectangle(ajz2.ald - 1, ajz2.ale - 1, this.apB + 12 + 2, n4 + this.apD + 3 + 2, n2, 1.0, aip.d(this.rz().rA(), 100), aip.d(this.rz().rB(), 100));
+                RenderUtil.roundedOutlineGradientRectangle(ajz2.ald - 1, ajz2.ale - 1, this.apB + 12 + 2, n4 + this.apD + 3 + 2, n2, 1.0, ColorUtil.d(this.rz().rA(), 100), ColorUtil.d(this.rz().rB(), 100));
             }
         });
         this.b(gg.BLUR).c(() -> this.a(ajz2.ald, ajz2.ale, Color.WHITE, false, n2, false));

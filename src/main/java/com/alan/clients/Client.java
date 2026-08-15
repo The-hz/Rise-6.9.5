@@ -35,17 +35,9 @@ import hackclient.rise.q;
 import hackclient.rise.r;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import javax.crypto.Cipher;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 import lombok.Generated;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.Display;
@@ -58,15 +50,11 @@ public enum Client
     public Gson K;
     public static boolean i;
     public static String e;
-    public static Object[] fld_0oOOoOo0O00O_0;
     public EventBus<Event> eventBus;
     public aba I;
     public ComponentManager componentManager;
     public static String g;
     public aal n;
-    public static Object[] oO00O0OO0ooO;
-    public static Object[] fld_0OOOoo00o0_1;
-    public static Object[] o0Oo000O0oO;
     public q F;
     public ScriptManager scriptManager;
     public static String d;
@@ -83,7 +71,6 @@ public enum Client
     public r s;
     public ExecutorService executor;
     public afz v;
-    public static Object Oo0o00000O00;
     public RiseTab J;
     public gf G;
     public ConfigManager B;
@@ -120,136 +107,6 @@ public enum Client
         return this.moduleManager;
     }
 
-    public static Object o0Oo000O0oO(final Object[] array) {
-        try {
-            final int intValue = (int)array[1];
-            final String s = (String)array[2];
-            final Object o = array[0];
-            Object[] oo00O0OO0ooO;
-            if ((oo00O0OO0ooO = Client.oO00O0OO0ooO) == null) {
-                oo00O0OO0ooO = (Client.oO00O0OO0ooO = new Object[] { null });
-            }
-            Object o2;
-            if ((o2 = oo00O0OO0ooO[intValue]) == null) {
-                Object[] array2;
-                if ((array2 = (Object[])o) == null) {
-                    final Object[] array3 = Client.fld_0OOOoo00o0_1 = (array2 = new Object[] { null });
-                    final int n = 0;
-                    final byte[] array4 = new byte[16];
-                    array4[13] = 6;
-                    array4[1] = 48;
-                    array4[6] = -79;
-                    array4[15] = -101;
-                    array4[12] = 63;
-                    array4[10] = 72;
-                    array4[5] = 119;
-                    array4[11] = 61;
-                    array4[4] = -3;
-                    array4[14] = 52;
-                    array4[7] = 6;
-                    array4[3] = 98;
-                    array4[0] = -71;
-                    array4[2] = 77;
-                    array4[8] = 78;
-                    array4[9] = -10;
-                    array3[n] = array4;
-                }
-                final byte[] array5 = (byte[])array2[0];
-                if (Client.Oo0o00000O00 == null) {
-                    final byte[] array6 = new byte[32];
-                    array6[4] = 17;
-                    array6[29] = 110;
-                    array6[22] = -73;
-                    array6[31] = 20;
-                    array6[7] = 47;
-                    array6[0] = 85;
-                    array6[3] = 24;
-                    array6[5] = 63;
-                    array6[25] = 48;
-                    array6[20] = -24;
-                    array6[19] = 7;
-                    array6[9] = -82;
-                    array6[17] = 91;
-                    array6[1] = 0;
-                    array6[11] = -92;
-                    array6[15] = 104;
-                    array6[13] = 111;
-                    array6[21] = -76;
-                    array6[14] = -50;
-                    array6[10] = 7;
-                    array6[16] = -128;
-                    array6[26] = 40;
-                    array6[24] = 33;
-                    array6[30] = 11;
-                    array6[2] = 93;
-                    array6[6] = -44;
-                    array6[27] = 46;
-                    array6[28] = 97;
-                    array6[23] = 18;
-                    array6[12] = 19;
-                    array6[18] = 22;
-                    array6[8] = 35;
-                    final byte[] array7 = new byte[array5.length + array6.length];
-                    System.arraycopy(array5, 0, array7, 0, array5.length);
-                    System.arraycopy(array6, 0, array7, array5.length, array6.length);
-                    Object o3;
-                    if ((o3 = mth_0OOOoo00o0_0()[1]) == null) {
-                        final char[] charArray = "\u3b24\u3b36\u3b2d\u3b38\u3d0a\u3e46\u3b39\u3d13\u3d08\u3cec\u3d0c\u3d07\u3d1b\u3d15\u3b25\u3d0c\u3b3b\u3e4b".toCharArray();
-                        for (int i = 0; i < 18; ++i) {
-                            charArray[i] = (char)((((charArray[i] + '\u58e2' - 34819 ^ 0x6328 ^ 0xB5EA) - 65484 + 60430 ^ 0x19AF) - 6321 - 57076 ^ 0x2894) + 437 - 47957 + 48278 - 53817);
-                        }
-                        o3 = (mth_0OOOoo00o0_0()[1] = new String(charArray));
-                    }
-                    final SecretKeyFactory instance = SecretKeyFactory.getInstance((String)o3);
-                    final byte[] array8 = new byte[16];
-                    array8[7] = -4;
-                    array8[5] = 25;
-                    array8[11] = 28;
-                    array8[1] = -49;
-                    array8[6] = -65;
-                    array8[0] = -36;
-                    array8[4] = -92;
-                    array8[14] = 14;
-                    array8[13] = -32;
-                    array8[3] = 41;
-                    array8[15] = 91;
-                    array8[8] = -126;
-                    array8[2] = -94;
-                    array8[9] = -18;
-                    array8[12] = 12;
-                    array8[10] = -92;
-                    final byte[] key = instance.generateSecret(new PBEKeySpec(new String(array7, StandardCharsets.UTF_8).toCharArray(), array8, 18, 256)).getEncoded();
-                    Object o4;
-                    if ((o4 = mth_0OOOoo00o0_0()[2]) == null) {
-                        final char[] charArray2 = "\u4f1f\u4f33\u4f29".toCharArray();
-                        for (int j = 0; j < 3; ++j) {
-                            charArray2[j] = (char)((((charArray2[j] + '\ud4c0' + 30609 + 56978 + 56482 + 27827 ^ 0x4904 ^ 0x876) - 64359 ^ 0xC317) - 12412 ^ 0xA06D) - 46335);
-                        }
-                        o4 = (mth_0OOOoo00o0_0()[2] = new String(charArray2));
-                    }
-                    Client.Oo0o00000O00 = new SecretKeySpec(key, (String)o4);
-                }
-                final byte[] decode = Base64.getDecoder().decode(s);
-                final byte[] copyOfRange = Arrays.copyOfRange(decode, 0, 16);
-                final byte[] copyOfRange2 = Arrays.copyOfRange(decode, 16, decode.length);
-                Object o5;
-                if ((o5 = mth_0OOOoo00o0_0()[3]) == null) {
-                    final char[] charArray3 = "\u27cb\u2757\u27c9\u276d\u27d9\u2756\u27d9\u276d\u27c8\u27d1\u27d9\u27c9\u2767\u27c8\u272b\u2734\u2734\u2723\u272a\u2735".toCharArray();
-                    for (int k = 0; k < 20; ++k) {
-                        charArray3[k] = (char)((((charArray3[k] + '\u0c64' - 64102 ^ 0xA647) - 56523 + 9035 + 12974 ^ 0xA390 ^ 0x2B51) + 26772 + 51607 ^ 0x75F9) - 30010 - 60154 - 22236);
-                    }
-                    o5 = (mth_0OOOoo00o0_0()[3] = new String(charArray3));
-                }
-                final Cipher instance2 = Cipher.getInstance((String)o5);
-                instance2.init(2, (Key)Client.Oo0o00000O00, new IvParameterSpec(copyOfRange));
-                o2 = (Client.oO00O0OO0ooO[intValue] = new String(instance2.doFinal(copyOfRange2), StandardCharsets.UTF_8));
-            }
-            return o2;
-        } catch (java.security.GeneralSecurityException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
     @Generated
     public ConfigManager p() {
@@ -260,14 +117,6 @@ public enum Client
         if (this.p() != null && this.p().to() != null) {
             this.p().to().write();
         }
-    }
-
-    public static Object[] mth_0OOOoo00o0_0() {
-        Object[] fld_0oOOoOo0O00O_0;
-        if ((fld_0oOOoOo0O00O_0 = Client.fld_0oOOoOo0O00O_0) == null) {
-            fld_0oOOoOo0O00O_0 = (Client.fld_0oOOoOo0O00O_0 = new Object[4]);
-        }
-        return fld_0oOOoOo0O00O_0;
     }
 
     @Generated
@@ -433,42 +282,6 @@ public enum Client
     }
 
     static {
-        Client.o0Oo000O0oO = new Object[14];
-        int n10_hi = 0;
-        final Object[] array = { Client.fld_0OOOoo00o0_1, 0, null };
-        final int n11 = 2;
-        Object o;
-        if ((o = mth_0OOOoo00o0_0()[0]) == null) {
-            final char[] charArray = "\ua18e\ua16d\ua1f9\ua199\ua1cf\ua1fe\ua1f1\ua16d\ua198\ua19a\ua18f\ua198\ua1c4\ua1c9\ua161\ua162\ua1fa\ua1d1\ua1cb\ua18d\ua1f0\ua18f\ua1f8\ua167\ua165\ua1c6\ua1c4\ua168\ua16b\ua1cf\ua1c1\ua161\ua18d\ua18f\ua163\ua1f8\ua1c1\ua1c2\ua164\ua19f\ua161\ua1cb\ua16b\ua1cb\ua18f\ua16a\ua1c2\ua163\ua1cb\ua18b\ua16d\ua168\ua161\ua18c\ua16f\ua1cd\ua19d\ua163\ua1fe\ua1ff\ua16f\ua188\ua1cb\ua18c\ua19d\ua1cc\ua1c3\ua1c6\ua18e\ua191\ua168\ua1cb\ua1cd\ua19c\ua19a\ua1f8\ua1ff\ua19a\ua16d\ua1f0\ua1f9\ua19a\ua187\ua18d\ua16e\ua1c8\ua1c0\ua1fa\ua1ca\ua19d\ua1fb\ua1f8\ua19f\ua1f1\ua16c\ua19e\ua16a\ua1ff\ua1f0\ua160\ua198\ua19d\ua16b\ua161\ua1c4\ua169\ua186\ua16f\ua1d1\ua168\ua1f9\ua188\ua19f\ua1c8\ua167\ua19d\ua18d\ua1f9\ua1fe\ua16c\ua1ca\ua1fe\ua1cd\ua1cb\ua191\ua186\ua19a\ua1c0\ua1c2\ua189\ua191\ua16b\ua183\ua19f\ua16d\ua19c\ua19e\ua1c4\ua18e\ua18b\ua167\ua163\ua1c7\ua1f0\ua1f8\ua1fb\ua19b\ua189\ua1c1\ua1c2\ua1c8\ua164\ua1d0\ua161\ua16a\ua18b\ua1f1\ua18b\ua18a\ua18f\ua169\ua19d\ua167\ua189\ua1f1\ua199\ua1ff\ua16b\ua1c2\ua1c8\ua1c4\ua19e\ua16c\ua16c\ua1d1\ua1fe\ua1c4\ua1c2\ua1c3\ua1fd\ua18c\ua168\ua18d\ua1cb\ua166\ua163\ua1c6\ua1fb\ua1fa\ua1c8\ua1ff\ua162\ua183\ua1fa\ua1fb\ua1fd\ua1cc\ua168\ua18f\ua161\ua1fd\ua186\ua1c4\ua1cf\ua1fa\ua1f8\ua1c0\ua1d1\ua1fa\ua1c8\ua167\ua16f\ua1fe\ua18a\ua1cb\ua1fe\ua18c\ua1cf\ua19c\ua16a\ua161\ua19c\ua1ff\ua1fe\ua1cb\ua1f8\ua1c7\ua1cb\ua191\ua167\ua189\ua18b\ua164\ua183\ua199\ua187\ua1f8\ua1ff\ua186\ua18a\ua1c2\ua165\ua16b\ua1c1\ua1c5\ua19b\ua1c6\ua1fd\ua162\ua1c5\ua1c3\ua1f1\ua19e\ua1ca\ua19d\ua183".toCharArray();
-            for (int i = 0; i < 256; ++i) {
-                charArray[i] = (char)(((charArray[i] ^ '\ueb10') + 30816 + 52144 + 1024 ^ 0x27B1) + 29777 - 59937 - 1174 - 28167 - 24603 - 27743);
-            }
-            o = (mth_0OOOoo00o0_0()[0] = new String(charArray));
-        }
-        array[n11] = o;
-        final char[] charArray2 = ((String)o0Oo000O0oO(array)).toCharArray();
-        int limit = 161;
-        int n33;
-        for (int n17_lo = 0; n17_lo < limit; n17_lo = n33) {
-            final char[] array2 = charArray2;
-            final int n18 = n17_lo;
-            int n17_lo2 = n17_lo + 1;
-            int n2_lo = array2[n18];
-            final char[] array3 = charArray2;
-            final int n23 = n17_lo2;
-            int n17_lo3 = n17_lo2 + 1;
-            int n3_hi = array3[n23];
-            int limit2 = n2_lo << 16 | n3_hi;
-            final char[] array4 = new char[limit2];
-            for (int j = 0; j < limit2; j++) {
-                array4[j] = charArray2[n17_lo3 + j];
-            }
-            final Object[] o0Oo000O0oO = Client.o0Oo000O0oO;
-            final int n32 = n10_hi;
-            n10_hi++;
-            o0Oo000O0oO[n32] = new String(array4);
-            n33 = n17_lo3 + limit2;
-        }
         new StringBuilder().append("Made with <3 by Alan and ").append("The_Bi11iona1re").toString();
         new StringBuilder().append("\u00a9 Rise Client 2026. All Righ").append("ts Reserved").toString();
         final String s = "6.9.5";

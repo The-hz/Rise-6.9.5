@@ -10,7 +10,7 @@ import hackclient.rise.ui.menu.adi;
 import com.alan.clients.util.MouseUtil;
 import hackclient.rise.afe;
 import hackclient.rise.agc;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
 import com.alan.clients.util.font.FontManager;
@@ -73,13 +73,13 @@ public class AddAccountScreen extends GuiScreen implements InstanceAccess {
         this.adHoverAnimation.Q(MouseUtil.isHovered(this.adX, this.adY, this.adWidth, this.adHeight, var1, var2) ? 100.0 : 45.0);
         this.b(gg.REGULAR)
             .c(() -> FONT_RENDERER.c("Select your login method", this.width / 2, this.height / 2 - 76 + this.animation.sG(), Color.WHITE.getRGB()));
-        Color color = aip.d(Color.BLACK, 150);
-        Color color1 = aip.d(Color.WHITE, (int)(150.0 + this.adHoverAnimation.sG()));
+        Color color = ColorUtil.d(Color.BLACK, 150);
+        Color color1 = ColorUtil.d(Color.WHITE, (int)(150.0 + this.adHoverAnimation.sG()));
         this.b(gg.BLUR).c(() -> RenderUtil.roundedRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, Color.WHITE));
         this.b(gg.BLOOM).c(() -> RenderUtil.roundedRectangle(this.adX + 0.5F, this.adY + 0.5F, this.adWidth - 1, this.adHeight - 1, 6.0, color));
         this.b(gg.REGULAR).c(() -> {
-            RenderUtil.roundedRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, aip.d(adf.aBV, (int)this.adHoverAnimation.sG() - 15));
-            RenderUtil.roundedOutlineGradientRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, 1.0, aip.d(adf.aBP, 32), aip.d(adf.aBO, 32));
+            RenderUtil.roundedRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, ColorUtil.d(adf.aBV, (int)this.adHoverAnimation.sG() - 15));
+            RenderUtil.roundedOutlineGradientRectangle(this.adX, this.adY, this.adWidth, this.adHeight, 5.0, 1.0, ColorUtil.d(adf.aBP, 32), ColorUtil.d(adf.aBO, 32));
             int k = this.adX + 14;
             int l = this.adY + (this.adHeight - 24) / 2;
             RenderUtil.image(LOCALTS_RESOURCE, k, l, 24.0F, 24.0F, color1);

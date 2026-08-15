@@ -3,7 +3,7 @@ package com.alan.clients.util.font.impl.rise;
 import hackclient.rise.agc;
 import hackclient.rise.age;
 import hackclient.rise.agh;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -231,7 +231,7 @@ public class FontRenderer extends agc {
         double d4 = d2 * 2.0;
         double d5 = d4 - this.aIJ / 5.0F;
         double d6 = d3;
-        aip.aA(var7 ? Color.white.getRGB() : var6);
+        ColorUtil.aA(var7 ? Color.white.getRGB() : var6);
         String s = var1.replaceAll("§l", "");
 
         try {
@@ -246,7 +246,7 @@ public class FontRenderer extends agc {
                 } else if (c0 == 167 && j + 1 < achar.length) {
                     int k = "0123456789abcdefklmnor".indexOf(achar[++j]);
                     if (k >= 0 && k < COLOR_CODES.length) {
-                        aip.d(new Color(COLOR_CODES[k]));
+                        ColorUtil.d(new Color(COLOR_CODES[k]));
                     }
                 } else {
                     char c1 = c0;

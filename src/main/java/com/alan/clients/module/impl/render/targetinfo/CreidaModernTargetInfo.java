@@ -19,7 +19,7 @@ import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import hackclient.rise.ahd;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.ais;
 import com.alan.clients.util.render.particle.Particle;
 import hackclient.rise.bf;
@@ -121,7 +121,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                     this.rz();
                     Color color8 = Themes.rK();
                     this.rz();
-                    color8 = aip.d(color8, (int)(Themes.rK().getAlpha() / 1.7F));
+                    color8 = ColorUtil.d(color8, (int)(Themes.rK().getAlpha() / 1.7F));
                     this.rz();
                     RenderUtil.a(d12, d13, d5, 6.5, 3.5, color8, Themes.rK(), true);
                     RenderUtil.b(d0 + 10.0 + b0 + 6.0, d1 + 10.0 + b0 - 4.0 - 7.0, d6, 6.5, 3.5, color3, color2, false);
@@ -132,7 +132,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d9 / 2.0) * (1.0 - d11), (d1 + d10 / 2.0) * (1.0 - d11), 0.0);
                     GlStateManager.scale(d11, d11, 0.0);
-                    RenderUtil.color(aip.a(Color.RED, Color.WHITE, d7 / 9.0));
+                    RenderUtil.color(ColorUtil.a(Color.RED, Color.WHITE, d7 / 9.0));
                     RenderUtil.dropShadow(3, d0 + 10.0 + d8, d1 + 10.0 + d8, b0 - d7, b0 - d7, 20.0, this.rz().getRound() * 2);
                     this.auz.Q(d7 / 2.0);
                     double d12 = this.auz.sG() == 0.0 ? 1.0 : this.auz.sG();
@@ -154,7 +154,7 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
                     RenderUtil.roundedRectangle(d0 + 3.5, d1 + 5.5, d9 - 2.0, d10 - 1.0, 12.0, this.rz().rE());
                     Color color = this.rz().rA();
                     Color color1 = this.rz().rB();
-                    RenderUtil.b(d0 + 10.0 + b0 + 6.0, d1 + 10.0 + b0 - 4.0 - 7.0, d6, 6.0, 3.0, aip.d(color1, 255), aip.d(color, 255), false);
+                    RenderUtil.b(d0 + 10.0 + b0 + 6.0, d1 + 10.0 + b0 - 4.0 - 7.0, d6, 6.0, 3.0, ColorUtil.d(color1, 255), ColorUtil.d(color, 255), false);
                     GlStateManager.popMatrix();
                 });
             }
@@ -202,6 +202,6 @@ public class CreidaModernTargetInfo extends Mode<TargetInfo> {
         GlStateManager.disableBlend();
         ais.vM();
         float f1 = 0.5F;
-        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, aip.d(Color.BLACK, 40));
+        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.d(Color.BLACK, 40));
     }
 }

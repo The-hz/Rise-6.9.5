@@ -17,7 +17,7 @@ import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.gg;
 import hackclient.rise.ui.value.abm;
 import hackclient.rise.ui.value.abn;
@@ -81,7 +81,7 @@ public class SettingsRenderer implements InstanceAccess {
                 Color color = Themes.rK();
                 double d6 = this.animation.sG();
                 this.rz();
-                RenderUtil.roundedRectangle(d3, d4, d0, d1, d5, aip.d(color, (int)(d6 * Themes.rK().getAlpha())));
+                RenderUtil.roundedRectangle(d3, d4, d0, d1, d5, ColorUtil.d(color, (int)(d6 * Themes.rK().getAlpha())));
 
                 for (ValueComponent abl : this.valueList) {
                     if (abl.getValue() != null && abl.getValue().wm() != null && abl.getValue().wm().getAsBoolean()) {

@@ -4,7 +4,7 @@ import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.menu.impl.main.LoginMenu;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
@@ -36,7 +36,7 @@ public class PrereleaseDisclaimer extends GuiScreen {
                 "Note: This is private prerelease software",
                 scaledresolution.getScaledWidth() / 2.0,
                 scaledresolution.getScaledHeight() / 2.0 - 70.0,
-                aip.d(Color.WHITE, (int)this.fadeAnimation.sG()).getRGB()
+                ColorUtil.d(Color.WHITE, (int)this.fadeAnimation.sG()).getRGB()
             );
         FontManager.MAIN
             .a(24, gd.REGULAR)
@@ -44,7 +44,7 @@ public class PrereleaseDisclaimer extends GuiScreen {
                 "Features, interfaces and sequences are not final and can be expected to change at any time",
                 scaledresolution.getScaledWidth() / 2.0,
                 scaledresolution.getScaledHeight() / 2.0 - 50.0,
-                aip.d(Color.WHITE, (int)this.fadeAnimation.sG()).getRGB()
+                ColorUtil.d(Color.WHITE, (int)this.fadeAnimation.sG()).getRGB()
             );
         FontManager.MAIN
             .a(16, gd.REGULAR)
@@ -52,7 +52,7 @@ public class PrereleaseDisclaimer extends GuiScreen {
                 "© Rise Client 2022. All Rights Reserved",
                 scaledresolution.getScaledWidth() / 2.0,
                 scaledresolution.getScaledHeight() / 2.0 + 70.0,
-                aip.d(Color.WHITE, (int)this.fadeAnimation.sG() / 2).getRGB()
+                ColorUtil.d(Color.WHITE, (int)this.fadeAnimation.sG() / 2).getRGB()
             );
         if (this.aCt.T(5000L)) {
             aEg.displayGuiScreen(new LoginMenu());

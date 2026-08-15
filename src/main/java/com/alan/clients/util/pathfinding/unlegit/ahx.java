@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import lombok.Generated;
 
 class ahx {
-    private Vec3 aNT;
+    private ahy aNT;
     private ahx aNU;
-    private ArrayList<Vec3> aNM;
+    private ArrayList<ahy> aNM;
     private double aNV;
     private double aco;
     private double aNW;
 
-    public ahx(Vec3 var1, ahx var2, ArrayList<Vec3> var3, double var4, double var6, double var8) {
+    public ahx(ahy var1, ahx var2, ArrayList<ahy> var3, double var4, double var6, double var8) {
         this.aNT = var1;
         this.aNU = var2;
         this.aNM = var3;
@@ -21,7 +21,7 @@ class ahx {
     }
 
     @Generated
-    public Vec3 uS() {
+    public ahy uS() {
         return this.aNT;
     }
 
@@ -31,7 +31,7 @@ class ahx {
     }
 
     @Generated
-    public ArrayList<Vec3> uQ() {
+    public ArrayList<ahy> uQ() {
         return this.aNM;
     }
 
@@ -51,7 +51,7 @@ class ahx {
     }
 
     @Generated
-    public void b(Vec3 var1) {
+    public void b(ahy var1) {
         this.aNT = var1;
     }
 
@@ -61,7 +61,7 @@ class ahx {
     }
 
     @Generated
-    public void e(ArrayList<Vec3> var1) {
+    public void e(ArrayList<ahy> var1) {
         this.aNM = var1;
     }
 

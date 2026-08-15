@@ -2,7 +2,7 @@ package hackclient.rise.component.esp;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.component.impl.render.espcomponent.api.ESP;
 import com.alan.clients.component.impl.render.espcomponent.api.ESPColor;
 import java.awt.Color;
@@ -59,7 +59,7 @@ public class cp extends ESP implements InstanceAccess {
             }
 
             this.hV++;
-            RenderUtil.color(aip.d(flag ? Color.red : this.rz().rA(), 60));
+            RenderUtil.color(ColorUtil.d(flag ? Color.red : this.rz().rA(), 60));
             RenderUtil.drawBoundingBox(new AxisAlignedBB(d0 - f1 + 0.1, d1 + f2 + 0.1, d2 - f1 + 0.1, d0 + f1 - 0.1, d1, d2 + f1 - 0.1));
             GL11.glDisable(2848);
             GL11.glEnable(3553);

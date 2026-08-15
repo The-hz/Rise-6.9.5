@@ -16,7 +16,7 @@ import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.ahf;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
 import hackclient.rise.component.bv;
@@ -158,7 +158,7 @@ public class TargetStrafe extends Module {
         GL11.glEnable(2832);
         GL11.glHint(3153, 4354);
         GL11.glBegin(0);
-        aip.d(this.rz().rD());
+        ColorUtil.d(this.rz().rD());
         double d3 = this.range.wo().doubleValue();
         double d4 = Math.PI * 2;
 
@@ -188,7 +188,7 @@ public class TargetStrafe extends Module {
                 GL11.glEnable(2832);
                 GL11.glHint(3153, 4354);
                 GL11.glBegin(0);
-                aip.d(this.rz().rD());
+                ColorUtil.d(this.rz().rD());
 
                 for (int j = 0; j < 360; j += this.dots.wo().intValue()) {
                     double d8 = j * d4 / 360.0;

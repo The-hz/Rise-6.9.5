@@ -8,7 +8,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.component.bv;
 import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
@@ -29,7 +29,7 @@ public final class Tracers extends Module {
                     double d0 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * var1.getPartialTicks();
                     double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * var1.getPartialTicks() + 1.62F;
                     double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * var1.getPartialTicks();
-                    Color color = aip.d(aip.a(this.rz().rB(), this.rz().rA(), Math.min(1.0F, aEg.thePlayer.getDistanceToEntity(entity) / 50.0F)), 128);
+                    Color color = ColorUtil.d(ColorUtil.a(this.rz().rB(), this.rz().rA(), Math.min(1.0F, aEg.thePlayer.getDistanceToEntity(entity) / 50.0F)), 128);
                     aEg.getRenderManager();
                     double d3 = RenderManager.bUO;
                     aEg.getRenderManager();

@@ -4,7 +4,7 @@ import com.alan.clients.Client;
 import com.alan.clients.module.impl.render.Interface;
 import com.alan.clients.util.vector.Vector2d;
 import hackclient.rise.adw;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +50,7 @@ public enum Themes {
     GOTHIC("Gothic", new Color(31, 30, 30), new Color(196, 190, 190), EnumChatFormatting.NONE, adw.GRAY),
     SEN("Rue", new Color(234, 118, 176), new Color(31, 30, 30), EnumChatFormatting.DARK_PURPLE, adw.PINK),
     PURPLE("Purple", new Color(5391249), new Color(5391249).brighter(), EnumChatFormatting.NONE),
-    TEST("Rainbow", var0 -> aip.aB((int)((var0.getX() + var0.getY()) * 10.0)), EnumChatFormatting.RED),
+    TEST("Rainbow", var0 -> ColorUtil.aB((int)((var0.getX() + var0.getY()) * 10.0)), EnumChatFormatting.RED),
     NORD("Nord", new Color(143, 188, 187), new Color(163, 190, 140), new Color(236, 239, 244), EnumChatFormatting.AQUA, adw.AQUA, adw.GRAY);
 
     private final String themeName;
@@ -108,9 +108,9 @@ public enum Themes {
             return this.aDO.apply(var1);
         } else if (this.triColor) {
             double d0 = this.getBlendFactor(var1);
-            return d0 <= 0.5 ? aip.a(this.rB(), this.rA(), d0 * 2.0) : aip.a(this.rC(), this.rB(), (d0 - 0.5) * 2.0);
+            return d0 <= 0.5 ? ColorUtil.a(this.rB(), this.rA(), d0 * 2.0) : ColorUtil.a(this.rC(), this.rB(), (d0 - 0.5) * 2.0);
         }
-        return aip.a(this.rA(), this.rB(), this.getBlendFactor(var1));
+        return ColorUtil.a(this.rA(), this.rB(), this.getBlendFactor(var1));
     }
 
     public Color rD() {

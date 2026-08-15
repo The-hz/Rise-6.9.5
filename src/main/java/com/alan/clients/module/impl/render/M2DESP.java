@@ -14,7 +14,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.component.bv;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -186,7 +186,7 @@ extends Module {
                             }
                         }
                     }
-                    Color color5 = new Color(aip.a(this.rz().rA(), this.rz().rB(), f3).getRGB());
+                    Color color5 = new Color(ColorUtil.a(this.rz().rA(), this.rz().rB(), f3).getRGB());
                     RenderUtil.a(d2 - 2.0, d3 + d8, 0.5, d5 - d3 - d8 + 0.5, color5, this.rz().rB());
                     this.b(gg.BLOOM).c(() -> this.a(d2, d3, d8, d5, color5));
                     break block72;
@@ -198,7 +198,7 @@ extends Module {
             float f4 = (float)entityLivingBase.getTotalArmorValue() / 20.0f;
             if (!(f4 > 0.0f)) continue;
             RenderUtil.d(d2 - 0.5, d5 + 1.5, d4 - d2 + 1.5, 1.5, new Color(0, 0, 0, 180));
-            RenderUtil.c(d2, d5 + 2.0, (d6 + 0.5) * (double)f4, 0.5, this.rz().rA(), aip.a(this.rz().rA(), this.rz().rB(), f4));
+            RenderUtil.c(d2, d5 + 2.0, (d6 + 0.5) * (double)f4, 0.5, this.rz().rA(), ColorUtil.a(this.rz().rA(), this.rz().rB(), f4));
             this.b(gg.BLOOM).c(() -> this.a(d2, d5, d4, d6, f4));
         }
     };
@@ -207,7 +207,7 @@ extends Module {
         if (((Boolean)this.glow.wo()).booleanValue()) {
             GlStateManager.pushMatrix();
             RenderUtil.d(d2 - 0.5, d3 + 1.5, d4 - d2 + 1.5, 1.5, new Color(0, 0, 0, 180));
-            RenderUtil.c(d2, d3 + 2.0, (d5 + 2.0) * (double)f2, 0.5, this.rz().rA(), aip.a(this.rz().rA(), this.rz().rB(), f2));
+            RenderUtil.c(d2, d3 + 2.0, (d5 + 2.0) * (double)f2, 0.5, this.rz().rA(), ColorUtil.a(this.rz().rA(), this.rz().rB(), f2));
             GlStateManager.popMatrix();
         }
     }

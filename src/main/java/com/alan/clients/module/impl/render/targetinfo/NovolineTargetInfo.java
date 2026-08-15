@@ -10,7 +10,7 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.bf;
 import hackclient.rise.gg;
 import java.awt.Color;
@@ -75,7 +75,7 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
         double d11 = d10 * (d2 / d3);
         this.avb.Q(d11);
         double d12 = this.avb.sG();
-        RenderUtil.d(d0 + 44.0, d1 + 22.0, d12, 11.0, aip.a(this.rz().rB(), 0.5F));
+        RenderUtil.d(d0 + 44.0, d1 + 22.0, d12, 11.0, ColorUtil.a(this.rz().rB(), 0.5F));
         double d13 = d11;
         RenderUtil.d(d0 + 44.0, d1 + 22.0, d13, 11.0, this.rz().rA());
         String s2 = String.format("%.1f%%", d4);
@@ -84,7 +84,7 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
         if (this.nF()) {
             this.b(gg.BLOOM).c(() -> {
                 RenderUtil.d(d0 + 44.0, d1 + 22.0, d13, 11.0, this.rz().rA());
-                RenderUtil.d(d0 + 44.0, d1 + 22.0, d12, 11.0, aip.a(this.rz().rB(), 0.5F));
+                RenderUtil.d(d0 + 44.0, d1 + 22.0, d12, 11.0, ColorUtil.a(this.rz().rB(), 0.5F));
             });
         }
 

@@ -15,7 +15,7 @@ import hackclient.rise.AltAccount;
 import hackclient.rise.aep;
 import hackclient.rise.aeq;
 import hackclient.rise.agc;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.ais;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
@@ -29,12 +29,12 @@ public class AccountViewModel<T extends AltAccount> implements adf, InstanceAcce
     private static final agc FONT_RENDERER = FontManager.MAIN.a(24, gd.BOLD);
     private static final agc INFO_FONT_RENDERER = FontManager.MAIN.a(18, gd.MEDIUM);
     private static final DateFormat DATE_FORMAT = DateFormat.getDateInstance(3);
-    private static final Color BLOOM_COLOR = aip.d(Color.BLACK, 150);
-    private static final Color FONT_COLOR = aip.d(Color.WHITE, 150);
-    private static final Color INFO_COLOR = aip.d(FONT_COLOR.darker(), 150);
-    private static final Color BACKGROUND_COLOR = aip.d(aBV, 50);
-    private static final Color BORDER_ONE_COLOR = aip.d(aBP, 32);
-    private static final Color BORDER_TWO_COLOR = aip.d(aBO, 32);
+    private static final Color BLOOM_COLOR = ColorUtil.d(Color.BLACK, 150);
+    private static final Color FONT_COLOR = ColorUtil.d(Color.WHITE, 150);
+    private static final Color INFO_COLOR = ColorUtil.d(FONT_COLOR.darker(), 150);
+    private static final Color BACKGROUND_COLOR = ColorUtil.d(aBV, 50);
+    private static final Color BORDER_ONE_COLOR = ColorUtil.d(aBP, 32);
+    private static final Color BORDER_TWO_COLOR = ColorUtil.d(aBO, 32);
     private final Animation hoverAnimation;
     private final Animation positionAnimation;
     private T account;
@@ -136,7 +136,7 @@ public class AccountViewModel<T extends AltAccount> implements adf, InstanceAcce
         this.rz();
         RenderUtil.roundedRectangle(var1, var3, d0, d1, 5.0, Themes.rK());
         ais.aD(1);
-        RenderUtil.image(SkinUtil.a(aei.SKIN, this.account.sh(), 24), var1, var3, var5, var5, aip.d(Color.WHITE, (int)(200.0 + this.hoverAnimation.sG())));
+        RenderUtil.image(SkinUtil.a(aei.SKIN, this.account.sh(), 24), var1, var3, var5, var5, ColorUtil.d(Color.WHITE, (int)(200.0 + this.hoverAnimation.sG())));
         ais.vM();
     }
 

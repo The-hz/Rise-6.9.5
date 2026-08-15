@@ -15,7 +15,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.DragValue;
 import hackclient.rise.abw;
 import hackclient.rise.ahd;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
@@ -56,7 +56,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                 this.b(gg.BLOOM).c(() -> {
                     RenderUtil.roundedRectangle(this.atJ.apP.x, this.atJ.apP.y - 14.0, this.atJ.aHe.x, this.atJ.aHe.y + 14.0, 7.0, this.rz().rE());
                     double d1 = this.atJ.apP.x + this.atJ.aHe.x / 2.0 - (FontManager.MAIN.a(18, gd.REGULAR).getStringWidth("Information") / 2.0 + 1.0);
-                    FontManager.MAIN.a(18, gd.BOLD).c(ahd.ce("session"), d1, this.atJ.apP.y - 9.0, aip.d(this.rz().rA(), 200).getRGB());
+                    FontManager.MAIN.a(18, gd.BOLD).c(ahd.ce("session"), d1, this.atJ.apP.y - 9.0, ColorUtil.d(this.rz().rA(), 200).getRGB());
                 });
             }
 
@@ -70,7 +70,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
                             Math.min(255, abw.BACKGROUND.pV().getBlue() + color.getBlue() / 26),
                             245
                         );
-                        RenderUtil.a(this.atJ.apP.x, this.atJ.apP.y - 14.0, this.atJ.aHe.x, 14.0, 6.0, aip.d(abw.SECONDARY.pV(), 170), true, true, false, false);
+                        RenderUtil.a(this.atJ.apP.x, this.atJ.apP.y - 14.0, this.atJ.aHe.x, 14.0, 6.0, ColorUtil.d(abw.SECONDARY.pV(), 170), true, true, false, false);
                         RenderUtil.a(this.atJ.apP.x, this.atJ.apP.y, this.atJ.aHe.x, this.atJ.aHe.y, 6.0, color1, false, false, true, true);
                         double d1 = this.atJ.apP.x + this.atJ.aHe.x / 2.0 - (FontManager.MAIN.a(18, gd.REGULAR).getStringWidth("Information") / 2.0 + 1.0);
                         FontManager.MAIN.a(18, gd.BOLD).c(ahd.ce("session"), d1, this.atJ.apP.y - 9.0, this.rz().rD().getRGB());

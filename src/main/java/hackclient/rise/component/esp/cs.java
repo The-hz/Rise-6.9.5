@@ -3,7 +3,7 @@ package hackclient.rise.component.esp;
 import com.alan.clients.Client;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import hackclient.rise.ahf;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.component.bv;
 import com.alan.clients.component.impl.render.espcomponent.api.ESP;
 import com.alan.clients.component.impl.render.espcomponent.api.ESPColor;
@@ -45,7 +45,7 @@ public class cs extends ESP implements InstanceAccess {
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(2848);
-        aip.d(Client.a.g().c(com.alan.clients.module.impl.render.ESP.class).whiteColor.wo() ? Color.WHITE : this.hP.cr());
+        ColorUtil.d(Client.a.g().c(com.alan.clients.module.impl.render.ESP.class).whiteColor.wo() ? Color.WHITE : this.hP.cr());
         GL11.glDisable(2929);
         GL11.glDisable(3553);
         GL11.glDepthMask(false);

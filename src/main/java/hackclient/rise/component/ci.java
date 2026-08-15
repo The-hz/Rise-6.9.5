@@ -11,7 +11,7 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
@@ -60,8 +60,8 @@ public class ci extends Component {
                         GlStateManager.pushMatrix();
                         GlStateManager.translate((f2 + f * 0.5F) * (1.0 - d0), (f3 + f1 * 0.5F) * (1.0 - d0), 0.0);
                         GlStateManager.scale(d0, d0, 0.0);
-                        RenderUtil.roundedRectangle(f2, f3, f, f1, adv.getRound(), aip.d(adv.rK(), (int)(adv.rK().getAlpha() * d1)));
-                        RenderUtil.a(f2, f3, f * hA.sG(), f1, adv.getRound(), aip.d(adv.rA(), (int)(255.0 * d1)), aip.d(adv.rB(), (int)(255.0 * d1)), false);
+                        RenderUtil.roundedRectangle(f2, f3, f, f1, adv.getRound(), ColorUtil.d(adv.rK(), (int)(adv.rK().getAlpha() * d1)));
+                        RenderUtil.a(f2, f3, f * hA.sG(), f1, adv.getRound(), ColorUtil.d(adv.rA(), (int)(255.0 * d1)), ColorUtil.d(adv.rB(), (int)(255.0 * d1)), false);
                         if (hF) {
                             String s = MathUtil.round(hA.sG() * 100.0, 1) + "%";
                             int i = Math.max(12, Math.round(16.0F * hE));
@@ -71,7 +71,7 @@ public class ci extends Component {
                                     s,
                                     f2 + f - FontManager.MAIN.a(i, gd.REGULAR).getStringWidth(s) - 2.0F * hE,
                                     f3 + 3.0F * hE,
-                                    aip.d(Color.WHITE, (int)(255.0 * d1)).getRGB()
+                                    ColorUtil.d(Color.WHITE, (int)(255.0 * d1)).getRGB()
                                 );
                         }
 
@@ -85,7 +85,7 @@ public class ci extends Component {
                         GlStateManager.translate((f2 + f * 0.5F) * (1.0 - d0), (f3 + f1 * 0.5F) * (1.0 - d0), 0.0);
                         GlStateManager.scale(d0, d0, 0.0);
                         RenderUtil.roundedRectangle(
-                            f2 + 0.5F, f3 + 0.5F, f - 1.0F, f1 - 1.0F, adv.getRound() + 1, aip.d(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d1))
+                            f2 + 0.5F, f3 + 0.5F, f - 1.0F, f1 - 1.0F, adv.getRound() + 1, ColorUtil.d(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d1))
                         );
                         GlStateManager.popMatrix();
                     }
@@ -94,7 +94,7 @@ public class ci extends Component {
                 GlStateManager.pushMatrix();
                 GlStateManager.translate((f2 + f * 0.5F) * (1.0 - d0), (f3 + f1 * 0.5F) * (1.0 - d0), 0.0);
                 GlStateManager.scale(d0, d0, 0.0);
-                RenderUtil.roundedRectangle(f2, f3, f, f1, adv.getRound(), aip.d(Color.BLACK, (int)(255.0 * d1)));
+                RenderUtil.roundedRectangle(f2, f3, f, f1, adv.getRound(), ColorUtil.d(Color.BLACK, (int)(255.0 * d1)));
                 GlStateManager.popMatrix();
             });
             if (!dj && hB.isFinished()) {

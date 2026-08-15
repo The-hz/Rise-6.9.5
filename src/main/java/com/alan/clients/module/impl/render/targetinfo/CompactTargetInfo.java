@@ -15,7 +15,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.ais;
 import hackclient.rise.bf;
 import com.alan.clients.util.font.FontManager;
@@ -87,7 +87,7 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
                         RenderUtil.roundedRectangle(d0, d1, d8 - 3.5, d9 - 5.0, 8.0, color);
                     }
 
-                    RenderUtil.roundedOutlineGradientRectangle(d0, d1, d8 - 3.5, d9 - 5.0, 8.0, 0.5, aip.d(this.rz().rA(), 200), aip.d(this.rz().rB(), 200));
+                    RenderUtil.roundedOutlineGradientRectangle(d0, d1, d8 - 3.5, d9 - 5.0, 8.0, 0.5, ColorUtil.d(this.rz().rA(), 200), ColorUtil.d(this.rz().rB(), 200));
                     GlStateManager.pushMatrix();
                     this.auT.b(s1, d0 + 6.0 + b0 + 7.0 - 2.5, d1 + 6.0 + 4.0 + 1.0, Color.WHITE.hashCode());
                     this.auT.c(String.valueOf(Math.round(f)), d0 + b0 + d4 + 4.5, d1 + 6.0 + 4.0 + 1.0, color2.hashCode());
@@ -101,7 +101,7 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
                     this.rz();
                     Color color3 = Themes.rK();
                     this.rz();
-                    color3 = aip.d(color3, (int)(Themes.rK().getAlpha() / 1.7F));
+                    color3 = ColorUtil.d(color3, (int)(Themes.rK().getAlpha() / 1.7F));
                     this.rz();
                     RenderUtil.a(d11, d12, d4, 6.0, 3.0, color3, Themes.rK(), true);
                     RenderUtil.a(d0 + 6.0 + b0 + 7.0 - 2.5, d1 + 6.0 + b0 - 4.0 - 10.0, d5, 6.0, 3.0, color2, color1, false);
@@ -111,7 +111,7 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d8 / 2.0) * (1.0 - d10), (d1 + d9 / 2.0) * (1.0 - d10), 0.0);
                     GlStateManager.scale(d10, d10, 0.0);
-                    RenderUtil.color(aip.a(Color.RED, Color.WHITE, d6 / 9.0));
+                    RenderUtil.color(ColorUtil.a(Color.RED, Color.WHITE, d6 / 9.0));
                     RenderUtil.dropShadow(3, d0 + 6.0 + d7 - 2.5, d1 + 6.0 + d7 - 2.5, b0 - d6, b0 - d6, 20.0, this.rz().getRound() * 2);
                     this.a(abstractclientplayer, d0 + 6.0 + d7 - 2.5, d1 + 6.0 + d7 - 2.5, b0 - d6);
                     GlStateManager.popMatrix();
@@ -157,6 +157,6 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
         GlStateManager.disableBlend();
         ais.vM();
         float f1 = 0.5F;
-        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, aip.d(Color.BLACK, 40));
+        RenderUtil.roundedOutlineRectangle(var2 - f1, var4 - f1, var6 + f1 * 2.0F, var6 + f1 * 2.0F, this.rz().getRound() * 2, 0.5, ColorUtil.d(Color.BLACK, 40));
     }
 }

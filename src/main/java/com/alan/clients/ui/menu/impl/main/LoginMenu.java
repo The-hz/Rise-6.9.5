@@ -18,7 +18,7 @@ import hackclient.rise.aec;
 import hackclient.rise.agc;
 import hackclient.rise.agl;
 import com.alan.clients.util.gui.textbox.TextBox;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
 import hackclient.rise.aju;
@@ -230,7 +230,7 @@ extends Menu {
             double d3 = this.aCw.getY() - (double)this.aCu.height();
             this.animation.Q(d3);
             double d4 = this.animation.sG();
-            Color color = aip.d(Color.WHITE, (int)(d4 / d3 * 200.0));
+            Color color = ColorUtil.d(Color.WHITE, (int)(d4 / d3 * 200.0));
             this.aCu.c("Welcome", (float)this.width / 2.0f, d4 - 10.0, color.getRGB());
             if (this.bN.T(3000L)) {
                 if (this.aCz) {
@@ -247,8 +247,8 @@ extends Menu {
             } else if (this.jc != null) {
                 FontManager.MAIN.a(18, gd.LIGHT).c(this.jc, (float)this.width / 2.0f, d4 + 26.0, Color.RED.getRGB());
             }
-            FontManager.MAIN.a(18, gd.REGULAR).d("Made with <3 by Alan and The_Bi11iona1re", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 20, aip.d(aBS, 100).getRGB());
-            FontManager.MAIN.a(12, gd.REGULAR).d("\u00a9 Rise Client 2026. All Rights Reserved", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 10, aip.d(aBS, 100).getRGB());
+            FontManager.MAIN.a(18, gd.REGULAR).d("Made with <3 by Alan and The_Bi11iona1re", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 20, ColorUtil.d(aBS, 100).getRGB());
+            FontManager.MAIN.a(12, gd.REGULAR).d("\u00a9 Rise Client 2026. All Rights Reserved", scaledResolution.getScaledWidth() - 5, scaledResolution.getScaledHeight() - 10, ColorUtil.d(aBS, 100).getRGB());
             this.aCv.Q(0.0);
             RenderUtil.d(0.0, 0.0, LoginMenu.aEg.displayWidth, LoginMenu.aEg.displayHeight, new Color(0, 0, 0, (int)this.aCv.sG()));
         });

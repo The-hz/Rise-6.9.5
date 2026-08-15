@@ -11,7 +11,7 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
@@ -105,14 +105,14 @@ public final class SlotComponent extends Component {
                     this.rz();
                     Color color = Themes.rK();
                     this.rz();
-                    RenderUtil.roundedRectangle(d4, d5, d3, 22.0, d9, aip.d(color, (int)(Themes.rK().getAlpha() * d7)));
+                    RenderUtil.roundedRectangle(d4, d5, d3, 22.0, d9, ColorUtil.d(color, (int)(Themes.rK().getAlpha() * d7)));
                     if (flag1) {
                         float f = this.ge.getStringWidth("Amount:") + 2;
-                        this.ge.b("Amount:", d4 + 6.0 + 16.0, d6, aip.d(Color.WHITE, (int)(255.0 * d7)).getRGB());
-                        this.gf.b(s, d4 + 6.0 + 16.0 + f, d6, aip.d(this.rz().rA(), (int)(255.0 * d7)).getRGB());
+                        this.ge.b("Amount:", d4 + 6.0 + 16.0, d6, ColorUtil.d(Color.WHITE, (int)(255.0 * d7)).getRGB());
+                        this.gf.b(s, d4 + 6.0 + 16.0 + f, d6, ColorUtil.d(this.rz().rA(), (int)(255.0 * d7)).getRGB());
                     }
 
-                    RenderUtil.a(d4 + 3.0, d5 + 3.0, aip.d(Color.WHITE, (int)(255.0 * d7)).getRGB(), itemstack2);
+                    RenderUtil.a(d4 + 3.0, d5 + 3.0, ColorUtil.d(Color.WHITE, (int)(255.0 * d7)).getRGB(), itemstack2);
                     GlStateManager.popMatrix();
                 });
                 double d8 = d2;
@@ -123,7 +123,7 @@ public final class SlotComponent extends Component {
                             GlStateManager.translate((d4 + d3 * 0.5) * (1.0 - d0), (d5 + 11.0) * (1.0 - d0), 0.0);
                             GlStateManager.scale(d0, d0, 0.0);
                             RenderUtil.roundedRectangle(
-                                d4 + 0.5, d5 + 0.5, d3 - 1.0, 21.0, this.rz().getRound() + 1, aip.d(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d8))
+                                d4 + 0.5, d5 + 0.5, d3 - 1.0, 21.0, this.rz().getRound() + 1, ColorUtil.d(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d8))
                             );
                             GlStateManager.popMatrix();
                         }

@@ -11,7 +11,7 @@ import hackclient.rise.agl;
 import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.ahd;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import rip.vantage.commons.util.time.a;
@@ -76,7 +76,7 @@ public class abt extends ValueComponent {
         }
 
         this.azm.z(20.0F);
-        this.azm.setColor(aip.d(this.azm.getColor(), this.ayD));
+        this.azm.setColor(ColorUtil.d(this.azm.getColor(), this.ayD));
         this.azm.draw();
         RenderUtil.roundedRectangle(this.position.x + f, this.position.y + 1.5, 100.0, 2.0, 1.0, abw.BACKGROUND.Y(this.ayD));
         this.azk = this.position.x + f;
@@ -96,7 +96,7 @@ public class abt extends ValueComponent {
             this.azl = (this.azl * 29.0 + this.azj) / 30.0;
         }
 
-        RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, aip.d(this.rz().rA(), this.ayD));
+        RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.d(this.rz().rA(), this.ayD));
         this.azh.aX();
     }
 
@@ -123,7 +123,7 @@ public class abt extends ValueComponent {
     @Override
     public void released() {
         if (this.position != null) {
-            RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, aip.d(this.rz().rA(), this.ayD));
+            RenderUtil.roundedRectangle(this.azk + this.azl * 100.0 - 2.5, this.position.y, 5.0, 5.0, 2.5, ColorUtil.d(this.rz().rA(), this.ayD));
         }
     }
 

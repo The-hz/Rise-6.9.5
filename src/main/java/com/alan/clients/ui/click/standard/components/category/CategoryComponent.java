@@ -11,7 +11,7 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.ahd;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
@@ -44,7 +44,7 @@ public final class CategoryComponent implements InstanceAccess {
         double d0 = FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.category.getName())) + 8.0 + this.category.eb().getStringWidth(this.category.ea());
         GlStateManager.pushMatrix();
         RenderUtil.roundedRectangle(
-            this.x, this.y - 5.5, d0 + 8.0, 15.0, 5.0, aip.d(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.sG(), var5)).darker()
+            this.x, this.y - 5.5, d0 + 8.0, 15.0, 5.0, ColorUtil.d(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.sG(), var5)).darker()
         );
         int j = new Color(255, 255, 255, Math.min(var7.equals(this.category.ec()) ? 255 : 200, (int)var5)).hashCode();
         this.category.eb().a(this.category.ea(), (float)(this.x + this.animation.sG() / 80.0 + 3.0), this.y, j);
@@ -66,7 +66,7 @@ public final class CategoryComponent implements InstanceAccess {
     public void bloom(double var1) {
         double d0 = FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.category.getName())) + 8.0 + this.category.eb().getStringWidth(this.category.ea());
         RenderUtil.roundedRectangle(
-            this.x, this.y - 5.0F, d0 + 8.0, 14.0, 5.0, aip.d(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.sG(), var1)).darker()
+            this.x, this.y - 5.0F, d0 + 8.0, 14.0, 5.0, ColorUtil.d(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.sG(), var1)).darker()
         );
     }
 

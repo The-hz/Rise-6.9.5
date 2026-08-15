@@ -17,7 +17,7 @@ import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import hackclient.rise.ahd;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.ais;
 import com.alan.clients.util.render.particle.Particle;
 import hackclient.rise.bf;
@@ -96,7 +96,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                             GlStateManager.pushMatrix();
                             GlStateManager.translate((d0 + d8 / 2.0) * (1.0 - d10), (d1 + d9 / 2.0) * (1.0 - d10), 0.0);
                             GlStateManager.scale(d10, d10, 0.0);
-                            RenderUtil.color(aip.a(Color.RED, Color.WHITE, d5 / 9.0));
+                            RenderUtil.color(ColorUtil.a(Color.RED, Color.WHITE, d5 / 9.0));
                             RenderUtil.dropShadow(3, d0 + this.auj + d7, d1 + this.auj + d7, b0 - d5, b0 - d5, 20.0, 5.0);
                             this.a(abstractclientplayer, d0 + this.auj + d7, d1 + this.auj + d7, b0 - d5);
                             RenderUtil.roundedRectangle(
@@ -108,8 +108,8 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                                 d4,
                                 12.0,
                                 2.0,
-                                aip.d(color1, 100),
-                                aip.d(color1, 100),
+                                ColorUtil.d(color1, 100),
+                                ColorUtil.d(color1, 100),
                                 false
                             );
                             this.aug

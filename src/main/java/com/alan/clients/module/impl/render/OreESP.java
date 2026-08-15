@@ -11,7 +11,7 @@ import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
@@ -166,7 +166,7 @@ public final class OreESP extends Module {
         GL11.glDisable(2929);
         GL11.glDepthMask(false);
         GL11.glDisable(2884);
-        aip.d(var2);
+        ColorUtil.d(var2);
         this.e(new AxisAlignedBB(d0, d1, d2, d0 + 1.0, d1 + 1.0, d2 + 1.0));
         GL11.glEnable(2884);
         GL11.glDepthMask(true);

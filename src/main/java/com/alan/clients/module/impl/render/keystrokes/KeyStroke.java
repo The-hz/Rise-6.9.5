@@ -8,7 +8,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.ui.theme.Themes;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
@@ -44,7 +44,7 @@ public class KeyStroke implements InstanceAccess {
         double d3 = this.atq.getX();
         double d4 = this.atq.getY();
         this.rz();
-        RenderUtil.roundedRectangle(d1, d2, d3, d4, d0, aip.d(Themes.rK(), (int)this.animation.sG()));
+        RenderUtil.roundedRectangle(d1, d2, d3, d4, d0, ColorUtil.d(Themes.rK(), (int)this.animation.sG()));
         this.updateHeld();
         Vector2d vector2d1 = new Vector2d(FontManager.MAIN.a(20, gd.REGULAR).getStringWidth(this.name), FontManager.MAIN.a(20, gd.REGULAR).height());
         Vector2d vector2d2 = new Vector2d(

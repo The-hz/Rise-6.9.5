@@ -9,7 +9,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.bf;
 import java.awt.Color;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -63,7 +63,7 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
         double d2 = Math.min(!this.aui.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
         Color color = c(f, abstractclientplayer.getMaxHealth());
         double d3 = d0 + 40.0;
-        RenderUtil.d(d3, d1 + 25.0, 91.0, 5.0, aip.d(color, 50));
+        RenderUtil.d(d3, d1 + 25.0, 91.0, 5.0, ColorUtil.d(color, 50));
         RenderUtil.d(d3, d1 + 25.0, 91.0 * (d2 / abstractclientplayer.getMaxHealth()), 6.0, color);
         RenderUtil.d(d3, d1 + 25.0, 91.0, 1.0, Color.BLACK);
         RenderUtil.d(d3, d1 + 30.0, 91.0, 1.0, Color.BLACK);

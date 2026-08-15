@@ -14,8 +14,8 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.pathfinding.unlegit.MainPathFinder;
-import com.alan.clients.util.pathfinding.unlegit.Vec3;
-import hackclient.rise.aip;
+import com.alan.clients.util.pathfinding.unlegit.ahy;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gk;
@@ -31,7 +31,7 @@ import org.lwjgl.opengl.GL11;
 @gk
 public final class MiniBloxTeleport
 extends Mode<Teleport> {
-    private Vec3 Sx = new Vec3(0.0, 0.0, 0.0);
+    private ahy Sx = new ahy(0.0, 0.0, 0.0);
     @EventLink
     public final Listener<TeleportEvent> onTeleport = teleportEvent -> this.toggle();
     @EventLink
@@ -50,8 +50,8 @@ extends Mode<Teleport> {
         double d4 = entityPlayerSP.prevPosX + (entityPlayerSP.posX - entityPlayerSP.prevPosX) * (double)f2 - Math.sin(d2) * d3;
         double d5 = entityPlayerSP.prevPosY + (entityPlayerSP.posY - entityPlayerSP.prevPosY) * (double)f2;
         double d6 = entityPlayerSP.prevPosZ + (entityPlayerSP.posZ - entityPlayerSP.prevPosZ) * (double)f2 + Math.cos(d2) * d3;
-        this.Sx = new Vec3(d4, d5, d6);
-        Color color = aip.d(this.rz().rA(), 100);
+        this.Sx = new ahy(d4, d5, d6);
+        Color color = ColorUtil.d(this.rz().rA(), 100);
         if (color.getAlpha() <= 0) {
             return;
         }
@@ -79,14 +79,14 @@ extends Mode<Teleport> {
         if (!MiniBloxTeleport.aEg.gameSettings.keyBindSneak.isKeyDown()) {
             return;
         }
-        List<Vec3> list = MainPathFinder.a(new Vec3(MiniBloxTeleport.aEg.thePlayer.posX, MiniBloxTeleport.aEg.thePlayer.posY, MiniBloxTeleport.aEg.thePlayer.posZ), this.Sx, true);
+        List<ahy> list = MainPathFinder.a(new ahy(MiniBloxTeleport.aEg.thePlayer.posX, MiniBloxTeleport.aEg.thePlayer.posY, MiniBloxTeleport.aEg.thePlayer.posZ), this.Sx, true);
         if (list == null || list.isEmpty()) {
             return;
         }
         if (MiniBloxTeleport.aEg.thePlayer.onGround) {
             MiniBloxTeleport.aEg.thePlayer.setPosition(MiniBloxTeleport.aEg.thePlayer.posX, MiniBloxTeleport.aEg.thePlayer.posY - 1.0E-4, MiniBloxTeleport.aEg.thePlayer.posZ);
         }
-        for (Vec3 ahy2 : list) {
+        for (ahy ahy2 : list) {
             PacketUtil.m(new C03PacketPlayer.C04PacketPlayerPosition(ahy2.getX(), ahy2.getY(), ahy2.getZ(), true));
         }
     };

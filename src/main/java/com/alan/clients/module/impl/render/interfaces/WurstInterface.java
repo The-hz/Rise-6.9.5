@@ -10,7 +10,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
 import hackclient.rise.agc;
 import com.alan.clients.util.localization.Locale;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.zc;
@@ -36,7 +36,7 @@ public class WurstInterface extends Mode<Interface> {
                 }
             }
 
-            RenderUtil.d(0.0, 10.0, 185.0, 12.0, aip.d(Color.WHITE, 100));
+            RenderUtil.d(0.0, 10.0, 185.0, 12.0, ColorUtil.d(Color.WHITE, 100));
             RenderUtil.image(this.atc, 2.0, 5.5, 89.17647F, 22.588236F);
             this.ky.a("v6 MC 1.8.9", 95.0, 14.0, Color.BLACK.getRGB());
         }

@@ -8,7 +8,7 @@ import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import hackclient.rise.abw;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.ahd;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import rip.vantage.commons.util.time.a;
@@ -37,7 +37,7 @@ public class abm extends ValueComponent {
         RenderUtil.roundedRectangle(d0 - 2.5 + 5.0, this.position.y - 2.5 + 2.5, 5.0, 5.0, 2.5, abw.BACKGROUND.Y(this.ayD));
         if (this.axp != 0.0) {
             RenderUtil.roundedRectangle(
-                d0 - this.axp / 2.0 + 5.0, this.position.y - this.axp / 2.0 + 2.5, this.axp, this.axp, this.axp / 2.0, aip.d(this.rz().rA(), this.ayD)
+                d0 - this.axp / 2.0 + 5.0, this.position.y - this.axp / 2.0 + 2.5, this.axp, this.axp, this.axp / 2.0, ColorUtil.d(this.rz().rA(), this.ayD)
             );
         }
 
@@ -71,7 +71,7 @@ public class abm extends ValueComponent {
                 this.axp,
                 this.axp,
                 this.axp / 2.0,
-                aip.d(this.rz().rA(), this.ayD)
+                ColorUtil.d(this.rz().rA(), this.ayD)
             );
         }
     }

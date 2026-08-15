@@ -3,7 +3,7 @@ package hackclient.rise.component.esp;
 import com.alan.clients.Client;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.component.impl.render.espcomponent.api.ESP;
 import com.alan.clients.component.impl.render.espcomponent.api.ESPColor;
 import java.awt.Color;
@@ -30,7 +30,7 @@ public class cq extends ESP implements InstanceAccess {
                 && (entityplayer != aEg.thePlayer || aEg.gameSettings.thirdPersonView != 0)
                 && RenderUtil.isInViewFrustrum(entityplayer)
                 && !entityplayer.isDead) {
-                Color color = entityplayer.hurtTime > 0 ? Color.RED : aip.a(this.getColor(entityplayer), Color.WHITE, 0.4);
+                Color color = entityplayer.hurtTime > 0 ? Color.RED : ColorUtil.a(this.getColor(entityplayer), Color.WHITE, 0.4);
                 if (color.getAlpha() > 0) {
                     double d0 = entityplayer.prevPosX + (entityplayer.posX - entityplayer.prevPosX) * f;
                     double d1 = entityplayer.prevPosY + (entityplayer.posY - entityplayer.prevPosY) * f;

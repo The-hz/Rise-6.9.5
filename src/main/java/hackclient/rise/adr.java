@@ -9,6 +9,7 @@ import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.font.FontManager;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
 import java.awt.Color;
 import net.minecraft.client.gui.GuiMultiplayer;
@@ -45,7 +46,7 @@ public final class adr extends Menu {
             this.animation.Q(d0);
             String s = this.rice ? "Rice" : Client.b;
             double d1 = this.animation.sG();
-            Color color = aip.d(Color.WHITE, (int)(d1 / d0 * 200.0));
+            Color color = ColorUtil.d(Color.WHITE, (int)(d1 / d0 * 200.0));
             this.b(gg.REGULAR)
                 .c(
                     () -> {
@@ -56,7 +57,7 @@ public final class adr extends Menu {
                                 "Made with <3 by Alan and The_Bi11iona1re",
                                 scaledresolution.getScaledWidth() - 5,
                                 scaledresolution.getScaledHeight() - 20,
-                                aip.d(aBS, 100).getRGB()
+                                ColorUtil.d(aBS, 100).getRGB()
                             );
                         FontManager.MAIN
                             .a(12, gd.REGULAR)
@@ -64,7 +65,7 @@ public final class adr extends Menu {
                                 "© Rise Client 2026. All Rights Reserved",
                                 scaledresolution.getScaledWidth() - 5,
                                 scaledresolution.getScaledHeight() - 10,
-                                aip.d(aBS, 100).getRGB()
+                                ColorUtil.d(aBS, 100).getRGB()
                             );
                         if (!System.getProperty("java.vm.vendor").toLowerCase().contains("oracle corporation")) {
                             FontManager.MAIN.a(32, gd.BOLD);

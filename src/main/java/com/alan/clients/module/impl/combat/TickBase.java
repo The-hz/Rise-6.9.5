@@ -16,7 +16,7 @@ import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.aka;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import hackclient.rise.component.bv;
@@ -119,7 +119,7 @@ public final class TickBase extends Module {
         GlStateManager.disableTexture2D();
         GlStateManager.disableLighting();
         GL11.glDepthMask(false);
-        RenderUtil.color(aip.d(this.rz().rA(), 50));
+        RenderUtil.color(ColorUtil.d(this.rz().rA(), 50));
         GlStateManager.enableTexture2D();
         GlStateManager.enableLighting();
         GlStateManager.disableBlend();

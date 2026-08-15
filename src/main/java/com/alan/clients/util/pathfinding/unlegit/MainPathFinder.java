@@ -2,7 +2,7 @@ package com.alan.clients.util.pathfinding.unlegit;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.pathfinding.unlegit.PathFinder;
-import com.alan.clients.util.pathfinding.unlegit.Vec3;
+import com.alan.clients.util.pathfinding.unlegit.ahy;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Generated;
@@ -14,11 +14,11 @@ import net.minecraft.util.BlockPos;
 
 public final class MainPathFinder implements InstanceAccess
 {
-    public static List<Vec3> a(final Vec3 ahy, final Vec3 ahy2, final boolean b) {
+    public static List<ahy> a(final ahy ahy, final ahy ahy2, final boolean b) {
         return a(ahy, ahy2, b, 9.5);
     }
 
-    public static List<Vec3> a(Vec3 n, final Vec3 e, final boolean b, final double n2) {
+    public static List<ahy> a(ahy n, final ahy e, final boolean b, final double n2) {
         final IBlockState blockState = MainPathFinder.aEg.theWorld.getBlockState(new BlockPos(n.uY()));
         if (blockState == null) {
             return null;
@@ -33,11 +33,11 @@ public final class MainPathFinder implements InstanceAccess
         final PathFinder ahv = new PathFinder(n, e);
         ahv.uR();
         int n3 = 0;
-        Vec3 ahy = null;
-        Vec3 ahy2 = null;
-        final ArrayList<Vec3> list = new ArrayList<Vec3>();
+        ahy ahy = null;
+        ahy ahy2 = null;
+        final ArrayList<ahy> list = new ArrayList<ahy>();
         final ArrayList uq = ahv.getPath();
-        for (final Vec3 ahy3 : (Iterable<Vec3>)uq) {
+        for (final ahy ahy3 : (Iterable<ahy>)uq) {
             if (n3 == 0 || n3 == uq.size() - 1) {
                 list.add(ahy3.n(0.5, 0.0, 0.5));
                 ahy2 = ahy3;

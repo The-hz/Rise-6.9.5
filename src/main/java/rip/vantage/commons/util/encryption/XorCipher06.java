@@ -3,14 +3,14 @@ package rip.vantage.commons.util.encryption;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-public class e {
-    private static final String eQJ = "ふぃふにかふふいかぎんぁじざ";
+public class XorCipher06 {
+    private static final String eQM = "ぁふぃふかにかふふいぎんじざ";
 
-    public e() {
+    public XorCipher06() {
     }
 
     public static String kh(String var0) {
-        byte[] abyte = "ふぃふにかふふいかぎんぁじざ".getBytes(StandardCharsets.UTF_8);
+        byte[] abyte = "ぁふぃふかにかふふいぎんじざ".getBytes(StandardCharsets.UTF_8);
         byte[] abyte1 = var0.getBytes(StandardCharsets.UTF_8);
         byte[] abyte2 = new byte[abyte1.length];
 
@@ -22,7 +22,7 @@ public class e {
     }
 
     public static String ki(String var0) {
-        byte[] abyte = "ふぃふにかふふいかぎんぁじざ".getBytes(StandardCharsets.UTF_8);
+        byte[] abyte = "ぁふぃふかにかふふいぎんじざ".getBytes(StandardCharsets.UTF_8);
         byte[] abyte1 = Base64.getDecoder().decode(var0);
         byte[] abyte2 = new byte[abyte1.length];
 

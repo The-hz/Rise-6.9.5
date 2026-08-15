@@ -3,6 +3,7 @@ package hackclient.rise;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
 import java.awt.Color;
 import lombok.Generated;
@@ -20,7 +21,7 @@ public class abk implements InstanceAccess {
         RenderUtil.roundedRectangle(var1, var3, var5, 17.0, 5.0, new Color(25, 25, 25, (int)((1.0 - this.ayA.sG()) * 128.0)));
         this.b(gg.BLOOM).c(() -> {
             RenderUtil.roundedRectangle(var1, var3, var5, 17.0, 5.0, new Color(18, 21, 30, (int)(this.ayB.sG() * 255.0)));
-            RenderUtil.roundedRectangle(var1 + 0.5, var3 + 0.5, var5 - 1.0, 16.0, 4.0, aip.d(this.ayz.nw(), (int)(this.ayB.sG() * 255.0)));
+            RenderUtil.roundedRectangle(var1 + 0.5, var3 + 0.5, var5 - 1.0, 16.0, 4.0, ColorUtil.d(this.ayz.nw(), (int)(this.ayB.sG() * 255.0)));
         });
         this.ayu = new aka(var1, var3, var5);
     }

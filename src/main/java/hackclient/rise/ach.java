@@ -1,5 +1,6 @@
 package hackclient.rise;
 
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2f;
 import java.awt.Color;
@@ -18,7 +19,7 @@ public class ach {
         for (int i = 1; i <= 5; i++) {
             GL11.glLineWidth(i);
             RenderUtil.rt();
-            RenderUtil.color(aip.d(this.amH, (int)(this.amH.getAlpha() / i / 1.2)));
+            RenderUtil.color(ColorUtil.d(this.amH, (int)(this.amH.getAlpha() / i / 1.2)));
             GL11.glBegin(3);
 
             for (float[] afloat : this.aze) {

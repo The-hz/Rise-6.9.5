@@ -9,7 +9,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.bf;
 import java.awt.Color;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -33,7 +33,7 @@ public class WurstTargetInfo extends Mode<TargetInfo> {
         String s1 = bf.c(s, s);
         double d0 = this.aui.position.x;
         double d1 = this.aui.position.y;
-        RenderUtil.d(d0, d1, 185.0, 34.0, aip.d(Color.WHITE, 100));
+        RenderUtil.d(d0, d1, 185.0, 34.0, ColorUtil.d(Color.WHITE, 100));
         aEg.fontRendererObj.a("Name: " + s1, d0 + 4.0, d1 + 4.0, Color.BLACK.getRGB());
         this.aui.positionValue.aHe = new Vector2d(185.0, 50.0);
         AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;

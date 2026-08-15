@@ -16,7 +16,7 @@ import com.alan.clients.value.Value;
 import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.util.MouseUtil;
 import com.alan.clients.util.gui.GUIUtil;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.as;
 import hackclient.rise.at;
 import hackclient.rise.av;
@@ -91,7 +91,7 @@ public class DragComponent extends Component {
                 }
 
                 bY = null;
-                Color color = aip.d(Color.WHITE, 60);
+                Color color = ColorUtil.d(Color.WHITE, 60);
 
                 for (av av : bX) {
                     switch (as.cc[av.cm.ordinal()]) {

@@ -3,7 +3,7 @@ package com.alan.clients.util.render;
 import com.alan.clients.Client;
 import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.util.interfaces.InstanceAccess;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.aiv;
 import hackclient.rise.aka;
 import java.awt.Color;
@@ -86,7 +86,7 @@ public final class RenderUtil implements InstanceAccess {
     public static void d(double var0, double var2, double var4, double var6, Color var8) {
         rt();
         if (var8 != null) {
-            aip.d(var8);
+            ColorUtil.d(var8);
         }
 
         GL11.glBegin(7);
@@ -145,10 +145,10 @@ public final class RenderUtil implements InstanceAccess {
         GlStateManager.alphaFunc(516, 0.0F);
         GL11.glShadeModel(7425);
         GL11.glBegin(7);
-        aip.d(var8);
+        ColorUtil.d(var8);
         GL11.glVertex2d(var0, var2);
         GL11.glVertex2d(var0 + var4, var2);
-        aip.d(var9);
+        ColorUtil.d(var9);
         GL11.glVertex2d(var0 + var4, var2 + var6);
         GL11.glVertex2d(var0, var2 + var6);
         GL11.glEnd();
@@ -170,10 +170,10 @@ public final class RenderUtil implements InstanceAccess {
         rt();
         GL11.glShadeModel(7425);
         GL11.glBegin(7);
-        aip.d(var8);
+        ColorUtil.d(var8);
         GL11.glVertex2d(var0, var2);
         GL11.glVertex2d(var0, var2 + var6);
-        aip.d(var9);
+        ColorUtil.d(var9);
         GL11.glVertex2d(var0 + var4, var2 + var6);
         GL11.glVertex2d(var0 + var4, var2);
         GL11.glEnd();
@@ -461,7 +461,7 @@ public final class RenderUtil implements InstanceAccess {
     }
 
     public static void f(double var0, double var2, double var4, double var6, Color var8) {
-        aip.d(var8);
+        ColorUtil.d(var8);
         GL11.glBegin(7);
         GL11.glVertex2d(var0, var2);
         GL11.glVertex2d(var0 + var4, var2);

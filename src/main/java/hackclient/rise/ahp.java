@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.util.interfaces.InstanceAccess;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -137,7 +138,7 @@ public class ahp extends ArrayList<ahr> implements InstanceAccess {
         GlStateManager.disableTexture2D();
         GlStateManager.disableLighting();
         GL11.glDepthMask(false);
-        RenderUtil.color(aip.d(this.rz().rA(), 100));
+        RenderUtil.color(ColorUtil.d(this.rz().rA(), 100));
         double d0 = 0.6;
 
         for (ahr ahr : new ArrayList<>(this)) {

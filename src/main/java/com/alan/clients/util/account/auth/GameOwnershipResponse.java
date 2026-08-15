@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 class GameOwnershipResponse {
     @Expose
     @SerializedName("items")
-    private Item[] aEW;
+    private GameOwnershipItem[] aEW;
 
     private GameOwnershipResponse() {
     }
@@ -15,7 +15,7 @@ class GameOwnershipResponse {
         boolean flag = false;
         boolean flag1 = false;
 
-        for (Item c : this.aEW) {
+        for (GameOwnershipItem c : this.aEW) {
             if (c.gK.equals("product_minecraft")) {
                 flag = true;
             } else if (c.gK.equals("game_minecraft")) {

@@ -13,7 +13,7 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.DragValue;
 import hackclient.rise.ahd;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import hackclient.rise.gg;
@@ -59,9 +59,9 @@ public final class RueSessionStats extends Mode<SessionStats> {
             this.b(gg.REGULAR, 1)
                 .c(
                     () -> {
-                        RenderUtil.roundedRectangle(this.atY.apP.x, this.atY.apP.y, this.atY.aHe.x, this.atY.aHe.y, 11.0, aip.d(Color.black, 100));
+                        RenderUtil.roundedRectangle(this.atY.apP.x, this.atY.apP.y, this.atY.aHe.x, this.atY.aHe.y, 11.0, ColorUtil.d(Color.black, 100));
                         RenderUtil.roundedOutlineGradientRectangle(
-                            this.atY.apP.x, this.atY.apP.y, this.atY.aHe.x, this.atY.aHe.y, 11.0, 0.5, aip.d(this.rz().rA(), 200), aip.d(this.rz().rB(), 200)
+                            this.atY.apP.x, this.atY.apP.y, this.atY.aHe.x, this.atY.aHe.y, 11.0, 0.5, ColorUtil.d(this.rz().rA(), 200), ColorUtil.d(this.rz().rB(), 200)
                         );
                         FontManager.MAIN
                             .a(24, gd.REGULAR)

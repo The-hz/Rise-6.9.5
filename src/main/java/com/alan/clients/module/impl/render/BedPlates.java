@@ -13,7 +13,7 @@ import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.abw;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.aka;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
@@ -450,8 +450,8 @@ public class BedPlates extends Module {
             );
             Color color4 = this.rz().rA();
             Color color5 = this.rz().rB();
-            Color color6 = aip.a(color4, color5, this.alC);
-            Color color7 = aip.a(color5, color4, this.alC);
+            Color color6 = ColorUtil.a(color4, color5, this.alC);
+            Color color7 = ColorUtil.a(color5, color4, this.alC);
             ItemStack itemstack1 = itemstack;
             double d11 = d9;
             double d12 = d10;
@@ -462,7 +462,7 @@ public class BedPlates extends Module {
             double d17 = d3;
             double d18 = d4;
             double d19 = d1;
-            Color color8 = aip.d(abw.SECONDARY.pV(), 105);
+            Color color8 = ColorUtil.d(abw.SECONDARY.pV(), 105);
             Color color9 = color3;
             Color color10 = color6;
             Color color11 = color7;
@@ -487,7 +487,7 @@ public class BedPlates extends Module {
                         GlStateManager.pushMatrix();
                         GlStateManager.translate(d28, d29, 0.0);
                         GlStateManager.scale(d19, d19, d19);
-                        this.alv.a(s2, 0.0, 0.0, aip.d(this.rz().rA(), 240).getRGB());
+                        this.alv.a(s2, 0.0, 0.0, ColorUtil.d(this.rz().rA(), 240).getRGB());
                         GlStateManager.popMatrix();
                     }
                 });

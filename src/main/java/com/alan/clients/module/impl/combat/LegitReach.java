@@ -21,7 +21,7 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.component.bv;
 import java.util.List;
 import net.minecraft.client.renderer.GlStateManager;
@@ -159,7 +159,7 @@ public final class LegitReach extends Module {
             GlStateManager.disableLighting();
             GL11.glDepthMask(false);
             double d0 = 0.14;
-            RenderUtil.color(aip.d(this.rz().rA(), 50));
+            RenderUtil.color(ColorUtil.d(this.rz().rA(), 50));
             RenderUtil.drawBoundingBox(
                 aEg.thePlayer
                     .getEntityBoundingBox()

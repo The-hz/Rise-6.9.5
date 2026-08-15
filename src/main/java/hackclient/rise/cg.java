@@ -9,6 +9,7 @@ import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.font.FontManager;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
 import java.awt.Color;
@@ -47,10 +48,10 @@ public class cg extends Component {
                     this.rz();
                     Color color = Themes.rK();
                     this.rz();
-                    RenderUtil.roundedRectangle(d2, d3, d4, d5, 10.0, aip.d(color, (int)(Themes.rK().getAlpha() * d1)));
-                    RenderUtil.roundedRectangle(ho.x + hp, ho.y + hp, hn.x, hn.y, 6.0, aip.d(Color.WHITE, (int)(255.0 * d1)));
-                    hq.b(hk.vT(), ho.x + hp + hn.x + hp, ho.y + hp + 3.0, aip.d(this.rz().rA(), (int)(255.0 * d1)).getRGB());
-                    hr.b(hk.vU(), ho.x + hp + hn.x + hp, ho.y + hp + 0.5 + hp * 0.7 + hq.height(), aip.d(Color.WHITE, (int)(255.0 * d1)).getRGB());
+                    RenderUtil.roundedRectangle(d2, d3, d4, d5, 10.0, ColorUtil.d(color, (int)(Themes.rK().getAlpha() * d1)));
+                    RenderUtil.roundedRectangle(ho.x + hp, ho.y + hp, hn.x, hn.y, 6.0, ColorUtil.d(Color.WHITE, (int)(255.0 * d1)));
+                    hq.b(hk.vT(), ho.x + hp + hn.x + hp, ho.y + hp + 3.0, ColorUtil.d(this.rz().rA(), (int)(255.0 * d1)).getRGB());
+                    hr.b(hk.vU(), ho.x + hp + hn.x + hp, ho.y + hp + 0.5 + hp * 0.7 + hq.height(), ColorUtil.d(Color.WHITE, (int)(255.0 * d1)).getRGB());
                     GlStateManager.popMatrix();
                 });
                 this.b(gg.BLOOM)
@@ -60,7 +61,7 @@ public class cg extends Component {
                             GlStateManager.translate((ho.x + hm.x / 2.0) * (1.0 - d0), (ho.y + hm.y / 2.0) * (1.0 - d0), 0.0);
                             GlStateManager.scale(d0, d0, 0.0);
                             RenderUtil.roundedRectangle(
-                                ho.x + 0.5, ho.y + 0.5, hm.x - 1.0, hm.y - 1.0, 11.0, aip.d(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d1))
+                                ho.x + 0.5, ho.y + 0.5, hm.x - 1.0, hm.y - 1.0, 11.0, ColorUtil.d(this.rz().rE(), (int)(this.rz().rE().getAlpha() * d1))
                             );
                             GlStateManager.popMatrix();
                         }
@@ -70,7 +71,7 @@ public class cg extends Component {
                         GlStateManager.pushMatrix();
                         GlStateManager.translate((ho.x + hm.x / 2.0) * (1.0 - d0), (ho.y + hm.y / 2.0) * (1.0 - d0), 0.0);
                         GlStateManager.scale(d0, d0, 0.0);
-                        RenderUtil.roundedRectangle(ho.x, ho.y, hm.x, hm.y, 10.0, aip.d(Color.BLACK, (int)(255.0 * d1)));
+                        RenderUtil.roundedRectangle(ho.x, ho.y, hm.x, hm.y, 10.0, ColorUtil.d(Color.BLACK, (int)(255.0 * d1)));
                         GlStateManager.popMatrix();
                     }
                 });

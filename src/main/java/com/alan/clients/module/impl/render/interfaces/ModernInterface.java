@@ -18,7 +18,7 @@ import com.alan.clients.value.impl.StringValue;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.agc;
 import hackclient.rise.agd;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.particle.Particle;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
@@ -91,9 +91,9 @@ extends Mode<Interface> {
                     Color color = zc2.nw();
                     if (this.asT) {
                         if (!bl) {
-                            RenderUtil.d(d32 - d2, d4 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.getParent()).aoq, this.asR ? aip.d(color, 255) : this.rz().rE());
+                            RenderUtil.d(d32 - d2, d4 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.getParent()).aoq, this.asR ? ColorUtil.d(color, 255) : this.rz().rE());
                         } else {
-                            RenderUtil.d(d32 - d2 + 0.5, d4 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.getParent()).aoq, this.asR ? aip.d(color, 255) : this.rz().rE());
+                            RenderUtil.d(d32 - d2 + 0.5, d4 - 3.0, (double)(zc2.atj + zc2.atk + 3.0f) + d2, ((Interface)this.getParent()).aoq, this.asR ? ColorUtil.d(color, 255) : this.rz().rE());
                         }
                     } else if (this.asR) {
                         this.a(zc2, d32 + 0.5, d4, color.getRGB());
@@ -114,8 +114,8 @@ extends Mode<Interface> {
                     ModernInterface.aEg.fontRendererObj.b(Client.b, 6.0f / f4, 6.0f / f4, this.rz().rA().getRGB());
                     GlStateManager.popMatrix();
                 } else {
-                    aip.a(this.asD, Client.b, 6.0, 6.0, true);
-                    this.asF.b("", 39.0, 6.0, aip.d(Color.WHITE, 170).getRGB());
+                    ColorUtil.a(this.asD, Client.b, 6.0, 6.0, true);
+                    this.asF.b("", 39.0, 6.0, ColorUtil.d(Color.WHITE, 170).getRGB());
                 }
                 if (!((String)this.customClientName.wo()).isEmpty()) {
                     this.asF.a((String)this.customClientName.wo(), (double)(6 + this.asD.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
@@ -251,10 +251,10 @@ extends Mode<Interface> {
             ModernInterface.aEg.fontRendererObj.b(Client.b, 6.0f / f15, 6.0f / f15, this.rz().rA().getRGB());
             GlStateManager.popMatrix();
         } else {
-            aip.a(this.asD, Client.b, 6.0, 6.0, true);
-            this.asF.b("", 39.0, 6.0, aip.d(Color.WHITE, 170).getRGB());
+            ColorUtil.a(this.asD, Client.b, 6.0, 6.0, true);
+            this.asF.b("", 39.0, 6.0, ColorUtil.d(Color.WHITE, 170).getRGB());
         }
-        this.asF.b("", 39.0, 6.0, aip.d(Color.WHITE, 170).getRGB());
+        this.asF.b("", 39.0, 6.0, ColorUtil.d(Color.WHITE, 170).getRGB());
         if (!((String)this.customClientName.wo()).isEmpty()) {
             this.asF.a((String)this.customClientName.wo(), (double)(6 + this.asD.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
         }
@@ -373,7 +373,7 @@ extends Mode<Interface> {
                         switch (n3) {
                             case 0: {
                                 double d2 = this.rz().getBlendFactor(new Vector2d(0.0, 0.0));
-                                color = aip.a(color, this.rz().rB(), d2);
+                                color = ColorUtil.a(color, this.rz().rB(), d2);
                                 break block80;
                             }
                             case 1: {

@@ -9,7 +9,7 @@ import com.alan.clients.ui.click.standard.components.value.ValueComponent;
 import hackclient.rise.abw;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.ahd;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
@@ -72,13 +72,13 @@ public class abo extends ValueComponent {
                 this.azc = new Vector2f((float)(var2 - d0), (float)(var3 - d1));
                 this.azc.x = MathHelper.clamp_float(this.azc.x, 0.0F, (float)this.aza);
                 this.azc.y = MathHelper.clamp_float(this.azc.y, 0.0F, (float)d2);
-                Color color = aip.a(new Color(0, 0, 0, 0), aip.a(this.azd, Color.WHITE, this.azc.x / this.aza), this.azc.y / d2);
+                Color color = ColorUtil.a(new Color(0, 0, 0, 0), ColorUtil.a(this.azd, Color.WHITE, this.azc.x / this.aza), this.azc.y / d2);
                 colorvalue.n(color);
             } else if (this.ayW) {
                 this.ayZ = (float)(var2 - d4);
                 this.ayZ = MathHelper.clamp_float(this.ayZ, 0.0F, (float)d6);
                 this.azd = Color.getHSBColor((float)(this.ayZ / d6), 1.0F, 1.0F);
-                Color color2 = aip.a(new Color(0, 0, 0, 0), aip.a(this.azd, Color.WHITE, this.azc.x / this.aza), this.azc.y / d2);
+                Color color2 = ColorUtil.a(new Color(0, 0, 0, 0), ColorUtil.a(this.azd, Color.WHITE, this.azc.x / this.aza), this.azc.y / d2);
                 colorvalue.n(color2);
             }
 

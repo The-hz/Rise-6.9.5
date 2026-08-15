@@ -29,7 +29,7 @@ import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.agw;
 import hackclient.rise.agx;
 import hackclient.rise.ahd;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.dt;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
@@ -536,7 +536,7 @@ extends Module {
             double d3 = this.amf != null ? this.amf.lD() : 6.0;
             this.b(gg.REGULAR, 1).c(() -> {
                 runnable.run();
-                RenderUtil.roundedRectangle(vector2d.x, vector2d.y, vector2d2.x, vector2d2.y, d3, aip.d(Themes.rK(), Math.min((int)this.aqH.sG(), Themes.rK().getAlpha())));
+                RenderUtil.roundedRectangle(vector2d.x, vector2d.y, vector2d2.x, vector2d2.y, d3, ColorUtil.d(Themes.rK(), Math.min((int)this.aqH.sG(), Themes.rK().getAlpha())));
                 GlStateManager.popMatrix();
             });
             this.b(gg.BLOOM).c(() -> {
@@ -556,7 +556,7 @@ extends Module {
                 GlStateManager.popMatrix();
             });
         }
-        this.aqU.setColor(aip.d(Color.WHITE, (int)this.aqH.sG()));
+        this.aqU.setColor(ColorUtil.d(Color.WHITE, (int)this.aqH.sG()));
         this.aqU.c(this.aqL);
         this.aqU.h(new Vector2d(this.rz().qd() + 5.0f, (float)Chat.aEg.jY.getScaledHeight() - this.aqL.height() - this.rz().qd()));
         this.b(gg.REGULAR, 1).c(() -> {
@@ -619,13 +619,13 @@ extends Module {
                     RenderUtil.roundedRectangle(d7, d9, d5, d6, 6.0, this.rz().rE());
                     GlStateManager.popMatrix();
                 });
-                RenderUtil.roundedRectangle(d7, d9, d5, d6, 6.0, aip.d(Themes.rK(), Math.min(n, Themes.rK().getAlpha())));
+                RenderUtil.roundedRectangle(d7, d9, d5, d6, 6.0, ColorUtil.d(Themes.rK(), Math.min(n, Themes.rK().getAlpha())));
                 for (int i = 0; i < n2; ++i) {
                     String string4 = (String)arrayList.get(i);
                     if (string4 == null || string4.isEmpty()) continue;
                     float f4 = (float)((double)f3 - (double)i * (d3 + 1.0));
                     int n3 = i == 0 ? 180 : (i == 1 ? 140 : 120);
-                    this.aqL.b(string4, f2, f4, aip.d(Color.WHITE, Math.min(n, n3)).hashCode());
+                    this.aqL.b(string4, f2, f4, ColorUtil.d(Color.WHITE, Math.min(n, n3)).hashCode());
                 }
             }
             if (this.ads && ((Boolean)this.pinyinChineseIME.wo()).booleanValue() && agx.isEnabled() && aqO.uc()) {
@@ -635,9 +635,9 @@ extends Module {
                     int n = Math.min(255, Math.max(0, (int)this.aqH.sG()));
                     float f5 = this.aqU.tL();
                     float f6 = this.aqU.tM();
-                    this.aqL.b(string5, f5, f6, aip.d(new Color(220, 220, 220), n).hashCode());
+                    this.aqL.b(string5, f5, f6, ColorUtil.d(new Color(220, 220, 220), n).hashCode());
                     double d = this.aqL.getStringWidth(string5);
-                    RenderUtil.d(f5, f6 + this.aqL.height() + 1.0f, d, 1.0, aip.d(Color.WHITE, Math.min(n, 180)));
+                    RenderUtil.d(f5, f6 + this.aqL.height() + 1.0f, d, 1.0, ColorUtil.d(Color.WHITE, Math.min(n, 180)));
                     if (list != null && !list.isEmpty()) {
                         float f7 = (float)this.aqU.getPosition().x;
                         float f8 = f6 - this.aqL.height() - 3.0f;
@@ -659,8 +659,8 @@ extends Module {
                         String string7 = stringBuilder.toString();
                         double d11 = this.aqL.getStringWidth(string7) + 6;
                         double d12 = this.aqL.height() + 4.0f;
-                        RenderUtil.d(f7 - 2.0f, f8 - 2.0f, d11, d12, aip.d(new Color(0, 0, 0), Math.min(n, 140)));
-                        this.aqL.b(string7, f7 + 1.0f, f8, aip.d(Color.WHITE, n).hashCode());
+                        RenderUtil.d(f7 - 2.0f, f8 - 2.0f, d11, d12, ColorUtil.d(new Color(0, 0, 0), Math.min(n, 140)));
+                        this.aqL.b(string7, f7 + 1.0f, f8, ColorUtil.d(Color.WHITE, n).hashCode());
                     }
                 }
             }

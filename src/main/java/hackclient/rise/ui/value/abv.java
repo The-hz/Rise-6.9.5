@@ -8,7 +8,7 @@ import hackclient.rise.abw;
 import hackclient.rise.agl;
 import com.alan.clients.util.gui.textbox.TextBox;
 import hackclient.rise.ahd;
-import hackclient.rise.aip;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import hackclient.rise.gd;
 import java.awt.Color;
@@ -30,7 +30,7 @@ public class abv extends ValueComponent {
         this.height = 28.0;
         String s = ahd.ce(this.value.getName());
         FontManager.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));
-        this.azo.setColor(aip.d(this.azo.getColor(), this.ayD));
+        this.azo.setColor(ColorUtil.d(this.azo.getColor(), this.ayD));
         this.position = new Vector2d(this.position.x, this.position.y + 14.0);
         this.azo.h(this.position);
         this.azo.z(230.5F);

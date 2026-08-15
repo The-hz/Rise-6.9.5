@@ -8,6 +8,7 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.interfaces.InstanceAccess;
+import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.Value;
@@ -109,9 +110,9 @@ public class abb implements InstanceAccess {
             Math.min(255, abw.BACKGROUND.pV().getBlue() + color.getBlue() / 26),
             245
         );
-        RenderUtil.a(d0, d1, var5, d13, 6.0 * var10, aip.d(abw.SECONDARY.pV(), 180), true, true, !this.axv, !this.axv);
+        RenderUtil.a(d0, d1, var5, d13, 6.0 * var10, ColorUtil.d(abw.SECONDARY.pV(), 180), true, true, !this.axv, !this.axv);
         if (this.axx.sG() > 0.0) {
-            RenderUtil.a(d0, d1, var5, d13, 6.0 * var10, aip.d(Color.WHITE, (int)this.axx.sG()), true, true, !this.axv, !this.axv);
+            RenderUtil.a(d0, d1, var5, d13, 6.0 * var10, ColorUtil.d(Color.WHITE, (int)this.axx.sG()), true, true, !this.axv, !this.axv);
         }
 
         String s = ahd.ce(this.axt.getName());
@@ -122,7 +123,7 @@ public class abb implements InstanceAccess {
         FontManager.MAIN.a((int)(12.0 * var10), gd.REGULAR).d(s2, (float)(d0 + var5 - 26.0 * var10), (float)(d1 + 8.0 * var10), abw.TRINARY_TEXT.pW());
         if (d11 > 1.0) {
             if (this.axv) {
-                RenderUtil.d(d0, d1 + d13 - 4.0 * var10, var5, 4.0 * var10, aip.d(abw.SECONDARY.pV(), 180));
+                RenderUtil.d(d0, d1 + d13 - 4.0 * var10, var5, 4.0 * var10, ColorUtil.d(abw.SECONDARY.pV(), 180));
             }
 
             RenderUtil.a(d0, d1 + d13, var5, d11, 6.0 * var10, color1, false, false, true, true);
@@ -148,7 +149,7 @@ public class abb implements InstanceAccess {
                     double d17 = 34.0 * var10;
                     boolean flag1 = GUIUtil.c(d0 + 6.0 * var10, d14, var5 - 12.0 * var10, d17 - 2.0 * var10, var7, var8);
                     if (flag1) {
-                        RenderUtil.roundedRectangle(d0 + 6.0 * var10, d14, var5 - 12.0 * var10, d17 - 2.0 * var10, 4.0 * var10, aip.d(Color.WHITE, 15));
+                        RenderUtil.roundedRectangle(d0 + 6.0 * var10, d14, var5 - 12.0 * var10, d17 - 2.0 * var10, 4.0 * var10, ColorUtil.d(Color.WHITE, 15));
                     }
 
                     if (abd.getModule().isEnabled()) {
@@ -220,7 +221,7 @@ public class abb implements InstanceAccess {
                                 boolean flag3 = GUIUtil.c(d0 + 10.0 * var10, d14, var5 - 20.0 * var10, d21, var7, var8);
                                 if (flag3) {
                                     RenderUtil.roundedRectangle(
-                                        d0 + 10.0 * var10, d14, var5 - 20.0 * var10, d21 - 2.0 * var10, 3.0 * var10, aip.d(Color.WHITE, 10)
+                                        d0 + 10.0 * var10, d14, var5 - 20.0 * var10, d21 - 2.0 * var10, 3.0 * var10, ColorUtil.d(Color.WHITE, 10)
                                     );
                                 }
 
@@ -231,7 +232,7 @@ public class abb implements InstanceAccess {
                                     FontManager.MAIN.a((int)(12.0 * var10), gd.REGULAR).a(s6, (float)d22, (float)d23, abw.TEXT.pW());
                                     double d24 = d0 + var5 - 28.0 * var10;
                                     double d25 = d14 + 4.0 * var10;
-                                    RenderUtil.roundedRectangle(d24, d25, 12.0 * var10, 12.0 * var10, 3.0 * var10, aip.d(abw.SECONDARY.pV(), 150));
+                                    RenderUtil.roundedRectangle(d24, d25, 12.0 * var10, 12.0 * var10, 3.0 * var10, ColorUtil.d(abw.SECONDARY.pV(), 150));
                                     if (booleanvalue.wo()) {
                                         RenderUtil.roundedRectangle(d24 + 2.0 * var10, d25 + 2.0 * var10, 8.0 * var10, 8.0 * var10, 2.0 * var10, this.rz().rD());
                                     }
@@ -249,7 +250,7 @@ public class abb implements InstanceAccess {
                                     double d27 = d14 + 18.0 * var10 - 6.0 * var10;
                                     double d28 = var5 - 24.0 * var10;
                                     double d29 = 2.0 * var10;
-                                    RenderUtil.roundedRectangle(d26, d27, d28, d29, 1.5 * var10, aip.d(abw.SECONDARY.pV(), 100));
+                                    RenderUtil.roundedRectangle(d26, d27, d28, d29, 1.5 * var10, ColorUtil.d(abw.SECONDARY.pV(), 100));
                                     double d30 = (numbervalue.wo().doubleValue() - numbervalue.wx().doubleValue())
                                         / (numbervalue.wy().doubleValue() - numbervalue.wx().doubleValue());
                                     if (d30 > 0.0) {
@@ -270,7 +271,7 @@ public class abb implements InstanceAccess {
                                         boolean flag4 = GUIUtil.c(d0 + 16.0 * var10, d14, var5 - 32.0 * var10, d21, var7, var8);
                                         if (flag4) {
                                             RenderUtil.roundedRectangle(
-                                                d0 + 16.0 * var10, d14, var5 - 32.0 * var10, d21 - 2.0 * var10, 3.0 * var10, aip.d(Color.WHITE, 12)
+                                                d0 + 16.0 * var10, d14, var5 - 32.0 * var10, d21 - 2.0 * var10, 3.0 * var10, ColorUtil.d(Color.WHITE, 12)
                                             );
                                         }
 
@@ -306,16 +307,16 @@ public class abb implements InstanceAccess {
 
     public void i(double var1, double var3, double var5) {
         String s = ahd.ce(this.axt.getName());
-        FontManager.MAIN.a((int)(16.0 * var5), gd.BOLD).a(s, (float)(var1 + 8.0 * var5), (float)(var3 + 7.0 * var5), aip.d(this.rz().rA(), 200).getRGB());
+        FontManager.MAIN.a((int)(16.0 * var5), gd.BOLD).a(s, (float)(var1 + 8.0 * var5), (float)(var3 + 7.0 * var5), ColorUtil.d(this.rz().rA(), 200).getRGB());
         if (this.axv && this.axw.sG() > 1.0) {
             double d0 = var3 + 22.0 * var5 + 3.0 * var5;
 
             for (ModuleComponent abd : this.axu) {
                 if (abd.getModule().isEnabled()) {
-                    RenderUtil.roundedRectangle(var1 + 6.0 * var5, d0, 2.0 * var5, 34.0 * var5 - 2.0 * var5, 1.0 * var5, aip.d(this.rz().rA(), 150));
+                    RenderUtil.roundedRectangle(var1 + 6.0 * var5, d0, 2.0 * var5, 34.0 * var5 - 2.0 * var5, 1.0 * var5, ColorUtil.d(this.rz().rA(), 150));
                     FontManager.MAIN
                         .a((int)(13.0 * var5), gd.REGULAR)
-                        .a(abd.getModule().getName(), (float)(var1 + 12.0 * var5), (float)(d0 + 4.0 * var5), aip.d(this.rz().rA(), 120).getRGB());
+                        .a(abd.getModule().getName(), (float)(var1 + 12.0 * var5), (float)(d0 + 4.0 * var5), ColorUtil.d(this.rz().rA(), 120).getRGB());
                     if (abd.oJ()) {
                         abd.ci();
                     }
