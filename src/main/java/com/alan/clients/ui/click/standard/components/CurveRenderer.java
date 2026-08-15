@@ -61,7 +61,7 @@ public class CurveRenderer {
     }
 
     @Generated
-    public void b(Color color) {
+    public void setColor(Color color) {
         this.amH = color;
     }
 
@@ -76,7 +76,7 @@ public class CurveRenderer {
     }
 
     @Generated
-    public Color nw() {
+    public Color getColor() {
         return this.amH;
     }
 

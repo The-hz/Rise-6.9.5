@@ -28,37 +28,37 @@ import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 import net.minecraft.potion.Potion;
 
 public class WatchdogLongJump extends Mode<LongJump> {
-    private final ArrayList<Packet<?>> MF = new ArrayList<>();
+    private final ArrayList<Packet<?>> heldPackets = new ArrayList<>();
     private boolean active;
-    private boolean tt;
-    private boolean vq;
-    int IU = -1;
-    double jy;
-    double IW = -1.0;
-    private int dE;
-    private int hV;
+    private boolean replaying;
+    private boolean launched;
+    int previousSlot = -1;
+    double startY;
+    double savedMotionY = -1.0;
+    private int stage;
+    private int ticks;
     private final BooleanValue smoothCamera = new BooleanValue("Smooth Camera", this, false);
     @EventLink(value = 1)
     public final Listener<PacketReceiveEvent> receive = var1x -> {
-        if (!this.tt) {
+        if (!this.replaying) {
             switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
-                    if (!var1x.isCancelled() && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && !this.vq) {
-                        this.IW = aEg.thePlayer.motionY;
+                    if (!var1x.isCancelled() && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && !this.launched) {
+                        this.savedMotionY = aEg.thePlayer.motionY;
                         Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
                         aEg.thePlayer.motionX = vector2d.getX();
                         aEg.thePlayer.motionZ = vector2d.getY();
-                        aEg.thePlayer.motionY = this.IW;
+                        aEg.thePlayer.motionY = this.savedMotionY;
                         var1x.setCancelled();
                         this.active = true;
-                        this.MF.add(s12packetentityvelocity);
+                        this.heldPackets.add(s12packetentityvelocity);
                     } else if (!var1x.isCancelled() && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                         var1x.setCancelled();
                     }
                     break;
                 case S32PacketConfirmTransaction s32packetconfirmtransaction:
                     if (this.active) {
-                        this.MF.add(s32packetconfirmtransaction);
+                        this.heldPackets.add(s32packetconfirmtransaction);
                         var1x.setCancelled();
                     }
                     break;
@@ -68,7 +68,7 @@ public class WatchdogLongJump extends Mode<LongJump> {
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
-        if ((aEg.thePlayer.posY > this.jy || aEg.thePlayer.tR < 14) && this.smoothCamera.wo()) {
+        if ((aEg.thePlayer.posY > this.startY || aEg.thePlayer.tR < 14) && this.smoothCamera.wo()) {
             cl.cn();
         }
 
@@ -99,11 +99,11 @@ public class WatchdogLongJump extends Mode<LongJump> {
         }
 
         MoveUtil.useDiagonalSpeed();
-        if (this.dE < 4) {
+        if (this.stage < 4) {
             ;
         }
 
-        if (!this.vq) {
+        if (!this.launched) {
             if (aEg.thePlayer.tR == 1) {
                 if (aEg.thePlayer.isPotionActive(Potion.moveSpeed) && aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 >= 2) {
                     MoveUtil.strafe(0.475);
@@ -138,7 +138,7 @@ public class WatchdogLongJump extends Mode<LongJump> {
             aEg.thePlayer.cameraYaw = 0.1F;
         }
 
-        if (this.e(LongJump.class).autoDisable.wo() && !PacketlessDamageComponent.bd() && aEg.thePlayer.onGround && this.dE >= 999 && !this.active) {
+        if (this.e(LongJump.class).autoDisable.wo() && !PacketlessDamageComponent.bd() && aEg.thePlayer.onGround && this.stage >= 999 && !this.active) {
             this.e(LongJump.class).toggle();
         }
 
@@ -161,11 +161,11 @@ public class WatchdogLongJump extends Mode<LongJump> {
         if ((aEg.thePlayer.ae != 1 || !aEg.thePlayer.isPotionActive(Potion.moveSpeed)) && aEg.thePlayer.ae == 1) {
         }
 
-        if (aEg.thePlayer.ae > 1 && this.vq) {
+        if (aEg.thePlayer.ae > 1 && this.launched) {
             aEg.thePlayer.motionY += 0.0284;
         }
 
-        if (aEg.thePlayer.onGround && this.dE >= 999 && this.active) {
+        if (aEg.thePlayer.onGround && this.stage >= 999 && this.active) {
             MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() - 0.01);
             aEg.thePlayer.jump();
         }
@@ -176,22 +176,22 @@ public class WatchdogLongJump extends Mode<LongJump> {
     @EventLink(value = 4)
     public final Listener<PostStrafeEvent> onPostStrafe = var1x -> {
         if (aEg.thePlayer.hurtTime > 0) {
-            this.dE = 999;
+            this.stage = 999;
         }
 
-        if (this.dE < 999) {
+        if (this.stage < 999) {
             MoveUtil.stop();
         }
 
         if (this.active && aEg.thePlayer.tR == 15) {
             aEg.thePlayer.ae = 0;
-            this.vq = true;
+            this.launched = true;
             this.active = false;
-            this.tt = true;
+            this.replaying = true;
             new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
-            this.MF.forEach(PacketUtil::receive);
-            this.MF.clear();
-            this.tt = false;
+            this.heldPackets.forEach(PacketUtil::receive);
+            this.heldPackets.clear();
+            this.replaying = false;
         }
     };
     @EventLink
@@ -203,12 +203,12 @@ public class WatchdogLongJump extends Mode<LongJump> {
 
     @Override
     public void onEnable() {
-        this.jy = aEg.thePlayer.posY;
+        this.startY = aEg.thePlayer.posY;
         MoveUtil.stop();
         this.active = false;
-        this.tt = false;
-        this.IU = aEg.thePlayer.inventory.currentItem;
-        this.vq = false;
+        this.replaying = false;
+        this.previousSlot = aEg.thePlayer.inventory.currentItem;
+        this.launched = false;
         if (this.findProjectileSlot() == -1) {
             afi.b("you need a projectile in your hotbar for this");
         } else {
@@ -221,8 +221,8 @@ public class WatchdogLongJump extends Mode<LongJump> {
             }
 
             ItemDamageComponent.damage(false);
-            this.dE = 0;
-            this.hV = 0;
+            this.stage = 0;
+            this.ticks = 0;
         }
     }
 
@@ -254,11 +254,11 @@ public class WatchdogLongJump extends Mode<LongJump> {
     @Override
     public void onDisable() {
         MoveUtil.stop();
-        if (this.IU != -1) {
-            aEg.thePlayer.inventory.currentItem = this.IU;
+        if (this.previousSlot != -1) {
+            aEg.thePlayer.inventory.currentItem = this.previousSlot;
         }
 
-        this.MF.forEach(PacketUtil::receive);
-        this.MF.clear();
+        this.heldPackets.forEach(PacketUtil::receive);
+        this.heldPackets.clear();
     }
 }

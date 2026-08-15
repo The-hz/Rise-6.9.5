@@ -23,15 +23,15 @@ public class BufferAbuseBypass extends Mode<InventoryMove> {
     private final NumberValue clicksSetting = new NumberValue("Clicks", this, 3, 2, 10, 1);
     private final NumberValue amount = new NumberValue("Amount", this, 5, 1, 10, 1);
     private final ConcurrentLinkedQueue<Packet<?>> queuedPackets = new ConcurrentLinkedQueue<>();
-    private boolean Jq;
-    private boolean GU;
+    private boolean waitedTick;
+    private boolean flushed;
     private int clickCount;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (this.ht()) {
-            if (!this.GU) {
-                if (!this.Jq) {
-                    this.Jq = true;
+        if (this.isBuffering()) {
+            if (!this.flushed) {
+                if (!this.waitedTick) {
+                    this.waitedTick = true;
                 } else {
                     for (int i = 0; i < this.amount.wo().intValue(); i++) {
                         PacketUtil.sendNoEvent(new C0EPacketClickWindow());
@@ -39,23 +39,23 @@ public class BufferAbuseBypass extends Mode<InventoryMove> {
 
                     this.queuedPackets.forEach(PacketUtil::sendNoEvent);
                     this.queuedPackets.clear();
-                    this.GU = true;
+                    this.flushed = true;
                 }
             }
         } else {
-            this.Jq = false;
-            this.GU = false;
+            this.waitedTick = false;
+            this.flushed = false;
         }
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
-        if (this.ht() && !this.GU) {
+        if (this.isBuffering() && !this.flushed) {
             var1x.setCancelled();
         }
     };
     @EventLink
     public final Listener<JumpEvent> onJump = var1x -> {
-        if (this.ht() && !this.GU) {
+        if (this.isBuffering() && !this.flushed) {
             var1x.setCancelled();
         }
     };
@@ -63,7 +63,7 @@ public class BufferAbuseBypass extends Mode<InventoryMove> {
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         Packet packet = var1x.dq();
         if (packet instanceof C0EPacketClickWindow) {
-            if (this.ht() && !this.GU) {
+            if (this.isBuffering() && !this.flushed) {
                 var1x.setCancelled();
                 this.queuedPackets.add(packet);
                 return;
@@ -94,7 +94,7 @@ public class BufferAbuseBypass extends Mode<InventoryMove> {
         super(var1, inventoryMove);
     }
 
-    private boolean ht() {
+    private boolean isBuffering() {
         return this.clickCount > 0 && this.clickCount % this.clicksSetting.wo().intValue() == 0;
     }
 }

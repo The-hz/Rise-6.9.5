@@ -15,9 +15,9 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.network.play.server.S27PacketExplosion;
 
 public final class StandardVelocity extends Mode<Velocity> {
-    public Boolean uQ = false;
-    private Integer uR = 0;
-    private Speed uS = null;
+    public Boolean flag = false;
+    private Integer counter = 0;
+    private Speed speed = null;
     private String fH = null;
     private int sG;
     private final NumberValue horizontal = new NumberValue("Horizontal", this, 0, 0, 100, 1);
@@ -61,8 +61,8 @@ public final class StandardVelocity extends Mode<Velocity> {
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (this.uS == null) {
-            this.uS = this.e(Speed.class);
+        if (this.speed == null) {
+            this.speed = this.e(Speed.class);
         }
     };
     @EventLink
@@ -73,7 +73,7 @@ public final class StandardVelocity extends Mode<Velocity> {
 
     @Override
     public void onEnable() {
-        this.uR = 0;
+        this.counter = 0;
         this.setFlag(false);
     }
 
@@ -82,10 +82,10 @@ public final class StandardVelocity extends Mode<Velocity> {
     }
 
     public Boolean getFlag() {
-        return this.uQ;
+        return this.flag;
     }
 
     public void setFlag(Boolean var1) {
-        this.uQ = var1;
+        this.flag = var1;
     }
 }

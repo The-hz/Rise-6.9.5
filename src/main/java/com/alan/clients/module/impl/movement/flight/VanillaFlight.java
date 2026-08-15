@@ -11,7 +11,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 
 public class VanillaFlight extends Mode<Flight> {
-    private static final double Iz = 10.0;
+    private static final double MAX_SPEED = 10.0;
     private final NumberValue speed = new NumberValue("Speed", this, 1, 0.1, 10, 0.1);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {

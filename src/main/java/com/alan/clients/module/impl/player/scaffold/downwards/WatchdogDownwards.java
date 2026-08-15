@@ -12,7 +12,7 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import org.lwjgl.input.Keyboard;
 
 public class WatchdogDownwards extends Mode<Scaffold> {
-    public static int bj;
+    public static int fullBlockTicks;
     @EventLink(value = 0)
     public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (Keyboard.isKeyDown(aEg.gameSettings.keyBindSneak.getKeyCode())) {
@@ -39,6 +39,6 @@ public class WatchdogDownwards extends Mode<Scaffold> {
 
     @Override
     public void onEnable() {
-        bj = 0;
+        fullBlockTicks = 0;
     }
 }

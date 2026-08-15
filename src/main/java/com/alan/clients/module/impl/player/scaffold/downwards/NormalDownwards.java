@@ -11,7 +11,7 @@ public class NormalDownwards extends Mode<Scaffold> {
     @EventLink(value = 1)
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (Keyboard.isKeyDown(aEg.gameSettings.keyBindSneak.getKeyCode())) {
-            this.getParent().agy = this.getParent().agy.v(0.0, -1.0, 0.0);
+            this.getParent().placeOffset = this.getParent().placeOffset.v(0.0, -1.0, 0.0);
         }
     };
 

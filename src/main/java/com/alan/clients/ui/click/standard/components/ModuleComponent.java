@@ -88,12 +88,12 @@ public class ModuleComponent implements InstanceAccess {
 
         if (!this.aye.isFinished() || this.expanded) {
             for (ValueComponent valueComponent : this.getValueList()) {
-                if ((valueComponent.getValue() == null || valueComponent.getValue().getHideIf() == null || !valueComponent.getValue().getHideIf().getAsBoolean()) && (valueComponent.getValue().wn() == null || !valueComponent.getValue().wn().getAsBoolean())) {
+                if ((valueComponent.getValue() == null || valueComponent.getValue().getHideIf() == null || !valueComponent.getValue().getHideIf().getAsBoolean()) && (valueComponent.getValue().getBooleanSupplier() == null || !valueComponent.getValue().getBooleanSupplier().getAsBoolean())) {
                     valueComponent.U(valueComponent.position == null ? 0 : (valueComponent.position.y < position.y + this.aye.getValue() + 15.0 ? (int)this.ayf.getValue() : 0));
                     valueComponent.U(valueComponent.getValue().getHideIf() == null ? valueComponent.pT() : Math.max(valueComponent.pT() - 40, 0));
                     if (flag) {
                         valueComponent.draw(
-                            new Vector2d(position.x + 6.0 + (valueComponent.getValue().getHideIf() == null ? 0 : 10) + (valueComponent.getValue().wn() == null ? 0 : 10), (float)(position.y + f1 + 1.0)),
+                            new Vector2d(position.x + 6.0 + (valueComponent.getValue().getHideIf() == null ? 0 : 10) + (valueComponent.getValue().getBooleanSupplier() == null ? 0 : 10), (float)(position.y + f1 + 1.0)),
                             var2,
                             var3,
                             var4
@@ -166,7 +166,7 @@ public class ModuleComponent implements InstanceAccess {
             if (this.isExpanded()) {
                 for (ValueComponent ablx : this.getValueList()) {
                     if ((ablx.getValue() == null || ablx.getValue().getHideIf() == null || !ablx.getValue().getHideIf().getAsBoolean())
-                        && (ablx.getValue().wn() == null || !ablx.getValue().wn().getAsBoolean())
+                        && (ablx.getValue().getBooleanSupplier() == null || !ablx.getValue().getBooleanSupplier().getAsBoolean())
                         && ablx.e(var1, var2, var3)) {
                         break;
                     }
@@ -183,7 +183,7 @@ public class ModuleComponent implements InstanceAccess {
                     for (ValueComponent valueComponent : this.getValueList()) {
                         if (valueComponent.getValue() != null
                             && (valueComponent.getValue().getHideIf() == null || !valueComponent.getValue().getHideIf().getAsBoolean())
-                            && (valueComponent.getValue().wn() == null || !valueComponent.getValue().wn().getAsBoolean())) {
+                            && (valueComponent.getValue().getBooleanSupplier() == null || !valueComponent.getValue().getBooleanSupplier().getAsBoolean())) {
                             valueComponent.released();
                         }
                     }

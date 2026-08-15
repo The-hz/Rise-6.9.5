@@ -82,7 +82,7 @@ public class ConfigCard implements InstanceAccess {
     }
 
     @Generated
-    public Runnable qA() {
+    public Runnable getRunnable() {
         return this.aAa;
     }
 
@@ -127,7 +127,7 @@ public class ConfigCard implements InstanceAccess {
     }
 
     @Generated
-    public void e(Runnable runnable) {
+    public void setRunnable(Runnable runnable) {
         this.aAa = runnable;
     }
 

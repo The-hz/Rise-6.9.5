@@ -11,37 +11,37 @@ import com.alan.clients.value.impl.NumberValue;
 public final class SkyCaveFlight extends Mode<Flight> {
     private final NumberValue speed = new NumberValue("Speed", this, 1.2, 0.8, 10, 0.05);
     private final NumberValue damageSpeed = new NumberValue("Damage Speed", this, 5, 0.8, 10, 0.05);
-    private double xv;
-    private int FX;
+    private double currentSpeed;
+    private int stage;
     @EventLink(value = 4)
     private final Listener<MoveEvent> onMove = var1x -> {
         if (!MoveUtil.isMoving() || aEg.thePlayer.isCollidedHorizontally) {
-            this.FX = -1;
+            this.stage = -1;
         }
 
         if (aEg.thePlayer.ae == 1) {
-            this.xv = this.damageSpeed.wo().doubleValue();
+            this.currentSpeed = this.damageSpeed.wo().doubleValue();
         }
 
-        switch (this.FX) {
+        switch (this.stage) {
             case -1:
                 aEg.thePlayer.motionY = 0.0;
                 var1x.setPosY(-1.0E-5);
                 break;
             case 0:
-                this.xv = 0.3;
+                this.currentSpeed = 0.3;
                 break;
             case 1:
                 if (aEg.thePlayer.onGround) {
                     var1x.setPosY(aEg.thePlayer.motionY = 0.3999);
-                    this.xv *= 2.14;
+                    this.currentSpeed *= 2.14;
                 }
                 break;
             case 2:
-                this.xv = this.speed.wo().doubleValue();
+                this.currentSpeed = this.speed.wo().doubleValue();
                 break;
             default:
-                this.xv = this.xv - this.xv / 109.0;
+                this.currentSpeed = this.currentSpeed - this.currentSpeed / 109.0;
                 aEg.thePlayer.motionY = 0.0;
                 var1x.setPosY(-1.0E-5);
         }
@@ -50,10 +50,10 @@ public final class SkyCaveFlight extends Mode<Flight> {
             var1x.setPosY(-0.035);
         }
 
-        if (this.FX != -1) {
+        if (this.stage != -1) {
             aEg.thePlayer.jumpMovementFactor = 0.0F;
-            MoveUtil.setMoveEvent(var1x, Math.max(this.xv, MoveUtil.getAllowedHorizontalDistance()));
-            this.FX++;
+            MoveUtil.setMoveEvent(var1x, Math.max(this.currentSpeed, MoveUtil.getAllowedHorizontalDistance()));
+            this.stage++;
         }
     };
 
@@ -63,7 +63,7 @@ public final class SkyCaveFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        this.xv = 0.0;
-        this.FX = aEg.thePlayer.onGround ? 0 : -1;
+        this.currentSpeed = 0.0;
+        this.stage = aEg.thePlayer.onGround ? 0 : -1;
     }
 }

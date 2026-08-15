@@ -15,21 +15,21 @@ import com.alan.clients.component.impl.player.FallDistanceComponent;
 public class BlinkAntiVoid extends Mode<AntiVoid> {
     private aka position;
     private aka motion;
-    private Vector2f ka;
+    private Vector2f rotation;
     @EventLink
     public final Listener<PostMotionEvent> onPreUpdate = var1x -> {
         if (aEg.thePlayer.ticksExisted > 60) {
-            if (this.position == null || this.motion == null || this.ka == null || PlayerUtil.a(50.0, true)) {
+            if (this.position == null || this.motion == null || this.rotation == null || PlayerUtil.a(50.0, true)) {
                 this.position = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
                 this.motion = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
-                this.ka = new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
+                this.rotation = new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
             } else if (FallDistanceComponent.cY > 4.0F) {
                 aEg.thePlayer.setPosition(this.position.x, this.position.y, this.position.z);
                 aEg.thePlayer.motionX = 0.0;
                 aEg.thePlayer.motionY = MoveUtil.predictedMotion(this.motion.y);
                 aEg.thePlayer.motionZ = 0.0;
-                aEg.thePlayer.pl = this.ka.x;
-                aEg.thePlayer.rotationPitch = this.ka.y;
+                aEg.thePlayer.pl = this.rotation.x;
+                aEg.thePlayer.rotationPitch = this.rotation.y;
                 FallDistanceComponent.cY = 0.0F;
                 BlinkComponent.disable();
                 BlinkComponent.dispatch();

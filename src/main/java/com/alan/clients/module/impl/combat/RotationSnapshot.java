@@ -22,7 +22,7 @@ public final class RotationSnapshot {
         this.pr = var7;
     }
 
-    public void gh() {
+    public void restore() {
         EntityPlayerSP entityplayersp = Minecraft.getMinecraft().thePlayer;
         if (entityplayersp != null) {
             entityplayersp.pl = this.pl;

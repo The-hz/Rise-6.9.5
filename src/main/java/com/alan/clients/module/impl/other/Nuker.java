@@ -41,7 +41,7 @@ public final class Nuker extends Module {
     private final BooleanValue rotations = new BooleanValue("Rotations", this, false);
     private final BooleanValue scatter = new BooleanValue("Scatter", this, false);
     private final BooleanValue swing = new BooleanValue("Swing", this, false);
-    private final a Vp = new a();
+    private final a delayStopWatch = new a();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (!GUIDetectionComponent.inGUI()) {
@@ -51,9 +51,9 @@ public final class Nuker extends Module {
                 String s = this.mode.wo().getName();
                 switch (s) {
                     case "Nearby":
-                        if (this.Vp.T(this.delay.wo().longValue())) {
+                        if (this.delayStopWatch.T(this.delay.wo().longValue())) {
                             new Thread(() -> this.nuke(d0, var1.getPosX(), var1.getPosY(), var1.getPosZ())).start();
-                            this.Vp.aX();
+                            this.delayStopWatch.aX();
                         }
 
                         return;
@@ -64,7 +64,7 @@ public final class Nuker extends Module {
                 }
             }
 
-            if (aEg.gameSettings.cgI.isKeyDown() && this.Vp.T(this.delay.wo().longValue())) {
+            if (aEg.gameSettings.cgI.isKeyDown() && this.delayStopWatch.T(this.delay.wo().longValue())) {
                 BlockPos blockpos = aEg.thePlayer.rayTrace(999.0, 1.0F).getBlockPos();
                 if (aEg.theWorld.getBlockState(blockpos).getBlock() instanceof BlockAir) {
                     return;
@@ -96,7 +96,7 @@ public final class Nuker extends Module {
                         }
                     )
                     .start();
-                this.Vp.aX();
+                this.delayStopWatch.aX();
             }
         }
     };

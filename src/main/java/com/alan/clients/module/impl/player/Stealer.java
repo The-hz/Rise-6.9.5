@@ -38,26 +38,26 @@ public class Stealer extends Module {
     private long nextClick;
     private int lastClick;
     private int lastSteal;
-    private int ahp;
-    private boolean fY;
-    private boolean ahq;
+    private int chestOpenTicks;
+    private boolean closedScreen;
+    private boolean appliedFirstItemDelay;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.currentScreen instanceof GuiChest) {
-            this.ahp++;
-            this.fY = false;
+            this.chestOpenTicks++;
+            this.closedScreen = false;
             ContainerChest containerchest = (ContainerChest)aEg.thePlayer.openContainer;
-            if (this.ahp == 1 && !this.ahq) {
+            if (this.chestOpenTicks == 1 && !this.appliedFirstItemDelay) {
                 int i = this.firstItemDelay.wo().intValue();
                 int j = this.firstItemDelay.wA().intValue();
                 if (i > 0 || j > 0) {
                     this.nextClick = Math.round(MathUtil.l(i, j));
                     this.stopwatch.aX();
-                    this.ahq = true;
+                    this.appliedFirstItemDelay = true;
                     return;
                 }
 
-                this.ahq = true;
+                this.appliedFirstItemDelay = true;
             }
 
             if (this.guiDetection.wo() && GUIDetectionComponent.inGUI() || !this.stopwatch.T(this.nextClick)) {
@@ -68,7 +68,7 @@ public class Stealer extends Module {
 
             for (int k = 0; k < containerchest.inventorySlots.size(); k++) {
                 ItemStack itemstack = containerchest.getLowerChestInventory().getStackInSlot(k);
-                if (itemstack != null && this.lastSteal > 1 && (!this.ignoreTrash.wo() || ItemUtil.useful(itemstack)) && (!this.respectManagerRules.wo() || !this.r(itemstack))) {
+                if (itemstack != null && this.lastSteal > 1 && (!this.ignoreTrash.wo() || ItemUtil.useful(itemstack)) && (!this.respectManagerRules.wo() || !this.shouldIgnore(itemstack))) {
                     this.nextClick = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
                     aEg.playerController.windowClick(containerchest.windowId, k, 0, 1, aEg.thePlayer);
                     this.stopwatch.aX();
@@ -80,15 +80,15 @@ public class Stealer extends Module {
             }
 
             this.lastClick++;
-            if (this.lastClick > 1 && this.ahp > 2.0 + 2.0 * Math.random()) {
+            if (this.lastClick > 1 && this.chestOpenTicks > 2.0 + 2.0 * Math.random()) {
                 aEg.thePlayer.closeScreen();
-                this.fY = true;
+                this.closedScreen = true;
             }
         } else {
             this.lastClick = 0;
-            this.ahp = 0;
+            this.chestOpenTicks = 0;
             this.lastSteal = 0;
-            this.ahq = false;
+            this.appliedFirstItemDelay = false;
         }
     };
 
@@ -96,10 +96,10 @@ public class Stealer extends Module {
     }
 
     public boolean hasClosedScreen() {
-        return this.fY;
+        return this.closedScreen;
     }
 
-    private boolean r(ItemStack stack) {
+    private boolean shouldIgnore(ItemStack stack) {
         if (stack != null && stack.getItem() != null) {
             Item item = stack.getItem();
             Manager manager = this.e(Manager.class);
@@ -117,7 +117,7 @@ public class Stealer extends Module {
             } else if (item instanceof ItemArmor) {
                 return !ItemUtil.a(stack, container, ((ItemArmor)item).armorType);
             } else if (item instanceof net.minecraft.item.be) {
-                return this.a(var0 -> var0 instanceof net.minecraft.item.be) >= 1;
+                return this.countItems(var0 -> var0 instanceof net.minecraft.item.be) >= 1;
             }
             int i = manager != null ? manager.getArrowLimit() : 128;
             int j = manager != null ? manager.getBucketLimit() : 1;
@@ -125,20 +125,20 @@ public class Stealer extends Module {
             int l = manager != null ? manager.getEnderPearlLimit() : 16;
             int i1 = manager != null ? manager.getBlockLimit() : 512;
             if (item == Items.arrow) {
-                return this.a(Items.arrow) + stack.stackSize > i;
+                return this.countItem(Items.arrow) + stack.stackSize > i;
             } else if (item == Items.ender_pearl) {
-                return this.a(Items.ender_pearl) + stack.stackSize > l;
+                return this.countItem(Items.ender_pearl) + stack.stackSize > l;
             } else if (item == Items.bucket || item == Items.water_bucket || item == Items.lava_bucket || item == Items.milk_bucket) {
-                return this.a(Items.bucket) + this.a(Items.water_bucket) + this.a(Items.lava_bucket) + this.a(Items.milk_bucket) + stack.stackSize > j;
+                return this.countItem(Items.bucket) + this.countItem(Items.water_bucket) + this.countItem(Items.lava_bucket) + this.countItem(Items.milk_bucket) + stack.stackSize > j;
             } else if (item == Items.snowball || item == Items.egg) {
-                return this.a(Items.snowball) + this.a(Items.egg) + stack.stackSize > k;
+                return this.countItem(Items.snowball) + this.countItem(Items.egg) + stack.stackSize > k;
             }
-            return item instanceof ItemBlock ? this.a(var0 -> var0 instanceof ItemBlock) + stack.stackSize > i1 : false;
+            return item instanceof ItemBlock ? this.countItems(var0 -> var0 instanceof ItemBlock) + stack.stackSize > i1 : false;
         }
         return true;
     }
 
-    private int a(Item item) {
+    private int countItem(Item item) {
         int i = 0;
 
         for (int j = 0; j <= 39; j++) {
@@ -151,7 +151,7 @@ public class Stealer extends Module {
         return i;
     }
 
-    private int a(Predicate<Item> predicate) {
+    private int countItems(Predicate<Item> predicate) {
         int i = 0;
 
         for (int j = 0; j <= 39; j++) {
@@ -166,6 +166,6 @@ public class Stealer extends Module {
 
     @Generated
     public int kw() {
-        return this.ahp;
+        return this.chestOpenTicks;
     }
 }

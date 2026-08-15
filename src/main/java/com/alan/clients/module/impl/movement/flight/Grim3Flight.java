@@ -16,19 +16,19 @@ import com.viaversion.viaversion.protocols.v1_8to1_9.packet.ServerboundPackets1_
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 
 public class Grim3Flight extends Mode<Flight> {
-    private int Gq;
+    private int airTicks;
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (!aEg.thePlayer.onGround) {
-            this.Gq++;
+            this.airTicks++;
         } else {
-            this.Gq = 0;
+            this.airTicks = 0;
         }
     };
     @EventLink
     public final Listener<PostMotionEvent> onPostMotion = var1x -> {
         if (!aEg.thePlayer.onGround) {
-            this.hp();
+            this.sendStartFallFlying();
         }
     };
 
@@ -38,17 +38,17 @@ public class Grim3Flight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        this.Gq = 0;
+        this.airTicks = 0;
         super.onEnable();
     }
 
     @Override
     public void onDisable() {
-        this.Gq = 0;
+        this.airTicks = 0;
         super.onDisable();
     }
 
-    private void hp() {
+    private void sendStartFallFlying() {
         if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9)) {
             UserConnection userconnection = Via.getManager().getConnectionManager().getConnections().iterator().next();
             PacketWrapper packetwrapper = PacketWrapper.create(ServerboundPackets1_9.PLAYER_COMMAND, userconnection);

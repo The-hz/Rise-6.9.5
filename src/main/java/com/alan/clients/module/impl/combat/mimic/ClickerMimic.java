@@ -15,8 +15,8 @@ import net.minecraft.network.play.server.m;
 import net.minecraft.util.Tuple;
 
 public class ClickerMimic extends Mode<Mimic> {
-    private long sc;
-    private HashMap<String, Tuple<ArrayList<Integer>, Integer>> sd = new HashMap<>();
+    private long nextClickTime;
+    private HashMap<String, Tuple<ArrayList<Integer>, Integer>> recordedDelays = new HashMap<>();
     @EventLink(value = 0)
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         Packet packet = var1x.getPacket();
@@ -28,11 +28,11 @@ public class ClickerMimic extends Mode<Mimic> {
 
             String s = aEg.theWorld.getEntityByID(i).getName();
             int j = aEg.thePlayer.ticksExisted;
-            if (!this.sd.containsKey(s)) {
-                this.sd.put(s, new Tuple<>(new ArrayList<>(), j));
+            if (!this.recordedDelays.containsKey(s)) {
+                this.recordedDelays.put(s, new Tuple<>(new ArrayList<>(), j));
             }
 
-            Tuple tuple = this.sd.get(s);
+            Tuple tuple = this.recordedDelays.get(s);
             afi.b("Recorded " + (j - (Integer)tuple.getSecond()) + " von " + s);
             ((ArrayList)tuple.getFirst()).add(j - (Integer)tuple.getSecond());
             tuple.k(j);
@@ -42,10 +42,10 @@ public class ClickerMimic extends Mode<Mimic> {
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.gameSettings.cgK.isKeyDown()) {
             if (aEg.gameSettings.keyBindSneak.isKeyDown()) {
-                this.sd = new HashMap<>();
+                this.recordedDelays = new HashMap<>();
             }
 
-            if (System.currentTimeMillis() > this.sc) {
+            if (System.currentTimeMillis() > this.nextClickTime) {
                 long i = 0L;
 
                 while (i == 0L || i >= 450L) {
@@ -53,15 +53,15 @@ public class ClickerMimic extends Mode<Mimic> {
                         afi.b("Running again prev " + i);
                     }
 
-                    Optional optional = this.sd.keySet().stream().findFirst();
+                    Optional optional = this.recordedDelays.keySet().stream().findFirst();
                     if (!optional.isPresent()) {
                         afi.b("Empty");
                         return;
                     }
 
-                    Tuple tuple = this.sd.get(optional.get());
+                    Tuple tuple = this.recordedDelays.get(optional.get());
                     if (((ArrayList)tuple.getFirst()).isEmpty()) {
-                        this.sd.remove(optional.get());
+                        this.recordedDelays.remove(optional.get());
                         return;
                     }
 
@@ -70,7 +70,7 @@ public class ClickerMimic extends Mode<Mimic> {
                     afi.b("Running " + (String)optional.get() + " " + i);
                 }
 
-                this.sc = System.currentTimeMillis() + i / 2L;
+                this.nextClickTime = System.currentTimeMillis() + i / 2L;
                 aEg.Ay();
                 aEg.leftClickCounter = 1;
             }

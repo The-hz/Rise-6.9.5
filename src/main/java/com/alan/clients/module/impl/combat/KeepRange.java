@@ -27,19 +27,19 @@ public final class KeepRange extends Module {
     private final NumberValue edgeRange = new NumberValue("Edge Range", this, 5, 0, 6, 1, () -> !this.disableNearEdge.wo());
     private final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("BackWards")).add(new SubMode("Stop")).setDefault("Stop");
     private final NumberValue comboToStart = new NumberValue("Combo To Start", this, 2, 0, 6, 1);
-    private boolean lP;
-    private int lQ;
+    private boolean nearEdge;
+    private int comboTicks;
     @EventLink
     public final Listener<GameEvent> onGame = var1 -> {
         if (aEg.thePlayer.onGround) {
-            this.lP = false;
+            this.nearEdge = false;
             int i = this.edgeRange.wo().intValue();
 
             for (int j = -i; j <= i; j++) {
                 for (int k = -i; k <= i; k++) {
                     for (int l = -5; l <= 0 && PlayerUtil.p(j, l, k) instanceof BlockAir; l++) {
                         if (l == 0) {
-                            this.lP = true;
+                            this.nearEdge = true;
                             return;
                         }
                     }
@@ -55,16 +55,16 @@ public final class KeepRange extends Module {
             d0 -= 0.2;
         }
 
-        if (entitylivingbase != null && (!this.lP || !this.disableNearEdge.wo())) {
+        if (entitylivingbase != null && (!this.nearEdge || !this.disableNearEdge.wo())) {
             if (entitylivingbase.hurtTime > 0) {
-                this.lQ++;
+                this.comboTicks++;
             }
 
             if (aEg.thePlayer.hurtTime > 0) {
-                this.lQ = 0;
+                this.comboTicks = 0;
             }
 
-            if (this.lQ > this.comboToStart.wo().intValue() * 8 || this.comboToStart.wo().intValue() <= 0) {
+            if (this.comboTicks > this.comboToStart.wo().intValue() * 8 || this.comboToStart.wo().intValue() <= 0) {
                 if (PlayerUtil.v(entitylivingbase) < d0 - 0.05) {
                     float f = var1.getForward();
                     float f1 = var1.getStrafe();
@@ -116,7 +116,7 @@ public final class KeepRange extends Module {
                 }
             }
         } else {
-            this.lQ = 0;
+            this.comboTicks = 0;
         }
     };
 

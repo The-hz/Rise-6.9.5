@@ -17,7 +17,7 @@ import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
 
 public class KeyStroke implements InstanceAccess {
-    private Interface amf;
+    private Interface interfaceModule;
     private final Vector2f scale;
     private final Vector2f offset;
     private final String name;
@@ -34,11 +34,11 @@ public class KeyStroke implements InstanceAccess {
 
     public void c(Vector2d var1) {
         Vector2d vector2d = new Vector2d(var1.getX() + this.offset.getX(), var1.getY() + this.offset.getY());
-        if (this.amf == null) {
-            this.amf = this.e(Interface.class);
+        if (this.interfaceModule == null) {
+            this.interfaceModule = this.e(Interface.class);
         }
 
-        double d0 = this.amf != null ? this.amf.getRoundingRadius() : 4.0;
+        double d0 = this.interfaceModule != null ? this.interfaceModule.getRoundingRadius() : 4.0;
         double d1 = vector2d.getX();
         double d2 = vector2d.getY();
         double d3 = this.scale.getX();
@@ -55,20 +55,20 @@ public class KeyStroke implements InstanceAccess {
     }
 
     public void bloom(Vector2d vector2d) {
-        if (this.amf == null) {
-            this.amf = this.e(Interface.class);
+        if (this.interfaceModule == null) {
+            this.interfaceModule = this.e(Interface.class);
         }
 
-        double d0 = this.amf != null ? this.amf.getRoundingRadius() : 4.0;
+        double d0 = this.interfaceModule != null ? this.interfaceModule.getRoundingRadius() : 4.0;
         RenderUtil.roundedRectangle(vector2d.x + this.offset.x + 0.5, vector2d.y + this.offset.y + 0.5, this.scale.x - 1.0F, this.scale.y - 1.0F, d0, this.rz().rE());
     }
 
     public void blur(Vector2d vector2d) {
-        if (this.amf == null) {
-            this.amf = this.e(Interface.class);
+        if (this.interfaceModule == null) {
+            this.interfaceModule = this.e(Interface.class);
         }
 
-        double d0 = this.amf != null ? this.amf.getRoundingRadius() : 4.0;
+        double d0 = this.interfaceModule != null ? this.interfaceModule.getRoundingRadius() : 4.0;
         RenderUtil.roundedRectangle(vector2d.x + this.offset.x, vector2d.y + this.offset.y, this.scale.x, this.scale.y, d0, Color.BLACK);
     }
 

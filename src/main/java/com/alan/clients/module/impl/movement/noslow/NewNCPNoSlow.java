@@ -23,9 +23,9 @@ public class NewNCPNoSlow extends Mode<NoSlow> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         this.disable++;
-        this.hA();
-        this.hB();
-        this.hC();
+        this.handleFood();
+        this.handlePotion();
+        this.handleSword();
     };
     @EventLink
     public final Listener<SlowDownEvent> onSlowDown = var1x -> {
@@ -58,25 +58,25 @@ public class NewNCPNoSlow extends Mode<NoSlow> {
     public void onEnable() {
     }
 
-    private void hA() {
+    private void handleFood() {
         if (this.getParent().food.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
-            this.hE();
+            this.sendPlacement();
         }
     }
 
-    private void hB() {
+    private void handlePotion() {
         if (this.getParent().potion.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion) {
-            this.hE();
+            this.sendPlacement();
         }
     }
 
-    private void hC() {
+    private void handleSword() {
         if (this.getParent().sword.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
-            this.hE();
+            this.sendPlacement();
         }
     }
 
-    private void hE() {
+    private void sendPlacement() {
         if (this.disable > 10 && !BadPacketsComponent.bad(false, true, true, false, false) && Client.a.g().c(KillAura.class).jE == null) {
             PacketUtil.send(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 5, null, 0.0F, 0.0F, 0.0F));
         }

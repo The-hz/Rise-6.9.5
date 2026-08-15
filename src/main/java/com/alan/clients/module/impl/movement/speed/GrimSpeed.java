@@ -30,14 +30,14 @@ public class GrimSpeed extends Mode<Speed> {
     private final NumberValue inPlayerSpeed = new NumberValue("in Player Speed", this, 0.08, 0, 0.08, 0.01);
     private final NumberValue moveFlyingIncrease = new NumberValue("Move Flying Increase", this, 1.0E-4, 0, 0.001, 1.0E-5);
     public final BooleanValue fastFall = new BooleanValue("Fast Fall", this, true);
-    private int Gq = 0;
-    private int Py = 0;
+    private int airTicks = 0;
+    private int groundSpoof = 0;
     @EventLink(value = 1)
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (!aEg.thePlayer.onGround) {
-            this.Gq++;
+            this.airTicks++;
         } else {
-            this.Gq = 0;
+            this.airTicks = 0;
         }
 
         if (!aEg.thePlayer.isInWeb
@@ -53,13 +53,13 @@ public class GrimSpeed extends Mode<Speed> {
     @EventLink(value = 4)
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (this.fastFall.wo()) {
-            if (this.Py == 0) {
-                this.Py = var1x.isOnGround() ? 1 : 0;
+            if (this.groundSpoof == 0) {
+                this.groundSpoof = var1x.isOnGround() ? 1 : 0;
             } else {
-                this.Py = 0;
+                this.groundSpoof = 0;
             }
 
-            var1x.setOnGround(this.Py != 0);
+            var1x.setOnGround(this.groundSpoof != 0);
             if (aEg.thePlayer.onGround) {
                 aEg.thePlayer.jump();
             }
@@ -68,14 +68,14 @@ public class GrimSpeed extends Mode<Speed> {
     @EventLink(value = 4)
     public final Listener<PostMotionEvent> onPostMotion = var1x -> {
         if (this.fastFall.wo()) {
-            if (!aEg.thePlayer.onGround && this.Py >= 0) {
-                if (this.Gq < 1 || this.Gq > 5) {
+            if (!aEg.thePlayer.onGround && this.groundSpoof >= 0) {
+                if (this.airTicks < 1 || this.airTicks > 5) {
                     return;
                 }
 
-                this.hp();
+                this.startFallFlying();
                 aEg.thePlayer.setSneaking(false);
-                if (this.Gq == 2) {
+                if (this.airTicks == 2) {
                     aEg.thePlayer.jump();
                 }
             }
@@ -97,7 +97,7 @@ public class GrimSpeed extends Mode<Speed> {
             )
             .forEach(var1xx -> MoveUtil.moveFlying(this.inPlayerSpeed.wo().doubleValue()));
         MoveUtil.moveFlying(this.moveFlyingIncrease.wo().doubleValue());
-        if ((!GrimVelocity.dj && (GrimVelocity.tS == 0 || GrimVelocity.tS >= 6) || !aEg.thePlayer.onGround)
+        if ((!GrimVelocity.dj && (GrimVelocity.velocityTicks == 0 || GrimVelocity.velocityTicks >= 6) || !aEg.thePlayer.onGround)
             && aEg.thePlayer.hurtTime == 0
             && aEg.thePlayer.onGround
             && aEg.gameSettings.keyBindJump.isKeyDown()) {
@@ -113,11 +113,11 @@ public class GrimSpeed extends Mode<Speed> {
     public void onDisable() {
         aEg.gameSettings.keyBindSneak.setPressed(false);
         aEg.gameSettings.keyBindJump.setPressed(false);
-        this.Gq = 0;
-        this.Py = 0;
+        this.airTicks = 0;
+        this.groundSpoof = 0;
     }
 
-    private void hp() {
+    private void startFallFlying() {
         if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9)) {
             UserConnection userconnection = Via.getManager().getConnectionManager().getConnections().iterator().next();
             PacketWrapper packetwrapper = PacketWrapper.create(ServerboundPackets1_9.PLAYER_COMMAND, userconnection);

@@ -12,7 +12,7 @@ public final class CubecraftBedrockCheckAntiBot extends Mode<AntiBot> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> aEg.theWorld.playerEntities.forEach(var1xx -> {
         String s = var1xx.getDisplayName().getUnformattedText();
-        s(s);
+        stripFormatting(s);
         if (s.chars().filter(var0 -> var0 == 167).count() >= 8L && s.contains("§\u0000§\u0000§\u0000§\u0000")) {
             if (aEg.thePlayer.Zl == 10) {
                 afi.c("Detected bot by formatting pattern: " + s);
@@ -26,7 +26,7 @@ public final class CubecraftBedrockCheckAntiBot extends Mode<AntiBot> {
         super(var1, antiBot);
     }
 
-    public static String s(String var0) {
+    public static String stripFormatting(String var0) {
         if (var0 == null) {
             return null;
         }

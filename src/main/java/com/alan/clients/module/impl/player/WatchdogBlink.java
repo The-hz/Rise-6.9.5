@@ -17,44 +17,44 @@ import java.util.Deque;
 public class WatchdogBlink extends Module {
     public NumberValue interval = new NumberValue("Interval", this, 4, 1, 20, 1);
     public NumberValue disableTicks = new NumberValue("Disable Ticks", this, 15, 1, 40, 1);
-    private final Deque<Integer> ahw = new ArrayDeque<>();
-    private int ahx;
-    private int qH;
-    private boolean ahy;
-    private boolean ahz;
+    private final Deque<Integer> packetCounts = new ArrayDeque<>();
+    private int lastQueueSize;
+    private int ticks;
+    private boolean flushing;
+    private boolean selfDisabling;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> BlinkComponent.blink();
     @EventLink
     public final Listener<PostMotionEvent> onPostMotion = var1 -> {
-        int i = BlinkComponent.bg() - this.ahx;
+        int i = BlinkComponent.bg() - this.lastQueueSize;
         if (i > 0) {
-            this.ahw.add(i);
+            this.packetCounts.add(i);
         }
 
-        if (this.ahy) {
-            this.N(this.disableTicks.wo().intValue());
-            if (this.ahw.isEmpty() && !BlinkComponent.bh()) {
-                this.ahz = true;
+        if (this.flushing) {
+            this.releaseTicks(this.disableTicks.wo().intValue());
+            if (this.packetCounts.isEmpty() && !BlinkComponent.bh()) {
+                this.selfDisabling = true;
                 super.setEnabled(false);
-                this.ahz = false;
+                this.selfDisabling = false;
                 return;
             }
         } else {
-            this.qH++;
-            if (this.qH >= this.interval.wo().intValue()) {
-                this.qH = 0;
-                this.N(1);
+            this.ticks++;
+            if (this.ticks >= this.interval.wo().intValue()) {
+                this.ticks = 0;
+                this.releaseTicks(1);
             }
         }
 
-        this.ahx = BlinkComponent.bg();
+        this.lastQueueSize = BlinkComponent.bg();
     };
     @EventLink
     public final Listener<WorldChangeEvent> onWorldChange = var1 -> {
-        this.ahw.clear();
-        this.qH = 0;
-        this.ahy = false;
-        this.ahx = BlinkComponent.bg();
+        this.packetCounts.clear();
+        this.ticks = 0;
+        this.flushing = false;
+        this.lastQueueSize = BlinkComponent.bg();
     };
 
     public WatchdogBlink() {
@@ -62,14 +62,14 @@ public class WatchdogBlink extends Module {
 
     @Override
     public void setEnabled(boolean enabled) {
-        if (!enabled && this.isEnabled() && !this.ahz) {
-            if (this.ahy) {
+        if (!enabled && this.isEnabled() && !this.selfDisabling) {
+            if (this.flushing) {
                 return;
             }
 
-            if (!this.ahw.isEmpty() || BlinkComponent.bh()) {
-                this.ahy = true;
-                this.qH = 0;
+            if (!this.packetCounts.isEmpty() || BlinkComponent.bh()) {
+                this.flushing = true;
+                this.ticks = 0;
                 return;
             }
         }
@@ -79,36 +79,36 @@ public class WatchdogBlink extends Module {
 
     @Override
     public void onEnable() {
-        this.ahy = false;
-        this.ahz = false;
-        this.ahw.clear();
-        this.ahx = BlinkComponent.bg();
-        this.qH = 0;
+        this.flushing = false;
+        this.selfDisabling = false;
+        this.packetCounts.clear();
+        this.lastQueueSize = BlinkComponent.bg();
+        this.ticks = 0;
     }
 
     @Override
     public void onDisable() {
-        this.ahy = false;
-        this.ahz = false;
-        this.ahw.clear();
-        this.qH = 0;
+        this.flushing = false;
+        this.selfDisabling = false;
+        this.packetCounts.clear();
+        this.ticks = 0;
         BlinkComponent.dispatch();
     }
 
-    private void N(int var1) {
+    private void releaseTicks(int var1) {
         for (int i = 0; i < var1; i++) {
-            Integer integer = this.ahw.poll();
+            Integer integer = this.packetCounts.poll();
             if (integer == null) {
                 break;
             }
 
             if (integer > 0) {
-                this.d(integer);
+                this.releasePackets(integer);
             }
         }
     }
 
-    private void d(int var1) {
+    private void releasePackets(int var1) {
         BlinkComponent.d(var1);
     }
 }

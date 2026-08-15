@@ -30,49 +30,49 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 public class CompactTargetInfo extends Mode<TargetInfo> {
-    private final agc auT = FontManager.MAIN.a(18, FontWeight.LIGHT);
-    private TargetInfo aui;
-    private final int auU = 6;
-    private final int auV = 7;
-    private final int auW = 4;
-    private final Animation auXX = new Animation(Easing.EASE_OUT_ELASTIC, 500L);
-    private final Animation auY = new Animation(Easing.EASE_OUT_SINE, 500L);
+    private final agc font = FontManager.MAIN.a(18, FontWeight.LIGHT);
+    private TargetInfo targetInfo;
+    private final int PADDING = 6;
+    private final int TEXT_GAP = 7;
+    private final int INNER_PADDING = 4;
+    private final Animation scaleAnimation = new Animation(Easing.EASE_OUT_ELASTIC, 500L);
+    private final Animation healthAnimation = new Animation(Easing.EASE_OUT_SINE, 500L);
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1x -> {
-        if (this.aui == null) {
-            this.aui = this.e(TargetInfo.class);
+        if (this.targetInfo == null) {
+            this.targetInfo = this.e(TargetInfo.class);
         }
 
         this.b(ShaderQueueType.BLOOM).c(NotificationComponent::ci);
         this.b(ShaderQueueType.REGULAR, 1).c(NotificationComponent::cj);
-        Entity entity = this.aui.target;
+        Entity entity = this.targetInfo.target;
         if (entity != null) {
-            boolean flag = !this.aui.inWorld || this.aui.stopwatch.T(1000L);
-            this.auXX.setDuration(flag ? 400L : 850L);
-            this.auXX.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
-            this.auXX.Q(flag ? 0.0 : 1.0);
-            if (!(this.auXX.getValue() <= 0.0)) {
+            boolean flag = !this.targetInfo.inWorld || this.targetInfo.stopwatch.T(1000L);
+            this.scaleAnimation.setDuration(flag ? 400L : 850L);
+            this.scaleAnimation.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
+            this.scaleAnimation.Q(flag ? 0.0 : 1.0);
+            if (!(this.scaleAnimation.getValue() <= 0.0)) {
                 String s = entity.getName();
                 String s1 = bf.c(s, s);
-                double d0 = this.aui.position.x;
-                double d1 = this.aui.position.y;
+                double d0 = this.targetInfo.position.x;
+                double d1 = this.targetInfo.position.y;
                 AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;
                 HealthBypass healthbypass = this.e(HealthBypass.class);
-                float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractclientplayer) : abstractclientplayer.getHealth();
-                double d2 = this.auT.getStringWidth(s1);
-                double d3 = Math.min(!this.aui.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
+                float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.getScoreboardHealth(abstractclientplayer) : abstractclientplayer.getHealth();
+                double d2 = this.font.getStringWidth(s1);
+                double d3 = Math.min(!this.targetInfo.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
                 double d4 = Math.max(d2 + 15.0, 70.0);
-                this.auY.Q(d3 / abstractclientplayer.getMaxHealth() * d4);
-                this.auY.setEasing(Easing.EASE_OUT_QUINT);
-                this.auY.setDuration(250L);
-                double d5 = this.auY.getValue();
+                this.healthAnimation.Q(d3 / abstractclientplayer.getMaxHealth() * d4);
+                this.healthAnimation.setEasing(Easing.EASE_OUT_QUINT);
+                this.healthAnimation.setDuration(250L);
+                double d5 = this.healthAnimation.getValue();
                 double d6 = (abstractclientplayer.hurtTime == 0 ? 0.0F : abstractclientplayer.hurtTime - aEg.timer.bWm) * 0.5;
                 byte b0 = 35;
                 double d7 = d6 / 2.0;
                 double d8 = 47 + d4 + 4.0 + 6.0;
                 double d9 = 47;
-                this.aui.positionValue.n(new Vector2d(d8, d9));
-                double d10 = this.auXX.getValue();
+                this.targetInfo.positionValue.n(new Vector2d(d8, d9));
+                double d10 = this.scaleAnimation.getValue();
                 this.b(ShaderQueueType.REGULAR).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d8 / 2.0) * (1.0 - d10), (d1 + d9 / 2.0) * (1.0 - d10), 0.0);
@@ -89,8 +89,8 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
 
                     RenderUtil.roundedOutlineGradientRectangle(d0, d1, d8 - 3.5, d9 - 5.0, 8.0, 0.5, ColorUtil.withBlue(this.rz().rA(), 200), ColorUtil.withBlue(this.rz().rB(), 200));
                     GlStateManager.pushMatrix();
-                    this.auT.b(s1, d0 + 6.0 + b0 + 7.0 - 2.5, d1 + 6.0 + 4.0 + 1.0, Color.WHITE.hashCode());
-                    this.auT.drawString(String.valueOf(Math.round(f)), d0 + b0 + d4 + 4.5, d1 + 6.0 + 4.0 + 1.0, color2.hashCode());
+                    this.font.b(s1, d0 + 6.0 + b0 + 7.0 - 2.5, d1 + 6.0 + 4.0 + 1.0, Color.WHITE.hashCode());
+                    this.font.drawString(String.valueOf(Math.round(f)), d0 + b0 + d4 + 4.5, d1 + 6.0 + 4.0 + 1.0, color2.hashCode());
                     GlStateManager.popMatrix();
                     GlStateManager.popMatrix();
                     GlStateManager.pushMatrix();
@@ -113,7 +113,7 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
                     GlStateManager.scale(d10, d10, 0.0);
                     RenderUtil.color(ColorUtil.a(Color.RED, Color.WHITE, d6 / 9.0));
                     RenderUtil.dropShadow(3, d0 + 6.0 + d7 - 2.5, d1 + 6.0 + d7 - 2.5, b0 - d6, b0 - d6, 20.0, this.rz().getRound() * 2);
-                    this.a(abstractclientplayer, d0 + 6.0 + d7 - 2.5, d1 + 6.0 + d7 - 2.5, b0 - d6);
+                    this.drawHead(abstractclientplayer, d0 + 6.0 + d7 - 2.5, d1 + 6.0 + d7 - 2.5, b0 - d6);
                     GlStateManager.popMatrix();
                 });
                 this.b(ShaderQueueType.BLUR).c(() -> {
@@ -138,7 +138,7 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
         super(var1, targetInfo);
     }
 
-    private void a(AbstractClientPlayer abstractClientPlayer, double var2, double var4, double var6) {
+    private void drawHead(AbstractClientPlayer abstractClientPlayer, double var2, double var4, double var6) {
         ais.initStencil();
         ais.bindWriteStencilBuffer();
         double d0 = this.rz().getRound() * 2;
@@ -150,8 +150,8 @@ public class CompactTargetInfo extends Mode<TargetInfo> {
         GlStateManager.alphaFunc(516, 0.0F);
         GlStateManager.enableTexture2D();
         HealthBypass healthbypass = this.e(HealthBypass.class);
-        float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractClientPlayer) : abstractClientPlayer.getHealth();
-        ResourceLocation resourcelocation = this.aui.inWorld && f > 0.0F ? abstractClientPlayer.getLocationSkin() : RenderSkeleton.getEntityTexture();
+        float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.getScoreboardHealth(abstractClientPlayer) : abstractClientPlayer.getHealth();
+        ResourceLocation resourcelocation = this.targetInfo.inWorld && f > 0.0F ? abstractClientPlayer.getLocationSkin() : RenderSkeleton.getEntityTexture();
         aEg.getTextureManager().bindTexture(resourcelocation);
         Gui.drawScaledCustomSizeModalRect(var2, var4, 4.0F, 4.0F, 4.0F, 4.0F, var6, var6, 32.0F, 32.0F);
         GlStateManager.disableBlend();

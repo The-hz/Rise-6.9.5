@@ -35,7 +35,7 @@ import org.lwjgl.opengl.GL11;
 
 @ModuleInfo(aliases = {"module.combat.legitreach.name", "Back Track"}, description = "module.combat.legitreach.description", category = Category.COMBAT)
 public final class LegitReach extends Module {
-    public static AxisAlignedBB pQ;
+    public static AxisAlignedBB realTargetBoundingBox;
     public NumberValue maxPingSpoof = new NumberValue("Max Ping Spoof", this, 1000, 50, 10000, 1);
     public BooleanValue renderRealLocation = new BooleanValue("Render Real Location", this, true);
     public BooleanValue watchdogMode = new BooleanValue("Watchdog Mode", this, false);
@@ -71,7 +71,7 @@ public final class LegitReach extends Module {
                 && !GrimReduceVelocity.dj) {
                 double d0 = this.targetEntity.width / 2.0;
                 double d1 = this.targetEntity.height;
-                pQ = new AxisAlignedBB(
+                realTargetBoundingBox = new AxisAlignedBB(
                     this.realTargetPosition.xCoord - d0,
                     this.realTargetPosition.yCoord,
                     this.realTargetPosition.zCoord - d0,

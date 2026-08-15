@@ -18,12 +18,12 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.util.MathHelper;
 
 public class MineMenClubSpeed extends Mode<Speed> {
-    private static float Qa = 0.0F;
-    private static final float Qb = 45.0F;
-    private int PD = 0;
+    private static float strafeAngle = 0.0F;
+    private static final float MAX_ANGLE_CHANGE = 45.0F;
+    private int jumpCount = 0;
     public final BooleanValue allowMoreStrafing = new BooleanValue("allow more strafing", this, true);
     @EventLink
-    public final Listener<JumpEvent> onJump = var1x -> this.PD++;
+    public final Listener<JumpEvent> onJump = var1x -> this.jumpCount++;
     private double ue;
     private double velocityX;
     private double velocityZ;
@@ -54,7 +54,7 @@ public class MineMenClubSpeed extends Mode<Speed> {
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
-        if (this.PD % 2 == 1) {
+        if (this.jumpCount % 2 == 1) {
             ;
         }
 
@@ -83,7 +83,7 @@ public class MineMenClubSpeed extends Mode<Speed> {
         super(var1, speed);
     }
 
-    public static void a(MoveEvent moveEvent, double var1, float var3, float var4, float var5) {
+    public static void simulateStrafe(MoveEvent moveEvent, double var1, float var3, float var4, float var5) {
         if (var3 != 0.0F || var4 != 0.0F) {
             float f = var5;
             boolean flag = var3 < 0.0F;
@@ -99,17 +99,17 @@ public class MineMenClubSpeed extends Mode<Speed> {
             }
 
             float f2 = (f + 360.0F) % 360.0F;
-            float f3 = f2 - Qa;
+            float f3 = f2 - strafeAngle;
             float f4 = (f3 + 180.0F) % 360.0F - 180.0F;
             if (Math.abs(f4) < 45.0F) {
-                Qa = f2;
+                strafeAngle = f2;
             } else {
-                Qa = Qa + Math.signum(f4) * 45.0F;
+                strafeAngle = strafeAngle + Math.signum(f4) * 45.0F;
             }
 
-            Qa = (Qa + 360.0F) % 360.0F;
-            double d0 = StrictMath.cos(Math.toRadians(Qa + 90.0));
-            double d1 = StrictMath.cos(Math.toRadians(Qa));
+            strafeAngle = (strafeAngle + 360.0F) % 360.0F;
+            double d0 = StrictMath.cos(Math.toRadians(strafeAngle + 90.0));
+            double d1 = StrictMath.cos(Math.toRadians(strafeAngle));
             moveEvent.setPosX(d0 * var1);
             moveEvent.setPosZ(d1 * var1);
         }

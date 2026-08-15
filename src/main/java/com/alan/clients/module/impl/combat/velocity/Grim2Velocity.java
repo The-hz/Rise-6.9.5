@@ -23,7 +23,7 @@ public final class Grim2Velocity extends Mode<Velocity> {
     private final BooleanValue cancelVelocity = new BooleanValue("Cancel Velocity", this, true);
     private final NumberValue up = new NumberValue("Rotation Noise", this, 0.001, 0.0, 0.1, 0.001);
     private final BooleanValue debugLog = new BooleanValue("Debug Log", this, false);
-    private final Random ur = new Random();
+    private final Random random = new Random();
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
@@ -32,8 +32,8 @@ public final class Grim2Velocity extends Mode<Velocity> {
                 float f1 = c03packetplayer.getPitch();
                 if (this.h(f) || this.h(f1)) {
                     float f2 = this.up.wo().floatValue();
-                    float f3 = f + (this.ur.nextBoolean() ? 1 : -1) * f2;
-                    float f4 = f1 + (this.ur.nextBoolean() ? 1 : -1) * f2;
+                    float f3 = f + (this.random.nextBoolean() ? 1 : -1) * f2;
+                    float f4 = f1 + (this.random.nextBoolean() ? 1 : -1) * f2;
                     C03PacketPlayer c03packetplayer1;
                     if (c03packetplayer.isMoving()) {
                         c03packetplayer1 = new C06PacketPlayerPosLook(

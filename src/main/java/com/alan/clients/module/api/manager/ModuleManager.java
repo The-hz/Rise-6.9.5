@@ -152,15 +152,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ModuleManager {
-    public RegistryMap<Class<Module>, Module> lt = new RegistryMap<>();
+    public RegistryMap<Class<Module>, Module> modules = new RegistryMap<>();
 
     public void remove(Module module) {
-        this.lt.h(module);
+        this.modules.h(module);
         this.updateArraylistCache();
     }
 
     public boolean add(Module module) {
-        this.lt.g(module);
+        this.modules.g(module);
         this.updateArraylistCache();
         return true;
     }
@@ -169,7 +169,7 @@ public class ModuleManager {
     }
 
     public ArrayList<Module> getAll() {
-        return this.lt.rP();
+        return this.modules.rP();
     }
 
     public <T extends Module> T get(String var1) {
@@ -186,12 +186,12 @@ public class ModuleManager {
     public void updateArraylistCache() {
         Interface interfaceModule = this.c(Interface.class);
         if (interfaceModule != null) {
-            interfaceModule.lv();
+            interfaceModule.rebuildEntries();
         }
     }
 
     public <T extends Module> T c(Class<T> type) {
-        return (T)this.lt.get(type);
+        return (T)this.modules.get(type);
     }
 
 
@@ -199,158 +199,158 @@ public class ModuleManager {
     }
 
     public void init() {
-        this.lt = new RegistryMap<>();
-        this.a(AntiBot.class, new AntiBot());
-        this.a(ComboOneHit.class, new ComboOneHit());
-        this.a(Criticals.class, new Criticals());
-        this.a(Fences.class, new Fences());
-        this.a(KillAura.class, new KillAura());
-        this.a(LagBreak.class, new LagBreak());
-        this.a(LegitReach.class, new LegitReach());
-        this.a(Piercing.class, new Piercing());
-        this.a(Regen.class, new Regen());
-        this.a(TeleportAura.class, new TeleportAura());
-        this.a(WatchdogTPAura.class, new WatchdogTPAura());
-        this.a(TickBase.class, new TickBase());
-        this.a(ThrowableAura.class, new ThrowableAura());
-        this.a(Velocity.class, new Velocity());
-        this.a(WTap.class, new WTap());
-        this.a(KeepRange.class, new KeepRange());
-        this.a(BlockTracker.class, new BlockTracker());
-        this.a(ConsoleSpammer.class, new ConsoleSpammer());
-        this.a(Crasher.class, new Crasher());
-        this.a(Disabler.class, new Disabler());
-        this.a(GodMode.class, new GodMode());
-        this.a(GhostHand.class, new GhostHand());
-        this.a(LightningTracker.class, new LightningTracker());
-        this.a(NoRotate.class, new NoRotate());
-        this.a(PingSpoof.class, new PingSpoof());
-        this.a(StaffDetector.class, new StaffDetector());
-        this.a(AimAssist.class, new AimAssist());
-        this.a(AimBacktrack.class, new AimBacktrack());
-        this.a(AutoClicker.class, new AutoClicker());
-        this.a(ClickAssist.class, new ClickAssist());
-        this.a(LegitScaffold.class, new LegitScaffold());
-        this.a(FastPlace.class, new FastPlace());
-        this.a(GuiClicker.class, new GuiClicker());
-        this.a(HitBox.class, new HitBox());
-        this.a(KeepSprint.class, new KeepSprint());
-        this.a(NoClickDelay.class, new NoClickDelay());
-        this.a(Reach.class, new Reach());
-        this.a(SafeWalk.class, new SafeWalk());
-        this.a(ManualKBDisplacement.class, new ManualKBDisplacement());
-        this.a(Flight.class, new Flight());
-        this.a(InventoryMove.class, new InventoryMove());
-        this.a(Jesus.class, new Jesus());
-        this.a(LongJump.class, new LongJump());
-        this.a(NoClip.class, new NoClip());
-        this.a(NoSlow.class, new NoSlow());
-        this.a(Phase.class, new Phase());
-        this.a(PotionExtender.class, new PotionExtender());
-        this.a(Sneak.class, new Sneak());
-        this.a(SnapTap.class, new SnapTap());
-        this.a(Speed.class, new Speed());
-        this.a(Sprint.class, new Sprint());
-        this.a(Step.class, new Step());
-        this.a(Strafe.class, new Strafe());
-        this.a(AutoStuck.class, new AutoStuck());
-        this.a(Stuck.class, new Stuck());
-        this.a(TargetStrafe.class, new TargetStrafe());
-        this.a(Teleport.class, new Teleport());
-        this.a(WallClimb.class, new WallClimb());
-        this.a(TerrainSpeed.class, new TerrainSpeed());
-        this.a(NoJumpDelay.class, new NoJumpDelay());
-        this.a(Clipper.class, new Clipper());
-        this.a(AutoMLG.class, new AutoMLG());
-        this.a(ResourcePackSpoof.class, new ResourcePackSpoof());
-        this.a(SamplerDev.class, new SamplerDev());
-        this.a(AntiAFK.class, new AntiAFK());
-        this.a(AutoGG.class, new AutoGG());
-        this.a(AutoGroomer.class, new AutoGroomer());
-        this.a(ClickSounds.class, new ClickSounds());
-        this.a(ClientSpoofer.class, new ClientSpoofer());
-        this.a(Debugger.class, new Debugger());
-        this.a(HypixelAutoPlay.class, new HypixelAutoPlay());
-        this.a(Insults.class, new Insults());
-        this.a(MurderMystery.class, new MurderMystery());
-        this.a(NoGuiClose.class, new NoGuiClose());
-        this.a(Nuker.class, new Nuker());
-        this.a(PlayerNotifier.class, new PlayerNotifier());
-        this.a(AntiCrash.class, new AntiCrash());
-        this.a(Spammer.class, new Spammer());
-        this.a(Spotify.class, new Spotify());
-        this.a(Test.class, new Test());
-        this.a(Timer.class, new Timer());
-        this.a(Translator.class, new Translator());
-        this.a(BedwarsUtils.class, new BedwarsUtils());
-        this.a(ChatBypass.class, new ChatBypass());
-        this.a(AntiFireBall.class, new AntiFireBall());
-        this.a(AntiSuffocate.class, new AntiSuffocate());
-        this.a(AntiVoid.class, new AntiVoid());
-        this.a(AutoHead.class, new AutoHead());
-        this.a(AutoPot.class, new AutoPot());
-        this.a(AutoTool.class, new AutoTool());
-        this.a(Blink.class, new Blink());
-        this.a(WatchdogBlink.class, new WatchdogBlink());
-        this.a(Breaker.class, new Breaker());
-        this.a(Clutch.class, new Clutch());
-        this.a(FastBreak.class, new FastBreak());
-        this.a(FastUse.class, new FastUse());
-        this.a(NoFall.class, new NoFall());
-        this.a(InventorySync.class, new InventorySync());
-        this.a(Manager.class, new Manager());
-        this.a(OldManager.class, new OldManager());
-        this.a(NoFall.class, new NoFall());
-        this.a(Scaffold.class, new Scaffold());
-        this.a(Stealer.class, new Stealer());
-        this.a(Twerk.class, new Twerk());
-        this.a(PolarDetector.class, new PolarDetector());
-        this.a(CheatDetector.class, new CheatDetector());
-        this.a(HealthBypass.class, new HealthBypass());
-        this.a(Ambience.class, new Ambience());
-        this.a(Animations.class, new Animations());
-        this.a(Chat.class, new Chat());
-        this.a(AppleSkin.class, new AppleSkin());
-        this.a(BedPlates.class, new BedPlates());
-        this.a(BPSCounter.class, new BPSCounter());
-        this.a(ChestESP.class, new ChestESP());
-        this.a(ClickGUI.class, new ClickGUI());
-        this.a(CPSCounter.class, new CPSCounter());
-        this.a(FPSCounter.class, new FPSCounter());
-        this.a(FreeCam.class, new FreeCam());
-        this.a(FreeLook.class, new FreeLook());
-        this.a(FullBright.class, new FullBright());
-        this.a(Glint.class, new Glint());
-        this.a(BossBar.class, new BossBar());
-        this.a(HotBar.class, new HotBar());
-        this.a(HurtCamera.class, new HurtCamera());
-        this.a(HurtColor.class, new HurtColor());
-        this.a(Interface.class, new Interface());
-        this.a(ItemPhysics.class, new ItemPhysics());
-        this.a(KeyStrokes.class, new KeyStrokes());
-        this.a(KillEffect.class, new KillEffect());
-        this.a(NameTags.class, new NameTags());
-        this.a(NoCameraClip.class, new NoCameraClip());
-        this.a(Particles.class, new Particles());
-        this.a(M2DESP.class, new M2DESP());
-        this.a(ESP.class, new ESP());
-        this.a(ScoreBoard.class, new ScoreBoard());
-        this.a(Streamer.class, new Streamer());
-        this.a(TargetInfo.class, new TargetInfo());
-        this.a(Tracers.class, new Tracers());
-        this.a(UnlimitedChat.class, new UnlimitedChat());
-        this.a(ViewBobbing.class, new ViewBobbing());
-        this.a(IRC.class, new IRC());
-        this.a(SessionStats.class, new SessionStats());
-        this.a(BreadCrumbs.class, new BreadCrumbs());
-        this.a(JumpCircles.class, new JumpCircles());
-        this.a(BlackHoleOrbit.class, new BlackHoleOrbit());
-        this.a(OreESP.class, new OreESP());
+        this.modules = new RegistryMap<>();
+        this.register(AntiBot.class, new AntiBot());
+        this.register(ComboOneHit.class, new ComboOneHit());
+        this.register(Criticals.class, new Criticals());
+        this.register(Fences.class, new Fences());
+        this.register(KillAura.class, new KillAura());
+        this.register(LagBreak.class, new LagBreak());
+        this.register(LegitReach.class, new LegitReach());
+        this.register(Piercing.class, new Piercing());
+        this.register(Regen.class, new Regen());
+        this.register(TeleportAura.class, new TeleportAura());
+        this.register(WatchdogTPAura.class, new WatchdogTPAura());
+        this.register(TickBase.class, new TickBase());
+        this.register(ThrowableAura.class, new ThrowableAura());
+        this.register(Velocity.class, new Velocity());
+        this.register(WTap.class, new WTap());
+        this.register(KeepRange.class, new KeepRange());
+        this.register(BlockTracker.class, new BlockTracker());
+        this.register(ConsoleSpammer.class, new ConsoleSpammer());
+        this.register(Crasher.class, new Crasher());
+        this.register(Disabler.class, new Disabler());
+        this.register(GodMode.class, new GodMode());
+        this.register(GhostHand.class, new GhostHand());
+        this.register(LightningTracker.class, new LightningTracker());
+        this.register(NoRotate.class, new NoRotate());
+        this.register(PingSpoof.class, new PingSpoof());
+        this.register(StaffDetector.class, new StaffDetector());
+        this.register(AimAssist.class, new AimAssist());
+        this.register(AimBacktrack.class, new AimBacktrack());
+        this.register(AutoClicker.class, new AutoClicker());
+        this.register(ClickAssist.class, new ClickAssist());
+        this.register(LegitScaffold.class, new LegitScaffold());
+        this.register(FastPlace.class, new FastPlace());
+        this.register(GuiClicker.class, new GuiClicker());
+        this.register(HitBox.class, new HitBox());
+        this.register(KeepSprint.class, new KeepSprint());
+        this.register(NoClickDelay.class, new NoClickDelay());
+        this.register(Reach.class, new Reach());
+        this.register(SafeWalk.class, new SafeWalk());
+        this.register(ManualKBDisplacement.class, new ManualKBDisplacement());
+        this.register(Flight.class, new Flight());
+        this.register(InventoryMove.class, new InventoryMove());
+        this.register(Jesus.class, new Jesus());
+        this.register(LongJump.class, new LongJump());
+        this.register(NoClip.class, new NoClip());
+        this.register(NoSlow.class, new NoSlow());
+        this.register(Phase.class, new Phase());
+        this.register(PotionExtender.class, new PotionExtender());
+        this.register(Sneak.class, new Sneak());
+        this.register(SnapTap.class, new SnapTap());
+        this.register(Speed.class, new Speed());
+        this.register(Sprint.class, new Sprint());
+        this.register(Step.class, new Step());
+        this.register(Strafe.class, new Strafe());
+        this.register(AutoStuck.class, new AutoStuck());
+        this.register(Stuck.class, new Stuck());
+        this.register(TargetStrafe.class, new TargetStrafe());
+        this.register(Teleport.class, new Teleport());
+        this.register(WallClimb.class, new WallClimb());
+        this.register(TerrainSpeed.class, new TerrainSpeed());
+        this.register(NoJumpDelay.class, new NoJumpDelay());
+        this.register(Clipper.class, new Clipper());
+        this.register(AutoMLG.class, new AutoMLG());
+        this.register(ResourcePackSpoof.class, new ResourcePackSpoof());
+        this.register(SamplerDev.class, new SamplerDev());
+        this.register(AntiAFK.class, new AntiAFK());
+        this.register(AutoGG.class, new AutoGG());
+        this.register(AutoGroomer.class, new AutoGroomer());
+        this.register(ClickSounds.class, new ClickSounds());
+        this.register(ClientSpoofer.class, new ClientSpoofer());
+        this.register(Debugger.class, new Debugger());
+        this.register(HypixelAutoPlay.class, new HypixelAutoPlay());
+        this.register(Insults.class, new Insults());
+        this.register(MurderMystery.class, new MurderMystery());
+        this.register(NoGuiClose.class, new NoGuiClose());
+        this.register(Nuker.class, new Nuker());
+        this.register(PlayerNotifier.class, new PlayerNotifier());
+        this.register(AntiCrash.class, new AntiCrash());
+        this.register(Spammer.class, new Spammer());
+        this.register(Spotify.class, new Spotify());
+        this.register(Test.class, new Test());
+        this.register(Timer.class, new Timer());
+        this.register(Translator.class, new Translator());
+        this.register(BedwarsUtils.class, new BedwarsUtils());
+        this.register(ChatBypass.class, new ChatBypass());
+        this.register(AntiFireBall.class, new AntiFireBall());
+        this.register(AntiSuffocate.class, new AntiSuffocate());
+        this.register(AntiVoid.class, new AntiVoid());
+        this.register(AutoHead.class, new AutoHead());
+        this.register(AutoPot.class, new AutoPot());
+        this.register(AutoTool.class, new AutoTool());
+        this.register(Blink.class, new Blink());
+        this.register(WatchdogBlink.class, new WatchdogBlink());
+        this.register(Breaker.class, new Breaker());
+        this.register(Clutch.class, new Clutch());
+        this.register(FastBreak.class, new FastBreak());
+        this.register(FastUse.class, new FastUse());
+        this.register(NoFall.class, new NoFall());
+        this.register(InventorySync.class, new InventorySync());
+        this.register(Manager.class, new Manager());
+        this.register(OldManager.class, new OldManager());
+        this.register(NoFall.class, new NoFall());
+        this.register(Scaffold.class, new Scaffold());
+        this.register(Stealer.class, new Stealer());
+        this.register(Twerk.class, new Twerk());
+        this.register(PolarDetector.class, new PolarDetector());
+        this.register(CheatDetector.class, new CheatDetector());
+        this.register(HealthBypass.class, new HealthBypass());
+        this.register(Ambience.class, new Ambience());
+        this.register(Animations.class, new Animations());
+        this.register(Chat.class, new Chat());
+        this.register(AppleSkin.class, new AppleSkin());
+        this.register(BedPlates.class, new BedPlates());
+        this.register(BPSCounter.class, new BPSCounter());
+        this.register(ChestESP.class, new ChestESP());
+        this.register(ClickGUI.class, new ClickGUI());
+        this.register(CPSCounter.class, new CPSCounter());
+        this.register(FPSCounter.class, new FPSCounter());
+        this.register(FreeCam.class, new FreeCam());
+        this.register(FreeLook.class, new FreeLook());
+        this.register(FullBright.class, new FullBright());
+        this.register(Glint.class, new Glint());
+        this.register(BossBar.class, new BossBar());
+        this.register(HotBar.class, new HotBar());
+        this.register(HurtCamera.class, new HurtCamera());
+        this.register(HurtColor.class, new HurtColor());
+        this.register(Interface.class, new Interface());
+        this.register(ItemPhysics.class, new ItemPhysics());
+        this.register(KeyStrokes.class, new KeyStrokes());
+        this.register(KillEffect.class, new KillEffect());
+        this.register(NameTags.class, new NameTags());
+        this.register(NoCameraClip.class, new NoCameraClip());
+        this.register(Particles.class, new Particles());
+        this.register(M2DESP.class, new M2DESP());
+        this.register(ESP.class, new ESP());
+        this.register(ScoreBoard.class, new ScoreBoard());
+        this.register(Streamer.class, new Streamer());
+        this.register(TargetInfo.class, new TargetInfo());
+        this.register(Tracers.class, new Tracers());
+        this.register(UnlimitedChat.class, new UnlimitedChat());
+        this.register(ViewBobbing.class, new ViewBobbing());
+        this.register(IRC.class, new IRC());
+        this.register(SessionStats.class, new SessionStats());
+        this.register(BreadCrumbs.class, new BreadCrumbs());
+        this.register(JumpCircles.class, new JumpCircles());
+        this.register(BlackHoleOrbit.class, new BlackHoleOrbit());
+        this.register(OreESP.class, new OreESP());
         this.getAll().stream().filter(var0 -> var0.getModuleInfo().autoEnabled()).forEach(var0 -> var0.setEnabled(true));
         Client.a.e().b(this);
     }
 
-    public void a(Class type, Module module) {
-        this.lt.put(type, module);
+    public void register(Class type, Module module) {
+        this.modules.put(type, module);
     }
 }

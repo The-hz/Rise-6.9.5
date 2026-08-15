@@ -25,11 +25,11 @@ import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 
 public class Grim30NoSlow extends Mode<NoSlow> {
     @EventLink
-    public Listener<en> MU;
+    public Listener<en> onSprint;
     public BooleanValue heypixel = new BooleanValue("Heypixel", this, false);
     @EventLink
-    public Listener<ea> MV;
-    public int hV;
+    public Listener<ea> onRightClick;
+    public int usingItemTicks;
     @EventLink
     public Listener<PacketSendEvent> onPacketSend;
     @EventLink
@@ -82,28 +82,28 @@ public class Grim30NoSlow extends Mode<NoSlow> {
             }
         };
         this.onMoveInput = var1x -> {
-            if (this.hV >= 20) {
+            if (this.usingItemTicks >= 20) {
                 ;
             }
         };
-        this.MU = var0 -> {
+        this.onSprint = var0 -> {
             if (aEg.thePlayer.isUsingItem() && aEg.thePlayer.moveForward > 0.0F) {
                 aEg.thePlayer.setSprinting(true);
             }
         };
-        this.MV = var0 -> {
+        this.onRightClick = var0 -> {
             if (aEg.thePlayer.tR % 2 == 1 && !aEg.thePlayer.onGround) {
                 var0.setCancelled();
             }
         };
         this.onSlowDown = var1x -> {
             if (aEg.thePlayer.isUsingItem()) {
-                this.hV++;
+                this.usingItemTicks++;
                 if (!this.e(Speed.class).isEnabled()) {
                     MoveUtil.moveFlying(1.0E-4);
                 }
             } else {
-                this.hV = 0;
+                this.usingItemTicks = 0;
             }
 
             if (aEg.thePlayer.cqL == 1 || aEg.thePlayer.tR % 2 == 0 && !aEg.thePlayer.onGround || aEg.thePlayer.cqL % 2 == 1 && aEg.thePlayer.onGround) {

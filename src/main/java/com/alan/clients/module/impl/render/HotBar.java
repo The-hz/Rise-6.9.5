@@ -41,11 +41,11 @@ public class HotBar extends Module {
     private static final ResourceLocation WIDGETS_TEXTURE = new ResourceLocation("textures/gui/widgets.png");
     private final a stopwatch = new a();
     private float rPosX;
-    private float anP = 0.0F;
+    private float xpProgress = 0.0F;
     private Interface interfaceModule;
-    private KillAura gj;
+    private KillAura killAura;
     public final BooleanValue showXPBar = new BooleanValue("Show XP Bar", this, true);
-    private final agc anR = FontManager.MAIN.a(18, FontWeight.MEDIUM);
+    private final agc levelFont = FontManager.MAIN.a(18, FontWeight.MEDIUM);
     @EventLink
     public final Listener<Render2DEvent> onPreMotionEvent = var1 -> {
         if (aEg.getRenderViewEntity() instanceof EntityPlayer) {
@@ -136,20 +136,20 @@ public class HotBar extends Module {
             if ("Rise".equals(s) && this.showXPBar.wo() && entityplayer.experienceLevel > 0) {
                 this.b(ShaderQueueType.REGULAR, 1).c(() -> {
                     String s1 = String.valueOf(entityplayer.experienceLevel);
-                    float f = this.anR.getStringWidth(s1);
+                    float f = this.levelFont.getStringWidth(s1);
                     float f1 = (scaledresolution.getScaledWidth() - f) / 2.0F;
-                    float f2 = (float)(this.structure.apP.y - this.anR.height() + 17.0);
+                    float f2 = (float)(this.structure.apP.y - this.levelFont.height() + 17.0);
                     GlStateManager.enableBlend();
-                    this.anR.b(s1, f1, f2, Color.WHITE.getRGB());
+                    this.levelFont.b(s1, f1, f2, Color.WHITE.getRGB());
                     GlStateManager.disableBlend();
                 });
                 this.b(ShaderQueueType.BLOOM).c(() -> {
                     String s1 = String.valueOf(entityplayer.experienceLevel);
-                    float f = this.anR.getStringWidth(s1);
+                    float f = this.levelFont.getStringWidth(s1);
                     float f1 = (scaledresolution.getScaledWidth() - f) / 2.0F;
-                    float f2 = (float)(this.structure.apP.y - this.anR.height() + 17.0);
+                    float f2 = (float)(this.structure.apP.y - this.levelFont.height() + 17.0);
                     GlStateManager.enableBlend();
-                    this.anR.b(s1, f1, f2, this.rz().rD().getRGB());
+                    this.levelFont.b(s1, f1, f2, this.rz().rD().getRGB());
                     GlStateManager.disableBlend();
                 });
             }
@@ -169,11 +169,11 @@ public class HotBar extends Module {
                         return;
                     }
 
-                    this.anP = MathUtil.lerp(this.anP, f, 0.1F);
+                    this.xpProgress = MathUtil.lerp(this.xpProgress, f, 0.1F);
                     double d0 = this.structure.apP.x + 1.0;
                     double d1 = this.structure.apP.y + 14.4;
                     double d2 = this.structure.aHe.x - 1.0;
-                    double d3 = d2 * this.anP;
+                    double d3 = d2 * this.xpProgress;
                     double d4 = 3.0;
                     double d5 = this.interfaceModule != null ? Math.min(this.interfaceModule.getRoundingRadius(), 2.0) : 2.0;
                     this.rz();
@@ -230,11 +230,11 @@ public class HotBar extends Module {
     }
 
     private void renderHotBarItem(int var1, int var2, int var3, float var4, EntityPlayer player) {
-        if (this.gj == null) {
-            this.gj = this.e(KillAura.class);
+        if (this.killAura == null) {
+            this.killAura = this.e(KillAura.class);
         }
 
-        if (this.gj == null || !this.gj.p(var1)) {
+        if (this.killAura == null || !this.killAura.shouldHideSwordSlot(var1)) {
             ItemStack itemstack = player.inventory.mainInventory[var1];
             if (itemstack != null) {
                 RenderItem renderitem = aEg.getRenderItem();

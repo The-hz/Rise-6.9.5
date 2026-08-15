@@ -9,19 +9,19 @@ import com.alan.clients.value.Mode;
 import net.minecraft.potion.Potion;
 
 public class VulcanGravityJesus extends Mode<Jesus> {
-    private boolean Kl = true;
-    private boolean gD = true;
-    private int Km = 0;
-    private double gX = 50.0;
+    private boolean shouldDrop = true;
+    private boolean jumpHeld = true;
+    private int ticksSinceWater = 0;
+    private double targetY = 50.0;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (!aEg.gameSettings.keyBindJump.isPressed()
             && aEg.thePlayer.isInWater()
-            && this.Kl
+            && this.shouldDrop
             && aEg.thePlayer.posY % 1.0 != 0.0
             && aEg.thePlayer.posY * 2.0 % 1.0 != 0.0) {
             aEg.thePlayer.setPosition(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.85, aEg.thePlayer.posZ);
-            this.Kl = false;
+            this.shouldDrop = false;
         }
 
         if (aEg.thePlayer.isInWater() && !aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.posY % 1.0 != 0.0 && aEg.thePlayer.posY * 2.0 % 1.0 != 0.0) {
@@ -29,27 +29,27 @@ public class VulcanGravityJesus extends Mode<Jesus> {
             aEg.thePlayer.motionY = 0.0;
         }
 
-        if (this.Kl) {
-            this.gX = aEg.thePlayer.posY - 1.6;
+        if (this.shouldDrop) {
+            this.targetY = aEg.thePlayer.posY - 1.6;
         }
 
         if (aEg.thePlayer.isInWater()) {
-            this.Km = 0;
+            this.ticksSinceWater = 0;
         }
 
-        if (this.Km < 20) {
+        if (this.ticksSinceWater < 20) {
             MoveUtil.strafe();
         }
 
-        this.Km++;
+        this.ticksSinceWater++;
         if (!aEg.gameSettings.keyBindJump.isKeyDown() && !aEg.gameSettings.keyBindJump.isPressed()) {
-            this.gD = false;
+            this.jumpHeld = false;
         } else {
-            this.gD = true;
+            this.jumpHeld = true;
         }
 
-        if (this.gD && aEg.thePlayer.isInWater() && !aEg.gameSettings.keyBindJump.isKeyDown() && !aEg.gameSettings.keyBindJump.isPressed()) {
-            aEg.thePlayer.setPosition(aEg.thePlayer.posX, this.gX, aEg.thePlayer.posZ);
+        if (this.jumpHeld && aEg.thePlayer.isInWater() && !aEg.gameSettings.keyBindJump.isKeyDown() && !aEg.gameSettings.keyBindJump.isPressed()) {
+            aEg.thePlayer.setPosition(aEg.thePlayer.posX, this.targetY, aEg.thePlayer.posZ);
         }
 
         if (aEg.thePlayer.isPotionActive(Potion.moveSpeed) && aEg.thePlayer.isInWater() && !aEg.gameSettings.keyBindJump.isKeyDown()) {
@@ -57,7 +57,7 @@ public class VulcanGravityJesus extends Mode<Jesus> {
         }
 
         if (!aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.isInWater() && aEg.thePlayer.posY % 1.0 != 0.0 && aEg.thePlayer.posY * 2.0 % 1.0 != 0.0) {
-            aEg.thePlayer.setPosition(aEg.thePlayer.posX, this.gX, aEg.thePlayer.posZ);
+            aEg.thePlayer.setPosition(aEg.thePlayer.posX, this.targetY, aEg.thePlayer.posZ);
         }
 
         if (aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.isInWater()) {
@@ -70,11 +70,11 @@ public class VulcanGravityJesus extends Mode<Jesus> {
             && !aEg.gameSettings.keyBindJump.isPressed()
             && aEg.thePlayer.posY % 1.0 != 0.0
             && aEg.thePlayer.posY * 2.0 % 1.0 != 0.0) {
-            aEg.thePlayer.setPosition(aEg.thePlayer.posX, this.gX - 0.2, aEg.thePlayer.posZ);
+            aEg.thePlayer.setPosition(aEg.thePlayer.posX, this.targetY - 0.2, aEg.thePlayer.posZ);
         }
 
-        if (!aEg.thePlayer.isInWater() && !this.Kl && aEg.thePlayer.posY % 1.0 != 0.0 && aEg.thePlayer.posY * 2.0 % 1.0 != 0.0) {
-            this.Kl = true;
+        if (!aEg.thePlayer.isInWater() && !this.shouldDrop && aEg.thePlayer.posY % 1.0 != 0.0 && aEg.thePlayer.posY * 2.0 % 1.0 != 0.0) {
+            this.shouldDrop = true;
         }
     };
 

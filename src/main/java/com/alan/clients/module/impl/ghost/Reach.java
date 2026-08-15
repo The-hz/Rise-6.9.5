@@ -35,7 +35,7 @@ public class Reach extends Module {
     public final Listener<MouseOverEvent> onMouseOver = var1 -> {
         double d0 = MathUtil.l(this.range.wo().doubleValue(), this.range.wA().doubleValue());
         var1.setRange(d0);
-        if (!this.gR()) {
+        if (!this.isTargetingBlock()) {
             MovingObjectPosition movingobjectposition = aef.rayCast(RotationComponent.bH(), d0, var1.dB(), aEg.thePlayer, false);
             if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.ENTITY) {
                 var1.a(movingobjectposition);
@@ -43,7 +43,7 @@ public class Reach extends Module {
         }
     };
     @EventLink
-    public final Listener<ea> BY = var0 -> aEg.objectMouseOver = aef.c(RotationComponent.fk, 4.5);
+    public final Listener<ea> onGetMouseOver = var0 -> aEg.objectMouseOver = aef.c(RotationComponent.fk, 4.5);
     @EventLink
     public final Listener<AttackEvent> onAttackEvent = var1 -> {
         EntityLivingBase entitylivingbase = var1.getLiving();
@@ -68,7 +68,7 @@ public class Reach extends Module {
     public Reach() {
     }
 
-    private boolean gR() {
+    private boolean isTargetingBlock() {
         if (!aEg.bgA || aEg.currentScreen != null) {
             return false;
         }

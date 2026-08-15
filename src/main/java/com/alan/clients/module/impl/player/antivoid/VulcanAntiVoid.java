@@ -24,11 +24,11 @@ import net.minecraft.util.AxisAlignedBB;
 public class VulcanAntiVoid extends Mode<AntiVoid> {
     private final NumberValue distance = new NumberValue("Distance", this, 2.6, 0, 10, 0.1);
     private boolean zd;
-    private boolean ahL;
+    private boolean voidFalling;
     private Flight flight = null;
     private Speed speed = null;
     private LongJump longJump = null;
-    private boolean ahN = false;
+    private boolean toggledSpeed = false;
     private int zn;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
@@ -45,26 +45,26 @@ public class VulcanAntiVoid extends Mode<AntiVoid> {
         }
 
         if (aEg.thePlayer.fallDistance > this.distance.wo().floatValue() && !PlayerUtil.vh()) {
-            this.ahL = true;
+            this.voidFalling = true;
         }
 
         if (this.flight.isEnabled() || this.longJump.isEnabled()) {
-            this.ahL = false;
+            this.voidFalling = false;
         }
 
-        if (this.speed.isEnabled() && this.ahL) {
-            this.ahN = true;
+        if (this.speed.isEnabled() && this.voidFalling) {
+            this.toggledSpeed = true;
             this.speed.toggle();
         }
 
-        if (!this.ahL && !this.speed.isEnabled() && this.ahN) {
+        if (!this.voidFalling && !this.speed.isEnabled() && this.toggledSpeed) {
             this.speed.toggle();
-            this.ahN = false;
+            this.toggledSpeed = false;
         }
     };
     @EventLink
     public final Listener<BlockAABBEvent> onBlockAABB = var1x -> {
-        if (var1x.getBlock() instanceof BlockAir && !aEg.thePlayer.isSneaking() && this.ahL) {
+        if (var1x.getBlock() instanceof BlockAir && !aEg.thePlayer.isSneaking() && this.voidFalling) {
             double d0 = var1x.getBlockPos().getX();
             double d1 = var1x.getBlockPos().getY();
             double d2 = var1x.getBlockPos().getZ();
@@ -73,13 +73,13 @@ public class VulcanAntiVoid extends Mode<AntiVoid> {
             }
         }
 
-        if ((!(var1x.getBlock() instanceof BlockAir) || aEg.thePlayer.isSneaking()) && this.ahL && !aEg.thePlayer.isCollidedHorizontally) {
-            this.ahL = false;
+        if ((!(var1x.getBlock() instanceof BlockAir) || aEg.thePlayer.isSneaking()) && this.voidFalling && !aEg.thePlayer.isCollidedHorizontally) {
+            this.voidFalling = false;
         }
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
-        if (this.ahL) {
+        if (this.voidFalling) {
             MoveUtil.strafe(0.1);
             if (aEg.thePlayer.ticksExisted % 2 != 1 && aEg.thePlayer.moveForward == 0.0F) {
                 MoveUtil.strafe(0.0);
@@ -93,14 +93,14 @@ public class VulcanAntiVoid extends Mode<AntiVoid> {
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         Packet packet = var1x.getPacket();
         if (packet instanceof S08PacketPlayerPosLook) {
-            this.ahL = false;
+            this.voidFalling = false;
         }
     };
     @EventLink
-    public final Listener<WorldChangeEvent> onWorldChange = var1x -> this.ahL = false;
+    public final Listener<WorldChangeEvent> onWorldChange = var1x -> this.voidFalling = false;
     @EventLink
     public final Listener<JumpEvent> onJump = var1x -> {
-        if (this.ahL) {
+        if (this.voidFalling) {
             var1x.setJumpMotion(0.0F);
         }
     };

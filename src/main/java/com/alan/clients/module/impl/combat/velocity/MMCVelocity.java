@@ -15,12 +15,12 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public final class MMCVelocity extends Mode<Velocity> {
-    private boolean gD;
+    private boolean receivedVelocity;
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1x -> {
         Packet packet = var1x.getPacket();
         if (packet instanceof S12PacketEntityVelocity && ((S12PacketEntityVelocity)packet).getEntityID() == aEg.thePlayer.getEntityId()) {
-            this.gD = true;
+            this.receivedVelocity = true;
         }
     };
     @EventLink

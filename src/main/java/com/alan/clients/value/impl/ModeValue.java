@@ -50,7 +50,7 @@ public class ModeValue extends ListValue<Mode<?>> {
     public ModeValue setDefault(String var1) {
         this.n(this.modes.stream().filter(var1x -> var1x.getName().equalsIgnoreCase(var1)).findFirst().orElse(this.modes.get(0)));
         this.setDefaultValue(this.wo());
-        this.modes.forEach(var1x -> var1x.getValues().forEach(var2 -> var2.b(() -> var1x != this.wo())));
+        this.modes.forEach(var1x -> var1x.getValues().forEach(var2 -> var2.setBooleanSupplier(() -> var1x != this.wo())));
         return this;
     }
 

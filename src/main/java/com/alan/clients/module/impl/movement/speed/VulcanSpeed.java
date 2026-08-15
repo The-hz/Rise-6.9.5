@@ -38,15 +38,15 @@ public final class VulcanSpeed extends Mode<Speed> {
         .add(new SubMode("Ground"))
         .add(new SubMode("Yport"))
         .setDefault("Yport");
-    private int QN;
-    private int FX;
-    private double xv;
-    private int PD = 0;
-    private double az = 0.0;
-    private double aB = 0.0;
-    private boolean zL = false;
+    private int nextPlaceTick;
+    private int stage;
+    private double yOffset;
+    private int jumps = 0;
+    private double lastPosZ = 0.0;
+    private double lastPosX = 0.0;
+    private boolean wasSprinting = false;
     @EventLink
-    public final Listener<JumpEvent> onJump = var1x -> this.PD++;
+    public final Listener<JumpEvent> onJump = var1x -> this.jumps++;
     @EventLink
     public final Listener<StepEvent> onStep = var1x -> {
         switch (this.mode.wo().getName()) {
@@ -106,33 +106,33 @@ public final class VulcanSpeed extends Mode<Speed> {
                 double d0 = Math.hypot(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
                 boolean flag = (aEg.thePlayer.isPotionActive(Potion.moveSpeed) ? aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 : 0) >= 2;
                 double d1;
-                switch (this.FX) {
+                switch (this.stage) {
                     case 1:
-                        this.xv = 0.58F;
+                        this.yOffset = 0.58F;
                         d1 = flag ? d0 + 0.2 : 0.487;
                         var1x.setOnGround(true);
                         aEg.thePlayer.onGround = true;
                         break;
                     case 2:
                         d1 = flag ? d0 * 0.71 : 0.197;
-                        this.xv -= 0.0784F;
+                        this.yOffset -= 0.0784F;
                         var1x.setOnGround(false);
                         aEg.thePlayer.onGround = true;
                         break;
                     default:
-                        this.FX = 0;
+                        this.stage = 0;
                         d1 = d0 / (flag ? 0.64 : 0.58);
                         var1x.setOnGround(true);
                         aEg.thePlayer.onGround = true;
                 }
 
                 MoveUtil.strafe(d1);
-                this.FX++;
-                var1x.setPosY(var1x.getPosY() + this.xv);
+                this.stage++;
+                var1x.setPosY(var1x.getPosY() + this.yOffset);
                 MoveUtil.preventDiagonalSpeed();
             } else {
                 MoveUtil.strafe();
-                this.FX = 0;
+                this.stage = 0;
             }
         }
     };
@@ -341,7 +341,7 @@ public final class VulcanSpeed extends Mode<Speed> {
                             aEg.thePlayer.motionY = -10.0;
                     }
 
-                    this.a(aEg.thePlayer.posZ, aEg.thePlayer.posX, aEg.thePlayer.isSprinting(), aEg.thePlayer.cse, aEg.thePlayer.tR);
+                    this.correctSpeed(aEg.thePlayer.posZ, aEg.thePlayer.posX, aEg.thePlayer.isSprinting(), aEg.thePlayer.cse, aEg.thePlayer.tR);
                     MoveUtil.useDiagonalSpeed();
                     return;
                 }
@@ -378,7 +378,7 @@ public final class VulcanSpeed extends Mode<Speed> {
                         MoveUtil.strafe();
                         break;
                     case 2:
-                        if (this.PD % 4 != 1 && !aEg.thePlayer.isCollidedVertically) {
+                        if (this.jumps % 4 != 1 && !aEg.thePlayer.isCollidedVertically) {
                             aEg.thePlayer.motionY = MoveUtil.predictedMotion(aEg.thePlayer.motionY, 2);
                         }
                     case 3:
@@ -388,12 +388,12 @@ public final class VulcanSpeed extends Mode<Speed> {
                     default:
                         break;
                     case 4:
-                        if (this.PD % 4 == 1 || aEg.thePlayer.isCollidedVertically) {
+                        if (this.jumps % 4 == 1 || aEg.thePlayer.isCollidedVertically) {
                             aEg.thePlayer.motionY = MoveUtil.predictedMotion(aEg.thePlayer.motionY, 4);
                         }
                         break;
                     case 5:
-                        if (this.PD % 4 == 1) {
+                        if (this.jumps % 4 == 1) {
                             MoveUtil.strafe();
                         }
                         break;
@@ -405,7 +405,7 @@ public final class VulcanSpeed extends Mode<Speed> {
                     MoveUtil.strafe();
                 }
 
-                this.a(aEg.thePlayer.posZ, aEg.thePlayer.posX, aEg.thePlayer.isSprinting(), aEg.thePlayer.cse, aEg.thePlayer.tR);
+                this.correctSpeed(aEg.thePlayer.posZ, aEg.thePlayer.posX, aEg.thePlayer.isSprinting(), aEg.thePlayer.cse, aEg.thePlayer.tR);
                 return;
             }
 
@@ -419,8 +419,8 @@ public final class VulcanSpeed extends Mode<Speed> {
                 }
 
                 int j = aEg.thePlayer.isPotionActive(Potion.moveSpeed) ? aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 : 0;
-                if (!BadPacketsComponent.bad(false, true, false, false, false) && this.QN < aEg.thePlayer.ticksExisted) {
-                    this.QN = aEg.thePlayer.ticksExisted + 2;
+                if (!BadPacketsComponent.bad(false, true, false, false, false) && this.nextPlaceTick < aEg.thePlayer.ticksExisted) {
+                    this.nextPlaceTick = aEg.thePlayer.ticksExisted + 2;
                     BlockPos blockpos = new BlockPos(aEg.thePlayer).down();
                     int l = EnumFacing.UP.getIndex();
                     SlotComponent slotcomponent1 = this.d(SlotComponent.class);
@@ -486,7 +486,7 @@ public final class VulcanSpeed extends Mode<Speed> {
                     MoveUtil.strafe();
                 }
 
-                this.a(aEg.thePlayer.posZ, aEg.thePlayer.posX, aEg.thePlayer.isSprinting(), aEg.thePlayer.cse, aEg.thePlayer.tR);
+                this.correctSpeed(aEg.thePlayer.posZ, aEg.thePlayer.posX, aEg.thePlayer.isSprinting(), aEg.thePlayer.cse, aEg.thePlayer.tR);
         }
     };
 
@@ -501,7 +501,7 @@ public final class VulcanSpeed extends Mode<Speed> {
         }
     }
 
-    public void a(double var1, double var3, boolean var5, int var6, int var7) {
+    public void correctSpeed(double var1, double var3, boolean var5, int var6, int var7) {
         double d0 = (aEg.thePlayer.lastTickPosX - aEg.thePlayer.cry) * 0.91F;
         double d1 = (aEg.thePlayer.lastTickPosX - aEg.thePlayer.cry) * 0.91F;
         double d2 = 1000000.0;
@@ -510,7 +510,7 @@ public final class VulcanSpeed extends Mode<Speed> {
         double d5 = d3 - d0;
         double d6 = d4 - d1;
         double d7 = Math.hypot(d5, d6);
-        double d8 = d7 / (this.zL ? 1.3 : 1.3);
+        double d8 = d7 / (this.wasSprinting ? 1.3 : 1.3);
         double d9 = d8 - (!var5 && var6 >= 2 ? 0.026 : 0.026);
         int i = aEg.thePlayer.ticksExisted % 2;
         boolean flag = d9 > 0.0075 && Math.hypot(d3, d4) > 0.25 && var7 > 2;
@@ -518,8 +518,8 @@ public final class VulcanSpeed extends Mode<Speed> {
             MoveUtil.strafe();
         }
 
-        this.az = d3;
-        this.aB = d4;
-        this.zL = var5;
+        this.lastPosZ = d3;
+        this.lastPosX = d4;
+        this.wasSprinting = var5;
     }
 }

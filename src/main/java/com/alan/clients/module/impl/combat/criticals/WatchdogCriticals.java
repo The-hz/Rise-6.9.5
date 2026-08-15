@@ -17,57 +17,57 @@ public final class WatchdogCriticals extends Mode<Criticals> {
     private final double[] offsets = new double[]{1.0E-6, MoveUtil.predictedMotion(0.03125, 1)};
     private final a stopwatch = new a();
     public static boolean gD;
-    public static boolean pw;
-    private int hV;
-    private int rW;
+    public static boolean pendingCrit;
+    private int critTicks;
+    private int ticksSinceCrit;
     private int rX;
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var0 -> {};
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
-        if (aEg.thePlayer.onGround && pw) {
+        if (aEg.thePlayer.onGround && pendingCrit) {
             aEg.thePlayer.crd = true;
             aEg.thePlayer.stepHeight = 0.1F;
-            this.hV++;
-            this.rW = 0;
-            if (this.hV > 2) {
-                this.rW++;
+            this.critTicks++;
+            this.ticksSinceCrit = 0;
+            if (this.critTicks > 2) {
+                this.ticksSinceCrit++;
             }
 
-            switch (this.hV) {
+            switch (this.critTicks) {
                 case 1:
                     var1x.setPosY(var1x.getPosY() + 0.001);
                     break;
                 case 2:
-                    pw = false;
+                    pendingCrit = false;
             }
 
             var1x.setOnGround(false);
-            if (this.hV > 4) {
+            if (this.critTicks > 4) {
                 aEg.thePlayer.stepHeight = 0.6F;
             }
 
-            if (aEg.thePlayer.onGround && this.hV < 6) {
+            if (aEg.thePlayer.onGround && this.critTicks < 6) {
                 aEg.thePlayer.crd = true;
             }
 
-            if (this.hV > 6) {
+            if (this.critTicks > 6) {
                 aEg.thePlayer.crd = false;
             }
         } else {
-            this.rW++;
-            if (aEg.thePlayer.csk > 4 || this.rW > 4) {
+            this.ticksSinceCrit++;
+            if (aEg.thePlayer.csk > 4 || this.ticksSinceCrit > 4) {
                 aEg.thePlayer.stepHeight = 0.6F;
             }
 
-            if (this.rW < 5 && aEg.thePlayer.onGround && this.hV < 6) {
+            if (this.ticksSinceCrit < 5 && aEg.thePlayer.onGround && this.critTicks < 6) {
                 aEg.thePlayer.crd = true;
             } else {
                 aEg.thePlayer.crd = false;
             }
 
-            pw = false;
-            this.hV = 0;
+            pendingCrit = false;
+            this.critTicks = 0;
         }
     };
     @EventLink
@@ -75,12 +75,12 @@ public final class WatchdogCriticals extends Mode<Criticals> {
         if (aEg.thePlayer.onGround && !aEg.thePlayer.isOnLadder() && this.stopwatch.T(this.delay.wo().longValue())) {
             aEg.thePlayer.onCriticalHit(var1x.getLiving());
             this.stopwatch.aX();
-            pw = true;
+            pendingCrit = true;
         }
     };
     @EventLink(value = 4)
     public final Listener<JumpEvent> onJump = var1x -> {
-        if (this.hV <= 4 && this.rW <= 4 && aEg.thePlayer.cqL > 2) {
+        if (this.critTicks <= 4 && this.ticksSinceCrit <= 4 && aEg.thePlayer.cqL > 2) {
             var1x.setCancelled();
         }
     };

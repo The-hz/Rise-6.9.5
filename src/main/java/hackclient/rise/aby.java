@@ -33,10 +33,10 @@ public final class aby implements Screen, InstanceAccess {
     public void onRender(int var1, int var2, float var3) {
         Vector2f vector2f = new Vector2f(this.H.getScale()).h(this.azz, 0.0F);
         RenderUtil.roundedRectangle(vector2f.getX(), vector2f.getY() + this.azz, this.H.position.x - this.azz * 2.0F, 100.0, this.H.getRound(), UIColors.SECONDARY.pV());
-        this.azx.b(this.rz().rA());
+        this.azx.setColor(this.rz().rA());
         this.azx.i(new Vector2f(vector2f.h(this.azz, 0.0F)));
         this.azx.qx();
-        this.azy.b(this.rz().rB());
+        this.azy.setColor(this.rz().rB());
         this.azy.i(new Vector2f(vector2f.h(this.azz, 0.0F)));
         this.azy.qx();
         Vector2f vector2f1 = vector2f.h(0.0F, 100.0F);

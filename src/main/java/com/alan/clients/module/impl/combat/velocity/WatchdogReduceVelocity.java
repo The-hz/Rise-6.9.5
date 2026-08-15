@@ -23,10 +23,10 @@ public class WatchdogReduceVelocity extends Mode<Velocity> {
     private final BooleanValue cancelOnAttack = new BooleanValue("Cancel On Attack", this, true);
     private final BooleanValue cancelExplosions = new BooleanValue("Cancel Explosions", this, true);
     private final List<Packet<?>> heldPackets = new ArrayList<>();
-    private boolean vM = false;
+    private boolean flushing = false;
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
-        if (!this.vM && aEg.thePlayer != null) {
+        if (!this.flushing && aEg.thePlayer != null) {
             Packet packet = var1x.getPacket();
             if (packet instanceof S12PacketEntityVelocity s12packetentityvelocity) {
                 if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
@@ -85,14 +85,14 @@ public class WatchdogReduceVelocity extends Mode<Velocity> {
             this.heldPackets.clear();
         }
 
-        this.vM = true;
+        this.flushing = true;
 
         try {
             for (Packet<?> packet : list) {
                 PacketUtil.receive(packet);
             }
         } finally {
-            this.vM = false;
+            this.flushing = false;
         }
     }
 

@@ -24,15 +24,15 @@ public class VulcanPhase extends Mode<Phase> {
     @EventLink
     public Listener<BlockAABBEvent> onBlockAABB;
     public boolean Oi;
-    public boolean El;
+    public boolean pendingJump;
     @EventLink
     public Listener<PushOutOfBlockEvent> onPushOutOfBlock;
     public int setbacks;
     public int qH;
-    public int Oh;
-    public boolean ys = false;
-    public boolean Jq;
-    public boolean GQ;
+    public int insideBlockTicks;
+    public boolean setBack = false;
+    public boolean shouldFixCameraY;
+    public boolean shouldAnnouncePhase;
     public boolean JM = false;
     @EventLink
     public Listener<TickEvent> onTick;
@@ -55,12 +55,12 @@ public class VulcanPhase extends Mode<Phase> {
     @Override
     public void onEnable() {
         this.JM = false;
-        this.Jq = true;
-        this.GQ = true;
-        this.Oh = 0;
+        this.shouldFixCameraY = true;
+        this.shouldAnnouncePhase = true;
+        this.insideBlockTicks = 0;
         this.setbacks = 0;
-        this.ys = false;
-        this.El = true;
+        this.setBack = false;
+        this.pendingJump = true;
         if (aEg.thePlayer.onGround) {
             aEg.thePlayer.setPosition(aEg.thePlayer.posX, aEg.thePlayer.posY - 1.0, aEg.thePlayer.posZ);
             MoveUtil.stop();
@@ -72,31 +72,31 @@ public class VulcanPhase extends Mode<Phase> {
 
     public VulcanPhase(String var1, Phase phase) {
         super(var1, phase);
-        this.El = true;
+        this.pendingJump = true;
         this.setbacks = 0;
-        this.Oh = 0;
+        this.insideBlockTicks = 0;
         this.qH = 0;
         this.Oi = false;
-        this.Jq = true;
-        this.GQ = true;
+        this.shouldFixCameraY = true;
+        this.shouldAnnouncePhase = true;
         this.onPreMotion = var1x -> {
             aEg.thePlayer.cameraYaw = 0.1F;
-            if (this.Oh > 25 && PlayerUtil.vk()) {
+            if (this.insideBlockTicks > 25 && PlayerUtil.vk()) {
                 double d0;
                 int i = (d0 = aEg.thePlayer.motionY - 0.0) == 0.0 ? 0 : (d0 < 0.0 ? -1 : 1);
                 aEg.thePlayer.onGround = false;
             }
 
             if (PlayerUtil.vk()) {
-                this.Oh++;
+                this.insideBlockTicks++;
             }
 
-            if (this.Jq && this.Oh < 25) {
+            if (this.shouldFixCameraY && this.insideBlockTicks < 25) {
                 cl.cn();
             }
 
-            if (PlayerUtil.vk() && !this.El && this.GQ) {
-                this.GQ = false;
+            if (PlayerUtil.vk() && !this.pendingJump && this.shouldAnnouncePhase) {
+                this.shouldAnnouncePhase = false;
                 afi.b("Phased");
             }
 
@@ -116,7 +116,7 @@ public class VulcanPhase extends Mode<Phase> {
                         var1x.setBoundingBox(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d3, d4, d5));
                     }
                 }
-            } else if (!this.ys) {
+            } else if (!this.setBack) {
                 if (var1x.getBlock() instanceof BlockAir && !aEg.thePlayer.isSneaking()) {
                     double d6 = var1x.getBlockPos().getX();
                     double d7 = var1x.getBlockPos().getY();
@@ -125,7 +125,7 @@ public class VulcanPhase extends Mode<Phase> {
                         var1x.setBoundingBox(AxisAlignedBB.fromBounds(-15.0, -1.0, -15.0, 15.0, 1.0, 15.0).offset(d6, d7, d8));
                     }
                 }
-            } else if (this.ys && !PlayerUtil.vk()) {
+            } else if (this.setBack && !PlayerUtil.vk()) {
                 afi.b("Disabled due to not being in a block");
                 this.e(Phase.class).toggle();
             }
@@ -148,13 +148,13 @@ public class VulcanPhase extends Mode<Phase> {
                 }
             }
 
-            if (aEg.thePlayer.onGround && this.El && this.ys) {
+            if (aEg.thePlayer.onGround && this.pendingJump && this.setBack) {
                 aEg.thePlayer.jump();
-                this.ys = false;
-                this.El = false;
+                this.setBack = false;
+                this.pendingJump = false;
             }
 
-            if (aEg.thePlayer.onGround && !this.ys && !this.El) {
+            if (aEg.thePlayer.onGround && !this.setBack && !this.pendingJump) {
                 if (aEg.thePlayer.ticksExisted % 2 != 1 && aEg.thePlayer.moveForward == 0.0F) {
                     MoveUtil.strafe(0.0);
                     var1x.setForward(-1.0F);
@@ -165,14 +165,14 @@ public class VulcanPhase extends Mode<Phase> {
         };
         this.onPacketReceive = var1x -> {
             if (var1x.getPacket() instanceof S08PacketPlayerPosLook) {
-                this.ys = true;
+                this.setBack = true;
                 this.setbacks++;
             }
 
             if (this.setbacks > 4) {
-                this.Jq = false;
+                this.shouldFixCameraY = false;
             } else {
-                this.Jq = true;
+                this.shouldFixCameraY = true;
             }
         };
         this.onPushOutOfBlock = var0 -> var0.setCancelled();

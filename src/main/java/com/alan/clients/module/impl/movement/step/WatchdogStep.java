@@ -24,9 +24,9 @@ public class WatchdogStep extends Mode<Step> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {};
     private double height;
-    private int hV;
-    private long Ss;
-    private boolean JM = false;
+    private int ticksSinceStep;
+    private long speedReEnableTime;
+    private boolean speedDisabled = false;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionMedium = var1x -> {
         if (!this.e(Scaffold.class).isEnabled()) {
@@ -44,7 +44,7 @@ public class WatchdogStep extends Mode<Step> {
         this.height = d0;
         if (this.e(Speed.class).isEnabled() && d0 > 0.6F) {
             this.e(Speed.class).setEnabled(false);
-            this.JM = true;
+            this.speedDisabled = true;
         }
 
         if (!this.e(Scaffold.class).isEnabled()) {
@@ -59,12 +59,12 @@ public class WatchdogStep extends Mode<Step> {
                         adouble = new double[]{0.42F, 0.75, 1.0};
                     }
 
-                    this.Ss = System.currentTimeMillis() + 300L;
+                    this.speedReEnableTime = System.currentTimeMillis() + 300L;
 
                     for (double d1 : adouble) {
                         aEg.timer.dzD = 0.25F;
                         PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d1, aEg.thePlayer.posZ, false));
-                        this.hV = 0;
+                        this.ticksSinceStep = 0;
                     }
                 }
             }
@@ -72,15 +72,15 @@ public class WatchdogStep extends Mode<Step> {
     };
     @EventLink
     public final Listener<TickEvent> onTick = var1x -> {
-        this.hV++;
-        if (this.hV == 1) {
+        this.ticksSinceStep++;
+        if (this.ticksSinceStep == 1) {
             aEg.timer.dzD = 1.0F;
         }
 
-        if (this.JM && System.currentTimeMillis() > this.Ss) {
+        if (this.speedDisabled && System.currentTimeMillis() > this.speedReEnableTime) {
             this.e(Speed.class).setEnabled(true);
-            this.JM = false;
-            this.Ss = 0L;
+            this.speedDisabled = false;
+            this.speedReEnableTime = 0L;
         }
     };
 
@@ -91,7 +91,7 @@ public class WatchdogStep extends Mode<Step> {
     @Override
     public void onDisable() {
         aEg.thePlayer.stepHeight = 0.6F;
-        this.JM = false;
-        this.Ss = 0L;
+        this.speedDisabled = false;
+        this.speedReEnableTime = 0L;
     }
 }

@@ -37,56 +37,56 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
     public final NumberValue velocityToLetThrough = new NumberValue("Velocity to let through", this, 0.3, 0, 0.6, 0.01);
     private final BooleanValue preventGhosting = new BooleanValue("Prevent Ghosting", this, true);
     public static boolean dj = false;
-    public static boolean tt;
+    public static boolean releasing;
     private int tR;
-    private final ArrayList<Packet<?>> vA = new ArrayList<>();
-    private float ub;
-    private double vB;
-    private double vC;
-    private boolean gD;
-    private int dE;
+    private final ArrayList<Packet<?>> heldPackets = new ArrayList<>();
+    private float velocityYaw;
+    private double velocityX;
+    private double velocityZ;
+    private boolean shouldJump;
+    private int jumpCount;
     @EventLink(value = 2)
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
-        if (!tt && (!this.e(LongJump.class).isEnabled() || aEg.thePlayer.tR >= 29) && !this.e(Flight.class).isEnabled() && aEg.thePlayer.ticksExisted >= 50) {
+        if (!releasing && (!this.e(LongJump.class).isEnabled() || aEg.thePlayer.tR >= 29) && !this.e(Flight.class).isEnabled() && aEg.thePlayer.ticksExisted >= 50) {
             switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
                     if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && !var1x.isCancelled()) {
                         if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && s12packetentityvelocity.motionY > 0
                             || aEg.thePlayer.ae <= 14
                             || aEg.thePlayer.cqL <= 1) {
-                            this.gD = true;
+                            this.shouldJump = true;
                         }
 
                         if (!aEg.thePlayer.onGround && aEg.thePlayer.Zl > 4) {
                             dj = true;
                             double d0 = s12packetentityvelocity.getMotionX() / 8000.0;
                             double d1 = s12packetentityvelocity.getMotionZ() / 8000.0;
-                            this.ub = (float)Math.toDegrees(Math.atan2(d1, d0));
-                            if (this.ub < -180.0F) {
-                                this.ub += 360.0F;
+                            this.velocityYaw = (float)Math.toDegrees(Math.atan2(d1, d0));
+                            if (this.velocityYaw < -180.0F) {
+                                this.velocityYaw += 360.0F;
                             }
 
-                            if (this.ub > 180.0F) {
-                                this.ub -= 360.0F;
+                            if (this.velocityYaw > 180.0F) {
+                                this.velocityYaw -= 360.0F;
                             }
 
-                            this.vA.add(s12packetentityvelocity);
+                            this.heldPackets.add(s12packetentityvelocity);
                             var1x.setCancelled();
-                            this.vB = d0;
-                            this.vC = d1;
+                            this.velocityX = d0;
+                            this.velocityZ = d1;
                         }
                     }
                     break;
                 case S32PacketConfirmTransaction s32packetconfirmtransaction:
                     if (dj) {
                         var1x.setCancelled();
-                        this.vA.add(s32packetconfirmtransaction);
+                        this.heldPackets.add(s32packetconfirmtransaction);
                     }
                     break;
                 case a a:
                     if (dj) {
                         var1x.setCancelled();
-                        this.vA.add(a);
+                        this.heldPackets.add(a);
                     }
                     break;
                 case z z:
@@ -105,7 +105,7 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
                     String s = packet.getClass().getName();
                     if (dj && s.startsWith("net.minecraft.network.play.server.")) {
                         var1x.setCancelled();
-                        this.vA.add(packet);
+                        this.heldPackets.add(packet);
                     }
             }
         }
@@ -144,22 +144,22 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
                 f -= 360.0F;
             }
 
-            float f1 = Math.abs(f - this.ub);
+            float f1 = Math.abs(f - this.velocityYaw);
             float f2 = 15.0F;
             if (!aEg.thePlayer.onGround && (!(Math.random() > 0.98) || !this.preventGhosting.wo())) {
                 if (f1 <= f2 || f1 >= 360.0F - f2) {
-                    tt = true;
+                    releasing = true;
                     dj = false;
-                    this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::receive);
-                    this.vA.clear();
-                    tt = false;
+                    this.heldPackets.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::receive);
+                    this.heldPackets.clear();
+                    releasing = false;
                     this.tR = 0;
                 } else if (aEg.thePlayer.tR > 13) {
-                    tt = true;
+                    releasing = true;
                     dj = false;
-                    this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::receive);
-                    this.vA.clear();
-                    tt = false;
+                    this.heldPackets.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::receive);
+                    this.heldPackets.clear();
+                    releasing = false;
                 }
             } else {
                 if (aEg.thePlayer.tR > 3 && aEg.gameSettings.keyBindJump.isKeyDown() && this.preventGhosting.wo()) {
@@ -167,28 +167,28 @@ public class WatchdogPredictionVelocity extends Mode<Velocity> {
                     int i = (d0 = Math.hypot(aEg.thePlayer.crI, aEg.thePlayer.crK) - this.velocityToLetThrough.wo().doubleValue()) == 0.0 ? 0 : (d0 < 0.0 ? -1 : 1);
                 }
 
-                tt = true;
+                releasing = true;
                 dj = false;
-                this.vA.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::receive);
-                this.vA.clear();
-                tt = false;
+                this.heldPackets.stream().filter(var0 -> !(var0 instanceof S01PacketPong)).forEach(PacketUtil::receive);
+                this.heldPackets.clear();
+                releasing = false;
             }
         }
     };
     @EventLink
-    public final Listener<JumpEvent> onJump = var1x -> this.dE++;
+    public final Listener<JumpEvent> onJump = var1x -> this.jumpCount++;
     @EventLink
     public final Listener<MoveInputEvent> onMoveInput = var1x -> {
-        if (this.gD) {
+        if (this.shouldJump) {
             if (!ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_12_1) || !aEg.thePlayer.isJumping) {
                 var1x.setJump(true);
             }
 
-            this.gD = false;
+            this.shouldJump = false;
         }
 
-        if (dj || tt) {
-            this.gD = false;
+        if (dj || releasing) {
+            this.shouldJump = false;
         }
 
         if (!dj) {

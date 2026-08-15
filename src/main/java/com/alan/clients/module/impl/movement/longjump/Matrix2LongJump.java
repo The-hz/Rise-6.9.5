@@ -25,10 +25,10 @@ import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 
 public class Matrix2LongJump extends Mode<LongJump> {
     private final BooleanValue silent = new BooleanValue("Silent", this, false);
-    private boolean Hs;
-    private double KY;
-    private double KZ;
-    private double La;
+    private boolean started;
+    private double startX;
+    private double startZ;
+    private double startY;
     private boolean hadViewBobbing;
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
@@ -62,9 +62,9 @@ public class Matrix2LongJump extends Mode<LongJump> {
     public final Listener<Render3DEvent> onRender3D = var1x -> {
         if (this.silent.wo()) {
             double d3 = aEg.timer.bWm;
-            double d0 = this.KY;
-            double d1 = this.La;
-            double d2 = this.KZ;
+            double d0 = this.startX;
+            double d1 = this.startY;
+            double d2 = this.startZ;
             aEg.gameSettings.cfG = false;
             Entity entity = aEg.getRenderViewEntity();
             entity.posX = d0;
@@ -81,12 +81,12 @@ public class Matrix2LongJump extends Mode<LongJump> {
             aEg.thePlayer.jump();
         }
 
-        this.Hs = true;
+        this.started = true;
         if (aEg.thePlayer.ae > 1) {
             aEg.thePlayer.motionY += 0.00348;
         }
 
-        if (this.Hs && aEg.thePlayer.fallDistance > 0.1) {
+        if (this.started && aEg.thePlayer.fallDistance > 0.1) {
             aEg.thePlayer.motionY = 0.42;
             MoveUtil.strafe(1.97);
         }
@@ -98,7 +98,7 @@ public class Matrix2LongJump extends Mode<LongJump> {
 
     @Override
     public void onDisable() {
-        this.Hs = false;
+        this.started = false;
         if (this.hadViewBobbing) {
             aEg.gameSettings.cfG = true;
         }
@@ -112,8 +112,8 @@ public class Matrix2LongJump extends Mode<LongJump> {
             this.hadViewBobbing = false;
         }
 
-        this.KY = aEg.thePlayer.posX;
-        this.KZ = aEg.thePlayer.posZ;
-        this.La = aEg.thePlayer.posY;
+        this.startX = aEg.thePlayer.posX;
+        this.startZ = aEg.thePlayer.posZ;
+        this.startY = aEg.thePlayer.posY;
     }
 }

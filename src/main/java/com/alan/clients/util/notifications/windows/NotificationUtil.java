@@ -19,7 +19,7 @@ public class NotificationUtil {
             trayicon.setImageAutoSize(true);
             trayicon.setToolTip("System tray icon demo");
             systemtray.add(trayicon);
-            trayicon.displayMessage(var1, var2, var0.uI());
+            trayicon.displayMessage(var1, var2, var0.getMessageType());
         } catch (AWTException awtexception) {
             awtexception.printStackTrace();
         }

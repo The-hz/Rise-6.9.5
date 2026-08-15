@@ -13,7 +13,7 @@ import net.minecraft.network.play.server.c;
 import rip.vantage.commons.util.time.a;
 
 public class AdaptiveRefreshRateComponent extends Component {
-    private boolean bI;
+    private boolean keyDown;
     private boolean bJ;
     private boolean bK;
     private int disabledFor;
@@ -23,12 +23,12 @@ public class AdaptiveRefreshRateComponent extends Component {
     public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         if (aEg.thePlayer.ticksExisted % 100 == 0
             || this.bK
-            || aEg.gameSettings.keyBindPlayerList.isKeyDown() != this.bI
+            || aEg.gameSettings.keyBindPlayerList.isKeyDown() != this.keyDown
             || aEg.gameSettings.bJf != this.bJ
             || aEg.thePlayer.ticksExisted <= 10
             || this.disabledFor > 0) {
             GuiIngameCache.dirty = true;
-            this.bI = aEg.gameSettings.keyBindPlayerList.isKeyDown();
+            this.keyDown = aEg.gameSettings.keyBindPlayerList.isKeyDown();
             this.bJ = aEg.gameSettings.bJf;
             this.bK = false;
         }

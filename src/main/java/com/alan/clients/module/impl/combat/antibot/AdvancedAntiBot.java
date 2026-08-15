@@ -16,31 +16,31 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
 public final class AdvancedAntiBot extends Mode<AntiBot> {
-    private boolean ro;
-    private final Set<UUID> rp = new HashSet<>();
+    private boolean tabListCaptured;
+    private final Set<UUID> tabListUuids = new HashSet<>();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1x -> {
         if (aEg.theWorld != null && aEg.thePlayer != null) {
             EntityLivingBase entitylivingbase = this.e(KillAura.class).jE;
-            if (!this.ro && aEg.thePlayer.ticksExisted >= 150 && this.e(KillAura.class).isEnabled() && entitylivingbase != null && !entitylivingbase.isDead) {
-                this.rp.clear();
+            if (!this.tabListCaptured && aEg.thePlayer.ticksExisted >= 150 && this.e(KillAura.class).isEnabled() && entitylivingbase != null && !entitylivingbase.isDead) {
+                this.tabListUuids.clear();
 
                 for (NetworkPlayerInfo networkplayerinfo : aEg.getNetHandler().getPlayerInfoMap()) {
                     if (networkplayerinfo != null && networkplayerinfo.getGameProfile() != null) {
-                        this.rp.add(networkplayerinfo.getGameProfile().getId());
+                        this.tabListUuids.add(networkplayerinfo.getGameProfile().getId());
                     }
                 }
 
-                this.ro = true;
+                this.tabListCaptured = true;
             }
 
             for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
                 if (entityplayer != aEg.thePlayer) {
-                    if (!this.ro) {
+                    if (!this.tabListCaptured) {
                         Client.a.getBotManager().c(this, entityplayer);
                     } else {
                         UUID uuid = entityplayer.getUniqueID();
-                        if (this.rp.contains(uuid)) {
+                        if (this.tabListUuids.contains(uuid)) {
                             Client.a.getBotManager().c(this, entityplayer);
                         } else {
                             Client.a.getBotManager().b(this, entityplayer);
@@ -52,8 +52,8 @@ public final class AdvancedAntiBot extends Mode<AntiBot> {
     };
     @EventLink
     public final Listener<WorldChangeEvent> onWorldChange = var1x -> {
-        this.ro = false;
-        this.rp.clear();
+        this.tabListCaptured = false;
+        this.tabListUuids.clear();
         Client.a.getBotManager().a(this);
     };
 
@@ -63,8 +63,8 @@ public final class AdvancedAntiBot extends Mode<AntiBot> {
 
     @Override
     public void onDisable() {
-        this.ro = false;
-        this.rp.clear();
+        this.tabListCaptured = false;
+        this.tabListUuids.clear();
         Client.a.getBotManager().a(this);
     }
 }

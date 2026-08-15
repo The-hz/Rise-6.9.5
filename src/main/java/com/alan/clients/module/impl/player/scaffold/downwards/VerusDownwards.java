@@ -13,7 +13,7 @@ import net.minecraft.util.EnumFacing;
 import org.lwjgl.input.Keyboard;
 
 public class VerusDownwards extends Mode<Scaffold> {
-    int bj;
+    int sneakTicks;
     @EventLink(value = 0)
     public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (Keyboard.isKeyDown(aEg.gameSettings.keyBindSneak.getKeyCode())) {
@@ -24,16 +24,16 @@ public class VerusDownwards extends Mode<Scaffold> {
     @EventLink(value = 3)
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (Keyboard.isKeyDown(aEg.gameSettings.keyBindSneak.getKeyCode()) && aEg.thePlayer.crH <= 20) {
-            this.bj++;
+            this.sneakTicks++;
             if (aEg.thePlayer.posY % 1.0 != 0.0) {
-                this.bj = 0;
+                this.sneakTicks = 0;
             }
 
-            if (aEg.thePlayer.motionY <= 0.0 && this.bj >= 15) {
-                this.getParent().agy = this.getParent().agy.v(0.0, -1.0, 0.0);
+            if (aEg.thePlayer.motionY <= 0.0 && this.sneakTicks >= 15) {
+                this.getParent().placeOffset = this.getParent().placeOffset.v(0.0, -1.0, 0.0);
             }
         } else {
-            this.bj = 1000;
+            this.sneakTicks = 1000;
         }
     };
     @EventLink
@@ -51,6 +51,6 @@ public class VerusDownwards extends Mode<Scaffold> {
 
     @Override
     public void onEnable() {
-        this.bj = 1000;
+        this.sneakTicks = 1000;
     }
 }

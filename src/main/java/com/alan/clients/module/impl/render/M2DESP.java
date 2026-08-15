@@ -86,7 +86,7 @@ extends Module {
                             RenderUtil.horizontalCenteredGradient(d2, d3, d6, 0.5, color, color2);
                             RenderUtil.horizontalCenteredGradient(d4, d3, 0.5, d7, color, color2);
                             RenderUtil.horizontalCenteredGradient(d2, d5, d6 + 0.5, 0.5, color, color2);
-                            this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, d7, color, color2, d6, d4, d5));
+                            this.b(ShaderQueueType.BLOOM).c(() -> this.glowBox(d2, d3, d7, color, color2, d6, d4, d5));
                             break block90;
                         }
                         case "CS": {
@@ -116,11 +116,11 @@ extends Module {
                 RenderUtil.d(d4, d5 - (double)f6, 0.5, f6 + 0.5f, color2);
                 RenderUtil.d(d2, d5, f5, 0.5, color2);
                 RenderUtil.d(d4 - (double)f5, d5, f5, 0.5, color2);
-                this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, f6, color2, d5, f5, d4));
+                this.b(ShaderQueueType.BLOOM).c(() -> this.glowCornerBox(d2, d3, f6, color2, d5, f5, d4));
             }
             if (!(entityLivingBase instanceof EntityLivingBase)) continue;
             HealthBypass healthBypass = (HealthBypass)this.e(HealthBypass.class);
-            float f2 = healthBypass != null && healthBypass.isEnabled() ? HealthBypass.B(entityLivingBase) : entityLivingBase.getHealth();
+            float f2 = healthBypass != null && healthBypass.isEnabled() ? HealthBypass.getScoreboardHealth(entityLivingBase) : entityLivingBase.getHealth();
             block72: {
                 if (((Mode)this.healthBarMode.wo()).getName().equals("None")) break block72;
                 double d8;
@@ -136,7 +136,7 @@ extends Module {
                             case "Health": {
                                 int n6 = Color.HSBtoRGB(f2 / entityLivingBase.getMaxHealth() / 3.0f, 1.0f, 1.0f);
                                 RenderUtil.d(d2 - 2.0, d3 + d8, 0.5, d5 - d3 - d8 + 0.5, new Color(n6));
-                                this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, d8, d5, n6));
+                                this.b(ShaderQueueType.BLOOM).c(() -> this.glowHealthColorBar(d2, d3, d8, d5, n6));
                                 break block72;
                             }
                             case "Standard": {
@@ -152,22 +152,22 @@ extends Module {
                     }
                     Color color5 = new Color(ColorUtil.a(this.rz().rA(), this.rz().rB(), f3).getRGB());
                     RenderUtil.horizontalGradient(d2 - 2.0, d3 + d8, 0.5, d5 - d3 - d8 + 0.5, color5, this.rz().rB());
-                    this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, d8, d5, color5));
+                    this.b(ShaderQueueType.BLOOM).c(() -> this.glowGradientBar(d2, d3, d8, d5, color5));
                     break block72;
                 }
                 RenderUtil.d(d2 - 2.0, d3 + d8, 0.5, d5 - d3 - d8 + 0.5, this.rz().getAccentColor(vector2d));
-                this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d3, d8, d5, vector2d));
+                this.b(ShaderQueueType.BLOOM).c(() -> this.glowStandardBar(d2, d3, d8, d5, vector2d));
             }
             if (!((Boolean)this.armorBar.wo()).booleanValue()) continue;
             float f4 = (float)entityLivingBase.getTotalArmorValue() / 20.0f;
             if (!(f4 > 0.0f)) continue;
             RenderUtil.d(d2 - 0.5, d5 + 1.5, d4 - d2 + 1.5, 1.5, new Color(0, 0, 0, 180));
             RenderUtil.horizontalCenteredGradient(d2, d5 + 2.0, (d6 + 0.5) * (double)f4, 0.5, this.rz().rA(), ColorUtil.a(this.rz().rA(), this.rz().rB(), f4));
-            this.b(ShaderQueueType.BLOOM).c(() -> this.a(d2, d5, d4, d6, f4));
+            this.b(ShaderQueueType.BLOOM).c(() -> this.glowArmorBar(d2, d5, d4, d6, f4));
         }
     };
 
-    private  void a(double d2, double d3, double d4, double d5, float f2) {
+    private  void glowArmorBar(double d2, double d3, double d4, double d5, float f2) {
         if (((Boolean)this.glow.wo()).booleanValue()) {
             GlStateManager.pushMatrix();
             RenderUtil.d(d2 - 0.5, d3 + 1.5, d4 - d2 + 1.5, 1.5, new Color(0, 0, 0, 180));
@@ -176,7 +176,7 @@ extends Module {
         }
     }
 
-    private  void a(double d2, double d3, double d4, double d5, Color color) {
+    private  void glowGradientBar(double d2, double d3, double d4, double d5, Color color) {
         if (((Boolean)this.glow.wo()).booleanValue()) {
             GlStateManager.pushMatrix();
             RenderUtil.horizontalGradient(d2 - 2.0, d3 + d4, 2.0, d5 - d3 - d4 + 0.5, color, this.rz().rB());
@@ -184,7 +184,7 @@ extends Module {
         }
     }
 
-    private  void a(double d2, double d3, double d4, double d5, Vector2d vector2d) {
+    private  void glowStandardBar(double d2, double d3, double d4, double d5, Vector2d vector2d) {
         if (((Boolean)this.glow.wo()).booleanValue()) {
             GlStateManager.pushMatrix();
             RenderUtil.d(d2 - 2.0, d3 + d4, 2.0, d5 - d3 - d4 + 0.5, this.rz().getAccentColor(vector2d));
@@ -192,7 +192,7 @@ extends Module {
         }
     }
 
-    private  void a(double d2, double d3, double d4, double d5, int n2) {
+    private  void glowHealthColorBar(double d2, double d3, double d4, double d5, int n2) {
         if (((Boolean)this.glow.wo()).booleanValue()) {
             GlStateManager.pushMatrix();
             RenderUtil.d(d2 - 2.0, d3 + d4, 2.0, d5 - d3 - d4 + 0.5, new Color(n2));
@@ -200,7 +200,7 @@ extends Module {
         }
     }
 
-    private  void a(double d2, double d3, float f2, Color color, double d4, float f3, double d5) {
+    private  void glowCornerBox(double d2, double d3, float f2, Color color, double d4, float f3, double d5) {
         GlStateManager.pushMatrix();
         if (((Boolean)this.glow.wo()).booleanValue()) {
             RenderUtil.d(d2, d3 + 0.5, 0.5, f2, color);
@@ -215,7 +215,7 @@ extends Module {
         GlStateManager.popMatrix();
     }
 
-    private  void a(double d2, double d3, double d4, Color color, Color color2, double d5, double d6, double d7) {
+    private  void glowBox(double d2, double d3, double d4, Color color, Color color2, double d5, double d6, double d7) {
         GlStateManager.pushMatrix();
         if (((Boolean)this.glow.wo()).booleanValue()) {
             RenderUtil.horizontalCenteredGradient(d2, d3 + 0.5, 0.5, d4 - 0.5, color, color2);

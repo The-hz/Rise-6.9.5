@@ -76,7 +76,7 @@ extends Module {
     private final ArrayList<Packet<?>> packetArrayOutList = new ArrayList();
     private final ArrayList<Packet<?>> packetArrayInList = new ArrayList();
     private int anInt;
-    private int LM;
+    private int attackCount;
     private boolean aBoolean;
     private boolean aBoolean2;
     private boolean delay;
@@ -85,8 +85,8 @@ extends Module {
     private double serverPosX;
     private double serverPosY;
     private double serverPosZ;
-    private float Yh;
-    private float Yi;
+    private float lastYaw;
+    private float lastPitch;
     private Vec3 lastPosition;
     private Vec3 currentPosition;
     private Vec3 lastCurrentPosition;
@@ -123,13 +123,13 @@ extends Module {
     private boolean placeHolder;
     Executor threadPool = Executors.newFixedThreadPool(1);
     Pathfinder pathfinder;
-    EntityPlayerSP YG;
-    adz<BlockPos> YH = new adz(2);
-    private final HashMap<Double, HashMap<Integer, Tuple<Double, Boolean>>> YI = new HashMap();
-    private Runnable YJ;
-    private Runnable YK;
-    List<Vector2d> YL = new ArrayList<Vector2d>();
-    Vector2d YM = null;
+    EntityPlayerSP playerSP;
+    adz<BlockPos> blockHistory = new adz(2);
+    private final HashMap<Double, HashMap<Integer, Tuple<Double, Boolean>>> dataMap = new HashMap();
+    private Runnable aRunnable;
+    private Runnable aRunnable2;
+    List<Vector2d> curvePoints = new ArrayList<Vector2d>();
+    Vector2d draggedPoint = null;
     @EventLink
     public final Listener<MouseOverEvent> onMouseOver = mouseOverEvent -> {
         this.placeHolder = true;
@@ -169,7 +169,7 @@ extends Module {
     public final Listener<Render3DEvent> render3D = render3DEvent -> {
         this.placeHolder = true;
     };
-    private HashMap<Integer, Integer> YU = new HashMap();
+    private HashMap<Integer, Integer> rotationDeltaCounts = new HashMap();
     public static double YV;
     @EventLink
     public final Listener<PreUpdateEvent> preUpdate = preUpdateEvent -> {
@@ -182,7 +182,7 @@ extends Module {
     };
     @EventLink
     public final Listener<AttackEvent> attack = attackEvent -> {
-        ++this.LM;
+        ++this.attackCount;
         this.placeHolder = true;
     };
     @EventLink
@@ -199,15 +199,15 @@ extends Module {
     };
     @EventLink
     public final Listener<GuiMouseReleaseEvent> onGuiMouseRelease = guiMouseReleaseEvent -> {
-        this.YM = null;
+        this.draggedPoint = null;
     };
     @EventLink
     public final Listener<GuiClickEvent> onGuiClick = guiClickEvent -> {
         int n2 = guiClickEvent.getMouseX();
         int n3 = guiClickEvent.getMouseY();
-        ArrayList<Vector2d> arrayList = new ArrayList<Vector2d>(this.YL);
+        ArrayList<Vector2d> arrayList = new ArrayList<Vector2d>(this.curvePoints);
         arrayList.sort((vector2d, vector2d2) -> (int)(MathOperation.EUCLIDEAN_DISTANCE.a(vector2d.getX() - (double)n2, vector2d.getY() - (double)n3) - MathOperation.EUCLIDEAN_DISTANCE.a(vector2d2.getX() - (double)n2, vector2d2.getY() - (double)n3)));
-        this.YM = (Vector2d)arrayList.stream().findFirst().get();
+        this.draggedPoint = (Vector2d)arrayList.stream().findFirst().get();
     };
     @EventLink
     public final Listener<ClickEvent> onClick = clickEvent -> {
@@ -257,17 +257,17 @@ extends Module {
         this.placeHolder = true;
         this.aBoolean = false;
         this.blockFace = null;
-        this.YH.clear();
+        this.blockHistory.clear();
         this.anInt = 0;
-        this.LM = 0;
-        this.YL.clear();
-        this.YL.add(new Vector2d(100.0, 500.0));
-        this.YL.add(new Vector2d(200.0, 100.0));
-        this.YL.add(new Vector2d(600.0, 100.0));
-        this.YL.add(new Vector2d(700.0, 500.0));
+        this.attackCount = 0;
+        this.curvePoints.clear();
+        this.curvePoints.add(new Vector2d(100.0, 500.0));
+        this.curvePoints.add(new Vector2d(200.0, 100.0));
+        this.curvePoints.add(new Vector2d(600.0, 100.0));
+        this.curvePoints.add(new Vector2d(700.0, 500.0));
     }
 
-    private void g(List<Vector2d> list) {
+    private void drawCurve(List<Vector2d> list) {
         for (Vector2d vector2d : list) {
             RenderUtil.c(vector2d.x, vector2d.y, 3.0, this.rz().rA());
         }
@@ -280,7 +280,7 @@ extends Module {
         GL11.glBegin(3);
         float f2 = 0.0f;
         while ((double)f2 <= 1.0) {
-            Vector2d vector2d = this.a(f2, list);
+            Vector2d vector2d = this.getBezierPoint(f2, list);
             GL11.glVertex2f((float)vector2d.x, (float)vector2d.y);
             f2 += 0.01f;
         }
@@ -290,7 +290,7 @@ extends Module {
         RenderUtil.color(Color.WHITE);
     }
 
-    private Vector2d a(float f2, List<Vector2d> list) {
+    private Vector2d getBezierPoint(float f2, List<Vector2d> list) {
         float f3 = 1.0f - f2;
         float f4 = (float)(Math.pow(f3, 3.0) * list.get((int)0).x + 3.0 * Math.pow(f3, 2.0) * (double)f2 * list.get((int)1).x + (double)(3.0f * f3) * Math.pow(f2, 2.0) * list.get((int)2).x + Math.pow(f2, 3.0) * list.get((int)3).x);
         float f5 = (float)(Math.pow(f3, 3.0) * list.get((int)0).y + 3.0 * Math.pow(f3, 2.0) * (double)f2 * list.get((int)1).y + (double)(3.0f * f3) * Math.pow(f2, 2.0) * list.get((int)2).y + Math.pow(f2, 3.0) * list.get((int)3).y);
@@ -299,19 +299,19 @@ extends Module {
 
     public void run() {
         if (Test.aEg.gameSettings.keyBindSneak.isKeyDown()) {
-            this.YU.clear();
+            this.rotationDeltaCounts.clear();
         }
         if (aef.c((Vector2f)RotationComponent.fk, (double)15.0).typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY) {
-            this.Yh = Test.aEg.thePlayer.pl;
-            this.Yi = Test.aEg.thePlayer.rotationPitch;
+            this.lastYaw = Test.aEg.thePlayer.pl;
+            this.lastPitch = Test.aEg.thePlayer.rotationPitch;
             return;
         }
-        int n4 = (int)Math.round(Math.hypot(Test.aEg.thePlayer.pl - this.Yh, Test.aEg.thePlayer.rotationPitch - this.Yi));
-        this.YU.putIfAbsent(n4, 1);
-        this.YU.put(n4, this.YU.get(n4) + 1);
+        int n4 = (int)Math.round(Math.hypot(Test.aEg.thePlayer.pl - this.lastYaw, Test.aEg.thePlayer.rotationPitch - this.lastPitch));
+        this.rotationDeltaCounts.putIfAbsent(n4, 1);
+        this.rotationDeltaCounts.put(n4, this.rotationDeltaCounts.get(n4) + 1);
         afi.b("Outputted", new Object[0]);
-        this.YU.forEach((n2, n3) -> System.out.println(n3 + "\t" + n2));
-        this.Yh = Test.aEg.thePlayer.pl;
-        this.Yi = Test.aEg.thePlayer.rotationPitch;
+        this.rotationDeltaCounts.forEach((n2, n3) -> System.out.println(n3 + "\t" + n2));
+        this.lastYaw = Test.aEg.thePlayer.pl;
+        this.lastPitch = Test.aEg.thePlayer.rotationPitch;
     }
 }

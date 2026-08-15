@@ -13,7 +13,7 @@ public class NoJumpDelay extends Module {
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         Scaffold scaffold = this.e(Scaffold.class);
-        if (!scaffold.isEnabled() || !scaffold.mode.wo().getName().equals("Telly") || !aEg.gameSettings.keyBindJump.isKeyDown() || !scaffold.kh()) {
+        if (!scaffold.isEnabled() || !scaffold.mode.wo().getName().equals("Telly") || !aEg.gameSettings.keyBindJump.isKeyDown() || !scaffold.shouldDelayTellyJump()) {
             aEg.thePlayer.jumpTicks = 0;
         }
     };

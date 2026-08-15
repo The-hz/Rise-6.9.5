@@ -23,16 +23,16 @@ public final class MurderMystery extends Module {
     private final BooleanValue newestMethod = new BooleanValue("Newest Method", this, true);
     private final BooleanValue callOut = new BooleanValue("Call Out", this, false);
     private EntityPlayer murderer;
-    private final Set<Integer> Vd = new HashSet<>();
+    private final Set<Integer> announced = new HashSet<>();
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
-        if (var1.getPacket() instanceof e e && e.getEquipmentSlot() == 0 && e.getItemStack() != null && this.isMeleeWeapon(e.getItemStack()) && !this.Vd.contains(e.getEntityID())
+        if (var1.getPacket() instanceof e e && e.getEquipmentSlot() == 0 && e.getItemStack() != null && this.isMeleeWeapon(e.getItemStack()) && !this.announced.contains(e.getEntityID())
             )
          {
             Entity entity = aEg.theWorld.getEntityByID(e.getEntityID());
             if (entity instanceof EntityPlayer) {
                 afi.b(entity.getName() + " is The Murderer.");
-                this.Vd.add(e.getEntityID());
+                this.announced.add(e.getEntityID());
                 this.murderer = (EntityPlayer)entity;
                 if (this.callOut.wo()) {
                     aEg.thePlayer.sendChatMessage(entity.getName() + " is The Murderer.");

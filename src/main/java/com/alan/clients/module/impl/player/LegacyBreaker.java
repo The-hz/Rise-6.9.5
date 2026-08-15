@@ -59,29 +59,29 @@ extends Module {
     private final NumberValue fastBreak = new NumberValue("FastBreak", this, (Number)0, (Number)0, (Number)1, (Number)0.1);
     private final NumberValue fastBreakBed = new NumberValue("FastBreak bed", this, (Number)0, (Number)0, (Number)1, (Number)0.1);
     private final NumberValue airMultiplier = new NumberValue("Air Multiplier", this, (Number)1, (Number)0, (Number)3, (Number)0.1);
-    private float aeJ;
-    private float aeK;
-    private int BV;
-    private boolean aeL = true;
+    private float damagePerTick;
+    private float breakProgress;
+    private int ticksSinceAttack;
+    private boolean firstTeleport = true;
     private int aeM;
-    private int aaW;
+    private int cooldownTicks;
     private int aeN;
-    private Vec3 aeO;
-    private BlockPos aeP;
-    private BlockPos aeQ;
-    boolean aeR = false;
+    private Vec3 whitelistedBedPosition;
+    private BlockPos nearestBed;
+    private BlockPos targetBlock;
+    boolean breaking = false;
     @EventLink(value=4)
     public final Listener<WorldChangeEvent> onWorldChange = worldChangeEvent -> {
-        this.aeL = true;
+        this.firstTeleport = true;
     };
     @EventLink(value=4)
     public final Listener<TeleportEvent> onTeleport = teleportEvent -> {
         if (LegacyBreaker.aEg.thePlayer.getDistance(teleportEvent.getPosX(), teleportEvent.getPosY(), teleportEvent.getPosZ()) > 30.0) {
-            if (this.aeL) {
-                this.aeL = false;
+            if (this.firstTeleport) {
+                this.firstTeleport = false;
                 cg.e("Breaker", "Whitelisted bed");
             }
-            this.aeO = new Vec3(teleportEvent.getPosX(), teleportEvent.getPosY(), teleportEvent.getPosZ());
+            this.whitelistedBedPosition = new Vec3(teleportEvent.getPosX(), teleportEvent.getPosY(), teleportEvent.getPosZ());
         }
     };
     @EventLink(value=4)
@@ -93,9 +93,9 @@ extends Module {
                 return;
             }
             EntityPlayerSP entityPlayerSP = LegacyBreaker.aEg.thePlayer;
-            ++this.BV;
-            --this.aaW;
-            if (this.aaW > 0 || ((Boolean)this.whitelistFriendlyBed.wo()).booleanValue() && this.aeO != null && entityPlayerSP.getDistanceSq(this.aeO.xCoord, this.aeO.yCoord, this.aeO.zCoord) < 1500.0) {
+            ++this.ticksSinceAttack;
+            --this.cooldownTicks;
+            if (this.cooldownTicks > 0 || ((Boolean)this.whitelistFriendlyBed.wo()).booleanValue() && this.whitelistedBedPosition != null && entityPlayerSP.getDistanceSq(this.whitelistedBedPosition.xCoord, this.whitelistedBedPosition.yCoord, this.whitelistedBedPosition.zCoord) < 1500.0) {
                 return;
             }
             boolean bl = false;
@@ -107,10 +107,10 @@ extends Module {
                 if (n5 > ((Number)this.range.wo()).intValue() + 1) {
                     arrayList = new ArrayList<BlockPos>();
                     if (bl) break;
-                    if (this.aeR) {
-                        this.aeK = 0.0f;
+                    if (this.breaking) {
+                        this.breakProgress = 0.0f;
                     }
-                    this.aeR = false;
+                    this.breaking = false;
                     break block27;
                 }
                 int n6 = -((Number)this.range.wo()).intValue() + 1;
@@ -128,18 +128,18 @@ extends Module {
                         n3 = n6;
                         n4 = i2;
                         BlockPos blockPos = new BlockPos(entityPlayerSP.posX + (double)n5, entityPlayerSP.posY + (double)n6, entityPlayerSP.posZ + (double)i2);
-                        if (!(this.aeK <= 0.0f)) continue;
-                        if (this.aeP != null) {
-                            if (!(blockPos.distanceSq((Vec3i)LegacyBreaker.aEg.thePlayer.getPosition()) < this.aeP.distanceSq((Vec3i)LegacyBreaker.aEg.thePlayer.getPosition()))) continue;
-                            this.aeP = blockPos;
+                        if (!(this.breakProgress <= 0.0f)) continue;
+                        if (this.nearestBed != null) {
+                            if (!(blockPos.distanceSq((Vec3i)LegacyBreaker.aEg.thePlayer.getPosition()) < this.nearestBed.distanceSq((Vec3i)LegacyBreaker.aEg.thePlayer.getPosition()))) continue;
+                            this.nearestBed = blockPos;
                             continue;
                         }
-                        this.aeP = blockPos;
+                        this.nearestBed = blockPos;
                     }
                     ++n6;
                 }
             }
-            this.aeR = true;
+            this.breaking = true;
             int n7 = 0;
             arrayList.add(new BlockPos(n2 + 1, n3, n4));
             arrayList.add(new BlockPos(n2 - 1, n3, n4));
@@ -172,52 +172,52 @@ extends Module {
                 ++n8;
             }
             if (n7 > 0 || !((Mode)this.mode.wo()).getName().equals("Surroundings")) {
-                this.aeQ = this.aeP;
+                this.targetBlock = this.nearestBed;
             } else {
                 float f2 = 1.0E8f;
                 for (BlockPos blockPos : arrayList) {
                     Block block = PlayerUtil.p(blockPos.getX(), blockPos.getY(), blockPos.getZ());
                     if (!(block.wX() < f2) || block instanceof BlockBed) continue;
                     f2 = block.wX();
-                    if (!(this.aeK <= 0.0f)) continue;
-                    this.aeQ = new BlockPos(entityPlayerSP.posX + (double)blockPos.getX(), entityPlayerSP.posY + (double)blockPos.getY(), entityPlayerSP.posZ + (double)blockPos.getZ());
+                    if (!(this.breakProgress <= 0.0f)) continue;
+                    this.targetBlock = new BlockPos(entityPlayerSP.posX + (double)blockPos.getX(), entityPlayerSP.posY + (double)blockPos.getY(), entityPlayerSP.posZ + (double)blockPos.getZ());
                 }
                 for (int i4 = 0; i4 < arrayList.size(); ++i4) {
                     BlockPos blockPos = (BlockPos)arrayList.get(i4);
                     Block block = PlayerUtil.p(blockPos.getX(), blockPos.getY(), blockPos.getZ());
-                    if (f2 != block.wX() || !(blockPos.add((Vec3i)entityPlayerSP.getPosition()).j((Vec3i)entityPlayerSP.getPosition()) < this.aeQ.j((Vec3i)entityPlayerSP.getPosition())) || !(this.aeK <= 0.0f)) continue;
-                    this.aeQ = new BlockPos(entityPlayerSP.posX + (double)blockPos.getX(), entityPlayerSP.posY + (double)blockPos.getY(), entityPlayerSP.posZ + (double)blockPos.getZ());
+                    if (f2 != block.wX() || !(blockPos.add((Vec3i)entityPlayerSP.getPosition()).j((Vec3i)entityPlayerSP.getPosition()) < this.targetBlock.j((Vec3i)entityPlayerSP.getPosition())) || !(this.breakProgress <= 0.0f)) continue;
+                    this.targetBlock = new BlockPos(entityPlayerSP.posX + (double)blockPos.getX(), entityPlayerSP.posY + (double)blockPos.getY(), entityPlayerSP.posZ + (double)blockPos.getZ());
                 }
             }
-            if (this.aeQ.j((Vec3i)entityPlayerSP.getPosition()) <= (double)((Number)this.range.wo()).floatValue()) {
+            if (this.targetBlock.j((Vec3i)entityPlayerSP.getPosition()) <= (double)((Number)this.range.wo()).floatValue()) {
                 int n9;
                 if (((Boolean)this.rotations.wo()).booleanValue()) {
-                    this.m(this.aeQ);
+                    this.rotateToBlock(this.targetBlock);
                 }
-                if ((n9 = SlotUtil.findTool(this.aeQ)) != -1) {
+                if ((n9 = SlotUtil.findTool(this.targetBlock)) != -1) {
                     PacketUtil.send(new l(n9));
                 }
                 if (n9 != -1) {
-                    this.aeJ = SlotUtil.getPlayerRelativeBlockHardness((EntityPlayer)entityPlayerSP, (World)LegacyBreaker.aEg.theWorld, this.aeQ, n9);
+                    this.damagePerTick = SlotUtil.getPlayerRelativeBlockHardness((EntityPlayer)entityPlayerSP, (World)LegacyBreaker.aEg.theWorld, this.targetBlock, n9);
                 } else {
                     WorldClient worldClient = LegacyBreaker.aEg.theWorld;
                     this.d(SlotComponent.class);
-                    this.aeJ = SlotUtil.getPlayerRelativeBlockHardness((EntityPlayer)entityPlayerSP, (World)worldClient, this.aeQ, SlotComponent.bQ());
+                    this.damagePerTick = SlotUtil.getPlayerRelativeBlockHardness((EntityPlayer)entityPlayerSP, (World)worldClient, this.targetBlock, SlotComponent.bQ());
                 }
                 if (!LegacyBreaker.aEg.thePlayer.onGround) {
-                    this.aeJ *= ((Number)this.airMultiplier.wo()).floatValue();
+                    this.damagePerTick *= ((Number)this.airMultiplier.wo()).floatValue();
                 }
-                if (this.aeK == 0.0f) {
-                    PacketUtil.send(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, this.aeQ, EnumFacing.DOWN));
+                if (this.breakProgress == 0.0f) {
+                    PacketUtil.send(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, this.targetBlock, EnumFacing.DOWN));
                 }
                 LegacyBreaker.aEg.thePlayer.swingItem();
-                this.aeK += this.aeJ;
-                LegacyBreaker.aEg.theWorld.sendBlockBreakProgress(entityPlayerSP.getEntityId(), this.aeQ, (int)(this.aeK * 10.0f - 1.0f));
-                float f3 = PlayerUtil.p(this.aeQ.getX(), this.aeQ.getY(), this.aeQ.getZ()) instanceof BlockBed ? 1.0f - ((Number)this.fastBreakBed.wo()).floatValue() : 1.0f - ((Number)this.fastBreak.wo()).floatValue();
-                if (this.aeK >= f3) {
-                    this.aeK = 0.0f;
-                    PacketUtil.send(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, this.aeQ, EnumFacing.DOWN));
-                    LegacyBreaker.aEg.playerController.onPlayerDestroyBlock(this.aeQ, EnumFacing.UP);
+                this.breakProgress += this.damagePerTick;
+                LegacyBreaker.aEg.theWorld.sendBlockBreakProgress(entityPlayerSP.getEntityId(), this.targetBlock, (int)(this.breakProgress * 10.0f - 1.0f));
+                float f3 = PlayerUtil.p(this.targetBlock.getX(), this.targetBlock.getY(), this.targetBlock.getZ()) instanceof BlockBed ? 1.0f - ((Number)this.fastBreakBed.wo()).floatValue() : 1.0f - ((Number)this.fastBreak.wo()).floatValue();
+                if (this.breakProgress >= f3) {
+                    this.breakProgress = 0.0f;
+                    PacketUtil.send(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, this.targetBlock, EnumFacing.DOWN));
+                    LegacyBreaker.aEg.playerController.onPlayerDestroyBlock(this.targetBlock, EnumFacing.UP);
                 }
                 if (n9 != -1) {
                     this.d(SlotComponent.class);
@@ -225,24 +225,24 @@ extends Module {
                 }
             }
         }
-        LegacyBreaker.aEg.playerController.curBlockDamageMP = this.aeK;
+        LegacyBreaker.aEg.playerController.curBlockDamageMP = this.breakProgress;
     };
     @EventLink
     public final Listener<AttackEvent> onAttack = attackEvent -> {
         if (((Boolean)this.whitelistFriendlyBed.wo()).booleanValue()) {
-            this.BV = 0;
-        } else if (this.BV < 10) {
-            ++this.BV;
+            this.ticksSinceAttack = 0;
+        } else if (this.ticksSinceAttack < 10) {
+            ++this.ticksSinceAttack;
         }
-        if (this.BV < 10) {
-            this.aeR = true;
+        if (this.ticksSinceAttack < 10) {
+            this.breaking = true;
             return;
         }
-        this.aeR = false;
+        this.breaking = false;
     };
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
-        if (this.aeR) {
+        if (this.breaking) {
             ScaledResolution scaledResolution = render2DEvent.getScaledResolution();
             double d2 = (double)scaledResolution.getScaledHeight() * 0.8;
             RenderUtil.a(((float)scaledResolution.getScaledWidth() - LegacyBreaker.aEg.playerController.curBlockDamageMP * 100.0f) / 2.0f, d2, LegacyBreaker.aEg.playerController.curBlockDamageMP * 100.0f, 10.0, 4.0, this.rz().rA(), this.rz().rB(), true);
@@ -251,21 +251,21 @@ extends Module {
     };
     @EventLink
     public final Listener<Render3DEvent> onRender3D = render3DEvent -> {
-        if (!this.aeR) return;
+        if (!this.breaking) return;
         try {
-            double d2 = this.aeQ.getX();
+            double d2 = this.targetBlock.getX();
             aEg.getRenderManager();
             double d3 = d2 - RenderManager.bUO;
-            double d4 = this.aeQ.getY();
+            double d4 = this.targetBlock.getY();
             aEg.getRenderManager();
             double d5 = d4 - RenderManager.bUP;
-            double d6 = this.aeQ.getZ();
+            double d6 = this.targetBlock.getZ();
             aEg.getRenderManager();
             double d7 = d6 - RenderManager.bUQ;
             double d8 = d3 + 1.0;
             double d9 = d5 + 1.0;
             double d10 = d7 + 1.0;
-            this.a(d3, d5, d7, d8, d9, d10);
+            this.drawBox(d3, d5, d7, d8, d9, d10);
             return;
         }
         catch (NullPointerException nullPointerException) {
@@ -280,17 +280,17 @@ extends Module {
 
     @Override
     public void onEnable() {
-        this.aeJ = 0.0f;
-        this.aeK = 0.0f;
+        this.damagePerTick = 0.0f;
+        this.breakProgress = 0.0f;
     }
 
-    private void a(double d2, double d3, double d4, double d5, double d6, double d7) {
+    private void drawBox(double d2, double d3, double d4, double d5, double d6, double d7) {
         GL11.glPushMatrix();
         GL11.glDisable(3553);
         GL11.glEnable(2848);
         GL11.glLineWidth(2.0f);
         GL11.glBegin(1);
-        if (this.aeP == this.aeQ) {
+        if (this.nearestBed == this.targetBlock) {
             GL11.glColor3f(255.0f, 0.0f, 0.0f);
         } else {
             GL11.glColor3f(255.0f, 255.0f, 255.0f);
@@ -325,7 +325,7 @@ extends Module {
         GL11.glPopMatrix();
     }
 
-    public void m(BlockPos blockPos) {
+    public void rotateToBlock(BlockPos blockPos) {
         if (!((Boolean)this.rotations.wo()).booleanValue()) {
             return;
         }
@@ -338,6 +338,6 @@ extends Module {
 
     @Generated
     public boolean isBreaking() {
-        return this.aeR;
+        return this.breaking;
     }
 }

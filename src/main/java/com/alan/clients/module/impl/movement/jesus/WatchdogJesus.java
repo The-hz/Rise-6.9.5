@@ -18,17 +18,17 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.util.AxisAlignedBB;
 
 public class WatchdogJesus extends Mode<Jesus> {
-    private Boolean KG = false;
+    private Boolean standingOnWater = false;
     @EventLink
     public final Listener<BlockAABBEvent> onBlockAABB = var1x -> {
         if (var1x.getBlock() instanceof BlockLiquid && !aEg.thePlayer.inWater) {
-            this.KG = true;
+            this.standingOnWater = true;
             int i = var1x.getBlockPos().getX();
             int j = var1x.getBlockPos().getY();
             int k = var1x.getBlockPos().getZ();
             var1x.setBoundingBox(AxisAlignedBB.fromBounds(i, j, k, i + 1, j + 1, k + 1));
         } else {
-            this.KG = false;
+            this.standingOnWater = false;
         }
     };
     @EventLink
@@ -58,7 +58,7 @@ public class WatchdogJesus extends Mode<Jesus> {
     @EventLink(value = 0)
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         Packet packet = var1x.getPacket();
-        if (packet instanceof S12PacketEntityVelocity && this.KG || packet instanceof S12PacketEntityVelocity && (PlayerUtil.vl() || aEg.thePlayer.inWater)) {
+        if (packet instanceof S12PacketEntityVelocity && this.standingOnWater || packet instanceof S12PacketEntityVelocity && (PlayerUtil.vl() || aEg.thePlayer.inWater)) {
             S12PacketEntityVelocity s12packetentityvelocity = (S12PacketEntityVelocity)packet;
             if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                 s12packetentityvelocity.motionY = 0;

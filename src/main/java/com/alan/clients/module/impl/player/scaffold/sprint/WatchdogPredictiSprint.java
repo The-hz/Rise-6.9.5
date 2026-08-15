@@ -25,16 +25,16 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 
 public class WatchdogPredictiSprint extends Mode<Scaffold> {
-    private float gZ;
-    private boolean dk;
-    private boolean El;
-    private BlockPos Em;
-    private int En;
+    private float targetYaw;
+    private boolean holdSneak;
+    private boolean awaitingBlockChange;
+    private BlockPos lastBlockPos;
+    private int sneakUntilTick;
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        MathHelper.wrapAngleTo180_float(this.gZ);
+        MathHelper.wrapAngleTo180_float(this.targetYaw);
         RotationComponent.d(false);
-        RotationComponent.setRotations(new Vector2f(this.gZ, 94.0F), 10.0, MovementFix.NORMAL);
+        RotationComponent.setRotations(new Vector2f(this.targetYaw, 94.0F), 10.0, MovementFix.NORMAL);
     };
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var0 -> {
@@ -47,30 +47,30 @@ public class WatchdogPredictiSprint extends Mode<Scaffold> {
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         Packet packet = var1x.getPacket();
-        if (aEg.thePlayer.ticksExisted >= this.En) {
-            this.dk = false;
+        if (aEg.thePlayer.ticksExisted >= this.sneakUntilTick) {
+            this.holdSneak = false;
         }
 
         if (packet instanceof S23PacketBlockChange) {
             BlockPos blockpos = ((S23PacketBlockChange)packet).getBlockPosition();
-            if (!blockpos.equals(this.Em)) {
-                this.Em = blockpos;
-                this.En = aEg.thePlayer.ticksExisted + 10;
+            if (!blockpos.equals(this.lastBlockPos)) {
+                this.lastBlockPos = blockpos;
+                this.sneakUntilTick = aEg.thePlayer.ticksExisted + 10;
             }
 
-            if (this.El) {
-                this.dk = true;
-                this.El = false;
+            if (this.awaitingBlockChange) {
+                this.holdSneak = true;
+                this.awaitingBlockChange = false;
             }
         }
     };
     @EventLink
     public final Listener<MoveInputEvent> onMoveInput = var1x -> {
-        if (this.dk) {
+        if (this.holdSneak) {
             var1x.setSneak(true);
         }
 
-        if (this.dk) {
+        if (this.holdSneak) {
             var1x.setForward(0.0F);
         }
     };
@@ -81,16 +81,16 @@ public class WatchdogPredictiSprint extends Mode<Scaffold> {
 
     @Override
     public void onEnable() {
-        this.En = aEg.thePlayer.ticksExisted + 10;
-        this.El = true;
-        this.dk = true;
+        this.sneakUntilTick = aEg.thePlayer.ticksExisted + 10;
+        this.awaitingBlockChange = true;
+        this.holdSneak = true;
         SlotComponent slotcomponent = this.d(SlotComponent.class);
         PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
         slotcomponent = this.d(SlotComponent.class);
         PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
         slotcomponent = this.d(SlotComponent.class);
         PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
-        MathHelper.wrapAngleTo180_float(this.gZ);
+        MathHelper.wrapAngleTo180_float(this.targetYaw);
         RotationComponent.d(false);
         double d0 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
         MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
@@ -99,11 +99,11 @@ public class WatchdogPredictiSprint extends Mode<Scaffold> {
         aEg.thePlayer.pl = (float)d1;
         afi.c(d0);
         if (flag && d0 >= -10.0 && d0 <= 100.0 && aEg.thePlayer.onGround) {
-            this.gZ = aEg.thePlayer.pl + 43.0F;
+            this.targetYaw = aEg.thePlayer.pl + 43.0F;
         } else if (flag && aEg.thePlayer.onGround) {
-            this.gZ = aEg.thePlayer.pl - 43.0F;
+            this.targetYaw = aEg.thePlayer.pl - 43.0F;
         } else {
-            this.gZ = aEg.thePlayer.pl;
+            this.targetYaw = aEg.thePlayer.pl;
         }
     }
 }

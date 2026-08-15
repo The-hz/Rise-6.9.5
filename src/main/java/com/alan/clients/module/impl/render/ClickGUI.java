@@ -16,7 +16,7 @@ import rip.vantage.commons.util.time.a;
 
 @ModuleInfo(aliases = "module.render.clickgui.name", description = "module.render.clickgui.description", category = Category.RENDER, keyBind = 54)
 public final class ClickGUI extends Module {
-    private final a and = new a();
+    private final a openStopWatch = new a();
     public final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Modern")).add(new SubMode("Dropdown")).setDefault("Modern");
     @EventLink(value = 3)
     public final Listener<Render2DEvent> onRender2D = var1 -> {
@@ -29,8 +29,8 @@ public final class ClickGUI extends Module {
         }
     };
     @EventLink
-    public final Listener<dt> ang = var1 -> {
-        if (this.and.T(50L)) {
+    public final Listener<dt> onGuiKey = var1 -> {
+        if (this.openStopWatch.T(50L)) {
             if (var1.cO() == this.getKey()) {
                 aEg.displayGuiScreen(null);
                 if (aEg.currentScreen == null) {
@@ -51,7 +51,7 @@ public final class ClickGUI extends Module {
             aEg.displayGuiScreen(Client.a.z());
         }
 
-        this.and.aX();
+        this.openStopWatch.aX();
     }
 
     @Override
@@ -60,6 +60,6 @@ public final class ClickGUI extends Module {
         Keyboard.enableRepeatEvents(false);
         Client.a.e().c(Client.a.getStandardClickGUI());
         Client.a.e().c(Client.a.z());
-        aMR.execute(() -> Client.a.getConfigManager().to().write());
+        aMR.execute(() -> Client.a.getConfigManager().getConfigfile().write());
     }
 }

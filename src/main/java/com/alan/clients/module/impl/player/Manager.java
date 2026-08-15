@@ -83,15 +83,15 @@ public class Manager extends Module {
     private final NumberValue bowSlot = new NumberValue("Bow Slot", this, 7, 0, 9, 1);
     private final NumberValue add = new NumberValue("Rod Slot", this, 8, 0, 9, 1);
     private final BoundsNumberValue foodSlot = new BoundsNumberValue("Food Slot", this, 9, 9, 0, 9, 1);
-    private static final int adf = 39;
-    private static final int adg = 38;
-    private static final int adh = 37;
-    private static final int adi = 36;
-    private int adj = 0;
-    private static final int adk = 0;
-    private static final int adl = 8;
-    private static final int adm = 9;
-    private static final int adn = 35;
+    private static final int HELMET_SLOT = 39;
+    private static final int CHESTPLATE_SLOT = 38;
+    private static final int LEGGINGS_SLOT = 37;
+    private static final int BOOTS_SLOT = 36;
+    private int containerLookTicks = 0;
+    private static final int HOTBAR_FIRST_SLOT = 0;
+    private static final int HOTBAR_LAST_SLOT = 8;
+    private static final int INVENTORY_FIRST_SLOT = 9;
+    private static final int INVENTORY_LAST_SLOT = 35;
     private final a stopwatch = new a();
     private int chestTicks;
     private int attackTicks;
@@ -99,30 +99,30 @@ public class Manager extends Module {
     private boolean moved;
     private boolean open;
     private long nextClick;
-    private boolean adu = false;
-    private int adv;
-    private int adw;
-    private boolean adx = false;
-    private int ady = 0;
-    private int adz = 0;
+    private boolean pendingClose = false;
+    private int clicksThisTick;
+    private int sprintDisableTicks;
+    private boolean inventoryOpen = false;
+    private int openDelayTicks = 0;
+    private int idleTicks = 0;
     @EventLink(value = 2)
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             if (aEg.thePlayer.ticksExisted > 40) {
-                if (this.s(4.5)) {
-                    this.adj = 10;
-                } else if (this.adj > 0) {
-                    this.adj--;
+                if (this.isLookingAtContainer(4.5)) {
+                    this.containerLookTicks = 10;
+                } else if (this.containerLookTicks > 0) {
+                    this.containerLookTicks--;
                 }
 
-                if (this.adu && aEg.currentScreen == null && this.open && !BadPacketsComponent.bad(false, false, false, false, true) && (this.adj == 0 || this.placeTicks >= 10)) {
+                if (this.pendingClose && aEg.currentScreen == null && this.open && !BadPacketsComponent.bad(false, false, false, false, true) && (this.containerLookTicks == 0 || this.placeTicks >= 10)) {
                     PacketUtil.send(new q(aEg.thePlayer.inventoryContainer.windowId));
-                    this.jX();
-                    this.adu = false;
+                    this.registerClick();
+                    this.pendingClose = false;
                     this.open = false;
                 }
 
-                if (this.jV()) {
+                if (this.isForeignContainerOpen()) {
                     this.chestTicks = 0;
                 } else {
                     this.chestTicks++;
@@ -135,22 +135,22 @@ public class Manager extends Module {
                     this.u(false);
                 } else if (!this.stopwatch.T(this.nextClick) || this.chestTicks < 10 || this.attackTicks < 10 || this.placeTicks < 10 || this.e(Scaffold.class).isEnabled()) {
                     this.u(false);
-                } else if (this.jV()) {
+                } else if (this.isForeignContainerOpen()) {
                     this.u(false);
                 } else if (!this.e(InventoryMove.class).isEnabled() && !(aEg.currentScreen instanceof GuiInventory)) {
                     this.u(false);
                 } else {
                     this.moved = false;
-                    InventoryScan tr = this.jR();
-                    boolean flag = this.a(tr);
-                    if (!this.adx) {
+                    InventoryScan tr = this.scanInventory();
+                    boolean flag = this.needsWork(tr);
+                    if (!this.inventoryOpen) {
                         if (!flag) {
                             return;
                         }
 
                         this.openInventory();
-                        if (this.ady > 0) {
-                            this.ady--;
+                        if (this.openDelayTicks > 0) {
+                            this.openDelayTicks--;
                             return;
                         }
                     } else {
@@ -159,31 +159,31 @@ public class Manager extends Module {
                             return;
                         }
 
-                        if (this.ady > 0) {
-                            this.ady--;
+                        if (this.openDelayTicks > 0) {
+                            this.openDelayTicks--;
                             return;
                         }
                     }
 
-                    if (this.jW()) {
-                        this.jQ();
-                    } else if (this.c(0, tr.adF)) {
-                        this.jQ();
-                    } else if (this.c(1, tr.adG)) {
-                        this.jQ();
-                    } else if (this.c(2, tr.adH)) {
-                        this.jQ();
-                    } else if (this.c(3, tr.adI)) {
-                        this.jQ();
-                    } else if (this.d(tr)) {
-                        this.jQ();
-                    } else if (this.e(tr)) {
-                        this.jQ();
-                    } else if (this.f(tr)) {
-                        this.jQ();
-                    } else if (this.g(tr)) {
-                        this.jQ();
-                    } else if (this.b(var1x -> {
+                    if (this.clearCursorStack()) {
+                        this.updateIdle();
+                    } else if (this.swapArmor(0, tr.adF)) {
+                        this.updateIdle();
+                    } else if (this.swapArmor(1, tr.adG)) {
+                        this.updateIdle();
+                    } else if (this.swapArmor(2, tr.adH)) {
+                        this.updateIdle();
+                    } else if (this.swapArmor(3, tr.adI)) {
+                        this.updateIdle();
+                    } else if (this.moveTools(tr)) {
+                        this.updateIdle();
+                    } else if (this.moveBlocks(tr)) {
+                        this.updateIdle();
+                    } else if (this.movePotions(tr)) {
+                        this.updateIdle();
+                    } else if (this.moveFood(tr)) {
+                        this.updateIdle();
+                    } else if (this.dropExcess(var1x -> {
                         int k = 0;
 
                         for (int l = 0; l <= 39; l++) {
@@ -196,8 +196,8 @@ public class Manager extends Module {
 
                         return k;
                     }, this.blockLimit.wo().intValue())) {
-                        this.jQ();
-                    } else if (this.b(var1x -> {
+                        this.updateIdle();
+                    } else if (this.dropExcess(var1x -> {
                         int k = 0;
 
                         for (int l = 0; l <= 39; l++) {
@@ -210,8 +210,8 @@ public class Manager extends Module {
 
                         return k;
                     }, this.arrowLimit.wo().intValue())) {
-                        this.jQ();
-                    } else if (this.b(var1x -> {
+                        this.updateIdle();
+                    } else if (this.dropExcess(var1x -> {
                         int k = 0;
 
                         for (int l = 0; l <= 39; l++) {
@@ -227,8 +227,8 @@ public class Manager extends Module {
 
                         return k;
                     }, this.bucketLimit.wo().intValue())) {
-                        this.jQ();
-                    } else if (this.b(var1x -> {
+                        this.updateIdle();
+                    } else if (this.dropExcess(var1x -> {
                         int k = 0;
 
                         for (int l = 0; l <= 39; l++) {
@@ -244,8 +244,8 @@ public class Manager extends Module {
 
                         return k;
                     }, this.snowballEggLimit.wo().intValue())) {
-                        this.jQ();
-                    } else if (this.b(var1x -> {
+                        this.updateIdle();
+                    } else if (this.dropExcess(var1x -> {
                         int k = 0;
 
                         for (int l = 0; l <= 39; l++) {
@@ -258,19 +258,19 @@ public class Manager extends Module {
 
                         return k;
                     }, this.enderPearlLimit.wo().intValue())) {
-                        this.jQ();
+                        this.updateIdle();
                     } else {
-                        int i = this.jS();
-                        if (i != -1 && this.f(i, true)) {
-                            this.G(i);
-                            this.jQ();
+                        int i = this.firstUselessSlot();
+                        if (i != -1 && this.canDrop(i, true)) {
+                            this.dropStack(i);
+                            this.updateIdle();
                         } else {
                             int j = this.h(tr);
-                            if (j != -1 && this.f(j, true)) {
-                                this.G(j);
-                                this.jQ();
+                            if (j != -1 && this.canDrop(j, true)) {
+                                this.dropStack(j);
+                                this.updateIdle();
                             } else {
-                                this.jQ();
+                                this.updateIdle();
                             }
                         }
                     }
@@ -281,17 +281,17 @@ public class Manager extends Module {
     @EventLink
     public final Listener<AttackEvent> onAttack = var1 -> this.attackTicks = 0;
     @EventLink
-    public final Listener<en> adC = var1 -> {
-        if (this.jY() && this.adv > 0) {
-            this.adw = Math.max(this.adw, this.adv + this.getExtraSprintTicks());
+    public final Listener<en> onSprint = var1 -> {
+        if (this.isGrimInventoryMove() && this.clicksThisTick > 0) {
+            this.sprintDisableTicks = Math.max(this.sprintDisableTicks, this.clicksThisTick + this.getExtraSprintTicks());
         }
 
-        this.adv = 0;
-        if (this.jY() && this.adw > 0) {
+        this.clicksThisTick = 0;
+        if (this.isGrimInventoryMove() && this.sprintDisableTicks > 0) {
             aEg.thePlayer.setSprinting(false);
-            this.adw--;
-        } else if (!this.jY()) {
-            this.adw = 0;
+            this.sprintDisableTicks--;
+        } else if (!this.isGrimInventoryMove()) {
+            this.sprintDisableTicks = 0;
         }
     };
     @EventLink
@@ -342,7 +342,7 @@ public class Manager extends Module {
         return this.dropCustomItems.wo();
     }
 
-    private boolean s(double var1) {
+    private boolean isLookingAtContainer(double var1) {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             MovingObjectPosition movingobjectposition = aEg.thePlayer.rayTrace(var1, 1.0F);
             if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.BLOCK) {
@@ -355,12 +355,12 @@ public class Manager extends Module {
         return false;
     }
 
-    private void jQ() {
+    private void updateIdle() {
         if (this.moved) {
-            this.adz = 0;
+            this.idleTicks = 0;
         } else {
-            this.adz++;
-            if (this.adz >= 2) {
+            this.idleTicks++;
+            if (this.idleTicks >= 2) {
                 this.u(true);
             }
         }
@@ -369,11 +369,11 @@ public class Manager extends Module {
     @Override
     public void onDisable() {
         this.u(false);
-        this.adv = 0;
-        this.adw = 0;
+        this.clicksThisTick = 0;
+        this.sprintDisableTicks = 0;
     }
 
-    private InventoryScan jR() {
+    private InventoryScan scanInventory() {
         InventoryScan tr = new InventoryScan();
         ArrayList arraylist = new ArrayList();
         ArrayList arraylist1 = new ArrayList();
@@ -436,12 +436,12 @@ public class Manager extends Module {
             }
         }
 
-        tr.adF = this.a(arraylist, tr.aeb, this::armorReduction);
-        tr.adG = this.a(arraylist1, tr.aec, this::armorReduction);
-        tr.adH = this.a(arraylist2, tr.aed, this::armorReduction);
-        tr.adI = this.a(arraylist3, tr.aee, this::armorReduction);
-        this.a(arraylist4, tr);
-        tr.adL = this.a(arraylist5, tr.adU, var1 -> {
+        tr.adF = this.bestSlot(arraylist, tr.aeb, this::armorReduction);
+        tr.adG = this.bestSlot(arraylist1, tr.aec, this::armorReduction);
+        tr.adH = this.bestSlot(arraylist2, tr.aed, this::armorReduction);
+        tr.adI = this.bestSlot(arraylist3, tr.aee, this::armorReduction);
+        this.scanSwords(arraylist4, tr);
+        tr.adL = this.bestSlot(arraylist5, tr.adU, var1 -> {
             Item item1 = var1.getItem();
             int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.efficiency.effectId, var1);
             float f = j > 0 ? j * j + 1 : 0.0F;
@@ -452,7 +452,7 @@ public class Manager extends Module {
             }
             return item1 instanceof ItemAxe ? ((ItemAxe)item1).getToolMaterial().getEfficiencyOnProperMaterial() + f : 0.0F;
         });
-        tr.adM = this.a(arraylist6, tr.adV, var1 -> {
+        tr.adM = this.bestSlot(arraylist6, tr.adV, var1 -> {
             Item item1 = var1.getItem();
             int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.efficiency.effectId, var1);
             float f = j > 0 ? j * j + 1 : 0.0F;
@@ -463,7 +463,7 @@ public class Manager extends Module {
             }
             return item1 instanceof ItemAxe ? ((ItemAxe)item1).getToolMaterial().getEfficiencyOnProperMaterial() + f : 0.0F;
         });
-        tr.adN = this.a(arraylist7, tr.adW, var1 -> {
+        tr.adN = this.bestSlot(arraylist7, tr.adW, var1 -> {
             Item item1 = var1.getItem();
             int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.efficiency.effectId, var1);
             float f = j > 0 ? j * j + 1 : 0.0F;
@@ -474,12 +474,12 @@ public class Manager extends Module {
             }
             return item1 instanceof ItemAxe ? ((ItemAxe)item1).getToolMaterial().getEfficiencyOnProperMaterial() + f : 0.0F;
         });
-        tr.adO = this.a(arraylist8, tr.adZ, var1 -> EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, var1));
-        tr.adP = this.b(arraylist9, tr.aea);
+        tr.adO = this.bestSlot(arraylist8, tr.adZ, var1 -> EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, var1));
+        tr.adP = this.firstSlot(arraylist9, tr.aea);
         return tr;
     }
 
-    private int a(List<Integer> var1, List<Integer> var2, ItemScorer var3) {
+    private int bestSlot(List<Integer> var1, List<Integer> var2, ItemScorer var3) {
         if (var1.isEmpty()) {
             return -1;
         }
@@ -502,7 +502,7 @@ public class Manager extends Module {
         return i;
     }
 
-    private void a(List<Integer> var1, InventoryScan var2) {
+    private void scanSwords(List<Integer> var1, InventoryScan var2) {
         var1.sort((var1x, var2x) -> Float.compare(this.damage(aEg.thePlayer.inventory.getStackInSlot(var2x)), this.damage(aEg.thePlayer.inventory.getStackInSlot(var1x))));
         if (!var1.isEmpty()) {
             var2.adJ = (Integer)var1.get(0);
@@ -521,7 +521,7 @@ public class Manager extends Module {
         }
     }
 
-    private int b(List<Integer> var1, List<Integer> var2) {
+    private int firstSlot(List<Integer> var1, List<Integer> var2) {
         if (var1.isEmpty()) {
             return -1;
         }
@@ -535,41 +535,41 @@ public class Manager extends Module {
         return i;
     }
 
-    private boolean a(InventoryScan var1) {
+    private boolean needsWork(InventoryScan var1) {
         if (aEg.thePlayer.inventory.getItemStack() != null) {
             return true;
-        } else if (this.b(0, var1.adF)) {
+        } else if (this.betterArmor(0, var1.adF)) {
             return true;
-        } else if (this.b(1, var1.adG)) {
+        } else if (this.betterArmor(1, var1.adG)) {
             return true;
-        } else if (this.b(2, var1.adH)) {
+        } else if (this.betterArmor(2, var1.adH)) {
             return true;
-        } else if (this.b(3, var1.adI)) {
+        } else if (this.betterArmor(3, var1.adI)) {
             return true;
-        } else if (this.a(var1.adJ, this.swordSlot)) {
+        } else if (this.needsMove(var1.adJ, this.swordSlot)) {
             return true;
-        } else if (this.a(var1.adK, this.secondSwordSlot)) {
+        } else if (this.needsMove(var1.adK, this.secondSwordSlot)) {
             return true;
-        } else if (!this.a(var1, this.pickaxeSlot) && this.a(var1.adL, this.pickaxeSlot)) {
+        } else if (!this.slotTakenBySword(var1, this.pickaxeSlot) && this.needsMove(var1.adL, this.pickaxeSlot)) {
             return true;
-        } else if (!this.a(var1, this.axeSlot) && this.a(var1.adM, this.axeSlot)) {
+        } else if (!this.slotTakenBySword(var1, this.axeSlot) && this.needsMove(var1.adM, this.axeSlot)) {
             return true;
-        } else if (!this.a(var1, this.shovelSlot) && this.a(var1.adN, this.shovelSlot)) {
+        } else if (!this.slotTakenBySword(var1, this.shovelSlot) && this.needsMove(var1.adN, this.shovelSlot)) {
             return true;
-        } else if (!this.a(var1, this.bowSlot) && this.a(var1.adO, this.bowSlot)) {
+        } else if (!this.slotTakenBySword(var1, this.bowSlot) && this.needsMove(var1.adO, this.bowSlot)) {
             return true;
         }
         int i = this.add.wo().intValue();
         int j = this.bowSlot.wo().intValue();
-        if (!this.a(var1, this.add) && i != 0 && (j == 0 || i != j || var1.adO == -1) && this.a(var1.adP, this.add)) {
+        if (!this.slotTakenBySword(var1, this.add) && i != 0 && (j == 0 || i != j || var1.adO == -1) && this.needsMove(var1.adP, this.add)) {
             return true;
-        } else if (this.a(var1.adQ, this.blockSlot)) {
+        } else if (this.needsMoveRange(var1.adQ, this.blockSlot)) {
             return true;
-        } else if (this.b(var1)) {
+        } else if (this.needsMovePotion(var1)) {
             return true;
-        } else if (this.c(var1)) {
+        } else if (this.needsMoveFood(var1)) {
             return true;
-        } else if (this.a(var1x -> {
+        } else if (this.overLimit(var1x -> {
             int k = 0;
 
             for (int l = 0; l <= 39; l++) {
@@ -583,7 +583,7 @@ public class Manager extends Module {
             return k;
         }, this.blockLimit.wo().intValue())) {
             return true;
-        } else if (this.a(var1x -> {
+        } else if (this.overLimit(var1x -> {
             int k = 0;
 
             for (int l = 0; l <= 39; l++) {
@@ -597,7 +597,7 @@ public class Manager extends Module {
             return k;
         }, this.arrowLimit.wo().intValue())) {
             return true;
-        } else if (this.a(var1x -> {
+        } else if (this.overLimit(var1x -> {
             int k = 0;
 
             for (int l = 0; l <= 39; l++) {
@@ -614,7 +614,7 @@ public class Manager extends Module {
             return k;
         }, this.bucketLimit.wo().intValue())) {
             return true;
-        } else if (this.a(var1x -> {
+        } else if (this.overLimit(var1x -> {
             int k = 0;
 
             for (int l = 0; l <= 39; l++) {
@@ -631,7 +631,7 @@ public class Manager extends Module {
             return k;
         }, this.snowballEggLimit.wo().intValue())) {
             return true;
-        } else if (this.a(var1x -> {
+        } else if (this.overLimit(var1x -> {
             int k = 0;
 
             for (int l = 0; l <= 39; l++) {
@@ -646,7 +646,7 @@ public class Manager extends Module {
         }, this.enderPearlLimit.wo().intValue())) {
             return true;
         } else {
-            return this.jS() != -1
+            return this.firstUselessSlot() != -1
                 ? true
                 : !var1.adT.isEmpty()
                     || !var1.adU.isEmpty()
@@ -661,11 +661,11 @@ public class Manager extends Module {
         }
     }
 
-    private boolean b(int var1, int var2) {
+    private boolean betterArmor(int var1, int var2) {
         if (var2 == -1) {
             return false;
         }
-        int i = this.E(var1);
+        int i = this.armorSlot(var1);
         ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
         ItemStack itemstack1 = aEg.thePlayer.inventory.getStackInSlot(var2);
         if (itemstack1 != null && itemstack1.getItem() instanceof ItemArmor) {
@@ -676,20 +676,20 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean a(Integer var1, NumberValue numberValue) {
+    private boolean needsMove(Integer var1, NumberValue numberValue) {
         if (numberValue.wo().intValue() != 0 && var1 != null && var1 != -1) {
             int i = numberValue.wo().intValue() - 1;
-            return !this.f(var1, i);
+            return !this.isInSlot(var1, i);
         }
         return false;
     }
 
-    private boolean a(InventoryScan var1, NumberValue numberValue) {
+    private boolean slotTakenBySword(InventoryScan var1, NumberValue numberValue) {
         int i = numberValue.wo().intValue();
         return i != 0 && (var1.adJ != -1 && this.swordSlot.wo().intValue() == i || var1.adK != -1 && this.secondSwordSlot.wo().intValue() == i);
     }
 
-    private boolean a(List<SlotStack> var1, BoundsNumberValue boundsNumberValue) {
+    private boolean needsMoveRange(List<SlotStack> var1, BoundsNumberValue boundsNumberValue) {
         int i = boundsNumberValue.wo().intValue();
         int j = boundsNumberValue.wA().intValue();
         if (i == 0 || i > j) {
@@ -706,7 +706,7 @@ public class Manager extends Module {
         for (int l = 0; l < k && l < var1.size(); l++) {
             int i1 = i - 1 + l;
             int j1 = ((SlotStack)var1.get(l)).aeg;
-            if (!this.f(j1, i1)) {
+            if (!this.isInSlot(j1, i1)) {
                 return true;
             }
         }
@@ -714,7 +714,7 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean b(InventoryScan var1) {
+    private boolean needsMovePotion(InventoryScan var1) {
         int i = this.potionSlot.wo().intValue();
         int j = this.potionSlot.wA().intValue();
         if (i != 0 && i <= j) {
@@ -752,7 +752,7 @@ public class Manager extends Module {
             for (int l = 0; l < k && l < arraylist.size(); l++) {
                 int i1 = i - 1 + l;
                 int j1 = ((SlotStack)arraylist.get(l)).aeg;
-                if (!this.f(j1, i1)) {
+                if (!this.isInSlot(j1, i1)) {
                     return true;
                 }
             }
@@ -762,7 +762,7 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean c(InventoryScan var1) {
+    private boolean needsMoveFood(InventoryScan var1) {
         int i = this.foodSlot.wo().intValue();
         int j = this.foodSlot.wA().intValue();
         if (i == 0 || i > j) {
@@ -784,7 +784,7 @@ public class Manager extends Module {
         for (int l = 0; l < k && l < var1.adS.size(); l++) {
             int i1 = i - 1 + l;
             int j1 = var1.adS.get(l).aeg;
-            if (!this.f(j1, i1)) {
+            if (!this.isInSlot(j1, i1)) {
                 return true;
             }
         }
@@ -792,17 +792,17 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean a(IntGatherer intGatherer, int var2) {
+    private boolean overLimit(IntGatherer intGatherer, int var2) {
         ArrayList arraylist = new ArrayList();
         return intGatherer.gather(arraylist) > var2;
     }
 
-    private boolean c(int var1, int var2) {
+    private boolean swapArmor(int var1, int var2) {
         if (var2 == -1) {
             return false;
         }
 
-        int i = this.E(var1);
+        int i = this.armorSlot(var1);
         ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
         ItemStack itemstack1 = aEg.thePlayer.inventory.getStackInSlot(var2);
         if (itemstack1 != null && itemstack1.getItem() instanceof ItemArmor) {
@@ -811,7 +811,7 @@ public class Manager extends Module {
             if (var2 != i && j > k) {
                 int l = aEg.thePlayer.inventoryContainer.windowId;
                 int i1 = this.slot(var2);
-                int j1 = this.F(var1);
+                int j1 = this.armorWindowSlot(var1);
                 if (aEg.thePlayer.inventory.getItemStack() != null) {
                     return false;
                 }
@@ -834,7 +834,7 @@ public class Manager extends Module {
         return false;
     }
 
-    private int E(int var1) {
+    private int armorSlot(int var1) {
         switch (var1) {
             case 0:
                 return 39;
@@ -849,7 +849,7 @@ public class Manager extends Module {
         }
     }
 
-    private int F(int var1) {
+    private int armorWindowSlot(int var1) {
         switch (var1) {
             case 0:
                 return 5;
@@ -864,37 +864,37 @@ public class Manager extends Module {
         }
     }
 
-    private boolean d(InventoryScan var1) {
-        if (this.b(var1.adJ, this.swordSlot)) {
+    private boolean moveTools(InventoryScan var1) {
+        if (this.moveToSlot(var1.adJ, this.swordSlot)) {
             return true;
         }
 
-        if (this.b(var1.adK, this.secondSwordSlot)) {
+        if (this.moveToSlot(var1.adK, this.secondSwordSlot)) {
             return true;
         }
 
-        if (!this.a(var1, this.pickaxeSlot) && this.b(var1.adL, this.pickaxeSlot)) {
+        if (!this.slotTakenBySword(var1, this.pickaxeSlot) && this.moveToSlot(var1.adL, this.pickaxeSlot)) {
             return true;
         }
 
-        if (!this.a(var1, this.axeSlot) && this.b(var1.adM, this.axeSlot)) {
+        if (!this.slotTakenBySword(var1, this.axeSlot) && this.moveToSlot(var1.adM, this.axeSlot)) {
             return true;
         }
 
-        if (!this.a(var1, this.shovelSlot) && this.b(var1.adN, this.shovelSlot)) {
+        if (!this.slotTakenBySword(var1, this.shovelSlot) && this.moveToSlot(var1.adN, this.shovelSlot)) {
             return true;
         }
 
-        if (!this.a(var1, this.bowSlot) && this.b(var1.adO, this.bowSlot)) {
+        if (!this.slotTakenBySword(var1, this.bowSlot) && this.moveToSlot(var1.adO, this.bowSlot)) {
             return true;
         }
 
         int i = this.add.wo().intValue();
         int j = this.bowSlot.wo().intValue();
-        return !this.a(var1, this.add) && i != 0 && (j == 0 || i != j || var1.adO == -1) && this.b(var1.adP, this.add);
+        return !this.slotTakenBySword(var1, this.add) && i != 0 && (j == 0 || i != j || var1.adO == -1) && this.moveToSlot(var1.adP, this.add);
     }
 
-    private boolean e(InventoryScan var1) {
+    private boolean moveBlocks(InventoryScan var1) {
         int i = this.blockSlot.wo().intValue();
         int j = this.blockSlot.wA().intValue();
         if (i != 0 && i <= j) {
@@ -904,8 +904,8 @@ public class Manager extends Module {
             for (int l = 0; l < k && l < var1.adQ.size(); l++) {
                 int i1 = i - 1 + l;
                 int j1 = var1.adQ.get(l).aeg;
-                if (!this.f(j1, i1) && this.e(j1, false)) {
-                    this.e(j1, i1);
+                if (!this.isInSlot(j1, i1) && this.canClick(j1, false)) {
+                    this.swapToHotbar(j1, i1);
                     return true;
                 }
             }
@@ -915,7 +915,7 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean f(InventoryScan var1) {
+    private boolean movePotions(InventoryScan var1) {
         int i = this.potionSlot.wo().intValue();
         int j = this.potionSlot.wA().intValue();
         if (i != 0 && i <= j) {
@@ -949,8 +949,8 @@ public class Manager extends Module {
             for (int l = 0; l < k && l < arraylist.size(); l++) {
                 int i1 = i - 1 + l;
                 int j1 = ((SlotStack)arraylist.get(l)).aeg;
-                if (!this.f(j1, i1) && this.e(j1, false)) {
-                    this.e(j1, i1);
+                if (!this.isInSlot(j1, i1) && this.canClick(j1, false)) {
+                    this.swapToHotbar(j1, i1);
                     return true;
                 }
             }
@@ -960,7 +960,7 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean g(InventoryScan var1) {
+    private boolean moveFood(InventoryScan var1) {
         int i = this.foodSlot.wo().intValue();
         int j = this.foodSlot.wA().intValue();
         if (i != 0 && i <= j) {
@@ -975,8 +975,8 @@ public class Manager extends Module {
             for (int l = 0; l < k && l < var1.adS.size(); l++) {
                 int i1 = i - 1 + l;
                 int j1 = var1.adS.get(l).aeg;
-                if (!this.f(j1, i1) && this.e(j1, false)) {
-                    this.e(j1, i1);
+                if (!this.isInSlot(j1, i1) && this.canClick(j1, false)) {
+                    this.swapToHotbar(j1, i1);
                     return true;
                 }
             }
@@ -986,7 +986,7 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean b(IntGatherer intGatherer, int var2) {
+    private boolean dropExcess(IntGatherer intGatherer, int var2) {
         ArrayList arraylist = new ArrayList();
         int i = intGatherer.gather(arraylist);
         if (i <= var2) {
@@ -1000,14 +1000,14 @@ public class Manager extends Module {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(l);
             if (itemstack != null) {
                 int stackSize = itemstack.stackSize;
-                if (this.f(l, true)) {
+                if (this.canDrop(l, true)) {
                     if (j >= stackSize) {
-                        this.G(l);
+                        this.dropStack(l);
                         return true;
                     }
 
                     int j1 = stackSize - j;
-                    this.d(l, j1);
+                    this.dropPartialStack(l, j1);
                     return true;
                 }
             }
@@ -1016,7 +1016,7 @@ public class Manager extends Module {
         return false;
     }
 
-    private int jS() {
+    private int firstUselessSlot() {
         for (int i = 0; i <= 39; i++) {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
             if (itemstack != null && !ItemUtil.useful(itemstack)) {
@@ -1029,61 +1029,61 @@ public class Manager extends Module {
 
     private int h(InventoryScan var1) {
         for (int i : var1.adT) {
-            if (this.f(i, true)) {
+            if (this.canDrop(i, true)) {
                 return i;
             }
         }
 
         for (int j : var1.adU) {
-            if (this.f(j, true)) {
+            if (this.canDrop(j, true)) {
                 return j;
             }
         }
 
         for (int k : var1.adV) {
-            if (this.f(k, true)) {
+            if (this.canDrop(k, true)) {
                 return k;
             }
         }
 
         for (int l : var1.adW) {
-            if (this.f(l, true)) {
+            if (this.canDrop(l, true)) {
                 return l;
             }
         }
 
         for (int i1 : var1.adZ) {
-            if (this.f(i1, true)) {
+            if (this.canDrop(i1, true)) {
                 return i1;
             }
         }
 
         for (int j1 : var1.aea) {
-            if (this.f(j1, true)) {
+            if (this.canDrop(j1, true)) {
                 return j1;
             }
         }
 
         for (int k1 : var1.aeb) {
-            if (this.f(k1, true)) {
+            if (this.canDrop(k1, true)) {
                 return k1;
             }
         }
 
         for (int l1 : var1.aec) {
-            if (this.f(l1, true)) {
+            if (this.canDrop(l1, true)) {
                 return l1;
             }
         }
 
         for (int i2 : var1.aed) {
-            if (this.f(i2, true)) {
+            if (this.canDrop(i2, true)) {
                 return i2;
             }
         }
 
         for (int j2 : var1.aee) {
-            if (this.f(j2, true)) {
+            if (this.canDrop(j2, true)) {
                 return j2;
             }
         }
@@ -1092,36 +1092,36 @@ public class Manager extends Module {
     }
 
     private void openInventory() {
-        this.adz = 0;
-        if (!this.jV()) {
+        this.idleTicks = 0;
+        if (!this.isForeignContainerOpen()) {
             if (aEg.currentScreen instanceof GuiInventory) {
-                this.adx = true;
-                this.ady = 0;
+                this.inventoryOpen = true;
+                this.openDelayTicks = 0;
             } else {
                 if (this.canOpenInventory() && !this.open && aEg.currentScreen == null && !BadPacketsComponent.bad(false, false, false, false, true)) {
                     PacketUtil.send(new C16PacketClientStatus(EnumState.OPEN_INVENTORY_ACHIEVEMENT));
-                    this.jX();
+                    this.registerClick();
                     this.open = true;
-                    this.adx = true;
-                    this.ady = 1;
+                    this.inventoryOpen = true;
+                    this.openDelayTicks = 1;
                 }
             }
         }
     }
 
     private void u(boolean var1) {
-        if (this.adx) {
+        if (this.inventoryOpen) {
             if (this.open) {
                 if (var1 && aEg.currentScreen == null && !BadPacketsComponent.bad(false, false, false, false, true)) {
                     this.open = false;
                 } else {
-                    this.adu = true;
+                    this.pendingClose = true;
                 }
             }
 
-            this.adx = false;
-            this.ady = 0;
-            this.adz = 0;
+            this.inventoryOpen = false;
+            this.openDelayTicks = 0;
+            this.idleTicks = 0;
         }
     }
 
@@ -1132,11 +1132,11 @@ public class Manager extends Module {
         return flag && flag1 && !flag2 && !aEg.gameSettings.cgK.isKeyDown() && !aEg.gameSettings.cgI.isKeyDown();
     }
 
-    private boolean jV() {
+    private boolean isForeignContainerOpen() {
         return aEg.currentScreen instanceof GuiContainer && !(aEg.currentScreen instanceof GuiInventory);
     }
 
-    private boolean jW() {
+    private boolean clearCursorStack() {
         if (aEg.thePlayer.inventory.getItemStack() == null) {
             return false;
         }
@@ -1156,8 +1156,8 @@ public class Manager extends Module {
         return true;
     }
 
-    private void G(int var1) {
-        if (this.f(var1, true)) {
+    private void dropStack(int var1) {
+        if (this.canDrop(var1, true)) {
             int i = aEg.thePlayer.inventoryContainer.windowId;
             int j = this.slot(var1);
             this.windowClick(i, j, 1, 4);
@@ -1165,8 +1165,8 @@ public class Manager extends Module {
         }
     }
 
-    private void d(int var1, int var2) {
-        if (this.f(var1, true) && var2 >= 0) {
+    private void dropPartialStack(int var1, int var2) {
+        if (this.canDrop(var1, true) && var2 >= 0) {
             int i = aEg.thePlayer.inventoryContainer.windowId;
             int j = this.slot(var1);
             this.windowClick(i, j, 0, 0);
@@ -1180,8 +1180,8 @@ public class Manager extends Module {
         }
     }
 
-    private void H(int var1) {
-        if (this.e(var1, false)) {
+    private void shiftClickSlot(int var1) {
+        if (this.canClick(var1, false)) {
             int i = aEg.thePlayer.inventoryContainer.windowId;
             int j = this.slot(var1);
             this.windowClick(i, j, 0, 1);
@@ -1189,8 +1189,8 @@ public class Manager extends Module {
         }
     }
 
-    private void e(int var1, int var2) {
-        if (this.e(var1, false) && var2 >= 0 && var2 <= 8) {
+    private void swapToHotbar(int var1, int var2) {
+        if (this.canClick(var1, false) && var2 >= 0 && var2 <= 8) {
             int i = aEg.thePlayer.inventoryContainer.windowId;
             int j = this.slot(var1);
             this.windowClick(i, j, var2, 2);
@@ -1198,39 +1198,39 @@ public class Manager extends Module {
         }
     }
 
-    private boolean b(Integer var1, NumberValue numberValue) {
+    private boolean moveToSlot(Integer var1, NumberValue numberValue) {
         if (numberValue.wo().intValue() != 0 && var1 != null && var1 != -1) {
             int i = numberValue.wo().intValue() - 1;
-            if (this.f(var1, i)) {
+            if (this.isInSlot(var1, i)) {
                 return false;
             }
 
-            if (!this.e(var1, false)) {
+            if (!this.canClick(var1, false)) {
                 return false;
             }
 
-            this.e(var1, i);
+            this.swapToHotbar(var1, i);
             return true;
         }
         return false;
     }
 
-    private boolean f(int var1, int var2) {
+    private boolean isInSlot(int var1, int var2) {
         return var1 >= 0 && var1 <= 8 && var1 == var2;
     }
 
     private void windowClick(int var1, int var2, int var3, int var4) {
         aEg.playerController.windowClick(var1, var2, var3, var4, aEg.thePlayer);
-        this.jX();
+        this.registerClick();
     }
 
-    private void jX() {
-        if (this.jY()) {
-            this.adv++;
+    private void registerClick() {
+        if (this.isGrimInventoryMove()) {
+            this.clicksThisTick++;
         }
     }
 
-    private boolean jY() {
+    private boolean isGrimInventoryMove() {
         InventoryMove inventorymove = this.e(InventoryMove.class);
         return inventorymove != null && inventorymove.isEnabled() && inventorymove.isGrimBypass();
     }
@@ -1244,10 +1244,10 @@ public class Manager extends Module {
         this.nextClick = Math.round(MathUtil.l(this.delay.wo().intValue(), this.delay.wA().intValue()));
         this.stopwatch.aX();
         this.moved = true;
-        this.adz = 0;
+        this.idleTicks = 0;
     }
 
-    private boolean e(int var1, boolean var2) {
+    private boolean canClick(int var1, boolean var2) {
         if (this.moved && this.nextClick > 0L) {
             return false;
         }
@@ -1256,8 +1256,8 @@ public class Manager extends Module {
         return !SelectorDetectionComponent.a(var1, flag);
     }
 
-    private boolean f(int var1, boolean var2) {
-        return this.e(var1, true);
+    private boolean canDrop(int var1, boolean var2) {
+        return this.canClick(var1, true);
     }
 
     private float damage(ItemStack stack) {

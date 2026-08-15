@@ -38,7 +38,7 @@ public class ShaderRenderManager {
                 this.kM.put(i, new LinkedHashMap<>());
 
                 for (ShaderQueueType gg : ShaderQueueType.values()) {
-                    this.kM.get(i).put(gg, new ShaderRenderQueue(gg.dW().dY() == null ? null : (aix)gg.dW().dY().newInstance()));
+                    this.kM.get(i).put(gg, new ShaderRenderQueue(gg.dW().getType() == null ? null : (aix)gg.dW().getType().newInstance()));
                 }
             }
 

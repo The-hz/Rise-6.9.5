@@ -49,7 +49,7 @@ public class ESP implements InstanceAccess {
     }
 
     public Color getColor(EntityLivingBase living) {
-        Color color = this.espColor.cr();
+        Color color = this.espColor.getColor();
         if (living == null) {
             return color;
         }

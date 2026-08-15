@@ -505,7 +505,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public Screen oZ() {
+    public Screen getScreen() {
         return this.axK;
     }
 
@@ -605,7 +605,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public TextBox pr() {
+    public TextBox getTextBox() {
         return this.ayb;
     }
 

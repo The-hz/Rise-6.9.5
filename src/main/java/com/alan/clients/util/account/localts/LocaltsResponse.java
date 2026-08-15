@@ -4,16 +4,16 @@ import com.google.gson.JsonObject;
 
 final class LocaltsResponse {
     private final int aFP;
-    final JsonObject aFQ;
+    final JsonObject json;
     final String aFR;
 
     LocaltsResponse(int var1, JsonObject json, String var3) {
         this.aFP = var1;
-        this.aFQ = json;
+        this.json = json;
         this.aFR = var3;
     }
 
     boolean st() {
-        return this.aFQ != null;
+        return this.json != null;
     }
 }

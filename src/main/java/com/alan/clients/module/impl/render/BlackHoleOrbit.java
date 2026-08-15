@@ -28,30 +28,30 @@ import org.lwjgl.opengl.GL11;
 public final class BlackHoleOrbit extends Module {
     private final DragValue position = new DragValue("Position", this, new Vector2d(260.0, 140.0), false);
     private Interface interfaceModule;
-    private static final double amg = 190.0;
-    private static final double amh = 135.0;
-    private static final double ami = 120000.0;
-    private static final double amj = 3.0;
-    private static final double amk = 13.2;
-    private static final double aml = 14.0;
-    private static final double amm = 4.4;
-    private static final double amn = 12.0;
-    private static final double amo = 0.12;
-    private static final double amp = 2.35;
-    private static final double amq = 4000.0;
-    private static final int amr = 8;
-    private final OrbitBody ams = new OrbitBody();
-    private final OrbitBody amt = new OrbitBody();
-    private final TrailBuffer amu = new TrailBuffer(72);
-    private final TrailBuffer amv = new TrailBuffer(72);
-    private final ArrayList<OrbitParticle> amw = new ArrayList<>();
-    private long amx = -1L;
+    private static final double PANEL_WIDTH = 190.0;
+    private static final double PANEL_HEIGHT = 135.0;
+    private static final double GRAVITY = 120000.0;
+    private static final double SOFTENING = 3.0;
+    private static final double HORIZON_RADIUS = 13.2;
+    private static final double CAPTURE_RADIUS = 14.0;
+    private static final double BODY_SIZE = 4.4;
+    private static final double DRAG = 12.0;
+    private static final double TIDAL_SCALE = 0.12;
+    private static final double BURST_THRESHOLD = 2.35;
+    private static final double BODY_GLOW = 4000.0;
+    private static final int CELL_SIZE = 8;
+    private final OrbitBody primaryBody = new OrbitBody();
+    private final OrbitBody secondaryBody = new OrbitBody();
+    private final TrailBuffer primaryTrail = new TrailBuffer(72);
+    private final TrailBuffer secondaryTrail = new TrailBuffer(72);
+    private final ArrayList<OrbitParticle> particles = new ArrayList<>();
+    private long lastFrameTime = -1L;
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         this.position.n(new Vector2d(190.0, 135.0));
         Vector2d vector2d = this.position.apP;
-        this.b(ShaderQueueType.BLUR).c(() -> this.d(vector2d));
-        this.b(ShaderQueueType.BLOOM).c(() -> this.e(vector2d));
+        this.b(ShaderQueueType.BLUR).c(() -> this.renderBlur(vector2d));
+        this.b(ShaderQueueType.BLOOM).c(() -> this.renderBloom(vector2d));
         this.b(ShaderQueueType.REGULAR).c(() -> this.c(vector2d));
     };
 
@@ -60,12 +60,12 @@ public final class BlackHoleOrbit extends Module {
 
     @Override
     public void onEnable() {
-        this.amx = -1L;
-        this.lk();
+        this.lastFrameTime = -1L;
+        this.reset();
     }
 
     private void c(Vector2d var1) {
-        double d0 = this.ll();
+        double d0 = this.getRound();
         RenderUtil.roundedRectangle(var1.x, var1.y, 190.0, 135.0, d0, ColorUtil.withBlue(Themes.rK(), 140));
         String s = this.getName();
         FontManager.MAIN.a(18, FontWeight.BOLD).b(s, var1.x + 10.0, var1.y + 11.0, this.rz().rA().getRGB());
@@ -77,21 +77,21 @@ public final class BlackHoleOrbit extends Module {
         RenderUtil.g(d1, d2, 170.0, 97.0);
 
         try {
-            this.b(d1, d2, 170.0, 97.0, d3, d4);
-            this.lj();
-            this.g(d3, d4);
-            this.f(d3, d4);
+            this.drawGrid(d1, d2, 170.0, 97.0, d3, d4);
+            this.updatePhysics();
+            this.renderBodies(d3, d4);
+            this.renderHole(d3, d4);
         } finally {
             GL11.glDisable(3089);
         }
     }
 
-    private void d(Vector2d vector2d) {
-        RenderUtil.roundedRectangle(vector2d.x, vector2d.y, 190.0, 135.0, this.ll(), Color.BLACK);
+    private void renderBlur(Vector2d vector2d) {
+        RenderUtil.roundedRectangle(vector2d.x, vector2d.y, 190.0, 135.0, this.getRound(), Color.BLACK);
     }
 
-    private void e(Vector2d vector2d) {
-        double d0 = this.ll();
+    private void renderBloom(Vector2d vector2d) {
+        double d0 = this.getRound();
         RenderUtil.roundedRectangle(vector2d.x + 0.5, vector2d.y + 0.5, 189.0, 134.0, d0, this.rz().rE());
         double d1 = vector2d.x + 10.0;
         double d2 = vector2d.y + 28.0;
@@ -101,7 +101,7 @@ public final class BlackHoleOrbit extends Module {
         RenderUtil.c(d3, d4, 26.0, color);
     }
 
-    private void f(double var1, double var3) {
+    private void renderHole(double var1, double var3) {
         Color color = this.rz().rA();
         Color color1 = this.rz().rB();
         RenderUtil.c(var1, var3, 22.0, ColorUtil.withBlue(ColorUtil.a(color, color1, 0.5), 35));
@@ -110,33 +110,33 @@ public final class BlackHoleOrbit extends Module {
         RenderUtil.c(var1, var3, 13.0, ColorUtil.withBlue(Color.BLACK, 255));
     }
 
-    private void lj() {
+    private void updatePhysics() {
         long now = System.nanoTime();
-        if (this.amx < 0L) {
-            this.amx = now;
+        if (this.lastFrameTime < 0L) {
+            this.lastFrameTime = now;
         } else {
-            double d0 = (now - this.amx) / 1.0E9;
-            this.amx = now;
+            double d0 = (now - this.lastFrameTime) / 1.0E9;
+            this.lastFrameTime = now;
             double d1 = c(d0, 0.004166666666666667, 0.05);
-            this.a(this.ams, d1);
-            this.a(this.amt, d1);
-            if (this.ams.active) {
-                this.amu.h(this.ams.x, this.ams.y);
+            this.updateBody(this.primaryBody, d1);
+            this.updateBody(this.secondaryBody, d1);
+            if (this.primaryBody.active) {
+                this.primaryTrail.h(this.primaryBody.x, this.primaryBody.y);
             }
 
-            if (this.amt.active) {
-                this.amv.h(this.amt.x, this.amt.y);
+            if (this.secondaryBody.active) {
+                this.secondaryTrail.h(this.secondaryBody.x, this.secondaryBody.y);
             }
 
-            Iterator iterator = this.amw.iterator();
+            Iterator iterator = this.particles.iterator();
 
             while (iterator.hasNext()) {
                 OrbitParticle wo = (OrbitParticle)iterator.next();
-                wo.amF += d1;
+                wo.age += d1;
                 double d2 = Math.sqrt(wo.x * wo.x + wo.y * wo.y + 9.0);
-                if (!(wo.amF >= wo.amG) && !(d2 <= 14.0)) {
-                    this.a(wo, d1);
-                    wo.amI.h(wo.x, wo.y);
+                if (!(wo.age >= wo.lifetime) && !(d2 <= 14.0)) {
+                    this.updateParticle(wo, d1);
+                    wo.trail.h(wo.x, wo.y);
                 } else {
                     iterator.remove();
                 }
@@ -144,69 +144,69 @@ public final class BlackHoleOrbit extends Module {
         }
     }
 
-    private void a(OrbitBody var1, double var2) {
+    private void updateBody(OrbitBody var1, double var2) {
         if (!var1.active) {
-            var1.amD -= var2;
-            if (var1.amD <= 0.0) {
+            var1.respawnTimer -= var2;
+            if (var1.respawnTimer <= 0.0) {
                 var1.active = true;
-                this.a(var1, var1.amB);
+                this.resetBody(var1, var1.index);
             }
         } else {
             double d0 = var1.x * var1.x + var1.y * var1.y + 9.0;
             double d1 = Math.sqrt(d0);
             if (d1 <= 14.0) {
                 var1.active = false;
-                var1.amD = 0.65;
+                var1.respawnTimer = 0.65;
             } else {
                 double d2 = 1.0 / (d0 * d1);
                 double d3 = -120000.0 * var1.x * d2;
                 double d4 = -120000.0 * var1.y * d2;
                 double d5 = 12.0 / d0;
-                double d6 = -d5 * var1.amz;
-                double d7 = -d5 * var1.amA;
-                var1.amz += (d3 + d6) * var2;
-                var1.amA += (d4 + d7) * var2;
-                var1.x = var1.x + var1.amz * var2;
-                var1.y = var1.y + var1.amA * var2;
+                double d6 = -d5 * var1.velocityX;
+                double d7 = -d5 * var1.velocityY;
+                var1.velocityX += (d3 + d6) * var2;
+                var1.velocityY += (d4 + d7) * var2;
+                var1.x = var1.x + var1.velocityX * var2;
+                var1.y = var1.y + var1.velocityY * var2;
                 double d8 = d0 * d1;
                 double d9 = 240000.0 / d8;
                 double d10 = 0.5 * d9 * 0.12 * 0.12;
                 double d11 = c(1.0 + d10, 1.0, 6.0);
-                if (!var1.amC && d11 >= 2.35) {
-                    var1.amC = true;
-                    this.b(var1, d11);
+                if (!var1.burst && d11 >= 2.35) {
+                    var1.burst = true;
+                    this.spawnBurst(var1, d11);
                     var1.active = false;
-                    var1.amD = 1.1;
+                    var1.respawnTimer = 1.1;
                 }
             }
         }
     }
 
-    private void a(OrbitParticle var1, double var2) {
+    private void updateParticle(OrbitParticle var1, double var2) {
         double d0 = var1.x * var1.x + var1.y * var1.y + 9.0;
         double d1 = Math.sqrt(d0);
         double d2 = 1.0 / (d0 * d1);
         double d3 = -120000.0 * var1.x * d2;
         double d4 = -120000.0 * var1.y * d2;
         double d5 = 19.200000000000003 / d0;
-        var1.amz = var1.amz + (d3 - d5 * var1.amz) * var2;
-        var1.amA = var1.amA + (d4 - d5 * var1.amA) * var2;
-        var1.x = var1.x + var1.amz * var2;
-        var1.y = var1.y + var1.amA * var2;
+        var1.velocityX = var1.velocityX + (d3 - d5 * var1.velocityX) * var2;
+        var1.velocityY = var1.velocityY + (d4 - d5 * var1.velocityY) * var2;
+        var1.x = var1.x + var1.velocityX * var2;
+        var1.y = var1.y + var1.velocityY * var2;
     }
 
-    private void g(double var1, double var3) {
-        this.a(var1, var3, this.ams, this.amu, this.rz().rA());
-        this.a(var1, var3, this.amt, this.amv, this.rz().rB());
+    private void renderBodies(double var1, double var3) {
+        this.drawBody(var1, var3, this.primaryBody, this.primaryTrail, this.rz().rA());
+        this.drawBody(var1, var3, this.secondaryBody, this.secondaryTrail, this.rz().rB());
 
-        for (OrbitParticle wo : this.amw) {
-            this.a(var1, var3, wo);
+        for (OrbitParticle wo : this.particles) {
+            this.drawParticle(var1, var3, wo);
         }
 
         RenderUtil.c(var1, var3, 13.2, ColorUtil.withBlue(Color.WHITE, 10));
     }
 
-    private void a(double var1, double var3, OrbitBody var5, TrailBuffer var6, Color var7) {
+    private void drawBody(double var1, double var3, OrbitBody var5, TrailBuffer var6, Color var7) {
         if (var5.active) {
             int i = var6.size();
             if (i > 1) {
@@ -214,8 +214,8 @@ public final class BlackHoleOrbit extends Module {
                     double d0 = (double)j / (i - 1);
                     double d1 = 160.0 * (d0 * d0);
                     double d2 = 1.2 + 1.2 * d0;
-                    double d3 = var1 + var6.O(j);
-                    double d4 = var3 + var6.P(j);
+                    double d3 = var1 + var6.getX(j);
+                    double d4 = var3 + var6.getY(j);
                     RenderUtil.c(d3, d4, d2, ColorUtil.withBlue(var7, (int)d1));
                 }
             }
@@ -235,20 +235,20 @@ public final class BlackHoleOrbit extends Module {
             double d16 = var1 + var5.x;
             double d17 = var3 + var5.y;
             Color color = ColorUtil.withBlue(var7, k);
-            this.a(d16, d17, 4.4 * d12, 4.4 * d13, d15, color);
+            this.drawEllipse(d16, d17, 4.4 * d12, 4.4 * d13, d15, color);
             Color color1 = ColorUtil.withBlue(Color.WHITE, (int)(110.0 * d14));
-            this.a(d16 - 0.7, d17 - 0.7, Math.max(1.0, 2.4200000000000004), Math.max(0.8, 1.2320000000000002), d15, color1);
+            this.drawEllipse(d16 - 0.7, d17 - 0.7, Math.max(1.0, 2.4200000000000004), Math.max(0.8, 1.2320000000000002), d15, color1);
         }
     }
 
-    private void a(double var1, double var3, OrbitParticle var5) {
-        int i = var5.amI.size();
+    private void drawParticle(double var1, double var3, OrbitParticle var5) {
+        int i = var5.trail.size();
         if (i > 1) {
             for (int j = 0; j < i; j++) {
                 double d0 = (double)j / (i - 1);
                 double d1 = 110.0 * (d0 * d0);
                 double d2 = 0.8 + 0.9 * d0;
-                RenderUtil.c(var1 + var5.amI.O(j), var3 + var5.amI.P(j), d2, ColorUtil.withBlue(var5.amH, (int)d1));
+                RenderUtil.c(var1 + var5.trail.getX(j), var3 + var5.trail.getY(j), d2, ColorUtil.withBlue(var5.color, (int)d1));
             }
         }
 
@@ -261,14 +261,14 @@ public final class BlackHoleOrbit extends Module {
         double d9 = 0.5 * d7 * 0.12 * 0.12;
         double d10 = c(1.0 + d8, 1.0, 5.0);
         double d11 = c(1.0 + d9, 0.18, 1.0);
-        double d12 = u(1.0 - var5.amF / var5.amG);
+        double d12 = u(1.0 - var5.age / var5.lifetime);
         double d13 = u((d4 - 13.2) / 5.0) * d12;
         int k = (int)(170.0 * d13);
         double d14 = Math.atan2(var5.y, var5.x);
-        this.a(var1 + var5.x, var3 + var5.y, var5.amE * d10, var5.amE * d11, d14, ColorUtil.withBlue(var5.amH, k));
+        this.drawEllipse(var1 + var5.x, var3 + var5.y, var5.size * d10, var5.size * d11, d14, ColorUtil.withBlue(var5.color, k));
     }
 
-    private void b(double var1, double var3, double var5, double var7, double var9, double var11) {
+    private void drawGrid(double var1, double var3, double var5, double var7, double var9, double var11) {
         int i = (int)Math.ceil(var5 / 8.0);
         int j = (int)Math.ceil(var7 / 8.0);
         Color color = ColorUtil.withBlue(Color.BLACK, 18);
@@ -285,15 +285,15 @@ public final class BlackHoleOrbit extends Module {
                 double d5 = d3 - var11;
                 double d6 = d4 * d4 + d5 * d5 + 9.0;
                 double d7 = 120000.0 / d6;
-                if (this.ams.active) {
-                    d7 += 4000.0 / (v(d2 - (var9 + this.ams.x)) + v(d3 - (var11 + this.ams.y)) + 25.0);
+                if (this.primaryBody.active) {
+                    d7 += 4000.0 / (v(d2 - (var9 + this.primaryBody.x)) + v(d3 - (var11 + this.primaryBody.y)) + 25.0);
                 }
 
-                if (this.amt.active) {
-                    d7 += 4000.0 / (v(d2 - (var9 + this.amt.x)) + v(d3 - (var11 + this.amt.y)) + 25.0);
+                if (this.secondaryBody.active) {
+                    d7 += 4000.0 / (v(d2 - (var9 + this.secondaryBody.x)) + v(d3 - (var11 + this.secondaryBody.y)) + 25.0);
                 }
 
-                for (OrbitParticle wo : this.amw) {
+                for (OrbitParticle wo : this.particles) {
                     d7 += 1400.0 / (v(d2 - (var9 + wo.x)) + v(d3 - (var11 + wo.y)) + 20.0);
                 }
 
@@ -310,7 +310,7 @@ public final class BlackHoleOrbit extends Module {
         }
     }
 
-    private void b(OrbitBody var1, double var2) {
+    private void spawnBurst(OrbitBody var1, double var2) {
         double d0 = Math.atan2(var1.y, var1.x);
         double cos = Math.cos(d0);
         double sin = Math.sin(d0);
@@ -326,18 +326,18 @@ public final class BlackHoleOrbit extends Module {
             wo.y = var1.y + sin * d6 + d4 * d7;
             double d8 = ThreadLocalRandom.current().nextDouble(6.0, 18.0);
             double d9 = ThreadLocalRandom.current().nextDouble(-14.0, 14.0);
-            wo.amz = var1.amz + -cos * d8 + d3 * d9 * 0.25;
-            wo.amA = var1.amA + -sin * d8 + d4 * d9 * 0.25;
-            wo.amE = ThreadLocalRandom.current().nextDouble(1.0, 1.8);
-            wo.amG = 1.6 + ThreadLocalRandom.current().nextDouble(0.0, 1.0);
-            wo.amF = 0.0;
-            wo.amH = ColorUtil.withBlue(ColorUtil.a(this.rz().rA(), this.rz().rB(), ThreadLocalRandom.current().nextDouble()), 255);
-            wo.amI = new TrailBuffer(54);
-            this.amw.add(wo);
+            wo.velocityX = var1.velocityX + -cos * d8 + d3 * d9 * 0.25;
+            wo.velocityY = var1.velocityY + -sin * d8 + d4 * d9 * 0.25;
+            wo.size = ThreadLocalRandom.current().nextDouble(1.0, 1.8);
+            wo.lifetime = 1.6 + ThreadLocalRandom.current().nextDouble(0.0, 1.0);
+            wo.age = 0.0;
+            wo.color = ColorUtil.withBlue(ColorUtil.a(this.rz().rA(), this.rz().rB(), ThreadLocalRandom.current().nextDouble()), 255);
+            wo.trail = new TrailBuffer(54);
+            this.particles.add(wo);
         }
     }
 
-    private void a(double var1, double var3, double var5, double var7, double var9, Color color) {
+    private void drawEllipse(double var1, double var3, double var5, double var7, double var9, Color color) {
         GlStateManager.pushMatrix();
         GlStateManager.translate(var1, var3, 0.0);
         GlStateManager.rotate((float)Math.toDegrees(var9), 0.0F, 0.0F, 1.0F);
@@ -356,33 +356,33 @@ public final class BlackHoleOrbit extends Module {
         GlStateManager.popMatrix();
     }
 
-    private void lk() {
-        this.ams.amB = 1;
-        this.amt.amB = 2;
-        this.a(this.ams, this.ams.amB);
-        this.a(this.amt, this.amt.amB);
-        this.amu.clear();
-        this.amv.clear();
-        this.amw.clear();
+    private void reset() {
+        this.primaryBody.index = 1;
+        this.secondaryBody.index = 2;
+        this.resetBody(this.primaryBody, this.primaryBody.index);
+        this.resetBody(this.secondaryBody, this.secondaryBody.index);
+        this.primaryTrail.clear();
+        this.secondaryTrail.clear();
+        this.particles.clear();
     }
 
-    private void a(OrbitBody var1, int var2) {
+    private void resetBody(OrbitBody var1, int var2) {
         double d0 = var2 == 1 ? 52.0 : 44.0;
         double d1 = ThreadLocalRandom.current().nextDouble(0.0, Math.PI * 2);
         var1.x = Math.cos(d1) * d0;
         var1.y = Math.sin(d1) * d0;
-        var1.amC = false;
+        var1.burst = false;
         var1.active = true;
-        var1.amD = 0.0;
+        var1.respawnTimer = 0.0;
         double d2 = Math.sqrt(120000.0 / d0);
         double d3 = -Math.sin(d1);
         double cos = Math.cos(d1);
         double d5 = (var2 == 1 ? 1.0 : -1.0) * 0.06;
-        var1.amz = d3 * d2 * (1.0 + d5);
-        var1.amA = cos * d2 * (1.0 + d5);
+        var1.velocityX = d3 * d2 * (1.0 + d5);
+        var1.velocityY = cos * d2 * (1.0 + d5);
     }
 
-    private double ll() {
+    private double getRound() {
         if (this.interfaceModule == null) {
             this.interfaceModule = this.e(Interface.class);
         }

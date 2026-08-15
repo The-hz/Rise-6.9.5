@@ -33,48 +33,48 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 public class BMSTargetInfo extends Mode<TargetInfo> {
-    private final agc aug = FontManager.MAIN.a(22, FontWeight.LIGHT);
-    private final agc auh = FontManager.MAIN.a(22, FontWeight.LIGHT);
-    private TargetInfo aui;
-    private int auj = 4;
-    private int auk = 4;
-    private int aul = 4;
-    private Animation aum = new Animation(Easing.EASE_OUT_ELASTIC, 500L);
-    private Animation aun = new Animation(Easing.EASE_OUT_SINE, 500L);
+    private final agc healthFont = FontManager.MAIN.a(22, FontWeight.LIGHT);
+    private final agc nameFont = FontManager.MAIN.a(22, FontWeight.LIGHT);
+    private TargetInfo targetInfo;
+    private int padding = 4;
+    private int barOffsetX = 4;
+    private int barOffsetY = 4;
+    private Animation scaleAnimation = new Animation(Easing.EASE_OUT_ELASTIC, 500L);
+    private Animation healthAnimation = new Animation(Easing.EASE_OUT_SINE, 500L);
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1x -> {
-        if (this.aui == null) {
-            this.aui = this.e(TargetInfo.class);
+        if (this.targetInfo == null) {
+            this.targetInfo = this.e(TargetInfo.class);
         }
 
-        Entity entity = this.aui.target;
+        Entity entity = this.targetInfo.target;
         if (entity != null) {
-            boolean flag = !this.aui.inWorld || this.aui.stopwatch.T(1000L);
-            this.aum.setDuration(flag ? 400L : 850L);
-            this.aum.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
-            this.aum.Q(flag ? 0.0 : 1.0);
-            if (!(this.aum.getValue() <= 0.0)) {
+            boolean flag = !this.targetInfo.inWorld || this.targetInfo.stopwatch.T(1000L);
+            this.scaleAnimation.setDuration(flag ? 400L : 850L);
+            this.scaleAnimation.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
+            this.scaleAnimation.Q(flag ? 0.0 : 1.0);
+            if (!(this.scaleAnimation.getValue() <= 0.0)) {
                 String s = entity.getName();
                 String s1 = bf.c(s, s);
-                double d0 = this.aui.position.x;
-                double d1 = this.aui.position.y;
+                double d0 = this.targetInfo.position.x;
+                double d1 = this.targetInfo.position.y;
                 AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;
                 HealthBypass healthbypass = this.e(HealthBypass.class);
-                float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractclientplayer) : abstractclientplayer.getHealth();
-                double d2 = Math.min(!this.aui.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
+                float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.getScoreboardHealth(abstractclientplayer) : abstractclientplayer.getHealth();
+                double d2 = Math.min(!this.targetInfo.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
                 double d3 = Math.max(0, 100);
-                this.aun.Q(d2 / abstractclientplayer.getMaxHealth() * d3);
-                this.aun.setEasing(Easing.EASE_OUT_QUINT);
-                this.aun.setDuration(250L);
-                double d4 = this.aun.getValue();
+                this.healthAnimation.Q(d2 / abstractclientplayer.getMaxHealth() * d3);
+                this.healthAnimation.setEasing(Easing.EASE_OUT_QUINT);
+                this.healthAnimation.setDuration(250L);
+                double d4 = this.healthAnimation.getValue();
                 double d5 = (abstractclientplayer.hurtTime == 0 ? 0.0F : abstractclientplayer.hurtTime - aEg.timer.bWm) * 0.0F;
                 byte b0 = 32;
                 double d6 = Math.round(d2 / abstractclientplayer.getMaxHealth() * 100.0);
                 double d7 = d5 / 2.0;
-                double d8 = this.auj + b0 + this.auj + d3 + this.aul + this.auj;
-                double d9 = b0 + this.auj * 2;
-                this.aui.positionValue.n(new Vector2d(d8, d9));
-                double d10 = this.aum.getValue();
+                double d8 = this.padding + b0 + this.padding + d3 + this.barOffsetY + this.padding;
+                double d9 = b0 + this.padding * 2;
+                this.targetInfo.positionValue.n(new Vector2d(d8, d9));
+                double d10 = this.scaleAnimation.getValue();
                 this.b(ShaderQueueType.REGULAR, 1)
                     .c(
                         () -> {
@@ -85,11 +85,11 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                             Color color = Themes.rK();
                             Color color1 = this.rz().rA();
                             RenderUtil.a(d0, d1, d8 - 4.0, d9, 6.0, color, color, true);
-                            this.auh
+                            this.nameFont
                                 .b(
                                     s1,
-                                    d0 - 28.0 + b0 + this.auk + this.aug.getStringWidth(ahd.ce("ui.targethud.name")) + 3.0,
-                                    d1 + this.auj + this.aul,
+                                    d0 - 28.0 + b0 + this.barOffsetX + this.healthFont.getStringWidth(ahd.ce("ui.targethud.name")) + 3.0,
+                                    d1 + this.padding + this.barOffsetY,
                                     Color.white.getRGB()
                                 );
                             GlStateManager.popMatrix();
@@ -97,14 +97,14 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                             GlStateManager.translate((d0 + d8 / 2.0) * (1.0 - d10), (d1 + d9 / 2.0) * (1.0 - d10), 0.0);
                             GlStateManager.scale(d10, d10, 0.0);
                             RenderUtil.color(ColorUtil.a(Color.RED, Color.WHITE, d5 / 9.0));
-                            RenderUtil.dropShadow(3, d0 + this.auj + d7, d1 + this.auj + d7, b0 - d5, b0 - d5, 20.0, 5.0);
-                            this.a(abstractclientplayer, d0 + this.auj + d7, d1 + this.auj + d7, b0 - d5);
+                            RenderUtil.dropShadow(3, d0 + this.padding + d7, d1 + this.padding + d7, b0 - d5, b0 - d5, 20.0, 5.0);
+                            this.drawHead(abstractclientplayer, d0 + this.padding + d7, d1 + this.padding + d7, b0 - d5);
                             RenderUtil.roundedRectangle(
-                                d0 + this.auj + b0 + this.auk, d1 + this.auj + b0 - this.aul - 10.0, d3, 12.0, 2.0, Color.darkGray.darker()
+                                d0 + this.padding + b0 + this.barOffsetX, d1 + this.padding + b0 - this.barOffsetY - 10.0, d3, 12.0, 2.0, Color.darkGray.darker()
                             );
                             RenderUtil.a(
-                                d0 + this.auj + b0 + this.auk,
-                                d1 + this.auj + b0 - this.aul - 10.0,
+                                d0 + this.padding + b0 + this.barOffsetX,
+                                d1 + this.padding + b0 - this.barOffsetY - 10.0,
                                 d4,
                                 12.0,
                                 2.0,
@@ -112,8 +112,8 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
                                 ColorUtil.withBlue(color1, 100),
                                 false
                             );
-                            this.aug
-                                .drawString(d6 + "%", d0 + this.auj + b0 + this.auk + d3 + this.aul - 50.0, d1 + this.auj + b0 - this.aul - 8.0, Color.WHITE.getRGB());
+                            this.healthFont
+                                .drawString(d6 + "%", d0 + this.padding + b0 + this.barOffsetX + d3 + this.barOffsetY - 50.0, d1 + this.padding + b0 - this.barOffsetY - 8.0, Color.WHITE.getRGB());
                             GlStateManager.popMatrix();
                         }
                     );
@@ -138,15 +138,15 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
     };
     @EventLink
     public final Listener<TickEvent> onTick = var1x -> {
-        if (this.aui != null) {
-            Entity entity = this.aui.target;
-            if (entity != null && !(this.aum.getValue() <= 0.0)) {
+        if (this.targetInfo != null) {
+            Entity entity = this.targetInfo.target;
+            if (entity != null && !(this.scaleAnimation.getValue() <= 0.0)) {
                 double d0 = (((AbstractClientPlayer)entity).hurtTime == 0 ? 0.0F : ((AbstractClientPlayer)entity).hurtTime - aEg.timer.bWm) * 0.0F;
                 if (d0 > 0.0) {
                     for (int i = 0; i < d0 * Math.random() / 2.0; i++) {
                         NotificationComponent.a(
                             new Particle(
-                                new Vector2f((float)(this.aui.position.x + 20.0), (float)(this.aui.position.y + 20.0)),
+                                new Vector2f((float)(this.targetInfo.position.x + 20.0), (float)(this.targetInfo.position.y + 20.0)),
                                 new Vector2f((float)(Math.random() - 0.5) * 1.7F, (float)(Math.random() - 0.5) * 1.7F)
                             )
                         );
@@ -160,7 +160,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
         super(var1, targetInfo);
     }
 
-    private void a(AbstractClientPlayer abstractClientPlayer, double var2, double var4, double var6) {
+    private void drawHead(AbstractClientPlayer abstractClientPlayer, double var2, double var4, double var6) {
         ais.initStencil();
         ais.bindWriteStencilBuffer();
         this.rz();
@@ -171,8 +171,8 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
         GlStateManager.alphaFunc(516, 0.0F);
         GlStateManager.enableTexture2D();
         HealthBypass healthbypass = this.e(HealthBypass.class);
-        float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractClientPlayer) : abstractClientPlayer.getHealth();
-        ResourceLocation resourcelocation = this.aui.inWorld && f > 0.0F ? abstractClientPlayer.getLocationSkin() : RenderSkeleton.getEntityTexture();
+        float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.getScoreboardHealth(abstractClientPlayer) : abstractClientPlayer.getHealth();
+        ResourceLocation resourcelocation = this.targetInfo.inWorld && f > 0.0F ? abstractClientPlayer.getLocationSkin() : RenderSkeleton.getEntityTexture();
         aEg.getTextureManager().bindTexture(resourcelocation);
         Gui.drawScaledCustomSizeModalRect(var2, var4, 4.0F, 4.0F, 4.0F, 4.0F, var6, var6, 32.0F, 32.0F);
         GlStateManager.disableBlend();

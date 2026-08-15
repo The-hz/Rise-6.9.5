@@ -25,41 +25,41 @@ import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 
 public class WatchdogWater118LongJump extends Mode<LongJump>
 {
-    public int hV;
+    public int ticks;
     @EventLink
     public Listener<JumpEvent> onJump;
-    public int IU;
+    public int previousSlot;
     @EventLink
     public Listener<StrafeEvent> onStrafe;
     @EventLink
     public Listener<MoveInputEvent> onMoveInput;
-    public boolean tt;
-    public int Kw;
-    public boolean Kv;
+    public boolean replaying;
+    public int airTicks;
+    public boolean boosted;
     @EventLink(value = 4)
     public Listener<PreUpdateEvent> onPreUpdate;
-    public boolean vq;
+    public boolean launched;
     @EventLink(value = 2)
     public Listener<PacketReceiveEvent> onPacketReceive;
-    public ArrayList<Packet<?>> KM;
+    public ArrayList<Packet<?>> heldPackets;
     @EventLink(value = 3)
     public Listener<PreMotionEvent> onPreMotion;
-    public boolean dj;
-    public int dE;
+    public boolean active;
+    public int stage;
     @EventLink
     public Listener<KeyboardInputEvent> onKeyboardInput;
-    public int Kx;
-    public boolean HJ;
-    public double jy;
-    public double IW;
+    public int velocityCount;
+    public boolean keyConsumed;
+    public double startY;
+    public double velocityY;
 
 
     @Override
     public void onDisable() {
-        this.KM.forEach(PacketUtil::receive);
-        this.KM.clear();
-        this.Kv = false;
-        this.Kx = 0;
+        this.heldPackets.forEach(PacketUtil::receive);
+        this.heldPackets.clear();
+        this.boosted = false;
+        this.velocityCount = 0;
         MoveUtil.stop();
     }
 
@@ -67,13 +67,13 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
         super(s, longJump);
         this.onPreMotion = (preMotionEvent -> {
             if (!WatchdogWater118LongJump.aEg.thePlayer.inWater) {
-                ++this.Kw;
+                ++this.airTicks;
             }
             else {
                 MoveUtil.strafe();
-                this.Kw = 0;
+                this.airTicks = 0;
             }
-            if (WatchdogWater118LongJump.aEg.thePlayer.ae == 0 && this.Kv) {
+            if (WatchdogWater118LongJump.aEg.thePlayer.ae == 0 && this.boosted) {
                 final EntityPlayerSP thePlayer = WatchdogWater118LongJump.aEg.thePlayer;
                 thePlayer.motionX *= 4.1;
                 final EntityPlayerSP thePlayer2 = WatchdogWater118LongJump.aEg.thePlayer;
@@ -107,9 +107,9 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
             }
             return;
         });
-        this.KM = new ArrayList<Packet<?>>();
-        this.IU = -1;
-        this.IW = -1.0;
+        this.heldPackets = new ArrayList<Packet<?>>();
+        this.previousSlot = -1;
+        this.velocityY = -1.0;
         this.onStrafe = (p0 -> {
             if (WatchdogWater118LongJump.aEg.thePlayer.inWater) {
                 MoveUtil.stop();
@@ -121,7 +121,7 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
             return;
         });
         this.onPacketReceive = (packetReceiveEvent -> {
-            if (this.tt) {
+            if (this.replaying) {
                 return;
             }
             else {
@@ -131,11 +131,11 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
                     case S12PacketEntityVelocity s12PacketEntityVelocity: {
                         if (!packetReceiveEvent.isCancelled() && s12PacketEntityVelocity.getEntityID() == WatchdogWater118LongJump.aEg.thePlayer.getEntityId()) {
                             new Vector2d(WatchdogWater118LongJump.aEg.thePlayer.motionX, WatchdogWater118LongJump.aEg.thePlayer.motionZ);
-                            this.IW = s12PacketEntityVelocity.getMotionZ() / 8000.0;
-                            this.IW = s12PacketEntityVelocity.getMotionY() / 8000.0;
+                            this.velocityY = s12PacketEntityVelocity.getMotionZ() / 8000.0;
+                            this.velocityY = s12PacketEntityVelocity.getMotionY() / 8000.0;
                             packetReceiveEvent.setCancelled();
-                            this.dj = true;
-                            this.KM.add(s12PacketEntityVelocity);
+                            this.active = true;
+                            this.heldPackets.add(s12PacketEntityVelocity);
                             break;
                         }
                         else {
@@ -143,8 +143,8 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
                         }
                     }
                     case S32PacketConfirmTransaction s32PacketConfirmTransaction: {
-                        if (this.dj) {
-                            this.KM.add(s32PacketConfirmTransaction);
+                        if (this.active) {
+                            this.heldPackets.add(s32PacketConfirmTransaction);
                             packetReceiveEvent.setCancelled();
                             break;
                         }
@@ -166,28 +166,28 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
         });
         this.onJump = (p0 -> {});
         this.onKeyboardInput = (keyboardInputEvent -> {
-            if (keyboardInputEvent.getKeyCode() == this.getParent().getKey() && !this.HJ) {
+            if (keyboardInputEvent.getKeyCode() == this.getParent().getKey() && !this.keyConsumed) {
                 keyboardInputEvent.setCancelled();
-                this.HJ = true;
+                this.keyConsumed = true;
             }
             return;
         });
         this.onPreUpdate = (p0 -> {
-            if (this.dj && !WatchdogWater118LongJump.aEg.thePlayer.inWater) {
+            if (this.active && !WatchdogWater118LongJump.aEg.thePlayer.inWater) {
                 WatchdogWater118LongJump.aEg.thePlayer.ae = 0;
-                this.vq = true;
-                this.dj = false;
-                this.tt = true;
+                this.launched = true;
+                this.active = false;
+                this.replaying = true;
                 new Vector2d(WatchdogWater118LongJump.aEg.thePlayer.motionX, WatchdogWater118LongJump.aEg.thePlayer.motionZ);
-                this.KM.forEach(PacketUtil::receive);
-                if (this.IW > 0.41) {
-                    ++this.Kx;
+                this.heldPackets.forEach(PacketUtil::receive);
+                if (this.velocityY > 0.41) {
+                    ++this.velocityCount;
                 }
-                if (this.Kx == 2) {
-                    this.Kv = true;
+                if (this.velocityCount == 2) {
+                    this.boosted = true;
                 }
-                this.KM.clear();
-                if (!this.Kv) {
+                this.heldPackets.clear();
+                if (!this.boosted) {
                     final EntityPlayerSP thePlayer5 = WatchdogWater118LongJump.aEg.thePlayer;
                     thePlayer5.motionX *= 1.3;
                     final EntityPlayerSP thePlayer6 = WatchdogWater118LongJump.aEg.thePlayer;
@@ -199,7 +199,7 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
                     final EntityPlayerSP thePlayer8 = WatchdogWater118LongJump.aEg.thePlayer;
                     thePlayer8.motionZ *= 1.1;
                 }
-                this.tt = false;
+                this.replaying = false;
             }
         });
     }
@@ -209,8 +209,8 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
 
     @Override
     public void onEnable() {
-        this.KM.forEach(PacketUtil::receive);
-        this.KM.clear();
+        this.heldPackets.forEach(PacketUtil::receive);
+        this.heldPackets.clear();
         if (WatchdogWater118LongJump.aEg.thePlayer.onGround) {
             MoveUtil.stop();
         }

@@ -29,13 +29,13 @@ import net.minecraft.util.Vec3;
 
 @ModuleInfo(aliases = "module.combat.throwableaura.name", description = "module.combat.throwableaura.description", category = Category.COMBAT)
 public class ThrowableAura extends Module {
-    public int qH;
+    public int delayTicks;
     public BooleanValue players;
-    public int qI;
+    public int previousSlot;
     public EntityLivingBase target;
     public BooleanValue prediction;
     public NumberValue fOV;
-    public boolean qJ;
+    public boolean throwing;
     public BooleanValue playerTeammates;
     public BooleanValue moduleCheck;
     public NumberValue minimumRange;
@@ -53,14 +53,14 @@ public class ThrowableAura extends Module {
 
     @Override
     public void onEnable() {
-        this.qH = 0;
-        this.qI = -1;
-        this.qJ = false;
+        this.delayTicks = 0;
+        this.previousSlot = -1;
+        this.throwing = false;
         this.target = null;
     }
 
 
-    public Vec3 i(Entity entity) {
+    public Vec3 getPredictedPosition(Entity entity) {
         Vec3 vec3 = entity.getPositionVector().addVector(0.0, entity.getEyeHeight() * 0.5, 0.0);
         double d1 = aEg.thePlayer.getDistanceToEntity(entity) / 1.5;
         return vec3.addVector(entity.motionX * d1, entity.motionY * d1, entity.motionZ * d1);
@@ -68,17 +68,17 @@ public class ThrowableAura extends Module {
 
     @Override
     public void onDisable() {
-        if (this.autoSwitch.wo() && this.qI != -1 && aEg.thePlayer != null) {
-            aEg.thePlayer.inventory.currentItem = this.qI;
+        if (this.autoSwitch.wo() && this.previousSlot != -1 && aEg.thePlayer != null) {
+            aEg.thePlayer.inventory.currentItem = this.previousSlot;
         }
 
-        this.qJ = false;
+        this.throwing = false;
         this.target = null;
-        this.qI = -1;
+        this.previousSlot = -1;
     }
 
-    public boolean s(EntityLivingBase living) {
-        Vec3 vec3 = this.prediction.wo() ? this.i(living) : living.getPositionVector().addVector(0.0, living.getEyeHeight() * 0.5, 0.0);
+    public boolean isFacing(EntityLivingBase living) {
+        Vec3 vec3 = this.prediction.wo() ? this.getPredictedPosition(living) : living.getPositionVector().addVector(0.0, living.getEyeHeight() * 0.5, 0.0);
         Vec3 vec = aEg.thePlayer.getPositionEyes(1.0F);
         Vec3 vec32 = aEg.thePlayer.getLookVec().normalize();
         Vec3 vec33 = vec3.subtract(vec).normalize();
@@ -105,7 +105,7 @@ public class ThrowableAura extends Module {
     static {
     }
 
-    public boolean gs() {
+    public boolean canThrow() {
         if (!this.moduleCheck.wo()) {
             return true;
         }
@@ -115,7 +115,7 @@ public class ThrowableAura extends Module {
     }
 
     public void h(Entity entity) {
-        Vec3 vec3 = this.prediction.wo() ? this.i(entity) : entity.getPositionVector().addVector(0.0, entity.getEyeHeight() * 0.5, 0.0);
+        Vec3 vec3 = this.prediction.wo() ? this.getPredictedPosition(entity) : entity.getPositionVector().addVector(0.0, entity.getEyeHeight() * 0.5, 0.0);
         Vec3 vec = aEg.thePlayer.getPositionEyes(1.0F);
         double d6 = vec3.xCoord - vec.xCoord;
         double d7 = vec3.yCoord - vec.yCoord;
@@ -127,8 +127,8 @@ public class ThrowableAura extends Module {
         aEg.thePlayer.rotationPitch = (float)d11;
     }
 
-    public boolean a(KillAura killAura) {
-        return killAura != null && killAura.isEnabled() && killAura.jE != null ? !this.b(killAura) : false;
+    public boolean shouldClearAuraTarget(KillAura killAura) {
+        return killAura != null && killAura.isEnabled() && killAura.jE != null ? !this.isAuraTargetInRange(killAura) : false;
     }
 
     public ThrowableAura() {
@@ -146,25 +146,25 @@ public class ThrowableAura extends Module {
         this.snowballs = new BooleanValue("Snowballs", this, true);
         this.eggs = new BooleanValue("Eggs", this, true);
         this.throughWalls = new BooleanValue("Through Walls", this, true);
-        this.qI = -1;
+        this.previousSlot = -1;
         this.onPreUpdate = var1 -> {
-            if (aEg.thePlayer != null && aEg.theWorld != null && !this.qJ) {
-                if (this.gs()) {
-                    if (this.qH < this.throwDelay.wo().intValue()) {
-                        this.qH++;
+            if (aEg.thePlayer != null && aEg.theWorld != null && !this.throwing) {
+                if (this.canThrow()) {
+                    if (this.delayTicks < this.throwDelay.wo().intValue()) {
+                        this.delayTicks++;
                     } else {
-                        this.qH = 0;
+                        this.delayTicks = 0;
                         this.target = this.getTarget();
                         if (this.target != null) {
                             double d1 = aEg.thePlayer.getDistanceToEntity(this.target);
                             if (!(d1 > this.range.wo().doubleValue()) && !(d1 <= this.minimumRange.wo().doubleValue())) {
                                 int gu2 = this.findThrowableSlot();
                                 if (gu2 != -1) {
-                                    if (this.s(this.target) && this.t(this.target)) {
+                                    if (this.isFacing(this.target) && this.canHit(this.target)) {
                                         int currentItem2 = aEg.thePlayer.inventory.currentItem;
                                         if (this.autoSwitch.wo() && currentItem2 != gu2) {
-                                            if (this.qI == -1) {
-                                                this.qI = currentItem2;
+                                            if (this.previousSlot == -1) {
+                                                this.previousSlot = currentItem2;
                                             }
 
                                             aEg.thePlayer.inventory.currentItem = gu2;
@@ -172,27 +172,27 @@ public class ThrowableAura extends Module {
 
                                         ItemStack itemstack = aEg.thePlayer.getHeldItem();
                                         if (!this.isThrowable(itemstack)) {
-                                            if (this.autoSwitch.wo() && this.qI != -1) {
-                                                aEg.thePlayer.inventory.currentItem = this.qI;
-                                                this.qI = -1;
+                                            if (this.autoSwitch.wo() && this.previousSlot != -1) {
+                                                aEg.thePlayer.inventory.currentItem = this.previousSlot;
+                                                this.previousSlot = -1;
                                             }
                                         } else {
                                             KillAura killaura = this.e(KillAura.class);
-                                            EntityLivingBase entitylivingbase = this.a(killaura) ? killaura.jE : null;
+                                            EntityLivingBase entitylivingbase = this.shouldClearAuraTarget(killaura) ? killaura.jE : null;
                                             if (entitylivingbase != null) {
                                                 killaura.jE = null;
                                             }
 
-                                            this.qJ = true;
+                                            this.throwing = true;
                                             this.throwAt(this.target);
-                                            this.qJ = false;
+                                            this.throwing = false;
                                             if (entitylivingbase != null && killaura != null) {
                                                 killaura.jE = entitylivingbase;
                                             }
 
-                                            if (this.autoSwitch.wo() && this.qI != -1) {
-                                                aEg.thePlayer.inventory.currentItem = this.qI;
-                                                this.qI = -1;
+                                            if (this.autoSwitch.wo() && this.previousSlot != -1) {
+                                                aEg.thePlayer.inventory.currentItem = this.previousSlot;
+                                                this.previousSlot = -1;
                                             }
 
                                             this.target = null;
@@ -209,7 +209,7 @@ public class ThrowableAura extends Module {
         };
     }
 
-    public boolean t(EntityLivingBase living) {
+    public boolean canHit(EntityLivingBase living) {
         if (aEg.objectMouseOver != null && aEg.objectMouseOver.entityHit == living) {
             return true;
         }
@@ -240,7 +240,7 @@ public class ThrowableAura extends Module {
         return stack == null ? false : this.snowballs.wo() && stack.getItem() == Items.snowball || this.eggs.wo() && stack.getItem() == Items.egg;
     }
 
-    public boolean b(KillAura killAura) {
+    public boolean isAuraTargetInRange(KillAura killAura) {
         EntityLivingBase entitylivingbase = killAura.jE;
         if (entitylivingbase == null) {
             return false;
@@ -259,7 +259,7 @@ public class ThrowableAura extends Module {
                 double d1 = aEg.thePlayer.getDistanceToEntity(var1);
                 if (d1 > this.rotationRange.wo().doubleValue() || d1 <= this.minimumRange.wo().doubleValue()) {
                     return true ^ true;
-                } else if (!this.r(var1)) {
+                } else if (!this.isInFOV(var1)) {
                     return false;
                 } else if (this.throughWalls.wo() && !aEg.thePlayer.canEntityBeSeen(var1)) {
                     return false;
@@ -274,7 +274,7 @@ public class ThrowableAura extends Module {
         }).min(Comparator.comparingDouble(var0 -> aEg.thePlayer.getDistanceSqToEntity(var0))).orElse(null);
     }
 
-    public boolean r(EntityLivingBase living) {
+    public boolean isInFOV(EntityLivingBase living) {
         if (this.fOV.wo().doubleValue() >= 360.0) {
             return true;
         }

@@ -17,20 +17,20 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public final class Advanced2AntiBot extends Mode<AntiBot> {
     private final Set<UUID> pendingLookups = new HashSet<>();
-    private final Set<UUID> rj = new HashSet<>();
-    private final Set<String> rk = new HashSet<>();
-    private final Map<String, Integer> rl = new HashMap<>();
+    private final Set<UUID> invalidProfiles = new HashSet<>();
+    private final Set<String> seenNames = new HashSet<>();
+    private final Map<String, Integer> entityIdByName = new HashMap<>();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.theWorld != null && aEg.thePlayer != null) {
             for (Object object : aEg.theWorld.playerEntities) {
                 if (object instanceof EntityPlayer entityplayer && entityplayer != aEg.thePlayer) {
                     String s = entityplayer.getName();
-                    this.rl.putIfAbsent(s, entityplayer.getEntityId());
-                    if (this.rk.contains(s) && this.rl.get(s) != entityplayer.getEntityId()) {
+                    this.entityIdByName.putIfAbsent(s, entityplayer.getEntityId());
+                    if (this.seenNames.contains(s) && this.entityIdByName.get(s) != entityplayer.getEntityId()) {
                         Client.a.getBotManager().b(this, entityplayer);
                     } else {
-                        this.rk.add(s);
+                        this.seenNames.add(s);
                         if (entityplayer.getGameProfile() == null) {
                             Client.a.getBotManager().b(this, entityplayer);
                         } else {
@@ -39,7 +39,7 @@ public final class Advanced2AntiBot extends Mode<AntiBot> {
                                 Client.a.getBotManager().b(this, entityplayer);
                             } else if (uuid.version() != 4) {
                                 Client.a.getBotManager().b(this, entityplayer);
-                            } else if (this.rj.contains(uuid)) {
+                            } else if (this.invalidProfiles.contains(uuid)) {
                                 Client.a.getBotManager().b(this, entityplayer);
                             } else if (!this.pendingLookups.contains(uuid)) {
                                 this.pendingLookups.add(uuid);
@@ -48,7 +48,7 @@ public final class Advanced2AntiBot extends Mode<AntiBot> {
                                     var2x -> {
                                         this.pendingLookups.remove(uuid);
                                         if (!var2x) {
-                                            this.rj.add(uuid);
+                                            this.invalidProfiles.add(uuid);
                                             if (aEg.theWorld != null) {
                                                 for (Object object1 : aEg.theWorld.playerEntities) {
                                                     if (object1 instanceof EntityPlayer entityplayer1
@@ -80,9 +80,9 @@ public final class Advanced2AntiBot extends Mode<AntiBot> {
     public final Listener<WorldChangeEvent> onWorldChange = var1x -> {
         Client.a.getBotManager().a(this);
         this.pendingLookups.clear();
-        this.rj.clear();
-        this.rk.clear();
-        this.rl.clear();
+        this.invalidProfiles.clear();
+        this.seenNames.clear();
+        this.entityIdByName.clear();
         AntiBotProfileLookup.sb();
     };
 
@@ -94,8 +94,8 @@ public final class Advanced2AntiBot extends Mode<AntiBot> {
     public void onDisable() {
         Client.a.getBotManager().a(this);
         this.pendingLookups.clear();
-        this.rj.clear();
-        this.rk.clear();
-        this.rl.clear();
+        this.invalidProfiles.clear();
+        this.seenNames.clear();
+        this.entityIdByName.clear();
     }
 }

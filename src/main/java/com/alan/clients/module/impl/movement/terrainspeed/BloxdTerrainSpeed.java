@@ -38,13 +38,13 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
     private final NumberValue sneakTimer = new NumberValue("Sneak Timer", this, 2.5, 1.6, 10, 0.1);
     private final NumberValue longjumpSpeed = new NumberValue("Longjump Speed", this, 3, 0.1, 3, 0.05);
     private final NumberValue height = new NumberValue("Height", this, 25, 10, 50, 1);
-    private double xv;
-    private boolean im;
-    private static final double SK = 0.03333333333333333;
-    private final PhysicsIntegrator SL = new PhysicsIntegrator();
-    private int aR = 0;
-    private int SM = 0;
-    private long SN = 0L;
+    private double currentSpeed;
+    private boolean lastOnGround;
+    private static final double TIME_STEP = 0.03333333333333333;
+    private final PhysicsIntegrator integrator = new PhysicsIntegrator();
+    private int groundTicks = 0;
+    private int jumpStacks = 0;
+    private long velocityEndTime = 0L;
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
         EntityPlayerSP entityplayersp = aEg.thePlayer;
@@ -53,28 +53,28 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
         }
 
         aEg.timer.dzD = 1.5F;
-        if (entityplayersp.onGround && this.SL.SW.y < 0.0) {
-            this.SL.SW.set(0.0, 0.0, 0.0);
+        if (entityplayersp.onGround && this.integrator.velocity.y < 0.0) {
+            this.integrator.velocity.set(0.0, 0.0, 0.0);
         }
 
         if (entityplayersp.onGround && entityplayersp.motionY == MoveUtil.jumpMotion()) {
-            this.SM = Math.min(this.SM + 1, 3);
-            this.SL.SU.add(new PhysicsVector3(0.0, 8.0, 0.0));
+            this.jumpStacks = Math.min(this.jumpStacks + 1, 3);
+            this.integrator.impulse.add(new PhysicsVector3(0.0, 8.0, 0.0));
         }
 
-        this.aR = entityplayersp.onGround ? this.aR + 1 : 0;
-        if (this.aR > 5) {
-            this.SM = 0;
+        this.groundTicks = entityplayersp.onGround ? this.groundTicks + 1 : 0;
+        if (this.groundTicks > 5) {
+            this.jumpStacks = 0;
         }
 
         if (entityplayersp.isCollidedHorizontally) {
-            this.SL.SW.set(0.0, 8.6, 0.0);
+            this.integrator.velocity.set(0.0, 8.6, 0.0);
         }
 
         entityplayersp.motionX = entityplayersp.motionZ = 0.0;
         entityplayersp.posY = 0.0;
-        boolean flag = System.currentTimeMillis() < this.SN;
-        double d0 = entityplayersp.isUsingItem() ? 0.06 : 0.26 + 0.025 * this.SM;
+        boolean flag = System.currentTimeMillis() < this.velocityEndTime;
+        double d0 = entityplayersp.isUsingItem() ? 0.06 : 0.26 + 0.025 * this.jumpStacks;
         if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
             if (this.maximiseSpeed.wo()) {
                 d0 += 0.105 + aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier() * 0.04;
@@ -89,48 +89,48 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
 
         var1x.setSpeed(flag ? 1.0 : d0);
         if (aEg.thePlayer.ae == 1) {
-            this.xv = this.longjumpSpeed.wo().doubleValue();
+            this.currentSpeed = this.longjumpSpeed.wo().doubleValue();
         }
 
-        entityplayersp.motionY = this.SL.hI().y * 0.03333333333333333;
+        entityplayersp.motionY = this.integrator.integrate().y * 0.03333333333333333;
         if (aEg.thePlayer.Zl == 1) {
             afi.c(aEg.thePlayer.ae);
         }
 
         if (aEg.thePlayer.ae < 41 && this.e(LongJump.class).isEnabled()) {
             aEg.timer.dzD = 1.5F;
-            this.xv = this.xv - this.xv / 109.0;
+            this.currentSpeed = this.currentSpeed - this.currentSpeed / 109.0;
             aEg.thePlayer.motionY = 0.0;
-            this.SL.SW.y = -0.1;
-            this.SL.SU.y = -0.1;
-            this.SL.SV.y = -0.1;
+            this.integrator.velocity.y = -0.1;
+            this.integrator.impulse.y = -0.1;
+            this.integrator.force.y = -0.1;
             if ((!MoveUtil.isMoving() || aEg.thePlayer.isCollidedHorizontally) && this.e(LongJump.class).isEnabled()) {
                 var1x.setSpeed(0.3);
             } else if (this.e(LongJump.class).isEnabled()) {
-                var1x.setSpeed(this.xv);
+                var1x.setSpeed(this.currentSpeed);
             }
         }
 
         if (aEg.thePlayer.isCollidedHorizontally && this.e(Flight.class).isEnabled()) {
-            this.SL.SW.y = this.height.wo().intValue();
-            this.SL.SU.y = this.height.wo().intValue();
-            this.SL.SV.y = this.height.wo().intValue();
+            this.integrator.velocity.y = this.height.wo().intValue();
+            this.integrator.impulse.y = this.height.wo().intValue();
+            this.integrator.force.y = this.height.wo().intValue();
         }
 
-        if (this.e(Flight.class).isEnabled() && aEg.thePlayer.tR < 12 && this.SM < 3
+        if (this.e(Flight.class).isEnabled() && aEg.thePlayer.tR < 12 && this.jumpStacks < 3
             || this.e(Flight.class).isEnabled() && aEg.gameSettings.keyBindSneak.isKeyDown()) {
-            this.SL.SV.y = -10.0;
-            this.SL.SU.y = -0.01;
+            this.integrator.force.y = -10.0;
+            this.integrator.impulse.y = -0.01;
             aEg.timer.dzD = 1.6F;
         }
 
         if (this.e(Flight.class).isEnabled() && !aEg.gameSettings.keyBindSneak.isKeyDown() && aEg.thePlayer.motionY < 0.0 && aEg.thePlayer.tR > 30) {
-            this.SL.SW.y += 0.06;
+            this.integrator.velocity.y += 0.06;
         }
 
-        if (this.SM < 3 && this.e(Speed.class).isEnabled() && aEg.thePlayer.tR < 12) {
-            this.SL.SV.y = -10.0;
-            this.SL.SU.y = -0.01;
+        if (this.jumpStacks < 3 && this.e(Speed.class).isEnabled() && aEg.thePlayer.tR < 12) {
+            this.integrator.force.y = -10.0;
+            this.integrator.impulse.y = -0.01;
         }
 
         if (aEg.thePlayer.ae == 13) {
@@ -160,16 +160,16 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
         if (var1x.getPacket() instanceof S12PacketEntityVelocity) {
             S12PacketEntityVelocity s12packetentityvelocity = (S12PacketEntityVelocity)var1x.getPacket();
             if (aEg.thePlayer != null && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
-                this.SN = System.currentTimeMillis() + 1300L;
+                this.velocityEndTime = System.currentTimeMillis() + 1300L;
             }
         } else if (var1x.getPacket() instanceof S3FPacketCustomPayload) {
             S3FPacketCustomPayload s3fpacketcustompayload = (S3FPacketCustomPayload)var1x.getPacket();
             if ("bloxd:resyncphysics".equals(s3fpacketcustompayload.getChannelName())) {
                 PacketBuffer packetbuffer = s3fpacketcustompayload.getBufferData();
-                this.SM = 0;
-                this.SL.SV.set(0.0, 0.0, 0.0);
-                this.SL.SU.set(0.0, 0.0, 0.0);
-                this.SL.SW.set(packetbuffer.readFloat(), packetbuffer.readFloat(), packetbuffer.readFloat());
+                this.jumpStacks = 0;
+                this.integrator.force.set(0.0, 0.0, 0.0);
+                this.integrator.impulse.set(0.0, 0.0, 0.0);
+                this.integrator.velocity.set(packetbuffer.readFloat(), packetbuffer.readFloat(), packetbuffer.readFloat());
             }
         }
     };
@@ -186,7 +186,7 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
                 float f1 = aEg.thePlayer.rotationPitch;
                 boolean flag = aEg.thePlayer.onGround;
                 C06PacketPlayerPosLook c06packetplayerposlook = new C06PacketPlayerPosLook(d0, d1, d2, f, f1, flag);
-                this.im = c03packetplayer.aO;
+                this.lastOnGround = c03packetplayer.aO;
                 aEg.getNetHandler().addToSendQueue(c06packetplayerposlook);
             }
         }

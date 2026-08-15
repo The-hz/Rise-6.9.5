@@ -22,9 +22,9 @@ import net.minecraft.client.renderer.GlStateManager;
 
 public final class CreidaInterface extends Mode<Interface> {
     private final BooleanValue font = new BooleanValue("Font", this, true);
-    private static final agc asn = FontManager.MINECRAFT.dM();
-    private static final double aso = asn.height() + 2.0F;
-    private static final int asp = 1;
+    private static final agc minecraftFont = FontManager.MINECRAFT.dM();
+    private static final double rowHeight = minecraftFont.height() + 2.0F;
+    private static final int LINE_WIDTH = 1;
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1x -> {
         for (ArrayListEntry zc : this.getParent().getActiveEntries()) {
@@ -36,12 +36,12 @@ public final class CreidaInterface extends Mode<Interface> {
             double d0 = zc.getPosition().getX() - 1.0 - 2.0;
             double d1 = zc.getPosition().getY() + 1.0;
             double d2 = zc.nameWidth + zc.tagWidth + 2.0F + 3.0F;
-            this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.d(d0 - 1.0, d1 - 2.0, d2, aso + 1.0, new Color(0, 0, 0, 255)));
-            this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.d(d0 - 1.0, d1 - 2.0, d2, aso + 1.0, new Color(0, 0, 0, 255)));
+            this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.d(d0 - 1.0, d1 - 2.0, d2, rowHeight + 1.0, new Color(0, 0, 0, 255)));
+            this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.d(d0 - 1.0, d1 - 2.0, d2, rowHeight + 1.0, new Color(0, 0, 0, 255)));
             this.b(ShaderQueueType.REGULAR, 1).c(() -> {
-                RenderUtil.d(d0 - 1.0, d1 - 2.0, d2, aso + 1.0, new Color(0, 0, 0, 110));
-                RenderUtil.d(d0 + zc.nameWidth + zc.tagWidth + 4.0, d1 - 2.0, 1.0, aso + 1.0, this.rz().getAccentColor(new Vector2d(zc.getPosition().getX(), zc.getPosition().getY() / 1.5)));
-                this.a(zc, d0 + 1.0, d1, this.rz().getAccentColor(new Vector2d(zc.getPosition().getX(), zc.getPosition().getY() / 1.5)).getRGB());
+                RenderUtil.d(d0 - 1.0, d1 - 2.0, d2, rowHeight + 1.0, new Color(0, 0, 0, 110));
+                RenderUtil.d(d0 + zc.nameWidth + zc.tagWidth + 4.0, d1 - 2.0, 1.0, rowHeight + 1.0, this.rz().getAccentColor(new Vector2d(zc.getPosition().getX(), zc.getPosition().getY() / 1.5)));
+                this.drawEntry(zc, d0 + 1.0, d1, this.rz().getAccentColor(new Vector2d(zc.getPosition().getX(), zc.getPosition().getY() / 1.5)).getRGB());
             });
         }
 
@@ -95,7 +95,7 @@ public final class CreidaInterface extends Mode<Interface> {
         return this.font.wo() ? FontManager.MAIN.a(24, FontWeight.REGULAR) : FontManager.MINECRAFT.dM();
     }
 
-    private void a(ArrayListEntry var1, double var2, double var4, int var6) {
+    private void drawEntry(ArrayListEntry var1, double var2, double var4, int var6) {
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);
         this.getFont().b(var1.getDisplayName(), var2, var4, var6);

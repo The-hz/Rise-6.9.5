@@ -4,45 +4,45 @@ import lombok.Generated;
 import net.minecraft.util.ResourceLocation;
 
 public class by {
-    private bz gp;
-    private String gq;
+    private bz rank;
+    private String tag;
     private String gr;
-    private String[] gs;
-    private ResourceLocation[] gt;
-    private boolean gu = false;
-    private int gv = 0;
+    private String[] capeUrls;
+    private ResourceLocation[] capeTextures;
+    private boolean capeLoaded = false;
+    private int frame = 0;
 
     public by(String var1) {
         this.gr = var1;
     }
 
     public ResourceLocation bS() {
-        return this.gt[this.gv % this.gt.length];
+        return this.capeTextures[this.frame % this.capeTextures.length];
     }
 
     public boolean bT() {
-        return this.gs.length != 0;
+        return this.capeUrls.length != 0;
     }
 
-    public void a(bz var1) {
-        this.gp = var1;
+    public void setRank(bz var1) {
+        this.rank = var1;
     }
 
-    public void o(String var1) {
-        this.gq = var1;
+    public void setTag(String var1) {
+        this.tag = var1;
     }
 
     public String getColorCode() {
-        return this.gp.getColorCode();
+        return this.rank.getColorCode();
     }
 
     public bz bV() {
-        return this.gp;
+        return this.rank;
     }
 
     @Generated
-    public String bW() {
-        return this.gq;
+    public String getTag() {
+        return this.tag;
     }
 
     @Generated
@@ -52,41 +52,41 @@ public class by {
 
     @Generated
     public String[] bY() {
-        return this.gs;
+        return this.capeUrls;
     }
 
     @Generated
-    public void b(String[] var1) {
-        this.gs = var1;
+    public void setCapeUrls(String[] var1) {
+        this.capeUrls = var1;
     }
 
     @Generated
-    public ResourceLocation[] bZ() {
-        return this.gt;
+    public ResourceLocation[] getCapeTextures() {
+        return this.capeTextures;
     }
 
     @Generated
-    public void a(ResourceLocation[] locations) {
-        this.gt = locations;
+    public void setCapeTextures(ResourceLocation[] locations) {
+        this.capeTextures = locations;
     }
 
     @Generated
     public boolean ca() {
-        return this.gu;
+        return this.capeLoaded;
     }
 
     @Generated
-    public void e(boolean var1) {
-        this.gu = var1;
+    public void setCapeLoaded(boolean var1) {
+        this.capeLoaded = var1;
     }
 
     @Generated
-    public int cb() {
-        return this.gv;
+    public int getFrame() {
+        return this.frame;
     }
 
     @Generated
-    public void j(int var1) {
-        this.gv = var1;
+    public void setFrame(int var1) {
+        this.frame = var1;
     }
 }

@@ -9,7 +9,7 @@ public final class PacketEncodeEvent extends CancellableEvent {
     private int id;
 
     @Generated
-    public ByteBuf ds() {
+    public ByteBuf getByteBuf() {
         return this.jT;
     }
 
@@ -19,7 +19,7 @@ public final class PacketEncodeEvent extends CancellableEvent {
     }
 
     @Generated
-    public void a(ByteBuf byteBuf) {
+    public void setByteBuf(ByteBuf byteBuf) {
         this.jT = byteBuf;
     }
 

@@ -18,52 +18,52 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.server.S29PacketSoundEffect;
 
 public class LegitNoSlow extends Mode<NoSlow> {
-    private static final int Ng = 32;
-    private static final int Nh = 12;
+    private static final int MAX_USE_TICKS = 32;
+    private static final int MIN_USE_TICKS = 12;
     private static final int Ni = 0;
-    private int Nj;
-    private boolean Nk;
-    private boolean Nl;
-    private boolean Nm;
-    private int Nn;
+    private int useTicks;
+    private boolean heardBurp;
+    private boolean slowDownStarted;
+    private boolean delaying;
+    private int delayTicks;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer != null && aEg.thePlayer.getHeldItem() != null) {
             if (PacketQueueComponent.cR) {
-                this.Nj++;
+                this.useTicks++;
             }
 
-            if (this.hF()) {
+            if (this.shouldStopUsing()) {
                 if (!PacketQueueComponent.cR) {
                     PacketQueueComponent.cR = true;
-                    this.Nj = aEg.thePlayer.getItemInUseDuration();
+                    this.useTicks = aEg.thePlayer.getItemInUseDuration();
                 }
 
                 aEg.thePlayer.stopUsingItem();
                 aEg.gameSettings.cgI.setPressed(false);
             }
 
-            if (PacketQueueComponent.cR && (this.Nj >= 32 || this.Nk)) {
-                this.gx();
+            if (PacketQueueComponent.cR && (this.useTicks >= 32 || this.heardBurp)) {
+                this.flushQueue();
             }
         }
     };
     @EventLink
     public final Listener<SlowDownEvent> onSlowDown = var1x -> {
-        if (!this.hG()) {
-            this.hH();
+        if (!this.isUsingBypassedItem()) {
+            this.resetDelay();
         } else {
             boolean flag = aEg.thePlayer.getItemInUseDuration() % 3 != 0;
             if (!flag) {
-                this.hH();
-            } else if (!this.Nl) {
-                this.Nm = true;
-                this.Nn = 0;
-                this.Nl = true;
-            } else if (this.Nm) {
-                this.Nn--;
-                if (this.Nn <= 0) {
-                    this.Nm = false;
+                this.resetDelay();
+            } else if (!this.slowDownStarted) {
+                this.delaying = true;
+                this.delayTicks = 0;
+                this.slowDownStarted = true;
+            } else if (this.delaying) {
+                this.delayTicks--;
+                if (this.delayTicks <= 0) {
+                    this.delaying = false;
                     aEg.thePlayer.setSprinting(true);
                 }
             } else {
@@ -76,7 +76,7 @@ public class LegitNoSlow extends Mode<NoSlow> {
         if (var1x.getPacket() instanceof S29PacketSoundEffect) {
             S29PacketSoundEffect s29packetsoundeffect = (S29PacketSoundEffect)var1x.getPacket();
             if (s29packetsoundeffect.getSoundName() != null && s29packetsoundeffect.getSoundName().contains("random.burp")) {
-                this.Nk = true;
+                this.heardBurp = true;
             }
         }
     };
@@ -87,12 +87,12 @@ public class LegitNoSlow extends Mode<NoSlow> {
 
     @Override
     public void onDisable() {
-        this.gx();
-        this.hH();
+        this.flushQueue();
+        this.resetDelay();
         aEg.gameSettings.cgI.setPressed(GameSettings.isKeyDown(aEg.gameSettings.cgI));
     }
 
-    private boolean hF() {
+    private boolean shouldStopUsing() {
         if (!aEg.thePlayer.isUsingItem()) {
             return false;
         }
@@ -103,19 +103,19 @@ public class LegitNoSlow extends Mode<NoSlow> {
         }
 
         Item item = itemstack.getItem();
-        return aEg.thePlayer.getItemInUseDuration() > 12 && !(item instanceof ItemBow) && this.b(itemstack, false);
+        return aEg.thePlayer.getItemInUseDuration() > 12 && !(item instanceof ItemBow) && this.appliesTo(itemstack, false);
     }
 
-    private boolean hG() {
+    private boolean isUsingBypassedItem() {
         if (!aEg.thePlayer.isUsingItem()) {
             return false;
         }
 
         ItemStack itemstack = aEg.thePlayer.getHeldItem();
-        return itemstack != null && this.b(itemstack, true);
+        return itemstack != null && this.appliesTo(itemstack, true);
     }
 
-    private boolean b(ItemStack stack, boolean var2) {
+    private boolean appliesTo(ItemStack stack, boolean var2) {
         Item item = stack.getItem();
         if (item instanceof ItemFood) {
             return this.getParent().food.wo();
@@ -125,19 +125,19 @@ public class LegitNoSlow extends Mode<NoSlow> {
         return item instanceof ItemSword ? this.getParent().sword.wo() : var2 && item instanceof ItemBow && this.getParent().bow.wo();
     }
 
-    private void gx() {
+    private void flushQueue() {
         if (PacketQueueComponent.cR) {
             PacketQueueComponent.dispatch();
             PacketQueueComponent.cR = false;
         }
 
-        this.Nk = false;
-        this.Nj = 0;
+        this.heardBurp = false;
+        this.useTicks = 0;
     }
 
-    private void hH() {
-        this.Nl = false;
-        this.Nm = false;
-        this.Nn = 0;
+    private void resetDelay() {
+        this.slowDownStarted = false;
+        this.delaying = false;
+        this.delayTicks = 0;
     }
 }

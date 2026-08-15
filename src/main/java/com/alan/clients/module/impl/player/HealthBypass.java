@@ -19,7 +19,7 @@ public final class HealthBypass extends Module {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             for (Entity entity : aEg.theWorld.loadedEntityList) {
                 if (entity instanceof EntityPlayer entityplayer && entityplayer != aEg.thePlayer) {
-                    float f = B(entityplayer);
+                    float f = getScoreboardHealth(entityplayer);
                     if ((!(f <= 0.0F) || entityplayer.isDead) && !Float.isNaN(f) && !Float.isInfinite(f)) {
                         float f1 = entityplayer.getMaxHealth();
                         if (f1 > 0.0F) {
@@ -36,7 +36,7 @@ public final class HealthBypass extends Module {
     public HealthBypass() {
     }
 
-    public static float B(EntityLivingBase living) {
+    public static float getScoreboardHealth(EntityLivingBase living) {
         if (!(living instanceof EntityPlayer entityplayer)) {
             return living.getHealth();
         }

@@ -10,7 +10,7 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 
 public final class NormalBypass extends Mode<InventoryMove> {
-    private final KeyBinding[] JK = new KeyBinding[]{
+    private final KeyBinding[] movementKeys = new KeyBinding[]{
         aEg.gameSettings.keyBindForward,
         aEg.gameSettings.keyBindBack,
         aEg.gameSettings.keyBindRight,
@@ -20,7 +20,7 @@ public final class NormalBypass extends Mode<InventoryMove> {
     @EventLink
     private final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.currentScreen != null && !(aEg.currentScreen instanceof GuiChat) && aEg.currentScreen != this.getStandardClickGUI()) {
-            for (KeyBinding keybinding : this.JK) {
+            for (KeyBinding keybinding : this.movementKeys) {
                 keybinding.setPressed(GameSettings.isKeyDown(keybinding));
             }
         }

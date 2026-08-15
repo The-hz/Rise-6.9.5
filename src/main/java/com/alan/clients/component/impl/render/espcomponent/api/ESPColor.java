@@ -16,7 +16,7 @@ public class ESPColor {
     }
 
     @Generated
-    public Color cr() {
+    public Color getColor() {
         return this.hS;
     }
 

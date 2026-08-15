@@ -135,24 +135,24 @@ public class KillAura extends Module {
    public MovingObjectPosition movingObjectPosition;
    public BooleanValue blockSlowdown;
    public BooleanValue rayCast;
-   public int oB;
-   public int ov;
-   public int op;
+   public int blockSlot;
+   public int triggerEntityId;
+   public int lastTargetId;
    public NumberValue fOV;
-   public int oH;
+   public int rightClickTick;
    public NumberValue advancedOvershootMax;
    public NumberValue randomizeFactor;
    public BooleanValue advancedSwing;
    public BooleanValue badPacketsCheck;
    public int of;
-   public List<EntityLivingBase> oM;
+   public List<EntityLivingBase> espTargets;
    public NumberValue advancedDampedDistance;
-   public boolean oJ;
+   public boolean rightClickHandled;
    public BooleanValue showTargets;
    public boolean ob;
    public BooleanValue coloredSigmaRing;
    public BooleanValue extra;
-   public boolean oI;
+   public boolean rightClickDown;
    public NumberValue advancedTriggerReaction;
    public EntityLivingBase jE;
    public BooleanValue advancedFlickGuard;
@@ -164,57 +164,57 @@ public class KillAura extends Module {
    @EventLink
    public Listener<SlowDownEvent> onSlowDown;
    public BooleanValue fireAspect;
-   public boolean oD;
-   public static boolean nS;
+   public boolean blockQueued;
+   public static boolean inReach;
    public BooleanValue oldPredictionKeepSprint;
    public BooleanValue axes;
-   public static boolean cK;
-   public long ox;
-   public static boolean nR;
+   public static boolean blockPacketSent;
+   public long triggerReadyTime;
+   public static boolean canAttack;
    public BooleanValue oldMovefixBoost;
-   public int oC;
+   public int lastBlockAttackTick;
    public boolean oc;
-   public int mA;
+   public int lastVelocityBoostTick;
    @EventLink
    public Listener<PreUpdateEvent> onPreUpdate;
-   public float oz;
+   public float burstStrength;
    public ModeValue mode;
-   public boolean mz;
-   public boolean nU;
-   public boolean oE;
+   public boolean fakeBlocked;
+   public boolean shortBlockCycle;
+   public boolean warnedNoSecondSword;
    public BooleanValue hideSecondSword;
-   public double mJ;
+   public double cachedRotationsRange;
    public BoundsNumberValue switchDelay;
-   public float om;
-   public int ot;
+   public float stepSize;
+   public int holdTicks;
    @EventLink
    public Listener<PostMotionEvent> onPostMotion;
    public BooleanValue showFOVCircle;
    public int nZ;
    public BooleanValue rightClickOnly;
    public float velocityY;
-   public int my;
+   public int attackPending;
    public NumberValue advancedMinStep;
    public NumberValue advancedTriggerReactionJitter;
-   public a nP;
+   public a swingTimer;
    public BooleanValue silentRotations;
    public NumberValue advancedFlickMax;
    public ModeValue sorting;
    public BooleanValue noSwing;
    public BooleanValue velocityBoost;
    @EventLink
-   public Listener<ea> oX;
-   public aka os;
-   public int mF;
-   public boolean oF;
+   public Listener<ea> onAutoBlock;
+   public aka playerMotionAverage;
+   public int lastDebugTick;
+   public boolean pendingDisable;
    public NumberValue advancedPrediction;
    public NumberValue advancedDeadzone;
-   public KnockbackSample mD;
+   public KnockbackSample knockbackPlan;
    public float ok;
    public List<EntityLivingBase> targets;
-   public int oa;
-   public a nO;
-   public int oA;
+   public int ticksSinceAttack;
+   public a attackTimer;
+   public int lastSlotFlickTick;
    public BooleanValue attackWhilstScaffolding;
    public Entity target;
    public float windX;
@@ -223,56 +223,56 @@ public class KillAura extends Module {
    public NumberValue advancedAnchor;
    public BooleanValue preventServersideBlocking;
    public BooleanValue newYouNeedThisToggledOnCurreFake;
-   public aka oq;
-   public long nT;
+   public aka aimPoint;
+   public long attackInterval;
    public BooleanValue sharpness;
    @EventLink
    public Listener<WorldChangeEvent> onWorldChange;
-   public Map<Entity, Integer> oL;
+   public Map<Entity, Integer> lastHitTicks;
    @EventLink(value = 3)
    public Listener<PacketSendEvent> onPacketSend;
    public BooleanValue knockbackDisplacementDebug;
    public BooleanValue playerTeammates;
-   public Queue<Packet<?>> nN;
+   public Queue<Packet<?>> heldPackets;
    @EventLink
    public Listener<MouseOverEvent> onMouseOver;
    public static float SQRT3;
-   public int mH;
+   public int cachedRotationsTick;
    public NumberValue advancedOvershootScale;
    public Random random;
-   public adz<EntityLivingBase> oK;
-   public int oo;
-   public Animation oO;
+   public adz<EntityLivingBase> switchHistory;
+   public int overshootTicks;
+   public Animation fovCircleYaw;
    public BooleanValue swords;
    public NumberValue advancedWind;
-   public boolean ow;
+   public boolean triggerArmed;
    public BoundsNumberValue cps;
-   public Vector2f mG;
+   public Vector2f cachedRotations;
    public NumberValue advancedAimReactionJitter;
    public ModeValue boxMode;
    public BooleanValue weapons;
    public int oe;
-   public boolean mK;
+   public boolean cachedRotationsThroughWalls;
    @EventLink
    public Listener<HitSlowDownEvent> onHitSlowDown;
    public NumberValue advancedMaxStep;
    @EventLink
-   public Listener<en> pb;
+   public Listener<en> onKeepSprintCancel;
    public BooleanValue throughWalls;
    public BooleanValue fallbackToWatchdog;
    @EventLink(value = 3)
    public Listener<RenderItemEvent> onRenderItem;
-   public boolean oG;
+   public boolean watchdogFallbackActive;
    public NumberValue advancedAimReaction;
-   public static boolean nQ;
+   public static boolean blocking;
    public BooleanValue animals;
    public BooleanValue knockbackDisplacement;
    public BooleanValue invisibles;
    public NumberValue advancedHoldTicks;
    public BooleanValue fist;
    public BooleanValue mobs;
-   public boolean mC;
-   public String mE;
+   public boolean sprintCancelled;
+   public String lastDebugLine;
    public int attack;
    public NumberValue advancedGaussian;
    public BooleanValue newUniversalKeepSprint;
@@ -280,7 +280,7 @@ public class KillAura extends Module {
    public BoundsNumberValue rotationSpeed;
    public NumberValue advancedOvershootChance;
    public ListValue<MovementFix> movementCorrection;
-   public aka or;
+   public aka targetMotionAverage;
    public NumberValue rotationRange;
    public ModeValue rotationMode;
    public BooleanValue autoDisable;
@@ -290,14 +290,14 @@ public class KillAura extends Module {
    public NumberValue range;
    public BooleanValue randomize19Speed;
    public int hV;
-   public int oy;
+   public int burstTicks;
    public BooleanValue player;
-   public Animation oN;
+   public Animation fovCircleRadius;
    @EventLink
    public Listener<JumpEvent> onJump;
-   public Vector2f nt;
+   public Vector2f grimRotations;
    public NumberValue advancedCruiseFloor;
-   public int nY;
+   public int blockStage;
    public NumberValue boostTicks;
    public String nE;
    public ModeValue clickMode;
@@ -307,8 +307,8 @@ public class KillAura extends Module {
    public NumberValue advancedBurstStrength;
    @EventLink
    public Listener<PreMotionEvent> onPreMotionEvent;
-   public long ou;
-   public static boolean mB;
+   public long nextAimUpdate;
+   public static boolean attacking;
    public NumberValue advancedBurstChance;
    @EventLink(value = 3)
    public Listener<PreUpdateEvent> onPreUpdateHigh;
@@ -317,7 +317,7 @@ public class KillAura extends Module {
    public ModeValue espMode;
    public static float SQRT5;
 
-   public Tuple<Boolean, Double> eo() {
+   public Tuple<Boolean, Double> getAttackDelay() {
       Object var52 = null;
       double var53 = 0.0;
       Object var55 = null;
@@ -387,13 +387,13 @@ public class KillAura extends Module {
 
             var64 = 1.0 / var53 * 20.0 - 1.0;
          default:
-            var64 = this.j(var64);
+            var64 = this.adjustAttackDelay(var64);
             return new Tuple<>(Boolean.valueOf((var50_lo) != 0), var64);
       }
    }
 
-   public boolean eF() {
-      return aEg.thePlayer != null && this.eD()[1] != -1;
+   public boolean hasTwoSwords() {
+      return aEg.thePlayer != null && this.findSwordSlots()[1] != -1;
    }
 
    public void c(MovingObjectPosition hit) {
@@ -402,64 +402,64 @@ public class KillAura extends Module {
       }
    }
 
-   public boolean a(EntityLivingBase living, MovingObjectPosition hit, double var3) {
+   public boolean isTriggerReactionElapsed(EntityLivingBase living, MovingObjectPosition hit, double var3) {
       long var88 = 0L;
       long var92 = 0L;
-      if (!this.eR()) {
+      if (!this.isAdvancedRotations()) {
          return true;
       } else if (living == null) {
-         this.ov = Integer.MIN_VALUE;
-         this.ow = false;
-         this.ox = 0L;
+         this.triggerEntityId = Integer.MIN_VALUE;
+         this.triggerArmed = false;
+         this.triggerReadyTime = 0L;
          return false;
       }
       int notDistanceToEntity = (this.rayCast.wo() || !(aEg.thePlayer.getDistanceToEntity(living) <= var3)) && (hit == null || hit.entityHit != living) ? 0 : 1;
       if (notDistanceToEntity == 0) {
-         this.ow = false;
-         this.ov = Integer.MIN_VALUE;
-         this.ox = 0L;
+         this.triggerArmed = false;
+         this.triggerEntityId = Integer.MIN_VALUE;
+         this.triggerReadyTime = 0L;
          return false;
       }
       int entityId = living.getEntityId();
       var92 = System.currentTimeMillis();
-      if (this.ow && this.ov == entityId) {
-         return var92 >= this.ox;
+      if (this.triggerArmed && this.triggerEntityId == entityId) {
+         return var92 >= this.triggerReadyTime;
       }
-      this.ov = entityId;
-      this.ow = true;
-      var88 = this.a(this.advancedTriggerReaction.wo().doubleValue(), this.advancedTriggerReactionJitter.wo().doubleValue(), 0L, 450L);
-      this.ox = var92 + var88;
+      this.triggerEntityId = entityId;
+      this.triggerArmed = true;
+      var88 = this.jitteredDelay(this.advancedTriggerReaction.wo().doubleValue(), this.advancedTriggerReactionJitter.wo().doubleValue(), 0L, 450L);
+      this.triggerReadyTime = var92 + var88;
       return var88 <= 0L;
    }
 
-   public boolean eG() {
+   public boolean handleRightClickBlock() {
       int keyDown = (int)(aEg.gameSettings.cgI.isKeyDown() ? 1L : 0L);
-      if (!this.eA() || !this.rightClickOnly.wo()) {
-         this.oH = -1;
-         this.oI = (keyDown) != 0;
+      if (!this.isDualSword() || !this.rightClickOnly.wo()) {
+         this.rightClickTick = -1;
+         this.rightClickDown = (keyDown) != 0;
          return false;
-      } else if (this.oH != -1) {
-         this.oJ = true;
-         nR = false;
-         if (aEg.thePlayer.ticksExisted != this.oH) {
-            this.q(true);
-            this.oH = -1;
+      } else if (this.rightClickTick != -1) {
+         this.rightClickHandled = true;
+         canAttack = false;
+         if (aEg.thePlayer.ticksExisted != this.rightClickTick) {
+            this.releaseBlock(true);
+            this.rightClickTick = -1;
          }
 
-         this.oI = (keyDown) != 0;
+         this.rightClickDown = (keyDown) != 0;
          return true;
-      } else if (this.oI && keyDown == 0) {
-         this.oH = aEg.thePlayer.ticksExisted;
-         this.oJ = true;
-         nR = false;
-         this.oI = false;
+      } else if (this.rightClickDown && keyDown == 0) {
+         this.rightClickTick = aEg.thePlayer.ticksExisted;
+         this.rightClickHandled = true;
+         canAttack = false;
+         this.rightClickDown = false;
          return true;
       }
-      this.oI = (keyDown) != 0;
+      this.rightClickDown = (keyDown) != 0;
       return false;
    }
 
-   public Vector2f a(EntityLivingBase target, double var2, boolean var4) {
+   public Vector2f computeRotations(EntityLivingBase target, double var2, boolean var4) {
       Object var37 = null;
       float var44 = 0.0F;
       Object var46 = null;
@@ -467,23 +467,23 @@ public class KillAura extends Module {
          return new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
       }
       int ticksExisted2 = aEg.thePlayer.ticksExisted;
-      if (this.mG != null && this.mH == ticksExisted2 && this.target == target && this.mJ == var2 && this.mK == var4) {
-         return this.mG;
+      if (this.cachedRotations != null && this.cachedRotationsTick == ticksExisted2 && this.target == target && this.cachedRotationsRange == var2 && this.cachedRotationsThroughWalls == var4) {
+         return this.cachedRotations;
       }
       var37 = target.getEntityBoundingBox();
       if ((AxisAlignedBB)var37 != null && !((AxisAlignedBB)var37).hasNaN()) {
-         var44 = this.en();
+         var44 = this.getHitBoxExpand();
          var37 = ((AxisAlignedBB)var37).expand(var44, var44, var44);
          var46 = RotationUtil.a(target, (AxisAlignedBB)var37, true, var2, var4, var44);
       } else {
          var46 = RotationUtil.calculate(target, true, var2);
       }
 
-      this.mG = (Vector2f)var46;
-      this.mH = ticksExisted2;
+      this.cachedRotations = (Vector2f)var46;
+      this.cachedRotationsTick = ticksExisted2;
       this.target = target;
-      this.mJ = var2;
-      this.mK = var4;
+      this.cachedRotationsRange = var2;
+      this.cachedRotationsThroughWalls = var4;
       return (Vector2f)var46;
    }
 
@@ -518,10 +518,10 @@ public class KillAura extends Module {
       float var214 = 0.0F;
       float var215 = 0.0F;
       float var216 = 0.0F;
-      if (!this.eR()) {
+      if (!this.isAdvancedRotations()) {
          return vec2;
       }
-      var147 = this.eQ();
+      var147 = this.getServerRotations();
       if (this.jE == null) {
          return vec2;
       }
@@ -529,29 +529,29 @@ public class KillAura extends Module {
       var154 = this.advancedDampedDistance.wo().floatValue();
       var181 = Math.max(0.25F, this.advancedMinStep.wo().floatValue());
       var192 = MathHelper.clamp_float(this.advancedAccuracy.wo().floatValue() / 100.0F, 0.4F, 1.0F);
-      if (this.om <= 0.001F) {
-         this.om = var153;
+      if (this.stepSize <= 0.001F) {
+         this.stepSize = var153;
       }
 
       int entityId = this.jE.getEntityId();
-      if (entityId != this.op) {
+      if (entityId != this.lastTargetId) {
          this.windX = 0.0F;
          this.windY = 0.0F;
          this.ok = 0.0F;
          this.velocityY = 0.0F;
-         this.om = var153;
+         this.stepSize = var153;
          this.on = null;
-         this.oo = 0;
-         this.oq = null;
-         this.ot = 0;
-         this.ou = 0L;
-         this.ov = Integer.MIN_VALUE;
-         this.ow = false;
-         this.ox = 0L;
-         this.oy = 0;
-         this.oz = 0.0F;
-         this.op = entityId;
-         this.a((Vector2f)var147, vec2);
+         this.overshootTicks = 0;
+         this.aimPoint = null;
+         this.holdTicks = 0;
+         this.nextAimUpdate = 0L;
+         this.triggerEntityId = Integer.MIN_VALUE;
+         this.triggerArmed = false;
+         this.triggerReadyTime = 0L;
+         this.burstTicks = 0;
+         this.burstStrength = 0.0F;
+         this.lastTargetId = entityId;
+         this.planOvershoot((Vector2f)var147, vec2);
       }
 
       var205 = vec2;
@@ -560,7 +560,7 @@ public class KillAura extends Module {
          var180 = MathHelper.wrapAngleTo180_float(this.on.x - ((Vector2f)var147).x);
          var203 = this.on.y - ((Vector2f)var147).y;
          var160 = (float)Math.hypot(var180, var203);
-         if (!(var160 < 1.15F) && this.oo-- > 0) {
+         if (!(var160 < 1.15F) && this.overshootTicks-- > 0) {
             var205 = this.on;
             var184_hi = 1;
          } else {
@@ -573,20 +573,20 @@ public class KillAura extends Module {
       var160 = (float)Math.hypot(var180, var203);
       var213 = Math.max(0.001F, var160);
       var155 = this.advancedDeadzone.wo().floatValue();
-      var197 = aef.rayCast((Vector2f)var147, this.range.wo().doubleValue() + 0.15, this.en(), aEg.thePlayer, this.em());
+      var197 = aef.rayCast((Vector2f)var147, this.range.wo().doubleValue() + 0.15, this.getHitBoxExpand(), aEg.thePlayer, this.canHitThroughWalls());
       int flag = (MovingObjectPosition)var197 != null && ((MovingObjectPosition)var197).typeOfHit == MovingObjectType.ENTITY && ((MovingObjectPosition)var197).entityHit == this.jE ? 1 : 0;
       if (var184_hi == 0 && flag != 0 && var160 <= var155) {
-         this.ot = Math.max(this.ot, this.advancedHoldTicks.wo().intValue());
+         this.holdTicks = Math.max(this.holdTicks, this.advancedHoldTicks.wo().intValue());
       }
 
-      if (var184_hi == 0 && this.ot > 0 && flag != 0 && var160 <= var155 * 1.35F) {
-         this.ot--;
+      if (var184_hi == 0 && this.holdTicks > 0 && flag != 0 && var160 <= var155 * 1.35F) {
+         this.holdTicks--;
          this.ok *= 0.42F;
          this.velocityY *= 0.42F;
          return RotationUtil.applySensitivityPatch(new Vector2f(((Vector2f)var147).x, ((Vector2f)var147).y), (Vector2f)var147);
       }
-      if (this.ot > 0) {
-         this.ot--;
+      if (this.holdTicks > 0) {
+         this.holdTicks--;
       }
 
       if (var160 < 0.001F) {
@@ -599,14 +599,14 @@ public class KillAura extends Module {
          this.windX = this.windX / SQRT3 + this.b(var204 / SQRT5, var204);
          this.windY = this.windY / SQRT3 + this.b(var204 / SQRT5, var204);
          var206 = var153 * (0.78F + this.random.nextFloat() * 0.32F);
-         this.om = Math.max(this.om, var206);
+         this.stepSize = Math.max(this.stepSize, var206);
       } else {
          this.windX = this.windX / SQRT3;
          this.windY = this.windY / SQRT3;
-         if (this.om < var181) {
-            this.om = var181 + this.random.nextFloat() * 0.7F;
+         if (this.stepSize < var181) {
+            this.stepSize = var181 + this.random.nextFloat() * 0.7F;
          } else {
-            this.om = Math.max(var181, this.om / SQRT5);
+            this.stepSize = Math.max(var181, this.stepSize / SQRT5);
          }
       }
 
@@ -625,21 +625,21 @@ public class KillAura extends Module {
 
       if (var184_hi == 0 && var160 > var155 * 1.6F && var160 < var154 * 1.45F) {
          var187 = this.advancedBurstChance.wo().floatValue() / 100.0F;
-         if (this.oy <= 0 && var187 > 1.0E-4F && this.random.nextFloat() < var187 * 0.12F) {
-            this.oy = 1 + this.random.nextInt(2);
-            this.oz = this.advancedBurstStrength.wo().floatValue() * (0.65F + this.random.nextFloat() * 0.55F);
+         if (this.burstTicks <= 0 && var187 > 1.0E-4F && this.random.nextFloat() < var187 * 0.12F) {
+            this.burstTicks = 1 + this.random.nextInt(2);
+            this.burstStrength = this.advancedBurstStrength.wo().floatValue() * (0.65F + this.random.nextFloat() * 0.55F);
          }
       }
 
-      if (this.oy > 0) {
-         var212 *= 1.0F + this.oz;
-         this.oy--;
+      if (this.burstTicks > 0) {
+         var212 *= 1.0F + this.burstStrength;
+         this.burstTicks--;
       } else {
-         this.oz *= 0.55F;
+         this.burstStrength *= 0.55F;
       }
 
       var212 = MathHelper.clamp_float(var212, 0.72F, 1.55F);
-      var187 = Math.max(var181, this.om * var212);
+      var187 = Math.max(var181, this.stepSize * var212);
       var173 = (float)Math.hypot(this.ok, this.velocityY);
       if (var173 > var187) {
          var189 = var187 * (0.52F + this.random.nextFloat() * 0.48F);
@@ -670,8 +670,8 @@ public class KillAura extends Module {
       var216 = MathHelper.clamp_float(var160 / 45.0F, 0.0F, 1.0F);
       var166 = (0.16F + var216 * 0.42F) * (0.55F + var192 * 0.45F);
       var166 *= MathHelper.clamp_float(0.88F + (var212 - 1.0F) * 0.5F, 0.74F, 1.18F);
-      if (this.oz > 0.02F) {
-         var166 *= 1.0F + this.oz * 0.35F;
+      if (this.burstStrength > 0.02F) {
+         var166 *= 1.0F + this.burstStrength * 0.35F;
       }
 
       if (var184_hi != 0) {
@@ -723,25 +723,25 @@ public class KillAura extends Module {
       return RotationUtil.applySensitivityPatch(new Vector2f(var177, var214), (Vector2f)var147);
    }
 
-   public void eW() {
+   public void resetAdvancedState() {
       this.windX = 0.0F;
       this.windY = 0.0F;
       this.ok = 0.0F;
       this.velocityY = 0.0F;
-      this.om = this.advancedMaxStep.wo().floatValue();
+      this.stepSize = this.advancedMaxStep.wo().floatValue();
       this.on = null;
-      this.oo = 0;
-      this.oq = null;
-      this.or = new aka(0.0, 0.0, 0.0);
-      this.os = new aka(0.0, 0.0, 0.0);
-      this.ot = 0;
-      this.ou = 0L;
-      this.ov = Integer.MIN_VALUE;
-      this.ow = false;
-      this.ox = 0L;
-      this.oy = 0;
-      this.oz = 0.0F;
-      this.op = Integer.MIN_VALUE;
+      this.overshootTicks = 0;
+      this.aimPoint = null;
+      this.targetMotionAverage = new aka(0.0, 0.0, 0.0);
+      this.playerMotionAverage = new aka(0.0, 0.0, 0.0);
+      this.holdTicks = 0;
+      this.nextAimUpdate = 0L;
+      this.triggerEntityId = Integer.MIN_VALUE;
+      this.triggerArmed = false;
+      this.triggerReadyTime = 0L;
+      this.burstTicks = 0;
+      this.burstStrength = 0.0F;
+      this.lastTargetId = Integer.MIN_VALUE;
    }
 
    public boolean eX() {
@@ -749,7 +749,7 @@ public class KillAura extends Module {
          SlotComponent var10000 = this.d(SlotComponent.class);
          if (SlotComponent.getItemStack() != null) {
             var10000 = this.d(SlotComponent.class);
-            if (SlotComponent.getItemStack().getItem() instanceof ItemSword && (!this.eA() || this.canBlock())) {
+            if (SlotComponent.getItemStack().getItem() instanceof ItemSword && (!this.isDualSword() || this.canBlock())) {
                return true;
             }
          }
@@ -783,8 +783,8 @@ public class KillAura extends Module {
          .add(new SubMode("Watchdog 1.8"))
          .setDefault("None");
       this.newYouNeedThisToggledOnCurreFake = new BooleanValue("New (you need this toggled on curreFake", this, false, () -> !this.lV.wo().getName().equals("Watchdog"));
-      this.fallbackToWatchdog = new BooleanValue("Fallback to Watchdog", this, false, () -> !this.eB());
-      this.hideSecondSword = new BooleanValue("Hide Second Sword", this, true, () -> (!this.eB() ? 1 : 73 ^ 82 ^ 27) != 0);
+      this.fallbackToWatchdog = new BooleanValue("Fallback to Watchdog", this, false, () -> !this.isDualSwordEngaged());
+      this.hideSecondSword = new BooleanValue("Hide Second Sword", this, true, () -> (!this.isDualSwordEngaged() ? 1 : 73 ^ 82 ^ 27) != 0);
       this.rightClickOnly = new BooleanValue(
          "Right Click Only", this, false, () -> this.lV.wo().getName().equals("None") || this.lV.wo().getName().equals("Fake")
       );
@@ -827,7 +827,7 @@ public class KillAura extends Module {
          return var10000;
       });
       this.knockbackDisplacement = new BooleanValue("Knockback Displacement", this, true);
-      this.knockbackDisplacementDebug = new BooleanValue("Knockback Displacement Debug", this, false, () -> (!this.eV() ? 1 : -94 ^ -94) != 0);
+      this.knockbackDisplacementDebug = new BooleanValue("Knockback Displacement Debug", this, false, () -> (!this.isDisplacementEnabled() ? 1 : -94 ^ -94) != 0);
       this.silentRotations = new BooleanValue("Silent Rotations", this, true);
       this.movementCorrection = new ListValue<>("Movement correction", this);
       this.showMovementArc = new BooleanValue(
@@ -837,13 +837,13 @@ public class KillAura extends Module {
       this.oldPredictionKeepSprint = new BooleanValue("Old Prediction Keep sprint", this, false);
       this.oldMovefixBoost = new BooleanValue("Old Movefix Boost", this, false);
       this.newUniversalKeepSprint = new BooleanValue("New Universal Keep sprint", this, false);
-      this.my = 0;
-      this.mz = false;
-      this.mA = -1;
-      this.mC = false;
-      this.mE = "";
-      this.mF = -1;
-      this.mH = -1;
+      this.attackPending = 0;
+      this.fakeBlocked = false;
+      this.lastVelocityBoostTick = -1;
+      this.sprintCancelled = false;
+      this.lastDebugLine = "";
+      this.lastDebugTick = -1;
+      this.cachedRotationsTick = -1;
       this.espMode = new ModeValue("Target ESP Mode", this).add(new SubMode("Ring")).add(new SubMode("Box")).add(new SubMode("None")).setDefault("Ring");
       this.coloredSigmaRing = new BooleanValue("Colored Sigma Ring", this, true, () -> !this.espMode.wo().getName().equals("Ring"));
       this.boxMode = new ModeValue("Box Mode", this, () -> (!this.espMode.wo().getName().equals("Box") ? 1 : 60 ^ 60) != 0)
@@ -941,7 +941,7 @@ public class KillAura extends Module {
          "Advanced Trigger Reaction", this, 95, 0, 300, 5, () -> (!this.rotationMode.wo().getName().equals("Advanced") ? 1 : 123 - 123) != 0
       );
       this.advancedTriggerReactionJitter = new NumberValue("Advanced Trigger Reaction Jitter", this, 30, 0, 140, 1, () -> !this.rotationMode.wo().getName().equals("Advanced"));
-      this.nt = null;
+      this.grimRotations = null;
       this.attackWhilstScaffolding = new BooleanValue("Attack whilst Scaffolding", this, false, () -> {
          boolean var10000;
          if (!this.advanced.wo()) {
@@ -997,26 +997,26 @@ public class KillAura extends Module {
       this.sharpness = new BooleanValue("Sharpness", this, false, () -> (!this.weapons.wo() ? 1 : -13 - -13) != 0);
       this.knockback = new BooleanValue("Knockback", this, false, () -> !this.weapons.wo());
       this.fireAspect = new BooleanValue("Fire aspect", this, false, () -> !this.weapons.wo());
-      this.nN = new ConcurrentLinkedQueue<>();
-      this.nO = new a();
-      this.nP = new a();
-      this.nU = false;
+      this.heldPackets = new ConcurrentLinkedQueue<>();
+      this.attackTimer = new a();
+      this.swingTimer = new a();
+      this.shortBlockCycle = false;
       this.random = new Random();
       this.oe = 100;
       this.of = 0;
-      this.op = Integer.MIN_VALUE;
-      this.or = new aka(0.0, 0.0, 0.0);
-      this.os = new aka(0.0, 0.0, 0.0);
-      this.ov = Integer.MIN_VALUE;
-      this.oA = -1;
-      this.oB = -1;
-      this.oC = -1;
-      this.oH = -1;
-      this.oK = new adz<>(9);
-      this.oL = new HashMap<>();
-      this.oM = new ArrayList<>();
-      this.oN = new Animation(Easing.EASE_OUT_CUBIC, 300L);
-      this.oO = new Animation(Easing.EASE_OUT_CUBIC, 250L);
+      this.lastTargetId = Integer.MIN_VALUE;
+      this.targetMotionAverage = new aka(0.0, 0.0, 0.0);
+      this.playerMotionAverage = new aka(0.0, 0.0, 0.0);
+      this.triggerEntityId = Integer.MIN_VALUE;
+      this.lastSlotFlickTick = -1;
+      this.blockSlot = -1;
+      this.lastBlockAttackTick = -1;
+      this.rightClickTick = -1;
+      this.switchHistory = new adz<>(9);
+      this.lastHitTicks = new HashMap<>();
+      this.espTargets = new ArrayList<>();
+      this.fovCircleRadius = new Animation(Easing.EASE_OUT_CUBIC, 300L);
+      this.fovCircleYaw = new Animation(Easing.EASE_OUT_CUBIC, 250L);
       this.onPreMotionEvent = var1x -> {
          Object var136 = null;
          Object var144 = null;
@@ -1024,11 +1024,11 @@ public class KillAura extends Module {
          Object var160 = null;
          int nextInt2;
          Object var168 = null;
-         if (!this.oJ) {
+         if (!this.rightClickHandled) {
             label122: {
-               this.nN.forEach(PacketUtil::sendNoEvent);
-               this.nN.clear();
-               this.oa++;
+               this.heldPackets.forEach(PacketUtil::sendNoEvent);
+               this.heldPackets.clear();
+               this.ticksSinceAttack++;
                SlotComponent var10000 = this.d(SlotComponent.class);
                if (SlotComponent.getItemStack() != null) {
                   var10000 = this.d(SlotComponent.class);
@@ -1037,20 +1037,20 @@ public class KillAura extends Module {
                   }
                }
 
-               nQ = false;
+               blocking = false;
             }
 
             if (!GUIDetectionComponent.inGUI()) {
                if (this.jE == null || aEg.thePlayer.isDead || this.e(Scaffold.class).isEnabled()) {
-                  if (this.eA()) {
-                     this.q(true);
+                  if (this.isDualSword()) {
+                     this.releaseBlock(true);
                   } else if (!this.lV.wo().getName().equals("Watchdog 1.12")) {
-                     if (this.lV.wo().getName().equals("Watchdog") && !this.mz && nQ && !SlotComponent.dj) {
-                        if (this.ez()) {
-                           this.mz = true;
+                     if (this.lV.wo().getName().equals("Watchdog") && !this.fakeBlocked && blocking && !SlotComponent.dj) {
+                        if (this.flickSlot()) {
+                           this.fakeBlocked = true;
                         }
                      } else if (!BadPacketsComponent.aW()) {
-                        this.p(false);
+                        this.unblock(false);
                      }
                   } else if (!BadPacketsComponent.aW()) {
                      int bCP2 = aEg.playerController.bCP;
@@ -1059,12 +1059,12 @@ public class KillAura extends Module {
                         nextInt2 = ThreadLocalRandom.current().nextInt(8);
                      } while (bCP2 == nextInt2);
 
-                     if (nQ && !SlotComponent.dj) {
+                     if (blocking && !SlotComponent.dj) {
                         aEg.getNetHandler().addToSendQueue(new l(nextInt2));
                         aEg.playerController.bCP = nextInt2;
                         aEg.getNetHandler().addToSendQueue(new l(bCP2));
                         aEg.playerController.bCP = bCP2;
-                        nQ = false;
+                        blocking = false;
                      }
                   }
 
@@ -1141,11 +1141,11 @@ public class KillAura extends Module {
          }
       };
       this.onWorldChange = var1x -> {
-         this.oB = -1;
-         this.oC = -1;
-         this.oH = -1;
-         this.oJ = false;
-         this.eW();
+         this.blockSlot = -1;
+         this.lastBlockAttackTick = -1;
+         this.rightClickTick = -1;
+         this.rightClickHandled = false;
+         this.resetAdvancedState();
          if (this.autoDisable.wo()) {
             this.toggle();
          }
@@ -1154,24 +1154,24 @@ public class KillAura extends Module {
          Object var220 = null;
          Object var221 = null;
          Object var249 = null;
-         this.oD = false;
-         this.oJ = false;
-         if (!this.eG()) {
-            if (this.oF) {
-               this.eL();
+         this.blockQueued = false;
+         this.rightClickHandled = false;
+         if (!this.handleRightClickBlock()) {
+            if (this.pendingDisable) {
+               this.applyPendingDisable();
             } else {
-               this.eH();
-               this.eI();
+               this.updateWatchdogFallback();
+               this.warnMissingSecondSword();
                if (aEg.thePlayer.isSprinting() || this.jE == null || !this.newUniversalKeepSprint.wo()) {
-                  this.mC = false;
+                  this.sprintCancelled = false;
                }
 
                if (!RotationComponent.bK()) {
-                  if (this.my > 0) {
-                     this.my--;
+                  if (this.attackPending > 0) {
+                     this.attackPending--;
                   }
 
-                  mB = this.my > 0;
+                  attacking = this.attackPending > 0;
                   if (this.lV.wo().getName().equals("Watchdog 1.12")
                      && !ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_13)
                      && LastConnectionComponent.ip != null
@@ -1204,25 +1204,25 @@ public class KillAura extends Module {
                   }
 
                   aEg.entityRenderer.getMouseOver(1.0F);
-                  nR = !BadPacketsComponent.bad(false, false, false, true, true);
+                  canAttack = !BadPacketsComponent.bad(false, false, false, true, true);
                   if (aEg.thePlayer.getHealth() <= 0.0 && this.autoDisable.wo()) {
                      this.toggle();
                   }
 
                   if (!this.e(Scaffold.class).isEnabled() || this.attackWhilstScaffolding.wo()) {
-                     if (Breaker.abT && this.e(Breaker.class).isEnabled() && !this.e(Breaker.class).attackWhileBreaking.wo()) {
+                     if (Breaker.breakingBed && this.e(Breaker.class).isEnabled() && !this.e(Breaker.class).attackWhileBreaking.wo()) {
                         this.jE = null;
-                        this.ek();
-                     } else if (!this.eY()) {
+                        this.updateBlockForMode();
+                     } else if (!this.isWeaponAllowed()) {
                         this.jE = null;
-                        this.ek();
+                        this.updateBlockForMode();
                      } else {
                         this.attack = Math.max(Math.min(this.attack, this.attack - 2), 0);
                         var220 = this.e(Manager.class);
                         var249 = this.e(OldManager.class);
                         var221 = this.e(Stealer.class);
                         int jJ2 = (Manager)var220 != null && ((Manager)var220).isEnabled() && ((Manager)var220).jJ() ? 1 : 0;
-                        int jJ3 = (OldManager)var249 != null && ((OldManager)var249).isEnabled() && ((OldManager)var249).jJ() ? 1 : 0;
+                        int jJ3 = (OldManager)var249 != null && ((OldManager)var249).isEnabled() && ((OldManager)var249).isSorting() ? 1 : 0;
                         int enabled = (Stealer)var221 != null && ((Stealer)var221).isEnabled() && aEg.currentScreen instanceof GuiChest ? 1 : 0;
                         int notFlag = !GUIDetectionComponent.inGUI() && !aEg.gameSettings.cgI.isKeyDown() && !BadPacketsComponent.a(true, false, false, false, true, false) && jJ3 == 0 && enabled == 0 ? 0 : 1;
                         if (aEg.thePlayer.ticksExisted % 20 == 0 && !this.lV.wo().getName().equals("Watchdog 1.8")) {
@@ -1241,20 +1241,20 @@ public class KillAura extends Module {
                            this.updateTargets();
                            if (this.targets.isEmpty()) {
                               this.jE = null;
-                              this.eW();
-                              this.ek();
+                              this.resetAdvancedState();
+                              this.updateBlockForMode();
                            } else {
                               this.jE = this.targets.get(0);
                               if (this.jE != null && !aEg.thePlayer.isDead) {
                                  if (this.eX()) {
-                                    this.ex();
+                                    this.updateAutoBlock();
                                  } else {
-                                    this.ek();
+                                    this.updateBlockForMode();
                                  }
 
-                                 this.eS();
-                                 this.el();
-                                 this.oM = this.oL
+                                 this.updateKnockbackPlan();
+                                 this.updateRotations();
+                                 this.espTargets = this.lastHitTicks
                                     .entrySet()
                                     .stream()
                                     .filter(var0 -> aEg.thePlayer.ticksExisted - var0.getValue() <= 5)
@@ -1262,12 +1262,12 @@ public class KillAura extends Module {
                                     .map(EntityLivingBase.class::cast)
                                     .collect(Collectors.toList());
                                  if (this.mode.wo().getName().equals("Single") && this.jE != null) {
-                                    this.oM.clear();
-                                    this.oM.add(this.jE);
+                                    this.espTargets.clear();
+                                    this.espTargets.add(this.jE);
                                  }
                               } else {
-                                 this.eW();
-                                 this.ek();
+                                 this.resetAdvancedState();
+                                 this.updateBlockForMode();
                               }
                            }
                         }
@@ -1279,10 +1279,10 @@ public class KillAura extends Module {
       };
       this.onPreUpdate = var1x -> {
          Object var35 = null;
-         if (!this.oF && !this.oJ) {
+         if (!this.pendingDisable && !this.rightClickHandled) {
             if (this.jE != null && !aEg.thePlayer.isDead) {
-               if (this.es()) {
-                  this.my = 2;
+               if (this.isAttackReady()) {
+                  this.attackPending = 2;
                }
 
                var35 = this.lV.wo().getName();
@@ -1307,9 +1307,9 @@ public class KillAura extends Module {
       };
       this.onMouseOver = var1x -> var1x.setRange(var1x.dA() + this.range.wo().doubleValue() - 3.0);
       this.onPostMotion = var1x -> {
-         if (!this.oJ) {
+         if (!this.rightClickHandled) {
             if (this.jE != null && this.eX()) {
-               this.eM();
+               this.postMotionBlock();
             }
          }
       };
@@ -1325,15 +1325,15 @@ public class KillAura extends Module {
          if (!var1x.isCancelled()) {
             var16 = var1x.dq();
             if ((Packet)var16 instanceof m) {
-               cK = true;
+               blockPacketSent = true;
             } else if ((Packet)var16 instanceof C03PacketPlayer) {
-               cK = false;
+               blockPacketSent = false;
             }
 
             this.packetBlock(var1x);
          }
       };
-      this.oX = var1x -> {
+      this.onAutoBlock = var1x -> {
          Object var41 = null;
          if (this.jE != null) {
             SlotComponent var10000 = this.d(SlotComponent.class);
@@ -1389,19 +1389,19 @@ public class KillAura extends Module {
          }
       };
       this.onClick = var1x -> {
-         if (this.lV.wo().getName().equals("Watchdog") && this.jE != null && this.nY == 2) {
+         if (this.lV.wo().getName().equals("Watchdog") && this.jE != null && this.blockStage == 2) {
             var1x.setCancelled();
          }
       };
       this.onJump = var1x -> {
-         if (this.newUniversalKeepSprint.wo() && this.mC && !aEg.thePlayer.isSprinting()) {
+         if (this.newUniversalKeepSprint.wo() && this.sprintCancelled && !aEg.thePlayer.isSprinting()) {
             var1x.setCancelled();
          } else {
             if (!this.lV.wo().getName().equals("Watchdog") || this.rightClickOnly.wo() && !aEg.gameSettings.cgI.isKeyDown()) {
-               if (this.oldPredictionKeepSprint.wo() && aEg.thePlayer.ticksExisted % 2 == 0 && mB && this.jE != null && PlayerUtil.v(this.jE) <= 3.0 + MoveUtil.speed()) {
+               if (this.oldPredictionKeepSprint.wo() && aEg.thePlayer.ticksExisted % 2 == 0 && attacking && this.jE != null && PlayerUtil.v(this.jE) <= 3.0 + MoveUtil.speed()) {
                   var1x.setCancelled();
                }
-            } else if (!this.newYouNeedThisToggledOnCurreFake.wo() && this.oldPredictionKeepSprint.wo() && this.nY == 2 && mB && this.jE != null && PlayerUtil.v(this.jE) <= 3.0 + MoveUtil.speed()) {
+            } else if (!this.newYouNeedThisToggledOnCurreFake.wo() && this.oldPredictionKeepSprint.wo() && this.blockStage == 2 && attacking && this.jE != null && PlayerUtil.v(this.jE) <= 3.0 + MoveUtil.speed()) {
                var1x.setCancelled();
             }
          }
@@ -1416,7 +1416,7 @@ public class KillAura extends Module {
             var1x.setSlowDown(1.0);
          }
       };
-      this.pb = var1x -> {
+      this.onKeepSprintCancel = var1x -> {
          if (this.lV.wo().getName().equals("Watchdog")
             && this.jE != null
             && PlayerUtil.v(this.jE) <= 3.0 + MoveUtil.speed()
@@ -1429,19 +1429,19 @@ public class KillAura extends Module {
          if (!this.lV.wo().getName().equals("Watchdog") || this.rightClickOnly.wo() && !aEg.gameSettings.cgI.isKeyDown()) {
             if (this.oldPredictionKeepSprint.wo()
                && aEg.thePlayer.ticksExisted % 2 == 0
-               && mB
+               && attacking
                && this.jE != null
                && PlayerUtil.v(this.jE) <= 3.0 + MoveUtil.speed()
-               && (aEg.thePlayer.ae >= 7 || this.eZ())) {
+               && (aEg.thePlayer.ae >= 7 || this.isGrimSpeedActive())) {
                aEg.thePlayer.setSprinting(false);
             }
          } else if (!this.newYouNeedThisToggledOnCurreFake.wo()
             && this.oldPredictionKeepSprint.wo()
-            && this.nY > 1
-            && mB
+            && this.blockStage > 1
+            && attacking
             && this.jE != null
             && PlayerUtil.v(this.jE) <= 3.0 + MoveUtil.speed()
-            && (aEg.thePlayer.ae >= 7 || this.eZ())) {
+            && (aEg.thePlayer.ae >= 7 || this.isGrimSpeedActive())) {
             aEg.thePlayer.setSprinting(false);
          }
       };
@@ -1501,7 +1501,7 @@ public class KillAura extends Module {
                }
          }
 
-         if (this.blockSlowdown.wo() && nQ && this.eX()) {
+         if (this.blockSlowdown.wo() && blocking && this.eX()) {
             var1x.setCancelled(false);
             var1x.k(true);
          }
@@ -1577,11 +1577,11 @@ public class KillAura extends Module {
             }
 
             var145 = var143_hi != 0 ? 16.0 : 10.0;
-            this.oN.Q((Double)var145);
-            var152 = (float)this.oN.getValue();
+            this.fovCircleRadius.Q((Double)var145);
+            var152 = (float)this.fovCircleRadius.getValue();
             var163 = (EntityLivingBase)var127 != null ? var183 : 0.0;
-            this.oO.Q(var163);
-            var126 = this.oO.getValue();
+            this.fovCircleYaw.Q(var163);
+            var126 = this.fovCircleYaw.getValue();
             GL11.glPushMatrix();
             GL11.glDisable(3553);
             GL11.glEnable(2848);
@@ -1646,31 +1646,31 @@ public class KillAura extends Module {
       this.movementCorrection.setDefault(MovementFix.OFF);
    }
 
-   public boolean eK() {
+   public boolean isOnSwordSlot() {
       Object var55 = null;
-      var55 = this.eD();
+      var55 = this.findSwordSlots();
       if (((int[])var55)[1] == -1) {
          return false;
       }
-      if (this.oB != ((int[])var55)[0] && this.oB != ((int[])var55)[1]) {
+      if (this.blockSlot != ((int[])var55)[0] && this.blockSlot != ((int[])var55)[1]) {
          SlotComponent var10000 = this.d(SlotComponent.class);
          int bQ2 = SlotComponent.bQ();
          if (bQ2 != ((int[])var55)[0] && bQ2 != ((int[])var55)[1]) {
             return false;
          }
 
-         this.oB = bQ2;
+         this.blockSlot = bQ2;
       }
 
       SlotComponent var59 = this.d(SlotComponent.class);
-      if (SlotComponent.bQ() != this.oB) {
-         SlotComponent.b(this.oB, false);
+      if (SlotComponent.bQ() != this.blockSlot) {
+         SlotComponent.b(this.blockSlot, false);
       }
 
       return true;
    }
 
-   public float a(EntityLivingBase living, float var2) {
+   public float computePitch(EntityLivingBase living, float var2) {
       double var23 = 0.0;
       Object var25 = null;
       double var26 = 0.0;
@@ -1694,7 +1694,7 @@ public class KillAura extends Module {
       return (float)var23;
    }
 
-   public long a(double var1, double var3, long var5, long var7) {
+   public long jitteredDelay(double var1, double var3, long var5, long var7) {
       double var13 = 0.0;
       var13 = var1;
       if (var3 > 1.0E-4) {
@@ -1714,12 +1714,12 @@ public class KillAura extends Module {
 
    public void b(KnockbackSample var1) {
       if (var1 != null && aEg.thePlayer != null) {
-         this.eU();
+         this.getServerPitch();
          float var10000 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(var1.yaw - aEg.thePlayer.pl);
       }
    }
 
-   public void a(Vector2f vec2, Vector2f var2) {
+   public void planOvershoot(Vector2f vec2, Vector2f var2) {
       float var35 = 0.0F;
       float var36 = 0.0F;
       float var37 = 0.0F;
@@ -1756,7 +1756,7 @@ public class KillAura extends Module {
             var38 = var2.x + var49 * var50 + var53 * var41;
             var35 = MathHelper.clamp_float(var2.y + var36 * var50 + var49 * var41 * 0.65F, -89.0F, 89.0F);
             this.on = new Vector2f(var38, var35);
-            this.oo = 8 + this.random.nextInt(6);
+            this.overshootTicks = 8 + this.random.nextInt(6);
          }
       }
    }
@@ -1765,10 +1765,10 @@ public class KillAura extends Module {
       return false;
    }
 
-   public boolean ez() {
+   public boolean flickSlot() {
       if (aEg.thePlayer == null || SlotComponent.dj) {
          return false;
-      } else if (this.oA == aEg.thePlayer.ticksExisted) {
+      } else if (this.lastSlotFlickTick == aEg.thePlayer.ticksExisted) {
          return false;
       }
       SlotComponent var10000 = this.d(SlotComponent.class);
@@ -1786,24 +1786,24 @@ public class KillAura extends Module {
             SlotComponent.setSlot(bQ2);
          }
 
-         this.p(true);
+         this.unblock(true);
       } else {
-         this.p(true);
+         this.unblock(true);
          if (!this.blockSlowdown.wo()) {
             SlotComponent.setSlot(nextInt2);
             SlotComponent.setSlot(bQ2);
          }
       }
 
-      this.oA = aEg.thePlayer.ticksExisted;
+      this.lastSlotFlickTick = aEg.thePlayer.ticksExisted;
       return true;
    }
 
-   public boolean eC() {
-      return this.lV.wo().getName().equals("Watchdog") || this.eA();
+   public boolean usesWatchdogBlock() {
+      return this.lV.wo().getName().equals("Watchdog") || this.isDualSword();
    }
 
-   public void ek() {
+   public void updateBlockForMode() {
       Object var50 = null;
       var50 = this.lV.wo().getName();
       int var43_hi = -1;
@@ -1826,12 +1826,12 @@ public class KillAura extends Module {
 
       switch (var43_hi) {
          case 0:
-            this.nY = -1;
+            this.blockStage = -1;
          case 1:
          default:
             break;
          case 2:
-            this.q(true);
+            this.releaseBlock(true);
       }
    }
 
@@ -1842,7 +1842,7 @@ public class KillAura extends Module {
       }
    }
 
-   public double a(AxisAlignedBB box, int var2) {
+   public double findSurfaceBelow(AxisAlignedBB box, int var2) {
       Object var125 = null;
       Object var133 = null;
       double var140 = 0.0;
@@ -1880,25 +1880,25 @@ public class KillAura extends Module {
       return var11 == Double.longBitsToDouble(9218868437227405312L) ? -1.0 : var11;
    }
 
-   public boolean ep() {
+   public boolean stopSprinting() {
       if (aEg.thePlayer.cqL == 1) {
          return true;
       } else if (aEg.thePlayer.isSprinting()) {
          aEg.thePlayer.setSprinting(false);
          aEg.gameSettings.cgG.setPressed(false);
-         this.mC = true;
+         this.sprintCancelled = true;
          return true;
       }
       return false;
    }
 
-   public boolean fa() {
+   public boolean isGrimVelocityActive() {
       Object var15 = null;
       var15 = this.e(Velocity.class);
-      return (Velocity)var15 != null && ((Velocity)var15).isEnabled() && ((Velocity)var15).mode.wo().getName().equals("Grim") && GrimVelocity.tQ;
+      return (Velocity)var15 != null && ((Velocity)var15).isEnabled() && ((Velocity)var15).mode.wo().getName().equals("Grim") && GrimVelocity.rotating;
    }
 
-   public void ex() {
+   public void updateAutoBlock() {
       double var464 = 0.0;
       int nextInt2;
       Object var486 = null;
@@ -1964,17 +1964,17 @@ public class KillAura extends Module {
       switch (var441_hi) {
          case 0:
             var464 = PlayerUtil.v(this.jE);
-            aEg.gameSettings.cgI.setPressed(var464 < 3.0 && this.oa <= 5 && aEg.thePlayer.ae >= 5);
-            this.nY++;
+            aEg.gameSettings.cgI.setPressed(var464 < 3.0 && this.ticksSinceAttack <= 5 && aEg.thePlayer.ae >= 5);
+            this.blockStage++;
             if (aEg.gameSettings.cgI.isPressed() || aEg.thePlayer.isUsingItem()) {
-               this.nY = 0;
+               this.blockStage = 0;
             }
 
-            nR = this.nY >= 2;
+            canAttack = this.blockStage >= 2;
             break;
          case 1:
          case 2:
-            nR = true;
+            canAttack = true;
             break;
          case 3:
             SlotComponent var536 = this.d(SlotComponent.class);
@@ -1990,27 +1990,27 @@ public class KillAura extends Module {
                nextInt2 = ThreadLocalRandom.current().nextInt(8);
             } while (bCP2 == nextInt2);
 
-            if (nQ && !SlotComponent.dj) {
+            if (blocking && !SlotComponent.dj) {
                aEg.getNetHandler().addToSendQueue(new l(nextInt2));
                aEg.playerController.bCP = nextInt2;
                aEg.getNetHandler().addToSendQueue(new l(bCP2));
                aEg.playerController.bCP = bCP2;
-               nQ = false;
+               blocking = false;
             }
 
             if (!BadPacketsComponent.a(false, false, false, false, true, true)) {
-               nR = true;
+               canAttack = true;
             } else {
-               nR = false;
+               canAttack = false;
             }
             break;
          case 5:
-            if (nQ) {
+            if (blocking) {
                SlotComponent var534 = this.d(SlotComponent.class);
                PacketUtil.send(new l(SlotComponent.bQ() % 8 + 1));
                var534 = this.d(SlotComponent.class);
                PacketUtil.send(new l(SlotComponent.bQ()));
-               nQ = false;
+               blocking = false;
             }
             break;
          case 6:
@@ -2023,40 +2023,40 @@ public class KillAura extends Module {
             break;
          case 7:
             if (aEg.playerController.curBlockDamageMP != 0.0F && aEg.objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
-               this.nY = 0;
+               this.blockStage = 0;
                return;
             }
 
-            this.nY++;
-            if (this.nY > 5) {
-               this.nY = 2;
+            this.blockStage++;
+            if (this.blockStage > 5) {
+               this.blockStage = 2;
             }
 
             BlinkComponent.a(99999, false, false, false, false, true);
-            switch (this.nY) {
+            switch (this.blockStage) {
                case 2:
                   this.block(false, true);
                   return;
                case 3:
-                  this.p(false);
+                  this.unblock(false);
                   return;
                default:
                   return;
             }
          case 8:
             if (aEg.playerController.curBlockDamageMP != 0.0F && aEg.objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
-               this.nY = 0;
+               this.blockStage = 0;
             }
 
-            this.nY++;
-            if (this.nY >= (this.nU ? 3 : 4)) {
-               this.nY = 1;
+            this.blockStage++;
+            if (this.blockStage >= (this.shortBlockCycle ? 3 : 4)) {
+               this.blockStage = 1;
             }
 
-            switch (this.nY) {
+            switch (this.blockStage) {
                case 1:
-                  this.nU = !this.newYouNeedThisToggledOnCurreFake.wo();
-                  if (!nQ) {
+                  this.shortBlockCycle = !this.newYouNeedThisToggledOnCurreFake.wo();
+                  if (!blocking) {
                      ;
                   }
 
@@ -2068,24 +2068,24 @@ public class KillAura extends Module {
                      nextInt3 = ThreadLocalRandom.current().nextInt(9);
                   }
 
-                  if (ServerUtil.vn() && Math.random() > 0.5 && !this.blockSlowdown.wo() && !this.nU) {
+                  if (ServerUtil.vn() && Math.random() > 0.5 && !this.blockSlowdown.wo() && !this.shortBlockCycle) {
                      SlotComponent.setSlot(nextInt3);
                      SlotComponent.setSlot(bQ2);
-                     this.p(false);
+                     this.unblock(false);
                   }
 
                   BlinkComponent.blink();
                   return;
                case 2:
                   if (!ServerUtil.vn()) {
-                     this.p(false);
+                     this.unblock(false);
                   }
 
-                  if (!nQ) {
+                  if (!blocking) {
                      ;
                   }
 
-                  if (this.nU) {
+                  if (this.shortBlockCycle) {
                      SlotComponent var531 = this.d(SlotComponent.class);
                      int bQ3 = SlotComponent.bQ();
                      int nextInt4 = ThreadLocalRandom.current().nextInt(9);
@@ -2094,24 +2094,24 @@ public class KillAura extends Module {
                         nextInt4 = ThreadLocalRandom.current().nextInt(9);
                      }
 
-                     nR = false;
+                     canAttack = false;
                      BlinkComponent.bf();
                      if (!this.blockSlowdown.wo()) {
                         SlotComponent.setSlot(nextInt4);
                         SlotComponent.setSlot(bQ3);
                      }
 
-                     this.p(true);
-                     this.mz = true;
+                     this.unblock(true);
+                     this.fakeBlocked = true;
                   }
 
                   return;
                case 3:
-                  if (!this.mz && nQ) {
+                  if (!this.fakeBlocked && blocking) {
                      ;
                   }
 
-                  if (!this.nU) {
+                  if (!this.shortBlockCycle) {
                      SlotComponent var10000 = this.d(SlotComponent.class);
                      int bQ4 = SlotComponent.bQ();
                      int nextInt5 = ThreadLocalRandom.current().nextInt(9);
@@ -2120,7 +2120,7 @@ public class KillAura extends Module {
                         nextInt5 = ThreadLocalRandom.current().nextInt(9);
                      }
 
-                     nR = false;
+                     canAttack = false;
                      BlinkComponent.bf();
                      if (ServerUtil.vn()) {
                         if (!this.blockSlowdown.wo()) {
@@ -2128,16 +2128,16 @@ public class KillAura extends Module {
                            SlotComponent.setSlot(bQ4);
                         }
 
-                        this.p(true);
+                        this.unblock(true);
                      } else {
-                        this.p(true);
+                        this.unblock(true);
                         if (!this.blockSlowdown.wo()) {
                            SlotComponent.setSlot(nextInt5);
                            SlotComponent.setSlot(bQ4);
                         }
                      }
 
-                     this.mz = true;
+                     this.fakeBlocked = true;
                   }
 
                   return;
@@ -2145,7 +2145,7 @@ public class KillAura extends Module {
                   return;
             }
          case 9:
-            nR = this.eK() && !BadPacketsComponent.bad(false, false, false, true, true) && !ServerUtil.vn() || this.eK() && !BadPacketsComponent.bad(false, false, false, true, true) && Math.random() < 0.6;
+            canAttack = this.isOnSwordSlot() && !BadPacketsComponent.bad(false, false, false, true, true) && !ServerUtil.vn() || this.isOnSwordSlot() && !BadPacketsComponent.bad(false, false, false, true, true) && Math.random() < 0.6;
             break;
          case 10:
             BlinkComponent.bf();
@@ -2153,7 +2153,7 @@ public class KillAura extends Module {
       }
    }
 
-   public int[] eD() {
+   public int[] findSwordSlots() {
       Object var61 = null;
       Object var68 = null;
       var68 = new int[]{-1, -1};
@@ -2175,34 +2175,34 @@ public class KillAura extends Module {
       return (int[])var68;
    }
 
-   public boolean es() {
+   public boolean isAttackReady() {
       Object var36 = null;
       double var38 = 0.0;
-      var36 = this.eo();
+      var36 = this.getAttackDelay();
       var38 = (Double)((Tuple)var36).getSecond();
       int booleanValue2 = (int)(((Boolean)((Tuple)var36).getFirst()).booleanValue() ? 1L : 0L);
-      return this.nO.T(this.nT - 50L)
+      return this.attackTimer.T(this.attackInterval - 50L)
          && this.jE != null
-         && (this.nP.T((long)(var38 * 50.0) - 50L) || booleanValue2 != 0)
+         && (this.swingTimer.T((long)(var38 * 50.0) - 50L) || booleanValue2 != 0)
          && (!this.clickMode.wo().getName().equals("Hit Select") || this.jE.hurtTime <= PingSpoofComponent.getPing() / 50L - 1L || aEg.thePlayer.ae <= 11)
-         && nR;
+         && canAttack;
    }
 
-   public void eS() {
-      if (this.eV() && this.jE != null && this.eT()) {
-         this.mD = this.j(this.jE);
+   public void updateKnockbackPlan() {
+      if (this.isDisplacementEnabled() && this.jE != null && this.hasKnockbackSource()) {
+         this.knockbackPlan = this.sampleKnockback(this.jE);
       } else {
-         this.mD = null;
+         this.knockbackPlan = null;
       }
    }
 
-   public int eJ() {
+   public int getOtherSwordSlot() {
       Object var89 = null;
-      var89 = this.eD();
+      var89 = this.findSwordSlots();
       if (((int[])var89)[1] == -1) {
          return -1;
       }
-      int oB2 = this.oB;
+      int oB2 = this.blockSlot;
       if (oB2 != ((int[])var89)[0] && oB2 != ((int[])var89)[1]) {
          SlotComponent var10000 = this.d(SlotComponent.class);
          oB2 = SlotComponent.bQ();
@@ -2217,24 +2217,24 @@ public class KillAura extends Module {
    @Override
    public void onDisable() {
       int nextInt2;
-      this.oF = false;
-      this.oH = -1;
-      this.oJ = false;
-      this.mz = false;
-      this.nN.forEach(PacketUtil::sendNoEvent);
-      this.nN.clear();
+      this.pendingDisable = false;
+      this.rightClickTick = -1;
+      this.rightClickHandled = false;
+      this.fakeBlocked = false;
+      this.heldPackets.forEach(PacketUtil::sendNoEvent);
+      this.heldPackets.clear();
       PacketQueueComponent.dispatch();
       this.jE = null;
-      this.mD = null;
-      this.mE = "";
-      this.mF = -1;
-      this.eW();
-      if (this.lV.wo().getName().equals("Watchdog 1.8") && nQ) {
+      this.knockbackPlan = null;
+      this.lastDebugLine = "";
+      this.lastDebugTick = -1;
+      this.resetAdvancedState();
+      if (this.lV.wo().getName().equals("Watchdog 1.8") && blocking) {
          afi.c("for Autoblock to work best keep Killaura enabled unless it's necessary to turn off");
       }
 
-      if (this.eA()) {
-         this.q(true);
+      if (this.isDualSword()) {
+         this.releaseBlock(true);
       } else if (this.lV.wo().getName().equals("Watchdog 1.12")) {
          if (!BadPacketsComponent.aW()) {
             int bCP2 = aEg.playerController.bCP;
@@ -2243,31 +2243,31 @@ public class KillAura extends Module {
                nextInt2 = ThreadLocalRandom.current().nextInt(8);
             } while (bCP2 == nextInt2);
 
-            if (nQ && !SlotComponent.dj) {
+            if (blocking && !SlotComponent.dj) {
                aEg.getNetHandler().addToSendQueue(new l(nextInt2));
                aEg.playerController.bCP = nextInt2;
                aEg.getNetHandler().addToSendQueue(new l(bCP2));
                aEg.playerController.bCP = bCP2;
-               nQ = false;
+               blocking = false;
             }
          }
-      } else if (this.lV.wo().getName().equals("Watchdog") && !this.mz && !SlotComponent.dj && nQ) {
-         this.ez();
+      } else if (this.lV.wo().getName().equals("Watchdog") && !this.fakeBlocked && !SlotComponent.dj && blocking) {
+         this.flickSlot();
       } else if (!BadPacketsComponent.aW()) {
-         this.p(false);
+         this.unblock(false);
       }
 
       aEg.gameSettings.cgI.setPressed(false);
       PacketQueueComponent.cR = false;
-      this.oL.clear();
-      this.oM.clear();
-      if (this.oG) {
+      this.lastHitTicks.clear();
+      this.espTargets.clear();
+      if (this.watchdogFallbackActive) {
          this.lV.co("Dual Sword");
-         this.oG = false;
+         this.watchdogFallbackActive = false;
       }
    }
 
-   public boolean a(EntityLivingBase living, KnockbackSample var2) {
+   public boolean shouldUseKnockbackPlan(EntityLivingBase living, KnockbackSample var2) {
       if (living == null || var2 == null) {
          return false;
       } else if (this.h(living)) {
@@ -2277,14 +2277,14 @@ public class KillAura extends Module {
    }
 
    public boolean h(EntityLivingBase living) {
-      return this.g(living) && aEg.thePlayer.motionY < 0.0;
+      return this.canCriticalHit(living) && aEg.thePlayer.motionY < 0.0;
    }
 
-   public float en() {
+   public float getHitBoxExpand() {
       return 0.0F;
    }
 
-   public double j(double var1) {
+   public double adjustAttackDelay(double var1) {
       Object var115 = null;
       float var125 = 0.0F;
       var115 = this.lV.wo().getName();
@@ -2313,11 +2313,11 @@ public class KillAura extends Module {
 
       switch (var135_hi) {
          case 0:
-            var1 = this.nY >= 4 ? -1.0 : 500.0;
+            var1 = this.blockStage >= 4 ? -1.0 : 500.0;
             break;
          case 1:
             if (aEg.thePlayer.getHeldItem() != null && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
-               if (this.nY == 1 && Math.random() > 0.2 || this.nY == 2 || this.rightClickOnly.wo() && !aEg.gameSettings.cgI.isKeyDown()) {
+               if (this.blockStage == 1 && Math.random() > 0.2 || this.blockStage == 2 || this.rightClickOnly.wo() && !aEg.gameSettings.cgI.isKeyDown()) {
                   var1 = -1.0;
                   if (this.oldPredictionKeepSprint.wo() && !this.eX()) {
                      if (aEg.thePlayer.ticksExisted % 2 != 1 && this.oldPredictionKeepSprint.wo() && aEg.thePlayer.ae >= 7) {
@@ -2346,7 +2346,7 @@ public class KillAura extends Module {
             }
             break;
          case 3:
-            if (aEg.thePlayer.ticksExisted % 2 != 1 && this.oldPredictionKeepSprint.wo() && (aEg.thePlayer.ae >= 7 || this.eZ())) {
+            if (aEg.thePlayer.ticksExisted % 2 != 1 && this.oldPredictionKeepSprint.wo() && (aEg.thePlayer.ae >= 7 || this.isGrimSpeedActive())) {
                var1 = 500.0;
             } else {
                var1 = -1.0;
@@ -2354,7 +2354,7 @@ public class KillAura extends Module {
 
             if ((aEg.thePlayer.getHeldItem() == null || !(aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword))
                && (this.jE != null && aEg.thePlayer.getHeldItem() != null || aEg.thePlayer.getHeldItem() == null)) {
-               this.nY = -1;
+               this.blockStage = -1;
             }
       }
 
@@ -2367,13 +2367,13 @@ public class KillAura extends Module {
                var1 = -1.0;
                if (aEg.thePlayer.cqL < 3 && aEg.thePlayer.onGround && this.oldMovefixBoost.wo()) {
                   RotationComponent.d(false);
-                  var125 = this.a(this.jE, aEg.thePlayer.pl);
+                  var125 = this.computePitch(this.jE, aEg.thePlayer.pl);
                   RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, var125), 10.0, MovementFix.NORMAL);
                }
             }
-         } else if (aEg.thePlayer.cqL < 3 && aEg.thePlayer.onGround && this.oldMovefixBoost.wo() && this.nY == 1 && aEg.thePlayer.ae > 7) {
+         } else if (aEg.thePlayer.cqL < 3 && aEg.thePlayer.onGround && this.oldMovefixBoost.wo() && this.blockStage == 1 && aEg.thePlayer.ae > 7) {
             RotationComponent.d(false);
-            var125 = this.a(this.jE, aEg.thePlayer.pl);
+            var125 = this.computePitch(this.jE, aEg.thePlayer.pl);
             RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, var125), 10.0, MovementFix.NORMAL);
          }
       }
@@ -2381,7 +2381,7 @@ public class KillAura extends Module {
       return var1;
    }
 
-   public long o(boolean var1) {
+   public long getAimReactionDelay(boolean var1) {
       double var8 = 0.0;
       double var10 = 0.0;
       var10 = this.advancedAimReaction.wo().doubleValue();
@@ -2391,40 +2391,40 @@ public class KillAura extends Module {
          var8 *= 0.5;
       }
 
-      return this.a(var10, var8, 20L, 700L);
+      return this.jitteredDelay(var10, var8, 20L, 700L);
    }
 
-   public MovingObjectPosition a(Vector2f vec2, double var2) {
+   public MovingObjectPosition rayCastTarget(Vector2f vec2, double var2) {
       this.movingObjectPosition = null;
       if (this.subtickRaycast.wo()) {
          aEg.entityRenderer.getMouseOver(1.0F);
-         if (this.a(aEg.objectMouseOver, this.jE)) {
+         if (this.isHitOn(aEg.objectMouseOver, this.jE)) {
             this.movingObjectPosition = aEg.objectMouseOver;
             return this.movingObjectPosition;
          }
       }
 
       this.b(vec2, var2);
-      if (!this.a(this.movingObjectPosition, this.jE)) {
+      if (!this.isHitOn(this.movingObjectPosition, this.jE)) {
          this.b(RotationComponent.fk, var2);
       }
 
-      if (!this.a(this.movingObjectPosition, this.jE)) {
+      if (!this.isHitOn(this.movingObjectPosition, this.jE)) {
          this.b(RotationComponent.fm, var2);
       }
 
-      if (this.a(this.movingObjectPosition, this.jE)) {
+      if (this.isHitOn(this.movingObjectPosition, this.jE)) {
          this.b(this.movingObjectPosition);
          return this.movingObjectPosition;
       }
       return this.movingObjectPosition != null && this.movingObjectPosition.typeOfHit == MovingObjectType.ENTITY ? this.movingObjectPosition : null;
    }
 
-   public boolean eT() {
+   public boolean hasKnockbackSource() {
       return (aEg.thePlayer == null || !aEg.thePlayer.isSprinting() && EnchantmentHelper.getKnockbackModifier(aEg.thePlayer) <= 0 ? 104 + -104 : 1) != 0;
    }
 
-   public Vector2f eN() {
+   public Vector2f getPredictedRotations() {
       Object var73 = null;
       double var74 = 0.0;
       double var76 = 0.0;
@@ -2436,39 +2436,39 @@ public class KillAura extends Module {
       double var98 = 0.0;
       double var101 = 0.0;
       Object var103 = null;
-      if (!this.eR()) {
+      if (!this.isAdvancedRotations()) {
          return this.jE == null ? new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch) : this.c(this.jE);
       } else if (this.jE == null) {
          return new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
       }
       var95 = this.jE.getEntityBoundingBox();
       if ((AxisAlignedBB)var95 != null && !((AxisAlignedBB)var95).hasNaN()) {
-         this.eO();
-         var73 = this.eP();
+         this.updateMotionAverages();
+         var73 = this.getPredictedAimPoint();
          var86 = System.currentTimeMillis();
          var74 = aEg.thePlayer.getDistanceToEntity(this.jE);
-         if (this.oq == null) {
-            this.oq = (aka)var73;
-            this.ou = var86 + this.o(false);
+         if (this.aimPoint == null) {
+            this.aimPoint = (aka)var73;
+            this.nextAimUpdate = var86 + this.getAimReactionDelay(false);
          } else {
-            var103 = ((aka)var73).subtract(this.oq);
+            var103 = ((aka)var73).subtract(this.aimPoint);
             var84 = 0.028 + Math.min(0.2, var74 * 0.006);
             var101 = ((aka)var103).wg();
             var76 = 0.36 + Math.min(0.85, var74 * 0.07);
             int flag = var101 > var76 ? 1 : 0;
-            int flag2 = var86 >= this.ou ? 1 : 0;
+            int flag2 = var86 >= this.nextAimUpdate ? 1 : 0;
             if (var101 > (Double)var84 && (flag2 != 0 || flag != 0)) {
                var89 = this.advancedAnchor.wo().doubleValue();
                var98 = Math.min(0.7, Math.max(0.08, var89 + var101 * 0.32));
                var96 = ((AxisAlignedBB)var95).expand(0.12, 0.12, 0.12);
-               this.oq = this.a(this.oq.e(((aka)var103).ag(var98)), (AxisAlignedBB)var96);
-               this.ou = var86 + this.o((flag) != 0);
+               this.aimPoint = this.clampToBox(this.aimPoint.e(((aka)var103).ag(var98)), (AxisAlignedBB)var96);
+               this.nextAimUpdate = var86 + this.getAimReactionDelay((flag) != 0);
             }
          }
 
          var103 = (AxisAlignedBB)var95;
-         var84 = new Vec3(this.oq.x, this.oq.y, this.oq.z);
-         return RotationUtil.h(RotationUtil.a(this.jE, (AxisAlignedBB)var103, (Vec3)var84, this.range.wo().doubleValue(), this.em(), this.en()));
+         var84 = new Vec3(this.aimPoint.x, this.aimPoint.y, this.aimPoint.z);
+         return RotationUtil.h(RotationUtil.a(this.jE, (AxisAlignedBB)var103, (Vec3)var84, this.range.wo().doubleValue(), this.canHitThroughWalls(), this.getHitBoxExpand()));
       }
       return RotationUtil.y(this.jE);
    }
@@ -2476,37 +2476,37 @@ public class KillAura extends Module {
    public void b(Vector2f vec2, double var2) {
       Object var10 = null;
       if (vec2 != null) {
-         var10 = aef.rayCast(vec2, var2, this.en(), aEg.thePlayer, this.em());
+         var10 = aef.rayCast(vec2, var2, this.getHitBoxExpand(), aEg.thePlayer, this.canHitThroughWalls());
          if ((MovingObjectPosition)var10 != null && ((MovingObjectPosition)var10).typeOfHit == MovingObjectType.ENTITY) {
             this.movingObjectPosition = (MovingObjectPosition)var10;
          }
       }
    }
 
-   public boolean a(AxisAlignedBB box, Class<? extends Block> type) {
-      return this.a(box, type::isInstance);
+   public boolean containsBlockClass(AxisAlignedBB box, Class<? extends Block> type) {
+      return this.containsBlock(box, type::isInstance);
    }
 
-   public void eI() {
-      if (!this.eA()) {
-         this.oE = false;
+   public void warnMissingSecondSword() {
+      if (!this.isDualSword()) {
+         this.warnedNoSecondSword = false;
       } else {
-         if (!this.eF()) {
-            if (!this.oE) {
+         if (!this.hasTwoSwords()) {
+            if (!this.warnedNoSecondSword) {
                afi.b("Dual Sword Auto Block requires two swords in your hotbar. Get a second sword.");
-               this.oE = true;
+               this.warnedNoSecondSword = true;
             }
          } else {
-            this.oE = false;
+            this.warnedNoSecondSword = false;
          }
       }
    }
 
    public boolean b(AxisAlignedBB box) {
-      return this.a(box, var0 -> var0 == Blocks.fire || var0 == Blocks.flowing_lava || var0 == Blocks.lava);
+      return this.containsBlock(box, var0 -> var0 == Blocks.fire || var0 == Blocks.flowing_lava || var0 == Blocks.lava);
    }
 
-   public KnockbackSample a(EntityLivingBase living, AxisAlignedBB box, double var3, double var5, double var7) {
+   public KnockbackSample evaluateKnockbackCandidate(EntityLivingBase living, AxisAlignedBB box, double var3, double var5, double var7) {
       double var47 = 0.0;
       float var49 = 0.0F;
       Object var50 = null;
@@ -2516,22 +2516,22 @@ public class KillAura extends Module {
       var50 = ((AxisAlignedBB)var59).offset(0.0, -0.35, 0.0);
       String var11 = null;
       var47 = Double.longBitsToDouble(-4503599627370496L);
-      if (this.a((AxisAlignedBB)var59, Material.lava) || this.a((AxisAlignedBB)var50, Material.lava)) {
+      if (this.containsMaterial((AxisAlignedBB)var59, Material.lava) || this.containsMaterial((AxisAlignedBB)var50, Material.lava)) {
          var11 = "Lava";
          var47 = 150.0 - var7 * 8.0;
-      } else if (this.a((AxisAlignedBB)var59, BlockWeb.class) || this.a((AxisAlignedBB)var50, BlockWeb.class)) {
+      } else if (this.containsBlockClass((AxisAlignedBB)var59, BlockWeb.class) || this.containsBlockClass((AxisAlignedBB)var50, BlockWeb.class)) {
          var11 = "Web";
          var47 = 125.0 - var7 * 7.0;
       } else if (!this.b((AxisAlignedBB)var59) && !this.b((AxisAlignedBB)var50)) {
-         if (!this.a((AxisAlignedBB)var59, Blocks.cactus) && !this.a((AxisAlignedBB)var50, Blocks.cactus)) {
-            var56 = this.a((AxisAlignedBB)var50, 24);
+         if (!this.containsBlockEqual((AxisAlignedBB)var59, Blocks.cactus) && !this.containsBlockEqual((AxisAlignedBB)var50, Blocks.cactus)) {
+            var56 = this.findSurfaceBelow((AxisAlignedBB)var50, 24);
             if ((Double)var56 < 0.0) {
                var11 = ((AxisAlignedBB)var50).minY <= 8.0 ? "Void" : "Deep Drop";
                var47 = (((AxisAlignedBB)var50).minY <= 8.0 ? Double.longBitsToDouble(-9072756156650891733L ^ -4434576306040613333L) : 108.0) - var7 * 7.0;
             } else if ((Double)var56 >= 4.0) {
                var11 = "Ditch";
                var47 = 88.0 + Math.min((Double)var56, 10.0) * 3.5 - var7 * 6.0;
-            } else if (this.a((AxisAlignedBB)var59, Material.water) || this.a((AxisAlignedBB)var50, Material.water)) {
+            } else if (this.containsMaterial((AxisAlignedBB)var59, Material.water) || this.containsMaterial((AxisAlignedBB)var50, Material.water)) {
                var11 = "Water";
                var47 = 58.0 + Math.max(0.0, (Double)var56) * 2.0 - var7 * 5.0;
             }
@@ -2547,25 +2547,25 @@ public class KillAura extends Module {
       if (var11 == null) {
          return null;
       }
-      var56 = this.d(var3, var5);
-      var49 = this.a(living, (Float)var56);
+      var56 = this.yawFromDelta(var3, var5);
+      var49 = this.computePitch(living, (Float)var56);
       return new KnockbackSample(living.getEntityId(), (Float)var56, var49, var7, var47, var11);
    }
 
    @Override
    public void setEnabled(boolean enabled) {
-      if (!enabled && this.isEnabled() && this.eA() && aEg.thePlayer != null && aEg.theWorld != null && aEg.getNetHandler() != null) {
-         this.oF = true;
+      if (!enabled && this.isEnabled() && this.isDualSword() && aEg.thePlayer != null && aEg.theWorld != null && aEg.getNetHandler() != null) {
+         this.pendingDisable = true;
       } else {
          if (enabled) {
-            this.oF = false;
+            this.pendingDisable = false;
          }
 
          super.setEnabled(enabled);
       }
    }
 
-   public aka eP() {
+   public aka getPredictedAimPoint() {
       Object var15 = null;
       double var16 = 0.0;
       double var18 = 0.0;
@@ -2574,28 +2574,28 @@ public class KillAura extends Module {
       Object var25 = null;
       var16 = aEg.thePlayer.Ty().v(0.0, aEg.thePlayer.getEyeHeight(), 0.0).g(new aka(this.jE.posX, this.jE.posY + this.jE.height * 0.75, this.jE.posZ));
       var20 = Math.min(3.5, Math.max(0.0, this.advancedPrediction.wo().doubleValue() + var16 * 0.017));
-      var23 = this.or.subtract(this.os);
+      var23 = this.targetMotionAverage.subtract(this.playerMotionAverage);
       var18 = Math.max(0.35, Math.min(this.jE.height * 0.82, this.jE.height - 0.12));
       var25 = (new aka(this.jE.posX, this.jE.posY + var18, this.jE.posZ)).e(((aka)var23).ag(var20));
       var15 = this.jE.getEntityBoundingBox().expand(0.18, 0.1, 0.18);
-      var25 = this.a((aka)var25, (AxisAlignedBB)var15);
+      var25 = this.clampToBox((aka)var25, (AxisAlignedBB)var15);
       return (aka)var25;
    }
 
-   public void ev() {
-      if (this.eA() && nQ) {
-         int eJ2 = this.eJ();
+   public void switchToOtherSword() {
+      if (this.isDualSword() && blocking) {
+         int eJ2 = this.getOtherSwordSlot();
          if (eJ2 == -1) {
-            nR = false;
+            canAttack = false;
          } else {
             SlotComponent.b(eJ2, false);
-            this.oB = eJ2;
-            nQ = false;
+            this.blockSlot = eJ2;
+            blocking = false;
          }
       }
    }
 
-   public aka a(aka var1, AxisAlignedBB box) {
+   public aka clampToBox(aka var1, AxisAlignedBB box) {
       double var13 = 0.0;
       double var15 = 0.0;
       double var17 = 0.0;
@@ -2605,9 +2605,9 @@ public class KillAura extends Module {
       return new aka(var15, var13, var17);
    }
 
-   public boolean f(EntityLivingBase living) {
+   public boolean canDisplaceKnockback(EntityLivingBase living) {
       boolean var10000;
-      if (this.i(living) == null) {
+      if (this.getDisplacementRejection(living) == null) {
          var10000 = true;
       } else {
          byte var5 = -70;
@@ -2621,39 +2621,39 @@ public class KillAura extends Module {
 
    @Override
    public void onEnable() {
-      this.mz = false;
-      this.oB = -1;
-      this.oC = -1;
-      this.oD = false;
-      this.oE = false;
-      this.oF = false;
-      this.oG = false;
-      this.oH = -1;
-      this.oI = aEg.gameSettings.cgI.isKeyDown();
-      this.oJ = false;
+      this.fakeBlocked = false;
+      this.blockSlot = -1;
+      this.lastBlockAttackTick = -1;
+      this.blockQueued = false;
+      this.warnedNoSecondSword = false;
+      this.pendingDisable = false;
+      this.watchdogFallbackActive = false;
+      this.rightClickTick = -1;
+      this.rightClickDown = aEg.gameSettings.cgI.isKeyDown();
+      this.rightClickHandled = false;
       this.attack = 0;
-      this.nY = 0;
-      this.nT = 0L;
-      this.mA = -1;
-      this.mD = null;
-      this.mE = "";
-      this.mF = -1;
-      this.eW();
+      this.blockStage = 0;
+      this.attackInterval = 0L;
+      this.lastVelocityBoostTick = -1;
+      this.knockbackPlan = null;
+      this.lastDebugLine = "";
+      this.lastDebugTick = -1;
+      this.resetAdvancedState();
       if (this.rightClickOnly.wo() && Math.random() > 0.7) {
          afi.b("hold right click to autoblock or turn off right click to autoblock");
       }
    }
 
-   public void eL() {
-      if (this.oF) {
-         this.oF = false;
-         this.q(true);
+   public void applyPendingDisable() {
+      if (this.pendingDisable) {
+         this.pendingDisable = false;
+         this.releaseBlock(true);
          super.setEnabled(false);
       }
    }
 
-   public boolean a(AxisAlignedBB box, Block var2) {
-      return this.a(box, var1x -> {
+   public boolean containsBlockEqual(AxisAlignedBB box, Block var2) {
+      return this.containsBlock(box, var1x -> {
          boolean var10000;
          if (var1x == var2) {
             var10000 = true;
@@ -2668,18 +2668,18 @@ public class KillAura extends Module {
       });
    }
 
-   public boolean eq() {
-      return aEg.thePlayer.ae < 8 && !this.eZ();
+   public boolean shouldSkipKeepSprint() {
+      return aEg.thePlayer.ae < 8 && !this.isGrimSpeedActive();
    }
 
-   public float d(double var1, double var3) {
+   public float yawFromDelta(double var1, double var3) {
       return (float)Math.toDegrees(Math.atan2(-var1, var3)) - 90.0F;
    }
 
-   public boolean er() {
+   public boolean isWithinAttackCooldown() {
       Object var26 = null;
-      var26 = this.eo();
-      int notBooleanValue = !this.nO.T(this.nT) || !this.nP.T((long)((Double)((Tuple)var26).getSecond() * 50.0)) && !((Boolean)((Tuple)var26).getFirst()).booleanValue() ? 0 : 1;
+      var26 = this.getAttackDelay();
+      int notBooleanValue = !this.attackTimer.T(this.attackInterval) || !this.swingTimer.T((long)((Double)((Tuple)var26).getSecond() * 50.0)) && !((Boolean)((Tuple)var26).getFirst()).booleanValue() ? 0 : 1;
       return notBooleanValue != 0 && aEg.thePlayer.getDistanceToEntity(this.jE) <= this.range.wo().doubleValue() + 0.5;
    }
 
@@ -2692,26 +2692,26 @@ public class KillAura extends Module {
       Object var355 = null;
       Object var361 = null;
       Object var363 = null;
-      if (!this.newUniversalKeepSprint.wo() || this.jE == null || this.eq() || !this.er() || !this.ep()) {
-         int eR2 = (int)(this.eR() ? 1L : 0L);
+      if (!this.newUniversalKeepSprint.wo() || this.jE == null || this.shouldSkipKeepSprint() || !this.isWithinAttackCooldown() || !this.stopSprinting()) {
+         int eR2 = (int)(this.isAdvancedRotations() ? 1L : 0L);
          if (eR2 == 0) {
-            this.ov = Integer.MIN_VALUE;
-            this.ow = false;
-            this.ox = 0L;
+            this.triggerEntityId = Integer.MIN_VALUE;
+            this.triggerArmed = false;
+            this.triggerReadyTime = 0L;
          }
 
-         if (!this.rotationMode.wo().getName().equals("Grim") || !this.fa()) {
-            if (!this.eA() && this.velocityBoost.wo() && this.jE != null && (nR || !this.badPacketsCheck.wo())) {
+         if (!this.rotationMode.wo().getName().equals("Grim") || !this.isGrimVelocityActive()) {
+            if (!this.isDualSword() && this.velocityBoost.wo() && this.jE != null && (canAttack || !this.badPacketsCheck.wo())) {
                int ae2 = aEg.thePlayer.ae;
                int intValue2 = this.boostTicks.wo().intValue();
-               if (ae2 < intValue2 && aEg.thePlayer.ticksExisted != this.mA) {
-                  this.mA = aEg.thePlayer.ticksExisted;
-                  int equals2 = this.rotationMode.wo().getName().equals("Grim") && this.nt != null ? 1 : 0;
+               if (ae2 < intValue2 && aEg.thePlayer.ticksExisted != this.lastVelocityBoostTick) {
+                  this.lastVelocityBoostTick = aEg.thePlayer.ticksExisted;
+                  int equals2 = this.rotationMode.wo().getName().equals("Grim") && this.grimRotations != null ? 1 : 0;
                   if (equals2 != 0) {
-                     var258 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.nt.getX() - aEg.thePlayer.pl);
+                     var258 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.grimRotations.getX() - aEg.thePlayer.pl);
                      PacketUtil.send(
                         new C06PacketPlayerPosLook(
-                           aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, (Float)var258, this.nt.getY(), aEg.thePlayer.onGround
+                           aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, (Float)var258, this.grimRotations.getY(), aEg.thePlayer.onGround
                         )
                      );
                   }
@@ -2738,11 +2738,11 @@ public class KillAura extends Module {
                   switch (var260_hi) {
                      case 0:
                      case 1:
-                        var259 = this.a(equals2 != 0 ? this.nt : RotationComponent.fk, this.range.wo().doubleValue());
+                        var259 = this.rayCastTarget(equals2 != 0 ? this.grimRotations : RotationComponent.fk, this.range.wo().doubleValue());
                         if ((MovingObjectPosition)var259 != null) {
                            this.b((MovingObjectPosition)var259);
                         } else if (!this.rayCast.wo()) {
-                           this.d(this.jE);
+                           this.spoofMouseOverTo(this.jE);
                         }
 
                         this.attack(this.jE);
@@ -2764,7 +2764,7 @@ public class KillAura extends Module {
                            return var10000;
                         }).forEach(var1x -> {
                            if (!this.rayCast.wo()) {
-                              this.d(var1x);
+                              this.spoofMouseOverTo(var1x);
                            }
 
                            this.attack(var1x);
@@ -2779,33 +2779,33 @@ public class KillAura extends Module {
                      );
                   }
 
-                  this.nO.aX();
+                  this.attackTimer.aX();
                   return;
                }
             }
 
-            int eA2 = (int)(this.eA() ? 1L : 0L);
-            Tuple var4 = eA2 != 0 ? null : this.eo();
+            int eA2 = (int)(this.isDualSword() ? 1L : 0L);
+            Tuple var4 = eA2 != 0 ? null : this.getAttackDelay();
             var277 = eA2 != 0 ? -1.0 : (Double)var4.getSecond();
             int booleanValue2 = eA2 == 0 && ((Boolean)var4.getFirst()).booleanValue() ? 1 : 0;
-            int t = eA2 != 0 ? (this.oC != -1 && aEg.thePlayer.ticksExisted - this.oC < 2 ? 0 : 1) : (!this.nO.T(this.nT) || !this.nP.T((long)(var277 * 50.0)) && booleanValue2 == 0 ? 0 : 1);
+            int t = eA2 != 0 ? (this.lastBlockAttackTick != -1 && aEg.thePlayer.ticksExisted - this.lastBlockAttackTick < 2 ? 0 : 1) : (!this.attackTimer.T(this.attackInterval) || !this.swingTimer.T((long)(var277 * 50.0)) && booleanValue2 == 0 ? 0 : 1);
             if (t != 0 && this.jE != null) {
                if (eA2 == 0) {
                   var363 = (long)(this.cps.wv().longValue() * 1.5);
-                  this.nT = 1000L / (Long)var363;
+                  this.attackInterval = 1000L / (Long)var363;
                }
 
-               if ((eA2 != 0 || Math.sin(this.nT) + 1.0 > Math.random() || this.nO.T(this.nT + 500L) || Math.random() > 0.5)
-                  && (nR || !this.badPacketsCheck.wo())) {
+               if ((eA2 != 0 || Math.sin(this.attackInterval) + 1.0 > Math.random() || this.attackTimer.T(this.attackInterval + 500L) || Math.random() > 0.5)
+                  && (canAttack || !this.badPacketsCheck.wo())) {
                   var363 = this.range.wo().doubleValue();
-                  int equals3 = this.rotationMode.wo().getName().equals("Grim") && this.nt != null ? 1 : 0;
-                  var355 = equals3 != 0 ? this.nt : RotationComponent.fk;
-                  var361 = this.a((Vector2f)var355, (Double)var363);
+                  int equals3 = this.rotationMode.wo().getName().equals("Grim") && this.grimRotations != null ? 1 : 0;
+                  var355 = equals3 != 0 ? this.grimRotations : RotationComponent.fk;
+                  var361 = this.rayCastTarget((Vector2f)var355, (Double)var363);
                   if (equals3 != 0) {
-                     var304 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.nt.getX() - aEg.thePlayer.pl);
+                     var304 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.grimRotations.getX() - aEg.thePlayer.pl);
                      PacketUtil.send(
                         new C06PacketPlayerPosLook(
-                           aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, (Float)var304, this.nt.getY(), aEg.thePlayer.onGround
+                           aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, (Float)var304, this.grimRotations.getY(), aEg.thePlayer.onGround
                         )
                      );
                   }
@@ -2834,11 +2834,11 @@ public class KillAura extends Module {
                      case 1:
                         int notWo = (!(aEg.thePlayer.getDistanceToEntity(this.jE) <= (Double)var363) || this.rayCast.wo()) && ((MovingObjectPosition)var361 == null || ((MovingObjectPosition)var361).entityHit != this.jE) ? 0 : 1;
                         if (notWo != 0) {
-                           if (eR2 == 0 || this.a(this.jE, (MovingObjectPosition)var361, (Double)var363)) {
+                           if (eR2 == 0 || this.isTriggerReactionElapsed(this.jE, (MovingObjectPosition)var361, (Double)var363)) {
                               if ((MovingObjectPosition)var361 != null) {
                                  this.b((MovingObjectPosition)var361);
                               } else {
-                                 this.d(this.jE);
+                                 this.spoofMouseOverTo(this.jE);
                               }
 
                               this.attack(this.jE);
@@ -2866,7 +2866,7 @@ public class KillAura extends Module {
                                  }
 
                                  if (eR2 != 0) {
-                                    this.eu();
+                                    this.swingAdvanced();
                                  }
                            }
                         } else if (((MovingObjectPosition)var361).entityHit instanceof EntityLivingBase) {
@@ -2880,7 +2880,7 @@ public class KillAura extends Module {
                         if (!livings.isEmpty()) {
                            livings.forEach(var1x -> {
                               if (!this.rayCast.wo()) {
-                                 this.d(var1x);
+                                 this.spoofMouseOverTo(var1x);
                               }
 
                               this.attack(var1x);
@@ -2896,7 +2896,7 @@ public class KillAura extends Module {
                      );
                   }
 
-                  this.nO.aX();
+                  this.attackTimer.aX();
                }
             }
          }
@@ -2955,53 +2955,53 @@ public class KillAura extends Module {
          default:
             break;
          case 2:
-            if (this.oa != 0) {
+            if (this.ticksSinceAttack != 0) {
                this.block(false, true);
             }
             break;
          case 3:
-            nR = false;
-            this.nY++;
+            canAttack = false;
+            this.blockStage++;
             BlinkComponent.blink();
-            int var10000 = this.nY % 2;
+            int var10000 = this.blockStage % 2;
             if (aEg.playerController.curBlockDamageMP != 0.0F && aEg.objectMouseOver.typeOfHit == MovingObjectType.BLOCK) {
             }
             break;
          case 4:
-            if (this.oa == 1 && aEg.thePlayer.isSwingInProgress && Math.random() > 0.1) {
+            if (this.ticksSinceAttack == 1 && aEg.thePlayer.isSwingInProgress && Math.random() > 0.1) {
                this.block(false, true);
             }
             break;
          case 5:
-            if (this.oa == 1) {
+            if (this.ticksSinceAttack == 1) {
                this.block(false, true);
             }
             break;
          case 6:
-            if (!this.nU) {
-               if (this.nY == 2) {
-                  nR = false;
+            if (!this.shortBlockCycle) {
+               if (this.blockStage == 2) {
+                  canAttack = false;
                   this.block(true, false);
                   BlinkComponent.blink();
-                  this.mz = false;
-                  nQ = true;
+                  this.fakeBlocked = false;
+                  blocking = true;
                }
-            } else if (this.nY == 1) {
-               nR = false;
+            } else if (this.blockStage == 1) {
+               canAttack = false;
                this.block(true, false);
                BlinkComponent.blink();
-               this.mz = false;
-               nQ = true;
+               this.fakeBlocked = false;
+               blocking = true;
             }
             break;
          case 7:
-            if (this.oD) {
+            if (this.blockQueued) {
                this.block(true, false);
             }
       }
    }
 
-   public float eU() {
+   public float getServerPitch() {
       return RotationComponent.fk != null ? RotationComponent.fk.getY() : aEg.thePlayer.rotationPitch;
    }
 
@@ -3009,7 +3009,7 @@ public class KillAura extends Module {
       Object var14 = null;
       Object var16 = null;
       Object var17 = null;
-      if (!nQ || !var1) {
+      if (!blocking || !var1) {
          var14 = aef.c(RotationComponent.fl, 3.0);
          if (var2 && (MovingObjectPosition)var14 != null && ((MovingObjectPosition)var14).typeOfHit == MovingObjectType.ENTITY) {
             this.c((MovingObjectPosition)var14);
@@ -3024,23 +3024,23 @@ public class KillAura extends Module {
 
          SlotComponent var10002 = this.d(SlotComponent.class);
          PacketUtil.send(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
-         nQ = true;
+         blocking = true;
       }
    }
 
-   public void d(EntityLivingBase living) {
+   public void spoofMouseOverTo(EntityLivingBase living) {
       if (living != null) {
          this.b(new MovingObjectPosition(living, living.getPositionEyes(1.0F)));
       }
    }
 
-   public boolean eZ() {
+   public boolean isGrimSpeedActive() {
       Object var11 = null;
       var11 = this.e(Speed.class);
       return ((Speed)var11).isEnabled() && ((Speed)var11).getMode().wo() instanceof GrimSpeed && ((GrimSpeed)((Speed)var11).getMode().wo()).fastFall.wo();
    }
 
-   public boolean a(AxisAlignedBB box, Predicate<Block> predicate) {
+   public boolean containsBlock(AxisAlignedBB box, Predicate<Block> predicate) {
       Object var132 = null;
       int floor_double2 = MathHelper.floor_double(box.minX + 1.0E-4);
       int floor_double3 = MathHelper.floor_double(box.maxX - 1.0E-4);
@@ -3063,7 +3063,7 @@ public class KillAura extends Module {
       return false;
    }
 
-   public void eM() {
+   public void postMotionBlock() {
       Object var82 = null;
       var82 = this.lV.wo().getName();
       int var79_hi = -1;
@@ -3089,48 +3089,48 @@ public class KillAura extends Module {
          default:
             break;
          case 1:
-            if (this.nY == 2) {
+            if (this.blockStage == 2) {
                BlinkComponent.dispatch();
             }
             break;
          case 2:
-            this.nY++;
-            if (this.nY > 0
+            this.blockStage++;
+            if (this.blockStage > 0
                && !BadPacketsComponent.a((-9 - 4 ^ -13) != 0, true, false, false, false, true)
                && !this.e(LongJump.class).isEnabled()
                && !SlotComponent.dj
-               && (aEg.thePlayer.ticksExisted % 2 == 0 || !this.oldPredictionKeepSprint.wo() || aEg.thePlayer.ae < 7 && !this.eZ())) {
+               && (aEg.thePlayer.ticksExisted % 2 == 0 || !this.oldPredictionKeepSprint.wo() || aEg.thePlayer.ae < 7 && !this.isGrimSpeedActive())) {
                this.block(true, false);
             }
       }
    }
 
-   public boolean et() {
+   public boolean isAttackDue() {
       double var26 = 0.0;
       Object var35 = null;
-      var35 = this.eo();
+      var35 = this.getAttackDelay();
       var26 = (Double)((Tuple)var35).getSecond();
       int booleanValue2 = (int)(((Boolean)((Tuple)var35).getFirst()).booleanValue() ? 1L : 0L);
-      return this.nO.T(this.nT - 1L)
+      return this.attackTimer.T(this.attackInterval - 1L)
          && this.jE != null
-         && (this.nP.T((long)(var26 * 50.0) - 50L) || booleanValue2 != 0)
+         && (this.swingTimer.T((long)(var26 * 50.0) - 50L) || booleanValue2 != 0)
          && (!this.clickMode.wo().getName().equals("Hit Select") || this.jE.hurtTime <= PingSpoofComponent.getPing() / 50L - 1L || aEg.thePlayer.ae <= 11)
-         && nR;
+         && canAttack;
    }
 
-   public void eO() {
+   public void updateMotionAverages() {
       Object var5 = null;
       Object var6 = null;
       var5 = new aka(this.jE.posX - this.jE.lastTickPosX, this.jE.posY - this.jE.lastTickPosY, this.jE.posZ - this.jE.lastTickPosZ);
       var6 = new aka(
          aEg.thePlayer.posX - aEg.thePlayer.lastTickPosX, aEg.thePlayer.posY - aEg.thePlayer.lastTickPosY, aEg.thePlayer.posZ - aEg.thePlayer.lastTickPosZ
       );
-      this.or = this.or.ag(0.72).e(((aka)var5).ag(0.28));
-      this.os = this.os.ag(0.76).e(((aka)var6).ag(0.24));
+      this.targetMotionAverage = this.targetMotionAverage.ag(0.72).e(((aka)var5).ag(0.28));
+      this.playerMotionAverage = this.playerMotionAverage.ag(0.76).e(((aka)var6).ag(0.24));
    }
 
-   public boolean a(AxisAlignedBB box, Material material) {
-      return this.a(box, var1x -> var1x.getMaterial() == material);
+   public boolean containsMaterial(AxisAlignedBB box, Material material) {
+      return this.containsBlock(box, var1x -> var1x.getMaterial() == material);
    }
 
    public boolean canBlock() {
@@ -3140,12 +3140,12 @@ public class KillAura extends Module {
       }
       SlotComponent var10000 = this.d(SlotComponent.class);
       var13 = SlotComponent.getItemStack();
-      return (ItemStack)var13 != null && ((ItemStack)var13).getItem() instanceof ItemSword && this.eF();
+      return (ItemStack)var13 != null && ((ItemStack)var13).getItem() instanceof ItemSword && this.hasTwoSwords();
    }
 
    static {
 
-      mB = false;
+      attacking = false;
       SQRT3 = (float)Math.sqrt(3.0);
       SQRT5 = (float)Math.sqrt(5.0);
    }
@@ -3158,22 +3158,22 @@ public class KillAura extends Module {
       Client.a.e().d((AttackEvent)var74);
       if (!((AttackEvent)var74).isCancelled() && ((AttackEvent)var74).getLiving() != null) {
          var79 = ((AttackEvent)var74).getLiving();
-         KnockbackSample var4 = this.f((EntityLivingBase)var79) ? this.mD : null;
-         int flag = var4 != null && this.a((EntityLivingBase)var79, var4) ? 1 : 0;
-         RotationSnapshot var6 = flag != 0 ? this.a(var4) : null;
+         KnockbackSample var4 = this.canDisplaceKnockback((EntityLivingBase)var79) ? this.knockbackPlan : null;
+         int flag = var4 != null && this.shouldUseKnockbackPlan((EntityLivingBase)var79, var4) ? 1 : 0;
+         RotationSnapshot var6 = flag != 0 ? this.snapshotRotations(var4) : null;
          if (this.eX()) {
-            this.ev();
+            this.switchToOtherSword();
          }
 
-         this.my = Math.max(this.my, 1);
-         mB = true;
+         this.attackPending = Math.max(this.attackPending, 1);
+         attacking = true;
          if (!this.noSwing.wo() && !ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
             aEg.thePlayer.swingItem();
          }
 
          if (flag != 0 && !this.rotationMode.wo().getName().equals("Grim")) {
             this.b(var4);
-            this.a("forced", var4);
+            this.debugKnockback("forced", var4);
          }
 
          if (this.keepSprint.wo()
@@ -3183,11 +3183,11 @@ public class KillAura extends Module {
                      || !this.e(Velocity.class).mode.wo().getName().equals("Grim Reduce")
                      || this.e(Velocity.class).mode.wo().getName().equals("Grim Reduce") && !((GrimReduceVelocity)this.e(Velocity.class).mode.wo()).stopSprint.wo()
                )
-            || !this.newYouNeedThisToggledOnCurreFake.wo() && this.oldPredictionKeepSprint.wo() && (aEg.thePlayer.ae >= 7 || this.eZ()) && living != null) {
+            || !this.newYouNeedThisToggledOnCurreFake.wo() && this.oldPredictionKeepSprint.wo() && (aEg.thePlayer.ae >= 7 || this.isGrimSpeedActive()) && living != null) {
             aEg.playerController.syncCurrentPlayItem();
             PacketUtil.send(new C02PacketUseEntity((EntityLivingBase)var79, Action.ATTACK));
-            if (this.eC() && this.eX()) {
-               var66 = this.k((EntityLivingBase)var79);
+            if (this.usesWatchdogBlock() && this.eX()) {
+               var66 = this.getHitVec((EntityLivingBase)var79);
                PacketUtil.send(new C02PacketUseEntity((EntityLivingBase)var79, (Vec3)var66));
                PacketUtil.send(new C02PacketUseEntity((EntityLivingBase)var79, Action.INTERACT));
             }
@@ -3202,33 +3202,33 @@ public class KillAura extends Module {
             }
          } else {
             aEg.playerController.attackEntity(aEg.thePlayer, (EntityLivingBase)var79);
-            if (this.eC() && this.eX()) {
-               var66 = this.k((EntityLivingBase)var79);
+            if (this.usesWatchdogBlock() && this.eX()) {
+               var66 = this.getHitVec((EntityLivingBase)var79);
                PacketUtil.send(new C02PacketUseEntity((EntityLivingBase)var79, (Vec3)var66));
                PacketUtil.send(new C02PacketUseEntity((EntityLivingBase)var79, Action.INTERACT));
             }
          }
 
-         if (this.eA()) {
-            this.oD = true;
-            this.oC = aEg.thePlayer.ticksExisted;
+         if (this.isDualSword()) {
+            this.blockQueued = true;
+            this.lastBlockAttackTick = aEg.thePlayer.ticksExisted;
          }
 
          if (var6 != null) {
-            var6.gh();
+            var6.restore();
          }
 
          if (!this.noSwing.wo() && ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
             aEg.thePlayer.swingItem();
          }
 
-         this.nP.aX();
-         this.oa = 0;
-         this.oL.put((EntityLivingBase)var79, aEg.thePlayer.ticksExisted);
+         this.swingTimer.aX();
+         this.ticksSinceAttack = 0;
+         this.lastHitTicks.put((EntityLivingBase)var79, aEg.thePlayer.ticksExisted);
       }
    }
 
-   public boolean g(EntityLivingBase living) {
+   public boolean canCriticalHit(EntityLivingBase living) {
       return living != null
          && aEg.thePlayer.fallDistance > 0.0F
          && !aEg.thePlayer.onGround
@@ -3238,24 +3238,24 @@ public class KillAura extends Module {
          && aEg.thePlayer.ridingEntity == null;
    }
 
-   public String i(EntityLivingBase living) {
-      if (!this.eV()) {
+   public String getDisplacementRejection(EntityLivingBase living) {
+      if (!this.isDisplacementEnabled()) {
          return "disabled";
       } else if (living == null) {
          return "no-target";
-      } else if (this.mD == null) {
+      } else if (this.knockbackPlan == null) {
          return "no-plan";
-      } else if (!this.eT()) {
+      } else if (!this.hasKnockbackSource()) {
          return "no-kb-source";
-      } else if (this.mD.targetId != living.getEntityId()) {
+      } else if (this.knockbackPlan.targetId != living.getEntityId()) {
          return "target-swap";
-      } else if (this.my <= 0 && !this.et()) {
+      } else if (this.attackPending <= 0 && !this.isAttackDue()) {
          return "no-attack-window";
       }
       return this.h(living) ? "crit-priority" : null;
    }
 
-   public void a(String var1, KnockbackSample var2) {
+   public void debugKnockback(String var1, KnockbackSample var2) {
       Object var51 = null;
       Object var52 = null;
       Object var69 = null;
@@ -3275,9 +3275,9 @@ public class KillAura extends Module {
             );
          }
 
-         if (!((String)var51).equals(this.mE) || aEg.thePlayer.ticksExisted - this.mF >= 8) {
-            this.mE = (String)var51;
-            this.mF = aEg.thePlayer.ticksExisted;
+         if (!((String)var51).equals(this.lastDebugLine) || aEg.thePlayer.ticksExisted - this.lastDebugTick >= 8) {
+            this.lastDebugLine = (String)var51;
+            this.lastDebugTick = aEg.thePlayer.ticksExisted;
             String prefix = afi.getPrefix();
             var69 = (String)var51;
             var52 = prefix;
@@ -3286,11 +3286,11 @@ public class KillAura extends Module {
       }
    }
 
-   public boolean a(EntityLivingBase living, double var2) {
+   public boolean isWithinYaw(EntityLivingBase living, double var2) {
       return Math.abs(MathHelper.wrapAngleTo180_float(RotationUtil.y(living).x - aEg.thePlayer.pl)) <= var2;
    }
 
-   public boolean eY() {
+   public boolean isWeaponAllowed() {
       Object var29 = null;
       Object var37 = null;
       if (!this.weapons.wo()) {
@@ -3317,34 +3317,34 @@ public class KillAura extends Module {
       }
    }
 
-   public Vector2f eQ() {
+   public Vector2f getServerRotations() {
       return new Vector2f(RotationComponent.bH());
    }
 
-   public void eH() {
+   public void updateWatchdogFallback() {
       Object var58 = null;
-      var58 = this.eD();
+      var58 = this.findSwordSlots();
       int flag = ((int[])var58)[0] != -1 && ((int[])var58)[1] == -1 ? 1 : 0;
-      if (this.oG) {
+      if (this.watchdogFallbackActive) {
          if (!this.lV.wo().getName().equals("Watchdog")) {
-            this.oG = false;
+            this.watchdogFallbackActive = false;
          } else if (flag == 0 || !this.fallbackToWatchdog.wo()) {
-            if (!nQ || this.ez()) {
-               this.mz = false;
-               this.oG = false;
+            if (!blocking || this.flickSlot()) {
+               this.fakeBlocked = false;
+               this.watchdogFallbackActive = false;
                this.lV.getModes().stream().filter(var0 -> var0.getName().equals("Dual Sword")).findFirst().ifPresent(this.lV::update);
                int var10000 = ((int[])var58)[1];
             }
          }
-      } else if (this.eA() && this.fallbackToWatchdog.wo() && flag != 0) {
-         this.q(true);
-         this.oE = false;
+      } else if (this.isDualSword() && this.fallbackToWatchdog.wo() && flag != 0) {
+         this.releaseBlock(true);
+         this.warnedNoSecondSword = false;
          this.lV.getModes().stream().filter(var0 -> var0.getName().equals("Watchdog")).findFirst().ifPresent(this.lV::update);
-         this.oG = true;
+         this.watchdogFallbackActive = true;
       }
    }
 
-   public RotationSnapshot a(KnockbackSample var1) {
+   public RotationSnapshot snapshotRotations(KnockbackSample var1) {
       Object var7 = null;
       float var8 = 0.0F;
       if (var1 != null && aEg.thePlayer != null) {
@@ -3357,7 +3357,7 @@ public class KillAura extends Module {
             aEg.thePlayer.pq,
             aEg.thePlayer.pr
          );
-         var8 = this.eU();
+         var8 = this.getServerPitch();
          aEg.thePlayer.pl = var1.yaw;
          aEg.thePlayer.rotationPitch = var8;
          aEg.thePlayer.rotationYawHead = var1.yaw;
@@ -3370,7 +3370,7 @@ public class KillAura extends Module {
       return null;
    }
 
-   public boolean em() {
+   public boolean canHitThroughWalls() {
       Object var12 = null;
       var12 = this.e(Piercing.class);
       int var10000;
@@ -3386,10 +3386,10 @@ public class KillAura extends Module {
       return var10000 != 0;
    }
 
-   public void p(boolean var1) {
-      if (nQ && (!var1 || !cK)) {
+   public void unblock(boolean var1) {
+      if (blocking && (!var1 || !blockPacketSent)) {
          PacketUtil.send(new C07PacketPlayerDigging(net.minecraft.network.play.client.C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
-         nQ = false;
+         blocking = false;
       }
 
       if (aEg.gameSettings.cgI.isKeyDown()) {
@@ -3402,7 +3402,7 @@ public class KillAura extends Module {
    }
 
    public Vector2f c(EntityLivingBase living) {
-      return this.a(living, this.range.wo().doubleValue(), this.em());
+      return this.computeRotations(living, this.range.wo().doubleValue(), this.canHitThroughWalls());
    }
 
    public void packetBlock(PacketSendEvent event) {
@@ -3421,25 +3421,25 @@ public class KillAura extends Module {
                case 0:
                   if ((Packet)var39 instanceof C03PacketPlayer && this.jE != null) {
                      event.setCancelled();
-                     this.p(false);
+                     this.unblock(false);
                      PacketUtil.sendNoEvent((Packet<?>)var39);
                      this.block(false, (130 + -20 ^ 111) != 0);
-                     this.p(false);
+                     this.unblock(false);
                   }
             }
       }
    }
 
-   public boolean p(int var1) {
+   public boolean shouldHideSwordSlot(int var1) {
       Object var24 = null;
-      if (this.eA() && this.hideSecondSword.wo()) {
-         var24 = this.eD();
+      if (this.isDualSword() && this.hideSecondSword.wo()) {
+         var24 = this.findSwordSlots();
          return ((int[])var24)[1] != -1 && var1 == ((int[])var24)[1];
       }
       return false;
    }
 
-   public void ej() {
+   public void sortFriendsFirst() {
       this.targets.sort((var0, var1) -> {
          int name = (int)(FriendManager.n(var0.getName()) ? 1L : 0L);
          int name2 = (int)(FriendManager.n(var1.getName()) ? 1L : 0L);
@@ -3450,37 +3450,37 @@ public class KillAura extends Module {
       });
    }
 
-   public boolean eA() {
+   public boolean isDualSword() {
       return this.lV.wo().getName().equals("Dual Sword");
    }
 
-   public void q(boolean var1) {
+   public void releaseBlock(boolean var1) {
       if (aEg.thePlayer == null) {
-         this.oB = -1;
-         nQ = false;
+         this.blockSlot = -1;
+         blocking = false;
       } else {
          int currentItem2 = aEg.thePlayer.inventory.currentItem;
-         int flag = var1 && this.oB != -1 && this.oB != currentItem2 && !SlotComponent.dj ? 1 : 0;
+         int flag = var1 && this.blockSlot != -1 && this.blockSlot != currentItem2 && !SlotComponent.dj ? 1 : 0;
          if (flag != 0) {
             SlotComponent.b(currentItem2, false);
-            nQ = false;
-         } else if (nQ) {
-            this.p(false);
+            blocking = false;
+         } else if (blocking) {
+            this.unblock(false);
          }
 
-         this.oB = -1;
+         this.blockSlot = -1;
       }
    }
 
-   public boolean eV() {
+   public boolean isDisplacementEnabled() {
       return this.knockbackDisplacement.wo();
    }
 
-   public void eu() {
-      if (this.eR()) {
+   public void swingAdvanced() {
+      if (this.isAdvancedRotations()) {
          if (this.advancedSwing.wo() && !this.noSwing.wo()) {
             aEg.thePlayer.swingItem();
-            this.nP.aX();
+            this.swingTimer.aX();
          }
       }
    }
@@ -3491,18 +3491,18 @@ public class KillAura extends Module {
       var37 = this.range.wo().doubleValue();
       this.targets = TargetComponent.f(var37);
       if (this.mode.wo().getName().equals("Switch")) {
-         this.targets.removeAll(this.oK);
+         this.targets.removeAll(this.switchHistory);
       }
 
       if (this.targets.isEmpty()) {
-         this.oK.clear();
+         this.switchHistory.clear();
          this.targets = TargetComponent.f(var37 + this.expandRange);
       }
 
       if (this.fOV.wo().doubleValue() < 360.0) {
          var43 = this.fOV.wo().doubleValue() / 2.0;
          final double var43a = (Double)var43;
-         this.targets.removeIf(var3 -> !this.a(var3, var43a));
+         this.targets.removeIf(var3 -> !this.isWithinYaw(var3, var43a));
       }
 
       var43 = this.sorting.wo().getName();
@@ -3522,19 +3522,19 @@ public class KillAura extends Module {
       switch (var31_hi) {
          case 0:
             this.targets.sort(Comparator.comparingDouble(EntityLivingBase::getHealth));
-            this.ej();
+            this.sortFriendsFirst();
             break;
          case 1:
             this.targets.sort(Comparator.comparingDouble(var0 -> var0.hurtTime));
-            this.ej();
+            this.sortFriendsFirst();
       }
    }
 
-   public boolean eB() {
-      return (!this.eA() && !this.oG ? -189 + 97 - -92 : 1) != 0;
+   public boolean isDualSwordEngaged() {
+      return (!this.isDualSword() && !this.watchdogFallbackActive ? -189 + 97 - -92 : 1) != 0;
    }
 
-   public Vec3 k(EntityLivingBase living) {
+   public Vec3 getHitVec(EntityLivingBase living) {
       double var12 = 0.0;
       Object var14 = null;
       Object var15 = null;
@@ -3571,11 +3571,11 @@ public class KillAura extends Module {
       return var11;
    }
 
-   public boolean a(MovingObjectPosition hit, EntityLivingBase living) {
+   public boolean isHitOn(MovingObjectPosition hit, EntityLivingBase living) {
       return hit != null && hit.typeOfHit == MovingObjectType.ENTITY && hit.entityHit == living;
    }
 
-   public void el() {
+   public void updateRotations() {
       Object var133 = null;
       Object var134 = null;
       Object var143 = null;
@@ -3588,8 +3588,8 @@ public class KillAura extends Module {
       Object var184 = null;
       Object var186 = null;
       var179 = this.rotationSpeed.wv().floatValue();
-      if (!this.eR()) {
-         this.eW();
+      if (!this.isAdvancedRotations()) {
+         this.resetAdvancedState();
       }
 
       var133 = this.rotationMode.wo().getName();
@@ -3629,12 +3629,12 @@ public class KillAura extends Module {
       switch (var167_hi) {
          case 0:
             var171 = this.c(this.jE);
-            var171 = this.a(this.jE, (Vector2f)var171);
+            var171 = this.applyKnockbackDisplacement(this.jE, (Vector2f)var171);
             if (var179 != 0.0F) {
                RotationComponent.a(
                   (Vector2f)var171, var179, this.movementCorrection.wo() == MovementFix.OFF ? MovementFix.OFF : this.movementCorrection.wo(), var1 -> {
-                     nS = RotationUtil.a(var1, this.jE, this.range.wo().doubleValue(), this.em(), this.en());
-                     return nS;
+                     inReach = RotationUtil.a(var1, this.jE, this.range.wo().doubleValue(), this.canHitThroughWalls(), this.getHitBoxExpand());
+                     return inReach;
                   }, this.silentRotations.wo()
                );
             }
@@ -3654,7 +3654,7 @@ public class KillAura extends Module {
             var181 = RotationUtil.m(this.c(this.jE));
             this.jE.setPosition(((aka)var143).x, ((aka)var143).y, ((aka)var143).z);
             aEg.thePlayer.setPosition(((aka)var144).x, ((aka)var144).y, ((aka)var144).z);
-            var181 = this.a(this.jE, (Vector2f)var181);
+            var181 = this.applyKnockbackDisplacement(this.jE, (Vector2f)var181);
             if (var179 != 0.0F) {
                if (Math.random() > 0.1) {
                   RotationComponent.a(
@@ -3676,8 +3676,8 @@ public class KillAura extends Module {
             }
             break;
          case 2:
-            var184 = this.a(this.jE, this.c(this.jE));
-            if (var179 != 0.0F && this.et()) {
+            var184 = this.applyKnockbackDisplacement(this.jE, this.c(this.jE));
+            if (var179 != 0.0F && this.isAttackDue()) {
                RotationComponent.d(false);
                RotationComponent.a(
                   (Vector2f)var184,
@@ -3691,16 +3691,16 @@ public class KillAura extends Module {
             }
             break;
          case 3:
-            var170 = this.a(this.jE, this.c(this.jE));
-            var134 = aef.rayCast((Vector2f)var170, this.range.wo().floatValue(), this.en(), aEg.thePlayer, this.em());
+            var170 = this.applyKnockbackDisplacement(this.jE, this.c(this.jE));
+            var134 = aef.rayCast((Vector2f)var170, this.range.wo().floatValue(), this.getHitBoxExpand(), aEg.thePlayer, this.canHitThroughWalls());
             int flag = (MovingObjectPosition)var134 != null && ((MovingObjectPosition)var134).entityHit == this.jE ? 1 : 0;
             int var155_hi = 1;
             if (this.rayCast.wo()) {
-               var186 = aef.rayCast((Vector2f)var170, this.range.wo().floatValue(), this.en(), aEg.thePlayer, this.em());
+               var186 = aef.rayCast((Vector2f)var170, this.range.wo().floatValue(), this.getHitBoxExpand(), aEg.thePlayer, this.canHitThroughWalls());
                var155_hi = (MovingObjectPosition)var186 != null && ((MovingObjectPosition)var186).entityHit == this.jE ? 1 : 0;
             }
 
-            if (var179 != 0.0F && this.et() && flag != 0 && var155_hi != 0 && this.rayCast.wo()) {
+            if (var179 != 0.0F && this.isAttackDue() && flag != 0 && var155_hi != 0 && this.rayCast.wo()) {
                RotationComponent.d(false);
                RotationComponent.a(
                   (Vector2f)var170,
@@ -3721,7 +3721,7 @@ public class KillAura extends Module {
             }
             break;
          case 4:
-            var186 = this.a(this.jE, this.eN());
+            var186 = this.applyKnockbackDisplacement(this.jE, this.getPredictedRotations());
             if (var179 != 0.0F) {
                RotationComponent.a(
                   this.b((Vector2f)var186),
@@ -3733,24 +3733,24 @@ public class KillAura extends Module {
             }
             break;
          case 5:
-            this.nt = this.a(this.jE, this.c(this.jE));
+            this.grimRotations = this.applyKnockbackDisplacement(this.jE, this.c(this.jE));
       }
    }
 
-   public Vector2f a(EntityLivingBase living, Vector2f vec2) {
+   public Vector2f applyKnockbackDisplacement(EntityLivingBase living, Vector2f vec2) {
       Object var14 = null;
       Object var15 = null;
-      var14 = this.i(living);
+      var14 = this.getDisplacementRejection(living);
       if ((String)var14 != null) {
          var15 = (String)var14;
-         this.a("rejected:" + (String)var15, this.mD);
+         this.debugKnockback("rejected:" + (String)var15, this.knockbackPlan);
          return vec2;
       }
-      this.a("applied", this.mD);
-      return new Vector2f(this.mD.yaw, vec2.getY());
+      this.debugKnockback("applied", this.knockbackPlan);
+      return new Vector2f(this.knockbackPlan.yaw, vec2.getY());
    }
 
-   public KnockbackSample j(EntityLivingBase living) {
+   public KnockbackSample sampleKnockback(EntityLivingBase living) {
       double var35 = 0.0;
       Object var40 = null;
       Object var44 = null;
@@ -3767,7 +3767,7 @@ public class KillAura extends Module {
 
          for (double var59 = 0.8; var59 <= 5.0; var59 += 0.35) {
             var49 = ((AxisAlignedBB)var44).offset(var35 * var59, 0.0, var47 * var59);
-            var40 = this.a(living, (AxisAlignedBB)var49, var35, var47, var59);
+            var40 = this.evaluateKnockbackCandidate(living, (AxisAlignedBB)var49, var35, var47, var59);
             if ((KnockbackSample)var40 != null && (var3 == null || ((KnockbackSample)var40).score > var3.score)) {
                var3 = (KnockbackSample)var40;
             }
@@ -3781,7 +3781,7 @@ public class KillAura extends Module {
       return var3 != null && var3.score >= 45.0 ? var3 : null;
    }
 
-   public boolean eR() {
+   public boolean isAdvancedRotations() {
       boolean var10000;
       if (this.rotationMode.wo() != null && "Advanced".equals(this.rotationMode.wo().getName())) {
          var10000 = true;

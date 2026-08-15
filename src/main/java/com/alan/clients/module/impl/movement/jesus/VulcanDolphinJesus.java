@@ -10,26 +10,26 @@ import com.alan.clients.value.Mode;
 import net.minecraft.potion.Potion;
 
 public class VulcanDolphinJesus extends Mode<Jesus> {
-    private int Km = 0;
+    private int ticksSinceWater = 0;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.isInWater()) {
-            this.Km = 0;
+            this.ticksSinceWater = 0;
             MoveUtil.strafe(0.335 - Math.random() / 1000.0);
             if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                 MoveUtil.strafe(0.033 * (1 + aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier()) + 0.34 - Math.random() / 1000.0);
             }
 
-            this.Km++;
+            this.ticksSinceWater++;
         }
 
-        this.Km++;
+        this.ticksSinceWater++;
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
-        if (aEg.thePlayer.isInWater() && this.Km < 10) {
+        if (aEg.thePlayer.isInWater() && this.ticksSinceWater < 10) {
             aEg.thePlayer.motionY = 0.01 - Math.random() / 1000.0;
-            this.Km++;
+            this.ticksSinceWater++;
         }
     };
 

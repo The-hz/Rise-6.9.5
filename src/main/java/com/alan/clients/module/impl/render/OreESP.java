@@ -25,13 +25,13 @@ import rip.vantage.commons.util.time.a;
 
 @ModuleInfo(aliases = {"XRay", "X-Ray", "Ore ESP"}, description = "Shows ores through walls with ESP and tracers", category = Category.RENDER)
 public final class OreESP extends Module {
-    public static int apY;
-    public static boolean apZ;
-    public static List<Integer> aqa = Arrays.asList(
+    public static int cachedOpacity;
+    public static boolean xrayActive;
+    public static List<Integer> XRAY_BLOCK_IDS = Arrays.asList(
         10, 11, 8, 9, 14, 15, 16, 21, 41, 42, 46, 48, 52, 56, 57, 61, 62, 73, 74, 84, 89, 103, 116, 117, 118, 120, 129, 133, 137, 145, 152, 153, 154
     );
     public static List<BlockPos> orePositions = new CopyOnWriteArrayList<>();
-    private final a aqc = new a();
+    private final a updateTimer = new a();
     private final NumberValue opacity = new NumberValue("Opacity", this, 160, 0, 255, 1);
     private final NumberValue worldOpacity = new NumberValue("World Opacity", this, 50, 0, 255, 1);
     private final BooleanValue eSP = new BooleanValue("ESP", this, true);
@@ -48,15 +48,15 @@ public final class OreESP extends Module {
     private final NumberValue updateDelay = new NumberValue("Update Delay", this, 10.0, 1.0, 30.0, 0.5);
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
-        if (apY != this.opacity.wo().intValue()) {
+        if (cachedOpacity != this.opacity.wo().intValue()) {
             aEg.renderGlobal.loadRenderers();
-            apY = this.opacity.wo().intValue();
-        } else if (this.chunkUpdate.wo() && this.aqc.T(this.updateDelay.wo().longValue() * 1000L)) {
+            cachedOpacity = this.opacity.wo().intValue();
+        } else if (this.chunkUpdate.wo() && this.updateTimer.T(this.updateDelay.wo().longValue() * 1000L)) {
             aEg.renderGlobal.loadRenderers();
-            this.aqc.aX();
+            this.updateTimer.aX();
         }
 
-        this.mh();
+        this.scanOres();
     };
     @EventLink
     public final Listener<Render3DEvent> onRender3D = var1 -> {
@@ -65,7 +65,7 @@ public final class OreESP extends Module {
                 Block block = aEg.theWorld.getBlockState(blockpos).getBlock();
                 Color color = this.getOreColor(block);
                 if (color != null) {
-                    this.a(blockpos, color.getRed(), color.getGreen(), color.getBlue());
+                    this.renderOre(blockpos, color.getRed(), color.getGreen(), color.getBlue());
                 }
             }
         }
@@ -82,16 +82,16 @@ public final class OreESP extends Module {
     @Override
     public void onDisable() {
         this.w(false);
-        this.aqc.aX();
+        this.updateTimer.aX();
     }
 
     private void w(boolean var1) {
         orePositions.clear();
         aEg.renderGlobal.loadRenderers();
-        apZ = var1;
+        xrayActive = var1;
     }
 
-    private void mh() {
+    private void scanOres() {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             orePositions.clear();
             int i = this.distance.wo().intValue();
@@ -102,7 +102,7 @@ public final class OreESP extends Module {
                     for (int l = -i; l <= i; l++) {
                         BlockPos blockpos1 = blockpos.add(j, k, l);
                         Block block = aEg.theWorld.getBlockState(blockpos1).getBlock();
-                        if (this.e(block)) {
+                        if (this.shouldRender(block)) {
                             orePositions.add(blockpos1);
                         }
                     }
@@ -111,7 +111,7 @@ public final class OreESP extends Module {
         }
     }
 
-    private boolean e(Block block) {
+    private boolean shouldRender(Block block) {
         if (this.diamond.wo() && block == Blocks.diamond_ore) {
             return true;
         } else if (this.iron.wo() && block == Blocks.iron_ore) {
@@ -143,11 +143,11 @@ public final class OreESP extends Module {
         return block == Blocks.gold_ore ? new Color(255, 255, 0) : null;
     }
 
-    private void a(BlockPos pos, int var2, int var3, int var4) {
+    private void renderOre(BlockPos pos, int var2, int var3, int var4) {
         int i = this.opacity.wo().intValue();
         Color color = new Color(var2, var3, var4, i);
         if (this.eSP.wo()) {
-            this.a(pos, color);
+            this.drawEspBox(pos, color);
         }
 
         if (this.tracers.wo()) {
@@ -155,7 +155,7 @@ public final class OreESP extends Module {
         }
     }
 
-    private void a(BlockPos pos, Color color) {
+    private void drawEspBox(BlockPos pos, Color color) {
         double dx = pos.getX() - aEg.getRenderManager().viewerPosX;
         double dy = pos.getY() - aEg.getRenderManager().viewerPosY;
         double dz = pos.getZ() - aEg.getRenderManager().viewerPosZ;
@@ -167,7 +167,7 @@ public final class OreESP extends Module {
         GL11.glDepthMask(false);
         GL11.glDisable(2884);
         ColorUtil.glColor(color);
-        this.e(new AxisAlignedBB(dx, dy, dz, dx + 1.0, dy + 1.0, dz + 1.0));
+        this.drawFilledBox(new AxisAlignedBB(dx, dy, dz, dx + 1.0, dy + 1.0, dz + 1.0));
         GL11.glEnable(2884);
         GL11.glDepthMask(true);
         GL11.glEnable(2929);
@@ -189,7 +189,7 @@ public final class OreESP extends Module {
         RenderUtil.drawLine(d3, d4, d5, d0, d1, d2, color, 2.0F);
     }
 
-    private void e(AxisAlignedBB box) {
+    private void drawFilledBox(AxisAlignedBB box) {
         GL11.glBegin(7);
         GL11.glVertex3d(box.minX, box.minY, box.minZ);
         GL11.glVertex3d(box.maxX, box.minY, box.minZ);

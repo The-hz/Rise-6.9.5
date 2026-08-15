@@ -13,14 +13,14 @@ import com.alan.clients.newevent.impl.input.MoveInputEvent;
     category = Category.MOVEMENT
 )
 public class SnapTap extends Module {
-    private boolean DW;
-    private boolean DX;
-    private boolean DY;
-    private boolean DZ;
-    private long Ea;
-    private long Eb;
-    private long Ec;
-    private long Ed;
+    private boolean lastForward;
+    private boolean lastBack;
+    private boolean lastLeft;
+    private boolean lastRight;
+    private long forwardTime;
+    private long backTime;
+    private long leftTime;
+    private long rightTime;
     @EventLink
     public final Listener<MoveInputEvent> onMoveInput = var1 -> {
         boolean flag = aEg.gameSettings.keyBindForward.isKeyDown();
@@ -28,25 +28,25 @@ public class SnapTap extends Module {
         boolean flag2 = aEg.gameSettings.keyBindLeft.isKeyDown();
         boolean flag3 = aEg.gameSettings.keyBindRight.isKeyDown();
         long i = System.currentTimeMillis();
-        if (flag && !this.DW) {
-            this.Ea = i;
+        if (flag && !this.lastForward) {
+            this.forwardTime = i;
         }
 
-        if (flag1 && !this.DX) {
-            this.Eb = i;
+        if (flag1 && !this.lastBack) {
+            this.backTime = i;
         }
 
-        if (flag2 && !this.DY) {
-            this.Ec = i;
+        if (flag2 && !this.lastLeft) {
+            this.leftTime = i;
         }
 
-        if (flag3 && !this.DZ) {
-            this.Ed = i;
+        if (flag3 && !this.lastRight) {
+            this.rightTime = i;
         }
 
         if (flag && flag1) {
-            if (this.Ea != this.Eb) {
-                var1.setForward(this.Ea > this.Eb ? 1.0F : -1.0F);
+            if (this.forwardTime != this.backTime) {
+                var1.setForward(this.forwardTime > this.backTime ? 1.0F : -1.0F);
             } else {
                 var1.setForward(0.0F);
             }
@@ -57,8 +57,8 @@ public class SnapTap extends Module {
         }
 
         if (flag2 && flag3) {
-            if (this.Ec != this.Ed) {
-                var1.setStrafe(this.Ec > this.Ed ? 1.0F : -1.0F);
+            if (this.leftTime != this.rightTime) {
+                var1.setStrafe(this.leftTime > this.rightTime ? 1.0F : -1.0F);
             } else {
                 var1.setStrafe(0.0F);
             }
@@ -68,10 +68,10 @@ public class SnapTap extends Module {
             var1.setStrafe(-1.0F);
         }
 
-        this.DW = flag;
-        this.DX = flag1;
-        this.DY = flag2;
-        this.DZ = flag3;
+        this.lastForward = flag;
+        this.lastBack = flag1;
+        this.lastLeft = flag2;
+        this.lastRight = flag3;
     };
 
     public SnapTap() {
@@ -79,13 +79,13 @@ public class SnapTap extends Module {
 
     @Override
     public void onDisable() {
-        this.DW = false;
-        this.DX = false;
-        this.DY = false;
-        this.DZ = false;
-        this.Ea = 0L;
-        this.Eb = 0L;
-        this.Ec = 0L;
-        this.Ed = 0L;
+        this.lastForward = false;
+        this.lastBack = false;
+        this.lastLeft = false;
+        this.lastRight = false;
+        this.forwardTime = 0L;
+        this.backTime = 0L;
+        this.leftTime = 0L;
+        this.rightTime = 0L;
     }
 }

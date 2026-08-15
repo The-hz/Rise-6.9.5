@@ -15,7 +15,7 @@ import net.minecraft.util.Vec3;
 
 public class TatakoSpeed extends Mode<Speed> {
     public Vec3 Jd = new Vec3(0.0, 0.0, 0.0);
-    int dE = 0;
+    int strafeTicks = 0;
     float forward = 0.0F;
     float strafe = 0.0F;
     @EventLink(value = 3)
@@ -27,7 +27,7 @@ public class TatakoSpeed extends Mode<Speed> {
     public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (MoveUtil.isMoving() && aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();
-            this.dE++;
+            this.strafeTicks++;
         }
 
         if (aEg.thePlayer.onGround) {
@@ -71,6 +71,6 @@ public class TatakoSpeed extends Mode<Speed> {
 
     @Override
     public void onEnable() {
-        this.dE = 0;
+        this.strafeTicks = 0;
     }
 }

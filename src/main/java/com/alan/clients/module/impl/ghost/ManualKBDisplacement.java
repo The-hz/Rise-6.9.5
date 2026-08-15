@@ -39,51 +39,51 @@ public final class ManualKBDisplacement extends Module {
     private final NumberValue rotationSpeed = new NumberValue("Rotation Speed", this, 8, 1, 20, 1);
     private final NumberValue trackingRange = new NumberValue("Tracking Range", this, 6.0, 3.0, 8.0, 0.1);
     private final BooleanValue debug = new BooleanValue("Debug", this, false);
-    private EntityLivingBase Bq;
+    private EntityLivingBase target;
     private DisplacementSample plan;
     private int armedTicks;
-    private String Bt = "";
-    private int Bu = -1;
+    private String lastDebugMessage = "";
+    private int lastDebugTick = -1;
     @EventLink
-    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.gQ();
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.reset();
     @EventLink
     public final Listener<AttackEvent> onAttack = var1 -> {
         KillAura killaura = this.e(KillAura.class);
         if (killaura == null || !killaura.isEnabled()) {
             if (!var1.isCancelled() && var1.getLiving() != null) {
-                this.Bq = var1.getLiving();
+                this.target = var1.getLiving();
                 this.armedTicks = 2;
-                this.a("armed", null, this.Bq);
+                this.logDebug("armed", null, this.target);
             }
         }
     };
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
-        if (this.Bq != null) {
+        if (this.target != null) {
             if (this.armedTicks > 0) {
                 this.armedTicks--;
             }
 
-            if (!this.x(this.Bq)) {
-                this.a("rejected:no-target", null, this.Bq);
-                this.gQ();
+            if (!this.x(this.target)) {
+                this.logDebug("rejected:no-target", null, this.target);
+                this.reset();
             } else if (!this.hasKnockbackSource()) {
-                this.a("rejected:no-kb-source", null, this.Bq);
-            } else if (this.Bq.hurtTime <= 0 && this.armedTicks <= 0) {
-                this.a("rejected:hurt-time-ended", null, this.Bq);
-                this.gQ();
-            } else if (this.h(this.Bq)) {
-                this.a("rejected:crit-priority", null, this.Bq);
+                this.logDebug("rejected:no-kb-source", null, this.target);
+            } else if (this.target.hurtTime <= 0 && this.armedTicks <= 0) {
+                this.logDebug("rejected:hurt-time-ended", null, this.target);
+                this.reset();
+            } else if (this.h(this.target)) {
+                this.logDebug("rejected:crit-priority", null, this.target);
             } else {
-                this.plan = this.y(this.Bq);
+                this.plan = this.y(this.target);
                 if (this.plan == null) {
-                    this.a("rejected:no-plan", null, this.Bq);
+                    this.logDebug("rejected:no-plan", null, this.target);
                 } else {
-                    Vector2f vector2f = RotationUtil.calculate(this.Bq, true, this.trackingRange.wo().doubleValue());
+                    Vector2f vector2f = RotationUtil.calculate(this.target, true, this.trackingRange.wo().doubleValue());
                     Vector2f vector2f1 = new Vector2f(this.plan.yaw, vector2f.getY());
                     RotationComponent.a(vector2f1, this.rotationSpeed.wo().doubleValue(), MovementFix.NORMAL, null, true);
-                    this.f(vector2f1);
-                    this.a("applied", this.plan, this.Bq);
+                    this.applyServerYaw(vector2f1);
+                    this.logDebug("applied", this.plan, this.target);
                 }
             }
         }
@@ -94,20 +94,20 @@ public final class ManualKBDisplacement extends Module {
 
     @Override
     public void onEnable() {
-        this.gQ();
+        this.reset();
     }
 
     @Override
     public void onDisable() {
-        this.gQ();
+        this.reset();
     }
 
-    private void gQ() {
-        this.Bq = null;
+    private void reset() {
+        this.target = null;
         this.plan = null;
         this.armedTicks = 0;
-        this.Bt = "";
-        this.Bu = -1;
+        this.lastDebugMessage = "";
+        this.lastDebugTick = -1;
     }
 
     private boolean x(EntityLivingBase living) {
@@ -147,7 +147,7 @@ public final class ManualKBDisplacement extends Module {
 
             for (double d3 = 0.8; d3 <= 5.0; d3 += 0.35) {
                 AxisAlignedBB axisalignedbb1 = axisalignedbb.offset(d1 * d3, 0.0, cos * d3);
-                DisplacementSample lex = this.b(living, axisalignedbb1, d1, cos, d3);
+                DisplacementSample lex = this.buildSample(living, axisalignedbb1, d1, cos, d3);
                 if (lex != null && (le == null || lex.score > le.score)) {
                     le = lex;
                 }
@@ -161,29 +161,29 @@ public final class ManualKBDisplacement extends Module {
         return le != null && le.score >= 45.0 ? le : null;
     }
 
-    private DisplacementSample b(EntityLivingBase living, AxisAlignedBB box, double var3, double var5, double var7) {
+    private DisplacementSample buildSample(EntityLivingBase living, AxisAlignedBB box, double var3, double var5, double var7) {
         AxisAlignedBB axisalignedbb = box.contract(0.05, 0.0, 0.05);
         AxisAlignedBB axisalignedbb1 = axisalignedbb.offset(0.0, -0.35, 0.0);
         String s = null;
         double d0 = Double.NEGATIVE_INFINITY;
-        if (this.a(axisalignedbb, Material.lava) || this.a(axisalignedbb1, Material.lava)) {
+        if (this.containsMaterial(axisalignedbb, Material.lava) || this.containsMaterial(axisalignedbb1, Material.lava)) {
             s = "Lava";
             d0 = 150.0 - var7 * 8.0;
-        } else if (this.a(axisalignedbb, BlockWeb.class) || this.a(axisalignedbb1, BlockWeb.class)) {
+        } else if (this.containsBlockClass(axisalignedbb, BlockWeb.class) || this.containsBlockClass(axisalignedbb1, BlockWeb.class)) {
             s = "Web";
             d0 = 125.0 - var7 * 7.0;
-        } else if (this.b(axisalignedbb) || this.b(axisalignedbb1)) {
+        } else if (this.containsFireOrLava(axisalignedbb) || this.containsFireOrLava(axisalignedbb1)) {
             s = "Fire";
             d0 = 100.0 - var7 * 7.0;
-        } else if (!this.a(axisalignedbb, Blocks.cactus) && !this.a(axisalignedbb1, Blocks.cactus)) {
-            double d1 = this.a(axisalignedbb1, 24);
+        } else if (!this.containsBlock(axisalignedbb, Blocks.cactus) && !this.containsBlock(axisalignedbb1, Blocks.cactus)) {
+            double d1 = this.getDropDistance(axisalignedbb1, 24);
             if (d1 < 0.0) {
                 s = axisalignedbb1.minY <= 8.0 ? "Void" : "Deep Drop";
                 d0 = (axisalignedbb1.minY <= 8.0 ? 145.0 : 108.0) - var7 * 7.0;
             } else if (d1 >= 4.0) {
                 s = "Ditch";
                 d0 = 88.0 + Math.min(d1, 10.0) * 3.5 - var7 * 6.0;
-            } else if (this.a(axisalignedbb, Material.water) || this.a(axisalignedbb1, Material.water)) {
+            } else if (this.containsMaterial(axisalignedbb, Material.water) || this.containsMaterial(axisalignedbb1, Material.water)) {
                 s = "Water";
                 d0 = 58.0 + Math.max(0.0, d1) * 2.0 - var7 * 5.0;
             }
@@ -201,7 +201,7 @@ public final class ManualKBDisplacement extends Module {
         return new DisplacementSample(living.getEntityId(), f, f1, var7, d0, s);
     }
 
-    private double a(AxisAlignedBB box, int var2) {
+    private double getDropDistance(AxisAlignedBB box, int var2) {
         int i = MathHelper.floor_double(box.minX + 1.0E-4);
         int j = MathHelper.floor_double(box.maxX - 1.0E-4);
         int k = MathHelper.floor_double(box.minZ + 1.0E-4);
@@ -235,23 +235,23 @@ public final class ManualKBDisplacement extends Module {
         return d0 == Double.POSITIVE_INFINITY ? -1.0 : d0;
     }
 
-    private boolean a(AxisAlignedBB box, Material material) {
-        return this.a(box, var1x -> var1x.getMaterial() == material);
+    private boolean containsMaterial(AxisAlignedBB box, Material material) {
+        return this.containsBlockMatching(box, var1x -> var1x.getMaterial() == material);
     }
 
-    private boolean a(AxisAlignedBB box, Class<? extends Block> type) {
-        return this.a(box, type::isInstance);
+    private boolean containsBlockClass(AxisAlignedBB box, Class<? extends Block> type) {
+        return this.containsBlockMatching(box, type::isInstance);
     }
 
-    private boolean a(AxisAlignedBB box, Block var2) {
-        return this.a(box, var1x -> var1x == var2);
+    private boolean containsBlock(AxisAlignedBB box, Block var2) {
+        return this.containsBlockMatching(box, var1x -> var1x == var2);
     }
 
-    private boolean b(AxisAlignedBB box) {
-        return this.a(box, var0 -> var0 == Blocks.fire || var0 == Blocks.flowing_lava || var0 == Blocks.lava);
+    private boolean containsFireOrLava(AxisAlignedBB box) {
+        return this.containsBlockMatching(box, var0 -> var0 == Blocks.fire || var0 == Blocks.flowing_lava || var0 == Blocks.lava);
     }
 
-    private boolean a(AxisAlignedBB box, Predicate<Block> predicate) {
+    private boolean containsBlockMatching(AxisAlignedBB box, Predicate<Block> predicate) {
         int i = MathHelper.floor_double(box.minX + 1.0E-4);
         int j = MathHelper.floor_double(box.maxX - 1.0E-4);
         int k = MathHelper.floor_double(box.minY + 1.0E-4);
@@ -273,13 +273,13 @@ public final class ManualKBDisplacement extends Module {
         return false;
     }
 
-    private void f(Vector2f vec2) {
+    private void applyServerYaw(Vector2f vec2) {
         if (vec2 != null) {
             float f = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(vec2.getX() - aEg.thePlayer.pl);
         }
     }
 
-    private void a(String var1, DisplacementSample var2, EntityLivingBase living) {
+    private void logDebug(String var1, DisplacementSample var2, EntityLivingBase living) {
         if (this.debug.wo() && aEg.thePlayer != null) {
             String s = var2 == null
                 ? String.format("%s hurt=%d", var1, living == null ? -1 : living.hurtTime)
@@ -293,9 +293,9 @@ public final class ManualKBDisplacement extends Module {
                     var2.distance,
                     living == null ? -1 : living.hurtTime
                 );
-            if (!s.equals(this.Bt) || aEg.thePlayer.ticksExisted - this.Bu >= 8) {
-                this.Bt = s;
-                this.Bu = aEg.thePlayer.ticksExisted;
+            if (!s.equals(this.lastDebugMessage) || aEg.thePlayer.ticksExisted - this.lastDebugTick >= 8) {
+                this.lastDebugMessage = s;
+                this.lastDebugTick = aEg.thePlayer.ticksExisted;
                 afi.c(afi.getPrefix() + "[KB Module] " + s);
             }
         }

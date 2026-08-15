@@ -46,14 +46,14 @@ public class LagBreak
 extends Module {
     public int ps;
     public int blinkTicks;
-    private static final int pu = 6;
+    private static final int RELEASE_TICKS = 6;
     private EntityOtherPlayerMP fakePlayer;
-    private boolean pw;
-    private int px;
-    private int py;
-    private int pz;
-    private float pA;
-    private float pB;
+    private boolean pendingDispatch;
+    private int blinkStartTick;
+    private int releaseTicks;
+    private int lastReleaseTick;
+    private float releaseStartProgress;
+    private float radius;
     private float lastRadius;
     private final NumberValue maxLagTicks = new NumberValue("Max Lag Ticks", this, (Number)9, (Number)1, (Number)40, (Number)1);
     private final NumberValue range = new NumberValue("Range", this, (Number)10, (Number)8, (Number)15, (Number)0.1);
@@ -72,42 +72,42 @@ extends Module {
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = preUpdateEvent -> {
         if (LagBreak.aEg.gameSettings.cgI.isKeyDown()) {
-            this.gl();
+            this.cancelBlink();
             return;
         }
         if (this.blinkTicks > 0) {
             BlinkComponent.blink();
         }
         if (this.blinkTicks <= 0) {
-            if (this.py <= 0) return;
+            if (this.releaseTicks <= 0) return;
         }
-        float f2 = this.go();
+        float f2 = this.getDisplayProgress();
         if (((Mode)this.visualMode.wo()).getName().equals("Percentage")) {
             ProgressBarComponent.a(f2, 0.75f, false, true, 10);
             return;
         }
         if (!this.isCircleMode()) return;
-        this.g(f2);
+        this.updateRadius(f2);
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = preMotionEvent -> {
         EntityLivingBase entityLivingBase;
         if (LagBreak.aEg.gameSettings.cgI.isKeyDown()) {
-            this.gl();
+            this.cancelBlink();
             return;
         }
         if (LagBreak.aEg.thePlayer == null || LagBreak.aEg.theWorld == null) {
             return;
         }
-        this.blinkTicks = LagBreak.aEg.thePlayer.ticksExisted - this.px - 1;
-        if (this.blinkTicks > 0 && this.py > 0) {
-            this.py = 0;
-            this.pA = 0.0f;
-            this.pz = 0;
+        this.blinkTicks = LagBreak.aEg.thePlayer.ticksExisted - this.blinkStartTick - 1;
+        if (this.blinkTicks > 0 && this.releaseTicks > 0) {
+            this.releaseTicks = 0;
+            this.releaseStartProgress = 0.0f;
+            this.lastReleaseTick = 0;
             ProgressBarComponent.cl();
         }
-        boolean bl = (entityLivingBase = this.k(((Number)this.range.wo()).doubleValue())) != null && PlayerUtil.v((Entity)entityLivingBase) <= 3.0 + MoveUtil.speed() / 2.0;
-        boolean bl2 = entityLivingBase != null && PlayerUtil.v((Entity)entityLivingBase) <= 5.0 && this.a(entityLivingBase, 12.0f, 20.0f);
+        boolean bl = (entityLivingBase = this.getNearestTarget(((Number)this.range.wo()).doubleValue())) != null && PlayerUtil.v((Entity)entityLivingBase) <= 3.0 + MoveUtil.speed() / 2.0;
+        boolean bl2 = entityLivingBase != null && PlayerUtil.v((Entity)entityLivingBase) <= 5.0 && this.isLookingAtPlayer(entityLivingBase, 12.0f, 20.0f);
         int n2 = entityLivingBase != null ? (int)MathUtil.l(9.0, 16.0) : (int)MathUtil.l(10.0, 18.0);
         boolean bl3 = false;
         if (this.blinkTicks >= ((Number)this.maxLagTicks.wo()).intValue() || this.e(Scaffold.class).isEnabled() || LagBreak.aEg.gameSettings.cgI.isKeyDown() || !MoveUtil.isMoving() || entityLivingBase == null || PlayerUtil.v((Entity)entityLivingBase) > ((Number)this.range.wo()).doubleValue() || WatchdogPredictionVelocity.dj || LagBreak.aEg.thePlayer.Zl < 2) {
@@ -130,9 +130,9 @@ extends Module {
         if (LagBreak.aEg.thePlayer.ae < 2 && ((Boolean)this.dispatchOnHurtime.wo()).booleanValue()) {
             this.dispatchBlink();
         }
-        if (this.pw) {
+        if (this.pendingDispatch) {
             this.dispatchBlink();
-            this.pw = false;
+            this.pendingDispatch = false;
         }
     };
     @EventLink(value=1)
@@ -142,33 +142,33 @@ extends Module {
         }
         Packet<?> packet = packetSendEvent.dq();
         if (packet instanceof C02PacketUseEntity && ((C02PacketUseEntity)packet).getAction() == C02PacketUseEntity.Action.ATTACK) {
-            this.pw = true;
+            this.pendingDispatch = true;
         }
     };
     @EventLink
     public final Listener<WorldChangeEvent> onWorldChange = worldChangeEvent -> {
         this.gi();
-        this.py = 0;
-        this.pz = 0;
-        this.pA = 0.0f;
+        this.releaseTicks = 0;
+        this.lastReleaseTick = 0;
+        this.releaseStartProgress = 0.0f;
         if (LagBreak.aEg.thePlayer != null) {
-            this.px = LagBreak.aEg.thePlayer.ticksExisted;
+            this.blinkStartTick = LagBreak.aEg.thePlayer.ticksExisted;
         }
     };
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         if (LagBreak.aEg.gameSettings.cgI.isKeyDown()) {
-            this.gl();
+            this.cancelBlink();
             return;
         }
         if (this.blinkTicks <= 0) {
-            if (this.py <= 0) return;
+            if (this.releaseTicks <= 0) return;
         }
         block4: {
             float f2;
             block3: {
                 {
-                    f2 = this.go();
+                    f2 = this.getDisplayProgress();
                     String string = ((Mode)this.visualMode.wo()).getName();
                     switch (string) {
                         case "Percentage": {
@@ -186,14 +186,14 @@ extends Module {
                         }
                     }
                 }
-                this.gp();
+                this.drawBlinkText();
                 break block4;
             }
-            this.a(render2DEvent, f2);
+            this.drawCircle(render2DEvent, f2);
         }
-        if (this.py > 0 && LagBreak.aEg.thePlayer != null && this.pz != LagBreak.aEg.thePlayer.ticksExisted) {
-            this.pz = LagBreak.aEg.thePlayer.ticksExisted;
-            --this.py;
+        if (this.releaseTicks > 0 && LagBreak.aEg.thePlayer != null && this.lastReleaseTick != LagBreak.aEg.thePlayer.ticksExisted) {
+            this.lastReleaseTick = LagBreak.aEg.thePlayer.ticksExisted;
+            --this.releaseTicks;
         }
     };
 
@@ -203,12 +203,12 @@ extends Module {
             LastConnectionComponent.ip.contains("hypixel");
         }
         this.gi();
-        this.py = 0;
-        this.pz = 0;
-        this.pA = 0.0f;
-        this.lastRadius = this.pB = ((Number)this.circleRadius.wo()).floatValue();
+        this.releaseTicks = 0;
+        this.lastReleaseTick = 0;
+        this.releaseStartProgress = 0.0f;
+        this.lastRadius = this.radius = ((Number)this.circleRadius.wo()).floatValue();
         if (LagBreak.aEg.thePlayer != null) {
-            this.px = LagBreak.aEg.thePlayer.ticksExisted;
+            this.blinkStartTick = LagBreak.aEg.thePlayer.ticksExisted;
         }
     }
 
@@ -239,31 +239,31 @@ extends Module {
 
     private void dispatchBlink() {
         if (this.blinkTicks > 0) {
-            this.pA = this.gn();
-            this.py = 6;
-            this.pz = 0;
+            this.releaseStartProgress = this.getLagProgress();
+            this.releaseTicks = 6;
+            this.lastReleaseTick = 0;
         }
         BlinkComponent.dispatch();
         BlinkComponent.disable();
         if (LagBreak.aEg.thePlayer != null) {
-            this.px = LagBreak.aEg.thePlayer.ticksExisted;
+            this.blinkStartTick = LagBreak.aEg.thePlayer.ticksExisted;
         }
         this.blinkTicks = 0;
         this.removeFakePlayer();
     }
 
-    private void gl() {
+    private void cancelBlink() {
         if (this.blinkTicks > 0) {
             BlinkComponent.dispatch();
             BlinkComponent.disable();
         }
-        this.py = 0;
-        this.pA = 0.0f;
-        this.pz = 0;
+        this.releaseTicks = 0;
+        this.releaseStartProgress = 0.0f;
+        this.lastReleaseTick = 0;
         this.blinkTicks = 0;
-        this.pw = false;
+        this.pendingDispatch = false;
         if (LagBreak.aEg.thePlayer != null) {
-            this.px = LagBreak.aEg.thePlayer.ticksExisted;
+            this.blinkStartTick = LagBreak.aEg.thePlayer.ticksExisted;
         }
         ProgressBarComponent.stop();
     }
@@ -272,23 +272,23 @@ extends Module {
         return ((Mode)this.visualMode.wo()).getName().equals("Circle");
     }
 
-    private float gn() {
+    private float getLagProgress() {
         int n2 = Math.max(1, ((Number)this.maxLagTicks.wo()).intValue() - 1);
         return MathHelper.clamp_float((float)((float)this.blinkTicks / (float)n2), (float)0.0f, (float)1.0f);
     }
 
-    private float go() {
-        if (this.py <= 0) {
+    private float getDisplayProgress() {
+        if (this.releaseTicks <= 0) {
             if (this.blinkTicks <= 0) return 0.0f;
-            float f2 = this.gn();
+            float f2 = this.getLagProgress();
             return f2;
         }
-        float f3 = 1.0f - (float)(this.py - 1) / 6.0f;
+        float f3 = 1.0f - (float)(this.releaseTicks - 1) / 6.0f;
         float f4 = 1.0f - (float)Math.pow(1.0f - f3, 3.0);
-        return MathHelper.clamp_float((float)(this.pA + (1.0f - this.pA) * f4), (float)0.0f, (float)1.0f);
+        return MathHelper.clamp_float((float)(this.releaseStartProgress + (1.0f - this.releaseStartProgress) * f4), (float)0.0f, (float)1.0f);
     }
 
-    private void gp() {
+    private void drawBlinkText() {
         float f2 = (float)LagBreak.aEg.jY.getScaledWidth() / 2.0f;
         float f3 = (float)LagBreak.aEg.jY.getScaledHeight() / 2.0f;
         int n2 = this.rz().rA().getRGB();
@@ -297,12 +297,12 @@ extends Module {
         FontManager.MAIN.a(17, FontWeight.LIGHT).drawString("Blinking: " + this.blinkTicks, f2, f3 + 10.0f, n2);
     }
 
-    private void a(Render2DEvent render2DEvent, float f2) {
+    private void drawCircle(Render2DEvent render2DEvent, float f2) {
         int scaledWidth = render2DEvent.getScaledResolution().getScaledWidth();
         int scaledHeight = render2DEvent.getScaledResolution().getScaledHeight();
         float f3 = (float)scaledWidth / 2.0f;
         float f4 = (float)scaledHeight / 2.0f;
-        float f5 = MathUtil.lerp(this.lastRadius, this.pB, LagBreak.aEg.timer.bWm);
+        float f5 = MathUtil.lerp(this.lastRadius, this.radius, LagBreak.aEg.timer.bWm);
         double d2 = 360.0 * (double)f2;
         double d3 = 270.0 + d2;
         GL11.glPushMatrix();
@@ -311,7 +311,7 @@ extends Module {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate((int)770, (int)771, (int)1, (int)0);
         GL11.glLineWidth(((Number)this.circleThickness.wo()).floatValue());
-        this.a(f3, f4, f5, 270.0, d3, this.rz().rA(), 1.0f);
+        this.drawArc(f3, f4, f5, 270.0, d3, this.rz().rA(), 1.0f);
         GlStateManager.disableBlend();
         GL11.glDisable(2848);
         GL11.glEnable(3553);
@@ -319,13 +319,13 @@ extends Module {
         GlStateManager.resetColor();
     }
 
-    private void g(float f2) {
+    private void updateRadius(float f2) {
         float f3 = ((Number)this.circleRadius.wo()).floatValue() + f2 * 5.0f;
-        this.lastRadius = this.pB;
-        this.pB = MathUtil.lerp(this.pB, f3, 0.35f);
+        this.lastRadius = this.radius;
+        this.radius = MathUtil.lerp(this.radius, f3, 0.35f);
     }
 
-    private void a(float f2, float f3, float f4, double d2, double d3, Color color, float f5) {
+    private void drawArc(float f2, float f3, float f4, double d2, double d3, Color color, float f5) {
         GL11.glBegin(3);
         GL11.glColor4f((float)color.getRed() / 255.0f, (float)color.getGreen() / 255.0f, (float)color.getBlue() / 255.0f, f5);
         double d4 = d2 <= d3 ? 0.75 : -0.75;
@@ -342,7 +342,7 @@ extends Module {
         GL11.glEnd();
     }
 
-    private EntityLivingBase k(double d2) {
+    private EntityLivingBase getNearestTarget(double d2) {
         try {
             List<EntityLivingBase> list = TargetComponent.f(d2);
             if (list == null || list.isEmpty()) {
@@ -356,7 +356,7 @@ extends Module {
         }
     }
 
-    private boolean a(EntityLivingBase entityLivingBase, float f2, float f3) {
+    private boolean isLookingAtPlayer(EntityLivingBase entityLivingBase, float f2, float f3) {
         double dx = LagBreak.aEg.thePlayer.posX - entityLivingBase.posX;
         double dz = LagBreak.aEg.thePlayer.posZ - entityLivingBase.posZ;
         double d4 = LagBreak.aEg.thePlayer.posY + (double)LagBreak.aEg.thePlayer.getEyeHeight() - (entityLivingBase.posY + (double)entityLivingBase.getEyeHeight());

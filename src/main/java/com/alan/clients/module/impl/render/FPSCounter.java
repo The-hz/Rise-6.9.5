@@ -23,18 +23,18 @@ public final class FPSCounter extends Module {
     private final BooleanValue showTitle = new BooleanValue("Title", this, false);
     private final DragValue position = new DragValue("Position", this, new Vector2d(200.0, 200.0));
     private final Vector2f scale = new Vector2f(22.0F, 22.0F);
-    private int anq;
+    private int lastFps;
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         Vector2d vector2d = this.position.apP;
         String s = this.showTitle.wo() ? "FPS " : "";
         String s1 = Minecraft.getDebugFPS() + "";
         float f = FontManager.MAIN.a(20, FontWeight.BOLD).getStringWidth(s);
-        if (Minecraft.getDebugFPS() != this.anq) {
+        if (Minecraft.getDebugFPS() != this.lastFps) {
             this.scale.x = f + FontManager.MAIN.a(20, FontWeight.REGULAR).getStringWidth(s1);
         }
 
-        this.anq = Minecraft.getDebugFPS();
+        this.lastFps = Minecraft.getDebugFPS();
         this.b(ShaderQueueType.REGULAR, 1).c(() -> {
             double d2 = vector2d.x;
             double d3 = vector2d.y;

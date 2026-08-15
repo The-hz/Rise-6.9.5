@@ -11,7 +11,7 @@ import net.minecraft.network.play.client.C01PacketChatMessage;
 
 @ModuleInfo(aliases = "module.other.chatbypass.name", description = "module.other.chatbypass.description", category = Category.PLAYER)
 public class ChatBypass extends Module {
-    private final char[] TT = new char[]{
+    private final char[] obfuscationChars = new char[]{
         '\u0378',
         '\u0379',
         'Ϳ',
@@ -430,12 +430,12 @@ public class ChatBypass extends Module {
         '\u0a4e',
         '\u0a4f'
     };
-    private String TU = null;
+    private String lastMessage = null;
     @EventLink
     private final Listener<PacketSendEvent> onPacketSend = var1 -> {
         if (var1.dq() instanceof C01PacketChatMessage) {
             String s = ((C01PacketChatMessage)var1.dq()).getMessage();
-            if (s.startsWith("/") || s.equals(this.TU)) {
+            if (s.startsWith("/") || s.equals(this.lastMessage)) {
                 return;
             }
 
@@ -449,8 +449,8 @@ public class ChatBypass extends Module {
                 }
             }
 
-            this.TU = stringbuilder.toString();
-            Minecraft.getMinecraft().thePlayer.sendChatMessage(this.TU);
+            this.lastMessage = stringbuilder.toString();
+            Minecraft.getMinecraft().thePlayer.sendChatMessage(this.lastMessage);
         }
     };
 

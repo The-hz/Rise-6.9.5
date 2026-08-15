@@ -29,12 +29,12 @@ import net.minecraft.network.play.client.a;
 import net.minecraft.util.BlockPos;
 
 public class WatchdogAntiVoid extends Mode<AntiVoid> {
-    private aka Ft;
-    private aka EC;
-    private boolean ahU;
-    private boolean ahV;
-    private int ahW;
-    private boolean bh;
+    private aka lastSafePosition;
+    private aka lastSafeMotion;
+    private boolean blinking;
+    private boolean positionSent;
+    private int voidTicks;
+    private boolean moving;
     private final NumberValue distance = new NumberValue("Distance", this, 3, 0, 10, 0.1);
     @EventLink(value = 1)
     public final Listener<MoveEvent> onMove = var1x -> {
@@ -42,9 +42,9 @@ public class WatchdogAntiVoid extends Mode<AntiVoid> {
             if (!this.e(Flight.class).isEnabled()) {
                 boolean flag = false;
                 if (MoveUtil.enoughMovementForSprinting()) {
-                    this.bh = true;
+                    this.moving = true;
                 } else {
-                    this.bh = false;
+                    this.moving = false;
                 }
 
                 for (int i = 0; i <= this.distance.wo().doubleValue() * 40.0; i++) {
@@ -60,41 +60,41 @@ public class WatchdogAntiVoid extends Mode<AntiVoid> {
                 }
 
                 if (flag) {
-                    this.ahW++;
+                    this.voidTicks++;
                 } else if (aEg.thePlayer.onGround) {
-                    this.ahW = 0;
+                    this.voidTicks = 0;
                 }
 
                 if (!flag
-                    || this.Ft == null
-                    || this.EC == null
-                    || !(this.ahW < 30.0 + this.distance.wo().doubleValue() * 30.0)
+                    || this.lastSafePosition == null
+                    || this.lastSafeMotion == null
+                    || !(this.voidTicks < 30.0 + this.distance.wo().doubleValue() * 30.0)
                     || this.e(LongJump.class).isEnabled()
                         && (
                             Client.a.g().c(LongJump.class).mode.wo().getName().equals("Watchdog Fire Ball")
                                 || Client.a.g().c(LongJump.class).mode.wo().getName().equals("Watchdog Fire Ball 2")
                         )
-                    || this.e(LongJump.class).isEnabled() && Watchdog2LongJump.LW
+                    || this.e(LongJump.class).isEnabled() && Watchdog2LongJump.launched
                     || this.e(Flight.class).isEnabled()
                     || aEg.thePlayer.inventory.getStackInSlot(0) != null && aEg.thePlayer.inventory.getStackInSlot(0).getItem() == Items.compass
                     || this.e(Scaffold.class).isEnabled()) {
-                    this.ahV = false;
-                    if (this.ahU) {
+                    this.positionSent = false;
+                    if (this.blinking) {
                         BlinkComponent.dispatch();
-                        this.ahU = false;
+                        this.blinking = false;
                     }
 
-                    this.EC = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
-                    this.Ft = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
-                } else if (!this.ahV) {
-                    this.ahU = true;
+                    this.lastSafeMotion = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
+                    this.lastSafePosition = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
+                } else if (!this.positionSent) {
+                    this.blinking = true;
                     BlinkComponent.blink();
                     PacketQueueComponent.a(C0FPacketConfirmTransaction.class, a.class, C01PacketChatMessage.class);
-                    if (FallDistanceComponent.cY > this.distance.wo().doubleValue() || this.ahV) {
-                        PacketUtil.sendNoEvent(new C04PacketPlayerPosition(this.Ft.x, this.Ft.y - -0.09800000190735147, this.Ft.z, false));
+                    if (FallDistanceComponent.cY > this.distance.wo().doubleValue() || this.positionSent) {
+                        PacketUtil.sendNoEvent(new C04PacketPlayerPosition(this.lastSafePosition.x, this.lastSafePosition.y - -0.09800000190735147, this.lastSafePosition.z, false));
                         PacketQueueComponent.cQ.clear();
                         FallDistanceComponent.cY = 0.0F;
-                        this.ahV = true;
+                        this.positionSent = true;
                     }
                 } else {
                     BlinkComponent.dispatch();

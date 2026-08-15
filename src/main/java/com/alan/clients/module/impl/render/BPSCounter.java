@@ -23,7 +23,7 @@ import java.awt.Color;
 @ModuleInfo(aliases={"module.render.bpscounter.name"}, description="module.render.bpscounter.description", category=Category.RENDER)
 public class BPSCounter
 extends Module {
-    public aka ali;
+    public aka lastPosition;
     public Vector2f scale;
     @EventLink
     public Listener<Render2DEvent> onRender2D;
@@ -40,10 +40,10 @@ extends Module {
     public BPSCounter() {
         this.position = new DragValue("Position", (Module)this, new Vector2d(200.0, 200.0));
         this.scale = new Vector2f(22.0f, 22.0f);
-        this.ali = new aka(0.0, 0.0, 0.0);
+        this.lastPosition = new aka(0.0, 0.0, 0.0);
         this.onPostStrafe = postStrafeEvent -> {
-            this.speed = String.valueOf(MathUtil.round(new aka(BPSCounter.aEg.thePlayer.posX, 0.0, BPSCounter.aEg.thePlayer.posZ).g(this.ali) * 20.0 * (double)BPSCounter.aEg.timer.dzD, 2));
-            this.ali = new aka(BPSCounter.aEg.thePlayer.posX, 0.0, BPSCounter.aEg.thePlayer.posZ);
+            this.speed = String.valueOf(MathUtil.round(new aka(BPSCounter.aEg.thePlayer.posX, 0.0, BPSCounter.aEg.thePlayer.posZ).g(this.lastPosition) * 20.0 * (double)BPSCounter.aEg.timer.dzD, 2));
+            this.lastPosition = new aka(BPSCounter.aEg.thePlayer.posX, 0.0, BPSCounter.aEg.thePlayer.posZ);
         };
         this.onRender2D = render2DEvent -> {
             Vector2d vector2d = this.position.apP;

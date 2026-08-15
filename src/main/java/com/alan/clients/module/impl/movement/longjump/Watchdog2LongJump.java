@@ -46,61 +46,61 @@ import org.lwjgl.opengl.GL11;
 
 public class Watchdog2LongJump extends Mode<LongJump>
 {
-    public static int hQ;
+    public static int ticks;
     public BooleanValue flyMode;
-    public boolean LY;
+    public boolean onHalfBlock;
     @EventLink
     public Listener<Render3DEvent> onRender3D;
-    public static boolean LW;
-    public static double Mi;
+    public static boolean launched;
+    public static double knockbackSpeed;
     public static boolean LX;
     @EventLink
     public Listener<PreMotionEvent> onPreMotion;
-    public double Mh;
+    public double lockedPitch;
     @EventLink
     public Listener<PreUpdateEvent> onPreUpdate;
     @EventLink
     public Listener<MoveEvent> onMove;
-    public boolean Mc;
+    public boolean blocksScanned;
     @EventLink
     public Listener<JumpEvent> onJump;
-    public double jy;
-    public double Me;
+    public double takeoffY;
+    public double startY;
     public NumberValue delayBoostGoFurtherWithLessHe;
-    public double Mf;
+    public double startZ;
     @EventLink
     public Listener<MoveInputEvent> onMoveInput;
-    public List<BlockPos> Mb;
+    public List<BlockPos> halfBlocks;
     @EventLink
     public Listener<StrafeEvent> onStrafe;
-    public double Md;
+    public double startX;
     @EventLink
     public Listener<PacketReceiveEvent> onPacketReceive;
-    public static int LZ;
-    public static int Ma;
+    public static int boostTick;
+    public static int jumpTick;
     public BooleanValue allowDamageMove;
-    public double Mg;
+    public double lockedYaw;
     public BooleanValue timer;
 
     @Override
     public void onDisable() {
-        final double n = Watchdog2LongJump.aEg.thePlayer.posX - this.Md;
-        final double n2 = Watchdog2LongJump.aEg.thePlayer.posY - this.Me;
-        final double n3 = Watchdog2LongJump.aEg.thePlayer.posZ - this.Mf;
+        final double n = Watchdog2LongJump.aEg.thePlayer.posX - this.startX;
+        final double n2 = Watchdog2LongJump.aEg.thePlayer.posY - this.startY;
+        final double n3 = Watchdog2LongJump.aEg.thePlayer.posZ - this.startZ;
         final double sqrt = Math.sqrt(n * n + n2 * n2 + n3 * n3);
-        Watchdog2LongJump.LW = false;
-        this.LY = false;
+        Watchdog2LongJump.launched = false;
+        this.onHalfBlock = false;
         afi.b(Watchdog2LongJump.aEg.thePlayer.ae, new Object[0]);
         afi.c("Distance traveled: " + sqrt, new Object[0]);
         if (Watchdog2LongJump.aEg.thePlayer.onGround) {
             MoveUtil.stop();
         }
-        this.Mb.clear();
-        this.Mc = false;
+        this.halfBlocks.clear();
+        this.blocksScanned = false;
     }
 
-    public void hy() {
-        this.Mb.clear();
+    public void scanHalfBlocks() {
+        this.halfBlocks.clear();
         int limit = 30;
         int n10_lo = -limit;
         for (; n10_lo < limit; n10_lo = n10_lo + 1) {
@@ -117,13 +117,13 @@ public class Watchdog2LongJump extends Mode<LongJump>
                             n_hi = blockState.getProperties().containsKey(BlockSlab.HALF) ? 0 : 1;
                         }
                         if (block instanceof BlockStairs || block instanceof BlockSnow || n_hi != 0) {
-                            this.Mb.add(blockPos);
+                            this.halfBlocks.add(blockPos);
                         }
                     }
                 }
             }
         }
-        this.Mc = true;
+        this.blocksScanned = true;
     }
 
     public Watchdog2LongJump(final String s, final LongJump longJump) {
@@ -132,25 +132,25 @@ public class Watchdog2LongJump extends Mode<LongJump>
         this.flyMode = new BooleanValue("Fly Mode", this, false);
         this.allowDamageMove = new BooleanValue("Allow Damage Move", this, false);
         this.delayBoostGoFurtherWithLessHe = new NumberValue("Delay Boost (go further with less height)", this, 2, 0, 8, 1);
-        this.Mb = new ArrayList<BlockPos>();
-        this.Mc = false;
+        this.halfBlocks = new ArrayList<BlockPos>();
+        this.blocksScanned = false;
         this.onPacketReceive = (packetReceiveEvent -> {
             final Packet packet = packetReceiveEvent.getPacket();
             Objects.requireNonNull(packet);
             switch (packet) {
                 case S12PacketEntityVelocity s12PacketEntityVelocity: {
                     if (!packetReceiveEvent.isCancelled() && s12PacketEntityVelocity.getEntityID() == Watchdog2LongJump.aEg.thePlayer.getEntityId()) {
-                        Watchdog2LongJump.Mi = Math.hypot(s12PacketEntityVelocity.getMotionX() / 8000.0, s12PacketEntityVelocity.getMotionZ() / 8000.0);
-                        if (Watchdog2LongJump.hQ > Watchdog2LongJump.LZ && Watchdog2LongJump.Mi > 0.0 && s12PacketEntityVelocity.getMotionY() / 8000.0 > 0.4) {
+                        Watchdog2LongJump.knockbackSpeed = Math.hypot(s12PacketEntityVelocity.getMotionX() / 8000.0, s12PacketEntityVelocity.getMotionZ() / 8000.0);
+                        if (Watchdog2LongJump.ticks > Watchdog2LongJump.boostTick && Watchdog2LongJump.knockbackSpeed > 0.0 && s12PacketEntityVelocity.getMotionY() / 8000.0 > 0.4) {
                             afi.c(MoveUtil.speed(), new Object[0]);
                             MoveUtil.strafe(0.459999);
                             Watchdog2LongJump.aEg.thePlayer.motionY = s12PacketEntityVelocity.getMotionY() / 8000.0;
                             Watchdog2LongJump.aEg.thePlayer.ae = 0;
-                            Watchdog2LongJump.LW = true;
+                            Watchdog2LongJump.launched = true;
                             afi.c(MoveUtil.speed(), new Object[0]);
                         }
                         else {
-                            Watchdog2LongJump.LW = false;
+                            Watchdog2LongJump.launched = false;
                             cg.a("Watchdog Longjump", "Bad knockback detected from the server... Cancelling and trying to save you from the void", 5000);
                         }
                         packetReceiveEvent.setCancelled();
@@ -166,26 +166,26 @@ public class Watchdog2LongJump extends Mode<LongJump>
             return;
         });
         this.onMoveInput = (moveInputEvent -> {
-            if (Watchdog2LongJump.hQ < Watchdog2LongJump.Ma && Watchdog2LongJump.hQ > 7) {
+            if (Watchdog2LongJump.ticks < Watchdog2LongJump.jumpTick && Watchdog2LongJump.ticks > 7) {
                 moveInputEvent.setForward(100.0f);
                 moveInputEvent.setJump(false);
             }
             return;
         });
         this.onMove = (moveEvent -> {
-            if (Watchdog2LongJump.hQ < Watchdog2LongJump.Ma && (Watchdog2LongJump.hQ > 7 || !this.allowDamageMove.wo())) {
+            if (Watchdog2LongJump.ticks < Watchdog2LongJump.jumpTick && (Watchdog2LongJump.ticks > 7 || !this.allowDamageMove.wo())) {
                 moveEvent.setPosZ(0.0);
                 moveEvent.setPosX(0.0);
             }
             return;
         });
         this.onStrafe = (p0 -> {
-            if ((Watchdog2LongJump.aEg.thePlayer.posY > this.jy || Watchdog2LongJump.aEg.thePlayer.tR < 14) && this.flyMode.wo()) {
+            if ((Watchdog2LongJump.aEg.thePlayer.posY > this.takeoffY || Watchdog2LongJump.aEg.thePlayer.tR < 14) && this.flyMode.wo()) {
                 cl.cn();
             }
             final int tr = Watchdog2LongJump.aEg.thePlayer.tR;
             MoveUtil.useDiagonalSpeed();
-            if (Watchdog2LongJump.hQ < 8) {
+            if (Watchdog2LongJump.ticks < 8) {
                 if (Watchdog2LongJump.aEg.thePlayer.onGround) {
                     MoveUtil.strafe();
                 }
@@ -206,8 +206,8 @@ public class Watchdog2LongJump extends Mode<LongJump>
             return;
         });
         this.onPreUpdate = (p0 -> {
-            if (Watchdog2LongJump.hQ > 44) {
-                final int hq = Watchdog2LongJump.hQ;
+            if (Watchdog2LongJump.ticks > 44) {
+                final int hq = Watchdog2LongJump.ticks;
             }
             return;
         });
@@ -236,59 +236,59 @@ public class Watchdog2LongJump extends Mode<LongJump>
                 }
             }
             if (n_hi != 0) {
-                this.LY = true;
-                Watchdog2LongJump.LZ = 35;
-                Watchdog2LongJump.Ma = 34;
+                this.onHalfBlock = true;
+                Watchdog2LongJump.boostTick = 35;
+                Watchdog2LongJump.jumpTick = 34;
             }
             else if (Watchdog2LongJump.aEg.thePlayer.onGround) {
-                Watchdog2LongJump.LZ = 67;
-                Watchdog2LongJump.Ma = 66;
+                Watchdog2LongJump.boostTick = 67;
+                Watchdog2LongJump.jumpTick = 66;
             }
             if (Watchdog2LongJump.aEg.thePlayer.tR > 10 && !MoveUtil.isMoving()) {
                 MoveUtil.stop();
             }
-            if (Watchdog2LongJump.hQ < 7) {
-                this.Mg = Watchdog2LongJump.aEg.thePlayer.pl;
-                this.Mh = Watchdog2LongJump.aEg.thePlayer.rotationPitch;
+            if (Watchdog2LongJump.ticks < 7) {
+                this.lockedYaw = Watchdog2LongJump.aEg.thePlayer.pl;
+                this.lockedPitch = Watchdog2LongJump.aEg.thePlayer.rotationPitch;
             }
-            else if (Watchdog2LongJump.hQ > 8 && Watchdog2LongJump.hQ <= Watchdog2LongJump.LZ + this.delayBoostGoFurtherWithLessHe.wo().intValue()) {
-                Watchdog2LongJump.aEg.thePlayer.pl = (float)this.Mg;
+            else if (Watchdog2LongJump.ticks > 8 && Watchdog2LongJump.ticks <= Watchdog2LongJump.boostTick + this.delayBoostGoFurtherWithLessHe.wo().intValue()) {
+                Watchdog2LongJump.aEg.thePlayer.pl = (float)this.lockedYaw;
             }
-            preMotionEvent.setPitch((float)this.Mh);
-            preMotionEvent.setYaw((float)this.Mg);
-            final int hq2 = Watchdog2LongJump.hQ;
-            if ((Watchdog2LongJump.aEg.thePlayer.onGround && ((Watchdog2LongJump.hQ > 67 && !this.LY) || (Watchdog2LongJump.hQ > 40 && this.LY))) || Watchdog2LongJump.aEg.thePlayer.Zl == 1) {
+            preMotionEvent.setPitch((float)this.lockedPitch);
+            preMotionEvent.setYaw((float)this.lockedYaw);
+            final int hq2 = Watchdog2LongJump.ticks;
+            if ((Watchdog2LongJump.aEg.thePlayer.onGround && ((Watchdog2LongJump.ticks > 67 && !this.onHalfBlock) || (Watchdog2LongJump.ticks > 40 && this.onHalfBlock))) || Watchdog2LongJump.aEg.thePlayer.Zl == 1) {
                 MoveUtil.stop();
                 this.getParent().setEnabled(false);
             }
             if (this.flyMode.wo()) {
                 Watchdog2LongJump.aEg.thePlayer.cameraYaw = 0.1f;
             }
-            ++Watchdog2LongJump.hQ;
-            if (Watchdog2LongJump.hQ < Watchdog2LongJump.LZ + this.delayBoostGoFurtherWithLessHe.wo().intValue()) {
+            ++Watchdog2LongJump.ticks;
+            if (Watchdog2LongJump.ticks < Watchdog2LongJump.boostTick + this.delayBoostGoFurtherWithLessHe.wo().intValue()) {
                 BlinkComponent.a(500, true, true, true, true);
             }
-            if (Watchdog2LongJump.hQ < Watchdog2LongJump.LZ) {
+            if (Watchdog2LongJump.ticks < Watchdog2LongJump.boostTick) {
                 if (Watchdog2LongJump.aEg.thePlayer.onGround) {
                     double n2;
-                    if (this.LY) {
+                    if (this.onHalfBlock) {
                         n2 = 34.0;
                     }
                     else {
                         n2 = 66.0;
                     }
-                    ProgressBarComponent.a((float)(Watchdog2LongJump.hQ / n2));
+                    ProgressBarComponent.a((float)(Watchdog2LongJump.ticks / n2));
                 }
-                if (Watchdog2LongJump.aEg.thePlayer.onGround && Watchdog2LongJump.hQ > 3) {
-                    if (!this.LY) {
-                        preMotionEvent.setPosY(preMotionEvent.getPosY() + ((Watchdog2LongJump.hQ % 2 != 0) ? 0.0625 : (Math.random() / 5000.0)));
+                if (Watchdog2LongJump.aEg.thePlayer.onGround && Watchdog2LongJump.ticks > 3) {
+                    if (!this.onHalfBlock) {
+                        preMotionEvent.setPosY(preMotionEvent.getPosY() + ((Watchdog2LongJump.ticks % 2 != 0) ? 0.0625 : (Math.random() / 5000.0)));
                     }
                     else {
-                        preMotionEvent.setPosY(preMotionEvent.getPosY() + ((Watchdog2LongJump.hQ % 2 != 0) ? 0.14499999582767487 : (Math.random() / 5000.0)));
+                        preMotionEvent.setPosY(preMotionEvent.getPosY() + ((Watchdog2LongJump.ticks % 2 != 0) ? 0.14499999582767487 : (Math.random() / 5000.0)));
                     }
                     preMotionEvent.setOnGround(false);
                 }
-                if (Watchdog2LongJump.hQ == Watchdog2LongJump.Ma) {
+                if (Watchdog2LongJump.ticks == Watchdog2LongJump.jumpTick) {
                     if (!Watchdog2LongJump.aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                         MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() - 0.01);
                     }
@@ -301,16 +301,16 @@ public class Watchdog2LongJump extends Mode<LongJump>
                     Watchdog2LongJump.aEg.thePlayer.jump();
                 }
             }
-            else if (Watchdog2LongJump.hQ == Watchdog2LongJump.LZ) {
+            else if (Watchdog2LongJump.ticks == Watchdog2LongJump.boostTick) {
                 preMotionEvent.setPosY(preMotionEvent.getPosY() + 1.0E-13);
                 PacketUtil.send(new C03PacketPlayer(true));
                 if (this.timer.wo()) {
                     Watchdog2LongJump.aEg.timer.dzD = 0.5f;
                 }
-                Watchdog2LongJump.LW = true;
+                Watchdog2LongJump.launched = true;
             }
             int ae2 = Watchdog2LongJump.aEg.thePlayer.ae;
-            if (((ae2 > 3 && ae2 < 38) || (ae2 > 37 && Watchdog2LongJump.aEg.thePlayer.motionY <= 0.0)) && Watchdog2LongJump.hQ > 40) {
+            if (((ae2 > 3 && ae2 < 38) || (ae2 > 37 && Watchdog2LongJump.aEg.thePlayer.motionY <= 0.0)) && Watchdog2LongJump.ticks > 40) {
                 final EntityPlayerSP thePlayer4 = Watchdog2LongJump.aEg.thePlayer;
                 thePlayer4.motionY += 0.0283;
             }
@@ -395,17 +395,17 @@ public class Watchdog2LongJump extends Mode<LongJump>
             return;
         });
         this.onJump = (jumpEvent -> {
-            if (Watchdog2LongJump.hQ > 45) {
+            if (Watchdog2LongJump.ticks > 45) {
                 jumpEvent.setJumpMotion(0.42f);
             }
             return;
         });
         this.onRender3D = (p0 -> {
-            if (!this.Mc) {
-                this.hy();
+            if (!this.blocksScanned) {
+                this.scanHalfBlocks();
             }
             this.b(ShaderQueueType.BLOOM).c(() -> {
-                final Iterator iterator = this.Mb.iterator();
+                final Iterator iterator = this.halfBlocks.iterator();
                 while (iterator.hasNext()) {
                     final BlockPos blockPos = (BlockPos)iterator.next();
                     final AxisAlignedBB axisAlignedBB2 = new AxisAlignedBB(blockPos, blockPos.add(1, 1, 1));
@@ -437,9 +437,9 @@ public class Watchdog2LongJump extends Mode<LongJump>
 
     @Override
     public void onEnable() {
-        this.Mg = Watchdog2LongJump.aEg.thePlayer.pl;
-        this.Mh = Watchdog2LongJump.aEg.thePlayer.rotationPitch;
-        Watchdog2LongJump.aEg.thePlayer.pl = (float)this.Mg;
+        this.lockedYaw = Watchdog2LongJump.aEg.thePlayer.pl;
+        this.lockedPitch = Watchdog2LongJump.aEg.thePlayer.rotationPitch;
+        Watchdog2LongJump.aEg.thePlayer.pl = (float)this.lockedYaw;
         if (Watchdog2LongJump.aEg.thePlayer.onGround) {
             Watchdog2LongJump.aEg.thePlayer.jump();
         }
@@ -447,12 +447,12 @@ public class Watchdog2LongJump extends Mode<LongJump>
             afi.b("start on the ground", new Object[0]);
             this.getParent().setEnabled(false);
         }
-        this.Md = Watchdog2LongJump.aEg.thePlayer.posX;
-        this.Me = Watchdog2LongJump.aEg.thePlayer.posY;
-        this.Mf = Watchdog2LongJump.aEg.thePlayer.posZ;
-        this.jy = Watchdog2LongJump.aEg.thePlayer.posY;
-        Watchdog2LongJump.LW = false;
-        Watchdog2LongJump.hQ = 0;
+        this.startX = Watchdog2LongJump.aEg.thePlayer.posX;
+        this.startY = Watchdog2LongJump.aEg.thePlayer.posY;
+        this.startZ = Watchdog2LongJump.aEg.thePlayer.posZ;
+        this.takeoffY = Watchdog2LongJump.aEg.thePlayer.posY;
+        Watchdog2LongJump.launched = false;
+        Watchdog2LongJump.ticks = 0;
     }
 
     static {

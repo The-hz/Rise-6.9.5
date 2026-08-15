@@ -15,27 +15,27 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 public class DamageFlight extends Mode<Flight> {
     private final NumberValue duration = new NumberValue("Duration", this, 3000.0, 1000.0, 10000.0, 100.0);
     private final NumberValue timer = new NumberValue("Timer", this, 1.0, 0.1, 2.0, 0.1);
-    private long Hn;
-    private boolean dj;
-    private int Ho;
+    private long damageTime;
+    private boolean damaged;
+    private int flying;
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         Packet packet = var1x.getPacket();
         if (packet instanceof S12PacketEntityVelocity && ((S12PacketEntityVelocity)packet).getEntityID() == aEg.thePlayer.getEntityId()) {
-            this.Hn = System.currentTimeMillis();
-            this.dj = true;
+            this.damageTime = System.currentTimeMillis();
+            this.damaged = true;
         }
     };
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        if (this.dj) {
-            if (System.currentTimeMillis() - this.Hn >= this.duration.wo().longValue()) {
-                if (this.Ho == 1) {
+        if (this.damaged) {
+            if (System.currentTimeMillis() - this.damageTime >= this.duration.wo().longValue()) {
+                if (this.flying == 1) {
                     this.getParent().toggle();
                 }
             } else {
                 aEg.timer.dzD = this.timer.wo().floatValue();
-                this.Ho = 1;
+                this.flying = 1;
                 if (aEg.thePlayer.onGround && aEg.thePlayer.isCollidedVertically) {
                     aEg.thePlayer.motionY = 0.42;
                 } else {
@@ -53,8 +53,8 @@ public class DamageFlight extends Mode<Flight> {
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (this.dj) {
-            if (System.currentTimeMillis() - this.Hn < this.duration.wo().longValue()) {
+        if (this.damaged) {
+            if (System.currentTimeMillis() - this.damageTime < this.duration.wo().longValue()) {
                 var1x.setOnGround(false);
             }
         }
@@ -66,16 +66,16 @@ public class DamageFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        this.Hn = 0L;
-        this.dj = false;
-        this.Ho = 0;
+        this.damageTime = 0L;
+        this.damaged = false;
+        this.flying = 0;
     }
 
     @Override
     public void onDisable() {
         aEg.timer.dzD = 1.0F;
         MoveUtil.stop();
-        this.dj = false;
-        this.Ho = 0;
+        this.damaged = false;
+        this.flying = 0;
     }
 }

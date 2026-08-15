@@ -88,7 +88,7 @@ public class ConfigManager extends ArrayList<ConfigFile> {
     }
 
     @Generated
-    public ConfigFile to() {
+    public ConfigFile getConfigfile() {
         return this.aHM;
     }
 }

@@ -16,10 +16,10 @@ import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import net.minecraft.util.BlockPos;
 
 public class ElytraNoFall extends Mode<NoFall> {
-    private boolean aix = false;
+    private boolean jumpWasDown = false;
     @EventLink
     public final Listener<PostMotionEvent> onPostMotion = var1x -> {
-        this.aix = aEg.gameSettings.keyBindJump.isKeyDown();
+        this.jumpWasDown = aEg.gameSettings.keyBindJump.isKeyDown();
         if (aEg.thePlayer.fallDistance > 2.5) {
             aEg.gameSettings.keyBindJump.setPressed(true);
             int i = (int)Math.floor(aEg.thePlayer.posX);
@@ -27,9 +27,9 @@ public class ElytraNoFall extends Mode<NoFall> {
             int k = (int)Math.floor(aEg.thePlayer.posZ);
             BlockPos blockpos = new BlockPos(i, j - 1, k);
             if (!aEg.theWorld.getBlockState(blockpos).getBlock().getMaterial().isReplaceable()) {
-                this.hp();
+                this.startFallFlying();
                 aEg.thePlayer.jump();
-                aEg.gameSettings.keyBindJump.setPressed(this.aix);
+                aEg.gameSettings.keyBindJump.setPressed(this.jumpWasDown);
             }
         }
     };
@@ -43,7 +43,7 @@ public class ElytraNoFall extends Mode<NoFall> {
         aEg.gameSettings.keyBindJump.setPressed(false);
     }
 
-    private void hp() {
+    private void startFallFlying() {
         try {
             if (!ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9)) {
                 return;

@@ -30,22 +30,22 @@ public class ProximityVoiceChat extends Module {
         .add(new SubMode("Quadraphonic"))
         .add(new SubMode("Surround Sound"))
         .setDefault("Mono");
-    private Thread VD;
-    private SourceDataLine VE;
-    private TargetDataLine VF;
+    private Thread audioThread;
+    private SourceDataLine outputLine;
+    private TargetDataLine microphoneLine;
     private boolean talking = false;
-    private int VH = 0;
+    private int talkTicks = 0;
     @EventLink
     public final Listener<TickEvent> onTick = var1 -> {
         if (Keyboard.isKeyDown(45)) {
             if (!this.talking) {
                 this.talking = true;
-                this.VH = 0;
-                this.hK();
+                this.talkTicks = 0;
+                this.startAudio();
                 afi.b("Start Talking");
             } else {
                 afi.b("Talking");
-                this.VH++;
+                this.talkTicks++;
             }
         } else if (this.talking) {
             afi.b("Stop talking");
@@ -57,54 +57,54 @@ public class ProximityVoiceChat extends Module {
     public ProximityVoiceChat() {
     }
 
-    private void hK() {
-        if (this.VD != null) {
-            this.VD.interrupt();
-            this.VF.stop();
-            this.VF.close();
-            this.VE.stop();
-            this.VE.close();
+    private void startAudio() {
+        if (this.audioThread != null) {
+            this.audioThread.interrupt();
+            this.microphoneLine.stop();
+            this.microphoneLine.close();
+            this.outputLine.stop();
+            this.outputLine.close();
         }
 
-        this.VD = new Thread(() -> {
+        this.audioThread = new Thread(() -> {
             try {
                 AudioFormat audioformat = this.getAudioFormat();
                 Info info = new Info(TargetDataLine.class, audioformat);
-                this.VF = (TargetDataLine)AudioSystem.getLine(info);
-                this.VF.open(audioformat);
-                this.VF.start();
+                this.microphoneLine = (TargetDataLine)AudioSystem.getLine(info);
+                this.microphoneLine.open(audioformat);
+                this.microphoneLine.start();
                 Info info1 = new Info(SourceDataLine.class, audioformat);
-                this.VE = (SourceDataLine)AudioSystem.getLine(info1);
-                this.VE.open(audioformat);
-                this.VE.start();
+                this.outputLine = (SourceDataLine)AudioSystem.getLine(info1);
+                this.outputLine.open(audioformat);
+                this.outputLine.start();
                 byte[] abyte = new byte[4096];
 
                 while (true) {
-                    int i = this.VF.read(abyte, 0, abyte.length);
+                    int i = this.microphoneLine.read(abyte, 0, abyte.length);
                     if (this.listenToYourself.wo()) {
-                        this.VE.write(abyte, 0, i);
+                        this.outputLine.write(abyte, 0, i);
                     }
                 }
             } catch (LineUnavailableException lineunavailableexception) {
                 lineunavailableexception.printStackTrace();
             }
         });
-        this.VD.start();
+        this.audioThread.start();
     }
 
     private void disable() {
-        if (this.VD != null) {
-            this.VD.interrupt();
+        if (this.audioThread != null) {
+            this.audioThread.interrupt();
         }
 
-        if (this.VF != null) {
-            this.VF.stop();
-            this.VF.close();
+        if (this.microphoneLine != null) {
+            this.microphoneLine.stop();
+            this.microphoneLine.close();
         }
 
-        if (this.VE != null) {
-            this.VE.stop();
-            this.VE.close();
+        if (this.outputLine != null) {
+            this.outputLine.stop();
+            this.outputLine.close();
         }
     }
 

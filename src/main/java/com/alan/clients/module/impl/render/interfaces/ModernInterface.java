@@ -48,7 +48,7 @@ extends Mode<Interface> {
     private final agc medium18Font = FontManager.MAIN.a(18, FontWeight.MEDIUM);
     private final agc regular18Font = FontManager.MAIN.a(18, FontWeight.REGULAR);
     agc arrayListFont = FontManager.MAIN.a(18, FontWeight.REGULAR);
-    private final a asH = new a();
+    private final a particleStopWatch = new a();
     private final ModeValue arrayListColorMode = new ModernArrayListColorModeValue(this, "ArrayList Color Mode", this);
     private final ModeValue arrayListFontMode = new ArrayListFontModeValue(this, "ArrayList Font", this);
     private final StringValue customInstalledFont = new StringValue("Custom Installed Font", (Mode<?>)this, "Arial", () -> {
@@ -68,7 +68,7 @@ extends Mode<Interface> {
     private float userWidth;
     private float xyzWidth;
     private Color logoColor = new Color(0);
-    private final a asY = new a();
+    private final a particleCycleStopWatch = new a();
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         double d2;
@@ -96,7 +96,7 @@ extends Mode<Interface> {
                             RenderUtil.d(d32 - d2 + 0.5, d4 - 3.0, (double)(zc2.nameWidth + zc2.tagWidth + 3.0f) + d2, ((Interface)this.getParent()).moduleSpacing, this.glow ? ColorUtil.withBlue(color, 255) : this.rz().rE());
                         }
                     } else if (this.glow) {
-                        this.a(zc2, d32 + 0.5, d4, color.getRGB());
+                        this.drawEntry(zc2, d32 + 0.5, d4, color.getRGB());
                     } else if (this.shadow) {
                         this.arrayListFont.a(zc2.getDisplayName(), d32, d4, Color.BLACK.getRGB());
                         if (zc2.isHasTag()) {
@@ -183,14 +183,14 @@ extends Mode<Interface> {
                     consumer.accept(Themes.rK());
                 });
             }
-            this.b(ShaderQueueType.REGULAR, 1).c(() -> this.a(zc2, d4, d5 - 0.5, color2.getRGB()));
+            this.b(ShaderQueueType.REGULAR, 1).c(() -> this.drawEntry(zc2, d4, d5 - 0.5, color2.getRGB()));
             if (!((Boolean)this.sidebar.wo()).booleanValue()) continue;
             RenderUtil.roundedRectangle(d4 + (double)zc2.getNameWidth() + (double)zc2.getTagWidth() + 2.0, d5 - 1.5, 2.0, 9.0, 1.0, color2);
         }
         if (this.coordinates == null) {
             return;
         }
-        if (!this.asH.T(2000L)) {
+        if (!this.particleStopWatch.T(2000L)) {
             this.b(ShaderQueueType.BLOOM).c(NotificationComponent::cj);
         }
         String string = rip.vantage.network.core.a.aKB().bX();
@@ -238,7 +238,7 @@ extends Mode<Interface> {
                 if (potionEffect3 == null) continue;
                 float f13 = f2 - (float)agc4.getStringWidth(string4) - (float)agc5.getStringWidth(" " + string7) - f10 - f12 - 5.0f;
                 float f14 = f3 - (agc5.height() + 5.0f) * (float)(i + 1);
-                this.a(potionEffect3.getPotionID(), f13 + 4.0f, f14 + f11, 13.0f);
+                this.drawPotionIcon(potionEffect3.getPotionID(), f13 + 4.0f, f14 + f11, 13.0f);
                 agc4.b(string4, f13 + f10 + f12, f14, -3355444);
                 agc4.b(" " + string7, f13 + f10 + f12 + (float)agc4.getStringWidth(string4), f14, -3355444);
             }
@@ -258,19 +258,19 @@ extends Mode<Interface> {
         if (!((String)this.customClientName.wo()).isEmpty()) {
             this.medium18Font.a((String)this.customClientName.wo(), (double)(6 + this.medium36Font.getStringWidth(Client.b) + 2), 6.0, this.rz().rB().getRGB());
         }
-        if (this.asY.T(7500L)) {
-            this.asH.aX();
-            this.asY.aX();
+        if (this.particleCycleStopWatch.T(7500L)) {
+            this.particleStopWatch.aX();
+            this.particleCycleStopWatch.aX();
         }
     };
     @EventLink
     public final Listener<KillEvent> onKill = killEvent -> {
-        if (!this.asH.T(2000L) && ((Boolean)this.particles.wo()).booleanValue()) {
+        if (!this.particleStopWatch.T(2000L) && ((Boolean)this.particles.wo()).booleanValue()) {
             for (int i = 0; i <= 10; ++i) {
                 NotificationComponent.a(new Particle(new Vector2f(0.0f, 0.0f), new Vector2f((float)Math.random(), (float)Math.random())));
             }
         }
-        this.asH.aX();
+        this.particleStopWatch.aX();
     };
     @EventLink
     public final Listener<TickEvent> onTick = tickEvent -> {
@@ -321,7 +321,7 @@ extends Mode<Interface> {
                 }
                 String string2 = (String)this.customInstalledFont.wo();
                 if (Math.random() > 0.95) {
-                    Optional<String> optional = FontManager.dN().stream().filter(string3 -> ModernInterface.o(string2, string3)).findFirst();
+                    Optional<String> optional = FontManager.dN().stream().filter(string3 -> ModernInterface.fontNameMatches(string2, string3)).findFirst();
                     if (optional.isPresent() && !FontManager.CUSTOM.getName().equals(optional.get())) {
                         FontManager.CUSTOM.setName((String)optional.get());
                         FontManager.CUSTOM.dO().clear();
@@ -392,7 +392,7 @@ extends Mode<Interface> {
         return stringBuilder.toString();
     }
 
-    private void a(int n2, float f2, float f3, float f4) {
+    private void drawPotionIcon(int n2, float f2, float f3, float f4) {
         Potion potion = Potion.potionTypes[n2];
         if (potion == null || !potion.hasStatusIcon()) {
             return;
@@ -404,11 +404,11 @@ extends Mode<Interface> {
         RenderUtil.a(resourceLocation, f2, f3, n4, n5, 18, 18, 256, 256, f4, f4);
     }
 
-    public static String am(String string) {
+    public static String lettersOnly(String string) {
         return string.replaceAll("[^a-zA-Z]", "");
     }
 
-    private void a(ArrayListEntry zc2, double d2, double d3, int n2) {
+    private void drawEntry(ArrayListEntry zc2, double d2, double d3, int n2) {
         if (((Boolean)this.dropShadow.wo()).booleanValue()) {
             this.arrayListFont.b(zc2.getDisplayName(), d2, d3, n2);
             if (!zc2.isHasTag()) return;
@@ -420,7 +420,7 @@ extends Mode<Interface> {
         this.arrayListFont.a(zc2.getDisplayTag(), d2 + (double)zc2.getNameWidth() + 3.0, d3, -3355444);
     }
 
-    private static  boolean o(String string, String string2) {
-        return ModernInterface.am(string2).toLowerCase().contains(ModernInterface.am(string).toLowerCase());
+    private static  boolean fontNameMatches(String string, String string2) {
+        return ModernInterface.lettersOnly(string2).toLowerCase().contains(ModernInterface.lettersOnly(string).toLowerCase());
     }
 }

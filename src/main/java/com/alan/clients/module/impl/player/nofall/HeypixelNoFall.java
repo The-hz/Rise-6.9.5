@@ -14,15 +14,15 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.BlockPos;
 
 public class HeypixelNoFall extends Mode<NoFall> {
-    private boolean ahZ;
-    private boolean aiz;
+    private boolean spoofingFall;
+    private boolean holdingJump;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (this.aiz) {
+        if (this.holdingJump) {
             aEg.gameSettings.keyBindJump.setPressed(true);
         }
 
-        if (this.ahZ) {
+        if (this.spoofingFall) {
             aEg.thePlayer.motionY = 0.0;
             var1x.setOnGround(false);
             var1x.setPosY(var1x.getPosY() - 0.098F);
@@ -30,26 +30,26 @@ public class HeypixelNoFall extends Mode<NoFall> {
         } else if (!(aEg.thePlayer.motionY > 0.0) && !(FallDistanceComponent.cY <= 3.0F)) {
             if (PlayerUtil.block(new BlockPos(var1x.getPosX(), var1x.getPosY() + aEg.thePlayer.motionY, var1x.getPosZ())).getMaterial().isSolid()) {
                 FallDistanceComponent.cY = 0.0F;
-                this.ahZ = true;
-                this.aiz = true;
+                this.spoofingFall = true;
+                this.holdingJump = true;
                 aEg.gameSettings.keyBindJump.setPressed(true);
             }
         }
     };
     @EventLink(value = -1)
     public final Listener<MoveInputEvent> onMoveInput = var1x -> {
-        if (this.aiz) {
+        if (this.holdingJump) {
             var1x.setJump(true);
         }
     };
     @EventLink(value = -1)
     public final Listener<JumpEvent> onJump = var1x -> {
-        if (this.aiz && !this.ahZ && !var1x.isCancelled()) {
-            this.kA();
+        if (this.holdingJump && !this.spoofingFall && !var1x.isCancelled()) {
+            this.releaseJump();
         }
     };
     @EventLink
-    public final Listener<TeleportEvent> onTeleport = var1x -> this.ahZ = false;
+    public final Listener<TeleportEvent> onTeleport = var1x -> this.spoofingFall = false;
 
     public HeypixelNoFall(String var1, NoFall noFall) {
         super(var1, noFall);
@@ -57,18 +57,18 @@ public class HeypixelNoFall extends Mode<NoFall> {
 
     @Override
     public void onEnable() {
-        this.ahZ = false;
-        this.aiz = false;
+        this.spoofingFall = false;
+        this.holdingJump = false;
     }
 
     @Override
     public void onDisable() {
-        this.ahZ = false;
-        this.kA();
+        this.spoofingFall = false;
+        this.releaseJump();
     }
 
-    private void kA() {
-        this.aiz = false;
+    private void releaseJump() {
+        this.holdingJump = false;
         aEg.gameSettings.keyBindJump.setPressed(GameSettings.isKeyDown(aEg.gameSettings.keyBindJump));
     }
 }

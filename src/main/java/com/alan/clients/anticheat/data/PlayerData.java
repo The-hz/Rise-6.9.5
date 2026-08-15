@@ -28,9 +28,9 @@ import rip.vantage.commons.util.time.a;
 public final class PlayerData {
     private final EntityOtherPlayerMP player;
     private final List<Check> checks;
-    private int ao;
-    private int ap;
-    private int aq;
+    private int serverPosX;
+    private int serverPosY;
+    private int serverPosZ;
     private int ar;
     private int as;
     private double x;
@@ -54,7 +54,7 @@ public final class PlayerData {
     private double aI;
     private double aJ;
     private double aK;
-    private double aL;
+    private double pitch;
     private double aM;
     private double aN;
     private boolean onGround;
@@ -83,9 +83,9 @@ public final class PlayerData {
 
     public PlayerData(EntityOtherPlayerMP player) {
         this.player = player;
-        this.ao = player.serverPosX;
-        this.ap = player.serverPosY;
-        this.aq = player.serverPosZ;
+        this.serverPosX = player.serverPosX;
+        this.serverPosY = player.serverPosY;
+        this.serverPosZ = player.serverPosZ;
         this.checks = CheckManager.loadChecks(this);
     }
 
@@ -100,20 +100,20 @@ public final class PlayerData {
                         this.as = 0;
                     }
 
-                    this.ao = this.ao + s14packetentity.posX;
-                    this.ap = this.ap + s14packetentity.posY;
-                    this.aq = this.aq + s14packetentity.posZ;
+                    this.serverPosX = this.serverPosX + s14packetentity.posX;
+                    this.serverPosY = this.serverPosY + s14packetentity.posY;
+                    this.serverPosZ = this.serverPosZ + s14packetentity.posZ;
                     this.at = this.x;
                     this.au = this.y;
                     this.av = this.z;
-                    this.x = this.ao / 32.0;
-                    this.y = this.ap / 32.0;
-                    this.z = this.aq / 32.0;
+                    this.x = this.serverPosX / 32.0;
+                    this.y = this.serverPosY / 32.0;
+                    this.z = this.serverPosZ / 32.0;
                     this.aM = this.aK;
-                    this.aN = this.aL;
+                    this.aN = this.pitch;
                     if (packet instanceof S17PacketEntityLookMove) {
                         this.aK = s14packetentity.yaw;
-                        this.aL = s14packetentity.pitch;
+                        this.pitch = s14packetentity.pitch;
                     }
 
                     this.az = this.aw;
@@ -162,15 +162,15 @@ public final class PlayerData {
                 }
             } else if (packet instanceof z zx) {
                 if (zx.getEntityId() == this.player.getEntityId()) {
-                    this.ao = zx.we();
-                    this.ap = zx.wf();
-                    this.aq = zx.wi();
+                    this.serverPosX = zx.we();
+                    this.serverPosY = zx.wf();
+                    this.serverPosZ = zx.wi();
                     this.at = this.x;
                     this.au = this.y;
                     this.av = this.z;
-                    this.x = this.ao / 32.0;
-                    this.y = this.ap / 32.0;
-                    this.z = this.aq / 32.0;
+                    this.x = this.serverPosX / 32.0;
+                    this.y = this.serverPosY / 32.0;
+                    this.z = this.serverPosZ / 32.0;
                     this.ar = 0;
                     this.aD = this.aC;
                     this.aC = MathHelper.sqrt_double(this.aw * this.aw + this.ay * this.ay);
@@ -287,18 +287,18 @@ public final class PlayerData {
     }
 
     @Generated
-    public int aa() {
-        return this.ao;
+    public int getServerPosX() {
+        return this.serverPosX;
     }
 
     @Generated
-    public int ab() {
-        return this.ap;
+    public int getServerPosY() {
+        return this.serverPosY;
     }
 
     @Generated
-    public int ac() {
-        return this.aq;
+    public int getServerPosZ() {
+        return this.serverPosZ;
     }
 
     @Generated
@@ -417,8 +417,8 @@ public final class PlayerData {
     }
 
     @Generated
-    public double ax() {
-        return this.aL;
+    public double getPitch() {
+        return this.pitch;
     }
 
     @Generated

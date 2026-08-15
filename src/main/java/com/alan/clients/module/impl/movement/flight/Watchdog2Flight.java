@@ -13,7 +13,7 @@ import com.alan.clients.value.Mode;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public class Watchdog2Flight extends Mode<Flight> {
-    private boolean Fg;
+    private boolean shouldDisableOnLand;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (aEg.thePlayer.ae == 1) {
@@ -24,7 +24,7 @@ public class Watchdog2Flight extends Mode<Flight> {
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.tR == 20) {
-            this.Fg = true;
+            this.shouldDisableOnLand = true;
         }
 
         if (aEg.thePlayer.ae > 1 && aEg.thePlayer.ae < 5) {
@@ -33,7 +33,7 @@ public class Watchdog2Flight extends Mode<Flight> {
             aEg.thePlayer.motionY += 0.028;
         }
 
-        if (this.Fg && aEg.thePlayer.onGround) {
+        if (this.shouldDisableOnLand && aEg.thePlayer.onGround) {
             this.e(Flight.class).setEnabled(false);
         }
 
@@ -62,7 +62,7 @@ public class Watchdog2Flight extends Mode<Flight> {
             MoveUtil.stop();
         }
 
-        this.Fg = false;
+        this.shouldDisableOnLand = false;
     }
 
     @Override

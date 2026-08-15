@@ -12,17 +12,17 @@ import rip.vantage.commons.util.time.a;
 
 public final class VerusCriticals extends Mode<Criticals> {
     private final NumberValue delay = new NumberValue("Delay", this, 500, 0, 1000, 1);
-    private final double[] rP = new double[]{0.0625, 0.0};
-    private final a rQ = new a();
+    private final double[] offsets = new double[]{0.0625, 0.0};
+    private final a delayStopWatch = new a();
     @EventLink
     public final Listener<AttackEvent> onAttack = var1x -> {
-        if (this.rQ.T(this.delay.wo().longValue()) && aEg.thePlayer.cqL > 2 && aEg.thePlayer.hurtTime != 0) {
-            for (double d0 : this.rP) {
+        if (this.delayStopWatch.T(this.delay.wo().longValue()) && aEg.thePlayer.cqL > 2 && aEg.thePlayer.hurtTime != 0) {
+            for (double d0 : this.offsets) {
                 PacketUtil.send(new C04PacketPlayerPosition(aEg.thePlayer.posX, aEg.thePlayer.posY + d0, aEg.thePlayer.posZ, false));
             }
 
             aEg.thePlayer.onCriticalHit(var1x.getLiving());
-            this.rQ.aX();
+            this.delayStopWatch.aX();
         }
     };
 

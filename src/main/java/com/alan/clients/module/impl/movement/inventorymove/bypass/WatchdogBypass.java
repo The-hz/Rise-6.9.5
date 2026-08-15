@@ -39,29 +39,29 @@ import net.minecraft.world.World;
 
 public class WatchdogBypass
 extends Mode<InventoryMove> {
-    private boolean JM = false;
-    private boolean JN = false;
-    private long JO = 0L;
-    private float jp;
-    private float jq;
-    public static boolean JP;
-    public static boolean JQ;
+    private boolean speedSuppressed = false;
+    private boolean inputDelayPassed = false;
+    private long inputBlockStart = 0L;
+    private float forward;
+    private float strafe;
+    public static boolean inventoryClicking;
+    public static boolean chestOpenConfirmed;
     int dm;
-    int JR;
-    private final KeyBinding[] JS;
+    int pressedKeyCount;
+    private final KeyBinding[] movementKeys;
     public final BooleanValue predictionMode;
     public final NumberValue ticks;
     public final BooleanValue measureChestOpen;
     private int JW;
-    private int JX;
-    private int JY;
-    private int JZ;
-    private BlockPos Ka;
-    private BlockPos Kb;
-    private String Kc;
-    private String Kd;
-    private boolean Ke;
-    private boolean Kf;
+    private int openSentTick;
+    private int openLatencyTicks;
+    private int chestOpenTick;
+    private BlockPos lastChestPos;
+    private BlockPos pendingChestPos;
+    private String lastOpenSource;
+    private String pendingOpenSource;
+    private boolean openPending;
+    private boolean awaitingChestGui;
     @EventLink
     private final Listener<PreMotionEvent> onPreMotion;
     @EventLink
@@ -71,7 +71,7 @@ extends Mode<InventoryMove> {
     @EventLink(value=3)
     Listener<MoveInputEvent> onMoveInputHigh;
     @EventLink(value=1)
-    Listener<en> pb;
+    Listener<en> onSprint;
     @EventLink(value=1)
     Listener<PreUpdateEvent> onPreUpdate;
     @EventLink
@@ -81,24 +81,24 @@ extends Mode<InventoryMove> {
 
     public WatchdogBypass(String string, InventoryMove inventoryMove) {
         super(string, inventoryMove);
-        this.JS = new KeyBinding[]{WatchdogBypass.aEg.gameSettings.keyBindForward, WatchdogBypass.aEg.gameSettings.keyBindBack, WatchdogBypass.aEg.gameSettings.keyBindRight, WatchdogBypass.aEg.gameSettings.keyBindLeft, WatchdogBypass.aEg.gameSettings.keyBindJump};
+        this.movementKeys = new KeyBinding[]{WatchdogBypass.aEg.gameSettings.keyBindForward, WatchdogBypass.aEg.gameSettings.keyBindBack, WatchdogBypass.aEg.gameSettings.keyBindRight, WatchdogBypass.aEg.gameSettings.keyBindLeft, WatchdogBypass.aEg.gameSettings.keyBindJump};
         this.predictionMode = new BooleanValue("Prediction Mode", (Mode<?>)this, (Boolean)false);
         this.ticks = new NumberValue("Ticks", this, (Number)1, (Number)1, (Number)20, (Number)1);
         this.measureChestOpen = new BooleanValue("Measure Chest Open", (Mode<?>)this, (Boolean)true);
-        this.JX = -1;
-        this.JY = -1;
-        this.JZ = -1;
-        this.Kc = "unknown";
-        this.Kd = "unknown";
+        this.openSentTick = -1;
+        this.openLatencyTicks = -1;
+        this.chestOpenTick = -1;
+        this.lastOpenSource = "unknown";
+        this.pendingOpenSource = "unknown";
         this.onPreMotion = preMotionEvent -> {
             if (WatchdogBypass.aEg.currentScreen == null || WatchdogBypass.aEg.currentScreen instanceof GuiChat || WatchdogBypass.aEg.currentScreen == this.getStandardClickGUI()) {
                 return;
             }
             boolean unused0 = WatchdogBypass.aEg.currentScreen instanceof GuiChest;
-            for (KeyBinding keyBinding : this.JS) {
+            for (KeyBinding keyBinding : this.movementKeys) {
                 keyBinding.setPressed(GameSettings.isKeyDown(keyBinding));
             }
-            if (JQ) {
+            if (chestOpenConfirmed) {
                 int unused1 = WatchdogBypass.aEg.thePlayer.ticksExisted % 2;
             }
         };
@@ -108,42 +108,42 @@ extends Mode<InventoryMove> {
                 C08PacketPlayerBlockPlacement c08PacketPlayerBlockPlacement = (C08PacketPlayerBlockPlacement)packet;
                 BlockPos blockPos = c08PacketPlayerBlockPlacement.getPosition();
                 if (!(WatchdogBypass.aEg.currentScreen instanceof GuiChest) && this.h(blockPos)) {
-                    this.Kb = blockPos;
-                    this.Kd = "C08 at " + String.valueOf(blockPos);
-                    this.Ke = true;
+                    this.pendingChestPos = blockPos;
+                    this.pendingOpenSource = "C08 at " + String.valueOf(blockPos);
+                    this.openPending = true;
                 }
             } else if (!packetSendEvent.isCancelled() && WatchdogBypass.aEg.thePlayer != null && WatchdogBypass.aEg.theWorld != null && ((Boolean)this.measureChestOpen.wo()).booleanValue() && packet instanceof C02PacketUseEntity) {
                 C02PacketUseEntity c02PacketUseEntity = (C02PacketUseEntity)packet;
                 Entity entity = c02PacketUseEntity.getEntityFromWorld((World)WatchdogBypass.aEg.theWorld);
-                if (!(WatchdogBypass.aEg.currentScreen instanceof GuiChest) && c02PacketUseEntity.getAction() != C02PacketUseEntity.Action.ATTACK && this.o(entity)) {
-                    this.Kb = null;
-                    this.Kd = "C02 at " + entity.getName() + " (" + entity.getEntityId() + ")";
-                    this.Ke = true;
+                if (!(WatchdogBypass.aEg.currentScreen instanceof GuiChest) && c02PacketUseEntity.getAction() != C02PacketUseEntity.Action.ATTACK && this.isNpcEntity(entity)) {
+                    this.pendingChestPos = null;
+                    this.pendingOpenSource = "C02 at " + entity.getName() + " (" + entity.getEntityId() + ")";
+                    this.openPending = true;
                 }
             }
             if (packet instanceof C0EPacketClickWindow) {
                 C0EPacketClickWindow c0EPacketClickWindow = (C0EPacketClickWindow)packet;
                 if (WatchdogBypass.aEg.currentScreen instanceof GuiInventory && c0EPacketClickWindow.getMode() < 1 && c0EPacketClickWindow.getClickedItem() != null) {
-                    JP = true;
+                    inventoryClicking = true;
                 }
             }
         };
         this.onPreMotionMedium = preMotionEvent -> {
             GuiScreen guiScreen;
             if (!(WatchdogBypass.aEg.currentScreen instanceof GuiInventory)) {
-                JP = false;
+                inventoryClicking = false;
             }
             if ((guiScreen = WatchdogBypass.aEg.currentScreen) instanceof GuiInventory) {
                 GuiInventory guiInventory = (GuiInventory)guiScreen;
-                if (!JP && !BadPacketsComponent.bad(false, false, false, false, true)) {
+                if (!inventoryClicking && !BadPacketsComponent.bad(false, false, false, false, true)) {
                     WatchdogBypass.aEg.thePlayer.sendQueue.u((Packet)new q(guiInventory.inventorySlots.windowId));
                 }
             }
-            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) && !((Boolean)this.predictionMode.wo()).booleanValue()) {
-                if (this.e(Speed.class).isEnabled() && !this.JM) {
+            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || inventoryClicking) && !((Boolean)this.predictionMode.wo()).booleanValue()) {
+                if (this.e(Speed.class).isEnabled() && !this.speedSuppressed) {
                     WatchdogBypass.aEg.thePlayer.motionZ *= -0.1;
                     WatchdogBypass.aEg.thePlayer.motionX *= -0.1;
-                    this.JM = true;
+                    this.speedSuppressed = true;
                 }
                 if (WatchdogBypass.aEg.thePlayer.cqL < 10 && !(Math.abs(WatchdogBypass.aEg.thePlayer.posY - (double)Math.round(WatchdogBypass.aEg.thePlayer.posY)) > 0.03) && !(WatchdogBypass.aEg.currentScreen instanceof GuiChest)) {
                     MoveUtil.strafe(0.0365);
@@ -162,11 +162,11 @@ extends Mode<InventoryMove> {
                     MoveUtil.stop();
                 }
                 MoveUtil.preventDiagonalSpeed();
-            } else if (this.JM) {
+            } else if (this.speedSuppressed) {
                 this.e(Speed.class).setEnabled(true);
-                this.JM = false;
+                this.speedSuppressed = false;
             }
-            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) && ((Boolean)this.predictionMode.wo()).booleanValue() && !WatchdogBypass.aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
+            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || inventoryClicking) && ((Boolean)this.predictionMode.wo()).booleanValue() && !WatchdogBypass.aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                 KeyBinding[] keyBindingArray;
                 preMotionEvent.setSprinting(false);
                 WatchdogBypass.aEg.gameSettings.cgG.setPressed(false);
@@ -176,24 +176,24 @@ extends Mode<InventoryMove> {
                 int n3 = 0;
                 while (n3 < n2) {
                     if (keyBindingArray2[n3].isKeyDown()) {
-                        ++this.JR;
+                        ++this.pressedKeyCount;
                     }
                     ++n3;
                 }
                 return;
             }
             if (!(WatchdogBypass.aEg.currentScreen instanceof GuiChest)) {
-                if (!JP) return;
+                if (!inventoryClicking) return;
             }
             if ((Boolean)this.predictionMode.wo() == false) return;
             preMotionEvent.setSprinting(false);
         };
         this.onMoveInputHigh = moveInputEvent -> {
-            this.jp = moveInputEvent.getForward();
-            this.jq = moveInputEvent.getStrafe();
+            this.forward = moveInputEvent.getForward();
+            this.strafe = moveInputEvent.getStrafe();
         };
-        this.pb = en2 -> {
-            if (WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) {
+        this.onSprint = en2 -> {
+            if (WatchdogBypass.aEg.currentScreen instanceof GuiChest || inventoryClicking) {
                 WatchdogBypass.aEg.thePlayer.setSprinting(false);
             }
         };
@@ -201,9 +201,9 @@ extends Mode<InventoryMove> {
             if (WatchdogBypass.aEg.thePlayer == null || WatchdogBypass.aEg.theWorld == null || WatchdogBypass.aEg.thePlayer.ticksExisted < 50) {
                 return;
             }
-            this.hw();
-            this.hv();
-            this.hx();
+            this.beginOpenMeasurement();
+            this.finishOpenMeasurement();
+            this.updateChestOpenState();
             KeyBinding[] keyBindingArray = new KeyBinding[]{WatchdogBypass.aEg.gameSettings.keyBindForward, WatchdogBypass.aEg.gameSettings.keyBindRight, WatchdogBypass.aEg.gameSettings.keyBindBack, WatchdogBypass.aEg.gameSettings.keyBindLeft};
             int n2 = 0;
             KeyBinding[] keyBindingArray2 = keyBindingArray;
@@ -212,8 +212,8 @@ extends Mode<InventoryMove> {
                 if (!keyBindingArray2[i2].isKeyDown()) continue;
                 ++n2;
             }
-            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) && n2 > 1) {
-                RotationComponent.setRotations(new Vector2f((float)Math.toDegrees(MoveUtil.g(this.jp, this.jq)), WatchdogBypass.aEg.thePlayer.rotationPitch), 10.0, MovementFix.NORMAL);
+            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || inventoryClicking) && n2 > 1) {
+                RotationComponent.setRotations(new Vector2f((float)Math.toDegrees(MoveUtil.g(this.forward, this.strafe)), WatchdogBypass.aEg.thePlayer.rotationPitch), 10.0, MovementFix.NORMAL);
             }
         };
         this.onMoveInput = moveInputEvent -> {
@@ -225,81 +225,81 @@ extends Mode<InventoryMove> {
                 if (!keyBindingArray2[i2].isKeyDown()) continue;
                 ++n2;
             }
-            if (JQ && WatchdogBypass.aEg.thePlayer.ticksExisted % 5 != 0 && WatchdogBypass.aEg.currentScreen instanceof GuiChest) {
+            if (chestOpenConfirmed && WatchdogBypass.aEg.thePlayer.ticksExisted % 5 != 0 && WatchdogBypass.aEg.currentScreen instanceof GuiChest) {
                 moveInputEvent.setStrafe(0.0f);
                 moveInputEvent.setForward(0.0f);
             }
             if (!(WatchdogBypass.aEg.currentScreen instanceof GuiChest)) {
-                JQ = false;
+                chestOpenConfirmed = false;
             }
-            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) && ((Boolean)this.predictionMode.wo()).booleanValue() && (WatchdogBypass.aEg.thePlayer.isPotionActive(Potion.moveSpeed) || !WatchdogBypass.aEg.thePlayer.onGround)) {
+            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || inventoryClicking) && ((Boolean)this.predictionMode.wo()).booleanValue() && (WatchdogBypass.aEg.thePlayer.isPotionActive(Potion.moveSpeed) || !WatchdogBypass.aEg.thePlayer.onGround)) {
                 moveInputEvent.setStrafe(0.0f);
                 moveInputEvent.setForward(0.0f);
-            } else if (JP && !this.JN) {
+            } else if (inventoryClicking && !this.inputDelayPassed) {
                 moveInputEvent.setStrafe(0.0f);
                 moveInputEvent.setForward(0.0f);
-                if (this.JO == 0L) {
-                    this.JO = System.currentTimeMillis();
+                if (this.inputBlockStart == 0L) {
+                    this.inputBlockStart = System.currentTimeMillis();
                 }
             } else {
-                this.JO = 0L;
+                this.inputBlockStart = 0L;
             }
-            if (this.JO != 0L && System.currentTimeMillis() - this.JO >= 60L) {
-                this.JN = true;
-                this.JO = 0L;
+            if (this.inputBlockStart != 0L && System.currentTimeMillis() - this.inputBlockStart >= 60L) {
+                this.inputDelayPassed = true;
+                this.inputBlockStart = 0L;
             }
-            if (!(WatchdogBypass.aEg.currentScreen instanceof GuiChest) && !JP) {
-                this.JN = false;
+            if (!(WatchdogBypass.aEg.currentScreen instanceof GuiChest) && !inventoryClicking) {
+                this.inputDelayPassed = false;
             }
         };
         this.onMove = moveEvent -> {
-            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || JP) && !((Boolean)this.predictionMode.wo()).booleanValue() && !WatchdogBypass.aEg.thePlayer.onGround) {
+            if ((WatchdogBypass.aEg.currentScreen instanceof GuiChest || inventoryClicking) && !((Boolean)this.predictionMode.wo()).booleanValue() && !WatchdogBypass.aEg.thePlayer.onGround) {
                 moveEvent.setPosZ(0.0);
                 moveEvent.setPosX(0.0);
             }
         };
     }
 
-    private void hv() {
-        if (!this.Kf) {
+    private void finishOpenMeasurement() {
+        if (!this.awaitingChestGui) {
             return;
         }
         if (WatchdogBypass.aEg.currentScreen instanceof GuiChest) {
             int n2;
-            this.JY = n2 = WatchdogBypass.aEg.thePlayer.ticksExisted - this.JX;
-            if (this.JZ == -1) {
-                this.JZ = WatchdogBypass.aEg.thePlayer.ticksExisted;
+            this.openLatencyTicks = n2 = WatchdogBypass.aEg.thePlayer.ticksExisted - this.openSentTick;
+            if (this.chestOpenTick == -1) {
+                this.chestOpenTick = WatchdogBypass.aEg.thePlayer.ticksExisted;
             }
-            this.Kf = false;
+            this.awaitingChestGui = false;
             return;
         }
-        if (WatchdogBypass.aEg.thePlayer.ticksExisted - this.JX > 40) {
-            this.Kf = false;
+        if (WatchdogBypass.aEg.thePlayer.ticksExisted - this.openSentTick > 40) {
+            this.awaitingChestGui = false;
         }
     }
 
-    private void hw() {
-        if (!this.Ke) {
+    private void beginOpenMeasurement() {
+        if (!this.openPending) {
             return;
         }
-        this.JX = WatchdogBypass.aEg.thePlayer.ticksExisted;
-        this.Ka = this.Kb;
-        this.Kc = this.Kd;
-        this.Ke = false;
-        this.Kf = true;
+        this.openSentTick = WatchdogBypass.aEg.thePlayer.ticksExisted;
+        this.lastChestPos = this.pendingChestPos;
+        this.lastOpenSource = this.pendingOpenSource;
+        this.openPending = false;
+        this.awaitingChestGui = true;
     }
 
-    private void hx() {
+    private void updateChestOpenState() {
         if (!(WatchdogBypass.aEg.currentScreen instanceof GuiChest)) {
-            this.JZ = -1;
-            JQ = false;
+            this.chestOpenTick = -1;
+            chestOpenConfirmed = false;
             return;
         }
-        if (this.JZ == -1) {
-            this.JZ = WatchdogBypass.aEg.thePlayer.ticksExisted;
+        if (this.chestOpenTick == -1) {
+            this.chestOpenTick = WatchdogBypass.aEg.thePlayer.ticksExisted;
         }
-        if (!JQ && this.JY >= 0 && WatchdogBypass.aEg.thePlayer.ticksExisted - this.JZ >= this.JY - ((Number)this.ticks.wo()).intValue()) {
-            JQ = true;
+        if (!chestOpenConfirmed && this.openLatencyTicks >= 0 && WatchdogBypass.aEg.thePlayer.ticksExisted - this.chestOpenTick >= this.openLatencyTicks - ((Number)this.ticks.wo()).intValue()) {
+            chestOpenConfirmed = true;
         }
     }
 
@@ -316,7 +316,7 @@ extends Mode<InventoryMove> {
         return true;
     }
 
-    private boolean o(Entity entity) {
+    private boolean isNpcEntity(Entity entity) {
         if (entity == null) return false;
         if (entity == WatchdogBypass.aEg.thePlayer) {
             return false;
@@ -326,11 +326,11 @@ extends Mode<InventoryMove> {
             return true;
         }
         if (entity.adr) return false;
-        if (!this.p(entity)) return false;
+        if (!this.isStationary(entity)) return false;
         return true;
     }
 
-    private boolean p(Entity entity) {
+    private boolean isStationary(Entity entity) {
         if (!(Math.abs(entity.posX - entity.lastTickPosX) < 0.03)) return false;
         if (!(Math.abs(entity.posY - entity.lastTickPosY) < 0.03)) return false;
         if (!(Math.abs(entity.posZ - entity.lastTickPosZ) < 0.03)) return false;

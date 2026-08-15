@@ -9,19 +9,19 @@ import com.alan.clients.value.Mode;
 import net.minecraft.potion.Potion;
 
 public class NCPPacketlessStep extends Mode<Step> {
-    private boolean RW;
+    private boolean pendingStep;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.onGround && aEg.thePlayer.isCollidedHorizontally && !aEg.thePlayer.isPotionActive(Potion.jump)) {
             aEg.thePlayer.jump();
             MoveUtil.stop();
-            this.RW = true;
+            this.pendingStep = true;
         }
 
-        if (aEg.thePlayer.tR == 3 && this.RW) {
+        if (aEg.thePlayer.tR == 3 && this.pendingStep) {
             aEg.thePlayer.motionY = MoveUtil.predictedMotion(aEg.thePlayer.motionY, 2);
             MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() * 0.6 - Math.random() / 100.0 - 0.05);
-            this.RW = false;
+            this.pendingStep = false;
         }
     };
 

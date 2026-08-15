@@ -25,22 +25,22 @@ import rip.vantage.network.core.a;
 
 public class bf extends Component implements InstanceAccess {
     public static HashMap<String, by> dc = new HashMap<>();
-    public static List<String> dd = new ArrayList<>();
-    public static List<String> de = new ArrayList<>();
+    public static List<String> known = new ArrayList<>();
+    public static List<String> pending = new ArrayList<>();
     @EventLink
     public final Listener<ServerJoinEvent> onServerJoin = var0 -> {
         dc = new HashMap<>();
-        dd = new ArrayList<>();
+        known = new ArrayList<>();
     };
     @EventLink
     public final Listener<TickEvent> onTick = var0 -> {
-        ce.ch();
-        ce.cg();
+        ce.loadTextures();
+        ce.updateFrames();
 
         for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
-            if (!dd.contains(entityplayer.getGameProfile().getName())) {
-                dd.add(entityplayer.getGameProfile().getName());
-                de.add(entityplayer.getGameProfile().getName());
+            if (!known.contains(entityplayer.getGameProfile().getName())) {
+                known.add(entityplayer.getGameProfile().getName());
+                pending.add(entityplayer.getGameProfile().getName());
             }
         }
 
@@ -57,18 +57,18 @@ public class bf extends Component implements InstanceAccess {
                 String s2 = jsonobject1.getString("f");
                 by by = new by(s1);
                 if (!s2.equals("") && !s2.equals(" ")) {
-                    by.o(s2);
-                    by.a(bz.Regular);
+                    by.setTag(s2);
+                    by.setRank(bz.Regular);
                     if (jsonobject1.getBoolean("h")) {
-                        by.a(bz.Developer);
+                        by.setRank(bz.Developer);
                     }
 
                     if (jsonobject1.getBoolean("g")) {
-                        by.a(bz.Admin);
+                        by.setRank(bz.Admin);
                     }
 
                     if (jsonobject1.getBoolean("i")) {
-                        by.a(bz.Gato);
+                        by.setRank(bz.Gato);
                     }
 
                     JSONArray jsonarray = jsonobject1.getJSONArray("j");
@@ -78,7 +78,7 @@ public class bf extends Component implements InstanceAccess {
                         astring[i] = jsonarray.getString(i);
                     }
 
-                    by.b(astring);
+                    by.setCapeUrls(astring);
                     dc.put(s1, by);
                 }
             }
@@ -115,19 +115,19 @@ public class bf extends Component implements InstanceAccess {
         by by = dc.get(var1);
         if (by != null) {
             String s = " §7(" + var1 + "§7)§r";
-            String s1 = "§" + by.getColorCode() + by.bW() + " §7(";
+            String s1 = "§" + by.getColorCode() + by.getTag() + " §7(";
             if (!var0.contains(s1)) {
                 int i = var0.indexOf(var1);
                 if (i > 1 && var0.toCharArray()[i - 2] == 167) {
                     s = " §7(§" + var0.toCharArray()[i - 1] + var1 + "§7)§r";
                 }
 
-                return var0.replaceAll(var1, "§" + by.getColorCode() + by.bW() + s);
+                return var0.replaceAll(var1, "§" + by.getColorCode() + by.getTag() + s);
             }
-        } else if (!dd.contains(var1)) {
-            dd.add(var1);
+        } else if (!known.contains(var1)) {
+            known.add(var1);
             if (!var1.isBlank()) {
-                de.add(var1);
+                pending.add(var1);
             }
         }
 
@@ -135,22 +135,22 @@ public class bf extends Component implements InstanceAccess {
     }
 
     public static void aZ() {
-        if (!de.isEmpty() && de.get(0) != "") {
+        if (!pending.isEmpty() && pending.get(0) != "") {
             StringBuilder stringbuilder = new StringBuilder();
             stringbuilder.append("[");
 
-            for (String s : de) {
+            for (String s : pending) {
                 stringbuilder.append("\"").append(s).append("\"");
             }
 
             stringbuilder.append("]");
-            String s1 = "[\"" + String.join("\", \"", de) + "\"]";
+            String s1 = "[\"" + String.join("\", \"", pending) + "\"]";
             a.aKB().aKK().sendMessage(new C2SPacketUserLookup(s1).aJk());
-            de = new ArrayList<>();
+            pending = new ArrayList<>();
         }
     }
 
-    public static String d(String var0, String var1) {
+    public static String getChatPrefix(String var0, String var1) {
         String s = Client.a.getThemeManager().getTheme().getChatAccentColor().toString();
         return EnumChatFormatting.BOLD + var1 + var0 + EnumChatFormatting.RESET + s + " » " + EnumChatFormatting.RESET;
     }

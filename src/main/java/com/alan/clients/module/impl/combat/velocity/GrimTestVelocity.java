@@ -60,21 +60,21 @@ public final class GrimTestVelocity extends Mode<Velocity> {
     private final NumberValue jumpResetTick = new NumberValue("Jump Reset Tick", this, 1, 0, 9, 1, () -> !this.u("Jump Reset"));
     private final NumberValue grimLevel = new NumberValue("Grim Level", this, 0.001, 0.001, 0.1, 0.001, () -> !this.u("Grim Full"));
     private final BooleanValue logging = new BooleanValue("Logging", this, true);
-    private Entity pY;
-    private boolean sS;
-    private int sT;
-    private double sU;
-    private int sV;
-    private boolean sW;
-    private long sX;
-    private boolean sY;
-    private int sZ;
+    private Entity target;
+    private boolean velocityReceived;
+    private int jumpResetCountdown;
+    private double knockbackSpeed;
+    private int pendingAttacks;
+    private boolean hurtReceived;
+    private long enableTime;
+    private boolean wasNotSprinting;
+    private int attackCount;
     private final Random random = new Random();
-    private final Queue<Packet<?>> tb = new ConcurrentLinkedQueue<>();
-    private boolean tc;
-    private Vec3 td;
-    private long te;
-    private boolean tf;
+    private final Queue<Packet<?>> delayedPackets = new ConcurrentLinkedQueue<>();
+    private boolean delaying;
+    private Vec3 pendingVelocity;
+    private long delayStart;
+    private boolean velocityApplied;
     private boolean skipNextDelay;
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
@@ -119,13 +119,13 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                 }
             }
 
-            if (this.u("Reduce") && this.delayRelease.wo() && packet instanceof S08PacketPlayerPosLook && !this.tc) {
+            if (this.u("Reduce") && this.delayRelease.wo() && packet instanceof S08PacketPlayerPosLook && !this.delaying) {
                 this.skipNextDelay = true;
                 this.t("Flag detected, skipping next delay.");
             }
 
             if (packet instanceof ab ab && ab.getEntity(aEg.theWorld) == aEg.thePlayer && ab.getOpCode() == 2) {
-                this.sW = true;
+                this.hurtReceived = true;
             }
 
             if (packet instanceof S12PacketEntityVelocity s12packetentityvelocity1) {
@@ -133,22 +133,22 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                     return;
                 }
 
-                this.sS = true;
+                this.velocityReceived = true;
                 KillAura killaura = this.e(KillAura.class);
-                this.pY = killaura != null ? killaura.jE : null;
+                this.target = killaura != null ? killaura.jE : null;
                 double d0 = s12packetentityvelocity1.getMotionX() / 8000.0;
                 double d1 = s12packetentityvelocity1.getMotionY() / 8000.0;
                 double d2 = s12packetentityvelocity1.getMotionZ() / 8000.0;
                 double d3 = Math.sqrt(d0 * d0 + d2 * d2);
-                this.sU = d3;
+                this.knockbackSpeed = d3;
                 if (this.u("Reduce")) {
-                    if (this.sW) {
-                        this.sW = false;
-                        if (this.gA()) {
+                    if (this.hurtReceived) {
+                        this.hurtReceived = false;
+                        if (this.isInLiquidOrWeb()) {
                             return;
                         }
 
-                        if (System.currentTimeMillis() - this.sX < 1000L) {
+                        if (System.currentTimeMillis() - this.enableTime < 1000L) {
                             return;
                         }
 
@@ -163,9 +163,9 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                         if (this.delayRelease.wo() && !this.skipNextDelay) {
                             if (d3 >= this.delaySpeedThreshold.wo().doubleValue()) {
                                 var1x.setCancelled();
-                                this.tc = true;
-                                this.td = new Vec3(d0, d1, d2);
-                                this.te = System.currentTimeMillis();
+                                this.delaying = true;
+                                this.pendingVelocity = new Vec3(d0, d1, d2);
+                                this.delayStart = System.currentTimeMillis();
                                 this.t("Strong KB (speed: " + String.format("%.3f", d3) + "), delay started.");
                                 return;
                             }
@@ -178,15 +178,15 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                             this.t("Flagged, using normal reduce this time.");
                         }
 
-                        this.sV = this.gz();
-                        this.sY = !aEg.thePlayer.isSprinting();
+                        this.pendingAttacks = this.getRandomAttackCount();
+                        this.wasNotSprinting = !aEg.thePlayer.isSprinting();
                     }
                 } else if (this.u("Jump Reset")) {
-                    this.sT = this.jumpResetTick.wo().intValue();
+                    this.jumpResetCountdown = this.jumpResetTick.wo().intValue();
                 }
             }
 
-            if (this.tc) {
+            if (this.delaying) {
                 if (packet instanceof S23PacketBlockChange || packet instanceof S29PacketSoundEffect || packet instanceof c) {
                     return;
                 }
@@ -198,7 +198,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                 if (packet instanceof S06PacketUpdateHealth s06packetupdatehealth) {
                     if (s06packetupdatehealth.getHealth() <= 0.0F) {
                         this.t("Player died, releasing all packets.");
-                        this.r(true);
+                        this.endDelay(true);
                     }
 
                     return;
@@ -206,11 +206,11 @@ public final class GrimTestVelocity extends Mode<Velocity> {
 
                 if (packet instanceof bt || packet instanceof S07PacketRespawn || packet instanceof S08PacketPlayerPosLook) {
                     this.t("Critical packet received, releasing all packets.");
-                    this.r(true);
+                    this.endDelay(true);
                     return;
                 }
 
-                this.tb.add(packet);
+                this.delayedPackets.add(packet);
                 var1x.setCancelled();
             }
         }
@@ -219,18 +219,18 @@ public final class GrimTestVelocity extends Mode<Velocity> {
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.thePlayer != null) {
             if (aEg.thePlayer.hurtTime == 0) {
-                this.sS = false;
-                this.sU = 0.0;
+                this.velocityReceived = false;
+                this.knockbackSpeed = 0.0;
             }
 
-            if (this.sT > 0) {
-                this.sT--;
+            if (this.jumpResetCountdown > 0) {
+                this.jumpResetCountdown--;
             }
 
-            if (this.tc && this.td != null) {
+            if (this.delaying && this.pendingVelocity != null) {
                 MovingObjectPosition movingobjectposition = aEg.objectMouseOver;
                 if (movingobjectposition != null && movingobjectposition.entityHit instanceof EntityPlayer entityplayer) {
-                    int i = this.gz();
+                    int i = this.getRandomAttackCount();
                     double d0 = 1.0;
 
                     for (int j = 0; j < i; j++) {
@@ -243,22 +243,22 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                         d0 *= 0.6;
                     }
 
-                    aEg.thePlayer.setVelocity(this.td.xCoord * d0, this.td.yCoord, this.td.zCoord * d0);
+                    aEg.thePlayer.setVelocity(this.pendingVelocity.xCoord * d0, this.pendingVelocity.yCoord, this.pendingVelocity.zCoord * d0);
                     this.t("Target acquired, attacks: " + i + ", KB reduced to " + String.format("%.1f%%", d0 * 100.0));
-                    this.tf = true;
+                    this.velocityApplied = true;
                 }
 
-                if (!this.tf) {
-                    long k = System.currentTimeMillis() - this.te;
+                if (!this.velocityApplied) {
+                    long k = System.currentTimeMillis() - this.delayStart;
                     if (k >= this.delayTimeoutMs.wo().longValue()) {
-                        aEg.thePlayer.setVelocity(this.td.xCoord, this.td.yCoord, this.td.zCoord);
+                        aEg.thePlayer.setVelocity(this.pendingVelocity.xCoord, this.pendingVelocity.yCoord, this.pendingVelocity.zCoord);
                         this.t("Timeout (" + k + "ms), applying full KB.");
-                        this.tf = true;
+                        this.velocityApplied = true;
                     }
                 }
 
-                if (this.tf) {
-                    this.r(true);
+                if (this.velocityApplied) {
+                    this.endDelay(true);
                 }
             }
 
@@ -266,31 +266,31 @@ public final class GrimTestVelocity extends Mode<Velocity> {
                 this.skipNextDelay = false;
             }
 
-            if (this.u("Reduce") && this.pY != null && this.sV > 0) {
-                if (this.sY) {
+            if (this.u("Reduce") && this.target != null && this.pendingAttacks > 0) {
+                if (this.wasNotSprinting) {
                     aEg.getNetHandler().addToSendQueue(new C0BPacketEntityAction(aEg.thePlayer, Action.START_SPRINTING));
                 }
 
-                while (this.sV >= 1) {
-                    aEg.getNetHandler().addToSendQueue(new C02PacketUseEntity(this.pY, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
+                while (this.pendingAttacks >= 1) {
+                    aEg.getNetHandler().addToSendQueue(new C02PacketUseEntity(this.target, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
                     aEg.thePlayer.swingItem();
                     aEg.thePlayer.setVelocity(aEg.thePlayer.motionX * 0.6, aEg.thePlayer.motionY, aEg.thePlayer.motionZ * 0.6);
                     aEg.thePlayer.onGround = false;
-                    this.sV--;
+                    this.pendingAttacks--;
                 }
 
-                if (this.sY) {
+                if (this.wasNotSprinting) {
                     aEg.getNetHandler().addToSendQueue(new C0BPacketEntityAction(aEg.thePlayer, Action.STOP_SPRINTING));
-                    this.sY = false;
+                    this.wasNotSprinting = false;
                 }
             }
         }
     };
     @EventLink
     public final Listener<MoveInputEvent> onMoveInput = var1x -> {
-        if (aEg.thePlayer != null && this.u("Jump Reset") && aEg.thePlayer.onGround && this.sT == 1) {
+        if (aEg.thePlayer != null && this.u("Jump Reset") && aEg.thePlayer.onGround && this.jumpResetCountdown == 1) {
             var1x.setJump(true);
-            this.sT = 0;
+            this.jumpResetCountdown = 0;
             var1x.setForward(1.0F);
         }
     };
@@ -301,39 +301,39 @@ public final class GrimTestVelocity extends Mode<Velocity> {
 
     @Override
     public void onEnable() {
-        this.sX = System.currentTimeMillis();
+        this.enableTime = System.currentTimeMillis();
     }
 
     @Override
     public void onDisable() {
-        this.sS = false;
-        this.sT = 0;
-        this.pY = null;
-        this.sU = 0.0;
-        this.sV = 0;
-        this.sW = false;
-        this.sY = false;
-        this.r(true);
+        this.velocityReceived = false;
+        this.jumpResetCountdown = 0;
+        this.target = null;
+        this.knockbackSpeed = 0.0;
+        this.pendingAttacks = 0;
+        this.hurtReceived = false;
+        this.wasNotSprinting = false;
+        this.endDelay(true);
     }
 
-    private void r(boolean var1) {
-        this.tc = false;
+    private void endDelay(boolean var1) {
+        this.delaying = false;
         if (var1) {
             BlinkComponent.dispatch();
 
-            while (!this.tb.isEmpty()) {
-                Packet packet = this.tb.poll();
+            while (!this.delayedPackets.isEmpty()) {
+                Packet packet = this.delayedPackets.poll();
                 if (packet != null) {
                     PacketUtil.receive(packet);
                 }
             }
         } else {
-            this.tb.clear();
+            this.delayedPackets.clear();
         }
 
-        this.td = null;
-        this.tf = false;
-        this.te = 0L;
+        this.pendingVelocity = null;
+        this.velocityApplied = false;
+        this.delayStart = 0L;
     }
 
     private void t(String var1) {
@@ -347,7 +347,7 @@ public final class GrimTestVelocity extends Mode<Velocity> {
         return f < 0.01F || f > 89.99F;
     }
 
-    private int gz() {
+    private int getRandomAttackCount() {
         int i = this.minAttacks.wo().intValue();
         int j = this.maxAttacks.wo().intValue();
         if (i < 1) {
@@ -365,14 +365,14 @@ public final class GrimTestVelocity extends Mode<Velocity> {
         }
 
         if (i == j) {
-            this.sZ = i;
+            this.attackCount = i;
             return i;
         }
-        this.sZ = ThreadLocalRandom.current().nextInt(i, j + 1);
-        return this.sZ;
+        this.attackCount = ThreadLocalRandom.current().nextInt(i, j + 1);
+        return this.attackCount;
     }
 
-    private boolean gA() {
+    private boolean isInLiquidOrWeb() {
         if (aEg.thePlayer == null || aEg.theWorld == null) {
             return false;
         }

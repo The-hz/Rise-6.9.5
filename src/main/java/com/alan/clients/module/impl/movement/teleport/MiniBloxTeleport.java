@@ -31,7 +31,7 @@ import org.lwjgl.opengl.GL11;
 @gk
 public final class MiniBloxTeleport
 extends Mode<Teleport> {
-    private ahy Sx = new ahy(0.0, 0.0, 0.0);
+    private ahy targetPosition = new ahy(0.0, 0.0, 0.0);
     @EventLink
     public final Listener<TeleportEvent> onTeleport = teleportEvent -> this.toggle();
     @EventLink
@@ -50,7 +50,7 @@ extends Mode<Teleport> {
         double d4 = entityPlayerSP.prevPosX + (entityPlayerSP.posX - entityPlayerSP.prevPosX) * (double)f2 - Math.sin(d2) * d3;
         double d5 = entityPlayerSP.prevPosY + (entityPlayerSP.posY - entityPlayerSP.prevPosY) * (double)f2;
         double d6 = entityPlayerSP.prevPosZ + (entityPlayerSP.posZ - entityPlayerSP.prevPosZ) * (double)f2 + Math.cos(d2) * d3;
-        this.Sx = new ahy(d4, d5, d6);
+        this.targetPosition = new ahy(d4, d5, d6);
         Color color = ColorUtil.withBlue(this.rz().rA(), 100);
         if (color.getAlpha() <= 0) {
             return;
@@ -79,7 +79,7 @@ extends Mode<Teleport> {
         if (!MiniBloxTeleport.aEg.gameSettings.keyBindSneak.isKeyDown()) {
             return;
         }
-        List<ahy> list = MainPathFinder.a(new ahy(MiniBloxTeleport.aEg.thePlayer.posX, MiniBloxTeleport.aEg.thePlayer.posY, MiniBloxTeleport.aEg.thePlayer.posZ), this.Sx, true);
+        List<ahy> list = MainPathFinder.a(new ahy(MiniBloxTeleport.aEg.thePlayer.posX, MiniBloxTeleport.aEg.thePlayer.posY, MiniBloxTeleport.aEg.thePlayer.posZ), this.targetPosition, true);
         if (list == null || list.isEmpty()) {
             return;
         }

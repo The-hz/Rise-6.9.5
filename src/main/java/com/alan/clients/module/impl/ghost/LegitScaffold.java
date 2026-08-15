@@ -23,35 +23,35 @@ public class LegitScaffold extends Module {
     private final BooleanValue blocksOnly = new BooleanValue("Only when holding blocks", this, false);
     private final BooleanValue backwardsOnly = new BooleanValue("Only when moving backwards", this, false);
     private final BooleanValue onlyOnSneak = new BooleanValue("Only on Sneak", this, true);
-    private boolean Ba;
-    private int Bb;
-    private int Bc;
+    private boolean overAir;
+    private int overAirTicks;
+    private int sneakTicks;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         if (aEg.thePlayer.getHeldItem() != null && !(aEg.thePlayer.getHeldItem().getItem() instanceof ItemBlock) && this.blocksOnly.wo()) {
-            if (this.Ba) {
-                this.Ba = false;
+            if (this.overAir) {
+                this.overAir = false;
             }
         } else {
             if ((aEg.thePlayer.onGround || !this.groundOnly.wo())
                 && PlayerUtil.p(0.0, -1.0, 0.0) instanceof BlockAir
                 && (!aEg.gameSettings.keyBindForward.isKeyDown() || !this.backwardsOnly.wo())) {
-                if (!this.Ba) {
-                    this.Ba = true;
+                if (!this.overAir) {
+                    this.overAir = true;
                 }
-            } else if (this.Ba) {
-                this.Ba = false;
+            } else if (this.overAir) {
+                this.overAir = false;
             }
 
-            if (this.Ba) {
-                this.Bc = this.length.wv().intValue();
+            if (this.overAir) {
+                this.sneakTicks = this.length.wv().intValue();
                 aEg.gameSettings.cgG.setPressed(false);
             }
 
-            if (this.Ba) {
-                this.Bb++;
+            if (this.overAir) {
+                this.overAirTicks++;
             } else {
-                this.Bb = 0;
+                this.overAirTicks = 0;
             }
         }
     };
@@ -62,13 +62,13 @@ public class LegitScaffold extends Module {
             slotcomponent = this.d(SlotComponent.class);
             if (SlotComponent.getItemStack().getItem() instanceof ItemBlock) {
                 var1.setSneak(
-                    this.Bc > 0 && (aEg.gameSettings.keyBindSneak.isKeyDown() || !this.onlyOnSneak.wo()) || aEg.gameSettings.keyBindSneak.isKeyDown() && !this.onlyOnSneak.wo()
+                    this.sneakTicks > 0 && (aEg.gameSettings.keyBindSneak.isKeyDown() || !this.onlyOnSneak.wo()) || aEg.gameSettings.keyBindSneak.isKeyDown() && !this.onlyOnSneak.wo()
                 );
             }
         }
 
-        this.Bc--;
-        if (this.Bc > 0 && this.Bb <= 2) {
+        this.sneakTicks--;
+        if (this.sneakTicks > 0 && this.overAirTicks <= 2) {
             var1.setSneakSlowDownMultiplier(this.slow.wo().doubleValue());
         }
     };
@@ -78,8 +78,8 @@ public class LegitScaffold extends Module {
 
     @Override
     public void onDisable() {
-        if (this.Ba) {
-            this.Ba = false;
+        if (this.overAir) {
+            this.overAir = false;
         }
     }
 }

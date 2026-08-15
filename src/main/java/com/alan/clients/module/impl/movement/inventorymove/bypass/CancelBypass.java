@@ -33,7 +33,7 @@ public class CancelBypass extends Mode<InventoryMove> {
             var0.setCancelled();
         }
     };
-    private final KeyBinding[] JA = new KeyBinding[]{
+    private final KeyBinding[] movementKeys = new KeyBinding[]{
         aEg.gameSettings.keyBindForward,
         aEg.gameSettings.keyBindBack,
         aEg.gameSettings.keyBindRight,
@@ -41,11 +41,11 @@ public class CancelBypass extends Mode<InventoryMove> {
         aEg.gameSettings.keyBindJump
     };
     @EventLink
-    public final Listener<en> JB = var0 -> {};
+    public final Listener<en> onSprint = var0 -> {};
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (!(aEg.currentScreen instanceof GuiChat) && aEg.currentScreen != this.getStandardClickGUI()) {
-            for (KeyBinding keybinding : this.JA) {
+            for (KeyBinding keybinding : this.movementKeys) {
                 keybinding.setPressed(GameSettings.isKeyDown(keybinding));
             }
         }

@@ -53,7 +53,7 @@ public final class SidebarCategory implements InstanceAccess {
             true
         );
         this.ayp.setDuration(1000L);
-        this.ayp.Q(riseclickgui.oZ().qa() ? 255.0 : 0.0);
+        this.ayp.Q(riseclickgui.getScreen().qa() ? 255.0 : 0.0);
         RenderUtil.horizontalCenteredGradient(
             riseclickgui.axI.x + this.aym + this.animation.getValue(),
             riseclickgui.axI.y,

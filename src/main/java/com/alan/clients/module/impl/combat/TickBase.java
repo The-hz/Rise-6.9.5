@@ -31,10 +31,10 @@ import org.lwjgl.opengl.GL11;
 @ModuleInfo(aliases = "module.combat.tickbase.name", description = "module.combat.legitreach.description", category = Category.COMBAT)
 public final class TickBase extends Module {
     private ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Post")).setDefault("Legit");
-    private aka qL = new aka(0.0, 0.0, 0.0);
-    private int qM = 0;
-    private int qN;
-    private int qO;
+    private aka trackedPosition = new aka(0.0, 0.0, 0.0);
+    private int cooldownTicks = 0;
+    private int ticksToSkip;
+    private int skipDelayTicks;
     @EventLink
     Listener<TickEvent> onTick = var1 -> {
         {
@@ -45,14 +45,14 @@ public final class TickBase extends Module {
                         aEg.timer.dzD = 0.5F;
                     }
 
-                    this.qM--;
-                    if (this.qN > 0) {
-                        if (this.qO > 0) {
-                            this.qO--;
+                    this.cooldownTicks--;
+                    if (this.ticksToSkip > 0) {
+                        if (this.skipDelayTicks > 0) {
+                            this.skipDelayTicks--;
                         } else {
                             var1.setCancelled();
                             aEg.timer.cancel();
-                            this.qN--;
+                            this.ticksToSkip--;
                         }
                     }
 
@@ -62,17 +62,17 @@ public final class TickBase extends Module {
                     }
 
                     EntityLivingBase entitylivingbase = (EntityLivingBase)list.get(0);
-                    this.qL = this.k(entitylivingbase);
-                    if (aEg.thePlayer.getDistance(this.qL.x, this.qL.y, this.qL.z) < 8.0 && PlayerUtil.v(entitylivingbase) > 3.0 && this.qM < 0) {
-                        int i = this.j(entitylivingbase);
+                    this.trackedPosition = this.predictPosition(entitylivingbase);
+                    if (aEg.thePlayer.getDistance(this.trackedPosition.x, this.trackedPosition.y, this.trackedPosition.z) < 8.0 && PlayerUtil.v(entitylivingbase) > 3.0 && this.cooldownTicks < 0) {
+                        int i = this.getTicksToReach(entitylivingbase);
                         if (i == -1) {
                             return;
                         }
 
                         aEg.timer.elapsedTicks += i;
-                        this.qN += i;
-                        this.qO += i + 5;
-                        this.qM = 10;
+                        this.ticksToSkip += i;
+                        this.skipDelayTicks += i + 5;
+                        this.cooldownTicks = 10;
                     }
 
                     return;
@@ -86,7 +86,7 @@ public final class TickBase extends Module {
         EntityLivingBase entitylivingbase1 = TargetComponent.e(8.0);
         if (entitylivingbase1 != null
             && !BadPacketsComponent.bad(false, true, false, false, false)
-            && this.qL.g(entitylivingbase1.Ty()) >= aEg.thePlayer.Ty().g(entitylivingbase1.Ty())) {
+            && this.trackedPosition.g(entitylivingbase1.Ty()) >= aEg.thePlayer.Ty().g(entitylivingbase1.Ty())) {
             BlinkComponent.blink();
         }
     };
@@ -94,7 +94,7 @@ public final class TickBase extends Module {
     Listener<PacketSendEvent> onPacketSend = var1 -> {
         Packet packet = var1.dq();
         if (!var1.isCancelled() && packet instanceof C03PacketPlayer) {
-            this.qL = new aka(((C03PacketPlayer)packet).getX(), ((C03PacketPlayer)packet).getY(), ((C03PacketPlayer)packet).getZ());
+            this.trackedPosition = new aka(((C03PacketPlayer)packet).getX(), ((C03PacketPlayer)packet).getY(), ((C03PacketPlayer)packet).getZ());
         }
     };
     @EventLink
@@ -118,7 +118,7 @@ public final class TickBase extends Module {
     public TickBase() {
     }
 
-    int j(Entity entity) {
+    int getTicksToReach(Entity entity) {
         byte b0 = 10;
         aka aka = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
 
@@ -135,7 +135,7 @@ public final class TickBase extends Module {
         return i == b0 ? -1 : i;
     }
 
-    aka k(Entity entity) {
+    aka predictPosition(Entity entity) {
         aka aka = new aka(entity.posX, entity.posY, entity.posZ);
 
         for (int i = 0; i <= PingSpoofComponent.getPing() / 50L; i++) {

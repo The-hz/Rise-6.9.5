@@ -23,7 +23,7 @@ import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 public class MatrixFlight extends Mode<Flight> {
     private boolean Hs;
     private boolean Ht;
-    private boolean Hu;
+    private boolean teleported;
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1x -> {
         if (var1x.getPacket() instanceof S08PacketPlayerPosLook s08packetplayerposlook) {
@@ -43,11 +43,11 @@ public class MatrixFlight extends Mode<Flight> {
             PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, false));
             aEg.thePlayer.setPosition(d0, d1, d2);
             aEg.thePlayer.jump();
-            if (this.Hu) {
+            if (this.teleported) {
                 this.getParent().setEnabled(false);
             }
 
-            this.Hu = true;
+            this.teleported = true;
         }
     };
     @EventLink
@@ -66,12 +66,12 @@ public class MatrixFlight extends Mode<Flight> {
             aEg.thePlayer.jump();
         }
 
-        if (aEg.thePlayer.fallDistance > 0.1 && !this.Hu) {
+        if (aEg.thePlayer.fallDistance > 0.1 && !this.teleported) {
             aEg.thePlayer.motionY = 0.42;
             MoveUtil.strafe(1.97);
         }
 
-        if (this.Hu && aEg.thePlayer.tR == 20) {
+        if (this.teleported && aEg.thePlayer.tR == 20) {
             aEg.thePlayer.motionY = 0.42;
             MoveUtil.strafe(9.3);
         }
@@ -83,13 +83,13 @@ public class MatrixFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        this.Hu = false;
+        this.teleported = false;
         this.Hs = false;
     }
 
     @Override
     public void onDisable() {
-        this.Hu = false;
+        this.teleported = false;
         this.Hs = false;
     }
 }

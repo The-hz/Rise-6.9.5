@@ -15,21 +15,21 @@ public class ce extends Component {
     public ce() {
     }
 
-    public static void cg() {
+    public static void updateFrames() {
         Iterator iterator = bf.dc.entrySet().iterator();
 
         while (iterator.hasNext()) {
             by by = (by)((Entry)iterator.next()).getValue();
-            if (by.bT() && by.bZ() != null) {
-                by.j(by.cb() + 1);
-                if (by.cb() >= by.bZ().length) {
-                    by.j(0);
+            if (by.bT() && by.getCapeTextures() != null) {
+                by.setFrame(by.getFrame() + 1);
+                if (by.getFrame() >= by.getCapeTextures().length) {
+                    by.setFrame(0);
                 }
             }
         }
     }
 
-    public static void ch() {
+    public static void loadTextures() {
         if (!hb.isEmpty()) {
             for (Entry entry : hb.entrySet()) {
                 String s = (String)entry.getKey();
@@ -37,7 +37,7 @@ public class ce extends Component {
                 by by = bf.dc.get(s);
                 ResourceLocation[] aresourcelocation = new ResourceLocation[astring.length];
                 if (!by.ca()) {
-                    by.e(true);
+                    by.setCapeLoaded(true);
 
                     for (int i = 0; i < astring.length; i++) {
                         int j = i;
@@ -56,7 +56,7 @@ public class ce extends Component {
                         }).start();
                     }
 
-                    by.a(aresourcelocation);
+                    by.setCapeTextures(aresourcelocation);
                     hb.remove(s);
                 }
             }

@@ -87,21 +87,21 @@ public class Breaker extends Module {
     public static aka targetBlock;
     public static aka lastBlock;
     public static aka home;
-    private int aaW;
-    public static boolean iq;
-    public static boolean ir;
-    public static boolean abT = false;
-    private int dm;
-    private boolean ji;
+    private int breakCooldownTicks;
+    public static boolean spoofingGround;
+    public static boolean bedBroken;
+    public static boolean breakingBed = false;
+    private int lastDiggingTick;
+    private boolean holdingAttackKey;
     private float breakProgress;
-    public static boolean tt;
-    private Animation abV = new Animation(Easing.LINEAR, 50L);
+    public static boolean flushingPackets;
+    private Animation progressAnimation = new Animation(Easing.LINEAR, 50L);
     private BlockPos blockPos;
-    private Vec3 abX;
-    private int abY;
-    private int abZ;
-    private final ArrayList<Packet<?>> aca = new ArrayList<>();
-    private boolean acb = false;
+    private Vec3 lastCheckPosition;
+    private int lastStandSearchTick;
+    private int lastSurroundingSearchTick;
+    private final ArrayList<Packet<?>> delayedPackets = new ArrayList<>();
+    private boolean hasDelayedVelocity = false;
     @EventLink
     public final Listener<Render3DEvent> onRender3D = var1 -> {
         if (targetBlock != null) {
@@ -112,7 +112,7 @@ public class Breaker extends Module {
             }
 
             Vector3i akb = new Vector3i((int)Math.floor(targetBlock.getX()), (int)Math.floor(targetBlock.getY()), (int)Math.floor(targetBlock.getZ()));
-            this.abV.Q(this.breakProgress);
+            this.progressAnimation.Q(this.breakProgress);
             this.b(ShaderQueueType.BLOOM).c(() -> {
                 GlStateManager.pushMatrix();
                 GlStateManager.pushAttrib();
@@ -121,7 +121,7 @@ public class Breaker extends Module {
                 GlStateManager.disableLighting();
                 GL11.glDepthMask(false);
                 RenderUtil.color(this.rz().rA());
-                RenderUtil.drawBoundingBox(new AxisAlignedBB(akb.we(), akb.wf(), akb.wi(), akb.we() + 1, akb.wf() + 1.0 * this.abV.getValue(), akb.wi() + 1));
+                RenderUtil.drawBoundingBox(new AxisAlignedBB(akb.we(), akb.wf(), akb.wi(), akb.we() + 1, akb.wf() + 1.0 * this.progressAnimation.getValue(), akb.wi() + 1));
                 GlStateManager.enableTexture2D();
                 GlStateManager.enableLighting();
                 GlStateManager.disableBlend();
@@ -137,24 +137,24 @@ public class Breaker extends Module {
         BlockPos blockpos = this.blockPos;
         if (blockpos != null) {
             AxisAlignedBB axisalignedbb = new AxisAlignedBB(blockpos, blockpos.add(1, 1, 1));
-            this.a(axisalignedbb, this.rz().rA());
-            this.b(ShaderQueueType.BLOOM).c(() -> this.a(axisalignedbb, this.rz().rA()));
+            this.drawSelectionBox(axisalignedbb, this.rz().rA());
+            this.b(ShaderQueueType.BLOOM).c(() -> this.drawSelectionBox(axisalignedbb, this.rz().rA()));
         }
     };
     @EventLink(value = 2)
     public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> {
         Packet packet = var1.getPacket();
-        if (!tt) {
+        if (!flushingPackets) {
             if (this.delayVelocityUntilBedBroken.wo()) {
                 if (packet instanceof S12PacketEntityVelocity s12packetentityvelocity) {
-                    if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && abT) {
-                        this.acb = true;
-                        this.aca.add(packet);
+                    if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && breakingBed) {
+                        this.hasDelayedVelocity = true;
+                        this.delayedPackets.add(packet);
                         var1.setCancelled();
                     }
-                } else if (packet instanceof S32PacketConfirmTransaction && this.acb) {
+                } else if (packet instanceof S32PacketConfirmTransaction && this.hasDelayedVelocity) {
                     afi.b(aEg.thePlayer.ticksExisted);
-                    this.aca.add(packet);
+                    this.delayedPackets.add(packet);
                     var1.setCancelled();
                 }
             }
@@ -176,7 +176,7 @@ public class Breaker extends Module {
                         && iblockstate.getBlock() == Blocks.air) {
                         targetBlock = null;
                         if (this.block() == null) {
-                            abT = false;
+                            breakingBed = false;
                         }
                     }
                 }
@@ -189,8 +189,8 @@ public class Breaker extends Module {
         if (packet instanceof C07PacketPlayerDigging && targetBlock != null && this.watchdogGroundSpoof.wo()) {
             C07PacketPlayerDigging c07packetplayerdigging = (C07PacketPlayerDigging)packet;
             if (c07packetplayerdigging.getStatus() == Action.START_DESTROY_BLOCK || c07packetplayerdigging.getStatus() == Action.STOP_DESTROY_BLOCK) {
-                iq = true;
-                this.dm = aEg.thePlayer.ticksExisted;
+                spoofingGround = true;
+                this.lastDiggingTick = aEg.thePlayer.ticksExisted;
             }
         }
     };
@@ -198,19 +198,19 @@ public class Breaker extends Module {
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         float f;
         int i = (f = aEg.playerController.curBlockDamageMP - 0.0F) == 0.0F ? 0 : (f < 0.0F ? -1 : 1);
-        if (iq) {
+        if (spoofingGround) {
             BlinkComponent.blink();
             var0.setOnGround(true);
         }
 
-        if (aEg.thePlayer.onGround && iq) {
+        if (aEg.thePlayer.onGround && spoofingGround) {
             BlinkComponent.dispatch();
-            iq = false;
+            spoofingGround = false;
         }
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var0 -> {
-        if (iq) {
+        if (spoofingGround) {
             ;
         }
     };
@@ -218,26 +218,26 @@ public class Breaker extends Module {
     public final Listener<BlockDamageEvent> onBlockDamage = var1 -> this.breakProgress = aEg.playerController.curBlockDamageMP;
     @EventLink(value = 4)
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
-        this.jA();
-        if (this.delayVelocityUntilBedBroken.wo() && !abT && this.acb) {
-            tt = true;
-            this.aca.forEach(PacketUtil::receive);
-            this.aca.clear();
-            this.acb = false;
-            tt = false;
+        this.updateStandPosition();
+        if (this.delayVelocityUntilBedBroken.wo() && !breakingBed && this.hasDelayedVelocity) {
+            flushingPackets = true;
+            this.delayedPackets.forEach(PacketUtil::receive);
+            this.delayedPackets.clear();
+            this.hasDelayedVelocity = false;
+            flushingPackets = false;
             afi.b(aEg.thePlayer.ticksExisted);
         }
 
-        this.aaW--;
-        if (this.aaW <= 0) {
-            this.jz();
+        this.breakCooldownTicks--;
+        if (this.breakCooldownTicks <= 0) {
+            this.revalidateTarget();
             if (targetBlock == null
                 || aEg.thePlayer.getDistance(targetBlock.getX(), targetBlock.getY(), targetBlock.getZ()) > this.range.wo().doubleValue() + 2.5
                 || PlayerUtil.o(targetBlock.getX(), targetBlock.getY(), targetBlock.getZ()) instanceof BlockAir) {
-                this.jv();
-                if (this.ji) {
+                this.updateTarget();
+                if (this.holdingAttackKey) {
                     aEg.gameSettings.cgK.setPressed(false);
-                    this.ji = false;
+                    this.holdingAttackKey = false;
                 }
 
                 if (targetBlock == null) {
@@ -253,7 +253,7 @@ public class Breaker extends Module {
         if (targetBlock != null) {
             BlockPos blockpos = new BlockPos(targetBlock.getX(), targetBlock.getY(), targetBlock.getZ());
             Vec3 vec3 = aEg.thePlayer.getPositionEyes(1.0F);
-            Vector2f vector2f = this.onlyRotateAtStartAndStop.wo() ? this.jE() : RotationComponent.fk;
+            Vector2f vector2f = this.onlyRotateAtStartAndStop.wo() ? this.getRotations() : RotationComponent.fk;
             Vec3 vec31 = aEg.thePlayer.getVectorForRotation(vector2f.getY(), vector2f.getX());
             double d0 = this.range.wo().doubleValue() + 1.0;
             Vec3 vec32 = vec3.addVector(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0);
@@ -280,35 +280,35 @@ public class Breaker extends Module {
     public void onEnable() {
         targetBlock = null;
         this.breakProgress = 0.0F;
-        this.aaW = 0;
+        this.breakCooldownTicks = 0;
         this.blockPos = null;
-        this.abX = null;
-        abT = false;
-        this.aca.clear();
-        this.aca.forEach(PacketUtil::receive);
-        this.acb = false;
+        this.lastCheckPosition = null;
+        breakingBed = false;
+        this.delayedPackets.clear();
+        this.delayedPackets.forEach(PacketUtil::receive);
+        this.hasDelayedVelocity = false;
     }
 
     @Override
     public void onDisable() {
         targetBlock = null;
-        iq = false;
-        abT = false;
+        spoofingGround = false;
+        breakingBed = false;
         this.blockPos = null;
-        this.abX = null;
-        if (!this.aca.isEmpty()) {
-            this.aca.forEach(PacketUtil::receive);
-            this.aca.clear();
+        this.lastCheckPosition = null;
+        if (!this.delayedPackets.isEmpty()) {
+            this.delayedPackets.forEach(PacketUtil::receive);
+            this.delayedPackets.clear();
         }
 
-        this.acb = false;
-        if (this.ji) {
+        this.hasDelayedVelocity = false;
+        if (this.holdingAttackKey) {
             aEg.gameSettings.cgK.setPressed(false);
-            this.ji = false;
+            this.holdingAttackKey = false;
         }
     }
 
-    private void a(AxisAlignedBB box, Color color) {
+    private void drawSelectionBox(AxisAlignedBB box, Color color) {
         double d0 = aEg.getRenderManager().viewerPosX;
         double d1 = aEg.getRenderManager().viewerPosY;
         double d2 = aEg.getRenderManager().viewerPosZ;
@@ -332,7 +332,7 @@ public class Breaker extends Module {
         GlStateManager.resetColor();
     }
 
-    public void jv() {
+    public void updateTarget() {
         if (targetBlock == null
             || PlayerUtil.o(targetBlock.x, targetBlock.y, targetBlock.z) instanceof BlockAir
             || aEg.thePlayer.getDistance(targetBlock.x, targetBlock.y - aEg.thePlayer.getEyeHeight(), targetBlock.z) > this.range.wo().doubleValue() + 2.5) {
@@ -343,9 +343,9 @@ public class Breaker extends Module {
             lastBlock = targetBlock;
             aka aka = this.block();
             if (aka != null) {
-                abT = true;
+                breakingBed = true;
             } else {
-                abT = false;
+                breakingBed = false;
             }
 
             targetBlock = aka;
@@ -357,7 +357,7 @@ public class Breaker extends Module {
         float f = PlayerUtil.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos);
         if (!this.onlyRotateAtStartAndStop.wo() || aEg.playerController.curBlockDamageMP == 0.0F || !(aEg.playerController.curBlockDamageMP <= 1.0F - f - 0.001)) {
             if (this.rotations.wo()) {
-                RotationComponent.setRotations(this.jE(), 10.0, this.movementCorrection.wo());
+                RotationComponent.setRotations(this.getRotations(), 10.0, this.movementCorrection.wo());
             }
         }
     }
@@ -368,7 +368,7 @@ public class Breaker extends Module {
         }
 
         if (this.throughWalls.wo() && this.emptySurrounding.wo() && this.surroundings.wo().getName().equals("Full")) {
-            return this.jy();
+            return this.getBestCandidateBlock();
         }
 
         int i = 0;
@@ -402,7 +402,7 @@ public class Breaker extends Module {
                                                     if (!(block1 instanceof BlockBed)
                                                         && !flag
                                                         && !(aEg.thePlayer.getDistance(akax2.getX() + k1, akax2.getY() + l1, akax2.getZ()) + i2 > 46.0)
-                                                        && !this.a(akax2.v(k1, l1, i2)).stream().noneMatch(var0 -> var0 instanceof BlockBed)) {
+                                                        && !this.getNeighbourBlocks(akax2.v(k1, l1, i2)).stream().noneMatch(var0 -> var0 instanceof BlockBed)) {
                                                         if (!(block1 instanceof BlockAir) && !(block1 instanceof BlockLiquid)) {
                                                             if (!(
                                                                 aEg.thePlayer
@@ -451,21 +451,21 @@ public class Breaker extends Module {
         return null;
     }
 
-    private aka jy() {
-        BreakCandidate tg = this.a(aEg.thePlayer.getPositionEyes(1.0F), this.jC());
+    private aka getBestCandidateBlock() {
+        BreakCandidate tg = this.getBestCandidate(aEg.thePlayer.getPositionEyes(1.0F), this.getBedPositions());
         if (tg == null) {
             return null;
         }
 
-        BlockPos blockpos = tg.acn.get(0);
+        BlockPos blockpos = tg.blocksToBreak.get(0);
         return new aka(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5);
     }
 
-    private BreakCandidate a(Vec3 vec, List<BlockPos> poses) {
+    private BreakCandidate getBestCandidate(Vec3 vec, List<BlockPos> poses) {
         BreakCandidate tgx = null;
 
-        for (BreakCandidate tgx2 : this.b(vec, poses)) {
-            if (tgx == null || tgx2.aco < tgx.aco) {
+        for (BreakCandidate tgx2 : this.getCandidates(vec, poses)) {
+            if (tgx == null || tgx2.breakTime < tgx.breakTime) {
                 tgx = tgx2;
             }
         }
@@ -473,12 +473,12 @@ public class Breaker extends Module {
         return tgx;
     }
 
-    private List<BreakCandidate> b(Vec3 vec, List<BlockPos> poses) {
+    private List<BreakCandidate> getCandidates(Vec3 vec, List<BlockPos> poses) {
         ArrayList arraylist = new ArrayList();
 
         for (BlockPos blockpos : poses) {
-            for (Vec3 vec3 : this.k(blockpos)) {
-                BreakCandidate tg = this.a(vec, blockpos, vec3);
+            for (Vec3 vec3 : this.getSamplePoints(blockpos)) {
+                BreakCandidate tg = this.buildCandidate(vec, blockpos, vec3);
                 if (tg != null) {
                     arraylist.add(tg);
                 }
@@ -488,14 +488,14 @@ public class Breaker extends Module {
         return arraylist;
     }
 
-    private BreakCandidate a(Vec3 vec, BlockPos pos, Vec3 var3) {
+    private BreakCandidate buildCandidate(Vec3 vec, BlockPos pos, Vec3 var3) {
         double range = this.range.wo().doubleValue();
         int i = this.surroundingLayers.wo().intValue();
         ArrayList arraylist = new ArrayList();
         double d1 = 0.0;
 
-        for (BlockPos blockpos : this.b(vec, var3)) {
-            if (this.a(vec, blockpos) > range) {
+        for (BlockPos blockpos : this.traceBlocks(vec, var3)) {
+            if (this.distanceToBlock(vec, blockpos) > range) {
                 return null;
             }
 
@@ -504,7 +504,7 @@ public class Breaker extends Module {
                 return new BreakCandidate(pos, arraylist, d1);
             }
 
-            if (!this.j(blockpos)) {
+            if (!this.isPassable(blockpos)) {
                 Block block = PlayerUtil.block(blockpos);
                 if (block instanceof BlockBed || block.getBlockHardness(aEg.theWorld, blockpos) < 0.0F || arraylist.size() >= i) {
                     return null;
@@ -518,7 +518,7 @@ public class Breaker extends Module {
         return null;
     }
 
-    private List<BlockPos> b(Vec3 vec, Vec3 var2) {
+    private List<BlockPos> traceBlocks(Vec3 vec, Vec3 var2) {
         ArrayList arraylist = new ArrayList();
         int i = MathHelper.floor_double(vec.xCoord);
         int j = MathHelper.floor_double(vec.yCoord);
@@ -556,67 +556,67 @@ public class Breaker extends Module {
         return arraylist;
     }
 
-    private void jz() {
+    private void revalidateTarget() {
         if (targetBlock != null && this.throughWalls.wo() && this.emptySurrounding.wo() && this.surroundings.wo().getName().equals("Full")) {
             Vec3 vec3 = new Vec3(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
-            if (this.abX != null && !(this.abX.squareDistanceTo(vec3) < 0.25) && aEg.thePlayer.ticksExisted - this.abZ >= 5) {
-                this.abX = vec3;
-                this.abZ = aEg.thePlayer.ticksExisted;
+            if (this.lastCheckPosition != null && !(this.lastCheckPosition.squareDistanceTo(vec3) < 0.25) && aEg.thePlayer.ticksExisted - this.lastSurroundingSearchTick >= 5) {
+                this.lastCheckPosition = vec3;
+                this.lastSurroundingSearchTick = aEg.thePlayer.ticksExisted;
                 BlockPos blockpos = new BlockPos(targetBlock.getX(), targetBlock.getY(), targetBlock.getZ());
                 BreakCandidate tgxx = null;
                 BreakCandidate tgx = null;
 
-                for (BreakCandidate tgxx2 : this.b(aEg.thePlayer.getPositionEyes(1.0F), this.jC())) {
-                    if (tgx == null || tgxx2.aco < tgx.aco) {
+                for (BreakCandidate tgxx2 : this.getCandidates(aEg.thePlayer.getPositionEyes(1.0F), this.getBedPositions())) {
+                    if (tgx == null || tgxx2.breakTime < tgx.breakTime) {
                         tgx = tgxx2;
                     }
 
-                    if (tgxx2.acn.get(0).equals(blockpos) && (tgxx == null || tgxx2.aco < tgxx.aco)) {
+                    if (tgxx2.blocksToBreak.get(0).equals(blockpos) && (tgxx == null || tgxx2.breakTime < tgxx.breakTime)) {
                         tgxx = tgxx2;
                     }
                 }
 
-                if (tgx != null && !tgx.acn.get(0).equals(blockpos)) {
+                if (tgx != null && !tgx.blocksToBreak.get(0).equals(blockpos)) {
                     if (tgxx != null) {
                         double d0 = aEg.playerController.curBlockDamageMP
                             / Math.max(PlayerUtil.block(blockpos).getPlayerRelativeBlockHardness(aEg.thePlayer, aEg.theWorld, blockpos), 1.0E-4F);
-                        if (tgx.aco >= (tgxx.aco - d0) * 0.9) {
+                        if (tgx.breakTime >= (tgxx.breakTime - d0) * 0.9) {
                             return;
                         }
                     }
 
                     aEg.playerController.curBlockDamageMP = 0.0F;
                     this.breakProgress = 0.0F;
-                    if (this.ji) {
+                    if (this.holdingAttackKey) {
                         aEg.gameSettings.cgK.setPressed(false);
-                        this.ji = false;
+                        this.holdingAttackKey = false;
                     }
 
                     targetBlock = null;
                 }
             } else {
-                if (this.abX == null) {
-                    this.abX = vec3;
+                if (this.lastCheckPosition == null) {
+                    this.lastCheckPosition = vec3;
                 }
             }
         } else {
-            this.abX = null;
+            this.lastCheckPosition = null;
         }
     }
 
-    private void jA() {
+    private void updateStandPosition() {
         if (!this.showBestStandPosition.wo() || !this.throughWalls.wo() || !this.emptySurrounding.wo() || !this.surroundings.wo().getName().equals("Full")) {
             this.blockPos = null;
-        } else if (aEg.thePlayer.ticksExisted - this.abY >= 10) {
-            this.abY = aEg.thePlayer.ticksExisted;
-            this.blockPos = this.jB();
+        } else if (aEg.thePlayer.ticksExisted - this.lastStandSearchTick >= 10) {
+            this.lastStandSearchTick = aEg.thePlayer.ticksExisted;
+            this.blockPos = this.findBestStandPosition();
         }
     }
 
-    private BlockPos jB() {
+    private BlockPos findBestStandPosition() {
         double range = this.range.wo().doubleValue();
         int i = (int)Math.ceil(range) + 1;
-        List list = this.jC();
+        List list = this.getBedPositions();
         if (list.isEmpty()) {
             return null;
         }
@@ -634,19 +634,19 @@ public class Breaker extends Module {
                     boolean flag = false;
 
                     for (BlockPos blockpos3 : (Iterable<BlockPos>)list) {
-                        if (this.a(vec3, blockpos3) <= range) {
+                        if (this.distanceToBlock(vec3, blockpos3) <= range) {
                             flag = true;
                             break;
                         }
                     }
 
-                    if (flag && this.i(blockpos2)) {
-                        BreakCandidate tg = this.a(vec3, list);
+                    if (flag && this.canStandAt(blockpos2)) {
+                        BreakCandidate tg = this.getBestCandidate(vec3, list);
                         if (tg != null) {
                             double d3 = aEg.thePlayer.getDistanceSq(blockpos2.getX() + 0.5, blockpos2.getY(), blockpos2.getZ() + 0.5);
-                            if (blockpos1 == null || tg.aco < d1 - 0.001 || Math.abs(tg.aco - d1) <= 0.001 && d3 < d2) {
+                            if (blockpos1 == null || tg.breakTime < d1 - 0.001 || Math.abs(tg.breakTime - d1) <= 0.001 && d3 < d2) {
                                 blockpos1 = blockpos2;
-                                d1 = tg.aco;
+                                d1 = tg.breakTime;
                                 d2 = d3;
                             }
                         }
@@ -658,24 +658,24 @@ public class Breaker extends Module {
         return blockpos1;
     }
 
-    private boolean i(BlockPos pos) {
-        return this.j(pos)
-            && this.j(pos.up())
+    private boolean canStandAt(BlockPos pos) {
+        return this.isPassable(pos)
+            && this.isPassable(pos.up())
             && PlayerUtil.block(pos.down()).getCollisionBoundingBox(aEg.theWorld, pos.down(), aEg.theWorld.getBlockState(pos.down())) != null;
     }
 
-    private boolean j(BlockPos pos) {
+    private boolean isPassable(BlockPos pos) {
         return PlayerUtil.block(pos).getCollisionBoundingBox(aEg.theWorld, pos, aEg.theWorld.getBlockState(pos)) == null;
     }
 
-    private double a(Vec3 vec, BlockPos pos) {
+    private double distanceToBlock(Vec3 vec, BlockPos pos) {
         double d0 = Math.max(pos.getX() - vec.xCoord, Math.max(0.0, vec.xCoord - (pos.getX() + 1)));
         double d1 = Math.max(pos.getY() - vec.yCoord, Math.max(0.0, vec.yCoord - (pos.getY() + 1)));
         double d2 = Math.max(pos.getZ() - vec.zCoord, Math.max(0.0, vec.zCoord - (pos.getZ() + 1)));
         return Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
     }
 
-    private List<BlockPos> jC() {
+    private List<BlockPos> getBedPositions() {
         ArrayList arraylist = new ArrayList();
 
         for (int i = -5; i <= 5; i++) {
@@ -691,7 +691,7 @@ public class Breaker extends Module {
         return arraylist;
     }
 
-    private Vec3[] k(BlockPos pos) {
+    private Vec3[] getSamplePoints(BlockPos pos) {
         return new Vec3[]{
             new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5),
             new Vec3(pos.getX() + 0.1, pos.getY() + 0.1, pos.getZ() + 0.1),
@@ -701,7 +701,7 @@ public class Breaker extends Module {
         };
     }
 
-    public List<Block> a(aka var1) {
+    public List<Block> getNeighbourBlocks(aka var1) {
         ArrayList arraylist = new ArrayList();
 
         for (EnumFacing enumfacing : EnumFacing.values()) {
@@ -714,7 +714,7 @@ public class Breaker extends Module {
         return arraylist;
     }
 
-    public void l(BlockPos pos) {
+    public void dispatchBlockDamage(BlockPos pos) {
         BlockDamageEvent blockdamageevent = new BlockDamageEvent(aEg.thePlayer, aEg.thePlayer.worldObj, pos);
         Client.a.e().d(blockdamageevent);
     }
@@ -734,13 +734,13 @@ public class Breaker extends Module {
                 switch (s) {
                     case "Instant":
                         this.rotate();
-                        this.l(blockpos);
+                        this.dispatchBlockDamage(blockpos);
                         aEg.thePlayer.swingItem();
                         PacketUtil.send(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockpos, EnumFacing.UP));
                         aEg.thePlayer.swingItem();
                         PacketUtil.send(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockpos, EnumFacing.UP));
                         targetBlock = null;
-                        this.aaW = 20;
+                        this.breakCooldownTicks = 20;
                         aEg.playerController.onPlayerDestroyBlock(blockpos, EnumFacing.DOWN);
                         break label26;
                     case "Normal":
@@ -750,16 +750,16 @@ public class Breaker extends Module {
                 }
             }
 
-            this.l(blockpos);
+            this.dispatchBlockDamage(blockpos);
             this.rotate();
             aEg.gameSettings.cgK.setPressed(true);
-            this.ji = true;
+            this.holdingAttackKey = true;
         }
 
         aEg.thePlayer.onGround = onGround;
     }
 
-    public Vector2f jE() {
+    public Vector2f getRotations() {
         return RotationUtil.d(
             new aka(
                 Math.floor(targetBlock.getX()) + 0.5 + (Math.random() - 0.5) / 4.0,

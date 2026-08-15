@@ -15,13 +15,13 @@ import net.minecraft.util.AxisAlignedBB;
 
 public class VulcanDeprecatedFlight extends Mode<Flight> {
     private final NumberValue speed = new NumberValue("Speed", this, 1, 1, 10, 0.1);
-    private aka HI;
-    private boolean HJ;
-    private int HK;
+    private aka lastTeleportPos;
+    private boolean jumped;
+    private int timerTicks;
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
-        if (this.HK > 0 && !this.HJ) {
-            this.HK--;
+        if (this.timerTicks > 0 && !this.jumped) {
+            this.timerTicks--;
             aEg.timer.dzD = this.speed.wo().floatValue();
         }
     };
@@ -39,23 +39,23 @@ public class VulcanDeprecatedFlight extends Mode<Flight> {
     @EventLink
     public final Listener<TeleportEvent> onTeleport = var1x -> {
         aka aka = new aka(var1x.getPosX(), var1x.getPosY(), var1x.getPosZ());
-        if (this.HI == null) {
-            this.HI = aka;
+        if (this.lastTeleportPos == null) {
+            this.lastTeleportPos = aka;
             var1x.setCancelled();
-            this.HK += 2;
-        } else if (!this.HI.equals(aka)) {
+            this.timerTicks += 2;
+        } else if (!this.lastTeleportPos.equals(aka)) {
             this.getParent().toggle();
         } else {
             var1x.setCancelled();
-            this.HK += 2;
+            this.timerTicks += 2;
         }
     };
     @EventLink
     public final Listener<KeyboardInputEvent> onKeyboardInput = var1x -> {
-        if (var1x.getKeyCode() == this.getParent().getKey() && !this.HJ) {
+        if (var1x.getKeyCode() == this.getParent().getKey() && !this.jumped) {
             var1x.setCancelled();
             aEg.thePlayer.jump();
-            this.HJ = true;
+            this.jumped = true;
         }
     };
 
@@ -65,8 +65,8 @@ public class VulcanDeprecatedFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        this.HI = null;
-        this.HJ = false;
-        this.HK = 0;
+        this.lastTeleportPos = null;
+        this.jumped = false;
+        this.timerTicks = 0;
     }
 }

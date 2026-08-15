@@ -22,23 +22,23 @@ import net.minecraft.entity.EntityLivingBase;
 import org.lwjgl.opengl.GL11;
 
 public class ExhibitionTargetInfo extends Mode<TargetInfo> {
-    private TargetInfo aui;
+    private TargetInfo targetInfo;
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1x -> {
-        if (this.aui == null) {
-            this.aui = this.e(TargetInfo.class);
+        if (this.targetInfo == null) {
+            this.targetInfo = this.e(TargetInfo.class);
         }
 
-        Entity entity = this.aui.target;
-        boolean flag = !this.aui.inWorld || this.aui.stopwatch.T(1000L);
+        Entity entity = this.targetInfo.target;
+        boolean flag = !this.targetInfo.inWorld || this.targetInfo.stopwatch.T(1000L);
         if (entity == null || flag) {
             return;
         }
 
         String s = entity.getName();
         String s1 = bf.c(s, s);
-        double d0 = this.aui.position.x;
-        double d1 = this.aui.position.y;
+        double d0 = this.targetInfo.position.x;
+        double d1 = this.targetInfo.position.y;
         RenderUtil.d(d0, d1, 140.0, 50.0, new Color(0, 0, 0));
         RenderUtil.d(d0 + 0.5, d1 + 0.5, 139.0, 49.0, new Color(60, 60, 60));
         RenderUtil.d(d0 + 1.5, d1 + 1.5, 137.0, 47.0, new Color(0, 0, 0));
@@ -49,7 +49,7 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
         AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;
         HealthBypass healthbypass = this.e(HealthBypass.class);
         float f = healthbypass != null && healthbypass.isEnabled()
-            ? HealthBypass.B(abstractclientplayer)
+            ? HealthBypass.getScoreboardHealth(abstractclientplayer)
             : abstractclientplayer.getHealth();
         aEg.fontRendererObj
             .a(
@@ -59,9 +59,9 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
                 Color.WHITE.getRGB()
             );
         GlStateManager.popMatrix();
-        this.aui.positionValue.aHe = new Vector2d(140.0, 50.0);
-        double d2 = Math.min(!this.aui.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
-        Color color = c(f, abstractclientplayer.getMaxHealth());
+        this.targetInfo.positionValue.aHe = new Vector2d(140.0, 50.0);
+        double d2 = Math.min(!this.targetInfo.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
+        Color color = getHealthColor(f, abstractclientplayer.getMaxHealth());
         double d3 = d0 + 40.0;
         RenderUtil.d(d3, d1 + 25.0, 91.0, 5.0, ColorUtil.withBlue(color, 50));
         RenderUtil.d(d3, d1 + 25.0, 91.0 * (d2 / abstractclientplayer.getMaxHealth()), 6.0, color);
@@ -80,7 +80,7 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
         GlStateManager.pushMatrix();
         GlStateManager.scale(0.4, 0.4, 0.4);
         GlStateManager.translate((d0 + 20.0) * 2.5, (d1 + 44.0) * 2.5, 100.0);
-        a(entity.pl, entity.rotationPitch, (EntityLivingBase)entity);
+        drawEntity(entity.pl, entity.rotationPitch, (EntityLivingBase)entity);
         GlStateManager.popMatrix();
     };
 
@@ -88,7 +88,7 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
         super(var1, targetInfo);
     }
 
-    private static Color c(float var0, float var1) {
+    private static Color getHealthColor(float var0, float var1) {
         Color color = new Color(0, 165, 0);
         if (var0 < var1 / 1.5F) {
             color = new Color(200, 200, 0);
@@ -105,7 +105,7 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
         return color;
     }
 
-    public static void a(float var0, float var1, EntityLivingBase living) {
+    public static void drawEntity(float var0, float var1, EntityLivingBase living) {
         GlStateManager.resetColor();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.enableColorMaterial();

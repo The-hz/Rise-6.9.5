@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 class DecodeState {
     BufferedImage[] images;
-    int[] arP;
+    int[] delays;
     int frameCount;
 
     DecodeState() {

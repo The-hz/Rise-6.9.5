@@ -148,7 +148,7 @@ public enum Themes {
     }
 
     @Generated
-    public Function<Vector2d, Color> rG() {
+    public Function<Vector2d, Color> getFunction() {
         return this.aDO;
     }
 

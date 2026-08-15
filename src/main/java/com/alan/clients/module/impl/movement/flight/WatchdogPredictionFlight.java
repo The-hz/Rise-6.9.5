@@ -24,14 +24,14 @@ public class WatchdogPredictionFlight
 extends Mode<Flight> {
     @EventLink
     public Listener<TeleportEvent> onTeleport = teleportEvent -> {
-        this.ys = this.ys;
+        this.boosting = this.boosting;
     };
     @EventLink
     public Listener<PostStrafeEvent> onPostStrafe = postStrafeEvent -> {
         int unused0 = WatchdogPredictionFlight.aEg.thePlayer.Zl;
         boolean unused1 = WatchdogPredictionFlight.aEg.thePlayer.onGround;
         if (WatchdogPredictionFlight.aEg.thePlayer.tR == 5) {
-            this.ys = true;
+            this.boosting = true;
         }
         if (!WatchdogPredictionFlight.aEg.thePlayer.onGround && WatchdogPredictionFlight.aEg.thePlayer.Zl != 1) {
             WatchdogPredictionFlight.aEg.thePlayer.cameraYaw = 0.1f;
@@ -42,7 +42,7 @@ extends Mode<Flight> {
     };
     @EventLink
     public Listener<PreMotionEvent> onPreMotion;
-    public boolean ys;
+    public boolean boosting;
     @EventLink
     public Listener<PacketReceiveEvent> onPacketReceive = packetReceiveEvent -> {
         Packet<?> packet;
@@ -58,7 +58,7 @@ extends Mode<Flight> {
         if ((packet2 = packetReceiveEvent.getPacket()) instanceof a) {
             a a2 = (a)packet2;
         }
-        if ((packet = packetReceiveEvent.getPacket()) instanceof S08PacketPlayerPosLook && this.ys) {
+        if ((packet = packetReceiveEvent.getPacket()) instanceof S08PacketPlayerPosLook && this.boosting) {
             S08PacketPlayerPosLook s08PacketPlayerPosLook = (S08PacketPlayerPosLook)packet;
             s08PacketPlayerPosLook.getX();
             s08PacketPlayerPosLook.getY();
@@ -76,7 +76,7 @@ extends Mode<Flight> {
     public WatchdogPredictionFlight(String string, Flight flight) {
         super(string, flight);
         this.onPreMotion = preMotionEvent -> {
-            if (WatchdogPredictionFlight.aEg.thePlayer.ticksExisted % 2 == 0 && this.ys) {
+            if (WatchdogPredictionFlight.aEg.thePlayer.ticksExisted % 2 == 0 && this.boosting) {
                 Double direction = MoveUtil.direction();
                 double unused0 = -MathHelper.sin((float)((float)direction.doubleValue())) * 100.0f;
                 double unused1 = MathHelper.cos((float)((float)direction.doubleValue())) * 100.0f;
@@ -98,7 +98,7 @@ extends Mode<Flight> {
 
     @Override
     public void onDisable() {
-        this.ys = false;
+        this.boosting = false;
         WatchdogPredictionFlight.aEg.thePlayer.capabilities.isFlying = false;
     }
 
@@ -111,6 +111,6 @@ extends Mode<Flight> {
         if (WatchdogPredictionFlight.aEg.thePlayer.onGround) {
             WatchdogPredictionFlight.aEg.thePlayer.jump();
         }
-        this.ys = false;
+        this.boosting = false;
     }
 }

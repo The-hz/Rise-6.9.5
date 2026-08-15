@@ -17,27 +17,27 @@ import net.minecraft.util.IChatComponent;
 
 public class RiseGuiNewChat extends GuiNewChat
 {
-    private Chat asf;
+    private Chat chatModule;
 
     public RiseGuiNewChat(final Minecraft minecraft) {
         super(minecraft);
     }
 
     public void setChatLine(final IChatComponent chatComponent, final int n, final int n2, final boolean b) {
-        if (this.asf == null) {
-            this.asf = (Chat)Client.a.g().c((Class)Chat.class);
+        if (this.chatModule == null) {
+            this.chatModule = (Chat)Client.a.g().c((Class)Chat.class);
         }
         System.out.println("[ChatImage] RiseGuiNewChat#setChatLine text=" + chatComponent.getUnformattedText());
         if (n != 0) {
             this.deleteChatLine(n);
         }
-        final List a = GuiUtilRenderComponents.a(chatComponent, (int)(this.asf.getDragValue().aHe.x - 19.0), this.mc.fontRendererObj, false, false);
+        final List a = GuiUtilRenderComponents.a(chatComponent, (int)(this.chatModule.getDragValue().aHe.x - 19.0), this.mc.fontRendererObj, false, false);
         final boolean chatOpen = this.getChatOpen();
         Object obj = Collections.emptyList();
-        if ((boolean)this.asf.getImageChat().wo()) {
+        if ((boolean)this.chatModule.getImageChat().wo()) {
             final String unformattedText = chatComponent.getUnformattedText();
-            final ChatImageManager mz = this.asf.getImageManager();
-            obj = mz.Y(unformattedText);
+            final ChatImageManager mz = this.chatModule.getImageManager();
+            obj = mz.extractUrls(unformattedText);
             System.out.println("[ChatImage] detected urls=" + String.valueOf(obj));
             final Iterator iterator = ((List)obj).iterator();
             while (iterator.hasNext()) {

@@ -17,9 +17,9 @@ import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 
 public class MatrixSpeed extends Mode<Speed> {
     private final NumberValue timerBoostOnSneak = new NumberValue("Timer Boost (on sneak)", this, 30, 1, 100, 0.1);
-    private int PD = 0;
+    private int ticksSinceSneak = 0;
     @EventLink
-    public final Listener<JumpEvent> onJump = var1x -> this.PD++;
+    public final Listener<JumpEvent> onJump = var1x -> this.ticksSinceSneak++;
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
         boolean flag = aEg.thePlayer.posY % 0.015625 == 0.0;
@@ -57,12 +57,12 @@ public class MatrixSpeed extends Mode<Speed> {
 
         MoveUtil.useDiagonalSpeed();
         if (aEg.gameSettings.keyBindSneak.isKeyDown()) {
-            this.PD = 0;
+            this.ticksSinceSneak = 0;
             MoveUtil.strafe(0.07);
             aEg.timer.dzD = this.timerBoostOnSneak.wo().floatValue();
         } else {
-            this.PD++;
-            if (this.PD == 1) {
+            this.ticksSinceSneak++;
+            if (this.ticksSinceSneak == 1) {
                 PacketUtil.sendNoEvent(
                     new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false)
                 );

@@ -43,7 +43,7 @@ public class ESPComponent extends Component {
     @EventLink(value = 4)
     public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {
         KillAura killaura = Client.a.g().c(KillAura.class);
-        List list = killaura.isEnabled() ? killaura.oM : new ArrayList();
+        List list = killaura.isEnabled() ? killaura.espTargets : new ArrayList();
         esps.removeIf(var1 -> var1.tick + 10 < aEg.thePlayer.ticksExisted || !list.contains(var1.target));
         Iterator iterator = esps.iterator();
 

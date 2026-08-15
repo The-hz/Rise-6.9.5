@@ -40,29 +40,29 @@ public class AutoMLG extends Module {
     private final NumberValue pickupDelay = new NumberValue("Pickup Delay", this, 4, 1, 20, 1);
     private final BooleanValue autoPickup = new BooleanValue("Auto Pickup", this, true);
     private final BooleanValue autoDisable = new BooleanValue("Auto Disable", this, false);
-    private ScaffoldState CE = ScaffoldState.IDLE;
-    private int CF = -1;
-    private int qH;
-    private BlockPos CG;
+    private ScaffoldState state = ScaffoldState.IDLE;
+    private int bucketSlot = -1;
+    private int stateTicks;
+    private BlockPos waterPos;
     @EventLink(value = 3)
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         if (aEg.thePlayer != null && aEg.theWorld != null && !aEg.thePlayer.isDead) {
-            if (this.CE != ScaffoldState.IDLE && this.CF != -1) {
-                SlotComponent.b(this.CF, true);
+            if (this.state != ScaffoldState.IDLE && this.bucketSlot != -1) {
+                SlotComponent.b(this.bucketSlot, true);
             }
 
-            switch (this.CE) {
+            switch (this.state) {
                 case IDLE:
-                    this.gV();
+                    this.handleIdle();
                     break;
                 case ROTATING:
-                    this.gW();
+                    this.handleRotating();
                     break;
                 case PLACED:
-                    this.gX();
+                    this.handlePlaced();
                     break;
                 case PICKUP:
-                    this.gY();
+                    this.handlePickup();
             }
         }
     };
@@ -72,29 +72,29 @@ public class AutoMLG extends Module {
 
     @Override
     public void onEnable() {
-        this.gS();
+        this.reset();
     }
 
     @Override
     public void onDisable() {
-        this.CE = ScaffoldState.IDLE;
-        this.CF = -1;
-        this.CG = null;
+        this.state = ScaffoldState.IDLE;
+        this.bucketSlot = -1;
+        this.waterPos = null;
     }
 
-    private void gS() {
-        this.CE = ScaffoldState.IDLE;
-        this.CF = -1;
-        this.qH = 0;
-        this.CG = null;
+    private void reset() {
+        this.state = ScaffoldState.IDLE;
+        this.bucketSlot = -1;
+        this.stateTicks = 0;
+        this.waterPos = null;
     }
 
-    private boolean o(double var1) {
+    private boolean collidesAtOffset(double var1) {
         AxisAlignedBB axisalignedbb = aEg.thePlayer.getEntityBoundingBox().offset(0.0, var1, 0.0);
         return !aEg.theWorld.getCollidingBoundingBoxes(aEg.thePlayer, axisalignedbb).isEmpty();
     }
 
-    private Vec3 a(BlockPos pos, EnumFacing facing, MovingObjectPosition hit) {
+    private Vec3 getHitVec(BlockPos pos, EnumFacing facing, MovingObjectPosition hit) {
         Vec3 vec3 = new Vec3(pos.getX() + Math.random(), pos.getY() + Math.random(), pos.getZ() + Math.random());
         switch (facing) {
             case DOWN:
@@ -123,7 +123,7 @@ public class AutoMLG extends Module {
         return vec3;
     }
 
-    private BlockPos d(MovingObjectPosition hit) {
+    private BlockPos getPlacedPos(MovingObjectPosition hit) {
         if (hit != null && hit.getBlockPos() != null && hit.sideHit != null) {
             BlockPos blockpos = hit.getBlockPos();
             BlockPos blockpos1 = blockpos.offset(hit.sideHit);
@@ -143,7 +143,7 @@ public class AutoMLG extends Module {
         return (block == Blocks.water || block == Blocks.flowing_water) && block instanceof BlockLiquid && iblockstate.getValue(BlockLiquid.LEVEL) == 0;
     }
 
-    private BlockPos gT() {
+    private BlockPos findNearestWater() {
         BlockPos blockpos = new BlockPos(aEg.thePlayer);
         BlockPos blockpos1 = null;
         double d0 = Double.MAX_VALUE;
@@ -166,20 +166,20 @@ public class AutoMLG extends Module {
         return blockpos1;
     }
 
-    private BlockPos gU() {
-        if (this.e(this.CG)) {
-            return this.CG;
+    private BlockPos getWaterPos() {
+        if (this.e(this.waterPos)) {
+            return this.waterPos;
         }
 
-        BlockPos blockpos = this.gT();
+        BlockPos blockpos = this.findNearestWater();
         if (blockpos != null) {
-            this.CG = blockpos;
+            this.waterPos = blockpos;
         }
 
-        return this.CG;
+        return this.waterPos;
     }
 
-    private boolean a(ItemStack stack, BlockPos pos) {
+    private boolean pickupWater(ItemStack stack, BlockPos pos) {
         if (stack != null && stack.getItem() == Items.bucket && pos != null) {
             Vector2f vector2f = RotationUtil.h(new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5));
             float f = aEg.thePlayer.pl;
@@ -198,7 +198,7 @@ public class AutoMLG extends Module {
         return false;
     }
 
-    private void gV() {
+    private void handleIdle() {
         if (!(aEg.thePlayer.fallDistance < this.fallDistance.wo().floatValue())
             && !(aEg.thePlayer.motionY >= 0.0)
             && !aEg.thePlayer.isInWater()
@@ -207,73 +207,73 @@ public class AutoMLG extends Module {
             && !aEg.thePlayer.capabilities.isFlying) {
             int i = SlotUtil.findItem(Items.water_bucket);
             if (i != -1) {
-                this.CF = i;
-                SlotComponent.b(this.CF, true);
-                this.CE = ScaffoldState.ROTATING;
-                this.qH = 0;
+                this.bucketSlot = i;
+                SlotComponent.b(this.bucketSlot, true);
+                this.state = ScaffoldState.ROTATING;
+                this.stateTicks = 0;
             }
         }
     }
 
-    private void gW() {
-        this.qH++;
-        if (aEg.thePlayer.onGround || aEg.thePlayer.isInWater() || aEg.thePlayer.isDead || this.qH > 100) {
+    private void handleRotating() {
+        this.stateTicks++;
+        if (aEg.thePlayer.onGround || aEg.thePlayer.isInWater() || aEg.thePlayer.isDead || this.stateTicks > 100) {
             cg.e("Auto MLG", "Failed - couldn't place water in time");
-            this.gS();
+            this.reset();
         } else if (aEg.thePlayer.motionY > 0.5) {
-            this.gS();
+            this.reset();
         } else {
             ItemStack itemstack = SlotComponent.getItemStack();
             if (itemstack != null && itemstack.getItem() == Items.water_bucket) {
                 RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 90.0F), 10.0, MovementFix.NORMAL);
                 double d0 = Math.max(aEg.thePlayer.motionY * 2.0, -4.5);
-                if (this.o(d0)) {
+                if (this.collidesAtOffset(d0)) {
                     MovingObjectPosition movingobjectposition = aef.c(RotationComponent.fk, aEg.playerController.getBlockReachDistance());
                     if (movingobjectposition != null
                         && movingobjectposition.typeOfHit == MovingObjectType.BLOCK
                         && movingobjectposition.sideHit != null
                         && movingobjectposition.getBlockPos() != null
                         && !(movingobjectposition.getBlockPos().getY() >= aEg.thePlayer.posY)) {
-                        this.a(movingobjectposition.getBlockPos(), movingobjectposition.sideHit, movingobjectposition);
+                        this.getHitVec(movingobjectposition.getBlockPos(), movingobjectposition.sideHit, movingobjectposition);
                         ItemStack itemstack1 = SlotComponent.getItemStack();
                         if (itemstack1 != null && itemstack1.getItem() == Items.water_bucket) {
                             PacketUtil.send(new m());
                             PacketUtil.send(new C08PacketPlayerBlockPlacement(itemstack1));
                             boolean flag1 = true;
                             if (flag1) {
-                                this.CG = this.d(movingobjectposition);
+                                this.waterPos = this.getPlacedPos(movingobjectposition);
                                 aEg.rightClickDelayTimer = 0;
-                                this.CE = ScaffoldState.PLACED;
-                                this.qH = 0;
+                                this.state = ScaffoldState.PLACED;
+                                this.stateTicks = 0;
                             }
                         } else {
                             cg.e("Auto MLG", "Failed - no water bucket in hand");
-                            this.gS();
+                            this.reset();
                         }
                     }
                 }
             } else {
                 cg.e("Auto MLG", "Failed - no water bucket in hand");
-                this.gS();
+                this.reset();
             }
         }
     }
 
-    private void gX() {
-        this.qH++;
+    private void handlePlaced() {
+        this.stateTicks++;
         RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 90.0F), 10.0, MovementFix.NORMAL);
         if (!aEg.thePlayer.onGround && !aEg.thePlayer.isInWater()) {
-            if (this.qH > 60) {
+            if (this.stateTicks > 60) {
                 cg.e("Auto MLG", "Failed - landing timed out");
-                this.gS();
+                this.reset();
             }
         } else {
             if (this.autoPickup.wo()) {
-                this.CE = ScaffoldState.PICKUP;
-                this.qH = 0;
+                this.state = ScaffoldState.PICKUP;
+                this.stateTicks = 0;
             } else {
                 cg.e("Auto MLG", "Water placed successfully!");
-                this.gS();
+                this.reset();
                 if (this.autoDisable.wo()) {
                     this.toggle();
                 }
@@ -281,38 +281,38 @@ public class AutoMLG extends Module {
         }
     }
 
-    private void gY() {
-        this.qH++;
+    private void handlePickup() {
+        this.stateTicks++;
         ItemStack itemstack = SlotComponent.getItemStack();
         if (itemstack != null && itemstack.getItem() == Items.water_bucket) {
             cg.e("Auto MLG", "MLG successful!");
-            this.gS();
+            this.reset();
             if (this.autoDisable.wo()) {
                 this.toggle();
             }
         } else {
-            BlockPos blockpos = this.gU();
+            BlockPos blockpos = this.getWaterPos();
             if (blockpos != null) {
                 RotationComponent.setRotations(RotationUtil.h(new Vec3(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5)), 30.0, MovementFix.NORMAL);
             } else {
                 RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 90.0F), 10.0, MovementFix.NORMAL);
             }
 
-            if (this.qH >= this.pickupDelay.wo().intValue()) {
+            if (this.stateTicks >= this.pickupDelay.wo().intValue()) {
                 ItemStack itemstack1 = SlotComponent.getItemStack();
-                if (itemstack1 != null && itemstack1.getItem() == Items.bucket && blockpos != null && this.a(itemstack1, blockpos)) {
+                if (itemstack1 != null && itemstack1.getItem() == Items.bucket && blockpos != null && this.pickupWater(itemstack1, blockpos)) {
                     PacketUtil.send(new m());
                     cg.e("Auto MLG", "MLG successful!");
-                    this.gS();
+                    this.reset();
                     if (this.autoDisable.wo()) {
                         this.toggle();
                     }
                 }
             }
 
-            if (this.qH > this.pickupDelay.wo().intValue() + 40) {
+            if (this.stateTicks > this.pickupDelay.wo().intValue() + 40) {
                 cg.e("Auto MLG", "Pickup timed out, resetting");
-                this.gS();
+                this.reset();
             }
         }
     }

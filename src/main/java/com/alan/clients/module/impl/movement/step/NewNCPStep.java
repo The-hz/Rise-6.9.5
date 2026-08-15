@@ -15,7 +15,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 public class NewNCPStep extends Mode<Step> {
     private final NumberValue height = new NumberValue("Height", this, 1, 1, 1.5, 0.1);
     private final NumberValue timer = new NumberValue("Timer", this, 0.5, 0.1, 1, 0.1);
-    private double Sf;
+    private double stepHeight;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.onGround && !PlayerUtil.vj()) {
@@ -28,7 +28,7 @@ public class NewNCPStep extends Mode<Step> {
     public final Listener<StepEvent> onStep = var1x -> {
         if (aEg.thePlayer.onGround && !PlayerUtil.vj()) {
             double d0 = var1x.getHeight();
-            this.Sf = d0;
+            this.stepHeight = d0;
             if (!(d0 <= 0.6F)) {
                 double[] adouble;
                 if (d0 > 1.015) {
@@ -50,9 +50,9 @@ public class NewNCPStep extends Mode<Step> {
     @EventLink
     private final Listener<PacketSendEvent> onPacketSend = var1x -> {
         double[] adouble;
-        if (this.Sf > 1.015) {
+        if (this.stepHeight > 1.015) {
             adouble = new double[]{0.42F, 0.7532F, 1.0, 0.98F};
-        } else if (this.Sf > 0.875) {
+        } else if (this.stepHeight > 0.875) {
             adouble = new double[]{0.42F, 0.7532F, 1.0};
         } else {
             adouble = new double[]{0.39F, 0.6938F};

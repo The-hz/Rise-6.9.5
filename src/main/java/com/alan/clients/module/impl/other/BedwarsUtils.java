@@ -34,7 +34,7 @@ public final class BedwarsUtils extends Module {
     private final BooleanValue armorReveal = new BooleanValue("Armor Reveal", this, true);
     private final BooleanValue invisibleCheck = new BooleanValue("Invisible Check", this, true);
     private final BooleanValue invisibilityStatus = new BooleanValue("Invisibility Status", this, false);
-    private boolean TQ = false;
+    private boolean selfInvisible = false;
     @EventLink
     private final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
@@ -180,7 +180,7 @@ public final class BedwarsUtils extends Module {
 
                 if (this.invisibilityStatus.wo()) {
                     if (aEg.thePlayer.getActivePotionEffect(Potion.invisibility) != null) {
-                        this.TQ = true;
+                        this.selfInvisible = true;
                         if (aEg.thePlayer.ticksExisted % 200 == 0) {
                             afi.b(
                                 "Your Invisibility"
@@ -195,9 +195,9 @@ public final class BedwarsUtils extends Module {
                             );
                         }
                     }
-                } else if (this.TQ) {
+                } else if (this.selfInvisible) {
                     afi.b("Invisibility" + EnumChatFormatting.RED + " Expired");
-                    this.TQ = false;
+                    this.selfInvisible = false;
                 }
             }
         }

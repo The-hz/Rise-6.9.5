@@ -26,8 +26,8 @@ public class AppleSkin extends Module {
     private final NumberValue maxFlashAlpha = new NumberValue("Max Flash Alpha", this, 0.65, 0, 1, 0.05);
     public final Vector<FoodBarOffset> foodBarOffsets = new Vector<>();
     private final Random random = new Random();
-    private float akY;
-    private float akZ;
+    private float flashProgress;
+    private float flashAlpha;
     private byte alphaDir = 1;
     @EventLink
     public final Listener<RenderHungerEvent> onHunger = var1 -> {
@@ -49,19 +49,19 @@ public class AppleSkin extends Module {
         float f = yc.getSaturationIncrement();
         int l = foodstats.getFoodLevel() + k;
         float f1 = foodstats.getSaturationLevel() + f > l ? l - foodstats.getSaturationLevel() : f;
-        this.drawHungerOverlay(k, foodstats.getFoodLevel(), i, j, this.akZ, FoodHelper.t(itemstack));
-        this.drawSaturationOverlay(f1, foodstats.getSaturationLevel(), k, foodstats.getFoodLevel(), i, j, this.akZ);
+        this.drawHungerOverlay(k, foodstats.getFoodLevel(), i, j, this.flashAlpha, FoodHelper.isRotten(itemstack));
+        this.drawSaturationOverlay(f1, foodstats.getSaturationLevel(), k, foodstats.getFoodLevel(), i, j, this.flashAlpha);
     };
     @EventLink
     public final Listener<TickEvent> onTick = var1 -> {
-        this.akY = this.akY + this.alphaDir * 0.125F;
-        if (this.akY >= 1.5F) {
+        this.flashProgress = this.flashProgress + this.alphaDir * 0.125F;
+        if (this.flashProgress >= 1.5F) {
             this.alphaDir = -1;
-        } else if (this.akY <= -0.5F) {
+        } else if (this.flashProgress <= -0.5F) {
             this.alphaDir = 1;
         }
 
-        this.akZ = Math.max(0.0F, Math.min(1.0F, this.akY)) * Math.min(1.0F, this.maxFlashAlpha.wo().floatValue());
+        this.flashAlpha = Math.max(0.0F, Math.min(1.0F, this.flashProgress)) * Math.min(1.0F, this.maxFlashAlpha.wo().floatValue());
     };
 
     public AppleSkin() {
@@ -187,8 +187,8 @@ public class AppleSkin extends Module {
     }
 
     private void resetFlash() {
-        this.akY = 0.0F;
-        this.akZ = 0.0F;
+        this.flashProgress = 0.0F;
+        this.flashAlpha = 0.0F;
         this.alphaDir = 1;
     }
 }

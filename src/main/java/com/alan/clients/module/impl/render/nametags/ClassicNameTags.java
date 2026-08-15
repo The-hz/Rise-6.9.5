@@ -37,7 +37,7 @@ public class ClassicNameTags extends Mode<NameTags> {
 
         for (EntityLivingBase entitylivingbase : (Iterable<EntityLivingBase>)list) {
             HealthBypass healthbypass = this.e(HealthBypass.class);
-            float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(entitylivingbase) : entitylivingbase.getHealth();
+            float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.getScoreboardHealth(entitylivingbase) : entitylivingbase.getHealth();
             String s = entitylivingbase.getDisplayName().getFormattedText() + " §7[§4❤" + Math.round(f) + "§7]";
             if (this.showTeamTag.wo() && PlayerUtil.sameTeam(entitylivingbase)) {
                 s = "§a§l" + (this.shortenedTags.wo() ? "[TM]" : "[TEAM]") + "§r " + s;

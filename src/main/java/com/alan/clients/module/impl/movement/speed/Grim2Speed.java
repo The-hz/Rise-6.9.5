@@ -26,11 +26,11 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public class Grim2Speed
 extends Mode<Speed> {
-    public boolean gD;
-    public int Pj;
+    public boolean shouldJump;
+    public int groundTicks;
     @EventLink
     public Listener<PreMotionEvent> onPreMotion;
-    public int Ho;
+    public int strafeTicks;
     @EventLink
     public Listener<TeleportEvent> onTeleport;
     public boolean Ga;
@@ -51,23 +51,23 @@ extends Mode<Speed> {
     @EventLink
     public Listener<StrafeEvent> onStrafe = strafeEvent -> {
         double d2 = 0.0;
-        this.Pj = Grim2Speed.aEg.thePlayer.onGround ? ++this.Pj : 0;
-        if (this.Pj >= 1) {
+        this.groundTicks = Grim2Speed.aEg.thePlayer.onGround ? ++this.groundTicks : 0;
+        if (this.groundTicks >= 1) {
             boolean unused0 = Grim2Speed.aEg.thePlayer.onGround;
         }
-        if (this.Ho > -1) {
+        if (this.strafeTicks > -1) {
             double d3 = 0.03;
-            if (this.Ho % 2 == 0) {
+            if (this.strafeTicks % 2 == 0) {
                 d3 = Grim2Speed.aEg.thePlayer.onGround ? 0.085 : 0.03;
             }
             MoveUtil.moveFlying(d3 * ((Number)this.speed.wo()).doubleValue());
         }
-        ++this.Ho;
+        ++this.strafeTicks;
     };
-    public boolean Eo;
+    public boolean sentDoublePacket;
     @EventLink
     public Listener<PostStrafeEvent> onPostStrafe = postStrafeEvent -> {
-        this.Eo = this.Eo;
+        this.sentDoublePacket = this.sentDoublePacket;
     };
 
     static {
@@ -77,10 +77,10 @@ extends Mode<Speed> {
     public Grim2Speed(String string, Speed speed) {
         super(string, speed);
         this.onPreMotion = preMotionEvent -> {
-            this.gD = false;
+            this.shouldJump = false;
         };
         this.onPostMotion = postMotionEvent -> {
-            if (this.Ho % 2 == 0) {
+            if (this.strafeTicks % 2 == 0) {
                 if (!((Boolean)this.highPingModeMa.wo()).booleanValue()) {
                     PacketUtil.send(new C03PacketPlayer(true));
                     PacketUtil.send(new C03PacketPlayer(false));
@@ -88,27 +88,27 @@ extends Mode<Speed> {
                     PacketUtil.send(new C03PacketPlayer(false));
                     PacketUtil.send(new C03PacketPlayer(false));
                 }
-                this.Eo = true;
+                this.sentDoublePacket = true;
             }
         };
         this.onMoveInput = moveInputEvent -> {
-            if (this.gD) {
+            if (this.shouldJump) {
                 moveInputEvent.setJump(true);
             }
         };
         this.onPacketReceive = packetReceiveEvent -> {
             Packet<?> packet = packetReceiveEvent.getPacket();
             if (packet instanceof S08PacketPlayerPosLook) {
-                if (this.Ho % 2 == 1) {
-                    ++this.Ho;
+                if (this.strafeTicks % 2 == 1) {
+                    ++this.strafeTicks;
                 }
                 Grim2Speed.aEg.timer.dzD = 1.0f;
             }
             if (packet instanceof S12PacketEntityVelocity) {
                 S12PacketEntityVelocity s12PacketEntityVelocity = (S12PacketEntityVelocity)packet;
-                this.Eo = false;
+                this.sentDoublePacket = false;
                 if (s12PacketEntityVelocity.getEntityID() == Grim2Speed.aEg.thePlayer.getEntityId()) {
-                    this.gD = true;
+                    this.shouldJump = true;
                 }
             }
         };
@@ -136,8 +136,8 @@ extends Mode<Speed> {
         } else {
             afi.b("ping needs to be below 150ms for this to work consistantly", new Object[0]);
         }
-        this.Ho = 0;
-        this.Pj = 0;
+        this.strafeTicks = 0;
+        this.groundTicks = 0;
         Grim2Speed.aEg.timer.dzD = 1.0f;
     }
 }

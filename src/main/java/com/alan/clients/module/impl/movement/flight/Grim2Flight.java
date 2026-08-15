@@ -26,66 +26,66 @@ import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public class Grim2Flight extends Mode<Flight> {
-    private boolean Gi = false;
-    private boolean Gj = false;
-    private int Gk = 0;
-    public static final Queue<Packet<?>> Gl = new LinkedList<>();
+    private boolean pendingFallFlying = false;
+    private boolean blinking = false;
+    private int pendingTicks = 0;
+    public static final Queue<Packet<?>> heldPackets = new LinkedList<>();
     @EventLink
     public final Listener<WorldChangeEvent> onWorldChange = var1x -> {
         this.getParent().toggle();
-        this.Gk = 0;
-        this.Gi = false;
-        this.Gj = false;
-        Gl.clear();
+        this.pendingTicks = 0;
+        this.pendingFallFlying = false;
+        this.blinking = false;
+        heldPackets.clear();
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (this.Gi) {
-            this.Gk++;
-            if (this.Gk >= 8) {
+        if (this.pendingFallFlying) {
+            this.pendingTicks++;
+            if (this.pendingTicks >= 8) {
                 for (int i = 0; i < 1; i++) {
-                    this.hp();
+                    this.sendFallFlyingPacket();
                 }
             }
 
-            this.Gk = 0;
-            this.Gi = false;
+            this.pendingTicks = 0;
+            this.pendingFallFlying = false;
         }
     };
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         Packet packet = var1x.dq();
-        if (packet instanceof C0FPacketConfirmTransaction && this.Gj) {
+        if (packet instanceof C0FPacketConfirmTransaction && this.blinking) {
             var1x.setCancelled(true);
-            if (Gl.isEmpty()) {
-                this.Gi = true;
+            if (heldPackets.isEmpty()) {
+                this.pendingFallFlying = true;
             }
 
-            Gl.add(packet);
+            heldPackets.add(packet);
         }
 
-        if (packet instanceof C02PacketUseEntity && this.Gj && !Gl.isEmpty()) {
-            while (!Gl.isEmpty()) {
-                PacketUtil.sendNoEvent(Gl.poll());
+        if (packet instanceof C02PacketUseEntity && this.blinking && !heldPackets.isEmpty()) {
+            while (!heldPackets.isEmpty()) {
+                PacketUtil.sendNoEvent(heldPackets.poll());
             }
         }
     };
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         Packet packet = var1x.getPacket();
-        if (packet instanceof S08PacketPlayerPosLook && this.Gj && !Gl.isEmpty()) {
-            while (!Gl.isEmpty()) {
-                PacketUtil.sendNoEvent(Gl.poll());
+        if (packet instanceof S08PacketPlayerPosLook && this.blinking && !heldPackets.isEmpty()) {
+            while (!heldPackets.isEmpty()) {
+                PacketUtil.sendNoEvent(heldPackets.poll());
             }
         }
 
         if (packet instanceof S12PacketEntityVelocity && ((S12PacketEntityVelocity)packet).getEntityID() == aEg.thePlayer.getEntityId()) {
-            if (this.Gj || !Gl.isEmpty()) {
+            if (this.blinking || !heldPackets.isEmpty()) {
                 return;
             }
 
-            this.Gk = 0;
-            this.Gj = true;
+            this.pendingTicks = 0;
+            this.blinking = true;
             var1x.setCancelled(true);
         }
     };
@@ -96,27 +96,27 @@ public class Grim2Flight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        this.Gk = 0;
-        this.Gi = false;
-        this.Gj = false;
-        Gl.clear();
+        this.pendingTicks = 0;
+        this.pendingFallFlying = false;
+        this.blinking = false;
+        heldPackets.clear();
         super.onEnable();
     }
 
     @Override
     public void onDisable() {
-        this.Gk = 0;
-        this.Gi = false;
-        this.Gj = false;
+        this.pendingTicks = 0;
+        this.pendingFallFlying = false;
+        this.blinking = false;
 
-        while (!Gl.isEmpty()) {
-            PacketUtil.sendNoEvent(Gl.poll());
+        while (!heldPackets.isEmpty()) {
+            PacketUtil.sendNoEvent(heldPackets.poll());
         }
 
         super.onDisable();
     }
 
-    private void hp() {
+    private void sendFallFlyingPacket() {
         if (ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9)) {
             UserConnection userconnection = Via.getManager().getConnectionManager().getConnections().iterator().next();
             PacketWrapper packetwrapper = PacketWrapper.create(ServerboundPackets1_9.PLAYER_COMMAND, userconnection);

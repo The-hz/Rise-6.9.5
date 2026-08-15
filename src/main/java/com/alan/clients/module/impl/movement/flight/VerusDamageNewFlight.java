@@ -18,27 +18,27 @@ import net.minecraft.util.AxisAlignedBB;
 
 public class VerusDamageNewFlight extends Mode<Flight> {
     private int It;
-    private int hV;
-    private boolean El;
+    private int ticks;
+    private boolean flying;
     private final NumberValue speed = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
     private double y;
     @EventLink
     public final Listener<TeleportEvent> onTeleport = var0 -> {};
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (!this.El && aEg.thePlayer.onGround) {
+        if (!this.flying && aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();
         }
 
-        if (this.El) {
+        if (this.flying) {
             this.y = Math.floor(aEg.thePlayer.posY);
             aEg.thePlayer.motionY = 0.0 + (aEg.gameSettings.keyBindJump.isKeyDown() ? 1.0 : 0.0) - (aEg.gameSettings.keyBindSneak.isKeyDown() ? 1.0 : 0.0);
             if (aEg.thePlayer.getDistance(aEg.thePlayer.lastReportedPosX, aEg.thePlayer.lastReportedPosY, aEg.thePlayer.lastReportedPosZ) <= 8.5) {
                 var1x.setCancelled();
             } else {
-                this.hV++;
-                if (this.hV >= 20) {
-                    this.El = false;
+                this.ticks++;
+                if (this.ticks >= 20) {
+                    this.flying = false;
                     afi.b("s");
                     MoveUtil.stop();
                 }
@@ -47,7 +47,7 @@ public class VerusDamageNewFlight extends Mode<Flight> {
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
-        if (this.El) {
+        if (this.flying) {
             float f = this.speed.wo().floatValue();
             var1x.setSpeed(f);
         }
@@ -73,9 +73,9 @@ public class VerusDamageNewFlight extends Mode<Flight> {
     @Override
     public void onEnable() {
         DamageUtil.damagePlayer(DamageType.POSITION, 3.42F, 1, false, false);
-        this.hV = 0;
+        this.ticks = 0;
         this.It = 2;
-        this.El = true;
+        this.flying = true;
     }
 
     @Override

@@ -12,7 +12,7 @@ import com.alan.clients.value.Mode;
 import hackclient.rise.afi;
 
 public class PolarSpeed extends Mode<Speed> {
-    private int PD = 0;
+    private int jumps = 0;
     @EventLink(value = 4)
     public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {
         aEg.timer.dzD = 1.009F;
@@ -22,7 +22,7 @@ public class PolarSpeed extends Mode<Speed> {
     };
     @EventLink(value = 4)
     public final Listener<StrafeEvent> onStrafe = var1x -> {
-        if (aEg.thePlayer.tR == 5 && this.PD % 2 != 0) {
+        if (aEg.thePlayer.tR == 5 && this.jumps % 2 != 0) {
             aEg.thePlayer.motionY -= 0.03;
         }
 
@@ -30,14 +30,14 @@ public class PolarSpeed extends Mode<Speed> {
             aEg.thePlayer.jump();
         }
 
-        if (this.PD % 2 != 0) {
+        if (this.jumps % 2 != 0) {
             afi.c(aEg.thePlayer.tR);
         }
 
         MoveUtil.moveFlying(0.002);
     };
     @EventLink
-    public final Listener<JumpEvent> onJump = var1x -> this.PD++;
+    public final Listener<JumpEvent> onJump = var1x -> this.jumps++;
 
     public PolarSpeed(String var1, Speed speed) {
         super(var1, speed);

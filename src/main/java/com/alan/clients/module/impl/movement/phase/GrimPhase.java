@@ -21,7 +21,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 
 public class GrimPhase extends Mode<Phase> {
-    private final List<Packet<?>> NU = new ArrayList<>();
+    private final List<Packet<?>> packets = new ArrayList<>();
     private final ModeValue releaseMode = new ModeValue("Release Mode", this)
         .add(new SubMode("Simple"))
         .add(new SubMode("Double"))
@@ -29,14 +29,14 @@ public class GrimPhase extends Mode<Phase> {
         .add(new SubMode("None"))
         .setDefault("Simple");
     private final NumberValue semiPackets = new NumberValue("Semi Packets", this, 2, 1, 15, 1);
-    private boolean NX;
-    private boolean NY;
+    private boolean phasing;
+    private boolean selfDisabled;
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (aEg.thePlayer != null) {
             Packet packet = var1x.dq();
             if (packet instanceof C03PacketPlayer) {
-                this.NU.add(packet);
+                this.packets.add(packet);
                 var1x.setCancelled();
             }
         }
@@ -45,7 +45,7 @@ public class GrimPhase extends Mode<Phase> {
     public final Listener<TickEvent> onTick = var1x -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             boolean flag = PlayerUtil.vk();
-            if (!this.NX && flag) {
+            if (!this.phasing && flag) {
                 double d0 = aEg.thePlayer.posX;
                 double d1 = aEg.thePlayer.posY;
                 double d2 = aEg.thePlayer.posZ;
@@ -57,10 +57,10 @@ public class GrimPhase extends Mode<Phase> {
                     PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, flag1));
                 }
 
-                this.NX = true;
+                this.phasing = true;
             } else {
-                if (this.NX && !flag) {
-                    this.NY = true;
+                if (this.phasing && !flag) {
+                    this.selfDisabled = true;
                     this.toggle();
                 }
             }
@@ -79,16 +79,16 @@ public class GrimPhase extends Mode<Phase> {
 
     @Override
     public void onEnable() {
-        this.NU.clear();
-        this.NX = false;
-        this.NY = false;
+        this.packets.clear();
+        this.phasing = false;
+        this.selfDisabled = false;
     }
 
     @Override
     public void onDisable() {
-        if (!this.NY && this.NX) {
+        if (!this.selfDisabled && this.phasing) {
             if (!this.releaseMode.wo().getName().equals("None")) {
-                this.A(this.releaseMode.wo().getName());
+                this.release(this.releaseMode.wo().getName());
             } else {
                 PacketUtil.sendNoEvent(
                     new C06PacketPlayerPosLook(
@@ -98,13 +98,13 @@ public class GrimPhase extends Mode<Phase> {
             }
         }
 
-        if (aEg.thePlayer != null && !this.NU.isEmpty()) {
-            this.NU.forEach(PacketUtil::sendNoEvent);
-            this.NU.clear();
+        if (aEg.thePlayer != null && !this.packets.isEmpty()) {
+            this.packets.forEach(PacketUtil::sendNoEvent);
+            this.packets.clear();
         }
     }
 
-    private void A(String var1) {
+    private void release(String var1) {
         double d0;
         double d1;
         double d2;

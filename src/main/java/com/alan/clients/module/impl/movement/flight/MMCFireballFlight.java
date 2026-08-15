@@ -19,12 +19,12 @@ import net.minecraft.init.Items;
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 
 public class MMCFireballFlight extends Mode<Flight> {
-    private int hQ;
-    private int hV;
+    private int ticks;
+    private int desyncTicks;
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         int i = SlotUtil.findItem(Items.fire_charge);
-        if (this.hQ > 10) {
+        if (this.ticks > 10) {
             BlinkComponent.a(30000, true, true, false, false, false);
         }
 
@@ -33,8 +33,8 @@ public class MMCFireballFlight extends Mode<Flight> {
         }
 
         if (i != -1) {
-            this.hQ++;
-            if (this.hQ == 4) {
+            this.ticks++;
+            if (this.ticks == 4) {
                 PacketUtil.send(
                     new C06PacketPlayerPosLook(
                         aEg.thePlayer.posX, aEg.thePlayer.posY - 8.0, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false
@@ -44,11 +44,11 @@ public class MMCFireballFlight extends Mode<Flight> {
 
             SlotComponent slotcomponent = this.d(SlotComponent.class);
             SlotComponent.setSlot(i);
-            if (this.hQ == 2) {
+            if (this.ticks == 2) {
                 aEg.Az();
             }
 
-            if (this.hQ < 100) {
+            if (this.ticks < 100) {
                 RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 90.0F), 10.0, MovementFix.OFF);
             }
         }
@@ -57,12 +57,12 @@ public class MMCFireballFlight extends Mode<Flight> {
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         aEg.thePlayer.motionY = 0.0F + (aEg.gameSettings.keyBindJump.isKeyDown() ? 0.42F : 0.0F) - (aEg.gameSettings.keyBindSneak.isKeyDown() ? 0.42F : 0.0F);
         if (aEg.thePlayer.getDistance(aEg.thePlayer.lastReportedPosX, aEg.thePlayer.lastReportedPosY, aEg.thePlayer.lastReportedPosZ) <= 8.58F) {
-            if (this.hQ > 4) {
+            if (this.ticks > 4) {
                 var1x.setCancelled();
             }
         } else {
-            this.hV++;
-            if (this.hV >= 8) {
+            this.desyncTicks++;
+            if (this.desyncTicks >= 8) {
                 MoveUtil.stop();
                 this.getParent().toggle();
             }
@@ -70,7 +70,7 @@ public class MMCFireballFlight extends Mode<Flight> {
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
-        if (this.hQ > 4) {
+        if (this.ticks > 4) {
             var1x.setSpeed(2.0);
         }
     };
@@ -81,8 +81,8 @@ public class MMCFireballFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        this.hQ = 0;
-        this.hV = 0;
+        this.ticks = 0;
+        this.desyncTicks = 0;
     }
 
     @Override

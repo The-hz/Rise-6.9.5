@@ -26,20 +26,20 @@ import net.minecraft.util.MathHelper;
 
 public final class MiniBloxSpeed extends Mode<Speed> {
     private final NumberValue speed = new NumberValue("Speed", this, 4, 1, 9.5, 0.1);
-    private double xv;
-    private boolean xw;
-    private static final int Pd = 500;
-    private int xy;
+    private double moveSpeed;
+    private boolean payloadSent;
+    private static final int SEARCH_RADIUS = 500;
+    private int payloadTick;
     @EventLink
     public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = CancellableEvent::setCancelled;
     @EventLink
     private final Listener<TeleportEvent> onTeleport = var1x -> {
-        if (aEg.thePlayer.ticksExisted - this.xy > 7) {
+        if (aEg.thePlayer.ticksExisted - this.payloadTick > 7) {
             afi.c("silently accepted");
             var1x.setCancelled();
         }
 
-        this.xv = this.getBaseMoveSpeed();
+        this.moveSpeed = this.getBaseMoveSpeed();
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
@@ -49,7 +49,7 @@ public final class MiniBloxSpeed extends Mode<Speed> {
             aEg.thePlayer.motionY = 0.399;
         }
 
-        if (this.xw && aEg.thePlayer.Zl > 0) {
+        if (this.payloadSent && aEg.thePlayer.Zl > 0) {
             MoveUtil.strafe(this.getBaseMoveSpeed() * this.speed.wo().floatValue());
         } else if (aEg.thePlayer.Zl > 0) {
             MoveUtil.strafe(this.getBaseMoveSpeed() * 1.24);
@@ -59,8 +59,8 @@ public final class MiniBloxSpeed extends Mode<Speed> {
     public final Listener<PreUpdateEvent> onPreUpdate = var0 -> BlinkComponent.a(25000, true, false, false, false, false, false);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (this.xw && aEg.thePlayer.ticksExisted - this.xy >= 24) {
-            this.xw = false;
+        if (this.payloadSent && aEg.thePlayer.ticksExisted - this.payloadTick >= 24) {
+            this.payloadSent = false;
         }
 
         double d0 = Math.toRadians(aEg.thePlayer.pl);
@@ -74,10 +74,10 @@ public final class MiniBloxSpeed extends Mode<Speed> {
 
         if (aEg.thePlayer.ticksExisted % 24 == 0) {
             afi.c("payload sent");
-            BlockPos blockpos = this.s(500);
+            BlockPos blockpos = this.findNearestSolidBlock(500);
             if (blockpos != null) {
-                this.xw = true;
-                this.xy = aEg.thePlayer.ticksExisted;
+                this.payloadSent = true;
+                this.payloadTick = aEg.thePlayer.ticksExisted;
                 double d4 = blockpos.getX() + 0;
                 double d5 = blockpos.getY() + 0;
                 double d6 = blockpos.getZ() + 0;
@@ -102,10 +102,10 @@ public final class MiniBloxSpeed extends Mode<Speed> {
 
     @Override
     public void onEnable() {
-        BlockPos blockpos = this.s(500);
+        BlockPos blockpos = this.findNearestSolidBlock(500);
         if (blockpos != null) {
-            this.xw = true;
-            this.xy = aEg.thePlayer.ticksExisted;
+            this.payloadSent = true;
+            this.payloadTick = aEg.thePlayer.ticksExisted;
             double d0 = blockpos.getX() + 0;
             double d1 = blockpos.getY() + 0;
             double d2 = blockpos.getZ() + 0;
@@ -120,7 +120,7 @@ public final class MiniBloxSpeed extends Mode<Speed> {
             );
         }
 
-        this.xv = 0.0;
+        this.moveSpeed = 0.0;
     }
 
     @Override
@@ -128,7 +128,7 @@ public final class MiniBloxSpeed extends Mode<Speed> {
         MoveUtil.stop();
     }
 
-    private BlockPos s(int var1) {
+    private BlockPos findNearestSolidBlock(int var1) {
         double d0 = aEg.thePlayer.posX;
         double d1 = aEg.thePlayer.posY;
         double d2 = aEg.thePlayer.posZ;
@@ -156,10 +156,10 @@ public final class MiniBloxSpeed extends Mode<Speed> {
     }
 
     private double getBaseMoveSpeed() {
-        return this.m(0.2873);
+        return this.applySpeedEffect(0.2873);
     }
 
-    private double m(double var1) {
+    private double applySpeedEffect(double var1) {
         if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
             var1 *= 1.0 + 0.2 * (aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier() + 1);
         }

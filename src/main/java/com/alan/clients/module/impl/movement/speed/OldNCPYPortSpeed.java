@@ -14,18 +14,18 @@ import com.alan.clients.value.impl.BooleanValue;
 public class OldNCPYPortSpeed extends Mode<Speed> {
     public final BooleanValue smoothCamera = new BooleanValue("Smooth Camera", this, false);
     private boolean Lw;
-    private double Lx;
+    private double speed;
     private boolean HJ;
     private double QB;
-    private int FX;
-    private double QC;
-    private final double QD = 0.2873;
+    private int stage;
+    private double lastHorizontalDistance;
+    private final double BASE_SPEED = 0.2873;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         double d0 = aEg.thePlayer.posX - aEg.thePlayer.lastTickPosX;
         double d1 = aEg.thePlayer.posZ - aEg.thePlayer.lastTickPosZ;
-        this.QC = Math.sqrt(d0 * d0 + d1 * d1);
-        if (this.FX == 3) {
+        this.lastHorizontalDistance = Math.sqrt(d0 * d0 + d1 * d1);
+        if (this.stage == 3) {
             var1x.setPosY(var1x.getPosY() + 0.4);
         }
     };
@@ -34,39 +34,39 @@ public class OldNCPYPortSpeed extends Mode<Speed> {
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
         MoveUtil.isMoving();
-        switch (this.FX) {
+        switch (this.stage) {
             case 2:
-                this.Lx *= 2.14;
-                this.FX = 3;
+                this.speed *= 2.14;
+                this.stage = 3;
                 break;
             case 3:
-                this.FX = 2;
-                double d0 = 0.66 * (this.QC - 0.2873);
-                this.Lx = this.QC - d0;
+                this.stage = 2;
+                double d0 = 0.66 * (this.lastHorizontalDistance - 0.2873);
+                this.speed = this.lastHorizontalDistance - d0;
                 break;
             default:
                 if (aEg.theWorld.getCollidingBoundingBoxes(aEg.thePlayer, aEg.thePlayer.getEntityBoundingBox().offset(0.0, aEg.thePlayer.motionY, 0.0)).size()
                         > 0
                     || aEg.thePlayer.isCollidedVertically) {
-                    this.FX = 1;
+                    this.stage = 1;
                 }
 
-                this.Lx = this.QC - this.QC / 159.0;
+                this.speed = this.lastHorizontalDistance - this.lastHorizontalDistance / 159.0;
         }
 
         if (aEg.thePlayer.isCollidedHorizontally) {
-            this.Lx = 0.2873;
+            this.speed = 0.2873;
         }
 
         if (aEg.thePlayer.tR == 1 && aEg.thePlayer.Zl > 2) {
-            this.Lx = 0.3873;
+            this.speed = 0.3873;
         }
 
         if (!aEg.thePlayer.onGround) {
-            this.FX++;
+            this.stage++;
         }
 
-        var1x.setSpeed(this.Lx);
+        var1x.setSpeed(this.speed);
         MoveUtil.preventDiagonalSpeed();
     };
     @EventLink
@@ -80,13 +80,13 @@ public class OldNCPYPortSpeed extends Mode<Speed> {
 
     @Override
     public void onDisable() {
-        this.Lx = 0.0;
+        this.speed = 0.0;
     }
 
     @Override
     public void onEnable() {
-        this.FX = 2;
-        this.Lx = 0.2873;
-        this.QC = 0.0;
+        this.stage = 2;
+        this.speed = 0.2873;
+        this.lastHorizontalDistance = 0.0;
     }
 }

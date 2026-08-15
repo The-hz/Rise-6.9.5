@@ -41,29 +41,29 @@ extends Module {
     private final BooleanValue hostile = new BooleanValue("Hostile", (Module)this, (Boolean)false);
     private final BooleanValue teammates = new BooleanValue("Teammates", (Module)this, (Boolean)false);
     private final BooleanValue invisibles = new BooleanValue("Invisibles", (Module)this, (Boolean)true);
-    private boolean qW = true;
-    private boolean cR = false;
-    private EntityLivingBase jE;
-    private EntityLivingBase qX;
-    private int qY;
-    private final a qZ = new a();
-    private final ConcurrentLinkedQueue<Packet<?>> ra = new ConcurrentLinkedQueue();
+    private boolean skipNextTick = true;
+    private boolean blinking = false;
+    private EntityLivingBase target;
+    private EntityLivingBase pendingAttackTarget;
+    private int blinkTicks;
+    private final a blinkTimer = new a();
+    private final ConcurrentLinkedQueue<Packet<?>> heldPackets = new ConcurrentLinkedQueue();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = preMotionEvent -> {
-        if (this.qW) {
-            this.qW = false;
+        if (this.skipNextTick) {
+            this.skipNextTick = false;
             return;
         }
-        this.gv();
-        if (this.jE == null) {
+        this.updateTarget();
+        if (this.target == null) {
             return;
         }
-        if (this.cR) {
-            preMotionEvent.setPosX(this.jE.posX);
-            preMotionEvent.setPosY(this.jE.posY);
-            preMotionEvent.setPosZ(this.jE.posZ);
-            this.qX = this.jE;
-            Vector2f vector2f = RotationUtil.y((Entity)this.jE);
+        if (this.blinking) {
+            preMotionEvent.setPosX(this.target.posX);
+            preMotionEvent.setPosY(this.target.posY);
+            preMotionEvent.setPosZ(this.target.posZ);
+            this.pendingAttackTarget = this.target;
+            Vector2f vector2f = RotationUtil.y((Entity)this.target);
             preMotionEvent.setYaw(vector2f.x);
             preMotionEvent.setPitch(vector2f.y);
         } else {
@@ -75,49 +75,49 @@ extends Module {
     };
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = packetReceiveEvent -> {
-        if (packetReceiveEvent.getPacket() instanceof S08PacketPlayerPosLook && !this.cR) {
-            this.gw();
+        if (packetReceiveEvent.getPacket() instanceof S08PacketPlayerPosLook && !this.blinking) {
+            this.startBlink();
         }
     };
     @EventLink(value=0)
     public final Listener<PacketSendEvent> onPacketSend = packetSendEvent -> {
-        if (this.cR && !packetSendEvent.isCancelled()) {
+        if (this.blinking && !packetSendEvent.isCancelled()) {
             Packet<?> packet = packetSendEvent.dq();
-            this.ra.add(packet);
+            this.heldPackets.add(packet);
             packetSendEvent.setCancelled();
         }
     };
     @EventLink
     public final Listener<WorldChangeEvent> onWorldChange = worldChangeEvent -> {
-        if (this.cR) {
-            this.gx();
+        if (this.blinking) {
+            this.stopBlink();
         }
-        this.ra.clear();
+        this.heldPackets.clear();
     };
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = preUpdateEvent -> {
-        if (this.qX != null && this.cR) {
+        if (this.pendingAttackTarget != null && this.blinking) {
             WatchdogTPAura.aEg.playerController.syncCurrentPlayItem();
-            AttackEvent attackEvent = new AttackEvent(this.qX);
+            AttackEvent attackEvent = new AttackEvent(this.pendingAttackTarget);
             Client.a.e().d(attackEvent);
             if (!attackEvent.isCancelled()) {
                 PacketUtil.send(new m());
                 afi.c("attacked", new Object[0]);
-                PacketUtil.send(new C02PacketUseEntity((Entity)this.qX, C02PacketUseEntity.Action.ATTACK));
+                PacketUtil.send(new C02PacketUseEntity((Entity)this.pendingAttackTarget, C02PacketUseEntity.Action.ATTACK));
             }
-            this.qX = null;
+            this.pendingAttackTarget = null;
         }
-        if (this.cR && ++this.qY > 1) {
-            this.gx();
+        if (this.blinking && ++this.blinkTicks > 1) {
+            this.stopBlink();
         }
     };
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
-        if (this.jE != null && this.cR) {
+        if (this.target != null && this.blinking) {
             ScaledResolution scaledResolution = new ScaledResolution(aEg);
-            String string = this.jE.getName();
-            float f2 = this.jE.getHealth();
-            float f3 = this.jE.getMaxHealth();
+            String string = this.target.getName();
+            float f2 = this.target.getHealth();
+            float f3 = this.target.getMaxHealth();
             int n2 = (int)(f2 / f3 * 100.0f);
             String string2 = String.format("Target: %s [%d%%]", string, n2);
             int n3 = WatchdogTPAura.aEg.fontRendererObj.getStringWidth(string2);
@@ -125,10 +125,10 @@ extends Module {
         }
     };
 
-    private void gv() {
+    private void updateTarget() {
         List<EntityLivingBase> list = TargetComponent.a(((Number)this.range.wo()).doubleValue(), (boolean)((Boolean)this.players.wo()), (boolean)((Boolean)this.invisibles.wo()), false, (boolean)((Boolean)this.hostile.wo()), (Boolean)this.teammates.wo());
         if (list.isEmpty()) {
-            this.jE = null;
+            this.target = null;
             return;
         }
         list.sort(Comparator.comparingDouble(entityLivingBase -> {
@@ -137,27 +137,27 @@ extends Module {
             float f3 = Math.abs(MathHelper.wrapAngleTo180_float((float)(vector2f.y - WatchdogTPAura.aEg.thePlayer.rotationPitch)));
             return Math.sqrt(f2 * f2 + f3 * f3);
         }));
-        this.jE = list.get(0);
+        this.target = list.get(0);
     }
 
-    private void gw() {
-        if (!this.cR) {
-            this.cR = true;
-            this.qY = 0;
-            this.ra.clear();
-            this.qZ.aX();
+    private void startBlink() {
+        if (!this.blinking) {
+            this.blinking = true;
+            this.blinkTicks = 0;
+            this.heldPackets.clear();
+            this.blinkTimer.aX();
             afi.c("Started blinking", new Object[0]);
         }
     }
 
-    private void gx() {
-        if (this.cR) {
-            this.cR = false;
-            afi.c("Dispatching " + this.ra.size() + " packets", new Object[0]);
-            while (!this.ra.isEmpty()) {
-                PacketUtil.sendNoEvent(this.ra.poll());
+    private void stopBlink() {
+        if (this.blinking) {
+            this.blinking = false;
+            afi.c("Dispatching " + this.heldPackets.size() + " packets", new Object[0]);
+            while (!this.heldPackets.isEmpty()) {
+                PacketUtil.sendNoEvent(this.heldPackets.poll());
             }
-            this.qW = false;
+            this.skipNextTick = false;
             afi.c("Stopped blinking", new Object[0]);
         }
     }
@@ -165,23 +165,23 @@ extends Module {
     @Override
     public void onEnable() {
         afi.b("CREDIT TO https://youtube.com/@authh FOR THIS GOD BYPASS", new Object[0]);
-        this.qW = true;
-        this.cR = false;
-        this.jE = null;
-        this.qX = null;
-        this.qY = 0;
-        this.ra.clear();
+        this.skipNextTick = true;
+        this.blinking = false;
+        this.target = null;
+        this.pendingAttackTarget = null;
+        this.blinkTicks = 0;
+        this.heldPackets.clear();
     }
 
     @Override
     public void onDisable() {
-        if (this.cR) {
-            this.gx();
+        if (this.blinking) {
+            this.stopBlink();
         }
-        this.ra.clear();
-        this.jE = null;
-        this.qX = null;
-        this.qY = 0;
-        this.qW = true;
+        this.heldPackets.clear();
+        this.target = null;
+        this.pendingAttackTarget = null;
+        this.blinkTicks = 0;
+        this.skipNextTick = true;
     }
 }

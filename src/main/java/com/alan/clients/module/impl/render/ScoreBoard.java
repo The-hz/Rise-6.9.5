@@ -40,7 +40,7 @@ extends Module {
     private Collection<Score> collection;
     private ScoreObjective scoreObjective;
     private int maxWidth;
-    private Interface amf;
+    private Interface interfaceModule;
     private final int padding = 3;
     private final int fontHeight = 9;
     @EventLink
@@ -48,12 +48,12 @@ extends Module {
         if (this.scoreObjective == null) {
             return;
         }
-        if (this.amf == null) {
-            this.amf = this.e(Interface.class);
+        if (this.interfaceModule == null) {
+            this.interfaceModule = this.e(Interface.class);
         }
         Vector2i ajz2 = new Vector2i((int)this.position.apP.x, (int)this.position.apP.y);
-        boolean bl = ((Mode)this.amf.getInformationType().wo()).getName().equals("Rise");
-        int n2 = this.amf != null ? (int)this.amf.getRoundingRadius() : (bl ? 5 : 1);
+        boolean bl = ((Mode)this.interfaceModule.getInformationType().wo()).getName().equals("Rise");
+        int n2 = this.interfaceModule != null ? (int)this.interfaceModule.getRoundingRadius() : (bl ? 5 : 1);
         this.b(ShaderQueueType.REGULAR).c(() -> {
             int n3 = this.collection.size();
             int n4 = this.fontHeight * n3 + 3;
@@ -87,7 +87,7 @@ extends Module {
             }
             Score score2 = iterator.next();
             String string = ScorePlayerTeam.formatPlayerName(this.scoreObjective.getScoreboard().getPlayersTeam(score2.getPlayerName()), score2.getPlayerName());
-            String string2 = this.X(string);
+            String string2 = this.replaceIP(string);
             this.maxWidth = Math.max(this.maxWidth, ScoreBoard.aEg.fontRendererObj.getStringWidth(string2));
         }
     };
@@ -95,7 +95,7 @@ extends Module {
     public ScoreBoard() {
     }
 
-    private boolean W(String string) {
+    private boolean shouldReplace(String string) {
         if (!((Boolean)this.replaceIPWithRiseWebsite.wo()).booleanValue()) {
             return false;
         }
@@ -106,9 +106,9 @@ extends Module {
         return string2.toLowerCase().contains("www.hypixel");
     }
 
-    private String X(String string) {
-        if (this.W(string)) {
-            return this.mf();
+    private String replaceIP(String string) {
+        if (this.shouldReplace(string)) {
+            return this.getWebsite();
         }
         return string;
     }
@@ -140,20 +140,20 @@ extends Module {
             Score score = iterator.next();
             n8 += this.fontHeight;
             String string2 = ScorePlayerTeam.formatPlayerName(this.scoreObjective.getScoreboard().getPlayersTeam(score.getPlayerName()), score.getPlayerName());
-            String string3 = this.X(string2);
-            if (((Boolean)this.replaceIPWithRiseWebsite.wo()).booleanValue() && string3.equals(this.mf())) {
-                this.a(fontRendererObj, string3, n2, n8);
+            String string3 = this.replaceIP(string2);
+            if (((Boolean)this.replaceIPWithRiseWebsite.wo()).booleanValue() && string3.equals(this.getWebsite())) {
+                this.drawGradientString(fontRendererObj, string3, n2, n8);
                 continue;
             }
             fontRendererObj.b(string3, n2, n8, n7);
         }
     }
 
-    private String mf() {
+    private String getWebsite() {
         return String.valueOf((Object)this.rz().getChatAccentColor()) + "riseclient.com";
     }
 
-    private void a(agd agd2, String string, int n2, int n3) {
+    private void drawGradientString(agd agd2, String string, int n2, int n3) {
         String string2 = EnumChatFormatting.getTextWithoutFormattingCodes(string);
         Color color = this.rz().rA();
         Color color2 = this.rz().rB();

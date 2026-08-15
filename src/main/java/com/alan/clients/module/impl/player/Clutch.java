@@ -35,13 +35,13 @@ import net.minecraft.util.Vec3i;
 public class Clutch extends Module {
     private final BoundsNumberValue rotationSpeed = new BoundsNumberValue("Rotation Speed", this, 5, 10, 0, 10, 1);
     private final BoundsNumberValue placeDelay = new BoundsNumberValue("Place Delay", this, 0, 0, 0, 1, 1);
-    private Vec3 Yw;
-    private EnumFacingOffset acr;
-    private BlockPos Yx;
-    private float acs;
-    private float act;
-    private int acu;
-    private int acv;
+    private Vec3 placePosition;
+    private EnumFacingOffset facing;
+    private BlockPos placeBlock;
+    private float yaw;
+    private float pitch;
+    private int placeTicks;
+    private int activeTicks;
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         if (aEg.thePlayer.Zl > 15
@@ -50,49 +50,49 @@ public class Clutch extends Module {
             && !this.e(Scaffold.class).isEnabled()
             && aEg.gameSettings.keyBindSneak.isKeyDown()) {
             if (aEg.thePlayer.tR > 3 && !PlayerUtil.ad(10.0)) {
-                this.acv = 10;
+                this.activeTicks = 10;
             }
 
-            if (this.acv-- >= 0) {
+            if (this.activeTicks-- >= 0) {
                 SlotComponent slotcomponent = this.d(SlotComponent.class);
                 SlotComponent.setSlot(SlotUtil.vx());
                 Vec3i vec3i = new Vec3i(0, 0, 0);
                 if (PlayerUtil.p(vec3i.getX(), -1 + vec3i.getY(), vec3i.getZ()).isReplaceable(aEg.theWorld, new BlockPos(aEg.thePlayer).down())) {
-                    this.acu++;
+                    this.placeTicks++;
                 } else {
-                    this.acu = 0;
+                    this.placeTicks = 0;
                 }
 
-                this.Yw = PlayerUtil.getPlacePossibility(vec3i.getX(), vec3i.getY(), vec3i.getZ());
-                if (this.Yw != null) {
-                    this.acr = PlayerUtil.getEnumFacing(this.Yw);
-                    if (this.acr != null) {
-                        BlockPos blockpos = new BlockPos(this.Yw.xCoord, this.Yw.yCoord, this.Yw.zCoord);
-                        this.Yx = blockpos.add(this.acr.getOffset().xCoord, this.acr.getOffset().yCoord, this.acr.getOffset().zCoord);
-                        if (this.Yx != null && this.acr != null) {
-                            this.jF();
-                            if (this.Yw != null && this.acr != null && this.Yx != null) {
+                this.placePosition = PlayerUtil.getPlacePossibility(vec3i.getX(), vec3i.getY(), vec3i.getZ());
+                if (this.placePosition != null) {
+                    this.facing = PlayerUtil.getEnumFacing(this.placePosition);
+                    if (this.facing != null) {
+                        BlockPos blockpos = new BlockPos(this.placePosition.xCoord, this.placePosition.yCoord, this.placePosition.zCoord);
+                        this.placeBlock = blockpos.add(this.facing.getOffset().xCoord, this.facing.getOffset().yCoord, this.facing.getOffset().zCoord);
+                        if (this.placeBlock != null && this.facing != null) {
+                            this.updateRotations();
+                            if (this.placePosition != null && this.facing != null && this.placeBlock != null) {
                                 int i = aEg.thePlayer.inventory.cIT;
                                 SlotComponent slotcomponent1 = this.d(SlotComponent.class);
                                 if (i == SlotComponent.bQ()) {
                                     if (!BadPacketsComponent.bad(false, true, false, false, true)
-                                        && this.acu > MathUtil.l(this.placeDelay.wo().intValue(), this.placeDelay.wA().intValue())
-                                        && aef.overBlock(this.acr.getEnumFacing(), this.Yx, true)) {
+                                        && this.placeTicks > MathUtil.l(this.placeDelay.wo().intValue(), this.placeDelay.wA().intValue())
+                                        && aef.overBlock(this.facing.getEnumFacing(), this.placeBlock, true)) {
                                         Vec3 vec3 = aef.c(RotationComponent.fk, aEg.playerController.getBlockReachDistance()).hitVec;
                                         PlayerControllerMP playercontrollermp = aEg.playerController;
                                         EntityPlayerSP entityplayersp = aEg.thePlayer;
                                         WorldClient worldclient = aEg.theWorld;
                                         SlotComponent slotcomponent3 = this.d(SlotComponent.class);
                                         if (playercontrollermp.onPlayerRightClick(
-                                            entityplayersp, worldclient, SlotComponent.getItemStack(), this.Yx, this.acr.getEnumFacing(), vec3
+                                            entityplayersp, worldclient, SlotComponent.getItemStack(), this.placeBlock, this.facing.getEnumFacing(), vec3
                                         )) {
                                             PacketUtil.send(new m());
                                         }
 
                                         aEg.rightClickDelayTimer = 0;
-                                        this.acu = 0;
+                                        this.placeTicks = 0;
                                         slotcomponent = this.d(SlotComponent.class);
-                                        if (!acx && SlotComponent.getItemStack() == null) {
+                                        if (!assertionsDisabled && SlotComponent.getItemStack() == null) {
                                             throw new AssertionError();
                                         }
 
@@ -118,51 +118,51 @@ public class Clutch extends Module {
             }
         }
     };
-    static final boolean acx = !Clutch.class.desiredAssertionStatus();
+    static final boolean assertionsDisabled = !Clutch.class.desiredAssertionStatus();
 
     public Clutch() {
     }
 
     @Override
     public void onEnable() {
-        this.acs = aEg.thePlayer.pl - 180.0F;
-        this.act = 90.0F;
-        this.Yw = null;
+        this.yaw = aEg.thePlayer.pl - 180.0F;
+        this.pitch = 90.0F;
+        this.placePosition = null;
     }
 
-    public void jF() {
-        if (this.acu > 0 && !aef.a(RotationComponent.fk, this.acr.getEnumFacing(), this.Yx, true)) {
-            this.D(0);
+    public void updateRotations() {
+        if (this.placeTicks > 0 && !aef.a(RotationComponent.fk, this.facing.getEnumFacing(), this.placeBlock, true)) {
+            this.findRotations(0);
         }
 
         double rotationSpeed = this.rotationSpeed.wo().doubleValue();
         double d1 = this.rotationSpeed.wA().doubleValue();
         float f = (float)MathUtil.l(rotationSpeed, d1);
         if (f != 0.0F) {
-            RotationComponent.setRotations(new Vector2f(this.acs, this.act), f, MovementFix.NORMAL);
+            RotationComponent.setRotations(new Vector2f(this.yaw, this.pitch), f, MovementFix.NORMAL);
         }
     }
 
-    public void D(int var1) {
+    public void findRotations(int var1) {
         EntityPlayerSP entityplayersp = aEg.thePlayer;
-        double d0 = entityplayersp.posY + entityplayersp.getEyeHeight() - this.Yw.yCoord - 0.1 - Math.random() * 0.8;
+        double d0 = entityplayersp.posY + entityplayersp.getEyeHeight() - this.placePosition.yCoord - 0.1 - Math.random() * 0.8;
 
         for (int i = -180 + var1; i <= 180; i += 45) {
             entityplayersp.setPosition(entityplayersp.posX, entityplayersp.posY - d0, entityplayersp.posZ);
             MovingObjectPosition movingobjectposition = aef.c(new Vector2f(entityplayersp.pl + i, 0.0F), 4.5);
             entityplayersp.setPosition(entityplayersp.posX, entityplayersp.posY + d0, entityplayersp.posZ);
             if (movingobjectposition != null
-                && new BlockPos(this.Yx).equals(movingobjectposition.getBlockPos())
-                && this.acr.getEnumFacing() == movingobjectposition.sideHit) {
+                && new BlockPos(this.placeBlock).equals(movingobjectposition.getBlockPos())
+                && this.facing.getEnumFacing() == movingobjectposition.sideHit) {
                 Vector2f vector2f = RotationUtil.h(movingobjectposition.hitVec);
-                this.acs = vector2f.x;
-                this.act = vector2f.y;
+                this.yaw = vector2f.x;
+                this.pitch = vector2f.y;
                 return;
             }
         }
 
-        Vector2f vector2f1 = RotationUtil.a(new aka(this.Yx.getX(), this.Yx.getY(), this.Yx.getZ()), this.acr.getEnumFacing());
-        this.acs = vector2f1.x;
-        this.act = vector2f1.y;
+        Vector2f vector2f1 = RotationUtil.a(new aka(this.placeBlock.getX(), this.placeBlock.getY(), this.placeBlock.getZ()), this.facing.getEnumFacing());
+        this.yaw = vector2f1.x;
+        this.pitch = vector2f1.y;
     }
 }

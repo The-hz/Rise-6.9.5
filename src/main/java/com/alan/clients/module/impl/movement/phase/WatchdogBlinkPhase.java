@@ -18,22 +18,22 @@ import net.minecraft.network.play.server.c;
 import rip.vantage.commons.util.time.a;
 
 public class WatchdogBlinkPhase extends Mode<Phase> {
-    private boolean Op;
-    private final a Oq = new a();
-    private final WatchdogBlinkNoFall Or = null;
+    private boolean gameStarting;
+    private final a blinkStopWatch = new a();
+    private final WatchdogBlinkNoFall blinkNoFall = null;
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        if (this.Op && !this.Oq.T(4000L)) {
+        if (this.gameStarting && !this.blinkStopWatch.T(4000L)) {
             BlinkComponent.blink();
         }
     };
     @EventLink
     public final Listener<BlockAABBEvent> onBlockAABB = var1x -> {
-        if (this.Op && BlinkComponent.enabled && var1x.getBlock() instanceof BlockGlass) {
+        if (this.gameStarting && BlinkComponent.enabled && var1x.getBlock() instanceof BlockGlass) {
             var1x.setCancelled();
         }
 
-        if (this.Op && BlinkComponent.enabled && var1x.getBlock() instanceof BlockBarrier) {
+        if (this.gameStarting && BlinkComponent.enabled && var1x.getBlock() instanceof BlockBarrier) {
             var1x.setCancelled();
         }
     };
@@ -61,17 +61,17 @@ public class WatchdogBlinkPhase extends Mode<Phase> {
                         }
                     }
 
-                    this.Op = true;
-                    this.Oq.aX();
+                    this.gameStarting = true;
+                    this.blinkStopWatch.aX();
                     return;
                 }
 
-                this.Op = true;
-                this.Oq.aX();
+                this.gameStarting = true;
+                this.blinkStopWatch.aX();
                 return;
             }
 
-            this.Op = false;
+            this.gameStarting = false;
         }
     };
     @EventLink

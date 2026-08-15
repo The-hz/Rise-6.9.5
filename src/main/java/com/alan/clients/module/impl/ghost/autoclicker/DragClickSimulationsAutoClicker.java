@@ -11,19 +11,19 @@ import com.alan.clients.util.player.PlayerUtil;
 public class DragClickSimulationsAutoClicker extends Mode<AutoClicker> {
     private final BoundsNumberValue length = new BoundsNumberValue("Drag Click Length", this, 17, 18, 1, 50, 1);
     private final BoundsNumberValue delay = new BoundsNumberValue("Delay Between Dragging", this, 6, 6, 1, 20, 1);
-    private int Ch;
-    private int Ci;
+    private int lengthTicks;
+    private int delayTicks;
     @EventLink
     public final Listener<TickEvent> onTick = var1x -> {
         if (aEg.gameSettings.cgK.isKeyDown()) {
-            if (this.Ch < 0) {
-                this.Ci--;
-                if (this.Ci < 0) {
-                    this.Ci = this.delay.wv().intValue();
-                    this.Ch = this.length.wv().intValue();
+            if (this.lengthTicks < 0) {
+                this.delayTicks--;
+                if (this.delayTicks < 0) {
+                    this.delayTicks = this.delay.wv().intValue();
+                    this.lengthTicks = this.length.wv().intValue();
                 }
             } else if (Math.random() < 0.95) {
-                this.Ch--;
+                this.lengthTicks--;
                 PlayerUtil.sendClick(0, true);
             }
         }

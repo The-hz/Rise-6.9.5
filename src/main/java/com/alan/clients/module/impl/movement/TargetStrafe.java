@@ -41,25 +41,25 @@ public class TargetStrafe extends Module {
     private float yaw;
     private EntityLivingBase target;
     private boolean left;
-    private boolean EV;
+    private boolean colliding;
     private boolean active;
-    private boolean EW = false;
+    private boolean forcedThirdPerson = false;
     @EventLink(value = 1)
     public final Listener<WorldChangeEvent> onWorldChange = var1 -> {
-        this.EW = false;
+        this.forcedThirdPerson = false;
         aEg.gameSettings.thirdPersonView = 0;
     };
     @EventLink(value = 1)
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (this.target == null) {
-            if (aEg.gameSettings.thirdPersonView == 1 && this.EW) {
-                this.EW = false;
+            if (aEg.gameSettings.thirdPersonView == 1 && this.forcedThirdPerson) {
+                this.forcedThirdPerson = false;
                 aEg.gameSettings.thirdPersonView = 0;
             }
         } else {
             if (this.autoThirdPersonCamera.wo()) {
                 aEg.gameSettings.thirdPersonView = 1;
-                this.EW = true;
+                this.forcedThirdPerson = true;
             }
         }
     };
@@ -92,7 +92,7 @@ public class TargetStrafe extends Module {
                     } else {
                         if (this.autoThirdPersonCamera.wo()) {
                             aEg.gameSettings.thirdPersonView = 1;
-                            this.EW = true;
+                            this.forcedThirdPerson = true;
                         }
 
                         this.target = (EntityLivingBase)list.get(0);
@@ -132,7 +132,7 @@ public class TargetStrafe extends Module {
     @EventLink(value = 1)
     public final Listener<Render3DEvent> onRender3D = var1 -> {
         if (this.circle.wo() && this.target != null && this.active) {
-            this.j(var1.getPartialTicks());
+            this.drawCircle(var1.getPartialTicks());
         }
     };
 
@@ -141,10 +141,10 @@ public class TargetStrafe extends Module {
 
     @Override
     public void onEnable() {
-        this.EW = false;
+        this.forcedThirdPerson = false;
     }
 
-    private void j(float var1) {
+    private void drawCircle(float var1) {
         double d0 = MathInterpolation.interpolate(this.target.posX, this.target.lastTickPosX, var1) - aEg.getRenderManager().viewerPosX;
         double d1 = MathInterpolation.interpolate(this.target.posY, this.target.lastTickPosY, var1) - aEg.getRenderManager().viewerPosY;
         double d2 = MathInterpolation.interpolate(this.target.posZ, this.target.lastTickPosZ, var1) - aEg.getRenderManager().viewerPosZ;

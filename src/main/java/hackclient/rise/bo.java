@@ -89,22 +89,22 @@ import rip.vantage.network.core.a;
 
 public class bo extends Component {
     public int eX;
-    public Method ez;
+    public Method spawnPacketMethod;
     public boolean eM;
-    public long fa;
-    public DataOutputStream ff;
-    public int eE;
+    public long startTime;
+    public DataOutputStream output;
+    public int pendingSize;
     public boolean eH;
-    public volatile boolean eF;
+    public volatile boolean recording;
     public Object ex = new Object();
-    public int eN;
-    public byte eT;
-    public boolean eY;
+    public int lastX;
+    public byte lastFlags;
+    public boolean selfSpawned;
     public boolean eW;
-    public ByteArrayOutputStream fe;
+    public ByteArrayOutputStream buffer;
     public boolean eG;
     public static int ew;
-    public String fc;
+    public String serverIp;
     public boolean eK;
     public static UUID ev;
     @EventLink
@@ -112,27 +112,27 @@ public class bo extends Component {
     public boolean eJ;
     @EventLink
     public Listener<WorldChangeEvent> onWorldChange;
-    public byte eS;
+    public byte lastHeadYaw;
     public long eI;
-    public List<byte[]> eB;
-    public ItemStack[] eU;
+    public List<byte[]> pending;
+    public ItemStack[] lastEquipment;
     @EventLink
     public Listener<er> fg;
-    public byte eR;
+    public byte lastPitch;
     public int fd;
     public Field eA;
-    public int eP;
-    public byte eQ;
+    public int lastZ;
+    public byte lastYaw;
     public Object ey = new Object();
-    public String eZ;
-    public Set<UUID> eC;
-    public int eO;
-    public Map<UUID, GameProfile> eD;
+    public String name;
+    public Set<UUID> seenPlayers;
+    public int lastY;
+    public Map<UUID, GameProfile> profiles;
     public boolean eL;
-    public int fb;
+    public int duration;
     public ItemStack eV;
 
-    public void a(String var1, byte[] var2, String var3) {
+    public void uploadRecording(String var1, byte[] var2, String var3) {
 
         try {
             if (var1 == null || a.aKB().aKK() == null) {
@@ -151,7 +151,7 @@ public class bo extends Component {
         }
     }
 
-    public byte[] a(byte[] var1, String var2, long var3, long var5) throws java.io.IOException {
+    public byte[] buildReplayFile(byte[] var1, String var2, long var3, long var5) throws java.io.IOException {
         ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
         ZipOutputStream zipoutputstream = new ZipOutputStream(bytearrayoutputstream);
         CRC32 crc32 = new CRC32();
@@ -160,7 +160,7 @@ public class bo extends Component {
         zipoutputstream.write(var1);
         zipoutputstream.closeEntry();
         zipoutputstream.putNextEntry(new ZipEntry("metaData.json"));
-        String s = this.bE();
+        String s = this.buildPlayerUuidJson();
         String s4 = escapeJson(var2);
         String s1 = s;
         long k = var5;
@@ -210,7 +210,7 @@ public class bo extends Component {
             this.a(new ag(player.experience, player.experienceTotal, player.experienceLevel), EnumConnectionState.PLAY);
             this.b(player);
             if (!this.a(world.getScoreboard())) {
-                this.bz();
+                this.flushPending();
             }
 
             this.a(world, player);
@@ -223,7 +223,7 @@ public class bo extends Component {
         }
     }
 
-    public String bE() {
+    public String buildPlayerUuidJson() {
         if (aEg.getNetHandler() == null && aEg.theWorld == null) {
             return "[]";
         }
@@ -296,7 +296,7 @@ public class bo extends Component {
                     this.a(new e(aEg.thePlayer.getEntityId(), i, itemstack), EnumConnectionState.PLAY);
                 }
 
-                this.eU[i] = ItemStack.copyItemStack(itemstack);
+                this.lastEquipment[i] = ItemStack.copyItemStack(itemstack);
             }
 
             Iterator iterator = aEg.thePlayer.getActivePotionEffects().iterator();
@@ -306,17 +306,17 @@ public class bo extends Component {
                 this.a(new net.minecraft.network.play.server.ae(aEg.thePlayer.getEntityId(), potioneffect), EnumConnectionState.PLAY);
             }
 
-            this.eN = (int)Math.floor(aEg.thePlayer.posX * 32.0);
-            this.eO = (int)Math.floor(aEg.thePlayer.posY * 32.0);
-            this.eP = (int)Math.floor(aEg.thePlayer.posZ * 32.0);
-            this.eQ = (byte)(aEg.thePlayer.renderYawOffset * 256.0F / 360.0F);
-            this.eR = (byte)(aEg.thePlayer.rotationPitch * 256.0F / 360.0F);
-            this.eS = (byte)(aEg.thePlayer.getRotationYawHead() * 256.0F / 360.0F);
-            this.eT = aEg.thePlayer.getDataWatcher().getWatchableObjectByte(0);
+            this.lastX = (int)Math.floor(aEg.thePlayer.posX * 32.0);
+            this.lastY = (int)Math.floor(aEg.thePlayer.posY * 32.0);
+            this.lastZ = (int)Math.floor(aEg.thePlayer.posZ * 32.0);
+            this.lastYaw = (byte)(aEg.thePlayer.renderYawOffset * 256.0F / 360.0F);
+            this.lastPitch = (byte)(aEg.thePlayer.rotationPitch * 256.0F / 360.0F);
+            this.lastHeadYaw = (byte)(aEg.thePlayer.getRotationYawHead() * 256.0F / 360.0F);
+            this.lastFlags = aEg.thePlayer.getDataWatcher().getWatchableObjectByte(0);
             this.eV = ItemStack.copyItemStack(aEg.thePlayer.inventory.getCurrentItem());
             this.eW = aEg.thePlayer.isSwingInProgress;
             this.eX = aEg.thePlayer.swingProgressInt;
-            this.eY = true;
+            this.selfSpawned = true;
         }
     }
 
@@ -326,30 +326,30 @@ public class bo extends Component {
                 return new net.minecraft.network.play.server.n((EntityPlayer)entity);
             }
 
-            if (this.ez == null) {
-                this.ez = EntityTrackerEntry.class.getDeclaredMethod("Wd");
-                this.ez.setAccessible(true);
+            if (this.spawnPacketMethod == null) {
+                this.spawnPacketMethod = EntityTrackerEntry.class.getDeclaredMethod("Wd");
+                this.spawnPacketMethod.setAccessible(true);
             }
 
-            return (Packet<?>)this.ez.invoke(new EntityTrackerEntry(entity, 0, 0, true));
+            return (Packet<?>)this.spawnPacketMethod.invoke(new EntityTrackerEntry(entity, 0, 0, true));
         } catch (Exception exception) {
             return null;
         }
     }
 
     public void bw() {
-        if (this.bu()) {
+        if (this.canRecord()) {
             WorldClient worldclient = aEg.theWorld;
             NetHandlerPlayClient nethandlerplayclient = aEg.getNetHandler();
             HashSet hashset = new HashSet();
-            this.fd = Math.max(0, (int)(System.currentTimeMillis() - this.fa));
+            this.fd = Math.max(0, (int)(System.currentTimeMillis() - this.startTime));
 
             try {
                 this.a(new S02PacketLoginSuccess(new GameProfile(ev, "Player")), EnumConnectionState.LOGIN);
                 this.a(worldclient, nethandlerplayclient, hashset);
                 this.a(this.bG(), EnumConnectionState.PLAY);
-                this.a(this.bx(), EnumConnectionState.PLAY);
-                this.a(this.by(), EnumConnectionState.PLAY);
+                this.a(this.buildJoinGamePacket(), EnumConnectionState.PLAY);
+                this.a(this.buildRespawnPacket(), EnumConnectionState.PLAY);
                 this.a(worldclient, aEg.thePlayer, hashset);
             } catch (Throwable throwable) {
                 this.fd = -1;
@@ -361,9 +361,9 @@ public class bo extends Component {
     }
 
     public void a(GameProfile profile, int var2, GameType gameType, IChatComponent chat) {
-        if (this.a(profile)) {
+        if (this.isValidProfile(profile)) {
             this.b(profile);
-            this.eC.add(profile.getId());
+            this.seenPlayers.add(profile.getId());
             S38PacketPlayerListItem s38packetplayerlistitem = new S38PacketPlayerListItem(
                 net.minecraft.network.play.server.S38PacketPlayerListItem.Action.ADD_PLAYER, Collections.emptyList()
             );
@@ -426,7 +426,7 @@ public class bo extends Component {
     public void b(Packet<?> packet, EnumConnectionState enumConnectionState, byte[] var3) {
         if (enumConnectionState == EnumConnectionState.PLAY && packet != null) {
             if (packet instanceof S01PacketJoinGame) {
-                this.bA();
+                this.clearPending();
             } else if (packet instanceof S3BPacketScoreboardObjective
                 || packet instanceof S3CPacketUpdateScore
                 || packet instanceof net.minecraft.network.play.server.bq
@@ -434,12 +434,12 @@ public class bo extends Component {
                 byte[] abyte = var3 != null && var3.length > 0 ? var3 : this.b(packet, enumConnectionState);
                 if (abyte != null && abyte.length != 0) {
                     synchronized (this.ey) {
-                        this.eB.add(abyte);
-                        this.eE += abyte.length;
+                        this.pending.add(abyte);
+                        this.pendingSize += abyte.length;
 
-                        while (this.eE > 262144 && !this.eB.isEmpty()) {
-                            byte[] abyte1 = this.eB.remove(0);
-                            this.eE -= abyte1.length;
+                        while (this.pendingSize > 262144 && !this.pending.isEmpty()) {
+                            byte[] abyte1 = this.pending.remove(0);
+                            this.pendingSize -= abyte1.length;
                         }
                     }
                 }
@@ -447,10 +447,10 @@ public class bo extends Component {
         }
     }
 
-    public S07PacketRespawn by() {
+    public S07PacketRespawn buildRespawnPacket() {
         WorldClient worldclient = aEg.theWorld;
         EntityPlayerSP entityplayersp = aEg.thePlayer;
-        return new S07PacketRespawn(entityplayersp.dimension, worldclient.getDifficulty(), worldclient.getWorldType(), this.a(worldclient));
+        return new S07PacketRespawn(entityplayersp.dimension, worldclient.getDifficulty(), worldclient.getWorldType(), this.getGameType(worldclient));
     }
 
     public void d(Packet<?> packet, EnumConnectionState enumConnectionState) {
@@ -462,20 +462,20 @@ public class bo extends Component {
                 AddPlayerData addplayerdata = (AddPlayerData)iterator.next();
                 if (addplayerdata != null && addplayerdata.getProfile() != null && addplayerdata.getProfile().getId() != null) {
                     if (action == net.minecraft.network.play.server.S38PacketPlayerListItem.Action.REMOVE_PLAYER) {
-                        this.eC.remove(addplayerdata.getProfile().getId());
+                        this.seenPlayers.remove(addplayerdata.getProfile().getId());
                     } else {
-                        if (action == net.minecraft.network.play.server.S38PacketPlayerListItem.Action.ADD_PLAYER && this.a(addplayerdata.getProfile())) {
+                        if (action == net.minecraft.network.play.server.S38PacketPlayerListItem.Action.ADD_PLAYER && this.isValidProfile(addplayerdata.getProfile())) {
                             this.b(addplayerdata.getProfile());
                         }
 
-                        this.eC.add(addplayerdata.getProfile().getId());
+                        this.seenPlayers.add(addplayerdata.getProfile().getId());
                     }
                 }
             }
         }
     }
 
-    public GameType a(World world) {
+    public GameType getGameType(World world) {
         if (aEg.playerController != null && aEg.playerController.getCurrentGameType() != null) {
             return aEg.playerController.getCurrentGameType();
         }
@@ -491,8 +491,8 @@ public class bo extends Component {
 
             while (iterator.hasNext()) {
                 GameProfile gameprofile = (GameProfile)iterator.next();
-                if (this.a(gameprofile) && hashset.add(gameprofile.getId())) {
-                    this.eC.remove(gameprofile.getId());
+                if (this.isValidProfile(gameprofile) && hashset.add(gameprofile.getId())) {
+                    this.seenPlayers.remove(gameprofile.getId());
                     S38PacketPlayerListItem s38packetplayerlistitem = new S38PacketPlayerListItem(
                         net.minecraft.network.play.server.S38PacketPlayerListItem.Action.REMOVE_PLAYER, Collections.emptyList()
                     );
@@ -506,9 +506,9 @@ public class bo extends Component {
         }
     }
 
-    public void bF() {
-        this.eC.clear();
-        this.eD.clear();
+    public void clearProfileCache() {
+        this.seenPlayers.clear();
+        this.profiles.clear();
     }
 
     public void b(EntityPlayer player) {
@@ -527,14 +527,14 @@ public class bo extends Component {
                 if (addplayerdata != null && addplayerdata.getProfile() != null && addplayerdata.getProfile().getId() != null) {
                     if (action == net.minecraft.network.play.server.S38PacketPlayerListItem.Action.ADD_PLAYER) {
                         this.b(addplayerdata.getProfile());
-                        this.eC.add(addplayerdata.getProfile().getId());
-                    } else if (!this.eC.contains(addplayerdata.getProfile().getId())) {
+                        this.seenPlayers.add(addplayerdata.getProfile().getId());
+                    } else if (!this.seenPlayers.contains(addplayerdata.getProfile().getId())) {
                         GameProfile gameprofile = this.a(addplayerdata.getProfile().getId(), addplayerdata.getProfile().getName());
                         if (gameprofile != null) {
                             this.a(
                                 gameprofile,
                                 0,
-                                this.a(aEg.theWorld),
+                                this.getGameType(aEg.theWorld),
                                 action
                                         == net.minecraft.network.play.server.S38PacketPlayerListItem.Action.UPDATE_DISPLAY_NAME
                                     ? addplayerdata.getDisplayName()
@@ -547,56 +547,56 @@ public class bo extends Component {
         }
     }
 
-    public void bz() {
+    public void flushPending() {
         ArrayList arraylist;
         synchronized (this.ey) {
-            if (this.eB.isEmpty()) {
+            if (this.pending.isEmpty()) {
                 return;
             }
 
-            arraylist = new ArrayList<>(this.eB);
+            arraylist = new ArrayList<>(this.pending);
         }
 
         for (byte[] abyte : (Iterable<byte[]>)arraylist) {
-            this.a(abyte);
+            this.writeEntry(abyte);
         }
     }
 
-    public void bv() {
+    public void stopRecording() {
         long k;
         byte[] abyte;
         String s;
         String s1;
         long l;
         synchronized (this.ex) {
-            if (!this.eF || this.fe == null) {
+            if (!this.recording || this.buffer == null) {
                 return;
             }
 
-            this.eF = false;
-            k = System.currentTimeMillis() - this.fa;
-            abyte = this.fe.toByteArray();
-            s = this.eZ;
-            s1 = this.fc;
-            l = this.fa;
+            this.recording = false;
+            k = System.currentTimeMillis() - this.startTime;
+            abyte = this.buffer.toByteArray();
+            s = this.name;
+            s1 = this.serverIp;
+            l = this.startTime;
 
             try {
-                this.ff.close();
+                this.output.close();
             } catch (IOException ioexception) {
             }
 
-            this.ff = null;
-            this.fe = null;
-            this.eZ = null;
+            this.output = null;
+            this.buffer = null;
+            this.name = null;
             this.eG = false;
             this.eH = false;
             this.eI = 0L;
             this.eK = false;
             this.eL = false;
-            this.bF();
+            this.clearProfileCache();
             this.eM = false;
-            this.eY = false;
-            Arrays.fill(this.eU, null);
+            this.selfSpawned = false;
+            Arrays.fill(this.lastEquipment, null);
             this.eV = null;
             this.eW = false;
             this.eX = 0;
@@ -608,8 +608,8 @@ public class bo extends Component {
             Thread thread = new Thread(() -> {
 
                 try {
-                    byte[] abytex = this.a(abyte, s, k, l);
-                    this.a(s1, abytex, s);
+                    byte[] abytex = this.buildReplayFile(abyte, s, k, l);
+                    this.uploadRecording(s1, abytex, s);
                 } catch (IOException ioexceptionx) {
                 }
             }, "ReplayUpload");
@@ -659,7 +659,7 @@ public class bo extends Component {
     public void a(Packet<?> packet, EnumConnectionState enumConnectionState) {
         byte[] abyte = this.b(packet, enumConnectionState);
         if (abyte != null && abyte.length != 0) {
-            this.a(abyte);
+            this.writeEntry(abyte);
         }
     }
 
@@ -669,14 +669,14 @@ public class bo extends Component {
     }
 
     public void b(GameProfile profile) {
-        if (this.a(profile)) {
-            this.eD.put(profile.getId(), profile);
+        if (this.isValidProfile(profile)) {
+            this.profiles.put(profile.getId(), profile);
         }
     }
 
     public void bD() {
         if (aEg.thePlayer != null) {
-            if (!this.eY) {
+            if (!this.selfSpawned) {
                 this.a(new z(aEg.thePlayer), EnumConnectionState.PLAY);
             } else {
                 int floor2 = (int)Math.floor(aEg.thePlayer.posX * 32.0);
@@ -685,11 +685,11 @@ public class bo extends Component {
                 int renderYawOffset2 = (byte)(aEg.thePlayer.renderYawOffset * 256.0F / 360.0F);
                 int rotationPitch2 = (byte)(aEg.thePlayer.rotationPitch * 256.0F / 360.0F);
                 int rotationYawHead = (byte)(aEg.thePlayer.getRotationYawHead() * 256.0F / 360.0F);
-                int dJ4 = floor2 - this.eN;
-                int i5_lo = floor3 - this.eO;
-                int dK4 = floor4 - this.eP;
+                int dJ4 = floor2 - this.lastX;
+                int i5_lo = floor3 - this.lastY;
+                int dK4 = floor4 - this.lastZ;
                 int notFlag = dJ4 == 0 && i5_lo == 0 && dK4 == 0 ? 0 : 1;
-                int notFlag2 = renderYawOffset2 == this.eQ && rotationPitch2 == this.eR ? 0 : 1;
+                int notFlag2 = renderYawOffset2 == this.lastYaw && rotationPitch2 == this.lastPitch ? 0 : 1;
                 if (dJ4 < -128 || dJ4 > 127 || i5_lo < -128 || i5_lo > 127 || dK4 < -128 || dK4 > 127) {
                     this.a(new z(aEg.thePlayer), EnumConnectionState.PLAY);
                 } else if (notFlag != 0 && notFlag2 != 0) {
@@ -717,16 +717,16 @@ public class bo extends Component {
                     );
                 }
 
-                if (rotationYawHead != this.eS) {
+                if (rotationYawHead != this.lastHeadYaw) {
                     this.a(new net.minecraft.network.play.server.aa(aEg.thePlayer, (byte)(rotationYawHead)), EnumConnectionState.PLAY);
                 }
 
-                this.eN = floor2;
-                this.eO = floor3;
-                this.eP = floor4;
-                this.eQ = (byte)(renderYawOffset2);
-                this.eR = (byte)(rotationPitch2);
-                this.eS = (byte)(rotationYawHead);
+                this.lastX = floor2;
+                this.lastY = floor3;
+                this.lastZ = floor4;
+                this.lastYaw = (byte)(renderYawOffset2);
+                this.lastPitch = (byte)(rotationPitch2);
+                this.lastHeadYaw = (byte)(rotationYawHead);
             }
         }
     }
@@ -791,18 +791,18 @@ public class bo extends Component {
     }
 
     public void bC() {
-        if (aEg.thePlayer != null && this.eY) {
+        if (aEg.thePlayer != null && this.selfSpawned) {
             int watchableObjectByte = aEg.thePlayer.getDataWatcher().getWatchableObjectByte(0);
-            if (watchableObjectByte != this.eT) {
+            if (watchableObjectByte != this.lastFlags) {
                 this.a(new ad(aEg.thePlayer.getEntityId(), aEg.thePlayer.getDataWatcher(), true), EnumConnectionState.PLAY);
-                this.eT = (byte)(watchableObjectByte);
+                this.lastFlags = (byte)(watchableObjectByte);
             }
 
-            for (int i = 0; i < this.eU.length; i++) {
+            for (int i = 0; i < this.lastEquipment.length; i++) {
                 ItemStack itemstack = aEg.thePlayer.getEquipmentInSlot(i);
-                if (!ItemStack.areItemStacksEqual(itemstack, this.eU[i])) {
+                if (!ItemStack.areItemStacksEqual(itemstack, this.lastEquipment[i])) {
                     this.a(new e(aEg.thePlayer.getEntityId(), i, itemstack), EnumConnectionState.PLAY);
-                    this.eU[i] = ItemStack.copyItemStack(itemstack);
+                    this.lastEquipment[i] = ItemStack.copyItemStack(itemstack);
                 }
             }
 
@@ -818,19 +818,19 @@ public class bo extends Component {
         }
     }
 
-    public boolean bu() {
+    public boolean canRecord() {
         return aEg.theWorld != null && aEg.thePlayer != null && aEg.getNetHandler() != null && aEg.getNetHandler().doneLoadingTerrain;
     }
 
 
     public GameProfile a(net.minecraft.network.play.server.n var1) {
-        if (var1 != null && var1.agh() != null && !this.eC.contains(var1.agh())) {
+        if (var1 != null && var1.agh() != null && !this.seenPlayers.contains(var1.agh())) {
             GameProfile gameprofile = this.a(var1.agh(), null);
             if (gameprofile == null) {
                 return null;
             }
 
-            this.a(gameprofile, 0, this.a(aEg.theWorld), null);
+            this.a(gameprofile, 0, this.getGameType(aEg.theWorld), null);
             return aEg.getNetHandler() != null && aEg.getNetHandler().getPlayerInfo(gameprofile.getId()) != null ? null : gameprofile;
         }
         return null;
@@ -846,8 +846,8 @@ public class bo extends Component {
 
     public void a(Entity entity, EntityPlayer player, Set<Integer> var3, Set<UUID> uuids, List<GameProfile> profiles) {
         if (entity != null && entity != player && entity.isEntityAlive() && var3.add(entity.getEntityId())) {
-            if (entity instanceof EntityPlayer entityplayer && this.a(entityplayer.getGameProfile()) && uuids.add(entityplayer.getGameProfile().getId())) {
-                this.a(entityplayer.getGameProfile(), -94 - -34 - -60, this.a(entity.worldObj), null);
+            if (entity instanceof EntityPlayer entityplayer && this.isValidProfile(entityplayer.getGameProfile()) && uuids.add(entityplayer.getGameProfile().getId())) {
+                this.a(entityplayer.getGameProfile(), -94 - -34 - -60, this.getGameType(entity.worldObj), null);
                 profiles.add(entityplayer.getGameProfile());
             }
 
@@ -883,35 +883,35 @@ public class bo extends Component {
         }
     }
 
-    public void a(byte[] var1) {
+    public void writeEntry(byte[] var1) {
         if (var1 == null || var1.length == 0) {
             return;
         }
 
-        int currentTimeMillis2 = this.fd >= 0 ? this.fd : (int)(System.currentTimeMillis() - this.fa);
+        int currentTimeMillis2 = this.fd >= 0 ? this.fd : (int)(System.currentTimeMillis() - this.startTime);
 
         try {
             synchronized (this.ex) {
-                if (!this.eF || this.ff == null || this.fe == null) {
+                if (!this.recording || this.output == null || this.buffer == null) {
                     return;
                 }
 
-                this.ff.writeInt(currentTimeMillis2);
-                this.ff.writeInt(var1.length);
-                this.ff.write(var1);
+                this.output.writeInt(currentTimeMillis2);
+                this.output.writeInt(var1.length);
+                this.output.write(var1);
             }
         } catch (IOException ioexception) {
         }
 
-        if (currentTimeMillis2 > this.fb) {
-            this.bv();
+        if (currentTimeMillis2 > this.duration) {
+            this.stopRecording();
         }
     }
 
-    public void bA() {
+    public void clearPending() {
         synchronized (this.ey) {
-            this.eB.clear();
-            this.eE = 0;
+            this.pending.clear();
+            this.pendingSize = 0;
         }
     }
 
@@ -920,14 +920,14 @@ public class bo extends Component {
             return null;
         }
 
-        GameProfile gameprofile2 = this.eD.get(uuid);
-        if (this.a(gameprofile2)) {
+        GameProfile gameprofile2 = this.profiles.get(uuid);
+        if (this.isValidProfile(gameprofile2)) {
             return gameprofile2;
         }
 
         if (aEg.getNetHandler() != null) {
             NetworkPlayerInfo networkplayerinfo = aEg.getNetHandler().getPlayerInfo(uuid);
-            if (networkplayerinfo != null && this.a(networkplayerinfo.getGameProfile())) {
+            if (networkplayerinfo != null && this.isValidProfile(networkplayerinfo.getGameProfile())) {
                 GameProfile gameprofile3 = networkplayerinfo.getGameProfile();
                 this.b(gameprofile3);
                 return gameprofile3;
@@ -936,14 +936,14 @@ public class bo extends Component {
 
         if (aEg.theWorld != null) {
             EntityPlayer entityplayer = aEg.theWorld.getPlayerEntityByUUID(uuid);
-            if (entityplayer != null && this.a(entityplayer.getGameProfile())) {
+            if (entityplayer != null && this.isValidProfile(entityplayer.getGameProfile())) {
                 GameProfile gameprofile = entityplayer.getGameProfile();
                 this.b(gameprofile);
                 return gameprofile;
             }
         }
 
-        String s = this.i(var2 != null ? var2 : this.b(uuid));
+        String s = this.truncateName(var2 != null ? var2 : this.b(uuid));
         if (s == null) {
             return null;
         }
@@ -954,26 +954,26 @@ public class bo extends Component {
     }
 
     public void c(String var1, int var2) {
-        if (this.eF) {
-            this.bv();
+        if (this.recording) {
+            this.stopRecording();
         }
 
-        this.eZ = var1;
-        this.fb = var2 * 1000;
-        this.fc = aEg.getCurrentServerData() != null ? aEg.getCurrentServerData().serverIP : "unknown";
-        this.fe = new ByteArrayOutputStream();
-        this.ff = new DataOutputStream(this.fe);
-        this.fa = System.currentTimeMillis();
-        this.eF = true;
-        this.eG = !this.bu();
+        this.name = var1;
+        this.duration = var2 * 1000;
+        this.serverIp = aEg.getCurrentServerData() != null ? aEg.getCurrentServerData().serverIP : "unknown";
+        this.buffer = new ByteArrayOutputStream();
+        this.output = new DataOutputStream(this.buffer);
+        this.startTime = System.currentTimeMillis();
+        this.recording = true;
+        this.eG = !this.canRecord();
         this.eH = this.eG;
         this.eI = this.eH ? System.currentTimeMillis() : 0L;
         this.eK = false;
         this.eL = !this.eG;
-        this.bF();
+        this.clearProfileCache();
         this.eM = false;
-        this.eY = false;
-        Arrays.fill(this.eU, null);
+        this.selfSpawned = false;
+        Arrays.fill(this.lastEquipment, null);
         this.eV = null;
         this.eW = false;
         this.eX = 0;
@@ -1113,10 +1113,10 @@ public class bo extends Component {
     }
 
     public bo() {
-        this.eB = new ArrayList<>();
-        this.eC = new HashSet<>();
-        this.eD = new HashMap<>();
-        this.eU = new ItemStack[5];
+        this.pending = new ArrayList<>();
+        this.seenPlayers = new HashSet<>();
+        this.profiles = new HashMap<>();
+        this.lastEquipment = new ItemStack[5];
         this.fd = -1;
         this.fg = var1 -> {
             if (var1.dd() instanceof rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStartRecording) {
@@ -1124,13 +1124,13 @@ public class bo extends Component {
                 this.c(a.ajm(), a.aJV());
             } else if (var1.dd() instanceof S2CPacketStopRecording) {
                 S2CPacketStopRecording h = (S2CPacketStopRecording)var1.dd();
-                if (this.eF && h.ajm().equals(this.eZ)) {
-                    this.bv();
+                if (this.recording && h.ajm().equals(this.name)) {
+                    this.stopRecording();
                 }
             }
         };
         this.onTick = var1 -> {
-            if (this.eG && this.bu() && this.eH && System.currentTimeMillis() - this.eI > 1500L) {
+            if (this.eG && this.canRecord() && this.eH && System.currentTimeMillis() - this.eI > 1500L) {
                 this.eJ = true;
                 this.bw();
                 this.eJ = false;
@@ -1140,12 +1140,12 @@ public class bo extends Component {
                 this.eL = true;
             }
 
-            if (this.eF && aEg.thePlayer != null) {
-                if ("unknown".equals(this.fc) && aEg.getCurrentServerData() != null && aEg.getCurrentServerData().serverIP != null) {
-                    this.fc = aEg.getCurrentServerData().serverIP;
+            if (this.recording && aEg.thePlayer != null) {
+                if ("unknown".equals(this.serverIp) && aEg.getCurrentServerData() != null && aEg.getCurrentServerData().serverIP != null) {
+                    this.serverIp = aEg.getCurrentServerData().serverIP;
                 }
 
-                if (this.bu() && !this.eM) {
+                if (this.canRecord() && !this.eM) {
                     this.bB();
                 }
 
@@ -1154,12 +1154,12 @@ public class bo extends Component {
             }
         };
         this.onWorldChange = var1 -> {
-            this.bA();
-            this.bF();
-            if (this.eF) {
+            this.clearPending();
+            this.clearProfileCache();
+            if (this.recording) {
                 this.eM = false;
-                this.eY = false;
-                Arrays.fill(this.eU, null);
+                this.selfSpawned = false;
+                Arrays.fill(this.lastEquipment, null);
                 this.eV = null;
                 this.eW = false;
                 this.eX = 0;
@@ -1169,7 +1169,7 @@ public class bo extends Component {
 
     public void a(Packet<?> packet, EnumConnectionState enumConnectionState, byte[] var3) {
         this.b(packet, enumConnectionState, var3);
-        if (this.eF && enumConnectionState != null && !this.eJ) {
+        if (this.recording && enumConnectionState != null && !this.eJ) {
             if (this.eH) {
                 if (enumConnectionState != EnumConnectionState.LOGIN || !(packet instanceof S02PacketLoginSuccess)) {
                     return;
@@ -1178,8 +1178,8 @@ public class bo extends Component {
                 this.eH = false;
                 this.eL = true;
                 synchronized (this.ex) {
-                    if (this.fe != null && this.fe.size() == 0) {
-                        this.fa = System.currentTimeMillis();
+                    if (this.buffer != null && this.buffer.size() == 0) {
+                        this.startTime = System.currentTimeMillis();
                     }
                 }
             }
@@ -1188,8 +1188,8 @@ public class bo extends Component {
                 if (enumConnectionState != EnumConnectionState.LOGIN || packet instanceof S02PacketLoginSuccess) {
                     if (enumConnectionState == EnumConnectionState.PLAY && packet instanceof S01PacketJoinGame) {
                         this.eM = false;
-                        this.eY = false;
-                        Arrays.fill(this.eU, null);
+                        this.selfSpawned = false;
+                        Arrays.fill(this.lastEquipment, null);
                         this.eV = null;
                         this.eW = false;
                         this.eX = 0;
@@ -1204,7 +1204,7 @@ public class bo extends Component {
 
                     List list = this.c(packet, enumConnectionState);
                     if (var3 != null && var3.length > 0) {
-                        this.a(var3);
+                        this.writeEntry(var3);
                     } else {
                         this.a(packet, enumConnectionState);
                     }
@@ -1216,14 +1216,14 @@ public class bo extends Component {
         }
     }
 
-    public String i(String var1) {
+    public String truncateName(String var1) {
         if (var1 != null && !var1.isEmpty()) {
             return var1.length() > 16 ? var1.substring(0, 16) : var1;
         }
         return null;
     }
 
-    public S01PacketJoinGame bx() {
+    public S01PacketJoinGame buildJoinGamePacket() {
         WorldClient worldclient = aEg.theWorld;
         NetHandlerPlayClient nethandlerplayclient = aEg.getNetHandler();
         EntityPlayerSP entityplayersp = aEg.thePlayer;
@@ -1245,18 +1245,18 @@ public class bo extends Component {
         return "p_" + s1;
     }
 
-    public boolean a(GameProfile profile) {
+    public boolean isValidProfile(GameProfile profile) {
         return profile != null && profile.getId() != null && profile.getName() != null;
     }
 
     public void a(WorldClient world, NetHandlerPlayClient netHandlerPlayClient, Set<UUID> uuids) {
         if (netHandlerPlayClient != null) {
-            GameType gametype = this.a(world);
+            GameType gametype = this.getGameType(world);
             Iterator iterator = netHandlerPlayClient.getPlayerInfoMap().iterator();
 
             while (iterator.hasNext()) {
                 NetworkPlayerInfo networkplayerinfo = (NetworkPlayerInfo)iterator.next();
-                if (networkplayerinfo != null && this.a(networkplayerinfo.getGameProfile()) && uuids.add(networkplayerinfo.getGameProfile().getId())) {
+                if (networkplayerinfo != null && this.isValidProfile(networkplayerinfo.getGameProfile()) && uuids.add(networkplayerinfo.getGameProfile().getId())) {
                     this.a(
                         networkplayerinfo.getGameProfile(),
                         networkplayerinfo.getResponseTime(),
@@ -1266,7 +1266,7 @@ public class bo extends Component {
                 }
             }
 
-            if (aEg.thePlayer != null && this.a(aEg.thePlayer.getGameProfile()) && uuids.add(aEg.thePlayer.getGameProfile().getId())) {
+            if (aEg.thePlayer != null && this.isValidProfile(aEg.thePlayer.getGameProfile()) && uuids.add(aEg.thePlayer.getGameProfile().getId())) {
                 this.a(aEg.thePlayer.getGameProfile(), 73 + -73, gametype, null);
             }
         }

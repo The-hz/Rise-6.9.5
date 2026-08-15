@@ -83,7 +83,7 @@ public final class Module extends Command {
         String s = var2.toLowerCase(Locale.ROOT);
 
         for (Value value : module.getAllValues()) {
-            if (value.wn() == null || !value.wn().getAsBoolean()) {
+            if (value.getBooleanSupplier() == null || !value.getBooleanSupplier().getAsBoolean()) {
                 String s1 = value.getName();
                 if (s1.equalsIgnoreCase(var2)) {
                     return value;

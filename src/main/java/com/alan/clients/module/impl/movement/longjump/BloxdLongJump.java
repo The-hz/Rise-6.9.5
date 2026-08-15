@@ -20,8 +20,8 @@ import net.minecraft.util.Vec3;
 
 public class BloxdLongJump extends Mode<LongJump> {
     public Vec3 Jd = new Vec3(0.0, 0.0, 0.0);
-    public int LA = 0;
-    int IU = -1;
+    public int strafeTicks = 0;
+    int previousSlot = -1;
     double jy;
     double IW = -1.0;
     private int dE;
@@ -36,8 +36,8 @@ public class BloxdLongJump extends Mode<LongJump> {
             this.e(LongJump.class).setEnabled(true);
         }
 
-        this.LA++;
-        if (this.LA == 20) {
+        this.strafeTicks++;
+        if (this.strafeTicks == 20) {
             this.e(TerrainSpeed.class).setEnabled(true);
         }
 
@@ -67,11 +67,11 @@ public class BloxdLongJump extends Mode<LongJump> {
     public void onEnable() {
         this.e(TerrainSpeed.class).setEnabled(false);
         MoveUtil.stop();
-        this.IU = aEg.thePlayer.inventory.currentItem;
-        if (this.hq() == -1) {
+        this.previousSlot = aEg.thePlayer.inventory.currentItem;
+        if (this.getProjectileSlot() == -1) {
             afi.b("you need a projectile in your hotbar for this");
         } else {
-            int i = this.hq();
+            int i = this.getProjectileSlot();
             if (i != -1) {
                 SlotComponent slotcomponent = this.d(SlotComponent.class);
                 SlotComponent.setSlot(i);
@@ -80,7 +80,7 @@ public class BloxdLongJump extends Mode<LongJump> {
             }
 
             ItemDamageComponent.damage(false);
-            this.LA = 0;
+            this.strafeTicks = 0;
         }
     }
 
@@ -89,7 +89,7 @@ public class BloxdLongJump extends Mode<LongJump> {
         this.e(TerrainSpeed.class).setEnabled(true);
     }
 
-    private int hq() {
+    private int getProjectileSlot() {
         for (int i = 0; i < 9; i++) {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
             if (itemstack != null && itemstack.getItem() == Items.bow) {

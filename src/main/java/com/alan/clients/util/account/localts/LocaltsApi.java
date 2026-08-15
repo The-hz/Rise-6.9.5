@@ -29,7 +29,7 @@ public final class LocaltsApi {
             return new LocaltsProducts(false, Collections.emptyList(), aez.aFR);
         }
 
-        JsonObject jsonobject = aez.aFQ;
+        JsonObject jsonobject = aez.json;
         if (!c(jsonobject)) {
             return new LocaltsProducts(false, Collections.emptyList(), a(jsonobject, "Localts did not return products"));
         }
@@ -62,7 +62,7 @@ public final class LocaltsApi {
             return new LocaltsPurchase(false, "", 0, aez.aFR);
         }
 
-        JsonObject jsonobject = aez.aFQ;
+        JsonObject jsonobject = aez.json;
         return !c(jsonobject)
             ? new LocaltsPurchase(false, "", 0, a(jsonobject, "Invalid Localts API key"))
             : new LocaltsPurchase(true, b(jsonobject, "username"), d(jsonobject, "balance"), "");
@@ -77,7 +77,7 @@ public final class LocaltsApi {
                     return new LocaltsResult(false, "", aez.aFR);
                 }
 
-                JsonObject jsonobject = aez.aFQ;
+                JsonObject jsonobject = aez.json;
                 return !c(jsonobject) ? new LocaltsResult(false, "", a(jsonobject, "Purchase failed")) : new LocaltsResult(true, b(jsonobject, "orderId"), "");
             } catch (Exception exception) {
                 return new LocaltsResult(false, "", "Unable to create Localts purchase request");
@@ -94,7 +94,7 @@ public final class LocaltsApi {
                 return new LocaltsOrder(false, var1, "", "", new JsonArray(), aez.aFR);
             }
 
-            JsonObject jsonobject = aez.aFQ;
+            JsonObject jsonobject = aez.json;
             return !c(jsonobject)
                 ? new LocaltsOrder(false, var1, "", "", new JsonArray(), a(jsonobject, "Could not retrieve order"))
                 : new LocaltsOrder(true, b(jsonobject, "order-id"), b(jsonobject, "status"), b(jsonobject, "product-name"), e(jsonobject, "items"), "");
@@ -110,7 +110,7 @@ public final class LocaltsApi {
                 return new LocaltsOrderPage(false, new JsonArray(), 0, 0, 0, 0, aez.aFR);
             }
 
-            JsonObject jsonobject = aez.aFQ;
+            JsonObject jsonobject = aez.json;
             return !c(jsonobject)
                 ? new LocaltsOrderPage(false, new JsonArray(), 0, 0, 0, 0, a(jsonobject, "Could not retrieve Localts orders"))
                 : new LocaltsOrderPage(

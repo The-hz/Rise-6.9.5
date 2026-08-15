@@ -22,11 +22,11 @@ public class AutoTool extends Module {
         if (!this.e(Scaffold.class).isEnabled()) {
             if (var1.getPlayer() == aEg.thePlayer) {
                 if (!(aEg.thePlayer.getDistanceSq(var1.getBlockPos()) > 49.0)) {
-                    if (this.jt()) {
+                    if (this.isMiningBlock()) {
                         if (var1.getBlockPos().equals(aEg.objectMouseOver.getBlockPos())) {
                             this.blockBreak = 15;
                             this.blockPos = var1.getBlockPos();
-                            this.ju();
+                            this.switchTool();
                         }
                     }
                 }
@@ -39,21 +39,21 @@ public class AutoTool extends Module {
         this.blockPos = null;
     };
     @EventLink
-    public final Listener<PreUpdateEvent> abs = var1 -> this.ju();
+    public final Listener<PreUpdateEvent> abs = var1 -> this.switchTool();
 
     public AutoTool() {
     }
 
-    private boolean jt() {
+    private boolean isMiningBlock() {
         return aEg.playerController != null
             && (aEg.playerController.isHittingBlock || aEg.gameSettings.cgK.isKeyDown())
             && aEg.objectMouseOver != null
             && aEg.objectMouseOver.typeOfHit == MovingObjectType.BLOCK;
     }
 
-    public void ju() {
+    public void switchTool() {
         if (!this.e(Scaffold.class).isEnabled()) {
-            if (!this.jt()) {
+            if (!this.isMiningBlock()) {
                 this.blockBreak = 0;
             } else if (aEg.objectMouseOver != null && this.blockBreak > 0 && this.blockPos != null) {
                 if (aEg.objectMouseOver.typeOfHit == MovingObjectType.BLOCK && this.blockPos.equals(aEg.objectMouseOver.getBlockPos())) {

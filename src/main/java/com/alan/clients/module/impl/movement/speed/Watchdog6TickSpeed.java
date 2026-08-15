@@ -33,19 +33,19 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
     private static float Qb = 42.5F;
     private Entity Rd = null;
     private int PD = 0;
-    private boolean Re = false;
+    private boolean onStairs = false;
     public static boolean LW;
     public static boolean LX;
-    public static int hQ;
-    double jy;
+    public static int tickCounter;
+    double enableY;
     boolean LY;
     public static int LZ;
     public static int Ma;
-    private double Md;
-    private double Me;
-    private double Mf;
-    private double Mg;
-    private double Mh;
+    private double startPosX;
+    private double startPosY;
+    private double startPosZ;
+    private double startYaw;
+    private double startPitch;
     public static double Mi;
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var0 -> {
@@ -56,13 +56,13 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
     };
     @EventLink
     public final Listener<MoveInputEvent> onMoveInput = var0 -> {
-        if (hQ < 23 && hQ > 7) {
+        if (tickCounter < 23 && tickCounter > 7) {
             var0.setJump(false);
         }
     };
     @EventLink
     public final Listener<MoveEvent> onMove = var0 -> {
-        if (hQ < 23 && hQ > 7) {
+        if (tickCounter < 23 && tickCounter > 7) {
             var0.setPosZ(0.0);
             var0.setPosX(0.0);
         }
@@ -70,7 +70,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.onGround) {
-            this.Re = false;
+            this.onStairs = false;
         }
 
         AxisAlignedBB axisalignedbb = aEg.thePlayer.getEntityBoundingBox();
@@ -80,25 +80,25 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
             for (double d1 = axisalignedbb.minZ; d1 < axisalignedbb.maxZ; d1 += 0.3) {
                 BlockPos blockpos = new BlockPos(d0, axisalignedbb.minY - 0.05, d1);
                 if (worldclient.getBlockState(blockpos).getBlock() instanceof BlockStairs) {
-                    this.Re = true;
+                    this.onStairs = true;
                     break;
                 }
             }
 
-            if (this.Re) {
+            if (this.onStairs) {
                 break;
             }
         }
 
         double d2 = MathHelper.wrapAngleTo180_double(Math.toDegrees(MoveUtil.direction()));
         double d3 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
-        if (aEg.thePlayer.hurtTime == 9 && hQ < 23) {
-            hQ = 23;
+        if (aEg.thePlayer.hurtTime == 9 && tickCounter < 23) {
+            tickCounter = 23;
         }
 
-        if (hQ > 24 && !this.Re && aEg.thePlayer.csk > 5) {
+        if (tickCounter > 24 && !this.onStairs && aEg.thePlayer.csk > 5) {
             if (aEg.thePlayer.tR == 0) {
-                if (hQ <= 48 && (aEg.thePlayer.isPotionActive(Potion.moveSpeed) || hQ <= 66)) {
+                if (tickCounter <= 48 && (aEg.thePlayer.isPotionActive(Potion.moveSpeed) || tickCounter <= 66)) {
                     MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() - 0.01);
                 } else {
                     MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance());
@@ -138,7 +138,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
 
             if (aEg.thePlayer.tR == 4) {
                 if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                    if (hQ > 66) {
+                    if (tickCounter > 66) {
                         aEg.thePlayer.motionX *= 1.01;
                         aEg.thePlayer.motionZ *= 1.01;
                     }
@@ -151,19 +151,19 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
             if (aEg.thePlayer.tR == 5 && PlayerUtil.ae(aEg.thePlayer.motionY * 2.0)) {
                 aEg.thePlayer.motionY += 0.085;
                 if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                    if (hQ > 66) {
+                    if (tickCounter > 66) {
                         MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() * 1.069);
                     }
                 } else {
                     MoveUtil.strafe();
-                    if (hQ > 154) {
+                    if (tickCounter > 154) {
                     }
                 }
             }
 
             if (PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air) {
                 if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                    if (hQ > 66) {
+                    if (tickCounter > 66) {
                         MoveUtil.strafe(MoveUtil.getAllowedHorizontalDistance() * 1.059);
                     }
                 } else {
@@ -183,7 +183,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
             }
         }
 
-        if (hQ < 8 || this.Re || aEg.thePlayer.csk < 6) {
+        if (tickCounter < 8 || this.onStairs || aEg.thePlayer.csk < 6) {
             if (aEg.thePlayer.onGround) {
                 aEg.thePlayer.jump();
             }
@@ -212,23 +212,23 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
             }
         }
 
-        if (hQ == 24) {
+        if (tickCounter == 24) {
             MoveUtil.strafe(0.125);
         }
     };
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var0 -> {
-        if (hQ > 44) {
+        if (tickCounter > 44) {
             ;
         }
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         aEg.thePlayer.getEntityBoundingBox();
-        hQ++;
-        if (hQ < 23) {
-            if (aEg.thePlayer.onGround && hQ > 3) {
-                var0.setPosY(var0.getPosY() + (hQ % 2 != 0 ? 0.296875 : 0.001));
+        tickCounter++;
+        if (tickCounter < 23) {
+            if (aEg.thePlayer.onGround && tickCounter > 3) {
+                var0.setPosY(var0.getPosY() + (tickCounter % 2 != 0 ? 0.296875 : 0.001));
                 var0.setOnGround(false);
             }
         } else if (aEg.thePlayer.onGround) {
@@ -237,7 +237,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
     };
     @EventLink
     public final Listener<JumpEvent> onJump = var1x -> {
-        if (hQ >= 23 && hQ >= 8 && !this.Re && aEg.thePlayer.csk >= 6) {
+        if (tickCounter >= 23 && tickCounter >= 8 && !this.onStairs && aEg.thePlayer.csk >= 6) {
             var1x.setJumpMotion(0.4F);
         } else {
             var1x.setJumpMotion(0.42F);
@@ -262,10 +262,10 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
 
     @Override
     public void onEnable() {
-        this.Mg = aEg.thePlayer.pl;
-        this.Mh = aEg.thePlayer.rotationPitch;
-        hQ = 0;
-        aEg.thePlayer.pl = (float)this.Mg;
+        this.startYaw = aEg.thePlayer.pl;
+        this.startPitch = aEg.thePlayer.rotationPitch;
+        tickCounter = 0;
+        aEg.thePlayer.pl = (float)this.startYaw;
         if (aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();
         } else {
@@ -273,19 +273,19 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
             this.getParent().setEnabled(false);
         }
 
-        this.Md = aEg.thePlayer.posX;
-        this.Me = aEg.thePlayer.posY;
-        this.Mf = aEg.thePlayer.posZ;
-        this.jy = aEg.thePlayer.posY;
+        this.startPosX = aEg.thePlayer.posX;
+        this.startPosY = aEg.thePlayer.posY;
+        this.startPosZ = aEg.thePlayer.posZ;
+        this.enableY = aEg.thePlayer.posY;
         LX = true;
         LW = false;
     }
 
     @Override
     public void onDisable() {
-        double d0 = aEg.thePlayer.posX - this.Md;
-        double d1 = aEg.thePlayer.posY - this.Me;
-        double d2 = aEg.thePlayer.posZ - this.Mf;
+        double d0 = aEg.thePlayer.posX - this.startPosX;
+        double d1 = aEg.thePlayer.posY - this.startPosY;
+        double d2 = aEg.thePlayer.posZ - this.startPosZ;
         double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
         LW = false;
         this.LY = false;
@@ -298,7 +298,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
         aEg.thePlayer.stepHeight = 0.6F;
     }
 
-    private boolean a(Vec3 vec, Vec3 var2) {
+    private boolean wouldCollide(Vec3 vec, Vec3 var2) {
         EntityPlayerSP entityplayersp = Minecraft.getMinecraft().thePlayer;
         WorldClient worldclient = Minecraft.getMinecraft().theWorld;
         AxisAlignedBB axisalignedbb = entityplayersp.getEntityBoundingBox().offset(var2.xCoord, var2.yCoord, var2.zCoord);

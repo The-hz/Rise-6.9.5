@@ -19,7 +19,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 
 public class WatchdogWallClimb extends Mode<WallClimb> {
-    private double Th = 0.42;
+    private double jumpMotion = 0.42;
     private boolean active;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
@@ -75,7 +75,7 @@ public class WatchdogWallClimb extends Mode<WallClimb> {
                 int i = (d1 = MoveUtil.speed() - 0.0) == 0.0 ? 0 : (d1 < 0.0 ? -1 : 1);
             }
 
-            if (aEg.thePlayer.isCollidedHorizontally && aEg.gameSettings.keyBindJump.isKeyDown() && this.Th > 0.42) {
+            if (aEg.thePlayer.isCollidedHorizontally && aEg.gameSettings.keyBindJump.isKeyDown() && this.jumpMotion > 0.42) {
                 ;
             }
         }

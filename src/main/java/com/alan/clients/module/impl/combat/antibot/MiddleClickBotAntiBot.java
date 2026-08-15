@@ -13,15 +13,15 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 public final class MiddleClickBotAntiBot extends Mode<AntiBot> {
-    private boolean ji;
+    private boolean clicked;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (Mouse.isButtonDown(2) || Keyboard.isKeyDown(29) && aEg.gameSettings.cgK.isKeyDown()) {
-            if (this.ji) {
+            if (this.clicked) {
                 return;
             }
 
-            this.ji = true;
+            this.clicked = true;
             if (aEg.objectMouseOver.typeOfHit == MovingObjectType.ENTITY) {
                 BotManager r = Client.a.getBotManager();
                 Entity entity = aEg.objectMouseOver.entityHit;
@@ -32,7 +32,7 @@ public final class MiddleClickBotAntiBot extends Mode<AntiBot> {
                 }
             }
         } else {
-            this.ji = false;
+            this.clicked = false;
         }
     };
 

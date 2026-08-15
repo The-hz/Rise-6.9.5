@@ -31,88 +31,88 @@ public final class AutoStuck extends Module {
     private final NumberValue minFallDistance = new NumberValue("Min Fall Distance", this, 5.0, 0.0, 50.0, 0.5);
     private final NumberValue minVoidDepth = new NumberValue("Min Void Depth", this, 5.0, 1.0, 200.0, 1.0);
     private final NumberValue searchRadius = new NumberValue("Search Radius", this, 10.0, 2.0, 40.0, 1.0);
-    private ExecutorService k;
-    private Future<?> CV;
-    private boolean CW;
-    private boolean CX;
-    private boolean CY;
-    private int CZ;
-    private static final int Da = 3;
-    private Vector2f fm;
-    private int Db;
-    private int Dc = -1;
-    private int Dd = 0;
+    private ExecutorService executor;
+    private Future<?> searchFuture;
+    private boolean falling;
+    private boolean searching;
+    private boolean hasTarget;
+    private int searchAttempts;
+    private static final int MAX_ATTEMPTS = 3;
+    private Vector2f targetRotations;
+    private int rotationTicks;
+    private int pearlSlot = -1;
+    private int slotDelay = 0;
     @EventLink
     public final Listener<WorldChangeEvent> onWorldChange = var1 -> {
-        this.ha();
-        this.hc();
-        this.CW = false;
-        this.CY = false;
-        this.CX = false;
-        this.CZ = 0;
-        this.Db = 0;
-        this.fm = null;
-        this.Dc = -1;
-        this.Dd = 0;
+        this.cancelSearch();
+        this.disableStuck();
+        this.falling = false;
+        this.hasTarget = false;
+        this.searching = false;
+        this.searchAttempts = 0;
+        this.rotationTicks = 0;
+        this.targetRotations = null;
+        this.pearlSlot = -1;
+        this.slotDelay = 0;
     };
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
-            boolean flag = this.hf() != -1;
-            if (this.requireVoid.wo() ? this.he() : this.hd()) {
-                if (!this.CW) {
-                    this.CW = true;
-                    this.CZ = 0;
+            boolean flag = this.findPearlSlot() != -1;
+            if (this.requireVoid.wo() ? this.isOverVoid() : this.isFalling()) {
+                if (!this.falling) {
+                    this.falling = true;
+                    this.searchAttempts = 0;
                 }
 
                 if (aEg.thePlayer.ticksExisted % this.pulseTicks.wo().intValue() != 0) {
-                    this.hb();
+                    this.enableStuck();
                 } else {
-                    this.hc();
+                    this.disableStuck();
                 }
 
                 if (this.usePearl.wo() && flag) {
-                    this.hg();
+                    this.startSearch();
                 }
-            } else if (this.CW) {
-                this.CW = false;
-                this.CY = false;
-                this.Db = 0;
-                this.ha();
-                this.hc();
-                this.Dc = -1;
-                this.Dd = 0;
+            } else if (this.falling) {
+                this.falling = false;
+                this.hasTarget = false;
+                this.rotationTicks = 0;
+                this.cancelSearch();
+                this.disableStuck();
+                this.pearlSlot = -1;
+                this.slotDelay = 0;
             }
 
             if (this.usePearl.wo() && !flag) {
-                this.CY = false;
-                this.Db = 0;
-                this.Dc = -1;
-                this.Dd = 0;
+                this.hasTarget = false;
+                this.rotationTicks = 0;
+                this.pearlSlot = -1;
+                this.slotDelay = 0;
             }
 
-            if (this.CW && this.CY && this.fm != null) {
-                RotationComponent.setRotations(this.fm, 10.0, MovementFix.OFF);
-                if (this.Db++ >= 1) {
-                    this.Db = 0;
-                    this.CY = false;
-                    this.hh();
+            if (this.falling && this.hasTarget && this.targetRotations != null) {
+                RotationComponent.setRotations(this.targetRotations, 10.0, MovementFix.OFF);
+                if (this.rotationTicks++ >= 1) {
+                    this.rotationTicks = 0;
+                    this.hasTarget = false;
+                    this.preparePearl();
                 }
             }
 
-            if (this.Dc != -1) {
-                if (this.Dd > 0) {
-                    this.Dd--;
+            if (this.pearlSlot != -1) {
+                if (this.slotDelay > 0) {
+                    this.slotDelay--;
                 } else {
-                    this.t(this.Dc);
-                    this.Dc = -1;
+                    this.throwPearl(this.pearlSlot);
+                    this.pearlSlot = -1;
                 }
             }
         }
     };
     @EventLink
     public final Listener<MoveInputEvent> onMoveInput = var1 -> {
-        if (this.lockMovement.wo() && this.CW) {
+        if (this.lockMovement.wo() && this.falling) {
             var1.setForward(0.0F);
             var1.setStrafe(0.0F);
             var1.setJump(false);
@@ -125,64 +125,64 @@ public final class AutoStuck extends Module {
 
     @Override
     public void onEnable() {
-        this.CW = false;
-        this.CX = false;
-        this.CY = false;
-        this.CZ = 0;
-        this.Db = 0;
-        this.fm = null;
-        this.Dc = -1;
-        this.Dd = 0;
-        if (this.k == null || this.k.isShutdown()) {
-            this.k = Executors.newSingleThreadExecutor();
+        this.falling = false;
+        this.searching = false;
+        this.hasTarget = false;
+        this.searchAttempts = 0;
+        this.rotationTicks = 0;
+        this.targetRotations = null;
+        this.pearlSlot = -1;
+        this.slotDelay = 0;
+        if (this.executor == null || this.executor.isShutdown()) {
+            this.executor = Executors.newSingleThreadExecutor();
         }
     }
 
     @Override
     public void onDisable() {
-        this.ha();
-        this.hc();
-        this.CW = false;
-        this.CY = false;
-        this.CX = false;
-        this.CZ = 0;
-        this.Db = 0;
-        this.fm = null;
-        this.Dc = -1;
-        this.Dd = 0;
-        if (this.k != null) {
-            this.k.shutdownNow();
+        this.cancelSearch();
+        this.disableStuck();
+        this.falling = false;
+        this.hasTarget = false;
+        this.searching = false;
+        this.searchAttempts = 0;
+        this.rotationTicks = 0;
+        this.targetRotations = null;
+        this.pearlSlot = -1;
+        this.slotDelay = 0;
+        if (this.executor != null) {
+            this.executor.shutdownNow();
         }
     }
 
-    private void ha() {
-        if (this.CV != null && !this.CV.isDone()) {
-            this.CV.cancel(true);
+    private void cancelSearch() {
+        if (this.searchFuture != null && !this.searchFuture.isDone()) {
+            this.searchFuture.cancel(true);
         }
 
-        this.CV = null;
+        this.searchFuture = null;
     }
 
-    private void hb() {
+    private void enableStuck() {
         Stuck stuck = this.e(Stuck.class);
         if (stuck != null && !stuck.isEnabled()) {
             stuck.setEnabled(true);
         }
     }
 
-    private void hc() {
+    private void disableStuck() {
         Stuck stuck = this.e(Stuck.class);
         if (stuck != null && stuck.isEnabled()) {
             stuck.setEnabled(false);
         }
     }
 
-    private boolean hd() {
+    private boolean isFalling() {
         return aEg.thePlayer != null && !aEg.thePlayer.onGround && aEg.thePlayer.fallDistance >= this.minFallDistance.wo().floatValue();
     }
 
-    private boolean he() {
-        if (!this.hd()) {
+    private boolean isOverVoid() {
+        if (!this.isFalling()) {
             return false;
         }
 
@@ -209,7 +209,7 @@ public final class AutoStuck extends Module {
         return i >= j;
     }
 
-    private int hf() {
+    private int findPearlSlot() {
         if (aEg.thePlayer == null) {
             return -1;
         }
@@ -224,27 +224,27 @@ public final class AutoStuck extends Module {
         return -1;
     }
 
-    private void hg() {
-        if (!this.CX && this.CZ < 3) {
-            this.CX = true;
-            this.CZ++;
+    private void startSearch() {
+        if (!this.searching && this.searchAttempts < 3) {
+            this.searching = true;
+            this.searchAttempts++;
             Vec3 positionVector = aEg.thePlayer.getPositionVector();
-            this.CV = this.k.submit(() -> {
+            this.searchFuture = this.executor.submit(() -> {
                 try {
-                    Optional optional = this.a(positionVector, (int)this.searchRadius.wo().doubleValue());
+                    Optional optional = this.findLandingSpot(positionVector, (int)this.searchRadius.wo().doubleValue());
                     if (optional.isPresent()) {
-                        this.fm = this.c((Vec3)optional.get());
-                        this.CY = this.fm != null;
+                        this.targetRotations = this.getThrowRotation((Vec3)optional.get());
+                        this.hasTarget = this.targetRotations != null;
                     }
                 } catch (Throwable throwable) {
                 } finally {
-                    this.CX = false;
+                    this.searching = false;
                 }
             });
         }
     }
 
-    private Optional<Vec3> a(Vec3 vec, int var2) {
+    private Optional<Vec3> findLandingSpot(Vec3 vec, int var2) {
         if (aEg.theWorld == null) {
             return Optional.empty();
         }
@@ -274,17 +274,17 @@ public final class AutoStuck extends Module {
         return vec3 == null ? Optional.empty() : Optional.of(vec3);
     }
 
-    private void hh() {
+    private void preparePearl() {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             if (this.usePearl.wo()) {
-                int i = this.hf();
+                int i = this.findPearlSlot();
                 if (i != -1) {
                     if (i <= 8) {
                         int j = i;
-                        this.Dc = j;
-                        this.Dd = 0;
+                        this.pearlSlot = j;
+                        this.slotDelay = 0;
                     } else {
-                        int kx = this.hi();
+                        int kx = this.findEmptyHotbarSlot();
                         if (kx == -1) {
                             kx = 0;
                         }
@@ -292,15 +292,15 @@ public final class AutoStuck extends Module {
                         int l = aEg.thePlayer.inventoryContainer.windowId;
                         int i1 = i;
                         aEg.playerController.windowClick(l, i1, kx, 2, aEg.thePlayer);
-                        this.Dc = kx;
-                        this.Dd = 1;
+                        this.pearlSlot = kx;
+                        this.slotDelay = 1;
                     }
                 }
             }
         }
     }
 
-    private int hi() {
+    private int findEmptyHotbarSlot() {
         for (int i = 0; i < 9; i++) {
             if (aEg.thePlayer.inventory.mainInventory[i] == null) {
                 return i;
@@ -310,7 +310,7 @@ public final class AutoStuck extends Module {
         return -1;
     }
 
-    private void t(int var1) {
+    private void throwPearl(int var1) {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
             int i = aEg.thePlayer.inventory.currentItem;
             aEg.thePlayer.inventory.currentItem = var1;
@@ -325,7 +325,7 @@ public final class AutoStuck extends Module {
         }
     }
 
-    private Vector2f c(Vec3 vec) {
+    private Vector2f getThrowRotation(Vec3 vec) {
         if (aEg.thePlayer == null) {
             return null;
         }

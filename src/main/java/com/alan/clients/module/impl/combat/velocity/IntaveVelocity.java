@@ -10,22 +10,22 @@ import com.alan.clients.value.Mode;
 
 public final class IntaveVelocity extends Mode<Velocity> {
     private boolean attacked;
-    private boolean ux;
+    private boolean slowedDown;
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (!this.getParent().onSwing.wo() || aEg.thePlayer.isSwingInProgress) {
-            if (this.attacked && !this.ux && aEg.thePlayer.isSprinting()) {
+            if (this.attacked && !this.slowedDown && aEg.thePlayer.isSprinting()) {
                 aEg.thePlayer.motionX *= 0.6;
                 aEg.thePlayer.motionZ *= 0.6;
                 aEg.thePlayer.setSprinting(false);
             }
 
             this.attacked = false;
-            this.ux = false;
+            this.slowedDown = false;
         }
     };
     @EventLink
-    public final Listener<HitSlowDownEvent> onHitSlowDown = var1x -> this.ux = true;
+    public final Listener<HitSlowDownEvent> onHitSlowDown = var1x -> this.slowedDown = true;
     @EventLink
     public final Listener<AttackEvent> onAttack = var1x -> this.attacked = true;
 

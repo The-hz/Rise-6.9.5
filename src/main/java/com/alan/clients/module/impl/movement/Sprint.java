@@ -27,26 +27,26 @@ import net.minecraft.util.BlockPos;
 
 @ModuleInfo(aliases = "module.movement.sprint.name", description = "module.movement.sprint.description", category = Category.MOVEMENT)
 public class Sprint extends Module {
-    private float jp;
-    private float jq;
-    public static int Ek;
+    private float forward;
+    private float strafe;
+    public static int predictionTicks;
     private boolean dk;
     private boolean El;
     private BlockPos Em;
     private int En;
-    public static boolean Eo;
+    public static boolean predictionDone;
     public static boolean Ep;
     private final BooleanValue legit = new BooleanValue("Legit", this, true);
     private final BooleanValue watchdogPrediction = new BooleanValue("Watchdog Prediction", this, false);
     @EventLink(value = 2)
     public final Listener<StrafeEvent> onStrafe = var1 -> {
-        if (!this.watchdogPrediction.wo() || aEg.gameSettings.keyBindJump.isKeyDown() || Ek < 12 && KillAura.nQ || SlotUtil.vy() == -1 || this.e(Manager.class).kb() && Ek < 12) {
+        if (!this.watchdogPrediction.wo() || aEg.gameSettings.keyBindJump.isKeyDown() || predictionTicks < 12 && KillAura.blocking || SlotUtil.vy() == -1 || this.e(Manager.class).kb() && predictionTicks < 12) {
             aEg.gameSettings.cgG.setPressed(true);
-            Ek = 0;
-            Eo = false;
+            predictionTicks = 0;
+            predictionDone = false;
         }
 
-        if (aEg.thePlayer.cqL == 2 && !KillAura.nQ && this.watchdogPrediction.wo()) {
+        if (aEg.thePlayer.cqL == 2 && !KillAura.blocking && this.watchdogPrediction.wo()) {
             aEg.gameSettings.cgG.setPressed(false);
         }
 
@@ -64,13 +64,13 @@ public class Sprint extends Module {
         }
 
         if (this.watchdogPrediction.wo()) {
-            if (Ek < 12 && aEg.thePlayer.cqL > 3 && aEg.thePlayer.moveForward > 0.0F && !KillAura.nQ && SlotUtil.vy() != -1 && !this.e(Manager.class).kb()) {
+            if (predictionTicks < 12 && aEg.thePlayer.cqL > 3 && aEg.thePlayer.moveForward > 0.0F && !KillAura.blocking && SlotUtil.vy() != -1 && !this.e(Manager.class).kb()) {
                 aEg.thePlayer.inventory.currentItem = SlotUtil.vy();
-                Ek++;
-                if (Ek > 1) {
+                predictionTicks++;
+                if (predictionTicks > 1) {
                     aEg.gameSettings.cgI.setPressed(true);
                 }
-            } else if (!aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.moveForward > 0.0F && !KillAura.nQ) {
+            } else if (!aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.moveForward > 0.0F && !KillAura.blocking) {
                 aEg.gameSettings.cgI.setPressed(false);
             }
         }
@@ -78,7 +78,7 @@ public class Sprint extends Module {
     @EventLink
     Listener<JumpEvent> onJump = var0 -> {};
     @EventLink
-    Listener<en> Eu = var0 -> {};
+    Listener<en> onSprint = var0 -> {};
     @EventLink
     Listener<PreMotionEvent> onPreMotion = var0 -> {};
     @EventLink
@@ -92,7 +92,7 @@ public class Sprint extends Module {
                 while (iterator1.hasNext()) {
                     if (!((AttributeModifier)iterator1.next()).getID().equals(UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D"))
                         && !aEg.thePlayer.isSprinting()) {
-                        Ek = Ek;
+                        predictionTicks = predictionTicks;
                     }
                 }
             }
@@ -100,8 +100,8 @@ public class Sprint extends Module {
     };
     @EventLink
     Listener<MoveInputEvent> onMoveInput = var1 -> {
-        this.jp = var1.getForward();
-        this.jq = var1.getStrafe();
+        this.forward = var1.getForward();
+        this.strafe = var1.getStrafe();
     };
     @EventLink
     Listener<PreUpdateEvent> onPreUpdate = var0 -> {
@@ -116,18 +116,18 @@ public class Sprint extends Module {
     @Override
     public void onEnable() {
         afi.b("don't start on an edge when enabling");
-        Eo = false;
+        predictionDone = false;
         Ep = false;
         this.El = true;
-        Ek = 0;
+        predictionTicks = 0;
     }
 
     @Override
     public void onDisable() {
         aEg.thePlayer.setSprinting(aEg.gameSettings.cgG.isKeyDown());
         aEg.thePlayer.bjQ = false;
-        Eo = false;
-        Ek = 0;
+        predictionDone = false;
+        predictionTicks = 0;
         Ep = false;
         this.El = true;
         aEg.gameSettings.cgI.setPressed(false);

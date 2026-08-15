@@ -13,39 +13,39 @@ import com.alan.clients.component.impl.player.BadPacketsComponent;
 public class ClickAssist extends Module {
     public final NumberValue extraLeftClicks = new NumberValue("Extra Left Clicks", this, 1, 0, 3, 1);
     public final NumberValue extraRightClicks = new NumberValue("Extra Right Clicks", this, 1, 0, 3, 1);
-    public int AP;
-    public int AQ;
-    private boolean AR;
-    private boolean AS;
+    public int remainingLeftClicks;
+    public int remainingRightClicks;
+    private boolean leftWasDown;
+    private boolean rightWasDown;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.gameSettings.cgK.isKeyDown()) {
-            if (!this.AR) {
-                this.AP = this.extraLeftClicks.wo().intValue();
+            if (!this.leftWasDown) {
+                this.remainingLeftClicks = this.extraLeftClicks.wo().intValue();
             }
 
-            this.AR = true;
+            this.leftWasDown = true;
         } else {
-            this.AR = false;
+            this.leftWasDown = false;
         }
 
         if (aEg.gameSettings.cgI.isKeyDown()) {
-            if (!this.AS) {
-                this.AQ = this.extraRightClicks.wo().intValue();
+            if (!this.rightWasDown) {
+                this.remainingRightClicks = this.extraRightClicks.wo().intValue();
             }
 
-            this.AS = true;
+            this.rightWasDown = true;
         } else {
-            this.AS = false;
+            this.rightWasDown = false;
         }
 
-        if (this.AP > 0 && Math.random() > 0.2) {
-            this.AP--;
+        if (this.remainingLeftClicks > 0 && Math.random() > 0.2) {
+            this.remainingLeftClicks--;
             if (!aEg.thePlayer.isUsingItem() && !BadPacketsComponent.aW()) {
                 aEg.Ay();
             }
-        } else if (this.AQ > 0 && Math.random() > 0.2) {
-            this.AQ--;
+        } else if (this.remainingRightClicks > 0 && Math.random() > 0.2) {
+            this.remainingRightClicks--;
             if (!aEg.thePlayer.isUsingItem() && !BadPacketsComponent.aW()) {
                 aEg.Az();
             }

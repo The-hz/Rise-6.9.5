@@ -38,8 +38,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 public class WatchdogPredictionNoSlow extends Mode<NoSlow> {
-    boolean bi;
-    int MM;
+    boolean wasUsingItem;
+    int usingTicks;
     public NumberValue maxPingSpoof = new NumberValue("Max Ping Spoof", this, 8, 0, 30, 1);
     public NumberValue whenToFinishEating = new NumberValue("When to finish eating", this, 30, 20, 36, 1);
     public final BooleanValue nonBlinkSpeedBypass = new BooleanValue("Non-Blink Speed Bypass", this, true);
@@ -57,33 +57,33 @@ public class WatchdogPredictionNoSlow extends Mode<NoSlow> {
                                 && this.getParent().potion.wo()
                                 && aEg.thePlayer.isEating()
                     )) {
-                    this.MM++;
-                    if (this.MM > this.maxPingSpoof.wo().intValue()) {
+                    this.usingTicks++;
+                    if (this.usingTicks > this.maxPingSpoof.wo().intValue()) {
                         BlinkComponent.a(30000, true, false, false, false, true);
                     }
                 }
 
-                this.bi = true;
-            } else if (this.bi) {
-                this.MM = 0;
-                this.bi = false;
+                this.wasUsingItem = true;
+            } else if (this.wasUsingItem) {
+                this.usingTicks = 0;
+                this.wasUsingItem = false;
                 BlinkComponent.dispatch();
             }
 
-            if (this.MM > this.whenToFinishEating.wo().intValue()) {
+            if (this.usingTicks > this.whenToFinishEating.wo().intValue()) {
                 aEg.gameSettings.cgI.setPressed(false);
             }
         }
     };
     @EventLink
-    public final Listener<en> NA = var1x -> {
-        if (aEg.thePlayer.isUsingItem() && aEg.thePlayer.moveForward > 0.0F && this.nonBlinkSpeedBypass.wo() && this.MM <= this.maxPingSpoof.wo().intValue()) {
+    public final Listener<en> onSprint = var1x -> {
+        if (aEg.thePlayer.isUsingItem() && aEg.thePlayer.moveForward > 0.0F && this.nonBlinkSpeedBypass.wo() && this.usingTicks <= this.maxPingSpoof.wo().intValue()) {
             aEg.thePlayer.setSprinting(true);
         }
     };
     @EventLink(value = 1)
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        if ((!KillAura.mB || !this.e(KillAura.class).isEnabled())
+        if ((!KillAura.attacking || !this.e(KillAura.class).isEnabled())
             && (!aEg.thePlayer.onGround || aEg.thePlayer.cqL > 2)
             && !aEg.gameSettings.keyBindRight.isKeyDown()
             && !aEg.gameSettings.keyBindLeft.isKeyDown()
@@ -96,14 +96,14 @@ public class WatchdogPredictionNoSlow extends Mode<NoSlow> {
     };
     @EventLink
     public final Listener<SlowDownEvent> onSlowDown = var1x -> {
-        if (this.getParent().food.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood && this.MM > this.maxPingSpoof.wo().intValue()) {
+        if (this.getParent().food.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood && this.usingTicks > this.maxPingSpoof.wo().intValue()) {
             var1x.setCancelled();
         }
 
         if (this.getParent().potion.wo()
             && aEg.thePlayer.isUsingItem()
             && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion
-            && this.MM > this.maxPingSpoof.wo().intValue()) {
+            && this.usingTicks > this.maxPingSpoof.wo().intValue()) {
             var1x.setCancelled();
         }
 
@@ -124,7 +124,7 @@ public class WatchdogPredictionNoSlow extends Mode<NoSlow> {
             var1x.setCancelled();
         }
 
-        if (this.getParent().bow.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow && this.MM > this.maxPingSpoof.wo().intValue()) {
+        if (this.getParent().bow.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow && this.usingTicks > this.maxPingSpoof.wo().intValue()) {
             var1x.setCancelled();
         }
     };

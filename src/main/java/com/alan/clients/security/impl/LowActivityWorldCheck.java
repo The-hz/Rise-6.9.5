@@ -78,7 +78,7 @@ public class LowActivityWorldCheck extends SecurityFeature {
     public boolean awx;
     public static Pattern awk;
     public static Pattern[] avZ;
-    public Object avG;
+    public Object theWorld;
     public long aww;
 
     public void aD(String var1) {
@@ -218,7 +218,7 @@ public class LowActivityWorldCheck extends SecurityFeature {
     }
 
     public void nW() {
-        if (!this.awx && this.awq != null && this.awq != this.avG && aEg != null && aEg.theWorld != null && aEg.thePlayer != null) {
+        if (!this.awx && this.awq != null && this.awq != this.theWorld && aEg != null && aEg.theWorld != null && aEg.thePlayer != null) {
             long totalWorldTime = aEg.theWorld.getTotalWorldTime();
             if (totalWorldTime >= this.awt) {
                 this.awt = totalWorldTime + 5L;
@@ -239,9 +239,9 @@ public class LowActivityWorldCheck extends SecurityFeature {
     }
 
     public void aw(String var1) {
-        if (!this.awx && this.awq != null && this.awq != this.avG) {
+        if (!this.awx && this.awq != null && this.awq != this.theWorld) {
             if (var1 != null && this.ay(var1) && aEg != null && aEg.theWorld != null) {
-                this.avG = aEg.theWorld;
+                this.theWorld = aEg.theWorld;
                 this.avH = true;
             } else {
                 String s = this.ax(var1);
@@ -346,13 +346,13 @@ public class LowActivityWorldCheck extends SecurityFeature {
                     && (s1.contains("you were spawned in limbo.") || s1.contains("you are afk, move around to return from afk."))
                     && aEg != null
                     && aEg.theWorld != null) {
-                    this.avG = aEg.theWorld;
+                    this.theWorld = aEg.theWorld;
                     this.avH = true;
                     return;
                 }
 
                 if (s != null && this.ay(s) && aEg != null && aEg.theWorld != null) {
-                    this.avG = aEg.theWorld;
+                    this.theWorld = aEg.theWorld;
                     this.avH = true;
                     return;
                 }
@@ -365,10 +365,10 @@ public class LowActivityWorldCheck extends SecurityFeature {
         this.onWorldChange = var1 -> {
             this.av("world_change");
             if (this.avH) {
-                this.avG = aEg != null ? aEg.theWorld : null;
+                this.theWorld = aEg != null ? aEg.theWorld : null;
                 this.avH = false;
             } else {
-                this.avG = null;
+                this.theWorld = null;
             }
         };
         this.onServerKick = var1 -> this.av("server_kick");
@@ -387,7 +387,7 @@ public class LowActivityWorldCheck extends SecurityFeature {
 
     public void av(String var1) {
         if (this.awq != null) {
-            if (this.awq != this.avG && !this.avH) {
+            if (this.awq != this.theWorld && !this.avH) {
                 long l = System.currentTimeMillis() - this.awr;
                 int size2 = this.awo.size();
                 int empty = !this.awp.isEmpty() ? 1 : 0;
@@ -448,7 +448,7 @@ public class LowActivityWorldCheck extends SecurityFeature {
     }
 
     public void nV() {
-        if (!this.awx && this.awq != null && this.awq != this.avG && aEg != null && aEg.theWorld != null && aEg.thePlayer != null) {
+        if (!this.awx && this.awq != null && this.awq != this.theWorld && aEg != null && aEg.theWorld != null && aEg.thePlayer != null) {
             if (this.awo.size() < 5) {
                 long totalWorldTime = aEg.theWorld.getTotalWorldTime();
                 if (totalWorldTime >= this.aws) {

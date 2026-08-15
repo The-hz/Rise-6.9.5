@@ -6,18 +6,18 @@ import java.util.List;
 
 public class SurplusWidthComparator implements Comparator<Integer> {
     final int size;
-    final int[] XL;
-    final int[] XM;
-    final List XN;
+    final int[] widths;
+    final int[] minWidths;
+    final List tokenKinds;
 
     public SurplusWidthComparator(Spotify spotify, int var2, int[] var3, int[] var4, List var5) {
         this.size = var2;
-        this.XL = var3;
-        this.XM = var4;
-        this.XN = var5;
+        this.widths = var3;
+        this.minWidths = var4;
+        this.tokenKinds = var5;
     }
 
-    public int a(Integer var1, Integer var2) {
+    public int compareSurplus(Integer var1, Integer var2) {
         if (var1 == this.size - 1) {
             return 1;
         }
@@ -26,12 +26,12 @@ public class SurplusWidthComparator implements Comparator<Integer> {
             return -1;
         }
 
-        int i = this.XL[var1] - this.XM[var1];
-        int j = this.XL[var2] - this.XM[var2];
-        return i != j ? Integer.compare(j, i) : Integer.compare((Integer)this.XN.get(var1), (Integer)this.XN.get(var2));
+        int i = this.widths[var1] - this.minWidths[var1];
+        int j = this.widths[var2] - this.minWidths[var2];
+        return i != j ? Integer.compare(j, i) : Integer.compare((Integer)this.tokenKinds.get(var1), (Integer)this.tokenKinds.get(var2));
     }
 
     public int compare(Integer var1, Integer var2) {
-        return this.a(var1, var2);
+        return this.compareSurplus(var1, var2);
     }
 }

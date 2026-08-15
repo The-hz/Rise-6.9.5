@@ -44,20 +44,20 @@ import net.minecraft.util.ResourceLocation;
 
 public class ModernTargetInfo extends Mode<TargetInfo> {
     private final BooleanValue particles = new BooleanValue("Particles", this, true);
-    private final agc auE = FontManager.MAIN.a(22, FontWeight.LIGHT);
-    private final agc auF = FontManager.MAIN.a(22, FontWeight.MEDIUM);
+    private final agc lightFont = FontManager.MAIN.a(22, FontWeight.LIGHT);
+    private final agc mediumFont = FontManager.MAIN.a(22, FontWeight.MEDIUM);
     private final ModeValue backgroundMode = new TargetInfoBackgroundModeValue(this, "Background Mode", this);
-    private static final float auH = 0.01F;
-    private static final float auI = 0.8F;
-    private static final int auJ = 256;
-    private long auK = 0L;
-    private float auL = 0.0F;
+    private static final float MIN_DAMAGE = 0.01F;
+    private static final float MAX_REDUCTION = 0.8F;
+    private static final int MAX_ITERATIONS = 256;
+    private long lastUpdateTime = 0L;
+    private float cachedAdvantage = 0.0F;
     private TargetInfo targetInfoModule;
-    private final int auM = 8;
+    private final int padding = 8;
     private final int auN = 7;
     private final int auO = 4;
-    private final Animation auP = new Animation(Easing.EASE_OUT_ELASTIC, 500L);
-    private final Animation auQ = new Animation(Easing.EASE_OUT_SINE, 500L);
+    private final Animation scaleAnimation = new Animation(Easing.EASE_OUT_ELASTIC, 500L);
+    private final Animation healthAnimation = new Animation(Easing.EASE_OUT_SINE, 500L);
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1x -> {
         if (this.targetInfoModule == null) {
@@ -69,34 +69,34 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         Entity entity = this.targetInfoModule.target;
         if (entity != null) {
             boolean flag = !this.targetInfoModule.inWorld || this.targetInfoModule.stopwatch.T(1000L);
-            this.auP.setDuration(flag ? 400L : 850L);
-            this.auP.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
-            this.auP.Q(flag ? 0.0 : 1.0);
-            if (!(this.auP.getValue() <= 0.0)) {
+            this.scaleAnimation.setDuration(flag ? 400L : 850L);
+            this.scaleAnimation.setEasing(flag ? Easing.EASE_IN_BACK : Easing.EASE_OUT_ELASTIC);
+            this.scaleAnimation.Q(flag ? 0.0 : 1.0);
+            if (!(this.scaleAnimation.getValue() <= 0.0)) {
                 String s = entity.getName();
                 String s1 = bf.c(s, s);
-                String s2 = this.nC() > 0.0F ? "Winning:" : "Losing:";
+                String s2 = this.getAdvantage() > 0.0F ? "Winning:" : "Losing:";
                 double d0 = this.targetInfoModule.position.x;
                 double d1 = this.targetInfoModule.position.y;
-                double d2 = this.auF.getStringWidth(s1);
-                double d3 = this.auE.getStringWidth(s2);
+                double d2 = this.mediumFont.getStringWidth(s1);
+                double d3 = this.lightFont.getStringWidth(s2);
                 AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;
                 HealthBypass healthbypass = this.e(HealthBypass.class);
-                float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractclientplayer) : abstractclientplayer.getHealth();
+                float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.getScoreboardHealth(abstractclientplayer) : abstractclientplayer.getHealth();
                 double d4 = Math.min(!this.targetInfoModule.inWorld ? 0.0 : MathUtil.round(f, 1), abstractclientplayer.getMaxHealth());
-                double d5 = this.auF.getStringWidth(String.valueOf(d4));
+                double d5 = this.mediumFont.getStringWidth(String.valueOf(d4));
                 double d6 = Math.max(d3 + d2 + 35.0 - d5, 65.0);
-                this.auQ.Q(d4 / abstractclientplayer.getMaxHealth() * d6);
-                this.auQ.setEasing(Easing.EASE_OUT_QUINT);
-                this.auQ.setDuration(250L);
-                double d7 = this.auQ.getValue();
+                this.healthAnimation.Q(d4 / abstractclientplayer.getMaxHealth() * d6);
+                this.healthAnimation.setEasing(Easing.EASE_OUT_QUINT);
+                this.healthAnimation.setDuration(250L);
+                double d7 = this.healthAnimation.getValue();
                 double d8 = (abstractclientplayer.hurtTime == 0 ? 0.0F : abstractclientplayer.hurtTime - aEg.timer.bWm) * 0.5;
                 byte b0 = 32;
                 double d9 = d8 / 2.0;
                 double d10 = 48 + d6 + 4.0 + d5 + 8.0;
                 double d11 = 48;
                 this.targetInfoModule.positionValue.n(new Vector2d(d10, d11));
-                double d12 = this.auP.getValue();
+                double d12 = this.scaleAnimation.getValue();
                 this.b(ShaderQueueType.REGULAR).c(() -> {
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
@@ -120,8 +120,8 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                     }
 
                     RenderUtil.a(d0, d1, d10 - 1.0, d11, 16.0, color, color1, true);
-                    this.auE.b(s2, d0 + 8.0 + b0 + 7.0, d1 + 8.0 + 4.0 + 2.0, Color.WHITE.hashCode());
-                    this.auF.b(s1, d0 + 8.0 + b0 + 7.0 + d3 + 3.0, d1 + 8.0 + 4.0 + 2.5, color2.hashCode());
+                    this.lightFont.b(s2, d0 + 8.0 + b0 + 7.0, d1 + 8.0 + 4.0 + 2.0, Color.WHITE.hashCode());
+                    this.mediumFont.b(s1, d0 + 8.0 + b0 + 7.0 + d3 + 3.0, d1 + 8.0 + 4.0 + 2.5, color2.hashCode());
                     GlStateManager.popMatrix();
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((d0 + d10 / 2.0) * (1.0 - d12), (d1 + d11 / 2.0) * (1.0 - d12), 0.0);
@@ -132,7 +132,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
                     this.rz();
                     RenderUtil.a(d13, d14, d6, 6.0, 3.0, color8, Themes.rK(), true);
                     RenderUtil.a(d0 + 8.0 + b0 + 7.0, d1 + 8.0 + b0 - 4.0 - 7.0, d7, 6.0, 3.0, color3, color2, true);
-                    this.auF.b(String.valueOf(d4), d0 + 8.0 + b0 + 7.0 + d6 + 4.0, d1 + 8.0 + b0 - 4.0 - 8.0, color2.hashCode());
+                    this.mediumFont.b(String.valueOf(d4), d0 + 8.0 + b0 + 7.0 + d6 + 4.0, d1 + 8.0 + b0 - 4.0 - 8.0, color2.hashCode());
                     GlStateManager.popMatrix();
                 });
                 this.b(ShaderQueueType.REGULAR, 1).c(() -> {
@@ -165,7 +165,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
     public final Listener<TickEvent> onTick = var1x -> {
         if (this.targetInfoModule != null) {
             Entity entity = this.targetInfoModule.target;
-            if (entity != null && !(this.auP.getValue() <= 0.0) && this.particles.wo()) {
+            if (entity != null && !(this.scaleAnimation.getValue() <= 0.0) && this.particles.wo()) {
                 double d0 = (((AbstractClientPlayer)entity).hurtTime == 0 ? 0.0F : ((AbstractClientPlayer)entity).hurtTime - aEg.timer.bWm) * 0.5;
                 if (d0 > 0.0) {
                     for (int i = 0; i < d0 * Math.random() / 2.0; i++) {
@@ -185,7 +185,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         super(var1, targetInfo);
     }
 
-    private float a(ItemStack stack, Entity entity, Entity var3) {
+    private float calculateDamage(ItemStack stack, Entity entity, Entity var3) {
         float f = 1.0F;
         if (stack != null) {
             Item item = stack.getItem();
@@ -214,7 +214,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
             float totalArmorValue = entitylivingbase1.getTotalArmorValue();
             float f2 = Math.min(totalArmorValue * 0.04F, 0.8F);
             f *= 1.0F - f2;
-            int k = this.C(entitylivingbase1);
+            int k = this.getProtectionPoints(entitylivingbase1);
             int l = Math.min(20, (int)Math.ceil(Math.min(25, k) * 0.75F));
             if (l > 0) {
                 f *= 1.0F - l * 0.04F;
@@ -236,35 +236,35 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         return Math.max(0.01F, f);
     }
 
-    private int C(EntityLivingBase living) {
+    private int getProtectionPoints(EntityLivingBase living) {
         int i = 0;
 
         for (int j = 0; j < 4; j++) {
             ItemStack itemstack = living.getCurrentArmor(j);
             int k = itemstack != null ? EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, itemstack) : 0;
             if (k > 0) {
-                i += this.T(k);
+                i += this.getProtectionModifier(k);
             }
         }
 
         return i;
     }
 
-    private int T(int var1) {
+    private int getProtectionModifier(int var1) {
         return (int)Math.floor((6 + var1 * var1) * 0.75F / 3.0F);
     }
 
-    private float nC() {
+    private float getAdvantage() {
         long now = System.currentTimeMillis();
-        if (now - this.auK > 200L) {
-            this.auL = this.nD();
-            this.auK = now;
+        if (now - this.lastUpdateTime > 200L) {
+            this.cachedAdvantage = this.calculateAdvantage();
+            this.lastUpdateTime = now;
         }
 
-        return this.auL;
+        return this.cachedAdvantage;
     }
 
-    private float nD() {
+    private float calculateAdvantage() {
         Entity entity = this.targetInfoModule.target;
         if (!(entity instanceof AbstractClientPlayer)) {
             return 0.0F;
@@ -273,10 +273,10 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         float f = Math.max(0.1F, aEg.thePlayer.getHealth());
         AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;
         HealthBypass healthbypass = this.e(HealthBypass.class);
-        float f1 = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractclientplayer) : abstractclientplayer.getHealth();
+        float f1 = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.getScoreboardHealth(abstractclientplayer) : abstractclientplayer.getHealth();
         float f2 = Math.max(0.1F, f1);
-        float f3 = this.a(aEg.thePlayer.getHeldItem(), aEg.thePlayer, entity);
-        float f4 = this.a(((AbstractClientPlayer)entity).getHeldItem(), entity, aEg.thePlayer);
+        float f3 = this.calculateDamage(aEg.thePlayer.getHeldItem(), aEg.thePlayer, entity);
+        float f4 = this.calculateDamage(((AbstractClientPlayer)entity).getHeldItem(), entity, aEg.thePlayer);
         if (f3 <= 0.01F && f4 <= 0.01F) {
             return 0.0F;
         }
@@ -300,7 +300,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         GlStateManager.alphaFunc(516, 0.0F);
         GlStateManager.enableTexture2D();
         HealthBypass healthbypass = this.e(HealthBypass.class);
-        float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractClientPlayer) : abstractClientPlayer.getHealth();
+        float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.getScoreboardHealth(abstractClientPlayer) : abstractClientPlayer.getHealth();
         ResourceLocation resourcelocation = this.targetInfoModule.inWorld && f > 0.0F ? abstractClientPlayer.getLocationSkin() : RenderSkeleton.getEntityTexture();
         aEg.getTextureManager().bindTexture(resourcelocation);
         Gui.drawScaledCustomSizeModalRect(var2, var4, 4.0F, 4.0F, 4.0F, 4.0F, var6, var6, 32.0F, 32.0F);

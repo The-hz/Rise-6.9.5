@@ -27,7 +27,7 @@ public class ModernNameTags
 extends Mode<NameTags> {
     private final BooleanValue health = new BooleanValue("Show Health", (Mode<?>)this, (Boolean)true);
     private final BooleanValue overlaysBloomBlur = new BooleanValue("Overlays (Bloom/Blur)", (Mode<?>)this, (Boolean)true);
-    private final agc atC = FontManager.MAIN.a(14, FontWeight.LIGHT);
+    private final agc healthFont = FontManager.MAIN.a(14, FontWeight.LIGHT);
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         List<EntityLivingBase> list = TargetComponent.b((Boolean)((NameTags)this.getParent()).player.wo(), (Boolean)((NameTags)this.getParent()).invisibles.wo(), (Boolean)((NameTags)this.getParent()).animals.wo(), (Boolean)((NameTags)this.getParent()).mobs.wo(), (Boolean)((NameTags)this.getParent()).playerTeammates.wo(), true);
@@ -45,10 +45,10 @@ extends Mode<NameTags> {
             String string = entityLivingBase.getName();
             double d2 = ((NameTags)this.getParent()).a(string, FontManager.MAIN.a(17, FontWeight.LIGHT));
             HealthBypass healthBypass = this.e(HealthBypass.class);
-            float f2 = healthBypass != null && healthBypass.isEnabled() ? HealthBypass.B(entityLivingBase) : entityLivingBase.getHealth();
+            float f2 = healthBypass != null && healthBypass.isEnabled() ? HealthBypass.getScoreboardHealth(entityLivingBase) : entityLivingBase.getHealth();
             double d3 = vector4d.x + (vector4d.z - vector4d.x) / 2.0;
             double d4 = vector4d.y - 2.0;
-            double d5 = (double)(FontManager.MAIN.a(17, FontWeight.LIGHT).height() - 2.0f + ((Boolean)this.health.wo() != false ? this.atC.height() : 0.0f)) + 4.0;
+            double d5 = (double)(FontManager.MAIN.a(17, FontWeight.LIGHT).height() - 2.0f + ((Boolean)this.health.wo() != false ? this.healthFont.height() : 0.0f)) + 4.0;
             double d6 = d4 - d5 + 1.0;
             boolean bl = entityLivingBase.isPotionActive(Potion.damageBoost);
             Color color2 = new Color(255, 30, 30, 235);
@@ -64,7 +64,7 @@ extends Mode<NameTags> {
                 RenderUtil.roundedRectangle(d3 - 2.0 - d2 / 2.0, d6, d2 + 4.0, d5, this.rz().getRound() - 1, color);
                 FontManager.MAIN.a(17, FontWeight.LIGHT).drawString(string, d3 - 0.5, d6 - 0.5 + 4.0, this.rz().rA().getRGB());
                 if (((Boolean)this.health.wo()).booleanValue()) {
-                    this.atC.drawString(String.valueOf((int)f2), d3, d4 + 5.0 - 2.0 - (double)9, Color.WHITE.getRGB());
+                    this.healthFont.drawString(String.valueOf((int)f2), d3, d4 + 5.0 - 2.0 - (double)9, Color.WHITE.getRGB());
                 }
             });
             if (!((Boolean)this.overlaysBloomBlur.wo()).booleanValue()) continue;

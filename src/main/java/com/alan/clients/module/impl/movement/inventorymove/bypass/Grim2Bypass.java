@@ -13,7 +13,7 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 
 public final class Grim2Bypass extends Mode<InventoryMove> {
-    private final KeyBinding[] JH = new KeyBinding[]{
+    private final KeyBinding[] movementKeys = new KeyBinding[]{
         aEg.gameSettings.keyBindForward,
         aEg.gameSettings.keyBindBack,
         aEg.gameSettings.keyBindRight,
@@ -21,7 +21,7 @@ public final class Grim2Bypass extends Mode<InventoryMove> {
         aEg.gameSettings.keyBindJump
     };
     @EventLink
-    public final Listener<en> JI = var0 -> {
+    public final Listener<en> onSprint = var0 -> {
         if (aEg.currentScreen instanceof GuiInventory || aEg.currentScreen instanceof GuiChest) {
             aEg.thePlayer.setSprinting(false);
         }
@@ -29,7 +29,7 @@ public final class Grim2Bypass extends Mode<InventoryMove> {
     @EventLink
     private final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.currentScreen != null && !(aEg.currentScreen instanceof GuiChat) && aEg.currentScreen != this.getStandardClickGUI()) {
-            for (KeyBinding keybinding : this.JH) {
+            for (KeyBinding keybinding : this.movementKeys) {
                 keybinding.setPressed(GameSettings.isKeyDown(keybinding));
             }
         }

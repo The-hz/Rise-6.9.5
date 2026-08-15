@@ -15,10 +15,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
 public class RotationsMimic extends Mode<Mimic> {
-    Vector2f sg = new Vector2f(0.0F, 0.0F);
-    Vector2f fu = new Vector2f(0.0F, 0.0F);
-    Animation sh = new Animation(Easing.LINEAR, 150L);
-    Animation si = new Animation(Easing.LINEAR, 150L);
+    Vector2f animatedRotation = new Vector2f(0.0F, 0.0F);
+    Vector2f rotationDelta = new Vector2f(0.0F, 0.0F);
+    Animation yawAnimation = new Animation(Easing.LINEAR, 150L);
+    Animation pitchAnimation = new Animation(Easing.LINEAR, 150L);
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         EntityLivingBase entitylivingbase = TargetComponent.e(6.0);
@@ -27,34 +27,34 @@ public class RotationsMimic extends Mode<Mimic> {
             float f1 = entitylivingbase.rotationPitch;
             float f2 = f - 180.0F;
             float f3 = -f1;
-            this.sh.Q(f2);
-            this.sg.x = (float)this.sh.getValue();
-            this.si.Q(f3);
-            this.sg.y = (float)this.si.getValue();
+            this.yawAnimation.Q(f2);
+            this.animatedRotation.x = (float)this.yawAnimation.getValue();
+            this.pitchAnimation.Q(f3);
+            this.animatedRotation.y = (float)this.pitchAnimation.getValue();
             Vector2f vector2f = RotationUtil.a(new Vector2f(f2, f3), RotationUtil.y(entitylivingbase), 1000.0);
             Vector2f vector2f1 = RotationUtil.a(
                 new Vector2f(f2, f3), RotationUtil.y(entitylivingbase), (Math.abs(vector2f.getX()) + Math.abs(vector2f.getY())) / (vector2f.getX() > 90.0F ? 1.05 : 1.5)
             );
             float f4 = f2 + vector2f1.x;
             float f5 = f3 + vector2f1.y;
-            this.fu = new Vector2f(MathHelper.wrapAngleTo180_float(f4 - aEg.thePlayer.pl), f5 - aEg.thePlayer.rotationPitch);
-            this.fu.x = this.fu.x + (float)((Math.random() - 0.5) * this.fu.getX() / 10.0);
-            this.fu.y = this.fu.y + (float)((Math.random() - 0.5) * this.fu.getY() / 10.0);
+            this.rotationDelta = new Vector2f(MathHelper.wrapAngleTo180_float(f4 - aEg.thePlayer.pl), f5 - aEg.thePlayer.rotationPitch);
+            this.rotationDelta.x = this.rotationDelta.x + (float)((Math.random() - 0.5) * this.rotationDelta.getX() / 10.0);
+            this.rotationDelta.y = this.rotationDelta.y + (float)((Math.random() - 0.5) * this.rotationDelta.getY() / 10.0);
         } else {
-            this.sh.setValue(aEg.thePlayer.pl);
-            this.si.setValue(aEg.thePlayer.rotationPitch);
-            this.fu = new Vector2f(0.0F, 0.0F);
+            this.yawAnimation.setValue(aEg.thePlayer.pl);
+            this.pitchAnimation.setValue(aEg.thePlayer.rotationPitch);
+            this.rotationDelta = new Vector2f(0.0F, 0.0F);
         }
     };
-    private long sk;
+    private long lastRenderTime;
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1x -> {
-        double d0 = 50.0 / (System.currentTimeMillis() - this.sk);
-        this.sk = System.currentTimeMillis();
+        double d0 = 50.0 / (System.currentTimeMillis() - this.lastRenderTime);
+        this.lastRenderTime = System.currentTimeMillis();
         double d1 = aEg.gameSettings.mouseSensitivity * 0.6F + 0.2F;
         double d2 = d1 * d1 * d1 * 8.0;
-        double d3 = (int)(this.fu.getX() / d2);
-        double d4 = (int)(this.fu.getY() / d2);
+        double d3 = (int)(this.rotationDelta.getX() / d2);
+        double d4 = (int)(this.rotationDelta.getY() / d2);
         double d5 = d3 * (1.0 / d2) * 6.6666665F;
         double d6 = d4 * (1.0 / d2) * 6.6666665F;
         double d7 = d5 / d0;

@@ -107,7 +107,7 @@ public final class CategoryScreen implements Screen, InstanceAccess {
 
     private Category oH() {
         for (Category category : Category.values()) {
-            if (category.getClickGUIScreen() == this.getStandardClickGUI().oZ()) {
+            if (category.getClickGUIScreen() == this.getStandardClickGUI().getScreen()) {
                 return category;
             }
         }

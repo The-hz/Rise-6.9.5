@@ -11,30 +11,30 @@ import com.alan.clients.value.Mode;
 import net.minecraft.block.BlockLiquid;
 
 public class BlocksMCPhase extends Mode<Phase> {
-    private int NP = 1;
+    private int stage = 1;
     @EventLink
     public final Listener<TickEvent> onTick = var1x -> {
         if (aEg.thePlayer != null && aEg.theWorld != null) {
-            switch (this.NP) {
+            switch (this.stage) {
                 case 1:
                     if (aEg.gameSettings.keyBindJump.isKeyDown() && !aEg.theWorld.isAirBlock(aEg.thePlayer.getPosition())) {
                         aEg.thePlayer.motionY = 0.42;
-                        this.NP++;
+                        this.stage++;
                     }
 
                     aEg.thePlayer.onGround = true;
                     break;
                 case 2:
                     aEg.thePlayer.motionY = 0.33;
-                    this.NP++;
+                    this.stage++;
                     break;
                 case 3:
                     aEg.thePlayer.motionY = 0.25;
-                    this.NP++;
+                    this.stage++;
             }
 
-            if (this.NP > 3 || this.NP == 0) {
-                this.NP = 1;
+            if (this.stage > 3 || this.stage == 0) {
+                this.stage = 1;
             }
 
             aEg.thePlayer.noClip = true;
@@ -67,7 +67,7 @@ public class BlocksMCPhase extends Mode<Phase> {
 
     @Override
     public void onEnable() {
-        this.NP = 1;
+        this.stage = 1;
         if (aEg.thePlayer != null) {
             aEg.thePlayer.motionY = 0.0;
         }
@@ -79,6 +79,6 @@ public class BlocksMCPhase extends Mode<Phase> {
             aEg.thePlayer.noClip = false;
         }
 
-        this.NP = 1;
+        this.stage = 1;
     }
 }

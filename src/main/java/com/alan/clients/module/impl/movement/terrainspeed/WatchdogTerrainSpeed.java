@@ -16,8 +16,8 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.potion.Potion;
 
 public final class WatchdogTerrainSpeed extends Mode<TerrainSpeed> {
-    private int SE;
-    private int SF;
+    private int offStairTicks;
+    private int offSlabTicks;
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
         if (PlayerUtil.o(aEg.thePlayer.posX, aEg.thePlayer.posY - 0.5, aEg.thePlayer.posZ) instanceof BlockSlab
@@ -30,10 +30,10 @@ public final class WatchdogTerrainSpeed extends Mode<TerrainSpeed> {
                 double[] adouble = new double[]{0.276, 0.309, 0.349, 0.3967};
             }
 
-            this.SF = 0;
+            this.offSlabTicks = 0;
         } else {
-            this.SF++;
-            if (this.SF == 1) {
+            this.offSlabTicks++;
+            if (this.offSlabTicks == 1) {
                 var1x.setFriction(var1x.getFriction() * 0.9F);
             }
         }
@@ -43,20 +43,20 @@ public final class WatchdogTerrainSpeed extends Mode<TerrainSpeed> {
             && !this.e(Speed.class).isEnabled()
             && this.e(KillAura.class).jE == null
             && aEg.gameSettings.keyBindForward.isKeyDown()) {
-            if (aEg.thePlayer.posY == Math.floor(aEg.thePlayer.posY) + 0.5 || this.SE == 0) {
+            if (aEg.thePlayer.posY == Math.floor(aEg.thePlayer.posY) + 0.5 || this.offStairTicks == 0) {
                 var1x.setFriction((float)(var1x.getFriction() * 3.98));
-                this.SE = 0;
+                this.offStairTicks = 0;
             }
         } else {
-            this.SE++;
-            if (this.SE == 1) {
+            this.offStairTicks++;
+            if (this.offStairTicks == 1) {
                 MoveUtil.stop();
             }
         }
     };
     @EventLink
     public final Listener<MoveEvent> onMove = var1x -> {
-        if (this.SE < 2) {
+        if (this.offStairTicks < 2) {
             var1x.setPosY(-0.0784);
             aEg.gameSettings.keyBindJump.setPressed(false);
         }

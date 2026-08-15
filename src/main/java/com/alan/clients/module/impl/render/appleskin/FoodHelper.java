@@ -15,7 +15,7 @@ public final class FoodHelper implements InstanceAccess {
         return new FoodValues(i, f);
     }
 
-    public static boolean t(ItemStack stack) {
+    public static boolean isRotten(ItemStack stack) {
         if (!(stack.getItem() instanceof ItemFood)) {
             return false;
         }

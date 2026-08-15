@@ -27,28 +27,28 @@ public class Grim191181Flight extends Mode<Flight> {
     public Listener<TeleportEvent> onTeleport;
     @EventLink
     public Listener<PacketReceiveEvent> onPacketReceive;
-    public boolean Ga;
+    public boolean shouldFly;
     public NumberValue speed = new NumberValue("Speed", this, 0.275, 0, 0.32, 0.001);
-    public boolean Eo;
+    public boolean frozen;
 
     public Grim191181Flight(String var1, Flight flight) {
         super(var1, flight);
         this.timer = new NumberValue("Timer", this, 1, 0.1, 10, 0.1);
         this.onPostStrafe = var1x -> {
             aEg.timer.dzD = this.timer.wo().floatValue();
-            if (!this.Eo && aEg.thePlayer.fallDistance > 0.0F) {
+            if (!this.frozen && aEg.thePlayer.fallDistance > 0.0F) {
                 PacketUtil.send(new C03PacketPlayer(true));
                 aEg.thePlayer.fallDistance = 0.0F;
-                this.Eo = true;
+                this.frozen = true;
             }
 
-            if (this.Eo) {
+            if (this.frozen) {
                 aEg.thePlayer.motionX = 0.0;
                 aEg.thePlayer.motionZ = 0.0;
                 aEg.thePlayer.motionY = 0.0;
             }
 
-            if (this.Ga) {
+            if (this.shouldFly) {
                 MoveUtil.preventDiagonalSpeed();
                 MoveUtil.moveFlying(this.speed.wo().doubleValue());
                 if (this.glideLessFlyMore.wo()) {
@@ -58,22 +58,22 @@ public class Grim191181Flight extends Mode<Flight> {
                 }
 
                 MoveUtil.preventDiagonalSpeed();
-                this.Ga = false;
+                this.shouldFly = false;
             }
 
             MoveUtil.preventDiagonalSpeed();
         };
         this.onPreMotion = var1x -> {
-            if (this.Eo) {
+            if (this.frozen) {
                 var1x.setCancelled();
             }
         };
         this.onPacketReceive = var1x -> {
             Packet packet = var1x.getPacket();
             if (packet instanceof S12PacketEntityVelocity && ((S12PacketEntityVelocity)packet).getEntityID() == aEg.thePlayer.getEntityId()) {
-                this.Eo = false;
+                this.frozen = false;
                 var1x.setCancelled();
-                this.Ga = true;
+                this.shouldFly = true;
             }
         };
         this.onTeleport = var0 -> {};
@@ -81,7 +81,7 @@ public class Grim191181Flight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        this.Eo = false;
+        this.frozen = false;
     }
 
 

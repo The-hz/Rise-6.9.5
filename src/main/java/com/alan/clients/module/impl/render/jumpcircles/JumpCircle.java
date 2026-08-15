@@ -3,12 +3,12 @@ package com.alan.clients.module.impl.render.jumpcircles;
 import net.minecraft.util.Vec3;
 
 public final class JumpCircle {
-    private final Vec3 aoH;
+    private final Vec3 position;
     public double radius;
     public float alpha;
 
     public JumpCircle(Vec3 vec, double var2, float var4) {
-        this.aoH = vec;
+        this.position = vec;
         this.radius = var2;
         this.alpha = var4;
     }
@@ -18,7 +18,7 @@ public final class JumpCircle {
     }
 
     public Vec3 getPosition() {
-        return this.aoH;
+        return this.position;
     }
 
     public double getRadius() {

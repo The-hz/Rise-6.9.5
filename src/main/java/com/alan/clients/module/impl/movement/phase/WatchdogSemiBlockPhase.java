@@ -25,20 +25,20 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
     private final NumberValue amount = new NumberValue("Amount", this, 1, 0.1, 1.5, 0.1);
     private final NumberValue timer = new NumberValue("Timer", this, 0.1, 0.1, 1, 0.1);
     private final BooleanValue packet = new BooleanValue("Packet", this, false);
-    private boolean OK;
-    private boolean Od;
+    private boolean canPhase;
+    private boolean pushedThisTick;
     private double lastSetbackX;
     private double lastSetbackZ;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        this.Od = false;
+        this.pushedThisTick = false;
         double d0 = Math.toRadians(aEg.thePlayer.pl);
         double d1 = Math.sin(d0);
         double d2 = Math.cos(d0);
         if (aEg.thePlayer.isCollidedHorizontally) {
             aEg.thePlayer.setPosition(aEg.thePlayer.posX - d1 * 0.01, aEg.thePlayer.posY, aEg.thePlayer.posZ + d2 * 0.01);
-            this.Od = true;
-        } else if (this.OK && PlayerUtil.vk()) {
+            this.pushedThisTick = true;
+        } else if (this.canPhase && PlayerUtil.vk()) {
             aEg.timer.dzD = this.timer.wo().floatValue();
             if (!this.packet.wo()) {
                 aEg.thePlayer
@@ -51,12 +51,12 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
                 );
             }
 
-            this.Od = true;
+            this.pushedThisTick = true;
         }
     };
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
-        if (this.OK && PlayerUtil.vk()) {
+        if (this.canPhase && PlayerUtil.vk()) {
             MoveUtil.stop();
         }
     };
@@ -64,7 +64,7 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
     public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = CancellableEvent::setCancelled;
     @EventLink
     public final Listener<BlockAABBEvent> onBlockAABB = var1x -> {
-        if (var1x.getBlock() instanceof BlockAir && this.Od) {
+        if (var1x.getBlock() instanceof BlockAir && this.pushedThisTick) {
             double d2 = var1x.getBlockPos().getX();
             double d0 = var1x.getBlockPos().getY();
             d2 = var1x.getBlockPos().getZ();
@@ -74,7 +74,7 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
     };
     @EventLink
     private final Listener<MoveEvent> onMove = var1x -> {
-        if (this.OK) {
+        if (this.canPhase) {
             PlayerUtil.vk();
         }
     };
@@ -89,9 +89,9 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
             this.lastSetbackX = d0;
             this.lastSetbackZ = d1;
             if (d2 <= 0.001 && d3 <= 0.001) {
-                this.OK = true;
+                this.canPhase = true;
             } else {
-                this.OK = false;
+                this.canPhase = false;
             }
         }
     };
@@ -107,6 +107,6 @@ public class WatchdogSemiBlockPhase extends Mode<Phase> {
 
     @Override
     public void onDisable() {
-        this.OK = false;
+        this.canPhase = false;
     }
 }

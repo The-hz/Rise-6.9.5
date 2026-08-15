@@ -25,12 +25,12 @@ public class Stuck extends Module {
     private final BooleanValue rotations = new BooleanValue("Rotate", this, false);
     private final BooleanValue test = new BooleanValue("Test", this, false);
     private final NumberValue pulseTicks = new NumberValue("Pulse Ticks", this, 0, 0, 30, 1);
-    private boolean EG;
-    private int EH;
-    private int EI;
+    private boolean stuck;
+    private int stuckTicks;
+    private int refreezeTicks;
     @EventLink
     public final Listener<PostStrafeEvent> onPostStrafe = var1 -> {
-        if (this.EG) {
+        if (this.stuck) {
             MoveUtil.stop();
             aEg.thePlayer.motionY = 0.0;
         }
@@ -39,21 +39,21 @@ public class Stuck extends Module {
     public final Listener<TickEvent> onTick = var1 -> {
         int i = this.pulseTicks.wo().intValue();
         if (i <= 0) {
-            if (!this.EG) {
-                this.hm();
+            if (!this.stuck) {
+                this.freeze();
             }
 
-            this.EH = 0;
-            this.EI = 0;
-        } else if (this.EG) {
-            if (++this.EH >= i) {
-                this.hn();
-                this.EH = 0;
-                this.EI = 1;
+            this.stuckTicks = 0;
+            this.refreezeTicks = 0;
+        } else if (this.stuck) {
+            if (++this.stuckTicks >= i) {
+                this.release();
+                this.stuckTicks = 0;
+                this.refreezeTicks = 1;
             }
         } else {
-            if (this.EI > 0 && --this.EI <= 0) {
-                this.hm();
+            if (this.refreezeTicks > 0 && --this.refreezeTicks <= 0) {
+                this.freeze();
             }
         }
     };
@@ -61,12 +61,12 @@ public class Stuck extends Module {
     public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         Packet packet = var1.dq();
         if (this.test.wo()
-            && this.EG
+            && this.stuck
             && (packet instanceof C02PacketUseEntity || packet instanceof C07PacketPlayerDigging || packet instanceof C08PacketPlayerBlockPlacement)) {
-            this.ho();
+            this.pulse();
         }
 
-        if (this.EG && packet instanceof C03PacketPlayer) {
+        if (this.stuck && packet instanceof C03PacketPlayer) {
             if (!this.rotations.wo()) {
                 var1.setCancelled();
                 return;
@@ -83,41 +83,41 @@ public class Stuck extends Module {
 
     @Override
     public void onEnable() {
-        this.EG = false;
-        this.EH = 0;
-        this.EI = 0;
-        this.hm();
+        this.stuck = false;
+        this.stuckTicks = 0;
+        this.refreezeTicks = 0;
+        this.freeze();
     }
 
     @Override
     public void onDisable() {
-        this.EH = 0;
-        this.EI = 0;
-        this.hn();
+        this.stuckTicks = 0;
+        this.refreezeTicks = 0;
+        this.release();
     }
 
-    private void hm() {
-        if (!this.EG) {
+    private void freeze() {
+        if (!this.stuck) {
             this.savedMotion = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
-            this.EG = true;
+            this.stuck = true;
         }
     }
 
-    private void hn() {
-        if (this.EG) {
+    private void release() {
+        if (this.stuck) {
             if (this.savedMotion != null) {
                 aEg.thePlayer.motionX = this.savedMotion.x;
                 aEg.thePlayer.motionY = this.savedMotion.y;
                 aEg.thePlayer.motionZ = this.savedMotion.z;
             }
 
-            this.EG = false;
+            this.stuck = false;
         }
     }
 
-    private void ho() {
-        this.hn();
-        this.EH = 0;
-        this.EI = 1;
+    private void pulse() {
+        this.release();
+        this.stuckTicks = 0;
+        this.refreezeTicks = 1;
     }
 }

@@ -42,55 +42,55 @@ public class LagFlight extends Mode<Flight> {
     private final NumberValue flatTicks = new NumberValue("Flat Ticks", this, 10.0, 8.0, 12.0, 1.0);
     private final BooleanValue stuckWhenNotFlagged = new BooleanValue("Stuck When Not Flagged", this, false);
     private final BooleanValue onlySendOnce = new BooleanValue("Only Send Once", this, false);
-    private boolean GP;
-    private boolean GQ;
-    private int GR;
-    private int GS;
-    private int hV;
+    private boolean shouldJump;
+    private boolean waitingAfterFlag;
+    private int flagCount;
+    private int stage;
+    private int freezeTicks;
     private double x;
     private double y;
     private double z;
-    private double ud;
-    private double ue;
-    private double uf;
-    private boolean GT;
-    private boolean GU;
+    private double savedMotionX;
+    private double savedMotionY;
+    private double savedMotionZ;
+    private boolean frozen;
+    private boolean alreadySent;
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        if (this.GS == 0 && this.hV >= 0) {
+        if (this.stage == 0 && this.freezeTicks >= 0) {
             if (aEg.thePlayer.onGround) {
                 aEg.thePlayer.jump();
             }
 
-            if (aEg.thePlayer.fallDistance >= 0.3F && !this.GT) {
+            if (aEg.thePlayer.fallDistance >= 0.3F && !this.frozen) {
                 this.x = aEg.thePlayer.posX;
                 this.y = aEg.thePlayer.posY;
                 this.z = aEg.thePlayer.posZ;
-                this.ud = aEg.thePlayer.motionX;
-                this.ue = aEg.thePlayer.motionY;
-                this.uf = aEg.thePlayer.motionZ;
-                this.GT = true;
+                this.savedMotionX = aEg.thePlayer.motionX;
+                this.savedMotionY = aEg.thePlayer.motionY;
+                this.savedMotionZ = aEg.thePlayer.motionZ;
+                this.frozen = true;
             }
 
-            if (this.hV == 7) {
-                aEg.thePlayer.motionX = this.ud;
-                aEg.thePlayer.motionY = this.ue;
-                aEg.thePlayer.motionZ = this.uf;
-                this.hV = -4;
-                this.GT = false;
+            if (this.freezeTicks == 7) {
+                aEg.thePlayer.motionX = this.savedMotionX;
+                aEg.thePlayer.motionY = this.savedMotionY;
+                aEg.thePlayer.motionZ = this.savedMotionZ;
+                this.freezeTicks = -4;
+                this.frozen = false;
             }
 
-            if (this.hV != -4 && this.GT) {
+            if (this.freezeTicks != -4 && this.frozen) {
                 aEg.thePlayer.motionX = 0.0;
                 aEg.thePlayer.motionY = 0.0;
                 aEg.thePlayer.motionZ = 0.0;
                 aEg.thePlayer.setPosition(this.x, this.y, this.z);
-                this.hV++;
+                this.freezeTicks++;
             }
         }
 
-        if (this.GS == 1) {
-            if (this.GP) {
+        if (this.stage == 1) {
+            if (this.shouldJump) {
                 if (this.motionModify.wo()) {
                     MoveUtil.strafe(this.motion.wo().doubleValue());
                 }
@@ -114,16 +114,16 @@ public class LagFlight extends Mode<Flight> {
 
                 aEg.thePlayer.tR = 0;
                 aEg.timer.dzD = 1.0F;
-                this.GP = false;
-                this.GU = false;
-            } else if (this.GQ) {
+                this.shouldJump = false;
+                this.alreadySent = false;
+            } else if (this.waitingAfterFlag) {
                 if (MoveUtil.isMoving()) {
                     if (aEg.thePlayer.motionY <= 0.05 && !aEg.gameSettings.keyBindJump.isKeyDown() || aEg.thePlayer.tR >= this.flatTicks.wo().intValue()) {
-                        this.GQ = false;
+                        this.waitingAfterFlag = false;
                         aEg.timer.dzD = 0.3F;
                     }
                 } else if (aEg.thePlayer.motionY < -0.1) {
-                    this.GQ = false;
+                    this.waitingAfterFlag = false;
                     aEg.timer.dzD = 0.1F;
                 }
             }
@@ -131,13 +131,13 @@ public class LagFlight extends Mode<Flight> {
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (this.GS == 1 && !this.GQ) {
+        if (this.stage == 1 && !this.waitingAfterFlag) {
             if (this.stuckWhenNotFlagged.wo()) {
                 aEg.thePlayer.setPosition(aEg.thePlayer.lastTickPosX, aEg.thePlayer.lastTickPosY, aEg.thePlayer.lastTickPosZ);
             }
 
             aEg.timer.dzD = 1.0F;
-            if (!this.onlySendOnce.wo() || !this.GU) {
+            if (!this.onlySendOnce.wo() || !this.alreadySent) {
                 label54: {
                     double d0;
                     double d1;
@@ -188,18 +188,18 @@ public class LagFlight extends Mode<Flight> {
                     var1x.setPosY(var1x.getPosY() - this.offsetSize.wo().doubleValue());
                 }
 
-                this.GU = true;
+                this.alreadySent = true;
             }
         }
     };
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         Packet packet = var1x.dq();
-        if (this.GT && this.GS != 1 && packet instanceof C03PacketPlayer) {
+        if (this.frozen && this.stage != 1 && packet instanceof C03PacketPlayer) {
             var1x.setCancelled();
         }
 
-        if (this.c06ToC04.wo() && this.GS == 1) {
+        if (this.c06ToC04.wo() && this.stage == 1) {
             if (packet instanceof C06PacketPlayerPosLook c06packetplayerposlook) {
                 var1x.setCancelled();
                 PacketUtil.sendNoEvent(
@@ -218,15 +218,15 @@ public class LagFlight extends Mode<Flight> {
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         Packet packet = var1x.getPacket();
         if (packet instanceof S08PacketPlayerPosLook) {
-            if (this.GS == 1) {
-                this.GR++;
-                if (this.GR >= this.minFlags.wo().intValue() && !this.GP && !this.GQ) {
-                    this.GP = true;
-                    this.GQ = true;
-                    this.GR = 0;
+            if (this.stage == 1) {
+                this.flagCount++;
+                if (this.flagCount >= this.minFlags.wo().intValue() && !this.shouldJump && !this.waitingAfterFlag) {
+                    this.shouldJump = true;
+                    this.waitingAfterFlag = true;
+                    this.flagCount = 0;
                 }
             } else {
-                this.GS = 1;
+                this.stage = 1;
             }
         }
 
@@ -241,13 +241,13 @@ public class LagFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        this.GP = false;
-        this.GQ = false;
-        this.GR = 0;
-        this.GS = this.flatTest.wo() && MoveUtil.isMoving() ? 0 : 1;
-        this.hV = 0;
-        this.GT = false;
-        this.GU = false;
+        this.shouldJump = false;
+        this.waitingAfterFlag = false;
+        this.flagCount = 0;
+        this.stage = this.flatTest.wo() && MoveUtil.isMoving() ? 0 : 1;
+        this.freezeTicks = 0;
+        this.frozen = false;
+        this.alreadySent = false;
     }
 
     @Override

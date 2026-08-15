@@ -19,19 +19,19 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.BlockPos;
 
 public class WatchdogGlideLongJump extends Mode<LongJump> {
-    private final List<Packet<?>> LK = new ArrayList<>();
+    private final List<Packet<?>> packets = new ArrayList<>();
     private double Lx;
     private boolean Eo;
     private boolean LL;
     private int ug;
     private int LM;
     private double LN;
-    private int hV;
+    private int tickCounter;
     @EventLink(value = 3)
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        this.hV++;
-        if (this.hV > 2) {
-            this.hV = -1;
+        this.tickCounter++;
+        if (this.tickCounter > 2) {
+            this.tickCounter = -1;
         }
     };
     @EventLink

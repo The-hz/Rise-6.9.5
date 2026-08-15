@@ -18,7 +18,7 @@ import net.minecraft.src.a;
 import org.lwjgl.opengl.GL11;
 
 public class cs extends ESP implements InstanceAccess {
-    private final Map<EntityPlayer, float[][]> hW = new HashMap<>();
+    private final Map<EntityPlayer, float[][]> limbAngles = new HashMap<>();
     private static final float RAD_TO_DEG = 180.0F / (float)Math.PI;
 
     public cs(ESPColor espColor) {
@@ -28,7 +28,7 @@ public class cs extends ESP implements InstanceAccess {
     @Override
     public void render3D() {
         GL11.glPushMatrix();
-        this.cv();
+        this.begin();
 
         for (Entity entity : TargetComponent.bR()) {
             if (entity instanceof EntityPlayer) {
@@ -36,22 +36,22 @@ public class cs extends ESP implements InstanceAccess {
             }
         }
 
-        this.cw();
+        this.end();
         GL11.glPopMatrix();
     }
 
-    private void cv() {
+    private void begin() {
         GL11.glLineWidth(Client.a.g().c(com.alan.clients.module.impl.render.ESP.class).width.wo().floatValue());
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(2848);
-        ColorUtil.glColor(Client.a.g().c(com.alan.clients.module.impl.render.ESP.class).whiteColor.wo() ? Color.WHITE : this.espColor.cr());
+        ColorUtil.glColor(Client.a.g().c(com.alan.clients.module.impl.render.ESP.class).whiteColor.wo() ? Color.WHITE : this.espColor.getColor());
         GL11.glDisable(2929);
         GL11.glDisable(3553);
         GL11.glDepthMask(false);
     }
 
-    private void cw() {
+    private void end() {
         GL11.glDepthMask(true);
         GL11.glDisable(3042);
         GL11.glEnable(3553);
@@ -61,7 +61,7 @@ public class cs extends ESP implements InstanceAccess {
 
     @Override
     public void a(EntityPlayer player, ModelBiped modelBiped) {
-        this.hW
+        this.limbAngles
             .put(
                 player,
                 new float[][]{
@@ -75,7 +75,7 @@ public class cs extends ESP implements InstanceAccess {
     }
 
     private void a(EntityPlayer player, float var2) {
-        float[][] afloat = this.hW.get(player);
+        float[][] afloat = this.limbAngles.get(player);
         if (afloat != null) {
             GL11.glPushMatrix();
             float f = (float)(MathInterpolation.interpolate(player.posX, player.prevPosX, var2) - RenderManager.bUO);

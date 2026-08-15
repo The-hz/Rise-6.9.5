@@ -51,36 +51,36 @@ import net.minecraft.util.Vec3;
 import org.lwjgl.opengl.GL11;
 
 public final class VulcanVelocity extends Mode<Velocity> {
-    private long vc = -1L;
-    boolean vd = false;
-    boolean ve;
-    boolean vf = false;
+    private long backtrackStartTime = -1L;
+    boolean inBacktrackRange = false;
+    boolean pendingVelocity;
+    boolean backtrackBlocked = false;
     public final BooleanValue stack = new BooleanValue("Stack", this, true);
     boolean vh;
     public final BooleanValue pingSpoof = new BooleanValue("Ping Spoof", this, true);
-    private double vj;
-    private double vk;
-    private double vl;
+    private double velocityX;
+    private double velocityZ;
+    private double velocityY;
     public final BooleanValue alwaysCancelVertical = new BooleanValue("Always Cancel Vertical", this, true);
     public final BooleanValue backtrack = new BooleanValue("Backtrack", this, false);
     public final BooleanValue damageBoost = new BooleanValue("Damage Boost", this, false);
     private final NumberValue damageBoostSpeed = new NumberValue("Damage Boost Speed", this, 1, 1, 10, 0.01);
-    private boolean dj;
-    private boolean tt;
-    private boolean vq;
-    private Vec3 pU = new Vec3(0.0, 0.0, 0.0);
-    public Entity pY;
-    private int sG;
-    private final ArrayList<Packet<?>> vr = new ArrayList<>();
+    private boolean blinking;
+    private boolean releasing;
+    private boolean cancelling;
+    private Vec3 targetPosition = new Vec3(0.0, 0.0, 0.0);
+    public Entity target;
+    private int stackedVelocities;
+    private final ArrayList<Packet<?>> heldPackets = new ArrayList<>();
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceiveEvent = var1x -> {
-        if (!this.tt
+        if (!this.releasing
             && !this.e(LongJump.class).isEnabled()
             && !this.e(Flight.class).isEnabled()
             && (
                 !this.e(Jesus.class).isEnabled()
                     || !this.e(Jesus.class).mode.wo().getName().equals("Watchdog Dolphin 1.18+")
-                    || WatchdogDolphin118Jesus.Km >= 30
+                    || WatchdogDolphin118Jesus.outOfWaterTicks >= 30
             )
             && !this.e(Speed.class).isEnabled()) {
             switch (var1x.getPacket()) {
@@ -97,7 +97,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                 || !(s12packetentityvelocity.getMotionY() / 8000.0 > 0.08)
                                 || aEg.thePlayer.Zl <= 11
                         )) {
-                        if (this.stack.wo() && this.sG < 1 && !aEg.thePlayer.onGround && Math.random() < 0.73 && aEg.thePlayer.tR <= 13
+                        if (this.stack.wo() && this.stackedVelocities < 1 && !aEg.thePlayer.onGround && Math.random() < 0.73 && aEg.thePlayer.tR <= 13
                             || aEg.thePlayer.inWater
                             || this.e(Scaffold.class).isEnabled()
                                 && (
@@ -113,10 +113,10 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                                 > MoveUtil.speed()
                                         )
                                 )) {
-                            this.sG++;
-                            this.vq = true;
+                            this.stackedVelocities++;
+                            this.cancelling = true;
                             var1x.setCancelled();
-                            this.vq = false;
+                            this.cancelling = false;
                         }
 
                         if (var1x.isCancelled()
@@ -140,9 +140,9 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                 }
                             }
                         } else {
-                            this.sG = 0;
-                            this.dj = true;
-                            this.vr.add(s12packetentityvelocity);
+                            this.stackedVelocities = 0;
+                            this.blinking = true;
+                            this.heldPackets.add(s12packetentityvelocity);
                             var1x.setCancelled();
                         }
                     } else if (!var1x.isCancelled() && PlayerUtil.vk()) {
@@ -150,46 +150,46 @@ public final class VulcanVelocity extends Mode<Velocity> {
                     } else if (!var1x.isCancelled()
                         && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()
                         && !this.e(LongJump.class).isEnabled()) {
-                        this.ve = true;
-                        this.vr.add(s12packetentityvelocity);
-                        this.vj = s12packetentityvelocity.getMotionX() / 8000.0;
-                        this.vk = s12packetentityvelocity.getMotionZ() / 8000.0;
-                        this.vl = s12packetentityvelocity.getMotionY() / 8000.0;
+                        this.pendingVelocity = true;
+                        this.heldPackets.add(s12packetentityvelocity);
+                        this.velocityX = s12packetentityvelocity.getMotionX() / 8000.0;
+                        this.velocityZ = s12packetentityvelocity.getMotionZ() / 8000.0;
+                        this.velocityY = s12packetentityvelocity.getMotionY() / 8000.0;
                         var1x.setCancelled();
                     }
                     break;
                 case S32PacketConfirmTransaction s32packetconfirmtransaction:
-                    if (this.dj && this.pingSpoof.wo()) {
-                        this.vr.add(s32packetconfirmtransaction);
+                    if (this.blinking && this.pingSpoof.wo()) {
+                        this.heldPackets.add(s32packetconfirmtransaction);
                         var1x.setCancelled();
                     }
                     break;
                 case a a:
-                    if (this.dj && this.pingSpoof.wo()) {
+                    if (this.blinking && this.pingSpoof.wo()) {
                         var1x.setCancelled();
                     }
                     break;
                 case S16PacketEntityLook s16packetentitylook:
-                    if ((this.vd || this.dj) && this.backtrack.wo() && !this.vf) {
-                        this.vr.add(s16packetentitylook);
+                    if ((this.inBacktrackRange || this.blinking) && this.backtrack.wo() && !this.backtrackBlocked) {
+                        this.heldPackets.add(s16packetentitylook);
                         var1x.setCancelled();
                     }
                     break;
                 case S15PacketEntityRelMove s15packetentityrelmove:
-                    if ((this.vd || this.dj) && this.backtrack.wo() && !this.vf) {
-                        this.vr.add(s15packetentityrelmove);
+                    if ((this.inBacktrackRange || this.blinking) && this.backtrack.wo() && !this.backtrackBlocked) {
+                        this.heldPackets.add(s15packetentityrelmove);
                         var1x.setCancelled();
                     }
                     break;
                 case S17PacketEntityLookMove s17packetentitylookmove:
-                    if ((this.vd || this.dj) && this.backtrack.wo() && !this.vf) {
-                        this.vr.add(s17packetentitylookmove);
+                    if ((this.inBacktrackRange || this.blinking) && this.backtrack.wo() && !this.backtrackBlocked) {
+                        this.heldPackets.add(s17packetentitylookmove);
                         var1x.setCancelled();
                     }
                     break;
                 case aa aa:
-                    if ((this.vd || this.dj) && this.backtrack.wo() && !this.vf) {
-                        this.vr.add(aa);
+                    if ((this.inBacktrackRange || this.blinking) && this.backtrack.wo() && !this.backtrackBlocked) {
+                        this.heldPackets.add(aa);
                         var1x.setCancelled();
                     }
                     break;
@@ -199,10 +199,10 @@ public final class VulcanVelocity extends Mode<Velocity> {
             List list = TargetComponent.f(12.0);
             list.sort(Comparator.comparingDouble(var0 -> ((EntityLivingBase)var0).hurtTime));
             if (list.isEmpty()) {
-                this.pY = null;
+                this.target = null;
                 if (this.backtrack.wo()) {
-                    this.tt = true;
-                    this.vr
+                    this.releasing = true;
+                    this.heldPackets
                         .stream()
                         .filter(
                             var1xx -> var1xx instanceof S16PacketEntityLook
@@ -212,45 +212,45 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                 || var1xx instanceof z
                         )
                         .forEach(PacketUtil::receive);
-                    this.vr.clear();
-                    this.tt = false;
-                    this.vd = false;
-                    this.vf = false;
+                    this.heldPackets.clear();
+                    this.releasing = false;
+                    this.inBacktrackRange = false;
+                    this.backtrackBlocked = false;
                 }
             } else {
                 Entity entity = (Entity)list.get(0);
                 if (this.backtrack.wo()) {
-                    if (entity != this.pY) {
-                        this.pY = entity;
-                        this.pU.xCoord = entity.posX;
-                        this.pU.yCoord = entity.posY;
-                        this.pU.zCoord = entity.posZ;
+                    if (entity != this.target) {
+                        this.target = entity;
+                        this.targetPosition.xCoord = entity.posX;
+                        this.targetPosition.yCoord = entity.posY;
+                        this.targetPosition.zCoord = entity.posZ;
                     }
 
                     Vec3 vec3 = aEg.thePlayer.getPositionEyes(1.0F);
-                    Vec3 vec31 = new Vec3(this.pU.xCoord, this.pU.yCoord, this.pU.zCoord);
+                    Vec3 vec31 = new Vec3(this.targetPosition.xCoord, this.targetPosition.yCoord, this.targetPosition.zCoord);
                     double d0 = vec3.distanceTo(vec31);
-                    if ((!(d0 > 4.5) || !this.dj) && (aEg.thePlayer.tR <= 9 || !this.dj)) {
-                        if (this.dj) {
-                            this.vf = false;
+                    if ((!(d0 > 4.5) || !this.blinking) && (aEg.thePlayer.tR <= 9 || !this.blinking)) {
+                        if (this.blinking) {
+                            this.backtrackBlocked = false;
                         }
                     } else {
-                        this.vf = true;
+                        this.backtrackBlocked = true;
                     }
 
-                    this.vd = d0 < 4.5;
+                    this.inBacktrackRange = d0 < 4.5;
                     if (aEg.thePlayer.isSwingInProgress && d0 > 3.1 && d0 < 4.5) {
                         this.e(KillAura.class).isEnabled();
                     }
 
-                    if (this.vd) {
-                        if (this.vc == -1L) {
-                            this.vc = System.currentTimeMillis();
+                    if (this.inBacktrackRange) {
+                        if (this.backtrackStartTime == -1L) {
+                            this.backtrackStartTime = System.currentTimeMillis();
                         }
 
-                        if (System.currentTimeMillis() - this.vc >= Math.round(Math.random() * 150.0) + 100L) {
-                            this.tt = true;
-                            this.vr
+                        if (System.currentTimeMillis() - this.backtrackStartTime >= Math.round(Math.random() * 150.0) + 100L) {
+                            this.releasing = true;
+                            this.heldPackets
                                 .stream()
                                 .filter(
                                     var1xx -> var1xx instanceof S16PacketEntityLook
@@ -260,19 +260,19 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                         || var1xx instanceof z
                                 )
                                 .forEach(PacketUtil::receive);
-                            this.vr.clear();
-                            this.tt = false;
-                            this.vd = false;
-                            this.vc = -1L;
+                            this.heldPackets.clear();
+                            this.releasing = false;
+                            this.inBacktrackRange = false;
+                            this.backtrackStartTime = -1L;
                         }
                     } else {
-                        this.vc = -1L;
+                        this.backtrackStartTime = -1L;
                     }
 
-                    if (this.vf && this.dj) {
-                        this.vd = false;
-                        this.tt = true;
-                        this.vr
+                    if (this.backtrackBlocked && this.blinking) {
+                        this.inBacktrackRange = false;
+                        this.releasing = true;
+                        this.heldPackets
                             .stream()
                             .filter(
                                 var1xx -> var1xx instanceof S16PacketEntityLook
@@ -282,14 +282,14 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                     || var1xx instanceof z
                             )
                             .forEach(PacketUtil::receive);
-                        this.vr.clear();
-                        this.tt = false;
+                        this.heldPackets.clear();
+                        this.releasing = false;
                     }
 
                     if (aEg.thePlayer.ticksExisted < 100) {
-                        this.vd = false;
-                        this.tt = true;
-                        this.vr
+                        this.inBacktrackRange = false;
+                        this.releasing = true;
+                        this.heldPackets
                             .stream()
                             .filter(
                                 var1xx -> var1xx instanceof S16PacketEntityLook
@@ -299,14 +299,14 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                     || var1xx instanceof z
                             )
                             .forEach(PacketUtil::receive);
-                        this.vr.clear();
-                        this.tt = false;
+                        this.heldPackets.clear();
+                        this.releasing = false;
                     }
 
                     if (aEg.thePlayer.hurtTime == 9) {
-                        this.vd = false;
-                        this.tt = true;
-                        this.vr
+                        this.inBacktrackRange = false;
+                        this.releasing = true;
+                        this.heldPackets
                             .stream()
                             .filter(
                                 var1xx -> var1xx instanceof S16PacketEntityLook
@@ -316,14 +316,14 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                     || var1xx instanceof z
                             )
                             .forEach(PacketUtil::receive);
-                        this.vr.clear();
-                        this.tt = false;
+                        this.heldPackets.clear();
+                        this.releasing = false;
                     }
 
                     if (d0 < 2.5) {
-                        this.vd = false;
-                        this.tt = true;
-                        this.vr
+                        this.inBacktrackRange = false;
+                        this.releasing = true;
+                        this.heldPackets
                             .stream()
                             .filter(
                                 var1xx -> var1xx instanceof S16PacketEntityLook
@@ -333,14 +333,14 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                     || var1xx instanceof z
                             )
                             .forEach(PacketUtil::receive);
-                        this.vr.clear();
-                        this.tt = false;
+                        this.heldPackets.clear();
+                        this.releasing = false;
                     }
 
                     if (d0 > 4.5) {
-                        this.vd = false;
-                        this.tt = true;
-                        this.vr
+                        this.inBacktrackRange = false;
+                        this.releasing = true;
+                        this.heldPackets
                             .stream()
                             .filter(
                                 var1xx -> var1xx instanceof S16PacketEntityLook
@@ -350,19 +350,19 @@ public final class VulcanVelocity extends Mode<Velocity> {
                                     || var1xx instanceof z
                             )
                             .forEach(PacketUtil::receive);
-                        this.vr.clear();
-                        this.tt = false;
+                        this.heldPackets.clear();
+                        this.releasing = false;
                     }
 
                     Packet packet = var1x.getPacket();
                     if (packet instanceof S14PacketEntity s14packetentity) {
-                        if (s14packetentity.entityId == this.pY.getEntityId()) {
-                            this.pU.xCoord = this.pU.xCoord + s14packetentity.agC() / 32.0;
-                            this.pU.yCoord = this.pU.yCoord + s14packetentity.agD() / 32.0;
-                            this.pU.zCoord = this.pU.zCoord + s14packetentity.agE() / 32.0;
+                        if (s14packetentity.entityId == this.target.getEntityId()) {
+                            this.targetPosition.xCoord = this.targetPosition.xCoord + s14packetentity.agC() / 32.0;
+                            this.targetPosition.yCoord = this.targetPosition.yCoord + s14packetentity.agD() / 32.0;
+                            this.targetPosition.zCoord = this.targetPosition.zCoord + s14packetentity.agE() / 32.0;
                         }
-                    } else if (packet instanceof z z && z.getEntityId() == this.pY.getEntityId()) {
-                        this.pU = new Vec3(z.we() / 32.0, z.wf() / 32.0, z.wi() / 32.0);
+                    } else if (packet instanceof z z && z.getEntityId() == this.target.getEntityId()) {
+                        this.targetPosition = new Vec3(z.we() / 32.0, z.wf() / 32.0, z.wi() / 32.0);
                     }
                 }
             }
@@ -377,44 +377,44 @@ public final class VulcanVelocity extends Mode<Velocity> {
             aEg.thePlayer.motionZ *= -1.0;
         }
 
-        if (this.ve && aEg.thePlayer.onGround) {
-            this.ve = false;
-            this.tt = true;
+        if (this.pendingVelocity && aEg.thePlayer.onGround) {
+            this.pendingVelocity = false;
+            this.releasing = true;
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             double d0 = aEg.thePlayer.motionY;
-            this.vr.forEach(PacketUtil::receive);
-            this.vr.clear();
+            this.heldPackets.forEach(PacketUtil::receive);
+            this.heldPackets.clear();
             aEg.thePlayer.motionY = d0;
             aEg.thePlayer.motionX = vector2d.getX();
             aEg.thePlayer.motionZ = vector2d.getY();
-            var1x.setPosY(var1x.getPosY() + this.vl);
-            this.tt = false;
+            var1x.setPosY(var1x.getPosY() + this.velocityY);
+            this.releasing = false;
         }
     };
     @EventLink(value = 4)
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        if (Breaker.ir && this.dj) {
-            this.dj = false;
-            this.tt = true;
+        if (Breaker.bedBroken && this.blinking) {
+            this.blinking = false;
+            this.releasing = true;
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             double d0 = aEg.thePlayer.motionY;
-            this.vr.forEach(PacketUtil::receive);
-            this.vr.clear();
+            this.heldPackets.forEach(PacketUtil::receive);
+            this.heldPackets.clear();
             aEg.thePlayer.motionY = d0;
             aEg.thePlayer.motionX = vector2d.getX();
             aEg.thePlayer.motionZ = vector2d.getY();
-            this.tt = false;
+            this.releasing = false;
         }
 
-        if (aEg.thePlayer.onGround && this.dj && !this.ve && !this.e(Speed.class).isEnabled()) {
-            this.dj = false;
-            this.tt = true;
-            this.vf = false;
+        if (aEg.thePlayer.onGround && this.blinking && !this.pendingVelocity && !this.e(Speed.class).isEnabled()) {
+            this.blinking = false;
+            this.releasing = true;
+            this.backtrackBlocked = false;
             BlinkComponent.dispatch();
             Vector2d vector2d1 = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             double d1 = aEg.thePlayer.motionY;
-            this.vr.forEach(PacketUtil::receive);
-            this.vr.clear();
+            this.heldPackets.forEach(PacketUtil::receive);
+            this.heldPackets.clear();
             aEg.thePlayer.jump();
             aEg.thePlayer.motionX = vector2d1.getX();
             aEg.thePlayer.motionZ = vector2d1.getY();
@@ -430,33 +430,33 @@ public final class VulcanVelocity extends Mode<Velocity> {
                 minecraft.thePlayer.motionZ = minecraft.thePlayer.motionZ + MathHelper.cos(f) * 0.2F;
             }
 
-            this.tt = false;
+            this.releasing = false;
         }
 
-        if (this.vd && !this.dj && this.backtrack.wo()) {
+        if (this.inBacktrackRange && !this.blinking && this.backtrack.wo()) {
             BlinkComponent.a(50, true, false, false, false, true, false);
         }
     };
     @EventLink(value = 2)
     public final Listener<PostStrafeEvent> onPostStrafe = var1x -> {
-        if (aEg.thePlayer.tR > 12 && this.dj) {
-            this.dj = false;
-            this.tt = true;
+        if (aEg.thePlayer.tR > 12 && this.blinking) {
+            this.blinking = false;
+            this.releasing = true;
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             BlinkComponent.dispatch();
-            this.vr.forEach(PacketUtil::receive);
-            this.vr.clear();
+            this.heldPackets.forEach(PacketUtil::receive);
+            this.heldPackets.clear();
             if (!this.e(Speed.class).isEnabled()) {
                 aEg.thePlayer.motionX = vector2d.getX();
                 aEg.thePlayer.motionZ = vector2d.getY();
             }
 
-            this.tt = false;
+            this.releasing = false;
         }
     };
     @EventLink
     public final Listener<Render3DEvent> onRender3D = var1x -> {
-        if (this.pY != null && this.backtrack.wo() && (this.vd || this.dj)) {
+        if (this.target != null && this.backtrack.wo() && (this.inBacktrackRange || this.blinking)) {
             GlStateManager.pushMatrix();
             GlStateManager.pushAttrib();
             GlStateManager.enableBlend();
@@ -469,7 +469,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
                 aEg.thePlayer
                     .getEntityBoundingBox()
                     .offset(-aEg.thePlayer.posX, -aEg.thePlayer.posY, -aEg.thePlayer.posZ)
-                    .offset(this.pU.xCoord, this.pU.yCoord, this.pU.zCoord)
+                    .offset(this.targetPosition.xCoord, this.targetPosition.yCoord, this.targetPosition.zCoord)
                     .expand(d0, -0.3, d0)
             );
             GlStateManager.enableTexture2D();

@@ -51,32 +51,32 @@ import net.minecraft.util.Vec3;
 import org.lwjgl.opengl.GL11;
 
 public final class WatchdogVelocity extends Mode<Velocity> {
-    private long vc = -1L;
-    boolean vd = false;
-    boolean vf = false;
+    private long backtrackStart = -1L;
+    boolean inBacktrackRange = false;
+    boolean backtrackBlocked = false;
     public final BooleanValue stack = new BooleanValue("Stack", this, true);
-    boolean vh;
+    boolean onOffsetGround;
     public final BooleanValue pingSpoof = new BooleanValue("Ping Spoof", this, true);
     public final BooleanValue alwaysCancelVertical = new BooleanValue("Always Cancel Vertical", this, false);
     public final BooleanValue watchdogBacktrack = new BooleanValue("Watchdog Backtrack", this, false);
     public final BooleanValue damageBoostNotForHypixel = new BooleanValue("Damage Boost (not for hypixel)", this, false);
     private final NumberValue damageBoostSpeed = new NumberValue("Damage Boost Speed", this, 1, 1, 10, 0.01);
     public static boolean dj;
-    public static boolean tt;
-    public static boolean vq;
-    private Vec3 pU = new Vec3(0.0, 0.0, 0.0);
-    public Entity pY;
+    public static boolean releasing;
+    public static boolean velocityCancelled;
+    private Vec3 backtrackPos = new Vec3(0.0, 0.0, 0.0);
+    public Entity target;
     private int stackCount;
-    private final ArrayList<Packet<?>> vW = new ArrayList<>();
+    private final ArrayList<Packet<?>> heldPackets = new ArrayList<>();
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
-        if (!tt
+        if (!releasing
             && !this.e(LongJump.class).isEnabled()
             && !this.e(Flight.class).isEnabled()
             && (
                 !this.e(Jesus.class).isEnabled()
                     || !this.e(Jesus.class).mode.wo().getName().equals("Watchdog Dolphin 1.18+")
-                    || WatchdogDolphin118Jesus.Km >= 30
+                    || WatchdogDolphin118Jesus.outOfWaterTicks >= 30
             )) {
             switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
@@ -88,7 +88,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                 || this.e(Speed.class).isEnabled()
                                 || aEg.thePlayer.isJumping
                                 || aEg.gameSettings.keyBindJump.isKeyDown()
-                                || this.vh
+                                || this.onOffsetGround
                                 || !(s12packetentityvelocity.getMotionY() / 8000.0 > 0.08)
                                 || aEg.thePlayer.Zl <= 11
                         )) {
@@ -109,9 +109,9 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                         )
                                 )) {
                             this.stackCount++;
-                            vq = true;
+                            velocityCancelled = true;
                             var1x.setCancelled();
-                            vq = false;
+                            velocityCancelled = false;
                         }
 
                         if (var1x.isCancelled()
@@ -137,7 +137,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                         } else {
                             this.stackCount = 0;
                             dj = true;
-                            this.vW.add(s12packetentityvelocity);
+                            this.heldPackets.add(s12packetentityvelocity);
                             var1x.setCancelled();
                         }
                     } else if (!var1x.isCancelled() && PlayerUtil.vk()) {
@@ -153,7 +153,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                     break;
                 case S32PacketConfirmTransaction s32packetconfirmtransaction:
                     if (dj && this.pingSpoof.wo()) {
-                        this.vW.add(s32packetconfirmtransaction);
+                        this.heldPackets.add(s32packetconfirmtransaction);
                         var1x.setCancelled();
                     }
                     break;
@@ -163,26 +163,26 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                     }
                     break;
                 case S16PacketEntityLook s16packetentitylook:
-                    if ((this.vd || dj) && this.watchdogBacktrack.wo() && !this.vf) {
-                        this.vW.add(s16packetentitylook);
+                    if ((this.inBacktrackRange || dj) && this.watchdogBacktrack.wo() && !this.backtrackBlocked) {
+                        this.heldPackets.add(s16packetentitylook);
                         var1x.setCancelled();
                     }
                     break;
                 case S15PacketEntityRelMove s15packetentityrelmove:
-                    if ((this.vd || dj) && this.watchdogBacktrack.wo() && !this.vf) {
-                        this.vW.add(s15packetentityrelmove);
+                    if ((this.inBacktrackRange || dj) && this.watchdogBacktrack.wo() && !this.backtrackBlocked) {
+                        this.heldPackets.add(s15packetentityrelmove);
                         var1x.setCancelled();
                     }
                     break;
                 case S17PacketEntityLookMove s17packetentitylookmove:
-                    if ((this.vd || dj) && this.watchdogBacktrack.wo() && !this.vf) {
-                        this.vW.add(s17packetentitylookmove);
+                    if ((this.inBacktrackRange || dj) && this.watchdogBacktrack.wo() && !this.backtrackBlocked) {
+                        this.heldPackets.add(s17packetentitylookmove);
                         var1x.setCancelled();
                     }
                     break;
                 case aa aa:
-                    if ((this.vd || dj) && this.watchdogBacktrack.wo() && !this.vf) {
-                        this.vW.add(aa);
+                    if ((this.inBacktrackRange || dj) && this.watchdogBacktrack.wo() && !this.backtrackBlocked) {
+                        this.heldPackets.add(aa);
                         var1x.setCancelled();
                     }
                     break;
@@ -192,10 +192,10 @@ public final class WatchdogVelocity extends Mode<Velocity> {
             List list = TargetComponent.f(12.0);
             list.sort(Comparator.comparingDouble(var0 -> ((EntityLivingBase)var0).hurtTime));
             if (list.isEmpty()) {
-                this.pY = null;
+                this.target = null;
                 if (this.watchdogBacktrack.wo()) {
-                    tt = true;
-                    this.vW
+                    releasing = true;
+                    this.heldPackets
                         .stream()
                         .filter(
                             var1xx -> var1xx instanceof S16PacketEntityLook
@@ -205,45 +205,45 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                 || var1xx instanceof z
                         )
                         .forEach(PacketUtil::receive);
-                    this.vW.clear();
-                    tt = false;
-                    this.vd = false;
-                    this.vf = false;
+                    this.heldPackets.clear();
+                    releasing = false;
+                    this.inBacktrackRange = false;
+                    this.backtrackBlocked = false;
                 }
             } else {
                 Entity entity = (Entity)list.get(0);
                 if (this.watchdogBacktrack.wo()) {
-                    if (entity != this.pY) {
-                        this.pY = entity;
-                        this.pU.xCoord = entity.posX;
-                        this.pU.yCoord = entity.posY;
-                        this.pU.zCoord = entity.posZ;
+                    if (entity != this.target) {
+                        this.target = entity;
+                        this.backtrackPos.xCoord = entity.posX;
+                        this.backtrackPos.yCoord = entity.posY;
+                        this.backtrackPos.zCoord = entity.posZ;
                     }
 
                     Vec3 vec3 = aEg.thePlayer.getPositionEyes(1.0F);
-                    Vec3 vec31 = new Vec3(this.pU.xCoord, this.pU.yCoord, this.pU.zCoord);
+                    Vec3 vec31 = new Vec3(this.backtrackPos.xCoord, this.backtrackPos.yCoord, this.backtrackPos.zCoord);
                     double d0 = vec3.distanceTo(vec31);
                     if ((!(d0 > 4.5) || !dj) && (aEg.thePlayer.tR <= 9 || !dj)) {
                         if (dj) {
-                            this.vf = false;
+                            this.backtrackBlocked = false;
                         }
                     } else {
-                        this.vf = true;
+                        this.backtrackBlocked = true;
                     }
 
-                    this.vd = d0 < 4.5;
+                    this.inBacktrackRange = d0 < 4.5;
                     if (aEg.thePlayer.isSwingInProgress && d0 > 3.1 && d0 < 4.5) {
                         this.e(KillAura.class).isEnabled();
                     }
 
-                    if (this.vd) {
-                        if (this.vc == -1L) {
-                            this.vc = System.currentTimeMillis();
+                    if (this.inBacktrackRange) {
+                        if (this.backtrackStart == -1L) {
+                            this.backtrackStart = System.currentTimeMillis();
                         }
 
-                        if (System.currentTimeMillis() - this.vc >= Math.round(Math.random() * 150.0) + 100L) {
-                            tt = true;
-                            this.vW
+                        if (System.currentTimeMillis() - this.backtrackStart >= Math.round(Math.random() * 150.0) + 100L) {
+                            releasing = true;
+                            this.heldPackets
                                 .stream()
                                 .filter(
                                     var1xx -> var1xx instanceof S16PacketEntityLook
@@ -253,19 +253,19 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                         || var1xx instanceof z
                                 )
                                 .forEach(PacketUtil::receive);
-                            this.vW.clear();
-                            tt = false;
-                            this.vd = false;
-                            this.vc = -1L;
+                            this.heldPackets.clear();
+                            releasing = false;
+                            this.inBacktrackRange = false;
+                            this.backtrackStart = -1L;
                         }
                     } else {
-                        this.vc = -1L;
+                        this.backtrackStart = -1L;
                     }
 
-                    if (this.vf && dj) {
-                        this.vd = false;
-                        tt = true;
-                        this.vW
+                    if (this.backtrackBlocked && dj) {
+                        this.inBacktrackRange = false;
+                        releasing = true;
+                        this.heldPackets
                             .stream()
                             .filter(
                                 var1xx -> var1xx instanceof S16PacketEntityLook
@@ -275,14 +275,14 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                     || var1xx instanceof z
                             )
                             .forEach(PacketUtil::receive);
-                        this.vW.clear();
-                        tt = false;
+                        this.heldPackets.clear();
+                        releasing = false;
                     }
 
                     if (aEg.thePlayer.ticksExisted < 100) {
-                        this.vd = false;
-                        tt = true;
-                        this.vW
+                        this.inBacktrackRange = false;
+                        releasing = true;
+                        this.heldPackets
                             .stream()
                             .filter(
                                 var1xx -> var1xx instanceof S16PacketEntityLook
@@ -292,14 +292,14 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                     || var1xx instanceof z
                             )
                             .forEach(PacketUtil::receive);
-                        this.vW.clear();
-                        tt = false;
+                        this.heldPackets.clear();
+                        releasing = false;
                     }
 
                     if (aEg.thePlayer.hurtTime == 9) {
-                        this.vd = false;
-                        tt = true;
-                        this.vW
+                        this.inBacktrackRange = false;
+                        releasing = true;
+                        this.heldPackets
                             .stream()
                             .filter(
                                 var1xx -> var1xx instanceof S16PacketEntityLook
@@ -309,14 +309,14 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                     || var1xx instanceof z
                             )
                             .forEach(PacketUtil::receive);
-                        this.vW.clear();
-                        tt = false;
+                        this.heldPackets.clear();
+                        releasing = false;
                     }
 
                     if (d0 < 2.5) {
-                        this.vd = false;
-                        tt = true;
-                        this.vW
+                        this.inBacktrackRange = false;
+                        releasing = true;
+                        this.heldPackets
                             .stream()
                             .filter(
                                 var1xx -> var1xx instanceof S16PacketEntityLook
@@ -326,14 +326,14 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                     || var1xx instanceof z
                             )
                             .forEach(PacketUtil::receive);
-                        this.vW.clear();
-                        tt = false;
+                        this.heldPackets.clear();
+                        releasing = false;
                     }
 
                     if (d0 > 4.5) {
-                        this.vd = false;
-                        tt = true;
-                        this.vW
+                        this.inBacktrackRange = false;
+                        releasing = true;
+                        this.heldPackets
                             .stream()
                             .filter(
                                 var1xx -> var1xx instanceof S16PacketEntityLook
@@ -343,19 +343,19 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                                     || var1xx instanceof z
                             )
                             .forEach(PacketUtil::receive);
-                        this.vW.clear();
-                        tt = false;
+                        this.heldPackets.clear();
+                        releasing = false;
                     }
 
                     Packet packet = var1x.getPacket();
                     if (packet instanceof S14PacketEntity s14packetentity) {
-                        if (s14packetentity.entityId == this.pY.getEntityId()) {
-                            this.pU.xCoord = this.pU.xCoord + s14packetentity.agC() / 32.0;
-                            this.pU.yCoord = this.pU.yCoord + s14packetentity.agD() / 32.0;
-                            this.pU.zCoord = this.pU.zCoord + s14packetentity.agE() / 32.0;
+                        if (s14packetentity.entityId == this.target.getEntityId()) {
+                            this.backtrackPos.xCoord = this.backtrackPos.xCoord + s14packetentity.agC() / 32.0;
+                            this.backtrackPos.yCoord = this.backtrackPos.yCoord + s14packetentity.agD() / 32.0;
+                            this.backtrackPos.zCoord = this.backtrackPos.zCoord + s14packetentity.agE() / 32.0;
                         }
-                    } else if (packet instanceof z z && z.getEntityId() == this.pY.getEntityId()) {
-                        this.pU = new Vec3(z.we() / 32.0, z.wf() / 32.0, z.wi() / 32.0);
+                    } else if (packet instanceof z z && z.getEntityId() == this.target.getEntityId()) {
+                        this.backtrackPos = new Vec3(z.we() / 32.0, z.wf() / 32.0, z.wi() / 32.0);
                     }
                 }
             }
@@ -366,9 +366,9 @@ public final class WatchdogVelocity extends Mode<Velocity> {
     @EventLink(value = 4)
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (Math.abs(aEg.thePlayer.posY - Math.round(aEg.thePlayer.posY)) > 0.01 && aEg.thePlayer.onGround) {
-            this.vh = true;
+            this.onOffsetGround = true;
         } else {
-            this.vh = false;
+            this.onOffsetGround = false;
         }
 
         if (aEg.thePlayer.ae == 1
@@ -389,32 +389,32 @@ public final class WatchdogVelocity extends Mode<Velocity> {
     };
     @EventLink(value = 4)
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        if (this.vd && !dj && this.watchdogBacktrack.wo()) {
+        if (this.inBacktrackRange && !dj && this.watchdogBacktrack.wo()) {
             BlinkComponent.a(50, true, false, false, false, false, false);
         }
 
-        if (Breaker.ir && dj) {
+        if (Breaker.bedBroken && dj) {
             dj = false;
-            tt = true;
+            releasing = true;
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             double d0 = aEg.thePlayer.motionY;
-            this.vW.forEach(PacketUtil::receive);
-            this.vW.clear();
+            this.heldPackets.forEach(PacketUtil::receive);
+            this.heldPackets.clear();
             aEg.thePlayer.motionY = d0;
             aEg.thePlayer.motionX = vector2d.getX();
             aEg.thePlayer.motionZ = vector2d.getY();
-            tt = false;
+            releasing = false;
         }
 
         if (aEg.thePlayer.onGround && dj && !this.e(Speed.class).isEnabled()) {
             dj = false;
-            tt = true;
-            this.vf = false;
+            releasing = true;
+            this.backtrackBlocked = false;
             BlinkComponent.dispatch();
             Vector2d vector2d1 = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             double d1 = aEg.thePlayer.motionY;
-            this.vW.forEach(PacketUtil::receive);
-            this.vW.clear();
+            this.heldPackets.forEach(PacketUtil::receive);
+            this.heldPackets.clear();
             aEg.thePlayer.jump();
             aEg.thePlayer.motionX = vector2d1.getX();
             aEg.thePlayer.motionZ = vector2d1.getY();
@@ -430,44 +430,44 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                 minecraft.thePlayer.motionZ = minecraft.thePlayer.motionZ + MathHelper.cos(f) * 0.2F;
             }
 
-            tt = false;
+            releasing = false;
         }
     };
     @EventLink(value = 2)
     public final Listener<JumpEvent> onJump = var1x -> {
         if (aEg.thePlayer.onGround && dj && this.e(Speed.class).isEnabled()) {
             dj = false;
-            tt = true;
-            this.vf = false;
+            releasing = true;
+            this.backtrackBlocked = false;
             BlinkComponent.dispatch();
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
-            this.vW.forEach(PacketUtil::receive);
-            this.vW.clear();
+            this.heldPackets.forEach(PacketUtil::receive);
+            this.heldPackets.clear();
             aEg.thePlayer.motionX = vector2d.getX();
             aEg.thePlayer.motionZ = vector2d.getY();
-            tt = false;
+            releasing = false;
         }
     };
     @EventLink(value = 2)
     public final Listener<PostStrafeEvent> onPostStrafe = var1x -> {
         if (aEg.thePlayer.tR > 12 && dj) {
             dj = false;
-            tt = true;
+            releasing = true;
             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             BlinkComponent.dispatch();
-            this.vW.forEach(PacketUtil::receive);
-            this.vW.clear();
+            this.heldPackets.forEach(PacketUtil::receive);
+            this.heldPackets.clear();
             if (!this.e(Speed.class).isEnabled()) {
                 aEg.thePlayer.motionX = vector2d.getX();
                 aEg.thePlayer.motionZ = vector2d.getY();
             }
 
-            tt = false;
+            releasing = false;
         }
     };
     @EventLink
     public final Listener<Render3DEvent> onRender3D = var1x -> {
-        if (this.pY != null && this.watchdogBacktrack.wo() && (this.vd || dj)) {
+        if (this.target != null && this.watchdogBacktrack.wo() && (this.inBacktrackRange || dj)) {
             GlStateManager.pushMatrix();
             GlStateManager.pushAttrib();
             GlStateManager.enableBlend();
@@ -480,7 +480,7 @@ public final class WatchdogVelocity extends Mode<Velocity> {
                 aEg.thePlayer
                     .getEntityBoundingBox()
                     .offset(-aEg.thePlayer.posX, -aEg.thePlayer.posY, -aEg.thePlayer.posZ)
-                    .offset(this.pU.xCoord, this.pU.yCoord, this.pU.zCoord)
+                    .offset(this.backtrackPos.xCoord, this.backtrackPos.yCoord, this.backtrackPos.zCoord)
                     .expand(d0, -0.3, d0)
             );
             GlStateManager.enableTexture2D();

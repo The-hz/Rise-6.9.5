@@ -65,7 +65,7 @@ extends Mode<NameTags> {
             this.b(ShaderQueueType.BLOOM).c(() -> RenderUtil.d(f4 - f3 / 2.0f - f2, f5 - f2 - 3.0f, f3 + f2 * 2.0f, (float)n2 + f2 * 2.0f, this.rz().rE()));
             this.b(ShaderQueueType.BLUR).c(() -> RenderUtil.d(f4 - f3 / 2.0f - f2, f5 - f2 - 3.0f, f3 + f2 * 2.0f, (float)n2 + f2 * 2.0f, Color.BLACK));
             Object object2 = object;
-            this.b(ShaderQueueType.REGULAR).c(() -> this.b(f4, f3, f2, f5, n2, agd2, (String)object2));
+            this.b(ShaderQueueType.REGULAR).c(() -> this.drawNameTag(f4, f3, f2, f5, n2, agd2, (String)object2));
         }
     };
 
@@ -73,7 +73,7 @@ extends Mode<NameTags> {
         super(string, nameTags);
     }
 
-    private  void b(float f2, float f3, float f4, float f5, int n2, agc agc2, String string) {
+    private  void drawNameTag(float f2, float f3, float f4, float f5, int n2, agc agc2, String string) {
         double d2 = f2 - f3 / 2.0f - f4;
         double d3 = f5 - f4 - 3.0f;
         double d4 = f3 + f4 * 2.0f;

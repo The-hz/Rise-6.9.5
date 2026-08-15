@@ -58,46 +58,46 @@ public class BedPlates extends Module {
     private final BooleanValue distanceScale = new BooleanValue("Distance Scale", this, true);
     private final NumberValue range = new NumberValue("Range", this, 200, 20, 200, 10);
     private final NumberValue refreshTicks = new NumberValue("Refresh Ticks", this, 1, 1, 20, 1);
-    private final agc alu = FontManager.MAIN.a(15, FontWeight.MEDIUM);
-    private final agc alv = FontManager.MAIN.a(11, FontWeight.BOLD);
-    private final agc alw = FontManager.MAIN.a(11, FontWeight.REGULAR);
-    private final List<BedPlateEntry> alx = new ArrayList<>();
-    private final List<BedPosition> aly = new CopyOnWriteArrayList<>();
-    private int alz = 0;
-    private int alA = -1;
-    private int alB = 0;
-    private double alC = 0.5;
-    private boolean alD;
-    private double alE;
-    private double alF;
-    private double alG;
-    private int alH;
-    private int alI;
-    private float Il;
-    private float Im;
+    private final agc nameFont = FontManager.MAIN.a(15, FontWeight.MEDIUM);
+    private final agc distanceLabelFont = FontManager.MAIN.a(11, FontWeight.BOLD);
+    private final agc distanceFont = FontManager.MAIN.a(11, FontWeight.REGULAR);
+    private final List<BedPlateEntry> entries = new ArrayList<>();
+    private final List<BedPosition> bedPositions = new CopyOnWriteArrayList<>();
+    private int refreshCounter = 0;
+    private int lastTick = -1;
+    private int blockCheckTicks = 0;
+    private double gradientProgress = 0.5;
+    private boolean hasCachedView;
+    private double lastRenderPosX;
+    private double lastRenderPosY;
+    private double lastRenderPosZ;
+    private int lastScaleFactor;
+    private int lastDisplayHeight;
+    private float lastYaw;
+    private float lastPitch;
     private volatile boolean scanning = false;
-    private long alK = 0L;
-    private static final long alL = 5000L;
-    private static final EnumFacing[] alM = new EnumFacing[]{EnumFacing.UP, EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST};
+    private long lastScanTime = 0L;
+    private static final long SCAN_INTERVAL = 5000L;
+    private static final EnumFacing[] SURROUNDING_FACES = new EnumFacing[]{EnumFacing.UP, EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.EAST};
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1 -> {
-        if (!this.kN()) {
-            this.alx.clear();
-            this.aly.clear();
+        if (!this.isInWorld()) {
+            this.entries.clear();
+            this.bedPositions.clear();
             this.scanning = false;
         } else {
             int i = aEg.thePlayer.ticksExisted;
-            if (i != this.alA) {
-                this.alA = i;
-                this.alz++;
-                this.kO();
-                if (this.alz >= this.refreshTicks.wo().intValue() || this.alx.isEmpty()) {
-                    this.alz = 0;
-                    this.kQ();
+            if (i != this.lastTick) {
+                this.lastTick = i;
+                this.refreshCounter++;
+                this.tryStartScan();
+                if (this.refreshCounter >= this.refreshTicks.wo().intValue() || this.entries.isEmpty()) {
+                    this.refreshCounter = 0;
+                    this.updateEntries();
                 }
             }
 
-            this.kR();
+            this.renderPlates();
         }
     };
 
@@ -106,38 +106,38 @@ public class BedPlates extends Module {
 
     @Override
     public void onDisable() {
-        this.alx.clear();
-        this.aly.clear();
-        this.alz = 0;
-        this.alA = -1;
-        this.alB = 0;
-        this.alD = false;
+        this.entries.clear();
+        this.bedPositions.clear();
+        this.refreshCounter = 0;
+        this.lastTick = -1;
+        this.blockCheckTicks = 0;
+        this.hasCachedView = false;
         this.scanning = false;
-        this.alK = 0L;
+        this.lastScanTime = 0L;
     }
 
     @Override
     public void onEnable() {
-        this.alx.clear();
-        this.aly.clear();
-        this.alz = 0;
-        this.alA = -1;
-        this.alB = 0;
-        this.alD = false;
+        this.entries.clear();
+        this.bedPositions.clear();
+        this.refreshCounter = 0;
+        this.lastTick = -1;
+        this.blockCheckTicks = 0;
+        this.hasCachedView = false;
         this.scanning = false;
-        this.alK = 0L;
+        this.lastScanTime = 0L;
     }
 
-    private boolean kN() {
+    private boolean isInWorld() {
         return aEg.theWorld != null && aEg.thePlayer != null;
     }
 
-    private void kO() {
-        if (this.kN()) {
+    private void tryStartScan() {
+        if (this.isInWorld()) {
             long now = System.currentTimeMillis();
             if (!this.scanning) {
-                if (now - this.alK >= 5000L) {
-                    this.alK = now;
+                if (now - this.lastScanTime >= 5000L) {
+                    this.lastScanTime = now;
                     this.startBedScan();
                 }
             }
@@ -145,7 +145,7 @@ public class BedPlates extends Module {
     }
 
     private void startBedScan() {
-        if (this.kN()) {
+        if (this.isInWorld()) {
             synchronized (this) {
                 if (this.scanning) {
                     return;
@@ -206,8 +206,8 @@ public class BedPlates extends Module {
                             }
                         }
 
-                        this.aly.clear();
-                        this.aly.addAll(arraylist);
+                        this.bedPositions.clear();
+                        this.bedPositions.addAll(arraylist);
                     } catch (Throwable throwable) {
                         throwable.printStackTrace();
                     } finally {
@@ -218,16 +218,16 @@ public class BedPlates extends Module {
         }
     }
 
-    private void kQ() {
-        this.alx.clear();
-        if (this.kN() && !this.aly.isEmpty()) {
+    private void updateEntries() {
+        this.entries.clear();
+        if (this.isInWorld() && !this.bedPositions.isEmpty()) {
             double range = this.range.wo().doubleValue();
             double d1 = range * range;
             double d2 = aEg.thePlayer.posX;
             double d3 = aEg.thePlayer.posY;
             double d4 = aEg.thePlayer.posZ;
             WorldClient worldclient = aEg.theWorld;
-            Iterator iterator = this.aly.iterator();
+            Iterator iterator = this.bedPositions.iterator();
 
             while (iterator.hasNext()) {
                 BlockPos blockpos = ((BedPosition)iterator.next()).getPosition();
@@ -247,14 +247,14 @@ public class BedPlates extends Module {
                             BedPlateInfo wk = this.a(blockpos, enumfacing, d5, d6, d7);
                             if (wk != null) {
                                 aka aka = new aka(d5, d6, d7);
-                                this.alx.add(new BedPlateEntry(aka, d11, wk));
+                                this.entries.add(new BedPlateEntry(aka, d11, wk));
                             }
                         }
                     }
                 }
             }
 
-            this.alx.sort(Comparator.comparingDouble(BedPlateEntry::getDistanceSquared));
+            this.entries.sort(Comparator.comparingDouble(BedPlateEntry::getDistanceSquared));
         }
     }
 
@@ -286,7 +286,7 @@ public class BedPlates extends Module {
         WorldClient worldclient = aEg.theWorld;
 
         for (BlockPos blockpos1 : ablockpos) {
-            for (EnumFacing enumfacing : alM) {
+            for (EnumFacing enumfacing : SURROUNDING_FACES) {
                 BlockPos blockpos2 = blockpos1.offset(enumfacing);
                 IBlockState iblockstate = worldclient.getBlockState(blockpos2);
                 Block block = iblockstate.getBlock();
@@ -332,14 +332,14 @@ public class BedPlates extends Module {
         return null;
     }
 
-    private void kR() {
-        if (!this.alx.isEmpty()) {
+    private void renderPlates() {
+        if (!this.entries.isEmpty()) {
             if (aEg.currentScreen == null) {
-                this.alC = Math.sin(System.currentTimeMillis() / 600.0) * 0.5 + 0.5;
-                this.alB++;
-                boolean flag = this.alB >= 20;
+                this.gradientProgress = Math.sin(System.currentTimeMillis() / 600.0) * 0.5 + 0.5;
+                this.blockCheckTicks++;
+                boolean flag = this.blockCheckTicks >= 20;
                 if (flag) {
-                    this.alB = 0;
+                    this.blockCheckTicks = 0;
                 }
 
                 int i = aEg.jY.getScaleFactor();
@@ -349,26 +349,26 @@ public class BedPlates extends Module {
                 double d2 = RenderManager.bUQ;
                 float f = aEg.thePlayer.pl;
                 float rotationPitch = aEg.thePlayer.rotationPitch;
-                boolean flag1 = !this.alD
-                    || d0 != this.alE
-                    || d1 != this.alF
-                    || d2 != this.alG
-                    || i != this.alH
-                    || j != this.alI
-                    || f != this.Il
-                    || rotationPitch != this.Im;
+                boolean flag1 = !this.hasCachedView
+                    || d0 != this.lastRenderPosX
+                    || d1 != this.lastRenderPosY
+                    || d2 != this.lastRenderPosZ
+                    || i != this.lastScaleFactor
+                    || j != this.lastDisplayHeight
+                    || f != this.lastYaw
+                    || rotationPitch != this.lastPitch;
                 if (flag1) {
-                    this.alD = true;
-                    this.alE = d0;
-                    this.alF = d1;
-                    this.alG = d2;
-                    this.alH = i;
-                    this.alI = j;
-                    this.Il = f;
-                    this.Im = rotationPitch;
+                    this.hasCachedView = true;
+                    this.lastRenderPosX = d0;
+                    this.lastRenderPosY = d1;
+                    this.lastRenderPosZ = d2;
+                    this.lastScaleFactor = i;
+                    this.lastDisplayHeight = j;
+                    this.lastYaw = f;
+                    this.lastPitch = rotationPitch;
                 }
 
-                for (BedPlateEntry wi : this.alx) {
+                for (BedPlateEntry wi : this.entries) {
                     if (flag) {
                         aka aka = wi.getPosition();
                         BlockPos blockpos = new BlockPos(aka.getX(), aka.getY(), aka.getZ());
@@ -382,7 +382,7 @@ public class BedPlates extends Module {
 
                     if (wi.isVisible()) {
                         double[] adouble = wi.getProjectedPosition();
-                        wi.kZ();
+                        wi.incrementCacheAge();
                         if (adouble == null || flag1 || wi.getCacheAge() > 60) {
                             adouble = this.a(wi.getPosition(), d0, d1, d2, i, j);
                             if (adouble == null) {
@@ -423,14 +423,14 @@ public class BedPlates extends Module {
             double d7;
             double d8;
             if (flag) {
-                double d6 = showDistance ? this.alw.getStringWidth(var1.getDistanceText()) * d1 : 0.0;
+                double d6 = showDistance ? this.distanceFont.getStringWidth(var1.getDistanceText()) * d1 : 0.0;
                 d7 = Math.max(d3 + d2 * 2.0, d6 + d2 * 4.0);
                 d8 = d3 + d2 * 1.0;
             } else {
-                double d20 = this.alu.height() * d1;
+                double d20 = this.nameFont.height() * d1;
                 double d21 = Math.max(d3, d20);
-                double d22 = this.alu.getStringWidth(var1.getDisplayName()) * d1;
-                double d23 = showDistance ? (this.alv.getStringWidth("distance: ") + this.alw.getStringWidth(var1.getDistanceText())) * d1 : 0.0;
+                double d22 = this.nameFont.getStringWidth(var1.getDisplayName()) * d1;
+                double d23 = showDistance ? (this.distanceLabelFont.getStringWidth("distance: ") + this.distanceFont.getStringWidth(var1.getDistanceText())) * d1 : 0.0;
                 double d24 = d3 + d2 * 3.0 + d22;
                 d7 = Math.max(d24, d23 + d2 * 4.0);
                 d8 = d21 + d2 * 1.0;
@@ -450,8 +450,8 @@ public class BedPlates extends Module {
             );
             Color color4 = this.rz().rA();
             Color color5 = this.rz().rB();
-            Color color6 = ColorUtil.a(color4, color5, this.alC);
-            Color color7 = ColorUtil.a(color5, color4, this.alC);
+            Color color6 = ColorUtil.a(color4, color5, this.gradientProgress);
+            Color color7 = ColorUtil.a(color5, color4, this.gradientProgress);
             ItemStack itemstack1 = itemstack;
             double d11 = d9;
             double d12 = d10;
@@ -479,15 +479,15 @@ public class BedPlates extends Module {
                     RenderUtil.roundedRectangle(d11, d12, d14, d15 + d13, i + 1, this.rz().rE());
                     if (flag2 && !flag3) {
                         String s2 = "distance: ";
-                        double d25 = this.alv.getStringWidth(s2) * d19;
-                        double d26 = this.alw.getStringWidth(s1) * d19;
+                        double d25 = this.distanceLabelFont.getStringWidth(s2) * d19;
+                        double d26 = this.distanceFont.getStringWidth(s1) * d19;
                         double d27 = d25 + d26;
                         double d28 = d11 + (d14 - d27) / 2.0;
                         double d29 = d12 + d13 / 2.0 - 1.2 * d19;
                         GlStateManager.pushMatrix();
                         GlStateManager.translate(d28, d29, 0.0);
                         GlStateManager.scale(d19, d19, d19);
-                        this.alv.a(s2, 0.0, 0.0, ColorUtil.withBlue(this.rz().rA(), 240).getRGB());
+                        this.distanceLabelFont.a(s2, 0.0, 0.0, ColorUtil.withBlue(this.rz().rA(), 240).getRGB());
                         GlStateManager.popMatrix();
                     }
                 });
@@ -504,26 +504,26 @@ public class BedPlates extends Module {
 
                 if (flag2) {
                     if (flag3) {
-                        double d26 = this.alw.getStringWidth(s1) * d19;
+                        double d26 = this.distanceFont.getStringWidth(s1) * d19;
                         double d27 = d11 + (d14 - d26) / 2.0;
                         double d28 = d12 + d13 / 2.0 - 1.2 * d19;
                         GlStateManager.pushMatrix();
                         GlStateManager.translate(d27, d28, 0.0);
                         GlStateManager.scale(d19, d19, d19);
-                        this.alw.a(s1, 0.0, 0.0, UIColors.TEXT.pW());
+                        this.distanceFont.a(s1, 0.0, 0.0, UIColors.TEXT.pW());
                         GlStateManager.popMatrix();
                     } else {
                         String s2 = "distance: ";
-                        double d33 = this.alv.getStringWidth(s2) * d19;
-                        double d34 = this.alw.getStringWidth(s1) * d19;
+                        double d33 = this.distanceLabelFont.getStringWidth(s2) * d19;
+                        double d34 = this.distanceFont.getStringWidth(s1) * d19;
                         double d35 = d33 + d34;
                         double d36 = d11 + (d14 - d35) / 2.0;
                         double d37 = d12 + d13 / 2.0 - 1.2 * d19;
                         GlStateManager.pushMatrix();
                         GlStateManager.translate(d36, d37, 0.0);
                         GlStateManager.scale(d19, d19, d19);
-                        this.alv.a(s2, 0.0, 0.0, this.rz().rD().getRGB());
-                        this.alw.a(s1, (float)(d33 / d19), 0.0, UIColors.TEXT.pW());
+                        this.distanceLabelFont.a(s2, 0.0, 0.0, this.rz().rD().getRGB());
+                        this.distanceFont.a(s1, (float)(d33 / d19), 0.0, UIColors.TEXT.pW());
                         GlStateManager.popMatrix();
                     }
                 }
@@ -556,22 +556,22 @@ public class BedPlates extends Module {
                     GlStateManager.disableLighting();
                     GlStateManager.popMatrix();
                     double d41 = d11 + d16 * 2.0 + d17;
-                    double d42 = d29 + d15 / 2.0 - (this.alu.height() / 2.0 - 1.5) * d19;
+                    double d42 = d29 + d15 / 2.0 - (this.nameFont.height() / 2.0 - 1.5) * d19;
                     GlStateManager.pushMatrix();
                     GlStateManager.translate(d41, d42, 0.0);
                     GlStateManager.scale(d19, d19, d19);
-                    this.alu.a(s, 0.0, 0.0, -2038554);
+                    this.nameFont.a(s, 0.0, 0.0, -2038554);
                     GlStateManager.popMatrix();
                 }
             });
         }
     }
 
-    private double[] b(aka var1) {
-        return this.f(var1.getX(), var1.getY(), var1.getZ());
+    private double[] project(aka var1) {
+        return this.projectPosition(var1.getX(), var1.getY(), var1.getZ());
     }
 
-    private double[] f(double var1, double var3, double var5) {
+    private double[] projectPosition(double var1, double var3, double var5) {
         int i = aEg.jY.getScaleFactor();
         double d0 = RenderManager.bUO;
         double d1 = RenderManager.bUP;

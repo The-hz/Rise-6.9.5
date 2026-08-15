@@ -24,7 +24,7 @@ public class HitBox extends Module {
         }
     };
     @EventLink
-    public final Listener<ea> Bm = var0 -> aEg.objectMouseOver = aef.c(RotationComponent.fk, 4.5);
+    public final Listener<ea> onGetMouseOver = var0 -> aEg.objectMouseOver = aef.c(RotationComponent.fk, 4.5);
 
     public HitBox() {
     }

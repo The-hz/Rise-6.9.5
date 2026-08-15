@@ -22,40 +22,40 @@ import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 import net.minecraft.network.play.server.a;
 
 public class GrimServer19NoFall extends Mode<NoFall> {
-    private boolean aiE;
-    public static boolean dj = false;
-    public static boolean tt;
+    private boolean shouldNoFall;
+    public static boolean holdingPackets = false;
+    public static boolean releasing;
     private int tR;
-    private final ArrayList<Packet<?>> aiF = new ArrayList<>();
+    private final ArrayList<Packet<?>> heldPackets = new ArrayList<>();
     private float ub;
     private double vB;
     private double vC;
     private final BooleanValue newestGrimMayFlagTheAnticheat = new BooleanValue("Newest Grim, may flag the anticheat", this, false);
-    private boolean gD;
+    private boolean shouldJump;
     @EventLink(value = 2)
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
-        if (!tt && aEg.thePlayer.ticksExisted >= 10 && !aEg.thePlayer.isCollidedHorizontally) {
+        if (!releasing && aEg.thePlayer.ticksExisted >= 10 && !aEg.thePlayer.isCollidedHorizontally) {
             switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
                     if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && !var1x.isCancelled()) {
                         if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && s12packetentityvelocity.motionY > 0
                             || aEg.thePlayer.ae <= 14
                             || aEg.thePlayer.cqL <= 1) {
-                            this.gD = true;
+                            this.shouldJump = true;
                         }
 
-                        if (!aEg.thePlayer.onGround && this.aiE) {
-                            dj = true;
+                        if (!aEg.thePlayer.onGround && this.shouldNoFall) {
+                            holdingPackets = true;
                         }
                     }
                     break;
                 case S32PacketConfirmTransaction s32packetconfirmtransaction:
-                    if (dj) {
+                    if (holdingPackets) {
                         return;
                     }
                     break;
                 case a a:
-                    if (dj) {
+                    if (holdingPackets) {
                         return;
                     }
                     break;
@@ -68,14 +68,14 @@ public class GrimServer19NoFall extends Mode<NoFall> {
         if (!aEg.thePlayer.isCollidedHorizontally) {
             float f = FallDistanceComponent.cY;
             if (aEg.thePlayer.motionY > 0.1) {
-                this.aiE = false;
+                this.shouldNoFall = false;
             }
 
             if (f > 3.0F) {
-                this.aiE = true;
+                this.shouldNoFall = true;
             }
 
-            if (this.aiE && aEg.thePlayer.onGround) {
+            if (this.shouldNoFall && aEg.thePlayer.onGround) {
                 if (!this.newestGrimMayFlagTheAnticheat.wo()) {
                     var1x.setCancelled(true);
                 } else {
@@ -88,7 +88,7 @@ public class GrimServer19NoFall extends Mode<NoFall> {
                 f = 0.0F;
             }
 
-            if (this.aiE) {
+            if (this.shouldNoFall) {
                 aEg.gameSettings.keyBindJump.setPressed(false);
             }
 
@@ -101,21 +101,21 @@ public class GrimServer19NoFall extends Mode<NoFall> {
     };
     @EventLink(value = 2)
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        if (dj && aEg.thePlayer.onGround) {
-            tt = true;
-            dj = false;
-            this.aiF.forEach(PacketUtil::receive);
-            this.aiF.clear();
-            tt = false;
+        if (holdingPackets && aEg.thePlayer.onGround) {
+            releasing = true;
+            holdingPackets = false;
+            this.heldPackets.forEach(PacketUtil::receive);
+            this.heldPackets.clear();
+            releasing = false;
         }
     };
     @EventLink
     public final Listener<MoveInputEvent> onMoveInput = var1x -> {
         if (!aEg.thePlayer.isCollidedHorizontally) {
-            if (this.gD && this.aiE) {
+            if (this.shouldJump && this.shouldNoFall) {
                 var1x.setJump(true);
-                this.gD = false;
-            } else if (this.aiE) {
+                this.shouldJump = false;
+            } else if (this.shouldNoFall) {
             }
         }
     };
@@ -126,6 +126,6 @@ public class GrimServer19NoFall extends Mode<NoFall> {
 
     @Override
     public void onEnable() {
-        this.aiE = false;
+        this.shouldNoFall = false;
     }
 }

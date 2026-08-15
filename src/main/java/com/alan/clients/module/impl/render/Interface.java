@@ -53,31 +53,31 @@ public final class Interface extends Module {
     private List<ArrayListEntry> allEntries = new ArrayList<>();
     private List<ArrayListEntry> activeEntries = new ArrayList<>();
     private ModeValue informationType = new InformationTypeModeValue(this, "Information Type", this);
-    private final a aon = new a();
-    private final a aoo = new a();
+    private final a animationStopWatch = new a();
+    private final a preUpdateStopWatch = new a();
     public agc widthComparator = FontManager.MAIN.a(20, FontWeight.MEDIUM);
     public float moduleSpacing = 12.0F;
     public float edgeOffset;
     @EventLink
-    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.lv();
+    public final Listener<WorldChangeEvent> onWorldChange = var1 -> this.rebuildEntries();
     @EventLink
-    public final Listener<ServerJoinEvent> onServerJoin = var1 -> this.lv();
+    public final Listener<ServerJoinEvent> onServerJoin = var1 -> this.rebuildEntries();
     @EventLink
     public final Listener<ModuleToggleEvent> onModuleToggle = var1 -> {
         if (this.toggleNotifications.wo()) {
             cg.a("Toggled", "Toggled " + var1.getModule().getName() + " " + (var1.getModule().isEnabled() ? "on" : "off"), 900);
         }
     };
-    a aov = new a();
+    a nameUpdateStopWatch = new a();
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> aMR.execute(() -> {
         Themes.c(new Color(0, 0, 0, this.aoc.wo() ? this.getBackgroundAlpha() : 150));
-        if (this.aov.T(15000L)) {
-            this.lx();
-            this.aov.aX();
+        if (this.nameUpdateStopWatch.T(15000L)) {
+            this.updateEntryNames();
+            this.nameUpdateStopWatch.aX();
         }
 
-        this.aoo.aX();
+        this.preUpdateStopWatch.aX();
 
         for (ArrayListEntry zc : this.activeEntries) {
             if (zc.animationTime != 0.0F) {
@@ -104,9 +104,9 @@ public final class Interface extends Module {
         for (ArrayListEntry zcx : this.allEntries) {
             float f = this.mode.wo().getName().equals("Classic") ? 10.0F : 100.0F;
             if (zcx.getModule().isEnabled()) {
-                zcx.animationTime = Math.min(zcx.animationTime + (float)this.aon.getElapsedTime() / f, 10.0F);
+                zcx.animationTime = Math.min(zcx.animationTime + (float)this.animationStopWatch.getElapsedTime() / f, 10.0F);
             } else {
-                zcx.animationTime = Math.max(zcx.animationTime - (float)this.aon.getElapsedTime() / f, 0.0F);
+                zcx.animationTime = Math.max(zcx.animationTime - (float)this.animationStopWatch.getElapsedTime() / f, 0.0F);
             }
         }
 
@@ -129,20 +129,20 @@ public final class Interface extends Module {
                 if (!(Math.abs(zc.getPosition().getX() - zc.targetPosition.x) > 0.5) && !(Math.abs(zc.getPosition().getY() - zc.targetPosition.y) > 0.5) && (zc.animationTime == 0.0F || zc.animationTime == 10.0F)) {
                     zc.position = zc.targetPosition;
                 } else {
-                    zc.position.x = MathUtil.m(zc.position.x, zc.targetPosition.x, 0.015F * (float)this.aon.getElapsedTime());
-                    zc.position.y = MathUtil.m(zc.position.y, zc.targetPosition.y, 0.015F * (float)this.aon.getElapsedTime());
+                    zc.position.x = MathUtil.m(zc.position.x, zc.targetPosition.x, 0.015F * (float)this.animationStopWatch.getElapsedTime());
+                    zc.position.y = MathUtil.m(zc.position.y, zc.targetPosition.y, 0.015F * (float)this.animationStopWatch.getElapsedTime());
                 }
             }
         }
 
-        this.aon.aX();
+        this.animationStopWatch.aX();
     };
 
     public Interface() {
-        this.lv();
+        this.rebuildEntries();
     }
 
-    public void lv() {
+    public void rebuildEntries() {
         this.allEntries.clear();
         Client.a
             .g()
@@ -150,18 +150,18 @@ public final class Interface extends Module {
             .stream()
             .sorted(Comparator.comparingDouble(var1 -> -this.widthComparator.getStringWidth(var1.getName())))
             .forEach(var1 -> this.allEntries.add(new ArrayListEntry(var1)));
-        this.lx();
+        this.updateEntryNames();
     }
 
     public void createArrayList() {
         this.activeEntries = this.allEntries
             .stream()
-            .filter(var1 -> var1.a(this))
+            .filter(var1 -> var1.shouldShow(this))
             .sorted(Comparator.comparingDouble(var0 -> -var0.getNameWidth() - var0.getTagWidth()))
             .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public void lx() {
+    public void updateEntryNames() {
         for (ArrayListEntry zc : this.allEntries) {
             zc.setTranslatedName(zc.getModule().getName());
         }
@@ -243,12 +243,12 @@ public final class Interface extends Module {
 
     @Generated
     public a getAnimationStopWatch() {
-        return this.aon;
+        return this.animationStopWatch;
     }
 
     @Generated
     public a getPreUpdateStopWatch() {
-        return this.aoo;
+        return this.preUpdateStopWatch;
     }
 
     @Generated
@@ -283,7 +283,7 @@ public final class Interface extends Module {
 
     @Generated
     public a getNameUpdateStopWatch() {
-        return this.aov;
+        return this.nameUpdateStopWatch;
     }
 
     @Generated
@@ -343,7 +343,7 @@ public final class Interface extends Module {
 
     @Generated
     public void setNameUpdateStopWatch(a var1) {
-        this.aov = var1;
+        this.nameUpdateStopWatch = var1;
     }
 
     @Generated

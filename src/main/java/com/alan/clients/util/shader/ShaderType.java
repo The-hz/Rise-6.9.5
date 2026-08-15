@@ -9,17 +9,17 @@ public enum ShaderType {
     BLOOM(BloomShader.class),
     BLUR(GaussianBlurShader.class);
 
-    private final Class<?> lb;
+    private final Class<?> type;
     private static final ShaderType[] $VALUES = dZ();
 
     @Generated
     ShaderType(Class<?> type) {
-        this.lb = type;
+        this.type = type;
     }
 
     @Generated
-    public Class<?> dY() {
-        return this.lb;
+    public Class<?> getType() {
+        return this.type;
     }
 
     private static ShaderType[] dZ() {

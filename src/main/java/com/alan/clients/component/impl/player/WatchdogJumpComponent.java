@@ -49,7 +49,7 @@ public class WatchdogJumpComponent extends Component {
                 }
 
                 if (!this.e(Speed.class).isEnabled() && !BadPacketsComponent.bad(false, false, false, true, false)) {
-                    this.e(Scaffold.class).agy = this.e(Scaffold.class).agy.v(0.0, -1.0, 0.0);
+                    this.e(Scaffold.class).placeOffset = this.e(Scaffold.class).placeOffset.v(0.0, -1.0, 0.0);
                 }
 
                 aEg.thePlayer.crd = true;

@@ -19,7 +19,7 @@ public class SlimeNCPFlight extends Mode<Flight> {
     private final double HW = 1.0;
     private int tY;
     private boolean started;
-    private aka ua;
+    private aka savedMotion;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {};
     @EventLink
@@ -31,31 +31,31 @@ public class SlimeNCPFlight extends Mode<Flight> {
         if (aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();
         } else if ((aEg.thePlayer.tR - 1) % 3 == 0) {
-            this.ua = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
+            this.savedMotion = new aka(aEg.thePlayer.motionX, aEg.thePlayer.motionY, aEg.thePlayer.motionZ);
             aEg.thePlayer.motionY = 0.0;
             MoveUtil.stop();
-        } else if (this.ua != null) {
-            if (Math.abs(this.ua.getX()) < 0.005) {
-                this.ua.setX(0.0);
+        } else if (this.savedMotion != null) {
+            if (Math.abs(this.savedMotion.getX()) < 0.005) {
+                this.savedMotion.setX(0.0);
             }
 
-            if (Math.abs(this.ua.getY()) < 0.005) {
-                this.ua.setY(0.0);
+            if (Math.abs(this.savedMotion.getY()) < 0.005) {
+                this.savedMotion.setY(0.0);
             }
 
-            if (Math.abs(this.ua.getZ()) < 0.005) {
-                this.ua.setZ(0.0);
+            if (Math.abs(this.savedMotion.getZ()) < 0.005) {
+                this.savedMotion.setZ(0.0);
             }
 
             double d0 = aEg.thePlayer.tR <= 1 ? 0.5460000157356262 : 1.0;
-            aEg.thePlayer.motionX = this.ua.getX() * d0;
-            aEg.thePlayer.motionY = this.ua.getY() * d0;
-            aEg.thePlayer.motionZ = this.ua.getZ() * d0;
-            this.ua = null;
+            aEg.thePlayer.motionX = this.savedMotion.getX() * d0;
+            aEg.thePlayer.motionY = this.savedMotion.getY() * d0;
+            aEg.thePlayer.motionZ = this.savedMotion.getZ() * d0;
+            this.savedMotion = null;
             this.started = true;
         } else if (this.started) {
             this.started = false;
-            if (!KillAura.nQ) {
+            if (!KillAura.blocking) {
             }
         }
     };
@@ -68,11 +68,11 @@ public class SlimeNCPFlight extends Mode<Flight> {
     public void onDisable() {
         this.tU = 0.0;
         aEg.timer.dzD = 1.0F;
-        if (this.ua != null) {
-            aEg.thePlayer.motionX = this.ua.getX() * 0.91F;
-            aEg.thePlayer.motionY = this.ua.getY();
-            aEg.thePlayer.motionZ = this.ua.getZ() * 0.91F;
-            this.ua = null;
+        if (this.savedMotion != null) {
+            aEg.thePlayer.motionX = this.savedMotion.getX() * 0.91F;
+            aEg.thePlayer.motionY = this.savedMotion.getY();
+            aEg.thePlayer.motionZ = this.savedMotion.getZ() * 0.91F;
+            this.savedMotion = null;
         }
     }
 

@@ -9,12 +9,12 @@ import hackclient.rise.afi;
 import net.minecraft.util.Vec3;
 
 public final class WatchdogBedWarsTeleport extends Mode<Teleport> {
-    public Vec3 Jd = new Vec3(0.0, 0.0, 0.0);
+    public Vec3 startPosition = new Vec3(0.0, 0.0, 0.0);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        var1x.setPosY(this.Jd.yCoord);
-        var1x.setPosX(this.Jd.xCoord);
-        var1x.setPosZ(this.Jd.zCoord);
+        var1x.setPosY(this.startPosition.yCoord);
+        var1x.setPosX(this.startPosition.xCoord);
+        var1x.setPosZ(this.startPosition.zCoord);
     };
 
     public WatchdogBedWarsTeleport(String var1, Teleport teleport) {
@@ -23,7 +23,7 @@ public final class WatchdogBedWarsTeleport extends Mode<Teleport> {
 
     @Override
     public void onEnable() {
-        this.Jd = new Vec3(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
+        this.startPosition = new Vec3(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
         afi.b("Die -> Fly to where you want to teleport -> Toggle");
     }
 }

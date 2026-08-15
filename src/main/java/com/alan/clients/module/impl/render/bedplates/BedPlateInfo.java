@@ -6,12 +6,12 @@ import net.minecraft.item.ItemStack;
 
 public class BedPlateInfo {
     private final ItemStack stack;
-    private final String alW;
+    private final String displayName;
     private final String distanceText;
     private final double distanceSquared;
     private final double distance;
     private final MapColor mapColor;
-    private final aka amb;
+    private final aka position;
     private final boolean incomplete;
     private final boolean notProtected;
 
@@ -20,21 +20,21 @@ public class BedPlateInfo {
         this.incomplete = var6;
         this.notProtected = var7;
         if (var7) {
-            this.alW = "Not Protected";
+            this.displayName = "Not Protected";
         } else if (var6) {
-            this.alW = "Incomplete";
+            this.displayName = "Incomplete";
         } else {
-            this.alW = stack.getDisplayName();
+            this.displayName = stack.getDisplayName();
         }
 
         this.distanceSquared = var2;
         this.distance = Math.sqrt(var2);
         this.mapColor = mapColor;
-        this.amb = var5;
-        this.distanceText = t(this.distance);
+        this.position = var5;
+        this.distanceText = formatDistance(this.distance);
     }
 
-    private static String t(double var0) {
+    private static String formatDistance(double var0) {
         return Math.round(var0 * 10.0) / 10.0 + "m";
     }
 
@@ -43,7 +43,7 @@ public class BedPlateInfo {
     }
 
     public String getDisplayName() {
-        return this.alW;
+        return this.displayName;
     }
 
     public double getDistanceSquared() {
@@ -59,7 +59,7 @@ public class BedPlateInfo {
     }
 
     public aka getPosition() {
-        return this.amb;
+        return this.position;
     }
 
     public boolean isIncomplete() {

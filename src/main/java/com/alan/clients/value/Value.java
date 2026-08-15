@@ -95,7 +95,7 @@ public abstract class Value<T> {
     }
 
     @Generated
-    public BooleanSupplier wn() {
+    public BooleanSupplier getBooleanSupplier() {
         return this.aQK;
     }
 
@@ -130,7 +130,7 @@ public abstract class Value<T> {
     }
 
     @Generated
-    public void b(BooleanSupplier booleanSupplier) {
+    public void setBooleanSupplier(BooleanSupplier booleanSupplier) {
         this.aQK = booleanSupplier;
     }
 

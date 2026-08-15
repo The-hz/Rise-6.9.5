@@ -126,7 +126,7 @@ implements SuggestionProvider {
                         boolean bl;
                         String string11;
                         Value<?> value = iterator2.next();
-                        if (value.wn() != null && value.wn().getAsBoolean()) continue;
+                        if (value.getBooleanSupplier() != null && value.getBooleanSupplier().getAsBoolean()) continue;
                         String string12 = value.getName();
                         String string13 = string12.replace(" ", "");
                         String string14 = string13.toLowerCase(Locale.ROOT);
@@ -279,7 +279,7 @@ implements SuggestionProvider {
     private static Value<?> c(Module module, String string) {
         String string2 = string.toLowerCase(Locale.ROOT);
         for (Value<?> value : module.getAllValues()) {
-            if (value.wn() != null && value.wn().getAsBoolean()) continue;
+            if (value.getBooleanSupplier() != null && value.getBooleanSupplier().getAsBoolean()) continue;
             String string3 = value.getName();
             if (string3.equalsIgnoreCase(string)) {
                 return value;

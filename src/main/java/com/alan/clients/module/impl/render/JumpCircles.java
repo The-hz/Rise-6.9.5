@@ -24,54 +24,54 @@ import org.lwjgl.opengl.GL11;
 
 @ModuleInfo(aliases = "Jump Circles", description = "Draws circles around the player when they jump", category = Category.RENDER)
 public final class JumpCircles extends Module {
-    private final Queue<JumpCircle> aoy = new ConcurrentLinkedQueue<>();
-    private final Animation aoz = new Animation(Easing.EASE_IN_OUT_CUBIC, 300L);
-    private boolean aoA = false;
-    private static final float aoB = 0.004F;
-    private static final int aoC = 2;
-    private static final float aoD = 2.0F;
-    private static final float aoE = 4.0F;
+    private final Queue<JumpCircle> circles = new ConcurrentLinkedQueue<>();
+    private final Animation alphaAnimation = new Animation(Easing.EASE_IN_OUT_CUBIC, 300L);
+    private boolean wasAirborne = false;
+    private static final float GROWTH_RATE = 0.004F;
+    private static final int DRAW_MODE = 2;
+    private static final float LINE_WIDTH = 2.0F;
+    private static final float ALPHA_DIVISOR = 4.0F;
     @EventLink
     private final Listener<PostMotionEvent> onPostMotion = var1 -> {
-        if (aEg.thePlayer.onGround && this.aoA) {
+        if (aEg.thePlayer.onGround && this.wasAirborne) {
             double d0 = MathUtil.m(aEg.thePlayer.prevPosX, aEg.thePlayer.posX, aEg.timer.bWm);
             double d1 = MathUtil.m(aEg.thePlayer.prevPosY, aEg.thePlayer.posY, aEg.timer.bWm);
             double d2 = MathUtil.m(aEg.thePlayer.prevPosZ, aEg.thePlayer.posZ, aEg.timer.bWm);
-            this.aoy.add(new JumpCircle(new Vec3(d0, d1, d2), 0.0, 255.0F));
-            this.aoA = false;
+            this.circles.add(new JumpCircle(new Vec3(d0, d1, d2), 0.0, 255.0F));
+            this.wasAirborne = false;
         } else if (!aEg.thePlayer.onGround) {
-            this.aoA = true;
+            this.wasAirborne = true;
         }
 
-        Iterator iterator = this.aoy.iterator();
+        Iterator iterator = this.circles.iterator();
 
         while (iterator.hasNext()) {
             if (((JumpCircle)iterator.next()).alpha > 0.0F) {
                 return;
             }
 
-            this.aoy.clear();
+            this.circles.clear();
         }
     };
     @EventLink
     private final Listener<Render3DEvent> onRender3D = var1 -> {
-        for (JumpCircle xl : this.aoy) {
+        for (JumpCircle xl : this.circles) {
             Vec3 vec3 = xl.getPosition();
             double d1 = vec3.yCoord;
             aEg.getRenderManager();
             double d0 = d1 - RenderManager.bUP;
             xl.y(0.004F);
             if (xl.getRadius() <= 2.0) {
-                this.lY();
-                this.aoz.Q(xl.alpha = xl.alpha - (float)(xl.getRadius() / 4.0));
+                this.beginRender();
+                this.alphaAnimation.Q(xl.alpha = xl.alpha - (float)(xl.getRadius() / 4.0));
                 if (xl.mc() > 0.0F) {
                     xl.setAlpha(xl.alpha = xl.alpha - (float)(xl.getRadius() / 4.0));
                 }
 
-                this.a(xl, vec3, d0);
-                this.lZ();
+                this.drawCircle(xl, vec3, d0);
+                this.endRender();
             } else {
-                this.aoy.remove();
+                this.circles.remove();
             }
         }
     };
@@ -81,12 +81,12 @@ public final class JumpCircles extends Module {
 
     @Override
     public void onDisable() {
-        if (!this.aoy.isEmpty()) {
-            this.aoy.clear();
+        if (!this.circles.isEmpty()) {
+            this.circles.clear();
         }
     }
 
-    private void lY() {
+    private void beginRender() {
         GL11.glPushMatrix();
         GL11.glDisable(2929);
         GL11.glDisable(3553);
@@ -96,13 +96,13 @@ public final class JumpCircles extends Module {
         GlStateManager.blendFunc(770, 771);
     }
 
-    private void a(JumpCircle var1, Vec3 vec, double var3) {
+    private void drawCircle(JumpCircle var1, Vec3 vec, double var3) {
         GL11.glLineWidth(2.0F);
         GL11.glBegin(2);
 
         for (int i = 0; i <= 360; i++) {
             Color color = this.e(Interface.class).rz().getAccentColor(new Vector2d(i, i));
-            double[] adouble = this.c(vec.xCoord, vec.zCoord, i, var1.radius);
+            double[] adouble = this.circlePoint(vec.xCoord, vec.zCoord, i, var1.radius);
             double d2 = adouble[0];
             aEg.getRenderManager();
             double d0 = d2 - RenderManager.bUO;
@@ -117,7 +117,7 @@ public final class JumpCircles extends Module {
         GL11.glPopMatrix();
     }
 
-    private void lZ() {
+    private void endRender() {
         GlStateManager.disableBlend();
         GL11.glDisable(2848);
         GL11.glEnable(3008);
@@ -125,7 +125,7 @@ public final class JumpCircles extends Module {
         GL11.glEnable(2929);
     }
 
-    public double[] c(double var1, double var3, double var5, double var7) {
+    public double[] circlePoint(double var1, double var3, double var5, double var7) {
         double d0 = MathHelper.wrapAngleTo180_double(var5);
         double d1 = d0 * Math.PI / 180.0;
         double d2 = var1 - Math.sin(d1) * var7;

@@ -32,14 +32,14 @@ public class VerusSpeed extends Mode<Speed> {
     private int ticks;
     private boolean QL;
     private boolean lastStopped;
-    private int QN;
-    private boolean Lw;
-    private double Lx;
-    private float jp;
-    private float jq;
-    private boolean GQ = true;
-    private boolean cJ = false;
-    private int QO = 0;
+    private int nextActionTick;
+    private boolean stopHandled;
+    private double hopSpeed;
+    private float forwardInput;
+    private float strafeInput;
+    private boolean pendingBoost = true;
+    private boolean recentlyAttacked = false;
+    private int attackTicks = 0;
     private final ModeValue mode = new ModeValue("Sub-Mode", this)
         .add(new SubMode("Hop"))
         .add(new SubMode("yPort"))
@@ -100,26 +100,26 @@ public class VerusSpeed extends Mode<Speed> {
                             float f = 0.39F;
                             float f1 = aEg.thePlayer.isCollidedHorizontally ? 0.42F : (f == 0.4F ? f : 0.42F);
                             aEg.thePlayer.motionY = MoveUtil.jumpBoostMotion(f1);
-                            this.Lx = d0 * 1.76;
+                            this.hopSpeed = d0 * 1.76;
                             break;
                         case 1:
-                            this.Lx = this.Lx - 0.439 * (this.Lx - d0);
+                            this.hopSpeed = this.hopSpeed - 0.439 * (this.hopSpeed - d0);
                             break;
                         default:
-                            this.Lx = this.Lx - this.Lx / 159.9F;
+                            this.hopSpeed = this.hopSpeed - this.hopSpeed / 159.9F;
                     }
 
                     aEg.timer.dzD = 1.0F;
-                    this.Lw = false;
-                } else if (!this.Lw) {
-                    this.Lx = MoveUtil.getAllowedHorizontalDistance();
+                    this.stopHandled = false;
+                } else if (!this.stopHandled) {
+                    this.hopSpeed = MoveUtil.getAllowedHorizontalDistance();
                     aEg.timer.dzD = 1.0F;
-                    this.Lw = true;
+                    this.stopHandled = true;
                 }
 
-                var1x.setSpeed(Math.max(this.Lx, d0), Math.random() / 2000.0);
+                var1x.setSpeed(Math.max(this.hopSpeed, d0), Math.random() / 2000.0);
                 if (aEg.thePlayer.crG <= 20) {
-                    var1x.setSpeed(this.Lx * 2.0);
+                    var1x.setSpeed(this.hopSpeed * 2.0);
                 }
 
                 if (aEg.thePlayer.isInWater()) {
@@ -127,23 +127,23 @@ public class VerusSpeed extends Mode<Speed> {
                 }
 
                 if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
-                    var1x.setSpeed(0.93 * Math.max(this.Lx, d0), 1.0);
+                    var1x.setSpeed(0.93 * Math.max(this.hopSpeed, d0), 1.0);
                     if (aEg.thePlayer.isCollidedHorizontally) {
-                        this.Lx = MoveUtil.getAllowedHorizontalDistance();
+                        this.hopSpeed = MoveUtil.getAllowedHorizontalDistance();
                     }
 
                     if (aEg.thePlayer.crG <= 20) {
-                        var1x.setSpeed(this.Lx * 2.0);
+                        var1x.setSpeed(this.hopSpeed * 2.0);
                     }
                 }
         }
 
         if (this.mode.wo().getName().equals("yPort")) {
             MoveUtil.preventDiagonalSpeed();
-            if (this.QO > 0) {
-                this.QO--;
+            if (this.attackTicks > 0) {
+                this.attackTicks--;
             } else {
-                this.cJ = false;
+                this.recentlyAttacked = false;
             }
 
             if (aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.onGround) {
@@ -168,8 +168,8 @@ public class VerusSpeed extends Mode<Speed> {
                     );
                 }
 
-                if (this.GQ) {
-                    this.GQ = false;
+                if (this.pendingBoost) {
+                    this.pendingBoost = false;
                 }
 
                 if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
@@ -179,12 +179,12 @@ public class VerusSpeed extends Mode<Speed> {
                 }
 
                 BadPacketsComponent.bad(false, true, true, false, false);
-                if (!BadPacketsComponent.bad(false, true, false, false, false) & this.cJ) {
-                    this.QN = aEg.thePlayer.ticksExisted + 2;
+                if (!BadPacketsComponent.bad(false, true, false, false, false) & this.recentlyAttacked) {
+                    this.nextActionTick = aEg.thePlayer.ticksExisted + 2;
                 }
 
                 if (!BadPacketsComponent.bad(false, true, false, false, false) & aEg.thePlayer.ticksExisted % 10 == 1) {
-                    this.QN = aEg.thePlayer.ticksExisted + 2;
+                    this.nextActionTick = aEg.thePlayer.ticksExisted + 2;
                 }
 
                 if (aEg.thePlayer.onGround) {
@@ -198,7 +198,7 @@ public class VerusSpeed extends Mode<Speed> {
 
                 MoveUtil.preventDiagonalSpeed();
             } else {
-                this.GQ = true;
+                this.pendingBoost = true;
                 if (aEg.thePlayer.isPotionActive(Potion.moveSpeed)) {
                     MoveUtil.strafe(0.04 * (1 + aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier()) + 0.41);
                 } else {
@@ -234,19 +234,19 @@ public class VerusSpeed extends Mode<Speed> {
     public final Listener<MoveInputEvent> onMoveInput = var1x -> {
         var1x.setJump(false);
         var1x.setSneak(false);
-        this.jp = var1x.getForward();
-        this.jq = var1x.getStrafe();
+        this.forwardInput = var1x.getForward();
+        this.strafeInput = var1x.getStrafe();
     };
     @EventLink
     public final Listener<AttackEvent> onAttack = var1x -> {
-        this.cJ = true;
-        this.QO = 10;
+        this.recentlyAttacked = true;
+        this.attackTicks = 10;
     };
     @EventLink(value = 1)
     Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (this.mode.wo().getName().equals("Hop")) {
             RotationComponent.setRotations(
-                new Vector2f((float)Math.toDegrees(MoveUtil.g(this.jp, this.jq)), aEg.thePlayer.rotationPitch), 2.0, MovementFix.BACKWARDS_SPRINT
+                new Vector2f((float)Math.toDegrees(MoveUtil.g(this.forwardInput, this.strafeInput)), aEg.thePlayer.rotationPitch), 2.0, MovementFix.BACKWARDS_SPRINT
             );
         }
     };
@@ -257,7 +257,7 @@ public class VerusSpeed extends Mode<Speed> {
 
     @Override
     public void onEnable() {
-        this.GQ = true;
+        this.pendingBoost = true;
         if (this.mode.wo().getName().equals("yPort") && !BadPacketsComponent.bad(true, true, true, true, true) && !this.e(Scaffold.class).isEnabled()) {
             Random random = new Random();
             float f = random.nextFloat();

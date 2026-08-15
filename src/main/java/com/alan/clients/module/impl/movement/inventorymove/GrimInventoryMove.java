@@ -31,7 +31,7 @@ public final class GrimInventoryMove extends Mode<InventoryMove> {
         }
     };
     @EventLink
-    public final Listener<en> JG = var0 -> {
+    public final Listener<en> onSprint = var0 -> {
         if (aEg.currentScreen instanceof GuiInventory || aEg.currentScreen instanceof GuiChest) {
             aEg.thePlayer.setSprinting(false);
         }

@@ -114,8 +114,8 @@ public enum Client
     }
 
     public void b() {
-        if (this.getConfigManager() != null && this.getConfigManager().to() != null) {
-            this.getConfigManager().to().write();
+        if (this.getConfigManager() != null && this.getConfigManager().getConfigfile() != null) {
+            this.getConfigManager().getConfigfile().write();
         }
     }
 
@@ -144,7 +144,7 @@ public enum Client
         try {
             com.alan.clients.module.impl.render.Interface interface_;
             if (this.moduleManager != null && (interface_ = this.moduleManager.c(com.alan.clients.module.impl.render.Interface.class)) != null) {
-                interface_.lv();
+                interface_.rebuildEntries();
                 interface_.createArrayList();
             }
         } catch (Throwable throwable) {
@@ -249,7 +249,7 @@ public enum Client
                                     this.componentManager.a((Component)clazz.getConstructor((Class[])new Class[0]).newInstance(new Object[0]));
                                 }
                                 else if (Module.class.isAssignableFrom(clazz)) {
-                                    this.moduleManager.a(clazz, (Module)clazz.getConstructor((Class[])new Class[0]).newInstance(new Object[0]));
+                                    this.moduleManager.register(clazz, (Module)clazz.getConstructor((Class[])new Class[0]).newInstance(new Object[0]));
                                 }
                                 else if (Command.class.isAssignableFrom(clazz)) {
                                     this.commandManager.aQ().add((Command)clazz.getConstructor((Class[])new Class[0]).newInstance(new Object[0]));

@@ -23,7 +23,7 @@ public final class PacketReceiveEvent extends CancellableEvent {
     }
 
     @Generated
-    public NetworkManager dr() {
+    public NetworkManager getNetworkManager() {
         return this.jS;
     }
 
@@ -33,7 +33,7 @@ public final class PacketReceiveEvent extends CancellableEvent {
     }
 
     @Generated
-    public void a(NetworkManager networkManager) {
+    public void setNetworkManager(NetworkManager networkManager) {
         this.jS = networkManager;
     }
 

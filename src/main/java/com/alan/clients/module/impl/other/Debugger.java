@@ -49,11 +49,11 @@ public final class Debugger extends Module implements aha {
     private final BooleanValue eventCalls = new BooleanValue("Event Calls", this, false);
     private final DragValue position = new DragValue("", this, new Vector2d(200.0, 200.0), true);
     private final DateTimeFormatter date = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-    private final ArrayList<String> UB = new ArrayList<>();
+    private final ArrayList<String> debugLines = new ArrayList<>();
     public static HashMap<String, Integer> calls = new HashMap<>();
     private long threadLag;
     private boolean measuring;
-    private a bN = new a();
+    private a stopWatch = new a();
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1 -> {};
     @EventLink
@@ -185,6 +185,6 @@ public final class Debugger extends Module implements aha {
 
     @Override
     public void onEnable() {
-        this.UB.clear();
+        this.debugLines.clear();
     }
 }

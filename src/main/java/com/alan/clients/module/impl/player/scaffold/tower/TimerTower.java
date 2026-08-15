@@ -11,7 +11,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 
 public class TimerTower extends Mode<Scaffold> {
-    private boolean El;
+    private boolean offsetApplied;
     @EventLink(value = 3)
     private final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (aEg.thePlayer.onGround && !aEg.gameSettings.keyBindJump.isKeyDown()) {
@@ -23,7 +23,7 @@ public class TimerTower extends Mode<Scaffold> {
 
         if (aEg.gameSettings.keyBindJump.isPressed() && aEg.thePlayer.onGround) {
             MoveUtil.stop();
-            this.El = false;
+            this.offsetApplied = false;
         }
     };
     @EventLink(value = 3)
@@ -32,10 +32,10 @@ public class TimerTower extends Mode<Scaffold> {
             var1x.setPosY(var1x.getPosY() + 1.0E-13);
         }
 
-        if (aEg.thePlayer.onGround && !this.El && !aEg.gameSettings.keyBindJump.isKeyDown()) {
+        if (aEg.thePlayer.onGround && !this.offsetApplied && !aEg.gameSettings.keyBindJump.isKeyDown()) {
             MoveUtil.stop();
             var1x.setPosY(var1x.getPosY() + 1.0E-13);
-            this.El = true;
+            this.offsetApplied = true;
         }
     };
     @EventLink
@@ -55,7 +55,7 @@ public class TimerTower extends Mode<Scaffold> {
 
     @Override
     public void onEnable() {
-        this.El = true;
+        this.offsetApplied = true;
         if (!aEg.gameSettings.keyBindJump.isKeyDown()) {
             MoveUtil.stop();
         }

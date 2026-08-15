@@ -40,18 +40,18 @@ public class ChatImageManager {
     private static final byte[] art = new byte[]{-1, -40, -1};
     private static final byte[] GIF87A_MAGIC = new byte[]{71, 73, 70, 56, 55, 97};
     private static final byte[] GIF89A_MAGIC = new byte[]{71, 73, 70, 56, 57, 97};
-    private static final long arw = 15000L;
+    private static final long DECODE_TIMEOUT_MS = 15000L;
     private static volatile boolean sandboxInitialized = false;
     private static final Pattern URL_PATTERN = Pattern.compile("(https?://[^\\s<>\\\"']+)", 2);
     private static final Pattern META_TAG_PATTERN = Pattern.compile("(?is)<meta\\b[^>]*>");
     private static final Pattern META_CONTENT_PATTERN = Pattern.compile("(?is)\\bcontent\\s*=\\s*[\"']([^\"']+)[\"']");
     private static final String[] IMAGE_EXTENSIONS = new String[]{".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp"};
     private static final String[] VIDEO_EXTENSIONS = new String[]{".mp4", ".webm", ".mov"};
-    private static final int arD = 3;
-    private static final int arE = 8;
-    private static final int arF = 10485760;
-    private static final int arG = 200;
-    private static final int arH = 4096;
+    private static final int MAX_RESOLVE_DEPTH = 3;
+    private static final int MIN_HEADER_BYTES = 8;
+    private static final int MAX_DOWNLOAD_BYTES = 10485760;
+    private static final int MAX_GIF_FRAMES = 200;
+    private static final int MAX_IMAGE_DIMENSION = 4096;
     private static final String[] ALLOWED_DOMAINS = new String[]{
         "discord.com",
         "discordapp.com",
@@ -105,9 +105,9 @@ public class ChatImageManager {
         "meme-kingdom.com",
         "lomdei.com"
     };
-    private final Map<String, ChatImage> arJ = new ConcurrentHashMap<>();
-    private final Set<String> arK = ConcurrentHashMap.newKeySet();
-    private final ExecutorService arL = Executors.newFixedThreadPool(3);
+    private final Map<String, ChatImage> images = new ConcurrentHashMap<>();
+    private final Set<String> queuedUrls = ConcurrentHashMap.newKeySet();
+    private final ExecutorService downloadExecutor = Executors.newFixedThreadPool(3);
     private static final ExecutorService decodeExecutor = Executors.newCachedThreadPool(var0 -> {
         Thread thread = new Thread(var0, "ChatImage-Decode");
         thread.setDaemon(true);
@@ -126,14 +126,14 @@ public class ChatImageManager {
         }
     }
 
-    private static boolean a(byte[] var0, ImageFormat var1, String var2, DecodeState var3) {
+    private static boolean decodeWithTimeout(byte[] var0, ImageFormat var1, String var2, DecodeState var3) {
         initSandbox();
         DecodedImage[] ayi = new DecodedImage[1];
         Exception[] aexception = new Exception[1];
         Callable callable = () -> {
             if (var1 == ImageFormat.GIF) {
                 GifFrames yg = h(var0);
-                return yg != null ? new DecodedImage(yg.arO, yg.arP, yg.arO.length) : null;
+                return yg != null ? new DecodedImage(yg.images, yg.delays, yg.images.length) : null;
             }
             BufferedImage bufferedimage = ImageIO.read(new ByteArrayInputStream(var0));
             return bufferedimage != null ? new DecodedImage(new BufferedImage[]{bufferedimage}, new int[]{100}, 1) : null;
@@ -147,7 +147,7 @@ public class ChatImageManager {
             }
 
             var3.images = yi.frames;
-            var3.arP = yi.delays;
+            var3.delays = yi.delays;
             var3.frameCount = yi.frameCount;
             return true;
         } catch (TimeoutException timeoutexception) {
@@ -160,14 +160,14 @@ public class ChatImageManager {
         }
     }
 
-    private static ImageFormat b(byte[] var0) {
+    private static ImageFormat detectFormat(byte[] var0) {
         if (var0 == null || var0.length < 8) {
             return ImageFormat.UNKNOWN;
-        } else if (a(var0, PNG_MAGIC)) {
+        } else if (startsWith(var0, PNG_MAGIC)) {
             return ImageFormat.PNG;
-        } else if (a(var0, art)) {
+        } else if (startsWith(var0, art)) {
             return ImageFormat.JPEG;
-        } else if (a(var0, GIF87A_MAGIC) || a(var0, GIF89A_MAGIC)) {
+        } else if (startsWith(var0, GIF87A_MAGIC) || startsWith(var0, GIF89A_MAGIC)) {
             return ImageFormat.GIF;
         } else if (var0.length >= 12
             && var0[0] == 82
@@ -183,7 +183,7 @@ public class ChatImageManager {
         return var0[0] == 66 && var0[1] == 77 ? ImageFormat.BMP : ImageFormat.UNKNOWN;
     }
 
-    private static boolean a(byte[] var0, byte[] var1) {
+    private static boolean startsWith(byte[] var0, byte[] var1) {
         if (var0.length < var1.length) {
             return false;
         }
@@ -197,24 +197,24 @@ public class ChatImageManager {
         return true;
     }
 
-    private static boolean a(byte[] var0, ImageFormat var1) {
+    private static boolean validateStructure(byte[] var0, ImageFormat var1) {
         switch (var1) {
             case PNG:
-                return c(var0);
+                return isValidPng(var0);
             case JPEG:
-                return d(var0);
+                return isValidJpeg(var0);
             case GIF:
-                return e(var0);
+                return isValidGif(var0);
             case BMP:
-                return g(var0);
+                return isValidBmp(var0);
             case WEBP:
-                return f(var0);
+                return isValidWebp(var0);
             default:
                 return false;
         }
     }
 
-    private static boolean c(byte[] var0) {
+    private static boolean isValidPng(byte[] var0) {
         if (var0.length < 29) {
             return false;
         }
@@ -264,7 +264,7 @@ public class ChatImageManager {
         }
     }
 
-    private static boolean d(byte[] var0) {
+    private static boolean isValidJpeg(byte[] var0) {
         if (var0.length >= 2 && var0[0] == -1 && var0[1] == -40) {
             boolean flag = false;
             int i = 2;
@@ -314,7 +314,7 @@ public class ChatImageManager {
         }
     }
 
-    private static boolean e(byte[] var0) {
+    private static boolean isValidGif(byte[] var0) {
         if (var0.length < 14) {
             return false;
         }
@@ -392,7 +392,7 @@ public class ChatImageManager {
         return false;
     }
 
-    private static boolean f(byte[] var0) {
+    private static boolean isValidWebp(byte[] var0) {
         if (var0.length < 30) {
             return false;
         }
@@ -439,7 +439,7 @@ public class ChatImageManager {
         }
     }
 
-    private static boolean g(byte[] var0) {
+    private static boolean isValidBmp(byte[] var0) {
         if (var0.length >= 54 && var0[0] == 66 && var0[1] == 77) {
             int i;
             int j;
@@ -457,7 +457,7 @@ public class ChatImageManager {
     }
 
     private static GifFrames h(byte[] var0) throws java.io.IOException {
-        int i = i(var0);
+        int i = countGifFrames(var0);
         if (i > 0 && i <= 200) {
             ImageInputStream imageinputstream = ImageIO.createImageInputStream(new ByteArrayInputStream(var0));
             if (imageinputstream == null) {
@@ -484,11 +484,11 @@ public class ChatImageManager {
 
                     for (int k = 0; k < j; k++) {
                         abufferedimage[k] = imagereader.read(k);
-                        if (!c(abufferedimage[k])) {
+                        if (!isValidSize(abufferedimage[k])) {
                             return null;
                         }
 
-                        aint[k] = a(imagereader.getImageMetadata(k));
+                        aint[k] = getFrameDelay(imagereader.getImageMetadata(k));
                     }
 
                     return new GifFrames(abufferedimage, aint);
@@ -503,7 +503,7 @@ public class ChatImageManager {
         }
     }
 
-    private static int i(byte[] var0) {
+    private static int countGifFrames(byte[] var0) {
         int i = 0;
         int j = 13;
         int k = var0[10] & 255;
@@ -568,13 +568,13 @@ public class ChatImageManager {
         return i;
     }
 
-    public List<String> Y(String var1) {
+    public List<String> extractUrls(String var1) {
         ArrayList arraylist = new ArrayList();
         Matcher matcher = URL_PATTERN.matcher(var1);
 
         while (matcher.find()) {
-            String s = this.ae(matcher.group(1));
-            if (s != null && this.af(s)) {
+            String s = this.trimTrailingPunctuation(matcher.group(1));
+            if (s != null && this.isHttpUrl(s)) {
                 arraylist.add(s);
             }
         }
@@ -582,41 +582,41 @@ public class ChatImageManager {
         return arraylist;
     }
 
-    public boolean Z(String var1) {
-        return !this.Y(var1).isEmpty();
+    public boolean hasUrl(String var1) {
+        return !this.extractUrls(var1).isEmpty();
     }
 
-    public String aa(String var1) {
-        List list = this.Y(var1);
+    public String getFirstUrl(String var1) {
+        List list = this.extractUrls(var1);
         return list.isEmpty() ? null : (String)list.get(0);
     }
 
     public void queueImage(ChatImage var1) {
         String s = var1.getUrl();
-        this.arJ.putIfAbsent(s, var1);
+        this.images.putIfAbsent(s, var1);
         if (!this.isSafeUrl(s)) {
             System.out.println("[ChatImage] blocked unsafe url " + s);
             this.markFailed(s);
         } else {
-            if (this.arK.add(s)) {
+            if (this.queuedUrls.add(s)) {
                 System.out.println("[ChatImage] queued " + s);
-                this.arL.submit(() -> this.a(s, s, 0, new LinkedHashSet<>()));
+                this.downloadExecutor.submit(() -> this.resolveAndLoad(s, s, 0, new LinkedHashSet<>()));
             }
         }
     }
 
-    private void a(String var1, String var2, int var3, Set<String> var4) {
+    private void resolveAndLoad(String var1, String var2, int var3, Set<String> var4) {
         if (var3 > 3 || !var4.add(var2)) {
             System.out.println("[ChatImage] stopping resolve depth for " + var2);
             if (var3 == 0) {
                 this.markFailed(var1);
-                this.arK.remove(var1);
+                this.queuedUrls.remove(var1);
             }
         } else if (!this.isSafeUrl(var2)) {
             System.out.println("[ChatImage] blocked unsafe target " + var2);
             if (var3 == 0) {
                 this.markFailed(var1);
-                this.arK.remove(var1);
+                this.queuedUrls.remove(var1);
             }
         } else {
             try {
@@ -624,20 +624,20 @@ public class ChatImageManager {
                     if (this.isSafeUrl(s)) {
                         try {
                             System.out.println("[ChatImage] downloading " + s);
-                            DownloadResult yjx = this.ab(s);
+                            DownloadResult yjx = this.download(s);
                             if (yjx != null) {
                                 System.out.println("[ChatImage] downloaded " + s + " status=" + yjx.statusCode + " contentType=" + yjx.contentType + " resolved=" + yjx.resolvedUrl);
-                                if (this.a(var1, yjx)) {
+                                if (this.tryDecode(var1, yjx)) {
                                     System.out.println("[ChatImage] decoded " + var1);
                                     return;
                                 }
 
-                                for (String s1 : this.n(yjx.resolvedUrl, yjx.contentType)) {
+                                for (String s1 : this.getFallbackUrls(yjx.resolvedUrl, yjx.contentType)) {
                                     if (!this.isSafeUrl(s1)) {
                                         System.out.println("[ChatImage] blocked unsafe fallback " + s1);
                                     } else {
                                         System.out.println("[ChatImage] retrying decode fallback " + s1);
-                                        DownloadResult yjx2 = this.ab(s1);
+                                        DownloadResult yjx2 = this.download(s1);
                                         if (yjx2 != null) {
                                             System.out
                                                 .println(
@@ -650,7 +650,7 @@ public class ChatImageManager {
                                                         + " resolved="
                                                         + yjx2.resolvedUrl
                                                 );
-                                            if (this.a(var1, yjx2)) {
+                                            if (this.tryDecode(var1, yjx2)) {
                                                 System.out.println("[ChatImage] decoded via fallback " + var1);
                                                 return;
                                             }
@@ -658,13 +658,13 @@ public class ChatImageManager {
                                     }
                                 }
 
-                                if (this.a(yjx)) {
-                                    List list = this.b(yjx);
+                                if (this.isHtml(yjx)) {
+                                    List list = this.extractMetaUrls(yjx);
                                     System.out.println("[ChatImage] html media candidates=" + list);
 
                                     for (String s2 : (Iterable<String>)list) {
-                                        this.a(var1, s2, var3 + 1, var4);
-                                        ChatImage ye = this.arJ.get(var1);
+                                        this.resolveAndLoad(var1, s2, var3 + 1, var4);
+                                        ChatImage ye = this.images.get(var1);
                                         if (ye != null && ye.isLoaded() && !ye.isFailed()) {
                                             return;
                                         }
@@ -687,16 +687,16 @@ public class ChatImageManager {
                 }
             } finally {
                 if (var3 == 0) {
-                    this.arK.remove(var1);
+                    this.queuedUrls.remove(var1);
                 }
             }
         }
     }
 
-    private DownloadResult ab(String var1) throws java.io.IOException {
+    private DownloadResult download(String var1) throws java.io.IOException {
         IOException ioexception = null;
 
-        for (Proxy proxy : this.nj()) {
+        for (Proxy proxy : this.getProxies()) {
             HttpURLConnection httpurlconnection = null;
 
             try {
@@ -745,38 +745,38 @@ public class ChatImageManager {
         return null;
     }
 
-    private boolean a(String var1, DownloadResult var2) {
+    private boolean tryDecode(String var1, DownloadResult var2) {
         byte[] abyte = var2.data;
-        ImageFormat yk = b(abyte);
+        ImageFormat yk = detectFormat(abyte);
         if (yk == yk.UNKNOWN) {
             System.out.println("[ChatImage] unknown format, no magic bytes match");
             return false;
         }
 
-        if (!a(abyte, yk)) {
+        if (!validateStructure(abyte, yk)) {
             System.out.println("[ChatImage] structure validation failed: " + yk);
             return false;
         }
 
         System.out.println("[ChatImage] format=" + yk + " validated, decoding with timeout...");
         DecodeState yh = new DecodeState();
-        if (!a(abyte, yk, var1, yh)) {
+        if (!decodeWithTimeout(abyte, yk, var1, yh)) {
             return false;
         }
 
         for (int i = 0; i < yh.frameCount; i++) {
-            if (!c(yh.images[i])) {
+            if (!isValidSize(yh.images[i])) {
                 System.out.println("[ChatImage] post-decode dimension check failed");
                 return false;
             }
         }
 
-        ChatImage ye = this.arJ.get(var1);
+        ChatImage ye = this.images.get(var1);
         if (ye != null) {
             if (yh.frameCount == 1) {
-                ye.b(yh.images[0]);
+                ye.setImage(yh.images[0]);
             } else {
-                ye.a(yh.images, yh.arP);
+                ye.a(yh.images, yh.delays);
             }
         }
 
@@ -784,9 +784,9 @@ public class ChatImageManager {
     }
 
     public void uploadTextures(ChatImage var1) {
-        if (var1 != null && var1.ne()) {
+        if (var1 != null && var1.needsUpload()) {
             synchronized (var1) {
-                if (var1.ne()) {
+                if (var1.needsUpload()) {
                     BufferedImage[] abufferedimage = var1.getFrames();
                     if (abufferedimage != null && abufferedimage.length != 0) {
                         int[] aint = new int[abufferedimage.length];
@@ -795,7 +795,7 @@ public class ChatImageManager {
                             aint[i] = TextureUtil.uploadTextureImageAllocate(TextureUtil.glGenTextures(), abufferedimage[i], true, true);
                         }
 
-                        var1.a(aint);
+                        var1.setTextureIds(aint);
                         System.out.println("[ChatImage] uploaded " + aint.length + " texture(s) for " + var1.getUrl());
                     }
                 }
@@ -804,7 +804,7 @@ public class ChatImageManager {
     }
 
     private void markFailed(String var1) {
-        ChatImage ye = this.arJ.get(var1);
+        ChatImage ye = this.images.get(var1);
         if (ye != null) {
             ye.markFailed();
         }
@@ -813,10 +813,10 @@ public class ChatImageManager {
     }
 
     public ChatImage getImage(String var1) {
-        return this.arJ.get(var1);
+        return this.images.get(var1);
     }
 
-    private String ae(String var1) {
+    private String trimTrailingPunctuation(String var1) {
         if (var1 != null && !var1.isEmpty()) {
             String s;
             for (s = var1.trim(); !s.isEmpty(); s = s.substring(0, s.length() - 1)) {
@@ -831,7 +831,7 @@ public class ChatImageManager {
         return null;
     }
 
-    private boolean af(String var1) {
+    private boolean isHttpUrl(String var1) {
         try {
             URI uri = URI.create(var1);
             String s = uri.getScheme() == null ? "" : uri.getScheme().toLowerCase();
@@ -859,19 +859,19 @@ public class ChatImageManager {
         return new ArrayList<>(linkedhashset);
     }
 
-    private List<String> n(String var1, String var2) {
+    private List<String> getFallbackUrls(String var1, String var2) {
         LinkedHashSet linkedhashset = new LinkedHashSet();
 
         try {
             URI uri = URI.create(var1);
             String s = uri.getHost() == null ? "" : uri.getHost().toLowerCase();
             String path = uri.getPath();
-            String rawQuery = this.ah(uri.getRawQuery());
+            String rawQuery = this.stripQueryParams(uri.getRawQuery());
             boolean flag = var2 != null && var2.toLowerCase().contains("image/webp");
             boolean flag1 = s.endsWith("discordapp.net") && path != null && path.contains("/attachments/");
             if (flag && flag1) {
-                linkedhashset.add(this.a("https://cdn.discordapp.com", path, rawQuery));
-                linkedhashset.add(this.a("https://media.discordapp.net", path, rawQuery));
+                linkedhashset.add(this.buildUrl("https://cdn.discordapp.com", path, rawQuery));
+                linkedhashset.add(this.buildUrl("https://media.discordapp.net", path, rawQuery));
             }
         } catch (IllegalArgumentException illegalargumentexception) {
         }
@@ -879,7 +879,7 @@ public class ChatImageManager {
         return new ArrayList<>(linkedhashset);
     }
 
-    private String ah(String var1) {
+    private String stripQueryParams(String var1) {
         if (var1 != null && !var1.isEmpty()) {
             StringBuilder stringbuilder = new StringBuilder();
 
@@ -902,11 +902,11 @@ public class ChatImageManager {
         return null;
     }
 
-    private String a(String var1, String var2, String var3) {
+    private String buildUrl(String var1, String var2, String var3) {
         return var3 != null && !var3.isEmpty() ? var1 + var2 + "?" + var3 : var1 + var2;
     }
 
-    private List<Proxy> nj() {
+    private List<Proxy> getProxies() {
         ArrayList arraylist = new ArrayList(1);
         Proxy proxy = this.mc.getProxy();
         if (proxy != null) {
@@ -918,8 +918,8 @@ public class ChatImageManager {
         return arraylist;
     }
 
-    public void nk() {
-        Iterator iterator = this.arJ.values().iterator();
+    public void shutdown() {
+        Iterator iterator = this.images.values().iterator();
 
         while (iterator.hasNext()) {
             for (int i : ((ChatImage)iterator.next()).getTextureIds()) {
@@ -929,12 +929,12 @@ public class ChatImageManager {
             }
         }
 
-        this.arJ.clear();
-        this.arL.shutdown();
+        this.images.clear();
+        this.downloadExecutor.shutdown();
         decodeExecutor.shutdown();
     }
 
-    private boolean a(DownloadResult var1) {
+    private boolean isHtml(DownloadResult var1) {
         if (var1.contentType != null && var1.contentType.toLowerCase().contains("html")) {
             return true;
         }
@@ -943,7 +943,7 @@ public class ChatImageManager {
         return s.contains("<html") || s.contains("<meta");
     }
 
-    private List<String> b(DownloadResult var1) {
+    private List<String> extractMetaUrls(DownloadResult var1) {
         LinkedHashSet linkedhashset = new LinkedHashSet();
         String s = new String(var1.data, StandardCharsets.UTF_8);
 
@@ -966,7 +966,7 @@ public class ChatImageManager {
                 || s2.contains("twitter:image:src")) {
                 Matcher matcher1 = META_CONTENT_PATTERN.matcher(group);
                 if (matcher1.find()) {
-                    this.a(linkedhashset, uri, matcher1.group(1));
+                    this.addCandidate(linkedhashset, uri, matcher1.group(1));
                     if (linkedhashset.size() >= 8) {
                         break;
                     }
@@ -977,12 +977,12 @@ public class ChatImageManager {
         return new ArrayList<>(linkedhashset);
     }
 
-    private void a(Set<String> var1, URI uri, String var3) {
-        String s = this.ae(var3);
+    private void addCandidate(Set<String> var1, URI uri, String var3) {
+        String s = this.trimTrailingPunctuation(var3);
         if (s != null) {
             try {
                 String s1 = uri.resolve(s).toString();
-                if (this.ai(s1) && this.isSafeUrl(s1)) {
+                if (this.isImageUrl(s1) && this.isSafeUrl(s1)) {
                     var1.add(s1);
                 }
             } catch (IllegalArgumentException illegalargumentexception) {
@@ -990,7 +990,7 @@ public class ChatImageManager {
         }
     }
 
-    private boolean ai(String var1) {
+    private boolean isImageUrl(String var1) {
         try {
             URI uri = URI.create(var1);
             String s = uri.getPath() == null ? "" : uri.getPath().toLowerCase();
@@ -1014,13 +1014,13 @@ public class ChatImageManager {
         }
     }
 
-    private static int a(IIOMetadata iioMetadata) {
+    private static int getFrameDelay(IIOMetadata iioMetadata) {
         if (iioMetadata == null) {
             return 100;
         }
 
         try {
-            Node node = a(iioMetadata.getAsTree("javax_imageio_gif_image_1.0"), "GraphicControlExtension");
+            Node node = findNode(iioMetadata.getAsTree("javax_imageio_gif_image_1.0"), "GraphicControlExtension");
             if (node == null) {
                 return 100;
             }
@@ -1033,7 +1033,7 @@ public class ChatImageManager {
         }
     }
 
-    private static Node a(Node var0, String var1) {
+    private static Node findNode(Node var0, String var1) {
         if (var0 == null) {
             return null;
         }
@@ -1043,7 +1043,7 @@ public class ChatImageManager {
         }
 
         for (Node node = var0.getFirstChild(); node != null; node = node.getNextSibling()) {
-            Node node1 = a(node, var1);
+            Node node1 = findNode(node, var1);
             if (node1 != null) {
                 return node1;
             }
@@ -1083,7 +1083,7 @@ public class ChatImageManager {
         return false;
     }
 
-    private static boolean c(BufferedImage image) {
+    private static boolean isValidSize(BufferedImage image) {
         return image.getWidth() > 0 && image.getHeight() > 0 && image.getWidth() <= 4096 && image.getHeight() <= 4096;
     }
 }

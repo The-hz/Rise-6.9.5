@@ -25,15 +25,15 @@ import rip.vantage.commons.util.time.a;
 
 public class ClutchNoFall extends Mode<NoFall> {
     private ClutchState state = ClutchState.IDLE;
-    private BlockPos aid = null;
-    private BlockPos CG = null;
-    private a aie = new a();
-    private a aif = new a();
+    private BlockPos landingPos = null;
+    private BlockPos waterPos = null;
+    private a stateTimer = new a();
+    private a placeTimer = new a();
     private int waterSlot = -1;
     private int bucketSlot = -1;
-    private boolean aih = false;
-    private boolean aii = false;
-    private boolean aij = false;
+    private boolean placed = false;
+    private boolean pendingPlace = false;
+    private boolean pendingPickup = false;
     private Vector2f rotations = null;
     @EventLink(value = 2)
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
@@ -49,20 +49,20 @@ public class ClutchNoFall extends Mode<NoFall> {
                 }
 
                 this.state = ClutchState.PREDICT;
-                this.aie.aX();
+                this.stateTimer.aX();
                 break;
             case PREDICT:
-                this.aid = this.kx();
-                if (this.aid == null) {
+                this.landingPos = this.predictLandingPos();
+                if (this.landingPos == null) {
                     return;
                 }
 
-                double d0 = aEg.thePlayer.posY - this.aid.getY();
+                double d0 = aEg.thePlayer.posY - this.landingPos.getY();
                 double d1 = 8.0;
                 if (d0 < d1 && d0 > 3.0) {
                     this.state = ClutchState.ROTATE;
-                    this.aie.aX();
-                } else if (this.aie.T(50L)) {
+                    this.stateTimer.aX();
+                } else if (this.stateTimer.T(50L)) {
                     this.state = ClutchState.IDLE;
                 }
                 break;
@@ -70,51 +70,51 @@ public class ClutchNoFall extends Mode<NoFall> {
                 SlotComponent slotcomponent = this.d(SlotComponent.class);
                 SlotComponent.setSlot(this.waterSlot);
                 RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 90.0F), 5.0, MovementFix.NORMAL);
-                if (Math.abs(aEg.thePlayer.rotationPitch - 90.0F) < 15.0F || this.aie.T(200L)) {
-                    this.aii = true;
+                if (Math.abs(aEg.thePlayer.rotationPitch - 90.0F) < 15.0F || this.stateTimer.T(200L)) {
+                    this.pendingPlace = true;
                     this.rotations = new Vector2f(aEg.thePlayer.pl, 90.0F);
                     this.state = ClutchState.PLACE;
-                    this.aie.aX();
+                    this.stateTimer.aX();
                 }
                 break;
             case PLACE:
-                this.aii = true;
+                this.pendingPlace = true;
                 break;
             case WAIT_LAND:
-                if (aEg.thePlayer.onGround || this.aie.T(3000L)) {
-                    if (this.CG != null) {
+                if (aEg.thePlayer.onGround || this.stateTimer.T(3000L)) {
+                    if (this.waterPos != null) {
                         this.bucketSlot = com.alan.clients.util.player.SlotUtil.findItem(Items.bucket);
                         afi.b("S");
                         if (this.bucketSlot != -1) {
                             this.state = ClutchState.PICKUP;
-                            this.aie.aX();
+                            this.stateTimer.aX();
                         } else {
-                            this.ky();
+                            this.reset();
                         }
                     } else {
-                        this.ky();
+                        this.reset();
                     }
                 }
                 break;
             case PICKUP:
-                if (this.CG == null) {
-                    this.ky();
-                } else if (aEg.thePlayer.getDistance(this.CG.getX() + 0.5, this.CG.getY() + 0.5, this.CG.getZ() + 0.5) < 5.0) {
+                if (this.waterPos == null) {
+                    this.reset();
+                } else if (aEg.thePlayer.getDistance(this.waterPos.getX() + 0.5, this.waterPos.getY() + 0.5, this.waterPos.getZ() + 0.5) < 5.0) {
                     SlotComponent slotcomponent1 = this.d(SlotComponent.class);
                     SlotComponent.setSlot(this.bucketSlot);
                     aEg.thePlayer.inventory.currentItem = this.bucketSlot;
-                    Vec3 vec3 = new Vec3(this.CG.getX() + 0.5, this.CG.getY() + 0.5, this.CG.getZ() + 0.5);
+                    Vec3 vec3 = new Vec3(this.waterPos.getX() + 0.5, this.waterPos.getY() + 0.5, this.waterPos.getZ() + 0.5);
                     this.rotations = RotationUtil.h(vec3);
                     RotationComponent.setRotations(this.rotations, 10.0, MovementFix.NORMAL);
-                    this.aij = true;
+                    this.pendingPickup = true;
                 } else {
-                    this.ky();
+                    this.reset();
                 }
         }
     };
     @EventLink(value = 4)
     public final Listener<PreMotionEvent> aim = var1x -> {
-        if (this.state == ClutchState.PLACE && this.aii) {
+        if (this.state == ClutchState.PLACE && this.pendingPlace) {
             RotationComponent.setRotations(this.rotations, 10.0, MovementFix.NORMAL);
             float f = aEg.thePlayer.rotationPitch;
             aEg.thePlayer.pl = this.rotations.x;
@@ -125,30 +125,30 @@ public class ClutchNoFall extends Mode<NoFall> {
             aEg.rightClickDelayTimer = 0;
             aEg.Az();
             aEg.thePlayer.rotationPitch = f;
-            this.CG = new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY - 1.0, aEg.thePlayer.posZ);
-            this.aih = true;
-            this.aif.aX();
-            afi.b("MLG water placed at distance: " + (aEg.thePlayer.posY - this.aid.getY()));
+            this.waterPos = new BlockPos(aEg.thePlayer.posX, aEg.thePlayer.posY - 1.0, aEg.thePlayer.posZ);
+            this.placed = true;
+            this.placeTimer.aX();
+            afi.b("MLG water placed at distance: " + (aEg.thePlayer.posY - this.landingPos.getY()));
             this.state = ClutchState.WAIT_LAND;
-            this.aie.aX();
-            this.aii = false;
-        } else if (this.state == ClutchState.PICKUP && this.aij) {
+            this.stateTimer.aX();
+            this.pendingPlace = false;
+        } else if (this.state == ClutchState.PICKUP && this.pendingPickup) {
             float f1 = aEg.thePlayer.rotationPitch;
             aEg.entityRenderer.getMouseOver(1.0F);
             aEg.rightClickDelayTimer = 0;
             afi.b("Picked up water MLG");
-            this.ky();
-            this.aij = false;
+            this.reset();
+            this.pendingPickup = false;
         }
     };
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
-        if (this.state == ClutchState.PLACE && this.aii) {
+        if (this.state == ClutchState.PLACE && this.pendingPlace) {
             var1x.setCancelled(true);
-            this.aii = false;
-        } else if (this.state == ClutchState.PICKUP && this.aij) {
+            this.pendingPlace = false;
+        } else if (this.state == ClutchState.PICKUP && this.pendingPickup) {
             var1x.setCancelled(true);
-            this.aij = false;
+            this.pendingPickup = false;
         }
     };
 
@@ -156,7 +156,7 @@ public class ClutchNoFall extends Mode<NoFall> {
         super(var1, noFall);
     }
 
-    private BlockPos kx() {
+    private BlockPos predictLandingPos() {
         double d0 = aEg.thePlayer.posX;
         double d1 = aEg.thePlayer.posY;
         double d2 = aEg.thePlayer.posZ;
@@ -242,17 +242,17 @@ public class ClutchNoFall extends Mode<NoFall> {
         return null;
     }
 
-    private void ky() {
+    private void reset() {
         this.state = ClutchState.IDLE;
-        this.aid = null;
-        this.CG = null;
+        this.landingPos = null;
+        this.waterPos = null;
         this.waterSlot = -1;
         this.bucketSlot = -1;
-        this.aih = false;
-        this.aie.aX();
-        this.aif.aX();
-        this.aii = false;
-        this.aij = false;
+        this.placed = false;
+        this.stateTimer.aX();
+        this.placeTimer.aX();
+        this.pendingPlace = false;
+        this.pendingPickup = false;
         this.rotations = null;
     }
 }

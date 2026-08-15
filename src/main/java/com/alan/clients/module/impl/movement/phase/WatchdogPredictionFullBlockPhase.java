@@ -25,14 +25,14 @@ import net.minecraft.network.play.server.a;
 import net.minecraft.util.MathHelper;
 
 public class WatchdogPredictionFullBlockPhase extends Mode<Phase> {
-    private boolean ys;
+    private boolean waitingForSetback;
     @EventLink
-    private Listener<TeleportEvent> onTeleport = var1x -> this.ys = this.ys;
+    private Listener<TeleportEvent> onTeleport = var1x -> this.waitingForSetback = this.waitingForSetback;
     @EventLink
     private Listener<PostStrafeEvent> onPostStrafe = var1x -> {
         MoveUtil.stop();
         if (aEg.thePlayer.tR == 5) {
-            this.ys = true;
+            this.waitingForSetback = true;
         }
 
         if (!aEg.thePlayer.onGround && aEg.thePlayer.Zl != 1) {
@@ -57,7 +57,7 @@ public class WatchdogPredictionFullBlockPhase extends Mode<Phase> {
         }
 
         Packet packet = var1x.getPacket();
-        if (packet instanceof S08PacketPlayerPosLook && this.ys) {
+        if (packet instanceof S08PacketPlayerPosLook && this.waitingForSetback) {
             S08PacketPlayerPosLook s08packetplayerposlook = (S08PacketPlayerPosLook)packet;
             s08packetplayerposlook.getX();
             s08packetplayerposlook.getY();
@@ -99,12 +99,12 @@ public class WatchdogPredictionFullBlockPhase extends Mode<Phase> {
     @Override
     public void onEnable() {
         afi.c("collide with a block and wait until the server clips you down");
-        this.ys = false;
+        this.waitingForSetback = false;
     }
 
     @Override
     public void onDisable() {
-        this.ys = false;
+        this.waitingForSetback = false;
         aEg.thePlayer.capabilities.isFlying = false;
     }
 }

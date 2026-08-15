@@ -104,112 +104,112 @@ public class Spotify extends Module {
     public String Wd = "";
     public String song = "Loading...";
     public String artist = "Loading...";
-    public String Wg;
+    public String artworkUrl;
     public String progress = "1:43";
     public String length = "2:56";
-    public String Wj;
-    private String Wk = "";
+    public String songAtEnable;
+    private String trackId = "";
     public int durationMs = 1;
     public int progressMs = 1;
-    public int hV = 0;
-    public int Wn = -1;
-    public FontManager Wo = FontManager.MAIN;
+    public int ticks = 0;
+    public int artworkTexture = -1;
+    public FontManager fontManager = FontManager.MAIN;
     public static boolean Wp = false;
-    public final File Wq = new File(FileManager.DIRECTORY, "data");
-    private static final String Wr = "spotify.json";
-    private float Ws = 0.0F;
-    private final float Wt = 105.0F;
-    private boolean Wu = false;
-    private boolean Wv = false;
-    private volatile boolean Ww = false;
-    private volatile boolean Wx = false;
-    private volatile List<LyricLine> Wy = new ArrayList<>();
-    private volatile List<String> Wz = new ArrayList<>();
-    private int WA = -1;
-    private long WB = System.currentTimeMillis();
-    private int WC = -1;
-    private long WD = 0L;
-    private long WE = 0L;
-    private static final int WF = 260;
-    private static final int WG = 120;
+    public final File dataDirectory = new File(FileManager.DIRECTORY, "data");
+    private static final String CREDENTIALS_FILE_NAME = "spotify.json";
+    private float marqueeOffset = 0.0F;
+    private final float textWidthLimit = 105.0F;
+    private boolean songOverflows = false;
+    private boolean artistOverflows = false;
+    private volatile boolean lyricsAvailable = false;
+    private volatile boolean syncedLyrics = false;
+    private volatile List<LyricLine> syncedLines = new ArrayList<>();
+    private volatile List<String> plainLines = new ArrayList<>();
+    private int currentLineIndex = -1;
+    private long progressTimestamp = System.currentTimeMillis();
+    private int previousLineIndex = -1;
+    private long lineAnimStart = 0L;
+    private long lastLineSwitchTime = 0L;
+    private static final int LINE_ANIM_MS = 260;
+    private static final int LINE_SWITCH_MIN_MS = 120;
     private static final int WH = 0;
-    private static final int WI = 11;
-    private static final int WJ = 13;
-    private static final int WK = 14;
-    private float WL = 0.0F;
-    private float WM = 0.0F;
-    private long WN = System.currentTimeMillis();
-    private static final float WO = 20.0F;
+    private static final int LYRIC_FONT_SIZE_MIN = 11;
+    private static final int LYRIC_FONT_SIZE = 13;
+    private static final int LYRIC_FONT_SIZE_ACTIVE = 14;
+    private float scrollTarget = 0.0F;
+    private float scrollOffset = 0.0F;
+    private long lastFrameTime = System.currentTimeMillis();
+    private static final float TITLE_FONT_SIZE = 20.0F;
     private static final int WP = 0;
-    private float WQ;
-    private float WR;
-    private float WS;
-    private boolean WT = true;
-    private static final float WU = 25.0F;
-    private static final float WV = 6.5F;
-    private long WW = -1L;
-    private float WX = 0.0F;
-    private static final int WY = 520;
-    private volatile boolean WZ = false;
+    private float targetHeight;
+    private float animatedHeight;
+    private float heightVelocity;
+    private boolean firstFrame = true;
+    private static final float SPRING_STIFFNESS = 25.0F;
+    private static final float SPRING_DAMPING = 6.5F;
+    private long heightChangeTime = -1L;
+    private float heightJumpAmount = 0.0F;
+    private static final int HEIGHT_ANIM_MS = 520;
+    private volatile boolean pollerRunning = false;
     private Thread pollerThread;
-    private volatile boolean Xb = false;
+    private volatile boolean authServerRunning = false;
     private volatile String clientId = "";
     private volatile String clientSecret = "";
-    private volatile long Xe = 0L;
-    private volatile long Xf = 0L;
-    private final Minecraft Xg = Minecraft.getMinecraft();
+    private volatile long credentialsLastModified = 0L;
+    private volatile long tokenExpiredAt = 0L;
+    private final Minecraft minecraft = Minecraft.getMinecraft();
     private static final int CONNECT_TIMEOUT_MS = 4000;
     private static final int READ_TIMEOUT_MS = 6000;
     private static final String USER_AGENT = "RiseClient/SpotifyModule";
-    private volatile String Xk = "";
-    private volatile boolean Xl = false;
-    private volatile BufferedImage Xm = null;
-    private volatile String Xn = "";
-    private volatile long Xo = -1L;
-    private volatile long Xp = 0L;
-    private volatile long Xq = 0L;
-    private volatile int Xr = 0;
-    private static final long Xs = 1500L;
-    private static final int Xt = 3;
-    private volatile long Xu = -1L;
-    private volatile long Xv = -1L;
-    private volatile String Xw = "";
-    private float Xx = 0.0F;
-    private int Xy = -1;
-    private long Xz = System.currentTimeMillis();
-    private int XA = 0;
-    private static final int XB = 600;
-    private static final float XC = 2.0F;
-    private static final float XD = 6.0F;
-    private static final int XE = 260;
-    private static final float XF = 8.0F;
-    private long XG = 0L;
-    private float XH = 0.0F;
+    private volatile String fetchingArtworkUrl = "";
+    private volatile boolean artworkFetching = false;
+    private volatile BufferedImage pendingArtwork = null;
+    private volatile String pendingArtworkUrl = "";
+    private volatile long pendingArtworkToken = -1L;
+    private volatile long trackGeneration = 0L;
+    private volatile long lastPlayingTime = 0L;
+    private volatile int noContentCount = 0;
+    private static final long NO_CONTENT_GRACE_MS = 1500L;
+    private static final int NO_CONTENT_LIMIT = 3;
+    private volatile long lyricsToken = -1L;
+    private volatile long artworkToken = -1L;
+    private volatile String requestedArtworkUrl = "";
+    private float fillWidth = 0.0F;
+    private int fillLineIndex = -1;
+    private long lastFillFrameTime = System.currentTimeMillis();
+    private int lastFillTime = 0;
+    private static final int FILL_SEEK_BACK_MS = 600;
+    private static final float FILL_SNAP_PX = 2.0F;
+    private static final float FILL_JUMP_PX = 6.0F;
+    private static final int FILL_BOOST_MS = 260;
+    private static final float FILL_BOOST_MULTIPLIER = 8.0F;
+    private long fillBoostUntil = 0L;
+    private float lastFillTarget = 0.0F;
     @EventLink
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         if (this.debug.wo()) {
             afi.b("Song: " + this.song);
         }
 
-        int i = this.ib();
+        int i = this.getEstimatedProgressMs();
         byte b0 = 0;
-        if (this.Wx && this.WA >= 0 && this.WA < this.Wy.size()) {
-            b0 = (byte)(this.Wy.get(this.WA).XU ? 60 : 90);
+        if (this.syncedLyrics && this.currentLineIndex >= 0 && this.currentLineIndex < this.syncedLines.size()) {
+            b0 = (byte)(this.syncedLines.get(this.currentLineIndex).wordTimed ? 60 : 90);
         }
 
         int j = i + b0;
-        this.B(j);
+        this.updateCurrentLine(j);
         this.progress = String.format("%d:%02d", i / 1000 / 60, i / 1000 % 60);
         this.length = String.format("%d:%02d", this.durationMs / 1000 / 60, this.durationMs / 1000 % 60);
-        boolean flag = this.showLyricsSpotify.wo() && this.Ww;
-        boolean flag1 = flag && this.WA < 0;
+        boolean flag = this.showLyricsSpotify.wo() && this.lyricsAvailable;
+        boolean flag1 = flag && this.currentLineIndex < 0;
         float f = flag1 ? 18.0F : 18.0F;
         double d0 = this.positionValue.aHe.getX() - 25.0;
         int k;
-        if (flag && this.WA >= 0 && d0 > 0.0) {
+        if (flag && this.currentLineIndex >= 0 && d0 > 0.0) {
             byte b1 = 17;
             float f1 = 1.0F;
-            List list = this.a(this.A(this.WA), d0, b1, f1);
+            List list = this.wrapText(this.getLineText(this.currentLineIndex), d0, b1, f1);
             k = Math.max(0, list.size() - 1);
         } else {
             k = 0;
@@ -217,10 +217,10 @@ public class Spotify extends Module {
 
         float f2 = flag1 ? 56.0F : 65.0F;
         int l = Math.max(2, this.lyricLines.wo().intValue());
-        float f3 = this.hO();
+        float f3 = this.getLyricLineHeight();
         int i1 = 0;
         if (flag) {
-            int j1 = this.hW();
+            int j1 = this.getLineCount();
             int k1 = l + k;
             i1 = Math.min(Math.max(1, j1), k1);
         }
@@ -228,23 +228,23 @@ public class Spotify extends Module {
         float f4 = flag ? 14.0F + f3 * i1 + f : 0.0F;
         float f5 = f2 + f4;
         long l1 = System.currentTimeMillis();
-        if (this.WT) {
-            this.WQ = this.WR = f5;
-            this.WT = false;
+        if (this.firstFrame) {
+            this.targetHeight = this.animatedHeight = f5;
+            this.firstFrame = false;
         }
 
-        if (Math.abs(f5 - this.WQ) > 0.5F) {
-            this.WQ = f5;
-            this.WW = l1;
-            this.WX = this.a((int)(Math.abs(this.WQ - this.WR) * 0.25F), 6, 22);
+        if (Math.abs(f5 - this.targetHeight) > 0.5F) {
+            this.targetHeight = f5;
+            this.heightChangeTime = l1;
+            this.heightJumpAmount = this.clampInt((int)(Math.abs(this.targetHeight - this.animatedHeight) * 0.25F), 6, 22);
         }
 
-        float f6 = (float)(l1 - this.WN) / 1000.0F;
-        this.WN = l1;
-        float f7 = 25.0F * (this.WQ - this.WR) - 6.5F * this.WS;
-        this.WS += f7 * f6;
-        this.WR = this.WR + this.WS * f6;
-        this.positionValue.n(new Vector2d(180.0, this.WR));
+        float f6 = (float)(l1 - this.lastFrameTime) / 1000.0F;
+        this.lastFrameTime = l1;
+        float f7 = 25.0F * (this.targetHeight - this.animatedHeight) - 6.5F * this.heightVelocity;
+        this.heightVelocity += f7 * f6;
+        this.animatedHeight = this.animatedHeight + this.heightVelocity * f6;
+        this.positionValue.n(new Vector2d(180.0, this.animatedHeight));
         double d1 = this.positionValue.apP.getX() + 65.0;
         Color color = this.rz().rE();
         this.b(ShaderQueueType.BLUR)
@@ -278,8 +278,8 @@ public class Spotify extends Module {
             .c(
                 () -> {
                     float f8 = 10.0F;
-                    if (this.WW > 0L) {
-                        float f9 = (float)(l1 - this.WW) / 520.0F;
+                    if (this.heightChangeTime > 0L) {
+                        float f9 = (float)(l1 - this.heightChangeTime) / 520.0F;
                         if (f9 < 1.0F) {
                             f8 += (1.0F - this.easeOutCubic(f9)) * 2.0F;
                         }
@@ -294,30 +294,30 @@ public class Spotify extends Module {
                     Color color1 = Themes.rK();
                     this.rz();
                     RenderUtil.a(d13, d14, d15, d16, d17, color1, Themes.rK(), false);
-                    float f10 = this.d(this.song, 20);
-                    float f11 = this.d(this.artist, 16);
-                    this.Wu = f10 > 105.0F;
-                    this.Wv = f11 > 105.0F;
-                    if (!this.Wu && !this.Wv) {
-                        this.Ws = 0.0F;
+                    float f10 = this.getStringWidth(this.song, 20);
+                    float f11 = this.getStringWidth(this.artist, 16);
+                    this.songOverflows = f10 > 105.0F;
+                    this.artistOverflows = f11 > 105.0F;
+                    if (!this.songOverflows && !this.artistOverflows) {
+                        this.marqueeOffset = 0.0F;
                     } else {
-                        this.Ws += 0.1F;
+                        this.marqueeOffset += 0.1F;
                         float f12 = Math.max(f10, f11);
-                        if (this.Ws > f12) {
-                            this.Ws = -100.0F;
+                        if (this.marqueeOffset > f12) {
+                            this.marqueeOffset = -100.0F;
                         }
                     }
 
-                    this.a(this.song, d1, this.positionValue.apP.getY() + 15.0, 20, this.Wu);
-                    this.a(this.artist, d1, this.positionValue.apP.getY() + 30.0, 16, this.Wv);
-                    this.hX();
-                    if (this.Wn == -1 && this.Wg != null && !this.Wg.isEmpty()) {
-                        this.a(this.Wg, this.Xp);
+                    this.drawScrollingString(this.song, d1, this.positionValue.apP.getY() + 15.0, 20, this.songOverflows);
+                    this.drawScrollingString(this.artist, d1, this.positionValue.apP.getY() + 30.0, 16, this.artistOverflows);
+                    this.uploadPendingArtwork();
+                    if (this.artworkTexture == -1 && this.artworkUrl != null && !this.artworkUrl.isEmpty()) {
+                        this.fetchArtwork(this.artworkUrl, this.trackGeneration);
                     }
 
-                    if (this.Wn != -1) {
+                    if (this.artworkTexture != -1) {
                         RenderUtil.a(
-                            this.Wn, (float)this.positionValue.apP.getX() + 12.5F, (float)(this.positionValue.apP.getY() + 10.0), 42.5F, 42.5F, Color.WHITE
+                            this.artworkTexture, (float)this.positionValue.apP.getX() + 12.5F, (float)(this.positionValue.apP.getY() + 10.0), 42.5F, 42.5F, Color.WHITE
                         );
                     }
 
@@ -336,7 +336,7 @@ public class Spotify extends Module {
                         false
                     );
                     double d2 = d1 + this.positionValue.aHe.getX() - 75.0;
-                    double d3 = this.d(this.length, 13);
+                    double d3 = this.getStringWidth(this.length, 13);
                     this.a(this.progress + " / ", d2 - d3, this.positionValue.apP.getY() + 38.5, 13, new Color(255, 255, 255, 128).getRGB());
                     this.a(this.length, d2, this.positionValue.apP.getY() + 38.5, 13, new Color(255, 255, 255, 48).getRGB());
                     if (flag) {
@@ -346,27 +346,27 @@ public class Spotify extends Module {
                         double d7 = this.positionValue.apP.getY() + 45.0 + 6.0;
                         double d8 = Math.max(d6, d7) + (flag1 ? 8.0F : 12.0F);
                         float f13 = 1.0F;
-                        if (this.WW > 0L) {
-                            float f14 = (float)(l1 - this.WW) / 520.0F;
+                        if (this.heightChangeTime > 0L) {
+                            float f14 = (float)(l1 - this.heightChangeTime) / 520.0F;
                             if (f14 < 1.0F) {
                                 f13 = this.easeOutCubic(Math.max(0.0F, Math.min(1.0F, f14)));
                             }
                         }
 
                         int i2 = (int)(128.0F * f13);
-                        this.a("Lyrics", (float)d4, (float)d8, 12, new Color(255, 255, 255, i2).getRGB());
-                        int j2 = this.hW();
+                        this.drawString("Lyrics", (float)d4, (float)d8, 12, new Color(255, 255, 255, i2).getRGB());
+                        int j2 = this.getLineCount();
                         int k2 = Math.max(2, this.lyricLines.wo().intValue());
                         int l2 = Math.max(0, j2 - k2);
                         int i3 = Math.max(0, (k2 - 1) / 2);
-                        int j3 = this.WA >= 0 ? this.a(this.WA - i3, 0, l2) : 0;
-                        this.WL = j3;
+                        int j3 = this.currentLineIndex >= 0 ? this.clampInt(this.currentLineIndex - i3, 0, l2) : 0;
+                        this.scrollTarget = j3;
                         float f15 = Math.min(1.0F, f6 * 20.0F);
-                        this.WM = this.WM + (this.WL - this.WM) * f15;
-                        int k3 = Math.max(0, Math.min(Math.max(0, j2 - 1), (int)Math.floor(this.WM)));
-                        float f16 = this.WM - k3;
+                        this.scrollOffset = this.scrollOffset + (this.scrollTarget - this.scrollOffset) * f15;
+                        int k3 = Math.max(0, Math.min(Math.max(0, j2 - 1), (int)Math.floor(this.scrollOffset)));
+                        float f16 = this.scrollOffset - k3;
                         float f17 = (float)(d8 + (flag1 ? 12.0F : 12.0F));
-                        float f18 = this.hO();
+                        float f18 = this.getLyricLineHeight();
                         int l3 = k2 + k;
                         double d9 = d4;
                         double d10 = f17 - 2.0F;
@@ -376,11 +376,11 @@ public class Spotify extends Module {
                         RenderUtil.g(d9, d10, d11, d12);
                         float f19 = f17 - f16 * f18;
                         int i4 = k2 + 2;
-                        float f20 = this.ic();
+                        float f20 = this.getLineAnimProgress();
 
                         for (int j4 = k3; j4 < j2 && i4 > 0; j4++) {
-                            boolean flag2 = this.WA >= 0 && j4 == this.WA;
-                            boolean flag3 = this.WC >= 0 && j4 == this.WC;
+                            boolean flag2 = this.currentLineIndex >= 0 && j4 == this.currentLineIndex;
+                            boolean flag3 = this.previousLineIndex >= 0 && j4 == this.previousLineIndex;
                             int k4 = flag2 ? 14 : 13;
                             if (flag2) {
                                 byte b2 = 17;
@@ -401,42 +401,42 @@ public class Spotify extends Module {
                                 f22 = f20 * 2.0F;
                             }
 
-                            int i5 = this.a((int)(l4 * f13), 0, 255);
-                            String s = this.A(j4);
+                            int i5 = this.clampInt((int)(l4 * f13), 0, 255);
+                            String s = this.getLineText(j4);
                             int j5 = Math.max(11, Math.round(f21));
                             float f23 = f21 / Math.max(1, j5);
-                            List list1 = this.a(s, d5, j5, f23);
+                            List list1 = this.wrapText(s, d5, j5, f23);
                             if (flag2) {
                                 float f24 = 0.0F;
 
                                 for (String s1 : (Iterable<String>)list1) {
-                                    f24 += this.a(s1, j5, f23);
+                                    f24 += this.getScaledWidth(s1, j5, f23);
                                 }
 
-                                LyricLine sl = this.Wx && j4 < this.Wy.size() ? this.w(j4) : null;
+                                LyricLine sl = this.syncedLyrics && j4 < this.syncedLines.size() ? this.w(j4) : null;
                                 float f25;
                                 if (this.karaokeFill.wo() && sl != null) {
-                                    f25 = this.a(sl, j4, i, j5, f23, f24);
+                                    f25 = this.getFilledWidth(sl, j4, i, j5, f23, f24);
                                 } else {
                                     f25 = 0.0F;
                                 }
 
-                                float f26 = this.a(j4, f25, f24, i);
+                                float f26 = this.animateFill(j4, f25, f24, i);
 
                                 for (String s2 : (Iterable<String>)list1) {
-                                    float f27 = this.a(s2, j5, f23);
+                                    float f27 = this.getScaledWidth(s2, j5, f23);
                                     float f28 = this.b(s2, j5, f23);
                                     int k5 = new Color(255, 255, 255, Math.max(100, (int)(140.0F * Math.max(f20, 0.6F)))).getRGB();
-                                    this.a(s2, (float)d4, f19 + f22, j5, f23, k5);
+                                    this.drawScaledString(s2, (float)d4, f19 + f22, j5, f23, k5);
                                     float f29 = Math.max(0.0F, Math.min(f26, f27));
                                     if (f29 > 0.0F) {
                                         int l5 = new Color(255, 255, 255, 255).getRGB();
                                         RenderUtil.g(d4, f19 + f22 - 2.0F, f29, f28 + 4.0F);
-                                        this.a(s2, (float)d4, f19 + f22, j5, f23, l5);
+                                        this.drawScaledString(s2, (float)d4, f19 + f22, j5, f23, l5);
                                         RenderUtil.g(d9, d10, d11, d12);
                                     } else if (!this.karaokeFill.wo()) {
                                         int i6 = new Color(255, 255, 255, 255).getRGB();
-                                        this.a(s2, (float)d4, f19 + f22, j5, f23, i6);
+                                        this.drawScaledString(s2, (float)d4, f19 + f22, j5, f23, i6);
                                     }
 
                                     f26 -= f27;
@@ -447,7 +447,7 @@ public class Spotify extends Module {
                             } else {
                                 for (String s3 : (Iterable<String>)list1) {
                                     float f30 = this.b(s3, j5, f23);
-                                    this.a(s3, (float)d4, f19 + f22, j5, f23, new Color(255, 255, 255, i5).getRGB());
+                                    this.drawScaledString(s3, (float)d4, f19 + f22, j5, f23, new Color(255, 255, 255, i5).getRGB());
                                     f19 += f30 + 2.0F;
                                 }
 
@@ -469,17 +469,17 @@ public class Spotify extends Module {
             );
     };
     @EventLink
-    public final Listener<TickEvent> onTick = var1 -> this.hV++;
+    public final Listener<TickEvent> onTick = var1 -> this.ticks++;
 
     public Spotify() {
     }
 
-    private File hN() {
-        return new File(this.Wq, "spotify.json");
+    private File getCredentialsFile() {
+        return new File(this.dataDirectory, "spotify.json");
     }
 
-    private Map<String, String> aS() {
-        File file1 = this.hN();
+    private Map<String, String> loadCredentials() {
+        File file1 = this.getCredentialsFile();
         Map map = new HashMap();
         if (file1.exists()) {
             try (FileReader filereader = new FileReader(file1)) {
@@ -492,20 +492,20 @@ public class Spotify extends Module {
         return map;
     }
 
-    private float hO() {
-        float f = this.e("Ay", 13) + 3.0F;
-        float f1 = this.e("Ay", 17) + 0.0F;
+    private float getLyricLineHeight() {
+        float f = this.getStringHeight("Ay", 13) + 3.0F;
+        float f1 = this.getStringHeight("Ay", 17) + 0.0F;
         return Math.max(f, f1);
     }
 
-    private void hP() {
-        File file1 = this.hN();
+    private void reloadCredentials() {
+        File file1 = this.getCredentialsFile();
         long i = file1.exists() ? file1.lastModified() : 0L;
-        if (i != this.Xe) {
-            this.Xe = i;
+        if (i != this.credentialsLastModified) {
+            this.credentialsLastModified = i;
             String s = this.clientId;
             String s1 = this.clientSecret;
-            Map map = this.aS();
+            Map map = this.loadCredentials();
             this.clientId = String.valueOf(map.getOrDefault("client_id", ""));
             this.clientSecret = String.valueOf(map.getOrDefault("client_secret", ""));
             boolean flag = !Objects.equals(s, this.clientId) || !Objects.equals(s1, this.clientSecret);
@@ -516,27 +516,27 @@ public class Spotify extends Module {
         }
     }
 
-    private boolean hQ() {
+    private boolean hasCredentials() {
         return this.clientId != null && !this.clientId.isEmpty() && this.clientSecret != null && !this.clientSecret.isEmpty();
     }
 
-    private void hR() {
+    private void ensureAuthorized() {
         if ("Spotify".equals(this.musicService.wo().getName())) {
-            if (!this.Xb) {
-                boolean flag = this.Wd == null || this.Wd.isEmpty() || this.Xf > 0L;
-                if (flag && this.hQ()) {
+            if (!this.authServerRunning) {
+                boolean flag = this.Wd == null || this.Wd.isEmpty() || this.tokenExpiredAt > 0L;
+                if (flag && this.hasCredentials()) {
                     this.startAuthFlow();
-                    this.Xf = 0L;
+                    this.tokenExpiredAt = 0L;
                 }
             }
         }
     }
 
-    private float hS() {
-        return this.e("Ay", 13) + 2.0F;
+    private float getSmallLineHeight() {
+        return this.getStringHeight("Ay", 13) + 2.0F;
     }
 
-    private boolean C(String var1) {
+    private boolean needsFallbackFont(String var1) {
         if (var1 != null && !var1.isEmpty()) {
             for (int i = 0; i < var1.length(); i += Character.charCount(var1.codePointAt(i))) {
                 int j = var1.codePointAt(i);
@@ -564,17 +564,17 @@ public class Spotify extends Module {
         return var1 / 9.0F;
     }
 
-    private float d(String var1, int var2) {
-        return this.C(var1) ? this.Xg.fontRendererObj.getStringWidth(var1) * this.v(var2) : FontManager.MAIN.a(var2, FontWeight.BOLD).getStringWidth(var1);
+    private float getStringWidth(String var1, int var2) {
+        return this.needsFallbackFont(var1) ? this.minecraft.fontRendererObj.getStringWidth(var1) * this.v(var2) : FontManager.MAIN.a(var2, FontWeight.BOLD).getStringWidth(var1);
     }
 
-    private float e(String var1, int var2) {
-        return this.C(var1) ? 9 * this.v(var2) : FontManager.MAIN.a(var2, FontWeight.BOLD).height();
+    private float getStringHeight(String var1, int var2) {
+        return this.needsFallbackFont(var1) ? 9 * this.v(var2) : FontManager.MAIN.a(var2, FontWeight.BOLD).height();
     }
 
-    private void a(String var1, float var2, double var3, int var5, int var6) {
-        if (this.C(var1)) {
-            agd fontRendererObj = this.Xg.fontRendererObj;
+    private void drawString(String var1, float var2, double var3, int var5, int var6) {
+        if (this.needsFallbackFont(var1)) {
+            agd fontRendererObj = this.minecraft.fontRendererObj;
             GlStateManager.pushMatrix();
             GlStateManager.translate(var2, (float)var3, 0.0F);
             float f = this.v(var5 - 2);
@@ -587,46 +587,46 @@ public class Spotify extends Module {
     }
 
     private void a(String var1, double var2, double var4, int var6, int var7) {
-        float f = this.d(var1, var6);
-        this.a(var1, (float)(var2 - f), var4, var6, var7);
+        float f = this.getStringWidth(var1, var6);
+        this.drawString(var1, (float)(var2 - f), var4, var6, var7);
     }
 
-    private void a(String var1, double var2, double var4, int var6, boolean var7) {
-        float f = this.e(var1, var6);
+    private void drawScrollingString(String var1, double var2, double var4, int var6, boolean var7) {
+        float f = this.getStringHeight(var1, var6);
         if (var7) {
             ScissorUtil.hK();
             RenderUtil.g(this.positionValue.apP.getX() + 65.0, var4 - 2.0, 105.0, f + 2.0F);
-            this.a(var1, (float)(var2 - this.Ws), var4, var6, new Color(255, 255, 255, var6 == 20 ? 255 : 128).getRGB());
+            this.drawString(var1, (float)(var2 - this.marqueeOffset), var4, var6, new Color(255, 255, 255, var6 == 20 ? 255 : 128).getRGB());
             ScissorUtil.disable();
         } else {
-            this.a(var1, (float)var2, var4, var6, new Color(255, 255, 255, var6 == 20 ? 255 : 128).getRGB());
+            this.drawString(var1, (float)var2, var4, var6, new Color(255, 255, 255, var6 == 20 ? 255 : 128).getRGB());
         }
     }
 
-    private float f(String var1, int var2) {
-        return this.d(var1, var2);
+    private float getWidth(String var1, int var2) {
+        return this.getStringWidth(var1, var2);
     }
 
-    private float g(String var1, int var2) {
-        return this.e(var1, var2);
+    private float getHeight(String var1, int var2) {
+        return this.getStringHeight(var1, var2);
     }
 
-    private float a(String var1, int var2, float var3) {
-        return this.f(var1, var2) * var3;
+    private float getScaledWidth(String var1, int var2, float var3) {
+        return this.getWidth(var1, var2) * var3;
     }
 
     private float b(String var1, int var2, float var3) {
-        return this.g(var1, var2) * var3;
+        return this.getHeight(var1, var2) * var3;
     }
 
-    private List<String> a(String var1, double var2, int var4, float var5) {
+    private List<String> wrapText(String var1, double var2, int var4, float var5) {
         ArrayList arraylist = new ArrayList();
         String[] astring = var1.split(" ");
         String s = "";
 
         for (String s1 : astring) {
             String s2 = s.isEmpty() ? s1 : s + " " + s1;
-            if (this.a(s2, var4, var5) <= var2) {
+            if (this.getScaledWidth(s2, var4, var5) <= var2) {
                 s = s2;
             } else {
                 if (!s.isEmpty()) {
@@ -644,9 +644,9 @@ public class Spotify extends Module {
         return arraylist;
     }
 
-    private void a(String var1, float var2, float var3, int var4, float var5, int var6) {
-        if (this.C(var1)) {
-            agd fontRendererObj = this.Xg.fontRendererObj;
+    private void drawScaledString(String var1, float var2, float var3, int var4, float var5, int var6) {
+        if (this.needsFallbackFont(var1)) {
+            agd fontRendererObj = this.minecraft.fontRendererObj;
             GlStateManager.pushMatrix();
             GlStateManager.translate(var2, var3, 0.0F);
             float f = this.v(var4) * var5 / 1.5F;
@@ -662,10 +662,10 @@ public class Spotify extends Module {
         }
     }
 
-    private float a(int var1, int var2) {
-        if (this.Wx && var1 >= 0 && var1 < this.Wy.size()) {
-            int i = this.Wy.get(var1).XR;
-            int j = var1 + 1 < this.Wy.size() ? this.Wy.get(var1 + 1).XR : this.durationMs;
+    private float getLineProgress(int var1, int var2) {
+        if (this.syncedLyrics && var1 >= 0 && var1 < this.syncedLines.size()) {
+            int i = this.syncedLines.get(var1).startTime;
+            int j = var1 + 1 < this.syncedLines.size() ? this.syncedLines.get(var1 + 1).startTime : this.durationMs;
             if (j <= i) {
                 return 1.0F;
             }
@@ -679,11 +679,11 @@ public class Spotify extends Module {
     }
 
     private LyricLine w(int var1) {
-        if (this.Wx && var1 >= 0 && var1 < this.Wy.size()) {
-            LyricLine sl = this.Wy.get(var1);
-            if (sl.XT == null || sl.XT.isEmpty()) {
-                int i = var1 + 1 < this.Wy.size() ? this.Wy.get(var1 + 1).XR : this.durationMs;
-                sl.XT = this.a(sl.XS, sl.XR, i);
+        if (this.syncedLyrics && var1 >= 0 && var1 < this.syncedLines.size()) {
+            LyricLine sl = this.syncedLines.get(var1);
+            if (sl.words == null || sl.words.isEmpty()) {
+                int i = var1 + 1 < this.syncedLines.size() ? this.syncedLines.get(var1 + 1).startTime : this.durationMs;
+                sl.words = this.estimateWordTimings(sl.text, sl.startTime, i);
             }
 
             return sl;
@@ -691,21 +691,21 @@ public class Spotify extends Module {
         return null;
     }
 
-    private float a(LyricLine var1, int var2, int var3, int var4, float var5, float var6) {
+    private float getFilledWidth(LyricLine var1, int var2, int var3, int var4, float var5, float var6) {
         if (var1 == null) {
             return 0.0F;
         }
 
-        if (var1.XT != null && !var1.XT.isEmpty()) {
+        if (var1.words != null && !var1.words.isEmpty()) {
             float f = 0.0F;
 
-            for (int i = 0; i < var1.XT.size(); i++) {
-                LyricWord sn = var1.XT.get(i);
-                float f1 = this.a(sn.XX, var4, var5);
-                if (var3 < sn.XZ) {
-                    if (var3 > sn.XY) {
-                        int j = Math.max(1, sn.XZ - sn.XY);
-                        float f2 = (float)(var3 - sn.XY) / j;
+            for (int i = 0; i < var1.words.size(); i++) {
+                LyricWord sn = var1.words.get(i);
+                float f1 = this.getScaledWidth(sn.text, var4, var5);
+                if (var3 < sn.endTime) {
+                    if (var3 > sn.startTime) {
+                        int j = Math.max(1, sn.endTime - sn.startTime);
+                        float f2 = (float)(var3 - sn.startTime) / j;
                         f += f1 * Math.max(0.0F, Math.min(1.0F, f2));
                     }
                     break;
@@ -724,59 +724,59 @@ public class Spotify extends Module {
 
             return f;
         }
-        return var6 * this.a(var2, var3);
+        return var6 * this.getLineProgress(var2, var3);
     }
 
-    private float a(int var1, float var2, float var3, int var4) {
+    private float animateFill(int var1, float var2, float var3, int var4) {
         long now = System.currentTimeMillis();
-        if (var1 != this.Xy) {
-            this.Xy = var1;
-            this.Xx = 0.0F;
-            this.Xz = now;
-            this.XA = var4;
-            this.XG = now + 260L;
-            this.XH = var2;
-            return this.a(var2, 0.0F, var3);
+        if (var1 != this.fillLineIndex) {
+            this.fillLineIndex = var1;
+            this.fillWidth = 0.0F;
+            this.lastFillFrameTime = now;
+            this.lastFillTime = var4;
+            this.fillBoostUntil = now + 260L;
+            this.lastFillTarget = var2;
+            return this.clamp(var2, 0.0F, var3);
         }
 
-        if (var4 + 600 < this.XA) {
-            this.Xx = this.a(var2, 0.0F, var3);
-            this.Xz = now;
-            this.XA = var4;
-            this.XG = now + 260L;
-            this.XH = var2;
-            return this.Xx;
+        if (var4 + 600 < this.lastFillTime) {
+            this.fillWidth = this.clamp(var2, 0.0F, var3);
+            this.lastFillFrameTime = now;
+            this.lastFillTime = var4;
+            this.fillBoostUntil = now + 260L;
+            this.lastFillTarget = var2;
+            return this.fillWidth;
         }
 
-        float f = Math.max(0.0F, (float)(now - this.Xz) / 1000.0F);
-        this.Xz = now;
-        if (var2 - this.XH > 6.0F) {
-            this.XG = now + 260L;
+        float f = Math.max(0.0F, (float)(now - this.lastFillFrameTime) / 1000.0F);
+        this.lastFillFrameTime = now;
+        if (var2 - this.lastFillTarget > 6.0F) {
+            this.fillBoostUntil = now + 260L;
         }
 
-        this.XH = var2;
-        float f1 = this.a(var1, var3) * this.karaokeSpeedX.wo().floatValue();
-        if (now < this.XG) {
+        this.lastFillTarget = var2;
+        float f1 = this.getFillSpeed(var1, var3) * this.karaokeSpeedX.wo().floatValue();
+        if (now < this.fillBoostUntil) {
             f1 *= 8.0F;
         }
 
-        if (var2 > this.Xx) {
+        if (var2 > this.fillWidth) {
             float f2 = f1 * f;
-            if (var2 - this.Xx >= var3 * 0.25F) {
-                this.Xx = var2;
-            } else if (var2 - this.Xx <= 2.0F) {
-                this.Xx = var2;
+            if (var2 - this.fillWidth >= var3 * 0.25F) {
+                this.fillWidth = var2;
+            } else if (var2 - this.fillWidth <= 2.0F) {
+                this.fillWidth = var2;
             } else {
-                this.Xx = Math.min(var2, this.Xx + Math.max(0.75F, f2));
+                this.fillWidth = Math.min(var2, this.fillWidth + Math.max(0.75F, f2));
             }
         }
 
-        this.Xx = this.a(this.Xx, 0.0F, var3);
-        this.XA = var4;
-        return this.Xx;
+        this.fillWidth = this.clamp(this.fillWidth, 0.0F, var3);
+        this.lastFillTime = var4;
+        return this.fillWidth;
     }
 
-    private float a(int var1, float var2) {
+    private float getFillSpeed(int var1, float var2) {
         int i = this.x(var1);
         int j = this.y(var1);
         int k = Math.max(60, j - i);
@@ -784,26 +784,26 @@ public class Spotify extends Module {
     }
 
     private int x(int var1) {
-        if (this.Wx && var1 >= 0 && var1 < this.Wy.size()) {
-            return this.Wy.get(var1).XR;
+        if (this.syncedLyrics && var1 >= 0 && var1 < this.syncedLines.size()) {
+            return this.syncedLines.get(var1).startTime;
         }
 
-        int i = Math.max(1, this.Wz.size());
+        int i = Math.max(1, this.plainLines.size());
         double d0 = (double)var1 / i;
         return (int)Math.round(this.durationMs * d0);
     }
 
     private int y(int var1) {
-        if (this.Wx) {
-            return var1 + 1 < this.Wy.size() ? this.Wy.get(var1 + 1).XR : this.durationMs;
+        if (this.syncedLyrics) {
+            return var1 + 1 < this.syncedLines.size() ? this.syncedLines.get(var1 + 1).startTime : this.durationMs;
         }
 
-        int i = Math.max(1, this.Wz.size());
+        int i = Math.max(1, this.plainLines.size());
         double d0 = (double)(var1 + 1) / i;
         return (int)Math.round(this.durationMs * d0);
     }
 
-    private float a(float var1, float var2, float var3) {
+    private float clamp(float var1, float var2, float var3) {
         return Math.max(var2, Math.min(var3, var1));
     }
 
@@ -824,11 +824,11 @@ public class Spotify extends Module {
                     this.song = jsonobject1.getString("name");
                     this.artist = jsonobject1.getString("artistName");
                     this.durationMs = jsonobject1.getInt("durationInMillis");
-                    this.Wg = jsonobject1.getJSONObject("artwork").getString("url").replace("{w}x{h}", "600x600");
+                    this.artworkUrl = jsonobject1.getJSONObject("artwork").getString("url").replace("{w}x{h}", "600x600");
                     this.progressMs = (int)(this.durationMs - jsonobject1.getDouble("remainingTime") * 1000.0);
                     long j = (System.nanoTime() - now) / 1000000L;
                     long k = Math.min(150L, Math.max(0L, j / 2L));
-                    this.WB = System.currentTimeMillis() - k;
+                    this.progressTimestamp = System.currentTimeMillis() - k;
                 }
             }
         } catch (SocketException socketexception) {
@@ -852,8 +852,8 @@ public class Spotify extends Module {
             long k = System.currentTimeMillis();
             long l = (System.nanoTime() - now) / 1000000L;
             if (j == 200) {
-                this.Xr = 0;
-                this.Xq = k;
+                this.noContentCount = 0;
+                this.lastPlayingTime = k;
 
                 try (BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(httpurlconnection.getInputStream()))) {
                     JSONObject jsonobject = new JSONObject(bufferedreader.lines().reduce("", String::concat));
@@ -866,61 +866,61 @@ public class Spotify extends Module {
                             .map(var0 -> ((Map)var0).get("name").toString())
                             .reduce((var0, var1) -> var0 + ", " + var1)
                             .orElse("");
-                        this.Wg = jsonobject1.getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url");
+                        this.artworkUrl = jsonobject1.getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url");
                         this.durationMs = jsonobject1.getInt("duration_ms");
                         this.progressMs = jsonobject.getInt("progress_ms");
                         long i1 = jsonobject.optLong("timestamp", k);
                         long j1 = Math.max(0L, k - i1);
                         long k1 = Math.max(0L, l / 2L);
                         long l1 = Math.min(300L, Math.max(k1, j1 / 2L));
-                        this.WB = k - l1;
+                        this.progressTimestamp = k - l1;
                         String s = jsonobject1.optString("id", "");
-                        boolean flag = !s.equals(this.Wk);
-                        boolean flag1 = !this.Ww || this.hW() == 0;
-                        boolean flag2 = this.Wn == -1 && this.Wg != null && !this.Wg.isEmpty();
+                        boolean flag = !s.equals(this.trackId);
+                        boolean flag1 = !this.lyricsAvailable || this.getLineCount() == 0;
+                        boolean flag2 = this.artworkTexture == -1 && this.artworkUrl != null && !this.artworkUrl.isEmpty();
                         if (flag) {
-                            this.Wk = s;
-                            long i2 = ++this.Xp;
-                            this.d(i2);
-                            this.Xu = i2;
-                            this.a(this.song, this.artist, this.Wk, i2);
-                            if (this.Wg != null && !this.Wg.isEmpty()) {
-                                this.Xv = i2;
-                                this.Xw = this.Wg;
-                                this.a(this.Wg, i2);
+                            this.trackId = s;
+                            long i2 = ++this.trackGeneration;
+                            this.resetArtwork(i2);
+                            this.lyricsToken = i2;
+                            this.a(this.song, this.artist, this.trackId, i2);
+                            if (this.artworkUrl != null && !this.artworkUrl.isEmpty()) {
+                                this.artworkToken = i2;
+                                this.requestedArtworkUrl = this.artworkUrl;
+                                this.fetchArtwork(this.artworkUrl, i2);
                             }
                         } else {
-                            long j2 = this.Xp;
-                            if (flag1 && this.Xu != j2) {
-                                this.Xu = j2;
-                                this.a(this.song, this.artist, this.Wk, j2);
+                            long j2 = this.trackGeneration;
+                            if (flag1 && this.lyricsToken != j2) {
+                                this.lyricsToken = j2;
+                                this.a(this.song, this.artist, this.trackId, j2);
                             }
 
-                            if (flag2 && (this.Xv != j2 || !Objects.equals(this.Xw, this.Wg))) {
-                                this.Xv = j2;
-                                this.Xw = this.Wg;
-                                this.a(this.Wg, j2);
+                            if (flag2 && (this.artworkToken != j2 || !Objects.equals(this.requestedArtworkUrl, this.artworkUrl))) {
+                                this.artworkToken = j2;
+                                this.requestedArtworkUrl = this.artworkUrl;
+                                this.fetchArtwork(this.artworkUrl, j2);
                             }
                         }
                     }
                 }
             } else if (j == 204) {
-                this.Xr++;
-                long k2 = this.Xq == 0L ? Long.MAX_VALUE : k - this.Xq;
-                boolean flag3 = k2 >= 1500L && this.Xr >= 3;
+                this.noContentCount++;
+                long k2 = this.lastPlayingTime == 0L ? Long.MAX_VALUE : k - this.lastPlayingTime;
+                boolean flag3 = k2 >= 1500L && this.noContentCount >= 3;
                 if (flag3) {
                     this.artist = this.song = "No data";
-                    this.Wg = "";
+                    this.artworkUrl = "";
                     this.progressMs = this.durationMs = 999;
-                    this.Ww = false;
-                    this.Wy = new ArrayList<>();
-                    this.Wz = new ArrayList<>();
-                    this.Wk = "";
-                    long l2 = ++this.Xp;
-                    this.d(l2);
+                    this.lyricsAvailable = false;
+                    this.syncedLines = new ArrayList<>();
+                    this.plainLines = new ArrayList<>();
+                    this.trackId = "";
+                    long l2 = ++this.trackGeneration;
+                    this.resetArtwork(l2);
                 }
             } else if (j == 401) {
-                this.Xf = System.currentTimeMillis();
+                this.tokenExpiredAt = System.currentTimeMillis();
                 this.Wd = "";
             }
         } catch (SocketException socketexception) {
@@ -935,24 +935,24 @@ public class Spotify extends Module {
     }
 
     private void a(String var1, String var2, String var3, long var4) {
-        this.Ww = false;
-        this.Wy = new ArrayList<>();
-        this.Wz = new ArrayList<>();
-        this.Wx = false;
-        this.WA = -1;
-        this.WC = -1;
+        this.lyricsAvailable = false;
+        this.syncedLines = new ArrayList<>();
+        this.plainLines = new ArrayList<>();
+        this.syncedLyrics = false;
+        this.currentLineIndex = -1;
+        this.previousLineIndex = -1;
         new Thread(() -> this.b(var1, var2, var3, var4), "LyricsFetch-" + var4).start();
     }
 
     private void b(String var1, String var2, String var3, long var4) {
         try {
-            if (var4 != this.Xp) {
+            if (var4 != this.trackGeneration) {
                 return;
             }
 
             String s = var2.contains(",") ? var2.split(",")[0].trim() : var2.trim();
             if (!"LRCLIB".equals(this.lyricsProvider.wo().getName())) {
-                boolean flag = this.a(var1, var2, s, var3, var4);
+                boolean flag = this.tryLyricsEndpoint(var1, var2, s, var3, var4);
                 if (flag) {
                     return;
                 }
@@ -974,29 +974,29 @@ public class Spotify extends Module {
                 String s1 = jsonobject.optString("syncedLyrics", "");
                 String s2 = jsonobject.optString("plainLyrics", "");
                 if (!s1.isEmpty()) {
-                    List list = this.N(s1);
+                    List list = this.parseLRC(s1);
                     if (!list.isEmpty()) {
-                        if (var4 != this.Xp) {
+                        if (var4 != this.trackGeneration) {
                             return;
                         }
 
-                        this.Wy = list;
-                        this.Wx = true;
-                        this.Ww = true;
-                        this.WA = this.hV();
+                        this.syncedLines = list;
+                        this.syncedLyrics = true;
+                        this.lyricsAvailable = true;
+                        this.currentLineIndex = this.getCurrentLineIndex();
                         return;
                     }
                 }
 
                 if (!s2.isEmpty()) {
-                    if (var4 != this.Xp) {
+                    if (var4 != this.trackGeneration) {
                         return;
                     }
 
-                    this.Wz = Arrays.asList(s2.split("\\r?\\n"));
-                    this.Wx = false;
-                    this.Ww = !this.Wz.isEmpty();
-                    this.WA = this.hV();
+                    this.plainLines = Arrays.asList(s2.split("\\r?\\n"));
+                    this.syncedLyrics = false;
+                    this.lyricsAvailable = !this.plainLines.isEmpty();
+                    this.currentLineIndex = this.getCurrentLineIndex();
                 }
             } else if (this.debug.wo()) {
                 afi.c("LRCLIB: no lyrics for " + var1 + " - " + s);
@@ -1008,7 +1008,7 @@ public class Spotify extends Module {
         }
     }
 
-    private boolean a(String var1, String var2, String var3, String var4, long var5) {
+    private boolean tryLyricsEndpoint(String var1, String var2, String var3, String var4, long var5) {
         try {
             String s = this.lyricsProvider.wo().getName();
             String s1 = this.lyricsEndpointURL.wo();
@@ -1020,7 +1020,7 @@ public class Spotify extends Module {
                     return false;
                 }
 
-                if (var5 != this.Xp) {
+                if (var5 != this.trackGeneration) {
                     return true;
                 }
 
@@ -1030,16 +1030,16 @@ public class Spotify extends Module {
                     String s6 = jsonobject.optString("syncedLyrics", "");
                     String s7 = jsonobject.optString("plainLyrics", "");
                     if (!s6.isEmpty()) {
-                        List list = this.g(s, s6);
+                        List list = this.parseByProvider(s, s6);
                         if (!list.isEmpty()) {
-                            if (var5 != this.Xp) {
+                            if (var5 != this.trackGeneration) {
                                 return true;
                             }
 
-                            this.Wy = list;
-                            this.Wx = true;
-                            this.Ww = true;
-                            this.WA = this.hV();
+                            this.syncedLines = list;
+                            this.syncedLyrics = true;
+                            this.lyricsAvailable = true;
+                            this.currentLineIndex = this.getCurrentLineIndex();
                             return true;
                         }
                     }
@@ -1047,45 +1047,45 @@ public class Spotify extends Module {
                     if (s7.isEmpty()) {
                         String s8 = jsonobject.optString("lyrics", "");
                         if (!s8.isEmpty()) {
-                            List list1 = this.g(s, s8);
+                            List list1 = this.parseByProvider(s, s8);
                             if (!list1.isEmpty()) {
-                                if (var5 != this.Xp) {
+                                if (var5 != this.trackGeneration) {
                                     return true;
                                 }
 
-                                this.Wy = list1;
-                                this.Wx = true;
-                                this.Ww = true;
-                                this.WA = this.hV();
+                                this.syncedLines = list1;
+                                this.syncedLyrics = true;
+                                this.lyricsAvailable = true;
+                                this.currentLineIndex = this.getCurrentLineIndex();
                                 return true;
                             }
                         }
 
                         return false;
                     }
-                    if (var5 != this.Xp) {
+                    if (var5 != this.trackGeneration) {
                         return true;
                     }
 
-                    this.Wz = Arrays.asList(s7.split("\\r?\\n"));
-                    this.Wx = false;
-                    this.Ww = !this.Wz.isEmpty();
-                    this.WA = this.hV();
-                    return this.Ww;
+                    this.plainLines = Arrays.asList(s7.split("\\r?\\n"));
+                    this.syncedLyrics = false;
+                    this.lyricsAvailable = !this.plainLines.isEmpty();
+                    this.currentLineIndex = this.getCurrentLineIndex();
+                    return this.lyricsAvailable;
                 }
-                List list2 = this.g(s, s5);
+                List list2 = this.parseByProvider(s, s5);
                 if (list2.isEmpty()) {
                     return false;
                 }
 
-                if (var5 != this.Xp) {
+                if (var5 != this.trackGeneration) {
                     return true;
                 }
 
-                this.Wy = list2;
-                this.Wx = true;
-                this.Ww = true;
-                this.WA = this.hV();
+                this.syncedLines = list2;
+                this.syncedLyrics = true;
+                this.lyricsAvailable = true;
+                this.currentLineIndex = this.getCurrentLineIndex();
                 return true;
             }
             return false;
@@ -1098,7 +1098,7 @@ public class Spotify extends Module {
         }
     }
 
-    private List<LyricLine> g(String var1, String var2) {
+    private List<LyricLine> parseByProvider(String var1, String var2) {
         if (var2 == null) {
             return new ArrayList<>();
         }
@@ -1106,11 +1106,11 @@ public class Spotify extends Module {
         if (s.isEmpty()) {
             return new ArrayList<>();
         } else if ("Custom".equals(var1)) {
-            return this.D(s);
+            return this.parseLyrics(s);
         } else if ("TTML (Apple-style)".equals(var1)) {
-            return !this.E(s) ? new ArrayList<>() : this.F(s);
+            return !this.isTTML(s) ? new ArrayList<>() : this.parseTTML(s);
         }
-        return "Enhanced LRC (word-timed)".equals(var1) ? this.N(s) : this.D(s);
+        return "Enhanced LRC (word-timed)".equals(var1) ? this.parseLRC(s) : this.parseLyrics(s);
     }
 
     private String a(String var1, String var2, String var3, String var4, String var5) throws java.io.UnsupportedEncodingException {
@@ -1243,7 +1243,7 @@ public class Spotify extends Module {
         return (String)object2;
     }
 
-    private List<LyricLine> D(String var1) {
+    private List<LyricLine> parseLyrics(String var1) {
         if (var1 == null) {
             return new ArrayList<>();
         }
@@ -1251,15 +1251,15 @@ public class Spotify extends Module {
         if (s.isEmpty()) {
             return new ArrayList<>();
         }
-        return this.E(s) ? this.F(s) : this.N(s);
+        return this.isTTML(s) ? this.parseTTML(s) : this.parseLRC(s);
     }
 
-    private boolean E(String var1) {
+    private boolean isTTML(String var1) {
         String s = var1.trim();
         return s.startsWith("<") && (s.contains("<tt") || s.contains("http://www.w3.org/ns/ttml"));
     }
 
-    private List<LyricLine> F(String var1) {
+    private List<LyricLine> parseTTML(String var1) {
         ArrayList arraylist = new ArrayList();
         if (var1 == null) {
             return arraylist;
@@ -1270,8 +1270,8 @@ public class Spotify extends Module {
         while (matcher.find()) {
             String s = matcher.group(1);
             String s1 = matcher.group(2);
-            Integer integer = this.I(this.i(s, "begin"));
-            Integer integer1 = this.I(this.i(s, "end"));
+            Integer integer = this.parseTimestamp(this.getAttribute(s, "begin"));
+            Integer integer1 = this.parseTimestamp(this.getAttribute(s, "end"));
             if (integer != null) {
                 ArrayList arraylist1 = new ArrayList();
                 boolean flag = false;
@@ -1281,9 +1281,9 @@ public class Spotify extends Module {
                 while (matcher1.find()) {
                     String s2 = matcher1.group(1);
                     String s3 = matcher1.group(2);
-                    String s4 = this.G(this.H(s3));
-                    Integer integer2 = this.I(this.i(s2, "begin"));
-                    Integer integer3 = this.I(this.i(s2, "end"));
+                    String s4 = this.stripTags(this.unescapeHtml(s3));
+                    Integer integer2 = this.parseTimestamp(this.getAttribute(s2, "begin"));
+                    Integer integer3 = this.parseTimestamp(this.getAttribute(s2, "end"));
                     if (s4 == null) {
                         s4 = "";
                     }
@@ -1299,7 +1299,7 @@ public class Spotify extends Module {
                     if (integer2 != null) {
                         flag = true;
                         LyricWord sn = new LyricWord(s4.isEmpty() ? "" : s4, integer2);
-                        sn.XZ = integer3 != null ? integer3 : integer2;
+                        sn.endTime = integer3 != null ? integer3 : integer2;
                         arraylist1.add(sn);
                     }
                 }
@@ -1308,19 +1308,19 @@ public class Spotify extends Module {
                 if (stringbuilder.length() > 0) {
                     s5 = stringbuilder.toString().trim();
                 } else {
-                    s5 = this.G(this.H(s1)).trim();
+                    s5 = this.stripTags(this.unescapeHtml(s1)).trim();
                 }
 
                 if (flag && !arraylist1.isEmpty()) {
                     for (int i = 0; i < arraylist1.size(); i++) {
                         LyricWord snx = (LyricWord)arraylist1.get(i);
                         if (i + 1 < arraylist1.size()) {
-                            snx.XZ = Math.max(snx.XY, Math.min(snx.XZ, ((LyricWord)arraylist1.get(i + 1)).XY));
-                            if (snx.XZ == snx.XY) {
-                                snx.XZ = ((LyricWord)arraylist1.get(i + 1)).XY;
+                            snx.endTime = Math.max(snx.startTime, Math.min(snx.endTime, ((LyricWord)arraylist1.get(i + 1)).startTime));
+                            if (snx.endTime == snx.startTime) {
+                                snx.endTime = ((LyricWord)arraylist1.get(i + 1)).startTime;
                             }
                         } else if (integer1 != null) {
-                            snx.XZ = Math.max(snx.XY, integer1);
+                            snx.endTime = Math.max(snx.startTime, integer1);
                         }
                     }
                 }
@@ -1329,20 +1329,20 @@ public class Spotify extends Module {
             }
         }
 
-        arraylist.sort(Comparator.comparingInt(var0 -> ((LyricLine)var0).XR));
+        arraylist.sort(Comparator.comparingInt(var0 -> ((LyricLine)var0).startTime));
 
         for (int j = 0; j < arraylist.size(); j++) {
             LyricLine sl = (LyricLine)arraylist.get(j);
-            int k = j + 1 < arraylist.size() ? ((LyricLine)arraylist.get(j + 1)).XR : this.durationMs;
-            if (sl.XT == null || sl.XT.isEmpty()) {
-                sl.XT = this.a(sl.XS, sl.XR, k);
+            int k = j + 1 < arraylist.size() ? ((LyricLine)arraylist.get(j + 1)).startTime : this.durationMs;
+            if (sl.words == null || sl.words.isEmpty()) {
+                sl.words = this.estimateWordTimings(sl.text, sl.startTime, k);
             }
         }
 
         return arraylist;
     }
 
-    private String i(String var1, String var2) {
+    private String getAttribute(String var1, String var2) {
         if (var1 == null) {
             return null;
         }
@@ -1351,15 +1351,15 @@ public class Spotify extends Module {
         return matcher.find() ? matcher.group(1) : null;
     }
 
-    private String G(String var1) {
+    private String stripTags(String var1) {
         return var1 == null ? "" : var1.replaceAll("(?is)<[^>]+>", "");
     }
 
-    private String H(String var1) {
+    private String unescapeHtml(String var1) {
         return var1 == null ? "" : var1.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", "\"").replace("&apos;", "'");
     }
 
-    private Integer I(String var1) {
+    private Integer parseTimestamp(String var1) {
         if (var1 == null) {
             return null;
         }
@@ -1395,15 +1395,15 @@ public class Spotify extends Module {
     }
 
     private JSONObject a(String var1, String var2, int var3) {
-        for (String s : this.J(var1)) {
+        for (String s : this.getTitleVariants(var1)) {
             try {
                 String s1 = "https://lrclib.net/api/get?track_name=" + URLEncoder.encode(s, "UTF-8") + "&artist_name=" + URLEncoder.encode(var2, "UTF-8");
                 if (var3 > 0) {
                     s1 = s1 + "&duration=" + Math.max(1, Math.round(var3 / 1000.0F));
                 }
 
-                JSONObject jsonobject = this.L(s1);
-                if (this.a(jsonobject)) {
+                JSONObject jsonobject = this.requestJsonObject(s1);
+                if (this.hasLyrics(jsonobject)) {
                     return jsonobject;
                 }
             } catch (Exception exception) {
@@ -1422,12 +1422,12 @@ public class Spotify extends Module {
 
         for (String s : this.buildSearchUrls(var1, var2)) {
             try {
-                JSONArray jsonarray = this.M(s);
+                JSONArray jsonarray = this.requestJsonArray(s);
                 if (jsonarray != null) {
                     for (int i = 0; i < jsonarray.length(); i++) {
                         JSONObject jsonobject1 = jsonarray.optJSONObject(i);
-                        if (this.a(jsonobject1)) {
-                            double d1 = this.a(jsonobject1, var1, var2, var3);
+                        if (this.hasLyrics(jsonobject1)) {
+                            double d1 = this.score(jsonobject1, var1, var2, var3);
                             if (d1 < d0) {
                                 d0 = d1;
                                 jsonobject = jsonobject1;
@@ -1460,7 +1460,7 @@ public class Spotify extends Module {
         ArrayList arraylist = new ArrayList();
 
         try {
-            for (String s : this.J(var1)) {
+            for (String s : this.getTitleVariants(var1)) {
                 arraylist.add("https://lrclib.net/api/search?track_name=" + URLEncoder.encode(s, "UTF-8") + "&artist_name=" + URLEncoder.encode(var2, "UTF-8"));
             }
 
@@ -1474,10 +1474,10 @@ public class Spotify extends Module {
         return arraylist;
     }
 
-    private List<String> J(String var1) {
+    private List<String> getTitleVariants(String var1) {
         ArrayList arraylist = new ArrayList();
         String s = var1 == null ? "" : var1.trim();
-        this.a(arraylist, s);
+        this.addUnique(arraylist, s);
         String s1 = s.replaceAll(
                 "(?i)\\s*-\\s*(remaster(?:ed)?|\\d{4}\\s*remaster(?:ed)?|radio edit|single version|album version|explicit|clean|mono|stereo|live|sped up|slowed|nightcore).*$",
                 ""
@@ -1491,11 +1491,11 @@ public class Spotify extends Module {
                 ""
             )
             .trim();
-        this.a(arraylist, s1);
+        this.addUnique(arraylist, s1);
         return arraylist;
     }
 
-    private void a(List<String> var1, String var2) {
+    private void addUnique(List<String> var1, String var2) {
         if (var2 != null) {
             String s = var2.trim();
             if (!s.isEmpty()) {
@@ -1512,16 +1512,16 @@ public class Spotify extends Module {
         }
     }
 
-    private boolean a(JSONObject json) {
+    private boolean hasLyrics(JSONObject json) {
         return json != null && (!json.optString("syncedLyrics", "").isEmpty() || !json.optString("plainLyrics", "").isEmpty());
     }
 
-    private double a(JSONObject json, String var2, String var3, int var4) {
+    private double score(JSONObject json, String var2, String var3, int var4) {
         double d0 = 0.0;
-        String s = this.K(var2);
-        String s1 = this.K(var3);
-        String s2 = this.K(json.optString("trackName", json.optString("name", "")));
-        String s3 = this.K(json.optString("artistName", ""));
+        String s = this.normalize(var2);
+        String s1 = this.normalize(var3);
+        String s2 = this.normalize(json.optString("trackName", json.optString("name", "")));
+        String s3 = this.normalize(json.optString("artistName", ""));
         if (!s2.equals(s)) {
             d0 += !s2.contains(s) && !s.contains(s2) ? 20.0 : 6.0;
         }
@@ -1542,7 +1542,7 @@ public class Spotify extends Module {
         return d0;
     }
 
-    private String K(String var1) {
+    private String normalize(String var1) {
         return var1 == null
             ? ""
             : var1.toLowerCase(Locale.ROOT)
@@ -1553,7 +1553,7 @@ public class Spotify extends Module {
                 .trim();
     }
 
-    private JSONObject L(String var1) throws java.io.IOException {
+    private JSONObject requestJsonObject(String var1) throws java.io.IOException {
         HttpURLConnection httpurlconnection = (HttpURLConnection)new URL(var1).openConnection();
         httpurlconnection.setRequestMethod("GET");
         httpurlconnection.setRequestProperty("User-Agent", "RiseClient/SpotifyModule");
@@ -1575,7 +1575,7 @@ public class Spotify extends Module {
         }
     }
 
-    private JSONArray M(String var1) throws java.io.IOException {
+    private JSONArray requestJsonArray(String var1) throws java.io.IOException {
         HttpURLConnection httpurlconnection = (HttpURLConnection)new URL(var1).openConnection();
         httpurlconnection.setRequestMethod("GET");
         httpurlconnection.setRequestProperty("User-Agent", "RiseClient/SpotifyModule");
@@ -1597,7 +1597,7 @@ public class Spotify extends Module {
         }
     }
 
-    private List<LyricLine> N(String var1) {
+    private List<LyricLine> parseLRC(String var1) {
         ArrayList arraylist = new ArrayList();
         BufferedReader bufferedreader = new BufferedReader(new StringReader(var1));
         Pattern pattern = Pattern.compile("\\[(\\d{1,2}):(\\d{1,2})(?:\\.(\\d{1,3}))?]");
@@ -1610,12 +1610,12 @@ public class Spotify extends Module {
                 ArrayList arraylist1 = new ArrayList();
 
                 while (matcher.find()) {
-                    int i = this.i(matcher.group(1), 0);
-                    int j = this.i(matcher.group(2), 0);
+                    int i = this.parseInt(matcher.group(1), 0);
+                    int j = this.parseInt(matcher.group(2), 0);
                     byte b0 = 0;
                     if (matcher.group(3) != null) {
                         String s2 = matcher.group(3);
-                        b0 = (byte)(s2.length() == 2 ? this.i(s2, 0) * 10 : this.i(s2, 0));
+                        b0 = (byte)(s2.length() == 2 ? this.parseInt(s2, 0) * 10 : this.parseInt(s2, 0));
                     }
 
                     int k = i * 60000 + j * 1000 + b0;
@@ -1628,9 +1628,9 @@ public class Spotify extends Module {
                         ParsedLyricLine sm = this.h(s1.trim(), (Integer)arraylist1.get(0));
 
                         for (int l : (Iterable<Integer>)arraylist1) {
-                            LyricLine slx = new LyricLine(l, sm.XV, this.f(sm.words), true);
+                            LyricLine slx = new LyricLine(l, sm.text, this.copyWords(sm.words), true);
                             arraylist.add(slx);
-                            afi.c("Enhanced line parsed: [" + l + "ms] \"" + slx.XS + "\" | words=" + slx.XT.size());
+                            afi.c("Enhanced line parsed: [" + l + "ms] \"" + slx.text + "\" | words=" + slx.words.size());
                         }
                     } else {
                         String s3 = s1.trim();
@@ -1647,21 +1647,21 @@ public class Spotify extends Module {
 
         for (int i1 = 0; i1 < arraylist.size(); i1++) {
             LyricLine sl = (LyricLine)arraylist.get(i1);
-            int j1 = i1 + 1 < arraylist.size() ? ((LyricLine)arraylist.get(i1 + 1)).XR : this.durationMs;
-            if (!sl.XT.isEmpty()) {
-                for (int k1 = 0; k1 < sl.XT.size(); k1++) {
-                    if (k1 + 1 < sl.XT.size()) {
-                        sl.XT.get(k1).XZ = sl.XT.get(k1 + 1).XY;
+            int j1 = i1 + 1 < arraylist.size() ? ((LyricLine)arraylist.get(i1 + 1)).startTime : this.durationMs;
+            if (!sl.words.isEmpty()) {
+                for (int k1 = 0; k1 < sl.words.size(); k1++) {
+                    if (k1 + 1 < sl.words.size()) {
+                        sl.words.get(k1).endTime = sl.words.get(k1 + 1).startTime;
                     } else {
-                        sl.XT.get(k1).XZ = j1;
+                        sl.words.get(k1).endTime = j1;
                     }
                 }
             } else {
-                sl.XT = this.a(sl.XS, sl.XR, j1);
+                sl.words = this.estimateWordTimings(sl.text, sl.startTime, j1);
             }
         }
 
-        arraylist.sort(Comparator.comparingInt(var0 -> ((LyricLine)var0).XR));
+        arraylist.sort(Comparator.comparingInt(var0 -> ((LyricLine)var0).startTime));
         return arraylist;
     }
 
@@ -1686,7 +1686,7 @@ public class Spotify extends Module {
                     }
 
                     String s1 = var1.substring(i + 1, k);
-                    Integer integer = this.O(s1);
+                    Integer integer = this.parseWordTimestamp(s1);
                     if (integer != null) {
                         j = integer;
                         flag = true;
@@ -1707,7 +1707,7 @@ public class Spotify extends Module {
             stringbuilder.append(s2);
         }
 
-        arraylist.removeIf(var0 -> ((LyricWord)var0).XX == null || ((LyricWord)var0).XX.isEmpty());
+        arraylist.removeIf(var0 -> ((LyricWord)var0).text == null || ((LyricWord)var0).text.isEmpty());
         if (!flag) {
             arraylist.clear();
         }
@@ -1715,17 +1715,17 @@ public class Spotify extends Module {
         return new ParsedLyricLine(stringbuilder.toString(), arraylist);
     }
 
-    private List<LyricWord> f(List<LyricWord> var1) {
+    private List<LyricWord> copyWords(List<LyricWord> var1) {
         ArrayList arraylist = new ArrayList();
 
         for (LyricWord sn : var1) {
-            arraylist.add(new LyricWord(sn.XX, sn.XY));
+            arraylist.add(new LyricWord(sn.text, sn.startTime));
         }
 
         return arraylist;
     }
 
-    private Integer O(String var1) {
+    private Integer parseWordTimestamp(String var1) {
         try {
             String[] astring = var1.split(":");
             if (astring.length != 2) {
@@ -1747,7 +1747,7 @@ public class Spotify extends Module {
         }
     }
 
-    private List<LyricWord> a(String var1, int var2, int var3) {
+    private List<LyricWord> estimateWordTimings(String var1, int var2, int var3) {
         ArrayList arraylist = new ArrayList();
         if (var1 == null) {
             return arraylist;
@@ -1756,7 +1756,7 @@ public class Spotify extends Module {
         int i = Math.max(0, var3 - var2);
         if (i == 0) {
             LyricWord snx = new LyricWord(var1, var2);
-            snx.XZ = var2;
+            snx.endTime = var2;
             arraylist.add(snx);
             return arraylist;
         }
@@ -1788,7 +1788,7 @@ public class Spotify extends Module {
 
         if (arraylist1.isEmpty()) {
             LyricWord snxxx = new LyricWord(var1, var2);
-            snxxx.XZ = var3;
+            snxxx.endTime = var3;
             arraylist.add(snxxx);
             return arraylist;
         }
@@ -1804,7 +1804,7 @@ public class Spotify extends Module {
 
         if (i1 < 0) {
             LyricWord snxx = new LyricWord(var1, var2);
-            snxx.XZ = var3;
+            snxx.endTime = var3;
             arraylist.add(snxx);
             return arraylist;
         }
@@ -1835,13 +1835,13 @@ public class Spotify extends Module {
             double d2;
             if (k2 != 1) {
                 if (k2 == 2) {
-                    d2 = this.Q(s);
+                    d2 = this.getPunctuationWeight(s);
                 } else {
                     d2 = Math.max(0.12, 0.1 * s.length());
                 }
             } else {
                 String s1 = s.replaceAll("[^\\p{L}\\p{M}\\p{Nd}'’]+", "");
-                int l2 = this.P(s1);
+                int l2 = this.countSyllables(s1);
                 double d1 = 0.0;
 
                 for (int i3 = 0; i3 < s.length(); i3++) {
@@ -1963,7 +1963,7 @@ public class Spotify extends Module {
             int i8 = k7;
             int j8 = l7 == size - 1 ? var3 : Math.min(var3, i8 + Math.max(1, aint1[l7]));
             LyricWord sn = new LyricWord((String)arraylist3.get(l7), i8);
-            sn.XZ = j8;
+            sn.endTime = j8;
             arraylist.add(sn);
             k7 = j8;
         }
@@ -1971,7 +1971,7 @@ public class Spotify extends Module {
         return arraylist;
     }
 
-    private int P(String var1) {
+    private int countSyllables(String var1) {
         if (var1 == null) {
             return 1;
         }
@@ -1990,7 +1990,7 @@ public class Spotify extends Module {
         return Math.max(1, i);
     }
 
-    private double Q(String var1) {
+    private double getPunctuationWeight(String var1) {
         String s = var1;
         int i = s.length();
         if (s.matches("\\.+")) {
@@ -2005,7 +2005,7 @@ public class Spotify extends Module {
         return s.matches("[()\\[\\]\"“”]+") ? 0.35 : 0.3;
     }
 
-    private int i(String var1, int var2) {
+    private int parseInt(String var1, int var2) {
         try {
             return Integer.parseInt(var1);
         } catch (Exception exception) {
@@ -2014,22 +2014,22 @@ public class Spotify extends Module {
     }
 
     private int z(int var1) {
-        if (!this.Ww) {
+        if (!this.lyricsAvailable) {
             return -1;
         }
 
-        if (this.Wx && !this.Wy.isEmpty()) {
-            if (var1 < this.Wy.get(0).XR + 0) {
+        if (this.syncedLyrics && !this.syncedLines.isEmpty()) {
+            if (var1 < this.syncedLines.get(0).startTime + 0) {
                 return -1;
             }
 
             int i = 0;
-            int j = this.Wy.size() - 1;
+            int j = this.syncedLines.size() - 1;
             int k = -1;
 
             while (i <= j) {
                 int l = i + j >>> 1;
-                if (this.Wy.get(l).XR <= var1) {
+                if (this.syncedLines.get(l).startTime <= var1) {
                     k = l;
                     i = l + 1;
                 } else {
@@ -2038,30 +2038,30 @@ public class Spotify extends Module {
             }
 
             return k;
-        } else if (!this.Wx && !this.Wz.isEmpty() && this.durationMs > 0) {
-            int i1 = (int)Math.floor((double)var1 / this.durationMs * this.Wz.size());
-            return Math.max(0, Math.min(this.Wz.size() - 1, i1));
+        } else if (!this.syncedLyrics && !this.plainLines.isEmpty() && this.durationMs > 0) {
+            int i1 = (int)Math.floor((double)var1 / this.durationMs * this.plainLines.size());
+            return Math.max(0, Math.min(this.plainLines.size() - 1, i1));
         }
         return -1;
     }
 
-    private int hV() {
+    private int getCurrentLineIndex() {
         return this.z(this.progressMs);
     }
 
-    private int hW() {
-        return this.Wx ? this.Wy.size() : this.Wz.size();
+    private int getLineCount() {
+        return this.syncedLyrics ? this.syncedLines.size() : this.plainLines.size();
     }
 
-    private String A(int var1) {
-        if (this.Wx) {
-            return var1 >= 0 && var1 < this.Wy.size() ? this.Wy.get(var1).XS : "";
+    private String getLineText(int var1) {
+        if (this.syncedLyrics) {
+            return var1 >= 0 && var1 < this.syncedLines.size() ? this.syncedLines.get(var1).text : "";
         }
-        return var1 >= 0 && var1 < this.Wz.size() ? this.Wz.get(var1) : "";
+        return var1 >= 0 && var1 < this.plainLines.size() ? this.plainLines.get(var1) : "";
     }
 
     private String requestAccessToken(String var1) {
-        Map map = this.aS();
+        Map map = this.loadCredentials();
         String s = (String)map.get("client_id");
         String s1 = (String)map.get("client_secret");
         if (s == null) {
@@ -2106,7 +2106,7 @@ public class Spotify extends Module {
 
             return null;
         } finally {
-            this.Xb = false;
+            this.authServerRunning = false;
         }
     }
 
@@ -2117,7 +2117,7 @@ public class Spotify extends Module {
         serversocket.setSoTimeout(500);
 
         try (ServerSocket serversocket1 = serversocket) {
-            while (this.Xb) {
+            while (this.authServerRunning) {
 
                 Socket socket;
                 try {
@@ -2167,16 +2167,16 @@ public class Spotify extends Module {
         }
     }
 
-    public int S(String var1) {
+    public int uploadTexture(String var1) {
         try {
-            BufferedImage bufferedimage = this.T(var1);
+            BufferedImage bufferedimage = this.downloadImage(var1);
             return bufferedimage == null ? -1 : TextureUtil.uploadTextureImageAllocate(TextureUtil.glGenTextures(), bufferedimage, true, false);
         } catch (Exception exception) {
             return -1;
         }
     }
 
-    private BufferedImage T(String var1) {
+    private BufferedImage downloadImage(String var1) {
         try {
             URLConnection urlconnection = new URL(var1).openConnection();
             urlconnection.setRequestProperty("User-Agent", "RiseClient/SpotifyModule");
@@ -2195,23 +2195,23 @@ public class Spotify extends Module {
         }
     }
 
-    private void a(String var1, long var2) {
+    private void fetchArtwork(String var1, long var2) {
         if (var1 != null && !var1.isEmpty()) {
-            if (var2 == this.Xp) {
-                if (!this.Xl || !Objects.equals(var1, this.Xk)) {
-                    if (this.Xm == null || !Objects.equals(var1, this.Xn) || this.Xo != var2) {
-                        this.Xk = var1;
-                        this.Xl = true;
+            if (var2 == this.trackGeneration) {
+                if (!this.artworkFetching || !Objects.equals(var1, this.fetchingArtworkUrl)) {
+                    if (this.pendingArtwork == null || !Objects.equals(var1, this.pendingArtworkUrl) || this.pendingArtworkToken != var2) {
+                        this.fetchingArtworkUrl = var1;
+                        this.artworkFetching = true;
                         new Thread(() -> {
                             try {
-                                BufferedImage bufferedimage = this.T(var1);
-                                if (bufferedimage != null && var2 == this.Xp) {
-                                    this.Xn = var1;
-                                    this.Xo = var2;
-                                    this.Xm = bufferedimage;
+                                BufferedImage bufferedimage = this.downloadImage(var1);
+                                if (bufferedimage != null && var2 == this.trackGeneration) {
+                                    this.pendingArtworkUrl = var1;
+                                    this.pendingArtworkToken = var2;
+                                    this.pendingArtwork = bufferedimage;
                                 }
                             } finally {
-                                this.Xl = false;
+                                this.artworkFetching = false;
                             }
                         }, "SpotifyArtworkFetch-" + var2).start();
                     }
@@ -2220,47 +2220,47 @@ public class Spotify extends Module {
         }
     }
 
-    private void hX() {
-        BufferedImage bufferedimage = this.Xm;
+    private void uploadPendingArtwork() {
+        BufferedImage bufferedimage = this.pendingArtwork;
         if (bufferedimage != null) {
-            if (this.Xo == this.Xp && this.Wg != null && !this.Wg.isEmpty() && Objects.equals(this.Wg, this.Xn)) {
+            if (this.pendingArtworkToken == this.trackGeneration && this.artworkUrl != null && !this.artworkUrl.isEmpty() && Objects.equals(this.artworkUrl, this.pendingArtworkUrl)) {
                 try {
-                    this.Wn = TextureUtil.uploadTextureImageAllocate(TextureUtil.glGenTextures(), bufferedimage, true, false);
+                    this.artworkTexture = TextureUtil.uploadTextureImageAllocate(TextureUtil.glGenTextures(), bufferedimage, true, false);
                 } catch (Throwable throwable) {
                     if (this.debug.wo()) {
                         afi.c("Artwork upload issue: " + throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
                     }
                 } finally {
-                    this.Xm = null;
-                    this.Xn = "";
-                    this.Xo = -1L;
+                    this.pendingArtwork = null;
+                    this.pendingArtworkUrl = "";
+                    this.pendingArtworkToken = -1L;
                 }
             } else {
-                this.Xm = null;
-                this.Xn = "";
-                this.Xo = -1L;
+                this.pendingArtwork = null;
+                this.pendingArtworkUrl = "";
+                this.pendingArtworkToken = -1L;
             }
         }
     }
 
-    private void d(long var1) {
-        this.Wn = -1;
-        this.Xm = null;
-        this.Xn = "";
-        this.Xo = -1L;
-        this.Xu = -1L;
-        this.Xv = -1L;
-        this.Xw = "";
+    private void resetArtwork(long var1) {
+        this.artworkTexture = -1;
+        this.pendingArtwork = null;
+        this.pendingArtworkUrl = "";
+        this.pendingArtworkToken = -1L;
+        this.lyricsToken = -1L;
+        this.artworkToken = -1L;
+        this.requestedArtworkUrl = "";
     }
 
     private void startPoller() {
-        if (!this.WZ) {
-            this.WZ = true;
+        if (!this.pollerRunning) {
+            this.pollerRunning = true;
             this.pollerThread = new Thread(() -> {
-                while (this.WZ) {
+                while (this.pollerRunning) {
                     try {
-                        this.hP();
-                        this.hR();
+                        this.reloadCredentials();
+                        this.ensureAuthorized();
                         String s = this.musicService.wo().getName();
                         if ("Cider".equals(s)) {
                             this.pollCider();
@@ -2285,8 +2285,8 @@ public class Spotify extends Module {
         }
     }
 
-    private void hZ() {
-        this.WZ = false;
+    private void stopPoller() {
+        this.pollerRunning = false;
         if (this.pollerThread != null) {
             try {
                 this.pollerThread.interrupt();
@@ -2298,20 +2298,20 @@ public class Spotify extends Module {
     }
 
     public void startAuthFlow() {
-        if (!this.Xb) {
-            this.Xb = true;
+        if (!this.authServerRunning) {
+            this.authServerRunning = true;
             new Thread(() -> {
                 try {
                     this.startServer();
                 } catch (IOException ioexception) {
                     ioexception.printStackTrace();
-                    this.Xb = false;
+                    this.authServerRunning = false;
                 }
             }, "SpotifyAuthServer").start();
 
             try {
-                this.hP();
-                if (!this.hQ()) {
+                this.reloadCredentials();
+                if (!this.hasCredentials()) {
                     afi.b("Spotify client ID/secret missing. Use .spotify (clientid) / .spotify (clientsecret). Redirect URI: http://127.0.0.1:8888/callback");
                 }
 
@@ -2328,7 +2328,7 @@ public class Spotify extends Module {
                     );
             } catch (Exception exception) {
                 exception.printStackTrace();
-                this.Xb = false;
+                this.authServerRunning = false;
             }
         }
     }
@@ -2347,11 +2347,11 @@ public class Spotify extends Module {
             .setColor(this.rz().getChatAccentColor());
         sxxOnEnable.setChatStyle(chatstyle);
         sx.appendSibling(sxxOnEnable);
-        this.Xg.thePlayer.addChatMessage(sx);
-        this.hP();
+        this.minecraft.thePlayer.addChatMessage(sx);
+        this.reloadCredentials();
         String s1 = this.musicService.wo().getName();
         if ("Spotify".equals(s1)) {
-            if (!this.hQ()) {
+            if (!this.hasCredentials()) {
                 afi.b("Spotify: Missing client credentials. Set them before connecting.");
             } else if (this.Wd.isEmpty()) {
                 this.startAuthFlow();
@@ -2364,11 +2364,11 @@ public class Spotify extends Module {
             this.pollSpotify();
         }
 
-        this.Wj = this.song;
-        this.Wn = -1;
-        this.hX();
-        if (this.Wg != null && !this.Wg.isEmpty()) {
-            this.a(this.Wg, this.Xp);
+        this.songAtEnable = this.song;
+        this.artworkTexture = -1;
+        this.uploadPendingArtwork();
+        if (this.artworkUrl != null && !this.artworkUrl.isEmpty()) {
+            this.fetchArtwork(this.artworkUrl, this.trackGeneration);
         }
 
         this.startPoller();
@@ -2376,11 +2376,11 @@ public class Spotify extends Module {
 
     @Override
     public void onDisable() {
-        this.hZ();
+        this.stopPoller();
     }
 
-    private int ib() {
-        long now = System.currentTimeMillis() - this.WB;
+    private int getEstimatedProgressMs() {
+        long now = System.currentTimeMillis() - this.progressTimestamp;
         int j = this.progressMs + (int)now;
         if (j < 0) {
             j = 0;
@@ -2406,38 +2406,38 @@ public class Spotify extends Module {
         return 1.0F - f * f * f;
     }
 
-    private float ic() {
-        float f = (float)(System.currentTimeMillis() - this.WD) / 260.0F;
+    private float getLineAnimProgress() {
+        float f = (float)(System.currentTimeMillis() - this.lineAnimStart) / 260.0F;
         return this.easeOutCubic(Math.min(1.0F, Math.max(0.0F, f)));
     }
 
-    private void B(int var1) {
-        if (this.Ww) {
+    private void updateCurrentLine(int var1) {
+        if (this.lyricsAvailable) {
             int i = this.z(var1);
-            if (i < 0 && this.WA >= 0 && this.Wx && !this.Wy.isEmpty()) {
-                int j = this.Wy.get(0).XR + 0;
+            if (i < 0 && this.currentLineIndex >= 0 && this.syncedLyrics && !this.syncedLines.isEmpty()) {
+                int j = this.syncedLines.get(0).startTime + 0;
                 if (var1 >= j) {
                     return;
                 }
             }
 
-            if (this.WA < 0 || i < 0 || i >= this.WA || System.currentTimeMillis() - this.WE >= 120L) {
-                if (i != this.WA) {
+            if (this.currentLineIndex < 0 || i < 0 || i >= this.currentLineIndex || System.currentTimeMillis() - this.lastLineSwitchTime >= 120L) {
+                if (i != this.currentLineIndex) {
                     long now = System.currentTimeMillis();
-                    boolean flag = this.WA < 0 || i > this.WA;
-                    this.WC = this.WA;
-                    this.WA = i;
-                    this.WD = flag ? now + 0L : now;
-                    this.WE = now;
-                    this.Xy = -1;
-                    this.Xx = 0.0F;
-                    this.XG = now + 260L;
+                    boolean flag = this.currentLineIndex < 0 || i > this.currentLineIndex;
+                    this.previousLineIndex = this.currentLineIndex;
+                    this.currentLineIndex = i;
+                    this.lineAnimStart = flag ? now + 0L : now;
+                    this.lastLineSwitchTime = now;
+                    this.fillLineIndex = -1;
+                    this.fillWidth = 0.0F;
+                    this.fillBoostUntil = now + 260L;
                 }
             }
         }
     }
 
-    private int a(int var1, int var2, int var3) {
+    private int clampInt(int var1, int var2, int var3) {
         return Math.max(var2, Math.min(var3, var1));
     }
 }

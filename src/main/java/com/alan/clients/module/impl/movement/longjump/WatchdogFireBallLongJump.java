@@ -28,83 +28,83 @@ import rip.vantage.commons.util.time.a;
 
 public class WatchdogFireBallLongJump extends Mode<LongJump> {
     public final BooleanValue boost = new BooleanValue("Boost", this, true);
-    private int qI = -1;
-    private int hV = -1;
-    private boolean IN;
-    public static boolean IO;
-    private boolean IP;
-    private int IQ;
-    private boolean IR;
+    private int previousSlot = -1;
+    private int velocityTicks = -1;
+    private boolean receivedVelocity;
+    public static boolean boosting;
+    private boolean sentPlacement;
+    private int stage;
+    private boolean sentFireball;
     private boolean Ms;
     a stopWatch = new a();
     public static boolean active = false;
-    public static boolean tt;
+    public static boolean replaying;
     private int tR;
-    private final ArrayList<Packet<?>> Mt = new ArrayList<>();
-    private float ub;
-    private double vB;
-    private double vC;
+    private final ArrayList<Packet<?>> heldPackets = new ArrayList<>();
+    private float velocityYaw;
+    private double velocityX;
+    private double velocityZ;
     private boolean jump;
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
         if (var1x.dq() instanceof C08PacketPlayerBlockPlacement
             && ((C08PacketPlayerBlockPlacement)var1x.dq()).getStack() != null
             && ((C08PacketPlayerBlockPlacement)var1x.dq()).getStack().getItem() instanceof ItemFireball) {
-            this.IR = true;
+            this.sentFireball = true;
         }
     };
     @EventLink(value = 2)
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
         Packet packet = var1x.getPacket();
-        if (!tt) {
+        if (!replaying) {
             if (packet instanceof S12PacketEntityVelocity) {
                 if (((S12PacketEntityVelocity)var1x.getPacket()).getEntityID() != aEg.thePlayer.getEntityId()) {
                     return;
                 }
 
-                if (this.IR) {
-                    this.hV = 0;
-                    this.IN = true;
-                    this.IR = false;
-                    IO = true;
+                if (this.sentFireball) {
+                    this.velocityTicks = 0;
+                    this.receivedVelocity = true;
+                    this.sentFireball = false;
+                    boosting = true;
                 }
             }
 
             switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
                     if (s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && !var1x.isCancelled()) {
-                        this.hV = 0;
-                        this.IN = true;
-                        this.IR = false;
-                        IO = true;
-                        this.Mt.add(s12packetentityvelocity);
+                        this.velocityTicks = 0;
+                        this.receivedVelocity = true;
+                        this.sentFireball = false;
+                        boosting = true;
+                        this.heldPackets.add(s12packetentityvelocity);
                         var1x.setCancelled();
                         active = true;
                         double d0 = s12packetentityvelocity.getMotionX() / 8000.0;
                         double d1 = s12packetentityvelocity.getMotionZ() / 8000.0;
-                        this.ub = (float)Math.toDegrees(Math.atan2(d1, d0));
-                        if (this.ub < -180.0F) {
-                            this.ub += 360.0F;
+                        this.velocityYaw = (float)Math.toDegrees(Math.atan2(d1, d0));
+                        if (this.velocityYaw < -180.0F) {
+                            this.velocityYaw += 360.0F;
                         }
 
-                        if (this.ub > 180.0F) {
-                            this.ub -= 360.0F;
+                        if (this.velocityYaw > 180.0F) {
+                            this.velocityYaw -= 360.0F;
                         }
 
-                        this.vB = d0;
-                        this.vC = d1;
+                        this.velocityX = d0;
+                        this.velocityZ = d1;
                     }
                     break;
                 case S32PacketConfirmTransaction s32packetconfirmtransaction:
                     if (active) {
                         var1x.setCancelled();
-                        this.Mt.add(s32packetconfirmtransaction);
+                        this.heldPackets.add(s32packetconfirmtransaction);
                     }
                     break;
                 case net.minecraft.network.play.server.a a:
                     if (active) {
                         var1x.setCancelled();
-                        this.Mt.add(a);
+                        this.heldPackets.add(a);
                     }
                     break;
                 default:
@@ -115,60 +115,60 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (this.IQ == 0) {
+        if (this.stage == 0) {
             RotationComponent.d(false);
             RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 89.0F), 10.0, MovementFix.NORMAL);
             int i = this.findFireballSlot();
             if (i != -1 && i != aEg.thePlayer.inventory.currentItem) {
-                this.qI = aEg.thePlayer.inventory.currentItem;
+                this.previousSlot = aEg.thePlayer.inventory.currentItem;
                 if (aEg.thePlayer.cqL > 1) {
                     aEg.thePlayer.inventory.currentItem = i;
                 }
             }
         }
 
-        if (this.IQ == 1) {
-            if (!this.IP) {
+        if (this.stage == 1) {
+            if (!this.sentPlacement) {
                 PacketUtil.send(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getHeldItem()));
-                this.IP = true;
+                this.sentPlacement = true;
             }
-        } else if (this.IQ == 2 && this.qI != -1) {
-            aEg.thePlayer.inventory.currentItem = this.qI;
-            this.qI = -1;
+        } else if (this.stage == 2 && this.previousSlot != -1) {
+            aEg.thePlayer.inventory.currentItem = this.previousSlot;
+            this.previousSlot = -1;
         }
 
-        if (this.hV > 1) {
+        if (this.velocityTicks > 1) {
             this.toggle();
         } else {
-            if (this.IN) {
-                IO = true;
-                this.hV++;
+            if (this.receivedVelocity) {
+                boosting = true;
+                this.velocityTicks++;
             }
 
-            if (this.IQ < 3) {
-                this.IQ++;
+            if (this.stage < 3) {
+                this.stage++;
             }
 
-            if (this.IN) {
-                if (this.hV > 1) {
-                    IO = this.IN = false;
-                    this.hV = 0;
+            if (this.receivedVelocity) {
+                if (this.velocityTicks > 1) {
+                    boosting = this.receivedVelocity = false;
+                    this.velocityTicks = 0;
                     return;
                 }
 
-                IO = true;
-                this.hV++;
+                boosting = true;
+                this.velocityTicks++;
             }
         }
     };
     @EventLink(value = 2)
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (active && aEg.thePlayer.tR == 13) {
-            tt = true;
+            replaying = true;
             active = false;
-            this.Mt.forEach(PacketUtil::receive);
-            this.Mt.clear();
-            tt = false;
+            this.heldPackets.forEach(PacketUtil::receive);
+            this.heldPackets.clear();
+            replaying = false;
             this.tR = 0;
         }
 
@@ -182,7 +182,7 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
             this.jump = false;
         }
 
-        if (active || tt) {
+        if (active || replaying) {
             this.jump = false;
         }
 
@@ -197,33 +197,33 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
 
     @Override
     public void onDisable() {
-        this.Mt.clear();
-        tt = false;
+        this.heldPackets.clear();
+        replaying = false;
         active = false;
         if (aEg.thePlayer.onGround) {
             MoveUtil.stop();
         }
 
-        if (this.qI != -1) {
-            aEg.thePlayer.inventory.currentItem = this.qI;
+        if (this.previousSlot != -1) {
+            aEg.thePlayer.inventory.currentItem = this.previousSlot;
         }
 
-        this.hV = this.qI = -1;
-        this.IN = IO = this.IP = false;
-        this.IQ = 0;
+        this.velocityTicks = this.previousSlot = -1;
+        this.receivedVelocity = boosting = this.sentPlacement = false;
+        this.stage = 0;
     }
 
     @Override
     public void onEnable() {
-        this.Mt.clear();
-        tt = false;
+        this.heldPackets.clear();
+        replaying = false;
         active = false;
         if (this.findFireballSlot() == -1) {
             afi.b("Could not find Fireball");
             this.toggle();
         } else {
-            IO = true;
-            this.IQ = 0;
+            boosting = true;
+            this.stage = 0;
         }
     }
 

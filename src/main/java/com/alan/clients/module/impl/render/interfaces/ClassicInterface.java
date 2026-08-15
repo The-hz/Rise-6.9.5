@@ -88,7 +88,7 @@ public class ClassicInterface extends Mode<Interface> {
                             break label88;
                         }
 
-                        color1 = new Color(R(500 * i / 6));
+                        color1 = new Color(getRainbow(500 * i / 6));
                     }
 
                     if (this.arraylistBackground.wo()) {
@@ -114,8 +114,8 @@ public class ClassicInterface extends Mode<Interface> {
                 }
             }
 
-            int k = this.arrayListColorMode.wo().getName().equals("Rainbow") ? R(1000) : this.rz().rA().getRGB();
-            agc.b(this.nn(), 3.0, 3.0, k);
+            int k = this.arrayListColorMode.wo().getName().equals("Rainbow") ? getRainbow(1000) : this.rz().rA().getRGB();
+            agc.b(this.getWatermark(), 3.0, 3.0, k);
             if (this.showCoordinates.wo()) {
                 agc.b("X:§7 " + s, 3.0, d0 - aEg.fontRendererObj.height() * 2.0F, k);
                 agc.b("Y:§7 " + s1, 3.0, d0 - aEg.fontRendererObj.height(), k);
@@ -143,11 +143,11 @@ public class ClassicInterface extends Mode<Interface> {
         super(var1, var2);
     }
 
-    private static int R(int var0) {
+    private static int getRainbow(int var0) {
         return Color.getHSBColor((float)(Math.ceil((System.currentTimeMillis() + var0) / 10.0) % 360.0 / 360.0), 0.6F, 1.0F).getRGB();
     }
 
-    private String nn() {
+    private String getWatermark() {
         if (!this.customClientName.wo().isEmpty()) {
             Date date = new Date();
             String s = new SimpleDateFormat("h:mm a").format(date);

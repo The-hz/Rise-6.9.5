@@ -107,7 +107,7 @@ public final class ProtocolFixComponent extends Component {
     public final Listener<PacketSendEvent> onPacketSend = var1 -> {
         String s = a.aKB().bX();
         if (Breaker.targetBlock == null && !this.e(KillAura.class).isEnabled()) {
-            KillAura.nS = false;
+            KillAura.inReach = false;
         }
 
         if (ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_8)) {
@@ -133,7 +133,7 @@ public final class ProtocolFixComponent extends Component {
             if (var1.dq() instanceof C0EPacketClickWindow c0epacketclickwindow
                 && c0epacketclickwindow.getMode() < 5
                 && ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_18_2)
-                && (!this.e(Disabler.class).gC() || aEg.currentScreen instanceof GuiChest || aEg.currentScreen instanceof GuiInventory)) {
+                && (!this.e(Disabler.class).isGrimInventoryMove() || aEg.currentScreen instanceof GuiChest || aEg.currentScreen instanceof GuiInventory)) {
                 Class<Protocol1_19To1_18_2> oclass = Protocol1_19To1_18_2.class;
                 ProtocolVersion protocolversion = ViaLoadingBase.getInstance().getTargetVersion();
                 PacketWrapperImpl packetwrapperimpl = (PacketWrapperImpl)PacketWrapper.create(ServerboundPackets1_19.CONTAINER_CLICK, userconnection);

@@ -10,9 +10,9 @@ import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class MatrixNoFall extends Mode<NoFall> {
-    private int aiL = 0;
-    private boolean aiM = false;
-    private boolean aiN = false;
+    private int fallStage = 0;
+    private boolean fallTriggered = false;
+    private boolean pendingGroundSpoof = false;
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (Math.round(aEg.thePlayer.fallDistance) - aEg.thePlayer.motionY > 3.0) {
@@ -20,25 +20,25 @@ public class MatrixNoFall extends Mode<NoFall> {
             aEg.thePlayer.fallDistance = 0.0F;
             aEg.thePlayer.motionX *= 0.1;
             aEg.thePlayer.motionZ *= 0.1;
-            this.aiN = true;
+            this.pendingGroundSpoof = true;
         }
 
-        if (aEg.thePlayer.fallDistance / 3.0F > this.aiL) {
-            this.aiL = Math.round(aEg.thePlayer.fallDistance) / 3;
-            this.aiM = true;
+        if (aEg.thePlayer.fallDistance / 3.0F > this.fallStage) {
+            this.fallStage = Math.round(aEg.thePlayer.fallDistance) / 3;
+            this.fallTriggered = true;
         }
 
         if (aEg.thePlayer.onGround) {
-            this.aiL = 0;
+            this.fallStage = 0;
         }
     };
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1x -> {
-        if (var1x.dq() instanceof C03PacketPlayer c03packetplayer && this.aiN) {
+        if (var1x.dq() instanceof C03PacketPlayer c03packetplayer && this.pendingGroundSpoof) {
             aEg.timer.dzD = 0.5F;
             c03packetplayer.aO = false;
             PacketUtil.sendNoEvent(new C03PacketPlayer(true));
-            this.aiN = false;
+            this.pendingGroundSpoof = false;
         }
     };
 
@@ -48,8 +48,8 @@ public class MatrixNoFall extends Mode<NoFall> {
 
     @Override
     public void onEnable() {
-        this.aiN = false;
-        this.aiM = false;
-        this.aiL = 0;
+        this.pendingGroundSpoof = false;
+        this.fallTriggered = false;
+        this.fallStage = 0;
     }
 }

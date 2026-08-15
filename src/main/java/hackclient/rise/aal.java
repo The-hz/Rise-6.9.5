@@ -17,10 +17,10 @@ import lombok.Generated;
 import sun.misc.Unsafe;
 
 public final class aal {
-    private List<String> awS;
-    private ProtectionCheck[] awT;
-    private Thread awU;
-    private boolean Mc;
+    private List<String> inputArguments;
+    private ProtectionCheck[] checks;
+    private Thread checkThread;
+    private boolean initialized;
 
     public aal() {
     }
@@ -32,41 +32,41 @@ public final class aal {
         }
 
         try {
-            this.awS = ManagementFactory.getRuntimeMXBean().getInputArguments();
-            this.awT = new ProtectionCheck[]{new ProtectionThreadCheck(), new McqBGGeaWB(), new ProxyClearCheck()};
-            this.a(McqBFVadWB.INITIALIZE);
-            if (this.awT.length == 0) {
+            this.inputArguments = ManagementFactory.getRuntimeMXBean().getInputArguments();
+            this.checks = new ProtectionCheck[]{new ProtectionThreadCheck(), new McqBGGeaWB(), new ProxyClearCheck()};
+            this.runChecks(McqBFVadWB.INITIALIZE);
+            if (this.checks.length == 0) {
                 Client.a.a((ModuleManager)null);
             }
 
-            this.awU = new Thread(() -> {
+            this.checkThread = new Thread(() -> {
                 while (true) {
                     try {
-                        this.a(McqBFVadWB.REPETITIVE);
+                        this.runChecks(McqBFVadWB.REPETITIVE);
                         Thread.sleep(1000L);
                     } catch (Throwable throwable1) {
                         this.oc();
                     }
                 }
             });
-            this.awU.start();
-            if (this.Mc) {
+            this.checkThread.start();
+            if (this.initialized) {
                 this.oc();
             } else {
-                this.Mc = true;
+                this.initialized = true;
             }
 
-            this.a(McqBFVadWB.POST_INITIALIZE);
+            this.runChecks(McqBFVadWB.POST_INITIALIZE);
         } catch (Throwable throwable) {
             this.oc();
         }
     }
 
-    public void a(McqBFVadWB mcqBFVadWB) {
+    public void runChecks(McqBFVadWB mcqBFVadWB) {
         try {
-            for (ProtectionCheck protectionCheck : this.awT) {
+            for (ProtectionCheck protectionCheck : this.checks) {
                 if (protectionCheck.getTrigger() == mcqBFVadWB && protectionCheck.check()) {
-                    this.ob();
+                    this.hang();
                 }
             }
         } catch (Throwable throwable) {
@@ -74,7 +74,7 @@ public final class aal {
         }
     }
 
-    public void ob() {
+    public void hang() {
         long i = System.currentTimeMillis();
         int j = 0;
 
@@ -90,7 +90,7 @@ public final class aal {
     }
 
     public void oc() {
-        if (!this.od()) {
+        if (!this.isTampered()) {
             this.oe();
         }
 
@@ -108,12 +108,12 @@ public final class aal {
                 }
             } catch (Throwable throwable) {
                 this.oc();
-                this.ob();
+                this.hang();
             }
         }
     }
 
-    private boolean od() {
+    private boolean isTampered() {
         try {
             try {
                 this.getClass().getDeclaredMethod("crash");
@@ -165,26 +165,26 @@ public final class aal {
         } catch (Throwable throwable) {
         }
 
-        this.ob();
+        this.hang();
     }
 
     @Generated
-    public List<String> of() {
-        return this.awS;
+    public List<String> getInputArguments() {
+        return this.inputArguments;
     }
 
     @Generated
-    public ProtectionCheck[] og() {
-        return this.awT;
+    public ProtectionCheck[] getChecks() {
+        return this.checks;
     }
 
     @Generated
     public Thread oh() {
-        return this.awU;
+        return this.checkThread;
     }
 
     @Generated
     public boolean oi() {
-        return this.Mc;
+        return this.initialized;
     }
 }

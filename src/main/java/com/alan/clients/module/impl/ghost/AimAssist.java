@@ -46,10 +46,10 @@ public final class AimAssist extends Module {
     EntityLivingBase target;
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
-        double d0 = this.n(4.0);
+        double d0 = this.getRange(4.0);
         Vector2f vector2f = new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
-        if (this.d(vector2f)) {
-            this.e(vector2f);
+        if (this.isAimingAtBlock(vector2f)) {
+            this.applyPlayerRotations(vector2f);
         } else {
             List list = TargetComponent.a(d0, this.player.wo(), this.invisibles.wo(), this.animals.wo(), this.mobs.wo(), this.playerTeammates.wo());
             if (list.isEmpty()) {
@@ -57,11 +57,11 @@ public final class AimAssist extends Module {
             } else {
                 this.target = (EntityLivingBase)list.get(0);
                 if (this.target != null) {
-                    boolean flag = this.gO();
-                    Vector2f vector2f1 = this.gN();
-                    Vector2f vector2f2 = this.b(this.target, d0, flag);
+                    boolean flag = this.isPiercingEnabled();
+                    Vector2f vector2f1 = this.getCurrentRotations();
+                    Vector2f vector2f2 = this.getTargetRotations(this.target, d0, flag);
                     float f = Math.abs(MathHelper.wrapAngleTo180_float(RotationUtil.y(this.target).getX() - vector2f.getX()));
-                    if (flag || RotationUtil.a(vector2f2, this.target, d0, false, this.isBlatant() ? this.gr() : 0.0F)) {
+                    if (flag || RotationUtil.a(vector2f2, this.target, d0, false, this.isBlatant() ? this.getExpand() : 0.0F)) {
                         if (!(f > this.fOV.wo().intValue())) {
                             if (this.limitItems.wo()) {
                                 SlotComponent slotcomponent = this.d(SlotComponent.class);
@@ -75,9 +75,9 @@ public final class AimAssist extends Module {
                                 }
                             }
 
-                            double d1 = this.i(f);
-                            if (this.s(flag)) {
-                                Vector2f vector2f3 = this.a(vector2f1, vector2f2, flag);
+                            double d1 = this.getRotationSpeed(f);
+                            if (this.shouldAim(flag)) {
+                                Vector2f vector2f3 = this.mergeRotations(vector2f1, vector2f2, flag);
                                 RotationComponent.d(false);
                                 RotationComponent.a(vector2f3, d1 / 36.0, MovementFix.NORMAL, null, this.silent.wo(), !this.silent.wo());
                             }
@@ -91,7 +91,7 @@ public final class AimAssist extends Module {
     public AimAssist() {
     }
 
-    private boolean d(Vector2f vec2) {
+    private boolean isAimingAtBlock(Vector2f vec2) {
         if (!aEg.bgA || aEg.currentScreen != null) {
             return false;
         }
@@ -104,13 +104,13 @@ public final class AimAssist extends Module {
         return movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.BLOCK;
     }
 
-    private void e(Vector2f vec2) {
+    private void applyPlayerRotations(Vector2f vec2) {
         this.target = null;
         RotationComponent.d(false);
         RotationComponent.a(vec2, 10.0, MovementFix.NORMAL, null, true, false);
     }
 
-    private boolean s(boolean var1) {
+    private boolean shouldAim(boolean var1) {
         if (this.requireMouseMovement.wo() && aEg.bgr.dyD == 0 && aEg.bgr.dyE == 0) {
             return false;
         }
@@ -127,27 +127,27 @@ public final class AimAssist extends Module {
         return movingobjectposition == null || movingobjectposition.typeOfHit != MovingObjectType.ENTITY;
     }
 
-    private Vector2f gN() {
+    private Vector2f getCurrentRotations() {
         return this.silent.wo() ? RotationComponent.bH() : new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
     }
 
-    private double i(float var1) {
+    private double getRotationSpeed(float var1) {
         double d0 = this.speed.wo().doubleValue() * (this.sticky.wo() ? 10 : 1);
         double d1 = Math.min(1.0, var1 / 45.0);
         return Math.max(0.05, d0 * (0.35 + d1 * 0.65));
     }
 
-    private Vector2f a(Vector2f vec2, Vector2f var2, boolean var3) {
+    private Vector2f mergeRotations(Vector2f vec2, Vector2f var2, boolean var3) {
         return new Vector2f(var2.getX(), !this.isBlatant() && !var3 ? vec2.getY() : var2.getY());
     }
 
-    private Vector2f b(EntityLivingBase living, double var2, boolean var4) {
+    private Vector2f getTargetRotations(EntityLivingBase living, double var2, boolean var4) {
         if (!this.isBlatant() && !var4) {
             return RotationUtil.y(living);
         }
 
         AxisAlignedBB axisalignedbb = living.getEntityBoundingBox();
-        float f = this.gr();
+        float f = this.getExpand();
         if (axisalignedbb != null && !axisalignedbb.hasNaN()) {
             if (f > 0.0F) {
                 axisalignedbb = axisalignedbb.expand(f, f, f);
@@ -158,7 +158,7 @@ public final class AimAssist extends Module {
         return RotationUtil.y(living);
     }
 
-    private double n(double var1) {
+    private double getRange(double var1) {
         Piercing piercing = this.e(Piercing.class);
         if (piercing != null && piercing.isEnabled()) {
             return Math.max(var1, piercing.getReachRange());
@@ -168,7 +168,7 @@ public final class AimAssist extends Module {
         return reach != null && reach.isEnabled() ? Math.max(var1, reach.range.wA().doubleValue()) : var1;
     }
 
-    private float gr() {
+    private float getExpand() {
         Piercing piercing = this.e(Piercing.class);
         if (piercing != null && piercing.isEnabled()) {
             return piercing.getHitBoxExpand();
@@ -178,7 +178,7 @@ public final class AimAssist extends Module {
         return hitbox != null && hitbox.isEnabled() ? hitbox.expand.wo().floatValue() : 0.0F;
     }
 
-    private boolean gO() {
+    private boolean isPiercingEnabled() {
         Piercing piercing = this.e(Piercing.class);
         return piercing != null && piercing.isEnabled();
     }

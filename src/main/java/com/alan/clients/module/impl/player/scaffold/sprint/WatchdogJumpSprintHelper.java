@@ -14,11 +14,11 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 
 public final class WatchdogJumpSprintHelper implements InstanceAccess {
     private Scaffold scaffold;
-    private static final double ajS = 0.001;
-    private boolean ajT;
+    private static final double Y_OFFSET = 0.001;
+    private boolean active;
     @EventLink(value = 3)
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (!this.kC()) {
+        if (!this.shouldRun()) {
             this.unregister();
         } else {
             if (!var1x.isOnGround() && !aEg.thePlayer.onGround) {
@@ -35,7 +35,7 @@ public final class WatchdogJumpSprintHelper implements InstanceAccess {
                     }
                 }
 
-                this.ajT = true;
+                this.active = true;
             }
 
             if (this.e(Scaffold.class).isEnabled() && aEg.gameSettings.keyBindSneak.isPressed() && aEg.thePlayer.ticksExisted % 3 == 1) {
@@ -62,11 +62,11 @@ public final class WatchdogJumpSprintHelper implements InstanceAccess {
 
     private void unregister() {
         Client.a.e().c(this);
-        this.ajT = false;
+        this.active = false;
     }
 
-    private boolean kC() {
-        return this.scaffold.isEnabled() || this.ajT;
+    private boolean shouldRun() {
+        return this.scaffold.isEnabled() || this.active;
     }
 
     public void onEnable() {

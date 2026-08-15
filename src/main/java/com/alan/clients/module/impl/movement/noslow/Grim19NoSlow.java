@@ -23,7 +23,7 @@ import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemSword;
 
 public class Grim19NoSlow extends Mode<NoSlow> {
-    int MM;
+    int useTicks;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (aEg.thePlayer.isUsingItem() && ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_9)) {
@@ -39,11 +39,11 @@ public class Grim19NoSlow extends Mode<NoSlow> {
                 packetwrapper1.sendToServer(Protocol1_9To1_8.class);
             }
 
-            this.MM++;
+            this.useTicks++;
         } else if (aEg.thePlayer.isUsingItem() && aEg.thePlayer.ticksExisted % 5 == 0) {
             afi.b("use 1.9+ for this bypass");
         } else {
-            this.MM = 0;
+            this.useTicks = 0;
         }
     };
     @EventLink

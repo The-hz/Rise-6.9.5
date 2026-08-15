@@ -4,13 +4,13 @@ import java.util.List;
 import net.minecraft.util.BlockPos;
 
 public final class BreakCandidate {
-    private final BlockPos acm;
-    public final List<BlockPos> acn;
-    public final double aco;
+    private final BlockPos targetPos;
+    public final List<BlockPos> blocksToBreak;
+    public final double breakTime;
 
     public BreakCandidate(BlockPos pos, List<BlockPos> poses, double var3) {
-        this.acm = pos;
-        this.acn = poses;
-        this.aco = var3;
+        this.targetPos = pos;
+        this.blocksToBreak = poses;
+        this.breakTime = var3;
     }
 }

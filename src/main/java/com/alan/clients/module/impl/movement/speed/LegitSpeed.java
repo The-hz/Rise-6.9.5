@@ -34,7 +34,7 @@ public class LegitSpeed extends Mode<Speed> {
                 String s = this.rotationExploit.wo().getName();
                 switch (s) {
                     case "Rotate (Fully Legit)":
-                        if ((!KillAura.mB || !this.e(KillAura.class).isEnabled())
+                        if ((!KillAura.attacking || !this.e(KillAura.class).isEnabled())
                             && !aEg.thePlayer.onGround
                             && !aEg.gameSettings.keyBindRight.isKeyDown()
                             && !aEg.gameSettings.keyBindLeft.isKeyDown()

@@ -37,57 +37,57 @@ import net.minecraft.util.MathHelper;
 import rip.vantage.commons.util.time.a;
 
 public class WatchdogFlight extends Mode<Flight> {
-    private int qI = -1;
-    private int hV = -1;
-    private boolean IN;
-    public static boolean IO;
-    private boolean IP;
-    private int IQ;
-    private boolean IR;
+    private int previousSlot = -1;
+    private int boostTicks = -1;
+    private boolean velocityReceived;
+    public static boolean active;
+    private boolean placedFireball;
+    private int stage;
+    private boolean waitingForVelocity;
     private AntiFireBall antiFireBall;
     private final ArrayList<Packet<?>> packets = new ArrayList<>();
-    a bN = new a();
-    private boolean dj;
-    private boolean tt;
-    private boolean vq;
-    int IU = -1;
+    a stopwatch = new a();
+    private boolean pendingVelocity;
+    private boolean replayingPackets;
+    private boolean boosting;
+    int startSlot = -1;
     double speed = 0.0;
-    double IW = -1.0;
-    private int dE;
+    double savedMotionY = -1.0;
+    private int hurtTicks;
     @EventLink(value = 1)
     public final Listener<PacketReceiveEvent> receive = var1x -> {
-        if (!this.tt) {
+        if (!this.replayingPackets) {
             if (aEg.thePlayer != null && aEg.theWorld != null) {
                 if (var1x.getPacket() instanceof S12PacketEntityVelocity) {
                     if (((S12PacketEntityVelocity)var1x.getPacket()).getEntityID() != aEg.thePlayer.getEntityId()) {
                         return;
                     }
 
-                    if (this.IR) {
-                        this.hV = 0;
-                        this.IN = true;
-                        this.IR = false;
-                        IO = true;
+                    if (this.waitingForVelocity) {
+                        this.boostTicks = 0;
+                        this.velocityReceived = true;
+                        this.waitingForVelocity = false;
+                        active = true;
                     }
                 }
 
                 switch (var1x.getPacket()) {
                     case S12PacketEntityVelocity s12packetentityvelocity:
-                        if (!var1x.isCancelled() && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && !this.vq) {
-                            this.IW = aEg.thePlayer.motionY;
+                        if (!var1x.isCancelled() && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId() && !this.boosting) {
+                            this.savedMotionY = aEg.thePlayer.motionY;
                             Vector2d vector2d = new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
                             aEg.thePlayer.motionX = vector2d.getX();
                             aEg.thePlayer.motionZ = vector2d.getY();
-                            aEg.thePlayer.motionY = this.IW;
+                            aEg.thePlayer.motionY = this.savedMotionY;
                             var1x.setCancelled();
-                            this.dj = true;
+                            this.pendingVelocity = true;
                             this.packets.add(s12packetentityvelocity);
                         } else if (!var1x.isCancelled() && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()) {
                             var1x.setCancelled();
                         }
                         break;
                     case S32PacketConfirmTransaction s32packetconfirmtransaction:
-                        if (this.dj) {
+                        if (this.pendingVelocity) {
                             this.packets.add(s32packetconfirmtransaction);
                             var1x.setCancelled();
                         }
@@ -102,7 +102,7 @@ public class WatchdogFlight extends Mode<Flight> {
         if (var1x.dq() instanceof C08PacketPlayerBlockPlacement
             && ((C08PacketPlayerBlockPlacement)var1x.dq()).getStack() != null
             && ((C08PacketPlayerBlockPlacement)var1x.dq()).getStack().getItem() instanceof ItemFireball) {
-            this.IR = true;
+            this.waitingForVelocity = true;
         }
     };
     @EventLink
@@ -148,7 +148,7 @@ public class WatchdogFlight extends Mode<Flight> {
     };
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (!this.dj && aEg.thePlayer.tR < 7) {
+        if (!this.pendingVelocity && aEg.thePlayer.tR < 7) {
             aEg.thePlayer.crd = true;
         }
 
@@ -156,7 +156,7 @@ public class WatchdogFlight extends Mode<Flight> {
             aEg.gameSettings.keyBindJump.setPressed(false);
         }
 
-        if (this.e(LongJump.class).autoDisable.wo() && !PacketlessDamageComponent.bd() && aEg.thePlayer.onGround && this.dE >= 999) {
+        if (this.e(LongJump.class).autoDisable.wo() && !PacketlessDamageComponent.bd() && aEg.thePlayer.onGround && this.hurtTicks >= 999) {
             ;
         }
 
@@ -167,25 +167,25 @@ public class WatchdogFlight extends Mode<Flight> {
         if ((aEg.thePlayer.ae != 0 || !aEg.thePlayer.isPotionActive(Potion.moveSpeed)) && aEg.thePlayer.ae == 0) {
         }
 
-        if (aEg.thePlayer.ae > 4 && aEg.thePlayer.ae < 20 && this.vq && aEg.gameSettings.keyBindJump.isKeyDown() && !this.e(KillAura.class).isEnabled()) {
+        if (aEg.thePlayer.ae > 4 && aEg.thePlayer.ae < 20 && this.boosting && aEg.gameSettings.keyBindJump.isKeyDown() && !this.e(KillAura.class).isEnabled()) {
             aEg.thePlayer.motionY = 0.35;
             MoveUtil.strafe();
-        } else if (aEg.thePlayer.ae > 0 && aEg.thePlayer.ae < 21 && this.vq) {
+        } else if (aEg.thePlayer.ae > 0 && aEg.thePlayer.ae < 21 && this.boosting) {
             aEg.thePlayer.motionY = 0.005;
             MoveUtil.strafe();
         } else {
             aEg.thePlayer.motionY += 0.028;
         }
 
-        if (aEg.thePlayer.onGround && this.vq) {
+        if (aEg.thePlayer.onGround && this.boosting) {
             this.e(Flight.class).toggle();
         }
 
-        if (aEg.thePlayer.onGround && this.dE >= 999) {
+        if (aEg.thePlayer.onGround && this.hurtTicks >= 999) {
             ;
         }
 
-        if (this.dE >= 999 && this.dj && aEg.thePlayer.tR == 0) {
+        if (this.hurtTicks >= 999 && this.pendingVelocity && aEg.thePlayer.tR == 0) {
             double d0 = (
                     MathHelper.wrapAngleTo180_double(
                             Math.toDegrees(MoveUtil.direction(aEg.thePlayer.pl, aEg.thePlayer.moveForward, aEg.thePlayer.moveStrafing))
@@ -203,7 +203,7 @@ public class WatchdogFlight extends Mode<Flight> {
             }
         }
 
-        if (this.dE >= 999 && this.dj) {
+        if (this.hurtTicks >= 999 && this.pendingVelocity) {
             MoveUtil.strafe(this.speed);
         }
 
@@ -213,51 +213,51 @@ public class WatchdogFlight extends Mode<Flight> {
 
         aEg.thePlayer.isPotionActive(Potion.moveSpeed);
         MoveUtil.speed();
-        if (this.IQ == 0) {
+        if (this.stage == 0) {
             RotationComponent.d(false);
             RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl - 180.0F, 89.0F), 10.0, MovementFix.OFF);
             int i = this.getFireballSlot();
             if (i != -1 && i != aEg.thePlayer.inventory.currentItem) {
-                this.qI = aEg.thePlayer.inventory.currentItem;
+                this.previousSlot = aEg.thePlayer.inventory.currentItem;
                 aEg.thePlayer.inventory.currentItem = i;
             }
         }
 
-        if (this.IQ == 1) {
-            if (!this.IP) {
+        if (this.stage == 1) {
+            if (!this.placedFireball) {
                 PacketUtil.send(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getHeldItem()));
-                this.IP = true;
+                this.placedFireball = true;
                 if (this.antiFireBall != null && this.antiFireBall.isEnabled()) {
-                    this.antiFireBall.aaW = 1500;
-                    this.antiFireBall.aaV.aX();
+                    this.antiFireBall.cooldownMs = 1500;
+                    this.antiFireBall.cooldownStopWatch.aX();
                 }
             }
-        } else if (this.IQ == 2 && this.qI != -1) {
-            aEg.thePlayer.inventory.currentItem = this.qI;
-            this.qI = -1;
+        } else if (this.stage == 2 && this.previousSlot != -1) {
+            aEg.thePlayer.inventory.currentItem = this.previousSlot;
+            this.previousSlot = -1;
         }
 
-        if (this.hV > 1) {
+        if (this.boostTicks > 1) {
             this.toggle();
         } else {
-            if (this.IN) {
-                IO = true;
-                this.hV++;
+            if (this.velocityReceived) {
+                active = true;
+                this.boostTicks++;
             }
 
-            if (this.IQ < 3) {
-                this.IQ++;
+            if (this.stage < 3) {
+                this.stage++;
             }
 
-            if (this.IN) {
-                if (this.hV > 1) {
-                    IO = this.IN = false;
-                    this.hV = 0;
+            if (this.velocityReceived) {
+                if (this.boostTicks > 1) {
+                    active = this.velocityReceived = false;
+                    this.boostTicks = 0;
                     return;
                 }
 
-                IO = true;
-                this.hV++;
+                active = true;
+                this.boostTicks++;
             }
 
             MoveUtil.useDiagonalSpeed();
@@ -266,14 +266,14 @@ public class WatchdogFlight extends Mode<Flight> {
     @EventLink(value = 4)
     public final Listener<PostStrafeEvent> onStrafe = var1x -> {
         if (aEg.thePlayer.hurtTime > 0) {
-            this.dE = 999;
+            this.hurtTicks = 999;
         }
 
-        if (this.dj && aEg.thePlayer.tR == 7) {
+        if (this.pendingVelocity && aEg.thePlayer.tR == 7) {
             aEg.thePlayer.ae = 0;
-            this.vq = true;
-            this.dj = false;
-            this.tt = true;
+            this.boosting = true;
+            this.pendingVelocity = false;
+            this.replayingPackets = true;
             new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             BlinkComponent.dispatch();
             MoveUtil.strafe();
@@ -281,7 +281,7 @@ public class WatchdogFlight extends Mode<Flight> {
             aEg.thePlayer.motionY = 0.005;
             MoveUtil.strafe(1.59F);
             this.packets.clear();
-            this.tt = false;
+            this.replayingPackets = false;
         }
     };
     @EventLink
@@ -299,24 +299,24 @@ public class WatchdogFlight extends Mode<Flight> {
         }
 
         this.antiFireBall = Client.a.g().c(AntiFireBall.class);
-        this.dE = 0;
+        this.hurtTicks = 0;
         if (this.getFireballSlot() == -1) {
             afi.b("Could not find Fireball");
             this.toggle();
         } else {
             aEg.thePlayer.motionX *= -1.0;
             aEg.thePlayer.motionZ *= -1.0;
-            IO = true;
-            this.IQ = 0;
-            this.dj = false;
-            this.tt = false;
-            this.IU = aEg.thePlayer.inventory.currentItem;
-            this.vq = false;
-            this.hV = 0;
+            active = true;
+            this.stage = 0;
+            this.pendingVelocity = false;
+            this.replayingPackets = false;
+            this.startSlot = aEg.thePlayer.inventory.currentItem;
+            this.boosting = false;
+            this.boostTicks = 0;
         }
     }
 
-    private int hq() {
+    private int getThrowableSlot() {
         for (int i = 0; i < 9; i++) {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
             if (itemstack != null && itemstack.getItem() == Items.bow) {
@@ -348,18 +348,18 @@ public class WatchdogFlight extends Mode<Flight> {
             MoveUtil.stop();
         }
 
-        if (this.IU != -1) {
-            aEg.thePlayer.inventory.currentItem = this.IU;
+        if (this.startSlot != -1) {
+            aEg.thePlayer.inventory.currentItem = this.startSlot;
         }
 
         this.packets.forEach(PacketUtil::receive);
         this.packets.clear();
-        if (this.qI != -1) {
-            aEg.thePlayer.inventory.currentItem = this.qI;
+        if (this.previousSlot != -1) {
+            aEg.thePlayer.inventory.currentItem = this.previousSlot;
         }
 
-        this.hV = this.qI = -1;
-        this.IN = IO = this.IP = false;
+        this.boostTicks = this.previousSlot = -1;
+        this.velocityReceived = active = this.placedFireball = false;
     }
 
     private int getFireballSlot() {
@@ -376,7 +376,7 @@ public class WatchdogFlight extends Mode<Flight> {
         return i;
     }
 
-    private void hs() {
+    private void strafeBoost() {
         MoveUtil.strafe(1.768F);
     }
 }

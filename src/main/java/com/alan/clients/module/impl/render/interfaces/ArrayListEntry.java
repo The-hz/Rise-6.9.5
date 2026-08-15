@@ -23,7 +23,7 @@ public final class ArrayListEntry {
     public String displayTag = "";
     public boolean hasTag;
 
-    public float nq() {
+    public float getTotalWidth() {
         return this.nameWidth + this.tagWidth;
     }
 
@@ -31,7 +31,7 @@ public final class ArrayListEntry {
         this.module = module;
     }
 
-    public boolean a(Interface var1) {
+    public boolean shouldShow(Interface var1) {
         if (this.getModule() instanceof ClickGUI) {
             return false;
         }

@@ -21,13 +21,13 @@ import rip.vantage.commons.util.time.a;
 
 public class WatchdogFireBall2LongJump extends Mode<LongJump> {
     public final BooleanValue boost = new BooleanValue("Boost", this, true);
-    private int qI = -1;
-    private int hV = -1;
-    private boolean IN;
-    public static boolean IO;
-    private boolean IP;
-    private int IQ;
-    private boolean IR;
+    private int previousSlot = -1;
+    private int velocityTicks = -1;
+    private boolean receivedVelocity;
+    public static boolean boosting;
+    private boolean sentPlacement;
+    private int stage;
+    private boolean sentFireball;
     private boolean Ms;
     a stopWatch = new a();
     @EventLink
@@ -35,7 +35,7 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
         if (var1x.dq() instanceof C08PacketPlayerBlockPlacement
             && ((C08PacketPlayerBlockPlacement)var1x.dq()).getStack() != null
             && ((C08PacketPlayerBlockPlacement)var1x.dq()).getStack().getItem() instanceof ItemFireball) {
-            this.IR = true;
+            this.sentFireball = true;
             if (aEg.thePlayer.onGround) {
                 aEg.thePlayer.jump();
             }
@@ -49,11 +49,11 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
                     return;
                 }
 
-                if (this.IR) {
-                    this.hV = 0;
-                    this.IN = true;
-                    this.IR = false;
-                    IO = true;
+                if (this.sentFireball) {
+                    this.velocityTicks = 0;
+                    this.receivedVelocity = true;
+                    this.sentFireball = false;
+                    boosting = true;
                 }
             }
         }
@@ -86,51 +86,51 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
                 MoveUtil.strafe();
             }
 
-            if (this.IQ == 0) {
+            if (this.stage == 0) {
                 var1x.setYaw(aEg.thePlayer.pl - 180.0F);
                 var1x.setPitch(89.0F);
                 int i = this.findFireballSlot();
                 if (i != -1 && i != aEg.thePlayer.inventory.currentItem) {
-                    this.qI = aEg.thePlayer.inventory.currentItem;
+                    this.previousSlot = aEg.thePlayer.inventory.currentItem;
                     if (aEg.thePlayer.cqL > 1) {
                         aEg.thePlayer.inventory.currentItem = i;
                     }
                 }
             }
 
-            if (this.IQ == 1) {
-                if (!this.IP) {
+            if (this.stage == 1) {
+                if (!this.sentPlacement) {
                     PacketUtil.send(new C08PacketPlayerBlockPlacement(aEg.thePlayer.getHeldItem()));
-                    this.IP = true;
+                    this.sentPlacement = true;
                 }
-            } else if (this.IQ == 2 && this.qI != -1) {
-                aEg.thePlayer.inventory.currentItem = this.qI;
-                this.qI = -1;
+            } else if (this.stage == 2 && this.previousSlot != -1) {
+                aEg.thePlayer.inventory.currentItem = this.previousSlot;
+                this.previousSlot = -1;
             }
 
-            if (this.hV > 1) {
+            if (this.velocityTicks > 1) {
                 this.toggle();
             } else {
-                if (this.IN) {
-                    IO = true;
-                    this.hs();
-                    this.hV++;
+                if (this.receivedVelocity) {
+                    boosting = true;
+                    this.boostStrafe();
+                    this.velocityTicks++;
                 }
 
-                if (this.IQ < 3) {
-                    this.IQ++;
+                if (this.stage < 3) {
+                    this.stage++;
                 }
 
-                if (this.IN) {
-                    if (this.hV > 1) {
-                        IO = this.IN = false;
-                        this.hV = 0;
+                if (this.receivedVelocity) {
+                    if (this.velocityTicks > 1) {
+                        boosting = this.receivedVelocity = false;
+                        this.velocityTicks = 0;
                         return;
                     }
 
-                    IO = true;
-                    this.hV++;
-                    this.hs();
+                    boosting = true;
+                    this.velocityTicks++;
+                    this.boostStrafe();
                 }
             }
         }
@@ -225,13 +225,13 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
             MoveUtil.stop();
         }
 
-        if (this.qI != -1) {
-            aEg.thePlayer.inventory.currentItem = this.qI;
+        if (this.previousSlot != -1) {
+            aEg.thePlayer.inventory.currentItem = this.previousSlot;
         }
 
-        this.hV = this.qI = -1;
-        this.IN = IO = this.IP = false;
-        this.IQ = 0;
+        this.velocityTicks = this.previousSlot = -1;
+        this.receivedVelocity = boosting = this.sentPlacement = false;
+        this.stage = 0;
     }
 
     @Override
@@ -240,12 +240,12 @@ public class WatchdogFireBall2LongJump extends Mode<LongJump> {
             afi.b("Could not find Fireball");
             this.toggle();
         } else {
-            IO = true;
-            this.IQ = 0;
+            boosting = true;
+            this.stage = 0;
         }
     }
 
-    private void hs() {
+    private void boostStrafe() {
         MoveUtil.strafe(1.768F);
     }
 

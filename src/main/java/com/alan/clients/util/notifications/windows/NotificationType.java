@@ -18,7 +18,7 @@ public enum NotificationType {
     }
 
     @Generated
-    public MessageType uI() {
+    public MessageType getMessageType() {
         return this.aNm;
     }
 

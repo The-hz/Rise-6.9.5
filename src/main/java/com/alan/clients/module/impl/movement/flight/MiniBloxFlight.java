@@ -32,8 +32,8 @@ public class MiniBloxFlight extends Mode<Flight> {
     private final NumberValue speed = new NumberValue("Speed", this, 5, 5, 9.5, 0.1);
     private aka Ft;
     private Vector2f ka;
-    private static final int Fu = 50;
-    private boolean zd;
+    private static final int SEARCH_RADIUS = 50;
+    private boolean clipped;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         double d0 = Math.toRadians(aEg.thePlayer.pl);
@@ -48,13 +48,13 @@ public class MiniBloxFlight extends Mode<Flight> {
         }
 
         if (aEg.thePlayer.ticksExisted % 20 == 0) {
-            BlockPos blockpos = this.s(50);
+            BlockPos blockpos = this.findNearestSolidBlock(50);
             if (blockpos != null) {
                 aEg.thePlayer.setPosition(blockpos.getX() + 0.5, blockpos.getY(), blockpos.getZ() + 0.5);
-                this.zd = true;
+                this.clipped = true;
             }
-        } else if (this.zd) {
-            this.zd = false;
+        } else if (this.clipped) {
+            this.clipped = false;
         }
 
         float f = this.speed.wo().floatValue();
@@ -94,7 +94,7 @@ public class MiniBloxFlight extends Mode<Flight> {
     @Override
     public void onDisable() {
         MoveUtil.stop();
-        BlockPos blockpos = this.s(50);
+        BlockPos blockpos = this.findNearestSolidBlock(50);
         if (blockpos != null) {
             aEg.thePlayer.setPosition(blockpos.getX() + 0.51, blockpos.getY(), blockpos.getZ() + 0.51);
         }
@@ -108,7 +108,7 @@ public class MiniBloxFlight extends Mode<Flight> {
     @Override
     public void onEnable() {
         afi.b("try to clip through a block on disable");
-        BlockPos blockpos = this.s(50);
+        BlockPos blockpos = this.findNearestSolidBlock(50);
         if (blockpos != null) {
             aEg.thePlayer.setPosition(blockpos.getX() + 0.51, blockpos.getY(), blockpos.getZ() + 0.51);
         }
@@ -116,7 +116,7 @@ public class MiniBloxFlight extends Mode<Flight> {
         aEg.timer.dzD = 0.2F;
     }
 
-    private BlockPos s(int var1) {
+    private BlockPos findNearestSolidBlock(int var1) {
         double d0 = aEg.thePlayer.posX;
         double d1 = aEg.thePlayer.posY;
         double d2 = aEg.thePlayer.posZ;

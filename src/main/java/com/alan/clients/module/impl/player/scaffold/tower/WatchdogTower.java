@@ -33,22 +33,22 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.MathHelper;
 
 public class WatchdogTower extends Mode<Scaffold> {
-    public static int qH;
+    public static int moveTicks;
     int dm;
-    public static int hV;
-    private boolean akl;
-    private boolean HJ;
-    private int akm = 0;
+    public static int jumpStage;
+    private boolean placingUp;
+    private boolean pendingToggle;
+    private int upwardPlacements = 0;
     private int akn = 0;
-    float ako;
-    boolean akp = true;
-    boolean akq = false;
-    private int rW;
-    public static float akr;
+    float savedYaw;
+    boolean startedInAir = true;
+    boolean aligning = false;
+    private int alignStep;
+    public static float towerYaw;
     double targetZ = Double.NaN;
     double targetX = Double.NaN;
-    private int aku;
-    private boolean gD = false;
+    private int lastPlaceY;
+    private boolean jumpKeyHeld = false;
     @EventLink
     public final Listener<JumpEvent> onJump = var0 -> {};
     @EventLink(value = 1)
@@ -63,35 +63,35 @@ public class WatchdogTower extends Mode<Scaffold> {
 
         if (aEg.thePlayer.ticksExisted % 3 != 0 || !aEg.thePlayer.onGround || aEg.thePlayer.cqL <= 2) {
             if (!aEg.gameSettings.keyBindJump.isKeyDown() && MoveUtil.isMoving()) {
-                akr = aEg.thePlayer.pl;
-                hV = 0;
-                qH = 0;
+                towerYaw = aEg.thePlayer.pl;
+                jumpStage = 0;
+                moveTicks = 0;
             } else if (!aEg.gameSettings.keyBindJump.isKeyDown()) {
-                hV = 100;
+                jumpStage = 100;
                 return;
             }
 
             if (MoveUtil.isMoving()) {
-                qH++;
-            } else if (qH > 20) {
-                qH--;
+                moveTicks++;
+            } else if (moveTicks > 20) {
+                moveTicks--;
             }
 
             if (aEg.gameSettings.keyBindJump.isKeyDown()) {
-                hV++;
+                jumpStage++;
             }
 
-            if (qH >= 23) {
-                qH = 1;
-                akr = aEg.thePlayer.pl;
-                hV = 99;
+            if (moveTicks >= 23) {
+                moveTicks = 1;
+                towerYaw = aEg.thePlayer.pl;
+                jumpStage = 99;
             }
 
             if (aEg.thePlayer.onGround) {
-                hV = 0;
-                this.rW = 0;
-                akr = aEg.thePlayer.pl;
-            } else if (hV == 100) {
+                jumpStage = 0;
+                this.alignStep = 0;
+                towerYaw = aEg.thePlayer.pl;
+            } else if (jumpStage == 100) {
                 MoveUtil.strafe(0.0);
             }
 
@@ -100,8 +100,8 @@ public class WatchdogTower extends Mode<Scaffold> {
                 double d2 = Math.toRadians(d1);
                 d27 = -Math.sin(d2);
                 boolean flag2 = Math.cos(d2) * 1.0 < 0.0;
-                this.getParent().agF = 1;
-                if (!this.akq) {
+                this.getParent().extraPlacements = 1;
+                if (!this.aligning) {
                     if (flag2) {
                         this.targetX = Math.floor(aEg.thePlayer.posX) + 0.999999999999;
                         this.targetZ = Double.NaN;
@@ -110,69 +110,69 @@ public class WatchdogTower extends Mode<Scaffold> {
                         this.targetX = Double.NaN;
                     }
 
-                    this.akq = true;
+                    this.aligning = true;
                 }
 
-                this.rW++;
-                if (Math.abs(this.aku - aEg.thePlayer.posY) >= 1.0) {
-                    if (this.rW == 1) {
+                this.alignStep++;
+                if (Math.abs(this.lastPlaceY - aEg.thePlayer.posY) >= 1.0) {
+                    if (this.alignStep == 1) {
                         MoveUtil.stop();
-                        if (!this.kE()) {
+                        if (!this.isEnclosed()) {
                             if (!Double.isNaN(this.targetX)) {
                                 double d3 = aEg.thePlayer.posX + (this.targetX - aEg.thePlayer.posX) / 3.0;
                                 double d4 = aEg.thePlayer.posY;
                                 double d5 = aEg.thePlayer.posZ;
-                                if (this.e(d3, d4, d5)) {
+                                if (this.canFitAt(d3, d4, d5)) {
                                     aEg.thePlayer.setPosition(d3, d4, d5);
                                 }
                             } else if (!Double.isNaN(this.targetZ)) {
                                 double d6 = aEg.thePlayer.posX;
                                 double d7 = aEg.thePlayer.posY;
                                 double d8 = aEg.thePlayer.posZ + (this.targetZ - aEg.thePlayer.posZ) / 3.0;
-                                if (this.e(d6, d7, d8)) {
+                                if (this.canFitAt(d6, d7, d8)) {
                                     aEg.thePlayer.setPosition(d6, d7, d8);
                                 }
                             }
                         }
-                    } else if (this.rW == 2) {
+                    } else if (this.alignStep == 2) {
                         MoveUtil.stop();
-                        if (!this.kE()) {
+                        if (!this.isEnclosed()) {
                             if (!Double.isNaN(this.targetX)) {
                                 double d9 = aEg.thePlayer.posX + 2.0 * (this.targetX - aEg.thePlayer.posX) / 3.0;
                                 double d10 = aEg.thePlayer.posY;
                                 double d11 = aEg.thePlayer.posZ;
-                                if (this.e(d9, d10, d11)) {
+                                if (this.canFitAt(d9, d10, d11)) {
                                     aEg.thePlayer.setPosition(d9, d10, d11);
                                 }
                             } else if (!Double.isNaN(this.targetZ)) {
                                 double d12 = aEg.thePlayer.posX;
                                 double d13 = aEg.thePlayer.posY;
                                 double d14 = aEg.thePlayer.posZ + 2.0 * (this.targetZ - aEg.thePlayer.posZ) / 3.0;
-                                if (this.e(d12, d13, d14)) {
+                                if (this.canFitAt(d12, d13, d14)) {
                                     aEg.thePlayer.setPosition(d12, d13, d14);
                                 }
                             }
 
-                            this.kD();
+                            this.updateRotation();
                         } else {
-                            this.kD();
+                            this.updateRotation();
                         }
-                    } else if (this.rW == 3) {
+                    } else if (this.alignStep == 3) {
                         MoveUtil.stop();
-                        if (!this.kE()) {
+                        if (!this.isEnclosed()) {
                             if (!Double.isNaN(this.targetX)) {
                                 double d15 = this.targetX;
                                 double d16 = aEg.thePlayer.posY;
                                 double d17 = aEg.thePlayer.posZ;
-                                if (this.e(d15, d16, d17)) {
+                                if (this.canFitAt(d15, d16, d17)) {
                                     aEg.thePlayer.setPosition(d15, d16, d17);
-                                    this.kD();
+                                    this.updateRotation();
                                 }
                             } else if (!Double.isNaN(this.targetZ)) {
                                 double d21 = aEg.thePlayer.posX;
                                 double d22 = aEg.thePlayer.posY;
                                 double d23 = this.targetZ;
-                                if (this.e(d21, d22, d23)) {
+                                if (this.canFitAt(d21, d22, d23)) {
                                     aEg.thePlayer.setPosition(d21, d22, d23);
                                 }
                             }
@@ -180,72 +180,72 @@ public class WatchdogTower extends Mode<Scaffold> {
                             double d18 = aEg.thePlayer.posX;
                             double d19 = aEg.thePlayer.posY;
                             double d20 = this.targetZ;
-                            this.e(d18, d19, d20);
-                            this.kD();
-                            this.rW = 0;
-                            this.akq = false;
+                            this.canFitAt(d18, d19, d20);
+                            this.updateRotation();
+                            this.alignStep = 0;
+                            this.aligning = false;
                         } else {
-                            this.kD();
+                            this.updateRotation();
                         }
                     }
                 } else {
-                    this.kD();
-                    this.rW = 0;
-                    this.akq = false;
+                    this.updateRotation();
+                    this.alignStep = 0;
+                    this.aligning = false;
                 }
             } else {
-                this.akq = false;
+                this.aligning = false;
             }
 
-            if (this.HJ && !MoveUtil.isMoving()) {
+            if (this.pendingToggle && !MoveUtil.isMoving()) {
                 aEg.gameSettings.keyBindJump.setPressed(true);
             }
 
             if (aEg.thePlayer.Zl < 1) {
-                this.akq = false;
+                this.aligning = false;
             }
 
             if (aEg.gameSettings.keyBindJump.isKeyDown()) {
-                this.gD = true;
+                this.jumpKeyHeld = true;
             }
 
-            qH = 0;
-            if (aEg.thePlayer.motionY < 0.3 && this.HJ && aEg.thePlayer.motionY > 0.17) {
+            moveTicks = 0;
+            if (aEg.thePlayer.motionY < 0.3 && this.pendingToggle && aEg.thePlayer.motionY > 0.17) {
                 this.getParent().toggle();
                 if (aEg.thePlayer.onGround) {
                     aEg.thePlayer.jump();
                 }
 
-                this.HJ = false;
+                this.pendingToggle = false;
             }
 
-            if (this.gD && !aEg.gameSettings.keyBindJump.isKeyDown()) {
-                if (aEg.thePlayer.motionY < 0.3 && this.HJ) {
+            if (this.jumpKeyHeld && !aEg.gameSettings.keyBindJump.isKeyDown()) {
+                if (aEg.thePlayer.motionY < 0.3 && this.pendingToggle) {
                     double d24;
                     int i = (d24 = aEg.thePlayer.motionY - 0.17) == 0.0 ? 0 : (d24 < 0.0 ? -1 : 1);
                 }
 
-                this.gD = false;
+                this.jumpKeyHeld = false;
             }
 
             if (!aEg.gameSettings.keyBindJump.isPressed()) {
                 aEg.gameSettings.keyBindJump.isKeyDown();
             }
 
-            float f = hV == 1 ? 90.0F : 0.0F;
-            if (MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl - akr) < f) {
-                akr = aEg.thePlayer.pl;
-            } else if (MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl - akr) < 0.0F) {
-                akr -= f;
-            } else if (MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl - akr) > 0.0F) {
-                akr += f;
+            float f = jumpStage == 1 ? 90.0F : 0.0F;
+            if (MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl - towerYaw) < f) {
+                towerYaw = aEg.thePlayer.pl;
+            } else if (MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl - towerYaw) < 0.0F) {
+                towerYaw -= f;
+            } else if (MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl - towerYaw) > 0.0F) {
+                towerYaw += f;
             }
 
-            if (qH < 20 && !Client.a.g().c(Speed.class).isEnabled()) {
+            if (moveTicks < 20 && !Client.a.g().c(Speed.class).isEnabled()) {
                 aEg.thePlayer.isPotionActive(Potion.moveSpeed);
                 if (aEg.gameSettings.keyBindJump.isKeyDown()) {
                     aEg.thePlayer.isPotionActive(Potion.moveSpeed);
-                    switch (hV) {
+                    switch (jumpStage) {
                         case 0:
                             MoveUtil.strafe();
                             if (aEg.thePlayer.isPotionActive(Potion.moveSpeed) && aEg.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 >= 2) {
@@ -297,14 +297,14 @@ public class WatchdogTower extends Mode<Scaffold> {
                 aEg.gameSettings.keyBindJump.isKeyDown();
             }
 
-            if (qH != 20 && qH != 21) {
-                if (qH > 20) {
+            if (moveTicks != 20 && moveTicks != 21) {
+                if (moveTicks > 20) {
                 }
             } else {
-                this.ako = akr;
+                this.savedYaw = towerYaw;
             }
 
-            if (qH == 22 && !Client.a.g().c(Speed.class).isEnabled()) {
+            if (moveTicks == 22 && !Client.a.g().c(Speed.class).isEnabled()) {
                 if (aEg.thePlayer.cqL == 0) {
                     aEg.thePlayer.isPotionActive(Potion.moveSpeed);
                 }
@@ -318,11 +318,11 @@ public class WatchdogTower extends Mode<Scaffold> {
                 aEg.thePlayer.isPotionActive(Potion.moveSpeed);
             }
 
-            if (hV == 2) {
-                hV = -1;
+            if (jumpStage == 2) {
+                jumpStage = -1;
             }
 
-            this.getParent().agF = 1;
+            this.getParent().extraPlacements = 1;
         }
     };
     @EventLink
@@ -343,15 +343,15 @@ public class WatchdogTower extends Mode<Scaffold> {
             MoveUtil.strafe(0.19);
         }
 
-        if (qH >= 16) {
+        if (moveTicks >= 16) {
             aEg.thePlayer.isPotionActive(Potion.moveSpeed);
         }
     };
     @EventLink
     public final Listener<KeyboardInputEvent> onKeyboardInput = var1x -> {
-        if (var1x.getKeyCode() == this.getParent().getKey() && !this.HJ && aEg.gameSettings.keyBindJump.isKeyDown() && !Client.a.g().c(Speed.class).isEnabled()) {
+        if (var1x.getKeyCode() == this.getParent().getKey() && !this.pendingToggle && aEg.gameSettings.keyBindJump.isKeyDown() && !Client.a.g().c(Speed.class).isEnabled()) {
             var1x.setCancelled();
-            this.HJ = true;
+            this.pendingToggle = true;
         }
     };
     @EventLink
@@ -369,15 +369,15 @@ public class WatchdogTower extends Mode<Scaffold> {
         if (var1x.dq() instanceof C08PacketPlayerBlockPlacement c08packetplayerblockplacement
             && c08packetplayerblockplacement.getPlacedBlockDirection() == 1
             && (c08packetplayerblockplacement.getStack() == null || c08packetplayerblockplacement.getStack().getItem() != Item.getItemFromBlock(Blocks.ice))) {
-            this.akl = true;
-            this.akm++;
+            this.placingUp = true;
+            this.upwardPlacements++;
         } else if (var1x.dq() instanceof C08PacketPlayerBlockPlacement c08packetplayerblockplacement1
             && (c08packetplayerblockplacement1.getStack() == null || c08packetplayerblockplacement1.getStack().getItem() != Item.getItemFromBlock(Blocks.ice))) {
-            this.akm = 0;
-            this.akl = false;
+            this.upwardPlacements = 0;
+            this.placingUp = false;
         }
 
-        if (this.akl && !this.e(Speed.class).isEnabled() && this.akm >= 2) {
+        if (this.placingUp && !this.e(Speed.class).isEnabled() && this.upwardPlacements >= 2) {
             ;
         }
     };
@@ -387,7 +387,7 @@ public class WatchdogTower extends Mode<Scaffold> {
             MoveUtil.strafe(0.15);
         }
 
-        if (this.HJ) {
+        if (this.pendingToggle) {
             MoveUtil.strafe(0.0);
         }
     };
@@ -398,44 +398,44 @@ public class WatchdogTower extends Mode<Scaffold> {
 
     @Override
     public void onEnable() {
-        this.akl = false;
+        this.placingUp = false;
         SlotComponent slotcomponent = this.d(SlotComponent.class);
         SlotComponent.setSlot(SlotUtil.vx());
         this.akn = 0;
-        this.HJ = false;
+        this.pendingToggle = false;
         this.targetZ = Double.NaN;
-        qH = 0;
-        this.rW = 0;
-        akr = aEg.thePlayer.pl;
-        this.akq = false;
+        moveTicks = 0;
+        this.alignStep = 0;
+        towerYaw = aEg.thePlayer.pl;
+        this.aligning = false;
         if (aEg.thePlayer.onGround) {
-            hV = 0;
+            jumpStage = 0;
         } else {
-            hV = 100;
+            jumpStage = 100;
         }
 
         if (Client.a.g().c(Scaffold.class).sameY.wo().getName().equals("Off") && !aEg.thePlayer.onGround) {
-            this.akp = true;
+            this.startedInAir = true;
         }
 
-        this.gD = false;
+        this.jumpKeyHeld = false;
     }
 
     @Override
     public void onDisable() {
-        this.akq = false;
-        this.akp = false;
-        this.HJ = false;
-        akr = aEg.thePlayer.pl;
-        hV = 100;
-        this.rW = 0;
+        this.aligning = false;
+        this.startedInAir = false;
+        this.pendingToggle = false;
+        towerYaw = aEg.thePlayer.pl;
+        jumpStage = 100;
+        this.alignStep = 0;
         if (aEg.gameSettings.keyBindJump.isKeyDown()) {
             MoveUtil.strafe(0.23);
         }
     }
 
-    public void kD() {
-        this.aku = (int)Math.floor(aEg.thePlayer.posY);
+    public void updateRotation() {
+        this.lastPlaceY = (int)Math.floor(aEg.thePlayer.posY);
         double d0 = aEg.thePlayer.pl;
         double radians = Math.toRadians(d0);
         double d2 = -Math.sin(radians);
@@ -449,7 +449,7 @@ public class WatchdogTower extends Mode<Scaffold> {
             aka = new aka(0.0, 0.0, 1.0);
         }
 
-        this.getParent().agy = aka;
+        this.getParent().placeOffset = aka;
         RotationUtil.d(aka);
         if (!MoveUtil.isMoving() && !flag) {
             RotationComponent.d(false);
@@ -460,7 +460,7 @@ public class WatchdogTower extends Mode<Scaffold> {
         }
     }
 
-    private boolean kE() {
+    private boolean isEnclosed() {
         int i = (int)Math.floor(aEg.thePlayer.posX);
         int j = (int)Math.floor(aEg.thePlayer.posY);
         int k = (int)Math.floor(aEg.thePlayer.posZ);
@@ -476,7 +476,7 @@ public class WatchdogTower extends Mode<Scaffold> {
         return true;
     }
 
-    private boolean e(double var1, double var3, double var5) {
+    private boolean canFitAt(double var1, double var3, double var5) {
         float f = aEg.thePlayer.width / 2.0F;
         double d0 = var1 - f;
         double d1 = var3;

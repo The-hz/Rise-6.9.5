@@ -23,51 +23,51 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.l;
 
 public class WatchdogNoSlow extends Mode<NoSlow> {
-    private int tR;
+    private int airTicks;
     private boolean dk;
-    private boolean vh;
+    private boolean onSlab;
     private Packet<?> NI;
     private KillAura killAura = null;
     public final BooleanValue slowDownOnSlabs = new BooleanValue("Slow down on Slabs", this, true);
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
         if (PlayerUtil.p(0.0, aEg.thePlayer.motionY, 0.0) != Blocks.air && !aEg.thePlayer.isUsingItem() && this.slowDownOnSlabs.wo()) {
-            this.vh = false;
+            this.onSlab = false;
         }
 
         double d0 = var1x.getPosY();
         if (Math.abs(d0 - Math.round(d0)) > 0.03 && aEg.thePlayer.onGround) {
-            this.vh = true;
+            this.onSlab = true;
         }
 
         if (aEg.thePlayer.isUsingItem() && !(aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword)) {
             if (aEg.thePlayer.onGround) {
-                this.tR = 0;
+                this.airTicks = 0;
             } else {
-                this.tR++;
+                this.airTicks++;
             }
 
-            if (this.tR >= 2) {
+            if (this.airTicks >= 2) {
                 this.dk = false;
                 this.NI = null;
-            } else if (aEg.thePlayer.onGround && !this.vh) {
+            } else if (aEg.thePlayer.onGround && !this.onSlab) {
                 var1x.setPosY(var1x.getPosY() + 0.001);
             }
         }
 
-        if (this.vh && !aEg.thePlayer.onGround && aEg.thePlayer.isUsingItem() && !(aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword)) {
+        if (this.onSlab && !aEg.thePlayer.onGround && aEg.thePlayer.isUsingItem() && !(aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword)) {
             aEg.thePlayer.motionX *= 0.1;
             aEg.thePlayer.motionZ *= 0.1;
         }
     };
     @EventLink
-    public final Listener<ea> NM = var1x -> {
+    public final Listener<ea> onRightClick = var1x -> {
         if (aEg.thePlayer.getHeldItem() != null) {
             if (aEg.thePlayer.isUsingItem()
                 || aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion && !ItemPotion.isSplash(aEg.thePlayer.getHeldItem().getMetadata())
                 || aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood
                 || aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
-                if (aEg.thePlayer.tR < 2 && aEg.thePlayer.tR != 0 && !this.vh) {
+                if (aEg.thePlayer.tR < 2 && aEg.thePlayer.tR != 0 && !this.onSlab) {
                     afi.b("You must start eating while in the air even with potions");
                     var1x.setCancelled();
                 } else if (aEg.thePlayer.onGround) {
@@ -85,7 +85,7 @@ public class WatchdogNoSlow extends Mode<NoSlow> {
     };
     @EventLink
     public final Listener<SlowDownEvent> onSlowDown = var1x -> {
-        if (!this.vh || aEg.thePlayer.onGround) {
+        if (!this.onSlab || aEg.thePlayer.onGround) {
             if (this.getParent().food.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
                 var1x.setCancelled();
             }

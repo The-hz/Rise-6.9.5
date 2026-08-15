@@ -33,15 +33,15 @@ public class MatrixDamageFlight extends Mode<Flight> {
         .add(new SubMode("Multiply"))
         .setDefault("None");
     private final NumberValue motion = new NumberValue("Motion", this, -0.01, -0.3, 0.3, 0.01, () -> this.motionY.wo().getName().equals("None"));
-    private float Il;
-    private float Im;
-    private int In;
-    private int Hb;
-    private int Io;
-    private boolean Ip;
+    private float startYaw;
+    private float startPitch;
+    private int flightTicks;
+    private int selfDamageJumps;
+    private int speedTicksLeft;
+    private boolean damaged;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (this.selfDamage.wo() && aEg.thePlayer.hurtTime <= 0 && this.Hb < 4) {
+        if (this.selfDamage.wo() && aEg.thePlayer.hurtTime <= 0 && this.selfDamageJumps < 4) {
             var1x.setOnGround(false);
         }
 
@@ -54,7 +54,7 @@ public class MatrixDamageFlight extends Mode<Flight> {
     };
     @EventLink
     public final Listener<MoveInputEvent> onMoveInput = var1x -> {
-        if (this.selfDamage.wo() && !this.Ip && (this.Hb < 4 || !aEg.thePlayer.onGround)) {
+        if (this.selfDamage.wo() && !this.damaged && (this.selfDamageJumps < 4 || !aEg.thePlayer.onGround)) {
             var1x.setSneak(false);
             var1x.setJump(false);
             var1x.setStrafe(0.0F);
@@ -63,18 +63,18 @@ public class MatrixDamageFlight extends Mode<Flight> {
     };
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        if (aEg.thePlayer.hurtTime > 0 && !this.Ip && aEg.thePlayer.tR >= 3) {
-            this.Io = 20 * this.timerSpeed.wo().intValue();
-            this.Ip = true;
+        if (aEg.thePlayer.hurtTime > 0 && !this.damaged && aEg.thePlayer.tR >= 3) {
+            this.speedTicksLeft = 20 * this.timerSpeed.wo().intValue();
+            this.damaged = true;
         }
 
-        if (this.selfDamage.wo() && aEg.thePlayer.hurtTime <= 0 && this.Hb < 4 && aEg.thePlayer.onGround) {
+        if (this.selfDamage.wo() && aEg.thePlayer.hurtTime <= 0 && this.selfDamageJumps < 4 && aEg.thePlayer.onGround) {
             aEg.thePlayer.jump();
-            this.Hb++;
+            this.selfDamageJumps++;
         }
 
-        if (!this.detectDamage.wo() || this.In <= this.flyTicks.wo().intValue() && this.Ip) {
-            double d0 = this.Io > 0 ? this.speed.wo().doubleValue() : 0.03;
+        if (!this.detectDamage.wo() || this.flightTicks <= this.flyTicks.wo().intValue() && this.damaged) {
+            double d0 = this.speedTicksLeft > 0 ? this.speed.wo().doubleValue() : 0.03;
             if (!this.noSpeed.wo()) {
                 MoveUtil.strafe(d0);
             }
@@ -104,19 +104,19 @@ public class MatrixDamageFlight extends Mode<Flight> {
                 aEg.thePlayer.motionY = this.motion.wo().doubleValue();
             }
 
-            if (this.Io > 0) {
-                this.Io--;
+            if (this.speedTicksLeft > 0) {
+                this.speedTicksLeft--;
             }
 
-            this.In++;
+            this.flightTicks++;
         }
 
-        if (this.detectDamage.wo() && this.Ip) {
+        if (this.detectDamage.wo() && this.damaged) {
             if (!this.autoDisable.wo()) {
-                if (this.In >= this.flyTicks.wo().intValue()) {
+                if (this.flightTicks >= this.flyTicks.wo().intValue()) {
                     this.getParent().toggle();
                 }
-            } else if (this.Io <= 0) {
+            } else if (this.speedTicksLeft <= 0) {
                 this.getParent().toggle();
             }
         }
@@ -128,20 +128,20 @@ public class MatrixDamageFlight extends Mode<Flight> {
 
     @Override
     public void onEnable() {
-        this.In = 0;
-        this.Hb = 0;
-        this.Io = 0;
-        this.Ip = false;
-        this.Il = aEg.thePlayer.pl;
-        this.Im = aEg.thePlayer.rotationPitch;
+        this.flightTicks = 0;
+        this.selfDamageJumps = 0;
+        this.speedTicksLeft = 0;
+        this.damaged = false;
+        this.startYaw = aEg.thePlayer.pl;
+        this.startPitch = aEg.thePlayer.rotationPitch;
     }
 
     @Override
     public void onDisable() {
-        this.In = 0;
-        this.Hb = 0;
-        this.Io = 0;
-        this.Ip = false;
+        this.flightTicks = 0;
+        this.selfDamageJumps = 0;
+        this.speedTicksLeft = 0;
+        this.damaged = false;
         aEg.timer.dzD = 1.0F;
         if (this.packet.wo()) {
             PacketUtil.sendNoEvent(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, false));

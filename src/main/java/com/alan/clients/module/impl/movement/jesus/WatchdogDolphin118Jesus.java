@@ -25,26 +25,26 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 
 public class WatchdogDolphin118Jesus extends Mode<Jesus> {
-    public static int Km = 0;
-    private boolean Kv;
-    private boolean HJ;
-    private int Kw;
-    private int Kx;
+    public static int outOfWaterTicks = 0;
+    private boolean boostReady;
+    private boolean keyCancelled;
+    private int notInWaterTicks;
+    private int velocityCount;
     @EventLink(value = 3)
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        if (!this.e(LongJump.class).isEnabled() && !this.e(Flight.class).isEnabled() && Km <= 30) {
+        if (!this.e(LongJump.class).isEnabled() && !this.e(Flight.class).isEnabled() && outOfWaterTicks <= 30) {
             if (!aEg.thePlayer.inWater) {
-                this.Kw++;
+                this.notInWaterTicks++;
             } else {
                 MoveUtil.strafe();
-                this.Kw = 0;
+                this.notInWaterTicks = 0;
             }
 
             if (!aEg.thePlayer.inWater && aEg.thePlayer.onGround) {
-                Km = 31;
+                outOfWaterTicks = 31;
             }
 
-            if (aEg.thePlayer.ae == 0 && this.Kv) {
+            if (aEg.thePlayer.ae == 0 && this.boostReady) {
                 MoveUtil.strafe();
             } else if (aEg.thePlayer.ae == 0) {
                 MoveUtil.strafe();
@@ -52,10 +52,10 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
 
             var1x.setSprinting(true);
             if (aEg.thePlayer.inWater) {
-                Km = 0;
+                outOfWaterTicks = 0;
             } else {
-                Km++;
-                if (aEg.thePlayer.ae > 1 && Km < 30) {
+                outOfWaterTicks++;
+                if (aEg.thePlayer.ae > 1 && outOfWaterTicks < 30) {
                     aEg.thePlayer.motionY += 0.0281;
                 }
             }
@@ -85,14 +85,14 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
         }
     };
     private final ArrayList<Packet<?>> packets = new ArrayList<>();
-    private boolean dj;
-    private boolean tt;
-    private boolean vq;
-    int IU = -1;
-    double jy;
-    double IW = -1.0;
-    private int dE;
-    private int hV;
+    private boolean pendingVelocity;
+    private boolean replayingPackets;
+    private boolean boosting;
+    int startSlot = -1;
+    double startY;
+    double velocityY = -1.0;
+    private int hurtTicks;
+    private int boostTicks;
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var0 -> {
         if (aEg.thePlayer.inWater) {
@@ -110,32 +110,32 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
     };
     @EventLink(value = 2)
     public final Listener<PacketReceiveEvent> onPacketReceive = var1x -> {
-        if (!this.tt) {
+        if (!this.replayingPackets) {
             switch (var1x.getPacket()) {
                 case S12PacketEntityVelocity s12packetentityvelocity:
                     if (!var1x.isCancelled()
                         && s12packetentityvelocity.getEntityID() == aEg.thePlayer.getEntityId()
-                        && (Km < 30 || aEg.thePlayer.inWater)
+                        && (outOfWaterTicks < 30 || aEg.thePlayer.inWater)
                         && (s12packetentityvelocity.getMotionY() / 8000.0 > 0.4 || s12packetentityvelocity.getMotionY() / 8000.0 < 0.1)) {
                         new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
-                        this.IW = s12packetentityvelocity.getMotionZ() / 8000.0;
-                        this.IW = s12packetentityvelocity.getMotionY() / 8000.0;
+                        this.velocityY = s12packetentityvelocity.getMotionZ() / 8000.0;
+                        this.velocityY = s12packetentityvelocity.getMotionY() / 8000.0;
                         var1x.setCancelled();
-                        this.dj = true;
+                        this.pendingVelocity = true;
                         this.packets.add(s12packetentityvelocity);
-                        if (this.IW > 0.2) {
-                            this.Kx++;
+                        if (this.velocityY > 0.2) {
+                            this.velocityCount++;
                         }
 
-                        if (this.Kx == 2) {
-                            this.Kv = true;
+                        if (this.velocityCount == 2) {
+                            this.boostReady = true;
                         }
                     } else {
                         var1x.setCancelled();
                     }
                     break;
                 case S32PacketConfirmTransaction s32packetconfirmtransaction:
-                    if (this.dj) {
+                    if (this.pendingVelocity) {
                         this.packets.add(s32packetconfirmtransaction);
                         var1x.setCancelled();
                     }
@@ -154,28 +154,28 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
     public final Listener<JumpEvent> onJump = var0 -> {};
     @EventLink
     public final Listener<KeyboardInputEvent> onKeyboardInput = var1x -> {
-        if (var1x.getKeyCode() == this.getParent().getKey() && !this.HJ) {
+        if (var1x.getKeyCode() == this.getParent().getKey() && !this.keyCancelled) {
             var1x.setCancelled();
-            this.HJ = true;
+            this.keyCancelled = true;
         }
     };
     @EventLink(value = 4)
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
-        if (this.dj && (!aEg.thePlayer.inWater || this.Kv) && Km < 30) {
+        if (this.pendingVelocity && (!aEg.thePlayer.inWater || this.boostReady) && outOfWaterTicks < 30) {
             aEg.thePlayer.ae = 1;
-            this.vq = true;
-            this.dj = false;
-            this.tt = true;
+            this.boosting = true;
+            this.pendingVelocity = false;
+            this.replayingPackets = true;
             new Vector2d(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
             this.packets.forEach(PacketUtil::receive);
-            this.Kv = false;
-            if (aEg.thePlayer.Zl > 20 && this.IW > 0.4) {
+            this.boostReady = false;
+            if (aEg.thePlayer.Zl > 20 && this.velocityY > 0.4) {
                 aEg.thePlayer.motionX *= 1.23;
                 aEg.thePlayer.motionZ *= 1.23;
             }
 
             this.packets.clear();
-            this.tt = false;
+            this.replayingPackets = false;
         }
     };
 
@@ -194,7 +194,7 @@ public class WatchdogDolphin118Jesus extends Mode<Jesus> {
     public void onDisable() {
         this.packets.forEach(PacketUtil::receive);
         this.packets.clear();
-        this.Kv = false;
-        this.Kx = 0;
+        this.boostReady = false;
+        this.velocityCount = 0;
     }
 }

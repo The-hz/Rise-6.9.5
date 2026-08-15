@@ -417,7 +417,7 @@ public class CategoryComponent implements InstanceAccess {
     }
 
     private boolean d(Value<?> var1) {
-        return var1.getHideIf() != null && var1.getHideIf().getAsBoolean() ? false : var1.wn() == null || !var1.wn().getAsBoolean();
+        return var1.getHideIf() != null && var1.getHideIf().getAsBoolean() ? false : var1.getBooleanSupplier() == null || !var1.getBooleanSupplier().getAsBoolean();
     }
 
     public void oG() {
@@ -505,7 +505,7 @@ public class CategoryComponent implements InstanceAccess {
     }
 
     @Generated
-    public NumberValue oP() {
+    public NumberValue getNumbervalue() {
         return this.axF;
     }
 

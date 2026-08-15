@@ -17,10 +17,10 @@ import net.minecraft.network.play.client.l;
 public class GrimNoSlow extends Mode<NoSlow> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1x -> {
-        this.hA();
-        this.hB();
-        this.hC();
-        this.hD();
+        this.applyFood();
+        this.applyPotion();
+        this.applySword();
+        this.applyBow();
     };
     @EventLink
     public final Listener<SlowDownEvent> onSlowDown = var1x -> {
@@ -45,31 +45,31 @@ public class GrimNoSlow extends Mode<NoSlow> {
         super(var1, noSlow);
     }
 
-    private void hA() {
+    private void applyFood() {
         if (this.getParent().food.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemFood) {
-            this.hE();
+            this.sendSlotSwap();
         }
     }
 
-    private void hB() {
+    private void applyPotion() {
         if (this.getParent().potion.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion) {
-            this.hE();
+            this.sendSlotSwap();
         }
     }
 
-    private void hC() {
+    private void applySword() {
         if (this.getParent().sword.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
-            this.hE();
+            this.sendSlotSwap();
         }
     }
 
-    private void hD() {
+    private void applyBow() {
         if (this.getParent().bow.wo() && aEg.thePlayer.isUsingItem() && aEg.thePlayer.getHeldItem().getItem() instanceof ItemBow) {
-            this.hE();
+            this.sendSlotSwap();
         }
     }
 
-    private void hE() {
+    private void sendSlotSwap() {
         SlotComponent slotcomponent = this.d(SlotComponent.class);
         PacketUtil.send(new l(SlotComponent.bQ() % 8 + 1));
         slotcomponent = this.d(SlotComponent.class);

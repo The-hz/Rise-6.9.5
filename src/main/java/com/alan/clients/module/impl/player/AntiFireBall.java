@@ -29,19 +29,19 @@ public class AntiFireBall extends Module {
     private final BooleanValue rotations = new BooleanValue("Rotate", this, true);
     private final BooleanValue movementCorrection = new BooleanValue("Movement Correction", this, true, () -> !this.rotations.wo());
     private final BooleanValue badPacketsCheck = new BooleanValue("Bad Packets Check", this, false);
-    public final a aaV = new a();
-    public int aaW = 0;
-    private final HashSet<UUID> aaX = new HashSet<>();
+    public final a cooldownStopWatch = new a();
+    public int cooldownMs = 0;
+    private final HashSet<UUID> attackedFireballs = new HashSet<>();
     @EventLink(value = -100)
-    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> this.js();
+    public final Listener<PreUpdateEvent> onPreUpdate = var1 -> this.handleFireballs();
     @EventLink(value = -100)
-    public final Listener<TickEvent> onTick = var1 -> this.js();
+    public final Listener<TickEvent> onTick = var1 -> this.handleFireballs();
 
     public AntiFireBall() {
     }
 
-    public final void js() {
-        if ((!BadPacketsComponent.aW() || !this.badPacketsCheck.wo()) && this.aaV.T(this.aaW)) {
+    public final void handleFireballs() {
+        if ((!BadPacketsComponent.aW() || !this.badPacketsCheck.wo()) && this.cooldownStopWatch.T(this.cooldownMs)) {
             for (Entity entity : aEg.theWorld.loadedEntityList) {
                 if (entity instanceof EntityFireball && entity.getDistanceToEntity(aEg.thePlayer) < 6.0F) {
                     if (this.rotations.wo()) {
@@ -49,10 +49,10 @@ public class AntiFireBall extends Module {
                     }
 
                     MoveUtil.strafe(0.0);
-                    if (entity.getDistanceToEntity(aEg.thePlayer) <= 3.0F && !this.aaX.contains(entity.getUniqueID())) {
+                    if (entity.getDistanceToEntity(aEg.thePlayer) <= 3.0F && !this.attackedFireballs.contains(entity.getUniqueID())) {
                         PacketUtil.send(new m());
                         PacketUtil.send(new C02PacketUseEntity(entity, Action.ATTACK));
-                        this.aaX.add(entity.getUniqueID());
+                        this.attackedFireballs.add(entity.getUniqueID());
                         break;
                     }
 
