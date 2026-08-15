@@ -100,19 +100,19 @@ Bus<Event> {
     }
 
     @Override
-    public void d(Event Event2) {
+    public void d(Event event) {
         try {
-            if (!(EventBus.aEg.theWorld != null && aEg.getNetHandler() != null && (EventBus.aEg.getNetHandler().doneLoadingTerrain || Event2 instanceof PacketSendEvent) || Event2 instanceof er || Event2 instanceof fu || Event2 instanceof ServerKickEvent || Event2 instanceof GameEvent || Event2 instanceof WorldChangeEvent || Event2 instanceof ServerJoinEvent)) {
+            if (!(EventBus.aEg.theWorld != null && aEg.getNetHandler() != null && (EventBus.aEg.getNetHandler().doneLoadingTerrain || event instanceof PacketSendEvent) || event instanceof er || event instanceof fu || event instanceof ServerKickEvent || event instanceof GameEvent || event instanceof WorldChangeEvent || event instanceof ServerJoinEvent)) {
                 return;
             }
-            List list = this.iW.getOrDefault(Event2.getClass(), Collections.emptyList());
+            List list = this.iW.getOrDefault(event.getClass(), Collections.emptyList());
             int n2 = 0;
             int size = list.size();
             while (n2 < size) {
-                ((Listener)list.get(n2++)).call(Event2);
+                ((Listener)list.get(n2++)).call(event);
             }
             if (!this.iX.isEmpty()) {
-                this.iX.removeIf(function -> (Boolean)function.apply(Event2));
+                this.iX.removeIf(function -> (Boolean)function.apply(event));
             }
             return;
         }
@@ -125,7 +125,7 @@ Bus<Event> {
         this.iX.add(function);
     }
 
-    public void handle(Event Event2, Object ... objectArray) {
+    public void handle(Event event, Object ... objectArray) {
         try {
             System.out.println(objectArray.getClass().getDeclaredFields().length);
             for (Field field : objectArray.getClass().getDeclaredFields()) {
@@ -136,7 +136,7 @@ Bus<Event> {
                 }
                 Listener unused0 = (Listener)LOOKUP.unreflectGetter(field).invokeWithArguments(objectArray);
                 System.out.println("Name: " + type.getTypeName());
-                System.out.println("Event: " + Event2.getClass().getSimpleName());
+                System.out.println("Event: " + event.getClass().getSimpleName());
             }
             return;
         }
