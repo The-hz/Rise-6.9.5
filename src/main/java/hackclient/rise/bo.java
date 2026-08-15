@@ -1073,12 +1073,9 @@ public class bo extends Component {
             long j2 = (long)Math.min(aEg.gameSettings.renderDistanceChunks + 1, 8) << 32;
             long i2 = j1;
             j2 ^= j1;
-            long k2 = -1L;
-            byte b0 = 11;
-            byte b1 = 121;
 
             try {
-                j1 = i2 ^ j2 & k2 << (b0 - b1 ^ -78);
+                j1 = i2 ^ j2 & -1L << 32;
 
                 for (i1 ^= ((long)(var2.chunkCoordX - (int)(j1 >>> 32)) << 32 ^ i1) & -1L << 32;
                     (int)(i1 >>> 32) <= var2.chunkCoordX + (int)(j1 >>> 32);

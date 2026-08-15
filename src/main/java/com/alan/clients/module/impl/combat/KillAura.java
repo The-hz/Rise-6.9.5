@@ -3275,7 +3275,7 @@ public class KillAura extends Module {
             );
          }
 
-         if (!((String)var51).equals(this.mE) || aEg.thePlayer.ticksExisted - this.mF >= (-70 ^ -78)) {
+         if (!((String)var51).equals(this.mE) || aEg.thePlayer.ticksExisted - this.mF >= 8) {
             this.mE = (String)var51;
             this.mF = aEg.thePlayer.ticksExisted;
             String var10000 = afi.getPrefix();
