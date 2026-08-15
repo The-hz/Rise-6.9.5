@@ -56,7 +56,7 @@ public class S2CPacketTitle extends rip.vantage.commons.packet.api.abstracts.Abs
         return this.d;
     }
 
-    public String aJO() {
+    public String getColor() {
         return this.e;
     }
 }

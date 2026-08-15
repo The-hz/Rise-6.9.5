@@ -56,7 +56,7 @@ InstanceAccess {
     @EventLink
     public final Listener<er> azL = er2 -> {
         if (er2.dd() instanceof rip.vantage.commons.packet.impl.server.community.S2CPacketConfigList) {
-            JSONArray jSONArray = ((rip.vantage.commons.packet.impl.server.community.S2CPacketConfigList)er2.dd()).aJM();
+            JSONArray jSONArray = ((rip.vantage.commons.packet.impl.server.community.S2CPacketConfigList)er2.dd()).getConfigs();
             this.azG.clear();
             for (int i2 = 0; i2 < jSONArray.length(); ++i2) {
                 JSONObject jSONObject = jSONArray.getJSONObject(i2);

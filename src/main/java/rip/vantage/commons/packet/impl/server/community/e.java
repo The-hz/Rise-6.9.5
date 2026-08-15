@@ -30,11 +30,11 @@ public class e extends rip.vantage.commons.packet.api.abstracts.AbstractS2CPacke
         return jsonobject.toString();
     }
 
-    public boolean aJP() {
+    public boolean isKillauraDisabled() {
         return this.killauraDisabled;
     }
 
-    public boolean aJQ() {
+    public boolean isReverseKeybinds() {
         return this.reverseKeybinds;
     }
 }

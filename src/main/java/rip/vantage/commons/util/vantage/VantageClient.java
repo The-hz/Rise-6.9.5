@@ -25,11 +25,11 @@ public enum VantageClient {
         return this.displayName;
     }
 
-    public String aKy() {
+    public String getProductId() {
         return this.productId;
     }
 
-    public String aKz() {
+    public String getChatColor() {
         return this.chatColor;
     }
 

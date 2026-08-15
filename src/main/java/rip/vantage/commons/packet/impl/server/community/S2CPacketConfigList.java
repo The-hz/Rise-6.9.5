@@ -41,11 +41,11 @@ public class S2CPacketConfigList extends rip.vantage.commons.packet.api.abstract
         return jsonobject.toString();
     }
 
-    public JSONArray aJM() {
+    public JSONArray getConfigs() {
         return this.configs;
     }
 
-    public JSONArray aJN() {
+    public JSONArray getScripts() {
         return this.scripts;
     }
 

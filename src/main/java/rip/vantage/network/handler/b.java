@@ -43,7 +43,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
 
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication packet) {
-        String s = packet.aKh();
+        String s = packet.getExpectedHwid();
         if (s != null && !s.isEmpty()) {
             String s1 = aju.vW();
             if (!IntegrityGuard.aL(s1, s)) {
@@ -292,7 +292,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
 
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketAccount packet) {
-        Minecraft.getMinecraft().session = new Session(packet.bX(), packet.sh(), packet.si(), "microsoft");
+        Minecraft.getMinecraft().session = new Session(packet.getUsername(), packet.getUuid(), packet.getAccessToken(), "microsoft");
         Client.a.e().d(new er(packet));
     }
 

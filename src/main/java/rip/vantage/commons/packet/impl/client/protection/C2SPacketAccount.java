@@ -32,11 +32,11 @@ public class C2SPacketAccount extends rip.vantage.commons.packet.api.abstracts.A
         return jsonobject.toString();
     }
 
-    public String so() {
+    public String getRefreshToken() {
         return this.refreshToken;
     }
 
-    public String aJr() {
+    public String getAltSkin() {
         return this.altSkin;
     }
 }

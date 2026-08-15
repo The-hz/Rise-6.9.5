@@ -90,7 +90,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         Double.compare(n2, Double.MAX_VALUE);
     }
 
-    public String aKh() {
+    public String getExpectedHwid() {
         return this.expectedHwid;
     }
 
@@ -320,7 +320,7 @@ public class S2CPacketAuthentication extends rip.vantage.commons.packet.api.abst
         this.aKc();
     }
 
-    public String aKn() {
+    public String getE() {
         return this.e;
     }
 

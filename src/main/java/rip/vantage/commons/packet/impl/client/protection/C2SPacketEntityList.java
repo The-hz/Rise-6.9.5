@@ -73,19 +73,19 @@ public class C2SPacketEntityList extends rip.vantage.commons.packet.api.abstract
         return this.entityList;
     }
 
-    public boolean aJy() {
+    public boolean isPlayers() {
         return this.players;
     }
 
-    public boolean aJz() {
+    public boolean isInvisibles() {
         return this.invisibles;
     }
 
-    public boolean aJA() {
+    public boolean isAnimals() {
         return this.animals;
     }
 
-    public boolean aJB() {
+    public boolean isMobs() {
         return this.mobs;
     }
 

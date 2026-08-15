@@ -44,23 +44,23 @@ public class S2CPacketAccount extends rip.vantage.commons.packet.api.abstracts.A
         return jsonobject.toString();
     }
 
-    public String bX() {
+    public String getUsername() {
         return this.username;
     }
 
-    public String sh() {
+    public String getUuid() {
         return this.uuid;
     }
 
-    public String si() {
+    public String getAccessToken() {
         return this.accessToken;
     }
 
-    public String so() {
+    public String getRefreshToken() {
         return this.refreshToken;
     }
 
-    public String aJr() {
+    public String getAltSkin() {
         return this.altSkin;
     }
 }

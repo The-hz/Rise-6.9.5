@@ -144,7 +144,7 @@ extends Menu {
             rip.vantage.network.handler.c.eRC.aX();
             int aKi2 = (int)(b2.isSuccess() ? 1L : 0L);
             this.aCC = false;
-            if (aKi2 != 0 && (string2 = b2.aKh()) != null && !string2.isEmpty() && !rip.vantage.security.IntegrityGuard.aL(string = aju.vW(), string2)) {
+            if (aKi2 != 0 && (string2 = b2.getExpectedHwid()) != null && !string2.isEmpty() && !rip.vantage.security.IntegrityGuard.aL(string = aju.vW(), string2)) {
                 System.out.println("EC61");
                 aKi2 = 0;
                 this.aCC = true;
@@ -164,13 +164,13 @@ extends Menu {
                 Client.a.p().tn();
                 return;
             }
-            this.aX(b2.aKn());
+            this.aX(b2.getE());
             String string3 = null;
             string3 = aju.vW();
             StringSelection stringSelection = new StringSelection(string3);
             java.awt.datatransfer.Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(stringSelection, new StringSelection("Rise"));
-            int equalsIgnoreCase2 = this.aCC || b2.aKn() != null && b2.aKn().equalsIgnoreCase("HWID_MISMATCH") ? 1 : 0;
+            int equalsIgnoreCase2 = this.aCC || b2.getE() != null && b2.getE().equalsIgnoreCase("HWID_MISMATCH") ? 1 : 0;
             if (equalsIgnoreCase2 == 0) return;
             if (this.aCD) return;
             this.aCD = true;
