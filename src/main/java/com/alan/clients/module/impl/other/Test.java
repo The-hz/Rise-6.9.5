@@ -65,7 +65,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases={"module.other.test.name"}, description="module.other.test.description", category=Category.MOVEMENT)
 public final class Test
@@ -95,7 +95,7 @@ extends Module {
     private EntityOtherPlayerMP otherEntity;
     private final List<Packet<?>> packets = new ArrayList();
     private final ConcurrentLinkedQueue<TimedPacket> timedPackets = new ConcurrentLinkedQueue();
-    private final a timerUtil = new a();
+    private final StopWatch timerUtil = new StopWatch();
     private double startPosY;
     private double distance;
     private double moveSpeed;

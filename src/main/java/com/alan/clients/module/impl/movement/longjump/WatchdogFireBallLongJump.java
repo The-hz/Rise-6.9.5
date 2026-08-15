@@ -24,7 +24,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.network.play.server.S32PacketConfirmTransaction;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class WatchdogFireBallLongJump extends Mode<LongJump> {
     public final BooleanValue boost = new BooleanValue("Boost", this, true);
@@ -36,7 +36,7 @@ public class WatchdogFireBallLongJump extends Mode<LongJump> {
     private int stage;
     private boolean sentFireball;
     private boolean Ms;
-    a stopWatch = new a();
+    StopWatch stopWatch = new StopWatch();
     public static boolean active = false;
     public static boolean replaying;
     private int tR;

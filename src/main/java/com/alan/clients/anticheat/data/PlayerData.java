@@ -23,7 +23,7 @@ import net.minecraft.network.play.server.S14PacketEntity;
 import net.minecraft.network.play.server.ad;
 import net.minecraft.network.play.server.z;
 import net.minecraft.util.MathHelper;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public final class PlayerData {
     private final EntityOtherPlayerMP player;
@@ -63,8 +63,8 @@ public final class PlayerData {
     private int groundTicks;
     private boolean aS;
     private boolean aT;
-    private final a aU = new a();
-    private final a aV = new a();
+    private final StopWatch aU = new StopWatch();
+    private final StopWatch aV = new StopWatch();
     private int aW = 20;
     private int aX = 1;
     private int aY;
@@ -72,9 +72,9 @@ public final class PlayerData {
     private EntityPlayer lastAttackEntity;
     private final Map<Check, Float> bb = new HashMap<>();
     private boolean bc;
-    private final a bd = new a();
-    private final a be = new a();
-    private final a bf = new a();
+    private final StopWatch bd = new StopWatch();
+    private final StopWatch be = new StopWatch();
+    private final StopWatch bf = new StopWatch();
     private boolean sneaking;
     private boolean sprinting;
     private boolean usingItem;
@@ -462,12 +462,12 @@ public final class PlayerData {
     }
 
     @Generated
-    public a aE() {
+    public StopWatch aE() {
         return this.aU;
     }
 
     @Generated
-    public a aF() {
+    public StopWatch aF() {
         return this.aV;
     }
 
@@ -502,17 +502,17 @@ public final class PlayerData {
     }
 
     @Generated
-    public a aM() {
+    public StopWatch aM() {
         return this.bd;
     }
 
     @Generated
-    public a aN() {
+    public StopWatch aN() {
         return this.be;
     }
 
     @Generated
-    public a aO() {
+    public StopWatch aO() {
         return this.bf;
     }
 

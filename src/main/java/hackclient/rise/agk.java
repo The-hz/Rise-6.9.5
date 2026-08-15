@@ -8,14 +8,14 @@ import com.alan.clients.util.vector.Vector2d;
 import java.awt.Color;
 import lombok.Generated;
 import org.lwjgl.input.Mouse;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class agk implements InstanceAccess {
     public double aJc;
     public double scroll;
     public double aJd = 25.0;
-    public a rG = new a();
-    public a aJe = new a();
+    public StopWatch rG = new StopWatch();
+    public StopWatch aJe = new StopWatch();
     public boolean aJf;
     public boolean dj;
     public boolean aJg;
@@ -78,12 +78,12 @@ public class agk implements InstanceAccess {
     }
 
     @Generated
-    public a lN() {
+    public StopWatch lN() {
         return this.rG;
     }
 
     @Generated
-    public a tG() {
+    public StopWatch tG() {
         return this.aJe;
     }
 
@@ -123,12 +123,12 @@ public class agk implements InstanceAccess {
     }
 
     @Generated
-    public void c(a var1) {
+    public void c(StopWatch var1) {
         this.rG = var1;
     }
 
     @Generated
-    public void d(a var1) {
+    public void d(StopWatch var1) {
         this.aJe = var1;
     }
 

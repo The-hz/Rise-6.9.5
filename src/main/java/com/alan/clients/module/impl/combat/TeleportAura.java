@@ -44,7 +44,7 @@ import net.minecraft.network.play.client.C02PacketUseEntity.Action;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.potion.Potion;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(
     aliases = {"module.combat.teleportaura.name", "Infinite Aura", "Infinite", "TP Aura"},
@@ -57,7 +57,7 @@ public final class TeleportAura extends Module {
     private final BoundsNumberValue cps = new BoundsNumberValue("CPS", this, 10, 15, 1, 20, 1);
     private final BooleanValue cooldown19 = new BooleanValue("1.9 Cooldown", this, false);
     private final BooleanValue render = new BooleanValue("Render", this, true);
-    private final a clickStopWatch = new a();
+    private final StopWatch clickStopWatch = new StopWatch();
     private KillAura killAura;
     private List<ahy> path;
     public EntityLivingBase target;

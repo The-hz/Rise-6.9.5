@@ -12,11 +12,11 @@ import com.alan.clients.value.impl.SubMode;
 import hackclient.rise.dt;
 import com.alan.clients.util.shader.ShaderQueueType;
 import org.lwjgl.input.Keyboard;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = "module.render.clickgui.name", description = "module.render.clickgui.description", category = Category.RENDER, keyBind = 54)
 public final class ClickGUI extends Module {
-    private final a openStopWatch = new a();
+    private final StopWatch openStopWatch = new StopWatch();
     public final ModeValue mode = new ModeValue("Mode", this).add(new SubMode("Modern")).add(new SubMode("Dropdown")).setDefault("Modern");
     @EventLink(value = 3)
     public final Listener<Render2DEvent> onRender2D = var1 -> {

@@ -1,10 +1,10 @@
 package rip.vantage.runtime;
 
-public class a {
+public class NativeProbe17 {
     public static boolean aLc() {
         return false;
     }
 
-    a() {
+    NativeProbe17() {
     }
 }

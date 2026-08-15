@@ -6,12 +6,12 @@ import com.alan.clients.util.file.config.ConfigFile;
 import java.io.File;
 import java.util.ArrayList;
 import lombok.Generated;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class ConfigManager extends ArrayList<ConfigFile> {
     public static final File CONFIG_DIRECTORY = new File(FileManager.DIRECTORY, "configs");
     private ConfigFile aHM;
-    private final a aHN = new a();
+    private final StopWatch aHN = new StopWatch();
 
     public ConfigManager() {
     }
@@ -83,7 +83,7 @@ public class ConfigManager extends ArrayList<ConfigFile> {
         return configfile.getFile().delete();
     }
 
-    public a mQ() {
+    public StopWatch mQ() {
         return this.aHN;
     }
 

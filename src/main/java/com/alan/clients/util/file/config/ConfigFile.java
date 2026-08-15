@@ -30,7 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import lombok.Generated;
 import rip.vantage.commons.packet.impl.client.protection.C2SPacketConfig;
-import rip.vantage.network.core.a;
+import rip.vantage.network.core.VantageNetwork;
 
 public class ConfigFile extends File implements Bindable {
     private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd.MM.yyyy");
@@ -65,7 +65,7 @@ public class ConfigFile extends File implements Bindable {
 
             e(jsonobject);
             if (Client.a.getConfigManager().mQ().T(1000L)) {
-                a.aKB().aKK().sendMessage(new C2SPacketConfig(jsonobject.toString()).aJk());
+                VantageNetwork.aKB().aKK().sendMessage(new C2SPacketConfig(jsonobject.toString()).aJk());
                 Client.a.getConfigManager().mQ().aX();
             }
         } catch (IOException ioexception) {

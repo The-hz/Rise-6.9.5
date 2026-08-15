@@ -28,17 +28,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.util.Session;
-import rip.vantage.commons.packet.impl.client.protection.d;
+import rip.vantage.commons.packet.impl.client.protection.C2SPacketConfirmServer;
 import rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStopRecording;
 import rip.vantage.commons.packet.impl.server.protection.S2CPacketServerJoin;
 import rip.vantage.commons.packet.impl.server.protection.S2CPacketConfig;
 import rip.vantage.commons.packet.impl.server.protection.S2CPacketProofOfWorkChallenge;
 import rip.vantage.security.IntegrityGuard;
 
-public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler {
-    private final rip.vantage.commons.util.time.a eRz = new rip.vantage.commons.util.time.a();
+public final class BackendPacketHandler implements rip.vantage.commons.handler.api.S2CPacketHandler {
+    private final rip.vantage.commons.util.time.StopWatch eRz = new rip.vantage.commons.util.time.StopWatch();
 
-    public b() {
+    public BackendPacketHandler() {
     }
 
     @Override
@@ -68,7 +68,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
             NetworkManager networkmanager = nethandlerplayclient.getNetworkManager();
             String s2 = networkmanager.getRemoteAddress().toString().split(":")[0];
             int j = Integer.parseInt(networkmanager.getRemoteAddress().toString().split(":")[1]);
-            rip.vantage.network.core.a.aKB().aKK().sendMessage(new d(s2, j, InstanceAccess.aEg.getSession().getUsername()).aJk());
+            rip.vantage.network.core.VantageNetwork.aKB().aKK().sendMessage(new C2SPacketConfirmServer(s2, j, InstanceAccess.aEg.getSession().getUsername()).aJk());
         }
     }
 
@@ -327,12 +327,12 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
     }
 
     @Override
-    public void handle(rip.vantage.commons.packet.impl.server.community.e var1) {
+    public void handle(rip.vantage.commons.packet.impl.server.community.S2CPacketTroll var1) {
         Client.a.e().d(new er(var1));
     }
 
-    public void handle(rip.vantage.commons.packet.impl.server.general.a var1) {
-        c.eRC.aX();
+    public void handle(rip.vantage.commons.packet.impl.server.general.S2CPacketKeepAlive var1) {
+        BackendWebSocket.eRC.aX();
         this.eRz.aX();
     }
 
@@ -352,7 +352,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                 throw new SecurityException("EC40");
             }
 
-            rip.vantage.network.core.a.aKB().n(abyte);
+            rip.vantage.network.core.VantageNetwork.aKB().n(abyte);
         } else {
             System.out.println("EC151");
             rip.vantage.util.NativeBridge.kF(1);
@@ -402,7 +402,7 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
     }
 
     @Override
-    public void handle(rip.vantage.commons.packet.impl.server.protection.h var1) {
+    public void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketKeyShare var1) {
     }
 
     @Override

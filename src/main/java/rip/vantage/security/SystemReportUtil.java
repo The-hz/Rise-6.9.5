@@ -29,7 +29,7 @@ public class SystemReportUtil {
     SystemReportUtil() {
     }
 
-    public static g aLM() {
+    public static SystemReportEntry aLM() {
         return null;
     }
 

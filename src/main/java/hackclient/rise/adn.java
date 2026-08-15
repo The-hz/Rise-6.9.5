@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class adn extends GuiScreen {
     private final String aCj = "";
     private final String aCk = "";
     private final ArrayList<IntroLine> aCl = new IntroSequenceLines(this);
-    private final a aCm = new a();
+    private final StopWatch aCm = new StopWatch();
     private final int aCn = 0;
     private boolean yr = false;
     private final Animation aCo = new Animation(Easing.EASE_IN_OUT_CUBIC, 3000L);

@@ -13,7 +13,7 @@ import hackclient.rise.afl;
 import hackclient.rise.agc;
 import lombok.Generated;
 import net.minecraft.util.StringUtils;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class ConfigCard implements InstanceAccess {
     private String title;
@@ -23,7 +23,7 @@ public class ConfigCard implements InstanceAccess {
     private Animation aAb = new Animation(Easing.LINEAR, 200L);
     private Animation aAc = new Animation(Easing.EASE_OUT_EXPO, 500L);
     private Vector2f axI;
-    private a asY;
+    private StopWatch asY;
     private agc aAd = FontManager.MAIN.a(20, FontWeight.REGULAR);
 
     public ConfigCard(String var1, String var2) {
@@ -107,7 +107,7 @@ public class ConfigCard implements InstanceAccess {
     }
 
     @Generated
-    public a qD() {
+    public StopWatch qD() {
         return this.asY;
     }
 
@@ -152,7 +152,7 @@ public class ConfigCard implements InstanceAccess {
     }
 
     @Generated
-    public void b(a var1) {
+    public void b(StopWatch var1) {
         this.asY = var1;
     }
 

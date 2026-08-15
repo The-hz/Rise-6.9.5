@@ -27,7 +27,7 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(
     aliases = "module.render.hotbar.name",
@@ -39,7 +39,7 @@ import rip.vantage.commons.util.time.a;
 public class HotBar extends Module {
     private final DragValue structure = new DragValue("", this, new Vector2d(200.0, 200.0), false, true);
     private static final ResourceLocation WIDGETS_TEXTURE = new ResourceLocation("textures/gui/widgets.png");
-    private final a stopwatch = new a();
+    private final StopWatch stopwatch = new StopWatch();
     private float rPosX;
     private float xpProgress = 0.0F;
     private Interface interfaceModule;

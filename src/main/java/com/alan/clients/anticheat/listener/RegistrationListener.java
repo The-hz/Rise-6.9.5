@@ -1,12 +1,12 @@
-package hackclient.rise;
+package com.alan.clients.anticheat.listener;
 
 import com.alan.clients.Client;
 import com.alan.clients.anticheat.data.PlayerData;
 import java.util.UUID;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 
-public final class n {
-    public n() {
+public final class RegistrationListener {
+    public RegistrationListener() {
     }
 
     public void b(EntityOtherPlayerMP other) {

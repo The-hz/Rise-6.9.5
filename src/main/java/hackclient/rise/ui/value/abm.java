@@ -11,10 +11,10 @@ import hackclient.rise.ahd;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class abm extends ValueComponent {
-    private final a ayE = new a();
+    private final StopWatch ayE = new StopWatch();
     private double axp;
 
     public abm(Value<?> var1) {

@@ -21,14 +21,14 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class ClutchNoFall extends Mode<NoFall> {
     private ClutchState state = ClutchState.IDLE;
     private BlockPos landingPos = null;
     private BlockPos waterPos = null;
-    private a stateTimer = new a();
-    private a placeTimer = new a();
+    private StopWatch stateTimer = new StopWatch();
+    private StopWatch placeTimer = new StopWatch();
     private int waterSlot = -1;
     private int bucketSlot = -1;
     private boolean placed = false;

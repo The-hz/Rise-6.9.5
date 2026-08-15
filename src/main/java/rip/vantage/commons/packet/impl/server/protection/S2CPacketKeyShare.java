@@ -3,10 +3,10 @@ package rip.vantage.commons.packet.impl.server.protection;
 import java.util.Base64;
 import org.json.JSONObject;
 
-public class h extends rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket {
+public class S2CPacketKeyShare extends rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket {
     private final byte[] eQG;
 
-    public h(JSONObject json) {
+    public S2CPacketKeyShare(JSONObject json) {
         super((byte)32);
         this.eQG = Base64.getDecoder().decode(json.optString("a", ""));
     }

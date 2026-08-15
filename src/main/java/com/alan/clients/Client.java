@@ -28,7 +28,7 @@ import com.alan.clients.util.file.data.DataManager;
 import com.alan.clients.util.file.insult.InsultFile;
 import com.alan.clients.util.file.insult.InsultManager;
 import com.alan.clients.util.localization.Locale;
-import hackclient.rise.b;
+import com.alan.clients.anticheat.CheatDetector;
 import com.alan.clients.creative.RiseTab;
 import com.alan.clients.util.shader.ShaderRenderManager;
 import com.alan.clients.keybind.KeybindManager;
@@ -77,10 +77,10 @@ public enum Client
     public static Client[] $VALUES;
 
 
-    public b w;
+    public CheatDetector w;
     public static boolean h;
     public Locale locale;
-    public com.alan.clients.security.b r;
+    public com.alan.clients.security.CrashCheckManager r;
 
     @Generated
     public void setScriptManager(final ScriptManager scriptManager) {
@@ -93,7 +93,7 @@ public enum Client
     }
 
     @Generated
-    public com.alan.clients.security.b j() {
+    public com.alan.clients.security.CrashCheckManager j() {
         return this.r;
     }
 
@@ -120,7 +120,7 @@ public enum Client
     }
 
     @Generated
-    public b n() {
+    public CheatDetector n() {
         return this.w;
     }
 
@@ -196,7 +196,7 @@ public enum Client
     }
 
     @Generated
-    public void a(final com.alan.clients.security.b r) {
+    public void a(final com.alan.clients.security.CrashCheckManager r) {
         this.r = r;
     }
 
@@ -379,11 +379,11 @@ public enum Client
         this.altManager = new AltManager();
         this.insultManager = new InsultManager();
         this.dataManager = new DataManager();
-        this.r = new com.alan.clients.security.b();
+        this.r = new com.alan.clients.security.CrashCheckManager();
         this.botManager = new BotManager();
         this.themeManager = new ThemeManager();
         this.scriptManager = new ScriptManager();
-        this.w = new b();
+        this.w = new CheatDetector();
         this.eventBus = new EventBus<Event>();
         this.securityManager = new SecurityFeatureManager();
         this.F = new KeybindManager();

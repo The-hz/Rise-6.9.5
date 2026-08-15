@@ -18,11 +18,11 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import lombok.Generated;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public final class ConfigScreen implements Screen, InstanceAccess {
     public final TextBox azM = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(20, FontWeight.REGULAR), Color.WHITE, TextAlign.CENTER, "Start typing to search...", 150.0F);
-    private final a azN = new a();
+    private final StopWatch azN = new StopWatch();
     public agk scrollUtil = new agk();
     public ArrayList<ModuleComponent> relevantModules = new ArrayList<>();
     private double axT = 255.0;
@@ -165,7 +165,7 @@ public final class ConfigScreen implements Screen, InstanceAccess {
     }
 
     @Generated
-    public a lN() {
+    public StopWatch lN() {
         return this.azN;
     }
 

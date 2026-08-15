@@ -1,9 +1,9 @@
 package rip.vantage.commons.util.time;
 
-public class a {
+public class StopWatch {
     public long millis;
 
-    public a() {
+    public StopWatch() {
         this.aX();
     }
 

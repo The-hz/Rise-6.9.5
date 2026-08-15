@@ -25,7 +25,7 @@ import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = {"module.player.stealer.name", "Stealer"}, description = "module.player.stealer.description", category = Category.PLAYER)
 public class Stealer extends Module {
@@ -34,7 +34,7 @@ public class Stealer extends Module {
     private final BooleanValue ignoreTrash = new BooleanValue("Ignore Trash", this, true);
     private final BooleanValue respectManagerRules = new BooleanValue("Respect Manager Rules", this, true);
     private final BooleanValue guiDetection = new BooleanValue("Gui Detection", this, true);
-    private final a stopwatch = new a();
+    private final StopWatch stopwatch = new StopWatch();
     private long nextClick;
     private int lastClick;
     private int lastSteal;

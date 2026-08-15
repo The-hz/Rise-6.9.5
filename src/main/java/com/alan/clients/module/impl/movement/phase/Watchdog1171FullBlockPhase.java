@@ -27,13 +27,13 @@ import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class Watchdog1171FullBlockPhase extends Mode<Phase> {
     public final BooleanValue smartModeIfYouWantItToBeAlwaysBeToggledOn = new BooleanValue("Smart Mode (if you want it to be always be toggled on)", this, false);
     public final BooleanValue silent = new BooleanValue("Silent", this, false);
     private boolean readyToTeleport;
-    private final a Oy = new a();
+    private final StopWatch Oy = new StopWatch();
     private boolean ys;
     private static final int SEARCH_RADIUS = 10;
     private static final double BACKWARD_ANGLE_COS = Math.cos(Math.toRadians(130.0));

@@ -4,10 +4,10 @@ import rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorPing;
 import rip.vantage.commons.packet.impl.server.protection.S2CPacketJdkUnlockGrant;
 import rip.vantage.commons.packet.impl.server.protection.S2CPacketServerJoin;
 import rip.vantage.commons.packet.impl.server.protection.S2CPacketConfig;
-import rip.vantage.commons.packet.impl.server.protection.h;
+import rip.vantage.commons.packet.impl.server.protection.S2CPacketKeyShare;
 
 public interface S2CPacketHandler extends PacketHandler {
-    void handle(h var1);
+    void handle(S2CPacketKeyShare var1);
 
     void handle(rip.vantage.commons.packet.impl.server.management.S2CPacketHudRefresh packet);
 
@@ -27,7 +27,7 @@ public interface S2CPacketHandler extends PacketHandler {
 
     void b(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorCommand packet);
 
-    void handle(rip.vantage.commons.packet.impl.server.community.e var1);
+    void handle(rip.vantage.commons.packet.impl.server.community.S2CPacketTroll var1);
 
     void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketAccount packet);
 

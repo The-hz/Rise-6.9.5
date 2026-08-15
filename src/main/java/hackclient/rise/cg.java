@@ -17,11 +17,11 @@ import com.alan.clients.util.tuples.Triple;
 import com.alan.clients.util.vector.Vector2d;
 import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class cg extends Component {
     private static final adz<Triple<String, String, Integer>> queue = new adz<>(5);
-    private static final a time = new a();
+    private static final StopWatch time = new StopWatch();
     private static Triple<String, String, Integer> current;
     private static final Animation animation = new Animation(Easing.EASE_OUT_EXPO, 900L);
     private static final Vector2d SCALE = new Vector2d(140.0, 30.0);

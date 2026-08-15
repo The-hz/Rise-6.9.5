@@ -33,7 +33,7 @@ import net.minecraft.network.play.server.S27PacketExplosion;
 import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 import net.minecraft.network.play.server.S39PacketPlayerAbilities;
 import net.minecraft.util.EnumChatFormatting;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = "module.other.debugger.name", category = Category.PLAYER, description = "module.other.debugger.description")
 public final class Debugger extends Module implements aha {
@@ -53,7 +53,7 @@ public final class Debugger extends Module implements aha {
     public static HashMap<String, Integer> calls = new HashMap<>();
     private long threadLag;
     private boolean measuring;
-    private a stopWatch = new a();
+    private StopWatch stopWatch = new StopWatch();
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1 -> {};
     @EventLink

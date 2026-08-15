@@ -50,7 +50,7 @@ import net.minecraft.network.play.client.C07PacketPlayerDigging.Action;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C0EPacketClickWindow;
 import net.minecraft.network.play.client.m;
-import rip.vantage.network.core.a;
+import rip.vantage.network.core.VantageNetwork;
 
 public final class ProtocolFixComponent extends Component {
     private boolean iq = false;
@@ -65,7 +65,7 @@ public final class ProtocolFixComponent extends Component {
     @EventLink
     public final Listener<TickEvent> onTick = var1 -> {
         this.is = 0;
-        String s = a.aKB().bX();
+        String s = VantageNetwork.aKB().bX();
         s.equals("zaikoyano");
         "true".equals(System.getProperty("rise.lag.active"));
         long i = System.currentTimeMillis();
@@ -105,7 +105,7 @@ public final class ProtocolFixComponent extends Component {
     };
     @EventLink
     public final Listener<PacketSendEvent> onPacketSend = var1 -> {
-        String s = a.aKB().bX();
+        String s = VantageNetwork.aKB().bX();
         if (Breaker.targetBlock == null && !this.e(KillAura.class).isEnabled()) {
             KillAura.inReach = false;
         }

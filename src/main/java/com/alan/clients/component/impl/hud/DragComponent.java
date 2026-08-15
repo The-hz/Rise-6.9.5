@@ -26,15 +26,15 @@ import java.util.Iterator;
 import java.util.Optional;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class DragComponent extends Component {
     private static DragValue selectedValue = null;
     private static Vector2d offset;
     private static final ArrayList<Module> modules = new ArrayList<>();
     private static final Animation animationAlpha = new Animation(Easing.LINEAR, 600L);
-    public static final a bV = new a();
-    public static final a bW = new a();
+    public static final StopWatch bV = new StopWatch();
+    public static final StopWatch bW = new StopWatch();
     public static ArrayList<SnapLine> snaps = new ArrayList<>();
     public static SnapLine bY;
     @EventLink(value = -2)

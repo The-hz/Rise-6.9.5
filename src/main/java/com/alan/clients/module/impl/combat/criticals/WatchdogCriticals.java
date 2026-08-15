@@ -10,12 +10,12 @@ import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public final class WatchdogCriticals extends Mode<Criticals> {
     private final NumberValue delay = new NumberValue("Delay", this, 500, 0, 1000, 50);
     private final double[] offsets = new double[]{1.0E-6, MoveUtil.predictedMotion(0.03125, 1)};
-    private final a stopwatch = new a();
+    private final StopWatch stopwatch = new StopWatch();
     public static boolean gD;
     public static boolean pendingCrit;
     private int critTicks;

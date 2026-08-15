@@ -4,15 +4,15 @@ import org.json.JSONObject;
 import rip.vantage.commons.handler.api.S2CPacketHandler;
 import rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket;
 
-public class a extends AbstractS2CPacket {
+public class S2CPacketKeepAlive extends AbstractS2CPacket {
     long a;
 
-    public a() {
+    public S2CPacketKeepAlive() {
         super((byte)0);
         this.a = System.currentTimeMillis();
     }
 
-    public a(JSONObject json) {
+    public S2CPacketKeepAlive(JSONObject json) {
         super((byte)0);
         this.a = json.getLong("a");
     }

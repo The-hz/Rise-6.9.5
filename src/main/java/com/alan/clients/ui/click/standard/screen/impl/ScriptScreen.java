@@ -38,7 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import rip.vantage.commons.packet.impl.client.community.C2SPacketConfigRequest;
 import rip.vantage.commons.packet.impl.client.protection.C2SPacketConfig;
-import rip.vantage.network.core.a;
+import rip.vantage.network.core.VantageNetwork;
 
 public final class ScriptScreen
 implements Screen,
@@ -63,7 +63,7 @@ InstanceAccess {
                 String string = StringUtils.capitalize(jSONObject.getString("a"));
                 jSONObject.getString("b");
                 String string2 = jSONObject.getString("c");
-                this.azG.add(new ConfigCard("Click to load", string, () -> a.aKB().aKK().sendMessage(new C2SPacketConfigRequest(string2).aJk())));
+                this.azG.add(new ConfigCard("Click to load", string, () -> VantageNetwork.aKB().aKK().sendMessage(new C2SPacketConfigRequest(string2).aJk())));
             }
         }
     };
@@ -175,11 +175,11 @@ InstanceAccess {
             if (abd2.getModule().getModuleInfo().category() != Category.SCRIPT) return false;
             return true;
         }).collect(Collectors.toCollection(ArrayList::new));
-        a.aKB().aKK().sendMessage(new rip.vantage.commons.packet.impl.client.community.C2SPacketConfigListRequest().aJk());
+        VantageNetwork.aKB().aKK().sendMessage(new rip.vantage.commons.packet.impl.client.community.C2SPacketConfigListRequest().aJk());
         new Thread(() -> {
             ArrayList<Triple<String, String, String>> arrayList = this.qi();
             this.azF.clear();
-            arrayList.forEach(ajt2 -> this.azF.add(new ConfigCard("Click to load", (String)ajt2.getFirst(), () -> a.aKB().aKK().sendMessage(new C2SPacketConfig(NetworkUtil.aY("https://raw.githubusercontent.com/risellc/RiseOnlineConfigs/main/" + ((String)ajt2.getFirst()).toLowerCase() + ".json")).aJk()))));
+            arrayList.forEach(ajt2 -> this.azF.add(new ConfigCard("Click to load", (String)ajt2.getFirst(), () -> VantageNetwork.aKB().aKK().sendMessage(new C2SPacketConfig(NetworkUtil.aY("https://raw.githubusercontent.com/risellc/RiseOnlineConfigs/main/" + ((String)ajt2.getFirst()).toLowerCase() + ".json")).aJk()))));
         }).start();
     }
 

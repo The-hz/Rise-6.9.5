@@ -7,12 +7,12 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.AttackEvent;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public final class EditCriticals extends Mode<Criticals> {
     private final NumberValue delay = new NumberValue("Delay", this, 500, 0, 1000, 50);
     private final double[] VALUES = new double[]{5.0E-4, 1.0E-4};
-    private final a stopwatch = new a();
+    private final StopWatch stopwatch = new StopWatch();
     private boolean attacked;
     private int ticks;
     @EventLink

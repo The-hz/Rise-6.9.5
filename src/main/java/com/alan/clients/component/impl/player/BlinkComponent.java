@@ -60,11 +60,11 @@ import net.minecraft.network.play.server.ad;
 import net.minecraft.network.play.server.k;
 import net.minecraft.network.play.server.z;
 import net.minecraft.util.Tuple;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public final class BlinkComponent extends Component {
     public static ConcurrentLinkedQueue<TimedPacket> packets = new ConcurrentLinkedQueue<>();
-    static a dP = new a();
+    static StopWatch dP = new StopWatch();
     public static boolean enabled;
     static long dQ;
     private static final Object dR = new Object();

@@ -59,7 +59,7 @@ import net.minecraft.network.play.client.q;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = {"module.player.manager.name", "Manager"}, description = "module.player.manager.description", category = Category.PLAYER)
 public class Manager extends Module {
@@ -92,7 +92,7 @@ public class Manager extends Module {
     private static final int HOTBAR_LAST_SLOT = 8;
     private static final int INVENTORY_FIRST_SLOT = 9;
     private static final int INVENTORY_LAST_SLOT = 35;
-    private final a stopwatch = new a();
+    private final StopWatch stopwatch = new StopWatch();
     private int chestTicks;
     private int attackTicks;
     private int placeTicks;

@@ -49,7 +49,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 import rip.vantage.commons.packet.impl.client.community.C2SPacketStoreDelivery;
-import rip.vantage.network.core.a;
+import rip.vantage.network.core.VantageNetwork;
 
 public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceAccess {
     private static final String API_KEY_SETTINGS_URL = "https://localts.store/user/settings";
@@ -294,7 +294,7 @@ public class AddLocaltsScreen extends GuiScreen implements MenuColors, InstanceA
 
     private static void sendLocaltsDeliveryPacket(LocaltsProduct var0, String var1, int var2, boolean var3) {
         try {
-            a aInstance = a.aKB();
+            VantageNetwork aInstance = VantageNetwork.aKB();
             if (aInstance.aKK() == null || aInstance.bX() == null || aInstance.bX().trim().isEmpty()) {
                 return;
             }

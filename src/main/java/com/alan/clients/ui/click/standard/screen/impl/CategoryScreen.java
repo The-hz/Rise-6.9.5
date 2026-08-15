@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 import lombok.Generated;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public final class CategoryScreen implements Screen, InstanceAccess {
-    private final a azA = new a();
+    private final StopWatch azA = new StopWatch();
     public agk scrollUtil = new agk();
     public ArrayList<ModuleComponent> relevantModules;
     public Category category;
@@ -116,7 +116,7 @@ public final class CategoryScreen implements Screen, InstanceAccess {
     }
 
     @Generated
-    public a lN() {
+    public StopWatch lN() {
         return this.azA;
     }
 

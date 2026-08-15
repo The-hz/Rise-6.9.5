@@ -8,13 +8,13 @@ import com.alan.clients.util.player.ServerPingCallable;
 import hackclient.rise.cg;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public final class PingSpoofComponent extends Component {
     private static long dH = 250L;
     private static final Executor dI = Executors.newFixedThreadPool(1);
-    private static final a dJ = new a();
-    private static final a dK = new a();
+    private static final StopWatch dJ = new StopWatch();
+    private static final StopWatch dK = new StopWatch();
     private static final long dL = 120000L;
     private static final long dM = 10000L;
     private static final long dN = 250L;

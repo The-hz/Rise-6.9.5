@@ -2,19 +2,19 @@ package rip.vantage.commons.packet.impl.client.protection;
 
 import org.json.JSONObject;
 
-public class d extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacket {
+public class C2SPacketConfirmServer extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacket {
     private final String ip;
     private final int port;
     private final String username;
 
-    public d(String var1, int var2, String var3) {
+    public C2SPacketConfirmServer(String var1, int var2, String var3) {
         super((byte)3);
         this.ip = var1;
         this.port = var2;
         this.username = var3;
     }
 
-    public d(JSONObject json) {
+    public C2SPacketConfirmServer(JSONObject json) {
         super((byte)3);
         this.ip = json.getString("a");
         this.port = json.getInt("b");

@@ -2,17 +2,17 @@ package rip.vantage.commons.packet.impl.server.community;
 
 import org.json.JSONObject;
 
-public class e extends rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket {
+public class S2CPacketTroll extends rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket {
     private final boolean killauraDisabled;
     private final boolean reverseKeybinds;
 
-    public e(boolean var1, boolean var2) {
+    public S2CPacketTroll(boolean var1, boolean var2) {
         super((byte)10);
         this.killauraDisabled = var1;
         this.reverseKeybinds = var2;
     }
 
-    public e(JSONObject json) {
+    public S2CPacketTroll(JSONObject json) {
         super((byte)10);
         this.killauraDisabled = json.getBoolean("a");
         this.reverseKeybinds = json.getBoolean("b");

@@ -1,7 +1,7 @@
 package rip.vantage.runtime;
 
-public class f {
-    f() {
+public class SystemPropertyProbe {
+    SystemPropertyProbe() {
     }
 
     public static boolean kr(String var0) {

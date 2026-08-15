@@ -8,12 +8,12 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.packet.PacketUtil;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public final class PacketCriticals extends Mode<Criticals> {
     private final NumberValue delay = new NumberValue("Delay", this, 500, 0, 1000, 1);
     private final double[] offsets = new double[]{0.42, 0.0};
-    private final a stopwatch = new a();
+    private final StopWatch stopwatch = new StopWatch();
     @EventLink
     public final Listener<AttackEvent> onAttack = var1x -> {
         if (this.stopwatch.T(this.delay.wo().longValue()) && aEg.thePlayer.cqL > 0) {

@@ -85,7 +85,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings.GameType;
 import net.minecraft.world.chunk.Chunk;
 import rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStopRecording;
-import rip.vantage.network.core.a;
+import rip.vantage.network.core.VantageNetwork;
 
 public class bo extends Component {
     public int eX;
@@ -135,7 +135,7 @@ public class bo extends Component {
     public void uploadRecording(String var1, byte[] var2, String var3) {
 
         try {
-            if (var1 == null || a.aKB().aKK() == null) {
+            if (var1 == null || VantageNetwork.aKB().aKK() == null) {
                 return;
             }
 
@@ -145,8 +145,8 @@ public class bo extends Component {
             int l2 = l;
             String s1 = s3;
             String s2 = "{\"id\":30,\"a\":\"" + s1 + "\",\"b\":" + l2 + ",\"c\":\"" + s + "\"}";
-            a.aKB().aKK().sendMessage(s2);
-            a.aKB().aKK().o(var2);
+            VantageNetwork.aKB().aKK().sendMessage(s2);
+            VantageNetwork.aKB().aKK().o(var2);
         } catch (Exception exception) {
         }
     }

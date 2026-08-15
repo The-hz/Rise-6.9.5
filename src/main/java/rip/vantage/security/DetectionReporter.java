@@ -2,7 +2,7 @@ package rip.vantage.security;
 
 import java.security.SecureRandom;
 
-public class a {
+public class DetectionReporter {
     public static SecureRandom eSi;
     public static volatile boolean eSh;
 
@@ -15,7 +15,7 @@ public class a {
     public static void ks(String var0) {
     }
 
-    a() {
+    DetectionReporter() {
     }
 
     public static boolean aLp() {

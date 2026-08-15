@@ -5,7 +5,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.util.render.ColorUtil;
 import java.awt.Color;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class Particle implements InstanceAccess {
     private final Vector2f aPu;
@@ -14,8 +14,8 @@ public class Particle implements InstanceAccess {
     private final Color aPx;
     private Color aPy;
     private Color aPz;
-    public a bN = new a();
-    public a hj = new a();
+    public StopWatch bN = new StopWatch();
+    public StopWatch hj = new StopWatch();
     public float alpha;
 
     public Particle(Vector2f vec2, Color color, Vector2f var3, float var4) {

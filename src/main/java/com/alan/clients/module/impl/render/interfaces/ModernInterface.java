@@ -39,7 +39,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class ModernInterface
 extends Mode<Interface> {
@@ -48,7 +48,7 @@ extends Mode<Interface> {
     private final agc medium18Font = FontManager.MAIN.a(18, FontWeight.MEDIUM);
     private final agc regular18Font = FontManager.MAIN.a(18, FontWeight.REGULAR);
     agc arrayListFont = FontManager.MAIN.a(18, FontWeight.REGULAR);
-    private final a particleStopWatch = new a();
+    private final StopWatch particleStopWatch = new StopWatch();
     private final ModeValue arrayListColorMode = new ModernArrayListColorModeValue(this, "ArrayList Color Mode", this);
     private final ModeValue arrayListFontMode = new ArrayListFontModeValue(this, "ArrayList Font", this);
     private final StringValue customInstalledFont = new StringValue("Custom Installed Font", (Mode<?>)this, "Arial", () -> {
@@ -68,7 +68,7 @@ extends Mode<Interface> {
     private float userWidth;
     private float xyzWidth;
     private Color logoColor = new Color(0);
-    private final a particleCycleStopWatch = new a();
+    private final StopWatch particleCycleStopWatch = new StopWatch();
     @EventLink
     public final Listener<Render2DEvent> onRender2D = render2DEvent -> {
         double d2;
@@ -123,7 +123,7 @@ extends Mode<Interface> {
                 agc agc2 = FontManager.MAIN.a(18, FontWeight.MEDIUM);
                 agc agc3 = FontManager.MAIN.a(18, FontWeight.BOLD);
                 String string = "6.9.5";
-                String string2 = rip.vantage.network.core.a.aKB().bX();
+                String string2 = rip.vantage.network.core.VantageNetwork.aKB().bX();
                 String string3 = "User:";
                 float f5 = agc2.getStringWidth("Version:\u2009\u2009\u2009\u2009\u2009\u2009");
                 float f6 = agc3.getStringWidth(string);
@@ -193,7 +193,7 @@ extends Mode<Interface> {
         if (!this.particleStopWatch.T(2000L)) {
             this.b(ShaderQueueType.BLOOM).c(ParticleComponent::cj);
         }
-        String string = rip.vantage.network.core.a.aKB().bX();
+        String string = rip.vantage.network.core.VantageNetwork.aKB().bX();
         String string2 = "User:";
         String string3 = "6.9.5";
         agc agc2 = FontManager.MAIN.a(18, FontWeight.MEDIUM);

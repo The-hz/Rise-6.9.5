@@ -4,11 +4,11 @@ import com.alan.clients.component.Component;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreMotionEvent;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class cl extends Component {
     public static double y;
-    public static a bN = new a();
+    public static StopWatch bN = new StopWatch();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {
         if (!bN.T(80L)) {

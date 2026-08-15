@@ -30,12 +30,12 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import net.minecraft.client.gui.ScaledResolution;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class LoginMenu
 extends Menu {
     public String aCA;
-    public a bN;
+    public StopWatch bN;
     public MenuTextButton emailButton;
     @EventLink
     public Listener<er> aCE;
@@ -119,8 +119,8 @@ extends Menu {
                 exception.printStackTrace();
             }
         }
-        rip.vantage.network.core.a.aKB().kj(string);
-        rip.vantage.network.core.a.aKB().aKI();
+        rip.vantage.network.core.VantageNetwork.aKB().kj(string);
+        rip.vantage.network.core.VantageNetwork.aKB().aKI();
         this.aCz = true;
         this.bN.aX();
     }
@@ -133,7 +133,7 @@ extends Menu {
 
     public LoginMenu() {
         this.fadeAnimation = new Animation(Easing.EASE_IN_OUT_CUBIC, 3000L);
-        this.bN = new a();
+        this.bN = new StopWatch();
         this.aCE = er2 -> {
             String string;
             String string2;
@@ -141,7 +141,7 @@ extends Menu {
             if (!(er2.dd() instanceof rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication)) return;
             b2 = (rip.vantage.commons.packet.impl.server.protection.S2CPacketAuthentication)er2.dd();
             System.out.println("Auth");
-            rip.vantage.network.handler.c.eRC.aX();
+            rip.vantage.network.handler.BackendWebSocket.eRC.aX();
             int aKi2 = (int)(b2.isSuccess() ? 1L : 0L);
             this.aCC = false;
             if (aKi2 != 0 && (string2 = b2.getExpectedHwid()) != null && !string2.isEmpty() && !rip.vantage.security.IntegrityGuard.aL(string = aju.vW(), string2)) {

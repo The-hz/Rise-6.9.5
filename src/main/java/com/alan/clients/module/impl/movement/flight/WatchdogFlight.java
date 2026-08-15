@@ -34,7 +34,7 @@ import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.MathHelper;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class WatchdogFlight extends Mode<Flight> {
     private int previousSlot = -1;
@@ -46,7 +46,7 @@ public class WatchdogFlight extends Mode<Flight> {
     private boolean waitingForVelocity;
     private AntiFireBall antiFireBall;
     private final ArrayList<Packet<?>> packets = new ArrayList<>();
-    a stopwatch = new a();
+    StopWatch stopwatch = new StopWatch();
     private boolean pendingVelocity;
     private boolean replayingPackets;
     private boolean boosting;

@@ -128,7 +128,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.Vec3;
 import org.lwjgl.opengl.GL11;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = {"module.combat.killaura.name", "Aura", "Force Field"}, description = "module.combat.killaura.description", category = Category.COMBAT)
 public class KillAura extends Module {
@@ -196,7 +196,7 @@ public class KillAura extends Module {
    public int attackPending;
    public NumberValue advancedMinStep;
    public NumberValue advancedTriggerReactionJitter;
-   public a swingTimer;
+   public StopWatch swingTimer;
    public BooleanValue silentRotations;
    public NumberValue advancedFlickMax;
    public ModeValue sorting;
@@ -213,7 +213,7 @@ public class KillAura extends Module {
    public float ok;
    public List<EntityLivingBase> targets;
    public int ticksSinceAttack;
-   public a attackTimer;
+   public StopWatch attackTimer;
    public int lastSlotFlickTick;
    public BooleanValue attackWhilstScaffolding;
    public Entity target;
@@ -998,8 +998,8 @@ public class KillAura extends Module {
       this.knockback = new BooleanValue("Knockback", this, false, () -> !this.weapons.wo());
       this.fireAspect = new BooleanValue("Fire aspect", this, false, () -> !this.weapons.wo());
       this.heldPackets = new ConcurrentLinkedQueue<>();
-      this.attackTimer = new a();
-      this.swingTimer = new a();
+      this.attackTimer = new StopWatch();
+      this.swingTimer = new StopWatch();
       this.shortBlockCycle = false;
       this.random = new Random();
       this.oe = 100;

@@ -16,7 +16,7 @@ import lombok.Generated;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatAllowedCharacters;
 import org.lwjgl.input.Keyboard;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class TextBox {
     public String text = "";
@@ -37,7 +37,7 @@ public class TextBox {
     private double aJs;
     private float aJt;
     private float aJu;
-    public a aJv = new a();
+    public StopWatch aJv = new StopWatch();
 
     public TextBox(Vector2d position, agc var2, Color color, TextAlign var4, String var5, float width, boolean var7) {
         this.position = position;
@@ -369,7 +369,7 @@ public class TextBox {
     }
 
     @Generated
-    public a tY() {
+    public StopWatch tY() {
         return this.aJv;
     }
 
@@ -464,7 +464,7 @@ public class TextBox {
     }
 
     @Generated
-    public void e(a var1) {
+    public void e(StopWatch var1) {
         this.aJv = var1;
     }
 }

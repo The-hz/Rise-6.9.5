@@ -25,7 +25,7 @@ import javax.vecmath.Vector4d;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.entity.Entity;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = "module.render.targetinfo.name", description = "module.render.targetinfo.description", category = Category.RENDER)
 public final class TargetInfo extends Module {
@@ -45,7 +45,7 @@ public final class TargetInfo extends Module {
     public Entity target;
     public double distanceSq;
     public boolean inWorld;
-    public a stopwatch = new a();
+    public StopWatch stopwatch = new StopWatch();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (aEg.currentScreen instanceof GuiChat) {

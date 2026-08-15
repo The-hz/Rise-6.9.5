@@ -399,7 +399,7 @@ public class NativeBridge {
         return null;
     }
 
-    public static b aNv() {
+    public static NetworkInterfaceInfo aNv() {
         return null;
     }
 

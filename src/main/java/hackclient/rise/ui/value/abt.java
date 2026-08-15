@@ -14,12 +14,12 @@ import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class abt extends ValueComponent {
     private static final double azf = 100.0;
     private final double azg = 5.0;
-    private final a azh = new a();
+    private final StopWatch azh = new StopWatch();
     public boolean azi;
     private double azj;
     private double azk;

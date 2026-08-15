@@ -24,7 +24,7 @@ extends Module {
         if (string.startsWith("#") && string.length() > 1) {
             chatInputEvent.setCancelled();
             String string2 = StringUtils.normalizeSpace(string.substring(1));
-            rip.vantage.network.core.a.aKB().aKK().sendMessage(new C2SPacketChatMessage(string2).aJk());
+            rip.vantage.network.core.VantageNetwork.aKB().aKK().sendMessage(new C2SPacketChatMessage(string2).aJk());
         }
     };
     @EventLink

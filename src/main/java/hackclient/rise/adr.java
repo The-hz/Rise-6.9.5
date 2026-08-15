@@ -18,7 +18,7 @@ import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiSelectWorld;
 import net.minecraft.client.gui.ScaledResolution;
-import rip.vantage.network.core.a;
+import rip.vantage.network.core.VantageNetwork;
 
 public final class adr extends Menu {
     private Animation animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
@@ -82,7 +82,7 @@ public final class adr extends Menu {
         switch (var2) {
             case 203:
                 System.out.println("Reconnecting");
-                a.aKB().aKI();
+                VantageNetwork.aKB().aKI();
         }
     }
 

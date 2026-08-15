@@ -22,14 +22,14 @@ import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.network.play.client.C02PacketUseEntity.Action;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.m;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = "module.player.antifireball.name", description = "module.player.antifireball.description", category = Category.PLAYER)
 public class AntiFireBall extends Module {
     private final BooleanValue rotations = new BooleanValue("Rotate", this, true);
     private final BooleanValue movementCorrection = new BooleanValue("Movement Correction", this, true, () -> !this.rotations.wo());
     private final BooleanValue badPacketsCheck = new BooleanValue("Bad Packets Check", this, false);
-    public final a cooldownStopWatch = new a();
+    public final StopWatch cooldownStopWatch = new StopWatch();
     public int cooldownMs = 0;
     private final HashSet<UUID> attackedFireballs = new HashSet<>();
     @EventLink(value = -100)

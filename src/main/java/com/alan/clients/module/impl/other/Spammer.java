@@ -10,13 +10,13 @@ import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
 import hackclient.rise.afi;
 import com.alan.clients.util.player.ServerUtil;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = "module.other.spammer.name", description = "module.other.spammer.description", category = Category.PLAYER)
 public final class Spammer extends Module {
     private final StringValue message = new StringValue("Message", this, "Buy Rise at riseclient.com!");
     private final NumberValue delay = new NumberValue("Delay", this, 3000, 0, 20000, 1);
-    private final a stopWatch = new a();
+    private final StopWatch stopWatch = new StopWatch();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (ServerUtil.cg("loyisa.cn") && this.message.wo().startsWith("/")) {

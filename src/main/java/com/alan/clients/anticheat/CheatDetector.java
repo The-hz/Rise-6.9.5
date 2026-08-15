@@ -1,20 +1,21 @@
-package hackclient.rise;
+package com.alan.clients.anticheat;
 
 import com.alan.clients.anticheat.alert.AlertManager;
 import com.alan.clients.anticheat.check.manager.CheckManager;
 import com.alan.clients.anticheat.data.PlayerData;
+import com.alan.clients.anticheat.listener.RegistrationListener;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.Generated;
 import net.minecraft.client.Minecraft;
 
-public final class b {
+public final class CheatDetector {
     public final Map<UUID, PlayerData> playerMap = new ConcurrentHashMap<>();
-    private final n registrationListener = new n();
+    private final RegistrationListener registrationListener = new RegistrationListener();
     private final AlertManager alertManager = new AlertManager();
 
-    public b() {
+    public CheatDetector() {
         CheckManager.setup();
     }
 
@@ -34,7 +35,7 @@ public final class b {
     }
 
     @Generated
-    public n H() {
+    public RegistrationListener H() {
         return this.registrationListener;
     }
 

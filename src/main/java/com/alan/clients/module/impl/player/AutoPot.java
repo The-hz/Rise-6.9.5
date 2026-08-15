@@ -24,14 +24,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = "module.player.autopot.name", description = "module.player.autopot.description", category = Category.PLAYER)
 public class AutoPot extends Module {
     private final NumberValue health = new NumberValue("Health", this, 15, 1, 20, 1);
     private final BoundsNumberValue delay = new BoundsNumberValue("Delay", this, 500, 1000, 50, 5000, 50);
     private final BoundsNumberValue rotationSpeed = new BoundsNumberValue("Rotation Speed", this, 5, 10, 0, 10, 1);
-    private final a stopWatch = new a();
+    private final StopWatch stopWatch = new StopWatch();
     private int attackTicks;
     private long nextThrow;
     @EventLink

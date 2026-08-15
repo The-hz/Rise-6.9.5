@@ -2,7 +2,7 @@ package rip.vantage.security;
 
 import java.security.SecureRandom;
 
-public class m {
+public class NonceStamper {
     public static volatile long eSS;
     public static volatile String eSR;
     public static volatile boolean eST;
@@ -15,6 +15,6 @@ public class m {
     public static void aMK() {
     }
 
-    m() {
+    NonceStamper() {
     }
 }

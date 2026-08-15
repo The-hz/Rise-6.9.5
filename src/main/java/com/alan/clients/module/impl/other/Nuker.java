@@ -31,7 +31,7 @@ import net.minecraft.network.play.client.C13PacketPlayerAbilities;
 import net.minecraft.network.play.server.c;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = "module.other.nuker.name", description = "module.other.nuker.description", category = Category.PLAYER)
 public final class Nuker extends Module {
@@ -41,7 +41,7 @@ public final class Nuker extends Module {
     private final BooleanValue rotations = new BooleanValue("Rotations", this, false);
     private final BooleanValue scatter = new BooleanValue("Scatter", this, false);
     private final BooleanValue swing = new BooleanValue("Swing", this, false);
-    private final a delayStopWatch = new a();
+    private final StopWatch delayStopWatch = new StopWatch();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {
         if (!GUIDetectionComponent.inGUI()) {

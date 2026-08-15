@@ -48,7 +48,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class RiseClickGUI extends GuiScreen implements aha {
     public Vector2f axI = new Vector2f(-1.0F, -1.0F);
@@ -60,8 +60,8 @@ public class RiseClickGUI extends GuiScreen implements aha {
     public float axN;
     public float axO;
     public boolean dragging;
-    public a axP = new a();
-    public a rG = new a();
+    public StopWatch axP = new StopWatch();
+    public StopWatch rG = new StopWatch();
     public ConcurrentLinkedQueue<ModuleComponent> moduleList = new ConcurrentLinkedQueue<>();
     public Vector2f mouse;
     public double axS;
@@ -535,12 +535,12 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public a pf() {
+    public StopWatch pf() {
         return this.axP;
     }
 
     @Generated
-    public a lN() {
+    public StopWatch lN() {
         return this.rG;
     }
 

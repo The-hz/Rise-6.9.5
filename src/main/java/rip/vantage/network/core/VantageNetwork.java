@@ -7,27 +7,27 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.other.GameEvent;
 import java.security.SecureRandom;
 import lombok.Generated;
-import rip.vantage.network.handler.b;
-import rip.vantage.network.handler.c;
+import rip.vantage.network.handler.BackendPacketHandler;
+import rip.vantage.network.handler.BackendWebSocket;
 
-public class a {
+public class VantageNetwork {
     @EventLink
     public Listener<GameEvent> onGame;
     public static String eRr;
     public String aCj;
-    public b eRs;
-    public volatile c dcF;
+    public BackendPacketHandler eRs;
+    public volatile BackendWebSocket dcF;
     public static volatile long eRw;
-    public static volatile a eRq;
+    public static volatile VantageNetwork eRq;
     public static SecureRandom eRu;
-    public rip.vantage.commons.util.time.a eRt = new rip.vantage.commons.util.time.a();
+    public rip.vantage.commons.util.time.StopWatch eRt = new rip.vantage.commons.util.time.StopWatch();
     public static volatile boolean eRv;
     public static volatile boolean eRx;
 
     public void init() {
     }
 
-    public b aKJ() {
+    public BackendPacketHandler aKJ() {
         return null;
     }
 
@@ -37,16 +37,16 @@ public class a {
     //add code
     private static boolean creating;
 
-    public static a aKB() {
-        a instance = eRq;
+    public static VantageNetwork aKB() {
+        VantageNetwork instance = eRq;
         if (instance != null) {
             return instance;
         }
-        synchronized (a.class) {
+        synchronized (VantageNetwork.class) {
             if (eRq == null && !creating) {
                 creating = true;
                 try {
-                    eRq = new a();
+                    eRq = new VantageNetwork();
                 } finally {
                     creating = false;
                 }
@@ -62,7 +62,7 @@ public class a {
     }
 
     @Generated
-    public void f(rip.vantage.commons.util.time.a var1) {
+    public void f(rip.vantage.commons.util.time.StopWatch var1) {
     }
 
     public void n(byte[] var1) {
@@ -87,7 +87,7 @@ public class a {
     }
 
     @Generated
-    public rip.vantage.commons.util.time.a aKL() {
+    public rip.vantage.commons.util.time.StopWatch aKL() {
         return null;
     }
 
@@ -97,7 +97,7 @@ public class a {
     public void a(GameEvent event) {
     }
 
-    public a() {
+    public VantageNetwork() {
         this.onGame = this::a;
         Client.a.e().b(this);
     }
@@ -106,13 +106,13 @@ public class a {
     }
 
     //add code
-    public c aKK() {
-        c transport = this.dcF;
+    public BackendWebSocket aKK() {
+        BackendWebSocket transport = this.dcF;
         if (transport == null) {
             synchronized (this) {
                 transport = this.dcF;
                 if (transport == null) {
-                    transport = this.dcF = new c();
+                    transport = this.dcF = new BackendWebSocket();
                 }
             }
         }

@@ -21,7 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import rip.vantage.commons.packet.impl.client.community.C2SPacketUserLookup;
 import rip.vantage.commons.packet.impl.server.community.S2CPacketUserData;
-import rip.vantage.network.core.a;
+import rip.vantage.network.core.VantageNetwork;
 
 public class bf extends Component implements InstanceAccess {
     public static HashMap<String, by> dc = new HashMap<>();
@@ -145,7 +145,7 @@ public class bf extends Component implements InstanceAccess {
 
             stringbuilder.append("]");
             String s1 = "[\"" + String.join("\", \"", pending) + "\"]";
-            a.aKB().aKK().sendMessage(new C2SPacketUserLookup(s1).aJk());
+            VantageNetwork.aKB().aKK().sendMessage(new C2SPacketUserLookup(s1).aJk());
             pending = new ArrayList<>();
         }
     }

@@ -3,10 +3,10 @@ package rip.vantage.commons.packet.impl.client.protection;
 import java.util.Base64;
 import org.json.JSONObject;
 
-public class k extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacket {
+public class C2SPacketKeyShare extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacket {
     private final byte[] ePz;
 
-    public k(byte[] var1) {
+    public C2SPacketKeyShare(byte[] var1) {
         super((byte)32);
         this.ePz = var1;
     }

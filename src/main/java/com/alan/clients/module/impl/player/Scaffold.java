@@ -88,7 +88,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.util.Vec3i;
 import org.lwjgl.input.Keyboard;
-import rip.vantage.network.core.a;
+import rip.vantage.network.core.VantageNetwork;
 
 @ModuleInfo(aliases = "module.player.scaffold.name", description = "module.player.scaffold.description", category = Category.PLAYER)
 public class Scaffold extends Module {
@@ -857,7 +857,7 @@ public class Scaffold extends Module {
                     && this.isOffsetReplaceableBelow(3)
                     && !this.e(Speed.class).isEnabled()
                     && !aEg.gameSettings.keyBindSneak.isKeyDown()
-                    && !Objects.equals(a.aKB().bX(), "")) {
+                    && !Objects.equals(VantageNetwork.aKB().bX(), "")) {
                     aEg.thePlayer.crd = this.safeWalk.wo();
                 }
 

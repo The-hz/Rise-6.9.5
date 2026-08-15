@@ -33,7 +33,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Generated;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = "module.render.interface.name", description = "module.render.interface.description", category = Category.RENDER, autoEnabled = true)
 public final class Interface extends Module {
@@ -53,8 +53,8 @@ public final class Interface extends Module {
     private List<ArrayListEntry> allEntries = new ArrayList<>();
     private List<ArrayListEntry> activeEntries = new ArrayList<>();
     private ModeValue informationType = new InformationTypeModeValue(this, "Information Type", this);
-    private final a animationStopWatch = new a();
-    private final a preUpdateStopWatch = new a();
+    private final StopWatch animationStopWatch = new StopWatch();
+    private final StopWatch preUpdateStopWatch = new StopWatch();
     public agc widthComparator = FontManager.MAIN.a(20, FontWeight.MEDIUM);
     public float moduleSpacing = 12.0F;
     public float edgeOffset;
@@ -68,7 +68,7 @@ public final class Interface extends Module {
             cg.a("Toggled", "Toggled " + var1.getModule().getName() + " " + (var1.getModule().isEnabled() ? "on" : "off"), 900);
         }
     };
-    a nameUpdateStopWatch = new a();
+    StopWatch nameUpdateStopWatch = new StopWatch();
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> aMR.execute(() -> {
         Themes.c(new Color(0, 0, 0, this.aoc.wo() ? this.getBackgroundAlpha() : 150));
@@ -242,12 +242,12 @@ public final class Interface extends Module {
     }
 
     @Generated
-    public a getAnimationStopWatch() {
+    public StopWatch getAnimationStopWatch() {
         return this.animationStopWatch;
     }
 
     @Generated
-    public a getPreUpdateStopWatch() {
+    public StopWatch getPreUpdateStopWatch() {
         return this.preUpdateStopWatch;
     }
 
@@ -282,7 +282,7 @@ public final class Interface extends Module {
     }
 
     @Generated
-    public a getNameUpdateStopWatch() {
+    public StopWatch getNameUpdateStopWatch() {
         return this.nameUpdateStopWatch;
     }
 
@@ -342,7 +342,7 @@ public final class Interface extends Module {
     }
 
     @Generated
-    public void setNameUpdateStopWatch(a var1) {
+    public void setNameUpdateStopWatch(StopWatch var1) {
         this.nameUpdateStopWatch = var1;
     }
 

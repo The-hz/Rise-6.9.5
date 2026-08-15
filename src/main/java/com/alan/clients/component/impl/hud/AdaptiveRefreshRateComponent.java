@@ -10,7 +10,7 @@ import com.alan.clients.ui.ingame.GuiIngameCache;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S30PacketWindowItems;
 import net.minecraft.network.play.server.c;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class AdaptiveRefreshRateComponent extends Component {
     private boolean keyDown;
@@ -18,7 +18,7 @@ public class AdaptiveRefreshRateComponent extends Component {
     private boolean bK;
     private int disabledFor;
     private float health;
-    public final a bN = new a();
+    public final StopWatch bN = new StopWatch();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var1 -> {
         if (aEg.thePlayer.ticksExisted % 100 == 0

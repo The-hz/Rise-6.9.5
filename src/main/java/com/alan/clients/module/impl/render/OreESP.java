@@ -21,7 +21,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import org.lwjgl.opengl.GL11;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = {"XRay", "X-Ray", "Ore ESP"}, description = "Shows ores through walls with ESP and tracers", category = Category.RENDER)
 public final class OreESP extends Module {
@@ -31,7 +31,7 @@ public final class OreESP extends Module {
         10, 11, 8, 9, 14, 15, 16, 21, 41, 42, 46, 48, 52, 56, 57, 61, 62, 73, 74, 84, 89, 103, 116, 117, 118, 120, 129, 133, 137, 145, 152, 153, 154
     );
     public static List<BlockPos> orePositions = new CopyOnWriteArrayList<>();
-    private final a updateTimer = new a();
+    private final StopWatch updateTimer = new StopWatch();
     private final NumberValue opacity = new NumberValue("Opacity", this, 160, 0, 255, 1);
     private final NumberValue worldOpacity = new NumberValue("World Opacity", this, 50, 0, 255, 1);
     private final BooleanValue eSP = new BooleanValue("ESP", this, true);

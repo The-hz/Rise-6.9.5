@@ -12,10 +12,10 @@ import javax.websocket.WebSocketContainer;
 import org.json.JSONObject;
 
 @ClientEndpoint(configurator = WebSocketConfigurator.class)
-public class c {
-    private rip.vantage.network.core.a eRA;
+public class BackendWebSocket {
+    private rip.vantage.network.core.VantageNetwork eRA;
     private Session eRB;
-    public static rip.vantage.commons.util.time.a eRC;
+    public static rip.vantage.commons.util.time.StopWatch eRC;
     private static volatile long eRD;
     private static volatile long eRE;
     private static volatile long eRF;
@@ -27,7 +27,7 @@ public class c {
     private static final long eRL = 2000L;
     private static volatile boolean eRM;
 
-    public c() {
+    public BackendWebSocket() {
     }
 
     @OnOpen

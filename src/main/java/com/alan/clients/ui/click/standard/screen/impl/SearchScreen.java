@@ -19,13 +19,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import lombok.Generated;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public final class SearchScreen
 implements Screen,
 InstanceAccess {
     public final TextBox azR = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(20, FontWeight.REGULAR), Color.WHITE, TextAlign.CENTER, ahd.ce("ui.search.text"), 150.0f);
-    private final a azS = new a();
+    private final StopWatch azS = new StopWatch();
     public agk scrollUtil = new agk();
     public ArrayList<ModuleComponent> relevantModules = new ArrayList();
     private double axT = 255.0;
@@ -150,7 +150,7 @@ InstanceAccess {
     }
 
     @Generated
-    public a lN() {
+    public StopWatch lN() {
         return this.azS;
     }
 

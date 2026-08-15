@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3i;
 import org.lwjgl.opengl.GL11;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class Pathfinder extends ArrayList<ahr> implements InstanceAccess {
     public static int aNu = 100;
@@ -44,7 +44,7 @@ public class Pathfinder extends ArrayList<ahr> implements InstanceAccess {
 
     public void run() {
         Executors.newFixedThreadPool(1).execute(() -> {
-            a a = new a();
+            StopWatch a = new StopWatch();
 
             while (this.aNz == null && !a.T(this.aNC ? 15000L : 50L)) {
                 this.uN();

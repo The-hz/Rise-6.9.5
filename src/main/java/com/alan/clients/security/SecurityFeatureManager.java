@@ -28,7 +28,7 @@ import net.minecraft.network.play.client.C01PacketChatMessage;
 import org.apache.commons.lang3.StringUtils;
 
 public class SecurityFeatureManager implements InstanceAccess, aha {
-    public rip.vantage.commons.util.time.a avt;
+    public rip.vantage.commons.util.time.StopWatch avt;
     @EventLink
     public Listener<ChatInputEvent> onChatInput;
     public static long avp;
@@ -84,7 +84,7 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
     public SecurityFeatureManager() {
         this.avr = new ArrayList<>();
         this.avs = ConcurrentHashMap.newKeySet();
-        this.avt = new rip.vantage.commons.util.time.a();
+        this.avt = new rip.vantage.commons.util.time.StopWatch();
         this.avu = "";
         this.onPreMotion = var1 -> {
             if (!this.nH()) {
@@ -220,7 +220,7 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
     }
 
     @Generated
-    public rip.vantage.commons.util.time.a mQ() {
+    public rip.vantage.commons.util.time.StopWatch mQ() {
         return this.avt;
     }
 }

@@ -2,8 +2,8 @@ package rip.vantage.commons.packet.impl.client.general;
 
 import org.json.JSONObject;
 
-public class a extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacket {
-    public a() {
+public class C2SPacketKeepAlive extends rip.vantage.commons.packet.api.abstracts.AbstractC2SPacket {
+    public C2SPacketKeepAlive() {
         super((byte)0);
     }
 

@@ -1,10 +1,10 @@
 package rip.vantage.runtime;
 
-public class b {
+public class SystemClassLoaderProbe {
     public static boolean aLd() {
         return false;
     }
 
-    b() {
+    SystemClassLoaderProbe() {
     }
 }

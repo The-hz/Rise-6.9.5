@@ -13,7 +13,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = "module.ghost.autoclicker.name", description = "module.ghost.autoclicker.description", category = Category.GHOST)
 public class AutoClicker extends Module {
@@ -22,7 +22,7 @@ public class AutoClicker extends Module {
         .add(new DragClickSimulationsAutoClicker("Drag Click Simulations", this))
         .setDefault("Normal");
     private final BooleanValue jitter = new BooleanValue("Jitter", this, false);
-    private final a stopWatch = new a();
+    private final StopWatch stopWatch = new StopWatch();
     private double directionX;
     private double directionY;
     @EventLink

@@ -59,7 +59,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.optifine.gui.c;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-import rip.vantage.network.core.a;
+import rip.vantage.network.core.VantageNetwork;
 
 @ModuleInfo(aliases={"module.render.chat.name"}, description="module.render.chat.description", category=Category.RENDER, autoEnabled=true, allowDisable=false)
 public final class Chat
@@ -95,7 +95,7 @@ extends Module {
     private float lineHeight;
     public boolean lastMouseDown;
     public boolean chatOpen;
-    private rip.vantage.commons.util.time.a messageTimer;
+    private rip.vantage.commons.util.time.StopWatch messageTimer;
     private adz<String> sentMessages;
     private ArrayList<String> tabCompletions;
     private Interface interfaceModule;
@@ -115,7 +115,7 @@ extends Module {
         this.historyIndex = -1;
         this.savedText = "";
         this.textBox = new TextBox(new Vector2d(0.0, 0.0), this.inputFont, Color.WHITE, TextAlign.LEFT, "", 1000.0f, ALLOWED_CHARACTERS);
-        this.messageTimer = new rip.vantage.commons.util.time.a();
+        this.messageTimer = new rip.vantage.commons.util.time.StopWatch();
         this.sentMessages = new adz(20);
         this.onKeyboardInput = keyboardInputEvent -> {
             char c2 = keyboardInputEvent.cP();
@@ -379,7 +379,7 @@ extends Module {
                         continue block1;
                     }
                     String string3 = string.toLowerCase();
-                    String[] stringArray = new String[]{"billionaire2", "billionaire", a.aKB().bX()};
+                    String[] stringArray = new String[]{"billionaire2", "billionaire", VantageNetwork.aKB().bX()};
                     int n6 = -1;
                     String string4 = null;
                     String[] stringArray2 = stringArray;
@@ -831,7 +831,7 @@ extends Module {
     }
 
     @Generated
-    public rip.vantage.commons.util.time.a getMessageTimer() {
+    public rip.vantage.commons.util.time.StopWatch getMessageTimer() {
         return this.messageTimer;
     }
 

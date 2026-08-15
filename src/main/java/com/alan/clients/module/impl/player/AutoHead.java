@@ -15,13 +15,13 @@ import com.alan.clients.component.impl.player.BadPacketsComponent;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = "module.player.autohead.name", description = "module.player.autohead.description", category = Category.PLAYER)
 public class AutoHead extends Module {
     private final NumberValue health = new NumberValue("Health", this, 15, 1, 20, 1);
     private final BoundsNumberValue delay = new BoundsNumberValue("Delay", this, 500, 1000, 50, 5000, 50);
-    private final a stopWatch = new a();
+    private final StopWatch stopWatch = new StopWatch();
     private long nextUse;
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var1 -> {

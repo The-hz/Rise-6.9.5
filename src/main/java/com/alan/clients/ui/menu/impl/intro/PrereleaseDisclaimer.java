@@ -10,11 +10,11 @@ import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class PrereleaseDisclaimer extends GuiScreen {
     private final Animation fadeAnimation = new Animation(Easing.EASE_IN_OUT_CUBIC, 1000L);
-    private final a aCt = new a();
+    private final StopWatch aCt = new StopWatch();
 
     public PrereleaseDisclaimer() {
     }

@@ -1,6 +1,6 @@
 package rip.vantage.security;
 
-public class h {
+public class ClassIntegrityVerifier {
     public static volatile boolean eSP;
 
     public static void aMJ() {
@@ -28,7 +28,7 @@ public class h {
         return false;
     }
 
-    h() {
+    ClassIntegrityVerifier() {
     }
 
     public static boolean aME() {

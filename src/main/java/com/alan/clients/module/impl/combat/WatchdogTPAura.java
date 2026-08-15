@@ -31,7 +31,7 @@ import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.m;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.util.MathHelper;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases={"Watchdog TP Aura", "WatchdogTPAura"}, description="Teleport-based aura for Hypixel Watchdog", category=Category.COMBAT)
 public final class WatchdogTPAura
@@ -46,7 +46,7 @@ extends Module {
     private EntityLivingBase target;
     private EntityLivingBase pendingAttackTarget;
     private int blinkTicks;
-    private final a blinkTimer = new a();
+    private final StopWatch blinkTimer = new StopWatch();
     private final ConcurrentLinkedQueue<Packet<?>> heldPackets = new ConcurrentLinkedQueue();
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = preMotionEvent -> {

@@ -60,7 +60,7 @@ import java.util.Locale;
 import java.util.Map;
 import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Keyboard;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public final class CommandPalette
 extends GuiScreen {
@@ -76,7 +76,7 @@ extends GuiScreen {
     private final PinyinInputHandler aAu = new PinyinInputHandler();
     private final agk aAv = new agk();
     private final Animation aAw = new Animation(Easing.EASE_OUT_QUAD, 1L);
-    private final a aAx = new a();
+    private final StopWatch aAx = new StopWatch();
     private final List<CommandEntry> aAy = new ArrayList<CommandEntry>();
     private List<CommandEntry> aAz = new ArrayList<CommandEntry>();
     private final Map<String, SuggestionProvider> aAA = new HashMap<String, SuggestionProvider>();

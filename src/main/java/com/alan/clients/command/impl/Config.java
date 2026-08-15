@@ -15,7 +15,7 @@ import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.util.s;
 import rip.vantage.commons.packet.impl.client.community.C2SPacketConfigRequest;
-import rip.vantage.network.core.a;
+import rip.vantage.network.core.VantageNetwork;
 
 public final class Config extends Command {
     public Config() {
@@ -87,11 +87,11 @@ public final class Config extends Command {
                                         } catch (Throwable throwable) {
                                         }
                                     } else {
-                                        a.aKB().aKK().sendMessage(new C2SPacketConfigRequest(s1).aJk());
+                                        VantageNetwork.aKB().aKK().sendMessage(new C2SPacketConfigRequest(s1).aJk());
                                     }
                                 });
                             } else {
-                                a.aKB().aKK().sendMessage(new C2SPacketConfigRequest(s1).aJk());
+                                VantageNetwork.aKB().aKK().sendMessage(new C2SPacketConfigRequest(s1).aJk());
                             }
 
                             return;

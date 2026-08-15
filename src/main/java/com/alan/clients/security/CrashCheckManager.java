@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.Packet;
 
-public final class b extends ArrayList<CrashCheck> {
+public final class CrashCheckManager extends ArrayList<CrashCheck> {
     private AntiCrash axd;
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive = var1 -> var1.setCancelled(this.k(var1.getPacket()));
 
-    public b() {
+    public CrashCheckManager() {
     }
 
     public void init() {

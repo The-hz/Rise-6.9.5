@@ -16,7 +16,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S14PacketEntity;
 import net.minecraft.network.play.server.z;
 import net.minecraft.util.Vec3;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @CheckInfo(R = "Flight", S = "Prediction", description = "Detects flight")
 public final class FlightPrediction extends Check {
@@ -27,7 +27,7 @@ public final class FlightPrediction extends Check {
     private int Z = 10;
     private int aa = 5;
     private int ab;
-    private a ac = new a();
+    private StopWatch ac = new StopWatch();
     private int ad;
     private int ae;
     private boolean af;

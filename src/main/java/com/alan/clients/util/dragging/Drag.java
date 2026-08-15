@@ -3,7 +3,7 @@ package com.alan.clients.util.dragging;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.vector.Vector2d;
 import hackclient.rise.afl;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class Drag {
     public Vector2d apP;
@@ -11,7 +11,7 @@ public class Drag {
     public Vector2d aHe;
     public Vector2d bS = new Vector2d(0.0, 0.0);
     public boolean dragging = false;
-    public a bN = new a();
+    public StopWatch bN = new StopWatch();
 
     public Drag(Vector2d vector2d, Vector2d var2) {
         this.apP = this.atg = vector2d;

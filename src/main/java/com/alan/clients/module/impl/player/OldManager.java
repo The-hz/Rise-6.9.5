@@ -48,7 +48,7 @@ import net.minecraft.network.play.client.C16PacketClientStatus.EnumState;
 import net.minecraft.network.play.client.C16PacketClientStatus;
 import net.minecraft.network.play.client.q;
 import net.minecraft.util.DamageSource;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = {"module.player.oldmanager.name", "old manager"}, description = "module.player.manager.description", category = Category.PLAYER)
 public class OldManager extends Module {
@@ -78,7 +78,7 @@ public class OldManager extends Module {
     private final int INVENTORY_COLUMNS = 9;
     private final int ARMOR_SLOTS = 4;
     private final int INVENTORY_SLOTS = 40;
-    private final a stopwatch = new a();
+    private final StopWatch stopwatch = new StopWatch();
     private int chestTicks;
     private int attackTicks;
     private int placeTicks;

@@ -1,6 +1,6 @@
 package rip.vantage.security;
 
-public class b {
+public class MethodSignatureVerifier {
     public static boolean ku(String var0) {
         return false;
     }
@@ -20,7 +20,7 @@ public class b {
         return false;
     }
 
-    b() {
+    MethodSignatureVerifier() {
     }
 
     public static boolean aLs() {

@@ -15,11 +15,11 @@ import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class abn extends ValueComponent {
     private final double ayF = 100.0;
-    private final a ayG = new a();
+    private final StopWatch ayG = new StopWatch();
     private final double ayH = 5.0;
     public boolean ayI;
     public boolean ayJ;

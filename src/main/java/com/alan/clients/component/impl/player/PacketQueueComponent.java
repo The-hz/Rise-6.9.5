@@ -19,7 +19,7 @@ import net.minecraft.network.login.client.C01PacketEncryptionResponse;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.status.client.C00PacketServerQuery;
 import net.minecraft.network.status.client.C01PacketPing;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public final class PacketQueueComponent extends Component {
     private static boolean cP = true;
@@ -27,7 +27,7 @@ public final class PacketQueueComponent extends Component {
     public static boolean cR;
     public static boolean cS;
     public static ArrayList<Class<?>> cT = new ArrayList<>();
-    public static a cU = new a();
+    public static StopWatch cU = new StopWatch();
     @EventLink(value = 0)
     public final Listener<PacketSendEvent> onPacketSend = var0 -> {
         if (aEg.thePlayer == null) {

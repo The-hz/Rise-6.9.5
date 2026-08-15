@@ -10,7 +10,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.BoundsNumberValue;
 import com.alan.clients.util.player.PlayerUtil;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class NormalAutoClicker extends Mode<AutoClicker> {
     private final BoundsNumberValue cps = new BoundsNumberValue("CPS", this, 8, 14, 1, 20, 0.1);
@@ -19,7 +19,7 @@ public class NormalAutoClicker extends Mode<AutoClicker> {
     private final BooleanValue hitSelect = new BooleanValue("Hit Select", this, false);
     private final BooleanValue breakBlocks = new BooleanValue("Break Blocks", this, true);
     private final BooleanValue butterFly = new BooleanValue("ButterFly", this, true);
-    private final a clickStopWatch = new a();
+    private final StopWatch clickStopWatch = new StopWatch();
     private int ticksDown;
     private int attackTicks;
     private long nextSwing;

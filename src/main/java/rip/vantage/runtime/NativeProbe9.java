@@ -1,7 +1,7 @@
 package rip.vantage.runtime;
 
-public class k {
-    k() {
+public class NativeProbe9 {
+    NativeProbe9() {
     }
 
     public static boolean aKV() {

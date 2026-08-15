@@ -22,7 +22,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import lombok.Generated;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class ModuleComponent implements InstanceAccess {
     public Module module;
@@ -31,7 +31,7 @@ public class ModuleComponent implements InstanceAccess {
     public ArrayList<ValueComponent> valueList = new ArrayList<>();
     public Vector2d position;
     public double opacity;
-    public a rG = new a();
+    public StopWatch rG = new StopWatch();
     public Animation axx = new Animation(Easing.LINEAR, 50L);
     public Animation aye = new Animation(Easing.LINEAR, 200L);
     public Animation ayf = new Animation(Easing.LINEAR, 5000L);
@@ -234,7 +234,7 @@ public class ModuleComponent implements InstanceAccess {
     }
 
     @Generated
-    public a lN() {
+    public StopWatch lN() {
         return this.rG;
     }
 

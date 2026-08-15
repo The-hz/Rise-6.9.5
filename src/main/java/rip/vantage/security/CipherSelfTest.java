@@ -1,7 +1,7 @@
 package rip.vantage.security;
 
-public class d {
-    d() {
+public class CipherSelfTest {
+    CipherSelfTest() {
     }
 
     public static void aLA() {

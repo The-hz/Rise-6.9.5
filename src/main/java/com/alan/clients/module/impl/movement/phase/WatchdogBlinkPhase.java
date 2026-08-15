@@ -15,11 +15,11 @@ import net.minecraft.block.BlockBarrier;
 import net.minecraft.block.BlockGlass;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.c;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 public class WatchdogBlinkPhase extends Mode<Phase> {
     private boolean gameStarting;
-    private final a blinkStopWatch = new a();
+    private final StopWatch blinkStopWatch = new StopWatch();
     private final WatchdogBlinkNoFall blinkNoFall = null;
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {

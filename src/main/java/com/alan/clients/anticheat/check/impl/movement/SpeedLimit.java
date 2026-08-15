@@ -7,13 +7,13 @@ import com.alan.clients.anticheat.util.PacketUtil;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S14PacketEntity;
 import net.minecraft.network.play.server.z;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @CheckInfo(R = "Speed", S = "Limit", description = "Detects speeds")
 public final class SpeedLimit extends Check {
     private double ah;
     private double ai;
-    private a aj = new a();
+    private StopWatch aj = new StopWatch();
 
     public SpeedLimit(PlayerData playerData) {
         super(playerData);

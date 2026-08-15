@@ -22,13 +22,13 @@ import java.util.Map.Entry;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
-import rip.vantage.commons.util.time.a;
+import rip.vantage.commons.util.time.StopWatch;
 
 @ModuleInfo(aliases = "Data", description = "module.other.irc.description", category = Category.PLAYER)
 public final class Data extends Module {
     private File dataFile;
     private FileWriter writer;
-    private a writeStopWatch = new a();
+    private StopWatch writeStopWatch = new StopWatch();
     private Entity target;
     private aka lastTargetPosition = new aka(0.0, 0.0, 0.0);
     private aka lastPlayerPosition = new aka(0.0, 0.0, 0.0);
