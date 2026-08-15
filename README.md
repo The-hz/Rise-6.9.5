@@ -17,6 +17,10 @@
 - JDK 21 or newer
 - highiq
 
+## modify
+
+full offline, deobf, rename, fix, patch auth, add toggle and more...
+
 ## build
 
 ```
@@ -67,10 +71,11 @@ all default to off.
 ## thx
 
 - **original obfuscated client:** RiseClient 6.9.5
-- **deobfuscation, symbol recovery:** completed by Claude™️ and Codex™️ under human supervision (billionaires should be covering my token costs)
+- **some deobfuscation, symbol recovery:** completed by Claude™ and Codex™ under human supervision (billionaires should be covering my token costs)
+- **devirtualization, flowdeobf, deobf tool:** anonymous™
 - **Java Deobfuscator**
 - **Recaf**
-- **[VMProtect](https://vmpsoft.com/)** (deobf and devirtualization??!?!?!)
+- **[VMProtect](https://vmpsoft.com/)** (demutation and devirtualization??!?!?!)
 - **custom java obfuscator** (copied from zkm???)
 - **RiseJDK-22.0.2** (ruthlessly modified)
 - **Rise-vm😂** (funny)
