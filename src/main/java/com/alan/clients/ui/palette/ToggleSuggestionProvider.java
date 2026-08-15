@@ -1,11 +1,11 @@
-package hackclient.rise.ui.screen;
+package com.alan.clients.ui.palette;
 
 import com.alan.clients.Client;
 import com.alan.clients.module.Module;
-import hackclient.rise.ui.screen.CommandPalette;
-import hackclient.rise.ui.screen.Suggestion;
-import hackclient.rise.ui.screen.SuggestionContext;
-import hackclient.rise.ui.screen.SuggestionProvider;
+import com.alan.clients.ui.palette.CommandPalette;
+import com.alan.clients.ui.palette.Suggestion;
+import com.alan.clients.ui.palette.SuggestionContext;
+import com.alan.clients.ui.palette.SuggestionProvider;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;

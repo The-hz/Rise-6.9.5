@@ -1,4 +1,4 @@
-package hackclient.rise.ui.screen;
+package com.alan.clients.ui.palette;
 
 import com.alan.clients.command.Command;
 import com.alan.clients.util.localization.Localization;

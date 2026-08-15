@@ -1,4 +1,4 @@
-package hackclient.rise.ui.screen;
+package com.alan.clients.ui.palette;
 
 import java.util.List;
 

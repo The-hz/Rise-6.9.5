@@ -1,4 +1,4 @@
-package hackclient.rise.ui.screen;
+package com.alan.clients.ui.palette;
 
 import com.alan.clients.script.ScriptManager;
 import java.io.File;

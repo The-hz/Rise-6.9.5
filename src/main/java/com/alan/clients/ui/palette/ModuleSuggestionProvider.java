@@ -1,4 +1,4 @@
-package hackclient.rise.ui.screen;
+package com.alan.clients.ui.palette;
 
 import com.alan.clients.Client;
 import com.alan.clients.module.Module;
@@ -8,10 +8,10 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.value.impl.StringValue;
-import hackclient.rise.ui.screen.CommandPalette;
-import hackclient.rise.ui.screen.Suggestion;
-import hackclient.rise.ui.screen.SuggestionContext;
-import hackclient.rise.ui.screen.SuggestionProvider;
+import com.alan.clients.ui.palette.CommandPalette;
+import com.alan.clients.ui.palette.Suggestion;
+import com.alan.clients.ui.palette.SuggestionContext;
+import com.alan.clients.ui.palette.SuggestionProvider;
 import com.alan.clients.util.localization.Localization;
 import java.util.ArrayList;
 import java.util.Collections;

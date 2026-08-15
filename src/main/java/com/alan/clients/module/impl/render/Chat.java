@@ -17,7 +17,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.DragValue;
 import com.alan.clients.value.impl.NumberValue;
-import hackclient.rise.ui.screen.CommandPalette;
+import com.alan.clients.ui.palette.CommandPalette;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.type.EvictingList;
 import com.alan.clients.util.MouseUtil;

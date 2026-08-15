@@ -1,4 +1,4 @@
-package hackclient.rise.ui.screen;
+package com.alan.clients.ui.palette;
 
 record SuggestionContext(String aBF, String[] aBG, String aBH) {
     public String rj() {

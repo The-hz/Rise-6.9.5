@@ -1,4 +1,4 @@
-package hackclient.rise.ui.screen;
+package com.alan.clients.ui.palette;
 
 import com.alan.clients.Client;
 import com.alan.clients.command.impl.Bind;
