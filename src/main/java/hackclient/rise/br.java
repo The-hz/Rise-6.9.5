@@ -1,9 +1,10 @@
 package hackclient.rise;
 
+import com.alan.clients.util.packet.TimedPacket;
 import java.util.Set;
 import net.minecraft.network.Packet;
 
-public final class br extends ahk {
+public final class br extends TimedPacket {
     private final Set<bn> eu;
 
     public br(Packet<?> var1, Set<bn> var2) {

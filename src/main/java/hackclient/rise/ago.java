@@ -1,5 +1,6 @@
 package hackclient.rise;
 
+import com.alan.clients.util.ReflectionUtil;
 import com.google.common.hash.Hashing;
 import com.google.common.io.Files;
 import java.io.File;
@@ -12,7 +13,7 @@ public class ago {
 
     public static String tZ() {
         try {
-            File file1 = new File(aeg.rX());
+            File file1 = new File(ReflectionUtil.rX());
             return Files.asByteSource(file1).hash(Hashing.md5()).toString();
         } catch (IOException ioexception) {
             ioexception.printStackTrace();

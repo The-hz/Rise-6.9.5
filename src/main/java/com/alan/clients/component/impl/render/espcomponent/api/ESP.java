@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.component.impl.render.espcomponent.api;
 
 import com.alan.clients.module.impl.combat.KillAura;
 import com.alan.clients.module.impl.combat.TeleportAura;
@@ -9,14 +9,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class cm implements InstanceAccess {
-    public cn hP;
+public class ESP implements InstanceAccess {
+    public ESPColor hP;
     public Entity target;
     public int tick;
     public static KillAura gj;
     public static TeleportAura hR;
 
-    public cm(cn var1) {
+    public ESP(ESPColor var1) {
         this.hP = var1;
         this.tick = aEg.thePlayer.ticksExisted;
     }

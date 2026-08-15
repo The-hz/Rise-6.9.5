@@ -1,15 +1,15 @@
-package hackclient.rise;
+package com.alan.clients.component.impl.render.espcomponent.api;
 
 import java.awt.Color;
 import lombok.Generated;
 
-public class cn {
+public class ESPColor {
     private Color hS;
     private Color hT;
     private Color hU;
 
     @Generated
-    public cn(Color var1, Color var2, Color var3) {
+    public ESPColor(Color var1, Color var2, Color var3) {
         this.hS = var1;
         this.hT = var2;
         this.hU = var3;

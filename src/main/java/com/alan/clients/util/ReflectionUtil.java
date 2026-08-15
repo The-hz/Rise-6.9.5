@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.util;
 
 import com.alan.clients.Client;
 import java.io.File;
@@ -15,10 +15,10 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-public class aeg {
+public class ReflectionUtil {
     public static Class<?>[] ba(String string) {
         try {
-            Set<String> set = aeg.a(Paths.get(aeg.rX(), new String[0]).toFile());
+            Set<String> set = ReflectionUtil.a(Paths.get(ReflectionUtil.rX(), new String[0]).toFile());
             ArrayList arrayList = new ArrayList();
             for (String string2 : set) {
                 try {
@@ -31,11 +31,11 @@ public class aeg {
             return (Class[])arrayList.toArray(new Class[0]);
         }
         catch (Exception exception) {
-            File file = aeg.bb(string);
+            File file = ReflectionUtil.bb(string);
             if (!file.exists()) {
                 throw new IllegalArgumentException("Could not get directory resource for package " + string);
             }
-            return aeg.b(string, file);
+            return ReflectionUtil.b(string, file);
         }
     }
 
@@ -75,7 +75,7 @@ public class aeg {
         while (n3 < n2) {
             String string2 = stringArray[n3];
             if (string2.endsWith(".class")) {
-                String string3 = aeg.u(string, string2);
+                String string3 = ReflectionUtil.u(string, string2);
                 try {
                     arrayList.add(Class.forName(string3));
                 }
@@ -84,7 +84,7 @@ public class aeg {
                 }
             } else if (!string2.contains(".")) {
                 String string4 = string + (string.endsWith(".") ? "" : ".") + string2;
-                arrayList.addAll(Arrays.asList(aeg.b(string4, aeg.bb(string4))));
+                arrayList.addAll(Arrays.asList(ReflectionUtil.b(string4, ReflectionUtil.bb(string4))));
             }
             ++n3;
         }

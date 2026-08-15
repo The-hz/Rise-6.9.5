@@ -3,22 +3,22 @@ package hackclient.rise.component.esp;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import hackclient.rise.aip;
-import hackclient.rise.cm;
-import hackclient.rise.cn;
+import com.alan.clients.component.impl.render.espcomponent.api.ESP;
+import com.alan.clients.component.impl.render.espcomponent.api.ESPColor;
 import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.AxisAlignedBB;
 import org.lwjgl.opengl.GL11;
 
-public class cp extends cm implements InstanceAccess {
+public class cp extends ESP implements InstanceAccess {
     int hV = 255;
 
-    public cp(cn var1) {
+    public cp(ESPColor var1) {
         super(var1);
     }
 
-    public cp(EntityLivingBase var1, cn var2) {
+    public cp(EntityLivingBase var1, ESPColor var2) {
         super(var2);
         this.target = var1;
     }

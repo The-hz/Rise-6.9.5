@@ -36,7 +36,7 @@ import com.alan.clients.value.impl.StringValue;
 import hackclient.rise.adz;
 import hackclient.rise.aef;
 import hackclient.rise.afi;
-import hackclient.rise.ahk;
+import com.alan.clients.util.packet.TimedPacket;
 import hackclient.rise.ahp;
 import com.alan.clients.util.player.PlayerUtil;
 import hackclient.rise.aka;
@@ -94,7 +94,7 @@ extends Module {
     private Packet<?> aPacket;
     private EntityOtherPlayerMP otherEntity;
     private final List<Packet<?>> Yo = new ArrayList();
-    private final ConcurrentLinkedQueue<ahk> timedPackets = new ConcurrentLinkedQueue();
+    private final ConcurrentLinkedQueue<TimedPacket> timedPackets = new ConcurrentLinkedQueue();
     private final a Yq = new a();
     private double Yr;
     private double cl;

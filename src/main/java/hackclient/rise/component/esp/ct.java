@@ -1,8 +1,8 @@
 package hackclient.rise.component.esp;
 
 import com.alan.clients.util.render.RenderUtil;
-import hackclient.rise.cm;
-import hackclient.rise.cn;
+import com.alan.clients.component.impl.render.espcomponent.api.ESP;
+import com.alan.clients.component.impl.render.espcomponent.api.ESPColor;
 import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -10,12 +10,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import org.lwjgl.opengl.GL11;
 
-public class ct extends cm {
-    public ct(cn var1) {
+public class ct extends ESP {
+    public ct(ESPColor var1) {
         super(var1);
     }
 
-    public ct(Entity var1, cn var2) {
+    public ct(Entity var1, ESPColor var2) {
         super(var2);
         this.target = var1;
     }

@@ -23,7 +23,7 @@ import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.afi;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.ahk;
+import com.alan.clients.util.packet.TimedPacket;
 import hackclient.rise.component.bc;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import net.minecraft.network.Packet;
@@ -36,7 +36,7 @@ import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 @ModuleInfo(aliases = "module.other.timer.name", description = "module.other.timer.description", category = Category.MOVEMENT)
 public final class Timer extends Module {
     private boolean HJ;
-    public static ConcurrentLinkedQueue<ahk> Zk = new ConcurrentLinkedQueue<>();
+    public static ConcurrentLinkedQueue<TimedPacket> Zk = new ConcurrentLinkedQueue<>();
     private int Zl;
     private long Ss;
     private final BoundsNumberValue timer = new BoundsNumberValue("Timer", this, 1, 2, 0.1, 20, 0.05);
@@ -131,7 +131,7 @@ public final class Timer extends Module {
         if (this.watchdog.wo() && aEg.thePlayer.onGround) {
             Packet packet1 = var1.dq();
             if (packet1 instanceof S32PacketConfirmTransaction) {
-                Zk.add(new ahk(packet1));
+                Zk.add(new TimedPacket(packet1));
                 var1.setCancelled();
             }
         }

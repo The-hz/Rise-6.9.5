@@ -4,8 +4,8 @@ import com.alan.clients.Client;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import hackclient.rise.aip;
-import hackclient.rise.cm;
-import hackclient.rise.cn;
+import com.alan.clients.component.impl.render.espcomponent.api.ESP;
+import com.alan.clients.component.impl.render.espcomponent.api.ESPColor;
 import java.awt.Color;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.Render;
@@ -13,8 +13,8 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class cq extends cm implements InstanceAccess {
-    public cq(cn var1) {
+public class cq extends ESP implements InstanceAccess {
+    public cq(ESPColor var1) {
         super(var1);
     }
 

@@ -5,8 +5,8 @@ import com.alan.clients.util.interfaces.InstanceAccess;
 import hackclient.rise.ahf;
 import hackclient.rise.aip;
 import hackclient.rise.component.bv;
-import hackclient.rise.cm;
-import hackclient.rise.cn;
+import com.alan.clients.component.impl.render.espcomponent.api.ESP;
+import com.alan.clients.component.impl.render.espcomponent.api.ESPColor;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,11 +17,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.src.a;
 import org.lwjgl.opengl.GL11;
 
-public class cs extends cm implements InstanceAccess {
+public class cs extends ESP implements InstanceAccess {
     private final Map<EntityPlayer, float[][]> hW = new HashMap<>();
     private static final float hX = 180.0F / (float)Math.PI;
 
-    public cs(cn var1) {
+    public cs(ESPColor var1) {
         super(var1);
     }
 

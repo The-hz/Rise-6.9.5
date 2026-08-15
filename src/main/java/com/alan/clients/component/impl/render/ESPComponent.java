@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.newevent.impl.render.Render3DEvent;
-import hackclient.rise.cm;
+import com.alan.clients.component.impl.render.espcomponent.api.ESP;
 import hackclient.rise.ff;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,11 +17,11 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ESPComponent extends Component {
-    public static ConcurrentLinkedQueue<cm> esps = new ConcurrentLinkedQueue<>();
+    public static ConcurrentLinkedQueue<ESP> esps = new ConcurrentLinkedQueue<>();
     @EventLink(value = 4)
     public final Listener<Render2DEvent> onRender2D = var0 -> {
         if (!esps.isEmpty()) {
-            esps.forEach(cm::co);
+            esps.forEach(ESP::co);
         }
     };
     @EventLink(value = 4)
@@ -30,14 +30,14 @@ public class ESPComponent extends Component {
             Iterator iterator = esps.iterator();
 
             while (iterator.hasNext()) {
-                ((cm)iterator.next()).a(var0.do_(), var0.dp());
+                ((ESP)iterator.next()).a(var0.do_(), var0.dp());
             }
         }
     };
     @EventLink(value = 4)
     public final Listener<Render3DEvent> onRender3D = var0 -> {
         if (esps != null && !esps.isEmpty()) {
-            esps.forEach(cm::cp);
+            esps.forEach(ESP::cp);
         }
     };
     @EventLink(value = 4)
@@ -48,7 +48,7 @@ public class ESPComponent extends Component {
         Iterator iterator = esps.iterator();
 
         while (iterator.hasNext()) {
-            ((cm)iterator.next()).cq();
+            ((ESP)iterator.next()).cq();
         }
     };
     @EventLink
@@ -57,7 +57,7 @@ public class ESPComponent extends Component {
     public ESPComponent() {
     }
 
-    public static void a(cm var0) {
+    public static void a(ESP var0) {
         esps.removeIf(var1 -> var0.getClass() == var1.getClass() && var0.target == var1.target);
         esps.add(var0);
     }

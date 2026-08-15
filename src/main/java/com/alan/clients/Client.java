@@ -20,7 +20,7 @@ import hackclient.rise.aal;
 import hackclient.rise.ui.screen.aba;
 import hackclient.rise.abs;
 import hackclient.rise.adu;
-import hackclient.rise.aeg;
+import com.alan.clients.util.ReflectionUtil;
 import com.alan.clients.util.file.FileManager;
 import hackclient.rise.afv;
 import com.alan.clients.util.file.config.ConfigManager;
@@ -386,8 +386,8 @@ public enum Client
         int count = array.length;
         for (int i = 0; i < count; i++) {
             final String s = array[i];
-            if (aeg.bc(s)) {
-                final Class<?>[] array2 = aeg.ba(s);
+            if (ReflectionUtil.bc(s)) {
+                final Class<?>[] array2 = ReflectionUtil.ba(s);
                 int count2 = array2.length;
                 int j = 0;
             Label_0241_Outer:

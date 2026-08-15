@@ -3,8 +3,8 @@ package hackclient.rise.component.esp;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import hackclient.rise.component.bv;
-import hackclient.rise.cm;
-import hackclient.rise.cn;
+import com.alan.clients.component.impl.render.espcomponent.api.ESP;
+import com.alan.clients.component.impl.render.espcomponent.api.ESPColor;
 import hackclient.rise.gg;
 import java.awt.Color;
 import java.util.Iterator;
@@ -16,7 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class cr extends cm implements InstanceAccess
+public class cr extends ESP implements InstanceAccess
 {
 
 
@@ -59,7 +59,7 @@ public class cr extends cm implements InstanceAccess
         });
     }
 
-    public cr(final cn cn) {
+    public cr(final ESPColor cn) {
         super(cn);
     }
 

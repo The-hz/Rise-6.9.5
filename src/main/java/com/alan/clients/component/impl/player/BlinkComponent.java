@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.ahk;
+import com.alan.clients.util.packet.TimedPacket;
 import hackclient.rise.bn;
 import hackclient.rise.bp;
 import hackclient.rise.br;
@@ -63,7 +63,7 @@ import net.minecraft.util.Tuple;
 import rip.vantage.commons.util.time.a;
 
 public final class BlinkComponent extends Component {
-    public static ConcurrentLinkedQueue<ahk> packets = new ConcurrentLinkedQueue<>();
+    public static ConcurrentLinkedQueue<TimedPacket> packets = new ConcurrentLinkedQueue<>();
     static a dP = new a();
     public static boolean enabled;
     static long dQ;
@@ -315,7 +315,7 @@ public final class BlinkComponent extends Component {
             if (bp != null && bp.ek != null) {
                 int i = 0;
 
-                for (ahk ahk : packets) {
+                for (TimedPacket ahk : packets) {
                     if (ahk instanceof br && ((br)ahk).b(bp.ek)) {
                         i++;
                     }
@@ -368,7 +368,7 @@ public final class BlinkComponent extends Component {
             Iterator iterator = packets.iterator();
 
             while (iterator.hasNext() && i < var1) {
-                ahk ahk = (ahk)iterator.next();
+                TimedPacket ahk = (TimedPacket)iterator.next();
                 if (ahk instanceof br br) {
                     if (br.bt()) {
                         break;
@@ -393,7 +393,7 @@ public final class BlinkComponent extends Component {
             Iterator iterator = packets.iterator();
 
             while (iterator.hasNext() && i < var1) {
-                ahk ahk = (ahk)iterator.next();
+                TimedPacket ahk = (TimedPacket)iterator.next();
                 if (ahk instanceof br br) {
                     if (!br.b(var0)) {
                         break;
@@ -429,7 +429,7 @@ public final class BlinkComponent extends Component {
     private static void bl() {
         ArrayList arraylist = new ArrayList();
         synchronized (dR) {
-            for (ahk ahk : packets) {
+            for (TimedPacket ahk : packets) {
                 arraylist.add(ahk.getPacket());
             }
 
@@ -447,7 +447,7 @@ public final class BlinkComponent extends Component {
             Iterator iterator = packets.iterator();
 
             while (iterator.hasNext()) {
-                ahk ahk = (ahk)iterator.next();
+                TimedPacket ahk = (TimedPacket)iterator.next();
                 if (!(ahk instanceof br br)) {
                     if (ahk.getTime() + dQ >= var0) {
                         break;
@@ -474,7 +474,7 @@ public final class BlinkComponent extends Component {
         int i = 0;
 
         for (Iterator iterator = packets.iterator(); iterator.hasNext() && i < var1; i++) {
-            ahk ahk = (ahk)iterator.next();
+            TimedPacket ahk = (TimedPacket)iterator.next();
             if (ahk instanceof br && ((br)ahk).bt()) {
                 break;
             }

@@ -1102,9 +1102,9 @@ public class KillAura extends Module {
 
                      while (((Iterator)var168).hasNext()) {
                         var136 = (EntityLivingBase)((Iterator)var168).next();
-                        var144 = new hackclient.rise.cn(this.rz().rA(), this.rz().rB(), this.rz().rA());
+                        var144 = new com.alan.clients.component.impl.render.espcomponent.api.ESPColor(this.rz().rA(), this.rz().rB(), this.rz().rA());
                         if (!this.coloredSigmaRing.wo()) {
-                           var144 = new hackclient.rise.cn(Color.WHITE, Color.WHITE, Color.WHITE);
+                           var144 = new com.alan.clients.component.impl.render.espcomponent.api.ESPColor(Color.WHITE, Color.WHITE, Color.WHITE);
                         }
 
                         var151 = this.espMode.wo().getName();
@@ -1123,7 +1123,7 @@ public class KillAura extends Module {
 
                         switch (var117_hi) {
                            case 0:
-                              ESPComponent.a(new ct((EntityLivingBase)var136, (hackclient.rise.cn)var144));
+                              ESPComponent.a(new ct((EntityLivingBase)var136, (com.alan.clients.component.impl.render.espcomponent.api.ESPColor)var144));
                               break;
                            case 1:
                               var160 = this.boxMode.wo().getName();
@@ -1142,10 +1142,10 @@ public class KillAura extends Module {
 
                               switch (var152_hi) {
                                  case 0:
-                                    ESPComponent.a(new cp((EntityLivingBase)var136, (hackclient.rise.cn)var144));
+                                    ESPComponent.a(new cp((EntityLivingBase)var136, (com.alan.clients.component.impl.render.espcomponent.api.ESPColor)var144));
                                     break;
                                  case 1:
-                                    ESPComponent.a(new co((EntityLivingBase)var136, (hackclient.rise.cn)var144));
+                                    ESPComponent.a(new co((EntityLivingBase)var136, (com.alan.clients.component.impl.render.espcomponent.api.ESPColor)var144));
                               }
                         }
                      }
