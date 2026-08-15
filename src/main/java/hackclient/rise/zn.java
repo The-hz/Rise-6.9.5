@@ -234,16 +234,10 @@ implements zh {
 
     static {
         clinit: {
-        long l9 = 2364201132449480976L;
-        long l10 = -5346471382093092380L;
-        long l11 = 5870921969992954931L;
-        long l12 = -661853185985020065L;
-        long l13 = -8349644040828007420L;
-        long l14 = 7639139928974340856L;
-        long l15 = 8553931662828788126L;
+        int l12_lo = -1276706977;
+        int l14_hi = 1778625866;
         o0Oo000O0oO = new Object[5];
-        long l16 = l15;
-        long l17 = l16 ^ (0L ^ l16) & -1L << 32;
+        int l17_hi = 0;
         Object[] objectArray = new Object[3];
         objectArray[0] = fld_0OOOoo00o0_61;
         objectArray[1] = 0;
@@ -272,43 +266,34 @@ implements zh {
         }
         objectArray[2] = (String)object;
         char[] cArray = ((String)zn.o0Oo000O0oO(objectArray)).toCharArray();
-        long l18 = l9;
-        long l19 = l18 ^ (0xE200000000L ^ l18) & -1L << 32;
-        long l20 = l13;
-        long l21 = l20 ^ (0L ^ l20) & -1L >>> 32;
+        int l19_hi = 226;
+        int l21_lo = 0;
         boolean bl3 = true;
         char[] cArray2 = null;
-        long l22 = 0L;
+        int l21_lo2 = 0;
         while (true) {
             if (!bl3 || (bl3 = false) || !true) {
-                if ((int)(l14 >>> 32) < (int)l12) {
-                    cArray2[(int)(l14 >>> 32)] = cArray[(int)l22 + (int)(l14 >>> 32)];
-                    l14 += 0x100000000L;
+                if (l14_hi < l12_lo) {
+                    cArray2[l14_hi] = cArray[l21_lo2 + l14_hi];
+                    l14_hi++;
                     continue;
                 }
-                int n16 = (int)(l17 >>> 32);
-                l17 += 0x100000000L;
+                int n16 = l17_hi;
+                l17_hi++;
                 zn.o0Oo000O0oO[n16] = new String(cArray2);
-                long l23 = l22;
-                l21 = l23 ^ ((long)((int)l22 + (int)l12) ^ l23) & -1L >>> 32;
+                l21_lo = l21_lo2 + l12_lo;
             }
-            if ((int)l21 >= (int)(l19 >>> 32)) {
+            if (l21_lo >= l19_hi) {
                 avN = Pattern.compile("^/(?:ac[a-z]+|verus[a-z]*|grim[a-z]*|vulcan[a-z]*|alerts?[a-z]*|verbose[a-z]*|watchdog[a-z]*|anticheat[a-z]*|ncp[a-z]*|aac[a-z]*|karhu[a-z]*|matrix[a-z]*|spartan[a-z]*|intave[a-z]*|polar[a-z]*|hawk[a-z]*)$", 2);
                 break clinit;
             }
-            long l24 = l21;
-            long l25 = l24 ^ (l24 ^ l24 + (long)1) & -1L >>> 32;
-            long l26 = l10;
-            l10 = l26 ^ ((long)cArray[(int)l21] ^ l26) & -1L >>> 32;
-            long l27 = l25;
-            l22 = l27 ^ (l27 ^ l27 + (long)(-69 - -100 ^ 0x1E)) & -1L >>> 32;
-            long l28 = l11;
-            l11 = l28 ^ ((long)cArray[(int)l25] << 32 ^ l28) & -1L << 32;
-            long l29 = l12;
-            l12 = l29 ^ ((long)((int)l10 << 16 | (int)(l11 >>> 32)) ^ l29) & -1L >>> 32;
-            cArray2 = new char[(int)l12];
-            long l30 = l14;
-            l14 = l30 ^ (0L ^ l30) & -1L << 32;
+            int l21_lo3 = l21_lo + 1;
+            int l10_lo = cArray[l21_lo];
+            l21_lo2 = l21_lo3 + (-69 - -100 ^ 0x1E);
+            int l11_hi = cArray[l21_lo3];
+            l12_lo = l10_lo << 16 | l11_hi;
+            cArray2 = new char[l12_lo];
+            l14_hi = 0;
         }
         }
     }

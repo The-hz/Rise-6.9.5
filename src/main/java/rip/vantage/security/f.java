@@ -14,18 +14,17 @@ public class f {
 
     @Override
     public String toString() {
-        long j = -269106629741755986L;
         StringBuilder stringbuilder = new StringBuilder("{");
-        long k = j ^ (4294967296L ^ j) & -1L << 32;
+        int k_hi = 1;
         Iterator iterator = this.eSp.entrySet().iterator();
 
         while (iterator.hasNext()) {
             Entry entry = (Entry)iterator.next();
-            if ((int)(k >>> 32) == 0) {
+            if (k_hi == 0) {
                 stringbuilder.append(",");
             }
 
-            k ^= (0L ^ k) & -1L << 32;
+            k_hi = 0;
             stringbuilder.append("\"").append((String)entry.getKey()).append("\":");
             Object object3 = entry.getValue();
             if (object3 instanceof f) {

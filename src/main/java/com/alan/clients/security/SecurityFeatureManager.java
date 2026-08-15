@@ -93,14 +93,13 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
                 if (this.avt.T(10000L)) {
                     aMR.execute(() -> {
                         Object object = null;
-                        long j = -7061893230367646527L;
-                        long k = j ^ (0L ^ j) & -1L << 32;
+                        int k_hi = 0;
                         Iterator iterator = this.avq.iterator();
 
                         while (iterator.hasNext()) {
                             SecurityFeature securityfeature = (SecurityFeature)iterator.next();
                             if (securityfeature.nG()) {
-                                k ^= (4294967296L ^ k) & -1L << 32;
+                                k_hi = 1;
                                 this.c(securityfeature.getReason(), false);
                                 break;
                             }
@@ -115,7 +114,7 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
                             }
                         }
 
-                        this.avw = ((int)(k >>> 143 - 111)) != 0;
+                        this.avw = (k_hi) != 0;
                     });
                     this.avt.aX();
                 }

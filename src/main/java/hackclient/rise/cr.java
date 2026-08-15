@@ -35,7 +35,7 @@ public class cr extends cm implements InstanceAccess
                     final double n2 = ((Entity)entity).prevPosY + (((Entity)entity).posY - ((Entity)entity).prevPosY) * bWm;
                     final double n3 = ((Entity)entity).prevPosZ + (((Entity)entity).posZ - ((Entity)entity).prevPosZ) * bWm;
                     final float n4 = ((Entity)entity).prevRotationYaw + (((Entity)entity).pl - ((Entity)entity).prevRotationYaw) * bWm;
-                    final long n5 = (long)(((Entity)entity).isInvisible() ? 1 : 0) << 32;
+                    final int n5 = ((Entity)entity).isInvisible() ? 1 : 0;
                     ((Entity)entity).setInvisible(false);
                     RendererLivingEntity.setShaderBrightness((Color)color);
                     final Render render2 = (Render)render;
@@ -47,7 +47,7 @@ public class cr extends cm implements InstanceAccess
                     cr.aEg.getRenderManager();
                     render2.doRender((Entity)entityPlayer, n6, n8, n3 - RenderManager.bUQ, n4, bWm);
                     RendererLivingEntity.No();
-                    ((Entity)entity).setInvisible((int)(n5 >>> (0xFFFFFFA4 ^ 0xFFFFFF9A) - 30) != 0);
+                    ((Entity)entity).setInvisible(n5 != 0);
                 }
             }
             RenderHelper.disableStandardItemLighting();

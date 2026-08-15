@@ -96,12 +96,9 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
     }
 
     public void aKf() {
-        final long n = -3974787580592546974L;
         double n2 = 0.0;
-        final long n3 = 0L;
-        final long n4 = n;
-        for (long n5 = n4 ^ ((n3 ^ n4) & -1L << 32); (int)(n5 >>> 32) < 100000 * b.eQm; n5 += 4294967296L) {
-            n2 += Math.sin((double)(n5 >>> 32)) * Math.cos((double)(n5 >>> 32)) * Math.sqrt((int)(n5 >>> 32) + 1);
+        for (int i = 0; i < 100000 * b.eQm; i++) {
+            n2 += Math.sin((double)i) * Math.cos((double)i) * Math.sqrt(i + 1);
         }
         Double.compare(n2, Double.MAX_VALUE);
     }
@@ -111,14 +108,11 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
     }
 
     public boolean aKi() {
-        final long n = -7371658355298920343L;
         this.aKj();
         aKg();
-        final long n2 = (long)(this.eQf ? 1 : 0) << 32;
-        final long n3 = n;
-        final long n4 = n3 ^ ((n2 ^ n3) & -1L << 32);
-        this.cT((boolean)((int)(n4 >>> 32) != 0));
-        return (int)(n4 >>> 32) != 0;
+        int eQf2 = this.eQf ? 1 : 0;
+        this.cT((boolean)(eQf2 != 0));
+        return eQf2 != 0;
     }
 
     public void a(final c c) {
@@ -126,30 +120,17 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
     }
 
     public void aKj() {
-        final long n = 2697462253570956184L;
-        final long n2 = -2890373160484677072L;
         try {
             final StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-            final long n3 = 0L;
-            final long n4 = n2;
-            final long n5 = n4 ^ ((n3 ^ n4) & -1L << 32);
+            int n5_hi = 0;
             final StackTraceElement[] array = (StackTraceElement[])stackTrace;
-            final long n6 = (long)((StackTraceElement[])array).length << 32;
-            final long n7 = n;
-            final long n8 = n7 ^ ((n6 ^ n7) & -1L << 32);
-            final long n9 = 0L;
-            final long n10 = n5;
-            long n11;
-            long n14;
-            for (n11 = (n10 ^ ((n9 ^ n10) & -1L >>> 32)); (int)n11 < (int)(n8 >>> 32); n11 = (n14 ^ ((n14 ^ n14 + 1) & -1L >>> 32))) {
-                final String className = ((StackTraceElement[])array)[(int)n11].getClassName();
+            int limit = ((StackTraceElement[])array).length;
+            for (int n11_lo = 0; n11_lo < limit; n11_lo = n11_lo + 1) {
+                final String className = ((StackTraceElement[])array)[n11_lo].getClassName();
                 if (((String)className).contains("LoginMenu") || ((String)className).contains("ServerPacketHandler") || ((String)className).contains("BackendPacketEvent")) {
-                    final long n12 = 4294967296L;
-                    final long n13 = n11;
-                    n11 = (n13 ^ ((n12 ^ n13) & -1L << 32));
+                    int n11_hi = 1;
                     break;
                 }
-                n14 = n11;
             }
             final Long value = Long.valueOf(System.nanoTime());
             if (b.eQp > 0L && Long.valueOf(value) - b.eQp < 10000000L) {
@@ -202,17 +183,8 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
     }
 
     static {
-        final long n = 8206604562419419418L;
-        long n2 = -8396133904584098207L;
-        long n3 = -6240036008439105079L;
-        long n4 = -9222199121060613376L;
-        final long n5 = -4695731078722333687L;
-        long n6 = -4813147122225441300L;
-        final long n7 = 3623040437861569829L;
         b.o0Oo000O0oO = new Object[62];
-        final long n8 = 0L;
-        final long n9 = n7;
-        long n10 = n9 ^ ((n8 ^ n9) & -1L << 32);
+        int n10_hi = 0;
         final Object[] array = { b.fld_0OOOoo00o0_91, Integer.valueOf(0), null };
         final int n11 = 2;
         Object o;
@@ -225,43 +197,27 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
         }
         array[n11] = o;
         final char[] charArray2 = ((String)o0Oo000O0oO(array)).toCharArray();
-        final long n12 = 1997159792640L;
-        final long n13 = n;
-        final long n14 = n13 ^ ((n12 ^ n13) & -1L << 32);
-        final long n15 = 0L;
-        final long n16 = n5;
-        long n33;
-        long n34;
-        for (long n17 = n16 ^ ((n15 ^ n16) & -1L >>> 32); (int)n17 < (int)(n14 >>> (142 - 99 ^ 0xB)); n17 = (n34 ^ ((n33 ^ n34) & -1L >>> 32))) {
+        int limit = 465;
+        int n33;
+        for (int n17_lo = 0; n17_lo < limit; n17_lo = n33) {
             final char[] array2 = (char[])charArray2;
-            final int n18 = (int)n17;
-            final long n19 = n17;
-            final long n20 = n19 ^ ((n19 ^ n19 + 1) & -1L >>> 32);
-            final long n21 = (long)array2[n18];
-            final long n22 = n2;
-            n2 = (n22 ^ ((n21 ^ n22) & -1L >>> 32));
+            final int n18 = n17_lo;
+            int n17_lo2 = n17_lo + 1;
+            int n2_lo = array2[n18];
             final char[] array3 = (char[])charArray2;
-            final int n23 = (int)n20;
-            final long n24 = n20;
-            final long n25 = n24 ^ ((n24 ^ n24 + 1) & -1L >>> 32);
-            final long n26 = (long)array3[n23] << 32;
-            final long n27 = n3;
-            n3 = (n27 ^ ((n26 ^ n27) & -1L << 32));
-            final long n28 = (long)((int)n2 << 16 | (int)(n3 >>> 32));
-            final long n29 = n4;
-            n4 = (n29 ^ ((n28 ^ n29) & -1L >>> 32));
-            final char[] array4 = new char[(int)n4];
-            final long n30 = 0L;
-            final long n31 = n6;
-            for (n6 = (n31 ^ ((n30 ^ n31) & -1L << 32)); (int)(n6 >>> 32) < (int)n4; n6 += 4294967296L) {
-                ((char[])array4)[(int)(n6 >>> 32)] = ((char[])charArray2)[(int)n25 + (int)(n6 >>> 32)];
+            final int n23 = n17_lo2;
+            int n17_lo3 = n17_lo2 + 1;
+            int n3_hi = array3[n23];
+            int limit2 = n2_lo << 16 | n3_hi;
+            final char[] array4 = new char[limit2];
+            for (int j = 0; j < limit2; j++) {
+                ((char[])array4)[j] = ((char[])charArray2)[n17_lo3 + j];
             }
             final Object[] o0Oo000O0oO = b.o0Oo000O0oO;
-            final int n32 = (int)(n10 >>> 32);
-            n10 += 4294967296L;
+            final int n32 = n10_hi;
+            n10_hi++;
             o0Oo000O0oO[n32] = new String(array4);
-            n33 = (int)n25 + (int)n4;
-            n34 = n25;
+            n33 = n17_lo3 + limit2;
         }
         b.eQk = false;
         b.eQl = 0L;
@@ -417,11 +373,8 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
 
 
     public void c(final boolean bFlag, final boolean b2, final boolean b3, final boolean b4, final boolean b5) {
-        final long n = -8916039876471170094L;
         try {
-            final long n2 = (long)((b2 && b3 && b4 && b5) ? 1 : 0) << 32;
-            final long n3 = n;
-            if ((bFlag ? 1 : 0) != (int)((n3 ^ ((n2 ^ n3) & -1L << 32)) >>> 32)) {
+            if ((bFlag ? 1 : 0) != ((b2 && b3 && b4 && b5) ? 1 : 0)) {
                 System.out.println("EC36");
                 final Field declaredField = this.getClass().getDeclaredField("success");
                 ((Field)declaredField).setAccessible(true);
@@ -446,21 +399,13 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
 
     public b(final JSONObject jsonObject) {
         super((byte)1);
-        final long n = -4225072733441483207L;
-        final long n2 = 3330615166180782677L;
-        long n3 = -5575152126601245434L;
-        long n4 = 4058213722662846145L;
         try {
             final Class<?> forName = Class.forName(aJX());
             Method method = null;
             final Method[] declaredMethods = ((Class<?>)forName).getDeclaredMethods();
-            final long n5 = (long)declaredMethods.length;
-            final long n6 = n3;
-            n3 = (n6 ^ ((n5 ^ n6) & -1L >>> 32));
-            final long n7 = 0L;
-            final long n8 = n4;
-            for (n4 = (n8 ^ ((n7 ^ n8) & -1L << 32)); (int)(n4 >>> 32) < (int)n3; n4 += 4294967296L) {
-                final Method method2 = declaredMethods[(int)(n4 >>> 32)];
+            int count = declaredMethods.length;
+            for (int i = 0; i < count; i++) {
+                final Method method2 = declaredMethods[i];
                 if (Modifier.isPublic(method2.getModifiers()) && Modifier.isStatic(method2.getModifiers()) && method2.getReturnType() == Void.TYPE && method2.getParameterCount() == 1 && method2.getParameterTypes()[0] == Integer.TYPE) {
                     method = method2;
                     break;
@@ -472,48 +417,32 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
         }
         catch (final Exception ex) {}
         this.aJZ();
-        final long n9 = (long)(jsonObject.getBoolean("a") ? 1 : 0) << 32;
-        final long n10 = n2;
-        final long n11 = n10 ^ ((n9 ^ n10) & -1L << 32);
+        int boolean2 = jsonObject.getBoolean("a") ? 1 : 0;
         try {
             final Class<?> forName2 = Class.forName(aJX());
             Method method3 = null;
             final Method[] declaredMethods2 = forName2.getDeclaredMethods();
-            final long n12 = (long)((Method[])declaredMethods2).length << 32;
-            final long n13 = n4;
-            n4 = (n13 ^ ((n12 ^ n13) & -1L << 32));
-            final long n14 = 0L;
-            final long n15 = n4;
-            long n16;
-            for (n4 = (n15 ^ ((n14 ^ n15) & -1L >>> 32)); (int)n4 < (int)(n4 >>> 32); n4 = (n16 ^ ((n16 ^ n16 + 1) & -1L >>> 32))) {
-                final Method method4 = ((Method[])declaredMethods2)[(int)n4];
+            int n4_hi = ((Method[])declaredMethods2).length;
+            for (int limit = 0; limit < n4_hi; limit = limit + 1) {
+                final Method method4 = ((Method[])declaredMethods2)[limit];
                 if (Modifier.isPublic(method4.getModifiers()) && Modifier.isStatic(method4.getModifiers()) && method4.getReturnType() == Void.TYPE && method4.getParameterCount() == 1 && method4.getParameterTypes()[0] == Boolean.TYPE) {
                     method3 = method4;
                     break;
                 }
-                n16 = n4;
             }
             if (method3 != null) {
-                method3.invoke(null, Boolean.valueOf((boolean)((int)(n11 >>> 32) != 0)));
+                method3.invoke(null, Boolean.valueOf((boolean)(boolean2 != 0)));
             }
         }
         catch (final Exception ex2) {}
         final String string = jsonObject.getString("e");
         final String optString = jsonObject.optString("f", "");
         this.eQj = optString;
-        final long n17 = (long)(this.aE(string, optString) ? 1 : 0);
-        final long n18 = n3;
-        final long n19 = n18 ^ ((n17 ^ n18) & -1L >>> 32);
-        final long n20 = (long)(this.m((boolean)((int)(n11 >>> 32) != 0), (boolean)((int)n19 != 0)) ? 1 : 0) << 32;
-        final long n21 = n4;
-        final long n22 = n21 ^ ((n20 ^ n21) & -1L << 32);
-        final long n23 = (long)(this.n((boolean)((int)(n11 >>> 32) != 0), (boolean)((int)n19 != 0)) ? 1 : 0);
-        final long n24 = n22;
-        final long n25 = n24 ^ ((n23 ^ n24) & -1L >>> 32);
-        final long n26 = (long)(((int)n19 == 0 || (int)(n25 >>> 32) == 0 || (int)n25 == 0) ? 1 : 0) << 32;
-        final long n27 = n;
-        final long n28 = n27 ^ ((n26 ^ n27) & -1L << 32);
-        this.c(this.eQf = ((int)(n11 >>> 32) != 0 && (int)(n28 >>> 32) == 0), (boolean)((int)(n11 >>> 32) != 0), (boolean)((int)n19 != 0), (boolean)((int)(n25 >>> 32) != 0), (boolean)((int)n25 != 0));
+        int aE2 = this.aE(string, optString) ? 1 : 0;
+        int m2 = this.m((boolean)(boolean2 != 0), (boolean)(aE2 != 0)) ? 1 : 0;
+        int n3 = this.n((boolean)(boolean2 != 0), (boolean)(aE2 != 0)) ? 1 : 0;
+        int flag = (aE2 == 0 || m2 == 0 || n3 == 0) ? 1 : 0;
+        this.c(this.eQf = (boolean2 != 0 && flag == 0), (boolean)(boolean2 != 0), (boolean)(aE2 != 0), (boolean)(m2 != 0), (boolean)(n3 != 0));
         this.eQg = jsonObject.getDouble("b");
         this.eQh = jsonObject.getFloat("c");
         this.eQi = jsonObject.getLong("d");
@@ -555,8 +484,6 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
     }
 
     public void aJZ() {
-        final long n = 7353636659324986445L;
-        final long n2 = 4468805584694927464L;
         try {
             final String string = this.getClass().getName() + ".constructor";
             MessageDigest.getInstance("SHA-256");
@@ -564,28 +491,17 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
                 ((String)string).contains("S2CPacketAuthentication");
             }
             final StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-            final long n3 = 0L;
-            final long n4 = n2;
-            final long n5 = n4 ^ ((n3 ^ n4) & -1L << 32);
+            int n5_hi = 0;
             final StackTraceElement[] array = (StackTraceElement[])stackTrace;
-            final long n6 = (long)((StackTraceElement[])array).length << 32;
-            final long n7 = n;
-            final long n8 = n7 ^ ((n6 ^ n7) & -1L << 32);
-            final long n9 = 0L;
-            final long n10 = n5;
-            long n11;
-            long n14;
-            for (n11 = (n10 ^ ((n9 ^ n10) & -1L >>> 32)); (int)n11 < (int)(n8 >>> 32); n11 = (n14 ^ ((n14 ^ n14 + 1) & -1L >>> 32))) {
-                final StackTraceElement stackTraceElement = ((StackTraceElement[])array)[(int)n11];
+            int limit = ((StackTraceElement[])array).length;
+            for (int n11_lo = 0; n11_lo < limit; n11_lo = n11_lo + 1) {
+                final StackTraceElement stackTraceElement = ((StackTraceElement[])array)[n11_lo];
                 if (stackTraceElement.getClassName().contains("WebSocketClient") || stackTraceElement.getClassName().contains("ServerPacketHandler")) {
-                    final long n12 = 4294967296L;
-                    final long n13 = n11;
-                    n11 = (n13 ^ ((n12 ^ n13) & -1L << 32));
+                    n5_hi = 1;
                     break;
                 }
-                n14 = n11;
             }
-            if ((int)(n11 >>> 32) == 0) {
+            if (n5_hi == 0) {
                 return;
             }
             return;
@@ -600,8 +516,6 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
     }
 
     public boolean aE(final String s, final String s2) {
-        final long n = -838929360264287475L;
-        final long n2 = -2508622849679906202L;
         try {
             final String s3 = (String)((Method)((Class<?>)Class.forName(aJY())).getMethod("getHWID", (Class<?>[])new Class[0])).invoke(null, new Object[0]);
             if (s3 == null || ((String)s3).length() < 32 || !((String)s3).contains("dleotn6oc94kb")) {
@@ -616,13 +530,9 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
                     final Class<?> forName = Class.forName(aJX());
                     Method method = null;
                     final Method[] declaredMethods = ((Class<?>)forName).getDeclaredMethods();
-                    final long n3 = (long)((Method[])declaredMethods).length;
-                    final long n4 = n2;
-                    final long n5 = n4 ^ ((n3 ^ n4) & -1L >>> 32);
-                    final long n6 = 0L;
-                    final long n7 = n5;
-                    for (long n8 = n7 ^ ((n6 ^ n7) & -1L << 32); (int)(n8 >>> 32) < (int)n8; n8 += 4294967296L) {
-                        final Method method2 = ((Method[])declaredMethods)[(int)(n8 >>> 32)];
+                    int n5_lo = ((Method[])declaredMethods).length;
+                    for (int i = 0; i < n5_lo; i++) {
+                        final Method method2 = ((Method[])declaredMethods)[i];
                         if (Modifier.isPublic(method2.getModifiers()) && Modifier.isStatic(method2.getModifiers()) && method2.getReturnType() == Boolean.TYPE && method2.getParameterCount() == 2 && method2.getParameterTypes()[0] == String.class && method2.getParameterTypes()[1] == String.class) {
                             method = method2;
                             break;
@@ -633,9 +543,7 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b
                         this.aKc();
                         return false;
                     }
-                    final long n9 = (long)(((boolean)method.invoke(null, s3, s2)) ? 1 : 0) << 32;
-                    final long n10 = n;
-                    if ((int)((n10 ^ ((n9 ^ n10) & -1L << 32)) >>> 32) == 0) {
+                    if ((((boolean)method.invoke(null, s3, s2)) ? 1 : 0) == 0) {
                         System.out.println("EC47");
                         this.aKc();
                         return false;

@@ -107,11 +107,8 @@ public class ahm implements InstanceAccess
     }
 
     public static ServerData d(final String s, final int n, final int n2) {
-        final long n3 = 6664250340152746196L;
         try {
-            final long n4 = (long)n << 32;
-            final long n5 = n3;
-            final String string = (Object)(String)s + ":" + (int)((n5 ^ ((n4 ^ n5) & -1L << 32)) >>> 32);
+            final String string = (Object)(String)s + ":" + n;
             final ServerData serverData = new ServerData((String)string, (String)string, false);
             ahm.aPh.ping(serverData, n2);
             return serverData;
@@ -278,20 +275,17 @@ public class ahm implements InstanceAccess
     }
 
     public static String vu() {
-        final long n = -4753052636897831104L;
         if (ahm.aEg == null || ahm.aEg.theWorld == null || ahm.aEg.thePlayer == null) {
             return "";
         }
-        final long n2 = (long)(int)(ahm.aEg.theWorld.getTotalWorldTime() / 5L) << 32;
-        final long n3 = n;
-        final long n4 = n3 ^ ((n2 ^ n3) & -1L << 32);
-        if (ahm.aPd == ahm.aEg.theWorld && ahm.aPb == (int)(n4 >>> 32)) {
+        int totalWorldTime = (int)((int)(ahm.aEg.theWorld.getTotalWorldTime() / 5L));
+        if (ahm.aPd == ahm.aEg.theWorld && ahm.aPb == totalWorldTime) {
             return ahm.aPc;
         }
         final ScoreObjective vw = vw();
         if (vw == null) {
             ahm.aPd = ahm.aEg.theWorld;
-            ahm.aPb = (int)(n4 >>> 32);
+            ahm.aPb = totalWorldTime;
             return ahm.aPc = "";
         }
         final List<Object> list = (List<Object>)((Collection)((ScoreObjective)vw).getScoreboard().getSortedScores((ScoreObjective)vw)).stream().filter(score2 -> {
@@ -318,29 +312,25 @@ public class ahm implements InstanceAccess
             }
         }
         ahm.aPd = ahm.aEg.theWorld;
-        ahm.aPb = (int)(n4 >>> 32);
+        ahm.aPb = totalWorldTime;
         return ahm.aPc = cj(((StringBuilder)sb).toString());
     }
 
     public static boolean vm() {
-        final long n = -8681006949482774149L;
         if (ahm.aEg == null || ahm.aEg.theWorld == null || ahm.aEg.thePlayer == null) {
             return false;
         }
-        final long n2 = (long)(int)(ahm.aEg.theWorld.getTotalWorldTime() / 5L) << 32;
-        final long n3 = n;
-        final long n4 = n3 ^ ((n2 ^ n3) & -1L << 32);
-        if (ahm.aPa == ahm.aEg.theWorld && ahm.aOY == (int)(n4 >>> 32)) {
+        int totalWorldTime = (int)((int)(ahm.aEg.theWorld.getTotalWorldTime() / 5L));
+        if (ahm.aPa == ahm.aEg.theWorld && ahm.aOY == totalWorldTime) {
             return ahm.aOZ;
         }
         ahm.aOZ = (vv() || ci("www.hypixel"));
-        ahm.aOY = (int)(n4 >>> 32);
+        ahm.aOY = totalWorldTime;
         ahm.aPa = ahm.aEg.theWorld;
         return false;
     }
 
     public static ScoreObjective vw() {
-        final long n = -2568480668365641905L;
         if (ahm.aEg == null || ahm.aEg.theWorld == null || ahm.aEg.thePlayer == null) {
             return null;
         }
@@ -354,11 +344,9 @@ public class ahm implements InstanceAccess
         if (playersTeam != null) {
             final EnumChatFormatting chatFormat = ((ScorePlayerTeam)playersTeam).getChatFormat();
             if (chatFormat != null) {
-                final long n2 = (long)((EnumChatFormatting)chatFormat).getColorIndex() << 32;
-                final long n3 = n;
-                final long n4 = n3 ^ ((n2 ^ n3) & -1L << 32);
-                if ((int)(n4 >>> 32) > -1) {
-                    objectiveInDisplaySlot2 = ((Scoreboard)scoreboard).getObjectiveInDisplaySlot(3 + (int)(n4 >>> 32));
+                int colorIndex = ((EnumChatFormatting)chatFormat).getColorIndex();
+                if (colorIndex > -1) {
+                    objectiveInDisplaySlot2 = ((Scoreboard)scoreboard).getObjectiveInDisplaySlot(3 + colorIndex);
                 }
             }
         }
@@ -372,8 +360,6 @@ public class ahm implements InstanceAccess
     }
 
     public static String b(final Pattern[] array) {
-        final long n = 7415200234058367088L;
-        final long n2 = -6480405972923604784L;
         if (array == null || array.length == 0) {
             return null;
         }
@@ -381,13 +367,9 @@ public class ahm implements InstanceAccess
         if (((String)vu).isEmpty()) {
             return null;
         }
-        final long n3 = (long)((Pattern[])array).length;
-        final long n4 = n;
-        final long n5 = n4 ^ ((n3 ^ n4) & -1L >>> 32);
-        final long n6 = 0L;
-        final long n7 = n2;
-        for (long n8 = n7 ^ ((n6 ^ n7) & -1L << 32); (int)(n8 >>> 32) < (int)n5; n8 += 4294967296L) {
-            final Pattern pattern = ((Pattern[])array)[(int)(n8 >>> 32)];
+        int limit = ((Pattern[])array).length;
+        for (int i = 0; i < limit; i++) {
+            final Pattern pattern = ((Pattern[])array)[i];
             if (pattern != null) {
                 final Matcher matcher = pattern.matcher(vu);
                 if (((Matcher)matcher).find()) {
@@ -408,66 +390,37 @@ public class ahm implements InstanceAccess
     }
 
     public static boolean nS() {
-        final long n = 6569774662330232845L;
-        final long n2 = 5896440137033813237L;
-        final long n3 = 96340977250276011L;
-        final long n4 = 7673091319941414627L;
-        final long n5 = 1427631417133289638L;
         if (ahm.aEg == null || ahm.aEg.thePlayer == null || ahm.aEg.theWorld == null) {
             return false;
         }
-        final long n6 = (long)(int)ahm.aEg.theWorld.getTotalWorldTime();
-        final long n7 = n;
-        final long n8 = n7 ^ ((n6 ^ n7) & -1L >>> 32);
-        if (ahm.aPe == (int)n8) {
+        int totalWorldTime = (int)ahm.aEg.theWorld.getTotalWorldTime();
+        if (ahm.aPe == totalWorldTime) {
             return ahm.aPf;
         }
-        final long n9 = 0L;
-        final long n10 = n2;
-        long n11 = n10 ^ ((n9 ^ n10) & -1L << 32);
-        final long n12 = (long)MathHelper.floor_double(ahm.aEg.thePlayer.posX);
-        final long n13 = n5;
-        long n14 = n13 ^ ((n12 ^ n13) & -1L >>> 32);
-        final long n15 = (long)MathHelper.floor_double(ahm.aEg.thePlayer.posZ) << 32;
-        final long n16 = n3;
-        final long n17 = n16 ^ ((n15 ^ n16) & -1L << 32);
-        final long n18 = -8589934592L;
-        final long n19 = n4;
-        for (long n20 = n19 ^ ((n18 ^ n19) & -1L << 32); (int)(n20 >>> 32) <= 2; n20 += 4294967296L) {
-            final long n21 = -8589934592L;
-            final long n22 = n14;
-            for (n14 = (n22 ^ ((n21 ^ n22) & -1L << 32)); (int)(n14 >>> 32) <= 2; n14 += 4294967296L) {
-                if (i((int)n14 + (int)(n20 >>> 32), (int)(n17 >>> 32) + (int)(n14 >>> 32))) {
-                    n11 += 4294967296L;
+        int n11_hi = 0;
+        int floor_double2 = MathHelper.floor_double(ahm.aEg.thePlayer.posX);
+        int floor_double3 = MathHelper.floor_double(ahm.aEg.thePlayer.posZ);
+        for (int i2 = -2; i2 <= 2; i2++) {
+            for (int j = -2; j <= 2; j++) {
+                if (i(floor_double2 + i2, floor_double3 + j)) {
+                    n11_hi++;
                 }
             }
         }
-        ahm.aPf = ((((int)(n11 >>> 32) >= 16) ? 1 : 0) != 0);
-        ahm.aPe = (int)n8;
+        ahm.aPf = (((n11_hi >= 16) ? 1 : 0) != 0);
+        ahm.aPe = totalWorldTime;
         return false;
     }
 
     public static String aC(final String s) {
-        final long n = 3533539338652921970L;
         final String trimToEmpty = StringUtils.trimToEmpty(s);
-        final long n2 = (long)trimToEmpty.indexOf(58) << 32;
-        final long n3 = n;
-        final long n4 = n3 ^ ((n2 ^ n3) & -1L << 32);
-        return ((int)(n4 >>> 32) >= 0) ? trimToEmpty.substring(0, (int)(n4 >>> 32)) : trimToEmpty;
+        int indexOf2 = trimToEmpty.indexOf(58);
+        return (indexOf2 >= 0) ? trimToEmpty.substring(0, indexOf2) : trimToEmpty;
     }
 
     static {
-        final long n = 7304845158243551325L;
-        long n2 = 3250603806144659290L;
-        long n3 = -837757541339888883L;
-        long n4 = -1918666578368439142L;
-        final long n5 = 3860586101013374902L;
-        long n6 = 7902275193184149917L;
-        final long n7 = -9019677273848784340L;
         ahm.o0Oo000O0oO = new Object[51];
-        final long n8 = 0L;
-        final long n9 = n7;
-        long n10 = n9 ^ ((n8 ^ n9) & -1L << 32);
+        int n10_hi = 0;
         final Object[] array = { ahm.fld_0OOOoo00o0_7, Integer.valueOf(0), null };
         final int n11 = 2;
         Object o;
@@ -480,43 +433,27 @@ public class ahm implements InstanceAccess
         }
         array[n11] = o;
         final char[] charArray2 = ((String)o0Oo000O0oO(array)).toCharArray();
-        final long n12 = 3375844294656L;
-        final long n13 = n;
-        final long n14 = n13 ^ ((n12 ^ n13) & -1L << 32);
-        final long n15 = 0L;
-        final long n16 = n5;
-        long n33;
-        long n34;
-        for (long n17 = n16 ^ ((n15 ^ n16) & -1L >>> 32); (int)n17 < (int)(n14 >>> 32); n17 = (n34 ^ ((n33 ^ n34) & -1L >>> 32))) {
+        int limit = 786;
+        int n33;
+        for (int n17_lo = 0; n17_lo < limit; n17_lo = n33) {
             final char[] array2 = (char[])charArray2;
-            final int n18 = (int)n17;
-            final long n19 = n17;
-            final long n20 = n19 ^ ((n19 ^ n19 + 1) & -1L >>> 32);
-            final long n21 = (long)array2[n18];
-            final long n22 = n2;
-            n2 = (n22 ^ ((n21 ^ n22) & -1L >>> 32));
+            final int n18 = n17_lo;
+            int n17_lo2 = n17_lo + 1;
+            int n2_lo = array2[n18];
             final char[] array3 = (char[])charArray2;
-            final int n23 = (int)n20;
-            final long n24 = n20;
-            final long n25 = n24 ^ ((n24 ^ n24 + 1) & -1L >>> 32);
-            final long n26 = (long)array3[n23] << 32;
-            final long n27 = n3;
-            n3 = (n27 ^ ((n26 ^ n27) & -1L << 32));
-            final long n28 = (long)((int)n2 << 16 | (int)(n3 >>> 32));
-            final long n29 = n4;
-            n4 = (n29 ^ ((n28 ^ n29) & -1L >>> 32));
-            final char[] array4 = new char[(int)n4];
-            final long n30 = 0L;
-            final long n31 = n6;
-            for (n6 = (n31 ^ ((n30 ^ n31) & -1L << 32)); (int)(n6 >>> 32) < (int)n4; n6 += 4294967296L) {
-                ((char[])array4)[(int)(n6 >>> 32)] = ((char[])charArray2)[(int)n25 + (int)(n6 >>> 32)];
+            final int n23 = n17_lo2;
+            int n17_lo3 = n17_lo2 + 1;
+            int n3_hi = array3[n23];
+            int limit2 = n2_lo << 16 | n3_hi;
+            final char[] array4 = new char[limit2];
+            for (int j = 0; j < limit2; j++) {
+                ((char[])array4)[j] = ((char[])charArray2)[n17_lo3 + j];
             }
             final Object[] o0Oo000O0oO = ahm.o0Oo000O0oO;
-            final int n32 = (int)(n10 >>> 32);
-            n10 += 4294967296L;
+            final int n32 = n10_hi;
+            n10_hi++;
             o0Oo000O0oO[n32] = new String(array4);
-            n33 = (int)n25 + (int)n4;
-            n34 = n25;
+            n33 = n17_lo3 + limit2;
         }
         ahm.aOL = Pattern.compile("^(?:[a-zA-Z0-9-]+\\.)*(?:hypixel\\.net|hypixel\\.io|technoblade\\.club)(?:\\.)?$", 2);
         ahm.aOM = Pattern.compile("^([a-zA-Z0-9-]+)\\.[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+\\.fisx\\.uk$", 2);
@@ -552,18 +489,15 @@ public class ahm implements InstanceAccess
     }
 
     public static boolean cg(final String s) {
-        final long n = 8853192015720880671L;
         if (Client.a.s().nN()) {
             return false;
         }
         if (ahm.aPg.containsKey(s)) {
             return Boolean.valueOf(ahm.aPg.get((Object)s));
         }
-        final long n2 = (long)((!ahm.aEg.isIntegratedServerRunning() && StringUtils.containsIgnoreCase((CharSequence)LastConnectionComponent.ip, (CharSequence)s)) ? 1 : 0) << 32;
-        final long n3 = n;
-        final long n4 = n3 ^ ((n2 ^ n3) & -1L << 32);
-        ahm.aPg.put(s, Boolean.valueOf((boolean)((int)(n4 >>> 32) != 0)));
-        return (int)(n4 >>> 32) != 0;
+        int containsIgnoreCase2 = (!ahm.aEg.isIntegratedServerRunning() && StringUtils.containsIgnoreCase((CharSequence)LastConnectionComponent.ip, (CharSequence)s)) ? 1 : 0;
+        ahm.aPg.put(s, Boolean.valueOf((boolean)(containsIgnoreCase2 != 0)));
+        return containsIgnoreCase2 != 0;
     }
 
     public static String ch(final String s) {
@@ -579,24 +513,19 @@ public class ahm implements InstanceAccess
     }
 
     public static boolean vn() {
-        final long n = -5988082233906822015L;
         if (ahm.aEg == null || ahm.aEg.thePlayer == null || ahm.aEg.theWorld == null) {
             return false;
         }
-        final long n2 = (long)(ahm.aEg.thePlayer.ticksExisted / 20) << 32;
-        final long n3 = n;
-        final long n4 = n3 ^ ((n2 ^ n3) & -1L << 32);
+        int ticksExisted2 = ahm.aEg.thePlayer.ticksExisted / 20;
         final String trimToEmpty = StringUtils.trimToEmpty(LastConnectionComponent.ip);
-        final long n5 = (long)LastConnectionComponent.port;
-        final long n6 = n4;
-        final long n7 = n6 ^ ((n5 ^ n6) & -1L >>> 32);
-        if (ahm.aOX == ahm.aEg.theWorld && ahm.aOT == (int)(n7 >>> 32) && ahm.aOW == (int)n7 && StringUtils.equals((CharSequence)ahm.aOV, (CharSequence)(String)trimToEmpty)) {
+        int port2 = LastConnectionComponent.port;
+        if (ahm.aOX == ahm.aEg.theWorld && ahm.aOT == ticksExisted2 && ahm.aOW == port2 && StringUtils.equals((CharSequence)ahm.aOV, (CharSequence)(String)trimToEmpty)) {
             return ahm.aOU;
         }
         ahm.aOU = vo();
-        ahm.aOT = (int)(n7 >>> 32);
+        ahm.aOT = ticksExisted2;
         ahm.aOV = trimToEmpty;
-        ahm.aOW = (int)n7;
+        ahm.aOW = port2;
         ahm.aOX = ahm.aEg.theWorld;
         return ahm.aOU;
     }

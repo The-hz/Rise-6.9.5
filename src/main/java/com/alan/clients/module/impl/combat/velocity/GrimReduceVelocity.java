@@ -273,16 +273,8 @@ extends Mode<Velocity> {
     }
 
     static {
-        long l9 = 4694598421286159918L;
-        long l10 = 1063659800611395539L;
-        long l11 = -8140149489534518236L;
-        long l12 = 4552273611989643914L;
-        long l13 = -8830333522100371260L;
-        long l14 = 7802232416768268047L;
-        long l15 = -3592190588120519805L;
         o0Oo000O0oO = new Object[13];
-        long l16 = l15;
-        long l17 = l16 ^ (0L ^ l16) & -1L << 32;
+        int l17_hi = 0;
         Object[] objectArray = new Object[3];
         objectArray[0] = fld_0OOOoo00o0_22;
         objectArray[1] = 0;
@@ -308,33 +300,24 @@ extends Mode<Velocity> {
         }
         objectArray[2] = (String)object;
         char[] cArray = ((String)GrimReduceVelocity.o0Oo000O0oO(objectArray)).toCharArray();
-        long l18 = l9;
-        long l19 = l18 ^ (0x9800000000L ^ l18) & -1L << 32;
-        long l20 = l13;
-        long l21 = l20 ^ (0L ^ l20) & -1L >>> 32;
-        while ((int)l21 < (int)(l19 >>> 32)) {
-            long l22 = l21;
-            long l23 = l22 ^ (l22 ^ l22 + (long)1) & -1L >>> 32;
-            long l24 = l10;
-            l10 = l24 ^ ((long)cArray[(int)l21] ^ l24) & -1L >>> 32;
-            long l25 = l23;
-            long l26 = l25 ^ (l25 ^ l25 + (long)1) & -1L >>> 32;
-            long l27 = l11;
-            l11 = l27 ^ ((long)cArray[(int)l23] << 32 ^ l27) & -1L << 32;
-            long l28 = l12;
-            l12 = l28 ^ ((long)((int)l10 << 16 | (int)(l11 >>> 32)) ^ l28) & -1L >>> 32;
-            char[] cArray2 = new char[(int)l12];
-            long l29 = l14;
-            l14 = l29 ^ (0L ^ l29) & -1L << 32;
-            while ((int)(l14 >>> 32) < (int)l12) {
-                cArray2[(int)(l14 >>> 32)] = cArray[(int)l26 + (int)(l14 >>> 32)];
-                l14 += 0x100000000L;
+        int l19_hi = 152;
+        int limit = 0;
+        while (limit < l19_hi) {
+            int limit3 = limit + 1;
+            int l10_lo = cArray[limit];
+            int limit4 = limit3 + 1;
+            int l11_hi = cArray[limit3];
+            int limit2 = l10_lo << 16 | l11_hi;
+            char[] cArray2 = new char[limit2];
+            int j = 0;
+            while (j < limit2) {
+                cArray2[j] = cArray[limit4 + j];
+                j++;
             }
-            int n13 = (int)(l17 >>> 32);
-            l17 += 0x100000000L;
+            int n13 = l17_hi;
+            l17_hi++;
             GrimReduceVelocity.o0Oo000O0oO[n13] = new String(cArray2);
-            long l30 = l26;
-            l21 = l30 ^ ((long)((int)l26 + (int)l12) ^ l30) & -1L >>> 32;
+            limit = limit4 + limit2;
         }
         dj = false;
     }
@@ -356,12 +339,9 @@ extends Mode<Velocity> {
             Packet<?> packet3;
             Packet<?> packet4;
             S12PacketEntityVelocity s12PacketEntityVelocity;
-            long l2 = 0L;
-            long l3 = 7432305888346604623L;
-            long l4 = l3;
             Speed speed = this.e(Speed.class);
-            long l5 = l4 ^ ((long)(speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && (Boolean)((GrimSpeed)speed.hl().wo()).Px.wo() != false ? 1 : 0) << 32 ^ l4) & -1L << 32;
-            if (tt || GrimReduceVelocity.aEg.thePlayer.Zl < 3 || GrimReduceVelocity.aEg.thePlayer.isInWeb || !((Boolean)this.tw.wo()).booleanValue() && !((Boolean)this.tC.wo()).booleanValue() || (int)(l5 >>> 32) != 0) {
+            int wo2 = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && (Boolean)((GrimSpeed)speed.hl().wo()).Px.wo() != false ? 1 : 0;
+            if (tt || GrimReduceVelocity.aEg.thePlayer.Zl < 3 || GrimReduceVelocity.aEg.thePlayer.isInWeb || !((Boolean)this.tw.wo()).booleanValue() && !((Boolean)this.tC.wo()).booleanValue() || wo2 != 0) {
                 return;
             }
             Packet<?> packet5 = packetReceiveEvent.dq();
@@ -404,8 +384,6 @@ extends Mode<Velocity> {
         this.tH = preUpdateEvent -> {
             List<EntityLivingBase> list;
             EntityLivingBase entityLivingBase;
-            long l2 = 0L;
-            long l3 = 5160052018510288853L;
             this.tv = false;
             KillAura killAura = this.e(KillAura.class);
             List<EntityLivingBase> list2 = bv.f(((Number)this.tF.wo()).intValue());
@@ -423,11 +401,10 @@ extends Mode<Velocity> {
                     return;
                 }
             }
-            long l4 = l3;
             Speed speed = this.e(Speed.class);
-            long l5 = l4 ^ ((long)(speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && (Boolean)((GrimSpeed)speed.hl().wo()).Px.wo() != false ? 1 : 0) << 32 ^ l4) & -1L << 32;
+            int wo2 = speed.isEnabled() && speed.hl().wo() instanceof GrimSpeed && (Boolean)((GrimSpeed)speed.hl().wo()).Px.wo() != false ? 1 : 0;
             if (GrimReduceVelocity.aEg.thePlayer.ticksExisted <= 20) return;
-            if ((int)(l5 >>> 32) != 0) {
+            if (wo2 != 0) {
                 return;
             }
             entityLivingBase = killAura.isEnabled() && killAura.jE != null ? killAura.jE : this.e(list2);

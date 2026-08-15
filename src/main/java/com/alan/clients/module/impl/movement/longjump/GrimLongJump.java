@@ -25,8 +25,6 @@ extends Mode<LongJump> {
     public int Li;
     @EventLink
     public Listener<PreMotionEvent> Ln = preMotionEvent -> {
-        long l2 = 0L;
-        long l3 = -2156287223722575119L;
         GrimLongJump.aEg.timer.dzD = 2.0f;
         preMotionEvent.setPitch((float)((double)preMotionEvent.getPitch() + (double)((float)Math.random()) * 0.1));
         if (this.Li == 0) {
@@ -48,16 +46,15 @@ extends Mode<LongJump> {
             this.toggle();
             return;
         }
-        long l4 = l3;
-        long l5 = l4 ^ (0L ^ l4) & -1L << 32;
+        int l5_hi = 0;
         while (true) {
-            if ((int)(l5 >>> 32) >= 2) {
+            if (l5_hi >= 2) {
                 this.Ll = 1;
                 this.Lj = 0xFFFFFFC0 ^ 0xFFFFFFC0;
                 return;
             }
             ahj.m(new C03PacketPlayer(false));
-            l5 += 0x100000000L;
+            l5_hi++;
         }
     };
     public int Lj;
@@ -67,18 +64,15 @@ extends Mode<LongJump> {
     public Listener<PacketSendEvent> Lq;
     @EventLink
     public Listener<PostStrafeEvent> Lo = postStrafeEvent -> {
-        long l2 = 0L;
-        long l3 = -8335158128059520353L;
         if (this.Lh == 0) {
             GrimLongJump.aEg.thePlayer.jump();
         }
         if (this.Lh == 1) {
             this.Li = 1;
-            long l4 = l3;
-            long l5 = l4 ^ (0L ^ l4) & -1L << 32;
-            while ((int)(l5 >>> 32) < 20) {
+            int i = 0;
+            while (i < 20) {
                 ahj.m(new C03PacketPlayer(false));
-                l5 += 0x100000000L;
+                i++;
             }
         }
         ++this.Lh;

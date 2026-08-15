@@ -94,28 +94,27 @@ public class zq extends SecurityFeature {
     public long aww;
 
     public void aD(String var1) {
-        long j = 3894669226108115281L;
         if (awj.matcher(var1).find()) {
             if (this.awp.add("numeric_countdown_combined")) {
                 this.aE("numeric_countdown_combined");
             }
         } else if (var1.matches("^\\d+$")) {
-            long k;
+            int parseInt2;
             try {
-                k = j ^ ((long)Integer.parseInt(var1) << 32 ^ j) & -1L << 32;
+                parseInt2 = Integer.parseInt(var1);
             } catch (NumberFormatException numberformatexception) {
                 return;
             }
 
-            if ((int)(k >>> 32) >= 1 && (int)(k >>> 32) <= 5) {
+            if (parseInt2 >= 1 && parseInt2 <= 5) {
                 Long olong = System.currentTimeMillis();
-                if (this.awu == (int)(k >>> 32) + 1 && olong - this.aww <= 4000L) {
+                if (this.awu == parseInt2 + 1 && olong - this.aww <= 4000L) {
                     this.awv++;
                 } else {
                     this.awv = 1;
                 }
 
-                this.awu = (int)(k >>> 32);
+                this.awu = parseInt2;
                 this.aww = olong;
                 if (this.awv >= 3 && this.awp.add("numeric_countdown_sequence")) {
                     this.aE("numeric_countdown_sequence");
@@ -125,10 +124,9 @@ public class zq extends SecurityFeature {
     }
 
     public String aC(String var1) {
-        long j = 7513608022453495680L;
         String s = StringUtils.trimToEmpty(var1);
-        long k = j ^ ((long)s.indexOf(58) << 32 ^ j) & -1L << 32;
-        return (int)(k >>> 32) >= 0 ? s.substring(0, (int)(k >>> 32)) : s;
+        int indexOf2 = s.indexOf(58);
+        return indexOf2 >= 0 ? s.substring(0, indexOf2) : s;
     }
 
     public String p(String var1, String var2) throws java.io.IOException, java.net.MalformedURLException, java.net.ProtocolException {
@@ -262,7 +260,6 @@ public class zq extends SecurityFeature {
     }
 
     public void aw(String var1) {
-        long j = 4022089144606289883L;
         if (!this.awx && this.awq != null && this.awq != this.avG) {
             if (var1 != null && this.ay(var1) && aEg != null && aEg.theWorld != null) {
                 this.avG = aEg.theWorld;
@@ -278,10 +275,10 @@ public class zq extends SecurityFeature {
                         this.aD(s);
                         if (!this.awx) {
                             aag[] aaag = awi;
-                            long k = j ^ (aaag.length ^ j) & -1L >>> 32;
+                            int count = aaag.length;
 
-                            for (long l = k ^ (0L ^ k) & -1L << 32; (int)(l >>> 32) < (int)l; l += 4294967296L) {
-                                aag aag = aaag[(int)(l >>> 32)];
+                            for (int i = 0; i < count; i++) {
+                                aag aag = aaag[i];
                                 Matcher matcher1 = aag.awG.matcher(s);
                                 if (matcher1.find() && this.awp.add(aag.awF)) {
                                     String s4 = aag.awF;
@@ -328,20 +325,19 @@ public class zq extends SecurityFeature {
 
         String s2 = s4;
         Thread thread = new Thread(() -> {
-            long i2 = 1939285367986989335L;
-            long j2 = i2 ^ (0L ^ i2) & -1L << 32;
+            int j2_hi = 0;
             long l1 = 30000L;
 
             try {
                 String s5 = this.p(s2, (int)(i1 >>> 32) != 0 ? "target" : "domain");
-                j2 ^= ((long)((String)s5 != null && awe.matcher(s5).find() ? 1 : 0) << 32 ^ j2) & -1L << 32;
+                j2_hi = (String)s5 != null && awe.matcher(s5).find() ? 1 : 0;
                 l1 = 300000L;
             } catch (Exception exception) {
             }
 
             aah aahxx = new aah();
             aahxx.awH = false;
-            aahxx.awI = ((int)(j2 >>> 32)) != 0;
+            aahxx.awI = (j2_hi) != 0;
             aahxx.awJ = System.currentTimeMillis() + l1;
             this.awz.put(var1, aahxx);
         }, "WorldActivityProxyLookup");
@@ -361,13 +357,12 @@ public class zq extends SecurityFeature {
             this.nV();
         };
         this.awB = var1 -> {
-            long j = -2881929851642629629L;
             if (var1.dq() instanceof c) {
                 c c = (c)var1.dq();
                 String s = c.getChatComponent() != null ? c.getChatComponent().getUnformattedText() : "";
-                long k = j ^ ((long)(!this.a(c, s) ? 1 : 0) << 32 ^ j) & -1L << 32;
+                int flag = !this.a(c, s) ? 1 : 0;
                 String s1 = this.ax(s);
-                if ((int)(k >>> 32) != 0
+                if (flag != 0
                     && s != null
                     && (s1.contains("you were spawned in limbo.") || s1.contains("you are afk, move around to return from afk."))
                     && aEg != null
@@ -383,7 +378,7 @@ public class zq extends SecurityFeature {
                     return;
                 }
 
-                if ((int)(k >>> 32) != 0) {
+                if (flag != 0) {
                     this.aw(s);
                 }
             }
@@ -412,13 +407,12 @@ public class zq extends SecurityFeature {
     }
 
     public void av(String var1) {
-        long k = -5156460192214384815L;
         if (this.awq != null) {
             if (this.awq != this.avG && !this.avH) {
                 long l = System.currentTimeMillis() - this.awr;
-                long i1 = k ^ ((long)this.awo.size() << 32 ^ k) & -1L << 32;
-                long j1 = i1 ^ ((!this.awp.isEmpty() ? 1 : 0) ^ i1) & -1L >>> 32;
-                if (l >= 30000L && (int)(j1 >>> 32) < 5 && !this.awx && (int)j1 == 0) {
+                int size2 = this.awo.size();
+                int empty = !this.awp.isEmpty() ? 1 : 0;
+                if (l >= 30000L && size2 < 5 && !this.awx && empty == 0) {
                     Client.a.s().at(this.getReason());
                 }
 
@@ -437,18 +431,16 @@ public class zq extends SecurityFeature {
     }
 
     public boolean ay(String var1) {
-        long k = -7350012892717810641L;
-        long l = -6442538549737468332L;
         String s = this.ax(var1);
         if (s.isEmpty()) {
             return false;
         }
 
         Pattern[] apattern = avY;
-        long i1 = k ^ (apattern.length ^ k) & -1L >>> 32;
+        int count = apattern.length;
 
-        for (long j1 = l ^ (0L ^ l) & -1L << 32; (int)(j1 >>> 32) < (int)i1; j1 += 4294967296L) {
-            if (apattern[(int)(j1 >>> 32)].matcher(s).find()) {
+        for (int i = 0; i < count; i++) {
+            if (apattern[i].matcher(s).find()) {
                 return true;
             }
         }
@@ -477,8 +469,6 @@ public class zq extends SecurityFeature {
     }
 
     public void nV() {
-        long l = 7221703037876171785L;
-        long i1 = 4711121204642008207L;
         if (!this.awx && this.awq != null && this.awq != this.avG && aEg != null && aEg.theWorld != null && aEg.thePlayer != null) {
             if (this.awo.size() < 5) {
                 long j1 = aEg.theWorld.getTotalWorldTime();
@@ -489,8 +479,8 @@ public class zq extends SecurityFeature {
                     while (iterator.hasNext()) {
                         EntityPlayer entityplayer = (EntityPlayer)iterator.next();
                         if (entityplayer != null && entityplayer != aEg.thePlayer) {
-                            i1 ^= ((long)entityplayer.getEntityId() << 32 ^ i1) & -1L << 32;
-                            aai aai = this.awn.computeIfAbsent((int)(i1 >>> 32), var1 -> new aai(entityplayer.posX, entityplayer.posY, entityplayer.posZ));
+                            int entityId = entityplayer.getEntityId();
+                            aai aai = this.awn.computeIfAbsent(entityId, var1 -> new aai(entityplayer.posX, entityplayer.posY, entityplayer.posZ));
                             double d3 = entityplayer.posX - aai.at;
                             double d4 = entityplayer.posY - aai.au;
                             double d5 = entityplayer.posZ - aai.av;
@@ -498,9 +488,9 @@ public class zq extends SecurityFeature {
                             aai.at = entityplayer.posX;
                             aai.au = entityplayer.posY;
                             aai.av = entityplayer.posZ;
-                            if (aai.awK > 10.0 && this.awo.add((int)(i1 >>> 32)) && this.awo.size() >= 5) {
-                                long k1 = l ^ ((long)this.awo.size() << 32 ^ l) & -1L << 32;
-                                this.aE("moving_players:" + (int)(k1 >>> 32));
+                            if (aai.awK > 10.0 && this.awo.add(entityId) && this.awo.size() >= 5) {
+                                int size2 = this.awo.size();
+                                this.aE("moving_players:" + size2);
                                 return;
                             }
                         }
@@ -511,11 +501,7 @@ public class zq extends SecurityFeature {
     }
 
     static {
-        long i = 5914816155593953958L;
-        long j = 7028506495222199804L;
-        long k = 3860476229254459739L;
-        long j1 = -8802548524708165762L;
-        long k1 = i ^ (0L ^ i) & -1L << 32;
+        int k1_hi = 0;
         Object[] aobject = new Object[]{fld_0OOOoo00o0_65, 0, null};
         Object object = mth_0OOOoo00o0_31()[0];
         if (object == null) {
@@ -544,27 +530,27 @@ public class zq extends SecurityFeature {
 
         aobject[2] = (String)object;
         char[] achar10 = ((String)o0Oo000O0oO(aobject)).toCharArray();
-        long l19 = j ^ (21831318765568L ^ j) & -1L << 32;
-        long i20 = k ^ (0L ^ k) & -1L << 32;
+        int limit = 5083;
+        int i20_hi = 0;
 
-        while ((int)(i20 >>> 32) < (int)(l19 >>> 32)) {
-            int k30 = (int)(i20 >>> 32);
-            long j20 = i20 + 4294967296L;
+        while (i20_hi < limit) {
+            int k30 = i20_hi;
+            int j20_hi = i20_hi + 1;
             char c10 = achar10[k30];
-            k30 = (int)(j20 >>> 32);
-            long k20 = j20 + 4294967296L;
+            k30 = j20_hi;
+            int k20_hi = j20_hi + 1;
             char c11 = achar10[k30];
-            long l20 = j1 ^ ((long)(c10 << 16 | c11) << 32 ^ j1) & -1L << 32;
-            char[] achar11 = new char[(int)(l20 >>> 32)];
+            int l20_hi = c10 << 16 | c11;
+            char[] achar11 = new char[l20_hi];
 
-            for (j1 = l20 ^ (0L ^ l20) & -1L >>> 32; (int)j1 < (int)(j1 >>> 32); j1 ^= (j1 ^ j1 + 1) & -1L >>> 32) {
-                achar11[(int)j1] = achar10[(int)(k20 >>> 32) + (int)j1];
+            for (int limit2 = 0; limit2 < l20_hi; limit2 = limit2 + 1) {
+                achar11[limit2] = achar10[k20_hi + limit2];
             }
 
-            k30 = (int)(k1 >>> 32);
-            k1 += 4294967296L;
+            k30 = k1_hi;
+            k1_hi++;
             o0Oo000O0oO[k30] = new String(achar11);
-            i20 = k20 ^ ((long)((int)(k20 >>> 32) + (int)(j1 >>> 32)) << 32 ^ k20) & -1L << 32;
+            i20_hi = k20_hi + l20_hi;
         }
 
         aobject = new Object[]{fld_0OOOoo00o0_65, 1, null};
@@ -597,27 +583,27 @@ public class zq extends SecurityFeature {
 
         aobject[2] = (String)object;
         char[] achar13 = ((String)o0Oo000O0oO(aobject)).toCharArray();
-        long k24 = l19 ^ (20985210208256L ^ l19) & -1L << 32;
-        long l24 = i20 ^ (0L ^ i20) & -1L << 32;
+        int k24_hi = 4886;
+        int limit3 = 0;
 
-        while ((int)(l24 >>> 32) < (int)(k24 >>> 32)) {
-            int j29 = (int)(l24 >>> 32);
-            long i25 = l24 + 4294967296L;
+        while (limit3 < k24_hi) {
+            int j29 = limit3;
+            int i25_hi = limit3 + 1;
             char c13 = achar13[j29];
-            j29 = (int)(i25 >>> 32);
-            long j25 = i25 + 4294967296L;
+            j29 = i25_hi;
+            int j25_hi = i25_hi + 1;
             char c14 = achar13[j29];
-            long k25 = j1 ^ ((long)(c13 << 16 | c14) << 32 ^ j1) & -1L << 32;
-            char[] achar14 = new char[(int)(k25 >>> 32)];
+            int k25_hi = c13 << 16 | c14;
+            char[] achar14 = new char[k25_hi];
 
-            for (j1 = k25 ^ (0L ^ k25) & -1L >>> 32; (int)j1 < (int)(j1 >>> 32); j1 ^= (j1 ^ j1 + 1) & -1L >>> 32) {
-                achar14[(int)j1] = achar13[(int)(j25 >>> 32) + (int)j1];
+            for (int limit4 = 0; limit4 < k25_hi; limit4 = limit4 + 1) {
+                achar14[limit4] = achar13[j25_hi + limit4];
             }
 
-            j29 = (int)(k1 >>> 32);
-            k1 += 4294967296L;
+            j29 = k1_hi;
+            k1_hi++;
             o0Oo000O0oO[j29] = new String(achar14);
-            l24 = j25 ^ ((long)((int)(j25 >>> 32) + (int)(j1 >>> 32)) << 32 ^ j25) & -1L << 32;
+            limit3 = j25_hi + k25_hi;
         }
 
         aobject = new Object[]{fld_0OOOoo00o0_65, 2, null};
@@ -648,27 +634,27 @@ public class zq extends SecurityFeature {
 
         aobject[2] = (String)object;
         char[] achar16 = ((String)o0Oo000O0oO(aobject)).toCharArray();
-        long j5 = k24 ^ (21865678503936L ^ k24) & -1L << 32;
-        long i5 = l24 ^ (0L ^ l24) & -1L << 32;
+        int limit5 = 5091;
+        int i5_hi = 0;
 
-        while ((int)(i5 >>> 32) < (int)(j5 >>> 32)) {
-            int k29 = (int)(i5 >>> 32);
-            long l28 = i5 + 4294967296L;
+        while (i5_hi < limit5) {
+            int k29 = i5_hi;
+            int l28_hi = i5_hi + 1;
             char c16 = achar16[k29];
-            k29 = (int)(l28 >>> 32);
-            long l4 = l28 + 4294967296L;
+            k29 = l28_hi;
+            int l4_hi = l28_hi + 1;
             char c17 = achar16[k29];
-            long i29 = j1 ^ ((long)(c16 << 16 | c17) << 32 ^ j1) & -1L << 32;
-            char[] achar17 = new char[(int)(i29 >>> 32)];
+            int i29_hi = c16 << 16 | c17;
+            char[] achar17 = new char[i29_hi];
 
-            for (j1 = i29 ^ (0L ^ i29) & -1L >>> 32; (int)j1 < (int)(j1 >>> 32); j1 ^= (j1 ^ j1 + 1) & -1L >>> 32) {
-                achar17[(int)j1] = achar16[(int)(l4 >>> 32) + (int)j1];
+            for (int limit6 = 0; limit6 < i29_hi; limit6 = limit6 + 1) {
+                achar17[limit6] = achar16[l4_hi + limit6];
             }
 
-            k29 = (int)(k1 >>> 32);
-            k1 += 4294967296L;
+            k29 = k1_hi;
+            k1_hi++;
             o0Oo000O0oO[k29] = new String(achar17);
-            i5 = l4 ^ ((long)((int)(l4 >>> 32) + (int)(j1 >>> 32)) << 32 ^ l4) & -1L << 32;
+            i5_hi = l4_hi + i29_hi;
         }
 
         aobject = new Object[]{fld_0OOOoo00o0_65, 3, null};
@@ -704,27 +690,27 @@ public class zq extends SecurityFeature {
 
         aobject[2] = (String)object;
         char[] achar2 = ((String)o0Oo000O0oO(aobject)).toCharArray();
-        long l9 = j5 ^ (21835613732864L ^ j5) & -1L << 32;
-        long i10 = i5 ^ (0L ^ i5) & -1L << 32;
+        int limit7 = 5084;
+        int i10_hi = 0;
 
-        while ((int)(i10 >>> 32) < (int)(l9 >>> 32)) {
-            int l29 = (int)(i10 >>> 32);
-            long j10 = i10 + 4294967296L;
+        while (i10_hi < limit7) {
+            int l29 = i10_hi;
+            int j10_hi = i10_hi + 1;
             char c2 = achar2[l29];
-            l29 = (int)(j10 >>> 32);
-            long k10 = j10 + 4294967296L;
+            l29 = j10_hi;
+            int k10_hi = j10_hi + 1;
             char c3 = achar2[l29];
-            long l10 = j1 ^ ((long)(c2 << 16 | c3) << 32 ^ j1) & -1L << 32;
-            char[] achar3 = new char[(int)(l10 >>> 32)];
+            int l10_hi = c2 << 16 | c3;
+            char[] achar3 = new char[l10_hi];
 
-            for (j1 = l10 ^ (0L ^ l10) & -1L >>> 32; (int)j1 < (int)(j1 >>> 32); j1 ^= (j1 ^ j1 + 1) & -1L >>> 32) {
-                achar3[(int)j1] = achar2[(int)(k10 >>> 32) + (int)j1];
+            for (int limit8 = 0; limit8 < l10_hi; limit8 = limit8 + 1) {
+                achar3[limit8] = achar2[k10_hi + limit8];
             }
 
-            l29 = (int)(k1 >>> 32);
-            k1 += 4294967296L;
+            l29 = k1_hi;
+            k1_hi++;
             o0Oo000O0oO[l29] = new String(achar3);
-            i10 = k10 ^ ((long)((int)(k10 >>> 32) + (int)(j1 >>> 32)) << 32 ^ k10) & -1L << 32;
+            i10_hi = k10_hi + l10_hi;
         }
 
         aobject = new Object[]{fld_0OOOoo00o0_65, 4, null};
@@ -755,27 +741,27 @@ public class zq extends SecurityFeature {
 
         aobject[2] = (String)object;
         char[] achar5 = ((String)o0Oo000O0oO(aobject)).toCharArray();
-        long i14 = l9 ^ (21625160335360L ^ l9) & -1L << 32;
-        long j14 = i10 ^ (0L ^ i10) & -1L << 32;
+        int i14_hi = 5035;
+        int limit9 = 0;
 
-        while ((int)(j14 >>> 32) < (int)(i14 >>> 32)) {
-            int i30 = (int)(j14 >>> 32);
-            long k14 = j14 + 4294967296L;
+        while (limit9 < i14_hi) {
+            int i30 = limit9;
+            int k14_hi = limit9 + 1;
             char c5 = achar5[i30];
-            i30 = (int)(k14 >>> 32);
-            long l14 = k14 + 4294967296L;
+            i30 = k14_hi;
+            int l14_hi = k14_hi + 1;
             char c6 = achar5[i30];
-            long i15 = j1 ^ ((long)(c5 << 16 | c6) << 32 ^ j1) & -1L << 32;
-            char[] achar6 = new char[(int)(i15 >>> 32)];
+            int i15_hi = c5 << 16 | c6;
+            char[] achar6 = new char[i15_hi];
 
-            for (j1 = i15 ^ (0L ^ i15) & -1L >>> 32; (int)j1 < (int)(j1 >>> 32); j1 ^= (j1 ^ j1 + 1) & -1L >>> 32) {
-                achar6[(int)j1] = achar5[(int)(l14 >>> 32) + (int)j1];
+            for (int limit10 = 0; limit10 < i15_hi; limit10 = limit10 + 1) {
+                achar6[limit10] = achar5[l14_hi + limit10];
             }
 
-            i30 = (int)(k1 >>> 32);
-            k1 += 4294967296L;
+            i30 = k1_hi;
+            k1_hi++;
             o0Oo000O0oO[i30] = new String(achar6);
-            j14 = l14 ^ ((long)((int)(l14 >>> 32) + (int)(j1 >>> 32)) << 32 ^ l14) & -1L << 32;
+            limit9 = l14_hi + i15_hi;
         }
 
         aobject = new Object[]{fld_0OOOoo00o0_65, 5, null};
@@ -807,27 +793,27 @@ public class zq extends SecurityFeature {
 
         aobject[2] = (String)object;
         char[] achar8 = ((String)o0Oo000O0oO(aobject)).toCharArray();
-        long k18 = i14 ^ (9143985373184L ^ i14) & -1L << 32;
-        long l18 = j14 ^ (0L ^ j14) & -1L << 32;
+        int k18_hi = 2129;
+        int limit11 = 0;
 
-        while ((int)(l18 >>> 32) < (int)(k18 >>> 32)) {
-            int j30 = (int)(l18 >>> 32);
-            long i19 = l18 + 4294967296L;
+        while (limit11 < k18_hi) {
+            int j30 = limit11;
+            int i19_hi = limit11 + 1;
             char c8 = achar8[j30];
-            j30 = (int)(i19 >>> 32);
-            long j19 = i19 + 4294967296L;
+            j30 = i19_hi;
+            int j19_hi = i19_hi + 1;
             char c9 = achar8[j30];
-            long k19 = j1 ^ ((long)(c8 << 16 | c9) << 32 ^ j1) & -1L << 32;
-            char[] achar9 = new char[(int)(k19 >>> 32)];
+            int k19_hi = c8 << 16 | c9;
+            char[] achar9 = new char[k19_hi];
 
-            for (j1 = k19 ^ (0L ^ k19) & -1L >>> 32; (int)j1 < (int)(j1 >>> 32); j1 ^= (j1 ^ j1 + 1) & -1L >>> 32) {
-                achar9[(int)j1] = achar8[(int)(j19 >>> 32) + (int)j1];
+            for (int limit12 = 0; limit12 < k19_hi; limit12 = limit12 + 1) {
+                achar9[limit12] = achar8[j19_hi + limit12];
             }
 
-            j30 = (int)(k1 >>> 32);
-            k1 += 4294967296L;
+            j30 = k1_hi;
+            k1_hi++;
             o0Oo000O0oO[j30] = new String(achar9);
-            l18 = j19 ^ ((long)((int)(j19 >>> 32) + (int)(j1 >>> 32)) << 32 ^ j19) & -1L << 32;
+            limit11 = j19_hi + k19_hi;
         }
 
         avY = new Pattern[]{

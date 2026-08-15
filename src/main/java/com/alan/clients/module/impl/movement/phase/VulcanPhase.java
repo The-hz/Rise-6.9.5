@@ -132,9 +132,7 @@ public class VulcanPhase extends Mode<Phase> {
         };
         this.Ol = var0 -> {};
         this.Om = var1x -> {
-            long i = 0L;
-            long j = -4480092840615981475L;
-            long k = j ^ ((long)aik.vx() << 32 ^ j) & -1L << 32;
+            int vx2 = aik.vx();
             if ((!aEg.gameSettings.keyBindJump.isKeyDown() || aEg.thePlayer.hurtTime <= 0)
                 && !aEg.gameSettings.keyBindSneak.isKeyDown()
                 && !aEg.gameSettings.keyBindJump.isKeyDown()

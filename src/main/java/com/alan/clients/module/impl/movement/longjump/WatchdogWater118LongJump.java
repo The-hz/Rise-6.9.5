@@ -89,9 +89,7 @@ public class WatchdogWater118LongJump extends Mode<LongJump>
                 thePlayer3.motionY += 0.0281;
             }
             final boolean inWater = WatchdogWater118LongJump.aEg.thePlayer.inWater;
-            final long n = (long)WatchdogWater118LongJump.aEg.thePlayer.ae << 32;
-            final long n2 = 4412184569908866215L;
-            switch ((int)((n2 ^ ((n ^ n2) & -1L << 32)) >>> 32)) {
+            switch (WatchdogWater118LongJump.aEg.thePlayer.ae) {
                 case 1: {}
                 case 7: {
                     WatchdogWater118LongJump.aEg.thePlayer.motionY = 0.03;

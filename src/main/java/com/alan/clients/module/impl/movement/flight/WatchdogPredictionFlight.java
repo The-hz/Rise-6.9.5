@@ -76,19 +76,16 @@ extends Mode<Flight> {
     public WatchdogPredictionFlight(String string, Flight flight) {
         super(string, flight);
         this.yu = preMotionEvent -> {
-            long l3 = -626933667683321280L;
             if (WatchdogPredictionFlight.aEg.thePlayer.ticksExisted % 2 == 0 && this.ys) {
                 Double d2 = MoveUtil.direction();
                 double cfr_ignored_0 = -MathHelper.sin((float)((float)d2.doubleValue())) * 100.0f;
                 double cfr_ignored_1 = MathHelper.cos((float)((float)d2.doubleValue())) * 100.0f;
                 preMotionEvent.setPosY(preMotionEvent.getPosY() + 100.0);
                 WorldClient cfr_ignored_2 = Minecraft.getMinecraft().theWorld;
-                long l4 = l3;
-                l3 = l4 ^ ((long)Minecraft.getMinecraft().theWorld.GZ() << 32 ^ l4) & -1L << 32;
+                int gZ = Minecraft.getMinecraft().theWorld.GZ();
             }
             WorldClient worldClient = Minecraft.getMinecraft().theWorld;
-            long l5 = l3;
-            long l6 = l5 ^ ((long)Minecraft.getMinecraft().theWorld.GZ() ^ l5) & -1L >>> 32;
+            int gZ2 = Minecraft.getMinecraft().theWorld.GZ();
         };
         this.FN = packetSendEvent -> {
             Packet<?> packet = packetSendEvent.dq();

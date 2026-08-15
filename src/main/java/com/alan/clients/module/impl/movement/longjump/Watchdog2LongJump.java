@@ -100,45 +100,28 @@ public class Watchdog2LongJump extends Mode<LongJump>
     }
 
     public void hy() {
-        long n = -1996028352194688054L;
-        final long n2 = -6618392940758690381L;
-        final long n3 = 5753357184221243133L;
-        long n4 = 5379602857852028494L;
         this.Mb.clear();
-        final long n5 = 128849018880L;
-        final long n6 = n2;
-        final long n7 = n6 ^ ((n5 ^ n6) & -1L << 32);
-        final long n8 = -(int)(n7 >>> 32);
-        final long n9 = n3;
-        long n20;
-        for (long n10 = n9 ^ ((n8 ^ n9) & -1L >>> 32); (int)n10 < (int)(n7 >>> 32); n10 = (n20 ^ ((n20 ^ n20 + 1) & -1L >>> 32))) {
-            final long n11 = (long)(-(int)(n7 >>> 32)) << 32;
-            final long n12 = n4;
-            for (n4 = (n12 ^ ((n11 ^ n12) & -1L << 32)); (int)(n4 >>> 32) < (int)(n7 >>> 32); n4 += 4294967296L) {
-                final long n13 = -(int)(n7 >>> 32);
-                final long n14 = n;
-                long n19;
-                for (n = (n14 ^ ((n13 ^ n14) & -1L >>> 32)); (int)n < (int)(n7 >>> 32); n = (n19 ^ ((n19 ^ n19 + 1) & -1L >>> 32))) {
-                    final BlockPos blockPos = new BlockPos(Watchdog2LongJump.aEg.thePlayer.posX + (int)n10, Watchdog2LongJump.aEg.thePlayer.posY + (int)(n4 >>> 32), Watchdog2LongJump.aEg.thePlayer.posZ + (int)n);
+        int limit = 30;
+        int n10_lo = -limit;
+        for (; n10_lo < limit; n10_lo = n10_lo + 1) {
+            int j = -limit;
+            for (; j < limit; j++) {
+                int n_lo = -limit;
+                for (; n_lo < limit; n_lo = n_lo + 1) {
+                    final BlockPos blockPos = new BlockPos(Watchdog2LongJump.aEg.thePlayer.posX + n10_lo, Watchdog2LongJump.aEg.thePlayer.posY + j, Watchdog2LongJump.aEg.thePlayer.posZ + n_lo);
                     final IBlockState blockState = Watchdog2LongJump.aEg.theWorld.getBlockState(blockPos);
                     final Block block = blockState.getBlock();
                     if (block != Blocks.air) {
-                        final long n15 = 0L;
-                        final long n16 = n;
-                        n = (n16 ^ ((n15 ^ n16) & -1L << 32));
+                        int n_hi = 0;
                         if (block instanceof BlockSlab) {
-                            final long n17 = (long)(blockState.getProperties().containsKey(BlockSlab.HALF) ? 0 : 1) << 32;
-                            final long n18 = n;
-                            n = (n18 ^ ((n17 ^ n18) & -1L << 32));
+                            n_hi = blockState.getProperties().containsKey(BlockSlab.HALF) ? 0 : 1;
                         }
-                        if (block instanceof BlockStairs || block instanceof BlockSnow || (int)(n >>> 32) != 0) {
+                        if (block instanceof BlockStairs || block instanceof BlockSnow || n_hi != 0) {
                             this.Mb.add(blockPos);
                         }
                     }
-                    n19 = n;
                 }
             }
-            n20 = n10;
         }
         this.Mc = true;
     }
@@ -232,28 +215,27 @@ public class Watchdog2LongJump extends Mode<LongJump>
             final AxisAlignedBB axisAlignedBB = Watchdog2LongJump.aEg.thePlayer.getEntityBoundingBox();
             final WorldClient theWorld = Watchdog2LongJump.aEg.theWorld;
             double minX = axisAlignedBB.minX;
-            final long n192 = -5169351316448240581L;
-            long n = n192 ^ ((0L ^ n192) & -1L << 32);
+            int n_hi = 0;
             while (minX < axisAlignedBB.maxX) {
                 double minZ = axisAlignedBB.minZ;
                 while (minZ < axisAlignedBB.maxZ) {
                     final Block block = theWorld.getBlockState(new BlockPos(minX, axisAlignedBB.minY - 0.05, minZ)).getBlock();
                     if (block instanceof BlockStairs || block instanceof BlockSnow || (block instanceof BlockSlab && Math.abs(Watchdog2LongJump.aEg.thePlayer.posY - Math.round(Watchdog2LongJump.aEg.thePlayer.posY)) <= 0.03)) {
-                        n = n ^ ((4294967296L ^ n) & -1L << 32);
+                        n_hi = 1;
                         break;
                     }
                     else {
                         minZ += 0.3;
                     }
                 }
-                if ((int)(n >>> 32) != 0) {
+                if (n_hi != 0) {
                     break;
                 }
                 else {
                     minX += 0.3;
                 }
             }
-            if ((int)(n >>> 32) != 0) {
+            if (n_hi != 0) {
                 this.LY = true;
                 Watchdog2LongJump.LZ = 35;
                 Watchdog2LongJump.Ma = 34;
@@ -327,14 +309,12 @@ public class Watchdog2LongJump extends Mode<LongJump>
                 }
                 Watchdog2LongJump.LW = true;
             }
-            final long n3 = (long)Watchdog2LongJump.aEg.thePlayer.ae << 32;
-            final long n194 = -4809365704514670827L;
-            final long n4 = n194 ^ ((n3 ^ n194) & -1L << 32);
-            if ((((int)(n4 >>> 32) > 3 && (int)(n4 >>> 32) < 38) || ((int)(n4 >>> 32) > 37 && Watchdog2LongJump.aEg.thePlayer.motionY <= 0.0)) && Watchdog2LongJump.hQ > 40) {
+            int ae2 = Watchdog2LongJump.aEg.thePlayer.ae;
+            if (((ae2 > 3 && ae2 < 38) || (ae2 > 37 && Watchdog2LongJump.aEg.thePlayer.motionY <= 0.0)) && Watchdog2LongJump.hQ > 40) {
                 final EntityPlayerSP thePlayer4 = Watchdog2LongJump.aEg.thePlayer;
                 thePlayer4.motionY += 0.0283;
             }
-            switch ((int)(n4 >>> 32)) {
+            switch (ae2) {
                 case 1: {
                     final EntityPlayerSP thePlayer5 = Watchdog2LongJump.aEg.thePlayer;
                     thePlayer5.motionX *= 2.1;

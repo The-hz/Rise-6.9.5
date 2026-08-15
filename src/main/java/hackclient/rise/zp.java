@@ -28,8 +28,6 @@ implements zh {
 
     @Override
     public void ar(String string) {
-        long l4 = -7966772755212989606L;
-        long l5 = -4895270867030026971L;
         if (string == null) return;
         if (this.avA) {
             return;
@@ -41,16 +39,14 @@ implements zh {
             return;
         }
         Pattern[] patternArray = avR;
-        long l6 = l4;
-        long l7 = l6 ^ ((long)patternArray.length ^ l6) & -1L >>> 32;
-        long l8 = l5;
-        long l9 = l8 ^ (0L ^ l8) & -1L << 32;
-        while ((int)(l9 >>> 32) < (int)l7) {
-            if (patternArray[(int)(l9 >>> 32)].matcher(string2).find()) {
+        int count = patternArray.length;
+        int i = 0;
+        while (i < count) {
+            if (patternArray[i].matcher(string2).find()) {
                 this.avA = true;
                 return;
             }
-            l9 += 0x100000000L;
+            i++;
         }
     }
 
@@ -245,16 +241,8 @@ implements zh {
 
     static {
         clinit: {
-        long l9 = 2158836260573194485L;
-        long l10 = -5598912548307870118L;
-        long l11 = 2062248284796167102L;
-        long l12 = -7515286455545742772L;
-        long l13 = 3660159147437641942L;
-        long l14 = -7969565046437555617L;
-        long l15 = -1349815888238071724L;
         o0Oo000O0oO = new Object[19];
-        long l16 = l15;
-        long l17 = l16 ^ (0L ^ l16) & -1L << 32;
+        int l17_hi = 0;
         Object[] objectArray = new Object[3];
         objectArray[0] = fld_0OOOoo00o0_63;
         objectArray[1] = 0;
@@ -281,37 +269,28 @@ implements zh {
         }
         objectArray[2] = (String)object;
         char[] cArray = ((String)zp.o0Oo000O0oO(objectArray)).toCharArray();
-        long l18 = l9;
-        long l19 = l18 ^ (0x18300000000L ^ l18) & -1L << 32;
-        long l20 = l13;
-        long l21 = l20 ^ (0L ^ l20) & -1L >>> 32;
+        int l19_hi = 387;
+        int l21_lo = 0;
         while (true) {
-            if ((int)l21 >= (int)(l19 >>> 32)) {
+            if (l21_lo >= l19_hi) {
                 avR = new Pattern[]{Pattern.compile("\\bpacket\\s*log(?:ger)?\\b", 2), Pattern.compile("\\bpacket\\s*debug(?:ger)?\\b", 2), Pattern.compile("\\bdebug(?:ger)?\\b", 2), Pattern.compile("\\bverbose\\b", 2), Pattern.compile("\\balerts?\\b", 2), Pattern.compile("\\bproxy\\b|\\bmitm\\b|\\bmitmproxy\\b|\\bsniff(?:er|ing)?\\b", 2), Pattern.compile("\\bwireshark\\b|\\bburp\\b|\\bcharles\\b|\\bproxyman\\b", 2), Pattern.compile("\\bfrida\\b|\\bjdwp\\b|\\bjfr\\b|\\battach\\b|\\bjavaagent\\b|\\bagentlib\\b", 2), Pattern.compile("\\brecaf\\b|\\bdecompil(?:e|er|ing)\\b|\\bbytecode\\b|\\bhook(?:ing)?\\b|\\binject(?:ion|ing)?\\b", 2)};
                 break clinit;
             }
-            long l22 = l21;
-            long l23 = l22 ^ (l22 ^ l22 + (long)1) & -1L >>> 32;
-            long l24 = l10;
-            l10 = l24 ^ ((long)cArray[(int)l21] ^ l24) & -1L >>> 32;
-            long l25 = l23;
-            long l26 = l25 ^ (l25 ^ l25 + (long)1) & -1L >>> 32;
-            long l27 = l11;
-            l11 = l27 ^ ((long)cArray[(int)l23] << 32 ^ l27) & -1L << 32;
-            long l28 = l12;
-            l12 = l28 ^ ((long)((int)l10 << 16 | (int)(l11 >>> 32)) ^ l28) & -1L >>> 32;
-            char[] cArray2 = new char[(int)l12];
-            long l29 = l14;
-            l14 = l29 ^ (0L ^ l29) & -1L << 32;
-            while ((int)(l14 >>> 32) < (int)l12) {
-                cArray2[(int)(l14 >>> 32)] = cArray[(int)l26 + (int)(l14 >>> 32)];
-                l14 += 0x100000000L;
+            int l21_lo2 = l21_lo + 1;
+            int l10_lo = cArray[l21_lo];
+            int l21_lo3 = l21_lo2 + 1;
+            int l11_hi = cArray[l21_lo2];
+            int limit = l10_lo << 16 | l11_hi;
+            char[] cArray2 = new char[limit];
+            int i = 0;
+            while (i < limit) {
+                cArray2[i] = cArray[l21_lo3 + i];
+                i++;
             }
-            int n14 = (int)(l17 >>> 32);
-            l17 += 0x100000000L;
+            int n14 = l17_hi;
+            l17_hi++;
             zp.o0Oo000O0oO[n14] = new String(cArray2);
-            long l30 = l26;
-            l21 = l30 ^ ((long)((int)l26 + (int)l12) ^ l30) & -1L >>> 32;
+            l21_lo = l21_lo3 + limit;
         }
         }
     }

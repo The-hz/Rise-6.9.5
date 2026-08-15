@@ -144,7 +144,6 @@ public class bo extends Component {
     public static Object Oo0o00000O00;
 
     public void a(String var1, byte[] var2, String var3) {
-        long j = 9118408441173318930L;
 
         try {
             if (var1 == null || a.aKB().aKK() == null) {
@@ -154,9 +153,9 @@ public class bo extends Component {
             String s3 = h(var1);
             int l = var2.length;
             String s = h(var3);
-            long k = j ^ ((long)l << 32 ^ j) & -1L << 32;
+            int l2 = l;
             String s1 = s3;
-            String s2 = "{\"id\":30,\"a\":\"" + s1 + "\",\"b\":" + (int)(k >>> 32) + ",\"c\":\"" + s + "\"}";
+            String s2 = "{\"id\":30,\"a\":\"" + s1 + "\",\"b\":" + l2 + ",\"c\":\"" + s + "\"}";
             a.aKB().aKK().sendMessage(s2);
             a.aKB().aKK().o(var2);
         } catch (Exception exception) {
@@ -236,14 +235,13 @@ public class bo extends Component {
     }
 
     public String bE() {
-        long j = -2624712375192055742L;
         if (aEg.getNetHandler() == null && aEg.theWorld == null) {
             return "[]";
         }
 
         StringBuilder stringbuilder = new StringBuilder("[");
         LinkedHashSet linkedhashset = new LinkedHashSet();
-        long k = j ^ (4294967296L ^ j) & -1L << 32;
+        int k_hi = 1;
         if (aEg.getNetHandler() != null) {
             Iterator iterator = aEg.getNetHandler().getPlayerInfoMap().iterator();
 
@@ -266,9 +264,9 @@ public class bo extends Component {
             }
         }
 
-        for (Iterator iterator2 = linkedhashset.iterator(); iterator2.hasNext(); k ^= (0L ^ k) & -1L << 32) {
+        for (Iterator iterator2 = linkedhashset.iterator(); iterator2.hasNext(); k_hi = 0) {
             UUID uuid = (UUID)iterator2.next();
-            if ((int)(k >>> 32) == 0) {
+            if (k_hi == 0) {
                 stringbuilder.append(',');
             }
 
@@ -280,7 +278,6 @@ public class bo extends Component {
     }
 
     public void bB() {
-        long j = 3278068654361950734L;
         if (aEg.thePlayer != null) {
             this.eM = true;
             this.a(new net.minecraft.network.play.server.n(aEg.thePlayer), EnumConnectionState.PLAY);
@@ -304,13 +301,13 @@ public class bo extends Component {
 
             this.c(aEg.thePlayer);
 
-            for (long k = j ^ (0L ^ j) & -1L << 32; (int)(k >>> 32) < 5; k += 4294967296L) {
-                ItemStack itemstack = aEg.thePlayer.getEquipmentInSlot((int)(k >>> 32));
+            for (int i = 0; i < 5; i++) {
+                ItemStack itemstack = aEg.thePlayer.getEquipmentInSlot(i);
                 if (itemstack != null) {
-                    this.a(new e(aEg.thePlayer.getEntityId(), (int)(k >>> 32), itemstack), EnumConnectionState.PLAY);
+                    this.a(new e(aEg.thePlayer.getEntityId(), i, itemstack), EnumConnectionState.PLAY);
                 }
 
-                this.eU[(int)(k >>> 32)] = ItemStack.copyItemStack(itemstack);
+                this.eU[i] = ItemStack.copyItemStack(itemstack);
             }
 
             Iterator iterator = aEg.thePlayer.getActivePotionEffects().iterator();
@@ -390,13 +387,11 @@ public class bo extends Component {
     }
 
     public boolean a(Scoreboard var1) {
-        long k = -5904408796953368785L;
-        long l = 7829967910124762632L;
         if (var1 == null) {
             return false;
         }
 
-        long i1 = l ^ (0L ^ l) & -1L << 32;
+        int i1_hi = 0;
         HashSet hashset = new HashSet();
         Iterator iterator2 = var1.getScoreObjectives().iterator();
 
@@ -404,15 +399,15 @@ public class bo extends Component {
             ScoreObjective scoreobjective = (ScoreObjective)iterator2.next();
             if (scoreobjective != null && scoreobjective.getName() != null && hashset.add(scoreobjective.getName())) {
                 this.a(new S3BPacketScoreboardObjective(scoreobjective, 0), EnumConnectionState.PLAY);
-                i1 ^= (4294967296L ^ i1) & -1L << 32;
+                i1_hi = 1;
             }
         }
 
-        for (long j1 = k ^ (0L ^ k) & -1L >>> 32; (int)j1 < 19; j1 ^= (j1 ^ j1 + 1) & -1L >>> 32) {
-            ScoreObjective scoreobjective1 = var1.getObjectiveInDisplaySlot((int)j1);
+        for (int i = 0; i < 19; i = i + 1) {
+            ScoreObjective scoreobjective1 = var1.getObjectiveInDisplaySlot(i);
             if (scoreobjective1 != null) {
-                this.a(new net.minecraft.network.play.server.bq((int)j1, scoreobjective1), EnumConnectionState.PLAY);
-                i1 ^= (4294967296L ^ i1) & -1L << 32;
+                this.a(new net.minecraft.network.play.server.bq(i, scoreobjective1), EnumConnectionState.PLAY);
+                i1_hi = 1;
             }
         }
 
@@ -422,7 +417,7 @@ public class bo extends Component {
             Score score = (Score)iterator.next();
             if (score != null && score.getObjective() != null) {
                 this.a(new S3CPacketUpdateScore(score), EnumConnectionState.PLAY);
-                i1 ^= (4294967296L ^ i1) & -1L << 32;
+                i1_hi = 1;
             }
         }
 
@@ -432,11 +427,11 @@ public class bo extends Component {
             ScorePlayerTeam scoreplayerteam = (ScorePlayerTeam)iterator1.next();
             if (scoreplayerteam != null) {
                 this.a(new S3EPacketTeams(scoreplayerteam, 0), EnumConnectionState.PLAY);
-                i1 ^= (4294967296L ^ i1) & -1L << 32;
+                i1_hi = 1;
             }
         }
 
-        return ((int)(i1 >>> 32)) != 0;
+        return (i1_hi) != 0;
     }
 
     public void b(Packet<?> var1, EnumConnectionState var2, byte[] var3) {
@@ -867,14 +862,7 @@ public class bo extends Component {
     }
 
     static {
-        long l1 = -8049399875932860280L;
-        long i2 = 2045092036887553466L;
-        long j2 = 7103385715287951363L;
-        long k2 = 3263871419549633813L;
-        long l2 = -3273568148072812526L;
-        long i3 = -2248289790064815350L;
-        long j3 = -9186385460429314812L;
-        long k3 = j3 ^ (0L ^ j3) & -1L << 32;
+        int k3_hi = 0;
         Object[] achar3 = new Object[]{fld_0OOOoo00o0_12, 0, null};
         Object object3 = mth_0OOOoo00o0_5()[0];
         if (object3 == null) {
@@ -905,27 +893,27 @@ public class bo extends Component {
 
         achar3[2] = object3;
         char[] achar2 = ((String)o0Oo000O0oO(achar3)).toCharArray();
-        long l7 = l1 ^ (2078764171264L ^ l1) & -1L << 32;
-        long k7 = l2 ^ (0L ^ l2) & -1L >>> 32;
+        int limit = 484;
+        int i = 0;
 
-        while ((int)k7 < (int)(l7 >>> 32)) {
-            int j8 = (int)k7;
-            long i8 = k7 ^ (k7 ^ k7 + 1) & -1L >>> 32;
-            i2 ^= (achar2[j8] ^ i2) & -1L >>> 32;
-            j8 = (int)i8;
-            long j7 = i8 ^ (i8 ^ i8 + 1) & -1L >>> 32;
-            j2 ^= ((long)achar2[j8] << 32 ^ j2) & -1L << 32;
-            k2 ^= (((int)i2 << 16 | (int)(j2 >>> 32)) ^ k2) & -1L >>> 32;
-            char[] achar1 = new char[(int)k2];
+        while (i < limit) {
+            int j8 = i;
+            int i2 = i + 1;
+            int i2_lo = achar2[j8];
+            j8 = i2;
+            int i3 = i2 + 1;
+            int j2_hi = achar2[j8];
+            int limit2 = i2_lo << 16 | j2_hi;
+            char[] achar1 = new char[limit2];
 
-            for (i3 ^= (0L ^ i3) & -1L << 32; (int)(i3 >>> 32) < (int)k2; i3 += 4294967296L) {
-                achar1[(int)(i3 >>> 32)] = achar2[(int)j7 + (int)(i3 >>> 32)];
+            for (int j = 0; j < limit2; j++) {
+                achar1[j] = achar2[i3 + j];
             }
 
-            j8 = (int)(k3 >>> 32);
-            k3 += 4294967296L;
+            j8 = k3_hi;
+            k3_hi++;
             o0Oo000O0oO[j8] = new String(achar1);
-            k7 = j7 ^ ((int)j7 + (int)k2 ^ j7) & -1L >>> 32;
+            i = i3 + limit2;
         }
 
         ev = UUID.fromString("d41d8cd9-8f00-3204-a980-0998ecf8427e");
@@ -938,65 +926,58 @@ public class bo extends Component {
     }
 
     public void bD() {
-        long l1 = -477576802182111535L;
-        long i2 = 6843805781985009830L;
-        long j2 = -5833188217182083808L;
-        long k2 = 3152142492142540486L;
-        long l2 = -4085340617850080905L;
-        long i3 = -1103992403951424484L;
-        long j3 = -1164909228639259252L;
         if (aEg.thePlayer != null) {
             if (!this.eY) {
                 this.a(new z(aEg.thePlayer), EnumConnectionState.PLAY);
             } else {
-                long j4 = l1 ^ ((int)Math.floor(aEg.thePlayer.posX * 32.0) ^ l1) & -1L >>> 32;
-                long j5 = i2 ^ ((long)((int)Math.floor(aEg.thePlayer.posY * 32.0)) << 32 ^ i2) & -1L << 32;
-                long k4 = j5 ^ ((int)Math.floor(aEg.thePlayer.posZ * 32.0) ^ j5) & -1L >>> 32;
-                long k5 = i3 ^ ((long)((byte)(aEg.thePlayer.renderYawOffset * 256.0F / 360.0F)) << 32 ^ i3) & -1L << 32;
-                long l3 = k5 ^ ((byte)(aEg.thePlayer.rotationPitch * 256.0F / 360.0F) ^ k5) & -1L >>> 32;
-                long i4 = l2 ^ ((long)((byte)(aEg.thePlayer.getRotationYawHead() * 256.0F / 360.0F)) << 32 ^ l2) & -1L << 32;
-                long l5 = j3 ^ ((int)j4 - this.eN ^ j3) & -1L >>> 32;
-                long i5 = j2 ^ ((int)(k4 >>> 32) - this.eO ^ j2) & -1L >>> 32;
-                long i6 = k2 ^ ((long)((int)k4 - this.eP) << 32 ^ k2) & -1L << 32;
-                long k3 = i6 ^ (((int)l5 == 0 && (int)i5 == 0 && (int)(i6 >>> 32) == 0 ? 0 : 1) ^ i6) & -1L >>> 32;
-                long l4 = l5 ^ ((long)((int)(l3 >>> 32) == this.eQ && (int)l3 == this.eR ? 0 : 1) << 32 ^ l5) & -1L << 32;
-                if ((int)l4 < -128 || (int)l4 > 127 || (int)i5 < -128 || (int)i5 > 127 || (int)(k3 >>> 32) < -128 || (int)(k3 >>> 32) > 127) {
+                int floor2 = (int)Math.floor(aEg.thePlayer.posX * 32.0);
+                int floor3 = (int)Math.floor(aEg.thePlayer.posY * 32.0);
+                int floor4 = (int)Math.floor(aEg.thePlayer.posZ * 32.0);
+                int renderYawOffset2 = (byte)(aEg.thePlayer.renderYawOffset * 256.0F / 360.0F);
+                int rotationPitch2 = (byte)(aEg.thePlayer.rotationPitch * 256.0F / 360.0F);
+                int rotationYawHead = (byte)(aEg.thePlayer.getRotationYawHead() * 256.0F / 360.0F);
+                int dJ4 = floor2 - this.eN;
+                int i5_lo = floor3 - this.eO;
+                int dK4 = floor4 - this.eP;
+                int notFlag = dJ4 == 0 && i5_lo == 0 && dK4 == 0 ? 0 : 1;
+                int notFlag2 = renderYawOffset2 == this.eQ && rotationPitch2 == this.eR ? 0 : 1;
+                if (dJ4 < -128 || dJ4 > 127 || i5_lo < -128 || i5_lo > 127 || dK4 < -128 || dK4 > 127) {
                     this.a(new z(aEg.thePlayer), EnumConnectionState.PLAY);
-                } else if ((int)k3 != 0 && (int)(l4 >>> 32) != 0) {
+                } else if (notFlag != 0 && notFlag2 != 0) {
                     this.a(
                         new S17PacketEntityLookMove(
                             aEg.thePlayer.getEntityId(),
-                            (byte)l4,
-                            (byte)i5,
-                            (byte)(k3 >>> 32),
-                            (byte)((int)(l3 >>> 32)),
-                            (byte)((int)l3),
+                            (byte)dJ4,
+                            (byte)i5_lo,
+                            (byte)dK4,
+                            (byte)(renderYawOffset2),
+                            (byte)(rotationPitch2),
                             aEg.thePlayer.onGround
                         ),
                         EnumConnectionState.PLAY
                     );
-                } else if ((int)k3 != 0) {
+                } else if (notFlag != 0) {
                     this.a(
-                        new S15PacketEntityRelMove(aEg.thePlayer.getEntityId(), (byte)l4, (byte)i5, (byte)(k3 >>> 32), aEg.thePlayer.onGround),
+                        new S15PacketEntityRelMove(aEg.thePlayer.getEntityId(), (byte)dJ4, (byte)i5_lo, (byte)dK4, aEg.thePlayer.onGround),
                         EnumConnectionState.PLAY
                     );
-                } else if ((int)(l4 >>> 32) != 0) {
+                } else if (notFlag2 != 0) {
                     this.a(
-                        new S16PacketEntityLook(aEg.thePlayer.getEntityId(), (byte)((int)(l3 >>> 32)), (byte)((int)l3), aEg.thePlayer.onGround),
+                        new S16PacketEntityLook(aEg.thePlayer.getEntityId(), (byte)(renderYawOffset2), (byte)(rotationPitch2), aEg.thePlayer.onGround),
                         EnumConnectionState.PLAY
                     );
                 }
 
-                if ((int)(i4 >>> 32) != this.eS) {
-                    this.a(new net.minecraft.network.play.server.aa(aEg.thePlayer, (byte)((int)(i4 >>> 32))), EnumConnectionState.PLAY);
+                if (rotationYawHead != this.eS) {
+                    this.a(new net.minecraft.network.play.server.aa(aEg.thePlayer, (byte)(rotationYawHead)), EnumConnectionState.PLAY);
                 }
 
-                this.eN = (int)j4;
-                this.eO = (int)(k4 >>> 32);
-                this.eP = (int)k4;
-                this.eQ = (byte)((int)(l3 >>> 32));
-                this.eR = (byte)((int)l3);
-                this.eS = (byte)((int)(i4 >>> 32));
+                this.eN = floor2;
+                this.eO = floor3;
+                this.eP = floor4;
+                this.eQ = (byte)(renderYawOffset2);
+                this.eR = (byte)(rotationPitch2);
+                this.eS = (byte)(rotationYawHead);
             }
         }
     }
@@ -1061,33 +1042,30 @@ public class bo extends Component {
     }
 
     public void bC() {
-        long l = 6007260110062789659L;
-        long i1 = 5525602087375060364L;
-        long j1 = -8448430206031734452L;
         if (aEg.thePlayer != null && this.eY) {
-            long i2 = l ^ ((long)aEg.thePlayer.getDataWatcher().getWatchableObjectByte(0) << 32 ^ l) & -1L << 32;
-            if ((int)(i2 >>> 32) != this.eT) {
+            int watchableObjectByte = aEg.thePlayer.getDataWatcher().getWatchableObjectByte(0);
+            if (watchableObjectByte != this.eT) {
                 this.a(new ad(aEg.thePlayer.getEntityId(), aEg.thePlayer.getDataWatcher(), true), EnumConnectionState.PLAY);
-                this.eT = (byte)((int)(i2 >>> 32));
+                this.eT = (byte)(watchableObjectByte);
             }
 
-            for (long k1 = i1 ^ (0L ^ i1) & -1L << 32; (int)(k1 >>> 32) < this.eU.length; k1 += 4294967296L) {
-                ItemStack itemstack = aEg.thePlayer.getEquipmentInSlot((int)(k1 >>> 32));
-                if (!ItemStack.areItemStacksEqual(itemstack, this.eU[(int)(k1 >>> 32)])) {
-                    this.a(new e(aEg.thePlayer.getEntityId(), (int)(k1 >>> 32), itemstack), EnumConnectionState.PLAY);
-                    this.eU[(int)(k1 >>> 32)] = ItemStack.copyItemStack(itemstack);
+            for (int i = 0; i < this.eU.length; i++) {
+                ItemStack itemstack = aEg.thePlayer.getEquipmentInSlot(i);
+                if (!ItemStack.areItemStacksEqual(itemstack, this.eU[i])) {
+                    this.a(new e(aEg.thePlayer.getEntityId(), i, itemstack), EnumConnectionState.PLAY);
+                    this.eU[i] = ItemStack.copyItemStack(itemstack);
                 }
             }
 
             ItemStack itemstack1 = aEg.thePlayer.inventory.getCurrentItem();
             this.eV = ItemStack.copyItemStack(itemstack1);
-            long l1 = j1 ^ ((long)aEg.thePlayer.swingProgressInt << 32 ^ j1) & -1L << 32;
-            if (aEg.thePlayer.isSwingInProgress && (!this.eW || (int)(l1 >>> 32) < this.eX)) {
+            int swingProgressInt2 = aEg.thePlayer.swingProgressInt;
+            if (aEg.thePlayer.isSwingInProgress && (!this.eW || swingProgressInt2 < this.eX)) {
                 this.a(new m(aEg.thePlayer, 0), EnumConnectionState.PLAY);
             }
 
             this.eW = aEg.thePlayer.isSwingInProgress;
-            this.eX = (int)(l1 >>> 32);
+            this.eX = swingProgressInt2;
         }
     }
 
@@ -1118,7 +1096,6 @@ public class bo extends Component {
     }
 
     public void a(Entity var1, EntityPlayer var2, Set<Integer> var3, Set<UUID> var4, List<GameProfile> var5) {
-        long j = -2405070092624071380L;
         if (var1 != null && var1 != var2 && var1.isEntityAlive() && var3.add(var1.getEntityId())) {
             if (var1 instanceof EntityPlayer entityplayer && this.a(entityplayer.getGameProfile()) && var4.add(entityplayer.getGameProfile().getId())) {
                 this.a(entityplayer.getGameProfile(), -94 - -34 - -60, this.a(var1.worldObj), null);
@@ -1140,9 +1117,9 @@ public class bo extends Component {
                         this.a(new S20PacketEntityProperties(var1.getEntityId(), baseattributemap.getAllAttributes()), EnumConnectionState.PLAY);
                     }
 
-                    for (long k = j ^ (0L ^ j) & -1L << 32; (int)(k >>> 32) < 5; k += 4294967296L) {
-                        if (entitylivingbase.getEquipmentInSlot((int)(k >>> 32)) != null) {
-                            this.a(new e(var1.getEntityId(), (int)(k >>> 32), entitylivingbase.getEquipmentInSlot((int)(k >>> 32))), EnumConnectionState.PLAY);
+                    for (int i = 0; i < 5; i++) {
+                        if (entitylivingbase.getEquipmentInSlot(i) != null) {
+                            this.a(new e(var1.getEntityId(), i, entitylivingbase.getEquipmentInSlot(i)), EnumConnectionState.PLAY);
                         }
                     }
 
@@ -1158,12 +1135,11 @@ public class bo extends Component {
     }
 
     public void a(byte[] var1) {
-        long j = -2004719455039654948L;
         if (var1 == null || var1.length == 0) {
             return;
         }
 
-        long k = j ^ ((long)(this.fd >= 0 ? this.fd : (int)(System.currentTimeMillis() - this.fa)) << 32 ^ j) & -1L << 32;
+        int currentTimeMillis2 = this.fd >= 0 ? this.fd : (int)(System.currentTimeMillis() - this.fa);
 
         try {
             synchronized (this.ex) {
@@ -1171,14 +1147,14 @@ public class bo extends Component {
                     return;
                 }
 
-                this.ff.writeInt((int)(k >>> 32));
+                this.ff.writeInt(currentTimeMillis2);
                 this.ff.writeInt(var1.length);
                 this.ff.write(var1);
             }
         } catch (IOException ioexception) {
         }
 
-        if ((int)(k >>> 32) > this.fb) {
+        if (currentTimeMillis2 > this.fb) {
             this.bv();
         }
     }

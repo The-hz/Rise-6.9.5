@@ -196,10 +196,6 @@ public class Scaffold extends Module {
     public boolean agP;
 
     public void D(int var1) {
-        long i1 = -1018494789218055329L;
-        long j1 = 6271928420745137599L;
-        long k1 = 8733755186196028191L;
-        long l1 = -5328899403421840953L;
         aib aib = this.acr != null ? this.acr : this.agw;
         if (aib != null) {
             if (this.afY.wo()) {
@@ -207,9 +203,9 @@ public class Scaffold extends Module {
                 EntityPlayerSP entityplayersp1 = aEg.thePlayer;
                 double d3 = entityplayersp1.posY + entityplayersp1.getEyeHeight() - this.targetBlock.yCoord - 0.5 - (Math.random() - 0.5) * 0.1;
 
-                for (long i3 = k1 ^ ((long)(-180 + var1) << 32 ^ k1) & -1L << 32; (int)(i3 >>> 32) <= 180; i3 += 193273528320L) {
+                for (int i = -180 + var1; i <= 180; i += 45) {
                     entityplayersp1.setPosition(entityplayersp1.posX, entityplayersp1.posY - d3, entityplayersp1.posZ);
-                    MovingObjectPosition movingobjectposition1 = aef.c(new Vector2f(entityplayersp1.pl + (int)(i3 >>> 32) * 3, 0.0F), 6.0);
+                    MovingObjectPosition movingobjectposition1 = aef.c(new Vector2f(entityplayersp1.pl + i * 3, 0.0F), 6.0);
                     entityplayersp1.setPosition(entityplayersp1.posX, entityplayersp1.posY + d3, entityplayersp1.posZ);
                     if (movingobjectposition1 != null && movingobjectposition1.hitVec != null) {
                         Vector2f vector2f7 = aiu.h(movingobjectposition1.hitVec);
@@ -254,14 +250,14 @@ public class Scaffold extends Module {
                 Double d2 = MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
                 float f24;
                 int j3 = (f24 = Math.abs(f15 - this.acs) - 100.0F) == 0.0F ? 0 : (f24 < 0.0F ? -1 : 1);
-                long i2 = l1 ^ ((!(Math.abs(f15 % 90.0F) <= 10.0F) && !(Math.abs(f15 % 90.0F) >= 80.0F) ? 0 : 1) ^ l1) & -1L >>> 32;
-                long j2 = i2 ^ ((long)((int)i2 != 0 ? -135 + var1 : -180 + var1) << 32 ^ i2) & -1L << 32;
-                long k2 = i1 ^ ((long)((int)j2 != 0 ? 135 : 180) << 32 ^ i1) & -1L << 32;
+                int notAbs = !(Math.abs(f15 % 90.0F) <= 10.0F) && !(Math.abs(f15 % 90.0F) >= 80.0F) ? 0 : 1;
+                int j2_hi = notAbs != 0 ? -135 + var1 : -180 + var1;
+                int limit = notAbs != 0 ? 135 : 180;
                 ArrayList arraylist1 = new ArrayList();
 
-                for (long l2 = j1 ^ ((long)((int)(j2 >>> 32)) << 32 ^ j1) & -1L << 32; (int)(l2 >>> 32) <= (int)(k2 >>> 32); l2 += 193273528320L) {
+                for (int i2 = j2_hi; i2 <= limit; i2 += 45) {
                     entityplayersp.setPosition(entityplayersp.posX, entityplayersp.posY - d1, entityplayersp.posZ);
-                    MovingObjectPosition movingobjectposition = aef.c(new Vector2f(entityplayersp.pl + (int)(l2 >>> 32) * 3, 0.0F), this.agd.wo() ? 4.5 : 5.5);
+                    MovingObjectPosition movingobjectposition = aef.c(new Vector2f(entityplayersp.pl + i2 * 3, 0.0F), this.agd.wo() ? 4.5 : 5.5);
                     entityplayersp.setPosition(entityplayersp.posX, entityplayersp.posY + d1, entityplayersp.posZ);
                     if (movingobjectposition != null && movingobjectposition.hitVec != null) {
                         Vector2f vector2f3 = aiu.h(movingobjectposition.hitVec);
@@ -352,13 +348,12 @@ public class Scaffold extends Module {
     }
 
     public void ks() {
-        long j = -597661393861685211L;
         if (this.agE > 3) {
             afi.c("Pause is greater than 3");
         } else if (this.acr != null) {
-            long k = j ^ ((this.afK.wo().getName().equals("Grim") ? 1L : 0L) << 32 ^ j) & -1L << 32;
+            int equals2 = (int)(this.afK.wo().getName().equals("Grim") ? 1L : 0L);
             Vec3 vec3 = this.getHitVec();
-            if ((int)(k >>> 32) != 0) {
+            if (equals2 != 0) {
                 float f1 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.acs - aEg.thePlayer.pl);
                 ahj.l(new C06PacketPlayerPosLook(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, f1, this.act, aEg.thePlayer.onGround));
                 PlayerControllerMP playercontrollermp1 = aEg.playerController;
@@ -418,10 +413,9 @@ public class Scaffold extends Module {
     }
 
     public void kp() {
-        long j = -4047177162190724216L;
         if (this.km().equals("Telly")) {
             float f1 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
-            long k = j ^ ((long)(!(Math.abs(f1 % 90.0F) <= 10.0F) && !(Math.abs(f1 % 90.0F) >= 80.0F) ? 0 : 1) << 32 ^ j) & -1L << 32;
+            int notAbs = !(Math.abs(f1 % 90.0F) <= 10.0F) && !(Math.abs(f1 % 90.0F) >= 80.0F) ? 0 : 1;
             if (aEg.thePlayer.onGround) {
                 MoveUtil.enoughMovementForSprinting();
             }
@@ -450,19 +444,16 @@ public class Scaffold extends Module {
     }
 
     public float c(float var1, float var2, float var3) {
-        long j = 2483473862868227359L;
         float f2 = MathHelper.wrapAngleTo180_float(var2 - var1);
         MathHelper.wrapAngleTo180_double(var2);
         MathHelper.wrapAngleTo180_double(Math.toDegrees(Math.atan2(aEg.thePlayer.motionZ, aEg.thePlayer.motionX)) - 90.0);
         float f3 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
-        long k = j ^ ((long)(!(Math.abs(f3 % 90.0F) <= 15.0F) && !(Math.abs(f3 % 90.0F) >= 75.0F) ? 0 : 1) << 32 ^ j) & -1L << 32;
+        int notAbs = !(Math.abs(f3 % 90.0F) <= 15.0F) && !(Math.abs(f3 % 90.0F) >= 75.0F) ? 0 : 1;
         float f4 = MathHelper.clamp_float(f2, -var3, var3);
         return var1 + f4;
     }
 
     public void a(BlockPos var1, float var2) {
-        long k = 948590641378053290L;
-        long l = -4661216933181700127L;
         this.a(aEg.thePlayer, aEg.timer.bWm);
         aka akax2 = new aka(var1.getX() + 0.5, var1.getY() + 0.5, var1.getZ() + 0.5);
         float f6 = aEg.thePlayer.pl;
@@ -473,7 +464,7 @@ public class Scaffold extends Module {
             akaxx = new aka(akaxx.x / d5, 0.0, akaxx.z / d5);
         }
 
-        long i1 = k ^ ((long)(Math.cos(Math.toRadians(f6)) * 1.0 < 0.0 ? 1 : 0) << 32 ^ k) & -1L << 32;
+        int toRadians2 = Math.cos(Math.toRadians(f6)) * 1.0 < 0.0 ? 1 : 0;
         aka akaxxx = new aka(akaxx.z, 0.0, -akaxx.x);
         double d6 = akaxxx.wg();
         if (d6 != 0.0) {
@@ -492,10 +483,10 @@ public class Scaffold extends Module {
         this.act = f10;
         RotationComponent.d(false);
         float f11 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
-        long j1 = l ^ ((long)(!(Math.abs(f11 % 90.0F) <= 10.0F) && !(Math.abs(f11 % 90.0F) >= 80.0F) ? 0 : 1) << 32 ^ l) & -1L << 32;
+        int notAbs = !(Math.abs(f11 % 90.0F) <= 10.0F) && !(Math.abs(f11 % 90.0F) >= 80.0F) ? 0 : 1;
         if (!aEg.gameSettings.keyBindLeft.isKeyDown()
             && !aEg.gameSettings.keyBindRight.isKeyDown()
-            && (!MoveUtil.enoughMovementForSprinting() || MoveUtil.speed() < 0.09 || (int)(j1 >>> 32) != 0)) {
+            && (!MoveUtil.enoughMovementForSprinting() || MoveUtil.speed() < 0.09 || notAbs != 0)) {
             if ((MoveUtil.speed() < 0.21 || !aEg.thePlayer.onGround) && !aEg.gameSettings.keyBindJump.isKeyDown()) {
                 RotationComponent.setRotations(new Vector2f(this.acs - 30.0F, this.act), 10.0, this.afU.wo() ? MovementFix.NORMAL : MovementFix.OFF);
             } else if (MoveUtil.speed() < 0.3 && !aEg.gameSettings.keyBindJump.isKeyDown()) {
@@ -590,33 +581,20 @@ public class Scaffold extends Module {
     }
 
     public Vector2f a(BlockPos var1, EnumFacing var2, float var3, boolean var4, float var5) {
-        long k = 1669674263546720133L;
-        long l = 6566806101767772160L;
         float[] afloat = new float[]{0.0F, 1.5F, -1.5F, 3.0F, -3.0F, 4.5F, -4.5F};
-        long i1 = l ^ ((long)afloat.length << 32 ^ l) & -1L << 32;
+        int count = afloat.length;
 
-        for (long j1 = i1 ^ (0L ^ i1) & -1L >>> 32; (int)j1 < (int)(j1 >>> 32); j1 ^= (j1 ^ j1 + 1) & -1L >>> 32) {
-            float f2 = afloat[(int)j1];
+        for (int limit = 0; limit < count; limit = limit + 1) {
+            float f2 = afloat[limit];
             float f3 = m(var5 + f2);
             Vector2f vector2f = new Vector2f(var3, f3);
-            k ^= ((aef.a(vector2f, var2, var1, var4) ? 1L : 0L) << 32 ^ k) & -1L << 32;
-            if ((int)(k >>> 32) == 0) {
+            int k_hi = (int)(aef.a(vector2f, var2, var1, var4) ? 1L : 0L);
+            if (k_hi == 0) {
                 MovingObjectPosition movingobjectposition = aef.c(vector2f, this.agd.wo() ? 4.5 : 5.5);
-                k ^= (
-                        (long)(
-                                    (MovingObjectPosition)movingobjectposition != null
-                                            && var1.equals(movingobjectposition.getBlockPos())
-                                            && movingobjectposition.sideHit == var2
-                                        ? 1
-                                        : 0
-                                )
-                                << 32
-                            ^ k
-                    )
-                    & -1L << 32;
+                k_hi = (MovingObjectPosition)movingobjectposition != null && var1.equals(movingobjectposition.getBlockPos()) && movingobjectposition.sideHit == var2 ? 1 : 0;
             }
 
-            if ((int)(k >>> 32) != 0) {
+            if (k_hi != 0) {
                 return vector2f;
             }
         }
@@ -783,34 +761,15 @@ public class Scaffold extends Module {
         };
         this.agW = var1 -> {
             float f = 0.0F;
-            long i = 0L;
-            long j = 0L;
             Object object = null;
             Object object1 = null;
-            long k = 1057830707455819691L;
-            long l = 328727389015597311L;
             aib aib = this.acr != null ? this.acr : this.agw;
             Vector2f vector2f = RotationComponent.fn != null
                 ? new Vector2f(RotationComponent.fn)
                 : (RotationComponent.fk != null ? new Vector2f(RotationComponent.fk) : new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch));
             if (this.afZ.wo() && this.aga.wo() && this.km().equals("Telly")) {
                 if (this.Yx != null && aib != null) {
-                    long i1 = k
-                        ^ (
-                                (long)(
-                                            !MoveUtil.enoughMovementForSprinting()
-                                                    || !aEg.thePlayer.onGround
-                                                    || !aEg.gameSettings.keyBindJump.isKeyDown()
-                                                        && aEg.thePlayer.cqL > 1
-                                                        && this.agK > 3
-                                                        && (this.agO <= 0 || aEg.thePlayer.cqL != this.agO)
-                                                ? 0
-                                                : 1
-                                        )
-                                        << 32
-                                    ^ k
-                            )
-                            & -1L << 32;
+                    int notKeyDown = !MoveUtil.enoughMovementForSprinting() || !aEg.thePlayer.onGround || !aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.cqL > 1 && this.agK > 3 && (this.agO <= 0 || aEg.thePlayer.cqL != this.agO) ? 0 : 1;
                     Vector2f vector2f1 = this.a(
                         this.Yx,
                         aib,
@@ -824,29 +783,27 @@ public class Scaffold extends Module {
                     }
 
                     Vector2f vector2f2 = new Vector2f(vector2f1.x, MathHelper.clamp_float(vector2f1.y, 80.0F, 89.9F));
-                    long j1 = l
-                        ^ ((long)(!(Math.abs(MathHelper.wrapAngleTo180_float(vector2f.x - vector2f2.x)) > 22.5F) && (int)(i1 >>> 32) == 0 ? 0 : 1) << 32 ^ l)
-                            & -1L << 32;
-                    Vector2f vector2f3 = (int)(j1 >>> 32) != 0 ? vector2f2 : vector2f;
-                    if ((int)(j1 >>> 32) == 0 && !this.agP) {
+                    int notWrapAngleTo180_float = !(Math.abs(MathHelper.wrapAngleTo180_float(vector2f.x - vector2f2.x)) > 22.5F) && notKeyDown == 0 ? 0 : 1;
+                    Vector2f vector2f3 = notWrapAngleTo180_float != 0 ? vector2f2 : vector2f;
+                    if (notWrapAngleTo180_float == 0 && !this.agP) {
                         this.h(vector2f);
                     } else {
                         if (!this.agP) {
                             this.h(vector2f);
                         }
 
-                        long k1 = j1 ^ ((this.agN && this.agh.wo() && !aEg.thePlayer.onGround ? 1 : 0) ^ j1) & -1L >>> 32;
+                        int wo2 = this.agN && this.agh.wo() && !aEg.thePlayer.onGround ? 1 : 0;
                         if (this.agj.wo()) {
-                            k1 ^= (((int)k1 != 0 && aEg.gameSettings.keyBindJump.isKeyDown() ? 1 : 0) ^ k1) & -1L >>> 32;
+                            wo2 = wo2 != 0 && aEg.gameSettings.keyBindJump.isKeyDown() ? 1 : 0;
                         }
 
-                        float f1 = ((int)k1 != 0 ? this.agi.wv().floatValue() : this.agg.wv().floatValue()) * ((int)k1 != 0 ? 0.42F : 0.3F);
+                        float f1 = (wo2 != 0 ? this.agi.wv().floatValue() : this.agg.wv().floatValue()) * (wo2 != 0 ? 0.42F : 0.3F);
                         this.agS = this.agQ;
                         this.agT = this.agR;
                         this.agP = true;
                         this.agQ = this.b(this.agQ, vector2f3.x, Math.max(1.5F, f1));
                         this.agR = this.b(this.agR, vector2f3.y, Math.max(1.0F, f1 * 0.65F));
-                        if ((int)(k1 >>> 32) == 0
+                        if (notWrapAngleTo180_float == 0
                             && Math.abs(MathHelper.wrapAngleTo180_float(this.agQ - vector2f.x)) <= 2.0F
                             && Math.abs(this.agR - vector2f.y) <= 2.0F) {
                             this.h(vector2f);
@@ -881,7 +838,6 @@ public class Scaffold extends Module {
             int i = 1804046949;
             int j = 298231907;
             int k = 1561466657;
-            long l = -546999886189058306L;
             int i1 = 1905985305;
             int j1 = 705811684;
             if (this.afK.wo().getName().equals("Grim") && aEg.thePlayer.ticksExisted % 20 == 0) {
@@ -1131,18 +1087,7 @@ public class Scaffold extends Module {
                     aEg.thePlayer.motionZ *= 0.75;
                 }
 
-                long k1 = l
-                    ^ (
-                            (
-                                    (!this.afO.wo().getName().equals("Off") || this.e(Speed.class).isEnabled())
-                                            && !aEg.gameSettings.keyBindJump.isKeyDown()
-                                            && MoveUtil.isMoving()
-                                        ? 1
-                                        : 0
-                                )
-                                ^ l
-                        )
-                        & -1L >>> 32;
+                int moving = (!this.afO.wo().getName().equals("Off") || this.e(Speed.class).isEnabled()) && !aEg.gameSettings.keyBindJump.isKeyDown() && MoveUtil.isMoving() ? 1 : 0;
                 if (!this.afM.wo().getName().equals("Watchdog Prediction")
                     || Sprint.Eo
                     || !aEg.thePlayer.onGround
@@ -1153,17 +1098,17 @@ public class Scaffold extends Module {
                 }
 
                 if (aEg.gameSettings.keyBindJump.isKeyDown() && !MoveUtil.isMoving() && !this.e(Speed.class).isEnabled()) {
-                    if (!this.L(1) || (int)k1 != 0 && (!this.L(2) || !this.L(3))) {
+                    if (!this.L(1) || moving != 0 && (!this.L(2) || !this.L(3))) {
                         this.acu = 0;
                     } else {
                         this.acu++;
                     }
                 } else {
                     boolean flag7;
-                    if ((int)k1 != 0) {
+                    if (moving != 0) {
                         flag7 = this.kq();
                     } else {
-                        flag7 = this.K(1) && ((int)k1 == 0 || this.kq());
+                        flag7 = this.K(1) && (moving == 0 || this.kq());
                     }
 
                     if (flag7) {
@@ -1209,14 +1154,14 @@ public class Scaffold extends Module {
                 }
 
                 this.targetBlock = aih.a(
-                    this.agy.getX(), this.agy.getY(), this.agy.getZ(), (int)k1 != 0 ? (int)Math.floor(this.Me) + (int)this.agy.getY() : null
+                    this.agy.getX(), this.agy.getY(), this.agy.getZ(), moving != 0 ? (int)Math.floor(this.Me) + (int)this.agy.getY() : null
                 );
                 if (this.targetBlock == null) {
                     return;
                 }
 
                 aib aib = aih.a(this.targetBlock, this.agy.getY() < 0.0);
-                l = k1 ^ (0L ^ k1) & -1L << 32;
+                int l_hi = 0;
                 if (flag5 && aib != null && aib.va() != EnumFacing.UP) {
                     aib aibx = aih.a(this.targetBlock, false);
                     if (aibx != null && aibx.va() == EnumFacing.UP) {
@@ -1239,7 +1184,7 @@ public class Scaffold extends Module {
                         }
 
                         this.acr = this.agw;
-                        l ^= (4294967296L ^ l) & -1L << 32;
+                        l_hi = 1;
                     }
                 }
 
@@ -1279,7 +1224,7 @@ public class Scaffold extends Module {
                                 if (itemstack.getItem() instanceof ItemBlock && itemstack.cWo > 0 && this.acr != null) {
                                     if (!aef.a(this.acr.va(), this.Yx, this.afL.wo().getName().equals("Strict"))
                                         && !this.afL.wo().getName().equals("Off")
-                                        && ((int)(l >>> 32) == 0 || (int)l == 0 || !aEg.thePlayer.onGround)
+                                        && (l_hi == 0 || moving == 0 || !aEg.thePlayer.onGround)
                                         && (!flag5 || !this.agv.wo())
                                         && (!this.afK.wo().getName().equals("Grim") || !aef.a(new Vector2f(this.acs, this.act), this.acr.va(), this.Yx, false))
                                         )
@@ -1327,15 +1272,13 @@ public class Scaffold extends Module {
         };
         this.aha = var1 -> {
             float f = 0.0F;
-            long i = 0L;
-            long j = -4196515025755699599L;
             if (!this.agk.wo() && !this.afM.wo().getName().equals("Matrix")) {
                 var1.setSneak(false);
             }
 
             if (this.km().equals("Telly")) {
                 float f1 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
-                long k = j ^ ((long)(!(Math.abs(f1 % 90.0F) <= 10.0F) && !(Math.abs(f1 % 90.0F) >= 80.0F) ? 0 : 1) << 32 ^ j) & -1L << 32;
+                int notAbs = !(Math.abs(f1 % 90.0F) <= 10.0F) && !(Math.abs(f1 % 90.0F) >= 80.0F) ? 0 : 1;
                 if (aEg.thePlayer.onGround && MoveUtil.enoughMovementForSprinting()) {
                     if (this.afZ.wo()) {
                         if (aEg.thePlayer.cqL >= this.agO) {
@@ -1393,13 +1336,11 @@ public class Scaffold extends Module {
             }
         };
         this.ahe = var1 -> {
-            long i = 0L;
             float f = 0.0F;
-            long j = -1874804463676087248L;
             if (!aEg.thePlayer.onGround) {
                 float f1 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
-                long k = j ^ ((long)(!(Math.abs(f1 % 90.0F) <= 10.0F) && !(Math.abs(f1 % 90.0F) >= 80.0F) ? 0 : 1) << 32 ^ j) & -1L << 32;
-                if ((int)(k >>> 32) != 0 && aEg.gameSettings.keyBindJump.isKeyDown() && this.afZ.wo() && !aEg.thePlayer.onGround) {
+                int notAbs = !(Math.abs(f1 % 90.0F) <= 10.0F) && !(Math.abs(f1 % 90.0F) >= 80.0F) ? 0 : 1;
+                if (notAbs != 0 && aEg.gameSettings.keyBindJump.isKeyDown() && this.afZ.wo() && !aEg.thePlayer.onGround) {
                     aEg.thePlayer.setSprinting(false);
                 }
             }
@@ -1407,17 +1348,15 @@ public class Scaffold extends Module {
     }
 
     public void kk() {
-        long k = -6865874829549267538L;
-        long l = -6745351090343705613L;
         if (!this.afP.wo().getName().equals("Watchdog") && this.acu == 0) {
             aEg.gameSettings.keyBindSneak.setPressed(false);
         }
 
         this.agB--;
         if (this.agk.wo() || this.agE > 0) {
-            long i1 = k ^ ((long)this.agl.wv().intValue() << 32 ^ k) & -1L << 32;
-            long j1 = i1 ^ (this.afR.wv().intValue() ^ i1) & -1L >>> 32;
-            long k1 = l ^ ((long)this.agm.wv().intValue() << 32 ^ l) & -1L << 32;
+            int intValue2 = this.agl.wv().intValue();
+            int intValue3 = this.afR.wv().intValue();
+            int intValue4 = this.agm.wv().intValue();
             if (this.agE > 0) {
                 this.agE--;
                 this.agB = 0;
@@ -1428,15 +1367,15 @@ public class Scaffold extends Module {
                 aEg.gameSettings.keyBindSneak.setPressed(true);
             } else {
                 if (this.acu > 0) {
-                    this.agB = (int)((int)(k1 >>> 32));
+                    this.agB = (int)(intValue4);
                 }
 
                 if ((
                         this.acu > 0
-                            || aih.p(aEg.thePlayer.motionX * (int)(j1 >>> 32), -0.0784000015258789, aEg.thePlayer.motionZ * (int)(j1 >>> 32)) instanceof BlockAir
+                            || aih.p(aEg.thePlayer.motionX * intValue2, -0.0784000015258789, aEg.thePlayer.motionZ * intValue2) instanceof BlockAir
                     )
                     && this.agC <= 0) {
-                    this.agB = (int)((int)(j1 >>> 32) + (int)j1 + (int)(k1 >>> 32));
+                    this.agB = (int)(intValue2 + intValue3 + intValue4);
                     this.agC = this.agn.wv().intValue();
                 }
             }
@@ -1444,7 +1383,6 @@ public class Scaffold extends Module {
     }
 
     public Vector2f a(BlockPos var1, aib var2, boolean var3, float var4, float var5, float var6) {
-        long j = -3015943412123451197L;
         if (var2 == null) {
             return new Vector2f(var4, var5);
         }
@@ -1460,18 +1398,18 @@ public class Scaffold extends Module {
         ArrayList arraylist1 = new ArrayList();
 
         for (float f18 : (Iterable<Float>)arraylist) {
-            j ^= (0L ^ j) & -1L << 32;
+            int j_hi = 0;
             Iterator iterator1 = arraylist1.iterator();
 
             while (iterator1.hasNext()) {
                 Float f19 = (Float)iterator1.next();
                 if (Math.abs(MathHelper.wrapAngleTo180_float(f18 - f19)) < 0.1F) {
-                    j ^= (4294967296L ^ j) & -1L << 32;
+                    j_hi = 1;
                     break;
                 }
             }
 
-            if ((int)(j >>> 32) == 0) {
+            if (j_hi == 0) {
                 arraylist1.add(f18);
             }
         }
@@ -1510,20 +1448,9 @@ public class Scaffold extends Module {
     }
 
     public void jF() {
-        long l = 0L;
         double d = 0.0;
-        long k2 = -2595341550256897851L;
-        long l2 = -5203543206636347842L;
-        long i3 = -4607525302948312327L;
-        long j3 = -8813353592048539873L;
-        long k3 = 5733332171355984815L;
-        long l3 = -4841482604562180362L;
-        long i4 = 734599389200815415L;
-        long j4 = -9165617281282177393L;
-        long k4 = -9038150233639680016L;
-        long l4 = 3552533322399746160L;
-        long i5 = i4 ^ (0L ^ i4) & -1L << 32;
-        long j5 = i5 ^ (Integer.parseInt(String.valueOf(this.ags.wo().getName())) ^ i5) & -1L >>> 32;
+        int i5_hi = 0;
+        int name = Integer.parseInt(String.valueOf(this.ags.wo().getName()));
         double d3 = this.afQ.wo().doubleValue();
         double d4 = this.afQ.wA().doubleValue();
         float f6 = (float)ahg.l(d3, d4);
@@ -1531,47 +1458,47 @@ public class Scaffold extends Module {
         aib aib = this.acr != null ? this.acr : this.agw;
         if (aib != null) {
             String s = this.km();
-            long k5 = k4 ^ (-4294967296L ^ k4) & -1L << 32;
+            int k5_hi = -1;
             switch (s.hashCode()) {
                 case -2126575899:
                     if (s.equals("Godbridge")) {
-                        k5 ^= (21474836480L ^ k5) & -1L << 32;
+                        k5_hi = 5;
                     }
                     break;
                 case -1955878649:
                     if (s.equals("Normal")) {
-                        k5 ^= (0L ^ k5) & -1L << 32;
+                        k5_hi = 0;
                     }
                     break;
                 case 2581482:
                     if (s.equals("Snap")) {
-                        k5 ^= (8589934592L ^ k5) & -1L << 32;
+                        k5_hi = 2;
                     }
                     break;
                 case 66715108:
                     if (s.equals("Eagle")) {
-                        k5 ^= (12884901888L ^ k5) & -1L << 32;
+                        k5_hi = 3;
                     }
                     break;
                 case 80691912:
                     if (s.equals("Telly")) {
-                        k5 ^= (17179869184L ^ k5) & -1L << 32;
+                        k5_hi = 4;
                     }
                     break;
                 case 145919859:
                     if (s.equals("Breesily")) {
-                        k5 ^= (4294967296L ^ k5) & -1L << 32;
+                        k5_hi = 1;
                     }
             }
 
-            switch ((int)(k5 >>> 32)) {
+            switch (k5_hi) {
                 case 0:
                     aEg.entityRenderer.getMouseOver(1.0F);
                     if (this.agH
                         && !aEg.gameSettings.keyBindPickBlock.isKeyDown()
                         && aib != null
                         && (aEg.objectMouseOver.sideHit != aib.va() || !aEg.objectMouseOver.getBlockPos().equals(this.Yx))) {
-                        this.D((int)j5);
+                        this.D(name);
                     }
                     break;
                 case 1:
@@ -1628,33 +1555,22 @@ public class Scaffold extends Module {
                     }
                     break;
                 case 2:
-                    this.D((int)j5);
+                    this.D(name);
                     if (aib != null
                         && (
                             this.acu <= 0
                                 || aef.a(RotationComponent.fk, aib.va(), this.Yx, this.afL.wo().getName().equals("Strict"))
                                 || aEg.thePlayer.cqL < 2 && aEg.thePlayer.onGround
                         )) {
-                        this.acs = (float)Math.toDegrees(MoveUtil.direction(aEg.thePlayer.pl, this.jp, this.jq)) - (int)j5;
+                        this.acs = (float)Math.toDegrees(MoveUtil.direction(aEg.thePlayer.pl, this.jp, this.jq)) - name;
                     }
                     break;
                 case 3:
                     Float f7 = (aEg.thePlayer.pl + 1.0E7F) % 360.0F;
                     float f8 = f7 - 180.0F - f7 % 90.0F + 45.0F;
                     Float f9 = 78.0F;
-                    long l5 = k2
-                        ^ (
-                                (long)(
-                                            Math.min(Math.abs(f7 % 90.0F), Math.abs(90.0F - f7) % 90.0F)
-                                                    < Math.min(Math.abs(f7 + 45.0F) % 90.0F, Math.abs(90.0F - (f7 + 45.0F)) % 90.0F)
-                                                ? 1
-                                                : 0
-                                        )
-                                        << 32
-                                    ^ k2
-                            )
-                            & -1L << 32;
-                    if ((int)(l5 >>> 32) != 0
+                    int abs2 = Math.min(Math.abs(f7 % 90.0F), Math.abs(90.0F - f7) % 90.0F) < Math.min(Math.abs(f7 + 45.0F) % 90.0F, Math.abs(90.0F - (f7 + 45.0F)) % 90.0F) ? 1 : 0;
+                    if (abs2 != 0
                         && aef.c(new Vector2f(f8 + 90.0F, f9), 3.0).typeOfHit == MovingObjectType.BLOCK
                         && aef.c(new Vector2f(f8, f9), 3.0).typeOfHit != MovingObjectType.BLOCK) {
                         f8 += 90.0F;
@@ -1677,7 +1593,7 @@ public class Scaffold extends Module {
                         aEg.gameSettings.keyBindSneak.setPressed(false);
                     }
 
-                    if ((int)(l5 >>> 32) == 0) {
+                    if (abs2 == 0) {
                         f8 += 90.0F;
                     }
 
@@ -1690,65 +1606,49 @@ public class Scaffold extends Module {
                         Float f10 = aEg.thePlayer.pl;
                         float f11 = MathHelper.wrapAngleTo180_float(f10);
                         RotationComponent.d(false);
-                        long i6 = i3 ^ ((long)(!(Math.abs(f11 % 90.0F) <= 10.0F) && !(Math.abs(f11 % 90.0F) >= 80.0F) ? 0 : 1) << 32 ^ i3) & -1L << 32;
+                        int notAbs = !(Math.abs(f11 % 90.0F) <= 10.0F) && !(Math.abs(f11 % 90.0F) >= 80.0F) ? 0 : 1;
                         if (aEg.thePlayer.onGround && aEg.thePlayer.cqL == 1) {
                             this.agO = this.age.wv().intValue();
                         }
 
-                        long j6 = l2
-                            ^ ((long)(aEg.thePlayer.onGround && MoveUtil.enoughMovementForSprinting() && aEg.thePlayer.cqL == this.agO - 0 && this.agO > 0 ? 1 : 0) << 32 ^ l2)
-                                & -1L << 32;
-                        if ((int)(j6 >>> 32) != 0) {
+                        int enoughMovementForSprinting2 = aEg.thePlayer.onGround && MoveUtil.enoughMovementForSprinting() && aEg.thePlayer.cqL == this.agO - 0 && this.agO > 0 ? 1 : 0;
+                        if (enoughMovementForSprinting2 != 0) {
                             float f12 = (float)Math.toDegrees(MoveUtil.direction());
                             Float f13 = (float)(85.0 + Math.random() * 0.5);
                             this.acs = f12;
                             this.act = f13;
                             RotationComponent.setRotations(aiu.m(new Vector2f(this.acs, this.act)), 180.0, MovementFix.NORMAL);
-                            long k6 = j5 ^ (4294967296L ^ j5) & -1L << 32;
+                            int k6_hi = 1;
                             this.agN = true;
                         } else {
-                            long l6 = j3
-                                ^ (
-                                        (long)(
-                                                    !aEg.thePlayer.onGround
-                                                            || !MoveUtil.enoughMovementForSprinting()
-                                                            || this.agb.wo() && aEg.gameSettings.keyBindJump.isKeyDown() && (int)(i6 >>> 32) == 0
-                                                            || !aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.cqL > 1 && this.agK > 3
-                                                        ? 0
-                                                        : 1
-                                                )
-                                                << 32
-                                            ^ j3
-                                    )
-                                    & -1L << 32;
-                            if ((int)(l6 >>> 32) != 0) {
+                            int notKeyDown = !aEg.thePlayer.onGround || !MoveUtil.enoughMovementForSprinting() || this.agb.wo() && aEg.gameSettings.keyBindJump.isKeyDown() && notAbs == 0 || !aEg.gameSettings.keyBindJump.isKeyDown() && aEg.thePlayer.cqL > 1 && this.agK > 3 ? 0 : 1;
+                            if (notKeyDown != 0) {
                                 Vector2f vector2f = this.a(this.Yx, aib, 360.0F, 0.0F, 90.0F, -45);
                                 this.acs = vector2f.x;
                                 this.act = (float)(vector2f.y + Math.random() * 0.5);
                                 RotationComponent.setRotations(aiu.m(new Vector2f(this.acs, this.act)), 10.0, MovementFix.NORMAL);
-                                long i7 = j5 ^ (4294967296L ^ j5) & -1L << 32;
+                                int i7_hi = 1;
                                 this.agN = true;
                             } else {
-                                long j7 = l3
-                                    ^ ((long)(aib != null && !aef.a(RotationComponent.fk, aib.va(), this.Yx, this.kl()) ? 1 : 0) << 32 ^ l3) & -1L << 32;
-                                long k7 = k3 ^ ((aEg.thePlayer.onGround && !aEg.gameSettings.keyBindJump.isKeyDown() ? 1 : 0) ^ k3) & -1L >>> 32;
-                                if (((int)(j7 >>> 32) != 0 || (int)k7 != 0 || this.agK <= 5 || aib == null) && aib != null) {
+                                int kl2 = aib != null && !aef.a(RotationComponent.fk, aib.va(), this.Yx, this.kl()) ? 1 : 0;
+                                int keyDown = aEg.thePlayer.onGround && !aEg.gameSettings.keyBindJump.isKeyDown() ? 1 : 0;
+                                if ((kl2 != 0 || keyDown != 0 || this.agK <= 5 || aib == null) && aib != null) {
                                     Vector2f vector2f1 = this.a(
                                         this.Yx,
                                         aib,
-                                        (int)(j7 >>> 32) != 0 ? this.kl() : false,
+                                        kl2 != 0 ? this.kl() : false,
                                         (float)(this.acs + Math.random() * 0.5),
                                         (float)(this.act + Math.random() * 0.5),
                                         45.0F
                                     );
-                                    long l7 = j4 ^ ((long)(this.agN && this.agh.wo() && !aEg.thePlayer.onGround ? 1 : 0) << 32 ^ j4) & -1L << 32;
+                                    int wo2 = this.agN && this.agh.wo() && !aEg.thePlayer.onGround ? 1 : 0;
                                     if (this.agj.wo()) {
-                                        l7 ^= ((long)((int)(l7 >>> 32) != 0 && aEg.gameSettings.keyBindJump.isKeyDown() ? 1 : 0) << 32 ^ l7) & -1L << 32;
+                                        wo2 = wo2 != 0 && aEg.gameSettings.keyBindJump.isKeyDown() ? 1 : 0;
                                     }
 
                                     float f14;
                                     float f15;
-                                    if ((int)(l7 >>> 32) != 0) {
+                                    if (wo2 != 0) {
                                         f14 = this.agi.wo().floatValue();
                                         f15 = this.agi.wA().floatValue();
                                         this.agN = false;
@@ -1776,12 +1676,12 @@ public class Scaffold extends Module {
                             }
                         }
                     } else if (this.agG == 0 && this.afY.wo()) {
-                        long i8 = l4 ^ ((long)aEg.thePlayer.tR << 32 ^ l4) & -1L << 32;
-                        if ((int)(i8 >>> 32) == 1 || (int)(i8 >>> 32) == 0) {
+                        int tR2 = aEg.thePlayer.tR;
+                        if (tR2 == 1 || tR2 == 0) {
                             aEg.Az();
                         }
 
-                        if ((int)(i8 >>> 32) >= 0
+                        if (tR2 >= 0
                             && aEg.thePlayer.tR <= (this.afO.wo().getName().equals("Off") ? 7 : 10)
                             && (!aEg.thePlayer.onGround || !aEg.gameSettings.keyBindJump.isKeyDown())) {
                             if (aib != null && !aef.a(RotationComponent.fk, aib.va(), this.Yx, this.afL.wo().getName().equals("Strict"))) {
@@ -1796,12 +1696,12 @@ public class Scaffold extends Module {
                             this.agH = false;
                         }
                     } else if (this.agG == 0) {
-                        long j8 = l4 ^ ((long)aEg.thePlayer.tR << 32 ^ l4) & -1L << 32;
-                        if ((int)(j8 >>> 32) == 2 || (int)(j8 >>> 32) == 0) {
+                        int tR3 = aEg.thePlayer.tR;
+                        if (tR3 == 2 || tR3 == 0) {
                             aEg.Az();
                         }
 
-                        if ((int)(j8 >>> 32) < 3 || aEg.thePlayer.tR > (this.afO.wo().getName().equals("Off") ? 7 : 10)) {
+                        if (tR3 < 3 || aEg.thePlayer.tR > (this.afO.wo().getName().equals("Off") ? 7 : 10)) {
                             this.D(Integer.parseInt(String.valueOf(this.ags.wo().getName())));
                             this.acs = aEg.thePlayer.pl;
                         } else if (aib != null && !aef.a(RotationComponent.fk, aib.va(), this.Yx, this.afL.wo().getName().equals("Strict"))) {
@@ -1823,13 +1723,11 @@ public class Scaffold extends Module {
                     this.act = 76.4F;
                     movementfix = MovementFix.TRADITIONAL;
                     Double d11 = 0.15;
-                    long k8 = i3
-                        ^ ((long)(!(Math.abs(aEg.thePlayer.posX % 1.0) > 1.0 - d11) && !(Math.abs(aEg.thePlayer.posX % 1.0) < d11) ? 0 : 1) << 32 ^ i3) & -1L << 32;
-                    long l8 = l2
-                        ^ ((long)(!(Math.abs(aEg.thePlayer.posZ % 1.0) > 1.0 - d11) && !(Math.abs(aEg.thePlayer.posZ % 1.0) < d11) ? 0 : 1) << 32 ^ l2) & -1L << 32;
+                    int notAbs2 = !(Math.abs(aEg.thePlayer.posX % 1.0) > 1.0 - d11) && !(Math.abs(aEg.thePlayer.posX % 1.0) < d11) ? 0 : 1;
+                    int notAbs3 = !(Math.abs(aEg.thePlayer.posZ % 1.0) > 1.0 - d11) && !(Math.abs(aEg.thePlayer.posZ % 1.0) < d11) ? 0 : 1;
                     aEg.gameSettings
                         .keyBindRight
-                        .setPressed((int)(k8 >>> 32) != 0 && (int)(l8 >>> 32) != 0 || Keyboard.isKeyDown(aEg.gameSettings.keyBindLeft.getKeyCode()));
+                        .setPressed(notAbs2 != 0 && notAbs3 != 0 || Keyboard.isKeyDown(aEg.gameSettings.keyBindLeft.getKeyCode()));
                     aEg.gameSettings.keyBindBack.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindForward.getKeyCode()));
                     aEg.gameSettings.keyBindForward.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindBack.getKeyCode()));
                     aEg.gameSettings.keyBindLeft.setPressed(Keyboard.isKeyDown(aEg.gameSettings.keyBindRight.getKeyCode()));

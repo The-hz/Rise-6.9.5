@@ -54,17 +54,8 @@ public class abs
     }
 
     static {
-        final long n = 6341868354063047710L;
-        long n2 = -6514496455960521908L;
-        long n3 = 3524331609204261369L;
-        long n4 = -8614123382621395262L;
-        final long n5 = 4246158708550995172L;
-        long n6 = -6948788572798496733L;
-        final long n7 = -1205405472946808829L;
         abs.o0Oo000O0oO = new Object[2];
-        final long n8 = 0L;
-        final long n9 = n7;
-        long n10 = n9 ^ ((n8 ^ n9) & -1L << 32);
+        int n10_hi = 0;
         final Object[] array = { abs.fld_0OOOoo00o0_5, Integer.valueOf(0), null };
         final int n11 = 2;
         Object o;
@@ -77,43 +68,27 @@ public class abs
         }
         array[n11] = o;
         final char[] charArray2 = ((String)o0Oo000O0oO(array)).toCharArray();
-        final long n12 = 51539607552L;
-        final long n13 = n;
-        final long n14 = n13 ^ ((n12 ^ n13) & -1L << 32);
-        final long n15 = 0L;
-        final long n16 = n5;
-        long n33;
-        long n34;
-        for (long n17 = n16 ^ ((n15 ^ n16) & -1L >>> 32); (int)n17 < (int)(n14 >>> 32); n17 = (n34 ^ ((n33 ^ n34) & -1L >>> 32))) {
+        int limit = 12;
+        int n33;
+        for (int n17_lo = 0; n17_lo < limit; n17_lo = n33) {
             final char[] array2 = (char[])charArray2;
-            final int n18 = (int)n17;
-            final long n19 = n17;
-            final long n20 = n19 ^ ((n19 ^ n19 + 1) & -1L >>> 32);
-            final long n21 = (long)array2[n18];
-            final long n22 = n2;
-            n2 = (n22 ^ ((n21 ^ n22) & -1L >>> 32));
+            final int n18 = n17_lo;
+            int n17_lo2 = n17_lo + 1;
+            int n2_lo = array2[n18];
             final char[] array3 = (char[])charArray2;
-            final int n23 = (int)n20;
-            final long n24 = n20;
-            final long n25 = n24 ^ ((n24 ^ n24 + 1) & -1L >>> 32);
-            final long n26 = (long)array3[n23] << 32;
-            final long n27 = n3;
-            n3 = (n27 ^ ((n26 ^ n27) & -1L << 32));
-            final long n28 = (long)((int)n2 << 16 | (int)(n3 >>> 32));
-            final long n29 = n4;
-            n4 = (n29 ^ ((n28 ^ n29) & -1L >>> 32));
-            final char[] array4 = new char[(int)n4];
-            final long n30 = 0L;
-            final long n31 = n6;
-            for (n6 = (n31 ^ ((n30 ^ n31) & -1L << 32)); (int)(n6 >>> 32) < (int)n4; n6 += 4294967296L) {
-                ((char[])array4)[(int)(n6 >>> 32)] = ((char[])charArray2)[(int)n25 + (int)(n6 >>> 32)];
+            final int n23 = n17_lo2;
+            int n17_lo3 = n17_lo2 + 1;
+            int n3_hi = array3[n23];
+            int limit2 = n2_lo << 16 | n3_hi;
+            final char[] array4 = new char[limit2];
+            for (int j = 0; j < limit2; j++) {
+                ((char[])array4)[j] = ((char[])charArray2)[n17_lo3 + j];
             }
             final Object[] o0Oo000O0oO = abs.o0Oo000O0oO;
-            final int n32 = (int)(n10 >>> 32);
-            n10 += 4294967296L;
+            final int n32 = n10_hi;
+            n10_hi++;
             o0Oo000O0oO[n32] = new String(array4);
-            n33 = (int)n25 + (int)n4;
-            n34 = n25;
+            n33 = n17_lo3 + limit2;
         }
         abs.aHb = 6.283185307179586;
         abs.aHc = 180.0f;

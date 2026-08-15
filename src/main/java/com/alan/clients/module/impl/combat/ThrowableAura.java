@@ -148,8 +148,6 @@ public class ThrowableAura extends Module {
         this.qG = new BooleanValue("Through Walls", this, true);
         this.qI = -1;
         this.qK = var1 -> {
-            long k = 2705662454777865896L;
-            long l = 7055313991864828554L;
             if (aEg.thePlayer != null && aEg.theWorld != null && !this.qJ) {
                 if (this.gs()) {
                     if (this.qH < this.qv.wo().intValue()) {
@@ -160,16 +158,16 @@ public class ThrowableAura extends Module {
                         if (this.jE != null) {
                             double d1 = aEg.thePlayer.getDistanceToEntity(this.jE);
                             if (!(d1 > this.qt.wo().doubleValue()) && !(d1 <= this.qu.wo().doubleValue())) {
-                                long i1 = l ^ ((long)this.gu() << 32 ^ l) & -1L << 32;
-                                if ((int)(i1 >>> 32) != -1) {
+                                int gu2 = this.gu();
+                                if (gu2 != -1) {
                                     if (this.s(this.jE) && this.t(this.jE)) {
-                                        long j1 = k ^ (aEg.thePlayer.inventory.currentItem ^ k) & -1L >>> 32;
-                                        if (this.qA.wo() && (int)j1 != (int)(i1 >>> 32)) {
+                                        int currentItem2 = aEg.thePlayer.inventory.currentItem;
+                                        if (this.qA.wo() && currentItem2 != gu2) {
                                             if (this.qI == -1) {
-                                                this.qI = (int)j1;
+                                                this.qI = currentItem2;
                                             }
 
-                                            aEg.thePlayer.inventory.currentItem = (int)(i1 >>> 32);
+                                            aEg.thePlayer.inventory.currentItem = gu2;
                                         }
 
                                         ItemStack itemstack = aEg.thePlayer.getHeldItem();
@@ -221,18 +219,17 @@ public class ThrowableAura extends Module {
     }
 
     public int gu() {
-        long j = 6284645629799752712L;
         if (this.qE.wo()) {
-            j ^= ((long)aik.e(Items.snowball) << 32 ^ j) & -1L << 32;
-            if ((int)(j >>> 32) != -1) {
-                return (int)(j >>> 32);
+            int e2 = aik.e(Items.snowball);
+            if (e2 != -1) {
+                return e2;
             }
         }
 
         if (this.qF.wo()) {
-            long k = j ^ ((long)aik.e(Items.egg) << 32 ^ j) & -1L << 32;
-            if ((int)(k >>> 32) != -1) {
-                return (int)(k >>> 32);
+            int e3 = aik.e(Items.egg);
+            if (e3 != -1) {
+                return e3;
             }
         }
 

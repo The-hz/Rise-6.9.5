@@ -56,20 +56,14 @@ extends ade {
 
     @Override
     public void mouseClicked(final int n, final int n2, final int n3) {
-        final long n4 = -8667487250350770505L;
-        final long n5 = 4612836758129553145L;
         if (this.menuButtons == null) {
             return;
         }
         if (n3 == 0) {
             final adh[] menuButtons = this.menuButtons;
-            final long n6 = menuButtons.length;
-            final long n7 = n4;
-            final long n8 = n7 ^ ((n6 ^ n7) & -1L >>> 32);
-            final long n9 = 0L;
-            final long n10 = n5;
-            for (long n11 = n10 ^ ((n9 ^ n10) & -1L << 32); (int)(n11 >>> 32) < (int)n8; n11 += 4294967296L) {
-                final adh adh = menuButtons[(int)(n11 >>> 32)];
+            int count = menuButtons.length;
+            for (int i = 0; i < count; i++) {
+                final adh adh = menuButtons[i];
                 if (aeb.a(adh.getX(), adh.getY(), adh.oM(), adh.da(), n, n2)) {
                     adh.rm();
                     break;
@@ -92,7 +86,6 @@ extends ade {
     }
 
     public void aW(String string) {
-        long l3 = 5085688074218688810L;
         if (this.aCz) {
             return;
         }
@@ -113,16 +106,15 @@ extends ade {
                     }
                     String[] stringArray = "6.9.5".split("\\.");
                     String[] stringArray2 = this.aCA.split("\\.");
-                    long l4 = l3;
-                    l3 = l4 ^ (0L ^ l4) & -1L << 32;
-                    while ((int)(l3 >>> 32) < 2) {
-                        if (Float.parseFloat(stringArray[(int)(l3 >>> 32)]) < Float.parseFloat(stringArray2[(int)(l3 >>> 32)])) {
+                    int i = 0;
+                    while (i < 2) {
+                        if (Float.parseFloat(stringArray[i]) < Float.parseFloat(stringArray2[i])) {
                             System.out.println("A newer version is available please update your client on https://Vantage.Rip");
                             this.aX("A newer version is available please update your client on https://Vantage.Rip");
                             return;
                         }
                         try {
-                            l3 += 0x100000000L;
+                            i++;
                         } catch (Exception exception) {
                             exception.printStackTrace();
                             break;
@@ -153,30 +145,26 @@ extends ade {
             String string;
             String string2;
             rip.vantage.commons.packet.impl.server.protection.b b2 = null;
-            long l4 = 6187545175897021594L;
-            long l5 = 2076766356004144021L;
             if (!(er2.dd() instanceof rip.vantage.commons.packet.impl.server.protection.b)) return;
             b2 = (rip.vantage.commons.packet.impl.server.protection.b)er2.dd();
             System.out.println("Auth");
             rip.vantage.network.handler.c.eRC.aX();
-            long l6 = l4;
-            l4 = l6 ^ ((b2.aKi() ? 1L : 0L) << 32 ^ l6) & -1L << 32;
+            int aKi2 = (int)(b2.aKi() ? 1L : 0L);
             this.aCC = false;
-            if ((int)(l4 >>> 32) != 0 && (string2 = b2.aKh()) != null && !string2.isEmpty() && !rip.vantage.security.l.aL(string = aju.vW(), string2)) {
+            if (aKi2 != 0 && (string2 = b2.aKh()) != null && !string2.isEmpty() && !rip.vantage.security.l.aL(string = aju.vW(), string2)) {
                 System.out.println("EC61");
-                long l7 = l4;
-                l4 = l7 ^ (0L ^ l7) & -1L << 32;
+                aKi2 = 0;
                 this.aCC = true;
                 StringSelection stringSelection = new StringSelection(string);
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, new StringSelection("Rise"));
             }
-            if ((int)(l4 >>> 32) != 0 && !rip.vantage.security.l.cV((int)(l4 >>> 32) != 0)) {
+            if (aKi2 != 0 && !rip.vantage.security.l.cV(aKi2 != 0)) {
                 System.out.println("EC92");
                 System.exit(1);
                 Runtime.getRuntime().halt(1);
                 throw new SecurityException("EC92");
             }
-            if ((int)(l4 >>> 32) != 0) {
+            if (aKi2 != 0) {
                 this.aCB = null;
                 this.aCD = false;
                 aEg.displayGuiScreen(new adr());
@@ -189,9 +177,8 @@ extends ade {
             StringSelection stringSelection = new StringSelection(string3);
             java.awt.datatransfer.Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(stringSelection, new StringSelection("Rise"));
-            long l8 = l5;
-            l5 = l8 ^ ((long)(this.aCC || b2.aKn() != null && b2.aKn().equalsIgnoreCase("HWID_MISMATCH") ? 1 : 0) << 32 ^ l8) & -1L << 32;
-            if ((int)(l5 >>> 32) == 0) return;
+            int equalsIgnoreCase2 = this.aCC || b2.aKn() != null && b2.aKn().equalsIgnoreCase("HWID_MISMATCH") ? 1 : 0;
+            if (equalsIgnoreCase2 == 0) return;
             if (this.aCD) return;
             this.aCD = true;
             this.aCB = string3;
@@ -218,28 +205,16 @@ extends ade {
 
     @Override
     public void initGui() {
-        long l2;
-        long l8 = -6610901742768452103L;
-        long l9 = 4695415886190673032L;
-        long l10 = -3848389860043264573L;
-        long l11 = -2088766917341031741L;
-        long l12 = l2 = -6408109000536517085L;
-        long l13 = l12 ^ ((long)(this.width / 2) ^ l12) & -1L >>> 32;
-        long l14 = l8;
-        long l15 = l14 ^ ((long)(this.height / 2) << 32 ^ l14) & -1L << 32;
-        long l16 = l11;
-        long l17 = l16 ^ (0xB4L ^ l16) & -1L >>> 32;
-        long l18 = l13;
-        long l19 = l18 ^ (0x1800000000L ^ l18) & -1L << 32;
-        long l20 = l17;
-        long l21 = l20 ^ (0x600000000L ^ l20) & -1L << 32;
-        long l22 = l9;
-        long l23 = l22 ^ ((long)((int)l19 - (int)l21 / 2) ^ l22) & -1L >>> 32;
-        long l24 = l10;
-        long l25 = l24 ^ ((long)((int)(l15 >>> 32) - (int)(l19 >>> 32) / 2 - (int)(l21 >>> 32) / 2 - (int)(l19 >>> 32) / 2) << 32 ^ l24) & -1L << 32;
-        this.aCw = new adm((int)l23, (int)(l25 >>> 32), (int)l21, (int)(l19 >>> 32), () -> {}, "");
-        this.aCx = new adm((int)l23, (int)(l25 >>> 32) + (int)(l19 >>> 32) + (int)(l21 >>> 32), (int)l21, (int)(l19 >>> 32), () -> this.aW(this.aCy.getText()), "Login");
-        this.aCy = new agm(new Vector2d((int)l19, (int)(l25 >>> 32) + 9), gb.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Username", (int)l21 * 5);
+        int width2 = this.width / 2;
+        int height2 = this.height / 2;
+        int l17_lo = 180;
+        int l19_hi = 24;
+        int l21_hi = 6;
+        int dL19 = width2 - l17_lo / 2;
+        int l25_hi = height2 - l19_hi / 2 - l21_hi / 2 - l19_hi / 2;
+        this.aCw = new adm(dL19, l25_hi, l17_lo, l19_hi, () -> {}, "");
+        this.aCx = new adm(dL19, l25_hi + l19_hi + l21_hi, l17_lo, l19_hi, () -> this.aW(this.aCy.getText()), "Login");
+        this.aCy = new agm(new Vector2d(width2, l25_hi + 9), gb.MAIN.a(24, gd.BOLD), Color.WHITE, agl.CENTER, "Username", l17_lo * 5);
         this.animation = new Animation(Easing.EASE_OUT_QUINT, 600L);
         this.menuButtons = new adh[]{this.aCw, this.aCx};
         this.aCv.T(255.0);

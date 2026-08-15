@@ -332,29 +332,27 @@ public class KillAura extends Module {
    public static float oh;
 
    public Tuple<Boolean, Double> eo() {
-      long var50 = 0L;
       Object var52 = null;
       double var53 = 0.0;
       Object var55 = null;
       double var64 = 0.0;
-      var50 = 9090391290613378301L;
       var64 = -1.0;
-      var50 ^= (0L ^ var50) & -1L >>> 32;
+      int var50_lo = 0;
       var52 = this.me.wo().getName();
-      var50 ^= (-4294967296L ^ var50) & -1L << 32;
+      int var50_hi = -1;
       switch (((String)var52).hashCode()) {
          case 1505775:
             if (((String)var52).equals("1.9+")) {
-               var50 ^= (4294967296L ^ var50) & -1L << 32;
+               var50_hi = 1;
             }
             break;
          case 1934158813:
             if (((String)var52).equals("1.9+ With 1.8 Animations")) {
-               var50 ^= (0L ^ var50) & -1L << 32;
+               var50_hi = 0;
             }
       }
 
-      switch ((int)(var50 >>> 32)) {
+      switch (var50_hi) {
          case 0:
          case 1:
             if (this.me.wo().getName().equals("1.9+ With 1.8 Animations") && Math.random() > 0.2) {
@@ -404,7 +402,7 @@ public class KillAura extends Module {
             var64 = 1.0 / var53 * 20.0 - 1.0;
          default:
             var64 = this.j(var64);
-            return new Tuple<>(Boolean.valueOf(((int)var50) != 0), var64);
+            return new Tuple<>(Boolean.valueOf((var50_lo) != 0), var64);
       }
    }
 
@@ -419,12 +417,8 @@ public class KillAura extends Module {
    }
 
    public boolean a(EntityLivingBase var1, MovingObjectPosition var2, double var3) {
-      long var81 = 0L;
       long var88 = 0L;
       long var92 = 0L;
-      long var96 = 0L;
-      var96 = 1513316200021948489L;
-      var81 = 5010166724843560217L;
       if (!this.eR()) {
          return true;
       } else if (var1 == null) {
@@ -433,22 +427,19 @@ public class KillAura extends Module {
          this.ox = 0L;
          return false;
       }
-      var96 ^= (
-            (long)((this.mO.wo() || !(aEg.thePlayer.getDistanceToEntity(var1) <= var3)) && (var2 == null || var2.entityHit != var1) ? 0 : 1) << 32 ^ var96
-         )
-         & -1L << 32;
-      if ((int)(var96 >>> -123 + 82 - -73) == 0) {
+      int notDistanceToEntity = (this.mO.wo() || !(aEg.thePlayer.getDistanceToEntity(var1) <= var3)) && (var2 == null || var2.entityHit != var1) ? 0 : 1;
+      if (notDistanceToEntity == 0) {
          this.ow = false;
          this.ov = Integer.MIN_VALUE;
          this.ox = 0L;
          return false;
       }
-      var81 ^= ((long)var1.getEntityId() << 32 ^ var81) & -1L << 32;
+      int entityId = var1.getEntityId();
       var92 = System.currentTimeMillis();
-      if (this.ow && this.ov == (int)(var81 >>> 32)) {
+      if (this.ow && this.ov == entityId) {
          return var92 >= this.ox;
       }
-      this.ov = (int)(var81 >>> 32);
+      this.ov = entityId;
       this.ow = true;
       var88 = this.a(this.nr.wo().doubleValue(), this.ns.wo().doubleValue(), 0L, 450L);
       this.ox = var92 + var88;
@@ -456,12 +447,10 @@ public class KillAura extends Module {
    }
 
    public boolean eG() {
-      long var73 = 0L;
-      var73 = 3189889856590918615L;
-      var73 ^= ((aEg.gameSettings.cgI.isKeyDown() ? 1L : 0L) << 32 ^ var73) & -1L << 32;
+      int keyDown = (int)(aEg.gameSettings.cgI.isKeyDown() ? 1L : 0L);
       if (!this.eA() || !this.lZ.wo()) {
          this.oH = -1;
-         this.oI = ((int)(var73 >>> 32)) != 0;
+         this.oI = (keyDown) != 0;
          return false;
       } else if (this.oH != -1) {
          this.oJ = true;
@@ -471,30 +460,28 @@ public class KillAura extends Module {
             this.oH = -1;
          }
 
-         this.oI = ((int)(var73 >>> 32)) != 0;
+         this.oI = (keyDown) != 0;
          return true;
-      } else if (this.oI && (int)(var73 >>> 32) == 0) {
+      } else if (this.oI && keyDown == 0) {
          this.oH = aEg.thePlayer.ticksExisted;
          this.oJ = true;
          nR = false;
          this.oI = false;
          return true;
       }
-      this.oI = ((int)(var73 >>> 32)) != 0;
+      this.oI = (keyDown) != 0;
       return false;
    }
 
    public Vector2f a(EntityLivingBase var1, double var2, boolean var4) {
       Object var37 = null;
-      long var42 = 0L;
       float var44 = 0.0F;
       Object var46 = null;
-      var42 = 8936866978716645258L;
       if (var1 == null) {
          return new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
       }
-      var42 ^= ((long)aEg.thePlayer.ticksExisted << 32 ^ var42) & -1L << 32;
-      if (this.mG != null && this.mH == (int)(var42 >>> 32) && this.target == var1 && this.mJ == var2 && this.mK == var4) {
+      int ticksExisted2 = aEg.thePlayer.ticksExisted;
+      if (this.mG != null && this.mH == ticksExisted2 && this.target == var1 && this.mJ == var2 && this.mK == var4) {
          return this.mG;
       }
       var37 = var1.getEntityBoundingBox();
@@ -507,7 +494,7 @@ public class KillAura extends Module {
       }
 
       this.mG = (Vector2f)var46;
-      this.mH = (int)(var42 >>> 32);
+      this.mH = ticksExisted2;
       this.target = var1;
       this.mJ = var2;
       this.mK = var4;
@@ -516,20 +503,17 @@ public class KillAura extends Module {
 
    public Vector2f b(Vector2f var1) {
       Object var147 = null;
-      long var148 = 0L;
       float var153 = 0.0F;
       float var154 = 0.0F;
       float var155 = 0.0F;
       float var160 = 0.0F;
       float var163 = 0.0F;
       float var166 = 0.0F;
-      long var171 = 0L;
       float var173 = 0.0F;
       float var175 = 0.0F;
       float var177 = 0.0F;
       float var180 = 0.0F;
       float var181 = 0.0F;
-      long var184 = 0L;
       float var187 = 0.0F;
       float var188 = 0.0F;
       float var189 = 0.0F;
@@ -548,9 +532,6 @@ public class KillAura extends Module {
       float var214 = 0.0F;
       float var215 = 0.0F;
       float var216 = 0.0F;
-      var148 = 423552891137878799L;
-      var171 = 1070510752564407738L;
-      var184 = -6234646151828785129L;
       if (!this.eR()) {
          return var1;
       }
@@ -566,8 +547,8 @@ public class KillAura extends Module {
          this.om = var153;
       }
 
-      var148 ^= ((long)this.jE.getEntityId() << 32 ^ var148) & -1L << 32;
-      if ((int)(var148 >>> 32) != this.op) {
+      int entityId = this.jE.getEntityId();
+      if (entityId != this.op) {
          this.oi = 0.0F;
          this.oj = 0.0F;
          this.ok = 0.0F;
@@ -583,19 +564,19 @@ public class KillAura extends Module {
          this.ox = 0L;
          this.oy = 0;
          this.oz = 0.0F;
-         this.op = (int)(var148 >>> 32);
+         this.op = entityId;
          this.a((Vector2f)var147, var1);
       }
 
       var205 = var1;
-      var184 ^= (0L ^ var184) & -1L << 32;
+      int var184_hi = 0;
       if (this.on != null) {
          var180 = MathHelper.wrapAngleTo180_float(this.on.x - ((Vector2f)var147).x);
          var203 = this.on.y - ((Vector2f)var147).y;
          var160 = (float)Math.hypot(var180, var203);
          if (!(var160 < 1.15F) && this.oo-- > 0) {
             var205 = this.on;
-            var184 ^= (4294967296L ^ var184) & -1L << 32;
+            var184_hi = 1;
          } else {
             this.on = null;
          }
@@ -607,22 +588,12 @@ public class KillAura extends Module {
       var213 = Math.max(0.001F, var160);
       var155 = this.nf.wo().floatValue();
       var197 = aef.a((Vector2f)var147, this.mh.wo().doubleValue() + 0.15, this.en(), aEg.thePlayer, this.em());
-      var171 ^= (
-            (
-                  (MovingObjectPosition)var197 != null
-                        && ((MovingObjectPosition)var197).typeOfHit == MovingObjectType.ENTITY
-                        && ((MovingObjectPosition)var197).entityHit == this.jE
-                     ? 1
-                     : 0
-               )
-               ^ var171
-         )
-         & -1L >>> 32;
-      if ((int)(var184 >>> 32) == 0 && (int)var171 != 0 && var160 <= var155) {
+      int flag = (MovingObjectPosition)var197 != null && ((MovingObjectPosition)var197).typeOfHit == MovingObjectType.ENTITY && ((MovingObjectPosition)var197).entityHit == this.jE ? 1 : 0;
+      if (var184_hi == 0 && flag != 0 && var160 <= var155) {
          this.ot = Math.max(this.ot, this.nh.wo().intValue());
       }
 
-      if ((int)(var184 >>> 32) == 0 && this.ot > 0 && (int)var171 != 0 && var160 <= var155 * 1.35F) {
+      if (var184_hi == 0 && this.ot > 0 && flag != 0 && var160 <= var155 * 1.35F) {
          this.ot--;
          this.ok *= 0.42F;
          this.ol *= 0.42F;
@@ -666,7 +637,7 @@ public class KillAura extends Module {
          var212 += this.b(var175 * 0.42F, var175);
       }
 
-      if ((int)(var184 >>> 32) == 0 && var160 > var155 * 1.6F && var160 < var154 * 1.45F) {
+      if (var184_hi == 0 && var160 > var155 * 1.6F && var160 < var154 * 1.45F) {
          var187 = this.nk.wo().floatValue() / 100.0F;
          if (this.oy <= 0 && var187 > 1.0E-4F && this.od.nextFloat() < var187 * 0.12F) {
             this.oy = 1 + this.od.nextInt(2);
@@ -700,7 +671,7 @@ public class KillAura extends Module {
       }
 
       var189 = this.ni.wo().floatValue();
-      if ((int)(var184 >>> 32) == 0 && var189 > 0.01F && var160 > var155 * 1.25F && var160 < 14.0F) {
+      if (var184_hi == 0 && var189 > 0.01F && var160 > var155 * 1.25F && var160 < 14.0F) {
          var216 = var189 * (0.86F + this.od.nextFloat() * 0.24F);
          var166 = (float)Math.hypot(this.ok, this.ol);
          if (var166 < var216) {
@@ -717,13 +688,13 @@ public class KillAura extends Module {
          var166 *= 1.0F + this.oz * 0.35F;
       }
 
-      if ((int)(var184 >>> 32) != 0) {
+      if (var184_hi != 0) {
          var166 *= 0.55F;
       }
 
       var177 = ((Vector2f)var147).x + this.ok + var180 * var166;
       var214 = MathHelper.clamp_float(((Vector2f)var147).y + this.ol + var203 * (var166 * 0.85F), -89.9F, 89.9F);
-      if ((int)(var184 >>> 32) == 0 && var160 < 1.65F) {
+      if (var184_hi == 0 && var160 < 1.65F) {
          var210 = (0.56F + var192 * 0.28F) * (0.94F + this.od.nextFloat() * 0.1F);
          var177 = ((Vector2f)var147).x + var180 * var210;
          var214 = MathHelper.clamp_float(((Vector2f)var147).y + var203 * var210, -89.9F, 89.9F);
@@ -735,7 +706,7 @@ public class KillAura extends Module {
       if (var210 > 0.0F && var160 > 0.35F) {
          var209 = MathHelper.clamp_float(var160 / 16.0F, 0.25F, 1.0F);
          var209 *= 1.05F - var192 * 0.35F;
-         if ((int)(var184 >>> 32) != 0) {
+         if (var184_hi != 0) {
             var209 *= 0.8F;
          }
 
@@ -744,7 +715,7 @@ public class KillAura extends Module {
          var214 = MathHelper.clamp_float(var214, -89.9F, 89.9F);
       }
 
-      if (this.nm.wo() && (int)(var184 >>> 32) == 0) {
+      if (this.nm.wo() && var184_hi == 0) {
          var209 = MathHelper.wrapAngleTo180_float(var177 - ((Vector2f)var147).x);
          var208 = var214 - ((Vector2f)var147).y;
          var188 = (float)Math.hypot(var209, var208);
@@ -805,7 +776,6 @@ public class KillAura extends Module {
       super();
       int var822 = 0;
       var822 = -1696500114;
-      long var9 = 7922866345913891261L;
       this.lT = new ModeValue("Attack Mode", this).add(new SubMode("Single")).add(new SubMode("Switch")).add(new SubMode("Multiple")).setDefault("Single");
       this.lU = new BoundsNumberValue("Switch Delay", this, 0, 0, 0, 10, 1, () -> !this.lT.wo().getName().equals("Switch"));
       this.lV = new ModeValue("Auto Block", this)
@@ -1062,19 +1032,12 @@ public class KillAura extends Module {
       this.oN = new Animation(Easing.EASE_OUT_CUBIC, 300L);
       this.oO = new Animation(Easing.EASE_OUT_CUBIC, 250L);
       this.oP = var1x -> {
-         long var117 = 0L;
          Object var136 = null;
          Object var144 = null;
          Object var151 = null;
-         long var152 = 0L;
          Object var160 = null;
-         long var161 = 0L;
-         long var163 = 0L;
+         int nextInt2;
          Object var168 = null;
-         var117 = 6828045578734546642L;
-         var152 = -8508348394600547460L;
-         var163 = 7400001645768772499L;
-         var161 = -765180536011775016L;
          if (!this.oJ) {
             label122: {
                this.nN.forEach(ahj::m);
@@ -1104,17 +1067,17 @@ public class KillAura extends Module {
                         this.p(false);
                      }
                   } else if (!bb.aW()) {
-                     var163 ^= ((long)aEg.playerController.bCP << 32 ^ var163) & -1L << 32;
+                     int bCP2 = aEg.playerController.bCP;
 
                      do {
-                        var161 ^= ((long)ThreadLocalRandom.current().nextInt(8) << 32 ^ var161) & -1L << 32;
-                     } while ((int)(var163 >>> 32) == (int)(var161 >>> 32));
+                        nextInt2 = ThreadLocalRandom.current().nextInt(8);
+                     } while (bCP2 == nextInt2);
 
                      if (nQ && !SlotComponent.dj) {
-                        aEg.getNetHandler().addToSendQueue(new l((int)(var161 >>> 32)));
-                        aEg.playerController.bCP = (int)(var161 >>> 32);
-                        aEg.getNetHandler().addToSendQueue(new l((int)(var163 >>> 32)));
-                        aEg.playerController.bCP = (int)(var163 >>> 32);
+                        aEg.getNetHandler().addToSendQueue(new l(nextInt2));
+                        aEg.playerController.bCP = nextInt2;
+                        aEg.getNetHandler().addToSendQueue(new l(bCP2));
+                        aEg.playerController.bCP = bCP2;
                         nQ = false;
                      }
                   }
@@ -1145,39 +1108,39 @@ public class KillAura extends Module {
                         }
 
                         var151 = this.mL.wo().getName();
-                        var117 ^= (-4294967296L ^ var117) & -1L << 32;
+                        int var117_hi = -1;
                         switch (((String)var151).hashCode()) {
                            case 66987:
                               if (((String)var151).equals("Box")) {
-                                 var117 ^= (4294967296L ^ var117) & -1L << 32;
+                                 var117_hi = 1;
                               }
                               break;
                            case 2547280:
                               if (((String)var151).equals("Ring")) {
-                                 var117 ^= (0L ^ var117) & -1L << 32;
+                                 var117_hi = 0;
                               }
                         }
 
-                        switch ((int)(var117 >>> 32)) {
+                        switch (var117_hi) {
                            case 0:
                               cf.a(new ct((EntityLivingBase)var136, (hackclient.rise.cn)var144));
                               break;
                            case 1:
                               var160 = this.mN.wo().getName();
-                              var152 ^= (-4294967296L ^ var152) & -1L << 32;
+                              int var152_hi = -1;
                               switch (((String)var160).hashCode()) {
                                  case 2201263:
                                     if (((String)var160).equals("Full")) {
-                                       var152 ^= (0L ^ var152) & -1L << 32;
+                                       var152_hi = 0;
                                     }
                                     break;
                                  case 63058813:
                                     if (((String)var160).equals("Above")) {
-                                       var152 ^= (4294967296L ^ var152) & -1L << 32;
+                                       var152_hi = 1;
                                     }
                               }
 
-                              switch ((int)(var152 >>> 32)) {
+                              switch (var152_hi) {
                                  case 0:
                                     cf.a(new cp((EntityLivingBase)var136, (hackclient.rise.cn)var144));
                                     break;
@@ -1202,17 +1165,9 @@ public class KillAura extends Module {
          }
       };
       this.oR = var1x -> {
-         long var192 = 0L;
-         long var217 = 0L;
          Object var220 = null;
          Object var221 = null;
-         long var244 = 0L;
-         long var247 = 0L;
          Object var249 = null;
-         var247 = -1016726030717259525L;
-         var192 = -7936930297909722777L;
-         var244 = -9005393354721491727L;
-         var217 = -981692028500884552L;
          this.oD = false;
          this.oJ = false;
          if (!this.eG()) {
@@ -1256,18 +1211,8 @@ public class KillAura extends Module {
                   }
 
                   if (this.mT.wo().getName().equals("Grim") && aEg.thePlayer.ticksExisted % 20 == 0) {
-                     var247 ^= (
-                           (long)(
-                                    ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_17)
-                                          && !ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_20_5)
-                                       ? 1
-                                       : 0
-                                 )
-                                 << 32
-                              ^ var247
-                        )
-                        & -1L << 32;
-                     if ((int)(var247 >>> 32) == 0) {
+                     int newerThan2 = ViaLoadingBase.getInstance().getTargetVersion().newerThanOrEqualTo(ProtocolVersion.v1_17) && !ViaLoadingBase.getInstance().getTargetVersion().newerThan(ProtocolVersion.v1_20_5) ? 1 : 0;
+                     if (newerThan2 == 0) {
                         afi.b("OnTick rotation only works correctly on versions 1.17-1.20.6. Please switch to a version in that range.");
                      }
                   }
@@ -1290,35 +1235,19 @@ public class KillAura extends Module {
                         var220 = this.e(Manager.class);
                         var249 = this.e(OldManager.class);
                         var221 = this.e(Stealer.class);
-                        var192 ^= ((long)((Manager)var220 != null && ((Manager)var220).isEnabled() && ((Manager)var220).jJ() ? 1 : 0) << 32 ^ var192)
-                           & -1L << 32;
-                        var244 ^= (((OldManager)var249 != null && ((OldManager)var249).isEnabled() && ((OldManager)var249).jJ() ? 1 : 0) ^ var244) & -1L >>> 32;
-                        var217 ^= (
-                              (long)((Stealer)var221 != null && ((Stealer)var221).isEnabled() && aEg.currentScreen instanceof GuiChest ? 1 : 0) << 32 ^ var217
-                           )
-                           & -1L << 32;
-                        var217 ^= (
-                              (
-                                    !be.aY()
-                                          && !aEg.gameSettings.cgI.isKeyDown()
-                                          && !bb.a(true, false, false, false, true, false)
-                                          && (int)var244 == 0
-                                          && (int)(var217 >>> 32) == 0
-                                       ? 0
-                                       : 1
-                                 )
-                                 ^ var217
-                           )
-                           & -1L >>> 32;
+                        int jJ2 = (Manager)var220 != null && ((Manager)var220).isEnabled() && ((Manager)var220).jJ() ? 1 : 0;
+                        int jJ3 = (OldManager)var249 != null && ((OldManager)var249).isEnabled() && ((OldManager)var249).jJ() ? 1 : 0;
+                        int enabled = (Stealer)var221 != null && ((Stealer)var221).isEnabled() && aEg.currentScreen instanceof GuiChest ? 1 : 0;
+                        int notFlag = !be.aY() && !aEg.gameSettings.cgI.isKeyDown() && !bb.a(true, false, false, false, true, false) && jJ3 == 0 && enabled == 0 ? 0 : 1;
                         if (aEg.thePlayer.ticksExisted % 20 == 0 && !this.lV.wo().getName().equals("Watchdog 1.8")) {
                            this.nX = (int)(this.mi.wo().doubleValue() + Math.random() * 0.5);
                         }
 
-                        if (aEg.thePlayer.ticksExisted % 2 == 0 && this.lV.wo().getName().equals("Watchdog 1.8") && (int)var217 == 0) {
+                        if (aEg.thePlayer.ticksExisted % 2 == 0 && this.lV.wo().getName().equals("Watchdog 1.8") && notFlag == 0) {
                            this.nX = (int)(5.0 + Math.random() * 0.5);
                         }
 
-                        if ((int)var217 != 0 && this.lV.wo().getName().equals("Watchdog 1.8")) {
+                        if (notFlag != 0 && this.lV.wo().getName().equals("Watchdog 1.8")) {
                            this.nX = (int)(this.mi.wo().doubleValue() + Math.random() * 0.5);
                         }
 
@@ -1363,9 +1292,7 @@ public class KillAura extends Module {
          }
       };
       this.oS = var1x -> {
-         long var29 = 0L;
          Object var35 = null;
-         var29 = -2910459004906749320L;
          if (!this.oF && !this.oJ) {
             if (this.jE != null && !aEg.thePlayer.isDead) {
                if (this.es()) {
@@ -1373,14 +1300,14 @@ public class KillAura extends Module {
                }
 
                var35 = this.lV.wo().getName();
-               var29 ^= (-4294967296L ^ var29) & -1L << 32;
+               int var29_hi = -1;
                switch (((String)var35).hashCode()) {
                   case -1336727224:
                      if (((String)var35).equals("Watchdog 1.8")) {
-                        var29 ^= (0L ^ var29) & -1L << 32;
+                        var29_hi = 0;
                      }
                   default:
-                     switch ((int)(var29 >>> 32)) {
+                     switch (var29_hi) {
                         case 0:
                         default:
                            this.doAttack(this.nV);
@@ -1421,34 +1348,32 @@ public class KillAura extends Module {
          }
       };
       this.oX = var1x -> {
-         long var39 = 0L;
          Object var41 = null;
-         var39 = 1115406751610737241L;
          if (this.jE != null) {
             SlotComponent var10000 = this.d(SlotComponent.class);
             if (SlotComponent.getItemStack() != null) {
                var10000 = this.d(SlotComponent.class);
                if (SlotComponent.getItemStack().getItem() instanceof ItemSword) {
                   var41 = this.lV.wo().getName();
-                  var39 ^= (-4294967296L ^ var39) & -1L << 32;
+                  int var39_hi = -1;
                   switch (((String)var41).hashCode()) {
                      case 2182005:
                         if (((String)var41).equals("Fake")) {
-                           var39 ^= (0L ^ var39) & -1L << 32;
+                           var39_hi = 0;
                         }
                         break;
                      case 2433880:
                         if (((String)var41).equals("None")) {
-                           var39 ^= (4294967296L ^ var39) & -1L << 32;
+                           var39_hi = 1;
                         }
                         break;
                      case 73298841:
                         if (((String)var41).equals("Legit")) {
-                           var39 ^= (8589934592L ^ var39) & -1L << 32;
+                           var39_hi = 2;
                         }
                   }
 
-                  switch ((int)(var39 >>> 32)) {
+                  switch (var39_hi) {
                      case 0:
                      case 1:
                         if (!this.ma.wo()) {
@@ -1535,39 +1460,37 @@ public class KillAura extends Module {
          }
       };
       this.pc = var1x -> {
-         long var66 = 0L;
          Object var72 = null;
-         var66 = -510184345878839245L;
          var72 = this.lV.wo().getName();
-         var66 ^= (-4294967296L ^ var66) & -1L << 32;
+         int var66_hi = -1;
          switch (((String)var72).hashCode()) {
             case -1885322919:
                if (((String)var72).equals("Dual Sword")) {
-                  var66 ^= (8589934592L ^ var66) & -1L << 32;
+                  var66_hi = 2;
                }
                break;
             case -1336727224:
                if (((String)var72).equals("Watchdog 1.8")) {
-                  var66 ^= (12884901888L ^ var66) & -1L << 32;
+                  var66_hi = 3;
                }
                break;
             case 73298841:
                if (((String)var72).equals("Legit")) {
-                  var66 ^= (0L ^ var66) & -1L << 32;
+                  var66_hi = 0;
                }
                break;
             case 609795629:
                if (((String)var72).equals("Watchdog")) {
-                  var66 ^= (4294967296L ^ var66) & -1L << 32;
+                  var66_hi = 1;
                }
                break;
             case 1511128849:
                if (((String)var72).equals("Watchdog 1.12")) {
-                  var66 ^= (17179869184L ^ var66) & -1L << 32;
+                  var66_hi = 4;
                }
          }
 
-         switch ((int)(var66 >>> 32)) {
+         switch (var66_hi) {
             case 0:
             default:
                break;
@@ -1602,12 +1525,10 @@ public class KillAura extends Module {
          double var122 = 0.0;
          Object var126 = null;
          Object var127 = null;
-         long var130 = 0L;
          double var132 = 0.0;
          float var135 = 0.0F;
          Object var138 = null;
          Object var140 = null;
-         long var143 = 0L;
          Object var145 = null;
          Object var146 = null;
          float var147 = 0.0F;
@@ -1627,17 +1548,15 @@ public class KillAura extends Module {
          double var183 = 0.0;
          double var186 = 0.0;
          Object var189 = null;
-         var130 = 2204964575998294504L;
-         var143 = -7356230310865281554L;
          if (this.ml.wo() && !(this.mk.wo().doubleValue() >= 360.0) || this.mt.wo()) {
             var181 = this.mk.wo().doubleValue();
-            var130 ^= ((long)var1x.dx().getScaledWidth() << 32 ^ var130) & -1L << 32;
-            var130 ^= (var1x.dx().getScaledHeight() ^ var130) & -1L >>> 32;
-            var149 = (int)(var130 >>> 32) / 2.0F;
-            var121 = (int)var130 / 2.0F;
+            int scaledWidth = var1x.dx().getScaledWidth();
+            int scaledHeight = var1x.dx().getScaledHeight();
+            var149 = scaledWidth / 2.0F;
+            var121 = scaledHeight / 2.0F;
             var127 = this.jE;
             var183 = 0.0;
-            var143 ^= (0L ^ var143) & -1L << 32;
+            int var143_hi = 0;
             if ((EntityLivingBase)var127 == null) {
                var145 = Double.MAX_VALUE;
                var152 = this.mh.wo().doubleValue() + 3.0;
@@ -1664,14 +1583,14 @@ public class KillAura extends Module {
                var183 = var157;
                if (this.jE != null && !this.nV.isEmpty()) {
                   if (var181 >= 360.0) {
-                     var143 ^= (4294967296L ^ var143) & -1L << 32;
+                     var143_hi = 1;
                   } else {
-                     var143 ^= ((long)(Math.abs(var157) <= var181 / 2.0 ? 1 : 0) << 32 ^ var143) & -1L << 32;
+                     var143_hi = Math.abs(var157) <= var181 / 2.0 ? 1 : 0;
                   }
                }
             }
 
-            var145 = (int)(var143 >>> 32) != 0 ? 16.0 : 10.0;
+            var145 = var143_hi != 0 ? 16.0 : 10.0;
             this.oN.Q((Double)var145);
             var152 = (float)this.oN.sG();
             var163 = (EntityLivingBase)var127 != null ? var183 : 0.0;
@@ -1690,7 +1609,7 @@ public class KillAura extends Module {
                var179 = var186 + (Double)var140;
                GL11.glBegin(3);
                var146 = this.rz().rA();
-               var171 = (int)(var143 >>> 32) != 0 ? 1.0F : 0.5F;
+               var171 = var143_hi != 0 ? 1.0F : 0.5F;
                GL11.glColor4f(((Color)var146).getRed() / 255.0F, ((Color)var146).getGreen() / 255.0F, ((Color)var146).getBlue() / 255.0F, (Float)var171);
 
                for (double var217 = var132; var217 <= var179; var217 += 2.0) {
@@ -1733,8 +1652,8 @@ public class KillAura extends Module {
       MovementFix[] var1 = MovementFix.values();
       var822 = var1.length;
 
-      for (long var823 = var9 ^ (0L ^ var9) & -1L << 32; (int)(var823 >>> 32) < var822; var823 += 4294967296L) {
-         MovementFix var4 = var1[(int)(var823 >>> 32)];
+      for (int i2 = 0; i2 < var822; i2++) {
+         MovementFix var4 = var1[i2];
          this.movementCorrection.add(var4);
       }
 
@@ -1742,21 +1661,19 @@ public class KillAura extends Module {
    }
 
    public boolean eK() {
-      long var49 = 0L;
       Object var55 = null;
-      var49 = -7667508546491421682L;
       var55 = this.eD();
       if (((int[])var55)[1] == -1) {
          return false;
       }
       if (this.oB != ((int[])var55)[0] && this.oB != ((int[])var55)[1]) {
          SlotComponent var10000 = this.d(SlotComponent.class);
-         var49 ^= ((long)SlotComponent.bQ() << 32 ^ var49) & -1L << 32;
-         if ((int)(var49 >>> 32) != ((int[])var55)[0] && (int)(var49 >>> 32) != ((int[])var55)[1]) {
+         int bQ2 = SlotComponent.bQ();
+         if (bQ2 != ((int[])var55)[0] && bQ2 != ((int[])var55)[1]) {
             return false;
          }
 
-         this.oB = (int)(var49 >>> 32);
+         this.oB = bQ2;
       }
 
       SlotComponent var59 = this.d(SlotComponent.class);
@@ -1863,36 +1780,32 @@ public class KillAura extends Module {
    }
 
    public boolean ez() {
-      long var53 = 0L;
-      long var64 = 0L;
-      var53 = -1423041391610544759L;
-      var64 = 2393767509853753789L;
       if (aEg.thePlayer == null || SlotComponent.dj) {
          return false;
       } else if (this.oA == aEg.thePlayer.ticksExisted) {
          return false;
       }
       SlotComponent var10000 = this.d(SlotComponent.class);
-      var64 ^= ((long)SlotComponent.bQ() << 32 ^ var64) & -1L << 32;
-      var53 ^= (ThreadLocalRandom.current().nextInt(9) ^ var53) & -1L >>> 32;
+      int bQ2 = SlotComponent.bQ();
+      int nextInt2 = ThreadLocalRandom.current().nextInt(9);
 
-      while ((int)var53 == (int)(var64 >>> 32)) {
-         var53 ^= (ThreadLocalRandom.current().nextInt(9) ^ var53) & -1L >>> 32;
+      while (nextInt2 == bQ2) {
+         nextInt2 = ThreadLocalRandom.current().nextInt(9);
       }
 
       BlinkComponent.dispatch();
       if (ahm.vn()) {
          if (!this.mb.wo()) {
-            SlotComponent.setSlot((int)var53);
-            SlotComponent.setSlot((int)(var64 >>> 32));
+            SlotComponent.setSlot(nextInt2);
+            SlotComponent.setSlot(bQ2);
          }
 
          this.p(true);
       } else {
          this.p(true);
          if (!this.mb.wo()) {
-            SlotComponent.setSlot((int)var53);
-            SlotComponent.setSlot((int)(var64 >>> 32));
+            SlotComponent.setSlot(nextInt2);
+            SlotComponent.setSlot(bQ2);
          }
       }
 
@@ -1905,29 +1818,27 @@ public class KillAura extends Module {
    }
 
    public void ek() {
-      long var43 = 0L;
       Object var50 = null;
-      var43 = 3823536904575860749L;
       var50 = this.lV.wo().getName();
-      var43 ^= (-4294967296L ^ var43) & -1L << 32;
+      int var43_hi = -1;
       switch (((String)var50).hashCode()) {
          case -1885322919:
             if (((String)var50).equals("Dual Sword")) {
-               var43 ^= (8589934592L ^ var43) & -1L << 32;
+               var43_hi = 2;
             }
             break;
          case 609795629:
             if (((String)var50).equals("Watchdog")) {
-               var43 ^= (4294967296L ^ var43) & -1L << 32;
+               var43_hi = 1;
             }
             break;
          case 1594433067:
             if (((String)var50).equals("Universal")) {
-               var43 ^= (0L ^ var43) & -1L << 32;
+               var43_hi = 0;
             }
       }
 
-      switch ((int)(var43 >>> -78 - -110)) {
+      switch (var43_hi) {
          case 0:
             this.nY = -1;
          case 1:
@@ -1949,46 +1860,32 @@ public class KillAura extends Module {
       Object var125 = null;
       Object var133 = null;
       double var140 = 0.0;
-      long var147 = 0L;
-      long var150 = 0L;
-      long var152 = 0L;
-      long var154 = 0L;
-      long var174 = 0L;
-      long var176 = 0L;
-      long var182 = 0L;
       Object var185 = null;
-      var154 = -5710225603574653889L;
-      var174 = 3311639214671708186L;
-      var176 = 6315101467458565326L;
-      var147 = -5197126957434029320L;
-      var182 = -4963104922307923346L;
-      var152 = -5583893236452085416L;
-      var150 = -461063028018441529L;
-      var152 ^= (MathHelper.floor_double(var1.minX + 1.0E-4) ^ var152) & -1L >>> 32;
-      var176 ^= (MathHelper.floor_double(var1.maxX - 1.0E-4) ^ var176) & -1L >>> 32;
-      var147 ^= ((long)MathHelper.floor_double(var1.minZ + 1.0E-4) << 32 ^ var147) & -1L << 32;
-      var147 ^= (MathHelper.floor_double(var1.maxZ - 1.0E-4) ^ var147) & -1L >>> 32;
-      var182 ^= ((long)(MathHelper.floor_double(var1.minY) - 1) << 32 ^ var182) & -1L << 32;
-      var152 ^= ((long)Math.max(0, (int)(var182 >>> 32) - var2) << 32 ^ var152) & -1L << 32;
+      int floor_double2 = MathHelper.floor_double(var1.minX + 1.0E-4);
+      int floor_double3 = MathHelper.floor_double(var1.maxX - 1.0E-4);
+      int floor_double4 = MathHelper.floor_double(var1.minZ + 1.0E-4);
+      int floor_double5 = MathHelper.floor_double(var1.maxZ - 1.0E-4);
+      int floor_double6 = MathHelper.floor_double(var1.minY) - 1;
+      int max2 = Math.max(0, floor_double6 - var2);
       double var11 = Double.longBitsToDouble(9218868437227405312L);
 
-      for (long var193 = var150 ^ ((long)((int)var152) << 32 ^ var150) & -1L << 32; (int)(var193 >>> 32) <= (int)var176; var193 += 4294967296L) {
-         for (var174 ^= ((long)((int)(var147 >>> 32)) << 32 ^ var174) & -1L << 32; (int)(var174 >>> 32) <= (int)var147; var174 += 4294967296L) {
-            var154 ^= (0L ^ var154) & -1L >>> 32;
+      for (int i = floor_double2; i <= floor_double3; i++) {
+         for (int j = floor_double4; j <= floor_double5; j++) {
+            int var154_lo = 0;
 
-            for (var154 ^= ((long)((int)(var182 >>> 32)) << 32 ^ var154) & -1L << 32; (int)(var154 >>> 32) >= (int)(var152 >>> 32); var154 += -4294967296L) {
-               var185 = new BlockPos((int)(var193 >>> 32), (int)(var154 >>> 32), (int)(var174 >>> 32));
+            for (int k = floor_double6; k >= max2; k--) {
+               var185 = new BlockPos(i, k, j);
                var133 = aEg.theWorld.getBlockState((BlockPos)var185);
                var125 = ((IBlockState)var133).getBlock().getCollisionBoundingBox(aEg.theWorld, (BlockPos)var185, (IBlockState)var133);
                if ((AxisAlignedBB)var125 != null) {
                   var140 = Math.max(0.0, var1.minY - ((AxisAlignedBB)var125).maxY);
                   var11 = Math.min(var11, var140);
-                  var154 ^= (1L ^ var154) & -1L >>> 32;
+                  var154_lo = 1;
                   break;
                }
             }
 
-            if ((int)var154 == 0) {
+            if (var154_lo == 0) {
                return Double.longBitsToDouble(6568169346052289630L ^ -1957144748560059298L);
             }
          }
@@ -2016,78 +1913,69 @@ public class KillAura extends Module {
    }
 
    public void ex() {
-      long var402 = 0L;
-      long var441 = 0L;
       double var464 = 0.0;
-      long var466 = 0L;
+      int nextInt2;
       Object var486 = null;
-      long var508 = 0L;
-      long var514 = 0L;
-      var402 = -5333747962569643249L;
-      var508 = -3480722137998210520L;
-      var441 = -8166976482889915623L;
-      var466 = -1435708872768625502L;
-      var514 = 1981690352390143365L;
       var486 = this.lV.wo().getName();
-      var441 ^= (-4294967296L ^ var441) & -1L << 32;
+      int var441_hi = -1;
       switch (((String)var486).hashCode()) {
          case -2099899231:
             if (((String)var486).equals("Intave")) {
-               var441 ^= (8589934592L ^ var441) & -1L << 32;
+               var441_hi = 2;
             }
             break;
          case -1885322919:
             if (((String)var486).equals("Dual Sword")) {
-               var441 ^= (38654705664L ^ var441) & -1L << 32;
+               var441_hi = 9;
             }
             break;
          case -1558462246:
             if (((String)var486).equals("Old Intave")) {
-               var441 ^= (25769803776L ^ var441) & -1L << 32;
+               var441_hi = 6;
             }
             break;
          case -1336727224:
             if (((String)var486).equals("Watchdog 1.8")) {
-               var441 ^= (42949672960L ^ var441) & -1L << 32;
+               var441_hi = 10;
             }
             break;
          case -786683237:
             if (((String)var486).equals("New NCP")) {
-               var441 ^= (21474836480L ^ var441) & -1L << 32;
+               var441_hi = 5;
             }
             break;
          case 77115:
             if (((String)var486).equals("NCP")) {
-               var441 ^= (4294967296L ^ var441) & -1L << 32;
+               var441_hi = 1;
             }
             break;
          case 2228079:
             if (((String)var486).equals("Grim")) {
-               var441 ^= (12884901888L ^ var441) & -1L << 32;
+               var441_hi = 3;
             }
             break;
          case 73298841:
             if (((String)var486).equals("Legit")) {
-               var441 ^= (0L ^ var441) & -1L << 32;
+               var441_hi = 0;
             }
             break;
          case 609795629:
             if (((String)var486).equals("Watchdog")) {
-               var441 ^= (34359738368L ^ var441) & -1L << 32;
+               var441_hi = 8;
             }
             break;
          case 1511128849:
             if (((String)var486).equals("Watchdog 1.12")) {
-               var441 ^= (17179869184L ^ var441) & -1L << 32;
+               var441_hi = 4;
             }
             break;
          case 1594433067:
             if (((String)var486).equals("Universal")) {
-               var441 ^= (30064771072L ^ var441) & -1L << 32;
+               var441_hi = 7;
             }
       }
 
-      switch ((int)(var441 >>> 32)) {
+      switch (var441_hi) {
          case 0:
             var464 = aih.v(this.jE);
             aEg.gameSettings.cgI.setPressed(var464 < 3.0 && this.oa <= 5 && aEg.thePlayer.ae >= 5);
@@ -2110,17 +1998,17 @@ public class KillAura extends Module {
             this.block(false, false);
             break;
          case 4:
-            var514 ^= ((long)aEg.playerController.bCP << 32 ^ var514) & -1L << 32;
+            int bCP2 = aEg.playerController.bCP;
 
             do {
-               var466 ^= ((long)ThreadLocalRandom.current().nextInt(8) << 32 ^ var466) & -1L << 32;
-            } while ((int)(var514 >>> 32) == (int)(var466 >>> 32));
+               nextInt2 = ThreadLocalRandom.current().nextInt(8);
+            } while (bCP2 == nextInt2);
 
             if (nQ && !SlotComponent.dj) {
-               aEg.getNetHandler().addToSendQueue(new l((int)(var466 >>> 32)));
-               aEg.playerController.bCP = (int)(var466 >>> 32);
-               aEg.getNetHandler().addToSendQueue(new l((int)(var514 >>> 32)));
-               aEg.playerController.bCP = (int)(var514 >>> 32);
+               aEg.getNetHandler().addToSendQueue(new l(nextInt2));
+               aEg.playerController.bCP = nextInt2;
+               aEg.getNetHandler().addToSendQueue(new l(bCP2));
+               aEg.playerController.bCP = bCP2;
                nQ = false;
             }
 
@@ -2187,16 +2075,16 @@ public class KillAura extends Module {
                   }
 
                   SlotComponent var532 = this.d(SlotComponent.class);
-                  var514 ^= (SlotComponent.bQ() ^ var514) & -1L >>> 32;
-                  var402 ^= ((long)ThreadLocalRandom.current().nextInt(9) << 32 ^ var402) & -1L << 32;
+                  int bQ2 = SlotComponent.bQ();
+                  int nextInt3 = ThreadLocalRandom.current().nextInt(9);
 
-                  while ((int)(var402 >>> 32) == (int)var514) {
-                     var402 ^= ((long)ThreadLocalRandom.current().nextInt(9) << 32 ^ var402) & -1L << 32;
+                  while (nextInt3 == bQ2) {
+                     nextInt3 = ThreadLocalRandom.current().nextInt(9);
                   }
 
                   if (ahm.vn() && Math.random() > 0.5 && !this.mb.wo() && !this.nU) {
-                     SlotComponent.setSlot((int)(var402 >>> 32));
-                     SlotComponent.setSlot((int)var514);
+                     SlotComponent.setSlot(nextInt3);
+                     SlotComponent.setSlot(bQ2);
                      this.p(false);
                   }
 
@@ -2213,18 +2101,18 @@ public class KillAura extends Module {
 
                   if (this.nU) {
                      SlotComponent var531 = this.d(SlotComponent.class);
-                     var508 ^= (SlotComponent.bQ() ^ var508) & -1L >>> 32;
-                     var508 ^= ((long)ThreadLocalRandom.current().nextInt(9) << 32 ^ var508) & -1L << 32;
+                     int bQ3 = SlotComponent.bQ();
+                     int nextInt4 = ThreadLocalRandom.current().nextInt(9);
 
-                     while ((int)(var508 >>> 32) == (int)var508) {
-                        var508 ^= ((long)ThreadLocalRandom.current().nextInt(9) << 32 ^ var508) & -1L << 32;
+                     while (nextInt4 == bQ3) {
+                        nextInt4 = ThreadLocalRandom.current().nextInt(9);
                      }
 
                      nR = false;
                      BlinkComponent.bf();
                      if (!this.mb.wo()) {
-                        SlotComponent.setSlot((int)(var508 >>> 32));
-                        SlotComponent.setSlot((int)var508);
+                        SlotComponent.setSlot(nextInt4);
+                        SlotComponent.setSlot(bQ3);
                      }
 
                      this.p(true);
@@ -2239,27 +2127,27 @@ public class KillAura extends Module {
 
                   if (!this.nU) {
                      SlotComponent var10000 = this.d(SlotComponent.class);
-                     var508 ^= (SlotComponent.bQ() ^ var508) & -1L >>> 32;
-                     var508 ^= ((long)ThreadLocalRandom.current().nextInt(9) << 32 ^ var508) & -1L << 32;
+                     int bQ4 = SlotComponent.bQ();
+                     int nextInt5 = ThreadLocalRandom.current().nextInt(9);
 
-                     while ((int)(var508 >>> 32) == (int)var508) {
-                        var508 ^= ((long)ThreadLocalRandom.current().nextInt(9) << 32 ^ var508) & -1L << 32;
+                     while (nextInt5 == bQ4) {
+                        nextInt5 = ThreadLocalRandom.current().nextInt(9);
                      }
 
                      nR = false;
                      BlinkComponent.bf();
                      if (ahm.vn()) {
                         if (!this.mb.wo()) {
-                           SlotComponent.setSlot((int)(var508 >>> 32));
-                           SlotComponent.setSlot((int)var508);
+                           SlotComponent.setSlot(nextInt5);
+                           SlotComponent.setSlot(bQ4);
                         }
 
                         this.p(true);
                      } else {
                         this.p(true);
                         if (!this.mb.wo()) {
-                           SlotComponent.setSlot((int)(var508 >>> 32));
-                           SlotComponent.setSlot((int)var508);
+                           SlotComponent.setSlot(nextInt5);
+                           SlotComponent.setSlot(bQ4);
                         }
                      }
 
@@ -2280,25 +2168,21 @@ public class KillAura extends Module {
    }
 
    public int[] eD() {
-      long var57 = 0L;
       Object var61 = null;
       Object var68 = null;
-      long var69 = 0L;
-      var69 = 1252793020810708014L;
-      var57 = 43321095306799714L;
       var68 = new int[]{-1, -1};
       if (aEg.thePlayer == null) {
          return (int[])var68;
       }
-      var69 ^= (0L ^ var69) & -1L << 32;
+      int var69_hi = 0;
 
-      for (long var72 = var57 ^ (0L ^ var57) & -1L << 32; (int)(var72 >>> 32) < 9 && (int)(var69 >>> 32) < ((int[])var68).length; var72 += 4294967296L) {
-         var61 = aEg.thePlayer.inventory.getStackInSlot((int)(var72 >>> 32));
+      for (int i = 0; i < 9 && var69_hi < ((int[])var68).length; i++) {
+         var61 = aEg.thePlayer.inventory.getStackInSlot(i);
          if ((ItemStack)var61 != null && ((ItemStack)var61).getItem() instanceof ItemSword) {
             int[] var10000 = (int[])var68;
-            int var10001 = (int)(var69 >>> 32);
-            var69 += 4294967296L;
-            var10000[var10001] = (int)(var72 >>> 32);
+            int var10001 = var69_hi;
+            var69_hi++;
+            var10000[var10001] = i;
          }
       }
 
@@ -2306,16 +2190,14 @@ public class KillAura extends Module {
    }
 
    public boolean es() {
-      long var34 = 0L;
       Object var36 = null;
       double var38 = 0.0;
-      var34 = 6100460748651146790L;
       var36 = this.eo();
       var38 = (Double)((Tuple)var36).getSecond();
-      var34 ^= ((((Boolean)((Tuple)var36).getFirst()).booleanValue() ? 1L : 0L) << 32 ^ var34) & -1L << 32;
+      int booleanValue2 = (int)(((Boolean)((Tuple)var36).getFirst()).booleanValue() ? 1L : 0L);
       return this.nO.T(this.nT - 50L)
          && this.jE != null
-         && (this.nP.T((long)(var38 * 50.0) - 50L) || (int)(var34 >>> 32) != 0)
+         && (this.nP.T((long)(var38 * 50.0) - 50L) || booleanValue2 != 0)
          && (!this.me.wo().getName().equals("Hit Select") || this.jE.hurtTime <= PingSpoofComponent.getPing() / 50L - 1L || aEg.thePlayer.ae <= 11)
          && nR;
    }
@@ -2329,31 +2211,26 @@ public class KillAura extends Module {
    }
 
    public int eJ() {
-      long var69 = 0L;
       Object var89 = null;
-      var69 = 6689490048020486331L;
       var89 = this.eD();
       if (((int[])var89)[1] == -1) {
          return -1;
       }
-      var69 ^= ((long)this.oB << 32 ^ var69) & -1L << 32;
-      if ((int)(var69 >>> 32) != ((int[])var89)[0] && (int)(var69 >>> 32) != ((int[])var89)[1]) {
+      int oB2 = this.oB;
+      if (oB2 != ((int[])var89)[0] && oB2 != ((int[])var89)[1]) {
          SlotComponent var10000 = this.d(SlotComponent.class);
-         var69 ^= ((long)SlotComponent.bQ() << 32 ^ var69) & -1L << 32;
+         oB2 = SlotComponent.bQ();
       }
 
-      if ((int)(var69 >>> 32) != ((int[])var89)[0] && (int)(var69 >>> 32) != ((int[])var89)[1]) {
+      if (oB2 != ((int[])var89)[0] && oB2 != ((int[])var89)[1]) {
          return -1;
       }
-      return (int)(var69 >>> 32) == ((int[])var89)[0] ? ((int[])var89)[1] : ((int[])var89)[0];
+      return oB2 == ((int[])var89)[0] ? ((int[])var89)[1] : ((int[])var89)[0];
    }
 
    @Override
    public void onDisable() {
-      long var94 = 0L;
-      long var107 = 0L;
-      var94 = 8307221030464498177L;
-      var107 = 3427377327400920273L;
+      int nextInt2;
       this.oF = false;
       this.oH = -1;
       this.oJ = false;
@@ -2374,17 +2251,17 @@ public class KillAura extends Module {
          this.q(true);
       } else if (this.lV.wo().getName().equals("Watchdog 1.12")) {
          if (!bb.aW()) {
-            var107 ^= ((long)aEg.playerController.bCP << 32 ^ var107) & -1L << 32;
+            int bCP2 = aEg.playerController.bCP;
 
             do {
-               var94 ^= ((long)ThreadLocalRandom.current().nextInt(8) << 32 ^ var94) & -1L << 32;
-            } while ((int)(var107 >>> 32) == (int)(var94 >>> 32));
+               nextInt2 = ThreadLocalRandom.current().nextInt(8);
+            } while (bCP2 == nextInt2);
 
             if (nQ && !SlotComponent.dj) {
-               aEg.getNetHandler().addToSendQueue(new l((int)(var94 >>> 32)));
-               aEg.playerController.bCP = (int)(var94 >>> 32);
-               aEg.getNetHandler().addToSendQueue(new l((int)(var107 >>> 32)));
-               aEg.playerController.bCP = (int)(var107 >>> 32);
+               aEg.getNetHandler().addToSendQueue(new l(nextInt2));
+               aEg.playerController.bCP = nextInt2;
+               aEg.getNetHandler().addToSendQueue(new l(bCP2));
+               aEg.playerController.bCP = bCP2;
                nQ = false;
             }
          }
@@ -2424,33 +2301,31 @@ public class KillAura extends Module {
    public double j(double var1) {
       Object var115 = null;
       float var125 = 0.0F;
-      long var135 = 0L;
-      var135 = 2399744413283104804L;
       var115 = this.lV.wo().getName();
-      var135 ^= (-4294967296L ^ var135) & -1L << 32;
+      int var135_hi = -1;
       switch (((String)var115).hashCode()) {
          case -1336727224:
             if (((String)var115).equals("Watchdog 1.8")) {
-               var135 ^= (8589934592L ^ var135) & -1L << 32;
+               var135_hi = 2;
             }
             break;
          case 609795629:
             if (((String)var115).equals("Watchdog")) {
-               var135 ^= (4294967296L ^ var135) & -1L << 32;
+               var135_hi = 1;
             }
             break;
          case 1511128849:
             if (((String)var115).equals("Watchdog 1.12")) {
-               var135 ^= (12884901888L ^ var135) & -1L << 32;
+               var135_hi = 3;
             }
             break;
          case 1594433067:
             if (((String)var115).equals("Universal")) {
-               var135 ^= (0L ^ var135) & -1L << 32;
+               var135_hi = 0;
             }
       }
 
-      switch ((int)(var135 >>> 32)) {
+      switch (var135_hi) {
          case 0:
             var1 = this.nY >= 4 ? -1.0 : 500.0;
             break;
@@ -2567,18 +2442,14 @@ public class KillAura extends Module {
       Object var73 = null;
       double var74 = 0.0;
       double var76 = 0.0;
-      long var81 = 0L;
       Object var84 = null;
       long var86 = 0L;
       double var89 = 0.0;
-      long var91 = 0L;
       Object var95 = null;
       Object var96 = null;
       double var98 = 0.0;
       double var101 = 0.0;
       Object var103 = null;
-      var81 = -627505942308976062L;
-      var91 = -1257355175883883776L;
       if (!this.eR()) {
          return this.jE == null ? new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch) : this.c(this.jE);
       } else if (this.jE == null) {
@@ -2598,14 +2469,14 @@ public class KillAura extends Module {
             var84 = 0.028 + Math.min(0.2, var74 * 0.006);
             var101 = ((aka)var103).wg();
             var76 = 0.36 + Math.min(0.85, var74 * 0.07);
-            var91 ^= ((long)(var101 > var76 ? 1 : 0) << 32 ^ var91) & -1L << 32;
-            var81 ^= ((long)(var86 >= this.ou ? 1 : 0) << 32 ^ var81) & -1L << 32;
-            if (var101 > (Double)var84 && ((int)(var81 >>> 32) != 0 || (int)(var91 >>> 32) != 0)) {
+            int flag = var101 > var76 ? 1 : 0;
+            int flag2 = var86 >= this.ou ? 1 : 0;
+            if (var101 > (Double)var84 && (flag2 != 0 || flag != 0)) {
                var89 = this.ng.wo().doubleValue();
                var98 = Math.min(0.7, Math.max(0.08, var89 + var101 * 0.32));
                var96 = ((AxisAlignedBB)var95).expand(0.12, 0.12, 0.12);
                this.oq = this.a(this.oq.e(((aka)var103).ag(var98)), (AxisAlignedBB)var96);
-               this.ou = var86 + this.o(((int)(var91 >>> 32)) != 0);
+               this.ou = var86 + this.o((flag) != 0);
             }
          }
 
@@ -2726,15 +2597,13 @@ public class KillAura extends Module {
    }
 
    public void ev() {
-      long var40 = 0L;
-      var40 = -5793068129131438179L;
       if (this.eA() && nQ) {
-         var40 ^= ((long)this.eJ() << 32 ^ var40) & -1L << 32;
-         if ((int)(var40 >>> 32) == -1) {
+         int eJ2 = this.eJ();
+         if (eJ2 == -1) {
             nR = false;
          } else {
-            SlotComponent.b((int)(var40 >>> 32), false);
-            this.oB = (int)(var40 >>> 32);
+            SlotComponent.b(eJ2, false);
+            this.oB = eJ2;
             nQ = false;
          }
       }
@@ -2823,42 +2692,23 @@ public class KillAura extends Module {
 
    public boolean er() {
       Object var26 = null;
-      long var31 = 0L;
-      var31 = -8194477605589782688L;
       var26 = this.eo();
-      var31 ^= (
-            (long)(!this.nO.T(this.nT) || !this.nP.T((long)((Double)((Tuple)var26).getSecond() * 50.0)) && !((Boolean)((Tuple)var26).getFirst()).booleanValue() ? 0 : 1) << 32 ^ var31
-         )
-         & -1L << 32;
-      return (int)(var31 >>> 32) != 0 && aEg.thePlayer.getDistanceToEntity(this.jE) <= this.mh.wo().doubleValue() + 0.5;
+      int notBooleanValue = !this.nO.T(this.nT) || !this.nP.T((long)((Double)((Tuple)var26).getSecond() * 50.0)) && !((Boolean)((Tuple)var26).getFirst()).booleanValue() ? 0 : 1;
+      return notBooleanValue != 0 && aEg.thePlayer.getDistanceToEntity(this.jE) <= this.mh.wo().doubleValue() + 0.5;
    }
 
    public void doAttack(List<EntityLivingBase> var1) {
       Object var258 = null;
       Object var259 = null;
-      long var260 = 0L;
       double var277 = 0.0;
-      long var285 = 0L;
-      long var287 = 0L;
-      long var292 = 0L;
       Object var304 = null;
-      long var308 = 0L;
       Object var316 = null;
-      long var331 = 0L;
-      long var335 = 0L;
       Object var355 = null;
       Object var361 = null;
       Object var363 = null;
-      var292 = -7524950930856705550L;
-      var331 = -1759133238820449010L;
-      var285 = -2132614100567047987L;
-      var335 = 7457009964109532593L;
-      var308 = -678344936694919208L;
-      var287 = -1773754132682405955L;
-      var260 = 5757106360959215144L;
       if (!this.mx.wo() || this.jE == null || this.eq() || !this.er() || !this.ep()) {
-         var308 ^= ((this.eR() ? 1L : 0L) ^ var308) & -1L >>> 32;
-         if ((int)var308 == 0) {
+         int eR2 = (int)(this.eR() ? 1L : 0L);
+         if (eR2 == 0) {
             this.ov = Integer.MIN_VALUE;
             this.ow = false;
             this.ox = 0L;
@@ -2866,12 +2716,12 @@ public class KillAura extends Module {
 
          if (!this.mT.wo().getName().equals("Grim") || !this.fa()) {
             if (!this.eA() && this.mn.wo() && this.jE != null && (nR || !this.nx.wo())) {
-               var335 ^= ((long)aEg.thePlayer.ae << 32 ^ var335) & -1L << 32;
-               var335 ^= (this.mo.wo().intValue() ^ var335) & -1L >>> 32;
-               if ((int)(var335 >>> 32) < (int)var335 && aEg.thePlayer.ticksExisted != this.mA) {
+               int ae2 = aEg.thePlayer.ae;
+               int intValue2 = this.mo.wo().intValue();
+               if (ae2 < intValue2 && aEg.thePlayer.ticksExisted != this.mA) {
                   this.mA = aEg.thePlayer.ticksExisted;
-                  var260 ^= ((this.mT.wo().getName().equals("Grim") && this.nt != null ? 1 : 0) ^ var260) & -1L >>> 32;
-                  if ((int)var260 != 0) {
+                  int equals2 = this.mT.wo().getName().equals("Grim") && this.nt != null ? 1 : 0;
+                  if (equals2 != 0) {
                      var258 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.nt.getX() - aEg.thePlayer.pl);
                      ahj.l(
                         new C06PacketPlayerPosLook(
@@ -2881,28 +2731,28 @@ public class KillAura extends Module {
                   }
 
                   var258 = this.lT.wo().getName();
-                  var260 ^= (-4294967296L ^ var260) & -1L << 32;
+                  int var260_hi = -1;
                   switch (((String)var258).hashCode()) {
                      case -1818398616:
                         if (((String)var258).equals("Single")) {
-                           var260 ^= (4294967296L ^ var260) & -1L << 32;
+                           var260_hi = 1;
                         }
                         break;
                      case -1805606060:
                         if (((String)var258).equals("Switch")) {
-                           var260 ^= (0L ^ var260) & -1L << 32;
+                           var260_hi = 0;
                         }
                         break;
                      case 718473776:
                         if (((String)var258).equals("Multiple")) {
-                           var260 ^= (8589934592L ^ var260) & -1L << 32;
+                           var260_hi = 2;
                         }
                   }
 
-                  switch ((int)(var260 >>> 32)) {
+                  switch (var260_hi) {
                      case 0:
                      case 1:
-                        var259 = this.a((int)var260 != 0 ? this.nt : RotationComponent.fk, this.mh.wo().doubleValue());
+                        var259 = this.a(equals2 != 0 ? this.nt : RotationComponent.fk, this.mh.wo().doubleValue());
                         if ((MovingObjectPosition)var259 != null) {
                            this.b((MovingObjectPosition)var259);
                         } else if (!this.mO.wo()) {
@@ -2935,7 +2785,7 @@ public class KillAura extends Module {
                         });
                   }
 
-                  if ((int)var260 != 0) {
+                  if (equals2 != 0) {
                      ahj.l(
                         new C06PacketPlayerPosLook(
                            aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, aEg.thePlayer.onGround
@@ -2948,33 +2798,24 @@ public class KillAura extends Module {
                }
             }
 
-            var335 ^= ((this.eA() ? 1L : 0L) << 32 ^ var335) & -1L << 32;
-            Tuple var4 = (int)(var335 >>> 32) != 0 ? null : this.eo();
-            var277 = (int)(var335 >>> 32) != 0 ? -1.0 : (Double)var4.getSecond();
-            var260 ^= ((long)((int)(var335 >>> 32) == 0 && ((Boolean)var4.getFirst()).booleanValue() ? 1 : 0) << 32 ^ var260) & -1L << 32;
-            var292 ^= (
-                  (long)(
-                           (int)(var335 >>> 32) != 0
-                              ? (this.oC != -1 && aEg.thePlayer.ticksExisted - this.oC < 2 ? 0 : 1)
-                              : (!this.nO.T(this.nT) || !this.nP.T((long)(var277 * 50.0)) && (int)(var260 >>> 32) == 0 ? 0 : 1)
-                        )
-                        << 32
-                     ^ var292
-               )
-               & -1L << 32;
-            if ((int)(var292 >>> 32) != 0 && this.jE != null) {
-               if ((int)(var335 >>> 32) == 0) {
+            int eA2 = (int)(this.eA() ? 1L : 0L);
+            Tuple var4 = eA2 != 0 ? null : this.eo();
+            var277 = eA2 != 0 ? -1.0 : (Double)var4.getSecond();
+            int booleanValue2 = eA2 == 0 && ((Boolean)var4.getFirst()).booleanValue() ? 1 : 0;
+            int t = eA2 != 0 ? (this.oC != -1 && aEg.thePlayer.ticksExisted - this.oC < 2 ? 0 : 1) : (!this.nO.T(this.nT) || !this.nP.T((long)(var277 * 50.0)) && booleanValue2 == 0 ? 0 : 1);
+            if (t != 0 && this.jE != null) {
+               if (eA2 == 0) {
                   var363 = (long)(this.mm.wv().longValue() * 1.5);
                   this.nT = 1000L / (Long)var363;
                }
 
-               if (((int)(var335 >>> 32) != 0 || Math.sin(this.nT) + 1.0 > Math.random() || this.nO.T(this.nT + 500L) || Math.random() > 0.5)
+               if ((eA2 != 0 || Math.sin(this.nT) + 1.0 > Math.random() || this.nO.T(this.nT + 500L) || Math.random() > 0.5)
                   && (nR || !this.nx.wo())) {
                   var363 = this.mh.wo().doubleValue();
-                  var287 ^= ((long)(this.mT.wo().getName().equals("Grim") && this.nt != null ? 1 : 0) << 32 ^ var287) & -1L << 32;
-                  var355 = (int)(var287 >>> 32) != 0 ? this.nt : RotationComponent.fk;
+                  int equals3 = this.mT.wo().getName().equals("Grim") && this.nt != null ? 1 : 0;
+                  var355 = equals3 != 0 ? this.nt : RotationComponent.fk;
                   var361 = this.a((Vector2f)var355, (Double)var363);
-                  if ((int)(var287 >>> 32) != 0) {
+                  if (equals3 != 0) {
                      var304 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(this.nt.getX() - aEg.thePlayer.pl);
                      ahj.l(
                         new C06PacketPlayerPosLook(
@@ -2984,40 +2825,30 @@ public class KillAura extends Module {
                   }
 
                   var304 = this.lT.wo().getName();
-                  var331 ^= (-4294967296L ^ var331) & -1L << 32;
+                  int var331_hi = -1;
                   switch (((String)var304).hashCode()) {
                      case -1818398616:
                         if (((String)var304).equals("Single")) {
-                           var331 ^= (4294967296L ^ var331) & -1L << 32;
+                           var331_hi = 1;
                         }
                         break;
                      case -1805606060:
                         if (((String)var304).equals("Switch")) {
-                           var331 ^= (0L ^ var331) & -1L << 32;
+                           var331_hi = 0;
                         }
                         break;
                      case 718473776:
                         if (((String)var304).equals("Multiple")) {
-                           var331 ^= (8589934592L ^ var331) & -1L << 32;
+                           var331_hi = 2;
                         }
                   }
 
-                  switch ((int)(var331 >>> 32)) {
+                  switch (var331_hi) {
                      case 0:
                      case 1:
-                        var285 ^= (
-                              (long)(
-                                       (!(aEg.thePlayer.getDistanceToEntity(this.jE) <= (Double)var363) || this.mO.wo())
-                                             && ((MovingObjectPosition)var361 == null || ((MovingObjectPosition)var361).entityHit != this.jE)
-                                          ? 0
-                                          : 1
-                                    )
-                                    << 32
-                                 ^ var285
-                           )
-                           & -1L << 32;
-                        if ((int)(var285 >>> 32) != 0) {
-                           if ((int)var308 == 0 || this.a(this.jE, (MovingObjectPosition)var361, (Double)var363)) {
+                        int notWo = (!(aEg.thePlayer.getDistanceToEntity(this.jE) <= (Double)var363) || this.mO.wo()) && ((MovingObjectPosition)var361 == null || ((MovingObjectPosition)var361).entityHit != this.jE) ? 0 : 1;
+                        if (notWo != 0) {
+                           if (eR2 == 0 || this.a(this.jE, (MovingObjectPosition)var361, (Double)var363)) {
                               if ((MovingObjectPosition)var361 != null) {
                                  this.b((MovingObjectPosition)var361);
                               } else {
@@ -3028,27 +2859,27 @@ public class KillAura extends Module {
                            }
                         } else if ((MovingObjectPosition)var361 == null || ((MovingObjectPosition)var361).typeOfHit != MovingObjectType.ENTITY) {
                            var316 = this.me.wo().getName();
-                           var308 ^= (-4294967296L ^ var308) & -1L << 32;
+                           int var308_hi = -1;
                            switch (((String)var316).hashCode()) {
                               case -1955878649:
                                  if (((String)var316).equals("Normal")) {
-                                    var308 ^= (0L ^ var308) & -1L << 32;
+                                    var308_hi = 0;
                                  }
                                  break;
                               case -957532567:
                                  if (((String)var316).equals("Hit Select")) {
-                                    var308 ^= (4294967296L ^ var308) & -1L << 32;
+                                    var308_hi = 1;
                                  }
                            }
 
-                           switch ((int)(var308 >>> 32)) {
+                           switch (var308_hi) {
                               case 0:
                               case 1:
                                  if (aEg.playerController.curBlockDamageMP != 0.0F) {
                                     return;
                                  }
 
-                                 if ((int)var308 != 0) {
+                                 if (eR2 != 0) {
                                     this.eu();
                                  }
                            }
@@ -3071,7 +2902,7 @@ public class KillAura extends Module {
                         }
                   }
 
-                  if ((int)(var287 >>> 32) != 0) {
+                  if (equals3 != 0) {
                      ahj.l(
                         new C06PacketPlayerPosLook(
                            aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ, aEg.thePlayer.pl, aEg.thePlayer.rotationPitch, aEg.thePlayer.onGround
@@ -3088,53 +2919,51 @@ public class KillAura extends Module {
 
    public void ew() {
       Object var148 = null;
-      long var167 = 0L;
-      var167 = 832170771709706546L;
       var148 = this.lV.wo().getName();
-      var167 ^= (-4294967296L ^ var167) & -1L << 32;
+      int var167_hi = -1;
       switch (((String)var148).hashCode()) {
          case -2099899231:
             if (((String)var148).equals("Intave")) {
-               var167 ^= (4294967296L ^ var167) & -1L << 32;
+               var167_hi = 1;
             }
             break;
          case -1885322919:
             if (((String)var148).equals("Dual Sword")) {
-               var167 ^= (30064771072L ^ var167) & -1L << 32;
+               var167_hi = 7;
             }
             break;
          case -1844299644:
             if (((String)var148).equals("Imperfect Vanilla")) {
-               var167 ^= (17179869184L ^ var167) & -1L << 32;
+               var167_hi = 4;
             }
             break;
          case -1336727224:
             if (((String)var148).equals("Watchdog 1.8")) {
-               var167 ^= (12884901888L ^ var167) & -1L << 32;
+               var167_hi = 3;
             }
             break;
          case 73298841:
             if (((String)var148).equals("Legit")) {
-               var167 ^= (0L ^ var167) & -1L << 32;
+               var167_hi = 0;
             }
             break;
          case 341887541:
             if (((String)var148).equals("Vanilla ReBlock")) {
-               var167 ^= (21474836480L ^ var167) & -1L << 32;
+               var167_hi = 5;
             }
             break;
          case 609795629:
             if (((String)var148).equals("Watchdog")) {
-               var167 ^= (25769803776L ^ var167) & -1L << 32;
+               var167_hi = 6;
             }
             break;
          case 1897755483:
             if (((String)var148).equals("Vanilla")) {
-               var167 ^= (8589934592L ^ var167) & -1L << 32;
+               var167_hi = 2;
             }
       }
 
-      switch ((int)(var167 >>> 32)) {
+      switch (var167_hi) {
          case 0:
          case 1:
          default:
@@ -3226,30 +3055,18 @@ public class KillAura extends Module {
    }
 
    public boolean a(AxisAlignedBB var1, Predicate<Block> var2) {
-      long var110 = 0L;
-      long var112 = 0L;
-      long var119 = 0L;
       Object var132 = null;
-      long var137 = 0L;
-      long var142 = 0L;
-      long var153 = 0L;
-      var110 = 158318704840966988L;
-      var112 = -5562087371502462798L;
-      var119 = 4822846158519250104L;
-      var153 = -6958226904738522147L;
-      var137 = 5842619519815199882L;
-      var142 = 1919823832434119429L;
-      var137 ^= ((long)MathHelper.floor_double(var1.minX + 1.0E-4) << 32 ^ var137) & -1L << 32;
-      var137 ^= (MathHelper.floor_double(var1.maxX - 1.0E-4) ^ var137) & -1L >>> 32;
-      var112 ^= ((long)MathHelper.floor_double(var1.minY + 1.0E-4) << 32 ^ var112) & -1L << 32;
-      var119 ^= (MathHelper.floor_double(var1.maxY - 1.0E-4) ^ var119) & -1L >>> 32;
-      var153 ^= ((long)MathHelper.floor_double(var1.minZ + 1.0E-4) << 32 ^ var153) & -1L << 32;
-      var142 ^= (MathHelper.floor_double(var1.maxZ - 1.0E-4) ^ var142) & -1L >>> 32;
+      int floor_double2 = MathHelper.floor_double(var1.minX + 1.0E-4);
+      int floor_double3 = MathHelper.floor_double(var1.maxX - 1.0E-4);
+      int floor_double4 = MathHelper.floor_double(var1.minY + 1.0E-4);
+      int floor_double5 = MathHelper.floor_double(var1.maxY - 1.0E-4);
+      int floor_double6 = MathHelper.floor_double(var1.minZ + 1.0E-4);
+      int floor_double7 = MathHelper.floor_double(var1.maxZ - 1.0E-4);
 
-      for (long var156 = var110 ^ ((long)((int)(var137 >>> 32)) << 32 ^ var110) & -1L << 32; (int)(var156 >>> 32) <= (int)var137; var156 += 4294967296L) {
-         for (var119 ^= ((long)((int)(var112 >>> 32)) << 32 ^ var119) & -1L << 32; (int)(var119 >>> 32) <= (int)var119; var119 += 4294967296L) {
-            for (var142 ^= ((long)((int)(var153 >>> 32)) << 32 ^ var142) & -1L << 32; (int)(var142 >>> 32) <= (int)var142; var142 += 4294967296L) {
-               var132 = aEg.theWorld.getBlockState(new BlockPos((int)(var156 >>> 32), (int)(var119 >>> 32), (int)(var142 >>> 32))).getBlock();
+      for (int i = floor_double2; i <= floor_double3; i++) {
+         for (int j = floor_double4; j <= floor_double5; j++) {
+            for (int k = floor_double6; k <= floor_double7; k++) {
+               var132 = aEg.theWorld.getBlockState(new BlockPos(i, j, k)).getBlock();
                if (var2.test((Block)var132)) {
                   return true;
                }
@@ -3261,29 +3078,27 @@ public class KillAura extends Module {
    }
 
    public void eM() {
-      long var79 = 0L;
       Object var82 = null;
-      var79 = 1165172786894276937L;
       var82 = this.lV.wo().getName();
-      var79 ^= (-4294967296L ^ var79) & -1L << 32;
+      int var79_hi = -1;
       switch (((String)var82).hashCode()) {
          case 609795629:
             if (((String)var82).equals("Watchdog")) {
-               var79 ^= (0L ^ var79) & -1L << 32;
+               var79_hi = 0;
             }
             break;
          case 1511128849:
             if (((String)var82).equals("Watchdog 1.12")) {
-               var79 ^= (8589934592L ^ var79) & -1L << 32;
+               var79_hi = 2;
             }
             break;
          case 1594433067:
             if (((String)var82).equals("Universal")) {
-               var79 ^= (4294967296L ^ var79) & -1L << 32;
+               var79_hi = 1;
             }
       }
 
-      switch ((int)(var79 >>> 32)) {
+      switch (var79_hi) {
          case 0:
          default:
             break;
@@ -3306,15 +3121,13 @@ public class KillAura extends Module {
 
    public boolean et() {
       double var26 = 0.0;
-      long var32 = 0L;
       Object var35 = null;
-      var32 = 2913827917181913468L;
       var35 = this.eo();
       var26 = (Double)((Tuple)var35).getSecond();
-      var32 ^= ((((Boolean)((Tuple)var35).getFirst()).booleanValue() ? 1L : 0L) << 32 ^ var32) & -1L << 32;
+      int booleanValue2 = (int)(((Boolean)((Tuple)var35).getFirst()).booleanValue() ? 1L : 0L);
       return this.nO.T(this.nT - 1L)
          && this.jE != null
-         && (this.nP.T((long)(var26 * 50.0) - 50L) || (int)(var32 >>> 32) != 0)
+         && (this.nP.T((long)(var26 * 50.0) - 50L) || booleanValue2 != 0)
          && (!this.me.wo().getName().equals("Hit Select") || this.jE.hurtTime <= PingSpoofComponent.getPing() / 50L - 1L || aEg.thePlayer.ae <= 11)
          && nR;
    }
@@ -3345,25 +3158,11 @@ public class KillAura extends Module {
    }
 
    static {
-      long var95 = 0L;
       Object var103 = null;
-      long var116 = 0L;
-      long var120 = 0L;
       Object var128 = null;
       Object var129 = null;
-      long var133 = 0L;
-      long var138 = 0L;
-      long var145 = 0L;
-      long var147 = 0L;
       int var149 = 0;
-      var145 = -3083515823160335003L;
-      var95 = -2698578295082973992L;
-      var133 = 6491550787538376144L;
-      var147 = -257835150753585967L;
-      var120 = -7597275013359515207L;
-      var138 = -3838108104773179434L;
-      var116 = 4978464190006452139L;
-      var116 ^= (0L ^ var116) & -1L << 32;
+      int var116_hi = 0;
       Object[] var10000 = new Object[]{fld_0OOOoo00o0_17, 0, null};
       Object var10003 = mth_0OOOoo00o0_8()[0];
       if (var10003 == null) {
@@ -3393,29 +3192,29 @@ public class KillAura extends Module {
 
       var10000[2] = (String)var10003;
       var103 = ((String)o0Oo000O0oO(var10000)).toCharArray();
-      var145 ^= (18219251269632L ^ var145) & -1L << 32;
-      var120 ^= (0L ^ var120) & -1L >>> 32;
+      int limit = 4242;
+      int i = 0;
 
-      while ((int)var120 < (int)(var145 >>> 32)) {
+      while (i < limit) {
          char[] var180 = (char[])var103;
-         int var10001 = (int)var120;
-         var120 ^= (var120 ^ var120 + 1) & -1L >>> 32;
-         var95 ^= (var180[var10001] ^ var95) & -1L >>> 32;
+         int var10001 = i;
+         i = i + 1;
+         int var95_lo = var180[var10001];
          char[] var181 = (char[])var103;
-         var10001 = (int)var120;
-         var120 ^= (var120 ^ var120 + 1) & -1L >>> 32;
-         var133 ^= ((long)var181[var10001] << 32 ^ var133) & -1L << 32;
-         var147 ^= (((int)var95 << 16 | (int)(var133 >>> 32)) ^ var147) & -1L >>> 32;
-         var128 = new char[(int)var147];
+         var10001 = i;
+         i = i + 1;
+         int var133_hi = var181[var10001];
+         int limit2 = var95_lo << 16 | var133_hi;
+         var128 = new char[limit2];
 
-         for (var138 ^= (0L ^ var138) & -1L << 32; (int)(var138 >>> 32) < (int)var147; var138 += 4294967296L) {
-            ((char[])var128)[(int)(var138 >>> 32)] = ((char[])var103)[(int)var120 + (int)(var138 >>> 32)];
+         for (int j = 0; j < limit2; j++) {
+            ((char[])var128)[j] = ((char[])var103)[i + j];
          }
 
-         var10001 = (int)(var116 >>> 32);
-         var116 += 4294967296L;
+         var10001 = var116_hi;
+         var116_hi++;
          o0Oo000O0oO[var10001] = new String((char[])var128);
-         var120 ^= ((int)var120 + (int)var147 ^ var120) & -1L >>> 32;
+         i = i + limit2;
       }
 
       mB = false;
@@ -3629,17 +3428,15 @@ public class KillAura extends Module {
 
    public void e(EntityLivingBase var1) {
       Object var66 = null;
-      long var72 = 0L;
       Object var74 = null;
       Object var79 = null;
-      var72 = -846037102819949012L;
       var74 = new AttackEvent(var1);
       Client.a.e().d((AttackEvent)var74);
       if (!((AttackEvent)var74).isCancelled() && ((AttackEvent)var74).dc() != null) {
          var79 = ((AttackEvent)var74).dc();
          gu var4 = this.f((EntityLivingBase)var79) ? this.mD : null;
-         var72 ^= ((long)(var4 != null && this.a((EntityLivingBase)var79, var4) ? 1 : 0) << 32 ^ var72) & -1L << 32;
-         gv var6 = (int)(var72 >>> 32) != 0 ? this.a(var4) : null;
+         int flag = var4 != null && this.a((EntityLivingBase)var79, var4) ? 1 : 0;
+         gv var6 = flag != 0 ? this.a(var4) : null;
          if (this.eX()) {
             this.ev();
          }
@@ -3650,7 +3447,7 @@ public class KillAura extends Module {
             aEg.thePlayer.swingItem();
          }
 
-         if ((int)(var72 >>> 32) != 0 && !this.mT.wo().getName().equals("Grim")) {
+         if (flag != 0 && !this.mT.wo().getName().equals("Grim")) {
             this.b(var4);
             this.a("forced", var4);
          }
@@ -3802,14 +3599,12 @@ public class KillAura extends Module {
 
    public void eH() {
       Object var58 = null;
-      long var71 = 0L;
-      var71 = 5666526362077979080L;
       var58 = this.eD();
-      var71 ^= ((long)(((int[])var58)[0] != -1 && ((int[])var58)[1] == -1 ? 1 : 0) << 32 ^ var71) & -1L << 32;
+      int flag = ((int[])var58)[0] != -1 && ((int[])var58)[1] == -1 ? 1 : 0;
       if (this.oG) {
          if (!this.lV.wo().getName().equals("Watchdog")) {
             this.oG = false;
-         } else if ((int)(var71 >>> 94 + -62) == 0 || !this.lX.wo()) {
+         } else if (flag == 0 || !this.lX.wo()) {
             if (!nQ || this.ez()) {
                this.mz = false;
                this.oG = false;
@@ -3817,7 +3612,7 @@ public class KillAura extends Module {
                int var10000 = ((int[])var58)[1];
             }
          }
-      } else if (this.eA() && this.lX.wo() && (int)(var71 >>> 32) != 0) {
+      } else if (this.eA() && this.lX.wo() && flag != 0) {
          this.q(true);
          this.oE = false;
          this.lV.wF().stream().filter(var0 -> var0.getName().equals("Watchdog")).findFirst().ifPresent(this.lV::c);
@@ -3889,18 +3684,16 @@ public class KillAura extends Module {
    public void d(PacketSendEvent var1) {
       Object var36 = null;
       Object var39 = null;
-      long var41 = 0L;
-      var41 = -9102393437890829070L;
       var39 = var1.dq();
       var36 = this.lV.wo().getName();
-      var41 ^= (-4294967296L ^ var41) & -1L << 32;
+      int var41_hi = -1;
       switch (((String)var36).hashCode()) {
          case -2099899231:
             if (((String)var36).equals("Intave")) {
-               var41 ^= (0L ^ var41) & -1L << 32;
+               var41_hi = 0;
             }
          default:
-            switch ((int)(var41 >>> 32)) {
+            switch (var41_hi) {
                case 0:
                   if ((Packet)var39 instanceof C03PacketPlayer && this.jE != null) {
                      var1.setCancelled();
@@ -3924,14 +3717,12 @@ public class KillAura extends Module {
 
    public void ej() {
       this.nV.sort((var0, var1) -> {
-         long var41 = 0L;
-         var41 = -3026039053275850389L;
-         var41 ^= ((bx.n(var0.getName()) ? 1L : 0L) << 32 ^ var41) & -1L << 32;
-         var41 ^= ((bx.n(var1.getName()) ? 1L : 0L) ^ var41) & -1L >>> 32;
-         if ((int)(var41 >>> 32) != 0 && (int)var41 == 0) {
+         int name = (int)(bx.n(var0.getName()) ? 1L : 0L);
+         int name2 = (int)(bx.n(var1.getName()) ? 1L : 0L);
+         if (name != 0 && name2 == 0) {
             return -1;
          }
-         return (int)(var41 >>> 32) == 0 && (int)var41 != 0 ? -65 - -89 ^ 25 : 0;
+         return name == 0 && name2 != 0 ? -65 - -89 ^ 25 : 0;
       });
    }
 
@@ -3940,18 +3731,14 @@ public class KillAura extends Module {
    }
 
    public void q(boolean var1) {
-      long var53 = 0L;
-      long var64 = 0L;
-      var64 = 1433658597833706112L;
-      var53 = 336053655043818368L;
       if (aEg.thePlayer == null) {
          this.oB = -1;
          nQ = false;
       } else {
-         var53 ^= ((long)aEg.thePlayer.inventory.currentItem << 32 ^ var53) & -1L << 32;
-         var64 ^= ((long)(var1 && this.oB != -1 && this.oB != (int)(var53 >>> 32) && !SlotComponent.dj ? 1 : 0) << (-39 - -101 ^ 30) ^ var64) & -1L << 32;
-         if ((int)(var64 >>> 32) != 0) {
-            SlotComponent.b((int)(var53 >>> 32), false);
+         int currentItem2 = aEg.thePlayer.inventory.currentItem;
+         int flag = var1 && this.oB != -1 && this.oB != currentItem2 && !SlotComponent.dj ? 1 : 0;
+         if (flag != 0) {
+            SlotComponent.b(currentItem2, false);
             nQ = false;
          } else if (nQ) {
             this.p(false);
@@ -3975,10 +3762,8 @@ public class KillAura extends Module {
    }
 
    public void ei() {
-      long var31 = 0L;
       double var37 = 0.0;
       Object var43 = null;
-      var31 = 4503468478926686652L;
       var37 = this.mh.wo().doubleValue();
       this.nV = bv.f(var37);
       if (this.lT.wo().getName().equals("Switch")) {
@@ -3997,20 +3782,20 @@ public class KillAura extends Module {
       }
 
       var43 = this.md.wo().getName();
-      var31 ^= (-4294967296L ^ var31) & -1L << 32;
+      int var31_hi = -1;
       switch (((String)var43).hashCode()) {
          case -2137395588:
             if (((String)var43).equals("Health")) {
-               var31 ^= (0L ^ var31) & -1L << 32;
+               var31_hi = 0;
             }
             break;
          case -2087977922:
             if (((String)var43).equals("Hurt Time")) {
-               var31 ^= (4294967296L ^ var31) & -1L << 32;
+               var31_hi = 1;
             }
       }
 
-      switch ((int)(var31 >>> 32)) {
+      switch (var31_hi) {
          case 0:
             this.nV.sort(Comparator.comparingDouble(EntityLivingBase::getHealth));
             this.ej();
@@ -4071,59 +3856,53 @@ public class KillAura extends Module {
       Object var134 = null;
       Object var143 = null;
       Object var144 = null;
-      long var153 = 0L;
-      long var155 = 0L;
       Object var162 = null;
-      long var167 = 0L;
       Object var170 = null;
       Object var171 = null;
       float var179 = 0.0F;
       Object var181 = null;
       Object var184 = null;
       Object var186 = null;
-      var167 = -5541514191027666649L;
-      var153 = 4632470169088194157L;
-      var155 = -2859679182479583764L;
       var179 = this.mj.wv().floatValue();
       if (!this.eR()) {
          this.eW();
       }
 
       var133 = this.mT.wo().getName();
-      var167 ^= (-4294967296L ^ var167) & -1L << 32;
+      int var167_hi = -1;
       switch (((String)var133).hashCode()) {
          case -1631405611:
             if (((String)var133).equals("Autistic AntiCheat")) {
-               var167 ^= (12884901888L ^ var167) & -1L << 32;
+               var167_hi = 3;
             }
             break;
          case -654193598:
             if (((String)var133).equals("Advanced")) {
-               var167 ^= (17179869184L ^ var167) & -1L << 32;
+               var167_hi = 4;
             }
             break;
          case 77115:
             if (((String)var133).equals("NCP")) {
-               var167 ^= (4294967296L ^ var167) & -1L << 32;
+               var167_hi = 1;
             }
             break;
          case 2228079:
             if (((String)var133).equals("Grim")) {
-               var167 ^= (21474836480L ^ var167) & -1L << 32;
+               var167_hi = 5;
             }
             break;
          case 2581482:
             if (((String)var133).equals("Snap")) {
-               var167 ^= (8589934592L ^ var167) & -1L << 32;
+               var167_hi = 2;
             }
             break;
          case 1951303741:
             if (((String)var133).equals("Legit/Normal")) {
-               var167 ^= (0L ^ var167) & -1L << 32;
+               var167_hi = 0;
             }
       }
 
-      switch ((int)(var167 >>> 32)) {
+      switch (var167_hi) {
          case 0:
             var171 = this.c(this.jE);
             var171 = this.a(this.jE, (Vector2f)var171);
@@ -4137,16 +3916,16 @@ public class KillAura extends Module {
             }
             break;
          case 1:
-            var153 ^= ((long)((int)(Math.random() * 1.0)) << 32 ^ var153) & -1L << 32;
+            int random2 = (int)(Math.random() * 1.0);
             var143 = new aka(this.jE.posX, this.jE.posY, this.jE.posZ);
             var144 = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
-            var162 = MoveUtil.a(this.jE, new Vector2f(0.0F, 1.0F), (int)(var153 >>> 32), aEg.thePlayer.isSprinting());
+            var162 = MoveUtil.a(this.jE, new Vector2f(0.0F, 1.0F), random2, aEg.thePlayer.isSprinting());
             this.jE.setPosition(((aka)var162).x, ((aka)var162).y, ((aka)var162).z);
             aEg.thePlayer
                .setPosition(
-                  aEg.thePlayer.posX + aEg.thePlayer.motionX * (int)(var153 >>> 32),
-                  aEg.thePlayer.posY + (aEg.thePlayer.motionY + 0.17) * (int)(var153 >>> 32),
-                  aEg.thePlayer.posZ + aEg.thePlayer.motionZ * (int)(var153 >>> 32)
+                  aEg.thePlayer.posX + aEg.thePlayer.motionX * random2,
+                  aEg.thePlayer.posY + (aEg.thePlayer.motionY + 0.17) * random2,
+                  aEg.thePlayer.posZ + aEg.thePlayer.motionZ * random2
                );
             var181 = aiu.m(this.c(this.jE));
             this.jE.setPosition(((aka)var143).x, ((aka)var143).y, ((aka)var143).z);
@@ -4190,15 +3969,14 @@ public class KillAura extends Module {
          case 3:
             var170 = this.a(this.jE, this.c(this.jE));
             var134 = aef.a((Vector2f)var170, this.mh.wo().floatValue(), this.en(), aEg.thePlayer, this.em());
-            var153 ^= (((MovingObjectPosition)var134 != null && ((MovingObjectPosition)var134).entityHit == this.jE ? 1 : 0) ^ var153) & -1L >>> 32;
-            var155 ^= (4294967296L ^ var155) & -1L << 32;
+            int flag = (MovingObjectPosition)var134 != null && ((MovingObjectPosition)var134).entityHit == this.jE ? 1 : 0;
+            int var155_hi = 1;
             if (this.mO.wo()) {
                var186 = aef.a((Vector2f)var170, this.mh.wo().floatValue(), this.en(), aEg.thePlayer, this.em());
-               var155 ^= ((long)((MovingObjectPosition)var186 != null && ((MovingObjectPosition)var186).entityHit == this.jE ? 1 : 0) << 32 ^ var155)
-                  & -1L << 32;
+               var155_hi = (MovingObjectPosition)var186 != null && ((MovingObjectPosition)var186).entityHit == this.jE ? 1 : 0;
             }
 
-            if (var179 != 0.0F && this.et() && (int)var153 != 0 && (int)(var155 >>> 32) != 0 && this.mO.wo()) {
+            if (var179 != 0.0F && this.et() && flag != 0 && var155_hi != 0 && this.mO.wo()) {
                RotationComponent.d(false);
                RotationComponent.a(
                   (Vector2f)var170,
@@ -4259,18 +4037,16 @@ public class KillAura extends Module {
 
    public gu j(EntityLivingBase var1) {
       double var35 = 0.0;
-      long var37 = 0L;
       Object var40 = null;
       Object var44 = null;
       double var47 = 0.0;
       Object var49 = null;
       double var52 = 0.0;
-      var37 = 7366249327447755001L;
       var44 = var1.getEntityBoundingBox();
       gu var3 = null;
 
-      for (long var56 = var37 ^ (0L ^ var37) & -1L << 32; (int)(var56 >>> 32) < 32; var56 += 4294967296L) {
-         var52 = (Math.PI * 2) * (int)(var56 >>> 32) / 32.0;
+      for (int i = 0; i < 32; i++) {
+         var52 = (Math.PI * 2) * i / 32.0;
          var35 = -Math.sin(var52);
          var47 = Math.cos(var52);
 

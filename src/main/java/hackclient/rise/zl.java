@@ -57,7 +57,6 @@ public class zl extends SecurityFeature {
 
     @Override
     public boolean nG() {
-        long j = 1468521042548453867L;
         if (aEg == null || aEg.thePlayer == null || aEg.theWorld == null || aEg.isIntegratedServerRunning()) {
             this.avG = null;
             this.avH = false;
@@ -93,10 +92,10 @@ public class zl extends SecurityFeature {
             return false;
         }
 
-        long k = j ^ ((long)aEg.thePlayer.ticksExisted << 32 ^ j) & -1L << 32;
-        if (this.avK == Integer.MIN_VALUE || (int)(k >>> 32) - this.avK >= 100) {
+        int ticksExisted2 = aEg.thePlayer.ticksExisted;
+        if (this.avK == Integer.MIN_VALUE || ticksExisted2 - this.avK >= 100) {
             this.avJ++;
-            this.avK = (int)(k >>> 32);
+            this.avK = ticksExisted2;
         }
 
         if (this.avJ >= 5) {

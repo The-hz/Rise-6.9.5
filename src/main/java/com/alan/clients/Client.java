@@ -382,28 +382,17 @@ public enum Client
     }
 
     public void a() {
-        final long n = -6297520619757661444L;
-        final long n2 = 876962712539923373L;
-        final long n3 = 8521810644678046354L;
         final String[] array = { "hackclient.", "com.alan.clients." };
-        final long n4 = array.length;
-        final long n5 = n3;
-        final long n6 = n5 ^ ((n4 ^ n5) & -1L >>> 32);
-        final long n7 = 0L;
-        final long n8 = n6;
-        for (long n9 = n8 ^ ((n7 ^ n8) & -1L << 32); (int)(n9 >>> 32) < (int)n9; n9 += 4294967296L) {
-            final String s = array[(int)(n9 >>> 32)];
+        int count = array.length;
+        for (int i = 0; i < count; i++) {
+            final String s = array[i];
             if (aeg.bc(s)) {
                 final Class<?>[] array2 = aeg.ba(s);
-                final long n10 = (long)array2.length << 32;
-                final long n11 = n;
-                final long n12 = n11 ^ ((n10 ^ n11) & -1L << 32);
-                final long n13 = 0L;
-                final long n14 = n2;
-                long n15 = n14 ^ ((n13 ^ n14) & -1L << 32);
+                int count2 = array2.length;
+                int j = 0;
             Label_0241_Outer:
-                while ((int)(n15 >>> 32) < (int)(n12 >>> 32)) {
-                    final Class clazz = array2[(int)(n15 >>> 32)];
+                while (j < count2) {
+                    final Class clazz = array2[j];
                     while (true) {
                         try {
                             if (!Modifier.isAbstract(clazz.getModifiers())) {
@@ -420,7 +409,7 @@ public enum Client
                                     this.securityManager.a((SecurityFeature)clazz.getConstructor((Class[])new Class[0]).newInstance(new Object[0]));
                                 }
                             }
-                            n15 += 4294967296L;
+                            j++;
                             continue Label_0241_Outer;
                         }
                         catch (final IllegalAccessException | NoSuchMethodException | InvocationTargetException | InstantiationException ex) {
@@ -444,17 +433,8 @@ public enum Client
     }
 
     static {
-        final long n = -6572660094731715013L;
-        long n2 = 1225688883576723018L;
-        long n3 = 4377125705540254908L;
-        long n4 = 8247547237089773965L;
-        final long n5 = 766514392127847450L;
-        long n6 = -770659489898165532L;
-        final long n7 = 3070900508343144582L;
         Client.o0Oo000O0oO = new Object[14];
-        final long n8 = 0L;
-        final long n9 = n7;
-        long n10 = n9 ^ ((n8 ^ n9) & -1L << 32);
+        int n10_hi = 0;
         final Object[] array = { Client.fld_0OOOoo00o0_1, 0, null };
         final int n11 = 2;
         Object o;
@@ -467,43 +447,27 @@ public enum Client
         }
         array[n11] = o;
         final char[] charArray2 = ((String)o0Oo000O0oO(array)).toCharArray();
-        final long n12 = 691489734656L;
-        final long n13 = n;
-        final long n14 = n13 ^ ((n12 ^ n13) & -1L << 32);
-        final long n15 = 0L;
-        final long n16 = n5;
-        long n33;
-        long n34;
-        for (long n17 = n16 ^ ((n15 ^ n16) & -1L >>> 32); (int)n17 < (int)(n14 >>> 32); n17 = (n34 ^ ((n33 ^ n34) & -1L >>> 32))) {
+        int limit = 161;
+        int n33;
+        for (int n17_lo = 0; n17_lo < limit; n17_lo = n33) {
             final char[] array2 = charArray2;
-            final int n18 = (int)n17;
-            final long n19 = n17;
-            final long n20 = n19 ^ ((n19 ^ n19 + 1) & -1L >>> 32);
-            final long n21 = array2[n18];
-            final long n22 = n2;
-            n2 = (n22 ^ ((n21 ^ n22) & -1L >>> 32));
+            final int n18 = n17_lo;
+            int n17_lo2 = n17_lo + 1;
+            int n2_lo = array2[n18];
             final char[] array3 = charArray2;
-            final int n23 = (int)n20;
-            final long n24 = n20;
-            final long n25 = n24 ^ ((n24 ^ n24 + 1) & -1L >>> 32);
-            final long n26 = (long)array3[n23] << 32;
-            final long n27 = n3;
-            n3 = (n27 ^ ((n26 ^ n27) & -1L << 32));
-            final long n28 = (int)n2 << 16 | (int)(n3 >>> 32);
-            final long n29 = n4;
-            n4 = (n29 ^ ((n28 ^ n29) & -1L >>> 32));
-            final char[] array4 = new char[(int)n4];
-            final long n30 = 0L;
-            final long n31 = n6;
-            for (n6 = (n31 ^ ((n30 ^ n31) & -1L << 32)); (int)(n6 >>> 32) < (int)n4; n6 += 4294967296L) {
-                array4[(int)(n6 >>> 32)] = charArray2[(int)n25 + (int)(n6 >>> 32)];
+            final int n23 = n17_lo2;
+            int n17_lo3 = n17_lo2 + 1;
+            int n3_hi = array3[n23];
+            int limit2 = n2_lo << 16 | n3_hi;
+            final char[] array4 = new char[limit2];
+            for (int j = 0; j < limit2; j++) {
+                array4[j] = charArray2[n17_lo3 + j];
             }
             final Object[] o0Oo000O0oO = Client.o0Oo000O0oO;
-            final int n32 = (int)(n10 >>> 32);
-            n10 += 4294967296L;
+            final int n32 = n10_hi;
+            n10_hi++;
             o0Oo000O0oO[n32] = new String(array4);
-            n33 = (int)n25 + (int)n4;
-            n34 = n25;
+            n33 = n17_lo3 + limit2;
         }
         new StringBuilder().append("Made with <3 by Alan and ").append("The_Bi11iona1re").toString();
         new StringBuilder().append("\u00a9 Rise Client 2026. All Righ").append("ts Reserved").toString();
