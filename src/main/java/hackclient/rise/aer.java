@@ -3,9 +3,9 @@ package hackclient.rise;
 import com.alan.clients.Client;
 import com.alan.clients.ui.menu.impl.account.AccountManagerScreen;
 import com.alan.clients.util.account.auth.MicrosoftLogin;
-import com.alan.clients.util.account.auth.d;
-import com.alan.clients.util.account.auth.e;
-import com.alan.clients.util.account.auth.f;
+import com.alan.clients.util.account.auth.LoginData;
+import com.alan.clients.util.account.auth.McResponse;
+import com.alan.clients.util.account.auth.ProfileResponse;
 import com.alan.clients.util.web.Browser;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -47,7 +47,7 @@ public final class aer {
                     boolean flag = bo(s1);
                     String s2 = bp(s1);
                     if (flag || !s2.isEmpty()) {
-                        d d = flag ? bs(s1) : MicrosoftLogin.loginMarketplaceRefreshToken(s2);
+                        LoginData d = flag ? bs(s1) : MicrosoftLogin.loginMarketplaceRefreshToken(s2);
                         if (d != null && d.sm()) {
                             if (s.isEmpty()) {
                                 Minecraft.getMinecraft().setSession(new Session(d.aCj, d.aEL, d.aEX, "mojang"));
@@ -98,7 +98,7 @@ public final class aer {
         return var0.length() > 100 && var0.startsWith("M.") && var0.matches("[A-Za-z0-9.!*_-]+");
     }
 
-    private static d bs(String var0) {
+    private static LoginData bs(String var0) {
         try {
             String s = var0.trim();
             int i = s.indexOf(59);
@@ -107,7 +107,7 @@ public final class aer {
             }
 
             if (!s.contains("=")) {
-                return new d();
+                return new LoginData();
             }
 
             String s1 = w(
@@ -116,58 +116,58 @@ public final class aer {
                 )
                 .getHeaderField("Location");
             if (s1 == null) {
-                return new d();
+                return new LoginData();
             }
 
             String s2 = w(s1.replace(" ", "%20"), s).getHeaderField("Location");
             if (s2 == null) {
-                return new d();
+                return new LoginData();
             }
 
             String s3 = w(s2, s).getHeaderField("Location");
             if (s3 == null) {
-                return new d();
+                return new LoginData();
             }
 
             String s4 = x(s3, "accessToken");
             if (s4.isEmpty()) {
-                return new d();
+                return new LoginData();
             }
 
             String s5 = new String(bt(s4), StandardCharsets.UTF_8);
             String s6 = "\"rp://api.minecraftservices.com/\",";
             int j = s5.indexOf(s6);
             if (j < 0) {
-                return new d();
+                return new LoginData();
             }
 
             String s7 = s5.substring(j + s6.length());
             String s8 = y(s7, "Token");
             String s9 = y(s7, "uhs");
             if (!s8.isEmpty() && !s9.isEmpty()) {
-                e e = gson.fromJson(
+                McResponse e = gson.fromJson(
                     Browser.postExternal(
                         "https://api.minecraftservices.com/authentication/login_with_xbox",
                         "{\"identityToken\":\"XBL3.0 x=" + s9 + ";" + s8 + "\",\"ensureLegacyEnabled\":true}",
                         true
                     ),
-                    e.class
+                    McResponse.class
                 );
                 if (e != null && e.aEU != null) {
-                    f f = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.aEU), f.class);
+                    ProfileResponse f = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.aEU), ProfileResponse.class);
                     if (f != null && f.aEZ != null && f.gK != null) {
                         String s10 = MicrosoftLogin.extractRefreshTokenFromCookies(s);
-                        return new d(e.aEU, s10, f.aEZ, f.gK);
+                        return new LoginData(e.aEU, s10, f.aEZ, f.gK);
                     }
-                    return new d();
+                    return new LoginData();
                 } else {
-                    return new d();
+                    return new LoginData();
                 }
             } else {
-                return new d();
+                return new LoginData();
             }
         } catch (Exception exception) {
-            return new d();
+            return new LoginData();
         }
     }
 

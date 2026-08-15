@@ -3,14 +3,11 @@ package com.alan.clients.util.account.auth;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class f {
-    @Expose
-    @SerializedName("id")
-    public String aEZ;
+class Item {
     @Expose
     @SerializedName("name")
-    public String gK;
+    String gK;
 
-    public f() {
+    private Item() {
     }
 }

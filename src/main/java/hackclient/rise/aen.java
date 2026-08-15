@@ -54,7 +54,7 @@ public final class aen {
             Minecraft.getMinecraft().setSession(session);
             return session;
         } catch (IOException ioexception) {
-            com.alan.clients.util.account.auth.d akd1 = MicrosoftLogin.login(s);
+            com.alan.clients.util.account.auth.LoginData akd1 = MicrosoftLogin.login(s);
             if (akd1 == null || !akd1.sm() || akd1.aCj == null || akd1.aEL == null) {
                 throw ioexception;
             }

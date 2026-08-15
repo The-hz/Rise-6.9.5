@@ -1,10 +1,10 @@
 package com.alan.clients.util.account.auth;
 
-import com.alan.clients.util.account.auth.a;
-import com.alan.clients.util.account.auth.d;
-import com.alan.clients.util.account.auth.e;
-import com.alan.clients.util.account.auth.f;
-import com.alan.clients.util.account.auth.g;
+import com.alan.clients.util.account.auth.AuthTokenResponse;
+import com.alan.clients.util.account.auth.LoginData;
+import com.alan.clients.util.account.auth.McResponse;
+import com.alan.clients.util.account.auth.ProfileResponse;
+import com.alan.clients.util.account.auth.XblXstsResponse;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -81,7 +81,7 @@ public class MicrosoftLogin {
                 System.out.println("[DEBUG] Cookie->refresh got no code (HTTP " + httpsURLConnection.getResponseCode() + ", location=" + (string4 == null ? "null" : string4.substring(0, Math.min(80, string4.length()))) + ")");
                 return "";
             }
-            a a2 = gson.fromJson(Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=ba89e6e0-8490-4a26-8746-f389a0d3ccc7&code=" + string2 + "&client_secret=hlQ8Q~33jTRilP4yE-UtuOt9wG.ZFLqq6pErIa2B&grant_type=authorization_code&redirect_uri=http://localhost:8247", false), a.class);
+            AuthTokenResponse a2 = gson.fromJson(Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=ba89e6e0-8490-4a26-8746-f389a0d3ccc7&code=" + string2 + "&client_secret=hlQ8Q~33jTRilP4yE-UtuOt9wG.ZFLqq6pErIa2B&grant_type=authorization_code&redirect_uri=http://localhost:8247", false), AuthTokenResponse.class);
             if (a2 == null || a2.aEV == null || a2.aEV.isEmpty()) {
                 System.out.println("[DEBUG] Cookie->refresh code exchange returned no refresh_token");
                 return "";
@@ -115,41 +115,41 @@ public class MicrosoftLogin {
         return "";
     }
 
-    public static d login(String string) {
-        return MicrosoftLogin.loginWithMicrosoftAccessToken(gson.fromJson(Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=" + MicrosoftLogin.formValue(CLIENT_ID) + "&client_secret=" + MicrosoftLogin.formValue(CLIENT_SECRET) + "&refresh_token=" + MicrosoftLogin.formValue(string) + "&grant_type=refresh_token&redirect_uri=" + MicrosoftLogin.formValue("http://localhost:8247") + "&prompt=select_account", false), a.class), string);
+    public static LoginData login(String string) {
+        return MicrosoftLogin.loginWithMicrosoftAccessToken(gson.fromJson(Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=" + MicrosoftLogin.formValue(CLIENT_ID) + "&client_secret=" + MicrosoftLogin.formValue(CLIENT_SECRET) + "&refresh_token=" + MicrosoftLogin.formValue(string) + "&grant_type=refresh_token&redirect_uri=" + MicrosoftLogin.formValue("http://localhost:8247") + "&prompt=select_account", false), AuthTokenResponse.class), string);
     }
 
-    public static d loginMarketplaceRefreshToken(String string) {
-        return MicrosoftLogin.loginWithMicrosoftAccessToken(gson.fromJson(Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=00000000402B5328&grant_type=refresh_token&refresh_token=" + MicrosoftLogin.formValue(string) + "&scope=" + MicrosoftLogin.formValue("service::user.auth.xboxlive.com::MBI_SSL"), false), a.class), string);
+    public static LoginData loginMarketplaceRefreshToken(String string) {
+        return MicrosoftLogin.loginWithMicrosoftAccessToken(gson.fromJson(Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=00000000402B5328&grant_type=refresh_token&refresh_token=" + MicrosoftLogin.formValue(string) + "&scope=" + MicrosoftLogin.formValue("service::user.auth.xboxlive.com::MBI_SSL"), false), AuthTokenResponse.class), string);
     }
 
-    private static d loginWithMicrosoftAccessToken(a a2, String string) {
+    private static LoginData loginWithMicrosoftAccessToken(AuthTokenResponse a2, String string) {
         String string2;
         if (a2 == null || a2.aEU == null || a2.aEU.isEmpty()) {
-            return new d();
+            return new LoginData();
         }
         String string3 = a2.aEU;
         string2 = a2.aEV == null || a2.aEV.isEmpty() ? string : a2.aEV;
-        g g2 = MicrosoftLogin.authenticateXboxLive("d=" + string3);
+        XblXstsResponse g2 = MicrosoftLogin.authenticateXboxLive("d=" + string3);
         if (!MicrosoftLogin.isUsable(g2)) {
             g2 = MicrosoftLogin.authenticateXboxLive(string3);
         }
         if (!MicrosoftLogin.isUsable(g2)) {
-            return new d();
+            return new LoginData();
         }
-        g g3 = gson.fromJson(Browser.postExternal("https://xsts.auth.xboxlive.com/xsts/authorize", "{\"Properties\":{\"SandboxId\":\"RETAIL\",\"UserTokens\":[\"" + g2.aFa + "\"]},\"RelyingParty\":\"rp://api.minecraftservices.com/\",\"TokenType\":\"JWT\"}", true), g.class);
+        XblXstsResponse g3 = gson.fromJson(Browser.postExternal("https://xsts.auth.xboxlive.com/xsts/authorize", "{\"Properties\":{\"SandboxId\":\"RETAIL\",\"UserTokens\":[\"" + g2.aFa + "\"]},\"RelyingParty\":\"rp://api.minecraftservices.com/\",\"TokenType\":\"JWT\"}", true), XblXstsResponse.class);
         if (g3 == null) {
-            return new d();
+            return new LoginData();
         }
-        e e2 = gson.fromJson(Browser.postExternal("https://api.minecraftservices.com/authentication/login_with_xbox", "{\"identityToken\":\"XBL3.0 x=" + g2.aFb.aFc[0].aFd + ";" + g3.aFa + "\"}", true), e.class);
+        McResponse e2 = gson.fromJson(Browser.postExternal("https://api.minecraftservices.com/authentication/login_with_xbox", "{\"identityToken\":\"XBL3.0 x=" + g2.aFb.aFc[0].aFd + ";" + g3.aFa + "\"}", true), McResponse.class);
         if (e2 == null) {
-            return new d();
+            return new LoginData();
         }
-        f f2 = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e2.aEU), f.class);
+        ProfileResponse f2 = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e2.aEU), ProfileResponse.class);
         if (f2 == null) {
-            return new d();
+            return new LoginData();
         }
-        return new d(e2.aEU, string2, f2.aEZ, f2.gK);
+        return new LoginData(e2.aEU, string2, f2.aEZ, f2.gK);
     }
 
     private static String formValue(String string) {
@@ -161,11 +161,11 @@ public class MicrosoftLogin {
         }
     }
 
-    private static g authenticateXboxLive(String string) {
-        return gson.fromJson(Browser.postExternal("https://user.auth.xboxlive.com/user/authenticate", "{\"Properties\":{\"AuthMethod\":\"RPS\",\"SiteName\":\"user.auth.xboxlive.com\",\"RpsTicket\":\"" + string + "\"},\"RelyingParty\":\"http://auth.xboxlive.com\",\"TokenType\":\"JWT\"}", true), g.class);
+    private static XblXstsResponse authenticateXboxLive(String string) {
+        return gson.fromJson(Browser.postExternal("https://user.auth.xboxlive.com/user/authenticate", "{\"Properties\":{\"AuthMethod\":\"RPS\",\"SiteName\":\"user.auth.xboxlive.com\",\"RpsTicket\":\"" + string + "\"},\"RelyingParty\":\"http://auth.xboxlive.com\",\"TokenType\":\"JWT\"}", true), XblXstsResponse.class);
     }
 
-    private static boolean isUsable(g g2) {
+    private static boolean isUsable(XblXstsResponse g2) {
         if (g2 == null) return false;
         if (g2.aFa == null) return false;
         if (g2.aFb == null) return false;
@@ -233,7 +233,7 @@ public class MicrosoftLogin {
 
         private void bk(String string) {
             String string2 = Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=ba89e6e0-8490-4a26-8746-f389a0d3ccc7&code=" + string + "&client_secret=hlQ8Q~33jTRilP4yE-UtuOt9wG.ZFLqq6pErIa2B&grant_type=authorization_code&redirect_uri=http://localhost:8247", false);
-            a a2 = gson.fromJson(string2, a.class);
+            AuthTokenResponse a2 = gson.fromJson(string2, AuthTokenResponse.class);
             if (a2 == null) {
                 callback.accept(null);
                 return;

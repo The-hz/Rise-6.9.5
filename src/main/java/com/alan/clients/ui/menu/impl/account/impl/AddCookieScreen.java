@@ -2,8 +2,8 @@ package com.alan.clients.ui.menu.impl.account.impl;
 
 import com.alan.clients.ui.menu.impl.account.AccountManagerScreen;
 import com.alan.clients.util.account.auth.MicrosoftLogin;
-import com.alan.clients.util.account.auth.e;
-import com.alan.clients.util.account.auth.f;
+import com.alan.clients.util.account.auth.McResponse;
+import com.alan.clients.util.account.auth.ProfileResponse;
 import com.alan.clients.util.animation.Animation;
 import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
@@ -158,20 +158,20 @@ public class AddCookieScreen extends GuiScreen implements InstanceAccess {
                         String s6 = new String(Base64.getDecoder().decode(s5), StandardCharsets.UTF_8).split("\"rp://api.minecraftservices.com/\",")[1];
                         String s7 = s6.split("\"Token\":\"")[1].split("\"")[0];
                         String s8 = "XBL3.0 x=" + s6.split(Pattern.quote("{\"DisplayClaims\":{\"xui\":[{\"uhs\":\""))[1].split("\"")[0] + ";" + s7;
-                        e e = gson.fromJson(
+                        McResponse e = gson.fromJson(
                             Browser.postExternal(
                                 "https://api.minecraftservices.com/authentication/login_with_xbox",
                                 "{\"identityToken\":\"" + s8 + "\",\"ensureLegacyEnabled\":true}",
                                 true
                             ),
-                            e.class
+                            McResponse.class
                         );
                         if (e == null) {
                             text_to_render = "Error (Invalid Acc)";
                             return;
                         }
 
-                        f f = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.aEU), f.class);
+                        ProfileResponse f = gson.fromJson(Browser.getBearerResponse("https://api.minecraftservices.com/minecraft/profile", e.aEU), ProfileResponse.class);
                         if (f == null) {
                             text_to_render = "Error (Invalid Acc)";
                             return;

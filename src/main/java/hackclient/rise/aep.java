@@ -1,7 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.util.account.auth.MicrosoftLogin;
-import com.alan.clients.util.account.auth.d;
+import com.alan.clients.util.account.auth.LoginData;
 import com.google.gson.JsonObject;
 import lombok.Generated;
 
@@ -28,7 +28,7 @@ public class aep extends ael {
             return super.se();
         }
 
-        d d = MicrosoftLogin.login(this.aFe);
+        LoginData d = MicrosoftLogin.login(this.aFe);
         if (!d.sm()) {
             d = MicrosoftLogin.loginMarketplaceRefreshToken(this.aFe);
         }
