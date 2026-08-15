@@ -17,6 +17,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class UsernameGenerator {
     private static final String aGe = "https://raw.githubusercontent.com/jeanphorn/wordlist/master/usernames.txt";
     //add code
+    // fetching raw.githubusercontent on EVERY single click? STOP DDOS GITHUB CACHE THIS!!! billionaire????
     private static final File NAMES_FILE = new File(AltManager.ALT_DIRECTORY, "names.txt");
     private static volatile String[] wordList;
     private static volatile boolean downloading;
