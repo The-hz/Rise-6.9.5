@@ -8,7 +8,7 @@ import com.alan.clients.util.animation.Easing;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2d;
-import hackclient.rise.abx;
+import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.util.gui.GUIUtil;
 import hackclient.rise.ahd;
 import hackclient.rise.aip;
@@ -30,7 +30,7 @@ public final class CategoryComponent implements InstanceAccess {
         this.category = var1;
     }
 
-    public void a(double var1, double var3, double var5, abx var7) {
+    public void a(double var1, double var3, double var5, Screen var7) {
         RiseClickGUI riseclickgui = Client.a.v();
         if (System.currentTimeMillis() - this.lastTime > 300L) {
             this.lastTime = System.currentTimeMillis();

@@ -19,7 +19,7 @@ import hackclient.rise.ui.value.abn;
 import hackclient.rise.ui.value.abt;
 import hackclient.rise.ui.value.abv;
 import hackclient.rise.abw;
-import hackclient.rise.abx;
+import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.ui.click.standard.screen.impl.SearchScreen;
 import com.alan.clients.ui.click.standard.screen.impl.ThemeScreen;
 import com.alan.clients.util.gui.GUIUtil;
@@ -54,9 +54,9 @@ public class RiseClickGUI extends GuiScreen implements aha {
     public Vector2f axI = new Vector2f(-1.0F, -1.0F);
     public Vector2f alh = new Vector2f(416.0F, 338.0F);
     public SidebarCategory axJ = new SidebarCategory();
-    public abx axK = Category.SEARCH.ec();
-    public abx axL = this.axK;
-    public abx axM = this.axK;
+    public Screen axK = Category.SEARCH.ec();
+    public Screen axL = this.axK;
+    public Screen axM = this.axK;
     public float axN;
     public float axO;
     public boolean dragging;
@@ -456,7 +456,7 @@ public class RiseClickGUI extends GuiScreen implements aha {
         }
     }
 
-    public void a(abx var1) {
+    public void a(Screen var1) {
         if (!this.axK.getClass().getSimpleName().equals(var1.getClass().getSimpleName())) {
             this.axM = this.getStandardClickGUI().axK;
             this.axK = var1;
@@ -505,17 +505,17 @@ public class RiseClickGUI extends GuiScreen implements aha {
     }
 
     @Generated
-    public abx oZ() {
+    public Screen oZ() {
         return this.axK;
     }
 
     @Generated
-    public abx pa() {
+    public Screen pa() {
         return this.axL;
     }
 
     @Generated
-    public abx pb() {
+    public Screen pb() {
         return this.axM;
     }
 

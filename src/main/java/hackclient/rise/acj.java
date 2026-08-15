@@ -1,6 +1,7 @@
 package hackclient.rise;
 
 import com.alan.clients.ui.click.standard.RiseClickGUI;
+import com.alan.clients.ui.click.standard.screen.impl.ScriptScreen;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.gui.GUIUtil;
 import com.alan.clients.util.interfaces.InstanceAccess;
@@ -80,7 +81,7 @@ public class acj extends ArrayList<aci> implements InstanceAccess {
     public void qF() {
         if (this.axI != null) {
             if (this.qz()) {
-                aca.azE = false;
+                ScriptScreen.azE = false;
             }
         }
     }

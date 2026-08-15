@@ -5,7 +5,7 @@ import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.vector.Vector2f;
 import hackclient.rise.abw;
-import hackclient.rise.abx;
+import com.alan.clients.ui.click.standard.screen.Screen;
 import hackclient.rise.agk;
 import com.alan.clients.util.localization.Locale;
 import hackclient.rise.ahd;
@@ -18,7 +18,7 @@ import java.util.Iterator;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.opengl.GL11;
 
-public class LanguageScreen implements abx, InstanceAccess {
+public class LanguageScreen implements Screen, InstanceAccess {
     private final ArrayList<LanguageComponent> languages = new ArrayList<>();
     private final agk azQ = new agk();
 

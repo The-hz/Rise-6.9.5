@@ -447,11 +447,11 @@ public class bo extends Component {
                 if (abyte != null && abyte.length != 0) {
                     synchronized (this.ey) {
                         this.eB.add(abyte);
-                        this.eE += ((byte[])abyte).length;
+                        this.eE += abyte.length;
 
                         while (this.eE > 262144 && !this.eB.isEmpty()) {
                             byte[] abyte1 = this.eB.remove(0);
-                            this.eE -= ((byte[])abyte1).length;
+                            this.eE -= abyte1.length;
                         }
                     }
                 }
@@ -629,7 +629,7 @@ public class bo extends Component {
                     abyte2[25] = -75;
                     abyte2[11] = 28;
                     abyte2[7] = 23;
-                    byte[] abyte3 = new byte[((byte[])abyte1).length + ((byte[])abyte2).length];
+                    byte[] abyte3 = new byte[abyte1.length + abyte2.length];
                     System.arraycopy(abyte1, 0, abyte3, 0, abyte1.length);
                     System.arraycopy(abyte2, 0, abyte3, abyte1.length, abyte2.length);
                     secretkeyspec = mth_0OOOoo00o0_5()[1];

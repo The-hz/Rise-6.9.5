@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.ui.click.standard.screen.impl;
 
 import com.alan.clients.Client;
 import com.alan.clients.compat.OfflineMode;
@@ -17,7 +17,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.alan.clients.ui.click.standard.components.ModuleComponent;
 import hackclient.rise.abw;
-import hackclient.rise.abx;
+import com.alan.clients.ui.click.standard.screen.Screen;
 import hackclient.rise.aci;
 import hackclient.rise.acj;
 import hackclient.rise.aec;
@@ -40,8 +40,8 @@ import rip.vantage.commons.packet.impl.client.community.c;
 import rip.vantage.commons.packet.impl.client.protection.e;
 import rip.vantage.network.core.a;
 
-public final class aca
-implements abx,
+public final class ScriptScreen
+implements Screen,
 InstanceAccess {
     public agk scrollUtil = new agk();
     public static int auk = 10;

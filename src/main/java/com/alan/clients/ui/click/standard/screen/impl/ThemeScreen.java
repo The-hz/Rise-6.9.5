@@ -6,7 +6,7 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.util.vector.Vector2f;
 import hackclient.rise.abj;
 import hackclient.rise.abk;
-import hackclient.rise.abx;
+import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.ui.theme.Themes;
 import hackclient.rise.adw;
 import com.alan.clients.util.gui.GUIUtil;
@@ -18,7 +18,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ThemeScreen implements abx, InstanceAccess {
+public class ThemeScreen implements Screen, InstanceAccess {
     private final ArrayList<abj> azT = new ArrayList<>();
     private ArrayList<abj> azU = new ArrayList<>();
     private final ArrayList<abk> azV = new ArrayList<>();

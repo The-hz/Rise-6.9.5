@@ -19,15 +19,15 @@ public class HostsFileCheck extends SecurityFeature
                 }
                 final String separator = File.separator;
                 final File file = new File(new StringBuilder().append((Object)(String)System.getenv("windir")).append((Object)(String)separator).append("System32").append((Object)(String)separator).append("drivers").append((Object)(String)separator).append("etc").append((Object)(String)separator).append("hosts").toString());
-                if (!((File)file).exists() || ((File)file).isDirectory()) {
+                if (!file.exists() || file.isDirectory()) {
                     break Label_0335;
                 }
                 try {
                     String line = null;
                     final BufferedReader reader = new BufferedReader(new FileReader(file));
                     Label_0292: {
-                        while ((line = ((BufferedReader)reader).readLine()) != null) {
-                            if ((((String)line).toLowerCase().contains(LastConnectionComponent.ip.toLowerCase()) && !LastConnectionComponent.ip.toLowerCase().contains("localhost") && !LastConnectionComponent.ip.toLowerCase().contains("127.0.0.1")) || ((String)line).toLowerCase().contains("rise")) {
+                        while ((line = reader.readLine()) != null) {
+                            if ((line.toLowerCase().contains(LastConnectionComponent.ip.toLowerCase()) && !LastConnectionComponent.ip.toLowerCase().contains("localhost") && !LastConnectionComponent.ip.toLowerCase().contains("127.0.0.1")) || line.toLowerCase().contains("rise")) {
                                 break Label_0292;
                             }
                         }

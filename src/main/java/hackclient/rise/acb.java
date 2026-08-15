@@ -4,6 +4,7 @@ import com.alan.clients.Client;
 import com.alan.clients.ui.click.standard.RiseClickGUI;
 import com.alan.clients.ui.click.standard.components.ModuleComponent;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
+import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.gui.textbox.TextBox;
 import com.alan.clients.util.interfaces.InstanceAccess;
@@ -15,7 +16,7 @@ import java.util.Iterator;
 import lombok.Generated;
 import rip.vantage.commons.util.time.a;
 
-public final class acb implements abx, InstanceAccess {
+public final class acb implements Screen, InstanceAccess {
     public final TextBox azM = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(20, gd.REGULAR), Color.WHITE, agl.CENTER, "Start typing to search...", 150.0F);
     private final a azN = new a();
     public agk scrollUtil = new agk();

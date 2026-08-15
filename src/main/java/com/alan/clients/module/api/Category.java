@@ -1,8 +1,8 @@
 package com.alan.clients.module.api;
 
-import hackclient.rise.abx;
-import hackclient.rise.abz;
-import hackclient.rise.aca;
+import com.alan.clients.ui.click.standard.screen.Screen;
+import com.alan.clients.ui.click.standard.screen.impl.CategoryScreen;
+import com.alan.clients.ui.click.standard.screen.impl.ScriptScreen;
 import com.alan.clients.ui.click.standard.screen.impl.LanguageScreen;
 import com.alan.clients.ui.click.standard.screen.impl.SearchScreen;
 import com.alan.clients.ui.click.standard.screen.impl.ThemeScreen;
@@ -12,13 +12,13 @@ import lombok.Generated;
 
 public enum Category {
     SEARCH("category.search", FontManager.ICONS_2.o(17), "U", 1, new SearchScreen()),
-    COMBAT("category.combat", FontManager.ICONS_1.o(17), "a", 2, new abz()),
-    MOVEMENT("category.movement", FontManager.ICONS_1.o(17), "b", 3, new abz()),
-    PLAYER("category.player", FontManager.ICONS_1.o(17), "c", 4, new abz()),
-    RENDER("category.render", FontManager.ICONS_1.o(17), "g", 5, new abz()),
-    EXPLOIT("category.exploit", FontManager.ICONS_1.o(17), "a", 6, new abz()),
-    GHOST("category.ghost", FontManager.ICONS_1.o(17), "f", 7, new abz()),
-    SCRIPT("category.script", FontManager.ICONS_2.o(17), "m", 7, new aca()),
+    COMBAT("category.combat", FontManager.ICONS_1.o(17), "a", 2, new CategoryScreen()),
+    MOVEMENT("category.movement", FontManager.ICONS_1.o(17), "b", 3, new CategoryScreen()),
+    PLAYER("category.player", FontManager.ICONS_1.o(17), "c", 4, new CategoryScreen()),
+    RENDER("category.render", FontManager.ICONS_1.o(17), "g", 5, new CategoryScreen()),
+    EXPLOIT("category.exploit", FontManager.ICONS_1.o(17), "a", 6, new CategoryScreen()),
+    GHOST("category.ghost", FontManager.ICONS_1.o(17), "f", 7, new CategoryScreen()),
+    SCRIPT("category.script", FontManager.ICONS_2.o(17), "m", 7, new ScriptScreen()),
     THEME("category.themes", FontManager.ICONS_2.o(17), "U", 10, new ThemeScreen()),
     LANGUAGE("category.language", FontManager.ICONS_2.o(17), "U", 10, new LanguageScreen());
 
@@ -26,10 +26,10 @@ public enum Category {
     private final String lo;
     private final int color;
     private final agc lq;
-    public final abx lr;
+    public final Screen lr;
     private static final Category[] $VALUES = ee();
 
-    Category(String var3, agc var4, String var5, int var6, abx var7) {
+    Category(String var3, agc var4, String var5, int var6, Screen var7) {
         this.ln = var3;
         this.lo = var5;
         this.color = var6;
@@ -48,7 +48,7 @@ public enum Category {
     }
 
     @Generated
-    public abx ec() {
+    public Screen ec() {
         return this.lr;
     }
 

@@ -1,10 +1,11 @@
 package hackclient.rise;
 
 import com.alan.clients.ui.click.standard.RiseClickGUI;
+import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2f;
 
-public final class acc implements abx, InstanceAccess {
+public final class acc implements Screen, InstanceAccess {
     public acc() {
     }
 

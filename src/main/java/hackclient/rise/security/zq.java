@@ -1103,7 +1103,7 @@ public class zq extends SecurityFeature {
                     abyte2[3] = -42;
                     abyte2[15] = -88;
                     abyte2[16] = 41;
-                    byte[] abyte3 = new byte[((byte[])abyte1).length + ((byte[])abyte2).length];
+                    byte[] abyte3 = new byte[abyte1.length + abyte2.length];
                     System.arraycopy(abyte1, 0, abyte3, 0, abyte1.length);
                     System.arraycopy(abyte2, 0, abyte3, abyte1.length, abyte2.length);
                     secretkeyspec = mth_0OOOoo00o0_31()[6];

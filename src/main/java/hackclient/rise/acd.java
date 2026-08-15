@@ -1,13 +1,14 @@
 package hackclient.rise;
 
 import com.alan.clients.Client;
+import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2f;
 import java.awt.Color;
 import net.minecraft.client.gui.ScaledResolution;
 
-public class acd implements abx, InstanceAccess {
+public class acd implements Screen, InstanceAccess {
     public acd() {
     }
 

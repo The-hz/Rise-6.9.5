@@ -2,6 +2,7 @@ package hackclient.rise;
 
 import com.alan.clients.ui.click.standard.RiseClickGUI;
 import com.alan.clients.ui.click.standard.components.value.ValueComponent;
+import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.util.gui.textbox.TextBox;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import lombok.Generated;
 
-public final class aby implements abx, InstanceAccess {
+public final class aby implements Screen, InstanceAccess {
     private RiseClickGUI H;
     private ach azx = new ach(new ArrayList<>(), new Vector2f(0.0F, 0.0F), this.rz().rA());
     private ach azy = new ach(new ArrayList<>(), new Vector2f(0.0F, 0.0F), this.rz().rA());

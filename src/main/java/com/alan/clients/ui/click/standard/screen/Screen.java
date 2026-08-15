@@ -1,6 +1,6 @@
-package hackclient.rise;
+package com.alan.clients.ui.click.standard.screen;
 
-public interface abx {
+public interface Screen {
     default void b(int var1, int var2, float var3) {
     }
 

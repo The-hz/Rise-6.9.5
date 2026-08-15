@@ -6,7 +6,7 @@ import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.ui.click.standard.components.ModuleComponent;
 import hackclient.rise.abw;
-import hackclient.rise.abx;
+import com.alan.clients.ui.click.standard.screen.Screen;
 import hackclient.rise.agk;
 import hackclient.rise.agl;
 import com.alan.clients.util.gui.textbox.TextBox;
@@ -22,7 +22,7 @@ import lombok.Generated;
 import rip.vantage.commons.util.time.a;
 
 public final class SearchScreen
-implements abx,
+implements Screen,
 InstanceAccess {
     public final TextBox azR = new TextBox(new Vector2d(200.0, 200.0), FontManager.MAIN.a(20, gd.REGULAR), Color.WHITE, agl.CENTER, ahd.ce("ui.search.text"), 150.0f);
     private final a azS = new a();

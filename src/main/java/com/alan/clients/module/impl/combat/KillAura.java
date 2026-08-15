@@ -3247,7 +3247,7 @@ public class KillAura extends Module {
           Object var66 = null;
           var48 = (Integer)((Object[])var0)[1];
           var55 = (String)((Object[])var0)[2];
-          final Object var0a = ((Object[])var0)[0];
+          final Object var0a = var0[0];
           Object var10000 = oO00O0OO0ooO;
           if (oO00O0OO0ooO == null) {
              var10000 = oO00O0OO0ooO = new Object[1];

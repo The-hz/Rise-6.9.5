@@ -1,18 +1,20 @@
-package hackclient.rise;
+package com.alan.clients.ui.click.standard.screen.impl;
 
 import com.alan.clients.Client;
 import com.alan.clients.module.api.Category;
 import com.alan.clients.ui.click.standard.RiseClickGUI;
 import com.alan.clients.ui.click.standard.components.ModuleComponent;
+import com.alan.clients.ui.click.standard.screen.Screen;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.vector.Vector2d;
+import hackclient.rise.agk;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 import lombok.Generated;
 import rip.vantage.commons.util.time.a;
 
-public final class abz implements abx, InstanceAccess {
+public final class CategoryScreen implements Screen, InstanceAccess {
     private final a azA = new a();
     public agk scrollUtil = new agk();
     public ArrayList<ModuleComponent> azB;
@@ -20,7 +22,7 @@ public final class abz implements abx, InstanceAccess {
     private double azC;
     private double azD;
 
-    public abz() {
+    public CategoryScreen() {
     }
 
     @Override
