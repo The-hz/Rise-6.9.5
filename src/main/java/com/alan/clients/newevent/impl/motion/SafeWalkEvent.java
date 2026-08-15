@@ -1,9 +1,9 @@
-package hackclient.rise;
+package com.alan.clients.newevent.impl.motion;
 
 import com.alan.clients.newevent.Event;
 import lombok.Generated;
 
-public final class el implements Event {
+public final class SafeWalkEvent implements Event {
     private double jy;
 
     @Generated
@@ -17,7 +17,7 @@ public final class el implements Event {
     }
 
     @Generated
-    public el(double var1) {
+    public SafeWalkEvent(double var1) {
         this.jy = var1;
     }
 }

@@ -20,7 +20,7 @@ import hackclient.rise.aha;
 import com.alan.clients.util.localization.Locale;
 import hackclient.rise.ahd;
 import hackclient.rise.aju;
-import hackclient.rise.event.er;
+import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -61,7 +61,7 @@ public final class BackendPacketHandler implements rip.vantage.commons.handler.a
             throw new SecurityException("EC74");
         }
 
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
         this.eRz.aX();
         NetHandlerPlayClient nethandlerplayclient = InstanceAccess.aEg.getNetHandler();
         if (nethandlerplayclient != null) {
@@ -293,7 +293,7 @@ public final class BackendPacketHandler implements rip.vantage.commons.handler.a
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketAccount packet) {
         Minecraft.getMinecraft().session = new Session(packet.getUsername(), packet.getUuid(), packet.getAccessToken(), "microsoft");
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
@@ -303,32 +303,32 @@ public final class BackendPacketHandler implements rip.vantage.commons.handler.a
 
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.community.S2CPacketChatMessage packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.community.S2CPacketUserData packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketEntityListRequest packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.community.S2CPacketTitle packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.community.S2CPacketConfigList packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.community.S2CPacketTroll var1) {
-        Client.a.e().d(new er(var1));
+        Client.a.e().d(new BackendS2CEvent(var1));
     }
 
     public void handle(rip.vantage.commons.packet.impl.server.general.S2CPacketKeepAlive var1) {
@@ -363,42 +363,42 @@ public final class BackendPacketHandler implements rip.vantage.commons.handler.a
 
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStartRecording packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
     public void handle(S2CPacketStopRecording packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureRequest packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketCaptureCancel packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
     public void b(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorConsent packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
     public void b(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorRequest packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
     public void b(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorCommand packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.monitoring.S2CPacketMonitorPing packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 
     @Override
@@ -407,6 +407,6 @@ public final class BackendPacketHandler implements rip.vantage.commons.handler.a
 
     @Override
     public void handle(rip.vantage.commons.packet.impl.server.protection.S2CPacketJdkUnlockGrant packet) {
-        Client.a.e().d(new er(packet));
+        Client.a.e().d(new BackendS2CEvent(packet));
     }
 }

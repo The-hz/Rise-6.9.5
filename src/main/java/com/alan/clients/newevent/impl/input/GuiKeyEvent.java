@@ -1,10 +1,10 @@
-package hackclient.rise;
+package com.alan.clients.newevent.impl.input;
 
 import com.alan.clients.newevent.CancellableEvent;
 import lombok.Generated;
 import net.minecraft.client.gui.GuiScreen;
 
-public final class dt extends CancellableEvent {
+public final class GuiKeyEvent extends CancellableEvent {
     private final int je;
     private final char jf;
     private final GuiScreen jg;
@@ -25,7 +25,7 @@ public final class dt extends CancellableEvent {
     }
 
     @Generated
-    public dt(int var1, char var2, GuiScreen screen) {
+    public GuiKeyEvent(int var1, char var2, GuiScreen screen) {
         this.je = var1;
         this.jf = var2;
         this.jg = screen;

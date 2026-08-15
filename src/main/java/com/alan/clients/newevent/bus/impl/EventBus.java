@@ -9,8 +9,8 @@ import com.alan.clients.newevent.impl.other.ServerKickEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.interfaces.InstanceAccess;
-import hackclient.rise.event.er;
-import hackclient.rise.fu;
+import com.alan.clients.newevent.impl.other.BackendS2CEvent;
+import com.alan.clients.newevent.impl.render.RenderGuiEvent;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -102,7 +102,7 @@ Bus<Event> {
     @Override
     public void d(Event event) {
         try {
-            if (!(EventBus.aEg.theWorld != null && aEg.getNetHandler() != null && (EventBus.aEg.getNetHandler().doneLoadingTerrain || event instanceof PacketSendEvent) || event instanceof er || event instanceof fu || event instanceof ServerKickEvent || event instanceof GameEvent || event instanceof WorldChangeEvent || event instanceof ServerJoinEvent)) {
+            if (!(EventBus.aEg.theWorld != null && aEg.getNetHandler() != null && (EventBus.aEg.getNetHandler().doneLoadingTerrain || event instanceof PacketSendEvent) || event instanceof BackendS2CEvent || event instanceof RenderGuiEvent || event instanceof ServerKickEvent || event instanceof GameEvent || event instanceof WorldChangeEvent || event instanceof ServerJoinEvent)) {
                 return;
             }
             List list = this.listenerCache.getOrDefault(event.getClass(), Collections.emptyList());

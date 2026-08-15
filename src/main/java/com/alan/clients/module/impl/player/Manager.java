@@ -20,7 +20,7 @@ import com.alan.clients.util.player.ItemUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import com.alan.clients.component.impl.player.SelectorDetectionComponent;
-import hackclient.rise.en;
+import com.alan.clients.newevent.impl.motion.SprintEvent;
 import hackclient.rise.tp;
 import com.alan.clients.util.render.IntGatherer;
 import hackclient.rise.InventoryScan;
@@ -281,7 +281,7 @@ public class Manager extends Module {
     @EventLink
     public final Listener<AttackEvent> onAttack = var1 -> this.attackTicks = 0;
     @EventLink
-    public final Listener<en> onSprint = var1 -> {
+    public final Listener<SprintEvent> onSprint = var1 -> {
         if (this.isGrimInventoryMove() && this.clicksThisTick > 0) {
             this.sprintDisableTicks = Math.max(this.sprintDisableTicks, this.clicksThisTick + this.getExtraSprintTicks());
         }

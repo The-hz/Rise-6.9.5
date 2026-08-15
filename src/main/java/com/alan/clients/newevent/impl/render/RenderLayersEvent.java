@@ -1,14 +1,14 @@
-package hackclient.rise;
+package com.alan.clients.newevent.impl.render;
 
 import com.alan.clients.newevent.Event;
 import net.minecraft.entity.EntityLivingBase;
 
-public final class fx implements Event {
+public final class RenderLayersEvent implements Event {
     private final EntityLivingBase ko;
     private Runnable kp;
     private Runnable kq;
 
-    public fx(EntityLivingBase living, Runnable runnable, Runnable var3) {
+    public RenderLayersEvent(EntityLivingBase living, Runnable runnable, Runnable var3) {
         this.ko = living;
         this.kp = runnable;
         this.kq = var3;

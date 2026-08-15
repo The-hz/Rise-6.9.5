@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.mojang.authlib.GameProfile;
-import hackclient.rise.event.er;
+import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import io.netty.buffer.Unpooled;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -117,7 +117,7 @@ public class bo extends Component {
     public List<byte[]> pending;
     public ItemStack[] lastEquipment;
     @EventLink
-    public Listener<er> fg;
+    public Listener<BackendS2CEvent> fg;
     public byte lastPitch;
     public int fd;
     public Field eA;

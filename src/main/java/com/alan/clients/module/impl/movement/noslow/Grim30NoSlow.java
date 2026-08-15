@@ -15,8 +15,8 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.util.vector.Vector2f;
 import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
-import hackclient.rise.ea;
-import hackclient.rise.en;
+import com.alan.clients.newevent.impl.input.RightClickEvent;
+import com.alan.clients.newevent.impl.motion.SprintEvent;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemPotion;
@@ -25,10 +25,10 @@ import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 
 public class Grim30NoSlow extends Mode<NoSlow> {
     @EventLink
-    public Listener<en> onSprint;
+    public Listener<SprintEvent> onSprint;
     public BooleanValue heypixel = new BooleanValue("Heypixel", this, false);
     @EventLink
-    public Listener<ea> onRightClick;
+    public Listener<RightClickEvent> onRightClick;
     public int usingItemTicks;
     @EventLink
     public Listener<PacketSendEvent> onPacketSend;

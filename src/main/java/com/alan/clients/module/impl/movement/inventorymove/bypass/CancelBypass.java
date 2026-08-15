@@ -6,7 +6,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.motion.PreUpdateEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.value.Mode;
-import hackclient.rise.en;
+import com.alan.clients.newevent.impl.motion.SprintEvent;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
@@ -41,7 +41,7 @@ public class CancelBypass extends Mode<InventoryMove> {
         aEg.gameSettings.keyBindJump
     };
     @EventLink
-    public final Listener<en> onSprint = var0 -> {};
+    public final Listener<SprintEvent> onSprint = var0 -> {};
     @EventLink
     public final Listener<PreUpdateEvent> onPreUpdate = var1x -> {
         if (!(aEg.currentScreen instanceof GuiChat) && aEg.currentScreen != this.getStandardClickGUI()) {

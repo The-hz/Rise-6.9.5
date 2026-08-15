@@ -30,7 +30,7 @@ import com.alan.clients.util.ime.PinyinInputHandler;
 import hackclient.rise.agx;
 import hackclient.rise.ahd;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.dt;
+import com.alan.clients.newevent.impl.input.GuiKeyEvent;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -104,7 +104,7 @@ extends Module {
     @EventLink
     public final Listener<PacketReceiveEvent> onPacketReceive;
     @EventLink
-    public final Listener<dt> onGuiKey;
+    public final Listener<GuiKeyEvent> onGuiKey;
     @EventLink
     public final Listener<Render2DEvent> onRender2D;
 
@@ -861,7 +861,7 @@ extends Module {
     }
 
     @Generated
-    public Listener<dt> getKeyListener() {
+    public Listener<GuiKeyEvent> getKeyListener() {
         return this.onGuiKey;
     }
 

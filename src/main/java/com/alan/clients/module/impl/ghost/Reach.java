@@ -15,7 +15,7 @@ import com.alan.clients.value.impl.BoundsNumberValue;
 import com.alan.clients.value.impl.NumberValue;
 import hackclient.rise.aef;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.ea;
+import com.alan.clients.newevent.impl.input.RightClickEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
@@ -43,7 +43,7 @@ public class Reach extends Module {
         }
     };
     @EventLink
-    public final Listener<ea> onGetMouseOver = var0 -> aEg.objectMouseOver = aef.c(RotationComponent.fk, 4.5);
+    public final Listener<RightClickEvent> onGetMouseOver = var0 -> aEg.objectMouseOver = aef.c(RotationComponent.fk, 4.5);
     @EventLink
     public final Listener<AttackEvent> onAttackEvent = var1 -> {
         EntityLivingBase entitylivingbase = var1.getLiving();

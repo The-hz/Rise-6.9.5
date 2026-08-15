@@ -9,7 +9,7 @@ import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
-import hackclient.rise.dt;
+import com.alan.clients.newevent.impl.input.GuiKeyEvent;
 import com.alan.clients.util.shader.ShaderQueueType;
 import org.lwjgl.input.Keyboard;
 import rip.vantage.commons.util.time.StopWatch;
@@ -29,7 +29,7 @@ public final class ClickGUI extends Module {
         }
     };
     @EventLink
-    public final Listener<dt> onGuiKey = var1 -> {
+    public final Listener<GuiKeyEvent> onGuiKey = var1 -> {
         if (this.openStopWatch.T(50L)) {
             if (var1.cO() == this.getKey()) {
                 aEg.displayGuiScreen(null);

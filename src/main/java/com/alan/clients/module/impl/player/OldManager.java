@@ -17,7 +17,7 @@ import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.ItemUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.SelectorDetectionComponent;
-import hackclient.rise.en;
+import com.alan.clients.newevent.impl.motion.SprintEvent;
 import hackclient.rise.InventoryStack;
 import hackclient.rise.tz;
 import java.util.ArrayList;
@@ -593,7 +593,7 @@ public class OldManager extends Module {
     @EventLink
     public final Listener<AttackEvent> onAttack = var1 -> this.attackTicks = 0;
     @EventLink
-    public final Listener<en> onSprint = var1 -> {
+    public final Listener<SprintEvent> onSprint = var1 -> {
         if (this.isGrimBypass() && this.clicksThisTick > 0) {
             this.extraSprintTicks = Math.max(this.extraSprintTicks, this.getExtraSprintTicks());
         }

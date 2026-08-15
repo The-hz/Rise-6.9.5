@@ -25,7 +25,7 @@ import com.viaversion.viaversion.protocols.v1_18_2to1_19.packet.ServerboundPacke
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.component.impl.player.PacketQueueComponent;
-import hackclient.rise.en;
+import com.alan.clients.newevent.impl.motion.SprintEvent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemFood;
@@ -76,7 +76,7 @@ public class WatchdogPredictionNoSlow extends Mode<NoSlow> {
         }
     };
     @EventLink
-    public final Listener<en> onSprint = var1x -> {
+    public final Listener<SprintEvent> onSprint = var1x -> {
         if (aEg.thePlayer.isUsingItem() && aEg.thePlayer.moveForward > 0.0F && this.nonBlinkSpeedBypass.wo() && this.usingTicks <= this.maxPingSpoof.wo().intValue()) {
             aEg.thePlayer.setSprinting(true);
         }

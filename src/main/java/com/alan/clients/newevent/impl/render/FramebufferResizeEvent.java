@@ -1,12 +1,12 @@
-package hackclient.rise;
+package com.alan.clients.newevent.impl.render;
 
 import com.alan.clients.newevent.Event;
 
-public final class fl implements Event {
+public final class FramebufferResizeEvent implements Event {
     private final int width;
     private final int height;
 
-    public fl(int width, int height) {
+    public FramebufferResizeEvent(int width, int height) {
         this.width = width;
         this.height = height;
     }

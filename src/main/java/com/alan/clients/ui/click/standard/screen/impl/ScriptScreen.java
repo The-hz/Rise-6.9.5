@@ -23,7 +23,7 @@ import com.alan.clients.ui.click.standard.components.ConfigCardSection;
 import com.alan.clients.util.NetworkUtil;
 import hackclient.rise.agk;
 import com.alan.clients.util.tuples.Triple;
-import hackclient.rise.event.er;
+import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import java.awt.Color;
@@ -54,7 +54,7 @@ InstanceAccess {
     private boolean azK;
     private Animation animation = new Animation(Easing.EASE_OUT_EXPO, 400L);
     @EventLink
-    public final Listener<er> azL = er2 -> {
+    public final Listener<BackendS2CEvent> azL = er2 -> {
         if (er2.dd() instanceof rip.vantage.commons.packet.impl.server.community.S2CPacketConfigList) {
             JSONArray jSONArray = ((rip.vantage.commons.packet.impl.server.community.S2CPacketConfigList)er2.dd()).getConfigs();
             this.azG.clear();
@@ -242,7 +242,7 @@ InstanceAccess {
     }
 
     @Generated
-    public Listener<er> qp() {
+    public Listener<BackendS2CEvent> qp() {
         return this.azL;
     }
 

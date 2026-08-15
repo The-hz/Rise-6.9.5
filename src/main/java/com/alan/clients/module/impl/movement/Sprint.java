@@ -17,7 +17,7 @@ import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.impl.BooleanValue;
 import hackclient.rise.afi;
 import com.alan.clients.util.player.SlotUtil;
-import hackclient.rise.en;
+import com.alan.clients.newevent.impl.motion.SprintEvent;
 import java.util.Iterator;
 import java.util.UUID;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -78,7 +78,7 @@ public class Sprint extends Module {
     @EventLink
     Listener<JumpEvent> onJump = var0 -> {};
     @EventLink
-    Listener<en> onSprint = var0 -> {};
+    Listener<SprintEvent> onSprint = var0 -> {};
     @EventLink
     Listener<PreMotionEvent> onPreMotion = var0 -> {};
     @EventLink

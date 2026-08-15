@@ -5,12 +5,12 @@ import com.alan.clients.module.api.Category;
 import com.alan.clients.module.api.ModuleInfo;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
-import hackclient.rise.el;
+import com.alan.clients.newevent.impl.motion.SafeWalkEvent;
 
 @ModuleInfo(aliases = "module.combat.fences.name", description = "module.combat.fences.description", category = Category.COMBAT)
 public final class Fences extends Module {
     @EventLink
-    public final Listener<el> lJ = var0 -> {
+    public final Listener<SafeWalkEvent> lJ = var0 -> {
         aEg.thePlayer.crd = true;
         var0.h(-5.0);
     };

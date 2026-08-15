@@ -7,7 +7,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.input.ChatInputEvent;
 import hackclient.rise.afi;
-import hackclient.rise.event.er;
+import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import net.minecraft.util.EnumChatFormatting;
 import org.apache.commons.lang3.StringUtils;
 import rip.vantage.commons.packet.impl.client.community.C2SPacketChatMessage;
@@ -28,7 +28,7 @@ extends Module {
         }
     };
     @EventLink
-    public final Listener<er> onVantagePacketReceive = er2 -> {
+    public final Listener<BackendS2CEvent> onVantagePacketReceive = er2 -> {
         if (!(er2.dd() instanceof rip.vantage.commons.packet.impl.server.community.S2CPacketChatMessage)) {
             return;
         }

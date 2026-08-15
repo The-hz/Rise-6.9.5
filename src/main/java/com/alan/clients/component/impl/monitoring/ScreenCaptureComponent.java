@@ -5,7 +5,7 @@ import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.newevent.impl.render.Render2DEvent;
-import hackclient.rise.event.er;
+import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import java.awt.image.BufferedImage;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class ScreenCaptureComponent extends Component {
     public BufferedImage fP;
     public static int fG;
     @EventLink
-    public Listener<er> fR;
+    public Listener<BackendS2CEvent> fR;
     public String fH;
     public List<Integer> fM;
     public int fb;

@@ -22,7 +22,7 @@ import com.alan.clients.util.render.ColorUtil;
 import hackclient.rise.aiv;
 import hackclient.rise.aiz;
 import hackclient.rise.aju;
-import hackclient.rise.event.er;
+import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -38,7 +38,7 @@ extends Menu {
     public StopWatch bN;
     public MenuTextButton emailButton;
     @EventLink
-    public Listener<er> aCE;
+    public Listener<BackendS2CEvent> aCE;
     public MenuButton[] menuButtons;
     public MenuTextButton loginButton;
     public boolean aCz;

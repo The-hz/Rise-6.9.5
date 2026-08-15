@@ -70,8 +70,8 @@ import com.alan.clients.component.impl.render.ESPComponent;
 import com.alan.clients.component.impl.render.espcomponent.impl.AboveBox;
 import com.alan.clients.component.impl.render.espcomponent.impl.FullBox;
 import com.alan.clients.component.impl.render.espcomponent.impl.SigmaRing;
-import hackclient.rise.ea;
-import hackclient.rise.en;
+import com.alan.clients.newevent.impl.input.RightClickEvent;
+import com.alan.clients.newevent.impl.motion.SprintEvent;
 import com.alan.clients.module.impl.combat.KillAuraSwitchMap;
 import com.alan.clients.module.impl.combat.KnockbackSample;
 import com.alan.clients.module.impl.combat.RotationSnapshot;
@@ -203,7 +203,7 @@ public class KillAura extends Module {
    public BooleanValue noSwing;
    public BooleanValue velocityBoost;
    @EventLink
-   public Listener<ea> onAutoBlock;
+   public Listener<RightClickEvent> onAutoBlock;
    public aka playerMotionAverage;
    public int lastDebugTick;
    public boolean pendingDisable;
@@ -257,7 +257,7 @@ public class KillAura extends Module {
    public Listener<HitSlowDownEvent> onHitSlowDown;
    public NumberValue advancedMaxStep;
    @EventLink
-   public Listener<en> onKeepSprintCancel;
+   public Listener<SprintEvent> onKeepSprintCancel;
    public BooleanValue throughWalls;
    public BooleanValue fallbackToWatchdog;
    @EventLink(value = 3)

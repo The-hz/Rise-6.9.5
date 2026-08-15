@@ -1,9 +1,9 @@
-package hackclient.rise.event;
+package com.alan.clients.newevent.impl.other;
 
 import com.alan.clients.newevent.Event;
 import lombok.Generated;
 
-public final class er implements Event {
+public final class BackendS2CEvent implements Event {
     private final rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket jF;
 
     @Generated
@@ -12,7 +12,7 @@ public final class er implements Event {
     }
 
     @Generated
-    public er(rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket var1) {
+    public BackendS2CEvent(rip.vantage.commons.packet.api.abstracts.AbstractS2CPacket var1) {
         this.jF = var1;
     }
 }

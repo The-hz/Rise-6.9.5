@@ -1,14 +1,14 @@
-package hackclient.rise;
+package com.alan.clients.newevent.impl.other;
 
 import com.alan.clients.newevent.CancellableEvent;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.player.EntityPlayer;
 
-public final class ff extends CancellableEvent {
+public final class UpdateModelEvent extends CancellableEvent {
     private final EntityPlayer jP;
     private final ModelBiped jQ;
 
-    public ff(EntityPlayer player, ModelBiped modelBiped) {
+    public UpdateModelEvent(EntityPlayer player, ModelBiped modelBiped) {
         this.jP = player;
         this.jQ = modelBiped;
     }

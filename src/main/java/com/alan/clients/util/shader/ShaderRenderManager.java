@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.ui.ingame.GuiIngameCache;
 import hackclient.rise.aix;
 import hackclient.rise.aiz;
-import hackclient.rise.fu;
+import com.alan.clients.newevent.impl.render.RenderGuiEvent;
 import java.util.LinkedHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import lombok.Generated;
@@ -21,7 +21,7 @@ public class ShaderRenderManager {
     private final int kN = 3;
     private boolean kO;
     @EventLink(value = -1)
-    public final Listener<fu> kP = var1 -> this.b(aiz.OVERLAY);
+    public final Listener<RenderGuiEvent> kP = var1 -> this.b(aiz.OVERLAY);
     @EventLink(value = -1)
     public final Listener<Render2DEvent> onRender2D = var1 -> {
         GuiIngameCache.renderGameOverlay(0.0F);

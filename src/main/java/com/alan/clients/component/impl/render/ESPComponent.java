@@ -10,7 +10,7 @@ import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.component.impl.render.espcomponent.api.ESP;
-import hackclient.rise.ff;
+import com.alan.clients.newevent.impl.other.UpdateModelEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,7 +25,7 @@ public class ESPComponent extends Component {
         }
     };
     @EventLink(value = 4)
-    public final Listener<ff> onLimitedRender2D = var0 -> {
+    public final Listener<UpdateModelEvent> onLimitedRender2D = var0 -> {
         if (esps != null && !esps.isEmpty()) {
             Iterator iterator = esps.iterator();
 

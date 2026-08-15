@@ -3,7 +3,7 @@ package com.alan.clients.component.impl.monitoring;
 import com.alan.clients.component.Component;
 import com.alan.clients.newevent.Listener;
 import com.alan.clients.newevent.annotations.EventLink;
-import hackclient.rise.event.er;
+import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -22,7 +22,7 @@ public class MonitoringComponent extends Component {
     private final Map<String, byte[]> ie = new HashMap<>();
     private final Set<String> fld_if_14 = new HashSet<>();
     @EventLink
-    public final Listener<er> ig = var1 -> {};
+    public final Listener<BackendS2CEvent> ig = var1 -> {};
 
     public MonitoringComponent() {
     }

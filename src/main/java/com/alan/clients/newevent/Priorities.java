@@ -1,6 +1,6 @@
-package hackclient.rise;
+package com.alan.clients.newevent;
 
-public final class dl {
+public final class Priorities {
     public static final byte iO = -1;
     public static final byte iP = 0;
     public static final byte iQ = 1;
@@ -9,6 +9,6 @@ public final class dl {
     public static final byte iT = 4;
     public static final byte iU = 5;
 
-    public dl() {
+    public Priorities() {
     }
 }

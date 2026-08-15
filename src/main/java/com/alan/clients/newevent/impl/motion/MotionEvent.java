@@ -1,10 +1,10 @@
-package hackclient.rise;
+package com.alan.clients.newevent.impl.motion;
 
 import com.alan.clients.newevent.CancellableEvent;
 import lombok.Generated;
 import net.minecraft.util.Vec3;
 
-public final class ef extends CancellableEvent {
+public final class MotionEvent extends CancellableEvent {
     private Vec3 jw;
 
     @Generated
@@ -18,7 +18,7 @@ public final class ef extends CancellableEvent {
     }
 
     @Generated
-    public ef(Vec3 vec) {
+    public MotionEvent(Vec3 vec) {
         this.jw = vec;
     }
 }

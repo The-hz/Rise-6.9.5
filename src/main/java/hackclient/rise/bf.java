@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.other.ServerJoinEvent;
 import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.util.interfaces.InstanceAccess;
-import hackclient.rise.event.er;
+import com.alan.clients.newevent.impl.other.BackendS2CEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +47,7 @@ public class bf extends Component implements InstanceAccess {
         aZ();
     };
     @EventLink
-    public final Listener<er> dh = var0 -> {
+    public final Listener<BackendS2CEvent> dh = var0 -> {
         if (var0.dd() instanceof S2CPacketUserData) {
             String s = ((S2CPacketUserData)var0.dd()).getMessage();
             JSONObject jsonobject = new JSONObject(s);

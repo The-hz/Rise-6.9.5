@@ -17,7 +17,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
-import hackclient.rise.en;
+import com.alan.clients.newevent.impl.motion.SprintEvent;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
@@ -71,7 +71,7 @@ extends Mode<InventoryMove> {
     @EventLink(value=3)
     Listener<MoveInputEvent> onMoveInputHigh;
     @EventLink(value=1)
-    Listener<en> onSprint;
+    Listener<SprintEvent> onSprint;
     @EventLink(value=1)
     Listener<PreUpdateEvent> onPreUpdate;
     @EventLink

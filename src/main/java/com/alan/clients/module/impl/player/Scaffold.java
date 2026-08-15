@@ -60,8 +60,8 @@ import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
-import hackclient.rise.ea;
-import hackclient.rise.en;
+import com.alan.clients.newevent.impl.input.RightClickEvent;
+import com.alan.clients.newevent.impl.motion.SprintEvent;
 import hackclient.rise.ub;
 import com.alan.clients.module.impl.player.scaffold.tower.WatchdogPrediction18Tower;
 import java.util.ArrayList;
@@ -127,11 +127,11 @@ public class Scaffold extends Module {
     public float forward;
     public BooleanValue boostOnlyWhileHoldingJump;
     @EventLink
-    public Listener<ea> onRightClick;
+    public Listener<RightClickEvent> onRightClick;
     public BoundsNumberValue startSneaking;
     public BlockPos blockFace;
     @EventLink
-    public Listener<en> onSprint;
+    public Listener<SprintEvent> onSprint;
     public BooleanValue safeWalk;
     public float visualYaw;
     public float targetPitch;

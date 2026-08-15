@@ -1,10 +1,10 @@
-package hackclient.rise;
+package com.alan.clients.newevent.impl.render;
 
 import com.alan.clients.newevent.Event;
 import lombok.Generated;
 import net.minecraft.item.ItemStack;
 
-public final class fq implements Event {
+public final class ModelVisibilitiesEvent implements Event {
     private final ItemStack kb;
     private int kc;
 
@@ -24,7 +24,7 @@ public final class fq implements Event {
     }
 
     @Generated
-    public fq(ItemStack stack, int var2) {
+    public ModelVisibilitiesEvent(ItemStack stack, int var2) {
         this.kb = stack;
         this.kc = var2;
     }

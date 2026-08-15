@@ -13,7 +13,7 @@ import com.alan.clients.value.impl.BooleanValue;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.ea;
+import com.alan.clients.newevent.impl.input.RightClickEvent;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemFood;
@@ -61,7 +61,7 @@ public class WatchdogNoSlow extends Mode<NoSlow> {
         }
     };
     @EventLink
-    public final Listener<ea> onRightClick = var1x -> {
+    public final Listener<RightClickEvent> onRightClick = var1x -> {
         if (aEg.thePlayer.getHeldItem() != null) {
             if (aEg.thePlayer.isUsingItem()
                 || aEg.thePlayer.getHeldItem().getItem() instanceof ItemPotion && !ItemPotion.isSplash(aEg.thePlayer.getHeldItem().getMetadata())
