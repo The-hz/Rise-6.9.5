@@ -11,9 +11,9 @@ public class b extends rip.vantage.commons.packet.api.abstracts.a {
         this.eOs = var1;
     }
 
-    public b(JSONObject var1) {
+    public b(JSONObject json) {
         super((byte)4);
-        this.eOs = var1.getString("a");
+        this.eOs = json.getString("a");
     }
 
     @Override

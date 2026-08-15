@@ -110,20 +110,20 @@ public final class ManualKBDisplacement extends Module {
         this.Bu = -1;
     }
 
-    private boolean x(EntityLivingBase var1) {
-        return var1 != null
-            && !var1.isDead
+    private boolean x(EntityLivingBase living) {
+        return living != null
+            && !living.isDead
             && aEg.thePlayer != null
             && aEg.theWorld != null
-            && aEg.thePlayer.getDistanceToEntity(var1) <= this.trackingRange.wo().doubleValue() + 1.0;
+            && aEg.thePlayer.getDistanceToEntity(living) <= this.trackingRange.wo().doubleValue() + 1.0;
     }
 
     private boolean eT() {
         return aEg.thePlayer != null && (aEg.thePlayer.isSprinting() || EnchantmentHelper.getKnockbackModifier(aEg.thePlayer) > 0);
     }
 
-    private boolean g(EntityLivingBase var1) {
-        return var1 != null
+    private boolean g(EntityLivingBase living) {
+        return living != null
             && aEg.thePlayer.fallDistance > 0.0F
             && !aEg.thePlayer.onGround
             && !aEg.thePlayer.isOnLadder()
@@ -132,12 +132,12 @@ public final class ManualKBDisplacement extends Module {
             && aEg.thePlayer.ridingEntity == null;
     }
 
-    private boolean h(EntityLivingBase var1) {
-        return this.g(var1) && aEg.thePlayer.motionY < 0.0;
+    private boolean h(EntityLivingBase living) {
+        return this.g(living) && aEg.thePlayer.motionY < 0.0;
     }
 
-    private le y(EntityLivingBase var1) {
-        AxisAlignedBB axisalignedbb = var1.getEntityBoundingBox();
+    private le y(EntityLivingBase living) {
+        AxisAlignedBB axisalignedbb = living.getEntityBoundingBox();
         le le = null;
 
         for (int i = 0; i < 32; i++) {
@@ -147,12 +147,12 @@ public final class ManualKBDisplacement extends Module {
 
             for (double d3 = 0.8; d3 <= 5.0; d3 += 0.35) {
                 AxisAlignedBB axisalignedbb1 = axisalignedbb.offset(d1 * d3, 0.0, d2 * d3);
-                le lex = this.b(var1, axisalignedbb1, d1, d2, d3);
+                le lex = this.b(living, axisalignedbb1, d1, d2, d3);
                 if (lex != null && (le == null || lex.BC > le.BC)) {
                     le = lex;
                 }
 
-                if (!aEg.theWorld.getCollidingBoundingBoxes(var1, axisalignedbb1.contract(0.02, 0.0, 0.02)).isEmpty()) {
+                if (!aEg.theWorld.getCollidingBoundingBoxes(living, axisalignedbb1.contract(0.02, 0.0, 0.02)).isEmpty()) {
                     break;
                 }
             }
@@ -161,8 +161,8 @@ public final class ManualKBDisplacement extends Module {
         return le != null && le.BC >= 45.0 ? le : null;
     }
 
-    private le b(EntityLivingBase var1, AxisAlignedBB var2, double var3, double var5, double var7) {
-        AxisAlignedBB axisalignedbb = var2.contract(0.05, 0.0, 0.05);
+    private le b(EntityLivingBase living, AxisAlignedBB box, double var3, double var5, double var7) {
+        AxisAlignedBB axisalignedbb = box.contract(0.05, 0.0, 0.05);
         AxisAlignedBB axisalignedbb1 = axisalignedbb.offset(0.0, -0.35, 0.0);
         String s = null;
         double d0 = Double.NEGATIVE_INFINITY;
@@ -197,16 +197,16 @@ public final class ManualKBDisplacement extends Module {
         }
 
         float f = (float)Math.toDegrees(Math.atan2(var5, var3)) - 90.0F;
-        float f1 = RotationUtil.calculate(var1, true, this.trackingRange.wo().doubleValue()).getY();
-        return new le(var1.getEntityId(), f, f1, var7, d0, s);
+        float f1 = RotationUtil.calculate(living, true, this.trackingRange.wo().doubleValue()).getY();
+        return new le(living.getEntityId(), f, f1, var7, d0, s);
     }
 
-    private double a(AxisAlignedBB var1, int var2) {
-        int i = MathHelper.floor_double(var1.minX + 1.0E-4);
-        int j = MathHelper.floor_double(var1.maxX - 1.0E-4);
-        int k = MathHelper.floor_double(var1.minZ + 1.0E-4);
-        int l = MathHelper.floor_double(var1.maxZ - 1.0E-4);
-        int i1 = MathHelper.floor_double(var1.minY) - 1;
+    private double a(AxisAlignedBB box, int var2) {
+        int i = MathHelper.floor_double(box.minX + 1.0E-4);
+        int j = MathHelper.floor_double(box.maxX - 1.0E-4);
+        int k = MathHelper.floor_double(box.minZ + 1.0E-4);
+        int l = MathHelper.floor_double(box.maxZ - 1.0E-4);
+        int i1 = MathHelper.floor_double(box.minY) - 1;
         int j1 = Math.max(0, i1 - var2);
         double d0 = Double.POSITIVE_INFINITY;
 
@@ -219,7 +219,7 @@ public final class ManualKBDisplacement extends Module {
                     IBlockState iblockstate = aEg.theWorld.getBlockState(blockpos);
                     AxisAlignedBB axisalignedbb = iblockstate.getBlock().getCollisionBoundingBox(aEg.theWorld, blockpos, iblockstate);
                     if (axisalignedbb != null) {
-                        double d1 = Math.max(0.0, var1.minY - axisalignedbb.maxY);
+                        double d1 = Math.max(0.0, box.minY - axisalignedbb.maxY);
                         d0 = Math.min(d0, d1);
                         flag = true;
                         break;
@@ -235,35 +235,35 @@ public final class ManualKBDisplacement extends Module {
         return d0 == Double.POSITIVE_INFINITY ? -1.0 : d0;
     }
 
-    private boolean a(AxisAlignedBB var1, Material var2) {
-        return this.a(var1, var1x -> var1x.getMaterial() == var2);
+    private boolean a(AxisAlignedBB box, Material material) {
+        return this.a(box, var1x -> var1x.getMaterial() == material);
     }
 
-    private boolean a(AxisAlignedBB var1, Class<? extends Block> var2) {
-        return this.a(var1, var2::isInstance);
+    private boolean a(AxisAlignedBB box, Class<? extends Block> type) {
+        return this.a(box, type::isInstance);
     }
 
-    private boolean a(AxisAlignedBB var1, Block var2) {
-        return this.a(var1, var1x -> var1x == var2);
+    private boolean a(AxisAlignedBB box, Block var2) {
+        return this.a(box, var1x -> var1x == var2);
     }
 
-    private boolean b(AxisAlignedBB var1) {
-        return this.a(var1, var0 -> var0 == Blocks.fire || var0 == Blocks.flowing_lava || var0 == Blocks.lava);
+    private boolean b(AxisAlignedBB box) {
+        return this.a(box, var0 -> var0 == Blocks.fire || var0 == Blocks.flowing_lava || var0 == Blocks.lava);
     }
 
-    private boolean a(AxisAlignedBB var1, Predicate<Block> var2) {
-        int i = MathHelper.floor_double(var1.minX + 1.0E-4);
-        int j = MathHelper.floor_double(var1.maxX - 1.0E-4);
-        int k = MathHelper.floor_double(var1.minY + 1.0E-4);
-        int l = MathHelper.floor_double(var1.maxY - 1.0E-4);
-        int i1 = MathHelper.floor_double(var1.minZ + 1.0E-4);
-        int j1 = MathHelper.floor_double(var1.maxZ - 1.0E-4);
+    private boolean a(AxisAlignedBB box, Predicate<Block> predicate) {
+        int i = MathHelper.floor_double(box.minX + 1.0E-4);
+        int j = MathHelper.floor_double(box.maxX - 1.0E-4);
+        int k = MathHelper.floor_double(box.minY + 1.0E-4);
+        int l = MathHelper.floor_double(box.maxY - 1.0E-4);
+        int i1 = MathHelper.floor_double(box.minZ + 1.0E-4);
+        int j1 = MathHelper.floor_double(box.maxZ - 1.0E-4);
 
         for (int k1 = i; k1 <= j; k1++) {
             for (int l1 = k; l1 <= l; l1++) {
                 for (int i2 = i1; i2 <= j1; i2++) {
                     Block block = aEg.theWorld.getBlockState(new BlockPos(k1, l1, i2)).getBlock();
-                    if (var2.test(block)) {
+                    if (predicate.test(block)) {
                         return true;
                     }
                 }
@@ -273,16 +273,16 @@ public final class ManualKBDisplacement extends Module {
         return false;
     }
 
-    private void f(Vector2f var1) {
-        if (var1 != null) {
-            float f = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(var1.getX() - aEg.thePlayer.pl);
+    private void f(Vector2f vec2) {
+        if (vec2 != null) {
+            float f = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(vec2.getX() - aEg.thePlayer.pl);
         }
     }
 
-    private void a(String var1, le var2, EntityLivingBase var3) {
+    private void a(String var1, le var2, EntityLivingBase living) {
         if (this.debug.wo() && aEg.thePlayer != null) {
             String s = var2 == null
-                ? String.format("%s hurt=%d", var1, var3 == null ? -1 : var3.hurtTime)
+                ? String.format("%s hurt=%d", var1, living == null ? -1 : living.hurtTime)
                 : String.format(
                     "%s %s score=%.1f yaw=%.1f pitch=%.1f dist=%.2f hurt=%d",
                     var1,
@@ -291,7 +291,7 @@ public final class ManualKBDisplacement extends Module {
                     var2.Bz,
                     var2.BA,
                     var2.BB,
-                    var3 == null ? -1 : var3.hurtTime
+                    living == null ? -1 : living.hurtTime
                 );
             if (!s.equals(this.Bt) || aEg.thePlayer.ticksExisted - this.Bu >= 8) {
                 this.Bt = s;

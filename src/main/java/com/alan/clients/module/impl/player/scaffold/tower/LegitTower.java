@@ -16,7 +16,7 @@ public class LegitTower extends Mode<Scaffold> {
         }
     };
 
-    public LegitTower(String var1, Scaffold var2) {
-        super(var1, var2);
+    public LegitTower(String var1, Scaffold scaffold) {
+        super(var1, scaffold);
     }
 }

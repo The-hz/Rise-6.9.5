@@ -7,29 +7,29 @@ public class ProtocolRange {
     private final ProtocolVersion lowerBound;
     private final ProtocolVersion upperBound;
 
-    public ProtocolRange(ProtocolVersion var1, ProtocolVersion var2) {
-        if (var1 == null && var2 == null) {
+    public ProtocolRange(ProtocolVersion lowerBound, ProtocolVersion upperBound) {
+        if (lowerBound == null && upperBound == null) {
             throw new RuntimeException("Invalid protocol range");
         }
 
-        this.lowerBound = var1;
-        this.upperBound = var2;
+        this.lowerBound = lowerBound;
+        this.upperBound = upperBound;
     }
 
-    public static ProtocolRange andNewer(ProtocolVersion var0) {
-        return new ProtocolRange(null, var0);
+    public static ProtocolRange andNewer(ProtocolVersion protocolVersion) {
+        return new ProtocolRange(null, protocolVersion);
     }
 
-    public static ProtocolRange singleton(ProtocolVersion var0) {
-        return new ProtocolRange(var0, var0);
+    public static ProtocolRange singleton(ProtocolVersion protocolVersion) {
+        return new ProtocolRange(protocolVersion, protocolVersion);
     }
 
-    public static ProtocolRange andOlder(ProtocolVersion var0) {
-        return new ProtocolRange(var0, null);
+    public static ProtocolRange andOlder(ProtocolVersion protocolVersion) {
+        return new ProtocolRange(protocolVersion, null);
     }
 
-    public boolean contains(ProtocolVersion var1) {
-        return this.lowerBound != null && var1.olderThan(this.lowerBound) ? false : this.upperBound == null || var1.olderThanOrEqualTo(this.upperBound);
+    public boolean contains(ProtocolVersion protocolVersion) {
+        return this.lowerBound != null && protocolVersion.olderThan(this.lowerBound) ? false : this.upperBound == null || protocolVersion.olderThanOrEqualTo(this.upperBound);
     }
 
     @Override

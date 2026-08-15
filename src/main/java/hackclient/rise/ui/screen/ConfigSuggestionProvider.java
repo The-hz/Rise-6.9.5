@@ -14,7 +14,7 @@ final class ConfigSuggestionProvider implements SuggestionProvider {
     }
 
     @Override
-    public void a(SuggestionContext var1) {
+    public void a(SuggestionContext suggestionContext) {
         try {
             Client.a.p().update();
         } catch (Throwable throwable) {
@@ -22,13 +22,13 @@ final class ConfigSuggestionProvider implements SuggestionProvider {
     }
 
     @Override
-    public List<Suggestion> b(SuggestionContext var1) {
-        String[] astring = var1.rk();
+    public List<Suggestion> b(SuggestionContext suggestionContext) {
+        String[] astring = suggestionContext.rk();
         if (astring.length == 0) {
             return Collections.emptyList();
         }
 
-        String s = CommandPalette.aQ(var1.rj());
+        String s = CommandPalette.aQ(suggestionContext.rj());
         if (astring.length == 1) {
             String s1 = astring[0] == null ? "" : astring[0].toLowerCase(Locale.ROOT);
             ArrayList arraylist = new ArrayList();

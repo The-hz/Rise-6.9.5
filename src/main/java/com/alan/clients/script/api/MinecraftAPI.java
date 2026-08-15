@@ -18,8 +18,8 @@ public class MinecraftAPI extends API {
         return MC.getTimer().dzD;
     }
 
-    public void setTimerSpeed(float var1) {
-        MC.getTimer().dzD = var1;
+    public void setTimerSpeed(float timerSpeed) {
+        MC.getTimer().dzD = timerSpeed;
     }
 
     public float getPartialTicks() {

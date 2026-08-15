@@ -22,7 +22,7 @@ public class OldNCPFlight extends Mode<Flight> {
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var0 -> var0.setSpeed(MoveUtil.getAllowedHorizontalDistance(), Math.random() / 2000.0);
 
-    public OldNCPFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public OldNCPFlight(String var1, Flight flight) {
+        super(var1, flight);
     }
 }

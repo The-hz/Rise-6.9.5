@@ -18,8 +18,8 @@ public final class Vector2d {
         return new Vector2d(this.x + var1, this.y + var3);
     }
 
-    public Vector2d offset(Vector2d var1) {
-        return this.offset(var1.x, var1.y);
+    public Vector2d offset(Vector2d vector2d) {
+        return this.offset(vector2d.x, vector2d.y);
     }
 
     @Generated

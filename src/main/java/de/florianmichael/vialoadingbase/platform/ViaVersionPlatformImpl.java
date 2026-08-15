@@ -26,9 +26,9 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
     private final Logger logger;
     private final VLBViaConfig config;
 
-    public ViaVersionPlatformImpl(Logger var1) {
-        this.logger = var1;
-        this.config = new VLBViaConfig(new File(ViaLoadingBase.getInstance().getRunDirectory(), "viaversion.yml"), var1);
+    public ViaVersionPlatformImpl(Logger logger) {
+        this.logger = logger;
+        this.config = new VLBViaConfig(new File(ViaLoadingBase.getInstance().getRunDirectory(), "viaversion.yml"), logger);
     }
 
     public static List<ProtocolVersion> createVersionList() {
@@ -40,24 +40,24 @@ public class ViaVersionPlatformImpl implements ViaPlatform<UserConnection> {
         return list;
     }
 
-    public VLBTask runAsync(Runnable var1) {
-        return new VLBTask(Via.getManager().getScheduler().execute(var1));
+    public VLBTask runAsync(Runnable runnable) {
+        return new VLBTask(Via.getManager().getScheduler().execute(runnable));
     }
 
-    public VLBTask runRepeatingAsync(Runnable var1, long var2) {
-        return new VLBTask(Via.getManager().getScheduler().scheduleRepeating(var1, 0L, var2 * 50L, TimeUnit.MILLISECONDS));
+    public VLBTask runRepeatingAsync(Runnable runnable, long var2) {
+        return new VLBTask(Via.getManager().getScheduler().scheduleRepeating(runnable, 0L, var2 * 50L, TimeUnit.MILLISECONDS));
     }
 
-    public VLBTask runSync(Runnable var1) {
-        return this.runAsync(var1);
+    public VLBTask runSync(Runnable runnable) {
+        return this.runAsync(runnable);
     }
 
-    public VLBTask runSync(Runnable var1, long var2) {
-        return new VLBTask(Via.getManager().getScheduler().schedule(var1, var2 * 50L, TimeUnit.MILLISECONDS));
+    public VLBTask runSync(Runnable runnable, long var2) {
+        return new VLBTask(Via.getManager().getScheduler().schedule(runnable, var2 * 50L, TimeUnit.MILLISECONDS));
     }
 
-    public VLBTask runRepeatingSync(Runnable var1, long var2) {
-        return this.runRepeatingAsync(var1, var2);
+    public VLBTask runRepeatingSync(Runnable runnable, long var2) {
+        return this.runRepeatingAsync(runnable, var2);
     }
 
     @Override

@@ -71,8 +71,8 @@ public final class Grim2Velocity extends Mode<Velocity> {
         }
     };
 
-    public Grim2Velocity(String var1, Velocity var2) {
-        super(var1, var2);
+    public Grim2Velocity(String var1, Velocity velocity) {
+        super(var1, velocity);
     }
 
     private boolean h(float var1) {

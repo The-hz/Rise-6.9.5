@@ -84,8 +84,8 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
         GlStateManager.popMatrix();
     };
 
-    public ExhibitionTargetInfo(String var1, TargetInfo var2) {
-        super(var1, var2);
+    public ExhibitionTargetInfo(String var1, TargetInfo targetInfo) {
+        super(var1, targetInfo);
     }
 
     private static Color c(float var0, float var1) {
@@ -105,7 +105,7 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
         return color;
     }
 
-    public static void a(float var0, float var1, EntityLivingBase var2) {
+    public static void a(float var0, float var1, EntityLivingBase living) {
         GlStateManager.resetColor();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.enableColorMaterial();
@@ -113,31 +113,31 @@ public class ExhibitionTargetInfo extends Mode<TargetInfo> {
         GlStateManager.translate(0.0F, 0.0F, 50.0F);
         GlStateManager.scale(-50.0F, 50.0F, 50.0F);
         GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
-        float f = var2.renderYawOffset;
-        float f1 = var2.pl;
-        float f2 = var2.rotationPitch;
-        float f3 = var2.prevRotationYawHead;
-        float f4 = var2.rotationYawHead;
+        float f = living.renderYawOffset;
+        float f1 = living.pl;
+        float f2 = living.rotationPitch;
+        float f3 = living.prevRotationYawHead;
+        float f4 = living.rotationYawHead;
         GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
         RenderHelper.enableStandardItemLighting();
         GlStateManager.rotate(-135.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate((float)(-Math.atan(var1 / 40.0F) * 20.0), 1.0F, 0.0F, 0.0F);
-        var2.renderYawOffset = var0 - 0.4F;
-        var2.pl = var0 - 0.2F;
-        var2.rotationPitch = var1;
-        var2.rotationYawHead = var2.pl;
-        var2.prevRotationYawHead = var2.pl;
+        living.renderYawOffset = var0 - 0.4F;
+        living.pl = var0 - 0.2F;
+        living.rotationPitch = var1;
+        living.rotationYawHead = living.pl;
+        living.prevRotationYawHead = living.pl;
         GlStateManager.translate(0.0F, 0.0F, 0.0F);
         RenderManager rendermanager = aEg.getRenderManager();
         rendermanager.setPlayerViewY(180.0F);
         rendermanager.setRenderShadow(false);
-        rendermanager.renderEntityWithPosYaw(var2, 0.0, 0.0, 0.0, 0.0F, 1.0F);
+        rendermanager.renderEntityWithPosYaw(living, 0.0, 0.0, 0.0, 0.0F, 1.0F);
         rendermanager.setRenderShadow(true);
-        var2.renderYawOffset = f;
-        var2.pl = f1;
-        var2.rotationPitch = f2;
-        var2.prevRotationYawHead = f3;
-        var2.rotationYawHead = f4;
+        living.renderYawOffset = f;
+        living.pl = f1;
+        living.rotationPitch = f2;
+        living.prevRotationYawHead = f3;
+        living.rotationYawHead = f4;
         GlStateManager.popMatrix();
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableRescaleNormal();

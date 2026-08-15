@@ -976,11 +976,11 @@ public class yf {
         return new ArrayList<>(linkedhashset);
     }
 
-    private void a(Set<String> var1, URI var2, String var3) {
+    private void a(Set<String> var1, URI uri, String var3) {
         String s = this.ae(var3);
         if (s != null) {
             try {
-                String s1 = var2.resolve(s).toString();
+                String s1 = uri.resolve(s).toString();
                 if (this.ai(s1) && this.aj(s1)) {
                     var1.add(s1);
                 }
@@ -1013,13 +1013,13 @@ public class yf {
         }
     }
 
-    private static int a(IIOMetadata var0) {
-        if (var0 == null) {
+    private static int a(IIOMetadata iioMetadata) {
+        if (iioMetadata == null) {
             return 100;
         }
 
         try {
-            Node node = a(var0.getAsTree("javax_imageio_gif_image_1.0"), "GraphicControlExtension");
+            Node node = a(iioMetadata.getAsTree("javax_imageio_gif_image_1.0"), "GraphicControlExtension");
             if (node == null) {
                 return 100;
             }
@@ -1082,7 +1082,7 @@ public class yf {
         return false;
     }
 
-    private static boolean c(BufferedImage var0) {
-        return var0.getWidth() > 0 && var0.getHeight() > 0 && var0.getWidth() <= 4096 && var0.getHeight() <= 4096;
+    private static boolean c(BufferedImage image) {
+        return image.getWidth() > 0 && image.getHeight() > 0 && image.getWidth() <= 4096 && image.getHeight() <= 4096;
     }
 }

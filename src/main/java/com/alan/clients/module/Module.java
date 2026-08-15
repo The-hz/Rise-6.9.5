@@ -33,8 +33,8 @@ public abstract class Module implements InstanceAccess, aha, Toggleable, p {
         }
     }
 
-    public Module(ModuleInfo var1) {
-        this.moduleInfo = var1;
+    public Module(ModuleInfo moduleInfo) {
+        this.moduleInfo = moduleInfo;
         this.aliases = this.moduleInfo.aliases();
         this.keyCode = this.getModuleInfo().keyBind();
     }
@@ -59,11 +59,11 @@ public abstract class Module implements InstanceAccess, aha, Toggleable, p {
         this.setEnabled(!this.enabled);
     }
 
-    public void setEnabled(boolean var1) {
-        if (this.enabled != var1 && (this.moduleInfo.allowDisable() || var1)) {
-            this.enabled = var1;
+    public void setEnabled(boolean enabled) {
+        if (this.enabled != enabled && (this.moduleInfo.allowDisable() || enabled)) {
+            this.enabled = enabled;
             Client.a.e().d(new ModuleToggleEvent(this));
-            if (var1) {
+            if (enabled) {
                 this.superEnable();
             } else {
                 this.superDisable();
@@ -137,13 +137,13 @@ public abstract class Module implements InstanceAccess, aha, Toggleable, p {
     }
 
     @Generated
-    public void setAliases(String[] var1) {
-        this.aliases = var1;
+    public void setAliases(String[] aliases) {
+        this.aliases = aliases;
     }
 
     @Generated
-    public void setModuleInfo(ModuleInfo var1) {
-        this.moduleInfo = var1;
+    public void setModuleInfo(ModuleInfo moduleInfo) {
+        this.moduleInfo = moduleInfo;
     }
 
     @Generated

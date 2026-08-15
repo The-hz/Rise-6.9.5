@@ -62,7 +62,7 @@ public final class WatchdogTerrainSpeed extends Mode<TerrainSpeed> {
         }
     };
 
-    public WatchdogTerrainSpeed(String var1, TerrainSpeed var2) {
-        super(var1, var2);
+    public WatchdogTerrainSpeed(String var1, TerrainSpeed terrainSpeed) {
+        super(var1, terrainSpeed);
     }
 }

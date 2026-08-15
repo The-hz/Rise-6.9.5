@@ -58,14 +58,14 @@ public final class bp {
         return bn;
     }
 
-    public boolean d(Packet<?> var1) {
-        return a(BlinkComponent.dV, this.em, var1)
-            || a(BlinkComponent.dW, this.af, var1)
-            || a(BlinkComponent.dX, this.en, var1)
-            || a(BlinkComponent.dY, this.eo, var1)
-            || a(BlinkComponent.dZ, this.ep, var1)
-            || a(BlinkComponent.ea, this.eq, var1)
-            || a(BlinkComponent.eb, this.er, var1);
+    public boolean d(Packet<?> packet) {
+        return a(BlinkComponent.dV, this.em, packet)
+            || a(BlinkComponent.dW, this.af, packet)
+            || a(BlinkComponent.dX, this.en, packet)
+            || a(BlinkComponent.dY, this.eo, packet)
+            || a(BlinkComponent.dZ, this.ep, packet)
+            || a(BlinkComponent.ea, this.eq, packet)
+            || a(BlinkComponent.eb, this.er, packet);
     }
 
     public boolean bd() {
@@ -103,7 +103,7 @@ public final class bp {
         this.et = 0;
     }
 
-    private static boolean a(Tuple<Class[], Boolean> var0, boolean var1, Packet<?> var2) {
-        return var1 && Arrays.<Class>stream((Class[])var0.getFirst()).anyMatch(var1x -> var1x == var2.getClass());
+    private static boolean a(Tuple<Class[], Boolean> var0, boolean var1, Packet<?> packet) {
+        return var1 && Arrays.<Class>stream((Class[])var0.getFirst()).anyMatch(var1x -> var1x == packet.getClass());
     }
 }

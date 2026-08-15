@@ -35,15 +35,15 @@ public final class ScriptModule extends ScriptHandlerWrapper<Module> {
         return false;
     };
 
-    public ScriptModule(Module var1, boolean var2) {
-        super(var1);
+    public ScriptModule(Module module, boolean var2) {
+        super(module);
         if (var2) {
             Client.a.e().a(this.eventListenerFunction);
         }
     }
 
-    public ScriptModule(Module var1) {
-        super(var1);
+    public ScriptModule(Module module) {
+        super(module);
     }
 
     public void unregister() {
@@ -76,8 +76,8 @@ public final class ScriptModule extends ScriptHandlerWrapper<Module> {
         this.wrapped.toggle();
     }
 
-    public void setEnabled(boolean var1) {
-        this.wrapped.setEnabled(var1);
+    public void setEnabled(boolean enabled) {
+        this.wrapped.setEnabled(enabled);
     }
 
     public String getTag() {
@@ -87,8 +87,8 @@ public final class ScriptModule extends ScriptHandlerWrapper<Module> {
     }
 
     @Override
-    public void handle(String var1, JSObject var2) {
-        super.handle(var1, var2);
+    public void handle(String var1, JSObject jsObject) {
+        super.handle(var1, jsObject);
     }
 
     @Override

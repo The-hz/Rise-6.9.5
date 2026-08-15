@@ -247,8 +247,8 @@ InstanceAccess {
     }
 
     @Generated
-    public void a(agk agk2) {
-        this.scrollUtil = agk2;
+    public void a(agk scrollUtil) {
+        this.scrollUtil = scrollUtil;
     }
 
     @Generated

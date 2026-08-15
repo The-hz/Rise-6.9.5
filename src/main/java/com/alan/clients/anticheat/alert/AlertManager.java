@@ -19,24 +19,24 @@ public final class AlertManager implements aha {
     public AlertManager() {
     }
 
-    public void sendAlert(Check var1) {
+    public void sendAlert(Check check) {
         aMR.execute(
             () -> {
-                String sxxx = var1.getData().getPlayer().getName();
-                String s1 = sxxx + var1.getCheckInfo().R() + var1.getCheckInfo().S();
+                String sxxx = check.getData().getPlayer().getName();
+                String s1 = sxxx + check.getCheckInfo().R() + check.getCheckInfo().S();
                 String s2 = "§cRise §c» §c%player%§7 has failed §c%check% §7(§c%type%§7)%dev% (Violations: §c%vl%§7)"
                     .replaceAll("%player%", sxxx)
-                    .replaceAll("%check%", var1.getCheckInfo().R())
-                    .replaceAll("%type%", var1.getCheckInfo().S())
+                    .replaceAll("%check%", check.getCheckInfo().R())
+                    .replaceAll("%type%", check.getCheckInfo().S())
                     .replaceAll("%dev%", "")
-                    .replaceAll("%vl%", String.valueOf(var1.P()));
+                    .replaceAll("%vl%", String.valueOf(check.P()));
                 NetworkPlayerInfo networkplayerinfo = this.mc.getNetHandler().getPlayerInfo(this.mc.thePlayer.getUniqueID());
-                NetworkPlayerInfo networkplayerinfo1 = this.mc.getNetHandler().getPlayerInfo(var1.getData().getPlayer().getUniqueID());
+                NetworkPlayerInfo networkplayerinfo1 = this.mc.getNetHandler().getPlayerInfo(check.getData().getPlayer().getUniqueID());
                 int i = networkplayerinfo != null && !this.mc.isSingleplayer() ? networkplayerinfo.getResponseTime() : 0;
                 int j = networkplayerinfo1 != null && !this.mc.isSingleplayer() ? networkplayerinfo1.getResponseTime() : 0;
-                String s3 = "§dDescription: §f" + var1.getCheckInfo().description().concat("\n").concat("§dYour Ping: " + i).concat("\n").concat("§dTheir Ping: " + j);
+                String s3 = "§dDescription: §f" + check.getCheckInfo().description().concat("\n").concat("§dYour Ping: " + i).concat("\n").concat("§dTheir Ping: " + j);
                 ChatStyle chatstyle = new ChatStyle().setChatHoverEvent(new HoverEvent(Action.SHOW_TEXT, new s(s3)));
-                if (!"Flight".equalsIgnoreCase(var1.getCheckInfo().R())
+                if (!"Flight".equalsIgnoreCase(check.getCheckInfo().R())
                     && (this.mc.thePlayer.inventory.getStackInSlot(0) == null || this.mc.thePlayer.inventory.getStackInSlot(0).getItem() != Items.compass)) {
                     String s4 = ".target add " + sxxx;
                     if (s4.startsWith("/")) {

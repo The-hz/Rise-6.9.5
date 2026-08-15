@@ -27,8 +27,8 @@ public enum Locale {
     }
 
     @Generated
-    Locale(String var3) {
-        this.file = var3;
+    Locale(String file) {
+        this.file = file;
     }
 
     private static Locale[] uG() {

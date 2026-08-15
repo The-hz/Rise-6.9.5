@@ -52,8 +52,8 @@ public class Watchdog2Flight extends Mode<Flight> {
     @EventLink
     private final Listener<MoveEvent> onMove = var0 -> {};
 
-    public Watchdog2Flight(String var1, Flight var2) {
-        super(var1, var2);
+    public Watchdog2Flight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

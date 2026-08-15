@@ -31,7 +31,7 @@ public class c {
     }
 
     @OnOpen
-    public void a(Session var1) {
+    public void a(Session session) {
     }
 
     @OnMessage
@@ -48,7 +48,7 @@ public class c {
         return null;
     }
 
-    private void b(URI var1) {
+    private void b(URI uri) {
     }
 
     private void aKQ() {
@@ -70,7 +70,7 @@ public class c {
     public void o(byte[] var1) {
     }
 
-    private boolean b(JSONObject var1) {
+    private boolean b(JSONObject json) {
         return false;
     }
 
@@ -114,13 +114,13 @@ public class c {
     private void a(boolean var1, byte[] var2, String var3) {
     }
 
-    private static void a(HttpsURLConnection var0) {
+    private static void a(HttpsURLConnection connection) {
     }
 
-    private void a(WebSocketContainer var1) {
+    private void a(WebSocketContainer webSocketContainer) {
     }
 
-    private void b(WebSocketContainer var1) {
+    private void b(WebSocketContainer webSocketContainer) {
     }
 
     private static void kn(String var0) {

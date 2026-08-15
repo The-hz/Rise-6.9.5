@@ -4,8 +4,8 @@ import com.alan.clients.script.api.wrapper.impl.ScriptBlockPos;
 import net.minecraft.network.play.client.C14PacketTabComplete;
 
 public class ScriptPacketTabComplete extends ScriptPacket<C14PacketTabComplete> {
-    public ScriptPacketTabComplete(C14PacketTabComplete var1) {
-        super(var1);
+    public ScriptPacketTabComplete(C14PacketTabComplete packet) {
+        super(packet);
     }
 
     public String getMessage() {

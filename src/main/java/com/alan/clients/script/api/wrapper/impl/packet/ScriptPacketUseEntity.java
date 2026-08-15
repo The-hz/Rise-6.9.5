@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 
 public class ScriptPacketUseEntity extends ScriptPacket<C02PacketUseEntity> {
-    public ScriptPacketUseEntity(C02PacketUseEntity var1) {
-        super(var1);
+    public ScriptPacketUseEntity(C02PacketUseEntity packet) {
+        super(packet);
     }
 
     public String getAction() {

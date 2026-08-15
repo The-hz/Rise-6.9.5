@@ -13,11 +13,11 @@ public class aic {
     private aic() {
     }
 
-    public static boolean a(Container var0) {
-        return IntStream.range(9, 45).allMatch(var1 -> var0.getSlot(var1).getHasStack());
+    public static boolean a(Container container) {
+        return IntStream.range(9, 45).allMatch(var1 -> container.getSlot(var1).getHasStack());
     }
 
-    public static void a(Minecraft var0, int var1, int var2, int var3, aid var4) {
-        var0.playerController.windowClick(var1, var2, var3, var4.ordinal(), var0.thePlayer);
+    public static void a(Minecraft mc, int var1, int var2, int var3, aid var4) {
+        mc.playerController.windowClick(var1, var2, var3, var4.ordinal(), mc.thePlayer);
     }
 }

@@ -41,8 +41,8 @@ public class Grim30NoSlow extends Mode<NoSlow> {
     @EventLink
     public Listener<SlowDownEvent> onSlowDown;
 
-    public Grim30NoSlow(String var1, NoSlow var2) {
-        super(var1, var2);
+    public Grim30NoSlow(String var1, NoSlow noSlow) {
+        super(var1, noSlow);
         this.onPreUpdate = var1x -> {
             if (aEg.thePlayer.isUsingItem()
                 && !aEg.thePlayer.onGround

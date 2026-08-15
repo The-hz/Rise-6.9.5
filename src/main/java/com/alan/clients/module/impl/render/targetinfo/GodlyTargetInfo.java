@@ -137,11 +137,11 @@ public class GodlyTargetInfo extends Mode<TargetInfo> {
         }
     };
 
-    public GodlyTargetInfo(String var1, TargetInfo var2) {
-        super(var1, var2);
+    public GodlyTargetInfo(String var1, TargetInfo targetInfo) {
+        super(var1, targetInfo);
     }
 
-    private void a(AbstractClientPlayer var1, double var2, double var4, double var6) {
+    private void a(AbstractClientPlayer abstractClientPlayer, double var2, double var4, double var6) {
         ais.vK();
         ais.vL();
         double d0 = this.rz().getRound() * 2;
@@ -153,8 +153,8 @@ public class GodlyTargetInfo extends Mode<TargetInfo> {
         GlStateManager.alphaFunc(516, 0.0F);
         GlStateManager.enableTexture2D();
         HealthBypass healthbypass = this.e(HealthBypass.class);
-        float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(var1) : var1.getHealth();
-        ResourceLocation resourcelocation = this.aui.inWorld && f > 0.0F ? var1.getLocationSkin() : RenderSkeleton.getEntityTexture();
+        float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractClientPlayer) : abstractClientPlayer.getHealth();
+        ResourceLocation resourcelocation = this.aui.inWorld && f > 0.0F ? abstractClientPlayer.getLocationSkin() : RenderSkeleton.getEntityTexture();
         aEg.getTextureManager().bindTexture(resourcelocation);
         Gui.drawScaledCustomSizeModalRect(var2, var4, 4.0F, 4.0F, 4.0F, 4.0F, var6, var6, 32.0F, 32.0F);
         GlStateManager.disableBlend();

@@ -21,8 +21,8 @@ public class cs extends ESP implements InstanceAccess {
     private final Map<EntityPlayer, float[][]> hW = new HashMap<>();
     private static final float hX = 180.0F / (float)Math.PI;
 
-    public cs(ESPColor var1) {
-        super(var1);
+    public cs(ESPColor espColor) {
+        super(espColor);
     }
 
     @Override
@@ -60,32 +60,32 @@ public class cs extends ESP implements InstanceAccess {
     }
 
     @Override
-    public void a(EntityPlayer var1, ModelBiped var2) {
+    public void a(EntityPlayer player, ModelBiped modelBiped) {
         this.hW
             .put(
-                var1,
+                player,
                 new float[][]{
-                    {var2.bxN.rotateAngleX, var2.bxN.rotateAngleY, var2.bxN.rotateAngleZ},
-                    {var2.bxQ.rotateAngleX, var2.bxQ.rotateAngleY, var2.bxQ.rotateAngleZ},
-                    {var2.bxR.rotateAngleX, var2.bxR.rotateAngleY, var2.bxR.rotateAngleZ},
-                    {var2.bxS.rotateAngleX, var2.bxS.rotateAngleY, var2.bxS.rotateAngleZ},
-                    {var2.bxT.rotateAngleX, var2.bxT.rotateAngleY, var2.bxT.rotateAngleZ}
+                    {modelBiped.bxN.rotateAngleX, modelBiped.bxN.rotateAngleY, modelBiped.bxN.rotateAngleZ},
+                    {modelBiped.bxQ.rotateAngleX, modelBiped.bxQ.rotateAngleY, modelBiped.bxQ.rotateAngleZ},
+                    {modelBiped.bxR.rotateAngleX, modelBiped.bxR.rotateAngleY, modelBiped.bxR.rotateAngleZ},
+                    {modelBiped.bxS.rotateAngleX, modelBiped.bxS.rotateAngleY, modelBiped.bxS.rotateAngleZ},
+                    {modelBiped.bxT.rotateAngleX, modelBiped.bxT.rotateAngleY, modelBiped.bxT.rotateAngleZ}
                 }
             );
     }
 
-    private void a(EntityPlayer var1, float var2) {
-        float[][] afloat = this.hW.get(var1);
+    private void a(EntityPlayer player, float var2) {
+        float[][] afloat = this.hW.get(player);
         if (afloat != null) {
             GL11.glPushMatrix();
-            float f = (float)(ahf.l(var1.posX, var1.prevPosX, var2) - RenderManager.bUO);
-            float f1 = (float)(ahf.l(var1.posY, var1.prevPosY, var2) - RenderManager.bUP);
-            float f2 = (float)(ahf.l(var1.posZ, var1.prevPosZ, var2) - RenderManager.bUQ);
+            float f = (float)(ahf.l(player.posX, player.prevPosX, var2) - RenderManager.bUO);
+            float f1 = (float)(ahf.l(player.posY, player.prevPosY, var2) - RenderManager.bUP);
+            float f2 = (float)(ahf.l(player.posZ, player.prevPosZ, var2) - RenderManager.bUQ);
             GL11.glTranslated(f, f1, f2);
-            boolean flag = var1.isSneaking();
-            float f3 = var1.rotationYawHead;
-            float f4 = var1.renderYawOffset;
-            float f5 = var1.prevRenderYawOffset;
+            boolean flag = player.isSneaking();
+            float f3 = player.rotationYawHead;
+            float f4 = player.renderYawOffset;
+            float f5 = player.prevRenderYawOffset;
             float f6 = ahf.d(f4, f5, var2);
             float f7 = flag ? 0.6F : 0.75F;
             GL11.glRotatef(-f6, 0.0F, 1.0F, 0.0F);

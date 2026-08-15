@@ -24,17 +24,17 @@ public final class Script {
         this(var1, var2, var3, var4, var5, null);
     }
 
-    public Script(String var1, String var2, String var3, String var4, File var5) {
-        this(var1, var2, var3, var4, null, var5);
+    public Script(String var1, String var2, String var3, String var4, File file) {
+        this(var1, var2, var3, var4, null, file);
     }
 
-    public Script(String var1, String var2, String var3, String var4, String var5, File var6) {
-        this.name = var1;
-        this.author = var2;
-        this.version = var3;
-        this.description = var4;
-        this.code = var5;
-        this.sourceFile = var6;
+    public Script(String name, String author, String version, String description, String code, File sourceFile) {
+        this.name = name;
+        this.author = author;
+        this.version = version;
+        this.description = description;
+        this.code = code;
+        this.sourceFile = sourceFile;
     }
 
     public void load() throws ScriptException {
@@ -135,23 +135,23 @@ public final class Script {
     }
 
     @Generated
-    public void setCode(String var1) {
-        this.code = var1;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Generated
-    public void setEngine(ScriptEngine var1) {
-        this.engine = var1;
+    public void setEngine(ScriptEngine engine) {
+        this.engine = engine;
     }
 
     @Generated
-    public void setApiHandler(ScriptHandler var1) {
-        this.apiHandler = var1;
+    public void setApiHandler(ScriptHandler apiHandler) {
+        this.apiHandler = apiHandler;
     }
 
     @Generated
-    public void setLoaded(boolean var1) {
-        this.loaded = var1;
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
     }
 
     @Generated

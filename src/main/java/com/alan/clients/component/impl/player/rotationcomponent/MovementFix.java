@@ -17,8 +17,8 @@ public enum MovementFix {
     }
 
     @Generated
-    MovementFix(String var3) {
-        this.name = var3;
+    MovementFix(String name) {
+        this.name = name;
     }
 
     private static MovementFix[] cd() {

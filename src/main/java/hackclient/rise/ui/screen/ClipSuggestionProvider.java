@@ -12,14 +12,14 @@ final class ClipSuggestionProvider implements SuggestionProvider {
     }
 
     @Override
-    public List<Suggestion> b(SuggestionContext var1) {
-        String[] astring = var1.rk();
+    public List<Suggestion> b(SuggestionContext suggestionContext) {
+        String[] astring = suggestionContext.rk();
         if (astring.length == 0) {
             return Collections.emptyList();
         }
 
-        String s = CommandPalette.aQ(var1.rj());
-        String s1 = var1.rj().toLowerCase(Locale.ROOT);
+        String s = CommandPalette.aQ(suggestionContext.rj());
+        String s1 = suggestionContext.rj().toLowerCase(Locale.ROOT);
         if (!s1.equals("vclip") && !s1.equals("hclip")) {
             if (!s1.equals("clip")) {
                 return Collections.emptyList();

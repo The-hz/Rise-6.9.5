@@ -7,9 +7,9 @@ final class aez {
     final JsonObject aFQ;
     final String aFR;
 
-    aez(int var1, JsonObject var2, String var3) {
+    aez(int var1, JsonObject json, String var3) {
         this.aFP = var1;
-        this.aFQ = var2;
+        this.aFQ = json;
         this.aFR = var3;
     }
 

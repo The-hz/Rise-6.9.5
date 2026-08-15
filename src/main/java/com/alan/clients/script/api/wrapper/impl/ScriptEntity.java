@@ -8,8 +8,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
 public class ScriptEntity extends ScriptWrapper<Entity> {
-    public ScriptEntity(Entity var1) {
-        super(var1);
+    public ScriptEntity(Entity entity) {
+        super(entity);
     }
 
     static ScriptEntity getById(int var0) {
@@ -20,8 +20,8 @@ public class ScriptEntity extends ScriptWrapper<Entity> {
         return tryInstantiate(MC.theWorld.getPlayerEntityByName(var0));
     }
 
-    private static ScriptEntity tryInstantiate(Entity var0) {
-        return new ScriptEntity(var0);
+    private static ScriptEntity tryInstantiate(Entity entity) {
+        return new ScriptEntity(entity);
     }
 
     public boolean isLiving() {
@@ -32,8 +32,8 @@ public class ScriptEntity extends ScriptWrapper<Entity> {
         this.wrapped.pl = var1;
     }
 
-    public void setPitch(float var1) {
-        this.wrapped.rotationPitch = var1;
+    public void setPitch(float pitch) {
+        this.wrapped.rotationPitch = pitch;
     }
 
     public ScriptVector3d getPosition() {
@@ -48,10 +48,10 @@ public class ScriptEntity extends ScriptWrapper<Entity> {
         return new ScriptVector3d(this.wrapped.motionX, this.wrapped.motionY, this.wrapped.motionZ);
     }
 
-    public void setMotion(ScriptVector3d var1) {
-        this.wrapped.motionX = var1.getX();
-        this.wrapped.motionY = var1.getY();
-        this.wrapped.motionZ = var1.getZ();
+    public void setMotion(ScriptVector3d motion) {
+        this.wrapped.motionX = motion.getX();
+        this.wrapped.motionY = motion.getY();
+        this.wrapped.motionZ = motion.getZ();
     }
 
     public void setMotionX(double var1) {
@@ -122,10 +122,10 @@ public class ScriptEntity extends ScriptWrapper<Entity> {
         return this.wrapped.getDisplayName().getUnformattedTextForChat();
     }
 
-    public float getDistanceToEntity(ScriptEntity var1) {
-        float f = (float)(this.wrapped.posX - var1.getPosition().getX());
-        float f1 = (float)(this.wrapped.posY - var1.getPosition().getY());
-        float f2 = (float)(this.wrapped.posZ - var1.getPosition().getZ());
+    public float getDistanceToEntity(ScriptEntity scriptEntity) {
+        float f = (float)(this.wrapped.posX - scriptEntity.getPosition().getX());
+        float f1 = (float)(this.wrapped.posY - scriptEntity.getPosition().getY());
+        float f2 = (float)(this.wrapped.posZ - scriptEntity.getPosition().getZ());
         return MathHelper.sqrt_float(f * f + f1 * f1 + f2 * f2);
     }
 

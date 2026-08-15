@@ -64,7 +64,7 @@ public class pd extends Mode<NoSlow> {
         }
     };
 
-    public pd(String var1, NoSlow var2) {
-        super(var1, var2);
+    public pd(String var1, NoSlow noSlow) {
+        super(var1, noSlow);
     }
 }

@@ -8,8 +8,8 @@ public final class ScriptModuleInfo implements ModuleInfo {
     private final String name;
     private final String description;
 
-    public ScriptModuleInfo(String var1, String var2) {
-        this.name = var1;
+    public ScriptModuleInfo(String name, String var2) {
+        this.name = name;
         this.description = var2;
     }
 

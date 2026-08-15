@@ -7,11 +7,11 @@ import net.minecraft.network.Packet;
 
 @CheckInfo(R = "Velocity", S = "Cancel", description = "Detects velocities")
 public final class VelocityCancel extends Check {
-    public VelocityCancel(PlayerData var1) {
-        super(var1);
+    public VelocityCancel(PlayerData playerData) {
+        super(playerData);
     }
 
     @Override
-    public void handle(Packet<?> var1) {
+    public void handle(Packet<?> packet) {
     }
 }

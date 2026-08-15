@@ -21,14 +21,14 @@ public final class e extends rip.vantage.commons.packet.api.abstracts.a {
         this.eOF = var6;
     }
 
-    public e(JSONObject var1) {
+    public e(JSONObject json) {
         super((byte)31);
-        this.eOA = var1.getString("a");
-        this.eOB = var1.getString("b");
-        this.eOC = var1.getInt("c");
-        this.eOD = var1.getInt("d");
-        this.eOE = var1.optString("e", "");
-        this.eOF = var1.optBoolean("f", false);
+        this.eOA = json.getString("a");
+        this.eOB = json.getString("b");
+        this.eOC = json.getInt("c");
+        this.eOD = json.getInt("d");
+        this.eOE = json.optString("e", "");
+        this.eOF = json.optBoolean("f", false);
     }
 
     @Override

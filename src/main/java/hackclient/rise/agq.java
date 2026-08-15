@@ -10,17 +10,17 @@ class agq implements InputMethodListener {
         this.aJF = var1;
     }
 
-    public void b(InputMethodEvent var1) {
+    public void b(InputMethodEvent event) {
         try {
-            this.aJF.a(var1);
+            this.aJF.a(event);
         } finally {
-            var1.consume();
+            event.consume();
         }
     }
 
-    public void c(InputMethodEvent var1) {
+    public void c(InputMethodEvent event) {
     }
-    public void inputMethodTextChanged(InputMethodEvent var1) { }
-    public void caretPositionChanged(InputMethodEvent var1) { }
+    public void inputMethodTextChanged(InputMethodEvent event) { }
+    public void caretPositionChanged(InputMethodEvent event) { }
 
 }

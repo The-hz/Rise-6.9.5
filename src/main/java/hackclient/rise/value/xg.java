@@ -9,8 +9,8 @@ import com.alan.clients.module.impl.render.interfaces.ModernInterface;
 import com.alan.clients.module.impl.render.interfaces.WurstInterface;
 
 public class xg extends ModeValue {
-    public xg(Interface var1, String var2, Module var3) {
-        super(var2, var3);
+    public xg(Interface var1, String var2, Module module) {
+        super(var2, module);
         this.add(new ModernInterface("Modern", (Interface)this.wq()));
         this.add(new WurstInterface("Wurst", (Interface)this.wq()));
         this.add(new ys("Classic", (Interface)this.wq()));

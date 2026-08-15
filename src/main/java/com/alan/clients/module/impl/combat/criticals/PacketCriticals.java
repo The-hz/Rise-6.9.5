@@ -26,7 +26,7 @@ public final class PacketCriticals extends Mode<Criticals> {
         }
     };
 
-    public PacketCriticals(String var1, Criticals var2) {
-        super(var1, var2);
+    public PacketCriticals(String var1, Criticals criticals) {
+        super(var1, criticals);
     }
 }

@@ -250,8 +250,8 @@ public final class GrimVelocity extends Mode<Velocity> {
         }
     };
 
-    public GrimVelocity(String var1, Velocity var2) {
-        super(var1, var2);
+    public GrimVelocity(String var1, Velocity velocity) {
+        super(var1, velocity);
     }
 
     @Override

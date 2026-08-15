@@ -17,9 +17,9 @@ public class abr extends ValueComponent {
     }
 
     @Override
-    public void draw(Vector2d var1, int var2, int var3, float var4) {
+    public void draw(Vector2d position, int var2, int var3, float var4) {
         ModeValue modevalue = (ModeValue)this.value;
-        this.position = var1;
+        this.position = position;
         String s = ahd.ce(this.value.getName()) + ":";
         FontManager.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(Math.min(this.ayD, abw.SECONDARY_TEXT.pV().getAlpha())));
         FontManager.MAIN

@@ -11,13 +11,13 @@ public class hh {
     public hh() {
     }
 
-    public void a(Vector2f var1, aka var2, int var3) {
+    public void a(Vector2f vec2, aka var2, int var3) {
         if (var3 >= this.rh.size()) {
             for (int i = 0; i < var3 - this.rh.size(); i++) {
                 this.rh.add(null);
             }
 
-            this.rh.add(new Tuple<>(var1, var2));
+            this.rh.add(new Tuple<>(vec2, var2));
         }
     }
 

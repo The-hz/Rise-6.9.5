@@ -68,8 +68,8 @@ public class dv implements Event {
     }
 
     @Generated
-    public void setJump(boolean var1) {
-        this.gD = var1;
+    public void setJump(boolean jump) {
+        this.gD = jump;
     }
 
     @Generated
@@ -78,8 +78,8 @@ public class dv implements Event {
     }
 
     @Generated
-    public void setSprint(boolean var1) {
-        this.jk = var1;
+    public void setSprint(boolean sprint) {
+        this.jk = sprint;
     }
 
     @Generated

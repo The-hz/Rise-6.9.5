@@ -11,7 +11,7 @@ public abstract class CancellableScriptEvent<T extends CancellableEvent> extends
         return this.wrapped.isCancelled();
     }
 
-    public void setCancelled(boolean var1) {
-        this.wrapped.setCancelled(var1);
+    public void setCancelled(boolean cancelled) {
+        this.wrapped.setCancelled(cancelled);
     }
 }

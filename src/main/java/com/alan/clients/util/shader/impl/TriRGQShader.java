@@ -18,7 +18,7 @@ public final class TriRGQShader {
         float var3,
         float var4,
         float var5,
-        Color var6,
+        Color color,
         Color var7,
         Color var8,
         boolean var9,
@@ -31,7 +31,7 @@ public final class TriRGQShader {
         this.aQq.rt();
         ShaderUniforms.uniform2f(i, "u_size", var3, var4);
         ShaderUniforms.uniform1f(i, "u_radius", var5);
-        ShaderUniforms.uniform4f(i, "u_first_color", var6.getRed() / 255.0F, var6.getGreen() / 255.0F, var6.getBlue() / 255.0F, var6.getAlpha() / 255.0F);
+        ShaderUniforms.uniform4f(i, "u_first_color", color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, color.getAlpha() / 255.0F);
         ShaderUniforms.uniform4f(i, "u_second_color", var7.getRed() / 255.0F, var7.getGreen() / 255.0F, var7.getBlue() / 255.0F, var7.getAlpha() / 255.0F);
         ShaderUniforms.uniform4f(i, "u_third_color", var8.getRed() / 255.0F, var8.getGreen() / 255.0F, var8.getBlue() / 255.0F, var8.getAlpha() / 255.0F);
         ShaderUniforms.uniform1i(i, "u_direction", var9 ? 1 : 0);
@@ -44,7 +44,7 @@ public final class TriRGQShader {
         RiseShaderProgram.stop();
     }
 
-    public void draw(double var1, double var3, double var5, double var7, double var9, Color var11, Color var12, boolean var13) {
-        this.a((float)var1, (float)var3, (float)var5, (float)var7, (float)var9, var11, var12, var11, var13, true, true, true, true);
+    public void draw(double var1, double var3, double var5, double var7, double var9, Color color, Color var12, boolean var13) {
+        this.a((float)var1, (float)var3, (float)var5, (float)var7, (float)var9, color, var12, color, var13, true, true, true, true);
     }
 }

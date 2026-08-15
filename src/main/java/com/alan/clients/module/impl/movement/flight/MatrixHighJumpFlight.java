@@ -70,8 +70,8 @@ public class MatrixHighJumpFlight extends Mode<Flight> {
         }
     };
 
-    public MatrixHighJumpFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public MatrixHighJumpFlight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

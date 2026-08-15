@@ -55,8 +55,8 @@ public abstract class File implements InstanceAccess {
     }
 
     @Generated
-    public File(java.io.File var1, FileType var2) {
-        this.file = var1;
-        this.fileType = var2;
+    public File(java.io.File file, FileType fileType) {
+        this.file = file;
+        this.fileType = fileType;
     }
 }

@@ -8,9 +8,9 @@ public final class fx implements Event {
     private Runnable kp;
     private Runnable kq;
 
-    public fx(EntityLivingBase var1, Runnable var2, Runnable var3) {
-        this.ko = var1;
-        this.kp = var2;
+    public fx(EntityLivingBase living, Runnable runnable, Runnable var3) {
+        this.ko = living;
+        this.kp = runnable;
         this.kq = var3;
     }
 
@@ -26,11 +26,11 @@ public final class fx implements Event {
         return this.kq;
     }
 
-    public void a(Runnable var1) {
-        this.kp = var1;
+    public void a(Runnable runnable) {
+        this.kp = runnable;
     }
 
-    public void b(Runnable var1) {
-        this.kq = var1;
+    public void b(Runnable runnable) {
+        this.kq = runnable;
     }
 }

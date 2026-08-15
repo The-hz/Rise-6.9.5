@@ -14,8 +14,8 @@ public class wk {
     private final boolean amc;
     private final boolean amd;
 
-    public wk(ItemStack var1, double var2, MapColor var4, aka var5, boolean var6, boolean var7) {
-        this.alV = var1;
+    public wk(ItemStack stack, double var2, MapColor mapColor, aka var5, boolean var6, boolean var7) {
+        this.alV = stack;
         this.amc = var6;
         this.amd = var7;
         if (var7) {
@@ -23,12 +23,12 @@ public class wk {
         } else if (var6) {
             this.alW = "Incomplete";
         } else {
-            this.alW = var1.getDisplayName();
+            this.alW = stack.getDisplayName();
         }
 
         this.alY = var2;
         this.alZ = Math.sqrt(var2);
-        this.ama = var4;
+        this.ama = mapColor;
         this.amb = var5;
         this.alX = t(this.alZ);
     }

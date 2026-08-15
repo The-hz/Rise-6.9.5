@@ -38,9 +38,9 @@ public class PacketAPI extends API {
     public PacketAPI() {
     }
 
-    public void receivePacket(ScriptPacket<?> var1) {
-        if (var1 != null && var1.getWrapped() != null) {
-            PacketUtil.p(var1.getWrapped());
+    public void receivePacket(ScriptPacket<?> scriptPacket) {
+        if (scriptPacket != null && scriptPacket.getWrapped() != null) {
+            PacketUtil.p(scriptPacket.getWrapped());
         }
     }
 
@@ -58,20 +58,20 @@ public class PacketAPI extends API {
         PacketUtil.l(new C01PacketChatMessage(var1));
     }
 
-    public void sendUseEntity(ScriptEntity var1, String var2) {
-        this.sendUseEntity(var1.getEntityId(), var2);
+    public void sendUseEntity(ScriptEntity scriptEntity, String var2) {
+        this.sendUseEntity(scriptEntity.getEntityId(), var2);
     }
 
     public void sendUseEntity(int var1, String var2) {
         PacketUtil.l(new C02PacketUseEntity(Minecraft.getMinecraft().theWorld.getEntityByID(var1), Action.valueOf(var2)));
     }
 
-    public void sendUseEntity(int var1, ScriptVector3d var2) {
-        PacketUtil.l(new C02PacketUseEntity(Minecraft.getMinecraft().theWorld.getEntityByID(var1), new Vec3(var2.getX(), var2.getY(), var2.getZ())));
+    public void sendUseEntity(int var1, ScriptVector3d scriptVector3d) {
+        PacketUtil.l(new C02PacketUseEntity(Minecraft.getMinecraft().theWorld.getEntityByID(var1), new Vec3(scriptVector3d.getX(), scriptVector3d.getY(), scriptVector3d.getZ())));
     }
 
-    public void sendUseEntity(ScriptEntity var1, ScriptVector3d var2) {
-        this.sendUseEntity(var1.getEntityId(), var2);
+    public void sendUseEntity(ScriptEntity scriptEntity, ScriptVector3d scriptVector3d) {
+        this.sendUseEntity(scriptEntity.getEntityId(), scriptVector3d);
     }
 
     public void sendPosition(boolean var1) {
@@ -86,11 +86,11 @@ public class PacketAPI extends API {
         PacketUtil.l(new C06PacketPlayerPosLook(var1, var3, var5, var7, var8, var9));
     }
 
-    public void sendDigging(String var1, ScriptVector3d var2, String var3) {
+    public void sendDigging(String var1, ScriptVector3d scriptVector3d, String var3) {
         PacketUtil.l(
             new C07PacketPlayerDigging(
                 net.minecraft.network.play.client.C07PacketPlayerDigging.Action.valueOf(var1),
-                new BlockPos(var2.getX(), var2.getY(), var2.getZ()),
+                new BlockPos(scriptVector3d.getX(), scriptVector3d.getY(), scriptVector3d.getZ()),
                 EnumFacing.valueOf(var3)
             )
         );
@@ -101,14 +101,14 @@ public class PacketAPI extends API {
         PacketUtil.l(new C08PacketPlayerBlockPlacement(SlotComponent.getItemStack()));
     }
 
-    public void sendPlacement(ScriptVector3d var1, int var2, float var3, float var4, float var5) {
-        BlockPos blockpos = new BlockPos(var1.getX(), var1.getY(), var1.getZ());
+    public void sendPlacement(ScriptVector3d scriptVector3d, int var2, float var3, float var4, float var5) {
+        BlockPos blockpos = new BlockPos(scriptVector3d.getX(), scriptVector3d.getY(), scriptVector3d.getZ());
         SlotComponent slotcomponent = Client.a.h().b(SlotComponent.class);
         PacketUtil.l(new C08PacketPlayerBlockPlacement(blockpos, var2, SlotComponent.getItemStack(), var3, var4, var5));
     }
 
-    public void sendPlacement(ScriptVector3d var1, int var2, ScriptItemStack var3, float var4, float var5, float var6) {
-        PacketUtil.l(new C08PacketPlayerBlockPlacement(new BlockPos(var1.getX(), var1.getY(), var1.getZ()), var2, var3.getWrapped(), var4, var5, var6));
+    public void sendPlacement(ScriptVector3d scriptVector3d, int var2, ScriptItemStack scriptItemStack, float var4, float var5, float var6) {
+        PacketUtil.l(new C08PacketPlayerBlockPlacement(new BlockPos(scriptVector3d.getX(), scriptVector3d.getY(), scriptVector3d.getZ()), var2, scriptItemStack.getWrapped(), var4, var5, var6));
     }
 
     public void sendChangeItem(int var1) {
@@ -167,8 +167,8 @@ public class PacketAPI extends API {
         PacketUtil.l(new C14PacketTabComplete(var1));
     }
 
-    public void sendTabComplete(String var1, ScriptVector3d var2) {
-        PacketUtil.l(new C14PacketTabComplete(var1, new BlockPos(var2.getX(), var2.getY(), var2.getZ())));
+    public void sendTabComplete(String var1, ScriptVector3d scriptVector3d) {
+        PacketUtil.l(new C14PacketTabComplete(var1, new BlockPos(scriptVector3d.getX(), scriptVector3d.getY(), scriptVector3d.getZ())));
     }
 
     public void sendStatus(String var1) {

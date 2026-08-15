@@ -37,14 +37,14 @@ public class RiseAPI {
     public RiseAPI() {
     }
 
-    private static ScriptModule getModule(Module var0) {
-        SCRIPT_MODULE_MAP.putIfAbsent(var0, new ScriptModule(var0, true));
-        return SCRIPT_MODULE_MAP.get(var0);
+    private static ScriptModule getModule(Module module) {
+        SCRIPT_MODULE_MAP.putIfAbsent(module, new ScriptModule(module, true));
+        return SCRIPT_MODULE_MAP.get(module);
     }
 
-    private static ScriptCommand getCommand(Command var0) {
-        SCRIPT_COMMAND_MAP.putIfAbsent(var0, new ScriptCommand(var0));
-        return SCRIPT_COMMAND_MAP.get(var0);
+    private static ScriptCommand getCommand(Command command) {
+        SCRIPT_COMMAND_MAP.putIfAbsent(command, new ScriptCommand(command));
+        return SCRIPT_COMMAND_MAP.get(command);
     }
 
     public ScriptModule registerModule(String var1, String var2) {
@@ -83,8 +83,8 @@ public class RiseAPI {
         return new float[]{vector2f.x, vector2f.y};
     }
 
-    public float[] getRotations(ScriptVector3d var1) {
-        Vector2f vector2f = RotationUtil.d(new aka(var1.getX(), var1.getY(), var1.getZ()));
+    public float[] getRotations(ScriptVector3d scriptVector3d) {
+        Vector2f vector2f = RotationUtil.d(new aka(scriptVector3d.getX(), scriptVector3d.getY(), scriptVector3d.getZ()));
         return new float[]{vector2f.x, vector2f.y};
     }
 
@@ -180,24 +180,24 @@ public class RiseAPI {
         return null;
     }
 
-    public void setName(String var1) {
-        Client.b = var1;
+    public void setName(String name) {
+        Client.b = name;
     }
 
-    public void threadPool(JSObject var1) throws ScriptException {
-        if (!var1.isFunction()) {
+    public void threadPool(JSObject jsObject) throws ScriptException {
+        if (!jsObject.isFunction()) {
             throw new ScriptException("Not a function!");
         }
 
-        aha.aMR.execute(() -> var1.call(null));
+        aha.aMR.execute(() -> jsObject.call(null));
     }
 
-    public void thread(JSObject var1) throws ScriptException {
-        if (!var1.isFunction()) {
+    public void thread(JSObject jsObject) throws ScriptException {
+        if (!jsObject.isFunction()) {
             throw new ScriptException("Not a function!");
         }
 
-        new Thread(() -> var1.call(null)).start();
+        new Thread(() -> jsObject.call(null)).start();
     }
 
     public String translate(String var1) {

@@ -65,8 +65,8 @@ public class TatakoSpeed extends Mode<Speed> {
         new Vector2f((float)Math.toDegrees(MoveUtil.g(this.jp, this.jq)), aEg.thePlayer.rotationPitch), 10.0, MovementFix.OFF
     );
 
-    public TatakoSpeed(String var1, Speed var2) {
-        super(var1, var2);
+    public TatakoSpeed(String var1, Speed speed) {
+        super(var1, speed);
     }
 
     @Override

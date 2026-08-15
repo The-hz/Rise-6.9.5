@@ -16,9 +16,9 @@ public class MenuTextButton extends MenuButton {
     private float aCh = 5.0F;
     private int aCi = 32;
 
-    public MenuTextButton(double var1, double var3, double var5, double var7, Runnable var9, String var10) {
+    public MenuTextButton(double var1, double var3, double var5, double var7, Runnable var9, String name) {
         super(var1, var3, var5, var7, var9);
-        this.name = var10;
+        this.name = name;
     }
 
     @Override

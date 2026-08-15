@@ -12,10 +12,10 @@ public class e extends rip.vantage.commons.packet.api.abstracts.b {
         this.ePN = var2;
     }
 
-    public e(JSONObject var1) {
+    public e(JSONObject json) {
         super((byte)10);
-        this.ePM = var1.getBoolean("a");
-        this.ePN = var1.getBoolean("b");
+        this.ePM = json.getBoolean("a");
+        this.ePN = json.getBoolean("b");
     }
 
     @Override

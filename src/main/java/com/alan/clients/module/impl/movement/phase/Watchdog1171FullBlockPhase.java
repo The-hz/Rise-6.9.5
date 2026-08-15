@@ -111,8 +111,8 @@ public class Watchdog1171FullBlockPhase extends Mode<Phase> {
     @EventLink
     public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = CancellableEvent::setCancelled;
 
-    public Watchdog1171FullBlockPhase(String var1, Phase var2) {
-        super(var1, var2);
+    public Watchdog1171FullBlockPhase(String var1, Phase phase) {
+        super(var1, phase);
     }
 
     private boolean e(double var1, double var3) {

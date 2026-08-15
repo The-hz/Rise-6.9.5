@@ -4,12 +4,12 @@ import com.alan.clients.newevent.impl.motion.JumpEvent;
 import com.alan.clients.script.api.wrapper.impl.event.CancellableScriptEvent;
 
 public class ScriptJumpEvent extends CancellableScriptEvent<JumpEvent> {
-    public ScriptJumpEvent(JumpEvent var1) {
-        super(var1);
+    public ScriptJumpEvent(JumpEvent event) {
+        super(event);
     }
 
-    public void setJumpMotion(float var1) {
-        this.wrapped.setJumpMotion(var1);
+    public void setJumpMotion(float jumpMotion) {
+        this.wrapped.setJumpMotion(jumpMotion);
     }
 
     public void setYaw(float var1) {

@@ -8,8 +8,8 @@ import java.util.logging.Logger;
 public class ViaBackwardsPlatformImpl implements ViaBackwardsPlatform {
     private final File directory;
 
-    public ViaBackwardsPlatformImpl(File var1) {
-        this.init(new File(this.directory = var1, "viabackwards.yml"));
+    public ViaBackwardsPlatformImpl(File file) {
+        this.init(new File(this.directory = file, "viabackwards.yml"));
     }
 
     @Override

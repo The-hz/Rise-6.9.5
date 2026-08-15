@@ -34,16 +34,16 @@ public interface InstanceAccess {
         return this.u().a(var1, var2);
     }
 
-    default <T extends Component> T d(Class<T> var1) {
-        return this.rN().h().b(var1);
+    default <T extends Component> T d(Class<T> type) {
+        return this.rN().h().b(type);
     }
 
     default Themes rz() {
         return this.rN().k().rz();
     }
 
-    default <T extends Module> T e(Class<T> var1) {
-        return this.rN().g().c(var1);
+    default <T extends Module> T e(Class<T> type) {
+        return this.rN().g().c(type);
     }
 
     default Gson A() {

@@ -185,8 +185,8 @@ InstanceAccess {
     }
 
     @Generated
-    public void a(agk agk2) {
-        this.scrollUtil = agk2;
+    public void a(agk scrollUtil) {
+        this.scrollUtil = scrollUtil;
     }
 
     @Generated
@@ -210,7 +210,7 @@ InstanceAccess {
     }
 
     @Generated
-    public void setTypedWhileOpen(boolean bl) {
-        this.typedWhileOpen = bl;
+    public void setTypedWhileOpen(boolean typedWhileOpen) {
+        this.typedWhileOpen = typedWhileOpen;
     }
 }

@@ -13,7 +13,7 @@ public final class RenderHungerEvent implements Event {
     }
 
     @Generated
-    public RenderHungerEvent(ScaledResolution var1) {
-        this.scaledResolution = var1;
+    public RenderHungerEvent(ScaledResolution scaledResolution) {
+        this.scaledResolution = scaledResolution;
     }
 }

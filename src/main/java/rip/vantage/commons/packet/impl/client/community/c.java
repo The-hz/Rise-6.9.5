@@ -10,9 +10,9 @@ public class c extends rip.vantage.commons.packet.api.abstracts.a {
         this.eOu = var1;
     }
 
-    public c(JSONObject var1) {
+    public c(JSONObject json) {
         super((byte)10);
-        this.eOu = var1.getString("a");
+        this.eOu = json.getString("a");
     }
 
     @Override

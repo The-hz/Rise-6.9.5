@@ -11,13 +11,13 @@ import net.minecraft.entity.EntityLivingBase;
 import org.lwjgl.opengl.GL11;
 
 public class ct extends ESP {
-    public ct(ESPColor var1) {
-        super(var1);
+    public ct(ESPColor espColor) {
+        super(espColor);
     }
 
-    public ct(Entity var1, ESPColor var2) {
-        super(var2);
-        this.target = var1;
+    public ct(Entity target, ESPColor espColor) {
+        super(espColor);
+        this.target = target;
     }
 
     @Override

@@ -10,9 +10,9 @@ import net.minecraft.util.ResourceLocation;
 public class MenuIconButton extends MenuButton {
     private final ResourceLocation resourceLocation;
 
-    public MenuIconButton(double var1, double var3, double var5, double var7, Runnable var9, ResourceLocation var10) {
+    public MenuIconButton(double var1, double var3, double var5, double var7, Runnable var9, ResourceLocation resourceLocation) {
         super(var1, var3, var5, var7, var9);
-        this.resourceLocation = var10;
+        this.resourceLocation = resourceLocation;
     }
 
     @Override

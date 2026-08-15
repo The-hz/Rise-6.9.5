@@ -27,8 +27,8 @@ public class BufferAbuseFlight extends Mode<Flight> {
     @EventLink
     public Listener<PreMotionEvent> onPreMotion;
 
-    public BufferAbuseFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public BufferAbuseFlight(String var1, Flight flight) {
+        super(var1, flight);
         this.FE = new NumberValue("Speed", this, 1, 0.1, 9.5, 0.1);
         this.sendFlying = new BooleanValue("Send Flying", this, false);
         this.onStrafe = var1x -> {

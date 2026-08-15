@@ -154,13 +154,13 @@ import java.util.Arrays;
 public class ModuleManager {
     public ady<Class<Module>, Module> lt = new ady<>();
 
-    public void e(Module var1) {
-        this.lt.h(var1);
+    public void e(Module module) {
+        this.lt.h(module);
         this.eg();
     }
 
-    public boolean add(Module var1) {
-        this.lt.g(var1);
+    public boolean add(Module module) {
+        this.lt.g(module);
         this.eg();
         return true;
     }
@@ -190,8 +190,8 @@ public class ModuleManager {
         }
     }
 
-    public <T extends Module> T c(Class<T> var1) {
-        return (T)this.lt.get(var1);
+    public <T extends Module> T c(Class<T> type) {
+        return (T)this.lt.get(type);
     }
 
 
@@ -350,7 +350,7 @@ public class ModuleManager {
         Client.a.e().b(this);
     }
 
-    public void a(Class var1, Module var2) {
-        this.lt.put(var1, var2);
+    public void a(Class type, Module module) {
+        this.lt.put(type, module);
     }
 }

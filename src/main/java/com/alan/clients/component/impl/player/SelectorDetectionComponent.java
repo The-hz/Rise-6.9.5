@@ -30,20 +30,20 @@ public final class SelectorDetectionComponent extends Component {
         return selector;
     }
 
-    public static boolean c(ItemStack var0) {
-        if (var0 == null) {
+    public static boolean c(ItemStack stack) {
+        if (stack == null) {
             return false;
         }
-        return var0 == aEg.thePlayer.inventory.getItemStack() ? selector() : !trueName(var0).contains(var0.getDisplayName());
+        return stack == aEg.thePlayer.inventory.getItemStack() ? selector() : !trueName(stack).contains(stack.getDisplayName());
     }
 
-    public static boolean a(ItemStack var0, boolean var1) {
-        if (var0 == null) {
+    public static boolean a(ItemStack stack, boolean var1) {
+        if (stack == null) {
             return false;
-        } else if (var0 == aEg.thePlayer.inventory.getItemStack()) {
+        } else if (stack == aEg.thePlayer.inventory.getItemStack()) {
             return selector();
         }
-        return var1 ? !trueName(var0).contains(var0.getDisplayName()) : false;
+        return var1 ? !trueName(stack).contains(stack.getDisplayName()) : false;
     }
 
     public static boolean h(int var0) {
@@ -54,9 +54,9 @@ public final class SelectorDetectionComponent extends Component {
         return a(aEg.thePlayer.inventory.getStackInSlot(var0), var1);
     }
 
-    public static String trueName(ItemStack var0) {
-        String s = (StatCollector.translateToLocal(var0.getUnlocalizedName() + ".name") + "").trim();
-        String s1 = EntityList.getStringFromID(var0.getMetadata());
+    public static String trueName(ItemStack stack) {
+        String s = (StatCollector.translateToLocal(stack.getUnlocalizedName() + ".name") + "").trim();
+        String s1 = EntityList.getStringFromID(stack.getMetadata());
         if (s1 != null) {
             s = s + " " + StatCollector.translateToLocal("entity." + s1 + ".name");
         }

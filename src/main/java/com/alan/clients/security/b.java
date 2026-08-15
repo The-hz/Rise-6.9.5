@@ -25,7 +25,7 @@ public final class b extends ArrayList<a> {
         }
     }
 
-    public boolean k(Packet<?> var1) {
-        return this.axd != null && this.axd.isEnabled() && !Minecraft.getMinecraft().isSingleplayer() && this.stream().anyMatch(var1x -> var1x.handle(var1));
+    public boolean k(Packet<?> packet) {
+        return this.axd != null && this.axd.isEnabled() && !Minecraft.getMinecraft().isSingleplayer() && this.stream().anyMatch(var1x -> var1x.handle(packet));
     }
 }

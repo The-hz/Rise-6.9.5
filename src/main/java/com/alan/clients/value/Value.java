@@ -18,47 +18,47 @@ public abstract class Value<T> {
     private Consumer<T> valueChangeConsumer;
     private T aQO;
 
-    public Value(String var1, Module var2, T var3) {
-        this.name = var1;
+    public Value(String name, Module module, T var3) {
+        this.name = name;
         this.aQJ = null;
-        this.aQM = var2;
+        this.aQM = module;
         this.aQO = var3;
         this.n(var3);
-        var2.getValues().add(this);
+        module.getValues().add(this);
     }
 
-    public Value(String var1, Mode<?> var2, T var3) {
-        this.name = var1;
+    public Value(String name, Mode<?> mode, T var3) {
+        this.name = name;
         this.aQJ = null;
         this.aQO = var3;
-        this.aQM = var2;
+        this.aQM = mode;
         this.n(var3);
-        var2.getValues().add(this);
+        mode.getValues().add(this);
     }
 
-    public Value(String var1, Module var2, T var3, BooleanSupplier var4) {
-        this.name = var1;
-        this.aQJ = var4;
-        this.aQM = var2;
+    public Value(String name, Module module, T var3, BooleanSupplier booleanSupplier) {
+        this.name = name;
+        this.aQJ = booleanSupplier;
+        this.aQM = module;
         this.aQO = var3;
         this.n(var3);
-        var2.getValues().add(this);
+        module.getValues().add(this);
     }
 
-    public Value(String var1, Mode<?> var2, T var3, BooleanSupplier var4) {
-        this.name = var1;
-        this.aQJ = var4;
+    public Value(String name, Mode<?> mode, T var3, BooleanSupplier booleanSupplier) {
+        this.name = name;
+        this.aQJ = booleanSupplier;
         this.aQO = var3;
         this.n(var3);
-        var2.getValues().add(this);
+        mode.getValues().add(this);
     }
 
-    public void setValueAsObject(Object var1) {
+    public void setValueAsObject(Object valueAsObject) {
         if (this.valueChangeConsumer != null) {
-            this.valueChangeConsumer.accept((T)var1);
+            this.valueChangeConsumer.accept((T)valueAsObject);
         }
 
-        this.aQL = (T)var1;
+        this.aQL = (T)valueAsObject;
     }
 
     public void n(T var1) {
@@ -125,27 +125,27 @@ public abstract class Value<T> {
     }
 
     @Generated
-    public void setHideIf(BooleanSupplier var1) {
-        this.aQJ = var1;
+    public void setHideIf(BooleanSupplier hideIf) {
+        this.aQJ = hideIf;
     }
 
     @Generated
-    public void b(BooleanSupplier var1) {
-        this.aQK = var1;
+    public void b(BooleanSupplier booleanSupplier) {
+        this.aQK = booleanSupplier;
     }
 
     @Generated
-    public void setVisible(boolean var1) {
-        this.visible = var1;
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     @Generated
-    public void a(Toggleable var1) {
-        this.aQM = var1;
+    public void a(Toggleable toggleable) {
+        this.aQM = toggleable;
     }
 
     @Generated
-    public void setValueChangeConsumer(Consumer<T> var1) {
-        this.valueChangeConsumer = var1;
+    public void setValueChangeConsumer(Consumer<T> valueChangeConsumer) {
+        this.valueChangeConsumer = valueChangeConsumer;
     }
 }

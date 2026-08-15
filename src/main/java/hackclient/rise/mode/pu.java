@@ -9,8 +9,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 public class pu extends Mode<Phase> {
-    public pu(String var1, Phase var2) {
-        super(var1, var2);
+    public pu(String var1, Phase phase) {
+        super(var1, phase);
     }
 
     @Override

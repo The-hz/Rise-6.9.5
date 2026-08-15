@@ -14,15 +14,15 @@ public class Platform {
     private final Runnable executor;
     private final Consumer<List<ProtocolVersion>> versionCallback;
 
-    public Platform(String var1, BooleanSupplier var2, Runnable var3) {
-        this(var1, var2, var3, null);
+    public Platform(String var1, BooleanSupplier booleanSupplier, Runnable runnable) {
+        this(var1, booleanSupplier, runnable, null);
     }
 
-    public Platform(String var1, BooleanSupplier var2, Runnable var3, Consumer<List<ProtocolVersion>> var4) {
-        this.name = var1;
-        this.load = var2;
-        this.executor = var3;
-        this.versionCallback = var4;
+    public Platform(String name, BooleanSupplier load, Runnable executor, Consumer<List<ProtocolVersion>> versionCallback) {
+        this.name = name;
+        this.load = load;
+        this.executor = executor;
+        this.versionCallback = versionCallback;
     }
 
     public String getName() {
@@ -35,18 +35,18 @@ public class Platform {
         }
     }
 
-    public void build(Logger var1) {
+    public void build(Logger logger) {
         if (this.load.getAsBoolean()) {
             try {
                 this.executor.run();
-                var1.info("Loaded Platform " + this.name);
+                logger.info("Loaded Platform " + this.name);
                 COUNT++;
             } catch (Throwable throwable) {
-                var1.severe("An error occurred while loading Platform " + this.name + ":");
+                logger.severe("An error occurred while loading Platform " + this.name + ":");
                 throwable.printStackTrace();
             }
         } else {
-            var1.severe("Platform " + this.name + " is not present");
+            logger.severe("Platform " + this.name + " is not present");
         }
     }
 }

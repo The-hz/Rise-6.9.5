@@ -14,7 +14,7 @@ public class JumpStep extends Mode<Step> {
         }
     };
 
-    public JumpStep(String var1, Step var2) {
-        super(var1, var2);
+    public JumpStep(String var1, Step step) {
+        super(var1, step);
     }
 }

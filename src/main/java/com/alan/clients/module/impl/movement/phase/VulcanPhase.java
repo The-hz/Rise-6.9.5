@@ -70,8 +70,8 @@ public class VulcanPhase extends Mode<Phase> {
         }
     }
 
-    public VulcanPhase(String var1, Phase var2) {
-        super(var1, var2);
+    public VulcanPhase(String var1, Phase phase) {
+        super(var1, phase);
         this.El = true;
         this.Og = 0;
         this.Oh = 0;

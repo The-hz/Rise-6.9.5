@@ -4,8 +4,8 @@ import java.lang.reflect.Field;
 import net.minecraft.network.play.server.S27PacketExplosion;
 
 public class ScriptPacketExplosion extends ScriptPacket<S27PacketExplosion> {
-    public ScriptPacketExplosion(S27PacketExplosion var1) {
-        super(var1);
+    public ScriptPacketExplosion(S27PacketExplosion packet) {
+        super(packet);
     }
 
     public double getX() {

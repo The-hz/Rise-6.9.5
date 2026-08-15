@@ -20,8 +20,8 @@ public class VanillaLongJump extends Mode<LongJump> {
         var1x.setSpeed(this.speed.wo().floatValue());
     };
 
-    public VanillaLongJump(String var1, LongJump var2) {
-        super(var1, var2);
+    public VanillaLongJump(String var1, LongJump longJump) {
+        super(var1, longJump);
     }
 
     @Override

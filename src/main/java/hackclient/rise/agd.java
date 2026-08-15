@@ -59,11 +59,11 @@ public class agd extends agc implements IResourceManagerReloadListener {
     private boolean aIr = false;
     private final f aIs = new f();
 
-    public agd(GameSettings var1, ResourceLocation var2, TextureManager var3, boolean var4) {
-        this.gameSettings = var1;
-        this.aIo = var2;
-        this.aHY = var2;
-        this.renderEngine = var3;
+    public agd(GameSettings gameSettings, ResourceLocation location, TextureManager renderEngine, boolean var4) {
+        this.gameSettings = gameSettings;
+        this.aIo = location;
+        this.aHY = location;
+        this.renderEngine = renderEngine;
         this.aIc = var4;
         this.aHY = net.optifine.util.l.R(this.aIo);
         this.bindTexture(this.aHY);
@@ -77,7 +77,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
                 k += 85;
             }
 
-            if (var1.anaglyph) {
+            if (gameSettings.anaglyph) {
                 int j1 = (k * 30 + l * 59 + i1 * 11) / 100;
                 int k1 = (k * 30 + l * 70) / 100;
                 int l1 = (k * 30 + i1 * 70) / 100;
@@ -99,7 +99,7 @@ public class agd extends agc implements IResourceManagerReloadListener {
     }
 
     @Override
-    public void onResourceManagerReload(IResourceManager var1) {
+    public void onResourceManagerReload(IResourceManager iResourceManager) {
         this.aHY = net.optifine.util.l.R(this.aIo);
 
         for (int i = 0; i < unicodePageLocations.length; i++) {
@@ -492,8 +492,8 @@ public class agd extends agc implements IResourceManagerReloadListener {
     }
 
     @Override
-    public void a(char var1, int var2, int var3, Color var4) {
-        this.b(String.valueOf(var1), var2, var3, var4.getRGB());
+    public void a(char var1, int var2, int var3, Color color) {
+        this.b(String.valueOf(var1), var2, var3, color.getRGB());
     }
 
     public int b(char var1) {
@@ -741,11 +741,11 @@ public class agd extends agc implements IResourceManagerReloadListener {
         GlStateManager.enableAlpha();
     }
 
-    protected void bindTexture(ResourceLocation var1) {
-        this.renderEngine.bindTexture(var1);
+    protected void bindTexture(ResourceLocation location) {
+        this.renderEngine.bindTexture(location);
     }
 
-    protected InputStream getResourceInputStream(ResourceLocation var1) throws IOException {
-        return Minecraft.getMinecraft().getResourceManager().getResource(var1).getInputStream();
+    protected InputStream getResourceInputStream(ResourceLocation location) throws IOException {
+        return Minecraft.getMinecraft().getResourceManager().getResource(location).getInputStream();
     }
 }

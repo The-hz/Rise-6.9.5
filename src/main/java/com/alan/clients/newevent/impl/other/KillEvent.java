@@ -20,7 +20,7 @@ public final class KillEvent implements Event {
     }
 
     @Generated
-    public KillEvent(Entity var1) {
-        this.entity = var1;
+    public KillEvent(Entity entity) {
+        this.entity = entity;
     }
 }

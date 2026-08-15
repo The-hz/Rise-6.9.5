@@ -15,11 +15,11 @@ public final class d extends rip.vantage.commons.packet.api.abstracts.a {
         this.eOy = var3;
     }
 
-    public d(JSONObject var1) {
+    public d(JSONObject json) {
         super((byte)33);
-        this.eOw = var1.getString("a");
-        this.eOx = var1.getString("b");
-        this.eOy = var1.optString("c", "");
+        this.eOw = json.getString("a");
+        this.eOx = json.getString("b");
+        this.eOy = json.optString("c", "");
     }
 
     @Override

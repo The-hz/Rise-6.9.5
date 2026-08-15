@@ -13,7 +13,7 @@ public final class ServerKickEvent implements Event {
     }
 
     @Generated
-    public ServerKickEvent(List<String> var1) {
-        this.message = var1;
+    public ServerKickEvent(List<String> message) {
+        this.message = message;
     }
 }

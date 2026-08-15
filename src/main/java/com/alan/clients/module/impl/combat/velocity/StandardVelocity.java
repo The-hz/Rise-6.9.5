@@ -77,8 +77,8 @@ public final class StandardVelocity extends Mode<Velocity> {
         this.a(false);
     }
 
-    public StandardVelocity(String var1, Velocity var2) {
-        super(var1, var2);
+    public StandardVelocity(String var1, Velocity velocity) {
+        super(var1, velocity);
     }
 
     public Boolean gB() {

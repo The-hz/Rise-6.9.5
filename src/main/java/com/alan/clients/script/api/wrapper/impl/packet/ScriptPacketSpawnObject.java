@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S0EPacketSpawnObject;
 
 public class ScriptPacketSpawnObject extends ScriptPacket<S0EPacketSpawnObject> {
-    public ScriptPacketSpawnObject(S0EPacketSpawnObject var1) {
-        super(var1);
+    public ScriptPacketSpawnObject(S0EPacketSpawnObject packet) {
+        super(packet);
     }
 
     public int getEntityId() {

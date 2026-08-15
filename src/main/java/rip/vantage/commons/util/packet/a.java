@@ -8,9 +8,9 @@ public class a {
     public a() {
     }
 
-    public static String a(b<?> var0, SecretKey var1, IvParameterSpec var2) {
+    public static String a(b<?> var0, SecretKey secretKey, IvParameterSpec ivParameterSpec) {
         try {
-            return rip.vantage.commons.util.encryption.a.a(var0.aJk(), var1, var2);
+            return rip.vantage.commons.util.encryption.a.a(var0.aJk(), secretKey, ivParameterSpec);
         } catch (Exception exception) {
             System.out.println("Failed to encrypt packet, usually this is because Rise doesn't have access to the internet.");
             return "";

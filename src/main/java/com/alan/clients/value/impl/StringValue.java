@@ -9,20 +9,20 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 
 public class StringValue extends Value<String> {
-    public StringValue(String var1, Module var2, String var3) {
-        super(var1, var2, var3);
+    public StringValue(String var1, Module module, String var3) {
+        super(var1, module, var3);
     }
 
-    public StringValue(String var1, Mode<?> var2, String var3) {
-        super(var1, var2, var3);
+    public StringValue(String var1, Mode<?> mode, String var3) {
+        super(var1, mode, var3);
     }
 
-    public StringValue(String var1, Module var2, String var3, BooleanSupplier var4) {
-        super(var1, var2, var3, var4);
+    public StringValue(String var1, Module module, String var3, BooleanSupplier booleanSupplier) {
+        super(var1, module, var3, booleanSupplier);
     }
 
-    public StringValue(String var1, Mode<?> var2, String var3, BooleanSupplier var4) {
-        super(var1, var2, var3, var4);
+    public StringValue(String var1, Mode<?> mode, String var3, BooleanSupplier booleanSupplier) {
+        super(var1, mode, var3, booleanSupplier);
     }
 
     @Override

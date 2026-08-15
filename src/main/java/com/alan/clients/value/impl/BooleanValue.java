@@ -12,8 +12,8 @@ import lombok.Generated;
 public class BooleanValue extends Value<Boolean> {
     private final Mode<?> mode;
 
-    public BooleanValue(String var1, Module var2, Boolean var3) {
-        super(var1, var2, var3);
+    public BooleanValue(String var1, Module module, Boolean var3) {
+        super(var1, module, var3);
         this.mode = null;
     }
 
@@ -22,35 +22,35 @@ public class BooleanValue extends Value<Boolean> {
         this.mode = null;
     }
 
-    public BooleanValue(String var1, Module var2, Boolean var3, BooleanSupplier var4) {
-        super(var1, var2, var3, var4);
+    public BooleanValue(String var1, Module module, Boolean var3, BooleanSupplier booleanSupplier) {
+        super(var1, module, var3, booleanSupplier);
         this.mode = null;
     }
 
-    public BooleanValue(String var1, Mode<?> var2, Boolean var3, BooleanSupplier var4) {
-        super(var1, var2, var3, var4);
+    public BooleanValue(String var1, Mode<?> var2, Boolean var3, BooleanSupplier booleanSupplier) {
+        super(var1, var2, var3, booleanSupplier);
         this.mode = null;
     }
 
-    public BooleanValue(String var1, Module var2, Boolean var3, Mode<?> var4) {
-        super(var1, var2, var3);
-        this.mode = var4;
+    public BooleanValue(String var1, Module module, Boolean var3, Mode<?> mode) {
+        super(var1, module, var3);
+        this.mode = mode;
         this.wu().getValues().forEach(var1x -> var1x.setHideIf(() -> !this.wo()));
     }
 
-    public BooleanValue(String var1, Mode<?> var2, Boolean var3, Mode<?> var4) {
+    public BooleanValue(String var1, Mode<?> var2, Boolean var3, Mode<?> mode) {
         super(var1, var2, var3);
-        this.mode = var4;
+        this.mode = mode;
     }
 
-    public BooleanValue(String var1, Module var2, Boolean var3, BooleanSupplier var4, Mode<?> var5) {
-        super(var1, var2, var3, var4);
-        this.mode = var5;
+    public BooleanValue(String var1, Module module, Boolean var3, BooleanSupplier booleanSupplier, Mode<?> mode) {
+        super(var1, module, var3, booleanSupplier);
+        this.mode = mode;
     }
 
-    public BooleanValue(String var1, Mode<?> var2, Boolean var3, BooleanSupplier var4, Mode<?> var5) {
-        super(var1, var2, var3, var4);
-        this.mode = var5;
+    public BooleanValue(String var1, Mode<?> var2, Boolean var3, BooleanSupplier booleanSupplier, Mode<?> mode) {
+        super(var1, var2, var3, booleanSupplier);
+        this.mode = mode;
     }
 
     public void setValue(Boolean var1) {
@@ -70,13 +70,13 @@ public class BooleanValue extends Value<Boolean> {
     }
 
     @Override
-    public void setValueAsObject(Object var1) {
+    public void setValueAsObject(Object valueAsObject) {
         if (this.mode != null && this.wq() != null) {
             this.mode.onDisable();
             this.mode.unregister();
         }
 
-        super.setValueAsObject(var1);
+        super.setValueAsObject(valueAsObject);
         if (this.mode != null && this.wq() != null && ((Module)this.wq()).isEnabled() && this.wo()) {
             if (this.wo()) {
                 this.mode.a();

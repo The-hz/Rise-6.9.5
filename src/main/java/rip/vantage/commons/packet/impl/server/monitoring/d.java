@@ -17,9 +17,9 @@ public class d extends rip.vantage.commons.packet.api.abstracts.b {
         var1.a(this);
     }
 
-    public d(JSONObject var1) {
+    public d(JSONObject json) {
         super((byte)25);
-        this.eQa = var1.getString("a");
+        this.eQa = json.getString("a");
     }
 
     @Override

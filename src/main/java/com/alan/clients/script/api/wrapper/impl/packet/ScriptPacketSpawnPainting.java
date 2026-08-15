@@ -4,8 +4,8 @@ import com.alan.clients.script.api.wrapper.impl.ScriptBlockPos;
 import net.minecraft.network.play.server.S10PacketSpawnPainting;
 
 public class ScriptPacketSpawnPainting extends ScriptPacket<S10PacketSpawnPainting> {
-    public ScriptPacketSpawnPainting(S10PacketSpawnPainting var1) {
-        super(var1);
+    public ScriptPacketSpawnPainting(S10PacketSpawnPainting packet) {
+        super(packet);
     }
 
     public int getEntityId() {

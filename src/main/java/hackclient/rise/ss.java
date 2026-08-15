@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class ss extends ArrayList<ajt<String, String, Boolean>> {
     final LabyModClientSpoofer ZH;
 
-    public ss(LabyModClientSpoofer var1) {
-        this.ZH = var1;
+    public ss(LabyModClientSpoofer labyModClientSpoofer) {
+        this.ZH = labyModClientSpoofer;
         this.add(new ajt<>("MC|Brand", "labymod", true));
         this.add(new ajt<>("REGISTER", "labymod:neominecraft:intavelabymod3:main", false));
         this.add(new ajt<>("labymod:neo", "{\"version\":\"" + this.ZH.spoofedVersionLatestWouldBePreferred.wo() + "\"}", false));

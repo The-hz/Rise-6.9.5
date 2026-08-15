@@ -11,12 +11,12 @@ public class RQShader {
     public RQShader() {
     }
 
-    public void a(float var1, float var2, float var3, float var4, float var5, Color var6, boolean var7, boolean var8, boolean var9, boolean var10) {
+    public void a(float var1, float var2, float var3, float var4, float var5, Color color, boolean var7, boolean var8, boolean var9, boolean var10) {
         int i = this.aQp.getProgramId();
         this.aQp.rt();
         ShaderUniforms.uniform2f(i, "u_size", var3, var4);
         ShaderUniforms.uniform1f(i, "u_radius", var5);
-        ShaderUniforms.uniform4f(i, "u_color", var6.getRed() / 255.0F, var6.getGreen() / 255.0F, var6.getBlue() / 255.0F, var6.getAlpha() / 255.0F);
+        ShaderUniforms.uniform4f(i, "u_color", color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, color.getAlpha() / 255.0F);
         ShaderUniforms.uniform4f(i, "u_edges", var7 ? 1.0F : 0.0F, var8 ? 1.0F : 0.0F, var9 ? 1.0F : 0.0F, var10 ? 1.0F : 0.0F);
         GlStateManager.enableBlend();
         RiseShaderProgram.h(var1, var2, var3, var4);
@@ -24,11 +24,11 @@ public class RQShader {
         RiseShaderProgram.stop();
     }
 
-    public void b(double var1, double var3, double var5, double var7, double var9, Color var11, boolean var12, boolean var13, boolean var14, boolean var15) {
-        this.a((float)var1, (float)var3, (float)var5, (float)var7, (float)var9, var11, var12, var13, var14, var15);
+    public void b(double var1, double var3, double var5, double var7, double var9, Color color, boolean var12, boolean var13, boolean var14, boolean var15) {
+        this.a((float)var1, (float)var3, (float)var5, (float)var7, (float)var9, color, var12, var13, var14, var15);
     }
 
-    public void d(double var1, double var3, double var5, double var7, double var9, Color var11) {
-        this.a((float)var1, (float)var3, (float)var5, (float)var7, (float)var9, var11, true, true, true, true);
+    public void d(double var1, double var3, double var5, double var7, double var9, Color color) {
+        this.a((float)var1, (float)var3, (float)var5, (float)var7, (float)var9, color, true, true, true, true);
     }
 }

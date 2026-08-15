@@ -64,7 +64,7 @@ public class NormalAutoClicker extends Mode<AutoClicker> {
     @EventLink
     public final Listener<AttackEvent> onAttack = var1x -> this.BV = 0;
 
-    public NormalAutoClicker(String var1, AutoClicker var2) {
-        super(var1, var2);
+    public NormalAutoClicker(String var1, AutoClicker autoClicker) {
+        super(var1, autoClicker);
     }
 }

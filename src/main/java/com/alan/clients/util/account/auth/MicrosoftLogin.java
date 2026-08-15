@@ -123,13 +123,13 @@ public class MicrosoftLogin {
         return MicrosoftLogin.loginWithMicrosoftAccessToken(gson.fromJson(Browser.postExternal("https://login.live.com/oauth20_token.srf", "client_id=00000000402B5328&grant_type=refresh_token&refresh_token=" + MicrosoftLogin.formValue(string) + "&scope=" + MicrosoftLogin.formValue("service::user.auth.xboxlive.com::MBI_SSL"), false), AuthTokenResponse.class), string);
     }
 
-    private static LoginData loginWithMicrosoftAccessToken(AuthTokenResponse a2, String string) {
+    private static LoginData loginWithMicrosoftAccessToken(AuthTokenResponse authTokenResponse, String string) {
         String string2;
-        if (a2 == null || a2.aEU == null || a2.aEU.isEmpty()) {
+        if (authTokenResponse == null || authTokenResponse.aEU == null || authTokenResponse.aEU.isEmpty()) {
             return new LoginData();
         }
-        String string3 = a2.aEU;
-        string2 = a2.aEV == null || a2.aEV.isEmpty() ? string : a2.aEV;
+        String string3 = authTokenResponse.aEU;
+        string2 = authTokenResponse.aEV == null || authTokenResponse.aEV.isEmpty() ? string : authTokenResponse.aEV;
         XblXstsResponse g2 = MicrosoftLogin.authenticateXboxLive("d=" + string3);
         if (!MicrosoftLogin.isUsable(g2)) {
             g2 = MicrosoftLogin.authenticateXboxLive(string3);
@@ -165,14 +165,14 @@ public class MicrosoftLogin {
         return gson.fromJson(Browser.postExternal("https://user.auth.xboxlive.com/user/authenticate", "{\"Properties\":{\"AuthMethod\":\"RPS\",\"SiteName\":\"user.auth.xboxlive.com\",\"RpsTicket\":\"" + string + "\"},\"RelyingParty\":\"http://auth.xboxlive.com\",\"TokenType\":\"JWT\"}", true), XblXstsResponse.class);
     }
 
-    private static boolean isUsable(XblXstsResponse g2) {
-        if (g2 == null) return false;
-        if (g2.aFa == null) return false;
-        if (g2.aFb == null) return false;
-        if (g2.aFb.aFc == null) return false;
-        if (g2.aFb.aFc.length <= 0) return false;
-        if (g2.aFb.aFc[0] == null) return false;
-        if (g2.aFb.aFc[0].aFd == null) return false;
+    private static boolean isUsable(XblXstsResponse xblXstsResponse) {
+        if (xblXstsResponse == null) return false;
+        if (xblXstsResponse.aFa == null) return false;
+        if (xblXstsResponse.aFb == null) return false;
+        if (xblXstsResponse.aFb.aFc == null) return false;
+        if (xblXstsResponse.aFb.aFc.length <= 0) return false;
+        if (xblXstsResponse.aFb.aFc[0] == null) return false;
+        if (xblXstsResponse.aFb.aFc[0].aFd == null) return false;
         return true;
     }
 

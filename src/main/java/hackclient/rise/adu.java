@@ -10,8 +10,8 @@ public final class adu {
     }
 
     @Generated
-    public void a(Themes var1) {
-        this.aCW = var1;
+    public void a(Themes themes) {
+        this.aCW = themes;
     }
 
     @Generated

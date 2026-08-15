@@ -120,8 +120,8 @@ public class GrimServer19NoFall extends Mode<NoFall> {
         }
     };
 
-    public GrimServer19NoFall(String var1, NoFall var2) {
-        super(var1, var2);
+    public GrimServer19NoFall(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 
     @Override

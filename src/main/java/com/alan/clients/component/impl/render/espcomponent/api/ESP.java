@@ -16,8 +16,8 @@ public class ESP implements InstanceAccess {
     public static KillAura gj;
     public static TeleportAura hR;
 
-    public ESP(ESPColor var1) {
-        this.hP = var1;
+    public ESP(ESPColor espColor) {
+        this.hP = espColor;
         this.tick = aEg.thePlayer.ticksExisted;
     }
 
@@ -27,7 +27,7 @@ public class ESP implements InstanceAccess {
     public void cp() {
     }
 
-    public void a(EntityPlayer var1, ModelBiped var2) {
+    public void a(EntityPlayer player, ModelBiped modelBiped) {
     }
 
     public void cq() {
@@ -48,15 +48,15 @@ public class ESP implements InstanceAccess {
         }
     }
 
-    public Color getColor(EntityLivingBase var1) {
+    public Color getColor(EntityLivingBase living) {
         Color color = this.hP.cr();
-        if (var1 == null) {
+        if (living == null) {
             return color;
         }
 
-        if (var1.hurtTime > 0) {
+        if (living.hurtTime > 0) {
             color = this.hP.cs();
-        } else if (this.target == var1) {
+        } else if (this.target == living) {
             color = this.hP.ct();
         }
 

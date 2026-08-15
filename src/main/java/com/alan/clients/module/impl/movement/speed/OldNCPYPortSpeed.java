@@ -74,8 +74,8 @@ public class OldNCPYPortSpeed extends Mode<Speed> {
     @EventLink
     public final Listener<JumpEvent> onJump = var0 -> var0.setJumpMotion(0.4F);
 
-    public OldNCPYPortSpeed(String var1, Speed var2) {
-        super(var1, var2);
+    public OldNCPYPortSpeed(String var1, Speed speed) {
+        super(var1, speed);
     }
 
     @Override

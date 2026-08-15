@@ -42,7 +42,7 @@ public final class is extends Mode<Velocity> {
         }
     };
 
-    public is(String var1, Velocity var2) {
-        super(var1, var2);
+    public is(String var1, Velocity velocity) {
+        super(var1, velocity);
     }
 }

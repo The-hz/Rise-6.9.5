@@ -9,8 +9,8 @@ public class ais implements InstanceAccess {
     public ais() {
     }
 
-    private static void b(Framebuffer var0) {
-        GL30.glDeleteRenderbuffers(var0.depthBuffer);
+    private static void b(Framebuffer framebuffer) {
+        GL30.glDeleteRenderbuffers(framebuffer.depthBuffer);
         int i = GL30.glGenRenderbuffers();
         GL30.glBindRenderbuffer(36161, i);
         GL30.glRenderbufferStorage(36161, 34041, aEg.displayWidth, aEg.displayHeight);
@@ -18,10 +18,10 @@ public class ais implements InstanceAccess {
         GL30.glFramebufferRenderbuffer(36160, 36096, 36161, i);
     }
 
-    public static void c(Framebuffer var0) {
-        if (var0 != null && var0.depthBuffer > -1) {
-            b(var0);
-            var0.depthBuffer = -1;
+    public static void c(Framebuffer framebuffer) {
+        if (framebuffer != null && framebuffer.depthBuffer > -1) {
+            b(framebuffer);
+            framebuffer.depthBuffer = -1;
         }
     }
 
@@ -29,9 +29,9 @@ public class ais implements InstanceAccess {
         d(aEg.getFramebuffer());
     }
 
-    public static void d(Framebuffer var0) {
-        var0.bindFramebuffer(false);
-        c(var0);
+    public static void d(Framebuffer framebuffer) {
+        framebuffer.bindFramebuffer(false);
+        c(framebuffer);
         GL11.glClear(1280);
         GL11.glEnable(2960);
     }

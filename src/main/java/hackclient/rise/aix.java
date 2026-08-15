@@ -20,7 +20,7 @@ public abstract class aix implements InstanceAccess {
     }
 
     @Generated
-    public void setActive(boolean var1) {
-        this.active = var1;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

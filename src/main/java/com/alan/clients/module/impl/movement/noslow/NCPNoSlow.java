@@ -52,7 +52,7 @@ public class NCPNoSlow extends Mode<NoSlow> {
         }
     };
 
-    public NCPNoSlow(String var1, NoSlow var2) {
-        super(var1, var2);
+    public NCPNoSlow(String var1, NoSlow noSlow) {
+        super(var1, noSlow);
     }
 }

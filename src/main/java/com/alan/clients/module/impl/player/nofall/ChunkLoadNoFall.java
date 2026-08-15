@@ -29,7 +29,7 @@ public class ChunkLoadNoFall extends Mode<NoFall> {
     @EventLink
     public final Listener<TeleportEvent> onTeleport = var1x -> this.fakeUnloaded = false;
 
-    public ChunkLoadNoFall(String var1, NoFall var2) {
-        super(var1, var2);
+    public ChunkLoadNoFall(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 }

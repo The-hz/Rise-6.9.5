@@ -17,13 +17,13 @@ import net.minecraft.network.play.server.ad;
 
 @CheckInfo(R = "AutoBlock", S = "A", description = "Unlikely sword blocking/unblocking")
 public final class AutoBlockA extends Check {
-    public AutoBlockA(PlayerData var1) {
-        super(var1);
+    public AutoBlockA(PlayerData playerData) {
+        super(playerData);
     }
 
     @Override
-    public void handle(Packet<?> var1) {
-        if (var1 instanceof ad ad && ad.getEntityId() == this.data.getPlayer().getEntityId() && ad.func_149376_c() != null) {
+    public void handle(Packet<?> packet) {
+        if (packet instanceof ad ad && ad.getEntityId() == this.data.getPlayer().getEntityId() && ad.func_149376_c() != null) {
             int i = this.a(this.data.getPlayer());
             int j = this.data.W();
             if (i != -1 && j > i) {
@@ -35,13 +35,13 @@ public final class AutoBlockA extends Check {
             }
         }
 
-        if (PacketUtil.b(var1) && ((S14PacketEntity)var1).entityId == this.data.getPlayer().getEntityId() && !this.data.V()) {
+        if (PacketUtil.b(packet) && ((S14PacketEntity)packet).entityId == this.data.getPlayer().getEntityId() && !this.data.V()) {
             this.b(0.985F);
         }
     }
 
-    private int a(EntityOtherPlayerMP var1) {
-        ItemStack itemstack = var1.getHeldItem();
+    private int a(EntityOtherPlayerMP other) {
+        ItemStack itemstack = other.getHeldItem();
         if (itemstack == null) {
             return -1;
         }

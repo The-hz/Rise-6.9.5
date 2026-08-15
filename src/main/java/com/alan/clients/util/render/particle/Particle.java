@@ -18,17 +18,17 @@ public class Particle implements InstanceAccess {
     public a hj = new a();
     public float aoJ;
 
-    public Particle(Vector2f var1, Color var2, Vector2f var3, float var4) {
-        this.aPu = var1;
-        this.aPx = var2;
+    public Particle(Vector2f vec2, Color color, Vector2f var3, float var4) {
+        this.aPu = vec2;
+        this.aPx = color;
         this.aPv = var3;
         this.aPw = var4;
         this.bN.aX();
-        this.aoJ = var2.getAlpha();
+        this.aoJ = color.getAlpha();
     }
 
-    public Particle(Vector2f var1, Vector2f var2) {
-        this.aPu = var1;
+    public Particle(Vector2f vec2, Vector2f var2) {
+        this.aPu = vec2;
         this.aPx = ColorUtil.d(ColorUtil.a(this.rz().rA(), this.rz().rB(), Math.random()), (int)(Math.random() * 255.0));
         this.aPv = var2;
         this.aPw = (float)(2.0 + Math.random() * 3.0);

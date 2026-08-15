@@ -29,11 +29,11 @@ public enum Category {
     public final Screen lr;
     private static final Category[] $VALUES = ee();
 
-    Category(String var3, agc var4, String var5, int var6, Screen var7) {
+    Category(String var3, agc var4, String var5, int color, Screen screen) {
         this.ln = var3;
         this.lo = var5;
-        this.color = var6;
-        this.lr = var7;
+        this.color = color;
+        this.lr = screen;
         this.lq = var4;
     }
 

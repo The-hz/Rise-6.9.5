@@ -17,7 +17,7 @@ public class SkeletalESP extends Mode<ESP> {
         ESPComponent.a(new cs(new ESPColor(color, color, color)));
     };
 
-    public SkeletalESP(String var1, ESP var2) {
-        super(var1, var2);
+    public SkeletalESP(String var1, ESP esp) {
+        super(var1, esp);
     }
 }

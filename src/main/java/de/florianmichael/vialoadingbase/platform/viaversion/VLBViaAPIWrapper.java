@@ -9,11 +9,11 @@ public class VLBViaAPIWrapper extends ViaAPIBase<UserConnection> {
     public VLBViaAPIWrapper() {
     }
 
-    public ProtocolVersion getPlayerProtocolVersion(UserConnection var1) {
-        return var1.getProtocolInfo().protocolVersion();
+    public ProtocolVersion getPlayerProtocolVersion(UserConnection userConnection) {
+        return userConnection.getProtocolInfo().protocolVersion();
     }
 
-    public void sendRawPacket(UserConnection var1, ByteBuf var2) {
-        var1.scheduleSendRawPacket(var2);
+    public void sendRawPacket(UserConnection userConnection, ByteBuf byteBuf) {
+        userConnection.scheduleSendRawPacket(byteBuf);
     }
 }

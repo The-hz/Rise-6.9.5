@@ -25,8 +25,8 @@ public class KoksCraftSpeed extends Mode<Speed> {
         }
     };
 
-    public KoksCraftSpeed(String var1, Speed var2) {
-        super(var1, var2);
+    public KoksCraftSpeed(String var1, Speed speed) {
+        super(var1, speed);
     }
 
     @Override

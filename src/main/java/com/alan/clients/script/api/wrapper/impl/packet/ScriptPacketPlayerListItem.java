@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S38PacketPlayerListItem;
 
 public class ScriptPacketPlayerListItem extends ScriptPacket<S38PacketPlayerListItem> {
-    public ScriptPacketPlayerListItem(S38PacketPlayerListItem var1) {
-        super(var1);
+    public ScriptPacketPlayerListItem(S38PacketPlayerListItem packet) {
+        super(packet);
     }
 
     public String getAction() {

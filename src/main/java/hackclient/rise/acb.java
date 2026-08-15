@@ -196,13 +196,13 @@ public final class acb implements Screen, InstanceAccess {
     }
 
     @Generated
-    public void a(agk var1) {
-        this.scrollUtil = var1;
+    public void a(agk scrollUtil) {
+        this.scrollUtil = scrollUtil;
     }
 
     @Generated
-    public void b(ArrayList<ModuleComponent> var1) {
-        this.azB = var1;
+    public void b(ArrayList<ModuleComponent> moduleComponents) {
+        this.azB = moduleComponents;
     }
 
     @Generated

@@ -31,10 +31,10 @@ public class ScriptVector3d {
         this.z = var1;
     }
 
-    public void add(ScriptVector3d var1) {
-        this.x = this.x + var1.getX();
-        this.y = this.y + var1.getY();
-        this.z = this.z + var1.getZ();
+    public void add(ScriptVector3d scriptVector3d) {
+        this.x = this.x + scriptVector3d.getX();
+        this.y = this.y + scriptVector3d.getY();
+        this.z = this.z + scriptVector3d.getZ();
     }
 
     @Generated

@@ -22,8 +22,8 @@ public class abm extends ValueComponent {
     }
 
     @Override
-    public void draw(Vector2d var1, int var2, int var3, float var4) {
-        this.position = var1;
+    public void draw(Vector2d position, int var2, int var3, float var4) {
+        this.position = position;
         BooleanValue booleanvalue = (BooleanValue)this.value;
         String s = ahd.ce(this.value.getName());
         FontManager.MAIN.a(16, gd.REGULAR).a(s, this.position.x, this.position.y, abw.SECONDARY_TEXT.Z(this.ayD));

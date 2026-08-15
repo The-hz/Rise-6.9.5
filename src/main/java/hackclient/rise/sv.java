@@ -17,8 +17,8 @@ public enum sv {
     }
 
     @Generated
-    sv(Function<Double[], Double> var3) {
-        this.ZO = var3;
+    sv(Function<Double[], Double> function) {
+        this.ZO = function;
     }
 
     private static sv[] in() {

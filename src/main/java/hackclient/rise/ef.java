@@ -13,12 +13,12 @@ public final class ef extends CancellableEvent {
     }
 
     @Generated
-    public void b(Vec3 var1) {
-        this.jw = var1;
+    public void b(Vec3 vec) {
+        this.jw = vec;
     }
 
     @Generated
-    public ef(Vec3 var1) {
-        this.jw = var1;
+    public ef(Vec3 vec) {
+        this.jw = vec;
     }
 }

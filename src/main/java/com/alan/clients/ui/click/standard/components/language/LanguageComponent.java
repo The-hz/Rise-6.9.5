@@ -71,8 +71,8 @@ public class LanguageComponent implements InstanceAccess {
     }
 
     @Generated
-    public LanguageComponent(Locale var1, String var2, String var3) {
-        this.ayq = var1;
+    public LanguageComponent(Locale locale, String var2, String var3) {
+        this.ayq = locale;
         this.ayr = var2;
         this.ays = var3;
     }

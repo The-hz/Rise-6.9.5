@@ -4,8 +4,8 @@ import com.alan.clients.newevent.impl.input.ClickEvent;
 import com.alan.clients.script.api.wrapper.impl.event.ScriptEvent;
 
 public class ScriptClickEvent extends ScriptEvent<ClickEvent> {
-    public ScriptClickEvent(ClickEvent var1) {
-        super(var1);
+    public ScriptClickEvent(ClickEvent event) {
+        super(event);
     }
 
     @Override

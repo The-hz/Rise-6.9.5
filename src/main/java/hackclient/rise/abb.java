@@ -42,9 +42,9 @@ public class abb implements InstanceAccess {
     private double axG = 0.0;
     private double axH = 0.0;
 
-    public abb(Category var1, List<ModuleComponent> var2) {
-        this.axt = var1;
-        this.axu = var2;
+    public abb(Category category, List<ModuleComponent> moduleComponents) {
+        this.axt = category;
+        this.axu = moduleComponents;
     }
 
     public void a(double var1, double var3, double var5, int var7, int var8, float var9, double var10) {

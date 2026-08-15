@@ -14,11 +14,11 @@ public enum a {
     private final Color eRo;
     private static final a[] $VALUES = aKA();
 
-    a(String var3, String var4, String var5, Color var6) {
+    a(String var3, String var4, String var5, Color color) {
         this.eRl = var3;
         this.eRm = var4;
         this.eRn = var5;
-        this.eRo = var6;
+        this.eRo = color;
     }
 
     public String getDisplayName() {

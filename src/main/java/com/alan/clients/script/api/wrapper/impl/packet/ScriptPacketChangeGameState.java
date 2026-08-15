@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S2BPacketChangeGameState;
 
 public class ScriptPacketChangeGameState extends ScriptPacket<S2BPacketChangeGameState> {
-    public ScriptPacketChangeGameState(S2BPacketChangeGameState var1) {
-        super(var1);
+    public ScriptPacketChangeGameState(S2BPacketChangeGameState packet) {
+        super(packet);
     }
 
     public int getGameState() {

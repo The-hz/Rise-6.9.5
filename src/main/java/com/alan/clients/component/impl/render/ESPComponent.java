@@ -57,8 +57,8 @@ public class ESPComponent extends Component {
     public ESPComponent() {
     }
 
-    public static void a(ESP var0) {
-        esps.removeIf(var1 -> var0.getClass() == var1.getClass() && var0.target == var1.target);
-        esps.add(var0);
+    public static void a(ESP esp) {
+        esps.removeIf(var1 -> esp.getClass() == var1.getClass() && esp.target == var1.target);
+        esps.add(esp);
     }
 }

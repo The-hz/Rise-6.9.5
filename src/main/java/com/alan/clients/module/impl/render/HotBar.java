@@ -159,7 +159,7 @@ public class HotBar extends Module {
     public HotBar() {
     }
 
-    private void a(ScaledResolution var1, EntityPlayer var2) {
+    private void a(ScaledResolution resolution, EntityPlayer player) {
         label39: {
             String s = this.interfaceModule.lM().wo().getName();
             byte b0 = -1;
@@ -177,7 +177,7 @@ public class HotBar extends Module {
 
             switch (b0) {
                 case 0:
-                    float f = var2.experience;
+                    float f = player.experience;
                     if (f <= 0.0F) {
                         return;
                     }
@@ -201,25 +201,25 @@ public class HotBar extends Module {
         }
 
         if (this.showXPBar.wo()) {
-            float f1 = var2.experience;
+            float f1 = player.experience;
             if (!(f1 <= 0.0F)) {
                 int i = (int)(f1 * 182.0F);
-                int j = var1.getScaledWidth() / 2 - 91;
-                float f2 = var1.getScaledHeight() - 28.5F;
+                int j = resolution.getScaledWidth() / 2 - 91;
+                float f2 = resolution.getScaledHeight() - 28.5F;
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 aEg.getTextureManager().bindTexture(Gui.icons);
                 aEg.ingameGUI.drawTexturedModalRect(j, f2, 0, 64, 182, 5);
                 aEg.ingameGUI.drawTexturedModalRect(j, f2, 0, 69, i, 5);
-                String s1 = String.valueOf(var2.experienceLevel);
+                String s1 = String.valueOf(player.experienceLevel);
                 int k = aEg.fontRendererObj.getStringWidth(s1);
-                int l = var1.getScaledWidth() / 2 - k / 2;
+                int l = resolution.getScaledWidth() / 2 - k / 2;
                 float f3 = f2 - 5.0F;
                 aEg.fontRendererObj.b(s1, l, f3, 8388383);
             }
         }
     }
 
-    private void a(Color var1) {
+    private void a(Color color) {
         label27: {
             String s = this.interfaceModule.lM().wo().getName();
             byte b0 = -1;
@@ -239,7 +239,7 @@ public class HotBar extends Module {
                 case 0:
                     double d0 = this.interfaceModule != null ? this.interfaceModule.lD() : 9.0;
                     RenderUtil.roundedRectangle(
-                        this.structure.apP.x + 1.0, this.structure.apP.y + 18.0, this.structure.aHe.x - 0.0, this.structure.aHe.y - 18.0, d0, var1
+                        this.structure.apP.x + 1.0, this.structure.apP.y + 18.0, this.structure.aHe.x - 0.0, this.structure.aHe.y - 18.0, d0, color
                     );
                     return;
                 case 1:
@@ -255,13 +255,13 @@ public class HotBar extends Module {
         aEg.ingameGUI.drawTexturedModalRect((float)(this.structure.apP.x + 1.0), (int)(this.structure.apP.y + 18.0), 0, 0, 182, 22);
     }
 
-    private void renderHotBarItem(int var1, int var2, int var3, float var4, EntityPlayer var5) {
+    private void renderHotBarItem(int var1, int var2, int var3, float var4, EntityPlayer player) {
         if (this.gj == null) {
             this.gj = this.e(KillAura.class);
         }
 
         if (this.gj == null || !this.gj.p(var1)) {
-            ItemStack itemstack = var5.inventory.mainInventory[var1];
+            ItemStack itemstack = player.inventory.mainInventory[var1];
             if (itemstack != null) {
                 RenderItem renderitem = aEg.getRenderItem();
                 float f = itemstack.animationsToGo - var4;

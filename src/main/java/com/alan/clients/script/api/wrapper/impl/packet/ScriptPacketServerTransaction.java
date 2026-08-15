@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S32PacketConfirmTransaction;
 
 public class ScriptPacketServerTransaction extends ScriptPacket<S32PacketConfirmTransaction> {
-    public ScriptPacketServerTransaction(S32PacketConfirmTransaction var1) {
-        super(var1);
+    public ScriptPacketServerTransaction(S32PacketConfirmTransaction packet) {
+        super(packet);
     }
 
     public int getWindowId() {

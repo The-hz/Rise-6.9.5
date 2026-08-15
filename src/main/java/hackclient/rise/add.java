@@ -96,19 +96,19 @@ public class add implements InstanceAccess {
         GL11.glTexParameteri(3553, 10240, 9728);
     }
 
-    public static Framebuffer a(Framebuffer var0, int var1, int var2) {
-        if (var0 == null) {
-            var0 = new Framebuffer(var1, var2, true);
-            var0.setFramebufferFilter(9728);
-            var0.framebufferColor[0] = 0.0F;
-            var0.framebufferColor[1] = 0.0F;
-            var0.framebufferColor[2] = 0.0F;
-        } else if (var0.framebufferWidth != var1 || var0.framebufferHeight != var2) {
-            var0.createBindFramebuffer(var1, var2);
-            var0.setFramebufferFilter(9728);
+    public static Framebuffer a(Framebuffer framebuffer, int var1, int var2) {
+        if (framebuffer == null) {
+            framebuffer = new Framebuffer(var1, var2, true);
+            framebuffer.setFramebufferFilter(9728);
+            framebuffer.framebufferColor[0] = 0.0F;
+            framebuffer.framebufferColor[1] = 0.0F;
+            framebuffer.framebufferColor[2] = 0.0F;
+        } else if (framebuffer.framebufferWidth != var1 || framebuffer.framebufferHeight != var2) {
+            framebuffer.createBindFramebuffer(var1, var2);
+            framebuffer.setFramebufferFilter(9728);
         }
 
-        aBK = var0;
-        return var0;
+        aBK = framebuffer;
+        return framebuffer;
     }
 }

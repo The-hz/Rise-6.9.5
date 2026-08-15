@@ -11,12 +11,12 @@ public abstract class ahl implements Packet {
     private final EnumConnectionState aNr;
 
     @Override
-    public void readPacketData(PacketBuffer var1) {
+    public void readPacketData(PacketBuffer packetBuffer) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void writePacketData(PacketBuffer var1) {
+    public void writePacketData(PacketBuffer packetBuffer) {
         throw new UnsupportedOperationException();
     }
 
@@ -25,9 +25,9 @@ public abstract class ahl implements Packet {
     }
 
     @Generated
-    public ahl(int var1, EnumConnectionState var2) {
+    public ahl(int var1, EnumConnectionState enumConnectionState) {
         this.aNq = var1;
-        this.aNr = var2;
+        this.aNr = enumConnectionState;
     }
 
     @Generated

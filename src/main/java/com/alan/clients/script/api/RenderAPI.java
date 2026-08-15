@@ -78,16 +78,16 @@ public class RenderAPI extends API implements InstanceAccess {
         cl.cn();
     }
 
-    public void renderItemIcon(double var1, double var3, int var5, ScriptItemStack var6) {
-        RenderUtil.a(var1, var3, var5, var6.getWrapped());
+    public void renderItemIcon(double var1, double var3, int var5, ScriptItemStack scriptItemStack) {
+        RenderUtil.a(var1, var3, var5, scriptItemStack.getWrapped());
     }
 
     public void drawLine3D(double var1, double var3, double var5, double var7, double var9, double var11, int[] var13, float var14) {
         RenderUtil.drawLine(var1, var3, var5, var7, var9, var11, intArrayToColor(var13), var14);
     }
 
-    public void drawLine3D(ScriptVector3d var1, ScriptVector3d var2, int[] var3, float var4) {
-        this.drawLine3D(var1.getX(), var1.getY(), var1.getZ(), var2.getX(), var2.getY(), var2.getZ(), var3, var4);
+    public void drawLine3D(ScriptVector3d scriptVector3d, ScriptVector3d var2, int[] var3, float var4) {
+        this.drawLine3D(scriptVector3d.getX(), scriptVector3d.getY(), scriptVector3d.getZ(), var2.getX(), var2.getY(), var2.getZ(), var3, var4);
     }
 
     public ScriptMCFontRenderer getMinecraftFontRenderer() {
@@ -150,24 +150,24 @@ public class RenderAPI extends API implements InstanceAccess {
         return aint;
     }
 
-    public void blur(JSObject var1) throws ScriptException {
-        if (!var1.isFunction()) {
+    public void blur(JSObject jsObject) throws ScriptException {
+        if (!jsObject.isFunction()) {
             throw new ScriptException("Not a function!");
         }
 
-        this.b(gg.BLUR).c(() -> var1.call(null));
+        this.b(gg.BLUR).c(() -> jsObject.call(null));
     }
 
-    public void postBloom(JSObject var1) throws ScriptException {
-        this.bloom(var1);
+    public void postBloom(JSObject jsObject) throws ScriptException {
+        this.bloom(jsObject);
     }
 
-    public void bloom(JSObject var1) throws ScriptException {
-        if (!var1.isFunction()) {
+    public void bloom(JSObject jsObject) throws ScriptException {
+        if (!jsObject.isFunction()) {
             throw new ScriptException("Not a function!");
         }
 
-        this.b(gg.BLOOM).c(() -> var1.call(null));
+        this.b(gg.BLOOM).c(() -> jsObject.call(null));
     }
 
     public int[] getBackgroundShade() {

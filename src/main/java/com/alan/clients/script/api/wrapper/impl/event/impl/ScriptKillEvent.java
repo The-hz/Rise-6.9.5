@@ -9,8 +9,8 @@ public class ScriptKillEvent extends ScriptEvent<KillEvent> {
         return new ScriptEntity(this.wrapped.getEntity());
     }
 
-    public ScriptKillEvent(KillEvent var1) {
-        super(var1);
+    public ScriptKillEvent(KillEvent event) {
+        super(event);
     }
 
     @Override

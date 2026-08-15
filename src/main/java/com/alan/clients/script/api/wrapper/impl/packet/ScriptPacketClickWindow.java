@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.client.C0EPacketClickWindow;
 
 public class ScriptPacketClickWindow extends ScriptPacket<C0EPacketClickWindow> {
-    public ScriptPacketClickWindow(C0EPacketClickWindow var1) {
-        super(var1);
+    public ScriptPacketClickWindow(C0EPacketClickWindow packet) {
+        super(packet);
     }
 
     public int getWindowId() {

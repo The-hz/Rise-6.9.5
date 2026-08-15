@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S3BPacketScoreboardObjective;
 
 public class ScriptPacketScoreboardObjective extends ScriptPacket<S3BPacketScoreboardObjective> {
-    public ScriptPacketScoreboardObjective(S3BPacketScoreboardObjective var1) {
-        super(var1);
+    public ScriptPacketScoreboardObjective(S3BPacketScoreboardObjective packet) {
+        super(packet);
     }
 
     public String getObjectiveName() {

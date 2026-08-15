@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S3APacketTabComplete;
 
 public class ScriptPacketServerTabComplete extends ScriptPacket<S3APacketTabComplete> {
-    public ScriptPacketServerTabComplete(S3APacketTabComplete var1) {
-        super(var1);
+    public ScriptPacketServerTabComplete(S3APacketTabComplete packet) {
+        super(packet);
     }
 
     public int getMatchCount() {

@@ -26,8 +26,8 @@ public class JumpEvent extends CancellableEvent {
     }
 
     @Generated
-    public void setJumpMotion(float var1) {
-        this.ju = var1;
+    public void setJumpMotion(float jumpMotion) {
+        this.ju = jumpMotion;
     }
 
     @Generated

@@ -65,7 +65,7 @@ public class Grim19NoSlow extends Mode<NoSlow> {
         }
     };
 
-    public Grim19NoSlow(String var1, NoSlow var2) {
-        super(var1, var2);
+    public Grim19NoSlow(String var1, NoSlow noSlow) {
+        super(var1, noSlow);
     }
 }

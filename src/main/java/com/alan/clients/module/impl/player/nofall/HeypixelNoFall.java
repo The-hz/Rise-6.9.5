@@ -51,8 +51,8 @@ public class HeypixelNoFall extends Mode<NoFall> {
     @EventLink
     public final Listener<TeleportEvent> onTeleport = var1x -> this.ahZ = false;
 
-    public HeypixelNoFall(String var1, NoFall var2) {
-        super(var1, var2);
+    public HeypixelNoFall(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 
     @Override

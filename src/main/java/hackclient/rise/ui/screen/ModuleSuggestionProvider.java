@@ -25,7 +25,7 @@ implements SuggestionProvider {
     }
 
     @Override
-    public List<Suggestion> b(SuggestionContext acz2) {
+    public List<Suggestion> b(SuggestionContext suggestionContext) {
         ArrayList<Suggestion> arrayList;
         String string;
         String string2;
@@ -49,11 +49,11 @@ implements SuggestionProvider {
                                 String[] stringArray2;
                                 block22: {
                                     block20: {
-                                        stringArray2 = acz2.rk();
+                                        stringArray2 = suggestionContext.rk();
                                         if (stringArray2.length == 0) {
                                             return Collections.emptyList();
                                         }
-                                        string2 = CommandPalette.aQ(acz2.rj());
+                                        string2 = CommandPalette.aQ(suggestionContext.rj());
                                         if (stringArray2.length != 1) break block20;
                                         String string5 = stringArray2[0] == null ? "" : stringArray2[0].toLowerCase(Locale.ROOT);
                                         string4 = string5.trim().toLowerCase(Locale.ROOT).replace(" ", "");

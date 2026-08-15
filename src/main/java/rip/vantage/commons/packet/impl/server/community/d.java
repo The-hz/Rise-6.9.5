@@ -18,13 +18,13 @@ public class d extends rip.vantage.commons.packet.api.abstracts.b {
         this.ePL = var5;
     }
 
-    public d(JSONObject var1) {
+    public d(JSONObject json) {
         super((byte)9);
-        this.ePH = var1.getString("a");
-        this.ePI = var1.getInt("b");
-        this.ePJ = var1.getInt("c");
-        this.ePK = var1.getInt("d");
-        this.ePL = var1.getString("e");
+        this.ePH = json.getString("a");
+        this.ePI = json.getInt("b");
+        this.ePJ = json.getInt("c");
+        this.ePK = json.getInt("d");
+        this.ePL = json.getString("e");
     }
 
     @Override

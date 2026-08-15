@@ -29,7 +29,7 @@ public class DragClickSimulationsAutoClicker extends Mode<AutoClicker> {
         }
     };
 
-    public DragClickSimulationsAutoClicker(String var1, AutoClicker var2) {
-        super(var1, var2);
+    public DragClickSimulationsAutoClicker(String var1, AutoClicker autoClicker) {
+        super(var1, autoClicker);
     }
 }

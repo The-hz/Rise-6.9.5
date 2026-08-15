@@ -25,8 +25,8 @@ public class NCPPacketlessStep extends Mode<Step> {
         }
     };
 
-    public NCPPacketlessStep(String var1, Step var2) {
-        super(var1, var2);
+    public NCPPacketlessStep(String var1, Step step) {
+        super(var1, step);
     }
 
     @Override

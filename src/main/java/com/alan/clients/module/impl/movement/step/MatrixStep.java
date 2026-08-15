@@ -58,8 +58,8 @@ public class MatrixStep extends Mode<Step> {
         }
     };
 
-    public MatrixStep(String var1, Step var2) {
-        super(var1, var2);
+    public MatrixStep(String var1, Step step) {
+        super(var1, step);
     }
 
     @Override

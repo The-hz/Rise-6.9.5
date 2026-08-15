@@ -12,8 +12,8 @@ public class afk {
     public boolean dragging = false;
     public a bN = new a();
 
-    public afk(Vector2d var1, Vector2d var2) {
-        this.apP = this.atg = var1;
+    public afk(Vector2d vector2d, Vector2d var2) {
+        this.apP = this.atg = vector2d;
         this.aHe = var2;
     }
 

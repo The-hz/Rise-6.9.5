@@ -60,8 +60,8 @@ public class SlimeNCPFlight extends Mode<Flight> {
         }
     };
 
-    public SlimeNCPFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public SlimeNCPFlight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

@@ -94,51 +94,51 @@ public class AutoMLG extends Module {
         return !aEg.theWorld.getCollidingBoundingBoxes(aEg.thePlayer, axisalignedbb).isEmpty();
     }
 
-    private Vec3 a(BlockPos var1, EnumFacing var2, MovingObjectPosition var3) {
-        Vec3 vec3 = new Vec3(var1.getX() + Math.random(), var1.getY() + Math.random(), var1.getZ() + Math.random());
-        switch (ls.CI[var2.ordinal()]) {
+    private Vec3 a(BlockPos pos, EnumFacing facing, MovingObjectPosition hit) {
+        Vec3 vec3 = new Vec3(pos.getX() + Math.random(), pos.getY() + Math.random(), pos.getZ() + Math.random());
+        switch (ls.CI[facing.ordinal()]) {
             case 1:
-                vec3.yCoord = var1.getY();
+                vec3.yCoord = pos.getY();
                 break;
             case 2:
-                vec3.yCoord = var1.getY() + 1;
+                vec3.yCoord = pos.getY() + 1;
                 break;
             case 3:
-                vec3.zCoord = var1.getZ();
+                vec3.zCoord = pos.getZ();
                 break;
             case 4:
-                vec3.zCoord = var1.getZ() + 1;
+                vec3.zCoord = pos.getZ() + 1;
                 break;
             case 5:
-                vec3.xCoord = var1.getX();
+                vec3.xCoord = pos.getX();
                 break;
             case 6:
-                vec3.xCoord = var1.getX() + 1;
+                vec3.xCoord = pos.getX() + 1;
         }
 
-        if (var3 != null && var3.hitVec != null && var3.getBlockPos() != null && var3.getBlockPos().equals(var1) && var3.sideHit == var2) {
-            vec3 = var3.hitVec;
+        if (hit != null && hit.hitVec != null && hit.getBlockPos() != null && hit.getBlockPos().equals(pos) && hit.sideHit == facing) {
+            vec3 = hit.hitVec;
         }
 
         return vec3;
     }
 
-    private BlockPos d(MovingObjectPosition var1) {
-        if (var1 != null && var1.getBlockPos() != null && var1.sideHit != null) {
-            BlockPos blockpos = var1.getBlockPos();
-            BlockPos blockpos1 = blockpos.offset(var1.sideHit);
+    private BlockPos d(MovingObjectPosition hit) {
+        if (hit != null && hit.getBlockPos() != null && hit.sideHit != null) {
+            BlockPos blockpos = hit.getBlockPos();
+            BlockPos blockpos1 = blockpos.offset(hit.sideHit);
             Block block = aEg.theWorld.getBlockState(blockpos1).getBlock();
             return !block.isReplaceable(aEg.theWorld, blockpos1) && !block.getMaterial().isLiquid() ? blockpos : blockpos1;
         }
         return null;
     }
 
-    private boolean e(BlockPos var1) {
-        if (var1 == null) {
+    private boolean e(BlockPos pos) {
+        if (pos == null) {
             return false;
         }
 
-        IBlockState iblockstate = aEg.theWorld.getBlockState(var1);
+        IBlockState iblockstate = aEg.theWorld.getBlockState(pos);
         Block block = iblockstate.getBlock();
         return (block == Blocks.water || block == Blocks.flowing_water) && block instanceof BlockLiquid && iblockstate.getValue(BlockLiquid.LEVEL) == 0;
     }
@@ -179,14 +179,14 @@ public class AutoMLG extends Module {
         return this.CG;
     }
 
-    private boolean a(ItemStack var1, BlockPos var2) {
-        if (var1 != null && var1.getItem() == Items.bucket && var2 != null) {
-            Vector2f vector2f = RotationUtil.h(new Vec3(var2.getX() + 0.5, var2.getY() + 0.5, var2.getZ() + 0.5));
+    private boolean a(ItemStack stack, BlockPos pos) {
+        if (stack != null && stack.getItem() == Items.bucket && pos != null) {
+            Vector2f vector2f = RotationUtil.h(new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5));
             float f = aEg.thePlayer.pl;
             float f1 = aEg.thePlayer.rotationPitch;
             aEg.thePlayer.pl = vector2f.x;
             aEg.thePlayer.rotationPitch = vector2f.y;
-            boolean flag = aEg.playerController.sendUseItem(aEg.thePlayer, aEg.theWorld, var1);
+            boolean flag = aEg.playerController.sendUseItem(aEg.thePlayer, aEg.theWorld, stack);
             aEg.thePlayer.pl = f;
             aEg.thePlayer.rotationPitch = f1;
             if (flag) {

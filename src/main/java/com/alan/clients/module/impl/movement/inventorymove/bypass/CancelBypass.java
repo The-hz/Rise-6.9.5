@@ -51,7 +51,7 @@ public class CancelBypass extends Mode<InventoryMove> {
         }
     };
 
-    public CancelBypass(String var1, InventoryMove var2) {
-        super(var1, var2);
+    public CancelBypass(String var1, InventoryMove inventoryMove) {
+        super(var1, inventoryMove);
     }
 }

@@ -6,13 +6,13 @@ public class TimedPacket {
     private final Packet<?> packet;
     private final long time;
 
-    public TimedPacket(Packet<?> var1, long var2) {
-        this.packet = var1;
-        this.time = var2;
+    public TimedPacket(Packet<?> packet, long time) {
+        this.packet = packet;
+        this.time = time;
     }
 
-    public TimedPacket(Packet<?> var1) {
-        this.packet = var1;
+    public TimedPacket(Packet<?> packet) {
+        this.packet = packet;
         this.time = System.currentTimeMillis();
     }
 

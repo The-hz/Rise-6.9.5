@@ -42,20 +42,20 @@ public final class GlintEvent extends CancellableEvent {
     }
 
     @Generated
-    public void setItemStack(ItemStack var1) {
-        this.itemStack = var1;
+    public void setItemStack(ItemStack itemStack) {
+        this.itemStack = itemStack;
     }
 
     @Generated
-    public void setModel(IBakedModel var1) {
-        this.model = var1;
+    public void setModel(IBakedModel model) {
+        this.model = model;
     }
 
     @Generated
-    public GlintEvent(boolean var1, boolean var2, ItemStack var3, IBakedModel var4) {
+    public GlintEvent(boolean var1, boolean var2, ItemStack itemStack, IBakedModel model) {
         this.jU = var1;
         this.fX = var2;
-        this.itemStack = var3;
-        this.model = var4;
+        this.itemStack = itemStack;
+        this.model = model;
     }
 }

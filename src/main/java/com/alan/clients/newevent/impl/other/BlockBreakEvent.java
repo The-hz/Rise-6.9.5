@@ -13,12 +13,12 @@ public final class BlockBreakEvent extends CancellableEvent {
     }
 
     @Generated
-    public void setBlockPos(BlockPos var1) {
-        this.blockPos = var1;
+    public void setBlockPos(BlockPos blockPos) {
+        this.blockPos = blockPos;
     }
 
     @Generated
-    public BlockBreakEvent(BlockPos var1) {
-        this.blockPos = var1;
+    public BlockBreakEvent(BlockPos blockPos) {
+        this.blockPos = blockPos;
     }
 }

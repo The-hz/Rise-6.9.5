@@ -19,14 +19,14 @@ public class AlphaShader extends aix {
     }
 
     @Override
-    public void a(aiz var1, float var2, List<Runnable> var3) {
+    public void a(aiz var1, float var2, List<Runnable> runnables) {
         if (Display.isVisible()) {
             if (var1 == aiz.OVERLAY) {
                 this.update();
                 this.setActive(true);
                 if (this.isActive()) {
                     this.aPV.bindFramebuffer(true);
-                    var3.forEach(Runnable::run);
+                    runnables.forEach(Runnable::run);
                     aEg.getFramebuffer().bindFramebuffer(true);
                     int i = this.aPU.getProgramId();
                     this.aPU.rt();

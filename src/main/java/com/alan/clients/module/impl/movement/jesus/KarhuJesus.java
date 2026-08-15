@@ -28,7 +28,7 @@ public class KarhuJesus extends Mode<Jesus> {
         }
     };
 
-    public KarhuJesus(String var1, Jesus var2) {
-        super(var1, var2);
+    public KarhuJesus(String var1, Jesus jesus) {
+        super(var1, jesus);
     }
 }

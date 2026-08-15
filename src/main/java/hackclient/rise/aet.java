@@ -156,15 +156,15 @@ public final class aet {
         }
     }
 
-    private static String a(InputStream var0) throws java.io.IOException {
-        if (var0 == null) {
+    private static String a(InputStream in) throws java.io.IOException {
+        if (in == null) {
             return "";
         }
 
         StringBuilder stringbuilder = new StringBuilder();
 
         String s;
-        try (BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(var0, StandardCharsets.UTF_8))) {
+        try (BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
             while ((s = bufferedreader.readLine()) != null) {
                 stringbuilder.append(s);
             }
@@ -173,27 +173,27 @@ public final class aet {
         return stringbuilder.toString();
     }
 
-    private static boolean c(JsonObject var0) {
-        return var0.has("success") && !var0.get("success").isJsonNull() && var0.get("success").getAsBoolean();
+    private static boolean c(JsonObject json) {
+        return json.has("success") && !json.get("success").isJsonNull() && json.get("success").getAsBoolean();
     }
 
-    private static String a(JsonObject var0, String var1) {
-        return var0.has("error") && !var0.get("error").isJsonNull() ? var0.get("error").getAsString() : var1;
+    private static String a(JsonObject json, String var1) {
+        return json.has("error") && !json.get("error").isJsonNull() ? json.get("error").getAsString() : var1;
     }
 
-    private static String b(JsonObject var0, String var1) {
-        return var0.has(var1) && !var0.get(var1).isJsonNull() ? var0.get(var1).getAsString() : "";
+    private static String b(JsonObject json, String var1) {
+        return json.has(var1) && !json.get(var1).isJsonNull() ? json.get(var1).getAsString() : "";
     }
 
-    private static int c(JsonObject var0, String var1) {
-        return var0.has(var1) && !var0.get(var1).isJsonNull() ? var0.get(var1).getAsInt() : 0;
+    private static int c(JsonObject json, String var1) {
+        return json.has(var1) && !json.get(var1).isJsonNull() ? json.get(var1).getAsInt() : 0;
     }
 
-    private static int d(JsonObject var0, String var1) {
-        return var0.has(var1) && !var0.get(var1).isJsonNull() ? var0.get(var1).getAsInt() : 0;
+    private static int d(JsonObject json, String var1) {
+        return json.has(var1) && !json.get(var1).isJsonNull() ? json.get(var1).getAsInt() : 0;
     }
 
-    private static JsonArray e(JsonObject var0, String var1) {
-        return var0.has(var1) && var0.get(var1).isJsonArray() ? var0.getAsJsonArray(var1) : new JsonArray();
+    private static JsonArray e(JsonObject json, String var1) {
+        return json.has(var1) && json.get(var1).isJsonArray() ? json.getAsJsonArray(var1) : new JsonArray();
     }
 }

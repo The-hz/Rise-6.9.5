@@ -37,9 +37,9 @@ public class a extends rip.vantage.commons.packet.api.abstracts.b {
         var1.a(this);
     }
 
-    public a(JSONObject var1) {
+    public a(JSONObject json) {
         super((byte)22);
-        this.ePU = var1.getString("a");
-        this.ePV = var1.optInt("b", 600);
+        this.ePU = json.getString("a");
+        this.ePV = json.optInt("b", 600);
     }
 }

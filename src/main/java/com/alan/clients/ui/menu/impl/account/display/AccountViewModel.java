@@ -73,22 +73,22 @@ public class AccountViewModel<T extends AltAccount> implements adf, InstanceAcce
         this.x + 0.5F, this.y + 0.5F + this.scroll, this.width - 1.0F, this.height - 1.0F, 6.0, BLOOM_COLOR
     );
 
-    public AccountViewModel(T var1, float var2, float var3, float var4, float var5) {
-        this.account = var1;
+    public AccountViewModel(T account, float var2, float var3, float width, float height) {
+        this.account = account;
         this.x = var2;
         this.y = var3;
-        this.width = var4;
-        this.height = var5;
+        this.width = width;
+        this.height = height;
         this.hoverAnimation = new Animation(Easing.EASE_OUT_CUBIC, 200L);
         this.positionAnimation = new Animation(Easing.EASE_OUT_CUBIC, 200L);
-        if (!(var1 instanceof aep) && !(var1 instanceof aeq)) {
+        if (!(account instanceof aep) && !(account instanceof aeq)) {
             byte b0 = 2;
             this.labelButtons = new adl[]{
-                new adl(var2 + 76.0F, var3 + var5 - 12.0F, 28.0, 8.0, () -> aEg.displayGuiScreen(new RenameAccountScreen(this)), "Rename", Color.YELLOW),
-                new adl(var2 + 76.0F + 28.0F + b0, var3 + var5 - 12.0F, 24.0, 8.0, () -> this.removable = true, "Delete", Color.RED)
+                new adl(var2 + 76.0F, var3 + height - 12.0F, 28.0, 8.0, () -> aEg.displayGuiScreen(new RenameAccountScreen(this)), "Rename", Color.YELLOW),
+                new adl(var2 + 76.0F + 28.0F + b0, var3 + height - 12.0F, 24.0, 8.0, () -> this.removable = true, "Delete", Color.RED)
             };
         } else {
-            this.labelButtons = new adl[]{new adl(var2 + 76.0F, var3 + var5 - 12.0F, 24.0, 8.0, () -> this.removable = true, "Delete", Color.RED)};
+            this.labelButtons = new adl[]{new adl(var2 + 76.0F, var3 + height - 12.0F, 24.0, 8.0, () -> this.removable = true, "Delete", Color.RED)};
         }
     }
 
@@ -155,8 +155,8 @@ public class AccountViewModel<T extends AltAccount> implements adf, InstanceAcce
         return true;
     }
 
-    private void addScrollOffset(float var1) {
-        this.y += var1;
+    private void addScrollOffset(float scrollOffset) {
+        this.y += scrollOffset;
     }
 
     private boolean isOutOfScreen() {
@@ -174,8 +174,8 @@ public class AccountViewModel<T extends AltAccount> implements adf, InstanceAcce
     }
 
     @Generated
-    public void setScroll(double var1) {
-        this.scroll = var1;
+    public void setScroll(double scroll) {
+        this.scroll = scroll;
     }
 
     @Generated
@@ -189,7 +189,7 @@ public class AccountViewModel<T extends AltAccount> implements adf, InstanceAcce
     }
 
     @Generated
-    public void setScreenHeight(int var1) {
-        this.screenHeight = var1;
+    public void setScreenHeight(int screenHeight) {
+        this.screenHeight = screenHeight;
     }
 }

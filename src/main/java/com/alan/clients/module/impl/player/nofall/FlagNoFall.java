@@ -26,7 +26,7 @@ public class FlagNoFall extends Mode<NoFall> {
         var0.setResponse(new C06PacketPlayerPosLook(var0.getPosX(), var0.getPosY(), var0.getPosZ(), var0.getYaw(), var0.getPitch(), true));
     };
 
-    public FlagNoFall(String var1, NoFall var2) {
-        super(var1, var2);
+    public FlagNoFall(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 }

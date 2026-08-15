@@ -48,8 +48,8 @@ public class RenameAccountScreen extends GuiScreen implements InstanceAccess {
         RenderUtil.d(0.0, 0.0, scaledresolution.getScaledWidth(), scaledresolution.getScaledHeight(), Color.BLACK);
     };
 
-    public RenameAccountScreen(AccountViewModel<?> var1) {
-        this.accountViewModel = var1;
+    public RenameAccountScreen(AccountViewModel<?> accountViewModel) {
+        this.accountViewModel = accountViewModel;
         reference = this;
     }
 

@@ -60,8 +60,8 @@ public class NCPStep extends Mode<Step> {
         }
     };
 
-    public NCPStep(String var1, Step var2) {
-        super(var1, var2);
+    public NCPStep(String var1, Step step) {
+        super(var1, step);
     }
 
     @Override

@@ -19,12 +19,12 @@ public class ahd {
         return a(var0, Client.a.getLocale());
     }
 
-    public static String a(String var0, Locale var1) {
+    public static String a(String var0, Locale locale) {
         if (!populated) {
             populate();
         }
 
-        String s = var1.getStrings().get(var0);
+        String s = locale.getStrings().get(var0);
         if (s == null) {
             s = Locale.EN_US.getStrings().get(var0);
         }

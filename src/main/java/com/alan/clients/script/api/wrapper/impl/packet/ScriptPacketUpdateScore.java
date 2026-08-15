@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S3CPacketUpdateScore;
 
 public class ScriptPacketUpdateScore extends ScriptPacket<S3CPacketUpdateScore> {
-    public ScriptPacketUpdateScore(S3CPacketUpdateScore var1) {
-        super(var1);
+    public ScriptPacketUpdateScore(S3CPacketUpdateScore packet) {
+        super(packet);
     }
 
     public String getPlayerName() {

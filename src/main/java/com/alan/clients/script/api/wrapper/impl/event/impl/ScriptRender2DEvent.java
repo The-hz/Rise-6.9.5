@@ -4,8 +4,8 @@ import com.alan.clients.newevent.impl.render.Render2DEvent;
 import com.alan.clients.script.api.wrapper.impl.event.ScriptEvent;
 
 public class ScriptRender2DEvent extends ScriptEvent<Render2DEvent> {
-    public ScriptRender2DEvent(Render2DEvent var1) {
-        super(var1);
+    public ScriptRender2DEvent(Render2DEvent event) {
+        super(event);
     }
 
     public float getPartialTicks() {

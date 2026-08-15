@@ -117,8 +117,8 @@ public final class ScriptManager implements InstanceAccess {
         this.scripts.clear();
     }
 
-    public void setSecurityMeasures(boolean var1) {
-        this.securityMeasures = var1;
+    public void setSecurityMeasures(boolean securityMeasures) {
+        this.securityMeasures = securityMeasures;
         this.init();
     }
 
@@ -144,7 +144,7 @@ public final class ScriptManager implements InstanceAccess {
         return scriptengine;
     }
 
-    public Script parseScript(String var1, File var2) {
+    public Script parseScript(String var1, File file) {
         String s = "Unknown author";
         String s1 = "Unknown version";
         String s2 = "No description provided";
@@ -214,11 +214,11 @@ public final class ScriptManager implements InstanceAccess {
         if (flag && this.securityMeasures) {
             throw new IllegalStateException("Script requires no security measures!");
         }
-        return new Script(this.getName(var2), s, s1, s2, var1, var2);
+        return new Script(this.getName(file), s, s1, s2, var1, file);
     }
 
-    private String getName(File var1) {
-        return var1.getName().replace(".js", "");
+    private String getName(File file) {
+        return file.getName().replace(".js", "");
     }
 
     @Generated

@@ -33,7 +33,7 @@ public final class BounceVelocity extends Mode<Velocity> {
         }
     };
 
-    public BounceVelocity(String var1, Velocity var2) {
-        super(var1, var2);
+    public BounceVelocity(String var1, Velocity velocity) {
+        super(var1, velocity);
     }
 }

@@ -14,11 +14,11 @@ public class d extends rip.vantage.commons.packet.api.abstracts.a {
         this.eOX = var3;
     }
 
-    public d(JSONObject var1) {
+    public d(JSONObject json) {
         super((byte)3);
-        this.eOV = var1.getString("a");
-        this.eOW = var1.getInt("b");
-        this.eOX = var1.getString("c");
+        this.eOV = json.getString("a");
+        this.eOW = json.getInt("b");
+        this.eOX = json.getString("c");
     }
 
     @Override

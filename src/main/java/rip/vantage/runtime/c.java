@@ -32,7 +32,7 @@ public class c {
         return false;
     }
 
-    public static boolean b(InetAddress var0) {
+    public static boolean b(InetAddress inetAddress) {
         return false;
     }
 
@@ -44,7 +44,7 @@ public class c {
         return false;
     }
 
-    public static boolean a(InetAddress var0) {
+    public static boolean a(InetAddress inetAddress) {
         return false;
     }
 

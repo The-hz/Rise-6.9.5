@@ -4,8 +4,8 @@ import com.alan.clients.script.api.wrapper.ScriptWrapper;
 import net.minecraft.block.Block;
 
 public class ScriptBlock extends ScriptWrapper<Block> {
-    public ScriptBlock(Block var1) {
-        super(var1);
+    public ScriptBlock(Block block) {
+        super(block);
     }
 
     public int getId() {

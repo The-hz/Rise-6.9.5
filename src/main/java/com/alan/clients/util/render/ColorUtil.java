@@ -20,21 +20,21 @@ public final class ColorUtil {
         GL11.glColor4f(f1, f2, f3, f);
     }
 
-    public static void d(Color var0) {
-        GL11.glColor4f(var0.getRed() / 255.0F, var0.getGreen() / 255.0F, var0.getBlue() / 255.0F, var0.getAlpha() / 255.0F);
+    public static void d(Color color) {
+        GL11.glColor4f(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, color.getAlpha() / 255.0F);
     }
 
-    public static Color a(Color var0, float var1) {
+    public static Color a(Color color, float var1) {
         return new Color(
-            Math.max((int)(var0.getRed() * var1), 0), Math.max((int)(var0.getGreen() * var1), 0), Math.max((int)(var0.getBlue() * var1), 0), var0.getAlpha()
+            Math.max((int)(color.getRed() * var1), 0), Math.max((int)(color.getGreen() * var1), 0), Math.max((int)(color.getBlue() * var1), 0), color.getAlpha()
         );
     }
 
-    public static Color b(Color var0, float var1) {
-        int i = var0.getRed();
-        int j = var0.getGreen();
-        int k = var0.getBlue();
-        int l = var0.getAlpha();
+    public static Color b(Color color, float var1) {
+        int i = color.getRed();
+        int j = color.getGreen();
+        int k = color.getBlue();
+        int l = color.getAlpha();
         int i1 = (int)(1.0F / (1.0F - var1));
         if (i == 0 && j == 0 && k == 0) {
             return new Color(i1, i1, i1, l);
@@ -55,32 +55,32 @@ public final class ColorUtil {
         return new Color(Math.min((int)(i / var1), 255), Math.min((int)(j / var1), 255), Math.min((int)(k / var1), 255), l);
     }
 
-    public static Color a(Color var0, int var1) {
-        return new Color(var1, var0.getGreen(), var0.getBlue());
+    public static Color a(Color color, int var1) {
+        return new Color(var1, color.getGreen(), color.getBlue());
     }
 
-    public static Color b(Color var0, int var1) {
-        return new Color(var0.getRed(), var1, var0.getBlue());
+    public static Color b(Color color, int var1) {
+        return new Color(color.getRed(), var1, color.getBlue());
     }
 
-    public static Color c(Color var0, int var1) {
-        return new Color(var0.getRed(), var0.getGreen(), var1);
+    public static Color c(Color color, int var1) {
+        return new Color(color.getRed(), color.getGreen(), var1);
     }
 
-    public static Color d(Color var0, int var1) {
-        return var1 == var0.getAlpha() ? var0 : new Color(var0.getRed(), var0.getGreen(), var0.getBlue(), (int)MathUtil.c(0.0, 255.0, var1));
+    public static Color d(Color color, int var1) {
+        return var1 == color.getAlpha() ? color : new Color(color.getRed(), color.getGreen(), color.getBlue(), (int)MathUtil.c(0.0, 255.0, var1));
     }
 
-    public static Color a(Color var0, Color var1, double var2) {
+    public static Color a(Color color, Color var1, double var2) {
         double d0 = 1.0 - var2;
-        int i = (int)(var0.getRed() * var2 + var1.getRed() * d0);
-        int j = (int)(var0.getGreen() * var2 + var1.getGreen() * d0);
-        int k = (int)(var0.getBlue() * var2 + var1.getBlue() * d0);
+        int i = (int)(color.getRed() * var2 + var1.getRed() * d0);
+        int j = (int)(color.getGreen() * var2 + var1.getGreen() * d0);
+        int k = (int)(color.getBlue() * var2 + var1.getBlue() * d0);
         return new Color(i, j, k);
     }
 
-    public static double k(Vector2d var0) {
-        return Math.sin(System.currentTimeMillis() / 600.0 + var0.getX() * 0.005 + var0.getY() * 0.06) * 0.5 + 0.5;
+    public static double k(Vector2d vector2d) {
+        return Math.sin(System.currentTimeMillis() / 600.0 + vector2d.getX() * 0.005 + vector2d.getY() * 0.06) * 0.5 + 0.5;
     }
 
     public static Color aB(int var0) {

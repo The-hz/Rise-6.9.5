@@ -19,17 +19,17 @@ public class OutlineShader extends aix {
     }
 
     @Override
-    public void a(aiz var1, float var2, List<Runnable> var3) {
+    public void a(aiz var1, float var2, List<Runnable> runnables) {
         if (Display.isVisible()) {
             switch (var1) {
                 case CAMERA:
                     this.update();
-                    this.setActive(!var3.isEmpty());
+                    this.setActive(!runnables.isEmpty());
                     if (this.isActive()) {
                         RendererLivingEntity.bWd = 0.0F;
                         RendererLivingEntity.bWe = 0.0F;
                         this.aPV.bindFramebuffer(true);
-                        var3.forEach(Runnable::run);
+                        runnables.forEach(Runnable::run);
                         aEg.getFramebuffer().bindFramebuffer(true);
                         RendererLivingEntity.bWd = 64.0F;
                         RendererLivingEntity.bWe = 32.0F;
@@ -38,10 +38,10 @@ public class OutlineShader extends aix {
                     }
                     break;
                 case OVERLAY:
-                    this.setActive(this.isActive() || !var3.isEmpty());
+                    this.setActive(this.isActive() || !runnables.isEmpty());
                     if (this.isActive()) {
                         this.aPV.bindFramebuffer(true);
-                        var3.forEach(Runnable::run);
+                        runnables.forEach(Runnable::run);
                         int i = this.aQj.getProgramId();
                         aEg.getFramebuffer().bindFramebuffer(true);
                         this.aQj.rt();

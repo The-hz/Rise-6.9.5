@@ -44,26 +44,26 @@ public final class PlayerUtil implements InstanceAccess {
         return aEg.theWorld.getBlockState(new BlockPos(var0, var2, var4)).getBlock();
     }
 
-    public static Block block(BlockPos var0) {
-        return aEg.theWorld.getBlockState(var0).getBlock();
+    public static Block block(BlockPos pos) {
+        return aEg.theWorld.getBlockState(pos).getBlock();
     }
 
-    public static Block a(Vec3i var0) {
-        return block(new BlockPos(var0));
+    public static Block a(Vec3i vec) {
+        return block(new BlockPos(vec));
     }
 
     public static Block c(aka var0) {
         return o(var0.getX(), var0.getY(), var0.getZ());
     }
 
-    public static Block a(Vector3d var0) {
-        return block(new BlockPos(new Vec3i(var0.x, var0.y, var0.z)));
+    public static Block a(Vector3d vec3) {
+        return block(new BlockPos(new Vec3i(vec3.x, vec3.y, vec3.z)));
     }
 
-    public static double distance(BlockPos var0, BlockPos var1) {
-        double d0 = var0.getX() - var1.getX();
-        double d1 = var0.getY() - var1.getY();
-        double d2 = var0.getZ() - var1.getZ();
+    public static double distance(BlockPos pos, BlockPos var1) {
+        double d0 = pos.getX() - var1.getX();
+        double d1 = pos.getY() - var1.getY();
+        double d2 = pos.getZ() - var1.getZ();
         return d0 * d0 + d1 * d1 + d2 * d2;
     }
 
@@ -92,17 +92,17 @@ public final class PlayerUtil implements InstanceAccess {
         return p(-Math.sin(MoveUtil.direction()) * var0, var2, Math.cos(MoveUtil.direction()) * var0);
     }
 
-    public static String g(EntityPlayer var0) {
-        return var0.getName();
+    public static String g(EntityPlayer player) {
+        return player.getName();
     }
 
     public static String name() {
         return aEg.thePlayer.getName();
     }
 
-    public static boolean sameTeam(EntityLivingBase var0) {
-        if (var0.getTeam() != null && aEg.thePlayer.getTeam() != null) {
-            char c0 = var0.getDisplayName().getFormattedText().charAt(1);
+    public static boolean sameTeam(EntityLivingBase living) {
+        if (living.getTeam() != null && aEg.thePlayer.getTeam() != null) {
+            char c0 = living.getDisplayName().getFormattedText().charAt(1);
             char c1 = aEg.thePlayer.getDisplayName().getFormattedText().charAt(1);
             return c0 == c1;
         }
@@ -209,11 +209,11 @@ public final class PlayerUtil implements InstanceAccess {
         return false;
     }
 
-    public static boolean a(int var0, Material var1) {
+    public static boolean a(int var0, Material material) {
         for (int i = -var0; i <= var0; i++) {
             for (int j = -var0; j <= var0; j++) {
                 for (int k = -var0; k <= var0; k++) {
-                    if (p(i, j, k).getMaterial().equals(var1)) {
+                    if (p(i, j, k).getMaterial().equals(material)) {
                         return true;
                     }
                 }
@@ -285,15 +285,15 @@ public final class PlayerUtil implements InstanceAccess {
         return flag;
     }
 
-    public static aib e(Vec3 var0) {
-        return a(var0, false);
+    public static aib e(Vec3 vec) {
+        return a(vec, false);
     }
 
-    public static aib a(Vec3 var0, boolean var1) {
+    public static aib a(Vec3 vec, boolean var1) {
         ArrayList arraylist = new ArrayList();
 
         for (byte b0 = -1; b0 <= 1; b0 += 2) {
-            if (!o(var0.xCoord, var0.yCoord, var0.zCoord + b0).isReplaceable(aEg.theWorld, new BlockPos(var0.xCoord, var0.yCoord, var0.zCoord + b0))) {
+            if (!o(vec.xCoord, vec.yCoord, vec.zCoord + b0).isReplaceable(aEg.theWorld, new BlockPos(vec.xCoord, vec.yCoord, vec.zCoord + b0))) {
                 if (b0 < 0) {
                     arraylist.add(new aib(EnumFacing.SOUTH, new Vec3(0.0, 0.0, b0)));
                 } else {
@@ -303,7 +303,7 @@ public final class PlayerUtil implements InstanceAccess {
         }
 
         for (byte b1 = -1; b1 <= 1; b1 += 2) {
-            if (!o(var0.xCoord + b1, var0.yCoord, var0.zCoord).isReplaceable(aEg.theWorld, new BlockPos(var0.xCoord + b1, var0.yCoord, var0.zCoord))) {
+            if (!o(vec.xCoord + b1, vec.yCoord, vec.zCoord).isReplaceable(aEg.theWorld, new BlockPos(vec.xCoord + b1, vec.yCoord, vec.zCoord))) {
                 if (b1 > 0) {
                     arraylist.add(new aib(EnumFacing.WEST, new Vec3(b1, 0.0, 0.0)));
                 } else {
@@ -322,7 +322,7 @@ public final class PlayerUtil implements InstanceAccess {
         }
 
         for (byte b2 = -1; b2 <= 1; b2 += 2) {
-            if (!o(var0.xCoord, var0.yCoord + b2, var0.zCoord).isReplaceable(aEg.theWorld, new BlockPos(var0.xCoord, var0.yCoord + b2, var0.zCoord))) {
+            if (!o(vec.xCoord, vec.yCoord + b2, vec.zCoord).isReplaceable(aEg.theWorld, new BlockPos(vec.xCoord, vec.yCoord + b2, vec.zCoord))) {
                 if (b2 < 0) {
                     return new aib(EnumFacing.UP, new Vec3(0.0, b2, 0.0));
                 }
@@ -407,27 +407,27 @@ public final class PlayerUtil implements InstanceAccess {
         return arraylist.isEmpty() ? null : (Vec3)arraylist.getFirst();
     }
 
-    public static EntityOtherPlayerMP c(EntityOtherPlayerMP var0) {
-        EntityOtherPlayerMP entityotherplayermp = new EntityOtherPlayerMP(var0.getEntityWorld(), var0.getGameProfile());
-        entityotherplayermp.motionX = var0.motionX;
-        entityotherplayermp.motionY = var0.motionY;
-        entityotherplayermp.motionZ = var0.motionZ;
-        entityotherplayermp.pl = var0.pl;
-        entityotherplayermp.setEntityId(var0.getEntityId());
-        entityotherplayermp.lastTickPosX = var0.lastTickPosX;
-        entityotherplayermp.lastTickPosY = var0.lastTickPosY;
-        entityotherplayermp.lastTickPosZ = var0.lastTickPosZ;
-        entityotherplayermp.setPosition(var0.posX, var0.posY, var0.posZ);
+    public static EntityOtherPlayerMP c(EntityOtherPlayerMP other) {
+        EntityOtherPlayerMP entityotherplayermp = new EntityOtherPlayerMP(other.getEntityWorld(), other.getGameProfile());
+        entityotherplayermp.motionX = other.motionX;
+        entityotherplayermp.motionY = other.motionY;
+        entityotherplayermp.motionZ = other.motionZ;
+        entityotherplayermp.pl = other.pl;
+        entityotherplayermp.setEntityId(other.getEntityId());
+        entityotherplayermp.lastTickPosX = other.lastTickPosX;
+        entityotherplayermp.lastTickPosY = other.lastTickPosY;
+        entityotherplayermp.lastTickPosZ = other.lastTickPosZ;
+        entityotherplayermp.setPosition(other.posX, other.posY, other.posZ);
         return entityotherplayermp;
     }
 
-    public static double v(Entity var0) {
-        if (var0 != null && aEg.thePlayer != null) {
-            AxisAlignedBB axisalignedbb = var0.getEntityBoundingBox();
-            if (axisalignedbb != null && !axisalignedbb.hasNaN() && w(var0)) {
+    public static double v(Entity entity) {
+        if (entity != null && aEg.thePlayer != null) {
+            AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox();
+            if (axisalignedbb != null && !axisalignedbb.hasNaN() && w(entity)) {
                 Vec3 vec3 = aEg.thePlayer.getPositionEyes(1.0F);
                 if (af(vec3.xCoord) && af(vec3.yCoord) && af(vec3.zCoord)) {
-                    Vector2f vector2f = RotationUtil.y(var0);
+                    Vector2f vector2f = RotationUtil.y(entity);
                     if (vector2f != null && af(vector2f.getX()) && af(vector2f.getY())) {
                         Vec3 vec31 = aEg.thePlayer.getVectorForRotation(vector2f.getY(), vector2f.getX());
                         if (af(vec31.xCoord) && af(vec31.yCoord) && af(vec31.zCoord)) {
@@ -435,28 +435,28 @@ public final class PlayerUtil implements InstanceAccess {
                                 .calculateIntercept(vec3, vec3.addVector(vec31.xCoord * 1000.0, vec31.yCoord * 1000.0, vec31.zCoord * 1000.0));
                             if (movingobjectposition != null && movingobjectposition.hitVec != null) {
                                 double d0 = movingobjectposition.hitVec.distanceTo(vec3);
-                                return af(d0) ? d0 : aEg.thePlayer.getDistanceToEntity(var0);
+                                return af(d0) ? d0 : aEg.thePlayer.getDistanceToEntity(entity);
                             }
-                            return aEg.thePlayer.getDistanceToEntity(var0);
+                            return aEg.thePlayer.getDistanceToEntity(entity);
                         } else {
-                            return aEg.thePlayer.getDistanceToEntity(var0);
+                            return aEg.thePlayer.getDistanceToEntity(entity);
                         }
                     } else {
-                        return aEg.thePlayer.getDistanceToEntity(var0);
+                        return aEg.thePlayer.getDistanceToEntity(entity);
                     }
                 } else {
-                    return aEg.thePlayer.getDistanceToEntity(var0);
+                    return aEg.thePlayer.getDistanceToEntity(entity);
                 }
             } else {
-                return aEg.thePlayer.getDistanceToEntity(var0);
+                return aEg.thePlayer.getDistanceToEntity(entity);
             }
         } else {
             return Double.MAX_VALUE;
         }
     }
 
-    private static boolean w(Entity var0) {
-        return af(var0.posX) && af(var0.posY) && af(var0.posZ);
+    private static boolean w(Entity entity) {
+        return af(entity.posX) && af(entity.posY) && af(entity.posZ);
     }
 
     private static boolean af(double var0) {

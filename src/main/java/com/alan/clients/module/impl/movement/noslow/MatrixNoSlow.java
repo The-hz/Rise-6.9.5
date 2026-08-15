@@ -83,7 +83,7 @@ public class MatrixNoSlow extends Mode<NoSlow> {
         }
     };
 
-    public MatrixNoSlow(String var1, NoSlow var2) {
-        super(var1, var2);
+    public MatrixNoSlow(String var1, NoSlow noSlow) {
+        super(var1, noSlow);
     }
 }

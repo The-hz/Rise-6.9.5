@@ -75,10 +75,10 @@ public class gf {
         return this.kM;
     }
 
-    private static void a(AtomicInteger var0, Integer var1, LinkedHashMap var2) {
+    private static void a(AtomicInteger atomicInteger, Integer var1, LinkedHashMap var2) {
         var2.values().forEach(var1x -> {
             if (((ge)var1x).dU() != null && !((ge)var1x).dT().isEmpty()) {
-                var0.getAndIncrement();
+                atomicInteger.getAndIncrement();
             }
         });
     }

@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class xn extends ArrayList<KeyStroke> {
     final KeyStrokes aoQ;
 
-    public xn(KeyStrokes var1) {
-        this.aoQ = var1;
+    public xn(KeyStrokes keyStrokes) {
+        this.aoQ = keyStrokes;
         this.add(new KeyStroke(new Vector2f(25.0F, 0.0F), InstanceAccess.aEg.gameSettings.keyBindForward));
         this.add(new KeyStroke(new Vector2f(0.0F, 25.0F), InstanceAccess.aEg.gameSettings.keyBindLeft));
         this.add(new KeyStroke(new Vector2f(50.0F, 25.0F), InstanceAccess.aEg.gameSettings.keyBindRight));

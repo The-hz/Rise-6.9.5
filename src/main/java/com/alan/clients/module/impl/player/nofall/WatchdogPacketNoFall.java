@@ -84,7 +84,7 @@ public class WatchdogPacketNoFall extends Mode<NoFall> {
         }
     };
 
-    public WatchdogPacketNoFall(String var1, NoFall var2) {
-        super(var1, var2);
+    public WatchdogPacketNoFall(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 }

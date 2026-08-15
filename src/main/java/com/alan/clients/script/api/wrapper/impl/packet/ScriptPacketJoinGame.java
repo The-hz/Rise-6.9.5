@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S01PacketJoinGame;
 
 public class ScriptPacketJoinGame extends ScriptPacket<S01PacketJoinGame> {
-    public ScriptPacketJoinGame(S01PacketJoinGame var1) {
-        super(var1);
+    public ScriptPacketJoinGame(S01PacketJoinGame packet) {
+        super(packet);
     }
 
     public int getEntityId() {

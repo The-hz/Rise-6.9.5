@@ -27,14 +27,14 @@ public class aeq extends AltAccount {
     }
 
     @Override
-    public void b(JsonObject var1) {
-        super.b(var1);
-        if (var1.has("orderId")) {
-            this.aFf = var1.get("orderId").getAsString();
+    public void b(JsonObject json) {
+        super.b(json);
+        if (json.has("orderId")) {
+            this.aFf = json.get("orderId").getAsString();
         }
 
-        if (var1.has("purchaseDate")) {
-            this.aFg = var1.get("purchaseDate").getAsLong();
+        if (json.has("purchaseDate")) {
+            this.aFg = json.get("purchaseDate").getAsLong();
         }
     }
 

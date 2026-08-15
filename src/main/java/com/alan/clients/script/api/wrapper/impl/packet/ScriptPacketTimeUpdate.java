@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S03PacketTimeUpdate;
 
 public class ScriptPacketTimeUpdate extends ScriptPacket<S03PacketTimeUpdate> {
-    public ScriptPacketTimeUpdate(S03PacketTimeUpdate var1) {
-        super(var1);
+    public ScriptPacketTimeUpdate(S03PacketTimeUpdate packet) {
+        super(packet);
     }
 
     public long getTotalWorldTime() {

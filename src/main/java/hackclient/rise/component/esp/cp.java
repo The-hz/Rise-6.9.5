@@ -14,13 +14,13 @@ import org.lwjgl.opengl.GL11;
 public class cp extends ESP implements InstanceAccess {
     int hV = 255;
 
-    public cp(ESPColor var1) {
-        super(var1);
+    public cp(ESPColor espColor) {
+        super(espColor);
     }
 
-    public cp(EntityLivingBase var1, ESPColor var2) {
-        super(var2);
-        this.target = var1;
+    public cp(EntityLivingBase target, ESPColor espColor) {
+        super(espColor);
+        this.target = target;
     }
 
     @Override

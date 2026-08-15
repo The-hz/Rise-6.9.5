@@ -26,8 +26,8 @@ public final class Render2DEvent implements Event {
     }
 
     @Generated
-    public Render2DEvent(ScaledResolution var1, float var2) {
-        this.scaledResolution = var1;
-        this.partialTicks = var2;
+    public Render2DEvent(ScaledResolution scaledResolution, float partialTicks) {
+        this.scaledResolution = scaledResolution;
+        this.partialTicks = partialTicks;
     }
 }

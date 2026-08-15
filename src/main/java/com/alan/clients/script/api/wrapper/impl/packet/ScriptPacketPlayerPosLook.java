@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 
 public class ScriptPacketPlayerPosLook extends ScriptPacket<S08PacketPlayerPosLook> {
-    public ScriptPacketPlayerPosLook(S08PacketPlayerPosLook var1) {
-        super(var1);
+    public ScriptPacketPlayerPosLook(S08PacketPlayerPosLook packet) {
+        super(packet);
     }
 
     public double getX() {
@@ -43,7 +43,7 @@ public class ScriptPacketPlayerPosLook extends ScriptPacket<S08PacketPlayerPosLo
         this.wrapped.yaw = var1;
     }
 
-    public void setPitch(float var1) {
-        this.wrapped.pitch = var1;
+    public void setPitch(float pitch) {
+        this.wrapped.pitch = pitch;
     }
 }

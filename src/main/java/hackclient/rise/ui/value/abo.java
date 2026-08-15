@@ -34,8 +34,8 @@ public class abo extends ValueComponent {
     }
 
     @Override
-    public void draw(Vector2d var1, int var2, int var3, float var4) {
-        this.position = var1;
+    public void draw(Vector2d position, int var2, int var3, float var4) {
+        this.position = position;
         this.aza = 105.0;
         this.azb = 120.0;
         ColorValue colorvalue = (ColorValue)this.value;

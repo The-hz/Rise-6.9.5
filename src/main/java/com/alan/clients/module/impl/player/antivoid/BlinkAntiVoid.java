@@ -37,7 +37,7 @@ public class BlinkAntiVoid extends Mode<AntiVoid> {
         }
     };
 
-    public BlinkAntiVoid(String var1, AntiVoid var2) {
-        super(var1, var2);
+    public BlinkAntiVoid(String var1, AntiVoid antiVoid) {
+        super(var1, antiVoid);
     }
 }

@@ -121,7 +121,7 @@ public final class ModernSessionStats extends Mode<SessionStats> {
     @EventLink
     public final Listener<ServerJoinEvent> onServerJoin = var1x -> this.atK = new zt(0, 0, 0, 0, 0.0, 0.0);
 
-    public ModernSessionStats(String var1, SessionStats var2) {
-        super(var1, var2);
+    public ModernSessionStats(String var1, SessionStats sessionStats) {
+        super(var1, sessionStats);
     }
 }

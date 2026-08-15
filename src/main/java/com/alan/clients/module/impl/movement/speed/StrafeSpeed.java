@@ -32,7 +32,7 @@ public final class StrafeSpeed extends Mode<Speed> {
     @EventLink
     public final Listener<MoveInputEvent> onMove = var0 -> var0.setJump(false);
 
-    public StrafeSpeed(String var1, Speed var2) {
-        super(var1, var2);
+    public StrafeSpeed(String var1, Speed speed) {
+        super(var1, speed);
     }
 }

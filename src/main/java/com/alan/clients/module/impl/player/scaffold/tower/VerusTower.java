@@ -23,7 +23,7 @@ public class VerusTower extends Mode<Scaffold> {
         }
     };
 
-    public VerusTower(String var1, Scaffold var2) {
-        super(var1, var2);
+    public VerusTower(String var1, Scaffold scaffold) {
+        super(var1, scaffold);
     }
 }

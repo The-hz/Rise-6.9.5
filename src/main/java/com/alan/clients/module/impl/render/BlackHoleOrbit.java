@@ -86,15 +86,15 @@ public final class BlackHoleOrbit extends Module {
         }
     }
 
-    private void d(Vector2d var1) {
-        RenderUtil.roundedRectangle(var1.x, var1.y, 190.0, 135.0, this.ll(), Color.BLACK);
+    private void d(Vector2d vector2d) {
+        RenderUtil.roundedRectangle(vector2d.x, vector2d.y, 190.0, 135.0, this.ll(), Color.BLACK);
     }
 
-    private void e(Vector2d var1) {
+    private void e(Vector2d vector2d) {
         double d0 = this.ll();
-        RenderUtil.roundedRectangle(var1.x + 0.5, var1.y + 0.5, 189.0, 134.0, d0, this.rz().rE());
-        double d1 = var1.x + 10.0;
-        double d2 = var1.y + 28.0;
+        RenderUtil.roundedRectangle(vector2d.x + 0.5, vector2d.y + 0.5, 189.0, 134.0, d0, this.rz().rE());
+        double d1 = vector2d.x + 10.0;
+        double d2 = vector2d.y + 28.0;
         double d3 = d1 + 85.0;
         double d4 = d2 + 52.38;
         Color color = ColorUtil.d(this.rz().rA(), 55);
@@ -337,12 +337,12 @@ public final class BlackHoleOrbit extends Module {
         }
     }
 
-    private void a(double var1, double var3, double var5, double var7, double var9, Color var11) {
+    private void a(double var1, double var3, double var5, double var7, double var9, Color color) {
         GlStateManager.pushMatrix();
         GlStateManager.translate(var1, var3, 0.0);
         GlStateManager.rotate((float)Math.toDegrees(var9), 0.0F, 0.0F, 1.0F);
         RenderUtil.rt();
-        ColorUtil.d(var11);
+        ColorUtil.d(color);
         GL11.glBegin(6);
         GL11.glVertex2d(0.0, 0.0);
 

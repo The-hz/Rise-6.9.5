@@ -57,8 +57,8 @@ public final class SkyCaveFlight extends Mode<Flight> {
         }
     };
 
-    public SkyCaveFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public SkyCaveFlight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

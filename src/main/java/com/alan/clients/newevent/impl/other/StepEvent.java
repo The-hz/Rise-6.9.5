@@ -12,7 +12,7 @@ public final class StepEvent implements Event {
     }
 
     @Generated
-    public StepEvent(double var1) {
-        this.height = var1;
+    public StepEvent(double height) {
+        this.height = height;
     }
 }

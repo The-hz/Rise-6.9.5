@@ -12,13 +12,13 @@ import net.minecraft.util.AxisAlignedBB;
 import org.lwjgl.opengl.GL11;
 
 public class co extends ESP implements InstanceAccess {
-    public co(ESPColor var1) {
-        super(var1);
+    public co(ESPColor espColor) {
+        super(espColor);
     }
 
-    public co(EntityLivingBase var1, ESPColor var2) {
-        super(var2);
-        this.target = var1;
+    public co(EntityLivingBase target, ESPColor espColor) {
+        super(espColor);
+        this.target = target;
     }
 
     @Override

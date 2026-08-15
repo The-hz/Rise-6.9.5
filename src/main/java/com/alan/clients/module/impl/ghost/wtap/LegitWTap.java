@@ -30,7 +30,7 @@ public class LegitWTap extends Mode<WTap> {
         }
     };
 
-    public LegitWTap(String var1, WTap var2) {
-        super(var1, var2);
+    public LegitWTap(String var1, WTap wTap) {
+        super(var1, wTap);
     }
 }

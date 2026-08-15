@@ -18,7 +18,7 @@ public class VulcanNoFall extends Mode<NoFall> {
         }
     };
 
-    public VulcanNoFall(String var1, NoFall var2) {
-        super(var1, var2);
+    public VulcanNoFall(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 }

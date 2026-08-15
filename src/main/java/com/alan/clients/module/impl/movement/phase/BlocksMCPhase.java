@@ -61,8 +61,8 @@ public class BlocksMCPhase extends Mode<Phase> {
     @EventLink
     public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = var0 -> var0.setCancelled();
 
-    public BlocksMCPhase(String var1, Phase var2) {
-        super(var1, var2);
+    public BlocksMCPhase(String var1, Phase phase) {
+        super(var1, phase);
     }
 
     @Override

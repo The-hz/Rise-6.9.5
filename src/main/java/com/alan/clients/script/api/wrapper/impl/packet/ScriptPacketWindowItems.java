@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S30PacketWindowItems;
 
 public class ScriptPacketWindowItems extends ScriptPacket<S30PacketWindowItems> {
-    public ScriptPacketWindowItems(S30PacketWindowItems var1) {
-        super(var1);
+    public ScriptPacketWindowItems(S30PacketWindowItems packet) {
+        super(packet);
     }
 
     public int getWindowId() {

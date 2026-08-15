@@ -33,8 +33,8 @@ public final class FlightPrediction extends Check {
     private boolean af;
     private boolean ag;
 
-    public FlightPrediction(PlayerData var1) {
-        super(var1);
+    public FlightPrediction(PlayerData playerData) {
+        super(playerData);
 
         for (int i = 0; i < this.aa; i++) {
             double d0 = 0.42F;
@@ -49,8 +49,8 @@ public final class FlightPrediction extends Check {
     }
 
     @Override
-    public void handle(Packet<?> var1) {
-        if (PacketUtil.b(var1) && ((S14PacketEntity)var1).entityId == this.data.getPlayer().getEntityId() || var1 instanceof z && ((z)var1).cqK == this.data.getPlayer().getEntityId()) {
+    public void handle(Packet<?> packet) {
+        if (PacketUtil.b(packet) && ((S14PacketEntity)packet).entityId == this.data.getPlayer().getEntityId() || packet instanceof z && ((z)packet).cqK == this.data.getPlayer().getEntityId()) {
             EntityOtherPlayerMP entityotherplayermp = this.data.getPlayer();
             if (!this.af && this.data.ae() <= 20) {
                 this.af = true;

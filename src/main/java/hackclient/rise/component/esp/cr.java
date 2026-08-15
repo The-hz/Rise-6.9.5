@@ -59,8 +59,8 @@ public class cr extends ESP implements InstanceAccess
         });
     }
 
-    public cr(final ESPColor cn) {
-        super(cn);
+    public cr(final ESPColor espColor) {
+        super(espColor);
     }
 
     static {

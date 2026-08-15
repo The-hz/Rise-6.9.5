@@ -27,7 +27,7 @@ public class BloomShader extends aix {
     }
 
     @Override
-    public void a(aiz var1, float var2, List<Runnable> var3) {
+    public void a(aiz var1, float var2, List<Runnable> runnables) {
         if (Display.isVisible()) {
             boolean flag = System.getProperty("os.name").toLowerCase().contains("mac");
             switch (var1) {
@@ -36,7 +36,7 @@ public class BloomShader extends aix {
                     RendererLivingEntity.bWe = 0.0F;
                     this.aPV.bindFramebuffer(true);
 
-                    for (Runnable runnable : var3) {
+                    for (Runnable runnable : runnables) {
                         runnable.run();
                     }
 
@@ -49,7 +49,7 @@ public class BloomShader extends aix {
                 case OVERLAY:
                     this.aPV.bindFramebuffer(true);
 
-                    for (Runnable runnable1 : var3) {
+                    for (Runnable runnable1 : runnables) {
                         runnable1.run();
                     }
 

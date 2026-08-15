@@ -5,8 +5,8 @@ import com.alan.clients.script.api.wrapper.impl.ScriptModule;
 import com.alan.clients.script.api.wrapper.impl.event.ScriptEvent;
 
 public class ScriptModuleToggleEvent extends ScriptEvent<ModuleToggleEvent> {
-    public ScriptModuleToggleEvent(ModuleToggleEvent var1) {
-        super(var1);
+    public ScriptModuleToggleEvent(ModuleToggleEvent event) {
+        super(event);
     }
 
     public ScriptModule getModule() {

@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S2DPacketOpenWindow;
 
 public class ScriptPacketOpenWindow extends ScriptPacket<S2DPacketOpenWindow> {
-    public ScriptPacketOpenWindow(S2DPacketOpenWindow var1) {
-        super(var1);
+    public ScriptPacketOpenWindow(S2DPacketOpenWindow packet) {
+        super(packet);
     }
 
     public int getWindowId() {

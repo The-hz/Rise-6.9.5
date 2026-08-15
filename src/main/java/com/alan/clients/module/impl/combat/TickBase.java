@@ -132,12 +132,12 @@ public final class TickBase extends Module {
     public TickBase() {
     }
 
-    int j(Entity var1) {
+    int j(Entity entity) {
         byte b0 = 10;
         aka aka = new aka(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
 
         int i;
-        for (i = 0; i < b0 && var1.getDistance(aka.x, aka.y, aka.z) > 4.4; i++) {
+        for (i = 0; i < b0 && entity.getDistance(aka.x, aka.y, aka.z) > 4.4; i++) {
             aka = MoveUtil.a(
                 aka,
                 new aka(aEg.thePlayer.motionX, 0.0, aEg.thePlayer.motionZ),
@@ -149,14 +149,14 @@ public final class TickBase extends Module {
         return i == b0 ? -1 : i;
     }
 
-    aka k(Entity var1) {
-        aka aka = new aka(var1.posX, var1.posY, var1.posZ);
+    aka k(Entity entity) {
+        aka aka = new aka(entity.posX, entity.posY, entity.posZ);
 
         for (int i = 0; i <= PingSpoofComponent.getPing() / 50L; i++) {
-            double d0 = var1.posX - var1.lastTickPosX;
-            double d1 = var1.posZ - var1.lastTickPosZ;
+            double d0 = entity.posX - entity.lastTickPosX;
+            double d1 = entity.posZ - entity.lastTickPosZ;
             int j = d1 == 0.0 && d0 == 0.0 ? 0 : 1;
-            aka = MoveUtil.a(aka, new aka(d0, 0.0, d1), var1.pl, new Vector2f(0.0F, j));
+            aka = MoveUtil.a(aka, new aka(d0, 0.0, d1), entity.pl, new Vector2f(0.0F, j));
         }
 
         return aka;

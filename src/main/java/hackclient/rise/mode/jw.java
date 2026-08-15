@@ -66,8 +66,8 @@ public class jw extends Mode<Disabler> {
     @EventLink
     public final Listener<BlockAABBEvent> onBlockAABB = var0 -> var0.dh();
 
-    public jw(String var1, Disabler var2) {
-        super(var1, var2);
+    public jw(String var1, Disabler disabler) {
+        super(var1, disabler);
     }
 
     @Override

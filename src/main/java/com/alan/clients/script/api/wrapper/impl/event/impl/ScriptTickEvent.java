@@ -4,8 +4,8 @@ import com.alan.clients.newevent.impl.other.TickEvent;
 import com.alan.clients.script.api.wrapper.impl.event.ScriptEvent;
 
 public class ScriptTickEvent extends ScriptEvent<TickEvent> {
-    public ScriptTickEvent(TickEvent var1) {
-        super(var1);
+    public ScriptTickEvent(TickEvent event) {
+        super(event);
     }
 
     @Override

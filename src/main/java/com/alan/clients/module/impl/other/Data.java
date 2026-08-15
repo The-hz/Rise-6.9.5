@@ -198,12 +198,12 @@ public final class Data extends Module {
         }
     }
 
-    public Vector2f s(Entity var1) {
-        return this.a(aEg.thePlayer, var1);
+    public Vector2f s(Entity entity) {
+        return this.a(aEg.thePlayer, entity);
     }
 
-    public Vector2f a(Entity var1, Entity var2) {
-        Vector2f vector2f = RotationUtil.c(var1.Ty().v(0.0, var1.getEyeHeight(), 0.0), var2.Ty().v(0.0, aEg.thePlayer.getEyeHeight(), 0.0));
+    public Vector2f a(Entity entity, Entity var2) {
+        Vector2f vector2f = RotationUtil.c(entity.Ty().v(0.0, entity.getEyeHeight(), 0.0), var2.Ty().v(0.0, aEg.thePlayer.getEyeHeight(), 0.0));
         if (vector2f.y == 0.0F) {
             vector2f.y = Math.abs(vector2f.getY());
         }

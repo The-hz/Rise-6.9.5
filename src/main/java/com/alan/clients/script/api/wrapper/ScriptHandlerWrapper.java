@@ -10,8 +10,8 @@ public abstract class ScriptHandlerWrapper<T> extends ScriptWrapper<T> {
         super(var1);
     }
 
-    public void handle(String var1, JSObject var2) {
-        this.handler.handle(var1, var2);
+    public void handle(String var1, JSObject jsObject) {
+        this.handler.handle(var1, jsObject);
     }
 
     public void unhandle(String var1) {

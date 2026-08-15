@@ -181,27 +181,27 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         }
     };
 
-    public ModernTargetInfo(String var1, TargetInfo var2) {
-        super(var1, var2);
+    public ModernTargetInfo(String var1, TargetInfo targetInfo) {
+        super(var1, targetInfo);
     }
 
-    private float a(ItemStack var1, Entity var2, Entity var3) {
+    private float a(ItemStack stack, Entity entity, Entity var3) {
         float f = 1.0F;
-        if (var1 != null) {
-            Item item = var1.getItem();
+        if (stack != null) {
+            Item item = stack.getItem();
             if (item instanceof ItemSword) {
                 f = ((ItemSword)item).attackDamage;
             } else if (item instanceof ItemTool) {
                 f = ((ItemTool)item).damageVsEntity;
             }
 
-            int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, var1);
+            int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, stack);
             if (i > 0) {
                 f += i * 1.25F;
             }
         }
 
-        if (var2 instanceof EntityLivingBase entitylivingbase) {
+        if (entity instanceof EntityLivingBase entitylivingbase) {
             int j = entitylivingbase.getActivePotionEffect(Potion.damageBoost) != null
                 ? entitylivingbase.getActivePotionEffect(Potion.damageBoost).getAmplifier() + 1
                 : 0;
@@ -236,11 +236,11 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         return Math.max(0.01F, f);
     }
 
-    private int C(EntityLivingBase var1) {
+    private int C(EntityLivingBase living) {
         int i = 0;
 
         for (int j = 0; j < 4; j++) {
-            ItemStack itemstack = var1.getCurrentArmor(j);
+            ItemStack itemstack = living.getCurrentArmor(j);
             int k = itemstack != null ? EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, itemstack) : 0;
             if (k > 0) {
                 i += this.T(k);
@@ -290,7 +290,7 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         return i >= 256 ? f3 - f4 : f - f2;
     }
 
-    private void renderTargetHead(AbstractClientPlayer var1, double var2, double var4, double var6) {
+    private void renderTargetHead(AbstractClientPlayer abstractClientPlayer, double var2, double var4, double var6) {
         ais.vK();
         ais.vL();
         RenderUtil.roundedRectangle(var2, var4, var6, var6, this.rz().getRound() * 2, Themes.rK());
@@ -300,8 +300,8 @@ public class ModernTargetInfo extends Mode<TargetInfo> {
         GlStateManager.alphaFunc(516, 0.0F);
         GlStateManager.enableTexture2D();
         HealthBypass healthbypass = this.e(HealthBypass.class);
-        float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(var1) : var1.getHealth();
-        ResourceLocation resourcelocation = this.targetInfoModule.inWorld && f > 0.0F ? var1.getLocationSkin() : RenderSkeleton.getEntityTexture();
+        float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractClientPlayer) : abstractClientPlayer.getHealth();
+        ResourceLocation resourcelocation = this.targetInfoModule.inWorld && f > 0.0F ? abstractClientPlayer.getLocationSkin() : RenderSkeleton.getEntityTexture();
         aEg.getTextureManager().bindTexture(resourcelocation);
         Gui.drawScaledCustomSizeModalRect(var2, var4, 4.0F, 4.0F, 4.0F, 4.0F, var6, var6, 32.0F, 32.0F);
         GlStateManager.disableBlend();

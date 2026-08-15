@@ -19,7 +19,7 @@ public final class Render3DEvent implements Event {
     }
 
     @Generated
-    public Render3DEvent(float var1) {
-        this.partialTicks = var1;
+    public Render3DEvent(float partialTicks) {
+        this.partialTicks = partialTicks;
     }
 }

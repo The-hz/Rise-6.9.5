@@ -308,7 +308,7 @@ public class Breaker extends Module {
         }
     }
 
-    private void a(AxisAlignedBB var1, Color var2) {
+    private void a(AxisAlignedBB box, Color color) {
         double d0 = aEg.getRenderManager().viewerPosX;
         double d1 = aEg.getRenderManager().viewerPosY;
         double d2 = aEg.getRenderManager().viewerPosZ;
@@ -320,8 +320,8 @@ public class Breaker extends Module {
         GlStateManager.disableDepth();
         GL11.glDepthMask(false);
         GL11.glLineWidth(1.5F);
-        RenderUtil.color(var2);
-        RenderGlobal.drawSelectionBoundingBox(var1.expand(0.002, 0.002, 0.002).offset(-d0, -d1, -d2));
+        RenderUtil.color(color);
+        RenderGlobal.drawSelectionBoundingBox(box.expand(0.002, 0.002, 0.002).offset(-d0, -d1, -d2));
         GL11.glDepthMask(true);
         GlStateManager.enableDepth();
         GlStateManager.enableTexture2D();
@@ -461,10 +461,10 @@ public class Breaker extends Module {
         return new aka(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5);
     }
 
-    private tg a(Vec3 var1, List<BlockPos> var2) {
+    private tg a(Vec3 vec, List<BlockPos> poses) {
         tg tgx = null;
 
-        for (tg tgx2 : this.b(var1, var2)) {
+        for (tg tgx2 : this.b(vec, poses)) {
             if (tgx == null || tgx2.aco < tgx.aco) {
                 tgx = tgx2;
             }
@@ -473,12 +473,12 @@ public class Breaker extends Module {
         return tgx;
     }
 
-    private List<tg> b(Vec3 var1, List<BlockPos> var2) {
+    private List<tg> b(Vec3 vec, List<BlockPos> poses) {
         ArrayList arraylist = new ArrayList();
 
-        for (BlockPos blockpos : var2) {
+        for (BlockPos blockpos : poses) {
             for (Vec3 vec3 : this.k(blockpos)) {
-                tg tg = this.a(var1, blockpos, vec3);
+                tg tg = this.a(vec, blockpos, vec3);
                 if (tg != null) {
                     arraylist.add(tg);
                 }
@@ -488,20 +488,20 @@ public class Breaker extends Module {
         return arraylist;
     }
 
-    private tg a(Vec3 var1, BlockPos var2, Vec3 var3) {
+    private tg a(Vec3 vec, BlockPos pos, Vec3 var3) {
         double d0 = this.range.wo().doubleValue();
         int i = this.surroundingLayers.wo().intValue();
         ArrayList arraylist = new ArrayList();
         double d1 = 0.0;
 
-        for (BlockPos blockpos : this.b(var1, var3)) {
-            if (this.a(var1, blockpos) > d0) {
+        for (BlockPos blockpos : this.b(vec, var3)) {
+            if (this.a(vec, blockpos) > d0) {
                 return null;
             }
 
-            if (blockpos.equals(var2)) {
-                arraylist.add(var2);
-                return new tg(var2, arraylist, d1);
+            if (blockpos.equals(pos)) {
+                arraylist.add(pos);
+                return new tg(pos, arraylist, d1);
             }
 
             if (!this.j(blockpos)) {
@@ -518,26 +518,26 @@ public class Breaker extends Module {
         return null;
     }
 
-    private List<BlockPos> b(Vec3 var1, Vec3 var2) {
+    private List<BlockPos> b(Vec3 vec, Vec3 var2) {
         ArrayList arraylist = new ArrayList();
-        int i = MathHelper.floor_double(var1.xCoord);
-        int j = MathHelper.floor_double(var1.yCoord);
-        int k = MathHelper.floor_double(var1.zCoord);
+        int i = MathHelper.floor_double(vec.xCoord);
+        int j = MathHelper.floor_double(vec.yCoord);
+        int k = MathHelper.floor_double(vec.zCoord);
         int l = MathHelper.floor_double(var2.xCoord);
         int i1 = MathHelper.floor_double(var2.yCoord);
         int j1 = MathHelper.floor_double(var2.zCoord);
-        double d0 = var2.xCoord - var1.xCoord;
-        double d1 = var2.yCoord - var1.yCoord;
-        double d2 = var2.zCoord - var1.zCoord;
+        double d0 = var2.xCoord - vec.xCoord;
+        double d1 = var2.yCoord - vec.yCoord;
+        double d2 = var2.zCoord - vec.zCoord;
         int k1 = d0 > 0.0 ? 1 : (d0 < 0.0 ? -1 : 0);
         int l1 = d1 > 0.0 ? 1 : (d1 < 0.0 ? -1 : 0);
         int i2 = d2 > 0.0 ? 1 : (d2 < 0.0 ? -1 : 0);
         double d3 = k1 == 0 ? Double.MAX_VALUE : 1.0 / Math.abs(d0);
         double d4 = l1 == 0 ? Double.MAX_VALUE : 1.0 / Math.abs(d1);
         double d5 = i2 == 0 ? Double.MAX_VALUE : 1.0 / Math.abs(d2);
-        double d6 = k1 == 0 ? Double.MAX_VALUE : (k1 > 0 ? i + 1 - var1.xCoord : var1.xCoord - i) / Math.abs(d0);
-        double d7 = l1 == 0 ? Double.MAX_VALUE : (l1 > 0 ? j + 1 - var1.yCoord : var1.yCoord - j) / Math.abs(d1);
-        double d8 = i2 == 0 ? Double.MAX_VALUE : (i2 > 0 ? k + 1 - var1.zCoord : var1.zCoord - k) / Math.abs(d2);
+        double d6 = k1 == 0 ? Double.MAX_VALUE : (k1 > 0 ? i + 1 - vec.xCoord : vec.xCoord - i) / Math.abs(d0);
+        double d7 = l1 == 0 ? Double.MAX_VALUE : (l1 > 0 ? j + 1 - vec.yCoord : vec.yCoord - j) / Math.abs(d1);
+        double d8 = i2 == 0 ? Double.MAX_VALUE : (i2 > 0 ? k + 1 - vec.zCoord : vec.zCoord - k) / Math.abs(d2);
         arraylist.add(new BlockPos(i, j, k));
 
         for (; (i != l || j != i1 || k != j1) && arraylist.size() < 64; arraylist.add(new BlockPos(i, j, k))) {
@@ -658,20 +658,20 @@ public class Breaker extends Module {
         return blockpos1;
     }
 
-    private boolean i(BlockPos var1) {
-        return this.j(var1)
-            && this.j(var1.up())
-            && PlayerUtil.block(var1.down()).getCollisionBoundingBox(aEg.theWorld, var1.down(), aEg.theWorld.getBlockState(var1.down())) != null;
+    private boolean i(BlockPos pos) {
+        return this.j(pos)
+            && this.j(pos.up())
+            && PlayerUtil.block(pos.down()).getCollisionBoundingBox(aEg.theWorld, pos.down(), aEg.theWorld.getBlockState(pos.down())) != null;
     }
 
-    private boolean j(BlockPos var1) {
-        return PlayerUtil.block(var1).getCollisionBoundingBox(aEg.theWorld, var1, aEg.theWorld.getBlockState(var1)) == null;
+    private boolean j(BlockPos pos) {
+        return PlayerUtil.block(pos).getCollisionBoundingBox(aEg.theWorld, pos, aEg.theWorld.getBlockState(pos)) == null;
     }
 
-    private double a(Vec3 var1, BlockPos var2) {
-        double d0 = Math.max(var2.getX() - var1.xCoord, Math.max(0.0, var1.xCoord - (var2.getX() + 1)));
-        double d1 = Math.max(var2.getY() - var1.yCoord, Math.max(0.0, var1.yCoord - (var2.getY() + 1)));
-        double d2 = Math.max(var2.getZ() - var1.zCoord, Math.max(0.0, var1.zCoord - (var2.getZ() + 1)));
+    private double a(Vec3 vec, BlockPos pos) {
+        double d0 = Math.max(pos.getX() - vec.xCoord, Math.max(0.0, vec.xCoord - (pos.getX() + 1)));
+        double d1 = Math.max(pos.getY() - vec.yCoord, Math.max(0.0, vec.yCoord - (pos.getY() + 1)));
+        double d2 = Math.max(pos.getZ() - vec.zCoord, Math.max(0.0, vec.zCoord - (pos.getZ() + 1)));
         return Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
     }
 
@@ -691,13 +691,13 @@ public class Breaker extends Module {
         return arraylist;
     }
 
-    private Vec3[] k(BlockPos var1) {
+    private Vec3[] k(BlockPos pos) {
         return new Vec3[]{
-            new Vec3(var1.getX() + 0.5, var1.getY() + 0.5, var1.getZ() + 0.5),
-            new Vec3(var1.getX() + 0.1, var1.getY() + 0.1, var1.getZ() + 0.1),
-            new Vec3(var1.getX() + 0.9, var1.getY() + 0.1, var1.getZ() + 0.9),
-            new Vec3(var1.getX() + 0.1, var1.getY() + 0.5, var1.getZ() + 0.9),
-            new Vec3(var1.getX() + 0.9, var1.getY() + 0.5, var1.getZ() + 0.1)
+            new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5),
+            new Vec3(pos.getX() + 0.1, pos.getY() + 0.1, pos.getZ() + 0.1),
+            new Vec3(pos.getX() + 0.9, pos.getY() + 0.1, pos.getZ() + 0.9),
+            new Vec3(pos.getX() + 0.1, pos.getY() + 0.5, pos.getZ() + 0.9),
+            new Vec3(pos.getX() + 0.9, pos.getY() + 0.5, pos.getZ() + 0.1)
         };
     }
 
@@ -714,8 +714,8 @@ public class Breaker extends Module {
         return arraylist;
     }
 
-    public void l(BlockPos var1) {
-        BlockDamageEvent blockdamageevent = new BlockDamageEvent(aEg.thePlayer, aEg.thePlayer.worldObj, var1);
+    public void l(BlockPos pos) {
+        BlockDamageEvent blockdamageevent = new BlockDamageEvent(aEg.thePlayer, aEg.thePlayer.worldObj, pos);
         Client.a.e().d(blockdamageevent);
     }
 

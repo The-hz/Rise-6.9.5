@@ -9,11 +9,11 @@ public final class n {
     public n() {
     }
 
-    public void b(EntityOtherPlayerMP var1) {
-        Client.a.n().G().put(var1.getUniqueID(), new PlayerData(var1));
+    public void b(EntityOtherPlayerMP other) {
+        Client.a.n().G().put(other.getUniqueID(), new PlayerData(other));
     }
 
-    public void a(UUID var1) {
-        Client.a.n().G().remove(var1);
+    public void a(UUID uuid) {
+        Client.a.n().G().remove(uuid);
     }
 }

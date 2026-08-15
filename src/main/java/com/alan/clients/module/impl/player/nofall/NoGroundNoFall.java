@@ -13,7 +13,7 @@ public class NoGroundNoFall extends Mode<NoFall> {
         var0.setPosY(var0.getPosY() + Math.random() / 1.0E20F);
     };
 
-    public NoGroundNoFall(String var1, NoFall var2) {
-        super(var1, var2);
+    public NoGroundNoFall(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 }

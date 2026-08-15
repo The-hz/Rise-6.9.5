@@ -738,26 +738,26 @@ public class OldManager extends Module {
         return this.afz.T(this.adt) && this.adp >= 10 && this.BV >= 10 && this.adq >= 10 && (this.kg() || aEg.currentScreen instanceof GuiInventory);
     }
 
-    private boolean a(NumberValue var1, int var2, int var3) {
-        int i = var1.wo().intValue();
+    private boolean a(NumberValue numberValue, int var2, int var3) {
+        int i = numberValue.wo().intValue();
         return i != 0 && (var2 != -1 && this.swordSlot.wo().intValue() == i || var3 != -1 && this.secondSwordSlot.wo().intValue() == i);
     }
 
-    private float n(ItemStack var1) {
-        ItemSword itemsword = (ItemSword)var1.getItem();
-        int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, var1);
-        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, var1);
+    private float n(ItemStack stack) {
+        ItemSword itemsword = (ItemSword)stack.getItem();
+        int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, stack);
+        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, stack);
         return (float)(itemsword.getDamageVsEntity() + i * 1.25 + j * 2.5);
     }
 
-    private float o(ItemStack var1) {
-        ItemBow itembow = (ItemBow)var1.getItem();
-        return EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, var1);
+    private float o(ItemStack stack) {
+        ItemBow itembow = (ItemBow)stack.getItem();
+        return EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, stack);
     }
 
-    private float p(ItemStack var1) {
-        Item item = var1.getItem();
-        int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.efficiency.effectId, var1);
+    private float p(ItemStack stack) {
+        Item item = stack.getItem();
+        int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.efficiency.effectId, stack);
 
         short short1 = switch (i) {
             case 1 -> 30;
@@ -775,8 +775,8 @@ public class OldManager extends Module {
         return item instanceof ItemAxe ? ((ItemAxe)item).getToolMaterial().getEfficiencyOnProperMaterial() + short1 : 0.0F;
     }
 
-    private int m(ItemStack var1) {
-        ItemArmor itemarmor = (ItemArmor)var1.getItem();
+    private int m(ItemStack stack) {
+        ItemArmor itemarmor = (ItemArmor)stack.getItem();
         int i = itemarmor.damageReduceAmount;
 
         byte b0 = switch (tz.afE[itemarmor.getArmorMaterial().ordinal()]) {
@@ -787,15 +787,15 @@ public class OldManager extends Module {
             case 5 -> 1;
             default -> 0;
         };
-        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, var1);
-        int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.projectileProtection.effectId, var1);
-        int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireProtection.effectId, var1);
-        int i1 = EnchantmentHelper.getEnchantmentLevel(Enchantment.blastProtection.effectId, var1);
+        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, stack);
+        int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.projectileProtection.effectId, stack);
+        int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireProtection.effectId, stack);
+        int i1 = EnchantmentHelper.getEnchantmentLevel(Enchantment.blastProtection.effectId, stack);
         return i * 100 + b0 * 10 + j * 6 + (k + l + i1) * 2;
     }
 
-    private int q(ItemStack var1) {
-        return ((ItemArmor)var1.getItem()).damageReduceAmount + EnchantmentHelper.getEnchantmentModifierDamage(new ItemStack[]{var1}, DamageSource.generic);
+    private int q(ItemStack stack) {
+        return ((ItemArmor)stack.getItem()).damageReduceAmount + EnchantmentHelper.getEnchantmentModifierDamage(new ItemStack[]{stack}, DamageSource.generic);
     }
 
     private boolean f(int var1, int var2) {

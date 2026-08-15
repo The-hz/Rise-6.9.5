@@ -36,8 +36,8 @@ public final class MiddleClickBotAntiBot extends Mode<AntiBot> {
         }
     };
 
-    public MiddleClickBotAntiBot(String var1, AntiBot var2) {
-        super(var1, var2);
+    public MiddleClickBotAntiBot(String var1, AntiBot antiBot) {
+        super(var1, antiBot);
     }
 
     @Override

@@ -23,31 +23,31 @@ public class DragValue extends Value implements InstanceAccess {
     public boolean fX = true;
     public boolean aRb;
 
-    public DragValue(String var1, Module var2, Vector2d var3) {
-        super(var1, var2, var3);
+    public DragValue(String var1, Module module, Vector2d vector2d) {
+        super(var1, module, vector2d);
     }
 
-    public DragValue(String var1, Module var2, Vector2d var3, boolean var4) {
-        super(var1, var2, var3);
+    public DragValue(String var1, Module module, Vector2d vector2d, boolean var4) {
+        super(var1, module, vector2d);
         this.fX = var4;
     }
 
-    public DragValue(String var1, Module var2, Vector2d var3, boolean var4, boolean var5) {
-        super(var1, var2, var3);
+    public DragValue(String var1, Module module, Vector2d vector2d, boolean var4, boolean var5) {
+        super(var1, module, vector2d);
         this.fX = var4 && !var5;
         this.aRb = var5;
     }
 
-    public DragValue(String var1, Mode<?> var2, Vector2d var3) {
-        super(var1, var2, var3);
+    public DragValue(String var1, Mode<?> mode, Vector2d vector2d) {
+        super(var1, mode, vector2d);
     }
 
-    public DragValue(String var1, Module var2, Vector2d var3, BooleanSupplier var4) {
-        super(var1, var2, var3, var4);
+    public DragValue(String var1, Module module, Vector2d vector2d, BooleanSupplier booleanSupplier) {
+        super(var1, module, vector2d, booleanSupplier);
     }
 
-    public DragValue(String var1, Mode<?> var2, Vector2d var3, BooleanSupplier var4) {
-        super(var1, var2, var3, var4);
+    public DragValue(String var1, Mode<?> mode, Vector2d vector2d, BooleanSupplier booleanSupplier) {
+        super(var1, mode, vector2d, booleanSupplier);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class DragValue extends Value implements InstanceAccess {
         return null;
     }
 
-    public void n(Vector2d var1) {
-        this.aHe = var1;
+    public void n(Vector2d vector2d) {
+        this.aHe = vector2d;
         if (this.aQX.x == -1.0 && this.aQX.y == -1.0) {
             this.aQX = this.aHe;
         }
@@ -72,7 +72,7 @@ public class DragValue extends Value implements InstanceAccess {
             this.apP = this.atg;
         }
 
-        this.aQX = var1;
+        this.aQX = vector2d;
         this.lastScaledResolution = scaledresolution;
     }
 
@@ -82,28 +82,28 @@ public class DragValue extends Value implements InstanceAccess {
     }
 
     @Generated
-    public void i(Vector2d var1) {
-        this.atg = var1;
+    public void i(Vector2d vector2d) {
+        this.atg = vector2d;
     }
 
     @Generated
-    public void o(Vector2d var1) {
-        this.aQX = var1;
+    public void o(Vector2d vector2d) {
+        this.aQX = vector2d;
     }
 
     @Generated
-    public void d(Animation var1) {
-        this.aQY = var1;
+    public void d(Animation animation) {
+        this.aQY = animation;
     }
 
     @Generated
-    public void e(Animation var1) {
-        this.aQZ = var1;
+    public void e(Animation animation) {
+        this.aQZ = animation;
     }
 
     @Generated
-    public void setLastScaledResolution(ScaledResolution var1) {
-        this.lastScaledResolution = var1;
+    public void setLastScaledResolution(ScaledResolution lastScaledResolution) {
+        this.lastScaledResolution = lastScaledResolution;
     }
 
     @Generated

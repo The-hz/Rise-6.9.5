@@ -13,7 +13,7 @@ public class PositionValueComponent extends ValueComponent {
     }
 
     @Override
-    public void draw(Vector2d var1, int var2, int var3, float var4) {
+    public void draw(Vector2d vector2d, int var2, int var3, float var4) {
         this.height = 0.0;
     }
 

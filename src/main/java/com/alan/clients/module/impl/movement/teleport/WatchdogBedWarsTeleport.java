@@ -17,8 +17,8 @@ public final class WatchdogBedWarsTeleport extends Mode<Teleport> {
         var1x.setPosZ(this.Jd.zCoord);
     };
 
-    public WatchdogBedWarsTeleport(String var1, Teleport var2) {
-        super(var1, var2);
+    public WatchdogBedWarsTeleport(String var1, Teleport teleport) {
+        super(var1, teleport);
     }
 
     @Override

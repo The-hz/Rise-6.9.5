@@ -67,7 +67,7 @@ public final class WorldGuardRegen extends Mode<Regen> {
         }
     };
 
-    public WorldGuardRegen(String var1, Regen var2) {
-        super(var1, var2);
+    public WorldGuardRegen(String var1, Regen regen) {
+        super(var1, regen);
     }
 }

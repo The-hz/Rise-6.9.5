@@ -94,7 +94,7 @@ public class a {
     public void aKH() {
     }
 
-    public void a(GameEvent var1) {
+    public void a(GameEvent event) {
     }
 
     public a() {

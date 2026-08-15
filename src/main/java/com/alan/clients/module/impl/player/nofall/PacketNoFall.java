@@ -21,7 +21,7 @@ public class PacketNoFall extends Mode<NoFall> {
         FallDistanceComponent.cY = f;
     };
 
-    public PacketNoFall(String var1, NoFall var2) {
-        super(var1, var2);
+    public PacketNoFall(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 }

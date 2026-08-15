@@ -39,7 +39,7 @@ public class PolarSpeed extends Mode<Speed> {
     @EventLink
     public final Listener<JumpEvent> onJump = var1x -> this.PD++;
 
-    public PolarSpeed(String var1, Speed var2) {
-        super(var1, var2);
+    public PolarSpeed(String var1, Speed speed) {
+        super(var1, speed);
     }
 }

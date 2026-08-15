@@ -674,10 +674,10 @@ public class AddLocaltsScreen extends GuiScreen implements adf, InstanceAccess {
         TOOLTIP_FONT.c("Click to view", i + this.cardWidth() / 2, j + 204, new Color(175, 185, 208).getRGB());
     }
 
-    private void drawTag(float var1, float var2, String var3, Color var4) {
+    private void drawTag(float var1, float var2, String var3, Color color) {
         float f = TOOLTIP_FONT.getStringWidth(var3) + 20;
-        RenderUtil.roundedRectangle(var1, var2, f, 15.0, 7.0, ColorUtil.d(var4, 55));
-        TOOLTIP_FONT.a(var3, var1 + 10.0F, centeredTextY(var2, 15.0, TOOLTIP_FONT), var4.getRGB());
+        RenderUtil.roundedRectangle(var1, var2, f, 15.0, 7.0, ColorUtil.d(color, 55));
+        TOOLTIP_FONT.a(var3, var1 + 10.0F, centeredTextY(var2, 15.0, TOOLTIP_FONT), color.getRGB());
     }
 
     private String productTag(aew var1) {

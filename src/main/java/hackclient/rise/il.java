@@ -6,8 +6,8 @@ public class il {
     public final Packet<?> tr;
     public final int ts;
 
-    public il(Packet<?> var1, int var2) {
-        this.tr = var1;
+    public il(Packet<?> packet, int var2) {
+        this.tr = packet;
         this.ts = var2;
     }
 }

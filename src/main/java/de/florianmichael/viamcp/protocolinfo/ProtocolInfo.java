@@ -109,10 +109,10 @@ public class ProtocolInfo {
     private final String releaseDate;
     private final ProtocolVersion protocolVersion;
 
-    public ProtocolInfo(String var1, String var2, ProtocolVersion var3) {
-        this.name = var1;
-        this.releaseDate = var2;
-        this.protocolVersion = var3;
+    public ProtocolInfo(String name, String releaseDate, ProtocolVersion protocolVersion) {
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.protocolVersion = protocolVersion;
     }
 
     public String getName() {

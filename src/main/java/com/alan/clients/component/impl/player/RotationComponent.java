@@ -108,23 +108,23 @@ public final class RotationComponent extends Component {
     public RotationComponent() {
     }
 
-    public static void setRotations(Vector2f var0, double var1, MovementFix var3) {
-        a(var0, var1, var3, null, true);
+    public static void setRotations(Vector2f vec2, double var1, MovementFix movementFix) {
+        a(vec2, var1, movementFix, null, true);
     }
 
-    public static void a(Vector2f var0, double var1, MovementFix var3, Function<Vector2f, Boolean> var4) {
-        a(var0, var1, var3, var4, true);
+    public static void a(Vector2f vec2, double var1, MovementFix movementFix, Function<Vector2f, Boolean> function) {
+        a(vec2, var1, movementFix, function, true);
     }
 
-    public static void a(Vector2f var0, double var1, MovementFix var3, Function<Vector2f, Boolean> var4, boolean var5) {
-        a(var0, var1, var3, var4, var5, true);
+    public static void a(Vector2f vec2, double var1, MovementFix movementFix, Function<Vector2f, Boolean> function, boolean var5) {
+        a(vec2, var1, movementFix, function, var5, true);
     }
 
-    public static void a(Vector2f var0, double var1, MovementFix var3, Function<Vector2f, Boolean> var4, boolean var5, boolean var6) {
-        fm = var0;
+    public static void a(Vector2f vec2, double var1, MovementFix movementFix, Function<Vector2f, Boolean> function, boolean var5, boolean var6) {
+        fm = vec2;
         rotationSpeed = var1 * 36.0;
-        correctMovement = var3;
-        fq = var4;
+        correctMovement = movementFix;
+        fq = function;
         fr = var5;
         fs = var6;
         dj = true;

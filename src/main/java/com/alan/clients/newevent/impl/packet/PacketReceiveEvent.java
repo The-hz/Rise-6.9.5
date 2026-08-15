@@ -28,18 +28,18 @@ public final class PacketReceiveEvent extends CancellableEvent {
     }
 
     @Generated
-    public void setPacket(Packet<?> var1) {
-        this.packet = var1;
+    public void setPacket(Packet<?> packet) {
+        this.packet = packet;
     }
 
     @Generated
-    public void a(NetworkManager var1) {
-        this.jS = var1;
+    public void a(NetworkManager networkManager) {
+        this.jS = networkManager;
     }
 
     @Generated
-    public PacketReceiveEvent(Packet<?> var1, NetworkManager var2) {
-        this.packet = var1;
-        this.jS = var2;
+    public PacketReceiveEvent(Packet<?> packet, NetworkManager networkManager) {
+        this.packet = packet;
+        this.jS = networkManager;
     }
 }

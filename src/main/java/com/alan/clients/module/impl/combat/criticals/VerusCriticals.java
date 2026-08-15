@@ -26,7 +26,7 @@ public final class VerusCriticals extends Mode<Criticals> {
         }
     };
 
-    public VerusCriticals(String var1, Criticals var2) {
-        super(var1, var2);
+    public VerusCriticals(String var1, Criticals criticals) {
+        super(var1, criticals);
     }
 }

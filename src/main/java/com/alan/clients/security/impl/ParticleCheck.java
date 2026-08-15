@@ -12,8 +12,8 @@ public final class ParticleCheck extends a {
     }
 
     @Override
-    public boolean handle(Packet<?> var1) {
-        if (!(var1 instanceof S2APacketParticles s2apacketparticles)) {
+    public boolean handle(Packet<?> packet) {
+        if (!(packet instanceof S2APacketParticles s2apacketparticles)) {
             return false;
         }
         this.particles = this.particles + s2apacketparticles.getParticleCount();

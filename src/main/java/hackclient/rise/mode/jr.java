@@ -21,7 +21,7 @@ public class jr extends Mode<Disabler> {
         }
     };
 
-    public jr(String var1, Disabler var2) {
-        super(var1, var2);
+    public jr(String var1, Disabler disabler) {
+        super(var1, disabler);
     }
 }

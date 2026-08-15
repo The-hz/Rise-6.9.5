@@ -17,7 +17,7 @@ final class BindSuggestionProvider implements SuggestionProvider {
     }
 
     @Override
-    public void a(SuggestionContext var1) {
+    public void a(SuggestionContext suggestionContext) {
         try {
             Client.a.p().update();
         } catch (Throwable throwable) {
@@ -25,10 +25,10 @@ final class BindSuggestionProvider implements SuggestionProvider {
     }
 
     @Override
-    public List<Suggestion> b(SuggestionContext var1) {
-        if (var1.rk().length != 0 && var1.rk().length <= 1) {
-            String s = CommandPalette.aQ(var1.rj());
-            String s1 = var1.rk()[0].toLowerCase(Locale.ROOT);
+    public List<Suggestion> b(SuggestionContext suggestionContext) {
+        if (suggestionContext.rk().length != 0 && suggestionContext.rk().length <= 1) {
+            String s = CommandPalette.aQ(suggestionContext.rj());
+            String s1 = suggestionContext.rk()[0].toLowerCase(Locale.ROOT);
             List list = Client.a.t().aP();
             ArrayList arraylist = new ArrayList();
             HashSet hashset = new HashSet();

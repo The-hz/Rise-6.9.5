@@ -8,9 +8,9 @@ public class ahq {
     private boolean[][][] aNF;
     public final Vec3i aNG;
 
-    public ahq(int var1, Vec3i var2) {
+    public ahq(int var1, Vec3i vec) {
         this.aND = var1;
-        this.aNG = var2;
+        this.aNG = vec;
         this.aNE = this.aND * 2 + 2;
         this.aX();
     }

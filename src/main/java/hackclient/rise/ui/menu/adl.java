@@ -13,9 +13,9 @@ public class adl extends MenuTextButton {
     private static final Color aCf = ColorUtil.d(Color.WHITE, 150);
     private final Color aCg;
 
-    public adl(double var1, double var3, double var5, double var7, Runnable var9, String var10, Color var11) {
+    public adl(double var1, double var3, double var5, double var7, Runnable var9, String var10, Color color) {
         super(var1, var3, var5, var7, var9, var10);
-        this.aCg = ColorUtil.d(var11, 150);
+        this.aCg = ColorUtil.d(color, 150);
     }
 
     @Override

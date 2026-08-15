@@ -48,7 +48,7 @@ public final class Glint extends Module {
     public Glint() {
     }
 
-    public void renderEffect(IBakedModel var1) {
+    public void renderEffect(IBakedModel iBakedModel) {
         if (RendererLivingEntity.bWq) {
             return;
         }
@@ -72,7 +72,7 @@ public final class Glint extends Module {
                 GlStateManager.rotate(-50.0F, 0.0F, 0.0F, 1.0F);
                 aEg.getRenderItem()
                     .renderModel(
-                        var1,
+                        iBakedModel,
                         new Color(
                                 Color.HSBtoRGB(
                                     (

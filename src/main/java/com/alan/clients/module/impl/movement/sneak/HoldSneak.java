@@ -11,8 +11,8 @@ public class HoldSneak extends Mode<Sneak> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> aEg.gameSettings.keyBindSneak.setPressed(true);
 
-    public HoldSneak(String var1, Sneak var2) {
-        super(var1, var2);
+    public HoldSneak(String var1, Sneak sneak) {
+        super(var1, sneak);
     }
 
     @Override

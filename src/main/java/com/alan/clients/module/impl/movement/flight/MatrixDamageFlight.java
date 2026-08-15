@@ -142,8 +142,8 @@ public class MatrixDamageFlight extends Mode<Flight> {
         }
     };
 
-    public MatrixDamageFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public MatrixDamageFlight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

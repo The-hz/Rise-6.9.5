@@ -33,9 +33,9 @@ public final class KeyboardInputEvent extends CancellableEvent {
     }
 
     @Generated
-    public KeyboardInputEvent(int var1, char var2, GuiScreen var3) {
-        this.keyCode = var1;
+    public KeyboardInputEvent(int keyCode, char var2, GuiScreen guiScreen) {
+        this.keyCode = keyCode;
         this.jm = var2;
-        this.guiScreen = var3;
+        this.guiScreen = guiScreen;
     }
 }

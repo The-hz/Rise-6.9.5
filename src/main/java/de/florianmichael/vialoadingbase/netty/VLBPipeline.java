@@ -13,33 +13,33 @@ public abstract class VLBPipeline extends ChannelInboundHandlerAdapter {
     public static final String VIA_ENCODER_HANDLER_NAME = "via-encoder";
     private final UserConnection user;
 
-    public VLBPipeline(UserConnection var1) {
-        this.user = var1;
+    public VLBPipeline(UserConnection user) {
+        this.user = user;
     }
 
     @Override
-    public void handlerAdded(ChannelHandlerContext var1) throws Exception {
-        super.handlerAdded(var1);
-        var1.pipeline().addBefore(this.getDecoderHandlerName(), "via-decoder", this.createVLBViaDecodeHandler());
-        var1.pipeline().addBefore(this.getEncoderHandlerName(), "via-encoder", this.createVLBViaEncodeHandler());
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        super.handlerAdded(ctx);
+        ctx.pipeline().addBefore(this.getDecoderHandlerName(), "via-decoder", this.createVLBViaDecodeHandler());
+        ctx.pipeline().addBefore(this.getEncoderHandlerName(), "via-encoder", this.createVLBViaEncodeHandler());
     }
 
     @Override
-    public void userEventTriggered(ChannelHandlerContext var1, Object var2) throws Exception {
-        super.userEventTriggered(var1, var2);
+    public void userEventTriggered(ChannelHandlerContext ctx, Object var2) throws Exception {
+        super.userEventTriggered(ctx, var2);
         if (var2 instanceof CompressionReorderEvent) {
-            int i = var1.pipeline().names().indexOf(this.getDecompressionHandlerName());
+            int i = ctx.pipeline().names().indexOf(this.getDecompressionHandlerName());
             if (i == -1) {
                 return;
             }
 
-            if (i > var1.pipeline().names().indexOf("via-decoder")) {
-                ChannelHandler channelhandler = var1.pipeline().get("via-decoder");
-                ChannelHandler channelhandler1 = var1.pipeline().get("via-encoder");
-                var1.pipeline().remove(channelhandler);
-                var1.pipeline().remove(channelhandler1);
-                var1.pipeline().addAfter(this.getDecompressionHandlerName(), "via-decoder", channelhandler);
-                var1.pipeline().addAfter(this.getCompressionHandlerName(), "via-encoder", channelhandler1);
+            if (i > ctx.pipeline().names().indexOf("via-decoder")) {
+                ChannelHandler channelhandler = ctx.pipeline().get("via-decoder");
+                ChannelHandler channelhandler1 = ctx.pipeline().get("via-encoder");
+                ctx.pipeline().remove(channelhandler);
+                ctx.pipeline().remove(channelhandler1);
+                ctx.pipeline().addAfter(this.getDecompressionHandlerName(), "via-decoder", channelhandler);
+                ctx.pipeline().addAfter(this.getCompressionHandlerName(), "via-encoder", channelhandler1);
             }
         }
     }

@@ -235,19 +235,19 @@ public final class MoveUtil implements InstanceAccess {
         a(speed(), aEg.thePlayer);
     }
 
-    public static void u(Entity var0) {
-        a(speed(), var0);
+    public static void u(Entity entity) {
+        a(speed(), entity);
     }
 
     public static void strafe(double var0) {
         a(var0, aEg.thePlayer);
     }
 
-    public static void a(double var0, Entity var2) {
+    public static void a(double var0, Entity entity) {
         if (isMoving()) {
             double d0 = direction();
-            var2.motionX = -MathHelper.sin((float)d0) * var0;
-            var2.motionZ = MathHelper.cos((float)d0) * var0;
+            entity.motionX = -MathHelper.sin((float)d0) * var0;
+            entity.motionZ = MathHelper.cos((float)d0) * var0;
         }
     }
 
@@ -292,24 +292,24 @@ public final class MoveUtil implements InstanceAccess {
         return var0 == 0.0 && var2 == 0.0 ? aEg.thePlayer.pl : (float)(Math.toDegrees(Math.atan2(var2, var0)) - 90.0);
     }
 
-    public static double m(MoveInputEvent var0) {
+    public static double m(MoveInputEvent event) {
         float f = aEg.thePlayer.pp;
-        if (var0.getForward() < 0.0F) {
+        if (event.getForward() < 0.0F) {
             f += 180.0F;
         }
 
         float f1 = 1.0F;
-        if (var0.getForward() < 0.0F) {
+        if (event.getForward() < 0.0F) {
             f1 = -0.5F;
-        } else if (var0.getForward() > 0.0F) {
+        } else if (event.getForward() > 0.0F) {
             f1 = 0.5F;
         }
 
-        if (var0.getStrafe() > 0.0F) {
+        if (event.getStrafe() > 0.0F) {
             f -= 70.0F * f1;
         }
 
-        if (var0.getStrafe() < 0.0F) {
+        if (event.getStrafe() < 0.0F) {
             f += 70.0F * f1;
         }
 
@@ -384,11 +384,11 @@ public final class MoveUtil implements InstanceAccess {
         return Math.hypot(aEg.thePlayer.motionX, aEg.thePlayer.motionZ);
     }
 
-    public static void setMoveEvent(MoveEvent var0, double var1) {
-        setMoveEvent(var0, var1, aEg.thePlayer.pp, aEg.thePlayer.movementInput.moveStrafe, aEg.thePlayer.movementInput.moveForward);
+    public static void setMoveEvent(MoveEvent moveEvent, double var1) {
+        setMoveEvent(moveEvent, var1, aEg.thePlayer.pp, aEg.thePlayer.movementInput.moveStrafe, aEg.thePlayer.movementInput.moveForward);
     }
 
-    public static void setMoveEvent(MoveEvent var0, double var1, float var3, double var4, double var6) {
+    public static void setMoveEvent(MoveEvent moveEvent, double var1, float var3, double var4, double var6) {
         double d0 = var6;
         double d1 = var4;
         float f = var3;
@@ -409,13 +409,13 @@ public final class MoveUtil implements InstanceAccess {
 
         double d2 = Math.cos(Math.toRadians(f + abs.aHc));
         double d3 = Math.sin(Math.toRadians(f + abs.aHc));
-        var0.setPosX(d0 * var1 * d2 + d1 * var1 * d3);
-        var0.setPosZ(d0 * var1 * d3 - d1 * var1 * d2);
+        moveEvent.setPosX(d0 * var1 * d2 + d1 * var1 * d3);
+        moveEvent.setPosZ(d0 * var1 * d3 - d1 * var1 * d2);
     }
 
-    public static void fixMovement(MoveInputEvent var0, float var1) {
-        float f = var0.getForward();
-        float f1 = var0.getStrafe();
+    public static void fixMovement(MoveInputEvent moveInputEvent, float var1) {
+        float f = moveInputEvent.getForward();
+        float f1 = moveInputEvent.getStrafe();
         double d0 = MathHelper.wrapAngleTo180_double(Math.toDegrees(direction(aEg.thePlayer.pl, f, f1)));
         if (f != 0.0F || f1 != 0.0F) {
             float f2 = 0.0F;
@@ -442,8 +442,8 @@ public final class MoveUtil implements InstanceAccess {
 
             aOp = f3;
             aOq = f2;
-            var0.setForward(f2);
-            var0.setStrafe(f3);
+            moveInputEvent.setForward(f2);
+            moveInputEvent.setStrafe(f3);
         }
     }
 
@@ -515,12 +515,12 @@ public final class MoveUtil implements InstanceAccess {
         b(var0, aEg.thePlayer);
     }
 
-    public static void b(double var0, Entity var2) {
-        double d0 = var2.motionX;
-        double d1 = var2.motionZ;
-        u(var2);
-        var2.motionX = d0 + Math.max(-var0, Math.min(var0, var2.motionX - d0));
-        var2.motionZ = d1 + Math.max(-var0, Math.min(var0, var2.motionZ - d1));
+    public static void b(double var0, Entity entity) {
+        double d0 = entity.motionX;
+        double d1 = entity.motionZ;
+        u(entity);
+        entity.motionX = d0 + Math.max(-var0, Math.min(var0, entity.motionX - d0));
+        entity.motionZ = d1 + Math.max(-var0, Math.min(var0, entity.motionZ - d1));
     }
 
     public static void partialStrafePercent(double var0) {
@@ -640,13 +640,13 @@ public final class MoveUtil implements InstanceAccess {
         }
     }
 
-    public static void c(double var0, Entity var2) {
+    public static void c(double var0, Entity entity) {
         if (isMoving()) {
             double d0 = getMCFriction();
             double d1 = d0 > 1.0E-6 ? var0 / d0 : var0;
             double d2 = direction();
-            var2.motionX = -MathHelper.sin((float)d2) * d1;
-            var2.motionZ = MathHelper.cos((float)d2) * d1;
+            entity.motionX = -MathHelper.sin((float)d2) * d1;
+            entity.motionZ = MathHelper.cos((float)d2) * d1;
         }
     }
 
@@ -667,21 +667,21 @@ public final class MoveUtil implements InstanceAccess {
         aEg.thePlayer.motionZ = aEg.thePlayer.motionZ + MathHelper.cos((float)Math.toRadians(var2)) * var0;
     }
 
-    public static aka a(Entity var0, Vector2f var1, int var2, boolean var3) {
-        double d0 = var0.posX - var0.lastTickPosX;
-        double d1 = var0.posZ - var0.lastTickPosZ;
-        return a(new aka(var0.posX, var0.posY, var0.posZ), new aka(d0, 0.0, d1), var0.pl, var1, var2, var3);
+    public static aka a(Entity entity, Vector2f vec2, int var2, boolean var3) {
+        double d0 = entity.posX - entity.lastTickPosX;
+        double d1 = entity.posZ - entity.lastTickPosZ;
+        return a(new aka(entity.posX, entity.posY, entity.posZ), new aka(d0, 0.0, d1), entity.pl, vec2, var2, var3);
     }
 
-    public static aka a(aka var0, aka var1, float var2, Vector2f var3) {
-        return a(var0, var1, var2, var3, 1, var3.x != 0.0F || var3.y != 0.0F);
+    public static aka a(aka var0, aka var1, float var2, Vector2f vec2) {
+        return a(var0, var1, var2, vec2, 1, vec2.x != 0.0F || vec2.y != 0.0F);
     }
 
-    public static aka a(aka var0, aka var1, float var2, Vector2f var3, int var4, boolean var5) {
+    public static aka a(aka var0, aka var1, float var2, Vector2f vec2, int var4, boolean var5) {
         for (int i = 0; i <= var4; i++) {
             var1.z *= 0.54600006F;
             var1.x *= 0.54600006F;
-            double[] adouble = moveFlying(var3.x, var3.y, true, var2, var5);
+            double[] adouble = moveFlying(vec2.x, vec2.y, true, var2, var5);
             if (adouble == null) {
                 return var0;
             }

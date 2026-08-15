@@ -4,8 +4,8 @@ import com.viaversion.viaversion.api.connection.UserConnection;
 import de.florianmichael.vialoadingbase.netty.VLBPipeline;
 
 public class MCPVLBPipeline extends VLBPipeline {
-    public MCPVLBPipeline(UserConnection var1) {
-        super(var1);
+    public MCPVLBPipeline(UserConnection userConnection) {
+        super(userConnection);
     }
 
     @Override

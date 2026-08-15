@@ -40,16 +40,16 @@ public class BlockAABBEvent extends CancellableEvent {
     }
 
     @Generated
-    public void setBoundingBox(AxisAlignedBB var1) {
-        this.jJ = var1;
+    public void setBoundingBox(AxisAlignedBB boundingBox) {
+        this.jJ = boundingBox;
     }
 
     @Generated
-    public BlockAABBEvent(World var1, Block var2, BlockPos var3, AxisAlignedBB var4, AxisAlignedBB var5) {
-        this.world = var1;
-        this.block = var2;
-        this.blockPos = var3;
-        this.jJ = var4;
+    public BlockAABBEvent(World world, Block block, BlockPos blockPos, AxisAlignedBB box, AxisAlignedBB var5) {
+        this.world = world;
+        this.block = block;
+        this.blockPos = blockPos;
+        this.jJ = box;
         this.jK = var5;
     }
 }

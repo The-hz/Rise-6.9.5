@@ -4,8 +4,8 @@ import com.alan.clients.script.api.wrapper.ScriptWrapper;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class ScriptInventory extends ScriptWrapper<InventoryPlayer> {
-    public ScriptInventory(InventoryPlayer var1) {
-        super(var1);
+    public ScriptInventory(InventoryPlayer inventory) {
+        super(inventory);
     }
 
     public ScriptItemStack getItemStackInSlot(int var1) {

@@ -62,7 +62,7 @@ public class RotationsMimic extends Mode<Mimic> {
         aEg.thePlayer.setAngles((float)d7, (float)(d8 * (aEg.gameSettings.invertMouse ? 1.0 : -1.0)));
     };
 
-    public RotationsMimic(String var1, Mimic var2) {
-        super(var1, var2);
+    public RotationsMimic(String var1, Mimic mimic) {
+        super(var1, mimic);
     }
 }

@@ -60,8 +60,8 @@ public class ng extends Mode<Flight> {
         }
     };
 
-    public ng(String var1, Flight var2) {
-        super(var1, var2);
+    public ng(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

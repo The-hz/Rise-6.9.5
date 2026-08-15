@@ -4,8 +4,8 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.script.api.wrapper.impl.event.CancellableScriptEvent;
 
 public class ScriptPreMotionEvent extends CancellableScriptEvent<PreMotionEvent> {
-    public ScriptPreMotionEvent(PreMotionEvent var1) {
-        super(var1);
+    public ScriptPreMotionEvent(PreMotionEvent event) {
+        super(event);
     }
 
     public void setPosX(double var1) {
@@ -24,16 +24,16 @@ public class ScriptPreMotionEvent extends CancellableScriptEvent<PreMotionEvent>
         this.wrapped.setYaw(var1);
     }
 
-    public void setPitch(float var1) {
-        this.wrapped.setPitch(var1);
+    public void setPitch(float pitch) {
+        this.wrapped.setPitch(pitch);
     }
 
-    public void setOnGround(boolean var1) {
-        this.wrapped.setOnGround(var1);
+    public void setOnGround(boolean onGround) {
+        this.wrapped.setOnGround(onGround);
     }
 
-    public void setSprinting(boolean var1) {
-        this.wrapped.setSprinting(var1);
+    public void setSprinting(boolean sprinting) {
+        this.wrapped.setSprinting(sprinting);
     }
 
     public double getPosX() {

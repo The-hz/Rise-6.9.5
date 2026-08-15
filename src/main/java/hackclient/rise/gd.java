@@ -13,9 +13,9 @@ public enum gd {
     private final String[] aliases;
     private static final gd[] $VALUES = dS();
 
-    gd(int var3, String... var4) {
+    gd(int var3, String... aliases) {
         this.kI = var3;
-        this.aliases = var4;
+        this.aliases = aliases;
     }
 
     @Generated

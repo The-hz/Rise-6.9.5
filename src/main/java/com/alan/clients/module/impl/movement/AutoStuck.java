@@ -244,14 +244,14 @@ public final class AutoStuck extends Module {
         }
     }
 
-    private Optional<Vec3> a(Vec3 var1, int var2) {
+    private Optional<Vec3> a(Vec3 vec, int var2) {
         if (aEg.theWorld == null) {
             return Optional.empty();
         }
 
-        int i = (int)Math.floor(var1.xCoord);
-        int j = (int)Math.floor(var1.yCoord);
-        int kx = (int)Math.floor(var1.zCoord);
+        int i = (int)Math.floor(vec.xCoord);
+        int j = (int)Math.floor(vec.yCoord);
+        int kx = (int)Math.floor(vec.zCoord);
         Vec3 vec3 = null;
         double d0 = Double.MAX_VALUE;
 
@@ -261,7 +261,7 @@ public final class AutoStuck extends Module {
                     BlockPos blockpos = new BlockPos(i + l, j + j1, kx + i1);
                     if (!aEg.theWorld.isAirBlock(blockpos) && aEg.theWorld.isAirBlock(blockpos.up()) && aEg.theWorld.isAirBlock(blockpos.up(2))) {
                         Vec3 vec31 = new Vec3(blockpos.getX() + 0.5, blockpos.getY() + 1.0, blockpos.getZ() + 0.5);
-                        double d1 = vec31.squareDistanceTo(var1);
+                        double d1 = vec31.squareDistanceTo(vec);
                         if (d1 < d0) {
                             d0 = d1;
                             vec3 = vec31;
@@ -325,15 +325,15 @@ public final class AutoStuck extends Module {
         }
     }
 
-    private Vector2f c(Vec3 var1) {
+    private Vector2f c(Vec3 vec) {
         if (aEg.thePlayer == null) {
             return null;
         }
 
         Vec3 vec3 = new Vec3(aEg.thePlayer.posX, aEg.thePlayer.posY + aEg.thePlayer.getEyeHeight(), aEg.thePlayer.posZ);
-        double d0 = var1.xCoord - vec3.xCoord;
-        double d1 = var1.zCoord - vec3.zCoord;
-        double d2 = var1.yCoord - vec3.yCoord;
+        double d0 = vec.xCoord - vec3.xCoord;
+        double d1 = vec.zCoord - vec3.zCoord;
+        double d2 = vec.yCoord - vec3.yCoord;
         double d3 = Math.sqrt(d0 * d0 + d1 * d1);
         if (d3 < 0.001) {
             return null;

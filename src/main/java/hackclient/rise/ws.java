@@ -6,8 +6,8 @@ public class ws {
     public Vec3 amS;
     public long sk;
 
-    public ws(Vec3 var1, long var2) {
-        this.amS = var1;
+    public ws(Vec3 vec, long var2) {
+        this.amS = vec;
         this.sk = var2;
     }
 }

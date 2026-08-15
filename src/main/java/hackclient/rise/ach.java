@@ -56,13 +56,13 @@ public class ach {
     }
 
     @Generated
-    public void i(Vector2f var1) {
-        this.axI = var1;
+    public void i(Vector2f vec2) {
+        this.axI = vec2;
     }
 
     @Generated
-    public void b(Color var1) {
-        this.amH = var1;
+    public void b(Color color) {
+        this.amH = color;
     }
 
     @Generated
@@ -81,9 +81,9 @@ public class ach {
     }
 
     @Generated
-    public ach(ArrayList<float[]> var1, Vector2f var2, Color var3) {
+    public ach(ArrayList<float[]> var1, Vector2f vec2, Color color) {
         this.aze = var1;
-        this.axI = var2;
-        this.amH = var3;
+        this.axI = vec2;
+        this.amH = color;
     }
 }

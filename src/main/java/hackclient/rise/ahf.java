@@ -18,7 +18,7 @@ public class ahf {
         return new aka(l(var0.getX(), var1.getX(), var2), l(var0.getY(), var1.getY(), var2), l(var0.getZ(), var1.getZ(), var2));
     }
 
-    public static aka a(Entity var0, float var1) {
-        return new aka(l(var0.posX, var0.prevPosX, var1), l(var0.posY, var0.prevPosY, var1), l(var0.posZ, var0.prevPosZ, var1));
+    public static aka a(Entity entity, float var1) {
+        return new aka(l(entity.posX, entity.prevPosX, var1), l(entity.posY, entity.prevPosY, var1), l(entity.posZ, entity.prevPosZ, var1));
     }
 }

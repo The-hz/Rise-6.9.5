@@ -207,18 +207,18 @@ public class NetworkAPI extends API {
     public NetworkAPI() {
     }
 
-    private static Packet<?> instantiatePacket(EnumPacketDirection var0, int var1, Object... var2) throws ScriptException {
+    private static Packet<?> instantiatePacket(EnumPacketDirection enumPacketDirection, int var1, Object... var2) throws ScriptException {
         try {
             Packet packet = null;
 
             try {
-                if (var0 == EnumPacketDirection.CLIENTBOUND) {
+                if (enumPacketDirection == EnumPacketDirection.CLIENTBOUND) {
                     packet = (Packet)Arrays.stream(clientbound[var1].getConstructors())
                         .filter(var1x -> var1x.getParameterCount() == var2.length)
                         .findFirst()
                         .get()
                         .newInstance(var2);
-                } else if (var0 == EnumPacketDirection.SERVERBOUND) {
+                } else if (enumPacketDirection == EnumPacketDirection.SERVERBOUND) {
                     packet = (Packet)Arrays.stream(serverbound[var1].getConstructors())
                         .filter(var1x -> var1x.getParameterCount() == var2.length)
                         .findFirst()

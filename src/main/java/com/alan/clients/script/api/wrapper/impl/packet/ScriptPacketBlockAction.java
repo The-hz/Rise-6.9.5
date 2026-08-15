@@ -4,8 +4,8 @@ import com.alan.clients.script.api.wrapper.impl.ScriptBlockPos;
 import net.minecraft.network.play.server.S24PacketBlockAction;
 
 public class ScriptPacketBlockAction extends ScriptPacket<S24PacketBlockAction> {
-    public ScriptPacketBlockAction(S24PacketBlockAction var1) {
-        super(var1);
+    public ScriptPacketBlockAction(S24PacketBlockAction packet) {
+        super(packet);
     }
 
     public ScriptBlockPos getPosition() {

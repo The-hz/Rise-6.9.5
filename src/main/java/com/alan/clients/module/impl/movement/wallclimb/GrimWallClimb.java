@@ -10,7 +10,7 @@ public class GrimWallClimb extends Mode<WallClimb> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotion = var0 -> {};
 
-    public GrimWallClimb(String var1, WallClimb var2) {
-        super(var1, var2);
+    public GrimWallClimb(String var1, WallClimb wallClimb) {
+        super(var1, wallClimb);
     }
 }

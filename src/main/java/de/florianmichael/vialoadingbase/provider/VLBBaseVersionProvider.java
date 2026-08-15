@@ -10,7 +10,7 @@ public class VLBBaseVersionProvider extends BaseVersionProvider {
     }
 
     @Override
-    public ProtocolVersion getClosestServerProtocol(UserConnection var1) throws Exception {
-        return var1.isClientSide() ? ViaLoadingBase.getInstance().getTargetVersion() : super.getClosestServerProtocol(var1);
+    public ProtocolVersion getClosestServerProtocol(UserConnection userConnection) throws Exception {
+        return userConnection.isClientSide() ? ViaLoadingBase.getInstance().getTargetVersion() : super.getClosestServerProtocol(userConnection);
     }
 }

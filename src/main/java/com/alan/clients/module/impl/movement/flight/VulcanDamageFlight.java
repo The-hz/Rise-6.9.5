@@ -61,8 +61,8 @@ public class VulcanDamageFlight extends Mode<Flight> {
         }
     };
 
-    public VulcanDamageFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public VulcanDamageFlight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

@@ -13,13 +13,13 @@ public final class aho extends ahl {
     }
 
     @Override
-    public void readPacketData(PacketBuffer var1) {
-        this.aNt = var1.readInt();
+    public void readPacketData(PacketBuffer packetBuffer) {
+        this.aNt = packetBuffer.readInt();
     }
 
     @Override
-    public void writePacketData(PacketBuffer var1) {
-        var1.writeInt(this.aNt);
+    public void writePacketData(PacketBuffer packetBuffer) {
+        packetBuffer.writeInt(this.aNt);
     }
 
     @Override

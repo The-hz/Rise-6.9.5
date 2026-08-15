@@ -37,8 +37,8 @@ public final class GrimInventoryMove extends Mode<InventoryMove> {
         }
     };
 
-    public GrimInventoryMove(String var1, InventoryMove var2) {
-        super(var1, var2);
+    public GrimInventoryMove(String var1, InventoryMove inventoryMove) {
+        super(var1, inventoryMove);
     }
 
     public int hu() {

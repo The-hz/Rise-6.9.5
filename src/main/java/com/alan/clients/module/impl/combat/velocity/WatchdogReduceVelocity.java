@@ -70,8 +70,8 @@ public class WatchdogReduceVelocity extends Mode<Velocity> {
         }
     };
 
-    public WatchdogReduceVelocity(String var1, Velocity var2) {
-        super(var1, var2);
+    public WatchdogReduceVelocity(String var1, Velocity velocity) {
+        super(var1, velocity);
     }
 
     private void v(String param1) {

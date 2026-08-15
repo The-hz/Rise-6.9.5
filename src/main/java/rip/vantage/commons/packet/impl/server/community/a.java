@@ -8,22 +8,22 @@ public class a extends rip.vantage.commons.packet.api.abstracts.b {
     private JSONArray ePB;
     private final String ePC;
 
-    public a(JSONObject var1) {
+    public a(JSONObject json) {
         super((byte)11);
 
         try {
-            this.ePA = var1.getJSONArray("a");
+            this.ePA = json.getJSONArray("a");
         } catch (Exception exception1) {
             this.ePA = new JSONArray();
         }
 
         try {
-            this.ePB = var1.getJSONArray("b");
+            this.ePB = json.getJSONArray("b");
         } catch (Exception exception) {
             this.ePB = new JSONArray();
         }
 
-        this.ePC = var1.getString("c");
+        this.ePC = json.getString("c");
     }
 
     @Override

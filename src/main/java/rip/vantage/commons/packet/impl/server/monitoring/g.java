@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 public class g extends rip.vantage.commons.packet.api.abstracts.b {
 
-    public g(JSONObject var1) {
+    public g(JSONObject json) {
         super((byte)29);
     }
 

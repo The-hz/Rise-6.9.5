@@ -57,10 +57,10 @@ public class aep extends AltAccount {
     }
 
     @Override
-    public void b(JsonObject var1) {
-        super.b(var1);
-        if (var1.has("refreshToken")) {
-            this.aFe = var1.get("refreshToken").getAsString();
+    public void b(JsonObject json) {
+        super.b(json);
+        if (json.has("refreshToken")) {
+            this.aFe = json.get("refreshToken").getAsString();
         }
     }
 

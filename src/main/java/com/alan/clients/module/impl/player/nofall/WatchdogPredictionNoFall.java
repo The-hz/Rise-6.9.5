@@ -46,7 +46,7 @@ public class WatchdogPredictionNoFall extends Mode<NoFall> {
         }
     };
 
-    public WatchdogPredictionNoFall(String var1, NoFall var2) {
-        super(var1, var2);
+    public WatchdogPredictionNoFall(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 }

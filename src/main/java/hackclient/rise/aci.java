@@ -28,26 +28,26 @@ public class aci implements InstanceAccess {
         this.aAa = null;
     }
 
-    public aci(String var1, String var2, Runnable var3) {
+    public aci(String var1, String var2, Runnable runnable) {
         String s = org.apache.commons.lang3.StringUtils.capitalize(var2);
         this.azY = StringUtils.b(this.aAd, s, 86.450005F - 20);
-        this.aAa = var3;
+        this.aAa = runnable;
         this.azZ = var1;
     }
 
-    public void j(Vector2f var1) {
-        this.axI = new Vector2f(var1.x, var1.y);
+    public void j(Vector2f vec2) {
+        this.axI = new Vector2f(vec2.x, vec2.y);
         if (!(this.axI.x + this.alh.x < this.getStandardClickGUI().axI.x + this.getStandardClickGUI().axJ.aym)
             && !(this.axI.x > this.getStandardClickGUI().axI.x + this.getStandardClickGUI().axJ.aym + this.getStandardClickGUI().alh.x)) {
             this.aAb.Q(this.qz() ? 75.0 : 0.0);
             this.aAc.Q(this.qz() ? 5.0 : 0.0);
             RenderUtil.roundedRectangle(this.axI.x, this.axI.y, this.alh.x, this.alh.y, 8.0, abw.OVERLAY.pV());
-            RenderUtil.roundedRectangle(var1.x, var1.y, this.alh.x, this.alh.y, 8.0, abw.OVERLAY.Y((int)this.aAb.sG()));
+            RenderUtil.roundedRectangle(vec2.x, vec2.y, this.alh.x, this.alh.y, 8.0, abw.OVERLAY.Y((int)this.aAb.sG()));
             this.axI.y = this.axI.y + (this.alh.y / 2.0F - this.aAd.height() / 2.0F + 1.0F - 10 / 4.0F);
             this.aAd.c(this.azY, this.axI.x + this.alh.x / 2.0F, this.axI.y, abw.SECONDARY_TEXT.pW());
             this.axI.y = this.axI.y + (this.aAd.height() + 10 / 2.0F);
             this.k(this.axI);
-            this.axI = new Vector2f(var1.x, var1.y);
+            this.axI = new Vector2f(vec2.x, vec2.y);
         }
     }
 
@@ -63,8 +63,8 @@ public class aci implements InstanceAccess {
         return GUIUtil.a(this.axI, this.alh, afl.sW().getX(), afl.sW().getY());
     }
 
-    public void k(Vector2f var1) {
-        FontManager.MAIN.a(16, gd.REGULAR).c(this.azZ, var1.x + this.alh.x / 2.0F, var1.y, abw.TRINARY_TEXT.pW());
+    public void k(Vector2f vec2) {
+        FontManager.MAIN.a(16, gd.REGULAR).c(this.azZ, vec2.x + this.alh.x / 2.0F, vec2.y, abw.TRINARY_TEXT.pW());
     }
 
     @Generated
@@ -123,28 +123,28 @@ public class aci implements InstanceAccess {
     }
 
     @Generated
-    public void e(Runnable var1) {
-        this.aAa = var1;
+    public void e(Runnable runnable) {
+        this.aAa = runnable;
     }
 
     @Generated
-    public void l(Vector2f var1) {
-        this.alh = var1;
+    public void l(Vector2f vec2) {
+        this.alh = vec2;
     }
 
     @Generated
-    public void b(Animation var1) {
-        this.aAb = var1;
+    public void b(Animation animation) {
+        this.aAb = animation;
     }
 
     @Generated
-    public void c(Animation var1) {
-        this.aAc = var1;
+    public void c(Animation animation) {
+        this.aAc = animation;
     }
 
     @Generated
-    public void i(Vector2f var1) {
-        this.axI = var1;
+    public void i(Vector2f vec2) {
+        this.axI = vec2;
     }
 
     @Generated

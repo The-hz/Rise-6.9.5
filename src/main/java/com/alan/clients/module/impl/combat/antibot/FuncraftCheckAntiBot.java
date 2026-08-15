@@ -17,8 +17,8 @@ public final class FuncraftCheckAntiBot extends Mode<AntiBot> {
         }
     });
 
-    public FuncraftCheckAntiBot(String var1, AntiBot var2) {
-        super(var1, var2);
+    public FuncraftCheckAntiBot(String var1, AntiBot antiBot) {
+        super(var1, antiBot);
     }
 
     @Override

@@ -6,11 +6,11 @@ public class n {
     n() {
     }
 
-    public static boolean c(JSONObject var0) {
+    public static boolean c(JSONObject json) {
         return false;
     }
 
-    public static boolean d(JSONObject var0) {
+    public static boolean d(JSONObject json) {
         return false;
     }
 }

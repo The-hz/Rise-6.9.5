@@ -8,8 +8,8 @@ import java.util.UUID;
 public class UserCommandSender implements ViaCommandSender {
     private final UserConnection user;
 
-    public UserCommandSender(UserConnection var1) {
-        this.user = var1;
+    public UserCommandSender(UserConnection user) {
+        this.user = user;
     }
 
     @Override

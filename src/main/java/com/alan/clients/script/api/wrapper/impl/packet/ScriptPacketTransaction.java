@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 
 public class ScriptPacketTransaction extends ScriptPacket<C0FPacketConfirmTransaction> {
-    public ScriptPacketTransaction(C0FPacketConfirmTransaction var1) {
-        super(var1);
+    public ScriptPacketTransaction(C0FPacketConfirmTransaction packet) {
+        super(packet);
     }
 
     public int getWindowId() {
@@ -15,15 +15,15 @@ public class ScriptPacketTransaction extends ScriptPacket<C0FPacketConfirmTransa
         return this.wrapped.getUid();
     }
 
-    public void setWindowId(int var1) {
-        this.wrapped.setWindowId(var1);
+    public void setWindowId(int windowId) {
+        this.wrapped.setWindowId(windowId);
     }
 
     public void setUid(short var1) {
         this.wrapped.setUid(var1);
     }
 
-    public void setAccepted(boolean var1) {
-        this.wrapped.setAccepted(var1);
+    public void setAccepted(boolean accepted) {
+        this.wrapped.setAccepted(accepted);
     }
 }

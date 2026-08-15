@@ -31,8 +31,8 @@ public class Grim191181Flight extends Mode<Flight> {
     public NumberValue speed = new NumberValue("Speed", this, 0.275, 0, 0.32, 0.001);
     public boolean Eo;
 
-    public Grim191181Flight(String var1, Flight var2) {
-        super(var1, var2);
+    public Grim191181Flight(String var1, Flight flight) {
+        super(var1, flight);
         this.timer = new NumberValue("Timer", this, 1, 0.1, 10, 0.1);
         this.onPostStrafe = var1x -> {
             aEg.timer.dzD = this.timer.wo().floatValue();

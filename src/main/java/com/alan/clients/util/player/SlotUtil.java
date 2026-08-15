@@ -120,14 +120,14 @@ public final class SlotUtil implements InstanceAccess {
         return j;
     }
 
-    public static int findItem(Item var0) {
+    public static int findItem(Item item) {
         for (int i = 0; i < 9; i++) {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
             if (itemstack == null) {
-                if (var0 == null) {
+                if (item == null) {
                     return i;
                 }
-            } else if (itemstack.getItem() == var0) {
+            } else if (itemstack.getItem() == item) {
                 return i;
             }
         }
@@ -135,14 +135,14 @@ public final class SlotUtil implements InstanceAccess {
         return -1;
     }
 
-    public static int h(Block var0) {
+    public static int h(Block block) {
         for (int i = 0; i < 9; i++) {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(i);
             if (itemstack == null) {
-                if (var0 == null) {
+                if (block == null) {
                     return i;
                 }
-            } else if (itemstack.getItem() instanceof ItemBlock && ((ItemBlock)itemstack.getItem()).getBlock() == var0) {
+            } else if (itemstack.getItem() instanceof ItemBlock && ((ItemBlock)itemstack.getItem()).getBlock() == block) {
                 return i;
             }
         }
@@ -150,10 +150,10 @@ public final class SlotUtil implements InstanceAccess {
         return -1;
     }
 
-    public static int findTool(BlockPos var0) {
+    public static int findTool(BlockPos pos) {
         float f = 1.0F;
         int i = -1;
-        IBlockState iblockstate = aEg.theWorld.getBlockState(var0);
+        IBlockState iblockstate = aEg.theWorld.getBlockState(pos);
 
         for (int j = 0; j < 9; j++) {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(j);
@@ -173,40 +173,40 @@ public final class SlotUtil implements InstanceAccess {
         return var0 < 9 && var0 >= 0 ? aEg.thePlayer.inventory.mainInventory[var0] : null;
     }
 
-    public static float a(Block var0, int var1) {
+    public static float a(Block block, int var1) {
         float f = 1.0F;
         if (aEg.thePlayer.inventory.mainInventory[var1] != null) {
-            f *= aEg.thePlayer.inventory.mainInventory[var1].getStrVsBlock(var0);
+            f *= aEg.thePlayer.inventory.mainInventory[var1].getStrVsBlock(block);
         }
 
         return f;
     }
 
-    public static float getPlayerRelativeBlockHardness(EntityPlayer var0, World var1, BlockPos var2, int var3) {
-        Block block = aEg.theWorld.getBlockState(var2).getBlock();
-        float f = block.getBlockHardness(var1, var2);
+    public static float getPlayerRelativeBlockHardness(EntityPlayer player, World world, BlockPos pos, int var3) {
+        Block block = aEg.theWorld.getBlockState(pos).getBlock();
+        float f = block.getBlockHardness(world, pos);
         return f < 0.0F ? 0.0F : (!canHeldItemHarvest(block, var3) ? c(block, var3) / f / 100.0F : c(block, var3) / f / 30.0F);
     }
 
-    public static boolean canHeldItemHarvest(Block var0, int var1) {
-        if (var0.getMaterial().isToolNotRequired()) {
+    public static boolean canHeldItemHarvest(Block block, int var1) {
+        if (block.getMaterial().isToolNotRequired()) {
             return true;
         }
 
         ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(var1);
-        return itemstack != null && itemstack.canHarvestBlock(var0);
+        return itemstack != null && itemstack.canHarvestBlock(block);
     }
 
-    public static float a(World var0, Block var1, BlockPos var2, int var3, Item var4, boolean var5) {
+    public static float a(World world, Block block, BlockPos pos, int var3, Item item, boolean var5) {
         int i = 1;
         boolean flag = false;
-        if (var4 == null) {
+        if (item == null) {
             i = 1;
             flag = true;
         }
 
         if (!flag) {
-            int j = Item.getIdFromItem(var4);
+            int j = Item.getIdFromItem(item);
             if (j == 269 || j == 270 || j == 271) {
                 i = 2;
             }
@@ -227,21 +227,21 @@ public final class SlotUtil implements InstanceAccess {
                 i = 12;
             }
 
-            if ((j == 267 || j == 268 || j == 272 || j == 276 || j == 283) && var1 instanceof BlockWeb) {
+            if ((j == 267 || j == 268 || j == 272 || j == 276 || j == 283) && block instanceof BlockWeb) {
                 i = 1;
             }
 
-            if (j == 359 && var1 instanceof BlockVine) {
+            if (j == 359 && block instanceof BlockVine) {
                 i = 1;
-            } else if (j != 359 || !(var1 instanceof BlockWeb) && !(var1 instanceof BlockLeaves)) {
-                if (j == 359 && var1.getBlockHardness(Minecraft.getMinecraft().theWorld, var2) == 0.8) {
+            } else if (j != 359 || !(block instanceof BlockWeb) && !(block instanceof BlockLeaves)) {
+                if (j == 359 && block.getBlockHardness(Minecraft.getMinecraft().theWorld, pos) == 0.8) {
                     i = 5;
                 }
             } else {
                 i = 15;
             }
 
-            if (!canHeldItemHarvest(var1, var3)) {
+            if (!canHeldItemHarvest(block, var3)) {
                 i = 1;
             } else if (EnchantmentHelper.getEfficiencyModifier(Minecraft.getMinecraft().thePlayer) != 0) {
                 i += EnchantmentHelper.getEfficiencyModifier(Minecraft.getMinecraft().thePlayer) ^ 3;
@@ -270,9 +270,9 @@ public final class SlotUtil implements InstanceAccess {
             i = (int)(i / 5.0F);
         }
 
-        float f = i / var1.getBlockHardness(var0, var2);
+        float f = i / block.getBlockHardness(world, pos);
         float f1;
-        if (canHeldItemHarvest(var1, var3)) {
+        if (canHeldItemHarvest(block, var3)) {
             f1 = f / 30.0F;
         } else {
             f1 = f / 100.0F;
@@ -281,8 +281,8 @@ public final class SlotUtil implements InstanceAccess {
         return f1 > 1.0F ? 0.0F : (int)Math.ceil(1.0F / f1);
     }
 
-    public static float c(Block var0, int var1) {
-        float f = a(var0, var1);
+    public static float c(Block block, int var1) {
+        float f = a(block, var1);
         if (f > 1.0F) {
             int i = EnchantmentHelper.getEfficiencyModifier(aEg.thePlayer);
             ItemStack itemstack = getCurrentItemInSlot(var1);

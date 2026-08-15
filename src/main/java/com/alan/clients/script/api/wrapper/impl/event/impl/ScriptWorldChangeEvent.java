@@ -4,8 +4,8 @@ import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.script.api.wrapper.impl.event.ScriptEvent;
 
 public class ScriptWorldChangeEvent extends ScriptEvent<WorldChangeEvent> {
-    public ScriptWorldChangeEvent(WorldChangeEvent var1) {
-        super(var1);
+    public ScriptWorldChangeEvent(WorldChangeEvent event) {
+        super(event);
     }
 
     @Override

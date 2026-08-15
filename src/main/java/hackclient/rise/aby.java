@@ -140,8 +140,8 @@ public final class aby implements Screen, InstanceAccess {
     }
 
     @Generated
-    public void a(RiseClickGUI var1) {
-        this.H = var1;
+    public void a(RiseClickGUI riseClickGUI) {
+        this.H = riseClickGUI;
     }
 
     @Generated
@@ -160,7 +160,7 @@ public final class aby implements Screen, InstanceAccess {
     }
 
     @Generated
-    public void a(ArrayList<ValueComponent> var1) {
-        this.cj = var1;
+    public void a(ArrayList<ValueComponent> valueComponents) {
+        this.cj = valueComponents;
     }
 }

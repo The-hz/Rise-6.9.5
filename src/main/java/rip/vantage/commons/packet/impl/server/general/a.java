@@ -12,9 +12,9 @@ public class a extends b {
         this.ePO = System.currentTimeMillis();
     }
 
-    public a(JSONObject var1) {
+    public a(JSONObject json) {
         super((byte)0);
-        this.ePO = var1.getLong("a");
+        this.ePO = json.getLong("a");
     }
 
     @Override

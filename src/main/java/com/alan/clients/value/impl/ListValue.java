@@ -14,20 +14,20 @@ import lombok.Generated;
 public class ListValue<T> extends Value<T> {
     private final List<T> modes = new ArrayList<>();
 
-    public ListValue(String var1, Module var2) {
-        super(var1, var2, null);
+    public ListValue(String var1, Module module) {
+        super(var1, module, null);
     }
 
-    public ListValue(String var1, Mode<?> var2) {
-        super(var1, var2, null);
+    public ListValue(String var1, Mode<?> mode) {
+        super(var1, mode, null);
     }
 
-    public ListValue(String var1, Module var2, BooleanSupplier var3) {
-        super(var1, var2, null, var3);
+    public ListValue(String var1, Module module, BooleanSupplier booleanSupplier) {
+        super(var1, module, null, booleanSupplier);
     }
 
-    public ListValue(String var1, Mode<?> var2, BooleanSupplier var3) {
-        super(var1, var2, null, var3);
+    public ListValue(String var1, Mode<?> mode, BooleanSupplier booleanSupplier) {
+        super(var1, mode, null, booleanSupplier);
     }
 
     public ListValue<T> add(T... var1) {

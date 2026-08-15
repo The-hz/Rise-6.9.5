@@ -16,8 +16,8 @@ public final class DuplicateNameCheckAntiBot extends Mode<AntiBot> {
         }
     });
 
-    public DuplicateNameCheckAntiBot(String var1, AntiBot var2) {
-        super(var1, var2);
+    public DuplicateNameCheckAntiBot(String var1, AntiBot antiBot) {
+        super(var1, antiBot);
     }
 
     @Override

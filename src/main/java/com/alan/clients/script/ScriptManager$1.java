@@ -13,7 +13,7 @@ import com.alan.clients.script.api.WorldAPI;
 import javax.script.SimpleBindings;
 
 public class ScriptManager$1 extends SimpleBindings {
-    ScriptManager$1(ScriptManager var1) {
+    ScriptManager$1(ScriptManager scriptManager) {
         this.put("mc", new MinecraftAPI());
         this.put("rise", new RiseAPI());
         this.put("player", new PlayerAPI());

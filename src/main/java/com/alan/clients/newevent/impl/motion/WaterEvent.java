@@ -19,12 +19,12 @@ public class WaterEvent implements Event {
     }
 
     @Generated
-    public void setWater(boolean var1) {
-        this.water = var1;
+    public void setWater(boolean water) {
+        this.water = water;
     }
 
     @Generated
-    public WaterEvent(boolean var1) {
-        this.water = var1;
+    public WaterEvent(boolean water) {
+        this.water = water;
     }
 }

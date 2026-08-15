@@ -12,12 +12,12 @@ public final class HurtRenderEvent extends CancellableEvent {
     }
 
     @Generated
-    public void setOldDamage(boolean var1) {
-        this.oldDamage = var1;
+    public void setOldDamage(boolean oldDamage) {
+        this.oldDamage = oldDamage;
     }
 
     @Generated
-    public HurtRenderEvent(boolean var1) {
-        this.oldDamage = var1;
+    public HurtRenderEvent(boolean oldDamage) {
+        this.oldDamage = oldDamage;
     }
 }

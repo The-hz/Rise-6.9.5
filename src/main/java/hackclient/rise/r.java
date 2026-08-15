@@ -21,11 +21,11 @@ public class r {
         Client.a.e().b(this);
     }
 
-    public boolean a(Entity var1) {
+    public boolean a(Entity entity) {
         Iterator iterator = this.bn.values().iterator();
 
         while (iterator.hasNext()) {
-            if (((ArrayList)iterator.next()).contains(var1.getEntityId())) {
+            if (((ArrayList)iterator.next()).contains(entity.getEntityId())) {
                 return true;
             }
         }
@@ -33,12 +33,12 @@ public class r {
         return false;
     }
 
-    public boolean a(Object var1, Entity var2) {
-        return !this.bn.containsKey(var1) ? false : this.bn.get(var1).contains(var2.getEntityId());
+    public boolean a(Object var1, Entity entity) {
+        return !this.bn.containsKey(var1) ? false : this.bn.get(var1).contains(entity.getEntityId());
     }
 
-    public void b(Object var1, Entity var2) {
-        int i = var2.getEntityId();
+    public void b(Object var1, Entity entity) {
+        int i = entity.getEntityId();
         if (!this.bn.containsKey(var1)) {
             this.bn.put(var1, new ArrayList<>());
         }
@@ -49,9 +49,9 @@ public class r {
         }
     }
 
-    public void c(Object var1, Entity var2) {
+    public void c(Object var1, Entity entity) {
         if (this.bn.containsKey(var1)) {
-            this.bn.get(var1).remove(Integer.valueOf(var2.getEntityId()));
+            this.bn.get(var1).remove(Integer.valueOf(entity.getEntityId()));
         }
     }
 

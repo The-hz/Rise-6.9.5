@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S29PacketSoundEffect;
 
 public class ScriptPacketSoundEffect extends ScriptPacket<S29PacketSoundEffect> {
-    public ScriptPacketSoundEffect(S29PacketSoundEffect var1) {
-        super(var1);
+    public ScriptPacketSoundEffect(S29PacketSoundEffect packet) {
+        super(packet);
     }
 
     public String getSoundName() {

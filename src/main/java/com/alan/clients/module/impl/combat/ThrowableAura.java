@@ -60,10 +60,10 @@ public class ThrowableAura extends Module {
     }
 
 
-    public Vec3 i(Entity var1) {
-        Vec3 vec3 = var1.getPositionVector().addVector(0.0, var1.getEyeHeight() * 0.5, 0.0);
-        double d1 = aEg.thePlayer.getDistanceToEntity(var1) / 1.5;
-        return vec3.addVector(var1.motionX * d1, var1.motionY * d1, var1.motionZ * d1);
+    public Vec3 i(Entity entity) {
+        Vec3 vec3 = entity.getPositionVector().addVector(0.0, entity.getEyeHeight() * 0.5, 0.0);
+        double d1 = aEg.thePlayer.getDistanceToEntity(entity) / 1.5;
+        return vec3.addVector(entity.motionX * d1, entity.motionY * d1, entity.motionZ * d1);
     }
 
     @Override
@@ -77,19 +77,19 @@ public class ThrowableAura extends Module {
         this.qI = -1;
     }
 
-    public boolean s(EntityLivingBase var1) {
-        Vec3 vec3 = this.prediction.wo() ? this.i(var1) : var1.getPositionVector().addVector(0.0, var1.getEyeHeight() * 0.5, 0.0);
+    public boolean s(EntityLivingBase living) {
+        Vec3 vec3 = this.prediction.wo() ? this.i(living) : living.getPositionVector().addVector(0.0, living.getEyeHeight() * 0.5, 0.0);
         Vec3 vec31 = aEg.thePlayer.getPositionEyes(1.0F);
         Vec3 vec32 = aEg.thePlayer.getLookVec().normalize();
         Vec3 vec33 = vec3.subtract(vec31).normalize();
         return vec32.dotProduct(vec33) > 0.9;
     }
 
-    public void g(Entity var1) {
-        if (aEg.playerController != null && var1 != null) {
+    public void g(Entity entity) {
+        if (aEg.playerController != null && entity != null) {
             float f2 = aEg.thePlayer.pl;
             float f3 = aEg.thePlayer.rotationPitch;
-            this.h(var1);
+            this.h(entity);
             ItemStack itemstack = aEg.thePlayer.getHeldItem();
             if (itemstack != null) {
                 aEg.thePlayer.swingItem();
@@ -114,8 +114,8 @@ public class ThrowableAura extends Module {
         return aimbacktrack == null || !aimbacktrack.isEnabled();
     }
 
-    public void h(Entity var1) {
-        Vec3 vec3 = this.prediction.wo() ? this.i(var1) : var1.getPositionVector().addVector(0.0, var1.getEyeHeight() * 0.5, 0.0);
+    public void h(Entity entity) {
+        Vec3 vec3 = this.prediction.wo() ? this.i(entity) : entity.getPositionVector().addVector(0.0, entity.getEyeHeight() * 0.5, 0.0);
         Vec3 vec31 = aEg.thePlayer.getPositionEyes(1.0F);
         double d6 = vec3.xCoord - vec31.xCoord;
         double d7 = vec3.yCoord - vec31.yCoord;
@@ -127,8 +127,8 @@ public class ThrowableAura extends Module {
         aEg.thePlayer.rotationPitch = (float)d11;
     }
 
-    public boolean a(KillAura var1) {
-        return var1 != null && var1.isEnabled() && var1.jE != null ? !this.b(var1) : false;
+    public boolean a(KillAura killAura) {
+        return killAura != null && killAura.isEnabled() && killAura.jE != null ? !this.b(killAura) : false;
     }
 
     public ThrowableAura() {
@@ -209,13 +209,13 @@ public class ThrowableAura extends Module {
         };
     }
 
-    public boolean t(EntityLivingBase var1) {
-        if (aEg.objectMouseOver != null && aEg.objectMouseOver.entityHit == var1) {
+    public boolean t(EntityLivingBase living) {
+        if (aEg.objectMouseOver != null && aEg.objectMouseOver.entityHit == living) {
             return true;
         }
 
         MovingObjectPosition movingobjectposition = aef.rayCast(new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch), this.range.wo().doubleValue(), 0.1F);
-        return movingobjectposition != null && movingobjectposition.entityHit == var1;
+        return movingobjectposition != null && movingobjectposition.entityHit == living;
     }
 
     public int gu() {
@@ -236,17 +236,17 @@ public class ThrowableAura extends Module {
         return -1;
     }
 
-    public boolean g(ItemStack var1) {
-        return var1 == null ? false : this.snowballs.wo() && var1.getItem() == Items.snowball || this.eggs.wo() && var1.getItem() == Items.egg;
+    public boolean g(ItemStack stack) {
+        return stack == null ? false : this.snowballs.wo() && stack.getItem() == Items.snowball || this.eggs.wo() && stack.getItem() == Items.egg;
     }
 
-    public boolean b(KillAura var1) {
-        EntityLivingBase entitylivingbase = var1.jE;
+    public boolean b(KillAura killAura) {
+        EntityLivingBase entitylivingbase = killAura.jE;
         if (entitylivingbase == null) {
             return false;
         }
 
-        double d1 = var1.range.wo().doubleValue();
+        double d1 = killAura.range.wo().doubleValue();
         MovingObjectPosition movingobjectposition = aef.c(RotationComponent.fk, d1);
         return movingobjectposition != null && movingobjectposition.entityHit == entitylivingbase
             ? true ^ true
@@ -274,13 +274,13 @@ public class ThrowableAura extends Module {
         }).min(Comparator.comparingDouble(var0 -> aEg.thePlayer.getDistanceSqToEntity(var0))).orElse(null);
     }
 
-    public boolean r(EntityLivingBase var1) {
+    public boolean r(EntityLivingBase living) {
         if (this.fOV.wo().doubleValue() >= 360.0) {
             return true;
         }
 
         Vec3 vec3 = aEg.thePlayer.getLookVec().normalize();
-        Vec3 vec31 = var1.getPositionVector().addVector(0.0, var1.getEyeHeight() * 0.5, 0.0).subtract(aEg.thePlayer.getPositionEyes(1.0F)).normalize();
+        Vec3 vec31 = living.getPositionVector().addVector(0.0, living.getEyeHeight() * 0.5, 0.0).subtract(aEg.thePlayer.getPositionEyes(1.0F)).normalize();
         return Math.toDegrees(Math.acos(MathHelper.clamp_double(vec3.dotProduct(vec31), -1.0, 1.0))) <= this.fOV.wo().doubleValue() / 2.0;
     }
 }

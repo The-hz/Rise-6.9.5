@@ -213,8 +213,8 @@ public final class BloxdTerrainSpeed extends Mode<TerrainSpeed> {
         AxisAlignedBB axisalignedbb = var0.dh();
     };
 
-    public BloxdTerrainSpeed(String var1, TerrainSpeed var2) {
-        super(var1, var2);
+    public BloxdTerrainSpeed(String var1, TerrainSpeed terrainSpeed) {
+        super(var1, terrainSpeed);
     }
 
     @Override

@@ -6,8 +6,8 @@ class yg {
     final BufferedImage[] arO;
     final int[] arP;
 
-    yg(BufferedImage[] var1, int[] var2) {
-        this.arO = var1;
+    yg(BufferedImage[] images, int[] var2) {
+        this.arO = images;
         this.arP = var2;
     }
 }

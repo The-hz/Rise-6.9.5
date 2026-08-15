@@ -52,8 +52,8 @@ public class abt extends ValueComponent {
     }
 
     @Override
-    public void draw(Vector2d var1, int var2, int var3, float var4) {
-        this.position = var1;
+    public void draw(Vector2d position, int var2, int var3, float var4) {
+        this.position = position;
         NumberValue numbervalue = (NumberValue)this.value;
         String s = String.valueOf(numbervalue.wo().doubleValue());
         String s1 = ahd.ce(this.value.getName());

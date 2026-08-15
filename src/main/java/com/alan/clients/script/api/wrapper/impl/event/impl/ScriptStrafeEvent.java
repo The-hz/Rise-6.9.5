@@ -4,20 +4,20 @@ import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.script.api.wrapper.impl.event.CancellableScriptEvent;
 
 public class ScriptStrafeEvent extends CancellableScriptEvent<StrafeEvent> {
-    public ScriptStrafeEvent(StrafeEvent var1) {
-        super(var1);
+    public ScriptStrafeEvent(StrafeEvent event) {
+        super(event);
     }
 
-    public void setForward(float var1) {
-        this.wrapped.setForward(var1);
+    public void setForward(float forward) {
+        this.wrapped.setForward(forward);
     }
 
-    public void setStrafe(float var1) {
-        this.wrapped.setStrafe(var1);
+    public void setStrafe(float strafe) {
+        this.wrapped.setStrafe(strafe);
     }
 
-    public void setFriction(float var1) {
-        this.wrapped.setFriction(var1);
+    public void setFriction(float friction) {
+        this.wrapped.setFriction(friction);
     }
 
     public void setYaw(float var1) {
@@ -44,8 +44,8 @@ public class ScriptStrafeEvent extends CancellableScriptEvent<StrafeEvent> {
         this.wrapped.setSpeed(var1, var3);
     }
 
-    public void setSpeed(double var1) {
-        this.wrapped.setSpeed(var1);
+    public void setSpeed(double speed) {
+        this.wrapped.setSpeed(speed);
     }
 
     @Override

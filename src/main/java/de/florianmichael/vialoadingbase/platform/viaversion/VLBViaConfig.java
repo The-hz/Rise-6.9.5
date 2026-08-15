@@ -22,8 +22,8 @@ public class VLBViaConfig extends AbstractViaConfig {
         "left-handed-handling"
     );
 
-    public VLBViaConfig(File var1, Logger var2) {
-        super(var1, var2);
+    public VLBViaConfig(File file, Logger logger) {
+        super(file, logger);
         this.reload();
     }
 

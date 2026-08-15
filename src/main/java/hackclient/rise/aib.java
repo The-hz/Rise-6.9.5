@@ -8,9 +8,9 @@ public class aib {
     public EnumFacing aOa;
     private final Vec3 aOb;
 
-    public aib(EnumFacing var1, Vec3 var2) {
-        this.aOa = var1;
-        this.aOb = var2;
+    public aib(EnumFacing facing, Vec3 vec) {
+        this.aOa = facing;
+        this.aOb = vec;
     }
 
     @Generated

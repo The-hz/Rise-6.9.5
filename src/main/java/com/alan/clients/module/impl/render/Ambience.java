@@ -119,7 +119,7 @@ public final class Ambience extends Module {
         aEg.theWorld.getWorldInfo().setThundering(false);
     }
 
-    public float getFloatTemperature(BlockPos var1, BiomeGenBase var2) {
+    public float getFloatTemperature(BlockPos pos, BiomeGenBase biomeGenBase) {
         if (this.isEnabled()) {
             String s = this.weather.wo().getName();
             switch (s) {
@@ -132,7 +132,7 @@ public final class Ambience extends Module {
             }
         }
 
-        return var2.getFloatTemperature(var1);
+        return biomeGenBase.getFloatTemperature(pos);
     }
 
     public boolean kF() {

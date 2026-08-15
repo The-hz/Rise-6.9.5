@@ -45,7 +45,7 @@ public class WurstTargetInfo extends Mode<TargetInfo> {
         RenderUtil.d(d0 + 4.0, d1 + 16.0, 177.0 * (d2 / abstractclientplayer.getMaxHealth()), 10.0, Color.ORANGE);
     };
 
-    public WurstTargetInfo(String var1, TargetInfo var2) {
-        super(var1, var2);
+    public WurstTargetInfo(String var1, TargetInfo targetInfo) {
+        super(var1, targetInfo);
     }
 }

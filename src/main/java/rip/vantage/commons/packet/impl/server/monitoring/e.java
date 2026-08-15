@@ -8,9 +8,9 @@ public class e extends rip.vantage.commons.packet.api.abstracts.b {
     static {
     }
 
-    public e(JSONObject var1) {
+    public e(JSONObject json) {
         super((byte)26);
-        this.ePR = var1.optBoolean("a", false);
+        this.ePR = json.optBoolean("a", false);
     }
 
     @Override

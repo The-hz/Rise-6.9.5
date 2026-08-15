@@ -6,8 +6,8 @@ public class tm {
     private final ItemStack acJ;
     private final int acK;
 
-    public tm(ItemStack var1, int var2) {
-        this.acJ = var1;
+    public tm(ItemStack stack, int var2) {
+        this.acJ = stack;
         this.acK = var2;
     }
 

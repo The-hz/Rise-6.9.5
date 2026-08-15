@@ -90,8 +90,8 @@ public class Grim2Flight extends Mode<Flight> {
         }
     };
 
-    public Grim2Flight(String var1, Flight var2) {
-        super(var1, var2);
+    public Grim2Flight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

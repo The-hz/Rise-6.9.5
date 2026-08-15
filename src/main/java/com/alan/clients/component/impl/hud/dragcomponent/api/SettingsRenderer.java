@@ -37,11 +37,11 @@ public class SettingsRenderer implements InstanceAccess {
     public boolean close;
     public ArrayList<ValueComponent> valueList = new ArrayList<>();
 
-    public SettingsRenderer(Module var1, DragValue var2) {
-        this.module = var1;
-        this.positionValue = var2;
+    public SettingsRenderer(Module module, DragValue positionValue) {
+        this.module = module;
+        this.positionValue = positionValue;
 
-        for (Value value : var1.getAllValues()) {
+        for (Value value : module.getAllValues()) {
             if (value instanceof ModeValue) {
                 this.valueList.add(new abr(value));
             } else if (value instanceof BooleanValue) {

@@ -61,8 +61,8 @@ public class WatchdogBlink extends Module {
     }
 
     @Override
-    public void setEnabled(boolean var1) {
-        if (!var1 && this.isEnabled() && !this.ahz) {
+    public void setEnabled(boolean enabled) {
+        if (!enabled && this.isEnabled() && !this.ahz) {
             if (this.ahy) {
                 return;
             }
@@ -74,7 +74,7 @@ public class WatchdogBlink extends Module {
             }
         }
 
-        super.setEnabled(var1);
+        super.setEnabled(enabled);
     }
 
     @Override

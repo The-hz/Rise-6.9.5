@@ -39,22 +39,22 @@ public class TextBox {
     private float aJu;
     public a aJv = new a();
 
-    public TextBox(Vector2d var1, agc var2, Color var3, agl var4, String var5, float var6, boolean var7) {
-        this.position = var1;
+    public TextBox(Vector2d position, agc var2, Color color, agl var4, String var5, float width, boolean var7) {
+        this.position = position;
         this.lq = var2;
-        this.color = var3;
+        this.color = color;
         this.aJl = var4;
         this.aJm = var5;
-        this.width = var6;
+        this.width = width;
         this.aJn = var7;
     }
 
-    public TextBox(Vector2d var1, agc var2, Color var3, agl var4, String var5, float var6) {
-        this(var1, var2, var3, var4, var5, var6, false);
+    public TextBox(Vector2d vector2d, agc var2, Color var3, agl var4, String var5, float var6) {
+        this(vector2d, var2, var3, var4, var5, var6, false);
     }
 
-    public TextBox(Vector2d var1, agc var2, Color var3, agl var4, String var5, float var6, String var7) {
-        this(var1, var2, var3, var4, var5, var6, false);
+    public TextBox(Vector2d vector2d, agc var2, Color var3, agl var4, String var5, float var6, String var7) {
+        this(vector2d, var2, var3, var4, var5, var6, false);
         this.aJq = var7;
     }
 
@@ -394,8 +394,8 @@ public class TextBox {
     }
 
     @Generated
-    public void z(float var1) {
-        this.width = var1;
+    public void z(float width) {
+        this.width = width;
     }
 
     @Generated
@@ -404,8 +404,8 @@ public class TextBox {
     }
 
     @Generated
-    public void setColor(Color var1) {
-        this.color = var1;
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     @Generated

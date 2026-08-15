@@ -121,7 +121,7 @@ public class WatchdogBlinkPhase extends Mode<Phase> {
     @EventLink
     public final Listener<PushOutOfBlockEvent> onPushOutOfBlock = CancellableEvent::setCancelled;
 
-    public WatchdogBlinkPhase(String var1, Phase var2) {
-        super(var1, var2);
+    public WatchdogBlinkPhase(String var1, Phase phase) {
+        super(var1, phase);
     }
 }

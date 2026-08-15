@@ -17,8 +17,8 @@ public final class TimeVisibleCheckAntiBot extends Mode<AntiBot> {
         }
     });
 
-    public TimeVisibleCheckAntiBot(String var1, AntiBot var2) {
-        super(var1, var2);
+    public TimeVisibleCheckAntiBot(String var1, AntiBot antiBot) {
+        super(var1, antiBot);
     }
 
     @Override

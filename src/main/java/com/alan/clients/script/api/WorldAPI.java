@@ -40,19 +40,19 @@ public class WorldAPI extends ScriptWorld {
         return entitylivingbase != null ? new ScriptEntityLiving(entitylivingbase) : null;
     }
 
-    public void removeEntity(int var1) {
-        MC.theWorld.removeEntityFromWorld(var1);
+    public void removeEntity(int entity) {
+        MC.theWorld.removeEntityFromWorld(entity);
     }
 
-    public void removeEntity(ScriptEntityLiving var1) {
-        this.removeEntity(var1.getEntityId());
+    public void removeEntity(ScriptEntityLiving entity) {
+        this.removeEntity(entity.getEntityId());
     }
 
     public ScriptBlockPos newBlockPos(int var1, int var2, int var3) {
         return new ScriptBlockPos(new BlockPos(var1, var2, var3));
     }
 
-    public String getBlockName(ScriptBlockPos var1) {
-        return var1.getBlock().getName();
+    public String getBlockName(ScriptBlockPos scriptBlockPos) {
+        return scriptBlockPos.getBlock().getName();
     }
 }

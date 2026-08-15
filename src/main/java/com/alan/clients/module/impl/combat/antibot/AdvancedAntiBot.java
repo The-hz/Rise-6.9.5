@@ -57,8 +57,8 @@ public final class AdvancedAntiBot extends Mode<AntiBot> {
         Client.a.x().a(this);
     };
 
-    public AdvancedAntiBot(String var1, AntiBot var2) {
-        super(var1, var2);
+    public AdvancedAntiBot(String var1, AntiBot antiBot) {
+        super(var1, antiBot);
     }
 
     @Override

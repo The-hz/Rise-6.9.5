@@ -96,13 +96,13 @@ public final class JumpCircles extends Module {
         GlStateManager.blendFunc(770, 771);
     }
 
-    private void a(xl var1, Vec3 var2, double var3) {
+    private void a(xl var1, Vec3 vec, double var3) {
         GL11.glLineWidth(2.0F);
         GL11.glBegin(2);
 
         for (int i = 0; i <= 360; i++) {
             Color color = this.e(Interface.class).rz().getAccentColor(new Vector2d(i, i));
-            double[] adouble = this.c(var2.xCoord, var2.zCoord, i, var1.aoI);
+            double[] adouble = this.c(vec.xCoord, vec.zCoord, i, var1.aoI);
             double d2 = adouble[0];
             aEg.getRenderManager();
             double d0 = d2 - RenderManager.bUO;

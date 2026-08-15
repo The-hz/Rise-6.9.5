@@ -256,8 +256,8 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
         }
     };
 
-    public Watchdog6TickSpeed(String var1, Speed var2) {
-        super(var1, var2);
+    public Watchdog6TickSpeed(String var1, Speed speed) {
+        super(var1, speed);
     }
 
     @Override
@@ -298,7 +298,7 @@ public class Watchdog6TickSpeed extends Mode<Speed> {
         aEg.thePlayer.stepHeight = 0.6F;
     }
 
-    private boolean a(Vec3 var1, Vec3 var2) {
+    private boolean a(Vec3 vec, Vec3 var2) {
         EntityPlayerSP entityplayersp = Minecraft.getMinecraft().thePlayer;
         WorldClient worldclient = Minecraft.getMinecraft().theWorld;
         AxisAlignedBB axisalignedbb = entityplayersp.getEntityBoundingBox().offset(var2.xCoord, var2.yCoord, var2.zCoord);

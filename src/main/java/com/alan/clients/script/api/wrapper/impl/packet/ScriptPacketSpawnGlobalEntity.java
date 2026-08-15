@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S2CPacketSpawnGlobalEntity;
 
 public class ScriptPacketSpawnGlobalEntity extends ScriptPacket<S2CPacketSpawnGlobalEntity> {
-    public ScriptPacketSpawnGlobalEntity(S2CPacketSpawnGlobalEntity var1) {
-        super(var1);
+    public ScriptPacketSpawnGlobalEntity(S2CPacketSpawnGlobalEntity packet) {
+        super(packet);
     }
 
     public int getEntityId() {

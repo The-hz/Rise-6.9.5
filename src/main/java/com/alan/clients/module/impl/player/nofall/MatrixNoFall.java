@@ -42,8 +42,8 @@ public class MatrixNoFall extends Mode<NoFall> {
         }
     };
 
-    public MatrixNoFall(String var1, NoFall var2) {
-        super(var1, var2);
+    public MatrixNoFall(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 
     @Override

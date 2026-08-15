@@ -22,7 +22,7 @@ public final class VerusRegenRegen extends Mode<Regen> {
         }
     };
 
-    public VerusRegenRegen(String var1, Regen var2) {
-        super(var1, var2);
+    public VerusRegenRegen(String var1, Regen regen) {
+        super(var1, regen);
     }
 }

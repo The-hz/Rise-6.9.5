@@ -25,9 +25,9 @@ public final class dt extends CancellableEvent {
     }
 
     @Generated
-    public dt(int var1, char var2, GuiScreen var3) {
+    public dt(int var1, char var2, GuiScreen screen) {
         this.je = var1;
         this.jf = var2;
-        this.jg = var3;
+        this.jg = screen;
     }
 }

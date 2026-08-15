@@ -4,8 +4,8 @@ import com.alan.clients.newevent.impl.other.MoveEvent;
 import com.alan.clients.script.api.wrapper.impl.event.CancellableScriptEvent;
 
 public class ScriptMoveEvent extends CancellableScriptEvent<MoveEvent> {
-    public ScriptMoveEvent(MoveEvent var1) {
-        super(var1);
+    public ScriptMoveEvent(MoveEvent event) {
+        super(event);
     }
 
     public void setX(double var1) {

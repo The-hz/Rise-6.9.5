@@ -79,72 +79,72 @@ public class GameSettingsAPI extends API {
         return MC.gameSettings.keyBindSpectatorOutlines.isKeyDown();
     }
 
-    public void setKeyBindForward(boolean var1) {
-        MC.gameSettings.keyBindForward.setPressed(var1);
+    public void setKeyBindForward(boolean keyBindForward) {
+        MC.gameSettings.keyBindForward.setPressed(keyBindForward);
     }
 
-    public void setKeyBindBack(boolean var1) {
-        MC.gameSettings.keyBindBack.setPressed(var1);
+    public void setKeyBindBack(boolean keyBindBack) {
+        MC.gameSettings.keyBindBack.setPressed(keyBindBack);
     }
 
-    public void setKeyBindLeft(boolean var1) {
-        MC.gameSettings.keyBindLeft.setPressed(var1);
+    public void setKeyBindLeft(boolean keyBindLeft) {
+        MC.gameSettings.keyBindLeft.setPressed(keyBindLeft);
     }
 
-    public void setKeyBindRight(boolean var1) {
-        MC.gameSettings.keyBindRight.setPressed(var1);
+    public void setKeyBindRight(boolean keyBindRight) {
+        MC.gameSettings.keyBindRight.setPressed(keyBindRight);
     }
 
-    public void setKeyBindJump(boolean var1) {
-        MC.gameSettings.keyBindJump.setPressed(var1);
+    public void setKeyBindJump(boolean keyBindJump) {
+        MC.gameSettings.keyBindJump.setPressed(keyBindJump);
     }
 
-    public void setKeyBindSneak(boolean var1) {
-        MC.gameSettings.keyBindSneak.setPressed(var1);
+    public void setKeyBindSneak(boolean keyBindSneak) {
+        MC.gameSettings.keyBindSneak.setPressed(keyBindSneak);
     }
 
-    public void setKeyBindAttack(boolean var1) {
-        MC.gameSettings.cgK.setPressed(var1);
+    public void setKeyBindAttack(boolean keyBindAttack) {
+        MC.gameSettings.cgK.setPressed(keyBindAttack);
     }
 
-    public void setKeyBindUseItem(boolean var1) {
-        MC.gameSettings.cgI.setPressed(var1);
+    public void setKeyBindUseItem(boolean keyBindUseItem) {
+        MC.gameSettings.cgI.setPressed(keyBindUseItem);
     }
 
-    public void setKeyBindDrop(boolean var1) {
-        MC.gameSettings.keyBindDrop.setPressed(var1);
+    public void setKeyBindDrop(boolean keyBindDrop) {
+        MC.gameSettings.keyBindDrop.setPressed(keyBindDrop);
     }
 
-    public void setKeyBindInventory(boolean var1) {
-        MC.gameSettings.keyBindInventory.setPressed(var1);
+    public void setKeyBindInventory(boolean keyBindInventory) {
+        MC.gameSettings.keyBindInventory.setPressed(keyBindInventory);
     }
 
-    public void setKeyBindChat(boolean var1) {
-        MC.gameSettings.keyBindChat.setPressed(var1);
+    public void setKeyBindChat(boolean keyBindChat) {
+        MC.gameSettings.keyBindChat.setPressed(keyBindChat);
     }
 
-    public void setKeyBindPlayerList(boolean var1) {
-        MC.gameSettings.keyBindPlayerList.setPressed(var1);
+    public void setKeyBindPlayerList(boolean keyBindPlayerList) {
+        MC.gameSettings.keyBindPlayerList.setPressed(keyBindPlayerList);
     }
 
-    public void setKeyBindCommand(boolean var1) {
-        MC.gameSettings.cgO.setPressed(var1);
+    public void setKeyBindCommand(boolean keyBindCommand) {
+        MC.gameSettings.cgO.setPressed(keyBindCommand);
     }
 
-    public void setKeyBindScreenshot(boolean var1) {
-        MC.gameSettings.cgP.setPressed(var1);
+    public void setKeyBindScreenshot(boolean keyBindScreenshot) {
+        MC.gameSettings.cgP.setPressed(keyBindScreenshot);
     }
 
     public void setKeyBindTogglePerspective(boolean var1) {
         MC.gameSettings.cgQ.setPressed(var1);
     }
 
-    public void setKeyBindSmoothCamera(boolean var1) {
-        MC.gameSettings.cgR.setPressed(var1);
+    public void setKeyBindSmoothCamera(boolean keyBindSmoothCamera) {
+        MC.gameSettings.cgR.setPressed(keyBindSmoothCamera);
     }
 
-    public void setKeyBindFullscreen(boolean var1) {
-        MC.gameSettings.cgS.setPressed(var1);
+    public void setKeyBindFullscreen(boolean keyBindFullscreen) {
+        MC.gameSettings.cgS.setPressed(keyBindFullscreen);
     }
 
     public void setKeyBindSpectatorOutlines(boolean var1) {

@@ -21,19 +21,19 @@ public class VLBViaDecodeHandler extends MessageToMessageDecoder<ByteBuf> {
     private final UserConnection user;
     public static int stateId;
 
-    public VLBViaDecodeHandler(UserConnection var1) {
-        this.user = var1;
+    public VLBViaDecodeHandler(UserConnection user) {
+        this.user = user;
     }
 
-    protected void decode(ChannelHandlerContext var1, ByteBuf var2, List<Object> var3) {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> var3) {
         if (!this.user.checkIncomingPacket()) {
             throw CancelDecoderException.generate(null);
         }
 
         if (!this.user.shouldTransformPacket()) {
-            var3.add(var2.retain());
+            var3.add(byteBuf.retain());
         } else {
-            ByteBuf bytebuf = var1.alloc().buffer().writeBytes(var2);
+            ByteBuf bytebuf = ctx.alloc().buffer().writeBytes(byteBuf);
             ByteBuf bytebuf1 = bytebuf.copy();
 
             try {
@@ -52,10 +52,10 @@ public class VLBViaDecodeHandler extends MessageToMessageDecoder<ByteBuf> {
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext var1, Throwable var2) {
-        if (!PipelineUtil.containsCause(var2, CancelCodecException.class)) {
-            if (PipelineUtil.containsCause(var2, InformativeException.class)) {
-                Throwable throwable = var2;
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable t) {
+        if (!PipelineUtil.containsCause(t, CancelCodecException.class)) {
+            if (PipelineUtil.containsCause(t, InformativeException.class)) {
+                Throwable throwable = t;
 
                 while (throwable.getCause() != null) {
                     throwable = throwable.getCause();
@@ -77,10 +77,10 @@ public class VLBViaDecodeHandler extends MessageToMessageDecoder<ByteBuf> {
                 }
 
                 if (this.user.getProtocolInfo().getServerState() != State.HANDSHAKE || Via.getManager().debugHandler().enabled()) {
-                    var2.printStackTrace();
+                    t.printStackTrace();
                     afi.c("exception");
                     if (LastConnectionComponent.ip != null && LastConnectionComponent.ip.contains("hypixel")) {
-                        var1.close();
+                        ctx.close();
                     }
                 }
             }

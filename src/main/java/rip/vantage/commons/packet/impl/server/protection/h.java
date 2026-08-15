@@ -6,9 +6,9 @@ import org.json.JSONObject;
 public class h extends rip.vantage.commons.packet.api.abstracts.b {
     private final byte[] eQG;
 
-    public h(JSONObject var1) {
+    public h(JSONObject json) {
         super((byte)32);
-        this.eQG = Base64.getDecoder().decode(var1.optString("a", ""));
+        this.eQG = Base64.getDecoder().decode(json.optString("a", ""));
     }
 
     @Override

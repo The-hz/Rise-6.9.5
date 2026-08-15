@@ -36,16 +36,16 @@ public final class HealthBypass extends Module {
     public HealthBypass() {
     }
 
-    public static float B(EntityLivingBase var0) {
-        if (!(var0 instanceof EntityPlayer entityplayer)) {
-            return var0.getHealth();
+    public static float B(EntityLivingBase living) {
+        if (!(living instanceof EntityPlayer entityplayer)) {
+            return living.getHealth();
         }
         Scoreboard scoreboard = entityplayer.getWorldScoreboard();
         if (scoreboard == null) {
-            return var0.getHealth();
+            return living.getHealth();
         }
 
         ScoreObjective scoreobjective = scoreboard.getObjectiveInDisplaySlot(2);
-        return scoreobjective == null ? var0.getHealth() : scoreboard.getValueFromObjective(entityplayer.getName(), scoreobjective).getScorePoints();
+        return scoreobjective == null ? living.getHealth() : scoreboard.getValueFromObjective(entityplayer.getName(), scoreobjective).getScorePoints();
     }
 }

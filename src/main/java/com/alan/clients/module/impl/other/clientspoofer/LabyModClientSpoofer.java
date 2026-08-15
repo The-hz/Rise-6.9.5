@@ -34,7 +34,7 @@ public class LabyModClientSpoofer extends Mode<ClientSpoofer> {
         }
     };
 
-    public LabyModClientSpoofer(String var1, ClientSpoofer var2) {
-        super(var1, var2);
+    public LabyModClientSpoofer(String var1, ClientSpoofer clientSpoofer) {
+        super(var1, clientSpoofer);
     }
 }

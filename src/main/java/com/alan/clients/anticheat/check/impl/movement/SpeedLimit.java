@@ -15,13 +15,13 @@ public final class SpeedLimit extends Check {
     private double ai;
     private a aj = new a();
 
-    public SpeedLimit(PlayerData var1) {
-        super(var1);
+    public SpeedLimit(PlayerData playerData) {
+        super(playerData);
     }
 
     @Override
-    public void handle(Packet<?> var1) {
-        if (PacketUtil.b(var1) && ((S14PacketEntity)var1).entityId == this.data.getPlayer().getEntityId() || var1 instanceof z && ((z)var1).cqK == this.data.getPlayer().getEntityId()) {
+    public void handle(Packet<?> packet) {
+        if (PacketUtil.b(packet) && ((S14PacketEntity)packet).entityId == this.data.getPlayer().getEntityId() || packet instanceof z && ((z)packet).cqK == this.data.getPlayer().getEntityId()) {
             if (this.data.getPlayer().isInvisible()) {
                 return;
             }

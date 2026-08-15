@@ -80,25 +80,25 @@ public class ConfigFile extends File implements p {
         return true;
     }
 
-    private static void e(JsonObject var0) {
-        if (var0 != null) {
+    private static void e(JsonObject json) {
+        if (json != null) {
             for (Module module : Client.a.g().ef()) {
                 if (module != null && module.getModuleInfo() != null) {
                     String s = module.getModuleInfo().aliases()[0];
-                    if (!var0.has(s)) {
+                    if (!json.has(s)) {
                         String s1 = null;
 
                         for (Locale ahc : Locale.values()) {
                             String s2 = ahd.a(s, ahc);
-                            if (s2 != null && !s2.equals(s) && var0.has(s2)) {
+                            if (s2 != null && !s2.equals(s) && json.has(s2)) {
                                 s1 = s2;
                                 break;
                             }
                         }
 
                         if (s1 != null) {
-                            var0.add(s, var0.get(s1));
-                            var0.remove(s1);
+                            json.add(s, json.get(s1));
+                            json.remove(s1);
                         }
                     }
                 }

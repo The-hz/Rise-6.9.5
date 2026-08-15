@@ -43,8 +43,8 @@ public final class TeleportEvent extends CancellableEvent {
     }
 
     @Generated
-    public void setResponse(C03PacketPlayer var1) {
-        this.response = var1;
+    public void setResponse(C03PacketPlayer response) {
+        this.response = response;
     }
 
     @Generated
@@ -68,13 +68,13 @@ public final class TeleportEvent extends CancellableEvent {
     }
 
     @Generated
-    public void setPitch(float var1) {
-        this.ha = var1;
+    public void setPitch(float pitch) {
+        this.ha = pitch;
     }
 
     @Generated
-    public TeleportEvent(C03PacketPlayer var1, double var2, double var4, double var6, float var8, float var9) {
-        this.response = var1;
+    public TeleportEvent(C03PacketPlayer response, double var2, double var4, double var6, float var8, float var9) {
+        this.response = response;
         this.gW = var2;
         this.gX = var4;
         this.gY = var6;

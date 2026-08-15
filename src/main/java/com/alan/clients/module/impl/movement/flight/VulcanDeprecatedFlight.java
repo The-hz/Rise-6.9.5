@@ -59,8 +59,8 @@ public class VulcanDeprecatedFlight extends Mode<Flight> {
         }
     };
 
-    public VulcanDeprecatedFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public VulcanDeprecatedFlight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

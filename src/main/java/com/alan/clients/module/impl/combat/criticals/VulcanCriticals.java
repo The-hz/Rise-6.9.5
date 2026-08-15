@@ -15,7 +15,7 @@ public final class VulcanCriticals extends Mode<Criticals> {
         }
     };
 
-    public VulcanCriticals(String var1, Criticals var2) {
-        super(var1, var2);
+    public VulcanCriticals(String var1, Criticals criticals) {
+        super(var1, criticals);
     }
 }

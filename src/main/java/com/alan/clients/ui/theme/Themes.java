@@ -64,29 +64,29 @@ public enum Themes {
     static Color aDS = new Color(0, 0, 0, 110);
     private static final Themes[] $VALUES = rL();
 
-    Themes(String var3, Color var4, Color var5, EnumChatFormatting var6, adw... var7) {
-        this.themeName = var3;
-        this.aDL = this.aDN = var4;
+    Themes(String themeName, Color color, Color var5, EnumChatFormatting chatAccentColor, adw... var7) {
+        this.themeName = themeName;
+        this.aDL = this.aDN = color;
         this.aDM = var5;
-        this.chatAccentColor = var6;
+        this.chatAccentColor = chatAccentColor;
         this.keyColors = new ArrayList<>(Arrays.asList(var7));
         this.triColor = false;
     }
 
-    Themes(String var3, Color var4, Color var5, Color var6, EnumChatFormatting var7, adw... var8) {
-        this.themeName = var3;
-        this.aDL = var4;
+    Themes(String themeName, Color color, Color var5, Color var6, EnumChatFormatting chatAccentColor, adw... var8) {
+        this.themeName = themeName;
+        this.aDL = color;
         this.aDM = var5;
         this.aDN = var6;
-        this.chatAccentColor = var7;
+        this.chatAccentColor = chatAccentColor;
         this.keyColors = new ArrayList<>(Arrays.asList(var8));
         this.triColor = true;
     }
 
-    Themes(String var3, Function<Vector2d, Color> var4, EnumChatFormatting var5, adw... var6) {
-        this.themeName = var3;
-        this.aDO = var4;
-        this.chatAccentColor = var5;
+    Themes(String themeName, Function<Vector2d, Color> function, EnumChatFormatting chatAccentColor, adw... var6) {
+        this.themeName = themeName;
+        this.aDO = function;
+        this.chatAccentColor = chatAccentColor;
         this.keyColors = new ArrayList<>(Arrays.asList(var6));
         this.triColor = true;
     }
@@ -103,14 +103,14 @@ public enum Themes {
         return this.aDO == null ? this.aDN : this.getAccentColor(new Vector2d(0.0, 100.0));
     }
 
-    public Color getAccentColor(Vector2d var1) {
+    public Color getAccentColor(Vector2d vector2d) {
         if (this.aDO != null) {
-            return this.aDO.apply(var1);
+            return this.aDO.apply(vector2d);
         } else if (this.triColor) {
-            double d0 = this.getBlendFactor(var1);
+            double d0 = this.getBlendFactor(vector2d);
             return d0 <= 0.5 ? ColorUtil.a(this.rB(), this.rA(), d0 * 2.0) : ColorUtil.a(this.rC(), this.rB(), (d0 - 0.5) * 2.0);
         }
-        return ColorUtil.a(this.rA(), this.rB(), this.getBlendFactor(var1));
+        return ColorUtil.a(this.rA(), this.rB(), this.getBlendFactor(vector2d));
     }
 
     public Color rD() {
@@ -138,8 +138,8 @@ public enum Themes {
         return new Color(0, 0, 0, 190);
     }
 
-    public double getBlendFactor(Vector2d var1) {
-        return Math.sin(System.currentTimeMillis() / 600.0 + var1.getX() * 0.005 + var1.getY() * 0.06) * 0.5 + 0.5;
+    public double getBlendFactor(Vector2d vector2d) {
+        return Math.sin(System.currentTimeMillis() / 600.0 + vector2d.getX() * 0.005 + vector2d.getY() * 0.06) * 0.5 + 0.5;
     }
 
     @Generated
@@ -173,8 +173,8 @@ public enum Themes {
     }
 
     @Generated
-    public static void c(Color var0) {
-        aDS = var0;
+    public static void c(Color color) {
+        aDS = color;
     }
 
     private static Themes[] rL() {

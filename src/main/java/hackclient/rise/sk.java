@@ -9,7 +9,7 @@ public class sk implements Comparator<Integer> {
     final double[] XP;
     final List XQ;
 
-    public sk(Spotify var1, int var2, double[] var3, List var4) {
+    public sk(Spotify spotify, int var2, double[] var3, List var4) {
         this.XO = var2;
         this.XP = var3;
         this.XQ = var4;

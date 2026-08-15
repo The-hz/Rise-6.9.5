@@ -45,13 +45,13 @@ public class agk implements InstanceAccess {
         this.rG.aX();
     }
 
-    public void a(Vector2d var1, double var2) {
+    public void a(Vector2d vector2d, double var2) {
         double d0 = (this.RE ? this.tF() - this.tE() : this.tE()) / this.tF();
         double d1 = var2 - this.tF() / (this.tF() - var2) * var2;
         this.aJf = d1 < var2;
         if (this.aJf) {
-            double d2 = var1.x;
-            double d3 = var1.y + var2 * d0 - d1 * d0;
+            double d2 = vector2d.x;
+            double d3 = vector2d.y + var2 * d0 - d1 * d0;
             Color color = ColorUtil.d(Color.WHITE, 60);
             RenderUtil.roundedRectangle(d2, d3, 1.0, d1, 0.5, color);
         }
@@ -113,8 +113,8 @@ public class agk implements InstanceAccess {
     }
 
     @Generated
-    public void setScroll(double var1) {
-        this.scroll = var1;
+    public void setScroll(double scroll) {
+        this.scroll = scroll;
     }
 
     @Generated

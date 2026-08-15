@@ -105,7 +105,7 @@ public class VulcanAntiVoid extends Mode<AntiVoid> {
         }
     };
 
-    public VulcanAntiVoid(String var1, AntiVoid var2) {
-        super(var1, var2);
+    public VulcanAntiVoid(String var1, AntiVoid antiVoid) {
+        super(var1, antiVoid);
     }
 }

@@ -86,8 +86,8 @@ public final class Advanced2AntiBot extends Mode<AntiBot> {
         aej.sb();
     };
 
-    public Advanced2AntiBot(String var1, AntiBot var2) {
-        super(var1, var2);
+    public Advanced2AntiBot(String var1, AntiBot antiBot) {
+        super(var1, antiBot);
     }
 
     @Override

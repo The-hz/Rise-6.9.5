@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S37PacketStatistics;
 
 public class ScriptPacketStatistics extends ScriptPacket<S37PacketStatistics> {
-    public ScriptPacketStatistics(S37PacketStatistics var1) {
-        super(var1);
+    public ScriptPacketStatistics(S37PacketStatistics packet) {
+        super(packet);
     }
 
     public int getEntryCount() {

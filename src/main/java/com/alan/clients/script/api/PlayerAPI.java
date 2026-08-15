@@ -99,8 +99,8 @@ public class PlayerAPI extends ScriptEntityLiving {
         MC.thePlayer.setPosition(var1, var3, var5);
     }
 
-    public void setPosition(ScriptVector3d var1) {
-        this.setPosition(var1.getX(), var1.getY(), var1.getZ());
+    public void setPosition(ScriptVector3d position) {
+        this.setPosition(position.getX(), position.getY(), position.getZ());
     }
 
     public void setMotion(double var1, double var3, double var5) {
@@ -129,8 +129,8 @@ public class PlayerAPI extends ScriptEntityLiving {
     }
 
     @Override
-    public void setMotion(ScriptVector3d var1) {
-        this.setMotion(var1.getX(), var1.getY(), var1.getZ());
+    public void setMotion(ScriptVector3d motion) {
+        this.setMotion(motion.getX(), motion.getY(), motion.getZ());
     }
 
     public void leftClick() {
@@ -141,8 +141,8 @@ public class PlayerAPI extends ScriptEntityLiving {
         MC.Az();
     }
 
-    public void attackEntity(ScriptEntityLiving var1) {
-        MC.playerController.attackEntity(MC.thePlayer, MC.theWorld.getEntityByID(var1.getEntityId()));
+    public void attackEntity(ScriptEntityLiving scriptEntityLiving) {
+        MC.playerController.attackEntity(MC.thePlayer, MC.theWorld.getEntityByID(scriptEntityLiving.getEntityId()));
     }
 
     public void swingItem() {
@@ -155,8 +155,8 @@ public class PlayerAPI extends ScriptEntityLiving {
         }
     }
 
-    public void setRotation(ScriptVector2f var1, double var2, boolean var4) {
-        RotationComponent.setRotations(new Vector2f(var1.getX(), var1.getY()), var2, var4 ? MovementFix.NORMAL : MovementFix.OFF);
+    public void setRotation(ScriptVector2f scriptVector2f, double var2, boolean var4) {
+        RotationComponent.setRotations(new Vector2f(scriptVector2f.getX(), scriptVector2f.getY()), var2, var4 ? MovementFix.NORMAL : MovementFix.OFF);
     }
 
     public void setRotation(float var1, float var2) {
@@ -176,13 +176,13 @@ public class PlayerAPI extends ScriptEntityLiving {
         };
     }
 
-    public void setSlot(int var1) {
-        MC.thePlayer.inventory.currentItem = var1;
+    public void setSlot(int slot) {
+        MC.thePlayer.inventory.currentItem = slot;
     }
 
-    public void setHeldItem(int var1) {
+    public void setHeldItem(int heldItem) {
         SlotComponent slotcomponent = Client.a.h().b(SlotComponent.class);
-        SlotComponent.setSlot(var1);
+        SlotComponent.setSlot(heldItem);
     }
 
     @Override
@@ -248,21 +248,21 @@ public class PlayerAPI extends ScriptEntityLiving {
         return itemstack != null && itemstack.getItem() instanceof ItemFood;
     }
 
-    public ScriptVector2f calculateRotations(ScriptVector3d var1) {
-        Vector2f vector2f = RotationUtil.d(new aka(var1.getX(), var1.getY(), var1.getZ()));
+    public ScriptVector2f calculateRotations(ScriptVector3d scriptVector3d) {
+        Vector2f vector2f = RotationUtil.d(new aka(scriptVector3d.getX(), scriptVector3d.getY(), scriptVector3d.getZ()));
         return new ScriptVector2f(vector2f.x, vector2f.y);
     }
 
-    public ScriptVector2f calculateRotations(ScriptEntity var1) {
-        ScriptVector3d scriptvector3d = var1.getPosition();
+    public ScriptVector2f calculateRotations(ScriptEntity scriptEntity) {
+        ScriptVector3d scriptvector3d = scriptEntity.getPosition();
         scriptvector3d.add(new ScriptVector3d(0.0, 1.8, 0.0));
         return this.calculateRotations(scriptvector3d);
     }
 
-    public boolean mouseOverEntity(ScriptEntity var1, int var2) {
+    public boolean mouseOverEntity(ScriptEntity scriptEntity, int var2) {
         MovingObjectPosition movingobjectposition = aef.c(RotationComponent.fk, var2);
         return movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.ENTITY
-            ? movingobjectposition.entityHit != null && movingobjectposition.entityHit.getEntityId() == var1.getEntityId()
+            ? movingobjectposition.entityHit != null && movingobjectposition.entityHit.getEntityId() == scriptEntity.getEntityId()
             : false;
     }
 
@@ -274,8 +274,8 @@ public class PlayerAPI extends ScriptEntityLiving {
         return MC.thePlayer.getDistance(MC.thePlayer.lastTickPosX, MC.thePlayer.posY, MC.thePlayer.lastTickPosZ) * 20.0;
     }
 
-    public void setSprinting(boolean var1) {
-        MC.thePlayer.setSprinting(var1);
+    public void setSprinting(boolean sprinting) {
+        MC.thePlayer.setSprinting(sprinting);
     }
 
     public void setClientRotation(float var1, float var2) {
@@ -311,8 +311,8 @@ public class PlayerAPI extends ScriptEntityLiving {
         return MC.thePlayer.isInLava();
     }
 
-    public void setSneaking(boolean var1) {
-        MC.thePlayer.setSneaking(var1);
+    public void setSneaking(boolean sneaking) {
+        MC.thePlayer.setSneaking(sneaking);
     }
 
     public boolean isInWeb() {
@@ -339,13 +339,13 @@ public class PlayerAPI extends ScriptEntityLiving {
         return MC.thePlayer.isPotionActive(var1);
     }
 
-    public void placeBlock(ScriptItemStack var1, ScriptVector3d var2, int var3, ScriptVector3d var4) {
+    public void placeBlock(ScriptItemStack scriptItemStack, ScriptVector3d scriptVector3d, int var3, ScriptVector3d var4) {
         MC.playerController
             .onPlayerRightClick(
                 MC.thePlayer,
                 MC.theWorld,
-                var1.getWrapped(),
-                new BlockPos(var2.getX(), var2.getY(), var2.getZ()),
+                scriptItemStack.getWrapped(),
+                new BlockPos(scriptVector3d.getX(), scriptVector3d.getY(), scriptVector3d.getZ()),
                 EnumFacing.getFront(var3),
                 new Vec3(var4.getX(), var4.getY(), var4.getZ())
             );

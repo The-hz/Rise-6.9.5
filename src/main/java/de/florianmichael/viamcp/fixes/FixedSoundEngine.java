@@ -20,67 +20,67 @@ public class FixedSoundEngine {
     public FixedSoundEngine() {
     }
 
-    public static boolean destroyBlock(World var0, BlockPos var1, boolean var2) {
-        IBlockState iblockstate = var0.getBlockState(var1);
+    public static boolean destroyBlock(World world, BlockPos pos, boolean var2) {
+        IBlockState iblockstate = world.getBlockState(pos);
         Block block = iblockstate.getBlock();
-        var0.playAuxSFX(2001, var1, Block.getStateId(iblockstate));
+        world.playAuxSFX(2001, pos, Block.getStateId(iblockstate));
         if (block.getMaterial() == Material.air) {
             return false;
         }
 
         if (var2) {
-            block.dropBlockAsItem(var0, var1, iblockstate, 0);
+            block.dropBlockAsItem(world, pos, iblockstate, 0);
         }
 
-        return var0.setBlockState(var1, Blocks.air.getDefaultState(), 3);
+        return world.setBlockState(pos, Blocks.air.getDefaultState(), 3);
     }
 
     public static boolean onItemUse(
-        ItemBlock var0, ItemStack var1, EntityPlayer var2, World var3, BlockPos var4, EnumFacing var5, float var6, float var7, float var8
+        ItemBlock itemBlock, ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing facing, float var6, float var7, float var8
     ) {
-        if (!var3.getBlockState(var4).getBlock().isReplaceable(var3, var4)) {
-            var4 = var4.offset(var5);
+        if (!world.getBlockState(pos).getBlock().isReplaceable(world, pos)) {
+            pos = pos.offset(facing);
         }
 
-        if (var1.stackSize == 0) {
+        if (stack.stackSize == 0) {
             return false;
         }
 
-        if (!var2.canPlayerEdit(var4, var5, var1)) {
+        if (!player.canPlayerEdit(pos, facing, stack)) {
             return false;
         }
 
-        if (var3.canBlockBePlaced(var0.getBlock(), var4, false, var5, (Entity)null, var1)) {
-            int i = var0.getMetadata(var1.getMetadata());
-            IBlockState iblockstate = var0.getBlock().onBlockPlaced(var3, var4, var5, var6, var7, var8, i, var2);
-            if (var3.setBlockState(var4, iblockstate, 3)) {
-                iblockstate = var3.getBlockState(var4);
-                if (iblockstate.getBlock() == var0.getBlock()) {
-                    ItemBlock.setTileEntityNBT(var3, var2, var4, var1);
-                    var0.getBlock().onBlockPlacedBy(var3, var4, iblockstate, var2, var1);
+        if (world.canBlockBePlaced(itemBlock.getBlock(), pos, false, facing, (Entity)null, stack)) {
+            int i = itemBlock.getMetadata(stack.getMetadata());
+            IBlockState iblockstate = itemBlock.getBlock().onBlockPlaced(world, pos, facing, var6, var7, var8, i, player);
+            if (world.setBlockState(pos, iblockstate, 3)) {
+                iblockstate = world.getBlockState(pos);
+                if (iblockstate.getBlock() == itemBlock.getBlock()) {
+                    ItemBlock.setTileEntityNBT(world, player, pos, stack);
+                    itemBlock.getBlock().onBlockPlacedBy(world, pos, iblockstate, player, stack);
                 }
 
                 if (ViaLoadingBase.getInstance().getTargetVersion().getOriginalVersion() != 47) {
                     mc.theWorld
                         .playSoundAtPos(
-                            var4.add(0.5, 0.5, 0.5),
-                            var0.getBlock().stepSound.getPlaceSound(),
-                            (var0.getBlock().stepSound.getVolume() + 1.0F) / 2.0F,
-                            var0.getBlock().stepSound.getFrequency() * 0.8F,
+                            pos.add(0.5, 0.5, 0.5),
+                            itemBlock.getBlock().stepSound.getPlaceSound(),
+                            (itemBlock.getBlock().stepSound.getVolume() + 1.0F) / 2.0F,
+                            itemBlock.getBlock().stepSound.getFrequency() * 0.8F,
                             false
                         );
                 } else {
-                    var3.playSoundEffect(
-                        var4.getX() + 0.5F,
-                        var4.getY() + 0.5F,
-                        var4.getZ() + 0.5F,
-                        var0.getBlock().stepSound.getPlaceSound(),
-                        (var0.getBlock().stepSound.getVolume() + 1.0F) / 2.0F,
-                        var0.getBlock().stepSound.getFrequency() * 0.8F
+                    world.playSoundEffect(
+                        pos.getX() + 0.5F,
+                        pos.getY() + 0.5F,
+                        pos.getZ() + 0.5F,
+                        itemBlock.getBlock().stepSound.getPlaceSound(),
+                        (itemBlock.getBlock().stepSound.getVolume() + 1.0F) / 2.0F,
+                        itemBlock.getBlock().stepSound.getFrequency() * 0.8F
                     );
                 }
 
-                var1.stackSize--;
+                stack.stackSize--;
             }
 
             return true;

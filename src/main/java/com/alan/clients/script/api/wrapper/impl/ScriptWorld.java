@@ -5,8 +5,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 
 public class ScriptWorld extends ScriptWrapper<World> {
-    public ScriptWorld(World var1) {
-        super(var1);
+    public ScriptWorld(World world) {
+        super(world);
     }
 
     public String getDimensionName() {

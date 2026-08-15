@@ -24,8 +24,8 @@ public final class fq implements Event {
     }
 
     @Generated
-    public fq(ItemStack var1, int var2) {
-        this.kb = var1;
+    public fq(ItemStack stack, int var2) {
+        this.kb = stack;
         this.kc = var2;
     }
 }

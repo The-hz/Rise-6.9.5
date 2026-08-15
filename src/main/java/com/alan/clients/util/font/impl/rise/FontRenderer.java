@@ -62,13 +62,13 @@ public class FontRenderer extends agc {
         this.aIS = var1;
     }
 
-    public FontRenderer(Font var1, boolean var2, boolean var3, boolean var4) {
+    public FontRenderer(Font font, boolean var2, boolean var3, boolean var4) {
         calculateColorCodes();
         this.aIN = var3;
-        this.font = var1;
+        this.font = font;
         this.aII = var2;
         this.aIJ = (float)(
-            var1.getStringBounds("ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", new FontRenderContext(new AffineTransform(), var3, var2)).getHeight()
+            font.getStringBounds("ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", new FontRenderContext(new AffineTransform(), var3, var2)).getHeight()
                 / 2.0
         );
         this.a(this.aIK, 0);
@@ -79,25 +79,25 @@ public class FontRenderer extends agc {
         }
     }
 
-    public FontRenderer(Font var1, boolean var2, boolean var3) {
+    public FontRenderer(Font font, boolean var2, boolean var3) {
         calculateColorCodes();
         this.aIN = var3;
-        this.font = var1;
+        this.font = font;
         this.aII = var2;
         this.aIJ = (float)(
-            var1.getStringBounds("ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", new FontRenderContext(new AffineTransform(), var3, var2)).getHeight()
+            font.getStringBounds("ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", new FontRenderContext(new AffineTransform(), var3, var2)).getHeight()
                 / 2.0
         );
         this.a(this.aIK, 0);
         this.a(this.aIM, 1);
     }
 
-    public FontRenderer(Font var1, boolean var2) {
+    public FontRenderer(Font font, boolean var2) {
         calculateColorCodes();
-        this.font = var1;
+        this.font = font;
         this.aII = var2;
         this.aIJ = (float)(
-            var1.getStringBounds("ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", new FontRenderContext(new AffineTransform(), true, var2)).getHeight()
+            font.getStringBounds("ABCDEFGHOKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", new FontRenderContext(new AffineTransform(), true, var2)).getHeight()
                 / 2.0
         );
         this.a(this.aIK, 0);
@@ -149,21 +149,21 @@ public class FontRenderer extends agc {
         }
     }
 
-    public void setRenderHints(Graphics2D var1) {
-        var1.setColor(Color.WHITE);
+    public void setRenderHints(Graphics2D renderHints) {
+        renderHints.setColor(Color.WHITE);
         if (this.aIN) {
-            var1.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            var1.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            renderHints.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            renderHints.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         }
 
-        var1.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        var1.setRenderingHint(
+        renderHints.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        renderHints.setRenderingHint(
             RenderingHints.KEY_FRACTIONALMETRICS, this.aII ? RenderingHints.VALUE_FRACTIONALMETRICS_ON : RenderingHints.VALUE_FRACTIONALMETRICS_OFF
         );
     }
 
-    public void uploadTexture(int var1, BufferedImage var2, int var3, int var4) {
-        int[] aint = var2.getRGB(0, 0, var3, var4, new int[var3 * var4], 0, var3);
+    public void uploadTexture(int var1, BufferedImage image, int var3, int var4) {
+        int[] aint = image.getRGB(0, 0, var3, var4, new int[var3 * var4], 0, var3);
         ByteBuffer bytebuffer = BufferUtils.createByteBuffer(var3 * var4 * 4);
 
         for (int i = 0; i < var4; i++) {
@@ -299,11 +299,11 @@ public class FontRenderer extends agc {
     }
 
     @Override
-    public void a(char var1, int var2, int var3, Color var4) {
+    public void a(char var1, int var2, int var3, Color color) {
         age[] aage = this.aIO ? this.aIL : this.aIK;
         if (var1 < aage.length && aage[var1] != null) {
             age age = aage[var1];
-            GlStateManager.color(var4.getRed() / 255.0F, var4.getGreen() / 255.0F, var4.getBlue() / 255.0F, var4.getAlpha() / 255.0F);
+            GlStateManager.color(color.getRed() / 255.0F, color.getGreen() / 255.0F, color.getBlue() / 255.0F, color.getAlpha() / 255.0F);
             age.e(var2, var3);
         }
     }

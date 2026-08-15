@@ -13,8 +13,8 @@ public enum ahi {
     private static final ahi[] $VALUES = uJ();
 
     @Generated
-    ahi(MessageType var3) {
-        this.aNm = var3;
+    ahi(MessageType messageType) {
+        this.aNm = messageType;
     }
 
     @Generated

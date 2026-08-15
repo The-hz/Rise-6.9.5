@@ -9,8 +9,8 @@ public class ESPColor {
     private Color hU;
 
     @Generated
-    public ESPColor(Color var1, Color var2, Color var3) {
-        this.hS = var1;
+    public ESPColor(Color color, Color var2, Color var3) {
+        this.hS = color;
         this.hT = var2;
         this.hU = var3;
     }

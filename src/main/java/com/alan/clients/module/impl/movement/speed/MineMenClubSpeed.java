@@ -79,11 +79,11 @@ public class MineMenClubSpeed extends Mode<Speed> {
         }
     };
 
-    public MineMenClubSpeed(String var1, Speed var2) {
-        super(var1, var2);
+    public MineMenClubSpeed(String var1, Speed speed) {
+        super(var1, speed);
     }
 
-    public static void a(MoveEvent var0, double var1, float var3, float var4, float var5) {
+    public static void a(MoveEvent moveEvent, double var1, float var3, float var4, float var5) {
         if (var3 != 0.0F || var4 != 0.0F) {
             float f = var5;
             boolean flag = var3 < 0.0F;
@@ -110,8 +110,8 @@ public class MineMenClubSpeed extends Mode<Speed> {
             Qa = (Qa + 360.0F) % 360.0F;
             double d0 = StrictMath.cos(Math.toRadians(Qa + 90.0));
             double d1 = StrictMath.cos(Math.toRadians(Qa));
-            var0.setPosX(d0 * var1);
-            var0.setPosZ(d1 * var1);
+            moveEvent.setPosX(d0 * var1);
+            moveEvent.setPosZ(d1 * var1);
         }
     }
 

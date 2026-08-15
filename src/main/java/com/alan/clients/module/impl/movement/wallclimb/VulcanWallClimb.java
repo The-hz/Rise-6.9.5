@@ -23,7 +23,7 @@ public class VulcanWallClimb extends Mode<WallClimb> {
         }
     };
 
-    public VulcanWallClimb(String var1, WallClimb var2) {
-        super(var1, var2);
+    public VulcanWallClimb(String var1, WallClimb wallClimb) {
+        super(var1, wallClimb);
     }
 }

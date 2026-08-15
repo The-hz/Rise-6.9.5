@@ -6,8 +6,8 @@ public class e {
     public int eSg;
     public InetAddress eSf;
 
-    e(InetAddress var1, int var2) {
-        this.eSf = var1;
+    e(InetAddress inetAddress, int var2) {
+        this.eSf = inetAddress;
         this.eSg = var2;
     }
 

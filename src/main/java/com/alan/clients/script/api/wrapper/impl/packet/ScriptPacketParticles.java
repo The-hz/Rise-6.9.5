@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S2APacketParticles;
 
 public class ScriptPacketParticles extends ScriptPacket<S2APacketParticles> {
-    public ScriptPacketParticles(S2APacketParticles var1) {
-        super(var1);
+    public ScriptPacketParticles(S2APacketParticles packet) {
+        super(packet);
     }
 
     public String getParticleType() {

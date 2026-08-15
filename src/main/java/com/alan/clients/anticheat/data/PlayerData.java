@@ -81,20 +81,20 @@ public final class PlayerData {
     private int bj;
     private Item bk;
 
-    public PlayerData(EntityOtherPlayerMP var1) {
-        this.player = var1;
-        this.ao = var1.serverPosX;
-        this.ap = var1.serverPosY;
-        this.aq = var1.serverPosZ;
+    public PlayerData(EntityOtherPlayerMP player) {
+        this.player = player;
+        this.ao = player.serverPosX;
+        this.ap = player.serverPosY;
+        this.aq = player.serverPosZ;
         this.checks = CheckManager.loadChecks(this);
     }
 
-    public void handle(Packet<?> var1) {
+    public void handle(Packet<?> packet) {
         if (this.player.ticksExisted <= 80) {
             this.aV.aX();
         } else if (!Client.a.x().a(this.player) && this.player.adr && !this.player.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer)) {
-            if (PacketUtil.b(var1)) {
-                S14PacketEntity s14packetentity = (S14PacketEntity)var1;
+            if (PacketUtil.b(packet)) {
+                S14PacketEntity s14packetentity = (S14PacketEntity)packet;
                 if (s14packetentity.entityId == this.player.getEntityId()) {
                     if (this.player.hurtTime != 0 && this.as > 9 && this.aZ > 40) {
                         this.as = 0;
@@ -111,7 +111,7 @@ public final class PlayerData {
                     this.z = this.aq / 32.0;
                     this.aM = this.aK;
                     this.aN = this.aL;
-                    if (var1 instanceof S17PacketEntityLookMove) {
+                    if (packet instanceof S17PacketEntityLookMove) {
                         this.aK = s14packetentity.yaw;
                         this.aL = s14packetentity.pitch;
                     }
@@ -160,7 +160,7 @@ public final class PlayerData {
                     double d2 = Math.abs(MathHelper.wrapAngleTo180_double(this.aw()) - d1);
                     this.aQ = d2 < 70.0 || d2 > 290.0;
                 }
-            } else if (var1 instanceof z zx) {
+            } else if (packet instanceof z zx) {
                 if (zx.getEntityId() == this.player.getEntityId()) {
                     this.ao = zx.we();
                     this.ap = zx.wf();
@@ -188,7 +188,7 @@ public final class PlayerData {
                 }
             }
 
-            if (var1 instanceof ad ad && ad.getEntityId() == this.player.getEntityId() && ad.func_149376_c() != null) {
+            if (packet instanceof ad ad && ad.getEntityId() == this.player.getEntityId() && ad.func_149376_c() != null) {
                 ad.func_149376_c().forEach(var1x -> {
                     if (var1x.getDataValueId() == 0 && var1x.getObject() instanceof Byte) {
                         byte b0 = (Byte)var1x.getObject();
@@ -211,7 +211,7 @@ public final class PlayerData {
                 });
             }
 
-            this.checks.forEach(var1x -> var1x.handle(var1));
+            this.checks.forEach(var1x -> var1x.handle(packet));
         }
     }
 
@@ -222,9 +222,9 @@ public final class PlayerData {
         this.aZ++;
     }
 
-    public Check getCheck(Class<?> var1) {
+    public Check getCheck(Class<?> type) {
         for (Check check : this.checks) {
-            if (check.getClass() == var1) {
+            if (check.getClass() == type) {
                 return check;
             }
         }
@@ -232,23 +232,23 @@ public final class PlayerData {
         return null;
     }
 
-    public float c(Check var1) {
-        return this.a(var1, 1);
+    public float c(Check check) {
+        return this.a(check, 1);
     }
 
-    public float a(Check var1, int var2) {
-        float f = this.bb.getOrDefault(var1, 0.0F) + var2;
-        this.bb.put(var1, f);
+    public float a(Check check, int var2) {
+        float f = this.bb.getOrDefault(check, 0.0F) + var2;
+        this.bb.put(check, f);
         return f;
     }
 
-    public float a(Check var1, float var2) {
-        float f = this.bb.getOrDefault(var1, 0.0F) * var2;
+    public float a(Check check, float var2) {
+        float f = this.bb.getOrDefault(check, 0.0F) * var2;
         if (f < 0.0F) {
             f = 0.0F;
         }
 
-        this.bb.put(var1, f);
+        this.bb.put(check, f);
         return f;
     }
 
@@ -272,8 +272,8 @@ public final class PlayerData {
         return this.bk;
     }
 
-    public void a(ItemStack var1) {
-        this.bk = var1 != null ? var1.getItem() : null;
+    public void a(ItemStack stack) {
+        this.bk = stack != null ? stack.getItem() : null;
     }
 
     @Generated

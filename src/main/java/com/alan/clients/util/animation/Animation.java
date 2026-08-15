@@ -12,8 +12,8 @@ public class Animation {
     private double aGk;
     private boolean finished;
 
-    public Animation(Easing var1, long var2) {
-        this.easing = var1;
+    public Animation(Easing easing, long var2) {
+        this.easing = easing;
         this.fa = System.currentTimeMillis();
         this.aGg = var2;
     }
@@ -90,8 +90,8 @@ public class Animation {
     }
 
     @Generated
-    public void setEasing(Easing var1) {
-        this.easing = var1;
+    public void setEasing(Easing easing) {
+        this.easing = easing;
     }
 
     @Generated
@@ -125,7 +125,7 @@ public class Animation {
     }
 
     @Generated
-    public void setFinished(boolean var1) {
-        this.finished = var1;
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 }

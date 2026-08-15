@@ -297,28 +297,28 @@ public final class Interface extends Module {
     }
 
     @Generated
-    public void a(BooleanValue var1) {
-        this.suffix = var1;
+    public void a(BooleanValue suffix) {
+        this.suffix = suffix;
     }
 
     @Generated
-    public void b(BooleanValue var1) {
-        this.lowercase = var1;
+    public void b(BooleanValue lowercase) {
+        this.lowercase = lowercase;
     }
 
     @Generated
-    public void c(BooleanValue var1) {
-        this.removeSpaces = var1;
+    public void c(BooleanValue removeSpaces) {
+        this.removeSpaces = removeSpaces;
     }
 
     @Generated
-    public void d(BooleanValue var1) {
-        this.aoc = var1;
+    public void d(BooleanValue booleanValue) {
+        this.aoc = booleanValue;
     }
 
     @Generated
-    public void e(BooleanValue var1) {
-        this.toggleNotifications = var1;
+    public void e(BooleanValue toggleNotifications) {
+        this.toggleNotifications = toggleNotifications;
     }
 
     @Generated
@@ -332,8 +332,8 @@ public final class Interface extends Module {
     }
 
     @Generated
-    public void a(ModeValue var1) {
-        this.aom = var1;
+    public void a(ModeValue modeValue) {
+        this.aom = modeValue;
     }
 
     @Generated

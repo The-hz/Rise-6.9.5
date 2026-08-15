@@ -249,9 +249,9 @@ public class WatchdogJumpSprint extends Mode<Scaffold> {
         }
     };
 
-    public WatchdogJumpSprint(String var1, Scaffold var2) {
-        super(var1, var2);
-        this.ajC = new vo(var2);
+    public WatchdogJumpSprint(String var1, Scaffold scaffold) {
+        super(var1, scaffold);
+        this.ajC = new vo(scaffold);
     }
 
     @Override

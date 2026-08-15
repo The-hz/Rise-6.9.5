@@ -15,7 +15,7 @@ public class NormalDownwards extends Mode<Scaffold> {
         }
     };
 
-    public NormalDownwards(String var1, Scaffold var2) {
-        super(var1, var2);
+    public NormalDownwards(String var1, Scaffold scaffold) {
+        super(var1, scaffold);
     }
 }

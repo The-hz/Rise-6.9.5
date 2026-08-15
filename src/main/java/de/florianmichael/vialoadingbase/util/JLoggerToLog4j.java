@@ -8,25 +8,25 @@ import java.util.logging.Logger;
 public class JLoggerToLog4j extends Logger {
     private final org.apache.logging.log4j.Logger base;
 
-    public JLoggerToLog4j(org.apache.logging.log4j.Logger var1) {
+    public JLoggerToLog4j(org.apache.logging.log4j.Logger base) {
         super("logger", null);
-        this.base = var1;
+        this.base = base;
     }
 
     @Override
-    public void log(LogRecord var1) {
-        this.log(var1.getLevel(), var1.getMessage());
+    public void log(LogRecord logRecord) {
+        this.log(logRecord.getLevel(), logRecord.getMessage());
     }
 
     @Override
-    public void log(Level var1, String var2) {
-        if (var1 == Level.FINE) {
+    public void log(Level level, String var2) {
+        if (level == Level.FINE) {
             this.base.debug(var2);
-        } else if (var1 == Level.WARNING) {
+        } else if (level == Level.WARNING) {
             this.base.warn(var2);
-        } else if (var1 == Level.SEVERE) {
+        } else if (level == Level.SEVERE) {
             this.base.error(var2);
-        } else if (var1 == Level.INFO) {
+        } else if (level == Level.INFO) {
             this.base.info(var2);
         } else {
             this.base.trace(var2);
@@ -34,14 +34,14 @@ public class JLoggerToLog4j extends Logger {
     }
 
     @Override
-    public void log(Level var1, String var2, Object var3) {
-        if (var1 == Level.FINE) {
+    public void log(Level level, String var2, Object var3) {
+        if (level == Level.FINE) {
             this.base.debug(var2, var3);
-        } else if (var1 == Level.WARNING) {
+        } else if (level == Level.WARNING) {
             this.base.warn(var2, var3);
-        } else if (var1 == Level.SEVERE) {
+        } else if (level == Level.SEVERE) {
             this.base.error(var2, var3);
-        } else if (var1 == Level.INFO) {
+        } else if (level == Level.INFO) {
             this.base.info(var2, var3);
         } else {
             this.base.trace(var2, var3);
@@ -49,22 +49,22 @@ public class JLoggerToLog4j extends Logger {
     }
 
     @Override
-    public void log(Level var1, String var2, Object[] var3) {
-        this.log(var1, MessageFormat.format(var2, var3));
+    public void log(Level level, String var2, Object[] var3) {
+        this.log(level, MessageFormat.format(var2, var3));
     }
 
     @Override
-    public void log(Level var1, String var2, Throwable var3) {
-        if (var1 == Level.FINE) {
-            this.base.debug(var2, var3);
-        } else if (var1 == Level.WARNING) {
-            this.base.warn(var2, var3);
-        } else if (var1 == Level.SEVERE) {
-            this.base.error(var2, var3);
-        } else if (var1 == Level.INFO) {
-            this.base.info(var2, var3);
+    public void log(Level level, String var2, Throwable t) {
+        if (level == Level.FINE) {
+            this.base.debug(var2, t);
+        } else if (level == Level.WARNING) {
+            this.base.warn(var2, t);
+        } else if (level == Level.SEVERE) {
+            this.base.error(var2, t);
+        } else if (level == Level.INFO) {
+            this.base.info(var2, t);
         } else {
-            this.base.trace(var2, var3);
+            this.base.trace(var2, t);
         }
     }
 }

@@ -52,9 +52,9 @@ public final class GUIDetectionComponent extends Component {
         return userInterface;
     }
 
-    private String expectedName(ItemStack var1) {
-        String s = (StatCollector.translateToLocal(var1.getUnlocalizedName() + ".name") + "").trim();
-        String s1 = EntityList.getStringFromID(var1.getMetadata());
+    private String expectedName(ItemStack stack) {
+        String s = (StatCollector.translateToLocal(stack.getUnlocalizedName() + ".name") + "").trim();
+        String s1 = EntityList.getStringFromID(stack.getMetadata());
         if (s1 != null) {
             s = s + " " + StatCollector.translateToLocal("entity." + s1 + ".name");
         }

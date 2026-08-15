@@ -29,7 +29,7 @@ public final class IntaveVelocity extends Mode<Velocity> {
     @EventLink
     public final Listener<AttackEvent> onAttack = var1x -> this.pw = true;
 
-    public IntaveVelocity(String var1, Velocity var2) {
-        super(var1, var2);
+    public IntaveVelocity(String var1, Velocity velocity) {
+        super(var1, velocity);
     }
 }

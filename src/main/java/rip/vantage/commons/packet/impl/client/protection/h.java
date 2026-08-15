@@ -38,11 +38,11 @@ public class h extends rip.vantage.commons.packet.api.abstracts.a {
         return this.ePw;
     }
 
-    public h(JSONObject var1) {
+    public h(JSONObject json) {
         super((byte)20);
-        this.ePw = Base64.getDecoder().decode(var1.getString("a"));
-        this.ePx = var1.getLong("b");
-        this.ePy = var1.getInt("c");
+        this.ePw = Base64.getDecoder().decode(json.getString("a"));
+        this.ePx = json.getLong("b");
+        this.ePy = json.getInt("c");
     }
 
     static {

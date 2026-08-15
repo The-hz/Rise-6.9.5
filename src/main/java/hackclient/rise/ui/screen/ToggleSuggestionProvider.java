@@ -18,12 +18,12 @@ implements SuggestionProvider {
     }
 
     @Override
-    public List<Suggestion> b(SuggestionContext acz2) {
-        String[] stringArray = acz2.rk();
+    public List<Suggestion> b(SuggestionContext suggestionContext) {
+        String[] stringArray = suggestionContext.rk();
         if (stringArray.length == 0) {
             return Collections.emptyList();
         }
-        String string = CommandPalette.aQ(acz2.rj());
+        String string = CommandPalette.aQ(suggestionContext.rj());
         String string2 = stringArray[0] == null ? "" : stringArray[0].toLowerCase(Locale.ROOT);
         String string3 = string2 == null ? "" : string2.trim().toLowerCase(Locale.ROOT).replace(" ", "");
         ArrayList<Module> arrayList = new ArrayList<Module>();

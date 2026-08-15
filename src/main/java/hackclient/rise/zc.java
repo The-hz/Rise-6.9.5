@@ -27,8 +27,8 @@ public final class zc {
         return this.atj + this.atk;
     }
 
-    public zc(Module var1) {
-        this.cg = var1;
+    public zc(Module module) {
+        this.cg = module;
     }
 
     public boolean a(Interface var1) {
@@ -119,8 +119,8 @@ public final class zc {
     }
 
     @Generated
-    public void k(Module var1) {
-        this.cg = var1;
+    public void k(Module module) {
+        this.cg = module;
     }
 
     @Generated
@@ -129,8 +129,8 @@ public final class zc {
     }
 
     @Generated
-    public void i(Vector2d var1) {
-        this.atg = var1;
+    public void i(Vector2d vector2d) {
+        this.atg = vector2d;
     }
 
     @Generated
@@ -154,8 +154,8 @@ public final class zc {
     }
 
     @Generated
-    public void b(Color var1) {
-        this.amH = var1;
+    public void b(Color color) {
+        this.amH = color;
     }
 
     @Generated

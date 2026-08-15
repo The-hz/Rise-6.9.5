@@ -482,7 +482,7 @@ public final class VulcanVelocity extends Mode<Velocity> {
         }
     };
 
-    public VulcanVelocity(String var1, Velocity var2) {
-        super(var1, var2);
+    public VulcanVelocity(String var1, Velocity velocity) {
+        super(var1, velocity);
     }
 }

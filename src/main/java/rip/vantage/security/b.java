@@ -16,7 +16,7 @@ public class b {
     public static void aLu() {
     }
 
-    public static boolean t(Class<?> var0) {
+    public static boolean t(Class<?> type) {
         return false;
     }
 

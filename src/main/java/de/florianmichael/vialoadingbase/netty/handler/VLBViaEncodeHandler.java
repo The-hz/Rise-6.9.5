@@ -19,24 +19,24 @@ public class VLBViaEncodeHandler extends MessageToMessageEncoder<ByteBuf> {
     private int lastTick = -1;
     private boolean actionPerformedThisTick = false;
 
-    public VLBViaEncodeHandler(UserConnection var1) {
-        this.user = var1;
+    public VLBViaEncodeHandler(UserConnection user) {
+        this.user = user;
     }
 
-    protected void encode(ChannelHandlerContext var1, ByteBuf var2, List<Object> var3) {
+    protected void encode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> var3) {
         if (!this.user.checkOutgoingPacket()) {
             throw CancelEncoderException.generate(null);
         }
 
         if (!this.user.shouldTransformPacket()) {
-            var3.add(var2.retain());
+            var3.add(byteBuf.retain());
         } else {
-            int i = new VarIntType().readPrimitive(var2);
-            ByteBuf bytebuf = var2.readerIndex(0);
+            int i = new VarIntType().readPrimitive(byteBuf);
+            ByteBuf bytebuf = byteBuf.readerIndex(0);
             fj fj = new fj(bytebuf, i);
             Client.a.e().d(fj);
             if (!fj.isCancelled()) {
-                ByteBuf bytebuf1 = var1.alloc().buffer().writeBytes(bytebuf);
+                ByteBuf bytebuf1 = ctx.alloc().buffer().writeBytes(bytebuf);
 
                 try {
                     this.user.transformOutgoing(bytebuf1, CancelEncoderException::generate);
@@ -49,9 +49,9 @@ public class VLBViaEncodeHandler extends MessageToMessageEncoder<ByteBuf> {
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext var1, Throwable var2) throws Exception {
-        if (!PipelineUtil.containsCause(var2, CancelCodecException.class)) {
-            super.exceptionCaught(var1, var2);
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable t) throws Exception {
+        if (!PipelineUtil.containsCause(t, CancelCodecException.class)) {
+            super.exceptionCaught(ctx, t);
         }
     }
 }

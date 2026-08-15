@@ -32,13 +32,13 @@ public class SlowDownEvent extends CancellableEvent {
     }
 
     @Generated
-    public void setStrafeMultiplier(float var1) {
-        this.jz = var1;
+    public void setStrafeMultiplier(float strafeMultiplier) {
+        this.jz = strafeMultiplier;
     }
 
     @Generated
-    public void setForwardMultiplier(float var1) {
-        this.jA = var1;
+    public void setForwardMultiplier(float forwardMultiplier) {
+        this.jA = forwardMultiplier;
     }
 
     @Generated

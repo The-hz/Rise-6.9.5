@@ -8,8 +8,8 @@ import java.util.logging.Logger;
 public class ViaRewindPlatformImpl implements ViaRewindPlatform {
     private final File directory;
 
-    public ViaRewindPlatformImpl(File var1) {
-        this.init(new File(this.directory = var1, "viarewind.yml"));
+    public ViaRewindPlatformImpl(File file) {
+        this.init(new File(this.directory = file, "viarewind.yml"));
     }
 
     @Override

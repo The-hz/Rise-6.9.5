@@ -30,7 +30,7 @@ public class GaussianBlurShader extends aix {
     }
 
     @Override
-    public void a(aiz var1, float var2, List<Runnable> var3) {
+    public void a(aiz var1, float var2, List<Runnable> runnables) {
         if (Display.isVisible()) {
             if (this.amf == null) {
                 this.amf = this.e(Interface.class);
@@ -42,12 +42,12 @@ public class GaussianBlurShader extends aix {
             switch (var1) {
                 case CAMERA:
                     this.aPV.bindFramebuffer(true);
-                    var3.forEach(Runnable::run);
+                    runnables.forEach(Runnable::run);
                     aEg.getFramebuffer().bindFramebuffer(true);
                     break;
                 case OVERLAY:
                     this.aPV.bindFramebuffer(true);
-                    var3.forEach(Runnable::run);
+                    runnables.forEach(Runnable::run);
                     int j = this.aQc.getProgramId();
                     this.aPZ.bindFramebuffer(true);
                     this.aQc.rt();

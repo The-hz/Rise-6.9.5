@@ -10,7 +10,7 @@ public class StandardSneak extends Mode<Sneak> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> aEg.thePlayer.movementInput.sneak = aEg.thePlayer.sendQueue.doneLoadingTerrain;
 
-    public StandardSneak(String var1, Sneak var2) {
-        super(var1, var2);
+    public StandardSneak(String var1, Sneak sneak) {
+        super(var1, sneak);
     }
 }

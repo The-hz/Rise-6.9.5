@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S06PacketUpdateHealth;
 
 public class ScriptPacketUpdateHealth extends ScriptPacket<S06PacketUpdateHealth> {
-    public ScriptPacketUpdateHealth(S06PacketUpdateHealth var1) {
-        super(var1);
+    public ScriptPacketUpdateHealth(S06PacketUpdateHealth packet) {
+        super(packet);
     }
 
     public float getHealth() {

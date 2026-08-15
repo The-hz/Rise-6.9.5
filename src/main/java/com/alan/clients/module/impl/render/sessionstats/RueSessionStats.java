@@ -107,7 +107,7 @@ public final class RueSessionStats extends Mode<SessionStats> {
     @EventLink
     public final Listener<ServerJoinEvent> onServerJoin = var1x -> this.atZ = new zv(0, 0, 0, 0, 0.0, 0.0);
 
-    public RueSessionStats(String var1, SessionStats var2) {
-        super(var1, var2);
+    public RueSessionStats(String var1, SessionStats sessionStats) {
+        super(var1, sessionStats);
     }
 }

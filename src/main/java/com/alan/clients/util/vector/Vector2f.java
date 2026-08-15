@@ -6,8 +6,8 @@ public final class Vector2f {
     public float x;
     public float y;
 
-    public Vector2f(Vector2f var1) {
-        this(var1.x, var1.y);
+    public Vector2f(Vector2f vec2) {
+        this(vec2.x, vec2.y);
     }
 
     public Vector2f h(float var1, float var2) {

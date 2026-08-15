@@ -44,8 +44,8 @@ public class CubeCraftFlight extends Mode<Flight> {
         }
     };
 
-    public CubeCraftFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public CubeCraftFlight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

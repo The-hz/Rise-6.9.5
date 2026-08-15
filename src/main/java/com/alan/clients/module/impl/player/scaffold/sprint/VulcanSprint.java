@@ -50,8 +50,8 @@ public class VulcanSprint extends Mode<Scaffold> {
         }
     };
 
-    public VulcanSprint(String var1, Scaffold var2) {
-        super(var1, var2);
+    public VulcanSprint(String var1, Scaffold scaffold) {
+        super(var1, scaffold);
     }
 
     @Override

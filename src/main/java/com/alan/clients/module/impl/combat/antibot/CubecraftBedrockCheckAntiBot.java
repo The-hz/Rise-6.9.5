@@ -22,8 +22,8 @@ public final class CubecraftBedrockCheckAntiBot extends Mode<AntiBot> {
         }
     });
 
-    public CubecraftBedrockCheckAntiBot(String var1, AntiBot var2) {
-        super(var1, var2);
+    public CubecraftBedrockCheckAntiBot(String var1, AntiBot antiBot) {
+        super(var1, antiBot);
     }
 
     public static String s(String var0) {

@@ -100,7 +100,7 @@ public class LegitSpeed extends Mode<Speed> {
         }
     };
 
-    public LegitSpeed(String var1, Speed var2) {
-        super(var1, var2);
+    public LegitSpeed(String var1, Speed speed) {
+        super(var1, speed);
     }
 }

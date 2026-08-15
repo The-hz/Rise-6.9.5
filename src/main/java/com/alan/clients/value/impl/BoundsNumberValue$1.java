@@ -4,8 +4,8 @@ class BoundsNumberValue$1 extends Number {
     final long aQV;
     final BoundsNumberValue aQW;
 
-    BoundsNumberValue$1(BoundsNumberValue var1, long var2) {
-        this.aQW = var1;
+    BoundsNumberValue$1(BoundsNumberValue boundsNumberValue, long var2) {
+        this.aQW = boundsNumberValue;
         this.aQV = var2;
     }
 

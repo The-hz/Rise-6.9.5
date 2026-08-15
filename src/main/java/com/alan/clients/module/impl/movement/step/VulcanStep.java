@@ -26,8 +26,8 @@ public class VulcanStep extends Mode<Step> {
         }
     };
 
-    public VulcanStep(String var1, Step var2) {
-        super(var1, var2);
+    public VulcanStep(String var1, Step step) {
+        super(var1, step);
     }
 
     @Override

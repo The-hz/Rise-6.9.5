@@ -10,13 +10,13 @@ import net.minecraft.entity.player.EntityPlayer;
 public class ScriptEntityLiving extends ScriptEntity {
     public EntityLivingBase wrappedLiving;
 
-    public ScriptEntityLiving(EntityLivingBase var1) {
-        super(var1);
-        this.wrappedLiving = var1;
+    public ScriptEntityLiving(EntityLivingBase wrappedLiving) {
+        super(wrappedLiving);
+        this.wrappedLiving = wrappedLiving;
     }
 
-    private static ScriptEntityLiving tryInstantiate(Entity var0) {
-        return var0 instanceof EntityLiving ? new ScriptEntityLiving((EntityLiving)var0) : null;
+    private static ScriptEntityLiving tryInstantiate(Entity entity) {
+        return entity instanceof EntityLiving ? new ScriptEntityLiving((EntityLiving)entity) : null;
     }
 
     public boolean isAnimal() {

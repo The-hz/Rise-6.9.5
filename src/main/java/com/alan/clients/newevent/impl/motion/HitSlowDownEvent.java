@@ -26,18 +26,18 @@ public final class HitSlowDownEvent extends CancellableEvent {
     }
 
     @Generated
-    public void setSlowDown(double var1) {
-        this.slowDown = var1;
+    public void setSlowDown(double slowDown) {
+        this.slowDown = slowDown;
     }
 
     @Generated
-    public void setSprint(boolean var1) {
-        this.sprint = var1;
+    public void setSprint(boolean sprint) {
+        this.sprint = sprint;
     }
 
     @Generated
-    public HitSlowDownEvent(double var1, boolean var3) {
-        this.slowDown = var1;
-        this.sprint = var3;
+    public HitSlowDownEvent(double slowDown, boolean sprint) {
+        this.slowDown = slowDown;
+        this.sprint = sprint;
     }
 }

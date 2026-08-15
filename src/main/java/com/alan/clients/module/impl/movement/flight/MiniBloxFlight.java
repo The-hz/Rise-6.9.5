@@ -87,8 +87,8 @@ public class MiniBloxFlight extends Mode<Flight> {
         }
     };
 
-    public MiniBloxFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public MiniBloxFlight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

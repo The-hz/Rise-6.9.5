@@ -139,8 +139,8 @@ public final class SlotComponent extends Component {
     public SlotComponent() {
     }
 
-    public static void setSlot(int var0) {
-        b(var0, true);
+    public static void setSlot(int slot) {
+        b(slot, true);
     }
 
     public static void b(int var0, boolean var1) {

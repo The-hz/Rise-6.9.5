@@ -15,17 +15,17 @@ public final class LoggerRCECheck extends a {
     }
 
     @Override
-    public boolean handle(Packet<?> var1) {
-        if (var1 instanceof S29PacketSoundEffect) {
-            String s = ((S29PacketSoundEffect)var1).getSoundName();
+    public boolean handle(Packet<?> packet) {
+        if (packet instanceof S29PacketSoundEffect) {
+            String s = ((S29PacketSoundEffect)packet).getSoundName();
             return PATTERN.matcher(s).matches();
         }
 
-        if (!(var1 instanceof c)) {
+        if (!(packet instanceof c)) {
             return false;
         }
 
-        IChatComponent ichatcomponent = ((c)var1).getChatComponent();
+        IChatComponent ichatcomponent = ((c)packet).getChatComponent();
         return PATTERN.matcher(ichatcomponent.getUnformattedText()).matches() || PATTERN.matcher(ichatcomponent.getFormattedText()).matches();
     }
 }

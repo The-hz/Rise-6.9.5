@@ -4,8 +4,8 @@ import com.alan.clients.newevent.impl.input.KeyboardInputEvent;
 import com.alan.clients.script.api.wrapper.impl.event.ScriptEvent;
 
 public class ScriptKeyboardInputEvent extends ScriptEvent<KeyboardInputEvent> {
-    public ScriptKeyboardInputEvent(KeyboardInputEvent var1) {
-        super(var1);
+    public ScriptKeyboardInputEvent(KeyboardInputEvent event) {
+        super(event);
     }
 
     public int getKey() {

@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S48PacketResourcePackSend;
 
 public class ScriptPacketResourcePackSend extends ScriptPacket<S48PacketResourcePackSend> {
-    public ScriptPacketResourcePackSend(S48PacketResourcePackSend var1) {
-        super(var1);
+    public ScriptPacketResourcePackSend(S48PacketResourcePackSend packet) {
+        super(packet);
     }
 
     public String getURL() {

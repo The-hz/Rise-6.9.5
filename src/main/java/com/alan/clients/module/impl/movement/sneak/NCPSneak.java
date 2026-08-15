@@ -19,8 +19,8 @@ public class NCPSneak extends Mode<Sneak> {
     @EventLink
     public final Listener<PostMotionEvent> onPostMotion = var0 -> PacketUtil.l(new C0BPacketEntityAction(aEg.thePlayer, Action.START_SNEAKING));
 
-    public NCPSneak(String var1, Sneak var2) {
-        super(var1, var2);
+    public NCPSneak(String var1, Sneak sneak) {
+        super(var1, sneak);
     }
 
     @Override

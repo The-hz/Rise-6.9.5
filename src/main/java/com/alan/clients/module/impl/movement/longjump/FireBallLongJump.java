@@ -93,8 +93,8 @@ public class FireBallLongJump extends Mode<LongJump> {
         }
     };
 
-    public FireBallLongJump(String var1, LongJump var2) {
-        super(var1, var2);
+    public FireBallLongJump(String var1, LongJump longJump) {
+        super(var1, longJump);
     }
 
     @Override

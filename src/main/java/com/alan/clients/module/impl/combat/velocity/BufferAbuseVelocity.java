@@ -48,7 +48,7 @@ public final class BufferAbuseVelocity extends Mode<Velocity> {
         }
     };
 
-    public BufferAbuseVelocity(String var1, Velocity var2) {
-        super(var1, var2);
+    public BufferAbuseVelocity(String var1, Velocity velocity) {
+        super(var1, velocity);
     }
 }

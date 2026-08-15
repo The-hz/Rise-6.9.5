@@ -25,8 +25,8 @@ public class ZoneCraftFlight extends Mode<Flight> {
         aEg.thePlayer.motionY = 0.0;
     };
 
-    public ZoneCraftFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public ZoneCraftFlight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

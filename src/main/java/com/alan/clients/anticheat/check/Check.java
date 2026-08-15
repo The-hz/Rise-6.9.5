@@ -14,8 +14,8 @@ public abstract class Check implements aha {
     protected double T;
     protected double U;
 
-    public Check(PlayerData var1) {
-        this.data = var1;
+    public Check(PlayerData playerData) {
+        this.data = playerData;
         if (this.getClass().isAnnotationPresent(CheckInfo.class)) {
             this.checkInfo = this.getClass().getAnnotation(CheckInfo.class);
         } else {

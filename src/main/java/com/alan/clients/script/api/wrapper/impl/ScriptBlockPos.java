@@ -11,8 +11,8 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.util.BlockPos;
 
 public class ScriptBlockPos extends ScriptWrapper<BlockPos> {
-    public ScriptBlockPos(BlockPos var1) {
-        super(var1);
+    public ScriptBlockPos(BlockPos pos) {
+        super(pos);
     }
 
     public ScriptVector3d getPosition() {

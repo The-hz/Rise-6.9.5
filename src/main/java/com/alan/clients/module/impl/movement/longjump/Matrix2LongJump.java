@@ -92,8 +92,8 @@ public class Matrix2LongJump extends Mode<LongJump> {
         }
     };
 
-    public Matrix2LongJump(String var1, LongJump var2) {
-        super(var1, var2);
+    public Matrix2LongJump(String var1, LongJump longJump) {
+        super(var1, longJump);
     }
 
     @Override

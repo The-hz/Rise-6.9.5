@@ -12,8 +12,8 @@ public class ScriptHandler {
     public ScriptHandler() {
     }
 
-    public void handle(String var1, JSObject var2) {
-        this.functionRegistry.put(var1, var2);
+    public void handle(String var1, JSObject jsObject) {
+        this.functionRegistry.put(var1, jsObject);
     }
 
     public void unhandle(String var1) {

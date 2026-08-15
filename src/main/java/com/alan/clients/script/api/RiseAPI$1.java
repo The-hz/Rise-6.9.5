@@ -8,9 +8,9 @@ import java.util.concurrent.atomic.AtomicReference;
 public class RiseAPI$1 extends Module {
     final AtomicReference val$scriptModuleReference;
 
-    RiseAPI$1(RiseAPI var1, ModuleInfo var2, AtomicReference var3) {
+    RiseAPI$1(RiseAPI riseAPI, ModuleInfo var2, AtomicReference atomicReference) {
         super(var2);
-        this.val$scriptModuleReference = var3;
+        this.val$scriptModuleReference = atomicReference;
     }
 
     @Override

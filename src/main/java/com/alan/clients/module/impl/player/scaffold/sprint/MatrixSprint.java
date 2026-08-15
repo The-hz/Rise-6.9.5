@@ -24,7 +24,7 @@ public class MatrixSprint extends Mode<Scaffold> {
         }
     };
 
-    public MatrixSprint(String var1, Scaffold var2) {
-        super(var1, var2);
+    public MatrixSprint(String var1, Scaffold scaffold) {
+        super(var1, scaffold);
     }
 }

@@ -76,18 +76,18 @@ public final class PreMotionEvent extends CancellableEvent {
     }
 
     @Generated
-    public void setPitch(float var1) {
-        this.ha = var1;
+    public void setPitch(float pitch) {
+        this.ha = pitch;
     }
 
     @Generated
-    public void setOnGround(boolean var1) {
-        this.aO = var1;
+    public void setOnGround(boolean onGround) {
+        this.aO = onGround;
     }
 
     @Generated
-    public void setSprinting(boolean var1) {
-        this.jx = var1;
+    public void setSprinting(boolean sprinting) {
+        this.jx = sprinting;
     }
 
     @Generated

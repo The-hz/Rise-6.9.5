@@ -10,17 +10,17 @@ class agt implements InputMethodListener {
         this.aJK = var1;
     }
 
-    public void b(InputMethodEvent var1) {
+    public void b(InputMethodEvent event) {
         try {
-            this.aJK.a(var1);
+            this.aJK.a(event);
         } finally {
-            var1.consume();
+            event.consume();
         }
     }
 
-    public void c(InputMethodEvent var1) {
+    public void c(InputMethodEvent event) {
     }
-    public void inputMethodTextChanged(InputMethodEvent var1) { }
-    public void caretPositionChanged(InputMethodEvent var1) { }
+    public void inputMethodTextChanged(InputMethodEvent event) { }
+    public void caretPositionChanged(InputMethodEvent event) { }
 
 }

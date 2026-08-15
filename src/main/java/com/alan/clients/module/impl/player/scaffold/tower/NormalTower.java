@@ -29,7 +29,7 @@ public class NormalTower extends Mode<Scaffold> {
         }
     };
 
-    public NormalTower(String var1, Scaffold var2) {
-        super(var1, var2);
+    public NormalTower(String var1, Scaffold scaffold) {
+        super(var1, scaffold);
     }
 }

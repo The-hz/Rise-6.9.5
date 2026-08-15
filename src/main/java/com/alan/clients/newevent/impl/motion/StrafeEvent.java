@@ -20,8 +20,8 @@ public final class StrafeEvent extends CancellableEvent implements InstanceAcces
         aEg.thePlayer.motionZ *= var3;
     }
 
-    public void setSpeed(double var1) {
-        this.setFriction((float)(this.getForward() != 0.0F && this.getStrafe() != 0.0F ? var1 * 0.98F : var1));
+    public void setSpeed(double speed) {
+        this.setFriction((float)(this.getForward() != 0.0F && this.getStrafe() != 0.0F ? speed * 0.98F : speed));
         MoveUtil.stop();
     }
 
@@ -51,18 +51,18 @@ public final class StrafeEvent extends CancellableEvent implements InstanceAcces
     }
 
     @Generated
-    public void setForward(float var1) {
-        this.jp = var1;
+    public void setForward(float forward) {
+        this.jp = forward;
     }
 
     @Generated
-    public void setStrafe(float var1) {
-        this.jq = var1;
+    public void setStrafe(float strafe) {
+        this.jq = strafe;
     }
 
     @Generated
-    public void setFriction(float var1) {
-        this.jC = var1;
+    public void setFriction(float friction) {
+        this.jC = friction;
     }
 
     @Generated

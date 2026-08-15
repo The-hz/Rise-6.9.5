@@ -86,16 +86,16 @@ public class RiseClickGUI extends GuiScreen implements aha {
     public RiseClickGUI() {
     }
 
-    public boolean a(TextBox var1) {
+    public boolean a(TextBox textBox) {
         if (!agx.isEnabled()) {
             return false;
         }
 
-        if (var1 == null) {
+        if (textBox == null) {
             return false;
         }
 
-        if (var1 != this.ayb) {
+        if (textBox != this.ayb) {
             return false;
         }
 
@@ -445,10 +445,10 @@ public class RiseClickGUI extends GuiScreen implements aha {
         return null;
     }
 
-    public void switchScreen(Category var1) {
-        if (!var1.ec().equals(this.axK)) {
+    public void switchScreen(Category category) {
+        if (!category.ec().equals(this.axK)) {
             this.axM = this.getStandardClickGUI().axK;
-            this.axK = var1.ec();
+            this.axK = category.ec();
             this.axP.aX();
             this.axK.aT();
             SearchScreen acf = (SearchScreen)Category.SEARCH.ec();
@@ -456,10 +456,10 @@ public class RiseClickGUI extends GuiScreen implements aha {
         }
     }
 
-    public void a(Screen var1) {
-        if (!this.axK.getClass().getSimpleName().equals(var1.getClass().getSimpleName())) {
+    public void a(Screen screen) {
+        if (!this.axK.getClass().getSimpleName().equals(screen.getClass().getSimpleName())) {
             this.axM = this.getStandardClickGUI().axK;
-            this.axK = var1;
+            this.axK = screen;
             this.axP.aX();
             this.axK.aT();
             SearchScreen acf = (SearchScreen)Category.SEARCH.ec();

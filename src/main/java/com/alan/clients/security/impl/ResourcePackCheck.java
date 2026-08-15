@@ -17,8 +17,8 @@ public final class ResourcePackCheck extends a {
     }
 
     @Override
-    public boolean handle(Packet<?> var1) {
-        if (var1 instanceof S48PacketResourcePackSend s48packetresourcepacksend) {
+    public boolean handle(Packet<?> packet) {
+        if (packet instanceof S48PacketResourcePackSend s48packetresourcepacksend) {
             String s = s48packetresourcepacksend.getURL();
             String s1 = s48packetresourcepacksend.getHash();
             if (s.toLowerCase().startsWith("level://")) {

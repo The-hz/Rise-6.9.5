@@ -57,7 +57,7 @@ public final class WatchdogBlinkNoFall extends Mode<NoFall> {
         }
     };
 
-    public WatchdogBlinkNoFall(String var1, NoFall var2) {
-        super(var1, var2);
+    public WatchdogBlinkNoFall(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 }

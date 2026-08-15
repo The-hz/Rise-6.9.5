@@ -12,10 +12,10 @@ public class e extends rip.vantage.commons.packet.api.abstracts.b {
         this.eQC = var2;
     }
 
-    public e(JSONObject var1) {
+    public e(JSONObject json) {
         super((byte)3);
-        this.eQB = var1.getString("a");
-        this.eQC = var1.getInt("b");
+        this.eQB = json.getString("a");
+        this.eQC = json.getInt("b");
     }
 
     @Override

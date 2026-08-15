@@ -13,7 +13,7 @@ public class DisabledSprint extends Mode<Scaffold> {
         aEg.thePlayer.setSprinting(false);
     };
 
-    public DisabledSprint(String var1, Scaffold var2) {
-        super(var1, var2);
+    public DisabledSprint(String var1, Scaffold scaffold) {
+        super(var1, scaffold);
     }
 }

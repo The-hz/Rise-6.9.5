@@ -10,20 +10,20 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 
 public class ColorValue extends Value<Color> {
-    public ColorValue(String var1, Module var2, Color var3) {
-        super(var1, var2, var3);
+    public ColorValue(String var1, Module module, Color color) {
+        super(var1, module, color);
     }
 
-    public ColorValue(String var1, Mode<?> var2, Color var3) {
-        super(var1, var2, var3);
+    public ColorValue(String var1, Mode<?> mode, Color color) {
+        super(var1, mode, color);
     }
 
-    public ColorValue(String var1, Module var2, Color var3, BooleanSupplier var4) {
-        super(var1, var2, var3, var4);
+    public ColorValue(String var1, Module module, Color color, BooleanSupplier booleanSupplier) {
+        super(var1, module, color, booleanSupplier);
     }
 
-    public ColorValue(String var1, Mode<?> var2, Color var3, BooleanSupplier var4) {
-        super(var1, var2, var3, var4);
+    public ColorValue(String var1, Mode<?> mode, Color color, BooleanSupplier booleanSupplier) {
+        super(var1, mode, color, booleanSupplier);
     }
 
     @Override

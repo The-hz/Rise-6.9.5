@@ -12,8 +12,8 @@ public final class EffectFullBright extends Mode<FullBright> {
     @EventLink
     public final Listener<TickEvent> onTick = var0 -> aEg.thePlayer.addPotionEffect(new PotionEffect(Potion.nightVision.id, Integer.MAX_VALUE, 1));
 
-    public EffectFullBright(String var1, FullBright var2) {
-        super(var1, var2);
+    public EffectFullBright(String var1, FullBright fullBright) {
+        super(var1, fullBright);
     }
 
     @Override

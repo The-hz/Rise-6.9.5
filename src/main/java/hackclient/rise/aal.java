@@ -62,10 +62,10 @@ public final class aal {
         }
     }
 
-    public void a(McqBFVadWB var1) {
+    public void a(McqBFVadWB mcqBFVadWB) {
         try {
             for (ProtectionCheck aaj : this.awT) {
-                if (aaj.nY() == var1 && aaj.check()) {
+                if (aaj.nY() == mcqBFVadWB && aaj.check()) {
                     this.ob();
                 }
             }

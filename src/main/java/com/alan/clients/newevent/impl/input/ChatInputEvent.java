@@ -25,7 +25,7 @@ public final class ChatInputEvent extends CancellableEvent {
     }
 
     @Generated
-    public ChatInputEvent(String var1) {
-        this.message = var1;
+    public ChatInputEvent(String message) {
+        this.message = message;
     }
 }

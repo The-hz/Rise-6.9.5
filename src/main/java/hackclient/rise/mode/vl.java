@@ -49,8 +49,8 @@ public class vl extends Mode<Scaffold> {
         }
     };
 
-    public vl(String var1, Scaffold var2) {
-        super(var1, var2);
+    public vl(String var1, Scaffold scaffold) {
+        super(var1, scaffold);
     }
 
     @Override

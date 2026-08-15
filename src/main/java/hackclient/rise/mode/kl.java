@@ -17,7 +17,7 @@ public class kl extends Mode<Disabler> {
         }
     };
 
-    public kl(String var1, Disabler var2) {
-        super(var1, var2);
+    public kl(String var1, Disabler disabler) {
+        super(var1, disabler);
     }
 }

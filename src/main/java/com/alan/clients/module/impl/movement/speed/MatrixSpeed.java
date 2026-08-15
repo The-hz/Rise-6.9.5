@@ -85,7 +85,7 @@ public class MatrixSpeed extends Mode<Speed> {
         }
     };
 
-    public MatrixSpeed(String var1, Speed var2) {
-        super(var1, var2);
+    public MatrixSpeed(String var1, Speed speed) {
+        super(var1, speed);
     }
 }

@@ -396,31 +396,31 @@ public class KillAura extends Module {
       return aEg.thePlayer != null && this.eD()[1] != -1;
    }
 
-   public void c(MovingObjectPosition var1) {
-      if (!aEg.playerController.isPlayerRightClickingOnEntity(aEg.thePlayer, var1.entityHit, var1)) {
-         aEg.playerController.interactWithEntitySendPacket(aEg.thePlayer, var1.entityHit);
+   public void c(MovingObjectPosition hit) {
+      if (!aEg.playerController.isPlayerRightClickingOnEntity(aEg.thePlayer, hit.entityHit, hit)) {
+         aEg.playerController.interactWithEntitySendPacket(aEg.thePlayer, hit.entityHit);
       }
    }
 
-   public boolean a(EntityLivingBase var1, MovingObjectPosition var2, double var3) {
+   public boolean a(EntityLivingBase living, MovingObjectPosition hit, double var3) {
       long var88 = 0L;
       long var92 = 0L;
       if (!this.eR()) {
          return true;
-      } else if (var1 == null) {
+      } else if (living == null) {
          this.ov = Integer.MIN_VALUE;
          this.ow = false;
          this.ox = 0L;
          return false;
       }
-      int notDistanceToEntity = (this.rayCast.wo() || !(aEg.thePlayer.getDistanceToEntity(var1) <= var3)) && (var2 == null || var2.entityHit != var1) ? 0 : 1;
+      int notDistanceToEntity = (this.rayCast.wo() || !(aEg.thePlayer.getDistanceToEntity(living) <= var3)) && (hit == null || hit.entityHit != living) ? 0 : 1;
       if (notDistanceToEntity == 0) {
          this.ow = false;
          this.ov = Integer.MIN_VALUE;
          this.ox = 0L;
          return false;
       }
-      int entityId = var1.getEntityId();
+      int entityId = living.getEntityId();
       var92 = System.currentTimeMillis();
       if (this.ow && this.ov == entityId) {
          return var92 >= this.ox;
@@ -459,35 +459,35 @@ public class KillAura extends Module {
       return false;
    }
 
-   public Vector2f a(EntityLivingBase var1, double var2, boolean var4) {
+   public Vector2f a(EntityLivingBase target, double var2, boolean var4) {
       Object var37 = null;
       float var44 = 0.0F;
       Object var46 = null;
-      if (var1 == null) {
+      if (target == null) {
          return new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch);
       }
       int ticksExisted2 = aEg.thePlayer.ticksExisted;
-      if (this.mG != null && this.mH == ticksExisted2 && this.target == var1 && this.mJ == var2 && this.mK == var4) {
+      if (this.mG != null && this.mH == ticksExisted2 && this.target == target && this.mJ == var2 && this.mK == var4) {
          return this.mG;
       }
-      var37 = var1.getEntityBoundingBox();
+      var37 = target.getEntityBoundingBox();
       if ((AxisAlignedBB)var37 != null && !((AxisAlignedBB)var37).hasNaN()) {
          var44 = this.en();
          var37 = ((AxisAlignedBB)var37).expand(var44, var44, var44);
-         var46 = RotationUtil.a(var1, (AxisAlignedBB)var37, true, var2, var4, var44);
+         var46 = RotationUtil.a(target, (AxisAlignedBB)var37, true, var2, var4, var44);
       } else {
-         var46 = RotationUtil.calculate(var1, true, var2);
+         var46 = RotationUtil.calculate(target, true, var2);
       }
 
       this.mG = (Vector2f)var46;
       this.mH = ticksExisted2;
-      this.target = var1;
+      this.target = target;
       this.mJ = var2;
       this.mK = var4;
       return (Vector2f)var46;
    }
 
-   public Vector2f b(Vector2f var1) {
+   public Vector2f b(Vector2f vec2) {
       Object var147 = null;
       float var153 = 0.0F;
       float var154 = 0.0F;
@@ -519,11 +519,11 @@ public class KillAura extends Module {
       float var215 = 0.0F;
       float var216 = 0.0F;
       if (!this.eR()) {
-         return var1;
+         return vec2;
       }
       var147 = this.eQ();
       if (this.jE == null) {
-         return var1;
+         return vec2;
       }
       var153 = this.advancedMaxStep.wo().floatValue();
       var154 = this.advancedDampedDistance.wo().floatValue();
@@ -551,10 +551,10 @@ public class KillAura extends Module {
          this.oy = 0;
          this.oz = 0.0F;
          this.op = entityId;
-         this.a((Vector2f)var147, var1);
+         this.a((Vector2f)var147, vec2);
       }
 
-      var205 = var1;
+      var205 = vec2;
       int var184_hi = 0;
       if (this.on != null) {
          var180 = MathHelper.wrapAngleTo180_float(this.on.x - ((Vector2f)var147).x);
@@ -1670,7 +1670,7 @@ public class KillAura extends Module {
       return true;
    }
 
-   public float a(EntityLivingBase var1, float var2) {
+   public float a(EntityLivingBase living, float var2) {
       double var23 = 0.0;
       Object var25 = null;
       double var26 = 0.0;
@@ -1679,11 +1679,11 @@ public class KillAura extends Module {
       double var31 = 0.0;
       double var33 = 0.0;
       double var35 = 0.0;
-      if (var1 == null) {
+      if (living == null) {
          return aEg.thePlayer.rotationPitch;
       }
       var25 = aEg.thePlayer.getPositionEyes(1.0F);
-      var30 = new Vec3(var1.posX, var1.posY + var1.getEyeHeight() * 0.9, var1.posZ);
+      var30 = new Vec3(living.posX, living.posY + living.getEyeHeight() * 0.9, living.posZ);
       var28 = ((Vec3)var30).xCoord - ((Vec3)var25).xCoord;
       var33 = ((Vec3)var30).yCoord - ((Vec3)var25).yCoord;
       var35 = ((Vec3)var30).zCoord - ((Vec3)var25).zCoord;
@@ -1719,7 +1719,7 @@ public class KillAura extends Module {
       }
    }
 
-   public void a(Vector2f var1, Vector2f var2) {
+   public void a(Vector2f vec2, Vector2f var2) {
       float var35 = 0.0F;
       float var36 = 0.0F;
       float var37 = 0.0F;
@@ -1740,8 +1740,8 @@ public class KillAura extends Module {
       if (!(var37 <= 0.0F)) {
          var52 = MathHelper.clamp_float(this.advancedAccuracy.wo().floatValue() / 100.0F, 0.4F, 1.0F);
          var40 = var37 * (1.15F - var52 * 0.35F);
-         var51 = MathHelper.wrapAngleTo180_float(var2.x - var1.x);
-         var39 = var2.y - var1.y;
+         var51 = MathHelper.wrapAngleTo180_float(var2.x - vec2.x);
+         var39 = var2.y - vec2.y;
          var42 = (float)Math.hypot(var51, var39);
          if (!(var42 < 9.0F) && !(this.od.nextFloat() * 100.0F > var40)) {
             var45 = this.advancedOvershootScale.wo().floatValue();
@@ -1835,23 +1835,23 @@ public class KillAura extends Module {
       }
    }
 
-   public void b(MovingObjectPosition var1) {
-      if (var1 != null && var1.typeOfHit == MovingObjectType.ENTITY) {
-         aEg.objectMouseOver = var1;
-         aEg.pointedEntity = var1.entityHit;
+   public void b(MovingObjectPosition hit) {
+      if (hit != null && hit.typeOfHit == MovingObjectType.ENTITY) {
+         aEg.objectMouseOver = hit;
+         aEg.pointedEntity = hit.entityHit;
       }
    }
 
-   public double a(AxisAlignedBB var1, int var2) {
+   public double a(AxisAlignedBB box, int var2) {
       Object var125 = null;
       Object var133 = null;
       double var140 = 0.0;
       Object var185 = null;
-      int floor_double2 = MathHelper.floor_double(var1.minX + 1.0E-4);
-      int floor_double3 = MathHelper.floor_double(var1.maxX - 1.0E-4);
-      int floor_double4 = MathHelper.floor_double(var1.minZ + 1.0E-4);
-      int floor_double5 = MathHelper.floor_double(var1.maxZ - 1.0E-4);
-      int floor_double6 = MathHelper.floor_double(var1.minY) - 1;
+      int floor_double2 = MathHelper.floor_double(box.minX + 1.0E-4);
+      int floor_double3 = MathHelper.floor_double(box.maxX - 1.0E-4);
+      int floor_double4 = MathHelper.floor_double(box.minZ + 1.0E-4);
+      int floor_double5 = MathHelper.floor_double(box.maxZ - 1.0E-4);
+      int floor_double6 = MathHelper.floor_double(box.minY) - 1;
       int max2 = Math.max(0, floor_double6 - var2);
       double var11 = Double.longBitsToDouble(9218868437227405312L);
 
@@ -1864,7 +1864,7 @@ public class KillAura extends Module {
                var133 = aEg.theWorld.getBlockState((BlockPos)var185);
                var125 = ((IBlockState)var133).getBlock().getCollisionBoundingBox(aEg.theWorld, (BlockPos)var185, (IBlockState)var133);
                if ((AxisAlignedBB)var125 != null) {
-                  var140 = Math.max(0.0, var1.minY - ((AxisAlignedBB)var125).maxY);
+                  var140 = Math.max(0.0, box.minY - ((AxisAlignedBB)var125).maxY);
                   var11 = Math.min(var11, var140);
                   var154_lo = 1;
                   break;
@@ -2267,17 +2267,17 @@ public class KillAura extends Module {
       }
    }
 
-   public boolean a(EntityLivingBase var1, gu var2) {
-      if (var1 == null || var2 == null) {
+   public boolean a(EntityLivingBase living, gu var2) {
+      if (living == null || var2 == null) {
          return false;
-      } else if (this.h(var1)) {
+      } else if (this.h(living)) {
          return (-67 - 23 - -90) != 0;
       }
-      return var1.hurtTime > 0 ? true : var2.pj >= 120.0 || aEg.thePlayer.getDistanceToEntity(var1) <= 2.6F;
+      return living.hurtTime > 0 ? true : var2.pj >= 120.0 || aEg.thePlayer.getDistanceToEntity(living) <= 2.6F;
    }
 
-   public boolean h(EntityLivingBase var1) {
-      return this.g(var1) && aEg.thePlayer.motionY < 0.0;
+   public boolean h(EntityLivingBase living) {
+      return this.g(living) && aEg.thePlayer.motionY < 0.0;
    }
 
    public float en() {
@@ -2394,7 +2394,7 @@ public class KillAura extends Module {
       return this.a(var10, var8, 20L, 700L);
    }
 
-   public MovingObjectPosition a(Vector2f var1, double var2) {
+   public MovingObjectPosition a(Vector2f vec2, double var2) {
       this.movingObjectPosition = null;
       if (this.subtickRaycast.wo()) {
          aEg.entityRenderer.getMouseOver(1.0F);
@@ -2404,7 +2404,7 @@ public class KillAura extends Module {
          }
       }
 
-      this.b(var1, var2);
+      this.b(vec2, var2);
       if (!this.a(this.movingObjectPosition, this.jE)) {
          this.b(RotationComponent.fk, var2);
       }
@@ -2473,18 +2473,18 @@ public class KillAura extends Module {
       return RotationUtil.y(this.jE);
    }
 
-   public void b(Vector2f var1, double var2) {
+   public void b(Vector2f vec2, double var2) {
       Object var10 = null;
-      if (var1 != null) {
-         var10 = aef.a(var1, var2, this.en(), aEg.thePlayer, this.em());
+      if (vec2 != null) {
+         var10 = aef.a(vec2, var2, this.en(), aEg.thePlayer, this.em());
          if ((MovingObjectPosition)var10 != null && ((MovingObjectPosition)var10).typeOfHit == MovingObjectType.ENTITY) {
             this.movingObjectPosition = (MovingObjectPosition)var10;
          }
       }
    }
 
-   public boolean a(AxisAlignedBB var1, Class<? extends Block> var2) {
-      return this.a(var1, var2::isInstance);
+   public boolean a(AxisAlignedBB box, Class<? extends Block> type) {
+      return this.a(box, type::isInstance);
    }
 
    public void eI() {
@@ -2502,17 +2502,17 @@ public class KillAura extends Module {
       }
    }
 
-   public boolean b(AxisAlignedBB var1) {
-      return this.a(var1, var0 -> var0 == Blocks.fire || var0 == Blocks.flowing_lava || var0 == Blocks.lava);
+   public boolean b(AxisAlignedBB box) {
+      return this.a(box, var0 -> var0 == Blocks.fire || var0 == Blocks.flowing_lava || var0 == Blocks.lava);
    }
 
-   public gu a(EntityLivingBase var1, AxisAlignedBB var2, double var3, double var5, double var7) {
+   public gu a(EntityLivingBase living, AxisAlignedBB box, double var3, double var5, double var7) {
       double var47 = 0.0;
       float var49 = 0.0F;
       Object var50 = null;
       Object var56 = null;
       Object var59 = null;
-      var59 = var2.contract(0.05, 0.0, 0.05);
+      var59 = box.contract(0.05, 0.0, 0.05);
       var50 = ((AxisAlignedBB)var59).offset(0.0, -0.35, 0.0);
       String var11 = null;
       var47 = Double.longBitsToDouble(-4503599627370496L);
@@ -2548,20 +2548,20 @@ public class KillAura extends Module {
          return null;
       }
       var56 = this.d(var3, var5);
-      var49 = this.a(var1, (Float)var56);
-      return new gu(var1.getEntityId(), (Float)var56, var49, var7, var47, var11);
+      var49 = this.a(living, (Float)var56);
+      return new gu(living.getEntityId(), (Float)var56, var49, var7, var47, var11);
    }
 
    @Override
-   public void setEnabled(boolean var1) {
-      if (!var1 && this.isEnabled() && this.eA() && aEg.thePlayer != null && aEg.theWorld != null && aEg.getNetHandler() != null) {
+   public void setEnabled(boolean enabled) {
+      if (!enabled && this.isEnabled() && this.eA() && aEg.thePlayer != null && aEg.theWorld != null && aEg.getNetHandler() != null) {
          this.oF = true;
       } else {
-         if (var1) {
+         if (enabled) {
             this.oF = false;
          }
 
-         super.setEnabled(var1);
+         super.setEnabled(enabled);
       }
    }
 
@@ -2595,19 +2595,19 @@ public class KillAura extends Module {
       }
    }
 
-   public aka a(aka var1, AxisAlignedBB var2) {
+   public aka a(aka var1, AxisAlignedBB box) {
       double var13 = 0.0;
       double var15 = 0.0;
       double var17 = 0.0;
-      var15 = Math.max(var2.minX, Math.min(var1.x, var2.maxX));
-      var13 = Math.max(var2.minY, Math.min(var1.y, var2.maxY));
-      var17 = Math.max(var2.minZ, Math.min(var1.z, var2.maxZ));
+      var15 = Math.max(box.minX, Math.min(var1.x, box.maxX));
+      var13 = Math.max(box.minY, Math.min(var1.y, box.maxY));
+      var17 = Math.max(box.minZ, Math.min(var1.z, box.maxZ));
       return new aka(var15, var13, var17);
    }
 
-   public boolean f(EntityLivingBase var1) {
+   public boolean f(EntityLivingBase living) {
       boolean var10000;
-      if (this.i(var1) == null) {
+      if (this.i(living) == null) {
          var10000 = true;
       } else {
          byte var5 = -70;
@@ -2652,8 +2652,8 @@ public class KillAura extends Module {
       }
    }
 
-   public boolean a(AxisAlignedBB var1, Block var2) {
-      return this.a(var1, var1x -> {
+   public boolean a(AxisAlignedBB box, Block var2) {
+      return this.a(box, var1x -> {
          boolean var10000;
          if (var1x == var2) {
             var10000 = true;
@@ -2683,7 +2683,7 @@ public class KillAura extends Module {
       return notBooleanValue != 0 && aEg.thePlayer.getDistanceToEntity(this.jE) <= this.range.wo().doubleValue() + 0.5;
    }
 
-   public void doAttack(List<EntityLivingBase> var1) {
+   public void doAttack(List<EntityLivingBase> livings) {
       Object var258 = null;
       Object var259 = null;
       double var277 = 0.0;
@@ -2750,7 +2750,7 @@ public class KillAura extends Module {
                      case 2:
                         var363 = this.range.wo().doubleValue();
                         final double var363a = (Double)var363;
-                        var1.stream().filter(var2 -> {
+                        livings.stream().filter(var2 -> {
                            boolean var10000;
                            if (aEg.thePlayer.getDistanceToEntity(var2) <= var363a) {
                               var10000 = true;
@@ -2876,9 +2876,9 @@ public class KillAura extends Module {
                         break;
                      case 2:
                         final double var363b = (Double)var363;
-                        var1.removeIf(var2 -> aEg.thePlayer.getDistanceToEntity(var2) > var363b);
-                        if (!var1.isEmpty()) {
-                           var1.forEach(var1x -> {
+                        livings.removeIf(var2 -> aEg.thePlayer.getDistanceToEntity(var2) > var363b);
+                        if (!livings.isEmpty()) {
+                           livings.forEach(var1x -> {
                               if (!this.rayCast.wo()) {
                                  this.d(var1x);
                               }
@@ -3028,9 +3028,9 @@ public class KillAura extends Module {
       }
    }
 
-   public void d(EntityLivingBase var1) {
-      if (var1 != null) {
-         this.b(new MovingObjectPosition(var1, var1.getPositionEyes(1.0F)));
+   public void d(EntityLivingBase living) {
+      if (living != null) {
+         this.b(new MovingObjectPosition(living, living.getPositionEyes(1.0F)));
       }
    }
 
@@ -3040,20 +3040,20 @@ public class KillAura extends Module {
       return ((Speed)var11).isEnabled() && ((Speed)var11).hl().wo() instanceof GrimSpeed && ((GrimSpeed)((Speed)var11).hl().wo()).fastFall.wo();
    }
 
-   public boolean a(AxisAlignedBB var1, Predicate<Block> var2) {
+   public boolean a(AxisAlignedBB box, Predicate<Block> predicate) {
       Object var132 = null;
-      int floor_double2 = MathHelper.floor_double(var1.minX + 1.0E-4);
-      int floor_double3 = MathHelper.floor_double(var1.maxX - 1.0E-4);
-      int floor_double4 = MathHelper.floor_double(var1.minY + 1.0E-4);
-      int floor_double5 = MathHelper.floor_double(var1.maxY - 1.0E-4);
-      int floor_double6 = MathHelper.floor_double(var1.minZ + 1.0E-4);
-      int floor_double7 = MathHelper.floor_double(var1.maxZ - 1.0E-4);
+      int floor_double2 = MathHelper.floor_double(box.minX + 1.0E-4);
+      int floor_double3 = MathHelper.floor_double(box.maxX - 1.0E-4);
+      int floor_double4 = MathHelper.floor_double(box.minY + 1.0E-4);
+      int floor_double5 = MathHelper.floor_double(box.maxY - 1.0E-4);
+      int floor_double6 = MathHelper.floor_double(box.minZ + 1.0E-4);
+      int floor_double7 = MathHelper.floor_double(box.maxZ - 1.0E-4);
 
       for (int i = floor_double2; i <= floor_double3; i++) {
          for (int j = floor_double4; j <= floor_double5; j++) {
             for (int k = floor_double6; k <= floor_double7; k++) {
                var132 = aEg.theWorld.getBlockState(new BlockPos(i, j, k)).getBlock();
-               if (var2.test((Block)var132)) {
+               if (predicate.test((Block)var132)) {
                   return true;
                }
             }
@@ -3129,8 +3129,8 @@ public class KillAura extends Module {
       this.os = this.os.ag(0.76).e(((aka)var6).ag(0.24));
    }
 
-   public boolean a(AxisAlignedBB var1, Material var2) {
-      return this.a(var1, var1x -> var1x.getMaterial() == var2);
+   public boolean a(AxisAlignedBB box, Material material) {
+      return this.a(box, var1x -> var1x.getMaterial() == material);
    }
 
    public boolean eE() {
@@ -3150,11 +3150,11 @@ public class KillAura extends Module {
       oh = (float)Math.sqrt(5.0);
    }
 
-   public void e(EntityLivingBase var1) {
+   public void e(EntityLivingBase living) {
       Object var66 = null;
       Object var74 = null;
       Object var79 = null;
-      var74 = new AttackEvent(var1);
+      var74 = new AttackEvent(living);
       Client.a.e().d((AttackEvent)var74);
       if (!((AttackEvent)var74).isCancelled() && ((AttackEvent)var74).dc() != null) {
          var79 = ((AttackEvent)var74).dc();
@@ -3183,7 +3183,7 @@ public class KillAura extends Module {
                      || !this.e(Velocity.class).mode.wo().getName().equals("Grim Reduce")
                      || this.e(Velocity.class).mode.wo().getName().equals("Grim Reduce") && !((GrimReduceVelocity)this.e(Velocity.class).mode.wo()).stopSprint.wo()
                )
-            || !this.newYouNeedThisToggledOnCurreFake.wo() && this.oldPredictionKeepSprint.wo() && (aEg.thePlayer.ae >= 7 || this.eZ()) && var1 != null) {
+            || !this.newYouNeedThisToggledOnCurreFake.wo() && this.oldPredictionKeepSprint.wo() && (aEg.thePlayer.ae >= 7 || this.eZ()) && living != null) {
             aEg.playerController.syncCurrentPlayItem();
             PacketUtil.l(new C02PacketUseEntity((EntityLivingBase)var79, Action.ATTACK));
             if (this.eC() && this.eX()) {
@@ -3228,8 +3228,8 @@ public class KillAura extends Module {
       }
    }
 
-   public boolean g(EntityLivingBase var1) {
-      return var1 != null
+   public boolean g(EntityLivingBase living) {
+      return living != null
          && aEg.thePlayer.fallDistance > 0.0F
          && !aEg.thePlayer.onGround
          && !aEg.thePlayer.isOnLadder()
@@ -3238,21 +3238,21 @@ public class KillAura extends Module {
          && aEg.thePlayer.ridingEntity == null;
    }
 
-   public String i(EntityLivingBase var1) {
+   public String i(EntityLivingBase living) {
       if (!this.eV()) {
          return "disabled";
-      } else if (var1 == null) {
+      } else if (living == null) {
          return "no-target";
       } else if (this.mD == null) {
          return "no-plan";
       } else if (!this.eT()) {
          return "no-kb-source";
-      } else if (this.mD.pf != var1.getEntityId()) {
+      } else if (this.mD.pf != living.getEntityId()) {
          return "target-swap";
       } else if (this.my <= 0 && !this.et()) {
          return "no-attack-window";
       }
-      return this.h(var1) ? "crit-priority" : null;
+      return this.h(living) ? "crit-priority" : null;
    }
 
    public void a(String var1, gu var2) {
@@ -3286,8 +3286,8 @@ public class KillAura extends Module {
       }
    }
 
-   public boolean a(EntityLivingBase var1, double var2) {
-      return Math.abs(MathHelper.wrapAngleTo180_float(RotationUtil.y(var1).x - aEg.thePlayer.pl)) <= var2;
+   public boolean a(EntityLivingBase living, double var2) {
+      return Math.abs(MathHelper.wrapAngleTo180_float(RotationUtil.y(living).x - aEg.thePlayer.pl)) <= var2;
    }
 
    public boolean eY() {
@@ -3401,14 +3401,14 @@ public class KillAura extends Module {
       }
    }
 
-   public Vector2f c(EntityLivingBase var1) {
-      return this.a(var1, this.range.wo().doubleValue(), this.em());
+   public Vector2f c(EntityLivingBase living) {
+      return this.a(living, this.range.wo().doubleValue(), this.em());
    }
 
-   public void packetBlock(PacketSendEvent var1) {
+   public void packetBlock(PacketSendEvent event) {
       Object var36 = null;
       Object var39 = null;
-      var39 = var1.dq();
+      var39 = event.dq();
       var36 = this.lV.wo().getName();
       int var41_hi = -1;
       switch (((String)var36).hashCode()) {
@@ -3420,7 +3420,7 @@ public class KillAura extends Module {
             switch (var41_hi) {
                case 0:
                   if ((Packet)var39 instanceof C03PacketPlayer && this.jE != null) {
-                     var1.setCancelled();
+                     event.setCancelled();
                      this.p(false);
                      PacketUtil.m((Packet<?>)var39);
                      this.block(false, (130 + -20 ^ 111) != 0);
@@ -3534,23 +3534,23 @@ public class KillAura extends Module {
       return (!this.eA() && !this.oG ? -189 + 97 - -92 : 1) != 0;
    }
 
-   public Vec3 k(EntityLivingBase var1) {
+   public Vec3 k(EntityLivingBase living) {
       double var12 = 0.0;
       Object var14 = null;
       Object var15 = null;
       Object var16 = null;
       Object var17 = null;
-      if (var1 == null) {
+      if (living == null) {
          return new Vec3(0.0, 0.0, 0.0);
       }
       var16 = aEg.thePlayer.getPositionEyes(1.0F);
       var15 = aEg.thePlayer.getVectorForRotation(RotationComponent.fk.getY(), RotationComponent.fk.getX());
       var12 = this.range.wo().doubleValue();
       var17 = ((Vec3)var16).addVector(((Vec3)var15).xCoord * var12, ((Vec3)var15).yCoord * var12, ((Vec3)var15).zCoord * var12);
-      var14 = var1.getEntityBoundingBox().expand(0.1, 0.1, 0.1).calculateIntercept((Vec3)var16, (Vec3)var17);
+      var14 = living.getEntityBoundingBox().expand(0.1, 0.1, 0.1).calculateIntercept((Vec3)var16, (Vec3)var17);
       return (MovingObjectPosition)var14 != null && ((MovingObjectPosition)var14).hitVec != null
-         ? ((MovingObjectPosition)var14).hitVec.subtract(new Vec3(var1.posX, var1.posY, var1.posZ))
-         : new Vec3(0.0, var1.getEyeHeight() * 0.5, 0.0);
+         ? ((MovingObjectPosition)var14).hitVec.subtract(new Vec3(living.posX, living.posY, living.posZ))
+         : new Vec3(0.0, living.getEyeHeight() * 0.5, 0.0);
    }
 
    public float b(float var1, float var2) {
@@ -3571,8 +3571,8 @@ public class KillAura extends Module {
       return var11;
    }
 
-   public boolean a(MovingObjectPosition var1, EntityLivingBase var2) {
-      return var1 != null && var1.typeOfHit == MovingObjectType.ENTITY && var1.entityHit == var2;
+   public boolean a(MovingObjectPosition hit, EntityLivingBase living) {
+      return hit != null && hit.typeOfHit == MovingObjectType.ENTITY && hit.entityHit == living;
    }
 
    public void el() {
@@ -3737,27 +3737,27 @@ public class KillAura extends Module {
       }
    }
 
-   public Vector2f a(EntityLivingBase var1, Vector2f var2) {
+   public Vector2f a(EntityLivingBase living, Vector2f vec2) {
       Object var14 = null;
       Object var15 = null;
-      var14 = this.i(var1);
+      var14 = this.i(living);
       if ((String)var14 != null) {
          var15 = (String)var14;
          this.a("rejected:" + (String)var15, this.mD);
-         return var2;
+         return vec2;
       }
       this.a("applied", this.mD);
-      return new Vector2f(this.mD.pg, var2.getY());
+      return new Vector2f(this.mD.pg, vec2.getY());
    }
 
-   public gu j(EntityLivingBase var1) {
+   public gu j(EntityLivingBase living) {
       double var35 = 0.0;
       Object var40 = null;
       Object var44 = null;
       double var47 = 0.0;
       Object var49 = null;
       double var52 = 0.0;
-      var44 = var1.getEntityBoundingBox();
+      var44 = living.getEntityBoundingBox();
       gu var3 = null;
 
       for (int i = 0; i < 32; i++) {
@@ -3767,12 +3767,12 @@ public class KillAura extends Module {
 
          for (double var59 = 0.8; var59 <= 5.0; var59 += 0.35) {
             var49 = ((AxisAlignedBB)var44).offset(var35 * var59, 0.0, var47 * var59);
-            var40 = this.a(var1, (AxisAlignedBB)var49, var35, var47, var59);
+            var40 = this.a(living, (AxisAlignedBB)var49, var35, var47, var59);
             if ((gu)var40 != null && (var3 == null || ((gu)var40).pj > var3.pj)) {
                var3 = (gu)var40;
             }
 
-            if (!aEg.theWorld.getCollidingBoundingBoxes(var1, ((AxisAlignedBB)var49).contract(0.02, 0.0, 0.02)).isEmpty()) {
+            if (!aEg.theWorld.getCollidingBoundingBoxes(living, ((AxisAlignedBB)var49).contract(0.02, 0.0, 0.02)).isEmpty()) {
                break;
             }
          }

@@ -12,11 +12,11 @@ public class ScriptPacketHeldItem extends ScriptPacket<l> {
         return this.wrapped.getSlotId();
     }
 
-    public void setSlotId(int var1) {
+    public void setSlotId(int slotId) {
         try {
             Field field = this.wrapped.getClass().getDeclaredField("slotId");
             field.setAccessible(true);
-            field.setInt(this.wrapped, var1);
+            field.setInt(this.wrapped, slotId);
         } catch (Exception exception) {
             exception.printStackTrace();
         }

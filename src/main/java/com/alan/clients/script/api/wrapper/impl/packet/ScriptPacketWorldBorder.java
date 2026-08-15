@@ -4,8 +4,8 @@ import java.lang.reflect.Field;
 import net.minecraft.network.play.server.S44PacketWorldBorder;
 
 public class ScriptPacketWorldBorder extends ScriptPacket<S44PacketWorldBorder> {
-    public ScriptPacketWorldBorder(S44PacketWorldBorder var1) {
-        super(var1);
+    public ScriptPacketWorldBorder(S44PacketWorldBorder packet) {
+        super(packet);
     }
 
     public String getAction() {

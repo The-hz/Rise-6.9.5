@@ -8,9 +8,9 @@ public final class tg {
     public final List<BlockPos> acn;
     public final double aco;
 
-    public tg(BlockPos var1, List<BlockPos> var2, double var3) {
-        this.acm = var1;
-        this.acn = var2;
+    public tg(BlockPos pos, List<BlockPos> poses, double var3) {
+        this.acm = pos;
+        this.acn = poses;
         this.aco = var3;
     }
 }

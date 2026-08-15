@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S42PacketCombatEvent;
 
 public class ScriptPacketCombatEvent extends ScriptPacket<S42PacketCombatEvent> {
-    public ScriptPacketCombatEvent(S42PacketCombatEvent var1) {
-        super(var1);
+    public ScriptPacketCombatEvent(S42PacketCombatEvent event) {
+        super(event);
     }
 
     public String getEventType() {

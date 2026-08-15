@@ -77,7 +77,7 @@ public class ClickerMimic extends Mode<Mimic> {
         }
     };
 
-    public ClickerMimic(String var1, Mimic var2) {
-        super(var1, var2);
+    public ClickerMimic(String var1, Mimic mimic) {
+        super(var1, mimic);
     }
 }

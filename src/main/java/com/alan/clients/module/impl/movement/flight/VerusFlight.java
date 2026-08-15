@@ -59,8 +59,8 @@ public class VerusFlight extends Mode<Flight> {
     @EventLink
     public final Listener<MoveInputEvent> onMoveInput = var0 -> var0.setSneak(false);
 
-    public VerusFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public VerusFlight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

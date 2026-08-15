@@ -81,8 +81,8 @@ public class LegitNoSlow extends Mode<NoSlow> {
         }
     };
 
-    public LegitNoSlow(String var1, NoSlow var2) {
-        super(var1, var2);
+    public LegitNoSlow(String var1, NoSlow noSlow) {
+        super(var1, noSlow);
     }
 
     @Override
@@ -115,12 +115,12 @@ public class LegitNoSlow extends Mode<NoSlow> {
         return itemstack != null && this.b(itemstack, true);
     }
 
-    private boolean b(ItemStack var1, boolean var2) {
-        Item item = var1.getItem();
+    private boolean b(ItemStack stack, boolean var2) {
+        Item item = stack.getItem();
         if (item instanceof ItemFood) {
             return this.getParent().food.wo();
         } else if (item instanceof ItemPotion) {
-            return this.getParent().potion.wo() && !ItemPotion.isSplash(var1.getMetadata());
+            return this.getParent().potion.wo() && !ItemPotion.isSplash(stack.getMetadata());
         }
         return item instanceof ItemSword ? this.getParent().sword.wo() : var2 && item instanceof ItemBow && this.getParent().bow.wo();
     }

@@ -20,7 +20,7 @@ public final class ModuleToggleEvent implements Event {
     }
 
     @Generated
-    public ModuleToggleEvent(Module var1) {
-        this.module = var1;
+    public ModuleToggleEvent(Module module) {
+        this.module = module;
     }
 }

@@ -95,11 +95,11 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
         this.ave = d8;
     };
 
-    public NovolineTargetInfo(String var1, TargetInfo var2) {
-        super(var1, var2);
+    public NovolineTargetInfo(String var1, TargetInfo targetInfo) {
+        super(var1, targetInfo);
     }
 
-    private void a(AbstractClientPlayer var1, double var2, double var4, double var6) {
+    private void a(AbstractClientPlayer abstractClientPlayer, double var2, double var4, double var6) {
         if (this.ava == null) {
             this.ava = this.e(TargetInfo.class);
         }
@@ -115,8 +115,8 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
         GlStateManager.alphaFunc(516, 0.0F);
         GlStateManager.enableTexture2D();
         HealthBypass healthbypass = this.e(HealthBypass.class);
-        float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(var1) : var1.getHealth();
-        ResourceLocation resourcelocation = this.ava.inWorld && f > 0.0F ? var1.getLocationSkin() : RenderSkeleton.getEntityTexture();
+        float f = healthbypass != null && healthbypass.isEnabled() ? HealthBypass.B(abstractClientPlayer) : abstractClientPlayer.getHealth();
+        ResourceLocation resourcelocation = this.ava.inWorld && f > 0.0F ? abstractClientPlayer.getLocationSkin() : RenderSkeleton.getEntityTexture();
         aEg.getTextureManager().bindTexture(resourcelocation);
         Gui.drawScaledCustomSizeModalRect((int)var2, (int)var4, 8.0F, 8.0F, 8.0F, 8.0F, (int)var6, (int)var6, 64.0F, 64.0F);
         Gui.drawScaledCustomSizeModalRect((int)var2, (int)var4, 40.0F, 8.0F, 8.0F, 8.0F, (int)var6, (int)var6, 64.0F, 64.0F);

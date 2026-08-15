@@ -14,7 +14,7 @@ public class ki extends Mode<Disabler> {
         }
     };
 
-    public ki(String var1, Disabler var2) {
-        super(var1, var2);
+    public ki(String var1, Disabler disabler) {
+        super(var1, disabler);
     }
 }

@@ -18,8 +18,8 @@ public final class ServerJoinEvent implements Event {
     }
 
     @Generated
-    public ServerJoinEvent(String var1, int var2) {
+    public ServerJoinEvent(String var1, int port) {
         this.ip = var1;
-        this.port = var2;
+        this.port = port;
     }
 }

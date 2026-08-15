@@ -36,8 +36,8 @@ public final class j extends rip.vantage.commons.packet.api.abstracts.a {
         this.ePv = Arrays.copyOf(var5, var5.length);
     }
 
-    public j(JSONObject var1) {
-        this(var1.getInt("v"), a(var1, "a"), a(var1, "b"), var1.getString("c"), a(var1, "d"));
+    public j(JSONObject json) {
+        this(json.getInt("v"), a(json, "a"), a(json, "b"), json.getString("c"), a(json, "d"));
     }
 
     @Override
@@ -77,9 +77,9 @@ public final class j extends rip.vantage.commons.packet.api.abstracts.a {
         return Arrays.copyOf(this.ePv, this.ePv.length);
     }
 
-    private static byte[] a(JSONObject var0, String var1) {
+    private static byte[] a(JSONObject json, String var1) {
         try {
-            return Base64.getDecoder().decode(var0.getString(var1));
+            return Base64.getDecoder().decode(json.getString(var1));
         } catch (IllegalArgumentException illegalargumentexception) {
             throw new IllegalArgumentException("invalid base64 field: " + var1, illegalargumentexception);
         }

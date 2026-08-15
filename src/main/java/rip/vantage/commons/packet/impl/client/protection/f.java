@@ -23,9 +23,9 @@ public class f extends rip.vantage.commons.packet.api.abstracts.a {
         this.ePe = var6;
     }
 
-    public f(JSONObject var1) {
+    public f(JSONObject json) {
         super((byte)8);
-        JSONArray jsonarray = var1.getJSONArray("a");
+        JSONArray jsonarray = json.getJSONArray("a");
         ArrayList arraylist = new ArrayList();
 
         for (int i = 0; i < jsonarray.length(); i++) {
@@ -34,11 +34,11 @@ public class f extends rip.vantage.commons.packet.api.abstracts.a {
         }
 
         this.eOZ = arraylist;
-        this.ePa = var1.getBoolean("b");
-        this.ePb = var1.getBoolean("c");
-        this.ePc = var1.getBoolean("d");
-        this.ePd = var1.getBoolean("e");
-        this.ePe = var1.getInt("f");
+        this.ePa = json.getBoolean("b");
+        this.ePb = json.getBoolean("c");
+        this.ePc = json.getBoolean("d");
+        this.ePd = json.getBoolean("e");
+        this.ePe = json.getInt("f");
     }
 
     @Override

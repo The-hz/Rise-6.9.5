@@ -10,8 +10,8 @@ public final class ExplosionCheck extends a {
     }
 
     @Override
-    public boolean handle(Packet<?> var1) {
-        return !(var1 instanceof S27PacketExplosion s27packetexplosion)
+    public boolean handle(Packet<?> packet) {
+        return !(packet instanceof S27PacketExplosion s27packetexplosion)
             ? false
             : s27packetexplosion.func_149149_c() >= 127.0F || s27packetexplosion.func_149144_d() >= 127.0F || s27packetexplosion.func_149147_e() >= 127.0F;
     }

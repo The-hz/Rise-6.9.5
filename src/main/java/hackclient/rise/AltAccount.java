@@ -12,8 +12,8 @@ public class AltAccount {
     private String aEM;
     private long aEN;
 
-    public AltAccount(AltType var1, String var2, String var3, String var4) {
-        this.aEK = var1;
+    public AltAccount(AltType altType, String var2, String var3, String var4) {
+        this.aEK = altType;
         this.gK = var2;
         this.aEL = var3;
         this.aEM = var4;
@@ -39,27 +39,27 @@ public class AltAccount {
         return jsonobject;
     }
 
-    public void b(JsonObject var1) {
-        if (var1.has("type")) {
-            this.aEK = AltType.bi(var1.get("type").getAsString());
+    public void b(JsonObject json) {
+        if (json.has("type")) {
+            this.aEK = AltType.bi(json.get("type").getAsString());
         } else {
             this.aEK = AltType.CRACKED;
         }
 
-        if (var1.has("name")) {
-            this.gK = var1.get("name").getAsString();
+        if (json.has("name")) {
+            this.gK = json.get("name").getAsString();
         }
 
-        if (var1.has("uuid")) {
-            this.aEL = var1.get("uuid").getAsString();
+        if (json.has("uuid")) {
+            this.aEL = json.get("uuid").getAsString();
         }
 
-        if (var1.has("accessToken")) {
-            this.aEM = var1.get("accessToken").getAsString();
+        if (json.has("accessToken")) {
+            this.aEM = json.get("accessToken").getAsString();
         }
 
-        if (var1.has("lastUsed")) {
-            this.aEN = var1.get("lastUsed").getAsLong();
+        if (json.has("lastUsed")) {
+            this.aEN = json.get("lastUsed").getAsLong();
         }
     }
 
@@ -89,13 +89,13 @@ public class AltAccount {
     }
 
     @Generated
-    public void a(AltType var1) {
-        this.aEK = var1;
+    public void a(AltType altType) {
+        this.aEK = altType;
     }
 
     @Generated
-    public void setName(String var1) {
-        this.gK = var1;
+    public void setName(String name) {
+        this.gK = name;
     }
 
     @Generated

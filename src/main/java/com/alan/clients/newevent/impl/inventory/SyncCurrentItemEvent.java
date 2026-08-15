@@ -12,12 +12,12 @@ public class SyncCurrentItemEvent implements Event {
     }
 
     @Generated
-    public void setSlot(int var1) {
-        this.slot = var1;
+    public void setSlot(int slot) {
+        this.slot = slot;
     }
 
     @Generated
-    public SyncCurrentItemEvent(int var1) {
-        this.slot = var1;
+    public SyncCurrentItemEvent(int slot) {
+        this.slot = slot;
     }
 }

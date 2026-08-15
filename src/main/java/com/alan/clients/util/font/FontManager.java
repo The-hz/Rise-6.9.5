@@ -32,11 +32,11 @@ public enum FontManager {
         this.kz = var4;
     }
 
-    FontManager(String var3, Supplier<agc> var4) {
+    FontManager(String var3, Supplier<agc> supplier) {
         this.gK = var3;
         this.kz = "";
-        this.ky = (agc)var4.get();
-        this.kx = var4;
+        this.ky = (agc)supplier.get();
+        this.kx = supplier;
     }
 
     public agc o(int var1) {
@@ -189,8 +189,8 @@ public enum FontManager {
     }
 
     @Generated
-    public void setName(String var1) {
-        this.gK = var1;
+    public void setName(String name) {
+        this.gK = name;
     }
 
     @Generated

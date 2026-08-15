@@ -10,8 +10,8 @@ public final class TeleportCheck extends a {
     }
 
     @Override
-    public boolean handle(Packet<?> var1) {
-        return !(var1 instanceof S08PacketPlayerPosLook s08packetplayerposlook)
+    public boolean handle(Packet<?> packet) {
+        return !(packet instanceof S08PacketPlayerPosLook s08packetplayerposlook)
             ? false
             : Math.abs(s08packetplayerposlook.x) > 1.0E9 || Math.abs(s08packetplayerposlook.y) > 1.0E9 || Math.abs(s08packetplayerposlook.z) > 1.0E9;
     }

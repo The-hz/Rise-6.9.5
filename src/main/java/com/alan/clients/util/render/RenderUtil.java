@@ -34,8 +34,8 @@ public final class RenderUtil implements InstanceAccess {
         return new aka(-RenderManager.bUO, -RenderManager.bUP, -RenderManager.bUQ);
     }
 
-    public static void a(ResourceLocation var0, float var1, float var2, int var3, int var4, int var5, int var6, int var7, int var8, float var9, float var10) {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(var0);
+    public static void a(ResourceLocation location, float var1, float var2, int var3, int var4, int var5, int var6, int var7, int var8, float var9, float var10) {
+        Minecraft.getMinecraft().getTextureManager().bindTexture(location);
         GL11.glTexParameteri(3553, 10242, 33071);
         GL11.glTexParameteri(3553, 10243, 33071);
         GL11.glTexParameteri(3553, 10241, 9728);
@@ -98,8 +98,8 @@ public final class RenderUtil implements InstanceAccess {
         stop();
     }
 
-    public static void E(EntityLivingBase var0) {
-        Client.a.e().d(new AttackEvent(var0));
+    public static void E(EntityLivingBase living) {
+        Client.a.e().d(new AttackEvent(living));
         if (!aEg.thePlayer.isSwingInProgress
             || aEg.thePlayer.swingProgressInt >= aEg.thePlayer.getArmSwingAnimationEnd() / 2
             || aEg.thePlayer.swingProgressInt < 0) {
@@ -108,7 +108,7 @@ public final class RenderUtil implements InstanceAccess {
         }
 
         if (aEg.thePlayer.fallDistance > 0.0F) {
-            aEg.thePlayer.onCriticalHit(var0);
+            aEg.thePlayer.onCriticalHit(living);
         }
     }
 
@@ -185,7 +185,7 @@ public final class RenderUtil implements InstanceAccess {
         c(var0 - var4 / 2.0, var2 - var6 / 2.0, var4, var6, var8, var9);
     }
 
-    public static void image(ResourceLocation var0, float var1, float var2, float var3, float var4, Color var5) {
+    public static void image(ResourceLocation location, float var1, float var2, float var3, float var4, Color var5) {
         GL11.glTexParameteri(3553, 10241, 9728);
         GL11.glTexParameteri(3553, 10240, 9728);
         GlStateManager.enableBlend();
@@ -193,7 +193,7 @@ public final class RenderUtil implements InstanceAccess {
         GlStateManager.alphaFunc(516, 0.0F);
         color(var5);
         OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-        aEg.getTextureManager().bindTexture(var0);
+        aEg.getTextureManager().bindTexture(location);
         Gui.drawModalRectWithCustomSizedTexture(var1, var2, 0.0F, 0.0F, var3, var4, var3, var4);
         GlStateManager.resetColor();
         GlStateManager.disableBlend();
@@ -213,16 +213,16 @@ public final class RenderUtil implements InstanceAccess {
         GlStateManager.disableBlend();
     }
 
-    public static void image(ResourceLocation var0, double var1, double var3, double var5, double var7, Color var9) {
-        image(var0, (float)var1, (float)var3, (float)var5, (float)var7, var9);
+    public static void image(ResourceLocation location, double var1, double var3, double var5, double var7, Color var9) {
+        image(location, (float)var1, (float)var3, (float)var5, (float)var7, var9);
     }
 
-    public static void image(ResourceLocation var0, float var1, float var2, float var3, float var4) {
-        image(var0, var1, var2, var3, var4, Color.WHITE);
+    public static void image(ResourceLocation location, float var1, float var2, float var3, float var4) {
+        image(location, var1, var2, var3, var4, Color.WHITE);
     }
 
-    public static void image(ResourceLocation var0, double var1, double var3, double var5, double var7) {
-        image(var0, (float)var1, (float)var3, (float)var5, (float)var7);
+    public static void image(ResourceLocation location, double var1, double var3, double var5, double var7) {
+        image(location, (float)var1, (float)var3, (float)var5, (float)var7);
     }
 
     public static void dropShadow(int var0, double var1, double var3, double var5, double var7, double var9, double var11) {
@@ -359,14 +359,14 @@ public final class RenderUtil implements InstanceAccess {
         a(var0, var2, var4, 3);
     }
 
-    public static void a(double var0, double var2, int var4, ItemStack var5) {
-        if (var5 != null) {
+    public static void a(double var0, double var2, int var4, ItemStack stack) {
+        if (stack != null) {
             GlStateManager.pushMatrix();
             GlStateManager.enableRescaleNormal();
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             RenderHelper.enableGUIStandardItemLighting();
-            aEg.getRenderItem().b(var5, var4, var0, var2);
+            aEg.getRenderItem().b(stack, var4, var0, var2);
             GlStateManager.disableRescaleNormal();
             GlStateManager.disableBlend();
             RenderHelper.disableStandardItemLighting();
@@ -519,23 +519,23 @@ public final class RenderUtil implements InstanceAccess {
         color(Color.WHITE);
     }
 
-    public static boolean isInViewFrustrum(Entity var0) {
-        return isInViewFrustrum(var0.getEntityBoundingBox()) || var0.ignoreFrustumCheck;
+    public static boolean isInViewFrustrum(Entity entity) {
+        return isInViewFrustrum(entity.getEntityBoundingBox()) || entity.ignoreFrustumCheck;
     }
 
-    public static boolean isInViewFrustrum(AxisAlignedBB var0) {
+    public static boolean isInViewFrustrum(AxisAlignedBB box) {
         Entity entity = aEg.getRenderViewEntity();
         FRUSTUM.setPosition(entity.posX, entity.posY, entity.posZ);
-        return FRUSTUM.isBoundingBoxInFrustum(var0);
+        return FRUSTUM.isBoundingBoxInFrustum(box);
     }
 
-    public static Framebuffer createFrameBuffer(Framebuffer var0) {
-        if (var0 != null && var0.framebufferWidth == aEg.displayWidth && var0.framebufferHeight == aEg.displayHeight) {
-            return var0;
+    public static Framebuffer createFrameBuffer(Framebuffer framebuffer) {
+        if (framebuffer != null && framebuffer.framebufferWidth == aEg.displayWidth && framebuffer.framebufferHeight == aEg.displayHeight) {
+            return framebuffer;
         }
 
-        if (var0 != null) {
-            var0.deleteFramebuffer();
+        if (framebuffer != null) {
+            framebuffer.deleteFramebuffer();
         }
 
         return new Framebuffer(aEg.displayWidth, aEg.displayHeight, false);
@@ -551,70 +551,70 @@ public final class RenderUtil implements InstanceAccess {
         return new Vec3(var0, var2, var4);
     }
 
-    public static void glVertex3D(Vec3 var0) {
-        GL11.glVertex3d(var0.xCoord, var0.yCoord, var0.zCoord);
+    public static void glVertex3D(Vec3 vec) {
+        GL11.glVertex3d(vec.xCoord, vec.yCoord, vec.zCoord);
     }
 
-    public static void drawBoundingBox(AxisAlignedBB var0) {
+    public static void drawBoundingBox(AxisAlignedBB box) {
         GL11.glBegin(7);
-        glVertex3D(getRenderPos(var0.minX, var0.minY, var0.minZ));
-        glVertex3D(getRenderPos(var0.minX, var0.maxY, var0.minZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.minY, var0.minZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.maxY, var0.minZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.minY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.maxY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.minX, var0.minY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.minX, var0.maxY, var0.maxZ));
+        glVertex3D(getRenderPos(box.minX, box.minY, box.minZ));
+        glVertex3D(getRenderPos(box.minX, box.maxY, box.minZ));
+        glVertex3D(getRenderPos(box.maxX, box.minY, box.minZ));
+        glVertex3D(getRenderPos(box.maxX, box.maxY, box.minZ));
+        glVertex3D(getRenderPos(box.maxX, box.minY, box.maxZ));
+        glVertex3D(getRenderPos(box.maxX, box.maxY, box.maxZ));
+        glVertex3D(getRenderPos(box.minX, box.minY, box.maxZ));
+        glVertex3D(getRenderPos(box.minX, box.maxY, box.maxZ));
         vI();
         GL11.glBegin(7);
-        glVertex3D(getRenderPos(var0.maxX, var0.maxY, var0.minZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.minY, var0.minZ));
-        glVertex3D(getRenderPos(var0.minX, var0.maxY, var0.minZ));
-        glVertex3D(getRenderPos(var0.minX, var0.minY, var0.minZ));
-        glVertex3D(getRenderPos(var0.minX, var0.maxY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.minX, var0.minY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.maxY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.minY, var0.maxZ));
+        glVertex3D(getRenderPos(box.maxX, box.maxY, box.minZ));
+        glVertex3D(getRenderPos(box.maxX, box.minY, box.minZ));
+        glVertex3D(getRenderPos(box.minX, box.maxY, box.minZ));
+        glVertex3D(getRenderPos(box.minX, box.minY, box.minZ));
+        glVertex3D(getRenderPos(box.minX, box.maxY, box.maxZ));
+        glVertex3D(getRenderPos(box.minX, box.minY, box.maxZ));
+        glVertex3D(getRenderPos(box.maxX, box.maxY, box.maxZ));
+        glVertex3D(getRenderPos(box.maxX, box.minY, box.maxZ));
         vI();
         GL11.glBegin(7);
-        glVertex3D(getRenderPos(var0.minX, var0.maxY, var0.minZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.maxY, var0.minZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.maxY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.minX, var0.maxY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.minX, var0.maxY, var0.minZ));
-        glVertex3D(getRenderPos(var0.minX, var0.maxY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.maxY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.maxY, var0.minZ));
+        glVertex3D(getRenderPos(box.minX, box.maxY, box.minZ));
+        glVertex3D(getRenderPos(box.maxX, box.maxY, box.minZ));
+        glVertex3D(getRenderPos(box.maxX, box.maxY, box.maxZ));
+        glVertex3D(getRenderPos(box.minX, box.maxY, box.maxZ));
+        glVertex3D(getRenderPos(box.minX, box.maxY, box.minZ));
+        glVertex3D(getRenderPos(box.minX, box.maxY, box.maxZ));
+        glVertex3D(getRenderPos(box.maxX, box.maxY, box.maxZ));
+        glVertex3D(getRenderPos(box.maxX, box.maxY, box.minZ));
         vI();
         GL11.glBegin(7);
-        glVertex3D(getRenderPos(var0.minX, var0.minY, var0.minZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.minY, var0.minZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.minY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.minX, var0.minY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.minX, var0.minY, var0.minZ));
-        glVertex3D(getRenderPos(var0.minX, var0.minY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.minY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.minY, var0.minZ));
+        glVertex3D(getRenderPos(box.minX, box.minY, box.minZ));
+        glVertex3D(getRenderPos(box.maxX, box.minY, box.minZ));
+        glVertex3D(getRenderPos(box.maxX, box.minY, box.maxZ));
+        glVertex3D(getRenderPos(box.minX, box.minY, box.maxZ));
+        glVertex3D(getRenderPos(box.minX, box.minY, box.minZ));
+        glVertex3D(getRenderPos(box.minX, box.minY, box.maxZ));
+        glVertex3D(getRenderPos(box.maxX, box.minY, box.maxZ));
+        glVertex3D(getRenderPos(box.maxX, box.minY, box.minZ));
         vI();
         GL11.glBegin(7);
-        glVertex3D(getRenderPos(var0.minX, var0.minY, var0.minZ));
-        glVertex3D(getRenderPos(var0.minX, var0.maxY, var0.minZ));
-        glVertex3D(getRenderPos(var0.minX, var0.minY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.minX, var0.maxY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.minY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.maxY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.minY, var0.minZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.maxY, var0.minZ));
+        glVertex3D(getRenderPos(box.minX, box.minY, box.minZ));
+        glVertex3D(getRenderPos(box.minX, box.maxY, box.minZ));
+        glVertex3D(getRenderPos(box.minX, box.minY, box.maxZ));
+        glVertex3D(getRenderPos(box.minX, box.maxY, box.maxZ));
+        glVertex3D(getRenderPos(box.maxX, box.minY, box.maxZ));
+        glVertex3D(getRenderPos(box.maxX, box.maxY, box.maxZ));
+        glVertex3D(getRenderPos(box.maxX, box.minY, box.minZ));
+        glVertex3D(getRenderPos(box.maxX, box.maxY, box.minZ));
         vI();
         GL11.glBegin(7);
-        glVertex3D(getRenderPos(var0.minX, var0.maxY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.minX, var0.minY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.minX, var0.maxY, var0.minZ));
-        glVertex3D(getRenderPos(var0.minX, var0.minY, var0.minZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.maxY, var0.minZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.minY, var0.minZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.maxY, var0.maxZ));
-        glVertex3D(getRenderPos(var0.maxX, var0.minY, var0.maxZ));
+        glVertex3D(getRenderPos(box.minX, box.maxY, box.maxZ));
+        glVertex3D(getRenderPos(box.minX, box.minY, box.maxZ));
+        glVertex3D(getRenderPos(box.minX, box.maxY, box.minZ));
+        glVertex3D(getRenderPos(box.minX, box.minY, box.minZ));
+        glVertex3D(getRenderPos(box.maxX, box.maxY, box.minZ));
+        glVertex3D(getRenderPos(box.maxX, box.minY, box.minZ));
+        glVertex3D(getRenderPos(box.maxX, box.maxY, box.maxZ));
+        glVertex3D(getRenderPos(box.maxX, box.minY, box.maxZ));
         vI();
     }
 

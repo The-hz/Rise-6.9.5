@@ -11,7 +11,7 @@ public class ahs extends Vec3i {
         super(var1, var3, var5);
     }
 
-    public ahs(Vec3i var1) {
-        super(var1.getX(), var1.getY(), var1.getZ());
+    public ahs(Vec3i vec) {
+        super(vec.getX(), vec.getY(), vec.getZ());
     }
 }

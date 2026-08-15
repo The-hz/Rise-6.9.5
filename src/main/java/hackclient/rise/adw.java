@@ -24,8 +24,8 @@ public enum adw {
     }
 
     @Generated
-    adw(Color var3) {
-        this.aEe = var3;
+    adw(Color color) {
+        this.aEe = color;
     }
 
     private static adw[] rM() {

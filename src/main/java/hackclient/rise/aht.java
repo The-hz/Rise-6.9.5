@@ -16,8 +16,8 @@ public enum aht {
     final Function<Tuple<ahr, ahp>, Boolean> aNJ;
     private static final aht[] $VALUES = uP();
 
-    aht(Function<Tuple<ahr, ahp>, Boolean> var3) {
-        this.aNJ = var3;
+    aht(Function<Tuple<ahr, ahp>, Boolean> function) {
+        this.aNJ = function;
     }
 
     public static boolean a(ahr var0, ahp var1, aht... var2) {

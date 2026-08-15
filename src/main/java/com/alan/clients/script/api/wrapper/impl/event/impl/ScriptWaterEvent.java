@@ -4,12 +4,12 @@ import com.alan.clients.newevent.impl.motion.WaterEvent;
 import com.alan.clients.script.api.wrapper.impl.event.ScriptEvent;
 
 public class ScriptWaterEvent extends ScriptEvent<WaterEvent> {
-    public ScriptWaterEvent(WaterEvent var1) {
-        super(var1);
+    public ScriptWaterEvent(WaterEvent event) {
+        super(event);
     }
 
-    public void setWater(boolean var1) {
-        this.wrapped.setWater(var1);
+    public void setWater(boolean water) {
+        this.wrapped.setWater(water);
     }
 
     public boolean isWater() {

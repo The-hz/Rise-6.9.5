@@ -91,7 +91,7 @@ public final class AimAssist extends Module {
     public AimAssist() {
     }
 
-    private boolean d(Vector2f var1) {
+    private boolean d(Vector2f vec2) {
         if (!aEg.bgA || aEg.currentScreen != null) {
             return false;
         }
@@ -100,14 +100,14 @@ public final class AimAssist extends Module {
             return false;
         }
 
-        MovingObjectPosition movingobjectposition = aef.a(var1, aEg.playerController.getBlockReachDistance(), 0.0F, aEg.thePlayer, false);
+        MovingObjectPosition movingobjectposition = aef.a(vec2, aEg.playerController.getBlockReachDistance(), 0.0F, aEg.thePlayer, false);
         return movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectType.BLOCK;
     }
 
-    private void e(Vector2f var1) {
+    private void e(Vector2f vec2) {
         this.target = null;
         RotationComponent.d(false);
-        RotationComponent.a(var1, 10.0, MovementFix.NORMAL, null, true, false);
+        RotationComponent.a(vec2, 10.0, MovementFix.NORMAL, null, true, false);
     }
 
     private boolean s(boolean var1) {
@@ -137,25 +137,25 @@ public final class AimAssist extends Module {
         return Math.max(0.05, d0 * (0.35 + d1 * 0.65));
     }
 
-    private Vector2f a(Vector2f var1, Vector2f var2, boolean var3) {
-        return new Vector2f(var2.getX(), !this.gP() && !var3 ? var1.getY() : var2.getY());
+    private Vector2f a(Vector2f vec2, Vector2f var2, boolean var3) {
+        return new Vector2f(var2.getX(), !this.gP() && !var3 ? vec2.getY() : var2.getY());
     }
 
-    private Vector2f b(EntityLivingBase var1, double var2, boolean var4) {
+    private Vector2f b(EntityLivingBase living, double var2, boolean var4) {
         if (!this.gP() && !var4) {
-            return RotationUtil.y(var1);
+            return RotationUtil.y(living);
         }
 
-        AxisAlignedBB axisalignedbb = var1.getEntityBoundingBox();
+        AxisAlignedBB axisalignedbb = living.getEntityBoundingBox();
         float f = this.gr();
         if (axisalignedbb != null && !axisalignedbb.hasNaN()) {
             if (f > 0.0F) {
                 axisalignedbb = axisalignedbb.expand(f, f, f);
             }
 
-            return RotationUtil.a(var1, axisalignedbb, true, var2, var4, f);
+            return RotationUtil.a(living, axisalignedbb, true, var2, var4, f);
         }
-        return RotationUtil.y(var1);
+        return RotationUtil.y(living);
     }
 
     private double n(double var1) {

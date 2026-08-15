@@ -46,8 +46,8 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
     agk scrollUtil = new agk();
     private static int accountsInRow;
 
-    public AccountManagerScreen(GuiScreen var1) {
-        prevScreen = var1;
+    public AccountManagerScreen(GuiScreen screen) {
+        prevScreen = screen;
     }
 
     @Override
@@ -163,13 +163,13 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
         }
     }
 
-    public static void addAccount(AltAccount var0) {
-        addDisplay(var0);
-        ALT_MANAGER.tl().add(var0);
+    public static void addAccount(AltAccount account) {
+        addDisplay(account);
+        ALT_MANAGER.tl().add(account);
         ALT_MANAGER.update();
     }
 
-    private static void addDisplay(AltAccount var0) {
+    private static void addDisplay(AltAccount display) {
         short short1 = 172;
         byte b0 = 40;
         byte b1 = 5;
@@ -177,7 +177,7 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
         int i = 16 + 45 * (ACCOUNT_DISPLAY_LIST.size() / accountsInRow);
         int j = screenWidth / 2 - ((accountsInRow & 1) == 0 ? 177 * (accountsInRow / 2) - 2 : (short1 + b1) * (accountsInRow / 2) + short1 / 2);
         int k = j + (short1 + b1) * (ACCOUNT_DISPLAY_LIST.size() % accountsInRow);
-        AccountViewModel accountviewmodel = new AccountViewModel<>(var0, k, i, short1, b0);
+        AccountViewModel accountviewmodel = new AccountViewModel<>(display, k, i, short1, b0);
         accountviewmodel.setScreenHeight(screenHeight);
         ACCOUNT_DISPLAY_LIST.add(accountviewmodel);
     }
@@ -193,9 +193,9 @@ public class AccountManagerScreen extends GuiScreen implements InstanceAccess {
     }
 
     @Override
-    public void onResize(Minecraft var1, int var2, int var3) {
+    public void onResize(Minecraft mc, int var2, int var3) {
         prevScreen = this;
-        super.onResize(var1, var2, var3);
+        super.onResize(mc, var2, var3);
     }
 
     @Override

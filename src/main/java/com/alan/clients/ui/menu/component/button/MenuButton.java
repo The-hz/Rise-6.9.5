@@ -10,9 +10,9 @@ public class MenuButton extends adg {
     private final Animation aBX = new Animation(Easing.EASE_OUT_QUINT, 500L);
     private final Animation aBY = new Animation(Easing.EASE_OUT_SINE, 250L);
 
-    public MenuButton(double var1, double var3, double var5, double var7, Runnable var9) {
+    public MenuButton(double var1, double var3, double var5, double var7, Runnable runnable) {
         super(var1, var3, var5, var7);
-        this.runnable = var9;
+        this.runnable = runnable;
     }
 
     public void draw(int var1, int var2, float var3) {

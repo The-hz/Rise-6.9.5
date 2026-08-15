@@ -13,12 +13,12 @@ final class CommandEntry {
     final String aBp;
     double aBq;
 
-    CommandEntry(Command var1) {
-        this.aBl = var1.getExpressions();
+    CommandEntry(Command command) {
+        this.aBl = command.getExpressions();
         this.aBk = this.aBl.length == 0 ? "" : this.aBl[0];
-        this.aBm = ahd.ce(var1.getDescription());
+        this.aBm = ahd.ce(command.getDescription());
         this.aBn = this.aBm.toLowerCase(Locale.ROOT);
-        this.aBo = aV(var1.getDescription());
+        this.aBo = aV(command.getDescription());
         this.aBp = c(this.aBl);
     }
 

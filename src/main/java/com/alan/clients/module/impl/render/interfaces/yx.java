@@ -5,8 +5,8 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
 
 class yx extends ModeValue {
-    yx(ModernInterface var1, String var2, Mode var3) {
-        super(var2, var3);
+    yx(ModernInterface modernInterface, String var2, Mode mode) {
+        super(var2, mode);
         this.add(new SubMode("Apple UI"));
         this.add(new SubMode("Minecraft"));
         this.add(new SubMode("Custom"));

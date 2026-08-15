@@ -83,7 +83,7 @@ public class WatchdogGlideLongJump extends Mode<LongJump> {
     @EventLink
     public final Listener<JumpEvent> onJump = var0 -> var0.setJumpMotion(0.42F);
 
-    public WatchdogGlideLongJump(String var1, LongJump var2) {
-        super(var1, var2);
+    public WatchdogGlideLongJump(String var1, LongJump longJump) {
+        super(var1, longJump);
     }
 }

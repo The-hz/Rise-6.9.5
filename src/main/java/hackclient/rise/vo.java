@@ -56,8 +56,8 @@ public final class vo implements InstanceAccess {
         }
     };
 
-    public vo(Scaffold var1) {
-        this.ajR = var1;
+    public vo(Scaffold scaffold) {
+        this.ajR = scaffold;
     }
 
     private void unregister() {

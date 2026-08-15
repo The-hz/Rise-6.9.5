@@ -583,55 +583,55 @@ extends GuiScreen {
         this.aAv.a(new Vector2d(this.aAK + this.aAM - 4.0, this.aAL + 6.0), this.aAN - 12.0);
     }
 
-    private void a(CommandEntry acr2, double d2, double d3, double d4, double d5) {
+    private void a(CommandEntry commandEntry, double d2, double d3, double d4, double d5) {
         double d6 = d3 + (28.0 - (double)aAp.height()) / 2.0;
         int n2 = ColorUtil.d(Color.WHITE, (int)(255.0 * d5)).getRGB();
-        String string = "." + acr2.aBk;
+        String string = "." + commandEntry.aBk;
         aAp.a(string, d2, d6, n2);
         double d7 = d2 + (double)aAp.getStringWidth(string) + 10.0;
         double d8 = d6 + (double)aAp.height() - (double)aAq.height() - 1.0;
         StringBuilder stringBuilder = new StringBuilder();
-        if (acr2.aBm != null && !acr2.aBm.isEmpty()) {
-            stringBuilder.append(acr2.aBm);
+        if (commandEntry.aBm != null && !commandEntry.aBm.isEmpty()) {
+            stringBuilder.append(commandEntry.aBm);
         }
-        if (acr2.aBo != null && !acr2.aBo.isEmpty()) {
+        if (commandEntry.aBo != null && !commandEntry.aBo.isEmpty()) {
             if (stringBuilder.length() > 0) {
                 stringBuilder.append("  ");
             }
-            stringBuilder.append(acr2.aBo);
+            stringBuilder.append(commandEntry.aBo);
         }
         if (stringBuilder.length() > 0) {
             int n3 = ColorUtil.d(Color.WHITE, (int)(205.0 * d5)).getRGB();
             aAq.a(stringBuilder.toString(), d7, d8, n3);
             d7 += (double)aAq.getStringWidth(stringBuilder.toString());
         }
-        if (!acr2.aBp.isEmpty()) {
+        if (!commandEntry.aBp.isEmpty()) {
             if (stringBuilder.length() > 0) {
                 d7 += (double)aAq.getStringWidth("  ");
             }
             int n4 = ColorUtil.d(Color.WHITE, (int)(155.0 * d5)).getRGB();
-            aAq.a(acr2.aBp, d7, d8, n4);
+            aAq.a(commandEntry.aBp, d7, d8, n4);
         }
     }
 
-    private void a(Suggestion acy2, double d2, double d3, double d4, double d5) {
+    private void a(Suggestion suggestion, double d2, double d3, double d4, double d5) {
         double d6 = d3 + (28.0 - (double)aAp.height()) / 2.0;
         int n2 = ColorUtil.d(Color.WHITE, (int)(250.0 * d5)).getRGB();
-        String string = acy2.aBz;
+        String string = suggestion.aBz;
         aAp.a(string, d2, d6, n2);
         double d7 = d2 + (double)aAp.getStringWidth(string) + 10.0;
         double d8 = d6 + (double)aAp.height() - (double)aAq.height();
-        if (!acy2.aBA.isEmpty()) {
+        if (!suggestion.aBA.isEmpty()) {
             int n3 = ColorUtil.d(Color.WHITE, (int)(220.0 * d5)).getRGB();
-            aAq.a(acy2.aBA, d7, d8, n3);
-            d7 += (double)aAq.getStringWidth(acy2.aBA);
+            aAq.a(suggestion.aBA, d7, d8, n3);
+            d7 += (double)aAq.getStringWidth(suggestion.aBA);
         }
-        if (!acy2.aBB.isEmpty()) {
-            if (!acy2.aBA.isEmpty()) {
+        if (!suggestion.aBB.isEmpty()) {
+            if (!suggestion.aBA.isEmpty()) {
                 d7 += (double)aAq.getStringWidth("  ");
             }
             int n4 = ColorUtil.d(Color.WHITE, (int)(155.0 * d5)).getRGB();
-            aAq.a(acy2.aBB, d7, d8, n4);
+            aAq.a(suggestion.aBB, d7, d8, n4);
         }
     }
 
@@ -822,8 +822,8 @@ extends GuiScreen {
         return Client.a.t().a(string);
     }
 
-    private void a(CommandEntry acr2) {
-        String string = "." + acr2.aBk;
+    private void a(CommandEntry commandEntry) {
+        String string = "." + commandEntry.aBk;
         if (Client.a.getCommandManager().a(string, false) == u.EXECUTED) {
             aEg.displayGuiScreen(this.aAs);
             return;
@@ -1724,11 +1724,11 @@ extends GuiScreen {
         this.a(this.aAB.get(this.aAP));
     }
 
-    private void a(Suggestion acy2) {
-        if (acy2 == null) {
+    private void a(Suggestion suggestion) {
+        if (suggestion == null) {
             return;
         }
-        this.a(acy2.aBD, acy2.aBC, acy2.aBE);
+        this.a(suggestion.aBD, suggestion.aBC, suggestion.aBE);
     }
 
     private void a(int n2, String string, boolean bl) {
@@ -1899,9 +1899,9 @@ extends GuiScreen {
         this.a(acv2, "module", "modules");
     }
 
-    private void a(SuggestionProvider ada2, String ... stringArray) {
+    private void a(SuggestionProvider suggestionProvider, String ... stringArray) {
         for (String string : stringArray) {
-            this.aAA.put(string.toLowerCase(Locale.ROOT), ada2);
+            this.aAA.put(string.toLowerCase(Locale.ROOT), suggestionProvider);
         }
     }
 

@@ -20,8 +20,8 @@ public abstract class ProtectionCheck {
     }
 
     @Generated
-    public ProtectionCheck(McqBFVadWB var1, boolean var2) {
-        this.awL = var1;
-        this.exemptDev = var2;
+    public ProtectionCheck(McqBFVadWB mcqBFVadWB, boolean exemptDev) {
+        this.awL = mcqBFVadWB;
+        this.exemptDev = exemptDev;
     }
 }

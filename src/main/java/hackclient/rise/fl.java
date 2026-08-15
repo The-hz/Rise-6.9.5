@@ -6,9 +6,9 @@ public final class fl implements Event {
     private final int width;
     private final int height;
 
-    public fl(int var1, int var2) {
-        this.width = var1;
-        this.height = var2;
+    public fl(int width, int height) {
+        this.width = width;
+        this.height = height;
     }
 
     public int getWidth() {

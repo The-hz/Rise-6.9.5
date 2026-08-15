@@ -4,8 +4,8 @@ import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.script.api.wrapper.impl.event.ScriptEvent;
 
 public class ScriptRender3DEvent extends ScriptEvent<Render3DEvent> {
-    public ScriptRender3DEvent(Render3DEvent var1) {
-        super(var1);
+    public ScriptRender3DEvent(Render3DEvent event) {
+        super(event);
     }
 
     public float getPartialTicks() {

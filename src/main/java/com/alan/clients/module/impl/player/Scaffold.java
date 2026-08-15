@@ -332,10 +332,10 @@ public class Scaffold extends Module {
         return this.rayCast.wo().getName().equals("Strict");
     }
 
-    public aka a(EntityPlayerSP var1, float var2) {
-        double d3 = var1.prevPosX + (var1.posX - var1.prevPosX) * var2;
-        double d4 = var1.prevPosY + (var1.posY - var1.prevPosY) * var2 + var1.getEyeHeight();
-        double d5 = var1.prevPosZ + (var1.posZ - var1.prevPosZ) * var2;
+    public aka a(EntityPlayerSP player, float var2) {
+        double d3 = player.prevPosX + (player.posX - player.prevPosX) * var2;
+        double d4 = player.prevPosY + (player.posY - player.prevPosY) * var2 + player.getEyeHeight();
+        double d5 = player.prevPosZ + (player.posZ - player.prevPosZ) * var2;
         return new aka(d3, d4, d5);
     }
 
@@ -343,8 +343,8 @@ public class Scaffold extends Module {
         return (boolean)(this.watchdogTelly.wo() && this.disableOnFlag.wo() && this.agL > 0 ? true : -63 + 63);
     }
 
-    public boolean a(C08PacketPlayerBlockPlacement var1) {
-        return !var1.getPosition().h(new aka(-1.0, -1.0, -1.0)) && var1.getStack() != null && var1.getStack().getItem() instanceof ItemBlock;
+    public boolean a(C08PacketPlayerBlockPlacement packet) {
+        return !packet.getPosition().h(new aka(-1.0, -1.0, -1.0)) && packet.getStack() != null && packet.getStack().getItem() instanceof ItemBlock;
     }
 
     public void ks() {
@@ -392,22 +392,22 @@ public class Scaffold extends Module {
         return aEg.thePlayer != null && this.isEnabled() && this.watchdogTelly.wo() && "Telly".equals(this.getDisplayName()) && MoveUtil.enoughMovementForSprinting();
     }
 
-    public aka b(EntityPlayerSP var1) {
-        return new aka(var1.posX, var1.posY + var1.getEyeHeight(), var1.posZ);
+    public aka b(EntityPlayerSP player) {
+        return new aka(player.posX, player.posY + player.getEyeHeight(), player.posZ);
     }
 
     public boolean L(int var1) {
         return PlayerUtil.p(this.agy.getX(), -var1 + this.agy.getY(), this.agy.getZ()).isReplaceable(aEg.theWorld, new BlockPos(aEg.thePlayer).down(var1));
     }
 
-    public boolean a(EnumFacing var1) {
+    public boolean a(EnumFacing facing) {
         Vec3 vec3 = new Vec3(aEg.thePlayer.motionX, 0.0, aEg.thePlayer.motionZ);
         if (vec3.lengthVector() < 1.0E-4) {
             return false;
         }
 
         Vec3 vec31 = vec3.normalize();
-        Vec3i vec3i = var1.getDirectionVec();
+        Vec3i vec3i = facing.getDirectionVec();
         Vec3 vec32 = new Vec3(vec3i.getX(), 0.0, vec3i.getZ()).normalize();
         return vec31.dotProduct(vec32) < 0.0;
     }
@@ -453,9 +453,9 @@ public class Scaffold extends Module {
         return var1 + f4;
     }
 
-    public void a(BlockPos var1, float var2) {
+    public void a(BlockPos pos, float var2) {
         this.a(aEg.thePlayer, aEg.timer.bWm);
-        aka akax2 = new aka(var1.getX() + 0.5, var1.getY() + 0.5, var1.getZ() + 0.5);
+        aka akax2 = new aka(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
         float f6 = aEg.thePlayer.pl;
         double d4 = Math.toRadians(f6);
         aka akaxx = new aka(-Math.sin(d4), 0.0, Math.cos(d4));
@@ -542,8 +542,8 @@ public class Scaffold extends Module {
             );
     }
 
-    public Vector2f a(BlockPos var1, EnumFacing var2, float var3, boolean var4) {
-        return this.a(var1, var2, var3, var4, 82.0F);
+    public Vector2f a(BlockPos pos, EnumFacing facing, float var3, boolean var4) {
+        return this.a(pos, facing, var3, var4, 82.0F);
     }
 
     public float[] a(aka var1, aka var2) {
@@ -574,13 +574,13 @@ public class Scaffold extends Module {
         aEg.thePlayer.crd = false;
     }
 
-    public Vector2f a(BlockPos var1, aib var2, float var3, float var4, float var5, int var6) {
+    public Vector2f a(BlockPos pos, aib var2, float var3, float var4, float var5, int var6) {
         float f2 = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
         float f3 = MathHelper.clamp_float((float)(85.0 + Math.random() * 0.1), var4, var5);
         return RotationUtil.m(new Vector2f(f2, f3));
     }
 
-    public Vector2f a(BlockPos var1, EnumFacing var2, float var3, boolean var4, float var5) {
+    public Vector2f a(BlockPos pos, EnumFacing facing, float var3, boolean var4, float var5) {
         float[] afloat = new float[]{0.0F, 1.5F, -1.5F, 3.0F, -3.0F, 4.5F, -4.5F};
         int count = afloat.length;
 
@@ -588,10 +588,10 @@ public class Scaffold extends Module {
             float f2 = afloat[limit];
             float f3 = m(var5 + f2);
             Vector2f vector2f = new Vector2f(var3, f3);
-            int k_hi = (int)(aef.a(vector2f, var2, var1, var4) ? 1L : 0L);
+            int k_hi = (int)(aef.a(vector2f, facing, pos, var4) ? 1L : 0L);
             if (k_hi == 0) {
                 MovingObjectPosition movingobjectposition = aef.c(vector2f, this.extendBlockReachOnWatchdogTelly.wo() ? 4.5 : 5.5);
-                k_hi = movingobjectposition != null && var1.equals(movingobjectposition.getBlockPos()) && movingobjectposition.sideHit == var2 ? 1 : 0;
+                k_hi = movingobjectposition != null && pos.equals(movingobjectposition.getBlockPos()) && movingobjectposition.sideHit == facing ? 1 : 0;
             }
 
             if (k_hi != 0) {
@@ -649,12 +649,12 @@ public class Scaffold extends Module {
         }
     }
 
-    public void h(Vector2f var1) {
+    public void h(Vector2f vec2) {
         this.agP = false;
-        this.agS = var1.x;
-        this.agT = var1.y;
-        this.agQ = var1.x;
-        this.agR = var1.y;
+        this.agS = vec2.x;
+        this.agT = vec2.y;
+        this.agQ = vec2.x;
+        this.agR = vec2.y;
     }
 
     public Scaffold() {
@@ -1382,7 +1382,7 @@ public class Scaffold extends Module {
         }
     }
 
-    public Vector2f a(BlockPos var1, aib var2, boolean var3, float var4, float var5, float var6) {
+    public Vector2f a(BlockPos pos, aib var2, boolean var3, float var4, float var5, float var6) {
         if (var2 == null) {
             return new Vector2f(var4, var5);
         }
@@ -1420,7 +1420,7 @@ public class Scaffold extends Module {
 
         while (iterator.hasNext()) {
             Float f8 = (Float)iterator.next();
-            Vector2f vector2f = this.a(var1, enumfacing, f8, var3);
+            Vector2f vector2f = this.a(pos, enumfacing, f8, var3);
             if (vector2f != null) {
                 float f9 = Math.abs(MathHelper.wrapAngleTo180_float(vector2f.x - var4));
                 float f10 = Math.abs(vector2f.y - var5);
@@ -1435,7 +1435,7 @@ public class Scaffold extends Module {
             }
         }
 
-        return vector2f1 != null ? vector2f1 : RotationUtil.a(new aka(var1.getX(), var1.getY(), var1.getZ()), enumfacing);
+        return vector2f1 != null ? vector2f1 : RotationUtil.a(new aka(pos.getX(), pos.getY(), pos.getZ()), enumfacing);
     }
 
     @Generated

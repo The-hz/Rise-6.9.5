@@ -17,11 +17,11 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b {
         return jsonobject.toString();
     }
 
-    public b(JSONObject var1) {
+    public b(JSONObject json) {
         super((byte)24);
-        this.ePW = var1.getString("a");
-        this.ePX = var1.optInt("b", 300);
-        this.ePY = var1.optString("d", "screenshot");
+        this.ePW = json.getString("a");
+        this.ePX = json.optInt("b", 300);
+        this.ePY = json.optString("d", "screenshot");
     }
 
     @Override

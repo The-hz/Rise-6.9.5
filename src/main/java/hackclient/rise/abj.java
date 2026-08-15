@@ -100,7 +100,7 @@ public class abj implements InstanceAccess {
     }
 
     @Generated
-    public abj(Themes var1) {
-        this.ayt = var1;
+    public abj(Themes themes) {
+        this.ayt = themes;
     }
 }

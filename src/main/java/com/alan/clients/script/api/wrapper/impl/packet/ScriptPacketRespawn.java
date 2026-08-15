@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S07PacketRespawn;
 
 public class ScriptPacketRespawn extends ScriptPacket<S07PacketRespawn> {
-    public ScriptPacketRespawn(S07PacketRespawn var1) {
-        super(var1);
+    public ScriptPacketRespawn(S07PacketRespawn packet) {
+        super(packet);
     }
 
     public int getDimensionId() {

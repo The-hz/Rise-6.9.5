@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class ScriptPacketPlayer extends ScriptPacket<C03PacketPlayer> {
-    public ScriptPacketPlayer(C03PacketPlayer var1) {
-        super(var1);
+    public ScriptPacketPlayer(C03PacketPlayer packet) {
+        super(packet);
     }
 
     public boolean isOnGround() {
@@ -19,8 +19,8 @@ public class ScriptPacketPlayer extends ScriptPacket<C03PacketPlayer> {
         return this.wrapped.afG();
     }
 
-    public void setOnGround(boolean var1) {
-        this.wrapped.setOnGround(var1);
+    public void setOnGround(boolean onGround) {
+        this.wrapped.setOnGround(onGround);
     }
 
     public double getX() {

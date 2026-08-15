@@ -412,8 +412,8 @@ public final class afj {
         }
     }
 
-    public void a(Command var1, String[] var2) {
-        if (var1 != null) {
+    public void a(Command command, String[] var2) {
+        if (command != null) {
             if (var2 != null && var2.length != 0) {
                 try {
                     String s = String.join(" ", var2).trim();
@@ -426,7 +426,7 @@ public final class afj {
                 } catch (Throwable throwable1) {
                 }
 
-                String[] astring = var1.getExpressions();
+                String[] astring = command.getExpressions();
                 String s1 = astring != null && astring.length != 0 ? astring[0] : null;
                 if (s1 == null || s1.trim().isEmpty()) {
                     s1 = var2[0];
@@ -773,13 +773,13 @@ public final class afj {
         }
     }
 
-    private String a(JsonObject var1) {
+    private String a(JsonObject json) {
         try {
-            if (var1 == null) {
+            if (json == null) {
                 return null;
             }
 
-            JsonObject jsonobject = var1.deepCopy();
+            JsonObject jsonobject = json.deepCopy();
             jsonobject.remove("Metadata");
             jsonobject.remove("theme");
             return aO(Client.a.A().toJson(jsonobject));
@@ -788,15 +788,15 @@ public final class afj {
         }
     }
 
-    private Map<String, String> d(JsonObject var1) {
+    private Map<String, String> d(JsonObject json) {
         HashMap hashmap = new HashMap();
 
         try {
-            if (var1 == null) {
+            if (json == null) {
                 return hashmap;
             }
 
-            for (Entry entry : var1.entrySet()) {
+            for (Entry entry : json.entrySet()) {
                 String s = (String)entry.getKey();
                 JsonElement jsonelement = (JsonElement)entry.getValue();
                 if (s != null

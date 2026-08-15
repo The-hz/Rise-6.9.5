@@ -20,14 +20,14 @@ public class h extends rip.vantage.commons.packet.api.abstracts.a {
         this.eON = var6;
     }
 
-    public h(JSONObject var1) {
+    public h(JSONObject json) {
         super((byte)9);
-        this.eOI = var1.getString("a");
-        this.eOJ = var1.getInt("b");
-        this.eOK = var1.getInt("c");
-        this.eOL = var1.getInt("d");
-        this.eOM = var1.getString("e");
-        this.eON = var1.getString("f");
+        this.eOI = json.getString("a");
+        this.eOJ = json.getInt("b");
+        this.eOK = json.getInt("c");
+        this.eOL = json.getInt("d");
+        this.eOM = json.getString("e");
+        this.eON = json.getString("f");
     }
 
     @Override

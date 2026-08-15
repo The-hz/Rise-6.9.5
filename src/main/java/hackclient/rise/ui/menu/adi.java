@@ -15,9 +15,9 @@ public class adi extends MenuTextButton {
     private static final agc aBZ = FontManager.MAIN.a(24, gd.BOLD);
     private final ResourceLocation aCa;
 
-    public adi(double var1, double var3, double var5, double var7, Runnable var9, String var10, ResourceLocation var11) {
+    public adi(double var1, double var3, double var5, double var7, Runnable var9, String var10, ResourceLocation location) {
         super(var1, var3, var5, var7, var9, var10);
-        this.aCa = var11;
+        this.aCa = location;
     }
 
     @Override

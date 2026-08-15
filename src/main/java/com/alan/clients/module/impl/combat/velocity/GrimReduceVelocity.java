@@ -73,10 +73,10 @@ extends Mode<Velocity> {
     public BooleanValue onSwingDisableOnAura;
     public boolean gD;
 
-    public static Vec3 a(Vec3 vec3, AxisAlignedBB axisAlignedBB) {
-        double d5 = GrimReduceVelocity.c(vec3.xCoord, axisAlignedBB.minX, axisAlignedBB.maxX);
-        double d6 = GrimReduceVelocity.c(vec3.yCoord, axisAlignedBB.minY, axisAlignedBB.maxY);
-        double d7 = GrimReduceVelocity.c(vec3.zCoord, axisAlignedBB.minZ, axisAlignedBB.maxZ);
+    public static Vec3 a(Vec3 vec, AxisAlignedBB axisAlignedBB) {
+        double d5 = GrimReduceVelocity.c(vec.xCoord, axisAlignedBB.minX, axisAlignedBB.maxX);
+        double d6 = GrimReduceVelocity.c(vec.yCoord, axisAlignedBB.minY, axisAlignedBB.maxY);
+        double d7 = GrimReduceVelocity.c(vec.zCoord, axisAlignedBB.minZ, axisAlignedBB.maxZ);
         return new Vec3(d5, d6, d7);
     }
 

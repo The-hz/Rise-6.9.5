@@ -34,8 +34,8 @@ public class VanillaStep extends Mode<Step> {
         }
     };
 
-    public VanillaStep(String var1, Step var2) {
-        super(var1, var2);
+    public VanillaStep(String var1, Step step) {
+        super(var1, step);
     }
 
     @Override

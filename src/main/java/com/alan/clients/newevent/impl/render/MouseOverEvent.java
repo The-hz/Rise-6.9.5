@@ -9,9 +9,9 @@ public class MouseOverEvent implements Event {
     private float expand;
     private MovingObjectPosition kf;
 
-    public MouseOverEvent(double var1, float var3) {
-        this.range = var1;
-        this.expand = var3;
+    public MouseOverEvent(double range, float expand) {
+        this.range = range;
+        this.expand = expand;
     }
 
     @Generated
@@ -30,17 +30,17 @@ public class MouseOverEvent implements Event {
     }
 
     @Generated
-    public void setRange(double var1) {
-        this.range = var1;
+    public void setRange(double range) {
+        this.range = range;
     }
 
     @Generated
-    public void setExpand(float var1) {
-        this.expand = var1;
+    public void setExpand(float expand) {
+        this.expand = expand;
     }
 
     @Generated
-    public void a(MovingObjectPosition var1) {
-        this.kf = var1;
+    public void a(MovingObjectPosition hit) {
+        this.kf = hit;
     }
 }

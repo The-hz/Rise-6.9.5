@@ -34,7 +34,7 @@ public class PredictionNoSlow extends Mode<NoSlow> {
         }
     };
 
-    public PredictionNoSlow(String var1, NoSlow var2) {
-        super(var1, var2);
+    public PredictionNoSlow(String var1, NoSlow noSlow) {
+        super(var1, noSlow);
     }
 }

@@ -37,11 +37,11 @@ public class ModuleComponent implements InstanceAccess {
     public Animation ayf = new Animation(Easing.LINEAR, 5000L);
     public boolean ayg;
 
-    public ModuleComponent(Module var1) {
-        this.module = var1;
+    public ModuleComponent(Module module) {
+        this.module = module;
         this.aye.T(this.scale.y);
         this.ayf.T(0.0);
-        var1.getAllValues().forEach(var1x -> {
+        module.getAllValues().forEach(var1x -> {
             ValueComponent abl = var1x.wl();
             if (abl != null) {
                 this.valueList.add(abl);
@@ -49,27 +49,27 @@ public class ModuleComponent implements InstanceAccess {
         });
     }
 
-    public void draw(Vector2d var1, int var2, int var3, float var4) {
-        this.position = var1;
+    public void draw(Vector2d position, int var2, int var3, float var4) {
+        this.position = position;
         float f = 38.0F;
         float f1 = f;
-        boolean flag = var1 != null
-            && !(var1.y + this.scale.y < this.getStandardClickGUI().axI.y)
-            && !(var1.y > this.getStandardClickGUI().axI.y + this.getStandardClickGUI().alh.y);
+        boolean flag = position != null
+            && !(position.y + this.scale.y < this.getStandardClickGUI().axI.y)
+            && !(position.y > this.getStandardClickGUI().axI.y + this.getStandardClickGUI().alh.y);
         if (flag) {
             RiseClickGUI riseclickgui = this.getStandardClickGUI();
-            RenderUtil.roundedRectangle(var1.x, var1.y, this.scale.x, this.scale.y, 6.0, abw.OVERLAY.pV());
+            RenderUtil.roundedRectangle(position.x, position.y, this.scale.x, this.scale.y, 6.0, abw.OVERLAY.pV());
             Color color = abw.TEXT.Y(this.module.isEnabled() ? 255 : 200);
-            boolean flag1 = GUIUtil.c(var1.x, var1.y, this.scale.x, this.scale.y, var2, var3);
+            boolean flag1 = GUIUtil.c(position.x, position.y, this.scale.x, this.scale.y, var2, var3);
             this.axx.Q(flag1 ? (this.ayg ? 35.0 : 20.0) : 0.0);
-            RenderUtil.roundedRectangle(var1.x, var1.y, this.scale.x, this.scale.y, 6.0, ColorUtil.d(Color.BLACK, (int)this.axx.sG()));
+            RenderUtil.roundedRectangle(position.x, position.y, this.scale.x, this.scale.y, 6.0, ColorUtil.d(Color.BLACK, (int)this.axx.sG()));
             if (riseclickgui.pa() instanceof SearchScreen) {
                 FontManager.MAIN
                     .a(15, gd.REGULAR)
                     .a(
                         "(" + ahd.ce(this.module.getModuleInfo().category().getName()) + ")",
-                        (float)(var1.getX() + FontManager.MAIN.a(20, gd.REGULAR).getStringWidth(this.module.getName()) + 10.0),
-                        (float)var1.getY() + 10.0F,
+                        (float)(position.getX() + FontManager.MAIN.a(20, gd.REGULAR).getStringWidth(this.module.getName()) + 10.0),
+                        (float)position.getY() + 10.0F,
                         ColorUtil.d(color, 64).hashCode()
                     );
             }
@@ -78,22 +78,22 @@ public class ModuleComponent implements InstanceAccess {
                 .a(20, gd.REGULAR)
                 .a(
                     this.module.getName(),
-                    (float)var1.x + 6.0F,
-                    (float)var1.y + 8.0F,
-                    this.module.isEnabled() ? this.rz().getAccentColor(new Vector2d(0.0, var1.y / 5.0)).getRGB() : color.getRGB()
+                    (float)position.x + 6.0F,
+                    (float)position.y + 8.0F,
+                    this.module.isEnabled() ? this.rz().getAccentColor(new Vector2d(0.0, position.y / 5.0)).getRGB() : color.getRGB()
                 );
-            FontManager.MAIN.a(15, gd.REGULAR).a(ahd.ce(this.module.getModuleInfo().description()), (float)var1.x + 6.0F, (float)var1.y + 25.0F, ColorUtil.d(color, 70).hashCode());
+            FontManager.MAIN.a(15, gd.REGULAR).a(ahd.ce(this.module.getModuleInfo().description()), (float)position.x + 6.0F, (float)position.y + 25.0F, ColorUtil.d(color, 70).hashCode());
             this.scale = new Vector2f(this.getStandardClickGUI().axY.x, f1);
         }
 
         if (!this.aye.isFinished() || this.axv) {
             for (ValueComponent abl : this.getValueList()) {
                 if ((abl.getValue() == null || abl.getValue().wm() == null || !abl.getValue().wm().getAsBoolean()) && (abl.getValue().wn() == null || !abl.getValue().wn().getAsBoolean())) {
-                    abl.U(abl.position == null ? 0 : (abl.position.y < var1.y + this.aye.sG() + 15.0 ? (int)this.ayf.sG() : 0));
+                    abl.U(abl.position == null ? 0 : (abl.position.y < position.y + this.aye.sG() + 15.0 ? (int)this.ayf.sG() : 0));
                     abl.U(abl.getValue().wm() == null ? abl.pT() : Math.max(abl.pT() - 40, 0));
                     if (flag) {
                         abl.draw(
-                            new Vector2d(var1.x + 6.0 + (abl.getValue().wm() == null ? 0 : 10) + (abl.getValue().wn() == null ? 0 : 10), (float)(var1.y + f1 + 1.0)),
+                            new Vector2d(position.x + 6.0 + (abl.getValue().wm() == null ? 0 : 10) + (abl.getValue().wn() == null ? 0 : 10), (float)(position.y + f1 + 1.0)),
                             var2,
                             var3,
                             var4

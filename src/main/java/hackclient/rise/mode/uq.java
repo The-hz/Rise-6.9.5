@@ -34,8 +34,8 @@ public class uq extends Mode<NoFall> {
         }
     };
 
-    public uq(String var1, NoFall var2) {
-        super(var1, var2);
+    public uq(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 
     @Override

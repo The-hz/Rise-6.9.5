@@ -6,7 +6,7 @@ public class h {
     public static void aMJ() {
     }
 
-    public static boolean u(Class<?> var0) {
+    public static boolean u(Class<?> type) {
         return false;
     }
 

@@ -7,8 +7,8 @@ public final class xl {
     public double aoI;
     public float aoJ;
 
-    public xl(Vec3 var1, double var2, float var4) {
-        this.aoH = var1;
+    public xl(Vec3 vec, double var2, float var4) {
+        this.aoH = vec;
         this.aoI = var2;
         this.aoJ = var4;
     }

@@ -9,9 +9,9 @@ class agr extends Canvas {
     final Window aJH;
     final agp aJI;
 
-    agr(agp var1, Window var2) {
+    agr(agp var1, Window window) {
         this.aJI = var1;
-        this.aJH = var2;
+        this.aJH = window;
         this.aJG = new ags(this);
     }
 

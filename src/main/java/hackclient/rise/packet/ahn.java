@@ -8,23 +8,23 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 public class ahn extends ahl {
     private final C08PacketPlayerBlockPlacement aNs;
 
-    public ahn(C08PacketPlayerBlockPlacement var1) {
+    public ahn(C08PacketPlayerBlockPlacement packet) {
         super(46, EnumConnectionState.PLAY);
-        this.aNs = var1;
+        this.aNs = packet;
     }
 
     @Override
-    public void writePacketData(PacketBuffer var1) {
-        var1.writeVarIntToBuffer(0);
-        var1.writeBlockPos(this.aNs.getPosition());
-        var1.writeVarIntToBuffer(this.aNs.getPlacedBlockDirection());
-        var1.writeFloat(this.aNs.facingX);
-        var1.writeFloat(this.aNs.facingY);
-        var1.writeFloat(this.aNs.facingZ);
-        var1.writeBoolean(false);
+    public void writePacketData(PacketBuffer packetBuffer) {
+        packetBuffer.writeVarIntToBuffer(0);
+        packetBuffer.writeBlockPos(this.aNs.getPosition());
+        packetBuffer.writeVarIntToBuffer(this.aNs.getPlacedBlockDirection());
+        packetBuffer.writeFloat(this.aNs.facingX);
+        packetBuffer.writeFloat(this.aNs.facingY);
+        packetBuffer.writeFloat(this.aNs.facingZ);
+        packetBuffer.writeBoolean(false);
     }
 
     @Override
-    public void readPacketData(PacketBuffer var1) {
+    public void readPacketData(PacketBuffer packetBuffer) {
     }
 }

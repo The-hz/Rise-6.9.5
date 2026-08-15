@@ -10,13 +10,13 @@ import net.minecraft.network.play.server.ad;
 
 @CheckInfo(R = "AutoBlock", S = "B", description = "Impossible 'Sprinting' and 'Use-Item' status combination.")
 public final class AutoBlockB extends Check {
-    public AutoBlockB(PlayerData var1) {
-        super(var1);
+    public AutoBlockB(PlayerData playerData) {
+        super(playerData);
     }
 
     @Override
-    public void handle(Packet<?> var1) {
-        if (var1 instanceof ad ad
+    public void handle(Packet<?> packet) {
+        if (packet instanceof ad ad
             && ad.getEntityId() == this.data.getPlayer().getEntityId()
             && ad.func_149376_c() != null
             && this.data.W() > 1

@@ -11,11 +11,11 @@ public class a extends rip.vantage.commons.packet.api.abstracts.a {
         this.eOO = var1;
     }
 
-    public a(JSONObject var1) {
+    public a(JSONObject json) {
         super((byte)4);
-        this.eOO = var1.getString("a");
-        if (var1.has("b")) {
-            this.eOP = new b(var1.getString("b")).toString();
+        this.eOO = json.getString("a");
+        if (json.has("b")) {
+            this.eOP = new b(json.getString("b")).toString();
         }
     }
 

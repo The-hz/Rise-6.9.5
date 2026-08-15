@@ -84,8 +84,8 @@ public class WatchdogStep extends Mode<Step> {
         }
     };
 
-    public WatchdogStep(String var1, Step var2) {
-        super(var1, var2);
+    public WatchdogStep(String var1, Step step) {
+        super(var1, step);
     }
 
     @Override

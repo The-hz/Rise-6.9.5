@@ -111,7 +111,7 @@ public class WatchdogNoSlow extends Mode<NoSlow> {
         }
     };
 
-    public WatchdogNoSlow(String var1, NoSlow var2) {
-        super(var1, var2);
+    public WatchdogNoSlow(String var1, NoSlow noSlow) {
+        super(var1, noSlow);
     }
 }

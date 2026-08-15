@@ -10,7 +10,7 @@ public class BypassSprint extends Mode<Scaffold> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> aEg.thePlayer.setSprinting(false);
 
-    public BypassSprint(String var1, Scaffold var2) {
-        super(var1, var2);
+    public BypassSprint(String var1, Scaffold scaffold) {
+        super(var1, scaffold);
     }
 }

@@ -308,8 +308,8 @@ public class tu extends Module {
         return arraylist;
     }
 
-    public void l(BlockPos var1) {
-        BlockDamageEvent blockdamageevent = new BlockDamageEvent(aEg.thePlayer, aEg.thePlayer.worldObj, var1);
+    public void l(BlockPos pos) {
+        BlockDamageEvent blockdamageevent = new BlockDamageEvent(aEg.thePlayer, aEg.thePlayer.worldObj, pos);
         Client.a.e().d(blockdamageevent);
     }
 
@@ -385,17 +385,17 @@ public class tu extends Module {
         return movingobjectposition;
     }
 
-    private boolean e(MovingObjectPosition var1) {
-        return var1 != null && var1.typeOfHit == MovingObjectType.BLOCK && var1.getBlockPos().h(new aka(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()));
+    private boolean e(MovingObjectPosition hit) {
+        return hit != null && hit.typeOfHit == MovingObjectType.BLOCK && hit.getBlockPos().h(new aka(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()));
     }
 
-    private MovingObjectPosition g(Vector2f var1) {
+    private MovingObjectPosition g(Vector2f vec2) {
         Block block = PlayerUtil.c(this.abQ);
         AxisAlignedBB axisalignedbb = block.getCollisionBoundingBox(
             aEg.theWorld, new BlockPos(this.abQ.getX(), this.abQ.getY(), this.abQ.getZ()), block.getDefaultState()
         );
         Vec3 vec3 = aEg.thePlayer.getPositionEyes(1.0F);
-        Vec3 vec31 = aEg.thePlayer.getVectorForRotation(var1.getY(), var1.getX());
+        Vec3 vec31 = aEg.thePlayer.getVectorForRotation(vec2.getY(), vec2.getX());
         Vec3 vec32 = vec3.addVector(vec31.xCoord * 4.5, vec31.yCoord * 4.5, vec31.zCoord * 4.5);
         MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
         if (movingobjectposition != null) {

@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S3EPacketTeams;
 
 public class ScriptPacketTeams extends ScriptPacket<S3EPacketTeams> {
-    public ScriptPacketTeams(S3EPacketTeams var1) {
-        super(var1);
+    public ScriptPacketTeams(S3EPacketTeams packet) {
+        super(packet);
     }
 
     public String getName() {

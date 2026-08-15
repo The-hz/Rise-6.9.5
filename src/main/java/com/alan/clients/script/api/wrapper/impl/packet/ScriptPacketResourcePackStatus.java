@@ -4,8 +4,8 @@ import java.lang.reflect.Field;
 import net.minecraft.network.play.client.C19PacketResourcePackStatus;
 
 public class ScriptPacketResourcePackStatus extends ScriptPacket<C19PacketResourcePackStatus> {
-    public ScriptPacketResourcePackStatus(C19PacketResourcePackStatus var1) {
-        super(var1);
+    public ScriptPacketResourcePackStatus(C19PacketResourcePackStatus packet) {
+        super(packet);
     }
 
     public String getHash() {

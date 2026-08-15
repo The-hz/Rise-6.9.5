@@ -102,7 +102,7 @@ public final class TeleportAura extends Module {
         this.jE = null;
     }
 
-    private void doAttack(List<EntityLivingBase> var1) {
+    private void doAttack(List<EntityLivingBase> livings) {
         boolean flag;
         if (this.ql.wo()) {
             double d0 = 4.0;
@@ -189,9 +189,9 @@ public final class TeleportAura extends Module {
                     }
                 }
 
-                var1.removeIf(var2 -> aEg.thePlayer.getDistanceToEntity(var2) > d2);
-                if (!var1.isEmpty()) {
-                    var1.forEach(this::e);
+                livings.removeIf(var2 -> aEg.thePlayer.getDistanceToEntity(var2) > d2);
+                if (!livings.isEmpty()) {
+                    livings.forEach(this::e);
                 }
             }
 
@@ -199,9 +199,9 @@ public final class TeleportAura extends Module {
         }
     }
 
-    private void e(EntityLivingBase var1) {
+    private void e(EntityLivingBase living) {
         aEg.playerController.syncCurrentPlayItem();
-        AttackEvent attackevent = new AttackEvent(var1);
+        AttackEvent attackevent = new AttackEvent(living);
         Client.a.e().d(attackevent);
         if (!attackevent.isCancelled()) {
             EntityLivingBase entitylivingbase = attackevent.dc();

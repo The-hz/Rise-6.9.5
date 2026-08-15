@@ -190,34 +190,34 @@ public class bo extends Component {
         return bytearrayoutputstream.toByteArray();
     }
 
-    public void a(WorldClient var1, EntityPlayer var2, Set<UUID> var3) {
-        if (var1 != null && var2 != null) {
+    public void a(WorldClient world, EntityPlayer player, Set<UUID> uuids) {
+        if (world != null && player != null) {
             ArrayList arraylist = new ArrayList();
             this.bB();
-            this.a(new S41PacketServerDifficulty(var1.getDifficulty(), false), EnumConnectionState.PLAY);
-            this.a(new f(var1.getSpawnPoint()), EnumConnectionState.PLAY);
-            this.a(new S44PacketWorldBorder(var1.getWorldBorder(), Action.INITIALIZE), EnumConnectionState.PLAY);
+            this.a(new S41PacketServerDifficulty(world.getDifficulty(), false), EnumConnectionState.PLAY);
+            this.a(new f(world.getSpawnPoint()), EnumConnectionState.PLAY);
+            this.a(new S44PacketWorldBorder(world.getWorldBorder(), Action.INITIALIZE), EnumConnectionState.PLAY);
             this.a(
-                new S03PacketTimeUpdate(var1.getTotalWorldTime(), var1.getWorldTime(), var1.getGameRules().getBoolean("doDaylightCycle")),
+                new S03PacketTimeUpdate(world.getTotalWorldTime(), world.getWorldTime(), world.getGameRules().getBoolean("doDaylightCycle")),
                 EnumConnectionState.PLAY
             );
             this.a(
-                new S06PacketUpdateHealth(var2.getHealth(), var2.getFoodStats().getFoodLevel(), var2.getFoodStats().getSaturationLevel()),
+                new S06PacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()),
                 EnumConnectionState.PLAY
             );
-            this.a(new k(var2.inventory.currentItem), EnumConnectionState.PLAY);
-            this.a(new S39PacketPlayerAbilities(var2.capabilities), EnumConnectionState.PLAY);
-            this.a(new ag(var2.experience, var2.experienceTotal, var2.experienceLevel), EnumConnectionState.PLAY);
-            this.b(var2);
-            if (!this.a(var1.getScoreboard())) {
+            this.a(new k(player.inventory.currentItem), EnumConnectionState.PLAY);
+            this.a(new S39PacketPlayerAbilities(player.capabilities), EnumConnectionState.PLAY);
+            this.a(new ag(player.experience, player.experienceTotal, player.experienceLevel), EnumConnectionState.PLAY);
+            this.b(player);
+            if (!this.a(world.getScoreboard())) {
                 this.bz();
             }
 
-            this.a(var1, var2);
-            this.a(var1, var2, var3, arraylist);
+            this.a(world, player);
+            this.a(world, player, uuids, arraylist);
             this.b(arraylist);
             this.a(
-                new S08PacketPlayerPosLook(var2.posX, var2.posY, var2.posZ, var2.pl, var2.rotationPitch, EnumSet.noneOf(EnumFlags.class)),
+                new S08PacketPlayerPosLook(player.posX, player.posY, player.posZ, player.pl, player.rotationPitch, EnumSet.noneOf(EnumFlags.class)),
                 EnumConnectionState.PLAY
             );
         }
@@ -320,10 +320,10 @@ public class bo extends Component {
         }
     }
 
-    public Packet<?> b(Entity var1) {
+    public Packet<?> b(Entity entity) {
         try {
-            if (var1 instanceof EntityPlayer) {
-                return new net.minecraft.network.play.server.n((EntityPlayer)var1);
+            if (entity instanceof EntityPlayer) {
+                return new net.minecraft.network.play.server.n((EntityPlayer)entity);
             }
 
             if (this.ez == null) {
@@ -331,7 +331,7 @@ public class bo extends Component {
                 this.ez.setAccessible(true);
             }
 
-            return (Packet<?>)this.ez.invoke(new EntityTrackerEntry(var1, 0, 0, true));
+            return (Packet<?>)this.ez.invoke(new EntityTrackerEntry(entity, 0, 0, true));
         } catch (Exception exception) {
             return null;
         }
@@ -360,29 +360,29 @@ public class bo extends Component {
         }
     }
 
-    public void a(GameProfile var1, int var2, GameType var3, IChatComponent var4) {
-        if (this.a(var1)) {
-            this.b(var1);
-            this.eC.add(var1.getId());
+    public void a(GameProfile profile, int var2, GameType gameType, IChatComponent chat) {
+        if (this.a(profile)) {
+            this.b(profile);
+            this.eC.add(profile.getId());
             S38PacketPlayerListItem s38packetplayerlistitem = new S38PacketPlayerListItem(
                 net.minecraft.network.play.server.S38PacketPlayerListItem.Action.ADD_PLAYER, Collections.emptyList()
             );
             List list = s38packetplayerlistitem.getEntries();
             S38PacketPlayerListItem s38packetplayerlistitem1 = s38packetplayerlistitem;
             Objects.requireNonNull(s38packetplayerlistitem);
-            list.add(new AddPlayerData(s38packetplayerlistitem1, var1, var2, var3 != null ? var3 : GameType.SURVIVAL, var4));
+            list.add(new AddPlayerData(s38packetplayerlistitem1, profile, var2, gameType != null ? gameType : GameType.SURVIVAL, chat));
             this.a(s38packetplayerlistitem, EnumConnectionState.PLAY);
         }
     }
 
-    public boolean a(Scoreboard var1) {
-        if (var1 == null) {
+    public boolean a(Scoreboard scoreboard) {
+        if (scoreboard == null) {
             return false;
         }
 
         int i1_hi = 0;
         HashSet hashset = new HashSet();
-        Iterator iterator2 = var1.getScoreObjectives().iterator();
+        Iterator iterator2 = scoreboard.getScoreObjectives().iterator();
 
         while (iterator2.hasNext()) {
             ScoreObjective scoreobjective = (ScoreObjective)iterator2.next();
@@ -393,14 +393,14 @@ public class bo extends Component {
         }
 
         for (int i = 0; i < 19; i = i + 1) {
-            ScoreObjective scoreobjective1 = var1.getObjectiveInDisplaySlot(i);
+            ScoreObjective scoreobjective1 = scoreboard.getObjectiveInDisplaySlot(i);
             if (scoreobjective1 != null) {
                 this.a(new net.minecraft.network.play.server.bq(i, scoreobjective1), EnumConnectionState.PLAY);
                 i1_hi = 1;
             }
         }
 
-        Iterator iterator = var1.getScores().iterator();
+        Iterator iterator = scoreboard.getScores().iterator();
 
         while (iterator.hasNext()) {
             Score score = (Score)iterator.next();
@@ -410,7 +410,7 @@ public class bo extends Component {
             }
         }
 
-        Iterator iterator1 = var1.getTeams().iterator();
+        Iterator iterator1 = scoreboard.getTeams().iterator();
 
         while (iterator1.hasNext()) {
             ScorePlayerTeam scoreplayerteam = (ScorePlayerTeam)iterator1.next();
@@ -423,15 +423,15 @@ public class bo extends Component {
         return (i1_hi) != 0;
     }
 
-    public void b(Packet<?> var1, EnumConnectionState var2, byte[] var3) {
-        if (var2 == EnumConnectionState.PLAY && var1 != null) {
-            if (var1 instanceof S01PacketJoinGame) {
+    public void b(Packet<?> packet, EnumConnectionState enumConnectionState, byte[] var3) {
+        if (enumConnectionState == EnumConnectionState.PLAY && packet != null) {
+            if (packet instanceof S01PacketJoinGame) {
                 this.bA();
-            } else if (var1 instanceof S3BPacketScoreboardObjective
-                || var1 instanceof S3CPacketUpdateScore
-                || var1 instanceof net.minecraft.network.play.server.bq
-                || var1 instanceof S3EPacketTeams) {
-                byte[] abyte = var3 != null && var3.length > 0 ? var3 : this.b(var1, var2);
+            } else if (packet instanceof S3BPacketScoreboardObjective
+                || packet instanceof S3CPacketUpdateScore
+                || packet instanceof net.minecraft.network.play.server.bq
+                || packet instanceof S3EPacketTeams) {
+                byte[] abyte = var3 != null && var3.length > 0 ? var3 : this.b(packet, enumConnectionState);
                 if (abyte != null && abyte.length != 0) {
                     synchronized (this.ey) {
                         this.eB.add(abyte);
@@ -453,8 +453,8 @@ public class bo extends Component {
         return new S07PacketRespawn(entityplayersp.dimension, worldclient.getDifficulty(), worldclient.getWorldType(), this.a(worldclient));
     }
 
-    public void d(Packet<?> var1, EnumConnectionState var2) {
-        if (var2 == EnumConnectionState.PLAY && var1 instanceof S38PacketPlayerListItem s38packetplayerlistitem) {
+    public void d(Packet<?> packet, EnumConnectionState enumConnectionState) {
+        if (enumConnectionState == EnumConnectionState.PLAY && packet instanceof S38PacketPlayerListItem s38packetplayerlistitem) {
             net.minecraft.network.play.server.S38PacketPlayerListItem.Action action = s38packetplayerlistitem.getAction();
             Iterator iterator = s38packetplayerlistitem.getEntries().iterator();
 
@@ -475,19 +475,19 @@ public class bo extends Component {
         }
     }
 
-    public GameType a(World var1) {
+    public GameType a(World world) {
         if (aEg.playerController != null && aEg.playerController.getCurrentGameType() != null) {
             return aEg.playerController.getCurrentGameType();
         }
-        return var1 != null && var1.getWorldInfo() != null && var1.getWorldInfo().getGameType() != null
-            ? var1.getWorldInfo().getGameType()
+        return world != null && world.getWorldInfo() != null && world.getWorldInfo().getGameType() != null
+            ? world.getWorldInfo().getGameType()
             : GameType.SURVIVAL;
     }
 
-    public void b(List<GameProfile> var1) {
-        if (var1 != null && !var1.isEmpty()) {
+    public void b(List<GameProfile> profiles) {
+        if (profiles != null && !profiles.isEmpty()) {
             HashSet hashset = new HashSet();
-            Iterator iterator = var1.iterator();
+            Iterator iterator = profiles.iterator();
 
             while (iterator.hasNext()) {
                 GameProfile gameprofile = (GameProfile)iterator.next();
@@ -511,16 +511,16 @@ public class bo extends Component {
         this.eD.clear();
     }
 
-    public void b(EntityPlayer var1) {
-        if (var1 != null && var1.inventoryContainer != null) {
-            this.a(new S30PacketWindowItems(var1.inventoryContainer.windowId, var1.inventoryContainer.getInventory()), EnumConnectionState.PLAY);
+    public void b(EntityPlayer player) {
+        if (player != null && player.inventoryContainer != null) {
+            this.a(new S30PacketWindowItems(player.inventoryContainer.windowId, player.inventoryContainer.getInventory()), EnumConnectionState.PLAY);
         }
     }
 
-    public void a(S38PacketPlayerListItem var1) {
-        if (var1 != null) {
-            net.minecraft.network.play.server.S38PacketPlayerListItem.Action action = var1.getAction();
-            Iterator iterator = var1.getEntries().iterator();
+    public void a(S38PacketPlayerListItem packet) {
+        if (packet != null) {
+            net.minecraft.network.play.server.S38PacketPlayerListItem.Action action = packet.getAction();
+            Iterator iterator = packet.getEntries().iterator();
 
             while (iterator.hasNext()) {
                 AddPlayerData addplayerdata = (AddPlayerData)iterator.next();
@@ -618,9 +618,9 @@ public class bo extends Component {
         }
     }
 
-    public byte[] b(Packet<?> var1, EnumConnectionState var2) {
-        if (var1 != null && var2 != null) {
-            Integer integer = var2.getPacketId(EnumPacketDirection.CLIENTBOUND, var1);
+    public byte[] b(Packet<?> packet, EnumConnectionState enumConnectionState) {
+        if (packet != null && enumConnectionState != null) {
+            Integer integer = enumConnectionState.getPacketId(EnumPacketDirection.CLIENTBOUND, packet);
             if (integer == null) {
                 return null;
             }
@@ -633,7 +633,7 @@ public class bo extends Component {
                 try {
                     try {
                         packetbuffer.writeVarIntToBuffer(integer);
-                        var1.writePacketData(packetbuffer);
+                        packet.writePacketData(packetbuffer);
                         byte[] abyte = new byte[packetbuffer.readableBytes()];
                         packetbuffer.readBytes(abyte);
                         abyte1 = abyte;
@@ -656,8 +656,8 @@ public class bo extends Component {
         return null;
     }
 
-    public void a(Packet<?> var1, EnumConnectionState var2) {
-        byte[] abyte = this.b(var1, var2);
+    public void a(Packet<?> packet, EnumConnectionState enumConnectionState) {
+        byte[] abyte = this.b(packet, enumConnectionState);
         if (abyte != null && abyte.length != 0) {
             this.a(abyte);
         }
@@ -668,9 +668,9 @@ public class bo extends Component {
         ev = UUID.fromString("d41d8cd9-8f00-3204-a980-0998ecf8427e");
     }
 
-    public void b(GameProfile var1) {
-        if (this.a(var1)) {
-            this.eD.put(var1.getId(), var1);
+    public void b(GameProfile profile) {
+        if (this.a(profile)) {
+            this.eD.put(profile.getId(), profile);
         }
     }
 
@@ -731,18 +731,18 @@ public class bo extends Component {
         }
     }
 
-    public List<GameProfile> c(Packet<?> var1, EnumConnectionState var2) {
-        if (var2 != EnumConnectionState.PLAY || var1 == null) {
+    public List<GameProfile> c(Packet<?> packet, EnumConnectionState enumConnectionState) {
+        if (enumConnectionState != EnumConnectionState.PLAY || packet == null) {
             return Collections.emptyList();
         }
 
-        if (var1 instanceof S38PacketPlayerListItem) {
-            this.a((S38PacketPlayerListItem)var1);
+        if (packet instanceof S38PacketPlayerListItem) {
+            this.a((S38PacketPlayerListItem)packet);
             return Collections.emptyList();
         }
 
-        if (var1 instanceof net.minecraft.network.play.server.n) {
-            GameProfile gameprofile = this.a((net.minecraft.network.play.server.n)var1);
+        if (packet instanceof net.minecraft.network.play.server.n) {
+            GameProfile gameprofile = this.a((net.minecraft.network.play.server.n)packet);
             if (gameprofile != null) {
                 return Collections.singletonList(gameprofile);
             }
@@ -751,20 +751,20 @@ public class bo extends Component {
         return Collections.emptyList();
     }
 
-    public void a(WorldClient var1, EntityPlayer var2, Set<UUID> var3, List<GameProfile> var4) {
+    public void a(WorldClient world, EntityPlayer player, Set<UUID> uuids, List<GameProfile> profiles) {
         HashSet hashset = new HashSet();
-        Iterator iterator = var1.loadedEntityList.iterator();
+        Iterator iterator = world.loadedEntityList.iterator();
 
         while (iterator.hasNext()) {
             Entity entity = (Entity)iterator.next();
-            this.a(entity, var2, hashset, var3, var4);
+            this.a(entity, player, hashset, uuids, profiles);
         }
 
-        Iterator iterator1 = var1.playerEntities.iterator();
+        Iterator iterator1 = world.playerEntities.iterator();
 
         while (iterator1.hasNext()) {
             EntityPlayer entityplayer = (EntityPlayer)iterator1.next();
-            this.a(entityplayer, var2, hashset, var3, var4);
+            this.a(entityplayer, player, hashset, uuids, profiles);
         }
     }
 
@@ -836,39 +836,39 @@ public class bo extends Component {
         return null;
     }
 
-    public void c(Entity var1) {
-        if (var1 != null) {
-            if (var1.motionX != 0.0 || var1.motionY != 0.0 || var1.motionZ != 0.0) {
-                this.a(new S12PacketEntityVelocity(var1), EnumConnectionState.PLAY);
+    public void c(Entity entity) {
+        if (entity != null) {
+            if (entity.motionX != 0.0 || entity.motionY != 0.0 || entity.motionZ != 0.0) {
+                this.a(new S12PacketEntityVelocity(entity), EnumConnectionState.PLAY);
             }
         }
     }
 
-    public void a(Entity var1, EntityPlayer var2, Set<Integer> var3, Set<UUID> var4, List<GameProfile> var5) {
-        if (var1 != null && var1 != var2 && var1.isEntityAlive() && var3.add(var1.getEntityId())) {
-            if (var1 instanceof EntityPlayer entityplayer && this.a(entityplayer.getGameProfile()) && var4.add(entityplayer.getGameProfile().getId())) {
-                this.a(entityplayer.getGameProfile(), -94 - -34 - -60, this.a(var1.worldObj), null);
-                var5.add(entityplayer.getGameProfile());
+    public void a(Entity entity, EntityPlayer player, Set<Integer> var3, Set<UUID> uuids, List<GameProfile> profiles) {
+        if (entity != null && entity != player && entity.isEntityAlive() && var3.add(entity.getEntityId())) {
+            if (entity instanceof EntityPlayer entityplayer && this.a(entityplayer.getGameProfile()) && uuids.add(entityplayer.getGameProfile().getId())) {
+                this.a(entityplayer.getGameProfile(), -94 - -34 - -60, this.a(entity.worldObj), null);
+                profiles.add(entityplayer.getGameProfile());
             }
 
-            Packet packet = this.b(var1);
+            Packet packet = this.b(entity);
             if (packet != null) {
                 this.a(packet, EnumConnectionState.PLAY);
-                this.a(new ad(var1.getEntityId(), var1.getDataWatcher(), true), EnumConnectionState.PLAY);
-                this.c(var1);
-                if (var1 instanceof EntityLivingBase entitylivingbase) {
+                this.a(new ad(entity.getEntityId(), entity.getDataWatcher(), true), EnumConnectionState.PLAY);
+                this.c(entity);
+                if (entity instanceof EntityLivingBase entitylivingbase) {
                     this.a(
                         new net.minecraft.network.play.server.aa(entitylivingbase, (byte)(entitylivingbase.getRotationYawHead() * 256.0F / 360.0F)),
                         EnumConnectionState.PLAY
                     );
                     BaseAttributeMap baseattributemap = entitylivingbase.getAttributeMap();
                     if (baseattributemap != null) {
-                        this.a(new S20PacketEntityProperties(var1.getEntityId(), baseattributemap.getAllAttributes()), EnumConnectionState.PLAY);
+                        this.a(new S20PacketEntityProperties(entity.getEntityId(), baseattributemap.getAllAttributes()), EnumConnectionState.PLAY);
                     }
 
                     for (int i = 0; i < 5; i++) {
                         if (entitylivingbase.getEquipmentInSlot(i) != null) {
-                            this.a(new e(var1.getEntityId(), i, entitylivingbase.getEquipmentInSlot(i)), EnumConnectionState.PLAY);
+                            this.a(new e(entity.getEntityId(), i, entitylivingbase.getEquipmentInSlot(i)), EnumConnectionState.PLAY);
                         }
                     }
 
@@ -876,7 +876,7 @@ public class bo extends Component {
 
                     while (iterator.hasNext()) {
                         PotionEffect potioneffect = (PotionEffect)iterator.next();
-                        this.a(new net.minecraft.network.play.server.ae(var1.getEntityId(), potioneffect), EnumConnectionState.PLAY);
+                        this.a(new net.minecraft.network.play.server.ae(entity.getEntityId(), potioneffect), EnumConnectionState.PLAY);
                     }
                 }
             }
@@ -915,18 +915,18 @@ public class bo extends Component {
         }
     }
 
-    public GameProfile a(UUID var1, String var2) {
-        if (var1 == null) {
+    public GameProfile a(UUID uuid, String var2) {
+        if (uuid == null) {
             return null;
         }
 
-        GameProfile gameprofile2 = this.eD.get(var1);
+        GameProfile gameprofile2 = this.eD.get(uuid);
         if (this.a(gameprofile2)) {
             return gameprofile2;
         }
 
         if (aEg.getNetHandler() != null) {
-            NetworkPlayerInfo networkplayerinfo = aEg.getNetHandler().getPlayerInfo(var1);
+            NetworkPlayerInfo networkplayerinfo = aEg.getNetHandler().getPlayerInfo(uuid);
             if (networkplayerinfo != null && this.a(networkplayerinfo.getGameProfile())) {
                 GameProfile gameprofile3 = networkplayerinfo.getGameProfile();
                 this.b(gameprofile3);
@@ -935,7 +935,7 @@ public class bo extends Component {
         }
 
         if (aEg.theWorld != null) {
-            EntityPlayer entityplayer = aEg.theWorld.getPlayerEntityByUUID(var1);
+            EntityPlayer entityplayer = aEg.theWorld.getPlayerEntityByUUID(uuid);
             if (entityplayer != null && this.a(entityplayer.getGameProfile())) {
                 GameProfile gameprofile = entityplayer.getGameProfile();
                 this.b(gameprofile);
@@ -943,12 +943,12 @@ public class bo extends Component {
             }
         }
 
-        String s = this.i(var2 != null ? var2 : this.b(var1));
+        String s = this.i(var2 != null ? var2 : this.b(uuid));
         if (s == null) {
             return null;
         }
 
-        GameProfile gameprofile1 = new GameProfile(var1, s);
+        GameProfile gameprofile1 = new GameProfile(uuid, s);
         this.b(gameprofile1);
         return gameprofile1;
     }
@@ -992,7 +992,7 @@ public class bo extends Component {
         }
     }
 
-    public void a(WorldClient var1, EntityPlayer var2) {
+    public void a(WorldClient world, EntityPlayer player) {
         long i1 = -5999452370710010159L;
         long j1 = -8132256309763312687L;
         long k1 = 1975227560856581487L;
@@ -1010,7 +1010,7 @@ public class bo extends Component {
                 }
 
                 try {
-                    this.eA = var1.getChunkProvider().getClass().getDeclaredField("chunkListing");
+                    this.eA = world.getChunkProvider().getClass().getDeclaredField("chunkListing");
                     this.eA.setAccessible(true);
                 } catch (Exception exception7) {
                     break label100;
@@ -1019,7 +1019,7 @@ public class bo extends Component {
 
             List list;
             try {
-                list = (List)this.eA.get(var1.getChunkProvider());
+                list = (List)this.eA.get(world.getChunkProvider());
                 if (list == null) {
                     break label100;
                 }
@@ -1077,17 +1077,17 @@ public class bo extends Component {
             try {
                 j1 = i2 ^ j2 & -1L << 32;
 
-                for (i1 ^= ((long)(var2.chunkCoordX - (int)(j1 >>> 32)) << 32 ^ i1) & -1L << 32;
-                    (int)(i1 >>> 32) <= var2.chunkCoordX + (int)(j1 >>> 32);
+                for (i1 ^= ((long)(player.chunkCoordX - (int)(j1 >>> 32)) << 32 ^ i1) & -1L << 32;
+                    (int)(i1 >>> 32) <= player.chunkCoordX + (int)(j1 >>> 32);
                     i1 += 4294967296L
                 ) {
-                    for (k1 ^= ((long)(var2.chunkCoordZ - (int)(j1 >>> 32)) << 32 ^ k1) & -1L << 32;
-                        (int)(k1 >>> 32) <= var2.chunkCoordZ + (int)(j1 >>> 32);
+                    for (k1 ^= ((long)(player.chunkCoordZ - (int)(j1 >>> 32)) << 32 ^ k1) & -1L << 32;
+                        (int)(k1 >>> 32) <= player.chunkCoordZ + (int)(j1 >>> 32);
                         k1 += 4294967296L
                     ) {
                         long l1 = (long)((int)(i1 >>> 32)) << 32 ^ (int)(k1 >>> 32) & 4294967295L;
                         if (hashset.add(l1)) {
-                            Chunk chunk1 = var1.getChunkFromChunkCoords((int)(i1 >>> 32), (int)(k1 >>> 32));
+                            Chunk chunk1 = world.getChunkFromChunkCoords((int)(i1 >>> 32), (int)(k1 >>> 32));
                             if (chunk1 != null) {
                                 arraylist.add(chunk1);
                             }
@@ -1167,11 +1167,11 @@ public class bo extends Component {
         };
     }
 
-    public void a(Packet<?> var1, EnumConnectionState var2, byte[] var3) {
-        this.b(var1, var2, var3);
-        if (this.eF && var2 != null && !this.eJ) {
+    public void a(Packet<?> packet, EnumConnectionState enumConnectionState, byte[] var3) {
+        this.b(packet, enumConnectionState, var3);
+        if (this.eF && enumConnectionState != null && !this.eJ) {
             if (this.eH) {
-                if (var2 != EnumConnectionState.LOGIN || !(var1 instanceof S02PacketLoginSuccess)) {
+                if (enumConnectionState != EnumConnectionState.LOGIN || !(packet instanceof S02PacketLoginSuccess)) {
                     return;
                 }
 
@@ -1184,9 +1184,9 @@ public class bo extends Component {
                 }
             }
 
-            if (var2 == EnumConnectionState.LOGIN || var2 == EnumConnectionState.PLAY) {
-                if (var2 != EnumConnectionState.LOGIN || var1 instanceof S02PacketLoginSuccess) {
-                    if (var2 == EnumConnectionState.PLAY && var1 instanceof S01PacketJoinGame) {
+            if (enumConnectionState == EnumConnectionState.LOGIN || enumConnectionState == EnumConnectionState.PLAY) {
+                if (enumConnectionState != EnumConnectionState.LOGIN || packet instanceof S02PacketLoginSuccess) {
+                    if (enumConnectionState == EnumConnectionState.PLAY && packet instanceof S01PacketJoinGame) {
                         this.eM = false;
                         this.eY = false;
                         Arrays.fill(this.eU, null);
@@ -1195,21 +1195,21 @@ public class bo extends Component {
                         this.eX = 0;
                     }
 
-                    if (var1 instanceof net.minecraft.network.play.server.n
+                    if (packet instanceof net.minecraft.network.play.server.n
                         && aEg.thePlayer != null
                         && aEg.thePlayer.getGameProfile() != null
-                        && ((net.minecraft.network.play.server.n)var1).agh().equals(aEg.thePlayer.getGameProfile().getId())) {
+                        && ((net.minecraft.network.play.server.n)packet).agh().equals(aEg.thePlayer.getGameProfile().getId())) {
                         this.eM = true;
                     }
 
-                    List list = this.c(var1, var2);
+                    List list = this.c(packet, enumConnectionState);
                     if (var3 != null && var3.length > 0) {
                         this.a(var3);
                     } else {
-                        this.a(var1, var2);
+                        this.a(packet, enumConnectionState);
                     }
 
-                    this.d(var1, var2);
+                    this.d(packet, enumConnectionState);
                     this.b(list);
                 }
             }
@@ -1239,24 +1239,24 @@ public class bo extends Component {
         );
     }
 
-    public String b(UUID var1) {
-        String s = var1.toString().replace("-", "");
+    public String b(UUID uuid) {
+        String s = uuid.toString().replace("-", "");
         String s1 = s.substring(0, Math.min(14, s.length()));
         return "p_" + s1;
     }
 
-    public boolean a(GameProfile var1) {
-        return var1 != null && var1.getId() != null && var1.getName() != null;
+    public boolean a(GameProfile profile) {
+        return profile != null && profile.getId() != null && profile.getName() != null;
     }
 
-    public void a(WorldClient var1, NetHandlerPlayClient var2, Set<UUID> var3) {
-        if (var2 != null) {
-            GameType gametype = this.a(var1);
-            Iterator iterator = var2.getPlayerInfoMap().iterator();
+    public void a(WorldClient world, NetHandlerPlayClient netHandlerPlayClient, Set<UUID> uuids) {
+        if (netHandlerPlayClient != null) {
+            GameType gametype = this.a(world);
+            Iterator iterator = netHandlerPlayClient.getPlayerInfoMap().iterator();
 
             while (iterator.hasNext()) {
                 NetworkPlayerInfo networkplayerinfo = (NetworkPlayerInfo)iterator.next();
-                if (networkplayerinfo != null && this.a(networkplayerinfo.getGameProfile()) && var3.add(networkplayerinfo.getGameProfile().getId())) {
+                if (networkplayerinfo != null && this.a(networkplayerinfo.getGameProfile()) && uuids.add(networkplayerinfo.getGameProfile().getId())) {
                     this.a(
                         networkplayerinfo.getGameProfile(),
                         networkplayerinfo.getResponseTime(),
@@ -1266,7 +1266,7 @@ public class bo extends Component {
                 }
             }
 
-            if (aEg.thePlayer != null && this.a(aEg.thePlayer.getGameProfile()) && var3.add(aEg.thePlayer.getGameProfile().getId())) {
+            if (aEg.thePlayer != null && this.a(aEg.thePlayer.getGameProfile()) && uuids.add(aEg.thePlayer.getGameProfile().getId())) {
                 this.a(aEg.thePlayer.getGameProfile(), 73 + -73, gametype, null);
             }
         }

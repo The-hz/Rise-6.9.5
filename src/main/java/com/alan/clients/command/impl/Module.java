@@ -61,10 +61,10 @@ public final class Module extends Command {
         }
     }
 
-    private ModeValue a(com.alan.clients.module.Module var1) {
+    private ModeValue a(com.alan.clients.module.Module module) {
         ModeValue modevalue = null;
 
-        for (Value value : var1.getAllValues()) {
+        for (Value value : module.getAllValues()) {
             if (value instanceof ModeValue modevalue1) {
                 if ("mode".equalsIgnoreCase(value.getName())) {
                     return modevalue1;
@@ -79,10 +79,10 @@ public final class Module extends Command {
         return modevalue;
     }
 
-    private Value<?> a(com.alan.clients.module.Module var1, String var2) {
+    private Value<?> a(com.alan.clients.module.Module module, String var2) {
         String s = var2.toLowerCase(Locale.ROOT);
 
-        for (Value value : var1.getAllValues()) {
+        for (Value value : module.getAllValues()) {
             if (value.wn() == null || !value.wn().getAsBoolean()) {
                 String s1 = value.getName();
                 if (s1.equalsIgnoreCase(var2)) {

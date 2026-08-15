@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 
 public class ScriptPacketVelocity extends ScriptPacket<S12PacketEntityVelocity> {
-    public ScriptPacketVelocity(S12PacketEntityVelocity var1) {
-        super(var1);
+    public ScriptPacketVelocity(S12PacketEntityVelocity packet) {
+        super(packet);
     }
 
     public int getEntityID() {

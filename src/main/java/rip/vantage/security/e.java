@@ -64,7 +64,7 @@ public class e {
         return null;
     }
 
-    public static boolean b(Path var0, String var1) {
+    public static boolean b(Path path, String var1) {
         return false;
     }
 
@@ -90,7 +90,7 @@ public class e {
         return null;
     }
 
-    public static void a(List<Path> var0, String var1, String var2) {
+    public static void a(List<Path> paths, String var1, String var2) {
     }
 
     public static f aLC() {
@@ -137,7 +137,7 @@ public class e {
         return null;
     }
 
-    public static String b(Path var0) {
+    public static String b(Path path) {
         return null;
     }
 }

@@ -17,7 +17,7 @@ public final class GlowESP extends Mode<ESP> {
         ESPComponent.a(new cr(new ESPColor(color, color, color)));
     };
 
-    public GlowESP(String var1, ESP var2) {
-        super(var1, var2);
+    public GlowESP(String var1, ESP esp) {
+        super(var1, esp);
     }
 }

@@ -14,8 +14,8 @@ public class GuiProtocolSelector extends GuiScreen {
     private final GuiScreen parent;
     public GuiProtocolSelector.SlotList list;
 
-    public GuiProtocolSelector(GuiScreen var1) {
-        this.parent = var1;
+    public GuiProtocolSelector(GuiScreen parent) {
+        this.parent = parent;
     }
 
     @Override
@@ -26,9 +26,9 @@ public class GuiProtocolSelector extends GuiScreen {
     }
 
     @Override
-    protected void actionPerformed(GuiButton var1) {
-        this.list.actionPerformed(var1);
-        if (var1.id == 1) {
+    protected void actionPerformed(GuiButton button) {
+        this.list.actionPerformed(button);
+        if (button.id == 1) {
             aEg.displayGuiScreen(this.parent);
         }
     }
@@ -62,9 +62,9 @@ public class GuiProtocolSelector extends GuiScreen {
     public static class SlotList extends GuiSlot {
         final GuiProtocolSelector this$0;
 
-        public SlotList(GuiProtocolSelector var1, Minecraft var2, int var3, int var4, int var5, int var6) {
-            super(var2, var3, var4, var5 + 30, var6, 18);
-            this.this$0 = var1;
+        public SlotList(GuiProtocolSelector guiProtocolSelector, Minecraft mc, int var3, int var4, int var5, int var6) {
+            super(mc, var3, var4, var5 + 30, var6, 18);
+            this.this$0 = guiProtocolSelector;
         }
 
         @Override

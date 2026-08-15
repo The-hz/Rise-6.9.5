@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S14PacketEntity;
 
 public class ScriptPacketEntity extends ScriptPacket<S14PacketEntity> {
-    public ScriptPacketEntity(S14PacketEntity var1) {
-        super(var1);
+    public ScriptPacketEntity(S14PacketEntity packet) {
+        super(packet);
     }
 
     public int getEntityId() {

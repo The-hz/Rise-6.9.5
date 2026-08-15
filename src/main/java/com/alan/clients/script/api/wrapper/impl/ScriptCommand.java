@@ -5,8 +5,8 @@ import com.alan.clients.command.Command;
 import com.alan.clients.script.api.wrapper.ScriptHandlerWrapper;
 
 public final class ScriptCommand extends ScriptHandlerWrapper<Command> {
-    public ScriptCommand(Command var1) {
-        super(var1);
+    public ScriptCommand(Command command) {
+        super(command);
     }
 
     public void unregister() {

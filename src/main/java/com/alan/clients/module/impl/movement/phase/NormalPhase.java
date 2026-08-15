@@ -42,7 +42,7 @@ public class NormalPhase extends Mode<Phase> {
         }
     };
 
-    public NormalPhase(String var1, Phase var2) {
-        super(var1, var2);
+    public NormalPhase(String var1, Phase phase) {
+        super(var1, phase);
     }
 }

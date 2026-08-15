@@ -190,9 +190,9 @@ public final class agp {
         return stringbuilder.toString();
     }
 
-    void a(InputMethodEvent var1) {
-        AttributedCharacterIterator attributedcharacteriterator = var1.getText();
-        int i = var1.getCommittedCharacterCount();
+    void a(InputMethodEvent event) {
+        AttributedCharacterIterator attributedcharacteriterator = event.getText();
+        int i = event.getCommittedCharacterCount();
         if (attributedcharacteriterator == null) {
             this.aJB = "";
         } else {

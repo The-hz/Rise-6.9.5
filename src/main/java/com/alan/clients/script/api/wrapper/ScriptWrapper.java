@@ -7,7 +7,7 @@ public abstract class ScriptWrapper<T> extends API {
     protected T wrapped;
 
     @Generated
-    public ScriptWrapper(T var1) {
-        this.wrapped = var1;
+    public ScriptWrapper(T wrapped) {
+        this.wrapped = wrapped;
     }
 }

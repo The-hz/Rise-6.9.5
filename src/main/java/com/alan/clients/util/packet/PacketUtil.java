@@ -13,69 +13,69 @@ public final class PacketUtil implements InstanceAccess {
         return aEg != null ? aEg.getNetHandler() : null;
     }
 
-    public static void l(Packet<?> var0) {
+    public static void l(Packet<?> packet) {
         NetHandlerPlayClient nethandlerplayclient = uK();
-        if (nethandlerplayclient != null && var0 != null) {
-            nethandlerplayclient.addToSendQueue(var0);
+        if (nethandlerplayclient != null && packet != null) {
+            nethandlerplayclient.addToSendQueue(packet);
         }
     }
 
-    public static void m(Packet<?> var0) {
+    public static void m(Packet<?> packet) {
         NetHandlerPlayClient nethandlerplayclient = uK();
-        if (nethandlerplayclient != null && var0 != null) {
-            nethandlerplayclient.u(var0);
+        if (nethandlerplayclient != null && packet != null) {
+            nethandlerplayclient.u(packet);
         }
     }
 
-    public static void n(Packet<?> var0) {
-        if (var0 == null) {
+    public static void n(Packet<?> packet) {
+        if (packet == null) {
             System.out.println("Packet is null");
         } else {
             NetHandlerPlayClient nethandlerplayclient = uK();
             if (nethandlerplayclient != null) {
-                if (s(var0)) {
-                    nethandlerplayclient.addToSendQueue(var0);
+                if (s(packet)) {
+                    nethandlerplayclient.addToSendQueue(packet);
                 } else {
-                    nethandlerplayclient.v(var0);
+                    nethandlerplayclient.v(packet);
                 }
             }
         }
     }
 
-    public static void o(Packet<?> var0) {
+    public static void o(Packet<?> packet) {
         NetHandlerPlayClient nethandlerplayclient = uK();
-        if (nethandlerplayclient != null && var0 != null) {
-            if (s(var0)) {
-                nethandlerplayclient.u(var0);
+        if (nethandlerplayclient != null && packet != null) {
+            if (s(packet)) {
+                nethandlerplayclient.u(packet);
             } else {
-                nethandlerplayclient.w(var0);
+                nethandlerplayclient.w(packet);
             }
         }
     }
 
-    public static void p(Packet<?> var0) {
+    public static void p(Packet<?> packet) {
         NetHandlerPlayClient nethandlerplayclient = uK();
-        if (nethandlerplayclient != null && var0 != null) {
-            nethandlerplayclient.v(var0);
+        if (nethandlerplayclient != null && packet != null) {
+            nethandlerplayclient.v(packet);
         }
     }
 
-    public static void q(Packet<?> var0) {
+    public static void q(Packet<?> packet) {
         NetHandlerPlayClient nethandlerplayclient = uK();
-        if (nethandlerplayclient != null && var0 != null) {
-            nethandlerplayclient.w(var0);
+        if (nethandlerplayclient != null && packet != null) {
+            nethandlerplayclient.w(packet);
         }
     }
 
-    public static boolean r(Packet<?> var0) {
-        return !s(var0);
+    public static boolean r(Packet<?> packet) {
+        return !s(packet);
     }
 
-    public static boolean s(Packet<?> var0) {
-        return Arrays.stream(NetworkAPI.serverbound).anyMatch(var1 -> var1 == var0.getClass());
+    public static boolean s(Packet<?> packet) {
+        return Arrays.stream(NetworkAPI.serverbound).anyMatch(var1 -> var1 == packet.getClass());
     }
 
-    public static void j(PacketReceiveEvent var0) {
+    public static void j(PacketReceiveEvent event) {
     }
 
     @Generated

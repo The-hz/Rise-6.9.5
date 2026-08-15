@@ -68,7 +68,7 @@ public class WatchdogJesus extends Mode<Jesus> {
         }
     };
 
-    public WatchdogJesus(String var1, Jesus var2) {
-        super(var1, var2);
+    public WatchdogJesus(String var1, Jesus jesus) {
+        super(var1, jesus);
     }
 }

@@ -4,8 +4,8 @@ import com.alan.clients.script.api.wrapper.impl.ScriptBlockPos;
 import net.minecraft.network.play.server.S28PacketEffect;
 
 public class ScriptPacketEffect extends ScriptPacket<S28PacketEffect> {
-    public ScriptPacketEffect(S28PacketEffect var1) {
-        super(var1);
+    public ScriptPacketEffect(S28PacketEffect packet) {
+        super(packet);
     }
 
     public int getSoundType() {

@@ -99,23 +99,23 @@ public class Stealer extends Module {
         return this.fY;
     }
 
-    private boolean r(ItemStack var1) {
-        if (var1 != null && var1.getItem() != null) {
-            Item item = var1.getItem();
+    private boolean r(ItemStack stack) {
+        if (stack != null && stack.getItem() != null) {
+            Item item = stack.getItem();
             Manager manager = this.e(Manager.class);
             Container container = aEg.thePlayer.inventoryContainer;
-            if (manager != null && SelectorDetectionComponent.a(var1, true) && manager.jP()) {
+            if (manager != null && SelectorDetectionComponent.a(stack, true) && manager.jP()) {
                 return true;
-            } else if (!ItemUtil.u(var1)) {
+            } else if (!ItemUtil.u(stack)) {
                 return true;
             } else if (item instanceof ItemSword) {
-                return !ItemUtil.b(var1, container);
+                return !ItemUtil.b(stack, container);
             } else if (item instanceof ItemTool) {
-                return !ItemUtil.b(var1, container, ItemUtil.d((ItemTool)item));
+                return !ItemUtil.b(stack, container, ItemUtil.d((ItemTool)item));
             } else if (item instanceof ItemBow) {
-                return !ItemUtil.c(var1, container);
+                return !ItemUtil.c(stack, container);
             } else if (item instanceof ItemArmor) {
-                return !ItemUtil.a(var1, container, ((ItemArmor)item).armorType);
+                return !ItemUtil.a(stack, container, ((ItemArmor)item).armorType);
             } else if (item instanceof net.minecraft.item.be) {
                 return this.a(var0 -> var0 instanceof net.minecraft.item.be) >= 1;
             }
@@ -125,25 +125,25 @@ public class Stealer extends Module {
             int l = manager != null ? manager.jO() : 16;
             int i1 = manager != null ? manager.jK() : 512;
             if (item == Items.arrow) {
-                return this.a(Items.arrow) + var1.stackSize > i;
+                return this.a(Items.arrow) + stack.stackSize > i;
             } else if (item == Items.ender_pearl) {
-                return this.a(Items.ender_pearl) + var1.stackSize > l;
+                return this.a(Items.ender_pearl) + stack.stackSize > l;
             } else if (item == Items.bucket || item == Items.water_bucket || item == Items.lava_bucket || item == Items.milk_bucket) {
-                return this.a(Items.bucket) + this.a(Items.water_bucket) + this.a(Items.lava_bucket) + this.a(Items.milk_bucket) + var1.stackSize > j;
+                return this.a(Items.bucket) + this.a(Items.water_bucket) + this.a(Items.lava_bucket) + this.a(Items.milk_bucket) + stack.stackSize > j;
             } else if (item == Items.snowball || item == Items.egg) {
-                return this.a(Items.snowball) + this.a(Items.egg) + var1.stackSize > k;
+                return this.a(Items.snowball) + this.a(Items.egg) + stack.stackSize > k;
             }
-            return item instanceof ItemBlock ? this.a(var0 -> var0 instanceof ItemBlock) + var1.stackSize > i1 : false;
+            return item instanceof ItemBlock ? this.a(var0 -> var0 instanceof ItemBlock) + stack.stackSize > i1 : false;
         }
         return true;
     }
 
-    private int a(Item var1) {
+    private int a(Item item) {
         int i = 0;
 
         for (int j = 0; j <= 39; j++) {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(j);
-            if (itemstack != null && itemstack.getItem() == var1) {
+            if (itemstack != null && itemstack.getItem() == item) {
                 i += itemstack.stackSize;
             }
         }
@@ -151,12 +151,12 @@ public class Stealer extends Module {
         return i;
     }
 
-    private int a(Predicate<Item> var1) {
+    private int a(Predicate<Item> predicate) {
         int i = 0;
 
         for (int j = 0; j <= 39; j++) {
             ItemStack itemstack = aEg.thePlayer.inventory.getStackInSlot(j);
-            if (itemstack != null && var1.test(itemstack.getItem())) {
+            if (itemstack != null && predicate.test(itemstack.getItem())) {
                 i += itemstack.stackSize;
             }
         }

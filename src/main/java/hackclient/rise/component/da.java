@@ -342,10 +342,10 @@ public final class da extends Component {
         return false;
     }
 
-    private static boolean a(java.awt.Component[] var0, String[] var1) {
-        if (var0 != null && var0.length != 0) {
+    private static boolean a(java.awt.Component[] components, String[] var1) {
+        if (components != null && components.length != 0) {
             try {
-                for (java.awt.Component component : var0) {
+                for (java.awt.Component component : components) {
                     if (component != null) {
                         try {
                             String s = (String)component.getClass().getMethod("getText").invoke(component);

@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 
 public class ScriptPacketPosition extends ScriptPacket<C04PacketPlayerPosition> {
-    public ScriptPacketPosition(C04PacketPlayerPosition var1) {
-        super(var1);
+    public ScriptPacketPosition(C04PacketPlayerPosition packet) {
+        super(packet);
     }
 
     public double getX() {
@@ -35,7 +35,7 @@ public class ScriptPacketPosition extends ScriptPacket<C04PacketPlayerPosition> 
         this.wrapped.z = var1;
     }
 
-    public void setOnGround(boolean var1) {
-        this.wrapped.setOnGround(var1);
+    public void setOnGround(boolean onGround) {
+        this.wrapped.setOnGround(onGround);
     }
 }

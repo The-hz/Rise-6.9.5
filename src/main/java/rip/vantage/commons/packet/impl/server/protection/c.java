@@ -15,9 +15,9 @@ public class c extends rip.vantage.commons.packet.api.abstracts.b {
         this.eQt = var2;
     }
 
-    public c(JSONObject var1) {
+    public c(JSONObject json) {
         super((byte)7);
-        JSONArray jsonarray = var1.getJSONArray("a");
+        JSONArray jsonarray = json.getJSONArray("a");
         ArrayList arraylist = new ArrayList();
 
         for (int i = 0; i < jsonarray.length(); i++) {
@@ -26,7 +26,7 @@ public class c extends rip.vantage.commons.packet.api.abstracts.b {
         }
 
         this.eQs = arraylist;
-        this.eQt = var1.getInt("b");
+        this.eQt = json.getInt("b");
     }
 
     @Override

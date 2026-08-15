@@ -676,22 +676,22 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean a(Integer var1, NumberValue var2) {
-        if (var2.wo().intValue() != 0 && var1 != null && var1 != -1) {
-            int i = var2.wo().intValue() - 1;
+    private boolean a(Integer var1, NumberValue numberValue) {
+        if (numberValue.wo().intValue() != 0 && var1 != null && var1 != -1) {
+            int i = numberValue.wo().intValue() - 1;
             return !this.f(var1, i);
         }
         return false;
     }
 
-    private boolean a(tr var1, NumberValue var2) {
-        int i = var2.wo().intValue();
+    private boolean a(tr var1, NumberValue numberValue) {
+        int i = numberValue.wo().intValue();
         return i != 0 && (var1.adJ != -1 && this.swordSlot.wo().intValue() == i || var1.adK != -1 && this.secondSwordSlot.wo().intValue() == i);
     }
 
-    private boolean a(List<ts> var1, BoundsNumberValue var2) {
-        int i = var2.wo().intValue();
-        int j = var2.wA().intValue();
+    private boolean a(List<ts> var1, BoundsNumberValue boundsNumberValue) {
+        int i = boundsNumberValue.wo().intValue();
+        int j = boundsNumberValue.wA().intValue();
         if (i == 0 || i > j) {
             return false;
         }
@@ -792,9 +792,9 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean a(IntGatherer var1, int var2) {
+    private boolean a(IntGatherer intGatherer, int var2) {
         ArrayList arraylist = new ArrayList();
-        return var1.gather(arraylist) > var2;
+        return intGatherer.gather(arraylist) > var2;
     }
 
     private boolean c(int var1, int var2) {
@@ -986,9 +986,9 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean b(IntGatherer var1, int var2) {
+    private boolean b(IntGatherer intGatherer, int var2) {
         ArrayList arraylist = new ArrayList();
-        int i = var1.gather(arraylist);
+        int i = intGatherer.gather(arraylist);
         if (i <= var2) {
             return false;
         }
@@ -1198,9 +1198,9 @@ public class Manager extends Module {
         }
     }
 
-    private boolean b(Integer var1, NumberValue var2) {
-        if (var2.wo().intValue() != 0 && var1 != null && var1 != -1) {
-            int i = var2.wo().intValue() - 1;
+    private boolean b(Integer var1, NumberValue numberValue) {
+        if (numberValue.wo().intValue() != 0 && var1 != null && var1 != -1) {
+            int i = numberValue.wo().intValue() - 1;
             if (this.f(var1, i)) {
                 return false;
             }
@@ -1260,15 +1260,15 @@ public class Manager extends Module {
         return this.e(var1, true);
     }
 
-    private float j(ItemStack var1) {
-        ItemSword itemsword = (ItemSword)var1.getItem();
-        int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, var1);
-        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, var1);
+    private float j(ItemStack stack) {
+        ItemSword itemsword = (ItemSword)stack.getItem();
+        int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, stack);
+        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, stack);
         return (float)(itemsword.getDamageVsEntity() + i * 1.25 + j * 2.5);
     }
 
-    private int armorReduction(ItemStack var1) {
-        ItemArmor itemarmor = (ItemArmor)var1.getItem();
+    private int armorReduction(ItemStack stack) {
+        ItemArmor itemarmor = (ItemArmor)stack.getItem();
         int i = itemarmor.damageReduceAmount;
 
         byte b0 = switch (tp.adE[itemarmor.getArmorMaterial().ordinal()]) {
@@ -1279,10 +1279,10 @@ public class Manager extends Module {
             case 5 -> 1;
             default -> 0;
         };
-        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, var1);
-        int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.projectileProtection.effectId, var1);
-        int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireProtection.effectId, var1);
-        int i1 = EnchantmentHelper.getEnchantmentLevel(Enchantment.blastProtection.effectId, var1);
+        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, stack);
+        int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.projectileProtection.effectId, stack);
+        int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireProtection.effectId, stack);
+        int i1 = EnchantmentHelper.getEnchantmentLevel(Enchantment.blastProtection.effectId, stack);
         return i * 100 + b0 * 10 + j * 6 + (k + l + i1) * 2;
     }
 

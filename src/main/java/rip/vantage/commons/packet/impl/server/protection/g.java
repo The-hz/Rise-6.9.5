@@ -13,10 +13,10 @@ public class g extends rip.vantage.commons.packet.api.abstracts.b {
         this.eQF = var2;
     }
 
-    public g(JSONObject var1) {
+    public g(JSONObject json) {
         super((byte)21);
-        this.eQE = Base64.getDecoder().decode(var1.getString("a"));
-        this.eQF = var1.getLong("b");
+        this.eQE = Base64.getDecoder().decode(json.getString("a"));
+        this.eQF = json.getLong("b");
     }
 
     @Override

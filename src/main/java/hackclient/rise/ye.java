@@ -55,20 +55,20 @@ public class ye {
         return this.arl;
     }
 
-    public synchronized void b(BufferedImage var1) {
-        this.a(new BufferedImage[]{var1}, new int[]{100});
+    public synchronized void b(BufferedImage image) {
+        this.a(new BufferedImage[]{image}, new int[]{100});
     }
 
-    public synchronized void a(BufferedImage[] var1, int[] var2) {
-        this.ark = var1;
-        this.arn = var1[0].getWidth();
-        this.aro = var1[0].getHeight();
+    public synchronized void a(BufferedImage[] images, int[] var2) {
+        this.ark = images;
+        this.arn = images[0].getWidth();
+        this.aro = images[0].getHeight();
         this.loaded = true;
         this.arp = false;
         this.arq = true;
-        this.arl = new int[var1.length];
+        this.arl = new int[images.length];
         Arrays.fill(this.arl, -1);
-        this.arm = var2 != null && var2.length == var1.length ? var2 : new int[var1.length];
+        this.arm = var2 != null && var2.length == images.length ? var2 : new int[images.length];
 
         for (int i = 0; i < this.arm.length; i++) {
             if (this.arm[i] <= 0) {

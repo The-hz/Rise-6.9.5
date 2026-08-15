@@ -11,8 +11,8 @@ public final class GammaFullBright extends Mode<FullBright> {
     @EventLink
     public final Listener<TickEvent> onTick = var0 -> aEg.gameSettings.gammaSetting = 100.0F;
 
-    public GammaFullBright(String var1, FullBright var2) {
-        super(var1, var2);
+    public GammaFullBright(String var1, FullBright fullBright) {
+        super(var1, fullBright);
     }
 
     @Override

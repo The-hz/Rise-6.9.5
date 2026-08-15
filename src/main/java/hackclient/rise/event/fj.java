@@ -19,8 +19,8 @@ public final class fj extends CancellableEvent {
     }
 
     @Generated
-    public void a(ByteBuf var1) {
-        this.jT = var1;
+    public void a(ByteBuf byteBuf) {
+        this.jT = byteBuf;
     }
 
     @Generated
@@ -29,8 +29,8 @@ public final class fj extends CancellableEvent {
     }
 
     @Generated
-    public fj(ByteBuf var1, int var2) {
-        this.jT = var1;
+    public fj(ByteBuf byteBuf, int var2) {
+        this.jT = byteBuf;
         this.id = var2;
     }
 }

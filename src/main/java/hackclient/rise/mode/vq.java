@@ -41,7 +41,7 @@ public class vq extends Mode<Scaffold> {
         }
     };
 
-    public vq(String var1, Scaffold var2) {
-        super(var1, var2);
+    public vq(String var1, Scaffold scaffold) {
+        super(var1, scaffold);
     }
 }

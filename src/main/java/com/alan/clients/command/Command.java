@@ -8,9 +8,9 @@ public abstract class Command implements InstanceAccess {
     private final String description;
     private final String[] expressions;
 
-    public Command(String var1, String... var2) {
-        this.description = var1;
-        this.expressions = var2;
+    public Command(String description, String... expressions) {
+        this.description = description;
+        this.expressions = expressions;
     }
 
     public abstract void execute(String[] var1);

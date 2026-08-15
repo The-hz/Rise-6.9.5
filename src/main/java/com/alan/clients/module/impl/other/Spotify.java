@@ -1512,16 +1512,16 @@ public class Spotify extends Module {
         }
     }
 
-    private boolean a(JSONObject var1) {
-        return var1 != null && (!var1.optString("syncedLyrics", "").isEmpty() || !var1.optString("plainLyrics", "").isEmpty());
+    private boolean a(JSONObject json) {
+        return json != null && (!json.optString("syncedLyrics", "").isEmpty() || !json.optString("plainLyrics", "").isEmpty());
     }
 
-    private double a(JSONObject var1, String var2, String var3, int var4) {
+    private double a(JSONObject json, String var2, String var3, int var4) {
         double d0 = 0.0;
         String s = this.K(var2);
         String s1 = this.K(var3);
-        String s2 = this.K(var1.optString("trackName", var1.optString("name", "")));
-        String s3 = this.K(var1.optString("artistName", ""));
+        String s2 = this.K(json.optString("trackName", json.optString("name", "")));
+        String s3 = this.K(json.optString("artistName", ""));
         if (!s2.equals(s)) {
             d0 += !s2.contains(s) && !s.contains(s2) ? 20.0 : 6.0;
         }
@@ -1530,12 +1530,12 @@ public class Spotify extends Module {
             d0 += !s3.contains(s1) && !s1.contains(s3) ? 12.0 : 4.0;
         }
 
-        if (var4 > 0 && var1.has("duration")) {
+        if (var4 > 0 && json.has("duration")) {
             double d1 = var4 / 1000.0;
-            d0 += Math.min(30.0, Math.abs(var1.optDouble("duration", d1) - d1) * 0.35);
+            d0 += Math.min(30.0, Math.abs(json.optDouble("duration", d1) - d1) * 0.35);
         }
 
-        if (!var1.optString("syncedLyrics", "").isEmpty()) {
+        if (!json.optString("syncedLyrics", "").isEmpty()) {
             d0 -= 2.0;
         }
 

@@ -7,9 +7,9 @@ import java.util.concurrent.atomic.AtomicReference;
 public class RiseAPI$2 extends Command {
     final AtomicReference val$scriptCommandReference;
 
-    RiseAPI$2(RiseAPI var1, String var2, String[] var3, AtomicReference var4) {
+    RiseAPI$2(RiseAPI riseAPI, String var2, String[] var3, AtomicReference atomicReference) {
         super(var2, var3);
-        this.val$scriptCommandReference = var4;
+        this.val$scriptCommandReference = atomicReference;
     }
 
     @Override

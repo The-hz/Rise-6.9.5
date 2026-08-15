@@ -21,12 +21,12 @@ public final class AttackEvent extends CancellableEvent {
     }
 
     @Generated
-    public void b(EntityLivingBase var1) {
-        this.jE = var1;
+    public void b(EntityLivingBase living) {
+        this.jE = living;
     }
 
     @Generated
-    public AttackEvent(EntityLivingBase var1) {
-        this.jE = var1;
+    public AttackEvent(EntityLivingBase living) {
+        this.jE = living;
     }
 }

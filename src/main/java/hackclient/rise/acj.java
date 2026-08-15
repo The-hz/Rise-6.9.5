@@ -34,10 +34,10 @@ public class acj extends ArrayList<aci> implements InstanceAccess {
         this.gK = var2;
     }
 
-    public void j(Vector2f var1) {
+    public void j(Vector2f vec2) {
         try {
             RiseClickGUI riseclickgui = this.getStandardClickGUI();
-            this.axI = new Vector2f(var1.x, var1.y);
+            this.axI = new Vector2f(vec2.x, vec2.y);
             FontManager.MAIN.a(18, gd.REGULAR).a(this.gK, this.axI.x, this.axI.y, Color.WHITE.getRGB());
             String s = this.size() + "";
             FontManager.MAIN.a(18, gd.REGULAR).a(s, this.axI.x + FontManager.MAIN.a(18, gd.REGULAR).getStringWidth(this.gK) + 10 / 2.0F, this.axI.y, this.rz().rA().getRGB());
@@ -60,7 +60,7 @@ public class acj extends ArrayList<aci> implements InstanceAccess {
                 }
             }
 
-            this.axI = new Vector2f(var1.x, var1.y);
+            this.axI = new Vector2f(vec2.x, vec2.y);
         } catch (ConcurrentModificationException concurrentmodificationexception) {
             concurrentmodificationexception.printStackTrace();
         }
@@ -118,17 +118,17 @@ public class acj extends ArrayList<aci> implements InstanceAccess {
     }
 
     @Generated
-    public void setName(String var1) {
-        this.gK = var1;
+    public void setName(String name) {
+        this.gK = name;
     }
 
     @Generated
-    public void i(Vector2f var1) {
-        this.axI = var1;
+    public void i(Vector2f vec2) {
+        this.axI = vec2;
     }
 
     @Generated
-    public void a(agk var1) {
-        this.scrollUtil = var1;
+    public void a(agk scrollUtil) {
+        this.scrollUtil = scrollUtil;
     }
 }

@@ -10,8 +10,8 @@ public final class DemoCheck extends a {
     }
 
     @Override
-    public boolean handle(Packet<?> var1) {
-        return !(var1 instanceof S2BPacketChangeGameState s2bpacketchangegamestate)
+    public boolean handle(Packet<?> packet) {
+        return !(packet instanceof S2BPacketChangeGameState s2bpacketchangegamestate)
             ? false
             : s2bpacketchangegamestate.getGameState() == 5 && s2bpacketchangegamestate.func_149137_d() == 0.0F;
     }

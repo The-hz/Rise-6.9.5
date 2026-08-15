@@ -17,14 +17,14 @@ public class a extends rip.vantage.commons.packet.api.abstracts.b {
         this.eQe = var4;
     }
 
-    public a(JSONObject var1) {
+    public a(JSONObject json) {
         super((byte)4);
-        this.eQb = var1.getString("a");
-        this.eQc = var1.getString("b");
-        this.eQd = var1.getString("c");
-        this.eQe = var1.getString("d");
-        if (var1.has("e")) {
-            this.eOP = new rip.vantage.commons.packet.impl.client.protection.b(var1.getString("e")).toString();
+        this.eQb = json.getString("a");
+        this.eQc = json.getString("b");
+        this.eQd = json.getString("c");
+        this.eQe = json.getString("d");
+        if (json.has("e")) {
+            this.eOP = new rip.vantage.commons.packet.impl.client.protection.b(json.getString("e")).toString();
         }
     }
 

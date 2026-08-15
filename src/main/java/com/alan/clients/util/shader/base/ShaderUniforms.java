@@ -7,8 +7,8 @@ public class ShaderUniforms {
     public ShaderUniforms() {
     }
 
-    public static void uniformFB(int var0, String var1, FloatBuffer var2) {
-        GL20.glUniform1(getLocation(var0, var1), var2);
+    public static void uniformFB(int var0, String var1, FloatBuffer floatBuffer) {
+        GL20.glUniform1(getLocation(var0, var1), floatBuffer);
     }
 
     public static void uniform1i(int var0, String var1, int var2) {

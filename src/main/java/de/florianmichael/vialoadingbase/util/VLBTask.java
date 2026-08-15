@@ -7,8 +7,8 @@ import com.viaversion.viaversion.api.scheduler.TaskStatus;
 public class VLBTask implements PlatformTask<Task> {
     private final Task object;
 
-    public VLBTask(Task var1) {
-        this.object = var1;
+    public VLBTask(Task task) {
+        this.object = task;
     }
 
     @Deprecated

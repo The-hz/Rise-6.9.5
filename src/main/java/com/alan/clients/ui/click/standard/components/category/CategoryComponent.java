@@ -26,11 +26,11 @@ public final class CategoryComponent implements InstanceAccess {
     private float y;
     private boolean down;
 
-    public CategoryComponent(Category var1) {
-        this.category = var1;
+    public CategoryComponent(Category category) {
+        this.category = category;
     }
 
-    public void a(double var1, double var3, double var5, Screen var7) {
+    public void a(double var1, double var3, double var5, Screen screen) {
         RiseClickGUI riseclickgui = Client.a.v();
         if (System.currentTimeMillis() - this.lastTime > 300L) {
             this.lastTime = System.currentTimeMillis();
@@ -40,13 +40,13 @@ public final class CategoryComponent implements InstanceAccess {
         this.x = (float)(riseclickgui.axI.x - (69.0 - var3) - 21.0);
         this.y = (float)(riseclickgui.axI.y + var1) + 16.0F;
         this.animation.h(200L);
-        this.animation.Q(var7.equals(this.category.ec()) ? 255.0 : 0.0);
+        this.animation.Q(screen.equals(this.category.ec()) ? 255.0 : 0.0);
         double d0 = FontManager.MAIN.a(16, gd.REGULAR).getStringWidth(ahd.ce(this.category.getName())) + 8.0 + this.category.eb().getStringWidth(this.category.ea());
         GlStateManager.pushMatrix();
         RenderUtil.roundedRectangle(
             this.x, this.y - 5.5, d0 + 8.0, 15.0, 5.0, ColorUtil.d(this.rz().getAccentColor(new Vector2d(0.0, this.y / 5.0)), (int)Math.min(this.animation.sG(), var5)).darker()
         );
-        int j = new Color(255, 255, 255, Math.min(var7.equals(this.category.ec()) ? 255 : 200, (int)var5)).hashCode();
+        int j = new Color(255, 255, 255, Math.min(screen.equals(this.category.ec()) ? 255 : 200, (int)var5)).hashCode();
         this.category.eb().a(this.category.ea(), (float)(this.x + this.animation.sG() / 80.0 + 3.0), this.y, j);
         FontManager.MAIN
             .a(16, gd.REGULAR)

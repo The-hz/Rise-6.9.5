@@ -4,9 +4,9 @@ public class FoodValues {
     public final int hunger;
     public final float saturationModifier;
 
-    public FoodValues(int var1, float var2) {
-        this.hunger = var1;
-        this.saturationModifier = var2;
+    public FoodValues(int hunger, float saturationModifier) {
+        this.hunger = hunger;
+        this.saturationModifier = saturationModifier;
     }
 
     public float getSaturationIncrement() {

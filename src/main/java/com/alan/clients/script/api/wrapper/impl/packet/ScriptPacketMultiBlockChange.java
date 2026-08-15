@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S22PacketMultiBlockChange;
 
 public class ScriptPacketMultiBlockChange extends ScriptPacket<S22PacketMultiBlockChange> {
-    public ScriptPacketMultiBlockChange(S22PacketMultiBlockChange var1) {
-        super(var1);
+    public ScriptPacketMultiBlockChange(S22PacketMultiBlockChange packet) {
+        super(packet);
     }
 
     public int getChangedBlockCount() {

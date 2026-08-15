@@ -21,12 +21,12 @@ public final class CheckManager {
     public CheckManager() {
     }
 
-    public static List<Check> loadChecks(PlayerData var0) {
+    public static List<Check> loadChecks(PlayerData playerData) {
         ArrayList arraylist = new ArrayList();
 
         for (Constructor constructor : CONSTRUCTORS) {
             try {
-                arraylist.add((Check)constructor.newInstance(var0));
+                arraylist.add((Check)constructor.newInstance(playerData));
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

@@ -5,8 +5,8 @@ import com.alan.clients.script.api.wrapper.impl.ScriptEntityLiving;
 import com.alan.clients.script.api.wrapper.impl.event.CancellableScriptEvent;
 
 public class ScriptAttackEvent extends CancellableScriptEvent<AttackEvent> {
-    public ScriptAttackEvent(AttackEvent var1) {
-        super(var1);
+    public ScriptAttackEvent(AttackEvent event) {
+        super(event);
     }
 
     public ScriptEntityLiving getTarget() {

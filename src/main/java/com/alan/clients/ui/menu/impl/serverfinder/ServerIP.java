@@ -33,19 +33,19 @@ public class ServerIP {
         this.aCU = Integer.parseInt(this.split[3]);
     }
 
-    public static ServerIP a(ServerIP var0, ServerIP var1) {
-        int i = Math.min(var0.aCR, var1.aCR);
-        int j = Math.min(var0.aCS, var1.aCS);
-        int k = Math.min(var0.aCT, var1.aCT);
-        int l = Math.min(var0.aCU, var1.aCU);
+    public static ServerIP a(ServerIP serverIP, ServerIP var1) {
+        int i = Math.min(serverIP.aCR, var1.aCR);
+        int j = Math.min(serverIP.aCS, var1.aCS);
+        int k = Math.min(serverIP.aCT, var1.aCT);
+        int l = Math.min(serverIP.aCU, var1.aCU);
         return new ServerIP(i, j, k, l);
     }
 
-    public static ServerIP b(ServerIP var0, ServerIP var1) {
-        int i = Math.max(var0.aCR, var1.aCR);
-        int j = Math.max(var0.aCS, var1.aCS);
-        int k = Math.max(var0.aCT, var1.aCT);
-        int l = Math.max(var0.aCU, var1.aCU);
+    public static ServerIP b(ServerIP serverIP, ServerIP var1) {
+        int i = Math.max(serverIP.aCR, var1.aCR);
+        int j = Math.max(serverIP.aCS, var1.aCS);
+        int k = Math.max(serverIP.aCT, var1.aCT);
+        int l = Math.max(serverIP.aCU, var1.aCU);
         return new ServerIP(i, j, k, l);
     }
 

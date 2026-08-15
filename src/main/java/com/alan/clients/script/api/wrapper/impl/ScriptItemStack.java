@@ -5,8 +5,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ScriptItemStack extends ScriptWrapper<ItemStack> {
-    public ScriptItemStack(ItemStack var1) {
-        super(var1);
+    public ScriptItemStack(ItemStack stack) {
+        super(stack);
     }
 
     public int getAmount() {

@@ -12,12 +12,12 @@ public final class SwingAnimationEvent extends CancellableEvent {
     }
 
     @Generated
-    public void setAnimationEnd(int var1) {
-        this.animationEnd = var1;
+    public void setAnimationEnd(int animationEnd) {
+        this.animationEnd = animationEnd;
     }
 
     @Generated
-    public SwingAnimationEvent(int var1) {
-        this.animationEnd = var1;
+    public SwingAnimationEvent(int animationEnd) {
+        this.animationEnd = animationEnd;
     }
 }

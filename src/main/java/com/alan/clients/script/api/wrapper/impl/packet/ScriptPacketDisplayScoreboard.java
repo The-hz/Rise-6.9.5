@@ -15,11 +15,11 @@ public class ScriptPacketDisplayScoreboard extends ScriptPacket<bq> {
         return this.wrapped.func_149370_d();
     }
 
-    public void setPosition(int var1) {
-        this.wrapped.setPosition(var1);
+    public void setPosition(int position) {
+        this.wrapped.setPosition(position);
     }
 
-    public void setScoreName(String var1) {
-        this.wrapped.setScoreName(var1);
+    public void setScoreName(String scoreName) {
+        this.wrapped.setScoreName(scoreName);
     }
 }

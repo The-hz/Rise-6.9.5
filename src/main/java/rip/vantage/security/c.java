@@ -24,7 +24,7 @@ public class c {
         return null;
     }
 
-    public static String c(HttpsURLConnection var0) {
+    public static String c(HttpsURLConnection connection) {
         return null;
     }
 
@@ -32,7 +32,7 @@ public class c {
         return null;
     }
 
-    public static void a(Path var0, String var1) {
+    public static void a(Path path, String var1) {
     }
 
     public static String[] kv(String var0) {
@@ -59,10 +59,10 @@ public class c {
     public static void kx(String var0) {
     }
 
-    public static void b(HttpsURLConnection var0) {
+    public static void b(HttpsURLConnection connection) {
     }
 
-    public static void a(Path var0) {
+    public static void a(Path path) {
     }
 
     public static Path aLx() {

@@ -87,10 +87,10 @@ public class aiw implements InstanceAccess {
         }
     }
 
-    public static void c(ScaledResolution var0) {
+    public static void c(ScaledResolution resolution) {
         if (!Minecraft.getMinecraft().gameSettings.cij) {
-            float f = (float)var0.getScaledWidth_double();
-            float f1 = (float)var0.getScaledHeight_double();
+            float f = (float)resolution.getScaledWidth_double();
+            float f1 = (float)resolution.getScaledHeight_double();
             GL11.glBegin(7);
             GL11.glTexCoord2f(0.0F, 1.0F);
             GL11.glVertex2f(0.0F, 0.0F);

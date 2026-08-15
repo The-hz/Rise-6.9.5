@@ -5,8 +5,8 @@ import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
 
 class yz extends ModeValue {
-    yz(ModernInterface var1, String var2, Mode var3) {
-        super(var2, var3);
+    yz(ModernInterface modernInterface, String var2, Mode mode) {
+        super(var2, mode);
         this.add(new SubMode("Off"));
         this.add(new SubMode("Normal"));
         this.setDefault("Normal");

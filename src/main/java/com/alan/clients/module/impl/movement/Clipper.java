@@ -100,19 +100,19 @@ public class Clipper extends Module {
     public Clipper() {
     }
 
-    private void a(EnumFacing var1, int var2, Consumer<BlockPos> var3) {
+    private void a(EnumFacing facing, int var2, Consumer<BlockPos> consumer) {
         if (var2 > 0) {
             boolean flag = false;
             BlockPos blockpos = aEg.thePlayer.getPosition();
 
             for (int i = 0; i < var2; i++) {
-                blockpos = blockpos.offset(var1);
-                if (var1 == EnumFacing.DOWN && this.a(blockpos, 50)) {
+                blockpos = blockpos.offset(facing);
+                if (facing == EnumFacing.DOWN && this.a(blockpos, 50)) {
                     return;
                 }
 
                 if (flag && this.f(blockpos)) {
-                    var3.accept(blockpos);
+                    consumer.accept(blockpos);
                     return;
                 }
 
@@ -123,11 +123,11 @@ public class Clipper extends Module {
         }
     }
 
-    private boolean a(BlockPos var1, int var2) {
+    private boolean a(BlockPos pos, int var2) {
         int i = 0;
 
         for (int j = 1; j <= var2; j++) {
-            BlockPos blockpos = var1.down(j);
+            BlockPos blockpos = pos.down(j);
             if (!aEg.theWorld.isAirBlock(blockpos)) {
                 break;
             }
@@ -138,15 +138,15 @@ public class Clipper extends Module {
         return i >= var2;
     }
 
-    private boolean f(BlockPos var1) {
+    private boolean f(BlockPos pos) {
         double d0 = aEg.thePlayer.posX;
         double d1 = aEg.thePlayer.posZ;
-        double d2 = var1.getY();
+        double d2 = pos.getY();
         AxisAlignedBB axisalignedbb = aEg.thePlayer.getEntityBoundingBox().offset(d0 - aEg.thePlayer.posX, d2 - aEg.thePlayer.posY, d1 - aEg.thePlayer.posZ);
         return aEg.theWorld.getCollidingBoundingBoxes(aEg.thePlayer, axisalignedbb).isEmpty();
     }
 
-    private boolean g(BlockPos var1) {
-        return aEg.theWorld.getBlockState(var1).getBlock().isPassable(aEg.theWorld, var1);
+    private boolean g(BlockPos pos) {
+        return aEg.theWorld.getBlockState(pos).getBlock().isPassable(aEg.theWorld, pos);
     }
 }

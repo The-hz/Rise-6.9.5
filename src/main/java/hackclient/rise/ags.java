@@ -13,7 +13,7 @@ class ags implements InputMethodRequests {
         this.aJJ = var1;
     }
 
-    public Rectangle a(TextHitInfo var1) {
+    public Rectangle a(TextHitInfo textHitInfo) {
         return new Rectangle(this.aJJ.aJH.getX(), this.aJJ.aJH.getY(), 1, Math.max(1, this.aJJ.aJI.aJC));
     }
 
@@ -25,7 +25,7 @@ class ags implements InputMethodRequests {
         return 0;
     }
 
-    public AttributedCharacterIterator a(int var1, int var2, Attribute[] var3) {
+    public AttributedCharacterIterator a(int var1, int var2, Attribute[] attributes) {
         return null;
     }
 
@@ -33,18 +33,18 @@ class ags implements InputMethodRequests {
         return 0;
     }
 
-    public AttributedCharacterIterator a(Attribute[] var1) {
+    public AttributedCharacterIterator a(Attribute[] attributes) {
         return null;
     }
 
-    public AttributedCharacterIterator b(Attribute[] var1) {
+    public AttributedCharacterIterator b(Attribute[] attributes) {
         return null;
     }
-    public java.awt.Rectangle getTextLocation(java.awt.font.TextHitInfo var1) { return null; }
+    public java.awt.Rectangle getTextLocation(java.awt.font.TextHitInfo textHitInfo) { return null; }
     public java.awt.font.TextHitInfo getLocationOffset(int var1, int var2) { return null; }
     public int getInsertPositionOffset() { return 0; }
-    public java.text.AttributedCharacterIterator getCommittedText(int var1, int var2, java.text.AttributedCharacterIterator.Attribute[] var3) { return null; }
+    public java.text.AttributedCharacterIterator getCommittedText(int var1, int var2, java.text.AttributedCharacterIterator.Attribute[] attributes) { return null; }
     public int getCommittedTextLength() { return 0; }
-    public java.text.AttributedCharacterIterator cancelLatestCommittedText(java.text.AttributedCharacterIterator.Attribute[] var1) { return null; }
-    public java.text.AttributedCharacterIterator getSelectedText(java.text.AttributedCharacterIterator.Attribute[] var1) { return null; }
+    public java.text.AttributedCharacterIterator cancelLatestCommittedText(java.text.AttributedCharacterIterator.Attribute[] attributes) { return null; }
+    public java.text.AttributedCharacterIterator getSelectedText(java.text.AttributedCharacterIterator.Attribute[] attributes) { return null; }
 }

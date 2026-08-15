@@ -30,7 +30,7 @@ public class VanillaNoSlow extends Mode<NoSlow> {
         }
     };
 
-    public VanillaNoSlow(String var1, NoSlow var2) {
-        super(var1, var2);
+    public VanillaNoSlow(String var1, NoSlow noSlow) {
+        super(var1, noSlow);
     }
 }

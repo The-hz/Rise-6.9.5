@@ -105,11 +105,11 @@ public class ComponentManager {
         this.bx.forEach((var0, var1) -> var1.aT());
     }
 
-    public void a(Component var1) {
-        this.bx.put((Class<Component>)var1.getClass(), var1);
+    public void a(Component component) {
+        this.bx.put((Class<Component>)component.getClass(), component);
     }
 
-    public <T extends Component> T b(Class<T> var1) {
-        return (T)this.bx.get(var1);
+    public <T extends Component> T b(Class<T> type) {
+        return (T)this.bx.get(type);
     }
 }

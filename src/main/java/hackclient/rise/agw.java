@@ -88,8 +88,8 @@ public final class agw {
         }
     }
 
-    public boolean a(TextBox var1, char var2, int var3) {
-        if (var1 == null) {
+    public boolean a(TextBox textBox, char var2, int var3) {
+        if (textBox == null) {
             return false;
         }
 
@@ -165,7 +165,7 @@ public final class agw {
         } else if (this.aJU && var3 >= 2 && var3 <= 10) {
             int i = var3 - 2;
             if (i < this.aJW.size()) {
-                this.a(var1, this.aJY + i);
+                this.a(textBox, this.aJY + i);
             }
 
             return true;
@@ -197,9 +197,9 @@ public final class agw {
 
             if (this.aJU && var2 != 0 && !Character.isISOControl(var2)) {
                 if (!this.aJW.isEmpty()) {
-                    this.a(var1, this.aJY + this.aAP);
+                    this.a(textBox, this.aJY + this.aAP);
                 } else if (!this.aJV.isEmpty()) {
-                    var1.bV(this.aJV);
+                    textBox.bV(this.aJV);
                     this.aX();
                 }
 
@@ -212,9 +212,9 @@ public final class agw {
             }
 
             if (!this.aJW.isEmpty()) {
-                this.a(var1, this.aJY + this.aAP);
+                this.a(textBox, this.aJY + this.aAP);
             } else {
-                var1.bV(this.aJV);
+                textBox.bV(this.aJV);
                 this.aX();
             }
 
@@ -294,13 +294,13 @@ public final class agw {
         return true;
     }
 
-    private void a(TextBox var1, int var2) {
+    private void a(TextBox textBox, int var2) {
         if (this.aJU) {
             if (this.aJX != null && !this.aJX.isEmpty()) {
                 int i = Math.max(0, Math.min(var2, this.aJX.size() - 1));
                 String s = this.aJX.get(i);
                 String s1 = this.aJV == null ? "" : this.aJV.toLowerCase(Locale.ROOT);
-                var1.bV(s);
+                textBox.bV(s);
                 if (!s1.isEmpty() && s != null && !s.isEmpty()) {
                     agy.uC().D(s1, s);
                 }

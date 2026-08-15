@@ -17,8 +17,8 @@ public final class NoPingCheckAntiBot extends Mode<AntiBot> {
         }
     });
 
-    public NoPingCheckAntiBot(String var1, AntiBot var2) {
-        super(var1, var2);
+    public NoPingCheckAntiBot(String var1, AntiBot antiBot) {
+        super(var1, antiBot);
     }
 
     @Override

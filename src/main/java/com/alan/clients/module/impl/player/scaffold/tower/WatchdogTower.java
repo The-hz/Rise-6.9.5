@@ -392,8 +392,8 @@ public class WatchdogTower extends Mode<Scaffold> {
         }
     };
 
-    public WatchdogTower(String var1, Scaffold var2) {
-        super(var1, var2);
+    public WatchdogTower(String var1, Scaffold scaffold) {
+        super(var1, scaffold);
     }
 
     @Override

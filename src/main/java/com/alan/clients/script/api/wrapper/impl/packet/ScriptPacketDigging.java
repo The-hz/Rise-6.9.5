@@ -4,8 +4,8 @@ import com.alan.clients.script.api.wrapper.impl.ScriptBlockPos;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 
 public class ScriptPacketDigging extends ScriptPacket<C07PacketPlayerDigging> {
-    public ScriptPacketDigging(C07PacketPlayerDigging var1) {
-        super(var1);
+    public ScriptPacketDigging(C07PacketPlayerDigging packet) {
+        super(packet);
     }
 
     public ScriptBlockPos getPosition() {

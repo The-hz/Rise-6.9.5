@@ -258,28 +258,28 @@ public class BedPlates extends Module {
         }
     }
 
-    private boolean a(BlockPos var1, EnumFacing var2) {
+    private boolean a(BlockPos pos, EnumFacing facing) {
         aka akaxx = Breaker.abS;
         if (akaxx == null) {
             return false;
         }
 
-        aka akax = new aka(var1.getX() + 0.5, var1.getY() + 0.5, var1.getZ() + 0.5);
-        BlockPos blockpos = var1.offset(var2.getOpposite());
+        aka akax = new aka(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+        BlockPos blockpos = pos.offset(facing.getOpposite());
         aka akaxx2 = new aka(blockpos.getX() + 0.5, blockpos.getY() + 0.5, blockpos.getZ() + 0.5);
         double d0 = 4.5;
         return akax.g(akaxx2) <= d0 || akaxx2.g(akaxx2) <= d0;
     }
 
-    private wk a(BlockPos var1, EnumFacing var2, double var3, double var5, double var7) {
+    private wk a(BlockPos pos, EnumFacing facing, double var3, double var5, double var7) {
         ItemStack itemstack = null;
         double d0 = Double.MAX_VALUE;
         double d1 = 0.0;
         MapColor mapcolor = null;
         aka aka = null;
         int i = 0;
-        BlockPos blockpos = var1.offset(var2.getOpposite());
-        BlockPos[] ablockpos = new BlockPos[]{var1, blockpos};
+        BlockPos blockpos = pos.offset(facing.getOpposite());
+        BlockPos[] ablockpos = new BlockPos[]{pos, blockpos};
         double d2 = aEg.thePlayer.posX;
         double d3 = aEg.thePlayer.posY;
         double d4 = aEg.thePlayer.posZ;
@@ -606,30 +606,30 @@ public class BedPlates extends Module {
         return this.rz().getRound();
     }
 
-    private Color a(Color var1, MapColor var2) {
-        if (var2 == null) {
+    private Color a(Color var1, MapColor mapColor) {
+        if (mapColor == null) {
             return var1;
         }
 
-        Color color = new Color(var2.colorValue | 0xFF000000, true);
+        Color color = new Color(mapColor.colorValue | 0xFF000000, true);
         Color color1 = new Color(color.getRed(), color.getGreen(), color.getBlue(), var1.getAlpha());
         return a(var1, color1, 0.35F);
     }
 
-    private static Color a(Color var0, Color var1, float var2) {
+    private static Color a(Color color, Color var1, float var2) {
         float f = Math.max(0.0F, Math.min(1.0F, var2));
-        int i = (int)(var0.getRed() + (var1.getRed() - var0.getRed()) * f);
-        int j = (int)(var0.getGreen() + (var1.getGreen() - var0.getGreen()) * f);
-        int k = (int)(var0.getBlue() + (var1.getBlue() - var0.getBlue()) * f);
-        int l = (int)(var0.getAlpha() + (var1.getAlpha() - var0.getAlpha()) * f);
+        int i = (int)(color.getRed() + (var1.getRed() - color.getRed()) * f);
+        int j = (int)(color.getGreen() + (var1.getGreen() - color.getGreen()) * f);
+        int k = (int)(color.getBlue() + (var1.getBlue() - color.getBlue()) * f);
+        int l = (int)(color.getAlpha() + (var1.getAlpha() - color.getAlpha()) * f);
         return new Color(i, j, k, l);
     }
 
-    private static boolean a(List<wj> var0, BlockPos var1) {
+    private static boolean a(List<wj> var0, BlockPos pos) {
         Iterator iterator = var0.iterator();
 
         while (iterator.hasNext()) {
-            if (((wj)iterator.next()).la().equals(var1)) {
+            if (((wj)iterator.next()).la().equals(pos)) {
                 return true;
             }
         }

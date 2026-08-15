@@ -166,30 +166,30 @@ public final class BlinkComponent extends Component {
     public BlinkComponent() {
     }
 
-    public CancellableEvent a(Packet<?> var1, CancellableEvent var2) {
-        if (!var2.isCancelled() && enabled) {
+    public CancellableEvent a(Packet<?> packet, CancellableEvent cancellableEvent) {
+        if (!cancellableEvent.isCancelled() && enabled) {
             boolean flag;
             synchronized (dR) {
                 Set<bp> set = dS.values()
                     .stream()
                     .filter(bp::bd)
-                    .filter(var1x -> var1x.d(var1))
+                    .filter(var1x -> var1x.d(packet))
                     .collect(Collectors.toCollection(HashSet::new));
                 Set<bn> set1 = set.stream().map(var0 -> var0.ek).collect(Collectors.toCollection(HashSet::new));
                 flag = !set1.isEmpty();
                 if (flag) {
                     set.forEach(bp::bq);
-                    packets.add(new br(var1, set1));
+                    packets.add(new br(packet, set1));
                 }
             }
 
             if (flag) {
-                var2.setCancelled();
+                cancellableEvent.setCancelled();
             }
 
-            return var2;
+            return cancellableEvent;
         }
-        return var2;
+        return cancellableEvent;
     }
 
     public static void dispatch() {

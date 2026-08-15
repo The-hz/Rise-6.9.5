@@ -14,8 +14,8 @@ import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class cq extends ESP implements InstanceAccess {
-    public cq(ESPColor var1) {
-        super(var1);
+    public cq(ESPColor espColor) {
+        super(espColor);
     }
 
     @Override

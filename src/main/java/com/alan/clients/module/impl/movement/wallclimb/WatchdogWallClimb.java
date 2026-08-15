@@ -102,8 +102,8 @@ public class WatchdogWallClimb extends Mode<WallClimb> {
         }
     };
 
-    public WatchdogWallClimb(String var1, WallClimb var2) {
-        super(var1, var2);
+    public WatchdogWallClimb(String var1, WallClimb wallClimb) {
+        super(var1, wallClimb);
     }
 
     @Override

@@ -33,8 +33,8 @@ public class ge implements InstanceAccess {
         this.kK.clear();
     }
 
-    public void c(Runnable var1) {
-        this.kK.add(var1);
+    public void c(Runnable runnable) {
+        this.kK.add(runnable);
     }
 
     @Generated

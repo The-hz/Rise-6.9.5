@@ -12,38 +12,38 @@ import lombok.Generated;
 public class ModeValue extends ListValue<Mode<?>> {
     private final List<Mode<?>> modes = new ArrayList<>();
 
-    public ModeValue(String var1, Module var2) {
-        super(var1, var2);
+    public ModeValue(String var1, Module module) {
+        super(var1, module);
     }
 
-    public ModeValue(String var1, Mode<?> var2) {
-        super(var1, var2);
+    public ModeValue(String var1, Mode<?> mode) {
+        super(var1, mode);
     }
 
-    public ModeValue(String var1, Module var2, BooleanSupplier var3) {
-        super(var1, var2, var3);
+    public ModeValue(String var1, Module module, BooleanSupplier booleanSupplier) {
+        super(var1, module, booleanSupplier);
     }
 
-    public ModeValue(String var1, Mode<?> var2, BooleanSupplier var3) {
-        super(var1, var2, var3);
+    public ModeValue(String var1, Mode<?> mode, BooleanSupplier booleanSupplier) {
+        super(var1, mode, booleanSupplier);
     }
 
-    public void update(Mode<?> var1) {
+    public void update(Mode<?> mode) {
         if (this.wq() == null || this.wq() instanceof Module && !((Module)this.wq()).isEnabled()) {
-            this.n(var1);
+            this.n(mode);
         } else {
             this.wo().unregister();
-            this.n(var1);
+            this.n(mode);
             this.wo().a();
         }
     }
 
-    public ModeValue add(Mode<?>... var1) {
-        if (var1 == null) {
+    public ModeValue add(Mode<?>... mode) {
+        if (mode == null) {
             return this;
         }
 
-        this.modes.addAll(Arrays.asList(var1));
+        this.modes.addAll(Arrays.asList(mode));
         return this;
     }
 

@@ -10,20 +10,20 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 public class akj extends Value<Supplier<Double>> {
-    public akj(String var1, Module var2) {
-        super(var1, var2, null);
+    public akj(String var1, Module module) {
+        super(var1, module, null);
     }
 
-    public akj(String var1, Mode<?> var2) {
-        super(var1, var2, null);
+    public akj(String var1, Mode<?> mode) {
+        super(var1, mode, null);
     }
 
-    public akj(String var1, Module var2, BooleanSupplier var3) {
-        super(var1, var2, null, var3);
+    public akj(String var1, Module module, BooleanSupplier booleanSupplier) {
+        super(var1, module, null, booleanSupplier);
     }
 
-    public akj(String var1, Mode<?> var2, BooleanSupplier var3) {
-        super(var1, var2, null, var3);
+    public akj(String var1, Mode<?> mode, BooleanSupplier booleanSupplier) {
+        super(var1, mode, null, booleanSupplier);
     }
 
     @Override

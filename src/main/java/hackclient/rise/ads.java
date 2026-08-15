@@ -85,10 +85,10 @@ extends Menu {
         this.a(ServerIP.a(adt3, adt2), ServerIP.b(adt3, adt2), Math.min(n3, n2), Math.max(n3, n2));
     }
 
-    private void a(ServerIP adt2, ServerIP adt3, int n2, int n3) {
-        ServerIP adt4 = new ServerIP(adt2.ru(), adt2.rv(), adt2.rw(), adt2.getThird());
+    private void a(ServerIP serverIP, ServerIP adt3, int n2, int n3) {
+        ServerIP adt4 = new ServerIP(serverIP.ru(), serverIP.rv(), serverIP.rw(), serverIP.getThird());
         for (int i2 = 0; i2 < 4; ++i2) {
-            for (int i3 = adt2.getPart(i2); i3 <= adt3.getPart(i2); ++i3) {
+            for (int i3 = serverIP.getPart(i2); i3 <= adt3.getPart(i2); ++i3) {
                 adt4.setPart(i2, i3);
                 ServerIP adt5 = new ServerIP(adt4.getPart(0), adt4.getPart(1), adt4.getPart(2), adt4.getPart(3));
                 int n4 = n2;

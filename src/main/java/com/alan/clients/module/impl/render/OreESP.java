@@ -111,54 +111,54 @@ public final class OreESP extends Module {
         }
     }
 
-    private boolean e(Block var1) {
-        if (this.diamond.wo() && var1 == Blocks.diamond_ore) {
+    private boolean e(Block block) {
+        if (this.diamond.wo() && block == Blocks.diamond_ore) {
             return true;
-        } else if (this.iron.wo() && var1 == Blocks.iron_ore) {
+        } else if (this.iron.wo() && block == Blocks.iron_ore) {
             return true;
-        } else if (this.gold.wo() && var1 == Blocks.gold_ore) {
+        } else if (this.gold.wo() && block == Blocks.gold_ore) {
             return true;
-        } else if (this.lapis.wo() && var1 == Blocks.lapis_ore) {
+        } else if (this.lapis.wo() && block == Blocks.lapis_ore) {
             return true;
-        } else if (!this.redstone.wo() || var1 != Blocks.redstone_ore && var1 != Blocks.lit_redstone_ore) {
-            return this.coal.wo() && var1 == Blocks.coal_ore ? true : this.emerald.wo() && var1 == Blocks.emerald_ore;
+        } else if (!this.redstone.wo() || block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore) {
+            return this.coal.wo() && block == Blocks.coal_ore ? true : this.emerald.wo() && block == Blocks.emerald_ore;
         }
         return true;
     }
 
-    private Color f(Block var1) {
-        if (var1 == Blocks.diamond_ore) {
+    private Color f(Block block) {
+        if (block == Blocks.diamond_ore) {
             return new Color(0, 255, 255);
-        } else if (var1 == Blocks.iron_ore) {
+        } else if (block == Blocks.iron_ore) {
             return new Color(225, 225, 225);
-        } else if (var1 == Blocks.lapis_ore) {
+        } else if (block == Blocks.lapis_ore) {
             return new Color(0, 0, 255);
-        } else if (var1 == Blocks.redstone_ore || var1 == Blocks.lit_redstone_ore) {
+        } else if (block == Blocks.redstone_ore || block == Blocks.lit_redstone_ore) {
             return new Color(255, 0, 0);
-        } else if (var1 == Blocks.coal_ore) {
+        } else if (block == Blocks.coal_ore) {
             return new Color(64, 64, 64);
-        } else if (var1 == Blocks.emerald_ore) {
+        } else if (block == Blocks.emerald_ore) {
             return new Color(0, 255, 0);
         }
-        return var1 == Blocks.gold_ore ? new Color(255, 255, 0) : null;
+        return block == Blocks.gold_ore ? new Color(255, 255, 0) : null;
     }
 
-    private void a(BlockPos var1, int var2, int var3, int var4) {
+    private void a(BlockPos pos, int var2, int var3, int var4) {
         int i = this.opacity.wo().intValue();
         Color color = new Color(var2, var3, var4, i);
         if (this.eSP.wo()) {
-            this.a(var1, color);
+            this.a(pos, color);
         }
 
         if (this.tracers.wo()) {
-            this.b(var1, color);
+            this.b(pos, color);
         }
     }
 
-    private void a(BlockPos var1, Color var2) {
-        double d0 = var1.getX() - aEg.getRenderManager().viewerPosX;
-        double d1 = var1.getY() - aEg.getRenderManager().viewerPosY;
-        double d2 = var1.getZ() - aEg.getRenderManager().viewerPosZ;
+    private void a(BlockPos pos, Color color) {
+        double d0 = pos.getX() - aEg.getRenderManager().viewerPosX;
+        double d1 = pos.getY() - aEg.getRenderManager().viewerPosY;
+        double d2 = pos.getZ() - aEg.getRenderManager().viewerPosZ;
         GL11.glPushMatrix();
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
@@ -166,7 +166,7 @@ public final class OreESP extends Module {
         GL11.glDisable(2929);
         GL11.glDepthMask(false);
         GL11.glDisable(2884);
-        ColorUtil.d(var2);
+        ColorUtil.d(color);
         this.e(new AxisAlignedBB(d0, d1, d2, d0 + 1.0, d1 + 1.0, d2 + 1.0));
         GL11.glEnable(2884);
         GL11.glDepthMask(true);
@@ -176,45 +176,45 @@ public final class OreESP extends Module {
         GL11.glPopMatrix();
     }
 
-    private void b(BlockPos var1, Color var2) {
-        double d0 = var1.getX() + 0.5 - aEg.getRenderManager().viewerPosX;
-        double d1 = var1.getY() + 0.5 - aEg.getRenderManager().viewerPosY;
-        double d2 = var1.getZ() + 0.5 - aEg.getRenderManager().viewerPosZ;
+    private void b(BlockPos pos, Color color) {
+        double d0 = pos.getX() + 0.5 - aEg.getRenderManager().viewerPosX;
+        double d1 = pos.getY() + 0.5 - aEg.getRenderManager().viewerPosY;
+        double d2 = pos.getZ() + 0.5 - aEg.getRenderManager().viewerPosZ;
         double d3 = aEg.thePlayer.lastTickPosX + (aEg.thePlayer.posX - aEg.thePlayer.lastTickPosX) * aEg.timer.bWm - aEg.getRenderManager().viewerPosX;
         double d4 = aEg.thePlayer.lastTickPosY
             + (aEg.thePlayer.posY - aEg.thePlayer.lastTickPosY) * aEg.timer.bWm
             - aEg.getRenderManager().viewerPosY
             + aEg.thePlayer.getEyeHeight();
         double d5 = aEg.thePlayer.lastTickPosZ + (aEg.thePlayer.posZ - aEg.thePlayer.lastTickPosZ) * aEg.timer.bWm - aEg.getRenderManager().viewerPosZ;
-        RenderUtil.drawLine(d3, d4, d5, d0, d1, d2, var2, 2.0F);
+        RenderUtil.drawLine(d3, d4, d5, d0, d1, d2, color, 2.0F);
     }
 
-    private void e(AxisAlignedBB var1) {
+    private void e(AxisAlignedBB box) {
         GL11.glBegin(7);
-        GL11.glVertex3d(var1.minX, var1.minY, var1.minZ);
-        GL11.glVertex3d(var1.maxX, var1.minY, var1.minZ);
-        GL11.glVertex3d(var1.maxX, var1.minY, var1.maxZ);
-        GL11.glVertex3d(var1.minX, var1.minY, var1.maxZ);
-        GL11.glVertex3d(var1.minX, var1.maxY, var1.minZ);
-        GL11.glVertex3d(var1.minX, var1.maxY, var1.maxZ);
-        GL11.glVertex3d(var1.maxX, var1.maxY, var1.maxZ);
-        GL11.glVertex3d(var1.maxX, var1.maxY, var1.minZ);
-        GL11.glVertex3d(var1.minX, var1.minY, var1.maxZ);
-        GL11.glVertex3d(var1.maxX, var1.minY, var1.maxZ);
-        GL11.glVertex3d(var1.maxX, var1.maxY, var1.maxZ);
-        GL11.glVertex3d(var1.minX, var1.maxY, var1.maxZ);
-        GL11.glVertex3d(var1.maxX, var1.minY, var1.minZ);
-        GL11.glVertex3d(var1.minX, var1.minY, var1.minZ);
-        GL11.glVertex3d(var1.minX, var1.maxY, var1.minZ);
-        GL11.glVertex3d(var1.maxX, var1.maxY, var1.minZ);
-        GL11.glVertex3d(var1.minX, var1.minY, var1.minZ);
-        GL11.glVertex3d(var1.minX, var1.minY, var1.maxZ);
-        GL11.glVertex3d(var1.minX, var1.maxY, var1.maxZ);
-        GL11.glVertex3d(var1.minX, var1.maxY, var1.minZ);
-        GL11.glVertex3d(var1.maxX, var1.minY, var1.maxZ);
-        GL11.glVertex3d(var1.maxX, var1.minY, var1.minZ);
-        GL11.glVertex3d(var1.maxX, var1.maxY, var1.minZ);
-        GL11.glVertex3d(var1.maxX, var1.maxY, var1.maxZ);
+        GL11.glVertex3d(box.minX, box.minY, box.minZ);
+        GL11.glVertex3d(box.maxX, box.minY, box.minZ);
+        GL11.glVertex3d(box.maxX, box.minY, box.maxZ);
+        GL11.glVertex3d(box.minX, box.minY, box.maxZ);
+        GL11.glVertex3d(box.minX, box.maxY, box.minZ);
+        GL11.glVertex3d(box.minX, box.maxY, box.maxZ);
+        GL11.glVertex3d(box.maxX, box.maxY, box.maxZ);
+        GL11.glVertex3d(box.maxX, box.maxY, box.minZ);
+        GL11.glVertex3d(box.minX, box.minY, box.maxZ);
+        GL11.glVertex3d(box.maxX, box.minY, box.maxZ);
+        GL11.glVertex3d(box.maxX, box.maxY, box.maxZ);
+        GL11.glVertex3d(box.minX, box.maxY, box.maxZ);
+        GL11.glVertex3d(box.maxX, box.minY, box.minZ);
+        GL11.glVertex3d(box.minX, box.minY, box.minZ);
+        GL11.glVertex3d(box.minX, box.maxY, box.minZ);
+        GL11.glVertex3d(box.maxX, box.maxY, box.minZ);
+        GL11.glVertex3d(box.minX, box.minY, box.minZ);
+        GL11.glVertex3d(box.minX, box.minY, box.maxZ);
+        GL11.glVertex3d(box.minX, box.maxY, box.maxZ);
+        GL11.glVertex3d(box.minX, box.maxY, box.minZ);
+        GL11.glVertex3d(box.maxX, box.minY, box.maxZ);
+        GL11.glVertex3d(box.maxX, box.minY, box.minZ);
+        GL11.glVertex3d(box.maxX, box.maxY, box.minZ);
+        GL11.glVertex3d(box.maxX, box.maxY, box.maxZ);
         GL11.glEnd();
     }
 

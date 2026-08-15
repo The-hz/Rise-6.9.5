@@ -14,29 +14,29 @@ public class NumberValue extends Value<Number> {
     private final Number aRf;
     private final Number aRg;
 
-    public NumberValue(String var1, Module var2, Number var3, Number var4, Number var5, Number var6) {
-        super(var1, var2, var3);
+    public NumberValue(String var1, Module module, Number var3, Number var4, Number var5, Number var6) {
+        super(var1, module, var3);
         this.aRg = var6;
         this.aRe = var4;
         this.aRf = var5;
     }
 
-    public NumberValue(String var1, Mode<?> var2, Number var3, Number var4, Number var5, Number var6) {
-        super(var1, var2, var3);
+    public NumberValue(String var1, Mode<?> mode, Number var3, Number var4, Number var5, Number var6) {
+        super(var1, mode, var3);
         this.aRg = var6;
         this.aRe = var4;
         this.aRf = var5;
     }
 
-    public NumberValue(String var1, Module var2, Number var3, Number var4, Number var5, Number var6, BooleanSupplier var7) {
-        super(var1, var2, var3, var7);
+    public NumberValue(String var1, Module module, Number var3, Number var4, Number var5, Number var6, BooleanSupplier booleanSupplier) {
+        super(var1, module, var3, booleanSupplier);
         this.aRg = var6;
         this.aRe = var4;
         this.aRf = var5;
     }
 
-    public NumberValue(String var1, Mode<?> var2, Number var3, Number var4, Number var5, Number var6, BooleanSupplier var7) {
-        super(var1, var2, var3, var7);
+    public NumberValue(String var1, Mode<?> mode, Number var3, Number var4, Number var5, Number var6, BooleanSupplier booleanSupplier) {
+        super(var1, mode, var3, booleanSupplier);
         this.aRg = var6;
         this.aRe = var4;
         this.aRf = var5;

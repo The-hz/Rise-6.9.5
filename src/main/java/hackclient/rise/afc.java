@@ -53,11 +53,11 @@ public final class afc {
         return a(var0, null);
     }
 
-    public static afd a(aeu var0, File var1) {
+    public static afd a(aeu var0, File file) {
         init();
         String s = var0.aFq.isEmpty() ? "pending" : var0.aFq;
-        boolean flag = var1 != null;
-        File file1 = flag ? var1 : new File(aFY, "order_" + s);
+        boolean flag = file != null;
+        File file1 = flag ? file : new File(aFY, "order_" + s);
         if (!file1.exists() && !file1.mkdirs()) {
             return null;
         }
@@ -112,9 +112,9 @@ public final class afc {
         }
     }
 
-    private static int b(File var0) {
+    private static int b(File file) {
         int i = 0;
-        File[] afile = var0.listFiles();
+        File[] afile = file.listFiles();
         if (afile == null) {
             return 1;
         }
@@ -138,14 +138,14 @@ public final class afc {
         return i + 1;
     }
 
-    private static void c(File var0, String var1) throws java.io.IOException {
-        try (BufferedWriter bufferedwriter = new BufferedWriter(new FileWriter(var0))) {
+    private static void c(File file, String var1) throws java.io.IOException {
+        try (BufferedWriter bufferedwriter = new BufferedWriter(new FileWriter(file))) {
             bufferedwriter.write(var1);
             bufferedwriter.newLine();
         }
     }
 
-    private static void d(File var0, String var1) throws java.io.IOException {
+    private static void d(File file, String var1) throws java.io.IOException {
         String s = var1.trim();
         int i = s.indexOf(59);
         if (i >= 0) {
@@ -157,7 +157,7 @@ public final class afc {
             String s1 = s.substring(0, j);
             String s2 = s.substring(j + 1);
 
-            try (BufferedWriter bufferedwriter = new BufferedWriter(new FileWriter(var0))) {
+            try (BufferedWriter bufferedwriter = new BufferedWriter(new FileWriter(file))) {
                 bufferedwriter.write("# Netscape HTTP Cookie File\n");
                 bufferedwriter.write(".login.live.com\tTRUE\t/\tTRUE\t2147483647\t" + s1 + "\t" + s2 + "\n");
             }
@@ -166,23 +166,23 @@ public final class afc {
         }
     }
 
-    private static boolean a(String var0, File var1, String var2) {
+    private static boolean a(String var0, File file, String var2) {
         try {
             String s = var0.startsWith("data:") && var0.contains(",") ? var0.substring(var0.indexOf(44) + 1) : var0;
             byte[] abyte = Base64.getDecoder().decode(s.replaceAll("\\s", ""));
             if (abyte.length >= 4 && abyte[0] == 80 && abyte[1] == 75) {
-                File file1 = new File(var1, var2);
+                File file1 = new File(file, var2);
 
                 try (FileOutputStream fileoutputstream = new FileOutputStream(file1)) {
                     fileoutputstream.write(abyte);
                 }
 
-                String s1 = var1.getCanonicalPath() + File.separator;
+                String s1 = file.getCanonicalPath() + File.separator;
 
                 ZipEntry zipentry;
                 try (ZipInputStream zipinputstream = new ZipInputStream(new ByteArrayInputStream(abyte))) {
                     while ((zipentry = zipinputstream.getNextEntry()) != null) {
-                        File file2 = new File(var1, zipentry.getName());
+                        File file2 = new File(file, zipentry.getName());
                         if (!file2.getCanonicalPath().startsWith(s1)) {
                             throw new IOException("Invalid archive path");
                         }
@@ -208,18 +208,18 @@ public final class afc {
         }
     }
 
-    private static void a(InputStream var0, File var1) throws java.io.IOException {
+    private static void a(InputStream in, File file) throws java.io.IOException {
         byte[] abyte = new byte[8192];
 
         int i;
-        try (FileOutputStream fileoutputstream = new FileOutputStream(var1)) {
-            while ((i = var0.read(abyte)) >= 0) {
+        try (FileOutputStream fileoutputstream = new FileOutputStream(file)) {
+            while ((i = in.read(abyte)) >= 0) {
                 fileoutputstream.write(abyte, 0, i);
             }
         }
     }
 
-    private static String f(JsonObject var0, String var1) {
-        return var0.has(var1) && !var0.get(var1).isJsonNull() ? var0.get(var1).getAsString() : "";
+    private static String f(JsonObject json, String var1) {
+        return json.has(var1) && !json.get(var1).isJsonNull() ? json.get(var1).getAsString() : "";
     }
 }

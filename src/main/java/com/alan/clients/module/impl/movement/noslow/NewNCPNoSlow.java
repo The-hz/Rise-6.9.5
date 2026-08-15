@@ -50,8 +50,8 @@ public class NewNCPNoSlow extends Mode<NoSlow> {
     @EventLink
     public final Listener<TeleportEvent> onTeleport = var1x -> this.disable = 0;
 
-    public NewNCPNoSlow(String var1, NoSlow var2) {
-        super(var1, var2);
+    public NewNCPNoSlow(String var1, NoSlow noSlow) {
+        super(var1, noSlow);
     }
 
     @Override

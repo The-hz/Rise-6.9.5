@@ -23,8 +23,8 @@ public class AsyncVersionSlider extends GuiButton {
     }
 
     @Override
-    public void drawButton(Minecraft var1, int var2, int var3) {
-        super.drawButton(var1, var2, var3);
+    public void drawButton(Minecraft mc, int var2, int var3) {
+        super.drawButton(mc, var2, var3);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class AsyncVersionSlider extends GuiButton {
     }
 
     @Override
-    protected void mouseDragged(Minecraft var1, int var2, int var3) {
+    protected void mouseDragged(Minecraft mc, int var2, int var3) {
         if (this.visible) {
             if (this.dragging) {
                 this.sliderValue = (float)(var2 - (this.xPosition + 4)) / (this.width - 8);
@@ -44,7 +44,7 @@ public class AsyncVersionSlider extends GuiButton {
                 ViaLoadingBase.getInstance().reload(this.values.get(i));
             }
 
-            var1.getTextureManager().bindTexture(buttonTextures);
+            mc.getTextureManager().bindTexture(buttonTextures);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.drawTexturedModalRect(this.xPosition + (int)(this.sliderValue * (this.width - 8)), this.yPosition, 0, 66, 4, 20);
             this.drawTexturedModalRect(this.xPosition + (int)(this.sliderValue * (this.width - 8)) + 4, this.yPosition, 196, 66, 4, 20);
@@ -52,8 +52,8 @@ public class AsyncVersionSlider extends GuiButton {
     }
 
     @Override
-    public boolean mousePressed(Minecraft var1, int var2, int var3) {
-        if (super.mousePressed(var1, var2, var3)) {
+    public boolean mousePressed(Minecraft mc, int var2, int var3) {
+        if (super.mousePressed(mc, var2, var3)) {
             this.sliderValue = (float)(var2 - (this.xPosition + 4)) / (this.width - 8);
             this.sliderValue = MathHelper.clamp_float(this.sliderValue, 0.0F, 1.0F);
             this.dragValue = this.sliderValue;
@@ -71,8 +71,8 @@ public class AsyncVersionSlider extends GuiButton {
         this.dragging = false;
     }
 
-    public void setVersion(int var1) {
-        this.dragValue = (float)ViaLoadingBase.PROTOCOLS.indexOf(ProtocolVersion.getProtocol(var1)) / (ViaLoadingBase.PROTOCOLS.size() - 1);
+    public void setVersion(int version) {
+        this.dragValue = (float)ViaLoadingBase.PROTOCOLS.indexOf(ProtocolVersion.getProtocol(version)) / (ViaLoadingBase.PROTOCOLS.size() - 1);
         this.sliderValue = this.dragValue;
         int i = (int)(this.sliderValue * (this.values.size() - 1) + 0.5F);
         this.displayString = this.values.get(i).getName();

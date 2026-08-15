@@ -161,10 +161,10 @@ Bus<Event> {
         final Listener<Event> listener;
         final byte priority;
 
-        public CallSite(Object object, Listener<Event> listener, byte by2) {
+        public CallSite(Object object, Listener<Event> listener, byte priority) {
             this.owner = object;
             this.listener = listener;
-            this.priority = by2;
+            this.priority = priority;
         }
     }
 }

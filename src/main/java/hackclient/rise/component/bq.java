@@ -43,7 +43,7 @@ public class bq extends Component {
     public void bL() {
     }
 
-    public byte[] a(BufferedImage var1) {
+    public byte[] a(BufferedImage image) {
         return null;
     }
 

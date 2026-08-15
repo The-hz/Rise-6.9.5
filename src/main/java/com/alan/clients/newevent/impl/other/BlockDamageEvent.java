@@ -11,10 +11,10 @@ public final class BlockDamageEvent extends CancellableEvent {
     private World world;
     private BlockPos blockPos;
 
-    public BlockDamageEvent(EntityPlayerSP var1, World var2, BlockPos var3) {
-        this.player = var1;
-        this.world = var2;
-        this.blockPos = var3;
+    public BlockDamageEvent(EntityPlayerSP player, World world, BlockPos blockPos) {
+        this.player = player;
+        this.world = world;
+        this.blockPos = blockPos;
     }
 
     @Generated
@@ -33,17 +33,17 @@ public final class BlockDamageEvent extends CancellableEvent {
     }
 
     @Generated
-    public void setPlayer(EntityPlayerSP var1) {
-        this.player = var1;
+    public void setPlayer(EntityPlayerSP player) {
+        this.player = player;
     }
 
     @Generated
-    public void setWorld(World var1) {
-        this.world = var1;
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     @Generated
-    public void setBlockPos(BlockPos var1) {
-        this.blockPos = var1;
+    public void setBlockPos(BlockPos blockPos) {
+        this.blockPos = blockPos;
     }
 }

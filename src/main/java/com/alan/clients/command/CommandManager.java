@@ -62,8 +62,8 @@ public final class CommandManager {
         Client.a.e().b(this);
     }
 
-    public void a(Command var1) {
-        this.bp.add(var1);
+    public void a(Command command) {
+        this.bp.add(command);
     }
 
     public <T extends Command> T get(String var1) {

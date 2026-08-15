@@ -16,8 +16,8 @@ public class BoundsNumberValue extends Value<Number> {
     private Number aQT;
     private Number aQU;
 
-    public BoundsNumberValue(String var1, Module var2, Number var3, Number var4, Number var5, Number var6, Number var7) {
-        super(var1, var2, var3);
+    public BoundsNumberValue(String var1, Module module, Number var3, Number var4, Number var5, Number var6, Number var7) {
+        super(var1, module, var3);
         this.aQS = var7;
         this.aQQ = var5;
         this.aQR = var6;
@@ -25,8 +25,8 @@ public class BoundsNumberValue extends Value<Number> {
         this.aQU = var4;
     }
 
-    public BoundsNumberValue(String var1, Mode<?> var2, Number var3, Number var4, Number var5, Number var6, Number var7) {
-        super(var1, var2, var3);
+    public BoundsNumberValue(String var1, Mode<?> mode, Number var3, Number var4, Number var5, Number var6, Number var7) {
+        super(var1, mode, var3);
         this.aQS = var7;
         this.aQQ = var5;
         this.aQR = var6;
@@ -34,8 +34,8 @@ public class BoundsNumberValue extends Value<Number> {
         this.aQU = var4;
     }
 
-    public BoundsNumberValue(String var1, Module var2, Number var3, Number var4, Number var5, Number var6, Number var7, BooleanSupplier var8) {
-        super(var1, var2, var3, var8);
+    public BoundsNumberValue(String var1, Module module, Number var3, Number var4, Number var5, Number var6, Number var7, BooleanSupplier booleanSupplier) {
+        super(var1, module, var3, booleanSupplier);
         this.aQS = var7;
         this.aQQ = var5;
         this.aQR = var6;
@@ -43,8 +43,8 @@ public class BoundsNumberValue extends Value<Number> {
         this.aQU = var4;
     }
 
-    public BoundsNumberValue(String var1, Mode<?> var2, Number var3, Number var4, Number var5, Number var6, Number var7, BooleanSupplier var8) {
-        super(var1, var2, var3, var8);
+    public BoundsNumberValue(String var1, Mode<?> mode, Number var3, Number var4, Number var5, Number var6, Number var7, BooleanSupplier booleanSupplier) {
+        super(var1, mode, var3, booleanSupplier);
         this.aQS = var7;
         this.aQQ = var5;
         this.aQR = var6;

@@ -43,7 +43,7 @@ public final class EditCriticals extends Mode<Criticals> {
         }
     };
 
-    public EditCriticals(String var1, Criticals var2) {
-        super(var1, var2);
+    public EditCriticals(String var1, Criticals criticals) {
+        super(var1, criticals);
     }
 }

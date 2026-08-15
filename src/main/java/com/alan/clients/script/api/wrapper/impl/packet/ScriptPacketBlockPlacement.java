@@ -4,8 +4,8 @@ import com.alan.clients.script.api.wrapper.impl.ScriptBlockPos;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 
 public class ScriptPacketBlockPlacement extends ScriptPacket<C08PacketPlayerBlockPlacement> {
-    public ScriptPacketBlockPlacement(C08PacketPlayerBlockPlacement var1) {
-        super(var1);
+    public ScriptPacketBlockPlacement(C08PacketPlayerBlockPlacement packet) {
+        super(packet);
     }
 
     public ScriptBlockPos getPosition() {

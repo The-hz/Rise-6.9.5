@@ -4,8 +4,8 @@ import java.lang.reflect.Field;
 import net.minecraft.network.play.client.C18PacketSpectate;
 
 public class ScriptPacketSpectate extends ScriptPacket<C18PacketSpectate> {
-    public ScriptPacketSpectate(C18PacketSpectate var1) {
-        super(var1);
+    public ScriptPacketSpectate(C18PacketSpectate packet) {
+        super(packet);
     }
 
     public String getEntityUUID() {

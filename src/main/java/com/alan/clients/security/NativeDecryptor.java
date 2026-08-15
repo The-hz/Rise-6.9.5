@@ -70,16 +70,16 @@ public class NativeDecryptor {
         return axa;
     }
 
-    private static void a(String var0, File var1) {
+    private static void a(String var0, File file) {
         try {
             InputStream inputstream = NativeDecryptor.class.getResourceAsStream(var0);
             if (inputstream == null) {
                 return;
             }
 
-            var1.deleteOnExit();
+            file.deleteOnExit();
 
-            try (FileOutputStream fileoutputstream = new FileOutputStream(var1)) {
+            try (FileOutputStream fileoutputstream = new FileOutputStream(file)) {
                 byte[] abyte = new byte[8192];
 
                 int i;
@@ -93,7 +93,7 @@ public class NativeDecryptor {
         }
     }
 
-    public static byte[] nativeDecryptAndDefine(byte[] var0, byte[] var1, String var2, ClassLoader var3) {
+    public static byte[] nativeDecryptAndDefine(byte[] var0, byte[] var1, String var2, ClassLoader classLoader) {
         return null;
     }
 }

@@ -76,7 +76,7 @@ public class ClassicNameTags extends Mode<NameTags> {
         GlStateManager.popMatrix();
     };
 
-    public ClassicNameTags(String var1, NameTags var2) {
-        super(var1, var2);
+    public ClassicNameTags(String var1, NameTags nameTags) {
+        super(var1, nameTags);
     }
 }

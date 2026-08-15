@@ -26,7 +26,7 @@ public final class NormalBypass extends Mode<InventoryMove> {
         }
     };
 
-    public NormalBypass(String var1, InventoryMove var2) {
-        super(var1, var2);
+    public NormalBypass(String var1, InventoryMove inventoryMove) {
+        super(var1, inventoryMove);
     }
 }

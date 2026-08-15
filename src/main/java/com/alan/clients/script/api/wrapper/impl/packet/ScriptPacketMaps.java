@@ -4,8 +4,8 @@ import java.lang.reflect.Field;
 import net.minecraft.network.play.server.S34PacketMaps;
 
 public class ScriptPacketMaps extends ScriptPacket<S34PacketMaps> {
-    public ScriptPacketMaps(S34PacketMaps var1) {
-        super(var1);
+    public ScriptPacketMaps(S34PacketMaps packet) {
+        super(packet);
     }
 
     public int getMapId() {

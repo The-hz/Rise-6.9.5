@@ -60,8 +60,8 @@ public final class FuncraftFlight extends Mode<Flight> {
         }
     };
 
-    public FuncraftFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public FuncraftFlight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

@@ -287,8 +287,8 @@ public class WatchdogFlight extends Mode<Flight> {
     @EventLink
     public final Listener<PostMotionEvent> onPostMotion = var1x -> {};
 
-    public WatchdogFlight(String var1, Flight var2) {
-        super(var1, var2);
+    public WatchdogFlight(String var1, Flight flight) {
+        super(var1, flight);
     }
 
     @Override

@@ -6,8 +6,8 @@ public class ts {
     public final int aeg;
     public final ItemStack aeh;
 
-    public ts(int var1, ItemStack var2) {
+    public ts(int var1, ItemStack stack) {
         this.aeg = var1;
-        this.aeh = var2;
+        this.aeh = stack;
     }
 }

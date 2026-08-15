@@ -66,8 +66,8 @@ public class by {
     }
 
     @Generated
-    public void a(ResourceLocation[] var1) {
-        this.gt = var1;
+    public void a(ResourceLocation[] locations) {
+        this.gt = locations;
     }
 
     @Generated

@@ -4,8 +4,8 @@ import com.alan.clients.script.api.RenderAPI;
 import com.alan.clients.util.font.impl.rise.FontRenderer;
 
 public class ScriptRiseFontRenderer extends ScriptFontRenderer<FontRenderer> {
-    public ScriptRiseFontRenderer(FontRenderer var1) {
-        super(var1);
+    public ScriptRiseFontRenderer(FontRenderer font) {
+        super(font);
     }
 
     @Override

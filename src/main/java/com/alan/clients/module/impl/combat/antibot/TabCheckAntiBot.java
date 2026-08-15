@@ -30,8 +30,8 @@ public class TabCheckAntiBot extends Mode<AntiBot> {
     @EventLink
     public final Listener<TeleportEvent> onTeleport = var1x -> Client.a.x().a(this);
 
-    public TabCheckAntiBot(String var1, AntiBot var2) {
-        super(var1, var2);
+    public TabCheckAntiBot(String var1, AntiBot antiBot) {
+        super(var1, antiBot);
     }
 
     @Override

@@ -35,7 +35,7 @@ public final class Grim2Bypass extends Mode<InventoryMove> {
         }
     };
 
-    public Grim2Bypass(String var1, InventoryMove var2) {
-        super(var1, var2);
+    public Grim2Bypass(String var1, InventoryMove inventoryMove) {
+        super(var1, inventoryMove);
     }
 }

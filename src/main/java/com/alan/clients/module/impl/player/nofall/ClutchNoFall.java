@@ -152,8 +152,8 @@ public class ClutchNoFall extends Mode<NoFall> {
         }
     };
 
-    public ClutchNoFall(String var1, NoFall var2) {
-        super(var1, var2);
+    public ClutchNoFall(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 
     private BlockPos kx() {

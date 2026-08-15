@@ -8,9 +8,9 @@ import com.alan.clients.script.api.wrapper.impl.packet.ScriptPacketFactory;
 public class ScriptPacketSendEvent extends CancellableScriptEvent<PacketSendEvent> {
     private ScriptPacket<?> wrappedPacket;
 
-    public ScriptPacketSendEvent(PacketSendEvent var1) {
-        super(var1);
-        this.wrappedPacket = ScriptPacketFactory.wrap(var1.dq());
+    public ScriptPacketSendEvent(PacketSendEvent event) {
+        super(event);
+        this.wrappedPacket = ScriptPacketFactory.wrap(event.dq());
     }
 
     public String getPacketName() {

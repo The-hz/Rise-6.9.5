@@ -57,9 +57,9 @@ public final class MurderMystery extends Module {
     public MurderMystery() {
     }
 
-    private boolean i(ItemStack var1) {
-        return var1.hasTagCompound() && var1.getTagCompound().hasKey("ExtraAttributes", 10)
-            ? var1.getTagCompound().getCompoundTag("ExtraAttributes").hasKey("MELEE", 1)
+    private boolean i(ItemStack stack) {
+        return stack.hasTagCompound() && stack.getTagCompound().hasKey("ExtraAttributes", 10)
+            ? stack.getTagCompound().getCompoundTag("ExtraAttributes").hasKey("MELEE", 1)
             : false;
     }
 }

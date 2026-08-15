@@ -36,7 +36,7 @@ public class NotificationComponent extends Component implements aha {
         }
     }
 
-    public static void a(Particle var0) {
-        hu.add(var0);
+    public static void a(Particle particle) {
+        hu.add(particle);
     }
 }

@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S21PacketChunkData;
 
 public class ScriptPacketChunkData extends ScriptPacket<S21PacketChunkData> {
-    public ScriptPacketChunkData(S21PacketChunkData var1) {
-        super(var1);
+    public ScriptPacketChunkData(S21PacketChunkData packet) {
+        super(packet);
     }
 
     public int getChunkX() {

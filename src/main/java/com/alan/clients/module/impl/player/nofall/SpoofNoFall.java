@@ -10,7 +10,7 @@ public class SpoofNoFall extends Mode<NoFall> {
     @EventLink
     public final Listener<PreMotionEvent> onPreMotionEvent = var0 -> var0.setOnGround(true);
 
-    public SpoofNoFall(String var1, NoFall var2) {
-        super(var1, var2);
+    public SpoofNoFall(String var1, NoFall noFall) {
+        super(var1, noFall);
     }
 }

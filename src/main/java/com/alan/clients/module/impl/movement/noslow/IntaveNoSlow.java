@@ -63,7 +63,7 @@ public class IntaveNoSlow extends Mode<NoSlow> {
         }
     };
 
-    public IntaveNoSlow(String var1, NoSlow var2) {
-        super(var1, var2);
+    public IntaveNoSlow(String var1, NoSlow noSlow) {
+        super(var1, noSlow);
     }
 }

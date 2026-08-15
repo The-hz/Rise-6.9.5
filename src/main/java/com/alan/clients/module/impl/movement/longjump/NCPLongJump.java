@@ -54,8 +54,8 @@ public class NCPLongJump extends Mode<LongJump> {
     @EventLink
     public final Listener<TeleportEvent> onTeleport = var1x -> this.speed = 0.0;
 
-    public NCPLongJump(String var1, LongJump var2) {
-        super(var1, var2);
+    public NCPLongJump(String var1, LongJump longJump) {
+        super(var1, longJump);
     }
 
     @Override

@@ -124,14 +124,14 @@ public enum Client
         return this.w;
     }
 
-    public void a(Locale ahc2) {
-        if (ahc2 == null) {
+    public void a(Locale locale) {
+        if (locale == null) {
             return;
         }
-        if (this.l == ahc2) {
+        if (this.l == locale) {
             return;
         }
-        this.l = ahc2;
+        this.l = locale;
         if (this.moduleManager != null) {
             for (Module module : this.moduleManager.ef()) {
                 if (module == null || module.getModuleInfo() == null) continue;
@@ -211,8 +211,8 @@ public enum Client
     }
 
     @Generated
-    public void b(final Locale l) {
-        this.l = l;
+    public void b(final Locale locale) {
+        this.l = locale;
     }
 
     @Generated

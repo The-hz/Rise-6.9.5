@@ -18,7 +18,7 @@ public class MainMenuBackgroundShader extends aix {
     }
 
     @Override
-    public void a(aiz var1, float var2, List<Runnable> var3) {
+    public void a(aiz var1, float var2, List<Runnable> runnables) {
         if (Display.isVisible()) {
             if (var1 == aiz.OVERLAY) {
                 this.update();

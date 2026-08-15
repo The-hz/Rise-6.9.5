@@ -31,15 +31,15 @@ extends com.alan.clients.util.file.File {
         super(file, fileType);
     }
 
-    private static boolean a(AltAccount ael2) {
-        if (!(ael2 instanceof aep)) {
+    private static boolean a(AltAccount altAccount) {
+        if (!(altAccount instanceof aep)) {
             return false;
         }
-        String string = ((aep)ael2).so();
+        String string = ((aep)altAccount).so();
         if (string != null && !string.isEmpty()) {
             return false;
         }
-        long l2 = ael2.sj();
+        long l2 = altAccount.sj();
         if (l2 <= 0L) return false;
         if (System.currentTimeMillis() - l2 <= 172800000L) return false;
         return true;

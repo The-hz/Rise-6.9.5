@@ -13,8 +13,8 @@ public enum gh {
     private static final gh[] $VALUES = dZ();
 
     @Generated
-    gh(Class<?> var3) {
-        this.lb = var3;
+    gh(Class<?> type) {
+        this.lb = type;
     }
 
     @Generated

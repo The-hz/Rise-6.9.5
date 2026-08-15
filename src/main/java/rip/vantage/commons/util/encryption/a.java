@@ -35,16 +35,16 @@ public class a {
         return new IvParameterSpec(abyte);
     }
 
-    public static String a(String var0, SecretKey var1, IvParameterSpec var2) throws java.security.InvalidAlgorithmParameterException, java.security.InvalidKeyException, java.security.NoSuchAlgorithmException, javax.crypto.BadPaddingException, javax.crypto.IllegalBlockSizeException, javax.crypto.NoSuchPaddingException {
+    public static String a(String var0, SecretKey secretKey, IvParameterSpec ivParameterSpec) throws java.security.InvalidAlgorithmParameterException, java.security.InvalidKeyException, java.security.NoSuchAlgorithmException, javax.crypto.BadPaddingException, javax.crypto.IllegalBlockSizeException, javax.crypto.NoSuchPaddingException {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(1, var1, var2);
+        cipher.init(1, secretKey, ivParameterSpec);
         byte[] abyte = cipher.doFinal(var0.getBytes());
         return Base64.getEncoder().encodeToString(abyte);
     }
 
-    public static String b(String var0, SecretKey var1, IvParameterSpec var2) throws java.security.InvalidAlgorithmParameterException, java.security.InvalidKeyException, java.security.NoSuchAlgorithmException, javax.crypto.BadPaddingException, javax.crypto.IllegalBlockSizeException, javax.crypto.NoSuchPaddingException {
+    public static String b(String var0, SecretKey secretKey, IvParameterSpec ivParameterSpec) throws java.security.InvalidAlgorithmParameterException, java.security.InvalidKeyException, java.security.NoSuchAlgorithmException, javax.crypto.BadPaddingException, javax.crypto.IllegalBlockSizeException, javax.crypto.NoSuchPaddingException {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(2, var1, var2);
+        cipher.init(2, secretKey, ivParameterSpec);
         byte[] abyte = cipher.doFinal(Base64.getDecoder().decode(var0));
         return new String(abyte);
     }

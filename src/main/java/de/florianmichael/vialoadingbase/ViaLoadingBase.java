@@ -56,23 +56,23 @@ public class ViaLoadingBase {
     private ProtocolVersion targetProtocolVersion;
 
     public ViaLoadingBase(
-        LinkedList<Platform> var1,
-        File var2,
-        int var3,
-        BooleanSupplier var4,
-        Supplier<JsonObject> var5,
-        Consumer<ViaProviders> var6,
-        Consumer<ViaManagerBuilder> var7,
-        Consumer<ProtocolVersion> var8
+        LinkedList<Platform> platforms,
+        File file,
+        int nativeVersion,
+        BooleanSupplier booleanSupplier,
+        Supplier<JsonObject> dumpSupplier,
+        Consumer<ViaProviders> providers,
+        Consumer<ViaManagerBuilder> managerBuilderConsumer,
+        Consumer<ProtocolVersion> onProtocolReload
     ) {
-        this.platforms = var1;
-        this.runDirectory = new File(var2, "ViaLoadingBase");
-        this.nativeVersion = var3;
-        this.forceNativeVersionCondition = var4;
-        this.dumpSupplier = var5;
-        this.providers = var6;
-        this.managerBuilderConsumer = var7;
-        this.onProtocolReload = var8;
+        this.platforms = platforms;
+        this.runDirectory = new File(file, "ViaLoadingBase");
+        this.nativeVersion = nativeVersion;
+        this.forceNativeVersionCondition = booleanSupplier;
+        this.dumpSupplier = dumpSupplier;
+        this.providers = providers;
+        this.managerBuilderConsumer = managerBuilderConsumer;
+        this.onProtocolReload = onProtocolReload;
         instance = this;
         this.initPlatform();
     }
@@ -83,8 +83,8 @@ public class ViaLoadingBase {
             : this.targetProtocolVersion;
     }
 
-    public void reload(ProtocolVersion var1) {
-        this.targetProtocolVersion = var1;
+    public void reload(ProtocolVersion targetProtocolVersion) {
+        this.targetProtocolVersion = targetProtocolVersion;
         if (this.onProtocolReload != null) {
             this.onProtocolReload.accept(this.targetProtocolVersion);
         }
@@ -192,8 +192,8 @@ public class ViaLoadingBase {
             return this;
         }
 
-        public ViaLoadingBase.ViaLoadingBaseBuilder runDirectory(File var1) {
-            this.runDirectory = var1;
+        public ViaLoadingBase.ViaLoadingBaseBuilder runDirectory(File file) {
+            this.runDirectory = file;
             return this;
         }
 
@@ -202,28 +202,28 @@ public class ViaLoadingBase {
             return this;
         }
 
-        public ViaLoadingBase.ViaLoadingBaseBuilder forceNativeVersionCondition(BooleanSupplier var1) {
-            this.forceNativeVersionCondition = var1;
+        public ViaLoadingBase.ViaLoadingBaseBuilder forceNativeVersionCondition(BooleanSupplier booleanSupplier) {
+            this.forceNativeVersionCondition = booleanSupplier;
             return this;
         }
 
-        public ViaLoadingBase.ViaLoadingBaseBuilder dumpSupplier(Supplier<JsonObject> var1) {
-            this.dumpSupplier = var1;
+        public ViaLoadingBase.ViaLoadingBaseBuilder dumpSupplier(Supplier<JsonObject> supplier) {
+            this.dumpSupplier = supplier;
             return this;
         }
 
-        public ViaLoadingBase.ViaLoadingBaseBuilder providers(Consumer<ViaProviders> var1) {
-            this.providers = var1;
+        public ViaLoadingBase.ViaLoadingBaseBuilder providers(Consumer<ViaProviders> consumer) {
+            this.providers = consumer;
             return this;
         }
 
-        public ViaLoadingBase.ViaLoadingBaseBuilder managerBuilderConsumer(Consumer<ViaManagerBuilder> var1) {
-            this.managerBuilderConsumer = var1;
+        public ViaLoadingBase.ViaLoadingBaseBuilder managerBuilderConsumer(Consumer<ViaManagerBuilder> consumer) {
+            this.managerBuilderConsumer = consumer;
             return this;
         }
 
-        public ViaLoadingBase.ViaLoadingBaseBuilder onProtocolReload(Consumer<ProtocolVersion> var1) {
-            this.onProtocolReload = var1;
+        public ViaLoadingBase.ViaLoadingBaseBuilder onProtocolReload(Consumer<ProtocolVersion> consumer) {
+            this.onProtocolReload = consumer;
             return this;
         }
 

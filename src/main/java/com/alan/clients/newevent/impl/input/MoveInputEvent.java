@@ -43,23 +43,23 @@ public class MoveInputEvent implements Event {
     }
 
     @Generated
-    public void setForward(float var1) {
-        this.jp = var1;
+    public void setForward(float forward) {
+        this.jp = forward;
     }
 
     @Generated
-    public void setStrafe(float var1) {
-        this.jq = var1;
+    public void setStrafe(float strafe) {
+        this.jq = strafe;
     }
 
     @Generated
-    public void setJump(boolean var1) {
-        this.gD = var1;
+    public void setJump(boolean jump) {
+        this.gD = jump;
     }
 
     @Generated
-    public void setSneak(boolean var1) {
-        this.jr = var1;
+    public void setSneak(boolean sneak) {
+        this.jr = sneak;
     }
 
     @Generated

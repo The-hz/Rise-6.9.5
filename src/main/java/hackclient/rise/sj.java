@@ -10,7 +10,7 @@ public class sj implements Comparator<Integer> {
     final int[] XM;
     final List XN;
 
-    public sj(Spotify var1, int var2, int[] var3, int[] var4, List var5) {
+    public sj(Spotify spotify, int var2, int[] var3, int[] var4, List var5) {
         this.XK = var2;
         this.XL = var3;
         this.XM = var4;

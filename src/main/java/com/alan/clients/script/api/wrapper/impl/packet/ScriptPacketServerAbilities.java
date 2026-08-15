@@ -3,8 +3,8 @@ package com.alan.clients.script.api.wrapper.impl.packet;
 import net.minecraft.network.play.server.S39PacketPlayerAbilities;
 
 public class ScriptPacketServerAbilities extends ScriptPacket<S39PacketPlayerAbilities> {
-    public ScriptPacketServerAbilities(S39PacketPlayerAbilities var1) {
-        super(var1);
+    public ScriptPacketServerAbilities(S39PacketPlayerAbilities packet) {
+        super(packet);
     }
 
     public boolean isInvulnerable() {

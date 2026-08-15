@@ -38,8 +38,8 @@ implements aha {
         });
     }
 
-    private static boolean c(UUID var0) {
-        if (var0 == null) {
+    private static boolean c(UUID uuid) {
+        if (uuid == null) {
             return false;
         }
         synchronized (aej.class) {
@@ -56,7 +56,7 @@ implements aha {
                 }
                 aej.aEG = System.currentTimeMillis();
 
-                String s = var0.toString().replace("-", "");
+                String s = uuid.toString().replace("-", "");
                 URL url = new URL(aED + s);
                 httpsurlconnection = (HttpsURLConnection)url.openConnection();
                 httpsurlconnection.setRequestMethod("GET");

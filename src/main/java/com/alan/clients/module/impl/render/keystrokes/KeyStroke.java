@@ -24,12 +24,12 @@ public class KeyStroke implements InstanceAccess {
     private final KeyBinding binding;
     private final Animation animation = new Animation(Easing.LINEAR, 200L);
 
-    public KeyStroke(Vector2f var1, String var2, KeyBinding var3) {
-        this(new Vector2f(22.0F, 22.0F), var1, var2, var3);
+    public KeyStroke(Vector2f vec2, String var2, KeyBinding key) {
+        this(new Vector2f(22.0F, 22.0F), vec2, var2, key);
     }
 
-    public KeyStroke(Vector2f var1, KeyBinding var2) {
-        this(var1, Keyboard.getKeyName(var2.getKeyCode()), var2);
+    public KeyStroke(Vector2f vec2, KeyBinding key) {
+        this(vec2, Keyboard.getKeyName(key.getKeyCode()), key);
     }
 
     public void c(Vector2d var1) {
@@ -54,22 +54,22 @@ public class KeyStroke implements InstanceAccess {
         FontManager.MAIN.a(20, gd.REGULAR).b(this.name, vector2d2.getX(), vector2d2.getY(), this.rz().rA().getRGB());
     }
 
-    public void e(Vector2d var1) {
+    public void e(Vector2d vector2d) {
         if (this.amf == null) {
             this.amf = this.e(Interface.class);
         }
 
         double d0 = this.amf != null ? this.amf.lD() : 4.0;
-        RenderUtil.roundedRectangle(var1.x + this.atr.x + 0.5, var1.y + this.atr.y + 0.5, this.atq.x - 1.0F, this.atq.y - 1.0F, d0, this.rz().rE());
+        RenderUtil.roundedRectangle(vector2d.x + this.atr.x + 0.5, vector2d.y + this.atr.y + 0.5, this.atq.x - 1.0F, this.atq.y - 1.0F, d0, this.rz().rE());
     }
 
-    public void d(Vector2d var1) {
+    public void d(Vector2d vector2d) {
         if (this.amf == null) {
             this.amf = this.e(Interface.class);
         }
 
         double d0 = this.amf != null ? this.amf.lD() : 4.0;
-        RenderUtil.roundedRectangle(var1.x + this.atr.x, var1.y + this.atr.y, this.atq.x, this.atq.y, d0, Color.BLACK);
+        RenderUtil.roundedRectangle(vector2d.x + this.atr.x, vector2d.y + this.atr.y, this.atq.x, this.atq.y, d0, Color.BLACK);
     }
 
     public void updateHeld() {
@@ -79,10 +79,10 @@ public class KeyStroke implements InstanceAccess {
     }
 
     @Generated
-    public KeyStroke(Vector2f var1, Vector2f var2, String var3, KeyBinding var4) {
-        this.atq = var1;
+    public KeyStroke(Vector2f vec2, Vector2f var2, String name, KeyBinding binding) {
+        this.atq = vec2;
         this.atr = var2;
-        this.name = var3;
-        this.binding = var4;
+        this.name = name;
+        this.binding = binding;
     }
 }

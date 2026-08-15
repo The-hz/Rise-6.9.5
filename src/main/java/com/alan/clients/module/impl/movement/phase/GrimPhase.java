@@ -73,8 +73,8 @@ public class GrimPhase extends Mode<Phase> {
         boolean flag = var0.getPacket() instanceof S08PacketPlayerPosLook;
     };
 
-    public GrimPhase(String var1, Phase var2) {
-        super(var1, var2);
+    public GrimPhase(String var1, Phase phase) {
+        super(var1, phase);
     }
 
     @Override

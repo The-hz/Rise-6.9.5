@@ -44,9 +44,9 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
     public Listener<PacketSendEvent> onPacketSend;
     public Set<String> avs;
 
-    public void a(SecurityFeature var1) {
-        this.avq.add(var1);
-        Client.a.e().b(var1);
+    public void a(SecurityFeature securityFeature) {
+        this.avq.add(securityFeature);
+        Client.a.e().b(securityFeature);
     }
 
     @Generated
@@ -59,9 +59,9 @@ public class SecurityFeatureManager implements InstanceAccess, aha {
         return this.avr;
     }
 
-    public void b(SecurityFeature var1) {
-        this.avr.add(var1);
-        Client.a.e().b(var1);
+    public void b(SecurityFeature securityFeature) {
+        this.avr.add(securityFeature);
+        Client.a.e().b(securityFeature);
     }
 
     @Generated

@@ -10,9 +10,9 @@ public class h extends rip.vantage.commons.packet.api.abstracts.b {
         this.ePZ = var1;
     }
 
-    public h(JSONObject var1) {
+    public h(JSONObject json) {
         super((byte)23);
-        this.ePZ = var1.getString("a");
+        this.ePZ = json.getString("a");
     }
 
     @Override

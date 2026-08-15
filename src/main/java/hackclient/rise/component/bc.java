@@ -89,8 +89,8 @@ public final class bc extends Component {
     public bc() {
     }
 
-    public static void a(Class<?>... var0) {
-        cT = new ArrayList<>(Arrays.asList(var0));
+    public static void a(Class<?>... type) {
+        cT = new ArrayList<>(Arrays.asList(type));
         cU.aX();
     }
 

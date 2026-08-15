@@ -14,11 +14,11 @@ public class b extends rip.vantage.commons.packet.api.abstracts.b {
         this.ePF = var3;
     }
 
-    public b(JSONObject var1) {
+    public b(JSONObject json) {
         super((byte)4);
-        this.ePD = var1.getString("a");
-        this.ePE = var1.getInt("b");
-        this.ePF = var1.getString("c");
+        this.ePD = json.getString("a");
+        this.ePE = json.getInt("b");
+        this.ePF = json.getString("c");
     }
 
     @Override

@@ -5,8 +5,8 @@ import net.minecraft.util.BlockPos;
 public class wj {
     private final BlockPos alU;
 
-    public wj(BlockPos var1) {
-        this.alU = var1;
+    public wj(BlockPos pos) {
+        this.alU = pos;
     }
 
     public BlockPos la() {
