@@ -161,38 +161,15 @@ public final class ScriptManager implements InstanceAccess {
                             String s6 = s5.toLowerCase(Locale.ENGLISH).split(" ")[0];
                             s7 = s5.substring(s6.length()).trim();
                             String s8 = s6;
-                            byte b0 = -1;
-                            switch (s8.hashCode()) {
-                                case -1724546052:
-                                    if (s8.equals("description")) {
-                                        break label49;
-                                    }
-                                    break;
-                                case -1406328437:
-                                    if (s8.equals("author")) {
-                                        b0 = 0;
-                                    }
-                                    break;
-                                case 351608024:
-                                    if (s8.equals("version")) {
-                                        break label50;
-                                    }
-                                    break;
-                                case 2043491329:
-                                    if (s8.equals("nosecurity")) {
-                                        break label48;
-                                    }
-                            }
-
-                            switch (b0) {
-                                case 0:
+                            switch (s8) {
+                                case "author":
                                     s = s7;
                                     continue;
-                                case 1:
+                                case "version":
                                     break label50;
-                                case 2:
+                                case "description":
                                     break label49;
-                                case 3:
+                                case "nosecurity":
                                     break;
                                 default:
                                     continue;

@@ -36,22 +36,8 @@ public final class FastBreak extends Module {
                 aEg.playerController.blockHitDelay = 0;
                 d0 = 0.0;
                 String s = this.mode.wo().getName();
-                byte b0 = -1;
-                switch (s.hashCode()) {
-                    case 80802390:
-                        if (s.equals("Ticks")) {
-                            boolean flag = true;
-                            break label59;
-                        }
-                        break;
-                    case 1071632058:
-                        if (s.equals("Percentage")) {
-                            b0 = 0;
-                        }
-                }
-
-                switch (b0) {
-                    case 0:
+                switch (s) {
+                    case "Percentage":
                         d0 = this.speed.wo().doubleValue() / 100.0;
                         if (aEg.thePlayer.tR == 1 && this.equalAirGroundDig.wo()) {
                             aEg.playerController.curBlockDamageMP /= 5.0F;
@@ -63,7 +49,7 @@ public final class FastBreak extends Module {
                             d0 -= 0.8F;
                         }
                         break label60;
-                    case 1:
+                    case "Ticks":
                         break;
                     default:
                         break label60;

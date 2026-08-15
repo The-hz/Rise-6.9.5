@@ -731,21 +731,8 @@ public class Breaker extends Module {
             label25: {
                 blockpos = new BlockPos(abQ.getX(), abQ.getY(), abQ.getZ());
                 String s = this.mode.wo().getName();
-                byte b0 = -1;
-                switch (s.hashCode()) {
-                    case -1955878649:
-                        if (s.equals("Normal")) {
-                            break label25;
-                        }
-                        break;
-                    case -672743999:
-                        if (s.equals("Instant")) {
-                            b0 = 0;
-                        }
-                }
-
-                switch (b0) {
-                    case 0:
+                switch (s) {
+                    case "Instant":
                         this.jw();
                         this.l(blockpos);
                         aEg.thePlayer.swingItem();
@@ -756,7 +743,7 @@ public class Breaker extends Module {
                         this.aaW = 20;
                         aEg.playerController.onPlayerDestroyBlock(blockpos, EnumFacing.DOWN);
                         break label26;
-                    case 1:
+                    case "Normal":
                         break;
                     default:
                         break label26;

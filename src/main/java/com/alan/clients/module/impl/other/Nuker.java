@@ -49,29 +49,15 @@ public final class Nuker extends Module {
             label41: {
                 d0 = this.range.wo().doubleValue();
                 String s = this.mode.wo().getName();
-                byte b0 = -1;
-                switch (s.hashCode()) {
-                    case -1965615457:
-                        if (s.equals("Nearby")) {
-                            b0 = 0;
-                        }
-                        break;
-                    case -1295557813:
-                        if (s.equals("Teleport")) {
-                            boolean flag = true;
-                            break label41;
-                        }
-                }
-
-                switch (b0) {
-                    case 0:
+                switch (s) {
+                    case "Nearby":
                         if (this.Vp.T(this.delay.wo().longValue())) {
                             new Thread(() -> this.nuke(d0, var1.getPosX(), var1.getPosY(), var1.getPosZ())).start();
                             this.Vp.aX();
                         }
 
                         return;
-                    case 1:
+                    case "Teleport":
                         break;
                     default:
                         return;

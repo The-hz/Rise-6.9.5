@@ -31,22 +31,8 @@ public class FireBallLongJump extends Mode<LongJump> {
         label47: {
             label46: {
                 String s = this.mode.wo().getName();
-                byte b0 = -1;
-                switch (s.hashCode()) {
-                    case -1248403467:
-                        if (s.equals("Hypixel")) {
-                            b0 = 0;
-                        }
-                        break;
-                    case 2029746065:
-                        if (s.equals("Custom")) {
-                            boolean flag = true;
-                            break label46;
-                        }
-                }
-
-                switch (b0) {
-                    case 0:
+                switch (s) {
+                    case "Hypixel":
                         if (aEg.thePlayer.hurtTime == 10) {
                             this.yawAtDamage = aEg.thePlayer.pl;
                             aEg.thePlayer.motionY = 1.5;
@@ -62,7 +48,7 @@ public class FireBallLongJump extends Mode<LongJump> {
                             this.moveSpeed = this.moveSpeed - (this.moveSpeed / 249.9 + Math.random() / 100.0);
                         }
                         break label47;
-                    case 1:
+                    case "Custom":
                         break;
                     default:
                         break label47;

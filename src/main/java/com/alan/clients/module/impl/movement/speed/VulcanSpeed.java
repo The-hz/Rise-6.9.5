@@ -172,34 +172,8 @@ public final class VulcanSpeed extends Mode<Speed> {
                 label344: {
                     label295: {
                         String s = this.mode.wo().getName();
-                        byte b0 = -1;
-                        switch (s.hashCode()) {
-                            case -2012992363:
-                                if (s.equals("Lowhop")) {
-                                    boolean flag = true;
-                                    break label344;
-                                }
-                                break;
-                            case 2038951:
-                                if (s.equals("BHop")) {
-                                    byte b1 = 2;
-                                    break label295;
-                                }
-                                break;
-                            case 68241258:
-                                if (s.equals("Funny")) {
-                                    byte b2 = 3;
-                                    break label343;
-                                }
-                                break;
-                            case 85640282:
-                                if (s.equals("Yport")) {
-                                    b0 = 0;
-                                }
-                        }
-
-                        switch (b0) {
-                            case 0:
+                        switch (s) {
+                            case "Yport":
                                 MoveUtil.strafe();
                                 double d1;
                                 int k = (d1 = MoveUtil.speed() - 0.22) == 0.0 ? 0 : (d1 < 0.0 ? -1 : 1);
@@ -252,11 +226,11 @@ public final class VulcanSpeed extends Mode<Speed> {
 
                                 MoveUtil.preventDiagonalSpeed();
                                 return;
-                            case 1:
+                            case "Lowhop":
                                 break label344;
-                            case 2:
+                            case "BHop":
                                 break;
-                            case 3:
+                            case "Funny":
                                 break label343;
                             default:
                                 return;

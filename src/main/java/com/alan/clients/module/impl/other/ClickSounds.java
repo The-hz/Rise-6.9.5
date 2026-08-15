@@ -28,25 +28,11 @@ public final class ClickSounds extends Module {
             label22: {
                 s = "rise.click.standard";
                 String s1 = this.sound.wo().getName();
-                byte b0 = -1;
-                switch (s1.hashCode()) {
-                    case 2043320:
-                        if (s1.equals("Alan")) {
-                            boolean flag = true;
-                            break label22;
-                        }
-                        break;
-                    case 2052876273:
-                        if (s1.equals("Double")) {
-                            b0 = 0;
-                        }
-                }
-
-                switch (b0) {
-                    case 0:
+                switch (s1) {
+                    case "Double":
                         s = "rise.click.double";
                         break label23;
-                    case 1:
+                    case "Alan":
                         break;
                     default:
                         break label23;

@@ -103,52 +103,19 @@ public final class ScriptModule extends ScriptHandlerWrapper<Module> {
                     label100: {
                         label70: {
                             String s = var1.toLowerCase();
-                            byte b0 = -1;
-                            switch (s.hashCode()) {
-                                case -1034364087:
-                                    if (s.equals("number")) {
-                                        break label100;
-                                    }
-                                    break;
-                                case -891985903:
-                                    if (s.equals("string")) {
-                                        b0 = 0;
-                                    }
-                                    break;
-                                case -169986498:
-                                    if (s.equals("boundsnumber")) {
-                                        break label97;
-                                    }
-                                    break;
-                                case 3357091:
-                                    if (s.equals("mode")) {
-                                        break label70;
-                                    }
-                                    break;
-                                case 64711720:
-                                    if (s.equals("boolean")) {
-                                        break label98;
-                                    }
-                                    break;
-                                case 94842723:
-                                    if (s.equals("color")) {
-                                        break label99;
-                                    }
-                            }
-
-                            switch (b0) {
-                                case 0:
+                            switch (s) {
+                                case "string":
                                     new StringValue(var2, this.wrapped, (String)var3);
                                     return;
-                                case 1:
+                                case "number":
                                     break label100;
-                                case 2:
+                                case "boundsnumber":
                                     break label97;
-                                case 3:
+                                case "boolean":
                                     break label98;
-                                case 4:
+                                case "mode":
                                     break;
-                                case 5:
+                                case "color":
                                     break label99;
                                 default:
                                     return;

@@ -294,36 +294,18 @@ extends Mode<Interface> {
                         this.logoColor = this.rz().rA();
                         this.asT = ((Mode)this.asP.wo()).getName().equals("Normal");
                         String string = ((Mode)this.asJ.wo()).getName();
-                        int n2 = -1;
-                        switch (string.hashCode()) {
-                            case -1595926131: {
-                                if (!string.equals("Minecraft")) break;
-                                n2 = 1;
-                                break block103;
-                            }
-                            case 1243966778: {
-                                if (!string.equals("Apple UI")) break;
-                                n2 = 0;
-                                break;
-                            }
-                            case 2029746065: {
-                                if (!string.equals("Custom")) break;
-                                n2 = 2;
-                                break block104;
-                            }
-                        }
-                        switch (n2) {
-                            case 0: {
+                        switch (string) {
+                            case "Apple UI": {
                                 agc agc2 = FontManager.MAIN.a(18, FontWeight.REGULAR);
                                 if (!this.ky.equals(agc2)) {
                                     this.ky = agc2;
                                 }
                                 break block105;
                             }
-                            case 1: {
+                            case "Minecraft": {
                                 break;
                             }
-                            case 2: {
+                            case "Custom": {
                                 break block104;
                             }
                             default: {
@@ -358,25 +340,13 @@ extends Mode<Interface> {
                         string5 = (((Boolean)((Interface)this.getParent()).lowercase.wo()).booleanValue() ? zc2.getTag().toLowerCase() : zc2.getTag()).replace(((Boolean)((Interface)this.getParent()).lH().wo()).booleanValue() ? " " : "", "");
                         color = this.rz().rA();
                         String string6 = ((Mode)this.asI.wo()).getName();
-                        int n3 = -1;
-                        switch (string6.hashCode()) {
-                            case 2181788: {
-                                if (!string6.equals("Fade")) break;
-                                n3 = 1;
-                                break block79;
-                            }
-                            case 1805704165: {
-                                if (!string6.equals("Breathe")) break;
-                                n3 = 0;
-                            }
-                        }
-                        switch (n3) {
-                            case 0: {
+                        switch (string6) {
+                            case "Breathe": {
                                 double d2 = this.rz().getBlendFactor(new Vector2d(0.0, 0.0));
                                 color = ColorUtil.a(color, this.rz().rB(), d2);
                                 break block80;
                             }
-                            case 1: {
+                            case "Fade": {
                                 break;
                             }
                             default: {

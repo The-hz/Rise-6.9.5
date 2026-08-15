@@ -45,60 +45,16 @@ public class WatchdogBlinkPhase extends Mode<Phase> {
                 label56: {
                     label43: {
                         String s = ((c)packet).getChatComponent().getUnformattedText();
-                        byte b0 = -1;
-                        switch (s.hashCode()) {
-                            case -1374273025:
-                                if (s.equals("§r§e§r§eThe game starts in §r§a§r§c3§r§e seconds!§r§e§r")) {
-                                    byte b3 = 4;
-                                    break label56;
-                                }
-                                break;
-                            case -1013464198:
-                                if (s.equals("The game starts in 3 seconds!")) {
-                                    byte b2 = 3;
-                                    break label56;
-                                }
-                                break;
-                            case -815930779:
-                                if (s.equals("§r§r§r                               §r§f§lSkyWars Duel§r")) {
-                                    boolean flag = true;
-                                    break label55;
-                                }
-                                break;
-                            case 445216674:
-                                if (s.equals("Cages opened! FIGHT!")) {
-                                    b0 = 0;
-                                }
-                                break;
-                            case 1119124025:
-                                if (s.equals("§r§eCages open in: §r§c3 §r§eseconds!§r")) {
-                                    byte b4 = 5;
-                                    break label56;
-                                }
-                                break;
-                            case 1865777181:
-                                if (s.equals("§r§eCages opened! §r§cFIGHT!§r")) {
-                                    byte b1 = 2;
-                                    break label55;
-                                }
-                                break;
-                            case 1915313797:
-                                if (s.equals("The games begin in 3 seconds!")) {
-                                    byte b5 = 6;
-                                    break label43;
-                                }
-                        }
-
-                        switch (b0) {
-                            case 0:
-                            case 1:
-                            case 2:
+                        switch (s) {
+                            case "§r§r§r                               §r§f§lSkyWars Duel§r":
+                            case "Cages opened! FIGHT!":
+                            case "§r§eCages opened! §r§cFIGHT!§r":
                                 break label55;
-                            case 3:
-                            case 4:
-                            case 5:
+                            case "§r§e§r§eThe game starts in §r§a§r§c3§r§e seconds!§r§e§r":
+                            case "The game starts in 3 seconds!":
+                            case "§r§eCages open in: §r§c3 §r§eseconds!§r":
                                 break label56;
-                            case 6:
+                            case "The games begin in 3 seconds!":
                                 break;
                             default:
                                 return;

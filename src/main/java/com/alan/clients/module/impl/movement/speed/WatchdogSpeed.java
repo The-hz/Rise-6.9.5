@@ -217,28 +217,8 @@ public class WatchdogSpeed extends Mode<Speed> {
                     label1224: {
                         label1086: {
                             String s = this.mode.wo().getName();
-                            byte b0 = -1;
-                            switch (s.hashCode()) {
-                                case -1808126673:
-                                    if (s.equals("Strafe")) {
-                                        b0 = 0;
-                                    }
-                                    break;
-                                case -475455564:
-                                    if (s.equals("NCP Strafe")) {
-                                        byte b1 = 2;
-                                        break label1086;
-                                    }
-                                    break;
-                                case 1244080027:
-                                    if (s.equals("Low Strafe")) {
-                                        boolean flag = true;
-                                        break label1224;
-                                    }
-                            }
-
-                            switch (b0) {
-                                case 0:
+                            switch (s) {
+                                case "Strafe":
                                     if (aEg.thePlayer.onGround && this.vh) {
                                         aEg.thePlayer.motionY = 0.42;
                                     }
@@ -415,9 +395,9 @@ public class WatchdogSpeed extends Mode<Speed> {
                                         MoveUtil.strafe(0.125);
                                     }
                                     break label1264;
-                                case 1:
+                                case "Low Strafe":
                                     break label1224;
-                                case 2:
+                                case "NCP Strafe":
                                     break;
                                 default:
                                     break label1264;

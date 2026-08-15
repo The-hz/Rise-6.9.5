@@ -117,31 +117,13 @@ public class ProximityVoiceChat extends Module {
         label44: {
             label30: {
                 String s = this.VC.wo().getName();
-                byte b0 = -1;
-                switch (s.hashCode()) {
-                    case -1808497640:
-                        if (s.equals("Stereo")) {
-                            b0 = 0;
-                        }
-                        break;
-                    case 148446855:
-                        if (s.equals("Quadraphonic")) {
-                            break label44;
-                        }
-                        break;
-                    case 787330989:
-                        if (s.equals("Surround Sound")) {
-                            break label30;
-                        }
-                }
-
-                switch (b0) {
-                    case 0:
+                switch (s) {
+                    case "Stereo":
                         byte b5 = 2;
                         return new AudioFormat(this.sampleRate.wo().floatValue(), this.sampleSizeInBits.wo().intValue(), b5, true, false);
-                    case 1:
+                    case "Quadraphonic":
                         break label44;
-                    case 2:
+                    case "Surround Sound":
                         break;
                     default:
                         byte b2 = 1;

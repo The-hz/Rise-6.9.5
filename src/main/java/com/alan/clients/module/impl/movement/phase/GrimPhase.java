@@ -118,32 +118,14 @@ public class GrimPhase extends Mode<Phase> {
                 f = aEg.thePlayer.pl;
                 f1 = aEg.thePlayer.rotationPitch;
                 String s = var1.toLowerCase();
-                byte b0 = -1;
-                switch (s.hashCode()) {
-                    case -1335230820:
-                        if (s.equals("desync")) {
-                            break label30;
-                        }
-                        break;
-                    case -1325958191:
-                        if (s.equals("double")) {
-                            break label44;
-                        }
-                        break;
-                    case -902286926:
-                        if (s.equals("simple")) {
-                            b0 = 0;
-                        }
-                }
-
-                switch (b0) {
-                    case 0:
+                switch (s) {
+                    case "simple":
                         PacketUtil.m(new C06PacketPlayerPosLook(d0 - 5000.0, d1, d2 - 5000.0, f, f1, false));
                         PacketUtil.m(new C06PacketPlayerPosLook(d0, d1, d2, f, f1, aEg.thePlayer.onGround));
                         return;
-                    case 1:
+                    case "double":
                         break label44;
-                    case 2:
+                    case "desync":
                         break;
                     default:
                         return;

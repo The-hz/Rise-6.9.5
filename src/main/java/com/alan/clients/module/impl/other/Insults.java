@@ -81,49 +81,17 @@ public final class Insults extends Module {
                                 label61: {
                                     s = "";
                                     String s1 = this.mode.wo().getName();
-                                    byte b0 = -1;
-                                    switch (s1.hashCode()) {
-                                        case -1085510111:
-                                            if (s1.equals("Default")) {
-                                                b0 = 0;
-                                            }
-                                            break;
-                                        case 2078040:
-                                            if (s1.equals("CSGO")) {
-                                                byte b2 = 3;
-                                                break label62;
-                                            }
-                                            break;
-                                        case 609795629:
-                                            if (s1.equals("Watchdog")) {
-                                                boolean flag = true;
-                                                break label64;
-                                            }
-                                            break;
-                                        case 1303557393:
-                                            if (s1.equals("NerdyAss")) {
-                                                byte b3 = 4;
-                                                break label61;
-                                            }
-                                            break;
-                                        case 1999394194:
-                                            if (s1.equals("WhatsApp")) {
-                                                byte b1 = 2;
-                                                break label63;
-                                            }
-                                    }
-
-                                    switch (b0) {
-                                        case 0:
+                                    switch (s1) {
+                                        case "Default":
                                             s = this.US[RandomUtils.nextInt(0, this.US.length)];
                                             break label65;
-                                        case 1:
+                                        case "Watchdog":
                                             break label64;
-                                        case 2:
+                                        case "WhatsApp":
                                             break label63;
-                                        case 3:
+                                        case "CSGO":
                                             break label62;
-                                        case 4:
+                                        case "NerdyAss":
                                             break;
                                         default:
                                             break label65;

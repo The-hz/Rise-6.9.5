@@ -32,22 +32,8 @@ public class LegitSpeed extends Mode<Speed> {
         label45: {
             label44: {
                 String s = this.rotationExploit.wo().getName();
-                byte b0 = -1;
-                switch (s.hashCode()) {
-                    case -1678930839:
-                        if (s.equals("Speed Equivalent (Almost legit, Very hard to flag)")) {
-                            boolean flag = true;
-                            break label44;
-                        }
-                        break;
-                    case 732128041:
-                        if (s.equals("Rotate (Fully Legit)")) {
-                            b0 = 0;
-                        }
-                }
-
-                switch (b0) {
-                    case 0:
+                switch (s) {
+                    case "Rotate (Fully Legit)":
                         if ((!KillAura.mB || !this.e(KillAura.class).isEnabled())
                             && !aEg.thePlayer.onGround
                             && !aEg.gameSettings.keyBindRight.isKeyDown()
@@ -56,7 +42,7 @@ public class LegitSpeed extends Mode<Speed> {
                             RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl + 45.0F, aEg.thePlayer.rotationPitch), 10.0, MovementFix.NORMAL);
                         }
                         break label45;
-                    case 1:
+                    case "Speed Equivalent (Almost legit, Very hard to flag)":
                         break;
                     default:
                         break label45;

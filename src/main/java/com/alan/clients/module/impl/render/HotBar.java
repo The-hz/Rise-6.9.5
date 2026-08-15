@@ -162,21 +162,8 @@ public class HotBar extends Module {
     private void a(ScaledResolution resolution, EntityPlayer player) {
         label39: {
             String s = this.interfaceModule.lM().wo().getName();
-            byte b0 = -1;
-            switch (s.hashCode()) {
-                case -469838457:
-                    if (s.equals("Traditional")) {
-                        break label39;
-                    }
-                    break;
-                case 2547433:
-                    if (s.equals("Rise")) {
-                        b0 = 0;
-                    }
-            }
-
-            switch (b0) {
-                case 0:
+            switch (s) {
+                case "Rise":
                     float f = player.experience;
                     if (f <= 0.0F) {
                         return;
@@ -193,7 +180,7 @@ public class HotBar extends Module {
                     RenderUtil.roundedRectangle(d0, d1, d2, d4, d5, Themes.rK());
                     RenderUtil.roundedRectangle(d0, d1, d3, d4, d5, this.rz().rD());
                     return;
-                case 1:
+                case "Traditional":
                     break;
                 default:
                     return;
@@ -222,27 +209,14 @@ public class HotBar extends Module {
     private void a(Color color) {
         label27: {
             String s = this.interfaceModule.lM().wo().getName();
-            byte b0 = -1;
-            switch (s.hashCode()) {
-                case -469838457:
-                    if (s.equals("Traditional")) {
-                        break label27;
-                    }
-                    break;
-                case 2547433:
-                    if (s.equals("Rise")) {
-                        b0 = 0;
-                    }
-            }
-
-            switch (b0) {
-                case 0:
+            switch (s) {
+                case "Rise":
                     double d0 = this.interfaceModule != null ? this.interfaceModule.lD() : 9.0;
                     RenderUtil.roundedRectangle(
                         this.structure.apP.x + 1.0, this.structure.apP.y + 18.0, this.structure.aHe.x - 0.0, this.structure.aHe.y - 18.0, d0, color
                     );
                     return;
-                case 1:
+                case "Traditional":
                     break;
                 default:
                     return;

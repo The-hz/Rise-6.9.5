@@ -71,33 +71,13 @@ public class ClassicInterface extends Mode<Interface> {
                                 color = zc.nw();
                                 color1 = this.rz().rA();
                                 String s3 = this.ass.wo().getName();
-                                byte b0 = -1;
-                                switch (s3.hashCode()) {
-                                    case -1656737386:
-                                        if (s3.equals("Rainbow")) {
-                                            boolean flag1 = true;
-                                            break label87;
-                                        }
-                                        break;
-                                    case 2181788:
-                                        if (s3.equals("Fade")) {
-                                            b0 = 0;
-                                        }
-                                        break;
-                                    case 81068680:
-                                        if (s3.equals("Trans")) {
-                                            byte b1 = 2;
-                                            break label86;
-                                        }
-                                }
-
-                                switch (b0) {
-                                    case 0:
+                                switch (s3) {
+                                    case "Fade":
                                         color1 = this.rz().getAccentColor(new Vector2d(0.0, zc.nr().getY()));
                                         break label88;
-                                    case 1:
+                                    case "Rainbow":
                                         break label87;
-                                    case 2:
+                                    case "Trans":
                                         break;
                                     default:
                                         break label88;

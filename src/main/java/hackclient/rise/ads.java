@@ -155,23 +155,12 @@ extends Menu {
             case 0: {
                 block3: {
                     String string = ((GuiButton)this.buttonList.get((int)0)).displayString;
-                    int n2 = -1;
-                    switch (string.hashCode()) {
-                        case 2587682: {
-                            if (!string.equals("Stop")) break;
-                            break block3;
-                        }
-                        case 80204866: {
-                            if (!string.equals("Start")) break;
-                            n2 = 0;
-                        }
-                    }
-                    switch (n2) {
-                        case 0: {
+                    switch (string) {
+                        case "Start": {
                             this.rt();
                             return;
                         }
-                        case 1: {
+                        case "Stop": {
                             break;
                         }
                         default: {

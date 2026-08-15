@@ -112,178 +112,8 @@ public final class Animations extends Module {
                                                                                                                     label293: {
                                                                                                                         label248: {
                                                                                                                             String s = this.blockAnimation.wo().getName();
-                                                                                                                            byte b0 = -1;
-                                                                                                                            switch (s.hashCode()) {
-                                                                                                                                case -2022880414:
-                                                                                                                                    if (s.equals("Leaked")) {
-                                                                                                                                        byte b12 = 13;
-                                                                                                                                        break label262;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case -1814666802:
-                                                                                                                                    if (s.equals("Smooth")) {
-                                                                                                                                        byte b9 = 10;
-                                                                                                                                        break label265;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case -1808503203:
-                                                                                                                                    if (s.equals("Stella")) {
-                                                                                                                                        byte b18 = 19;
-                                                                                                                                        break label256;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case -1135075377:
-                                                                                                                                    if (s.equals(
-                                                                                                                                        "Exhibition New"
-                                                                                                                                    )) {
-                                                                                                                                        byte b16 = 17;
-                                                                                                                                        break label258;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case -1135074218:
-                                                                                                                                    if (s.equals(
-                                                                                                                                        "Exhibition Old"
-                                                                                                                                    )) {
-                                                                                                                                        byte b15 = 16;
-                                                                                                                                        break label259;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case -1019669830:
-                                                                                                                                    if (s.equals("1.7 Accurate")
-                                                                                                                                        )
-                                                                                                                                     {
-                                                                                                                                        byte b1 = 2;
-                                                                                                                                        break label272;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case -352259601:
-                                                                                                                                    if (s.equals("Exhibition")) {
-                                                                                                                                        byte b14 = 15;
-                                                                                                                                        break label260;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 63:
-                                                                                                                                    if (s.equals("?")) {
-                                                                                                                                        byte b24 = 25;
-                                                                                                                                        break label250;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 48570:
-                                                                                                                                    if (s.equals("1.7")) {
-                                                                                                                                        boolean flag = true;
-                                                                                                                                        break label273;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 79367:
-                                                                                                                                    if (s.equals("Old")) {
-                                                                                                                                        byte b13 = 14;
-                                                                                                                                        break label261;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 83843:
-                                                                                                                                    if (s.equals("Tap")) {
-                                                                                                                                        byte b5 = 6;
-                                                                                                                                        break label268;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 86917:
-                                                                                                                                    if (s.equals("XIV")) {
-                                                                                                                                        byte b7 = 8;
-                                                                                                                                        break label267;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 2066960:
-                                                                                                                                    if (s.equals("Beta")) {
-                                                                                                                                        byte b6 = 7;
-                                                                                                                                        break label248;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 2192897:
-                                                                                                                                    if (s.equals("Flup")) {
-                                                                                                                                        byte b19 = 20;
-                                                                                                                                        break label255;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 2433880:
-                                                                                                                                    if (s.equals("None")) {
-                                                                                                                                        b0 = 0;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 2433928:
-                                                                                                                                    if (s.equals("Noov")) {
-                                                                                                                                        byte b20 = 21;
-                                                                                                                                        break label254;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 2546672:
-                                                                                                                                    if (s.equals("Rhys")) {
-                                                                                                                                        byte b22 = 23;
-                                                                                                                                        break label252;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 2583650:
-                                                                                                                                    if (s.equals("Spin")) {
-                                                                                                                                        byte b11 = 12;
-                                                                                                                                        break label263;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 2587234:
-                                                                                                                                    if (s.equals("Stab")) {
-                                                                                                                                        byte b10 = 11;
-                                                                                                                                        break label264;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 63569951:
-                                                                                                                                    if (s.equals("Astro")) {
-                                                                                                                                        byte b4 = 5;
-                                                                                                                                        break label269;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 73771637:
-                                                                                                                                    if (s.equals("Lucid")) {
-                                                                                                                                        byte b3 = 4;
-                                                                                                                                        break label270;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 80247031:
-                                                                                                                                    if (s.equals("Sunny")) {
-                                                                                                                                        byte b2 = 3;
-                                                                                                                                        break label271;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 80301790:
-                                                                                                                                    if (s.equals("Swing")) {
-                                                                                                                                        byte b23 = 24;
-                                                                                                                                        break label251;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 80307556:
-                                                                                                                                    if (s.equals("Swong")) {
-                                                                                                                                        byte b17 = 18;
-                                                                                                                                        break label257;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 522034400:
-                                                                                                                                    if (s.equals("Komorebi")) {
-                                                                                                                                        byte b21 = 22;
-                                                                                                                                        break label253;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 1355172906:
-                                                                                                                                    if (s.equals("Dortware")) {
-                                                                                                                                        byte b25 = 26;
-                                                                                                                                        break label293;
-                                                                                                                                    }
-                                                                                                                                    break;
-                                                                                                                                case 1972874617:
-                                                                                                                                    if (s.equals("Avatar")) {
-                                                                                                                                        byte b8 = 9;
-                                                                                                                                        break label266;
-                                                                                                                                    }
-                                                                                                                            }
-
-                                                                                                                            switch (b0) {
-                                                                                                                                case 0:
+                                                                                                                            switch (s) {
+                                                                                                                                case "None":
                                                                                                                                     itemrenderer.transformFirstPersonItem(
                                                                                                                                         f, 0.0F
                                                                                                                                     );
@@ -292,57 +122,57 @@ public final class Animations extends Module {
                                                                                                                                     );
                                                                                                                                     itemrenderer.doBlockTransformations();
                                                                                                                                     break label274;
-                                                                                                                                case 1:
+                                                                                                                                case "1.7":
                                                                                                                                     break label273;
-                                                                                                                                case 2:
+                                                                                                                                case "1.7 Accurate":
                                                                                                                                     break label272;
-                                                                                                                                case 3:
+                                                                                                                                case "Sunny":
                                                                                                                                     break label271;
-                                                                                                                                case 4:
+                                                                                                                                case "Lucid":
                                                                                                                                     break label270;
-                                                                                                                                case 5:
+                                                                                                                                case "Astro":
                                                                                                                                     break label269;
-                                                                                                                                case 6:
+                                                                                                                                case "Tap":
                                                                                                                                     break label268;
-                                                                                                                                case 7:
+                                                                                                                                case "Beta":
                                                                                                                                     break;
-                                                                                                                                case 8:
+                                                                                                                                case "XIV":
                                                                                                                                     break label267;
-                                                                                                                                case 9:
+                                                                                                                                case "Avatar":
                                                                                                                                     break label266;
-                                                                                                                                case 10:
+                                                                                                                                case "Smooth":
                                                                                                                                     break label265;
-                                                                                                                                case 11:
+                                                                                                                                case "Stab":
                                                                                                                                     break label264;
-                                                                                                                                case 12:
+                                                                                                                                case "Spin":
                                                                                                                                     break label263;
-                                                                                                                                case 13:
+                                                                                                                                case "Leaked":
                                                                                                                                     break label262;
-                                                                                                                                case 14:
+                                                                                                                                case "Old":
                                                                                                                                     break label261;
-                                                                                                                                case 15:
+                                                                                                                                case "Exhibition":
                                                                                                                                     break label260;
-                                                                                                                                case 16:
+                                                                                                                                case "Exhibition Old":
                                                                                                                                     break label259;
-                                                                                                                                case 17:
+                                                                                                                                case "Exhibition New":
                                                                                                                                     break label258;
-                                                                                                                                case 18:
+                                                                                                                                case "Swong":
                                                                                                                                     break label257;
-                                                                                                                                case 19:
+                                                                                                                                case "Stella":
                                                                                                                                     break label256;
-                                                                                                                                case 20:
+                                                                                                                                case "Flup":
                                                                                                                                     break label255;
-                                                                                                                                case 21:
+                                                                                                                                case "Noov":
                                                                                                                                     break label254;
-                                                                                                                                case 22:
+                                                                                                                                case "Komorebi":
                                                                                                                                     break label253;
-                                                                                                                                case 23:
+                                                                                                                                case "Rhys":
                                                                                                                                     break label252;
-                                                                                                                                case 24:
+                                                                                                                                case "Swing":
                                                                                                                                     break label251;
-                                                                                                                                case 25:
+                                                                                                                                case "?":
                                                                                                                                     break label250;
-                                                                                                                                case 26:
+                                                                                                                                case "Dortware":
                                                                                                                                     break label293;
                                                                                                                                 default:
                                                                                                                                     break label274;
@@ -640,53 +470,21 @@ public final class Animations extends Module {
                             label157: {
                                 label156: {
                                     String s1 = this.swingAnimation.wo().getName();
-                                    byte b26 = -1;
-                                    switch (s1.hashCode()) {
-                                        case -1814666802:
-                                            if (s1.equals("Smooth")) {
-                                                byte b29 = 4;
-                                                break label159;
-                                            }
-                                            break;
-                                        case 1505775:
-                                            if (s1.equals("1.9+")) {
-                                                byte b27 = 2;
-                                                break label157;
-                                            }
-                                            break;
-                                        case 2433880:
-                                            if (s1.equals("None")) {
-                                                b26 = 0;
-                                            }
-                                            break;
-                                        case 77476110:
-                                            if (s1.equals("Punch")) {
-                                                boolean flag1 = true;
-                                                break label156;
-                                            }
-                                            break;
-                                        case 79860937:
-                                            if (s1.equals("Shove")) {
-                                                byte b28 = 3;
-                                                break label158;
-                                            }
-                                    }
-
-                                    switch (b26) {
-                                        case 0:
+                                    switch (s1) {
+                                        case "None":
                                             itemrenderer.doItemUsedTransformations(f1);
                                             itemrenderer.transformFirstPersonItem(f, f1);
                                             if (!this.updatePositionOnlyWhenBlocking.wo()) {
                                                 GlStateManager.scale(d1, d1, d1);
                                             }
                                             break label160;
-                                        case 1:
+                                        case "Punch":
                                             break;
-                                        case 2:
+                                        case "1.9+":
                                             break label157;
-                                        case 3:
+                                        case "Shove":
                                             break label158;
-                                        case 4:
+                                        case "Smooth":
                                             break label159;
                                         default:
                                             break label160;

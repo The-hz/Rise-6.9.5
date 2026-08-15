@@ -37,26 +37,12 @@ public class Translator extends Module {
 
                 label29: {
                     String s1 = this.mode.wo().getName();
-                    byte b0 = -1;
-                    switch (s1.hashCode()) {
-                        case -1850574757:
-                            if (s1.equals("Resend")) {
-                                boolean flag = true;
-                                break label29;
-                            }
-                            break;
-                        case 65915235:
-                            if (s1.equals("Delay")) {
-                                b0 = 0;
-                            }
-                    }
-
-                    switch (b0) {
-                        case 0:
+                    switch (s1) {
+                        case "Delay":
                             var1.setCancelled();
                             this.U(s);
                             return;
-                        case 1:
+                        case "Resend":
                             break;
                         default:
                             return;

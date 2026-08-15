@@ -121,24 +121,11 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                                 Module module1 = (Module)hashmap.get(s4);
                                 String s5 = s3.split("_")[1].split("_")[0];
                                 String s6 = s5;
-                                byte b0 = -1;
-                                switch (s6.hashCode()) {
-                                    case 3180:
-                                        if (s6.equals("e1")) {
-                                            b0 = 0;
-                                        }
-                                        break;
-                                    case 3416:
-                                        if (s6.equals("kc")) {
-                                            continue;
-                                        }
-                                }
-
                                 String s7;
                                 int i;
-                                switch (b0) {
-                                    case 0:
-                                    case 1:
+                                switch (s6) {
+                                    case "e1":
+                                    case "kc":
                                         continue;
                                     default:
                                         s7 = s3.split("_" + Pattern.quote(s5) + "_")[1].split("_")[0];
@@ -178,24 +165,11 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                                             label198: {
                                                 d0 = Double.parseDouble(s3.split("_" + Pattern.quote(s7) + "_")[1]);
                                                 String s9 = s7;
-                                                byte b1 = -1;
-                                                switch (s9.hashCode()) {
-                                                    case -906279820:
-                                                        if (s9.equals("second")) {
-                                                            break label198;
-                                                        }
-                                                        break;
-                                                    case 97440432:
-                                                        if (s9.equals("first")) {
-                                                            b1 = 0;
-                                                        }
-                                                }
-
-                                                switch (b1) {
-                                                    case 0:
+                                                switch (s9) {
+                                                    case "first":
                                                         boundsnumbervalue.n(d0);
                                                         continue;
-                                                    case 1:
+                                                    case "second":
                                                         break;
                                                     default:
                                                         continue;
@@ -212,38 +186,15 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                                                         color = colorvalue.wo();
                                                         j = Integer.parseInt(s3.split("_" + Pattern.quote(s7) + "_")[1]);
                                                         String s10 = s7;
-                                                        byte b2 = -1;
-                                                        switch (s10.hashCode()) {
-                                                            case 112785:
-                                                                if (s10.equals("red")) {
-                                                                    b2 = 0;
-                                                                }
-                                                                break;
-                                                            case 3027034:
-                                                                if (s10.equals("blue")) {
-                                                                    break label219;
-                                                                }
-                                                                break;
-                                                            case 92909918:
-                                                                if (s10.equals("alpha")) {
-                                                                    break label218;
-                                                                }
-                                                                break;
-                                                            case 98619139:
-                                                                if (s10.equals("green")) {
-                                                                    break label220;
-                                                                }
-                                                        }
-
-                                                        switch (b2) {
-                                                            case 0:
+                                                        switch (s10) {
+                                                            case "red":
                                                                 colorvalue.n(new Color(j, color.getGreen(), color.getBlue(), color.getAlpha()));
                                                                 continue;
-                                                            case 1:
+                                                            case "green":
                                                                 break label220;
-                                                            case 2:
+                                                            case "blue":
                                                                 break label219;
-                                                            case 3:
+                                                            case "alpha":
                                                                 break;
                                                             default:
                                                                 continue;
@@ -274,39 +225,16 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                                                     label239: {
                                                         d1 = Double.parseDouble(s3.split("_" + Pattern.quote(s7) + "_")[1]);
                                                         String s11 = s7;
-                                                        byte b5 = -1;
-                                                        switch (s11.hashCode()) {
-                                                            case -908189618:
-                                                                if (s11.equals("scaleX")) {
-                                                                    break label240;
-                                                                }
-                                                                break;
-                                                            case -908189617:
-                                                                if (s11.equals("scaleY")) {
-                                                                    break label239;
-                                                                }
-                                                                break;
-                                                            case 1707117647:
-                                                                if (s11.equals("positionX")) {
-                                                                    b5 = 0;
-                                                                }
-                                                                break;
-                                                            case 1707117648:
-                                                                if (s11.equals("positionY")) {
-                                                                    break label241;
-                                                                }
-                                                        }
-
-                                                        switch (b5) {
-                                                            case 0:
+                                                        switch (s11) {
+                                                            case "positionX":
                                                                 dragvalue.h(new Vector2d(d1, dragvalue.apP.y));
                                                                 dragvalue.i(new Vector2d(d1, dragvalue.atg.y));
                                                                 continue;
-                                                            case 1:
+                                                            case "positionY":
                                                                 break label241;
-                                                            case 2:
+                                                            case "scaleX":
                                                                 break label240;
-                                                            case 3:
+                                                            case "scaleY":
                                                                 break;
                                                             default:
                                                                 continue;
@@ -338,26 +266,13 @@ public final class b implements rip.vantage.commons.handler.api.S2CPacketHandler
                                 module2 = (Module)hashmap.get(s13);
                                 String s14 = s12.split("_")[1].split("_")[0];
                                 String s15 = s14;
-                                byte b8 = -1;
-                                switch (s15.hashCode()) {
-                                    case 3180:
-                                        if (s15.equals("e1")) {
-                                            b8 = 0;
-                                        }
-                                        break;
-                                    case 3416:
-                                        if (s15.equals("kc")) {
-                                            break label152;
-                                        }
-                                }
-
-                                switch (b8) {
-                                    case 0:
+                                switch (s15) {
+                                    case "e1":
                                         if (!(module2 instanceof ClickGUI)) {
                                             module2.setEnabled(Boolean.parseBoolean(s12.split("_e1_")[1]));
                                         }
                                         continue;
-                                    case 1:
+                                    case "kc":
                                         break;
                                     default:
                                         continue;

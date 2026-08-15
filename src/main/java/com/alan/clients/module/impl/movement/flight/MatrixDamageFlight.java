@@ -84,33 +84,13 @@ public class MatrixDamageFlight extends Mode<Flight> {
                     label74: {
                         aEg.timer.dzD = this.timerSpeed.wo().floatValue();
                         String s = this.motionY.wo().getName();
-                        byte b0 = -1;
-                        switch (s.hashCode()) {
-                            case -1808631973:
-                                if (s.equals("Stable")) {
-                                    boolean flag = true;
-                                    break label75;
-                                }
-                                break;
-                            case 2433880:
-                                if (s.equals("None")) {
-                                    b0 = 0;
-                                }
-                                break;
-                            case 718473796:
-                                if (s.equals("Multiply")) {
-                                    byte b1 = 2;
-                                    break label74;
-                                }
-                        }
-
-                        switch (b0) {
-                            case 0:
+                        switch (s) {
+                            case "None":
                                 aEg.thePlayer.motionY *= 0.039;
                                 break label76;
-                            case 1:
+                            case "Stable":
                                 break label75;
-                            case 2:
+                            case "Multiply":
                                 break;
                             default:
                                 break label76;
