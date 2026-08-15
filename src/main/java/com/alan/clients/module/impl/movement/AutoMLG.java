@@ -17,8 +17,8 @@ import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.cg;
-import hackclient.rise.ls;
-import hackclient.rise.lt;
+import com.alan.clients.module.impl.movement.AutoMLGSwitchMap;
+import hackclient.rise.ScaffoldState;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
@@ -40,14 +40,14 @@ public class AutoMLG extends Module {
     private final NumberValue pickupDelay = new NumberValue("Pickup Delay", this, 4, 1, 20, 1);
     private final BooleanValue autoPickup = new BooleanValue("Auto Pickup", this, true);
     private final BooleanValue autoDisable = new BooleanValue("Auto Disable", this, false);
-    private lt CE = lt.IDLE;
+    private ScaffoldState CE = ScaffoldState.IDLE;
     private int CF = -1;
     private int qH;
     private BlockPos CG;
     @EventLink(value = 3)
     public final Listener<PreUpdateEvent> onPreUpdate = var1 -> {
         if (aEg.thePlayer != null && aEg.theWorld != null && !aEg.thePlayer.isDead) {
-            if (this.CE != lt.IDLE && this.CF != -1) {
+            if (this.CE != ScaffoldState.IDLE && this.CF != -1) {
                 SlotComponent.b(this.CF, true);
             }
 
@@ -77,13 +77,13 @@ public class AutoMLG extends Module {
 
     @Override
     public void onDisable() {
-        this.CE = lt.IDLE;
+        this.CE = ScaffoldState.IDLE;
         this.CF = -1;
         this.CG = null;
     }
 
     private void gS() {
-        this.CE = lt.IDLE;
+        this.CE = ScaffoldState.IDLE;
         this.CF = -1;
         this.qH = 0;
         this.CG = null;
@@ -96,23 +96,23 @@ public class AutoMLG extends Module {
 
     private Vec3 a(BlockPos pos, EnumFacing facing, MovingObjectPosition hit) {
         Vec3 vec3 = new Vec3(pos.getX() + Math.random(), pos.getY() + Math.random(), pos.getZ() + Math.random());
-        switch (ls.CI[facing.ordinal()]) {
-            case 1:
+        switch (facing) {
+            case DOWN:
                 vec3.yCoord = pos.getY();
                 break;
-            case 2:
+            case UP:
                 vec3.yCoord = pos.getY() + 1;
                 break;
-            case 3:
+            case NORTH:
                 vec3.zCoord = pos.getZ();
                 break;
-            case 4:
+            case SOUTH:
                 vec3.zCoord = pos.getZ() + 1;
                 break;
-            case 5:
+            case WEST:
                 vec3.xCoord = pos.getX();
                 break;
-            case 6:
+            case EAST:
                 vec3.xCoord = pos.getX() + 1;
         }
 
@@ -209,7 +209,7 @@ public class AutoMLG extends Module {
             if (i != -1) {
                 this.CF = i;
                 SlotComponent.b(this.CF, true);
-                this.CE = lt.ROTATING;
+                this.CE = ScaffoldState.ROTATING;
                 this.qH = 0;
             }
         }
@@ -243,7 +243,7 @@ public class AutoMLG extends Module {
                             if (flag1) {
                                 this.CG = this.d(movingobjectposition);
                                 aEg.rightClickDelayTimer = 0;
-                                this.CE = lt.PLACED;
+                                this.CE = ScaffoldState.PLACED;
                                 this.qH = 0;
                             }
                         } else {
@@ -269,7 +269,7 @@ public class AutoMLG extends Module {
             }
         } else {
             if (this.autoPickup.wo()) {
-                this.CE = lt.PICKUP;
+                this.CE = ScaffoldState.PICKUP;
                 this.qH = 0;
             } else {
                 cg.e("Auto MLG", "Water placed successfully!");

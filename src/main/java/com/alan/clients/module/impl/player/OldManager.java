@@ -18,7 +18,7 @@ import com.alan.clients.util.player.ItemUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.SelectorDetectionComponent;
 import hackclient.rise.en;
-import hackclient.rise.tm;
+import hackclient.rise.InventoryStack;
 import hackclient.rise.tz;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -244,11 +244,11 @@ public class OldManager extends Module {
                             if (item instanceof ItemBlock) {
                                 l2 += itemstack.stackSize;
                                 arraylist3.add(k4);
-                                arraylist.add(new tm(itemstack, k4));
+                                arraylist.add(new InventoryStack(itemstack, k4));
                             }
 
                             if (item instanceof ItemPotion) {
-                                arraylist1.add(new tm(itemstack, k4));
+                                arraylist1.add(new InventoryStack(itemstack, k4));
                             }
 
                             if (item instanceof ItemBow) {
@@ -264,7 +264,7 @@ public class OldManager extends Module {
                             }
 
                             if (item instanceof ItemFood && this.foodSlot.wo().intValue() != 0) {
-                                arraylist2.add(new tm(itemstack, k4));
+                                arraylist2.add(new InventoryStack(itemstack, k4));
                             }
 
                             if (item instanceof be) {
@@ -333,11 +333,11 @@ public class OldManager extends Module {
                         int j5 = Math.min(this.blockSlot.wo().intValue(), this.blockSlot.wA().intValue());
                         int k5 = Math.max(this.blockSlot.wo().intValue(), this.blockSlot.wA().intValue());
                         int l5 = k5 - j5 + 1;
-                        arraylist.sort(Comparator.comparingInt(tm::jI).reversed());
+                        arraylist.sort(Comparator.comparingInt(InventoryStack::jI).reversed());
 
                         for (int i6 = 0; i6 < l5 && arraylist.size() > i6; i6++) {
                             int i13 = j5 - 1 + i6;
-                            int j13 = ((tm)arraylist.get(i6)).jH();
+                            int j13 = ((InventoryStack)arraylist.get(i6)).jH();
                             if (!this.f(j13, i13)) {
                                 this.h(j13, i13);
                             }
@@ -525,11 +525,11 @@ public class OldManager extends Module {
                         int l11 = Math.max(this.potionSlot.wo().intValue(), this.potionSlot.wA().intValue()) - k11 + 1;
                         arraylist1.sort(
                             (var1x, var2) -> {
-                                ItemPotion itempotion = (ItemPotion)((tm)var1x).bO().getItem();
-                                ItemPotion itempotion1 = (ItemPotion)((tm)var2).bO().getItem();
+                                ItemPotion itempotion = (ItemPotion)((InventoryStack)var1x).bO().getItem();
+                                ItemPotion itempotion1 = (ItemPotion)((InventoryStack)var2).bO().getItem();
                                 if (this.prioritizeSplashPotions.wo()) {
-                                    boolean flag3 = ItemPotion.isSplash(((tm)var1x).bO().getMetadata());
-                                    boolean flag4 = ItemPotion.isSplash(((tm)var2).bO().getMetadata());
+                                    boolean flag3 = ItemPotion.isSplash(((InventoryStack)var1x).bO().getMetadata());
+                                    boolean flag4 = ItemPotion.isSplash(((InventoryStack)var2).bO().getMetadata());
                                     if (flag3 && !flag4) {
                                         return -1;
                                     }
@@ -539,8 +539,8 @@ public class OldManager extends Module {
                                     }
                                 }
 
-                                List list = itempotion.getEffects(((tm)var1x).bO());
-                                List list1 = itempotion1.getEffects(((tm)var2).bO());
+                                List list = itempotion.getEffects(((InventoryStack)var1x).bO());
+                                List list1 = itempotion1.getEffects(((InventoryStack)var2).bO());
                                 if (list.isEmpty() && list1.isEmpty()) {
                                     return 0;
                                 } else if (list.isEmpty()) {
@@ -549,15 +549,15 @@ public class OldManager extends Module {
                                 return list1.isEmpty()
                                     ? -1
                                     : Integer.compare(
-                                        PlayerUtil.potionRanking(itempotion1.getEffects(((tm)var2).bO()).get(0).getPotionID()),
-                                        PlayerUtil.potionRanking(itempotion.getEffects(((tm)var1x).bO()).get(0).getPotionID())
+                                        PlayerUtil.potionRanking(itempotion1.getEffects(((InventoryStack)var2).bO()).get(0).getPotionID()),
+                                        PlayerUtil.potionRanking(itempotion.getEffects(((InventoryStack)var1x).bO()).get(0).getPotionID())
                                     );
                             }
                         );
 
                         for (int i12 = 0; i12 < l11 && arraylist1.size() > i12; i12++) {
                             int j15 = k11 - 1 + i12;
-                            int k15 = ((tm)arraylist1.get(i12)).jH();
+                            int k15 = ((InventoryStack)arraylist1.get(i12)).jH();
                             if (!this.f(k15, j15)) {
                                 this.h(k15, j15);
                             }
@@ -568,13 +568,13 @@ public class OldManager extends Module {
                         int j12 = Math.min(this.foodSlot.wo().intValue(), this.foodSlot.wA().intValue());
                         int k12 = Math.max(this.foodSlot.wo().intValue(), this.foodSlot.wA().intValue()) - j12 + 1;
                         arraylist2.sort((var0, var1x) -> {
-                            ItemFood itemfood = (ItemFood)((tm)var0).bO().getItem();
-                            return Float.compare(((ItemFood)((tm)var1x).bO().getItem()).getSaturationModifier(((tm)var1x).bO()), itemfood.getSaturationModifier(((tm)var0).bO()));
+                            ItemFood itemfood = (ItemFood)((InventoryStack)var0).bO().getItem();
+                            return Float.compare(((ItemFood)((InventoryStack)var1x).bO().getItem()).getSaturationModifier(((InventoryStack)var1x).bO()), itemfood.getSaturationModifier(((InventoryStack)var0).bO()));
                         });
 
                         for (int l12 = 0; l12 < k12 && arraylist2.size() > l12; l12++) {
                             int l15 = j12 - 1 + l12;
-                            int i16 = ((tm)arraylist2.get(l12)).jH();
+                            int i16 = ((InventoryStack)arraylist2.get(l12)).jH();
                             if (!this.f(i16, l15)) {
                                 this.h(i16, l15);
                             }
@@ -779,12 +779,12 @@ public class OldManager extends Module {
         ItemArmor itemarmor = (ItemArmor)stack.getItem();
         int i = itemarmor.damageReduceAmount;
 
-        byte b0 = switch (tz.afE[itemarmor.getArmorMaterial().ordinal()]) {
-            case 1 -> 5;
-            case 2 -> 4;
-            case 3 -> 3;
-            case 4 -> 2;
-            case 5 -> 1;
+        byte b0 = switch (itemarmor.getArmorMaterial()) {
+            case DIAMOND -> 5;
+            case IRON -> 4;
+            case CHAIN -> 3;
+            case GOLD -> 2;
+            case LEATHER -> 1;
             default -> 0;
         };
         int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, stack);

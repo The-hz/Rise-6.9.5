@@ -26,8 +26,8 @@ import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.pathfinding.unlegit.MainPathFinder;
 import com.alan.clients.util.pathfinding.unlegit.ahy;
-import hackclient.rise.component.bv;
-import hackclient.rise.hc;
+import com.alan.clients.component.impl.combat.TargetComponent;
+import com.alan.clients.module.impl.combat.TeleportAuraSwitchMap;
 import java.awt.Color;
 import java.util.Collections;
 import java.util.Comparator;
@@ -68,7 +68,7 @@ public final class TeleportAura extends Module {
             this.gj = this.e(KillAura.class);
         }
 
-        List list = bv.a(this.range.wo().doubleValue(), this.gj.player.wo(), this.gj.invisibles.wo(), this.gj.animals.wo(), this.gj.mobs.wo(), this.gj.playerTeammates.wo());
+        List list = TargetComponent.a(this.range.wo().doubleValue(), this.gj.player.wo(), this.gj.invisibles.wo(), this.gj.animals.wo(), this.gj.mobs.wo(), this.gj.playerTeammates.wo());
         if (list.isEmpty()) {
             this.jE = null;
         } else {
@@ -115,31 +115,31 @@ public final class TeleportAura extends Module {
                 } else if (item instanceof bw) {
                     d0 = 1.2;
                 } else if (item instanceof ItemAxe) {
-                    switch (hc.qr[((ItemAxe)item).getToolMaterial().ordinal()]) {
-                        case 1:
-                        case 2:
+                    switch (((ItemAxe)item).getToolMaterial()) {
+                        case WOOD:
+                        case STONE:
                             d0 = 0.8;
                             break;
-                        case 3:
+                        case IRON:
                             d0 = 0.9;
                             break;
-                        case 4:
+                        case EMERALD:
                         default:
                             d0 = 1.0;
                     }
                 } else if (item instanceof ItemHoe) {
-                    switch (hc.qr[((ItemHoe)item).getToolMaterial().ordinal()]) {
-                        case 1:
-                        case 5:
+                    switch (((ItemHoe)item).getToolMaterial()) {
+                        case WOOD:
+                        case GOLD:
                             d0 = 1.0;
                             break;
-                        case 2:
+                        case STONE:
                             d0 = 2.0;
                             break;
-                        case 3:
+                        case IRON:
                             d0 = 3.0;
                             break;
-                        case 4:
+                        case EMERALD:
                         default:
                             d0 = 4.0;
                     }

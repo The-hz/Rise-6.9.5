@@ -23,9 +23,9 @@ import com.alan.clients.component.impl.player.SelectorDetectionComponent;
 import hackclient.rise.en;
 import hackclient.rise.tp;
 import com.alan.clients.util.render.IntGatherer;
-import hackclient.rise.tr;
-import hackclient.rise.ts;
-import hackclient.rise.tt;
+import hackclient.rise.InventoryScan;
+import hackclient.rise.SlotStack;
+import hackclient.rise.ItemScorer;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -141,7 +141,7 @@ public class Manager extends Module {
                     this.u(false);
                 } else {
                     this.adr = false;
-                    tr tr = this.jR();
+                    InventoryScan tr = this.jR();
                     boolean flag = this.a(tr);
                     if (!this.adx) {
                         if (!flag) {
@@ -373,8 +373,8 @@ public class Manager extends Module {
         this.adw = 0;
     }
 
-    private tr jR() {
-        tr tr = new tr();
+    private InventoryScan jR() {
+        InventoryScan tr = new InventoryScan();
         ArrayList arraylist = new ArrayList();
         ArrayList arraylist1 = new ArrayList();
         ArrayList arraylist2 = new ArrayList();
@@ -394,15 +394,15 @@ public class Manager extends Module {
                     tr.aef.add(i);
                 } else {
                     if (item instanceof ItemBlock) {
-                        tr.adQ.add(new ts(i, itemstack));
+                        tr.adQ.add(new SlotStack(i, itemstack));
                     }
 
                     if (item instanceof ItemPotion) {
-                        tr.adR.add(new ts(i, itemstack));
+                        tr.adR.add(new SlotStack(i, itemstack));
                     }
 
                     if (item instanceof ItemFood) {
-                        tr.adS.add(new ts(i, itemstack));
+                        tr.adS.add(new SlotStack(i, itemstack));
                     }
 
                     if (item instanceof ItemArmor) {
@@ -479,7 +479,7 @@ public class Manager extends Module {
         return tr;
     }
 
-    private int a(List<Integer> var1, List<Integer> var2, tt var3) {
+    private int a(List<Integer> var1, List<Integer> var2, ItemScorer var3) {
         if (var1.isEmpty()) {
             return -1;
         }
@@ -502,7 +502,7 @@ public class Manager extends Module {
         return i;
     }
 
-    private void a(List<Integer> var1, tr var2) {
+    private void a(List<Integer> var1, InventoryScan var2) {
         var1.sort((var1x, var2x) -> Float.compare(this.j(aEg.thePlayer.inventory.getStackInSlot(var2x)), this.j(aEg.thePlayer.inventory.getStackInSlot(var1x))));
         if (!var1.isEmpty()) {
             var2.adJ = (Integer)var1.get(0);
@@ -535,7 +535,7 @@ public class Manager extends Module {
         return i;
     }
 
-    private boolean a(tr var1) {
+    private boolean a(InventoryScan var1) {
         if (aEg.thePlayer.inventory.getItemStack() != null) {
             return true;
         } else if (this.b(0, var1.adF)) {
@@ -684,12 +684,12 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean a(tr var1, NumberValue numberValue) {
+    private boolean a(InventoryScan var1, NumberValue numberValue) {
         int i = numberValue.wo().intValue();
         return i != 0 && (var1.adJ != -1 && this.swordSlot.wo().intValue() == i || var1.adK != -1 && this.secondSwordSlot.wo().intValue() == i);
     }
 
-    private boolean a(List<ts> var1, BoundsNumberValue boundsNumberValue) {
+    private boolean a(List<SlotStack> var1, BoundsNumberValue boundsNumberValue) {
         int i = boundsNumberValue.wo().intValue();
         int j = boundsNumberValue.wA().intValue();
         if (i == 0 || i > j) {
@@ -705,7 +705,7 @@ public class Manager extends Module {
 
         for (int l = 0; l < k && l < var1.size(); l++) {
             int i1 = i - 1 + l;
-            int j1 = ((ts)var1.get(l)).aeg;
+            int j1 = ((SlotStack)var1.get(l)).aeg;
             if (!this.f(j1, i1)) {
                 return true;
             }
@@ -714,13 +714,13 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean b(tr var1) {
+    private boolean b(InventoryScan var1) {
         int i = this.potionSlot.wo().intValue();
         int j = this.potionSlot.wA().intValue();
         if (i != 0 && i <= j) {
             ArrayList arraylist = new ArrayList();
 
-            for (ts ts : var1.adR) {
+            for (SlotStack ts : var1.adR) {
                 List list = ((ItemPotion)ts.aeh.getItem()).getEffects(ts.aeh);
                 if (list != null && !list.isEmpty()) {
                     arraylist.add(ts);
@@ -732,8 +732,8 @@ public class Manager extends Module {
             }
 
             arraylist.sort((var1x, var2) -> {
-                boolean flag = ItemPotion.isSplash(((ts)var1x).aeh.getMetadata());
-                boolean metadata = ItemPotion.isSplash(((ts)var2).aeh.getMetadata());
+                boolean flag = ItemPotion.isSplash(((SlotStack)var1x).aeh.getMetadata());
+                boolean metadata = ItemPotion.isSplash(((SlotStack)var2).aeh.getMetadata());
                 if (this.prioritizeSplashPotions.wo()) {
                     if (flag && !metadata) {
                         return -1;
@@ -744,14 +744,14 @@ public class Manager extends Module {
                     }
                 }
 
-                int k1 = PlayerUtil.potionRanking(((ItemPotion)((ts)var1x).aeh.getItem()).getEffects(((ts)var1x).aeh).get(0).getPotionID());
-                return Integer.compare(PlayerUtil.potionRanking(((ItemPotion)((ts)var2).aeh.getItem()).getEffects(((ts)var2).aeh).get(0).getPotionID()), k1);
+                int k1 = PlayerUtil.potionRanking(((ItemPotion)((SlotStack)var1x).aeh.getItem()).getEffects(((SlotStack)var1x).aeh).get(0).getPotionID());
+                return Integer.compare(PlayerUtil.potionRanking(((ItemPotion)((SlotStack)var2).aeh.getItem()).getEffects(((SlotStack)var2).aeh).get(0).getPotionID()), k1);
             });
             int k = j - i + 1;
 
             for (int l = 0; l < k && l < arraylist.size(); l++) {
                 int i1 = i - 1 + l;
-                int j1 = ((ts)arraylist.get(l)).aeg;
+                int j1 = ((SlotStack)arraylist.get(l)).aeg;
                 if (!this.f(j1, i1)) {
                     return true;
                 }
@@ -762,7 +762,7 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean c(tr var1) {
+    private boolean c(InventoryScan var1) {
         int i = this.foodSlot.wo().intValue();
         int j = this.foodSlot.wA().intValue();
         if (i == 0 || i > j) {
@@ -864,7 +864,7 @@ public class Manager extends Module {
         }
     }
 
-    private boolean d(tr var1) {
+    private boolean d(InventoryScan var1) {
         if (this.b(var1.adJ, this.swordSlot)) {
             return true;
         }
@@ -894,7 +894,7 @@ public class Manager extends Module {
         return !this.a(var1, this.add) && i != 0 && (j == 0 || i != j || var1.adO == -1) && this.b(var1.adP, this.add);
     }
 
-    private boolean e(tr var1) {
+    private boolean e(InventoryScan var1) {
         int i = this.blockSlot.wo().intValue();
         int j = this.blockSlot.wA().intValue();
         if (i != 0 && i <= j) {
@@ -915,13 +915,13 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean f(tr var1) {
+    private boolean f(InventoryScan var1) {
         int i = this.potionSlot.wo().intValue();
         int j = this.potionSlot.wA().intValue();
         if (i != 0 && i <= j) {
             ArrayList arraylist = new ArrayList();
 
-            for (ts ts : var1.adR) {
+            for (SlotStack ts : var1.adR) {
                 List list = ((ItemPotion)ts.aeh.getItem()).getEffects(ts.aeh);
                 if (list != null && !list.isEmpty()) {
                     arraylist.add(ts);
@@ -929,8 +929,8 @@ public class Manager extends Module {
             }
 
             arraylist.sort((var1x, var2) -> {
-                boolean flag = ItemPotion.isSplash(((ts)var1x).aeh.getMetadata());
-                boolean metadata = ItemPotion.isSplash(((ts)var2).aeh.getMetadata());
+                boolean flag = ItemPotion.isSplash(((SlotStack)var1x).aeh.getMetadata());
+                boolean metadata = ItemPotion.isSplash(((SlotStack)var2).aeh.getMetadata());
                 if (this.prioritizeSplashPotions.wo()) {
                     if (flag && !metadata) {
                         return -1;
@@ -941,14 +941,14 @@ public class Manager extends Module {
                     }
                 }
 
-                int k1 = PlayerUtil.potionRanking(((ItemPotion)((ts)var1x).aeh.getItem()).getEffects(((ts)var1x).aeh).get(0).getPotionID());
-                return Integer.compare(PlayerUtil.potionRanking(((ItemPotion)((ts)var2).aeh.getItem()).getEffects(((ts)var2).aeh).get(0).getPotionID()), k1);
+                int k1 = PlayerUtil.potionRanking(((ItemPotion)((SlotStack)var1x).aeh.getItem()).getEffects(((SlotStack)var1x).aeh).get(0).getPotionID());
+                return Integer.compare(PlayerUtil.potionRanking(((ItemPotion)((SlotStack)var2).aeh.getItem()).getEffects(((SlotStack)var2).aeh).get(0).getPotionID()), k1);
             });
             int k = j - i + 1;
 
             for (int l = 0; l < k && l < arraylist.size(); l++) {
                 int i1 = i - 1 + l;
-                int j1 = ((ts)arraylist.get(l)).aeg;
+                int j1 = ((SlotStack)arraylist.get(l)).aeg;
                 if (!this.f(j1, i1) && this.e(j1, false)) {
                     this.e(j1, i1);
                     return true;
@@ -960,7 +960,7 @@ public class Manager extends Module {
         return false;
     }
 
-    private boolean g(tr var1) {
+    private boolean g(InventoryScan var1) {
         int i = this.foodSlot.wo().intValue();
         int j = this.foodSlot.wA().intValue();
         if (i != 0 && i <= j) {
@@ -1027,7 +1027,7 @@ public class Manager extends Module {
         return -1;
     }
 
-    private int h(tr var1) {
+    private int h(InventoryScan var1) {
         for (int i : var1.adT) {
             if (this.f(i, true)) {
                 return i;
@@ -1271,12 +1271,12 @@ public class Manager extends Module {
         ItemArmor itemarmor = (ItemArmor)stack.getItem();
         int i = itemarmor.damageReduceAmount;
 
-        byte b0 = switch (tp.adE[itemarmor.getArmorMaterial().ordinal()]) {
-            case 1 -> 5;
-            case 2 -> 4;
-            case 3 -> 3;
-            case 4 -> 2;
-            case 5 -> 1;
+        byte b0 = switch (itemarmor.getArmorMaterial()) {
+            case DIAMOND -> 5;
+            case IRON -> 4;
+            case CHAIN -> 3;
+            case GOLD -> 2;
+            case LEATHER -> 1;
             default -> 0;
         };
         int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, stack);

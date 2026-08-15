@@ -57,24 +57,24 @@ import hackclient.rise.adz;
 import hackclient.rise.aef;
 import hackclient.rise.afi;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.ahm;
+import com.alan.clients.util.player.ServerUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.rotation.RotationUtil;
 import hackclient.rise.aka;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
-import hackclient.rise.component.bc;
+import com.alan.clients.component.impl.player.PacketQueueComponent;
 import com.alan.clients.component.impl.player.GUIDetectionComponent;
-import hackclient.rise.component.bv;
-import hackclient.rise.bx;
+import com.alan.clients.component.impl.combat.TargetComponent;
+import com.alan.clients.util.social.FriendManager;
 import com.alan.clients.component.impl.render.ESPComponent;
 import hackclient.rise.component.esp.co;
 import hackclient.rise.component.esp.cp;
 import hackclient.rise.component.esp.ct;
 import hackclient.rise.ea;
 import hackclient.rise.en;
-import hackclient.rise.gt;
-import hackclient.rise.gu;
-import hackclient.rise.gv;
+import com.alan.clients.module.impl.combat.KillAuraSwitchMap;
+import com.alan.clients.module.impl.combat.KnockbackSample;
+import com.alan.clients.module.impl.combat.RotationSnapshot;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -209,7 +209,7 @@ public class KillAura extends Module {
    public boolean oF;
    public NumberValue advancedPrediction;
    public NumberValue advancedDeadzone;
-   public gu mD;
+   public KnockbackSample mD;
    public float ok;
    public List<EntityLivingBase> nV;
    public int oa;
@@ -355,27 +355,27 @@ public class KillAura extends Module {
                } else if ((Item)var55 instanceof bw) {
                   var53 = 1.2;
                } else if ((Item)var55 instanceof ItemAxe) {
-                  switch (gt.pe[((ItemAxe)((Item)var55)).getToolMaterial().ordinal()]) {
-                     case 1:
-                     case 2:
+                  switch (((ItemAxe)((Item)var55)).getToolMaterial()) {
+                     case WOOD:
+                     case STONE:
                         var53 = 0.8;
                         break;
-                     case 3:
+                     case IRON:
                         var53 = 0.9;
                         break;
                      default:
                         var53 = 1.0;
                   }
                } else if ((Item)var55 instanceof ItemHoe) {
-                  switch (gt.pe[((ItemHoe)((Item)var55)).getToolMaterial().ordinal()]) {
-                     case 1:
-                     case 4:
+                  switch (((ItemHoe)((Item)var55)).getToolMaterial()) {
+                     case WOOD:
+                     case GOLD:
                         var53 = 1.0;
                         break;
-                     case 2:
+                     case STONE:
                         var53 = 2.0;
                         break;
-                     case 3:
+                     case IRON:
                         var53 = 3.0;
                   }
                }
@@ -1712,7 +1712,7 @@ public class KillAura extends Module {
       return Math.round(var13);
    }
 
-   public void b(gu var1) {
+   public void b(KnockbackSample var1) {
       if (var1 != null && aEg.thePlayer != null) {
          this.eU();
          float var10000 = aEg.thePlayer.pl + MathHelper.wrapAngleTo180_float(var1.pg - aEg.thePlayer.pl);
@@ -1780,7 +1780,7 @@ public class KillAura extends Module {
       }
 
       BlinkComponent.dispatch();
-      if (ahm.vn()) {
+      if (ServerUtil.vn()) {
          if (!this.blockSlowdown.wo()) {
             SlotComponent.setSlot(nextInt2);
             SlotComponent.setSlot(bQ2);
@@ -2068,7 +2068,7 @@ public class KillAura extends Module {
                      nextInt3 = ThreadLocalRandom.current().nextInt(9);
                   }
 
-                  if (ahm.vn() && Math.random() > 0.5 && !this.blockSlowdown.wo() && !this.nU) {
+                  if (ServerUtil.vn() && Math.random() > 0.5 && !this.blockSlowdown.wo() && !this.nU) {
                      SlotComponent.setSlot(nextInt3);
                      SlotComponent.setSlot(bQ2);
                      this.p(false);
@@ -2077,7 +2077,7 @@ public class KillAura extends Module {
                   BlinkComponent.blink();
                   return;
                case 2:
-                  if (!ahm.vn()) {
+                  if (!ServerUtil.vn()) {
                      this.p(false);
                   }
 
@@ -2122,7 +2122,7 @@ public class KillAura extends Module {
 
                      nR = false;
                      BlinkComponent.bf();
-                     if (ahm.vn()) {
+                     if (ServerUtil.vn()) {
                         if (!this.blockSlowdown.wo()) {
                            SlotComponent.setSlot(nextInt5);
                            SlotComponent.setSlot(bQ4);
@@ -2145,7 +2145,7 @@ public class KillAura extends Module {
                   return;
             }
          case 9:
-            nR = this.eK() && !BadPacketsComponent.bad(false, false, false, true, true) && !ahm.vn() || this.eK() && !BadPacketsComponent.bad(false, false, false, true, true) && Math.random() < 0.6;
+            nR = this.eK() && !BadPacketsComponent.bad(false, false, false, true, true) && !ServerUtil.vn() || this.eK() && !BadPacketsComponent.bad(false, false, false, true, true) && Math.random() < 0.6;
             break;
          case 10:
             BlinkComponent.bf();
@@ -2223,7 +2223,7 @@ public class KillAura extends Module {
       this.mz = false;
       this.nN.forEach(PacketUtil::m);
       this.nN.clear();
-      bc.dispatch();
+      PacketQueueComponent.dispatch();
       this.jE = null;
       this.mD = null;
       this.mE = "";
@@ -2258,7 +2258,7 @@ public class KillAura extends Module {
       }
 
       aEg.gameSettings.cgI.setPressed(false);
-      bc.cR = false;
+      PacketQueueComponent.cR = false;
       this.oL.clear();
       this.oM.clear();
       if (this.oG) {
@@ -2267,7 +2267,7 @@ public class KillAura extends Module {
       }
    }
 
-   public boolean a(EntityLivingBase living, gu var2) {
+   public boolean a(EntityLivingBase living, KnockbackSample var2) {
       if (living == null || var2 == null) {
          return false;
       } else if (this.h(living)) {
@@ -2506,7 +2506,7 @@ public class KillAura extends Module {
       return this.a(box, var0 -> var0 == Blocks.fire || var0 == Blocks.flowing_lava || var0 == Blocks.lava);
    }
 
-   public gu a(EntityLivingBase living, AxisAlignedBB box, double var3, double var5, double var7) {
+   public KnockbackSample a(EntityLivingBase living, AxisAlignedBB box, double var3, double var5, double var7) {
       double var47 = 0.0;
       float var49 = 0.0F;
       Object var50 = null;
@@ -2549,7 +2549,7 @@ public class KillAura extends Module {
       }
       var56 = this.d(var3, var5);
       var49 = this.a(living, (Float)var56);
-      return new gu(living.getEntityId(), (Float)var56, var49, var7, var47, var11);
+      return new KnockbackSample(living.getEntityId(), (Float)var56, var49, var7, var47, var11);
    }
 
    @Override
@@ -3158,9 +3158,9 @@ public class KillAura extends Module {
       Client.a.e().d((AttackEvent)var74);
       if (!((AttackEvent)var74).isCancelled() && ((AttackEvent)var74).dc() != null) {
          var79 = ((AttackEvent)var74).dc();
-         gu var4 = this.f((EntityLivingBase)var79) ? this.mD : null;
+         KnockbackSample var4 = this.f((EntityLivingBase)var79) ? this.mD : null;
          int flag = var4 != null && this.a((EntityLivingBase)var79, var4) ? 1 : 0;
-         gv var6 = flag != 0 ? this.a(var4) : null;
+         RotationSnapshot var6 = flag != 0 ? this.a(var4) : null;
          if (this.eX()) {
             this.ev();
          }
@@ -3255,7 +3255,7 @@ public class KillAura extends Module {
       return this.h(living) ? "crit-priority" : null;
    }
 
-   public void a(String var1, gu var2) {
+   public void a(String var1, KnockbackSample var2) {
       Object var51 = null;
       Object var52 = null;
       Object var69 = null;
@@ -3344,11 +3344,11 @@ public class KillAura extends Module {
       }
    }
 
-   public gv a(gu var1) {
+   public RotationSnapshot a(KnockbackSample var1) {
       Object var7 = null;
       float var8 = 0.0F;
       if (var1 != null && aEg.thePlayer != null) {
-         var7 = new gv(
+         var7 = new RotationSnapshot(
             aEg.thePlayer.pl,
             aEg.thePlayer.rotationPitch,
             aEg.thePlayer.rotationYawHead,
@@ -3365,7 +3365,7 @@ public class KillAura extends Module {
          aEg.thePlayer.pp = var1.pg;
          aEg.thePlayer.pq = var1.pg;
          aEg.thePlayer.pr = var1.pg;
-         return (gv)var7;
+         return (RotationSnapshot)var7;
       }
       return null;
    }
@@ -3441,8 +3441,8 @@ public class KillAura extends Module {
 
    public void ej() {
       this.nV.sort((var0, var1) -> {
-         int name = (int)(bx.n(var0.getName()) ? 1L : 0L);
-         int name2 = (int)(bx.n(var1.getName()) ? 1L : 0L);
+         int name = (int)(FriendManager.n(var0.getName()) ? 1L : 0L);
+         int name2 = (int)(FriendManager.n(var1.getName()) ? 1L : 0L);
          if (name != 0 && name2 == 0) {
             return -1;
          }
@@ -3489,14 +3489,14 @@ public class KillAura extends Module {
       double var37 = 0.0;
       Object var43 = null;
       var37 = this.range.wo().doubleValue();
-      this.nV = bv.f(var37);
+      this.nV = TargetComponent.f(var37);
       if (this.mode.wo().getName().equals("Switch")) {
          this.nV.removeAll(this.oK);
       }
 
       if (this.nV.isEmpty()) {
          this.oK.clear();
-         this.nV = bv.f(var37 + this.nX);
+         this.nV = TargetComponent.f(var37 + this.nX);
       }
 
       if (this.fOV.wo().doubleValue() < 360.0) {
@@ -3750,7 +3750,7 @@ public class KillAura extends Module {
       return new Vector2f(this.mD.pg, vec2.getY());
    }
 
-   public gu j(EntityLivingBase living) {
+   public KnockbackSample j(EntityLivingBase living) {
       double var35 = 0.0;
       Object var40 = null;
       Object var44 = null;
@@ -3758,7 +3758,7 @@ public class KillAura extends Module {
       Object var49 = null;
       double var52 = 0.0;
       var44 = living.getEntityBoundingBox();
-      gu var3 = null;
+      KnockbackSample var3 = null;
 
       for (int i = 0; i < 32; i++) {
          var52 = (Math.PI * 2) * i / 32.0;
@@ -3768,8 +3768,8 @@ public class KillAura extends Module {
          for (double var59 = 0.8; var59 <= 5.0; var59 += 0.35) {
             var49 = ((AxisAlignedBB)var44).offset(var35 * var59, 0.0, var47 * var59);
             var40 = this.a(living, (AxisAlignedBB)var49, var35, var47, var59);
-            if ((gu)var40 != null && (var3 == null || ((gu)var40).pj > var3.pj)) {
-               var3 = (gu)var40;
+            if ((KnockbackSample)var40 != null && (var3 == null || ((KnockbackSample)var40).pj > var3.pj)) {
+               var3 = (KnockbackSample)var40;
             }
 
             if (!aEg.theWorld.getCollidingBoundingBoxes(living, ((AxisAlignedBB)var49).contract(0.02, 0.0, 0.02)).isEmpty()) {

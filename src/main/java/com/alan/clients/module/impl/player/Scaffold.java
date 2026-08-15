@@ -54,7 +54,7 @@ import hackclient.rise.aef;
 import hackclient.rise.afi;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.aib;
+import com.alan.clients.util.player.EnumFacingOffset;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
@@ -63,7 +63,7 @@ import com.alan.clients.component.impl.player.BadPacketsComponent;
 import hackclient.rise.ea;
 import hackclient.rise.en;
 import hackclient.rise.ub;
-import hackclient.rise.mode.vz;
+import com.alan.clients.module.impl.player.scaffold.tower.WatchdogPrediction18Tower;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
@@ -137,13 +137,13 @@ public class Scaffold extends Module {
     public float act;
     public BooleanValue disableOnFlag;
     public ModeValue downwardsPressS;
-    public aib acr;
+    public EnumFacingOffset acr;
     public ModeValue sprint;
     public ModeValue rayCast = new ModeValue("Ray Cast", this).add(new SubMode("Off")).add(new SubMode("Normal")).add(new SubMode("Strict")).setDefault("Strict");
     public BooleanValue watchdogPrediction;
     public BooleanValue rotationBlockBoost;
     public ModeValue yawOffset;
-    public aib agw;
+    public EnumFacingOffset agw;
     public NumberValue sneakingSpeed;
     public int agG;
     public BooleanValue keepYBypass;
@@ -196,7 +196,7 @@ public class Scaffold extends Module {
     public boolean agP;
 
     public void D(int var1) {
-        aib aib = this.acr != null ? this.acr : this.agw;
+        EnumFacingOffset aib = this.acr != null ? this.acr : this.agw;
         if (aib != null) {
             if (this.watchdogPrediction.wo()) {
                 ArrayList arraylist = new ArrayList();
@@ -574,7 +574,7 @@ public class Scaffold extends Module {
         aEg.thePlayer.crd = false;
     }
 
-    public Vector2f a(BlockPos pos, aib var2, float var3, float var4, float var5, int var6) {
+    public Vector2f a(BlockPos pos, EnumFacingOffset var2, float var3, float var4, float var5, int var6) {
         float wrapped = MathHelper.wrapAngleTo180_float(aEg.thePlayer.pl);
         float f3 = MathHelper.clamp_float((float)(85.0 + Math.random() * 0.1), var4, var5);
         return RotationUtil.m(new Vector2f(wrapped, f3));
@@ -682,7 +682,7 @@ public class Scaffold extends Module {
             .add(new MatrixTower("Matrix", this))
             .add(new LegitTower("Legit", this))
             .add(new VerusTower("Verus", this))
-            .add(new vz("Watchdog Prediction 1.8", this))
+            .add(new WatchdogPrediction18Tower("Watchdog Prediction 1.8", this))
             .setDefault("Disabled");
         this.sameY = new ModeValue("Same Y", this).add(new SubMode("Off")).add(new SubMode("On")).add(new SubMode("Auto Jump")).setDefault("Off");
         this.downwardsPressS = new ModeValue("Downwards (Press Sneak)", this)
@@ -763,7 +763,7 @@ public class Scaffold extends Module {
             float f = 0.0F;
             Object object = null;
             Object object1 = null;
-            aib aib = this.acr != null ? this.acr : this.agw;
+            EnumFacingOffset aib = this.acr != null ? this.acr : this.agw;
             Vector2f vector2f = RotationComponent.fn != null
                 ? new Vector2f(RotationComponent.fn)
                 : (RotationComponent.fk != null ? new Vector2f(RotationComponent.fk) : new Vector2f(aEg.thePlayer.pl, aEg.thePlayer.rotationPitch));
@@ -1160,10 +1160,10 @@ public class Scaffold extends Module {
                     return;
                 }
 
-                aib aib = PlayerUtil.a(this.targetBlock, this.agy.getY() < 0.0);
+                EnumFacingOffset aib = PlayerUtil.a(this.targetBlock, this.agy.getY() < 0.0);
                 int l_hi = 0;
                 if (flag5 && aib != null && aib.va() != EnumFacing.UP) {
-                    aib aibx = PlayerUtil.a(this.targetBlock, false);
+                    EnumFacingOffset aibx = PlayerUtil.a(this.targetBlock, false);
                     if (aibx != null && aibx.va() == EnumFacing.UP) {
                         aib = aibx;
                     }
@@ -1173,7 +1173,7 @@ public class Scaffold extends Module {
                     this.acr = aib;
                     this.agw = aib;
                 } else {
-                    aib aibx = PlayerUtil.a(this.targetBlock, !(this.agy.getY() < 0.0));
+                    EnumFacingOffset aibx = PlayerUtil.a(this.targetBlock, !(this.agy.getY() < 0.0));
                     if (aibx != null) {
                         this.acr = aibx;
                         this.agw = aibx;
@@ -1188,14 +1188,14 @@ public class Scaffold extends Module {
                     }
                 }
 
-                aib aibx = this.acr != null ? this.acr : this.agw;
+                EnumFacingOffset aibx = this.acr != null ? this.acr : this.agw;
                 aEg.gameSettings.keyBindSneak.isKeyDown();
                 if (aibx != null && aibx.va().getAxis().isHorizontal()) {
                 } else {
                 }
 
                 BlockPos blockpos = new BlockPos(this.targetBlock.xCoord, this.targetBlock.yCoord, this.targetBlock.zCoord);
-                aib aibxx = this.acr != null ? this.acr : this.agw;
+                EnumFacingOffset aibxx = this.acr != null ? this.acr : this.agw;
                 if (aibxx == null) {
                     return;
                 }
@@ -1382,7 +1382,7 @@ public class Scaffold extends Module {
         }
     }
 
-    public Vector2f a(BlockPos pos, aib var2, boolean var3, float var4, float var5, float var6) {
+    public Vector2f a(BlockPos pos, EnumFacingOffset var2, boolean var3, float var4, float var5, float var6) {
         if (var2 == null) {
             return new Vector2f(var4, var5);
         }
@@ -1455,7 +1455,7 @@ public class Scaffold extends Module {
         double d4 = this.rotationSpeed.wA().doubleValue();
         float f6 = (float)MathUtil.l(rotationSpeed, d4);
         MovementFix movementfix = this.movementCorrection.wo() ? MovementFix.NORMAL : MovementFix.OFF;
-        aib aib = this.acr != null ? this.acr : this.agw;
+        EnumFacingOffset aib = this.acr != null ? this.acr : this.agw;
         if (aib != null) {
             String s = this.getDisplayName();
             switch (s) {
@@ -1486,20 +1486,20 @@ public class Scaffold extends Module {
                     if (aEg.gameSettings.keyBindForward.isKeyDown() && !aEg.gameSettings.keyBindJump.isKeyDown()) {
                         Double d7 = 0.0;
                         Double d8 = 0.0;
-                        switch (ub.ahg[aEg.thePlayer.getHorizontalFacing().ordinal()]) {
-                            case 1:
+                        switch (aEg.thePlayer.getHorizontalFacing()) {
+                            case NORTH:
                                 d7 = aEg.thePlayer.posX - Math.floor(aEg.thePlayer.posX);
                                 d8 = aEg.thePlayer.motionZ;
                                 break;
-                            case 2:
+                            case EAST:
                                 d7 = aEg.thePlayer.posZ - Math.floor(aEg.thePlayer.posZ);
                                 d8 = aEg.thePlayer.motionX;
                                 break;
-                            case 3:
+                            case SOUTH:
                                 d7 = 1.0 - (aEg.thePlayer.posX - Math.floor(aEg.thePlayer.posX));
                                 d8 = aEg.thePlayer.motionZ;
                                 break;
-                            case 4:
+                            case WEST:
                                 d7 = 1.0 - (aEg.thePlayer.posZ - Math.floor(aEg.thePlayer.posZ));
                                 d8 = aEg.thePlayer.motionX;
                                 break;
@@ -1737,23 +1737,23 @@ public class Scaffold extends Module {
             return vec3;
         }
 
-        switch (ub.ahg[this.acr.va().ordinal()]) {
-            case 1:
+        switch (this.acr.va()) {
+            case NORTH:
                 vec3.zCoord = this.blockFace.getZ();
                 break;
-            case 2:
+            case EAST:
                 vec3.xCoord = this.blockFace.getX() + 1;
                 break;
-            case 3:
+            case SOUTH:
                 vec3.zCoord = this.blockFace.getZ() + 1;
                 break;
-            case 4:
+            case WEST:
                 vec3.xCoord = this.blockFace.getX();
                 break;
-            case 5:
+            case DOWN:
                 vec3.yCoord = this.blockFace.getY();
                 break;
-            case 6:
+            case UP:
                 vec3.yCoord = this.blockFace.getY() + 1;
         }
 

@@ -21,6 +21,7 @@ client-src.jar
 src/main/resources/native/
 
 libs/*.pre-fix
+libs/*.pre-enum
 libs/*.stale
 libs/lombok-*.jar
 
