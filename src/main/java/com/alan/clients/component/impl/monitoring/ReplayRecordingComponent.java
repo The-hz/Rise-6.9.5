@@ -327,7 +327,7 @@ public class ReplayRecordingComponent extends Component {
             }
 
             if (this.spawnPacketMethod == null) {
-                this.spawnPacketMethod = EntityTrackerEntry.class.getDeclaredMethod("Wd");
+                this.spawnPacketMethod = EntityTrackerEntry.class.getDeclaredMethod("createSpawnPacket");
                 this.spawnPacketMethod.setAccessible(true);
             }
 
