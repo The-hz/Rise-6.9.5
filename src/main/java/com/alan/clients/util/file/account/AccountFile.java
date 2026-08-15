@@ -105,9 +105,8 @@ extends com.alan.clients.util.file.File {
             if (!this.getFile().exists()) {
                 this.getFile().createNewFile();
             }
-            if ((list = Client.a.getAltManager().getAccounts()).isEmpty()) {
-                return true;
-            }
+            //add code
+            list = Client.a.getAltManager().getAccounts();
             JsonObject jsonObject = new JsonObject();
             JsonObject jsonObject2 = new JsonObject();
             jsonObject2.addProperty("version", "6");
