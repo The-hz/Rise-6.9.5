@@ -36,10 +36,21 @@ public class UsernameGenerator {
 
         try {
             List<String> list = Files.readAllLines(NAMES_FILE.toPath(), StandardCharsets.UTF_8);
-            return list.isEmpty() ? null : list.toArray(new String[0]);
+            // a torn write can leave a readable file with nothing usable in it
+            return usable(list) ? list.toArray(new String[0]) : null;
         } catch (IOException ioexception) {
             return null;
         }
+    }
+
+    private static boolean usable(List<String> var0) {
+        for (String s : var0) {
+            if (s.length() >= 3 && s.length() <= 6) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static void writeNamesFile(String var0) {
@@ -115,6 +126,10 @@ public class UsernameGenerator {
 
         String[] astring1 = new String[var0];
         List list = Arrays.stream(astring).filter(var0x -> var0x.length() >= 3 && var0x.length() <= 6).collect(Collectors.toList());
+        //add code
+        if (list.isEmpty()) {
+            return null;
+        }
 
         for (int i = 0; i < var0; i++) {
             String s = (String)list.get((int)(Math.random() * list.size()));
