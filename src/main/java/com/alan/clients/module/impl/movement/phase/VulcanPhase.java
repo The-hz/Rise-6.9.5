@@ -14,7 +14,7 @@ import com.alan.clients.value.Mode;
 import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
-import hackclient.rise.cl;
+import com.alan.clients.component.impl.render.SmoothCameraComponent;
 import net.minecraft.block.BlockAir;
 import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.potion.Potion;
@@ -92,7 +92,7 @@ public class VulcanPhase extends Mode<Phase> {
             }
 
             if (this.shouldFixCameraY && this.insideBlockTicks < 25) {
-                cl.cn();
+                SmoothCameraComponent.cn();
             }
 
             if (PlayerUtil.vk() && !this.pendingJump && this.shouldAnnouncePhase) {

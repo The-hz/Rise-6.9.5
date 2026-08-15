@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.component.impl.monitoring;
 
 import com.alan.clients.component.Component;
 import com.alan.clients.newevent.Listener;
@@ -87,7 +87,7 @@ import net.minecraft.world.chunk.Chunk;
 import rip.vantage.commons.packet.impl.server.monitoring.S2CPacketStopRecording;
 import rip.vantage.network.core.VantageNetwork;
 
-public class bo extends Component {
+public class ReplayRecordingComponent extends Component {
     public int eX;
     public Method spawnPacketMethod;
     public boolean eM;
@@ -1112,7 +1112,7 @@ public class bo extends Component {
         }
     }
 
-    public bo() {
+    public ReplayRecordingComponent() {
         this.pending = new ArrayList<>();
         this.seenPlayers = new HashSet<>();
         this.profiles = new HashMap<>();

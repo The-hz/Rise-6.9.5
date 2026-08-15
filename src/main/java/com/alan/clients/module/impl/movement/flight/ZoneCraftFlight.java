@@ -7,7 +7,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.motion.StrafeEvent;
 import com.alan.clients.util.player.MoveUtil;
 import com.alan.clients.value.Mode;
-import hackclient.rise.cg;
+import com.alan.clients.component.impl.render.NotificationComponent;
 import net.minecraft.util.Vec3;
 
 public class ZoneCraftFlight extends Mode<Flight> {
@@ -35,7 +35,7 @@ public class ZoneCraftFlight extends Mode<Flight> {
             this.toggle();
         }
 
-        cg.e("Flight", "This feature is only enabled for developers atm");
+        NotificationComponent.e("Flight", "This feature is only enabled for developers atm");
         this.position = new Vec3(aEg.thePlayer.posX, aEg.thePlayer.posY, aEg.thePlayer.posZ);
     }
 

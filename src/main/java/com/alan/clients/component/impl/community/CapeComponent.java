@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.component.impl.community;
 
 import com.alan.clients.component.Component;
 import java.util.HashMap;
@@ -9,17 +9,17 @@ import net.minecraft.client.renderer.ThreadDownloadImageData;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
 
-public class ce extends Component {
+public class CapeComponent extends Component {
     public static HashMap<String, String[]> hb = new HashMap<>();
 
-    public ce() {
+    public CapeComponent() {
     }
 
     public static void updateFrames() {
-        Iterator iterator = bf.dc.entrySet().iterator();
+        Iterator iterator = UserLookupComponent.dc.entrySet().iterator();
 
         while (iterator.hasNext()) {
-            by by = (by)((Entry)iterator.next()).getValue();
+            ClientUser by = (ClientUser)((Entry)iterator.next()).getValue();
             if (by.bT() && by.getCapeTextures() != null) {
                 by.setFrame(by.getFrame() + 1);
                 if (by.getFrame() >= by.getCapeTextures().length) {
@@ -34,7 +34,7 @@ public class ce extends Component {
             for (Entry entry : hb.entrySet()) {
                 String s = (String)entry.getKey();
                 String[] astring = (String[])entry.getValue();
-                by by = bf.dc.get(s);
+                ClientUser by = UserLookupComponent.dc.get(s);
                 ResourceLocation[] aresourcelocation = new ResourceLocation[astring.length];
                 if (!by.ca()) {
                     by.setCapeLoaded(true);

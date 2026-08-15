@@ -20,7 +20,7 @@ import com.alan.clients.util.localization.Localization;
 import com.alan.clients.util.rotation.RotationUtil;
 import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.util.social.FriendManager;
-import hackclient.rise.cg;
+import com.alan.clients.component.impl.render.NotificationComponent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -116,11 +116,11 @@ public class RiseAPI {
     }
 
     public void displayInfoNotification(String var1, String var2) {
-        cg.e(var1, var2);
+        NotificationComponent.e(var1, var2);
     }
 
     public void displayInfoNotification(String var1, String var2, int var3) {
-        cg.a(var1, var2, var3);
+        NotificationComponent.a(var1, var2, var3);
     }
 
     public void pingspoof(int var1, boolean var2, boolean var3, boolean var4, boolean var5) {

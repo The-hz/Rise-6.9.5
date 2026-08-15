@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.motion.PreMotionEvent;
 import com.alan.clients.newevent.impl.other.WorldChangeEvent;
 import com.alan.clients.newevent.impl.packet.PacketSendEvent;
 import com.alan.clients.util.chat.ChatUtil;
-import hackclient.rise.cg;
+import com.alan.clients.component.impl.render.NotificationComponent;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 
 @ModuleInfo(aliases = "module.player.polardetector.name", description = "module.player.polardetector.description", category = Category.PLAYER)
@@ -35,6 +35,6 @@ public class PolarDetector extends Module {
 
     @Override
     public void onEnable() {
-        cg.e("Polar Detector", "Join a game and this module will notify you of polars status");
+        NotificationComponent.e("Polar Detector", "Join a game and this module will notify you of polars status");
     }
 }

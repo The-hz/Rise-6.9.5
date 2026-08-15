@@ -62,7 +62,7 @@ import com.alan.clients.util.vector.Vector3d;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import com.alan.clients.newevent.impl.input.RightClickEvent;
 import com.alan.clients.newevent.impl.motion.SprintEvent;
-import hackclient.rise.ub;
+import com.alan.clients.module.impl.player.ScaffoldSwitchMap;
 import com.alan.clients.module.impl.player.scaffold.tower.WatchdogPrediction18Tower;
 import java.util.ArrayList;
 import java.util.Iterator;

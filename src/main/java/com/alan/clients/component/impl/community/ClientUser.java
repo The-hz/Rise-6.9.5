@@ -1,10 +1,10 @@
-package hackclient.rise;
+package com.alan.clients.component.impl.community;
 
 import lombok.Generated;
 import net.minecraft.util.ResourceLocation;
 
-public class by {
-    private bz rank;
+public class ClientUser {
+    private UserRank rank;
     private String tag;
     private String gr;
     private String[] capeUrls;
@@ -12,7 +12,7 @@ public class by {
     private boolean capeLoaded = false;
     private int frame = 0;
 
-    public by(String var1) {
+    public ClientUser(String var1) {
         this.gr = var1;
     }
 
@@ -24,7 +24,7 @@ public class by {
         return this.capeUrls.length != 0;
     }
 
-    public void setRank(bz var1) {
+    public void setRank(UserRank var1) {
         this.rank = var1;
     }
 
@@ -36,7 +36,7 @@ public class by {
         return this.rank.getColorCode();
     }
 
-    public bz bV() {
+    public UserRank bV() {
         return this.rank;
     }
 

@@ -9,7 +9,7 @@ import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.font.impl.rise.FontRenderer;
-import hackclient.rise.cl;
+import com.alan.clients.component.impl.render.SmoothCameraComponent;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -75,7 +75,7 @@ public class RenderAPI extends API implements InstanceAccess {
     }
 
     public void smoothCamera() {
-        cl.cn();
+        SmoothCameraComponent.cn();
     }
 
     public void renderItemIcon(double var1, double var3, int var5, ScriptItemStack scriptItemStack) {

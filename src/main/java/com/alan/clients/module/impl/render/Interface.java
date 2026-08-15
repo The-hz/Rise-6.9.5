@@ -20,7 +20,7 @@ import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.ui.theme.Themes;
 import com.alan.clients.util.font.Font;
 import com.alan.clients.util.math.MathUtil;
-import hackclient.rise.cg;
+import com.alan.clients.component.impl.render.NotificationComponent;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import hackclient.rise.value.InterfaceModeValue;
@@ -65,7 +65,7 @@ public final class Interface extends Module {
     @EventLink
     public final Listener<ModuleToggleEvent> onModuleToggle = var1 -> {
         if (this.toggleNotifications.wo()) {
-            cg.a("Toggled", "Toggled " + var1.getModule().getName() + " " + (var1.getModule().isEnabled() ? "on" : "off"), 900);
+            NotificationComponent.a("Toggled", "Toggled " + var1.getModule().getName() + " " + (var1.getModule().isEnabled() ? "on" : "off"), 900);
         }
     };
     StopWatch nameUpdateStopWatch = new StopWatch();

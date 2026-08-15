@@ -20,7 +20,7 @@ import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.render.StencilUtil;
 import com.alan.clients.util.render.particle.Particle;
-import hackclient.rise.bf;
+import com.alan.clients.component.impl.community.UserLookupComponent;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
@@ -55,7 +55,7 @@ public class BMSTargetInfo extends Mode<TargetInfo> {
             this.scaleAnimation.Q(flag ? 0.0 : 1.0);
             if (!(this.scaleAnimation.getValue() <= 0.0)) {
                 String s = entity.getName();
-                String s1 = bf.c(s, s);
+                String s1 = UserLookupComponent.c(s, s);
                 double d0 = this.targetInfo.position.x;
                 double d1 = this.targetInfo.position.y;
                 AbstractClientPlayer abstractclientplayer = (AbstractClientPlayer)entity;

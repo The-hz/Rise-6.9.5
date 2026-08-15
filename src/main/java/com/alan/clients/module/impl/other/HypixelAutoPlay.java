@@ -9,7 +9,7 @@ import com.alan.clients.newevent.impl.packet.PacketReceiveEvent;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.value.impl.SubMode;
 import com.alan.clients.util.chat.ChatUtil;
-import hackclient.rise.cg;
+import com.alan.clients.component.impl.render.NotificationComponent;
 import java.util.Iterator;
 import net.minecraft.network.play.server.c;
 import net.minecraft.util.IChatComponent;
@@ -31,7 +31,7 @@ public final class HypixelAutoPlay extends Module {
                     for (String s : ((IChatComponent)iterator.next()).toString().split("'")) {
                         if (s.startsWith("/play") && !s.contains(".")) {
                             ChatUtil.send(s);
-                            cg.a("Auto Play", "Joined a new game", 7000);
+                            NotificationComponent.a("Auto Play", "Joined a new game", 7000);
                             break;
                         }
                     }

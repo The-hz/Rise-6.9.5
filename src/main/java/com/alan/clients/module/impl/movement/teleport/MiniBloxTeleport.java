@@ -18,7 +18,7 @@ import com.alan.clients.util.pathfinding.unlegit.Vec3;
 import com.alan.clients.util.render.ColorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
-import hackclient.rise.gk;
+import com.alan.clients.module.api.DevelopmentFeature;
 import java.awt.Color;
 import java.util.List;
 import net.minecraft.block.BlockAir;
@@ -28,7 +28,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import org.lwjgl.opengl.GL11;
 
-@gk
+@DevelopmentFeature
 public final class MiniBloxTeleport
 extends Mode<Teleport> {
     private Vec3 targetPosition = new Vec3(0.0, 0.0, 0.0);

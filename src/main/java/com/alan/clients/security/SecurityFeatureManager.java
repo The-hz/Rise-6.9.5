@@ -15,7 +15,7 @@ import com.alan.clients.security.impl.HypixelBrandAddressMismatchCheck;
 import com.alan.clients.security.impl.HypixelIpNoScoreboardCheck;
 import com.alan.clients.security.impl.StackProbeCheck;
 import com.alan.clients.security.impl.AcCommandCheck;
-import hackclient.rise.security.zo;
+import com.alan.clients.security.impl.NativeWorldScanCheck;
 import com.alan.clients.security.impl.SusChatCheck;
 import com.alan.clients.security.impl.LowActivityWorldCheck;
 import java.util.ArrayList;
@@ -185,7 +185,7 @@ public class SecurityFeatureManager implements InstanceAccess, ExecutorAccess {
             this.avw = false;
         } else {
             this.a(new HostsFileCheck());
-            this.a(new zo());
+            this.a(new NativeWorldScanCheck());
             this.b(new HypixelIpNoScoreboardCheck());
             this.b(new HypixelBrandAddressMismatchCheck());
             this.b(new AcCommandCheck());

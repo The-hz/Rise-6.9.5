@@ -42,7 +42,7 @@ import com.alan.clients.newevent.impl.render.Render3DEvent;
 import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.ModeValue;
 import com.alan.clients.util.player.PlayerUtil;
-import hackclient.rise.cl;
+import com.alan.clients.component.impl.render.SmoothCameraComponent;
 import com.alan.clients.module.impl.movement.flight.AirJumpFlight;
 import com.alan.clients.module.impl.movement.flight.BufferAbuseFlight;
 import com.alan.clients.module.impl.movement.flight.SlimeNCPFlight;
@@ -102,7 +102,7 @@ public class Flight extends Module {
         }
 
         if (this.smoothCamera.wo()) {
-            cl.cn();
+            SmoothCameraComponent.cn();
         }
     };
     @EventLink

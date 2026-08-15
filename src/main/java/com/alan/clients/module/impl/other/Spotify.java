@@ -24,7 +24,7 @@ import com.alan.clients.util.render.ScissorUtil;
 import com.alan.clients.util.font.FontManager;
 import com.alan.clients.util.font.FontWeight;
 import com.alan.clients.util.shader.ShaderQueueType;
-import hackclient.rise.gk;
+import com.alan.clients.module.api.DevelopmentFeature;
 import com.alan.clients.module.impl.other.spotify.SurplusWidthComparator;
 import com.alan.clients.module.impl.other.spotify.RemainderWidthComparator;
 import com.alan.clients.module.impl.other.spotify.LyricLine;
@@ -78,7 +78,7 @@ import net.minecraft.util.s;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-@gk
+@DevelopmentFeature
 @ModuleInfo(aliases = "module.other.spotify.name", description = "module.other.spotify.description", category = Category.RENDER)
 public class Spotify extends Module {
     private final ModeValue musicService = new ModeValue("Music Service", this).add(new SubMode("Cider")).add(new SubMode("Spotify")).setDefault("Cider");

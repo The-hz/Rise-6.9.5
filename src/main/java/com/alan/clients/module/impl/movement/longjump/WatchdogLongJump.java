@@ -18,7 +18,7 @@ import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.ItemDamageComponent;
 import com.alan.clients.component.impl.player.PacketlessDamageComponent;
-import hackclient.rise.cl;
+import com.alan.clients.component.impl.render.SmoothCameraComponent;
 import java.util.ArrayList;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -69,7 +69,7 @@ public class WatchdogLongJump extends Mode<LongJump> {
     @EventLink
     public final Listener<StrafeEvent> onStrafe = var1x -> {
         if ((aEg.thePlayer.posY > this.startY || aEg.thePlayer.tR < 14) && this.smoothCamera.wo()) {
-            cl.cn();
+            SmoothCameraComponent.cn();
         }
 
         double d0;

@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.component.impl.community;
 
 import com.alan.clients.Client;
 import com.alan.clients.component.Component;
@@ -23,8 +23,8 @@ import rip.vantage.commons.packet.impl.client.community.C2SPacketUserLookup;
 import rip.vantage.commons.packet.impl.server.community.S2CPacketUserData;
 import rip.vantage.network.core.VantageNetwork;
 
-public class bf extends Component implements InstanceAccess {
-    public static HashMap<String, by> dc = new HashMap<>();
+public class UserLookupComponent extends Component implements InstanceAccess {
+    public static HashMap<String, ClientUser> dc = new HashMap<>();
     public static List<String> known = new ArrayList<>();
     public static List<String> pending = new ArrayList<>();
     @EventLink
@@ -34,8 +34,8 @@ public class bf extends Component implements InstanceAccess {
     };
     @EventLink
     public final Listener<TickEvent> onTick = var0 -> {
-        ce.loadTextures();
-        ce.updateFrames();
+        CapeComponent.loadTextures();
+        CapeComponent.updateFrames();
 
         for (EntityPlayer entityplayer : aEg.theWorld.playerEntities) {
             if (!known.contains(entityplayer.getGameProfile().getName())) {
@@ -55,20 +55,20 @@ public class bf extends Component implements InstanceAccess {
             for (String s1 : jsonobject.keySet()) {
                 JSONObject jsonobject1 = new JSONObject(jsonobject.get(s1).toString());
                 String s2 = jsonobject1.getString("f");
-                by by = new by(s1);
+                ClientUser by = new ClientUser(s1);
                 if (!s2.equals("") && !s2.equals(" ")) {
                     by.setTag(s2);
-                    by.setRank(bz.Regular);
+                    by.setRank(UserRank.Regular);
                     if (jsonobject1.getBoolean("h")) {
-                        by.setRank(bz.Developer);
+                        by.setRank(UserRank.Developer);
                     }
 
                     if (jsonobject1.getBoolean("g")) {
-                        by.setRank(bz.Admin);
+                        by.setRank(UserRank.Admin);
                     }
 
                     if (jsonobject1.getBoolean("i")) {
-                        by.setRank(bz.Gato);
+                        by.setRank(UserRank.Gato);
                     }
 
                     JSONArray jsonarray = jsonobject1.getJSONArray("j");
@@ -108,11 +108,11 @@ public class bf extends Component implements InstanceAccess {
         }
     };
 
-    public bf() {
+    public UserLookupComponent() {
     }
 
     public static String c(String var0, String var1) {
-        by by = dc.get(var1);
+        ClientUser by = dc.get(var1);
         if (by != null) {
             String s = " §7(" + var1 + "§7)§r";
             String s1 = "§" + by.getColorCode() + by.getTag() + " §7(";

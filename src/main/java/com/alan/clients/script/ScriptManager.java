@@ -8,7 +8,7 @@ import com.alan.clients.script.util.ScriptClassFilter;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.file.FileManager;
-import hackclient.rise.cg;
+import com.alan.clients.component.impl.render.NotificationComponent;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -111,7 +111,7 @@ public final class ScriptManager implements InstanceAccess {
                 var0.unload();
             } catch (ScriptException scriptexception) {
                 scriptexception.printStackTrace();
-                cg.e("Script \"" + var0.getName() + "\" unloaded incorrectly", "More details have been printed in a stacktrace.");
+                NotificationComponent.e("Script \"" + var0.getName() + "\" unloaded incorrectly", "More details have been printed in a stacktrace.");
             }
         });
         this.scripts.clear();

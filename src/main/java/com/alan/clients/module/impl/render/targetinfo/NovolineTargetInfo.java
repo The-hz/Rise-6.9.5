@@ -11,7 +11,7 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.value.Mode;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.bf;
+import com.alan.clients.component.impl.community.UserLookupComponent;
 import com.alan.clients.util.shader.ShaderQueueType;
 import java.awt.Color;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -53,7 +53,7 @@ public final class NovolineTargetInfo extends Mode<TargetInfo> {
         double d3 = abstractclientplayer.getMaxHealth();
         double d4 = d2 / d3 * 100.0;
         String s = entity.getName();
-        String s1 = bf.c(s, s);
+        String s1 = UserLookupComponent.c(s, s);
         double d5 = aEg.fontRendererObj.getStringWidth(s1);
         double d6 = 74.0;
         double d7 = d6 + d5;

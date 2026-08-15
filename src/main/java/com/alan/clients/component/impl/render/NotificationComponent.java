@@ -1,4 +1,4 @@
-package hackclient.rise;
+package com.alan.clients.component.impl.render;
 
 import com.alan.clients.component.Component;
 import com.alan.clients.newevent.Listener;
@@ -16,11 +16,12 @@ import com.alan.clients.util.render.RenderUtil;
 import com.alan.clients.util.shader.ShaderQueueType;
 import com.alan.clients.util.tuples.Triple;
 import com.alan.clients.util.vector.Vector2d;
+import hackclient.rise.EvictingList;
 import java.awt.Color;
 import net.minecraft.client.renderer.GlStateManager;
 import rip.vantage.commons.util.time.StopWatch;
 
-public class cg extends Component {
+public class NotificationComponent extends Component {
     private static final EvictingList<Triple<String, String, Integer>> queue = new EvictingList<>(5);
     private static final StopWatch time = new StopWatch();
     private static Triple<String, String, Integer> current;
@@ -100,7 +101,7 @@ public class cg extends Component {
         }
     };
 
-    public cg() {
+    public NotificationComponent() {
     }
 
     public static void e(String var0, String var1) {

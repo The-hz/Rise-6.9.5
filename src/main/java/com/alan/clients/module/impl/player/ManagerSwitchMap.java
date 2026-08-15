@@ -1,8 +1,8 @@
-package hackclient.rise;
+package com.alan.clients.module.impl.player;
 
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 
-public class tp {
+public class ManagerSwitchMap {
     public static final int[] adE = new int[ArmorMaterial.values().length];
 
     static {

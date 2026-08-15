@@ -8,7 +8,7 @@ import com.alan.clients.newevent.impl.input.MouseButtonEvent;
 import com.alan.clients.util.interfaces.Bindable;
 import com.alan.clients.util.ime.PinyinImeState;
 import com.alan.clients.util.localization.Localization;
-import hackclient.rise.cg;
+import com.alan.clients.component.impl.render.NotificationComponent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +26,7 @@ public class KeybindManager {
                 } else {
                     boolean flag = PinyinImeState.uB();
                     if (Minecraft.getMinecraft() != null && Minecraft.getMinecraft().theWorld != null && Minecraft.getMinecraft().thePlayer != null) {
-                        cg.a(Localization.ce("module.render.chat.pinyin_ime"), Localization.ce(flag ? "ui.chat.pinyin_ime.hint.on" : "ui.chat.pinyin_ime.hint.off"), 1500);
+                        NotificationComponent.a(Localization.ce("module.render.chat.pinyin_ime"), Localization.ce(flag ? "ui.chat.pinyin_ime.hint.on" : "ui.chat.pinyin_ime.hint.off"), 1500);
                     }
 
                     var1.setCancelled();

@@ -18,7 +18,7 @@ import com.alan.clients.value.impl.StringValue;
 import com.google.gson.JsonObject;
 import com.alan.clients.util.localization.Locale;
 import com.alan.clients.util.localization.Localization;
-import hackclient.rise.cg;
+import com.alan.clients.component.impl.render.NotificationComponent;
 import com.alan.clients.newevent.impl.other.ConfigLoadEvent;
 import com.alan.clients.util.interfaces.Bindable;
 import java.io.BufferedReader;
@@ -74,7 +74,7 @@ public class ConfigFile extends File implements Bindable {
 
         Client.a.e().d(new ConfigLoadEvent());
         if (this.name != null) {
-            cg.e("Config", "Loaded " + this.name + " config");
+            NotificationComponent.e("Config", "Loaded " + this.name + " config");
         }
 
         return true;

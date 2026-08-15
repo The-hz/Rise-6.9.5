@@ -19,9 +19,9 @@ import com.alan.clients.value.impl.BooleanValue;
 import com.alan.clients.value.impl.NumberValue;
 import com.alan.clients.util.chat.ChatUtil;
 import com.alan.clients.util.packet.PacketUtil;
-import hackclient.rise.cg;
+import com.alan.clients.component.impl.render.NotificationComponent;
 import com.alan.clients.component.impl.render.ProgressBarComponent;
-import hackclient.rise.cl;
+import com.alan.clients.component.impl.render.SmoothCameraComponent;
 import com.alan.clients.util.shader.ShaderQueueType;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -151,7 +151,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
                         }
                         else {
                             Watchdog2LongJump.launched = false;
-                            cg.a("Watchdog Longjump", "Bad knockback detected from the server... Cancelling and trying to save you from the void", 5000);
+                            NotificationComponent.a("Watchdog Longjump", "Bad knockback detected from the server... Cancelling and trying to save you from the void", 5000);
                         }
                         packetReceiveEvent.setCancelled();
                         break;
@@ -181,7 +181,7 @@ public class Watchdog2LongJump extends Mode<LongJump>
         });
         this.onStrafe = (p0 -> {
             if ((Watchdog2LongJump.aEg.thePlayer.posY > this.takeoffY || Watchdog2LongJump.aEg.thePlayer.tR < 14) && this.flyMode.wo()) {
-                cl.cn();
+                SmoothCameraComponent.cn();
             }
             final int tr = Watchdog2LongJump.aEg.thePlayer.tR;
             MoveUtil.useDiagonalSpeed();

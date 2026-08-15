@@ -10,7 +10,7 @@ import com.alan.clients.util.vector.Vector2d;
 import com.alan.clients.value.Mode;
 import com.alan.clients.util.math.MathUtil;
 import com.alan.clients.util.render.ColorUtil;
-import hackclient.rise.bf;
+import com.alan.clients.component.impl.community.UserLookupComponent;
 import java.awt.Color;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.Entity;
@@ -30,7 +30,7 @@ public class WurstTargetInfo extends Mode<TargetInfo> {
         }
 
         String s = entity.getName();
-        String s1 = bf.c(s, s);
+        String s1 = UserLookupComponent.c(s, s);
         double d0 = this.targetInfo.position.x;
         double d1 = this.targetInfo.position.y;
         RenderUtil.d(d0, d1, 185.0, 34.0, ColorUtil.withBlue(Color.WHITE, 100));

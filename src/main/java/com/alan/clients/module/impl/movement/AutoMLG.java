@@ -16,7 +16,7 @@ import com.alan.clients.util.RayCastUtil;
 import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.cg;
+import com.alan.clients.component.impl.render.NotificationComponent;
 import com.alan.clients.module.impl.movement.AutoMLGSwitchMap;
 import hackclient.rise.ScaffoldState;
 import net.minecraft.block.Block;
@@ -218,7 +218,7 @@ public class AutoMLG extends Module {
     private void handleRotating() {
         this.stateTicks++;
         if (aEg.thePlayer.onGround || aEg.thePlayer.isInWater() || aEg.thePlayer.isDead || this.stateTicks > 100) {
-            cg.e("Auto MLG", "Failed - couldn't place water in time");
+            NotificationComponent.e("Auto MLG", "Failed - couldn't place water in time");
             this.reset();
         } else if (aEg.thePlayer.motionY > 0.5) {
             this.reset();
@@ -247,13 +247,13 @@ public class AutoMLG extends Module {
                                 this.stateTicks = 0;
                             }
                         } else {
-                            cg.e("Auto MLG", "Failed - no water bucket in hand");
+                            NotificationComponent.e("Auto MLG", "Failed - no water bucket in hand");
                             this.reset();
                         }
                     }
                 }
             } else {
-                cg.e("Auto MLG", "Failed - no water bucket in hand");
+                NotificationComponent.e("Auto MLG", "Failed - no water bucket in hand");
                 this.reset();
             }
         }
@@ -264,7 +264,7 @@ public class AutoMLG extends Module {
         RotationComponent.setRotations(new Vector2f(aEg.thePlayer.pl, 90.0F), 10.0, MovementFix.NORMAL);
         if (!aEg.thePlayer.onGround && !aEg.thePlayer.isInWater()) {
             if (this.stateTicks > 60) {
-                cg.e("Auto MLG", "Failed - landing timed out");
+                NotificationComponent.e("Auto MLG", "Failed - landing timed out");
                 this.reset();
             }
         } else {
@@ -272,7 +272,7 @@ public class AutoMLG extends Module {
                 this.state = ScaffoldState.PICKUP;
                 this.stateTicks = 0;
             } else {
-                cg.e("Auto MLG", "Water placed successfully!");
+                NotificationComponent.e("Auto MLG", "Water placed successfully!");
                 this.reset();
                 if (this.autoDisable.wo()) {
                     this.toggle();
@@ -285,7 +285,7 @@ public class AutoMLG extends Module {
         this.stateTicks++;
         ItemStack itemstack = SlotComponent.getItemStack();
         if (itemstack != null && itemstack.getItem() == Items.water_bucket) {
-            cg.e("Auto MLG", "MLG successful!");
+            NotificationComponent.e("Auto MLG", "MLG successful!");
             this.reset();
             if (this.autoDisable.wo()) {
                 this.toggle();
@@ -302,7 +302,7 @@ public class AutoMLG extends Module {
                 ItemStack itemstack1 = SlotComponent.getItemStack();
                 if (itemstack1 != null && itemstack1.getItem() == Items.bucket && blockpos != null && this.pickupWater(itemstack1, blockpos)) {
                     PacketUtil.send(new m());
-                    cg.e("Auto MLG", "MLG successful!");
+                    NotificationComponent.e("Auto MLG", "MLG successful!");
                     this.reset();
                     if (this.autoDisable.wo()) {
                         this.toggle();
@@ -311,7 +311,7 @@ public class AutoMLG extends Module {
             }
 
             if (this.stateTicks > this.pickupDelay.wo().intValue() + 40) {
-                cg.e("Auto MLG", "Pickup timed out, resetting");
+                NotificationComponent.e("Auto MLG", "Pickup timed out, resetting");
                 this.reset();
             }
         }

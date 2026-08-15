@@ -21,7 +21,7 @@ import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.BadPacketsComponent;
 import com.alan.clients.component.impl.player.SelectorDetectionComponent;
 import com.alan.clients.newevent.impl.motion.SprintEvent;
-import hackclient.rise.tp;
+import com.alan.clients.module.impl.player.ManagerSwitchMap;
 import com.alan.clients.util.render.IntGatherer;
 import hackclient.rise.InventoryScan;
 import hackclient.rise.SlotStack;

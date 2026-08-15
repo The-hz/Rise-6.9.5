@@ -25,7 +25,7 @@ import com.alan.clients.util.packet.PacketUtil;
 import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.util.player.SlotUtil;
 import com.alan.clients.util.rotation.RotationUtil;
-import hackclient.rise.cg;
+import com.alan.clients.component.impl.render.NotificationComponent;
 import java.awt.Color;
 import java.util.ArrayList;
 import lombok.Generated;
@@ -79,7 +79,7 @@ extends Module {
         if (LegacyBreaker.aEg.thePlayer.getDistance(teleportEvent.getPosX(), teleportEvent.getPosY(), teleportEvent.getPosZ()) > 30.0) {
             if (this.firstTeleport) {
                 this.firstTeleport = false;
-                cg.e("Breaker", "Whitelisted bed");
+                NotificationComponent.e("Breaker", "Whitelisted bed");
             }
             this.whitelistedBedPosition = new Vec3(teleportEvent.getPosX(), teleportEvent.getPosY(), teleportEvent.getPosZ());
         }

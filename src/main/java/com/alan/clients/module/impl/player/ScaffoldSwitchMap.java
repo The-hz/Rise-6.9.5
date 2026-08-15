@@ -1,8 +1,8 @@
-package hackclient.rise;
+package com.alan.clients.module.impl.player;
 
 import net.minecraft.util.EnumFacing;
 
-public class ub {
+public class ScaffoldSwitchMap {
     public static final int[] ahg = new int[EnumFacing.values().length];
 
     static {

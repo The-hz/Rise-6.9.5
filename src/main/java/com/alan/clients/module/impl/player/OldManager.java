@@ -19,7 +19,7 @@ import com.alan.clients.util.player.PlayerUtil;
 import com.alan.clients.component.impl.player.SelectorDetectionComponent;
 import com.alan.clients.newevent.impl.motion.SprintEvent;
 import hackclient.rise.InventoryStack;
-import hackclient.rise.tz;
+import com.alan.clients.module.impl.player.OldManagerSwitchMap;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

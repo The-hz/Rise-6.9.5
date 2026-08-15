@@ -1,11 +1,11 @@
-package hackclient.rise.security;
+package com.alan.clients.security.impl;
 
 import com.alan.clients.security.SecurityFeature;
 import com.alan.clients.util.interfaces.InstanceAccess;
 import java.util.regex.Pattern;
 import net.minecraft.block.Block;
 
-public class zo extends SecurityFeature implements InstanceAccess {
+public class NativeWorldScanCheck extends SecurityFeature implements InstanceAccess {
     public static int avO;
     public volatile boolean avQ;
     public static Pattern avP;
@@ -23,7 +23,7 @@ public class zo extends SecurityFeature implements InstanceAccess {
         return null;
     }
 
-    public zo() {
+    public NativeWorldScanCheck() {
     }
 
     @Override

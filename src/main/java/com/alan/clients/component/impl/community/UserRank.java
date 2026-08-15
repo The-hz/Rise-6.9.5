@@ -1,17 +1,17 @@
-package hackclient.rise;
+package com.alan.clients.component.impl.community;
 
 import lombok.Generated;
 
-public enum bz {
+public enum UserRank {
     Regular("b"),
     Admin("a"),
     Developer("c"),
     Gato("b");
 
     private final String colorCode;
-    private static final bz[] $VALUES = cc();
+    private static final UserRank[] $VALUES = cc();
 
-    bz(String var3) {
+    UserRank(String var3) {
         this.colorCode = var3;
     }
 
@@ -20,7 +20,7 @@ public enum bz {
         return this.colorCode;
     }
 
-    private static bz[] cc() {
-        return new bz[]{Regular, Admin, Developer, Gato};
+    private static UserRank[] cc() {
+        return new UserRank[]{Regular, Admin, Developer, Gato};
     }
 }
