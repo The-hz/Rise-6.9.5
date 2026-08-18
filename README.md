@@ -19,7 +19,7 @@
 
 ## modify
 
-full offline, deobf, rename, fix, patch auth, add toggle and more...
+full offline, deobf, rename, fix, patch auth, add toggle and more....
 
 ## build
 
