@@ -82,7 +82,7 @@ all default to off.
 - **[ViaVersionMCP/ViaMCP](https://github.com/ViaVersionMCP/ViaMCP)** — Licensed under GNU General Public License v3.0 / relevant open-source license
 
 
-## legal & disclaimers
+## legal & disclaimers 
 
 - **Minecraft Trademarks:** *Minecraft* is a trademark of Mojang Studios / Microsoft Corporation.  
 - **Affiliation:** This project is an independent community development and is **NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.**  
