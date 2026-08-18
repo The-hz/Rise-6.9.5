@@ -20,6 +20,7 @@ client-src.jar
 /ViaMCP/
 src/main/resources/native/
 
+alan34mother/
 # pre-images of hand-patched libs/ jars: .pre-fix, .pre-enum, .pre-strip, ...
 libs/*.pre-*
 libs/*.stale
