@@ -11,6 +11,7 @@
   <img src="./img/heavy.jpg" alt="4" width="20%" />
 </p>
 
+Join Discord：https://discord.gg/eSFUUp7wW
 
 ## requirements
 
