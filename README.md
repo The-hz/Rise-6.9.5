@@ -11,6 +11,7 @@
   <img src="./img/heavy.jpg" alt="4" width="20%" />
 </p>
 
+Join Discord：https://discord.gg/eSFUUp7wW
 
 ## requirements
 
@@ -19,7 +20,7 @@
 
 ## modify
 
-full offline, deobf, rename, fix, patch auth, add toggle and more...
+full offline, deobf, rename, fix, patch auth, add toggle and more....
 
 ## build
 
@@ -86,4 +87,4 @@ all default to off.
 
 - **Minecraft Trademarks:** *Minecraft* is a trademark of Mojang Studios / Microsoft Corporation.  
 - **Affiliation:** This project is an independent community development and is **NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.**  
-- **Assets & Code:** No proprietary Minecraft assets or un-obfuscated original Mojang source code are distributed directly within this repository. (All game assets belong to their respective owners).
+- **Assets & Code:** No proprietary Minecraft assets or un-obfuscated original Mojang source code are distributed directly within this repository. (All game assets belong to their respective owners). 
